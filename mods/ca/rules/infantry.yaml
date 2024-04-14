@@ -4637,3 +4637,74 @@ ENFO:
 		-RequiresCondition:
 	WithDecoration@BINO:
 		-BlinkPatterns:
+
+CRYT:
+	Inherits: ^Soldier
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
+	Buildable:
+		Queue: InfantrySQ, InfantryMQ
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 186
+		Prerequisites: ~disabled, tent, atek, ~techlevel.high
+		Description: Elite infantry armed with a cryo sprayer.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Weak vs Buildings, Defenses\n• Cannot attack Aircraft
+	Valued:
+		Cost: 900
+	Tooltip:
+		Name: Cryo Trooper
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 15000
+	Mobile:
+		Voice: Move
+	RevealsShroud:
+		Range: 6c0
+	Armament@PRIMARY:
+		Weapon: CryoSprayer
+		LocalOffset: 450,0,341
+	Armament@BATF:
+		Name: batf
+		Weapon: CryoSprayer
+	AttackFrontal:
+		Voice: Attack
+		PauseOnCondition: being-warped
+		FacingTolerance: 0
+	AttackMove:
+		Voice: Move
+	Passenger:
+		Voice: Move
+	Guard:
+		Voice: Move
+	Voiced:
+		VoiceSet: CryoTrooperVoice
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
+	-Crushable:
+	-TakeCover:
+	WithInfantryBody:
+		IdleSequences: idle, idle2
+		StandSequences: stand, stand2
+		DefaultAttackSequence: shoot
+		RequiresCondition: !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
+	WithDecoration@BINO:
+		-BlinkPatterns:
+	AmbientSoundCA:
+		SoundFiles: cryobeam.aud
+		InitialSound: cryobeamstart.aud
+		FinalSound: cryobeamend.aud
+		RequiresCondition: attacking
+		InitialSoundLength: 10
+	GrantConditionOnAttackCA:
+		Condition: attacking
+		RevokeDelay: 6

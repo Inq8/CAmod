@@ -3271,3 +3271,36 @@ ZoneDefenderGun:
 		ExplosionPalette: tseffect
 	Warhead@4Smu_impact: LeaveSmudge
 		SmudgeType: Scorch
+
+CryoSprayer:
+	Range: 4c0
+	ReloadDelay: 5
+	Burst: 1
+	TargetActorCenter: true
+	Projectile: LinearPulse
+		Speed: 341
+		ImpactInterval: 1
+		MinimumImpactDistance: 0
+	Warhead@1Dam: SpreadDamage
+		Spread: 0c128
+		Falloff: 100, 75, 25, 0
+		Damage: 150
+		Versus:
+			None: 100
+			Wood: 2
+			Light: 60
+			Heavy: 20
+			Concrete: 2
+			Brick: 0
+		ValidRelationships: Enemy, Neutral
+		DamageTypes: Prone50Percent, TriggerProne, FrozenDeath
+	Warhead@2Eff: CreateFacingEffect
+		Explosions: cryobeam1, cryobeam2
+		ExplosionPalette: effect
+		ValidTargets: Ground, Air, Ship, Trees
+		Inaccuracy: 110
+	Warhead@chill1: GrantExternalConditionCA
+		Condition: chilled
+		Duration: 75
+		Range: 0c341
+		ValidRelationships: Enemy, Neutral
