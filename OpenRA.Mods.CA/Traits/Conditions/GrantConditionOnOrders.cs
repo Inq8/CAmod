@@ -50,7 +50,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled || IsTraitPaused)
 				return;
 
-			if (!Info.OrderNames.Contains(order.OrderString))
+			if (!Info.OrderNames.Contains(order.OrderString) && !order.Queued)
 				RevokeCondition(self);
 
 			if (Info.RequiresActorTarget && order.Target.Type != TargetType.Actor && order.Target.Type != TargetType.FrozenActor)
