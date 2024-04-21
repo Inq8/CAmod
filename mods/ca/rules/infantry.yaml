@@ -2691,6 +2691,7 @@ BJET:
 		RequiresCondition: airborne
 	WithInfantryBody:
 		IdleSequences: idle1-upg, idle2-upg
+		StandSequences: stand-upg
 		DefaultAttackSequence: attack-upg
 		RequiresCondition: !airborne
 	-ReplacedInQueue:
@@ -2704,7 +2705,7 @@ JJET.Husk:
 	Tooltip:
 		Name: Jumpjet Infantry
 	FallsToEarth:
-		Velocity: 86
+		Velocity: 70
 		Explosion:
 	Aircraft:
 		CruiseAltitude: 1c0
@@ -2723,12 +2724,15 @@ JJET.Husk:
 		Condition: water-death
 	WithDeathAnimation:
 		RequiresCondition: !water-death
-		FallbackSequence: die-flying
+		FallbackSequence: die-fallen
 		DeathSequencePalette: playertd
 	WithDeathAnimation@SPLASH:
 		RequiresCondition: water-death
 		FallbackSequence: die-splash
 	Interactable:
+	WithShadow:
+		Offset: 43, 128, 0
+		ZOffset: 512
 
 JJET.UPG.Husk:
 	Inherits: JJET.Husk
