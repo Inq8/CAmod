@@ -3645,144 +3645,134 @@ jjet:
 		ZOffset: 512
 	idle:
 		Filename: jjet.shp
-		Facings: 8
-		Length: 6
-		Start: 310
+		Start: 3
+		Length: 1
+		Tick: 400
 	idle-upg:
-		Filename: jjetg.shp
-		Facings: 8
-		Length: 6
-		Start: 310
+		Filename: bjet.shp
+		Start: 3
+		Length: 1
+		Tick: 400
 	stand:
 		Filename: jjet.shp
 		Facings: 8
 	stand-upg:
-		Filename: jjetg.shp
+		Filename: bjet.shp
 		Facings: 8
 	run:
 		Filename: jjet.shp
-		Start: 8
-		Length: 6
 		Facings: 8
+		Length: 2
+		Start: 48
+		Tick: 40
 	idle1:
 		Filename: jjet.shp
-		Start: 56
-		Length: 15
+		Start: 3
+		Length: 1
+		Tick: 400
 	idle2:
 		Filename: jjet.shp
-		Start: 71
-		Length: 15
+		Start: 5
+		Length: 1
+		Tick: 400
 	idle1-upg:
-		Filename: jjetg.shp
-		Start: 56
-		Length: 15
+		Filename: bjet.shp
+		Start: 5
+		Length: 1
+		Tick: 400
 	idle2-upg:
-		Filename: jjetg.shp
-		Start: 71
-		Length: 15
-	prone-run:
-		Filename: jjet.shp
-		Start: 86
-		Length: 6
-		Facings: 8
-	prone-stand:
-		Filename: jjet.shp
-		Facings: 8
+		Filename: bjet.shp
+		Start: 5
+		Length: 1
+		Tick: 400
 	flying:
 		Filename: jjet.shp
 		Facings: 8
-		Length: 6
-		Start: 262
+		Length: 2
+		Start: 48
+		Tick: 40
+	flying-upg:
+		Filename: bjet.shp
+		Facings: 8
+		Length: 2
+		Start: 48
+		Tick: 40
 	hover:
 		Filename: jjet.shp
 		Facings: 8
-		Length: 6
-		Start: 310
-	flying-upg:
-		Filename: jjetg.shp
-		Facings: 8
-		Length: 6
-		Start: 262
+		Length: 4
+		Start: 16
 	hover-upg:
-		Filename: jjetg.shp
+		Filename: bjet.shp
 		Facings: 8
-		Length: 6
-		Start: 310
-	die-twirling: # TODO: animation for falling from sky starts at 436
-		Filename: jjet.shp
-		Start: 414
-		Length: 6
+		Length: 4
+		Start: 16
 	die-falling:
 		Filename: jjet.shp
-		Start: 406
-		Length: 9
+		Start: 80
+		Length: 7
+		Tick: 100
 	die-falling-upg:
-		Filename: jjetg.shp
-		Start: 406
-		Length: 9
-	die-flying: # TODO: animation for falling from sky starts at 436
+		Filename: bjet.shp
+		Start: 80
+		Length: 7
+		Tick: 80
+	die-fallen:
 		Filename: jjet.shp
-		Start: 414
+		Start: 87
 		Length: 6
+		Tick: 160
 	attack:
 		Filename: jjet.shp
-		Start: 182
-		Length: 6
+		Start: 93
+		Length: 2
 		Facings: 8
 	attack-upg:
-		Filename: jjetg.shp
-		Start: 182
-		Length: 6
+		Filename: bjet.shp
+		Start: 93
+		Length: 2
 		Facings: 8
 	flying-attack:
 		Filename: jjet.shp
-		Start: 358
+		Start: 64
 		Facings: 8
-		Length: 6
-	flying-attack-upg:
-		Filename: jjetg.shp
-		Start: 358
-		Facings: 8
-		Length: 6
-	prone-attack:
-		Filename: jjet.shp
-		Start: 212
-		Length: 6
-		Facings: 8
-	standup:
-		Filename: jjet.shp
-		Start: 230
 		Length: 2
+		Tick: 60
+	flying-attack-upg:
+		Filename: bjet.shp
+		Start: 64
 		Facings: 8
+		Length: 2
+		Tick: 60
 	die1:
 		Filename: jjet.shp
-		Start: 414
-		Length: 6
+		Frames: 109,110,111,112,113,88,89,90,91,92
+		Length: *
 		Tick: 80
 	die2:
 		Filename: jjet.shp
-		Start: 414
-		Length: 6
+		Frames: 109,110,111,112,113,88,89,90,91,92
+		Length: *
 		Tick: 80
 	die3:
 		Filename: jjet.shp
-		Start: 414
-		Length: 6
+		Frames: 109,110,111,112,113,88,89,90,91,92
+		Length: *
 		Tick: 80
 	die4:
 		Filename: jjet.shp
-		Start: 414
-		Length: 6
+		Frames: 109,110,111,112,113,88,89,90,91,92
+		Length: *
 		Tick: 80
 	die5:
 		Filename: jjet.shp
-		Start: 414
-		Length: 6
+		Frames: 109,110,111,112,113,88,89,90,91,92
+		Length: *
 		Tick: 80
 	die7:
 		Filename: jjet.shp
-		Start: 318
-		Length: 8
+		Frames: 109,110,111,112,113,88,89,90,91,92
+		Length: *
 		Tick: 80
 	die-splash:
 		Filename: h2o_exp1.shp
@@ -3824,99 +3814,84 @@ e8:
 		Start: 8
 		Facings: 8
 	deploy:
-		Filename: e8d.shp
-		Length: 4
-		Tick: 180
+		Filename: e8.shp
+		Start: 137
+		Length: 9
+		Tick: 80
 	deployed:
-		Filename: e8d.shp
-		Start: 4
-		Length: 3
-		Tick: 420
+		Filename: e8.shp
+		Start: 146
+		Length: 8
+		Tick: 80
 	run:
 		Filename: e8.shp
 		Start: 16
 		Length: 6
 		Facings: 8
-		Tick: 100
+		Tick: 120
 	shoot:
 		Filename: e8.shp
 		Start: 64
-		Length: 16
+		Length: 4
 		Facings: 8
-	liedown:
-		Filename: e8.shp
-		Start: 192
-		Length: 2
-		Facings: 8
-	standup:
-		Filename: e8.shp
-		Start: 240
-		Length: 2
-		Facings: 8
+		Tick: 60
 	prone-stand:
 		Filename: e8.shp
-		Start: 208
-		Stride: 4
 		Facings: 8
 	prone-stand2:
 		Filename: e8.shp
-		Start: 208
-		Stride: 4
+		Start: 8
 		Facings: 8
 	prone-run:
 		Filename: e8.shp
-		Start: 208
-		Length: 4
+		Start: 16
+		Length: 6
 		Facings: 8
-		Tick: 100
+		Tick: 120
 	prone-shoot:
 		Filename: e8.shp
-		Start: 256
-		Length: 16
+		Start: 64
+		Length: 4
 		Facings: 8
+		Tick: 60
 	parachute:
 		Filename: e8.shp
-		Start: 528
+		Start: 2
 	idle1:
 		Filename: e8.shp
-		Start: 384
-		Length: 14
-		Tick: 120
+		Start: 96
+		Length: 8
+		Tick: 160
 	idle2:
 		Filename: e8.shp
-		Start: 398
-		Length: 18
-		Tick: 120
+		Start: 104
+		Length: 8
+		Tick: 160
 	die1:
 		Filename: e8.shp
-		Start: 415
-		Length: 9
+		Start: 111
+		Length: 14
 		Tick: 80
 	die2:
 		Filename: e8.shp
-		Start: 424
-		Length: 8
-		Tick: 80
+		Start: 125
+		Length: 12
 	die3:
 		Filename: e8.shp
-		Start: 432
-		Length: 8
-		Tick: 80
+		Start: 125
+		Length: 12
 	die4:
 		Filename: e8.shp
-		Start: 440
+		Start: 125
 		Length: 12
-		Tick: 80
 	die5:
 		Filename: e8.shp
-		Start: 452
-		Length: 18
-		Tick: 80
+		Start: 125
+		Length: 12
 	die7:
 		Filename: e8.shp
-		Start: 415
-		Length: 9
-		Tick: 80
+		Start: 125
+		Length: 12
 	chrono-overlay:
 		Filename: chronofade_small.shp
 		Length: *
@@ -4068,24 +4043,6 @@ n3c:
 		Filename: n3c.shp
 		Start: 8
 		Facings: 8
-	deploy:
-		Filename: e8d.shp
-		Length: 4
-		Tick: 180
-	undeploy:
-		Filename: e8d.shp
-		Start: 6
-		Length: 4
-		Tick: 180
-	deployed:
-		Filename: e8d.shp
-		Length: 7
-		Tick: 160
-	deployed-shoot:
-		Filename: e8d.shp
-		Start: 4
-		Length: 3
-		Tick: 80
 	run:
 		Filename: n3c.shp
 		Start: 16
