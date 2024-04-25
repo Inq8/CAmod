@@ -57,3 +57,5 @@ options-difficulty =
     .easy = Easy
     .normal = Normal
     .hard = Hard
+
+label-player-level = Current Rank: { $level }

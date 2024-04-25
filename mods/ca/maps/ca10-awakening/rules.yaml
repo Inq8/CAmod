@@ -123,6 +123,8 @@ BIO:
 	Production:
 		Produces: Cyborg
 	RallyPoint:
+	Targetable@V3Ignore:
+		TargetTypes: V3Ignore
 
 TTRK:
 	-Buildable:
@@ -133,6 +135,8 @@ TMPP:
 	ExternalCondition@AWAKENING:
 		Condition: awakening-complete
 	-Sellable:
+	Targetable@V3Ignore:
+		TargetTypes: V3Ignore
 
 MIG:
 	-MustBeDestroyed:
@@ -149,3 +153,4 @@ HIND:
 V3RL:
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Structure, Defense
+		InvalidTargets: NoAutoTarget, WaterStructure, AntiAirDefense, V3Ignore

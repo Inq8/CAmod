@@ -385,8 +385,11 @@ DeployCyborgs = function()
 			f.Produce(randomCyborg)
 		end
 	end)
-	TemplePrime.Produce("rmbc")
-	CyborgWaves = CyborgWaves + 1
+
+	if not TemplePrime.IsDead then
+		TemplePrime.Produce("rmbc")
+		CyborgWaves = CyborgWaves + 1
+	end
 
 	if CyborgWaves < MaxCyborgWaves then
 		Trigger.AfterDelay(DateTime.Seconds(2), DeployCyborgs)

@@ -661,8 +661,8 @@ SMEDI:
 		ValidRelationships: Ally
 	Voiced:
 		VoiceSet: AssimilatorVoice
-	Targetable:
-		TargetTypes: Ground, Infantry, ChaosImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	GuardsSelection:
 		ValidTargets: Infantry
 	KeepsDistance:
@@ -2633,6 +2633,8 @@ DEVA:
 	GpsRadarDot:
 		Sequence: Plane
 	-SoundOnDamageTransitionCA:
+	Targetable@AirHighValue:
+		TargetTypes: AirHighValue
 
 PAC:
 	Inherits: ^Helicopter
@@ -2766,6 +2768,8 @@ PAC:
 	GpsRadarDot:
 		Sequence: Plane
 	-SoundOnDamageTransitionCA:
+	Targetable@AirHighValue:
+		TargetTypes: AirHighValue
 
 INVA:
 	Inherits: ^NeutralPlane
