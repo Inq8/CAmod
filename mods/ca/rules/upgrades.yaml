@@ -597,6 +597,22 @@ decoy.upgrade:
 	RenderSprites:
 		Image: decoy.upgrade
 
+lastnk.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Laser Tanks
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.nod, tmpl, ~techlevel.high
+		Description: Upgrades: Light Tank\nUpgrades: Battle Tank
+	TooltipExtras:
+		Strengths: + Increased damage vs infantry & light armor
+		Weaknesses: – Reduced damage vs heavy armor
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: lastnk.upgrade
+
 blacknapalm.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:

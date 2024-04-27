@@ -3621,10 +3621,23 @@ LTNK:
 		RecoilRecovery: 17
 		LocalOffset: 720,0,90
 		MuzzleSequence: muzzle
+		RequiresCondition: !lastnk-upgrade
+	Armament@UPG:
+		Weapon: TankLaser
+		Recoil: 85
+		RecoilRecovery: 17
+		LocalOffset: 620,0,90
+		MuzzleSequence: muzzlelas
+		MuzzlePalette: caneon
+		RequiresCondition: lastnk-upgrade
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped || parachute
 	WithMuzzleOverlay:
 	WithSpriteTurret:
+		RequiresCondition: !lastnk-upgrade
+	WithSpriteTurret@LaserTank:
+		Sequence: turretlas
+		RequiresCondition: lastnk-upgrade
 	SpawnActorOnDeath:
 		Actor: LTNK.Husk
 		RequiresCondition: !onwater && !being-warped
@@ -3635,6 +3648,9 @@ LTNK:
 		Prerequisites: vehicles.upgraded
 	WithShadow:
 		RequiresCondition: parachute
+	GrantConditionOnPrerequisite@LaserTank:
+		Condition: lastnk-upgrade
+		Prerequisites: lastnk.upgrade
 
 MTNK:
 	Inherits: ^TankTD
@@ -3692,6 +3708,15 @@ MTNK:
 		RecoilRecovery: 26
 		LocalOffset: 768,0,90
 		MuzzleSequence: muzzle
+		RequiresCondition: !lastnk-upgrade
+	Armament@UPG:
+		Weapon: TankLaser
+		Recoil: 128
+		RecoilRecovery: 26
+		LocalOffset: 720,0,90
+		MuzzleSequence: muzzlelas
+		MuzzlePalette: caneon
+		RequiresCondition: lastnk-upgrade
 	Armament@SECONDARY:
 		Name: secondary
 		Turret: secondary
@@ -3706,10 +3731,13 @@ MTNK:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret@default:
-		RequiresCondition: !pointdef-upgrade
+		RequiresCondition: !pointdef-upgrade && !lastnk-upgrade
 	WithSpriteTurret@pointlaser:
 		Sequence: turretpd
 		RequiresCondition: pointdef-upgrade
+	WithSpriteTurret@LaserTank:
+		Sequence: turretlas
+		RequiresCondition: lastnk-upgrade
 	SpawnActorOnDeath:
 		Actor: MTNK.Husk
 		RequiresCondition: !being-warped
@@ -3728,6 +3756,9 @@ MTNK:
 	GrantConditionOnPrerequisite@POINTDEF:
 		Condition: pointdef-upgrade
 		Prerequisites: pointdef.upgrade
+	GrantConditionOnPrerequisite@LaserTank:
+		Condition: lastnk-upgrade
+		Prerequisites: lastnk.upgrade
 	TimedDamageMultiplier@GSHIELD:
 		ActiveCondition: gshield
 		ChargingCondition: gshield-charging
@@ -3805,6 +3836,10 @@ MTNK.Drone:
 		StartIfBelow: 50
 		DamageCooldown: 150
 		RequiresCondition: !mdrn-attached
+	-Armament@UPG:
+	-WithSpriteTurret@LaserTank:
+	WithSpriteTurret@default:
+		RequiresCondition: !pointdef-upgrade
 	-CaptureManager:
 	-Capturable:
 	-CaptureNotification:
