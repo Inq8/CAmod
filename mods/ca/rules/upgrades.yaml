@@ -1135,6 +1135,23 @@ regen.upgrade:
 	RenderSprites:
 		Image: regen.upgrade
 
+impl.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Impaler
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.scrin, scrt, ~techlevel.high
+		Description: Replaces: Ravager
+		IconPalette: chromes
+	TooltipExtras:
+		Strengths: + Increased range\n+ Increased damage\n+ Increased health\n+ Slows targets
+		Weaknesses: – Increased cost\n– Reduced speed
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: impl.upgrade
+
 hyper.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:

@@ -1272,6 +1272,43 @@ LaceratorShards.Hypercharged:
 		Damage: 2000
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath, TankBuster
 
+ImpalerSpike:
+	Range: 7c0
+	ReloadDelay: 80
+	Report: impl-fire1.aud
+	Projectile: Missile
+		Speed: 750
+		Blockable: false
+		Image: DRAGON
+		Shadow: True
+		HorizontalRateOfTurn: 20
+		RangeLimit: 8c0
+		ContrailLength: 11
+		ContrailStartWidth: 0c48
+		ContrailStartColor: ffffff
+		ContrailStartColorAlpha: 64
+		AllowSnapping: true
+	Warhead@1Dam: SpreadDamage
+		Damage: 10000
+		Spread: 42
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+		Versus:
+			Heavy: 15
+			Wood: 15
+			Concrete: 15
+			Brick: 15
+	Warhead@3Eff: CreateEffect
+		Explosions: piff
+		ValidTargets: Ground, Water, Trees
+		Inaccuracy: 64
+		ImpactSounds: gshardhit1.aud, gshardhit2.aud
+		ImpactSoundChance: 100
+	Warhead@Concussion: GrantExternalConditionCA
+		Range: 0c256
+		Duration: 75
+		Condition: slowed
+		ValidTargets: Vehicle, Infantry
+
 RiftInit:
 	ValidTargets: Ground, Water
 	Projectile: InstantExplode

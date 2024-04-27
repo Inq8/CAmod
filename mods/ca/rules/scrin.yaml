@@ -416,7 +416,7 @@ S2:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 160
-		Prerequisites: anyradar, ~infantry.scrin, ~techlevel.medium
+		Prerequisites: anyradar, ~infantry.scrin, ~!impl.upgrade, ~techlevel.medium
 		IconPalette: chromes
 		Description: Fast moving anti-personnel infantry.
 	TooltipExtras:
@@ -616,6 +616,42 @@ BRST:
 		DeployedCondition: triggered
 	KillsSelf:
 		RequiresCondition: (triggered || berserk)
+	-TakeCover:
+
+IMPL:
+	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Buildable:
+		Queue: InfantrySQ, InfantryMQ
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 172
+		Prerequisites: scrt, ~infantry.scrin, ~impl.upgrade, ~techlevel.high
+		IconPalette: chrome
+		Description: Assault infantry with high burst damage.
+	Valued:
+		Cost: 600
+	Tooltip:
+		Name: Impaler
+	TooltipExtras:
+		Strengths: • Strong vs Light Armor, Infantry
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
+		Attributes: • Slows targets
+	Health:
+		HP: 15000
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Mobile:
+		Speed: 72
+	RevealsShroud:
+		Range: 6c0
+	AttackFrontal:
+		FacingTolerance: 64
+	Armament@PRIMARY:
+		Weapon: ImpalerSpike
+		LocalOffset: 150,0,400
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
 	-TakeCover:
 
 SMEDI:
