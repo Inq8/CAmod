@@ -209,23 +209,69 @@ empgren.upgrade:
 	RenderSprites:
 		Image: empgren.upgrade
 
+strategic.upgrade1:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Strategy Dependent Upgrade
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.gdi, gtek, anystrategy, ~!bombard.strat, ~!seek.strat, ~!hold.strat, ~techlevel.high
+		IconPalette: chrometd
+		Description: Upgrade depends on chosen strategy.\n\n• Bombardment: Bombardier research\n• Seek & Destroy: Zone Raider researc\n• Hold the Line: Zone Defender research
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: strategic.upgrade
+
 bjet.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
 		Name: Research: Bombardier
 	Buildable:
 		BuildPaletteOrder: 30
-		Prerequisites: ~player.gdi, gtek, ~techlevel.high
-		Description: Allows construction of Bombardiers.\n\nReplaces: JumpJet Trooper
+		Prerequisites: ~player.gdi, gtek, ~bombard.strat, ~techlevel.high
+		Description: Allows training of Bombardiers.\n\nReplaces: JumpJet Trooper
 	TooltipExtras:
 		Strengths: + Strong vs Buildings\n+ Increased range
 		Weaknesses: – Slow projectiles\n– Increased cost
 	Valued:
-		Cost: 1000
+		Cost: 750
 	RenderSprites:
 		Image: bjet.upgrade
 
-strategic.upgrade:
+zrai.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Zone Raider
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.gdi, gtek, ~seek.strat, ~techlevel.high
+		Description: Allows training of Zone Raiders.\n\nReplaces: Zone Trooper
+	TooltipExtras:
+		Strengths: + Increased damage vs infantry, light armor & buildings\n+ Increased splash damage\n+ Increased speed\n+ Increased jump range
+		Weaknesses: – Reduced damage vs heavy armor & defenses\n– Slower projectiles
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: zrai.upgrade
+
+zdef.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Zone Defender
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.gdi, gtek, ~hold.strat, ~techlevel.high
+		Description: Allows training of Zone Defenders.\n\nReplaces: Zone Trooper
+	TooltipExtras:
+		Strengths: + Increased splash damage\n+ Can shield nearby infantry
+		Weaknesses: – Reduced single-target damage\n– Loses jump ability
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: zdef.upgrade
+
+strategic.upgrade2:
 	Inherits: ^Upgrade
 	Tooltip:
 		Name: Strategy Dependent Upgrade

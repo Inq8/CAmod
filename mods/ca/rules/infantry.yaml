@@ -2410,7 +2410,6 @@ ACOL:
 		Weapon: PortaLaser
 	TakeCover:
 		ProneOffset: 227,0,-245
-		PauseOnCondition: being-warped
 		SpeedModifier: 70
 	AttackFrontal:
 		Voice: Attack
@@ -3976,85 +3975,6 @@ SEAL:
 	WithDecoration@COMMANDOSKULL:
 		Sequence: pip-seal
 
-XO:
-	Inherits: ^VehicleTD-NOUPG
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@BERSERK: ^Berserk
-	Inherits@GYRO: ^GyroStabilizers
-	Buildable:
-		Queue: InfantrySQ, InfantryMQ
-		BuildAtProductionType: Powersuit
-		BuildPaletteOrder: 180
-		Prerequisites: gtek, infantry.any, vehicles.any, ~pyle, ~techlevel.high
-		Description: Light battle-mech with a short-range laser\n  and a machine gun.
-	TooltipExtras:
-		Strengths: • Strong vs Heavy Armor, Light Armor
-		Weaknesses: • Weak vs Buildings\n• Cannot attack Aircraft
-	Valued:
-		Cost: 1000
-	Selectable:
-		Bounds: 1024, 1024
-		DecorationBounds: 1024, 1024, 0, -100
-	Tooltip:
-		Name: X-O Powersuit
-	UpdatesPlayerStatistics:
-		AddToArmyValue: true
-	Health:
-		HP: 32000
-	Armor:
-		Type: Light
-	Mobile:
-		TurnSpeed: 54
-		Speed: 54
-		Voice: Move
-	Passenger:
-		Voice: Move
-	RevealsShroud:
-		MinRange: 4c0
-		Range: 6c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4c0
-	Voiced:
-		VoiceSet: XOVoice
-	WithMoveAnimation:
-	WithAttackAnimation:
-		Sequence: shoot
-		RequiresCondition: !moving
-	GrantConditionOnMovement@MOVING:
-		ValidMovementTypes: Horizontal, Vertical, Turn
-		Condition: moving
-	Armament@PRIMARY:
-		Weapon: M60mgXO
-		LocalOffset: 400,-220,180
-		MuzzleSequence: muzzle
-	Armament@SECONDARY:
-		Name: secondary
-		Weapon: XOLaser
-		LocalOffset: 400,220,180
-	AttackFollowFrontal:
-		PauseOnCondition: empdisable || being-warped
-		Voice: Attack
-		FacingTolerance: 32
-		RangeMargin: 0
-	ProducibleWithLevel:
-		Prerequisites: vehicles.upgraded
-	WithMuzzleOverlay:
-	Parachutable:
-		FallRate: 130
-	WithIdleAnimation@DESCENDING:
-		RequiresCondition: parachute
-		Interval: 3
-		Sequences: descend
-	-WithParachute:
-	RangeMultiplier@GYRO:
-		Modifier: 140
-	ReloadDelayMultiplier@GYRO:
-		Modifier: 140
-	GpsRadarDot:
-		Sequence: Infantry
-
 ENLI:
 	Inherits: ^Cyborg
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -4362,7 +4282,7 @@ CMSR:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 195
+		BuildPaletteOrder: 186
 		Prerequisites: stek, ~barr, ~techlevel.high
 		Description: Leads regular infantry into battle, motivating them\n  to move faster and fight harder.
 	TooltipExtras:
@@ -4442,8 +4362,8 @@ ZTRP:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 130
-		Prerequisites: ~disabled, pyle, gtek, ~techlevel.high
+		BuildPaletteOrder: 187
+		Prerequisites: ~pyle, gtek, ~techlevel.high, ~!zrai.upgrade, ~!zdef.upgrade
 		Description: Elite infantry armed with a railgun and equipped\n  with a jump pack.
 		IconPalette: chrometd
 	TooltipExtras:
@@ -4458,13 +4378,15 @@ ZTRP:
 		AddToArmyValue: true
 	Health:
 		HP: 15000
+	Armor:
+		Type: Light
 	Mobile:
 		Voice: Move
 	RevealsShroud:
 		Range: 6c0
 	Armament@PRIMARY:
 		Weapon: ZoneTrooperRailgun
-		LocalOffset: 350,0,341
+		LocalOffset: 350,0,300
 	Armament@BATF:
 		Name: batf
 		Weapon: ZoneTrooperRailgun
@@ -4553,12 +4475,13 @@ ZTRP:
 ZRAI:
 	Inherits: ZTRP
 	Buildable:
+		Prerequisites: ~pyle, gtek, ~techlevel.high, ~zrai.upgrade
 		Description: Elite infantry armed with a sonic grenade launcher\n  and equipped with a jump pack.
 	Tooltip:
 		Name: Zone Raider
 	Armament@PRIMARY:
 		Weapon: ZoneRaiderGrenade
-		LocalOffset: 350,0,341
+		LocalOffset: 350,0,300
 	Armament@BATF:
 		Name: batf
 		Weapon: ZoneRaiderGrenade
@@ -4570,6 +4493,61 @@ ZRAI:
 		MaxDistance: 10
 		Speed: 200
 
+ZDEF:
+	Inherits: ZTRP
+	Buildable:
+		Prerequisites: ~pyle, gtek, ~techlevel.high, ~zdef.upgrade
+		Description: Elite infantry armed with an ion rifle\n  and equipped with a shield generator.
+	Tooltip:
+		Name: Zone Defender
+	TooltipExtras:
+		Attributes: • Can activate a shield that protects nearby infantry.
+	Armament@PRIMARY:
+		Weapon: ZoneDefenderGun
+		LocalOffset: 350,0,300
+	Armament@BATF:
+		Name: batf
+		Weapon: ZoneDefenderGun
+	Voiced:
+		VoiceSet: ZoneDefenderVoice
+	-TargetedLeapAbility:
+	-Contrail@Jumping:
+	-WithShadow@Jump:
+	-Targetable@Jump:
+	WithInfantryBody:
+		RequiresCondition: !being-warped
+	-WithInfantryBody@Jump:
+	Targetable@TEMPORAL:
+		-RequiresCondition:
+	GrantTimedConditionOnDeploy@ZoneDefenderShield:
+		DeployedCondition: shield-active
+		ShowSelectionBar: true
+		StartsFullyCharged: true
+		DeployedTicks: 250
+		CooldownTicks: 750
+		ShowSelectionBarWhenFull: false
+		ChargingColor: 808080
+		DischargingColor: 00eecc
+		DeploySound: zdef-shield.aud
+		UndeploySound: gshielddown.aud
+		Voice: Shield
+	WithRadiatingCircle@ZoneDefenderShield:
+		EndRadius: 2c0
+		Color: 00eecc10
+		MaxRadiusColor: 00eecc66
+		MaxRadiusFlashColor: 00eecc66
+		Interval: 25
+		Duration: 50
+		ValidRelationships: Ally
+		AlwaysShowMaxRange: true
+		RequiresCondition: shield-active
+	ProximityExternalCondition@ZoneDefenderShield:
+		Range: 2c0
+		Condition: zdef-shield
+		ValidRelationships: Ally
+		RequiresCondition: shield-active
+		AffectsParent: true
+
 ENFO:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -4578,20 +4556,22 @@ ENFO:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 130
-		Prerequisites: ~disabled, tent, atek, ~techlevel.high
+		BuildPaletteOrder: 185
+		Prerequisites: ~tent, atek, ~techlevel.high
 		Description: Elite short-range front-line infantry.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 	Valued:
-		Cost: 850
+		Cost: 800
 	Tooltip:
 		Name: Enforcer
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 22500
+		HP: 32000
+	Armor:
+		Type: Light
 	Mobile:
 		Voice: Move
 	RevealsShroud:

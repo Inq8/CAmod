@@ -3174,10 +3174,7 @@ ZoneTrooperRailgun:
 		ZOffset: 2046
 	Warhead@1Dam: SpreadDamage
 		Spread: 0c64
-		Falloff: 100, 37, 14, 5, 0
 		Damage: 9500
-		ValidRelationships: Ally, Neutral, Enemy
-		InvalidTargets: Air, Submarine
 		Versus:
 			None: 20
 			Wood: 50
@@ -3202,16 +3199,15 @@ ZoneRaiderGrenade:
 		ContrailStartColor: 5bd8c3
 		ContrailStartColorAlpha: 128
 	Warhead@1Dam: SpreadDamage
-		Spread: 288
-		Falloff: 100, 50, 28, 18, 12, 6, 0
-		Damage: 6000
+		Spread: 448
+		Damage: 7500
 		Versus:
-			None: 20
-			Wood: 50
-			Light: 80
-			Heavy: 100
-			Concrete: 75
-			Brick: 75
+			None: 40
+			Wood: 65
+			Light: 100
+			Heavy: 60
+			Concrete: 60
+			Brick: 80
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
@@ -3225,3 +3221,33 @@ ZoneRaiderGrenade:
 		ImpactSounds: splashm1.aud, splashm2.aud, splashm3.aud
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
+
+ZoneDefenderGun:
+	ReloadDelay: 70
+	Range: 6c0
+	Report: ionrifle1.aud, ionrifle2.aud
+	Projectile: LaserZap
+		Width: 38
+		Duration: 8
+		Color: FFFFFFEE
+		ZOffset: 512
+		SecondaryBeam: true
+		SecondaryBeamWidth: 80
+		SecondaryBeamZOffset: 511
+		SecondaryBeamColor: FFFFFF66
+	Warhead@1Dam: SpreadDamage
+		Spread: 341
+		Damage: 8500
+		Versus:
+			None: 10
+			Wood: 50
+			Light: 80
+			Heavy: 100
+			Concrete: 75
+			Brick: 75
+		DamageTypes: Prone100Percent, TriggerProne, ExplosionDeath
+	Warhead@3Eff: CreateEffect
+		Explosions: shock_wave_sm
+		ExplosionPalette: tseffect
+	Warhead@4Smu_impact: LeaveSmudge
+		SmudgeType: Scorch

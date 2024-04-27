@@ -1530,6 +1530,22 @@
 		RequiresCondition: weapjammed
 		IsDecoration: True
 
+^ZoneDefenderShieldable:
+	ExternalCondition@ZoneDefenderShield:
+		Condition: zdef-shield
+	WithColoredOverlay@ZoneDefenderShield:
+		Color: 00ffff10
+		RequiresCondition: zdef-shield
+	DamageMultiplier@ZoneDefenderShield:
+		Modifier: 66
+		RequiresCondition: zdef-shield
+	WithIdleOverlay@ZoneDefenderShield:
+		Sequence: idle
+		Image: zdefshield-overlay
+		Palette: tdeffect
+		RequiresCondition: zdef-shield
+		IsDecoration: True
+
 ^C4Plantable:
 	DelayedWeaponAttachable@C4:
 		Type: c4
@@ -2324,6 +2340,7 @@
 ^Soldier:
 	Inherits: ^Infantry
 	Inherits@DRIVER: ^CanCaptureDriverlessVehicles
+	Inherits@ZoneDefenderShieldable: ^ZoneDefenderShieldable
 	UpdatesPlayerStatistics:
 	MustBeDestroyed:
 	RevealsShroud:
@@ -4277,11 +4294,11 @@
 		OnHoldAudio: OnHold
 		CancelledAudio: Cancelled
 	Production@SQVEH:
-		Produces: VehicleSQ, ParadropVehicle, Powersuit
+		Produces: VehicleSQ, ParadropVehicle
 		PauseOnCondition: forceshield || being-warped
 		RequiresCondition: !global-multiqueue
 	Production@MQVEH:
-		Produces: VehicleMQ, ParadropVehicle, Powersuit
+		Produces: VehicleMQ, ParadropVehicle
 		PauseOnCondition: forceshield || being-warped
 		RequiresCondition: global-multiqueue
 	ProductionBar@SQVEH:
