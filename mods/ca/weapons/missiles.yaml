@@ -50,6 +50,7 @@
 	ValidTargets: Air, AirSmall
 	Projectile: MissileCA
 		Inaccuracy: 0
+		AllowSnapping: true
 	Warhead@1Dam: SpreadDamage
 		Range: 0, 0c64, 0c256, 3c0
 		Falloff: 100, 100, 30, 15
@@ -85,7 +86,6 @@
 		Speed: 384
 		HorizontalRateOfTurn: 40
 		RangeLimit: 13c0
-		AllowSnapping: true
 	Warhead@smallDamage: SpreadDamage
 		Spread: 341
 
@@ -595,12 +595,11 @@ Nike:
 	Report: samshot1.aud
 	ValidTargets: Air, AirSmall, ICBM
 	Projectile: MissileCA
-		Arm: 3
+		Arm: 2
 		Image: MISSILE
 		HorizontalRateOfTurn: 100
 		RangeLimit: 10c512
 		Speed: 341
-		CloseEnough: 341
 	Warhead@1Dam: SpreadDamage
 		Damage: 6750
 		Range: 0, 0c64, 0c256, 4c256
@@ -629,7 +628,7 @@ RedEye:
 	Warhead@1Dam: SpreadDamage
 		Damage: 4000
 	Warhead@smallDamage: SpreadDamage
-		Damage: 4000
+		Damage: 6000
 	Warhead@3Eff: CreateEffect
 		ValidTargets: Air, AirSmall, ICBM, Ground, Water, Trees
 

@@ -81,12 +81,12 @@
 		Speed: 426
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
-		Damage: 5500
+		Damage: 6000
 		Versus:
-			None: 100
-			Wood: 90
-			Concrete: 70
-			Light: 90
+			None: 92
+			Wood: 85
+			Concrete: 75
+			Light: 100
 			Heavy: 15
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
 	Warhead@3Eff: CreateEffect
@@ -641,21 +641,22 @@ Grenade:
 
 GrenadeJJ:
 	Inherits: Grenade
-	Range: 5c512
+	Range: 6c512
 	Report: jjgren1.aud, jjgren2.aud
 	Projectile: Bullet
 		ContrailLength: 30
-		ContrailStartColorAlpha: 128
-		Speed: 200
+		ContrailStartColorAlpha: 100
+		Speed: 375
+		Inaccuracy: 128
 	Warhead@1Dam: SpreadDamage
+		Damage: 10000
 		Spread: 288
-		Falloff: 100, 50, 28, 18, 12, 6, 0
 		Versus:
-			None: 150
-			Wood: 80
-			Concrete: 80
-			Heavy: 20
-			Light: 95
+			None: 100
+			Wood: 50
+			Concrete: 50
+			Heavy: 10
+			Light: 70
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated, AirToGround
 
 EMPGrenade:
