@@ -3993,7 +3993,7 @@ ENLI:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
-		Attributes: • Heals on Tiberium\n• EMP blast ability
+		Attributes: • Heals on Tiberium\n• Special Ability: EMP Blast
 	Valued:
 		Cost: 1000
 	Tooltip:
@@ -4370,7 +4370,7 @@ ZTRP:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses
 		Weaknesses: • Weak vs Infantry, Buildings\n• Cannot attack Aircraft
-		Attributes: • Can jump short distances.
+		Attributes: • Special Ability: Jump Pack
 	Valued:
 		Cost: 800
 	Tooltip:
@@ -4480,6 +4480,9 @@ ZRAI:
 		Description: Elite infantry armed with a sonic grenade launcher\n  and equipped with a jump pack.
 	Tooltip:
 		Name: Zone Raider
+	TooltipExtras:
+		Strengths: • Strong vs Light Armor, Buildings
+		Weaknesses: • Cannot attack Aircraft
 	Armament@PRIMARY:
 		Weapon: ZoneRaiderGrenade
 		LocalOffset: 350,0,300
@@ -4498,11 +4501,11 @@ ZDEF:
 	Inherits: ZTRP
 	Buildable:
 		Prerequisites: ~pyle, gtek, ~techlevel.high, ~zdef.upgrade
-		Description: Elite infantry armed with an ion rifle\n  and equipped with a shield generator.
+		Description: Elite infantry armed with an ion rifle\n  and able to shield nearby infantry.
 	Tooltip:
 		Name: Zone Defender
 	TooltipExtras:
-		Attributes: • Can activate a shield that protects nearby infantry.
+		Attributes: • Special Ability: Defense Matrix
 	Armament@PRIMARY:
 		Weapon: ZoneDefenderGun
 		LocalOffset: 350,0,300
