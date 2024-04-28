@@ -4265,11 +4265,11 @@ VERT:
 	Armament@PRIMARY:
 		Weapon: VertigoBomb
 		LocalOffset: 2,0,-43
-		PauseOnCondition: !ammo || prepping || hidden
+		PauseOnCondition: !ammo || hidden
 	Armament@DECLOAK:
 		Name: secondary
 		Weapon: VertigoBombTargeter
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || !hidden
 	AttackAircraft:
 		FacingTolerance: 40
 		PersistentTargeting: false
@@ -4352,10 +4352,6 @@ VERT:
 	WithShadow@CLOAKED:
 		ShadowColor: 00000033
 		RequiresCondition: invisibility || hidden
-	GrantTimedCondition@Decloak:
-		Condition: prepping
-		Duration: 40
-		RequiresCondition: !hidden
 	Cloak:
 		DetectionTypes: AirCloak
 		InitialDelay: 100
