@@ -1785,9 +1785,9 @@ BEAG.Husk:
 		TrailWhileStationary: True
 		Type: CenterPosition
 	Contrail@1:
-		Offset: -400,-483,0
+		Offset: -50,-650,20
 	Contrail@2:
-		Offset: -400,483,0
+		Offset: -50,650,20
 	RevealsShroud:
 		Range: 11c0
 		MinRange: 9c0
@@ -1809,6 +1809,48 @@ BEAG.Husk.Empty:
 
 BEAG.Husk.Empty.EMP:
 	Inherits: BEAG.Husk.Empty
+	Inherits: ^EmpVisualEffect
+
+PHAN.Husk:
+	Inherits: ^PlaneHusk
+	Tooltip:
+		Name: Phantom
+	Aircraft:
+		TurnSpeed: 4
+		Speed: 201
+	LeavesTrails:
+		Offsets: -427,0,0
+		Image: smokey
+		MovingInterval: 3
+		StationaryInterval: 3
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
+	Contrail@1:
+		Offset: 50,-680,80
+	Contrail@2:
+		Offset: 50,680,80
+	RevealsShroud:
+		Range: 11c0
+		MinRange: 9c0
+		Type: GroundPosition
+		RevealGeneratedShroud: false
+	RevealsShroud@GAPGEN:
+		Range: 9c0
+		Type: GroundPosition
+	RenderSprites:
+		Image: phan
+
+PHAN.Husk.EMP:
+	Inherits: PHAN.Husk
+	Inherits: ^EmpVisualEffect
+
+PHAN.Husk.Empty:
+	Inherits: PHAN.Husk
+	Inherits: ^PlaneHuskEmpty
+
+PHAN.Husk.Empty.EMP:
+	Inherits: PHAN.Husk.Empty
 	Inherits: ^EmpVisualEffect
 
 KAMV.Husk:
@@ -1913,9 +1955,9 @@ VERT.Husk:
 		TrailWhileStationary: True
 		Type: CenterPosition
 	Contrail@1:
-		Offset: -380,-850,-20
+		Offset: -100,-850,25
 	Contrail@2:
-		Offset: -380,850,-20
+		Offset: -100,850,25
 	RevealsShroud:
 		Range: 11c0
 		MinRange: 9c0

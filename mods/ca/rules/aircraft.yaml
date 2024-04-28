@@ -3927,6 +3927,31 @@ BEAG:
 	EjectOnDeath:
 		ChuteSound: gejecta.aud
 
+PHAN:
+	Inherits: BEAG
+	Buildable:
+		Prerequisites: anyradar, ~aircraft.phan
+	Tooltip:
+		Name: Phantom
+	Contrail@1:
+		Offset: 50,-680,80
+	Contrail@2:
+		Offset: 50,680,80
+	Contrail@Inner1:
+		TrailLength: 15
+		Offset: -300,-70,80
+		StartColorUsePlayerColor: false
+		StartColor: 00FF00
+		StartColorAlpha: 80
+		ZOffset: -512
+	Contrail@Inner2:
+		TrailLength: 15
+		Offset: -300,70,80
+		StartColorUsePlayerColor: false
+		StartColor: 00FF00
+		StartColorAlpha: 80
+		ZOffset: -512
+
 KAMV:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove

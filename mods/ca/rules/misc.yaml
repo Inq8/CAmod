@@ -848,7 +848,7 @@ stolentech.airs:
 	ProvidesPrerequisite@STOLENNOD:
 		Prerequisite: vehicles.mant
 
-# afld - assault chopper
+# afld - kamov
 stolentech.afld:
 	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite@STOLENSOVIET:
@@ -860,14 +860,14 @@ stolentech.afld.gdi:
 	ProvidesPrerequisite@STOLENGDI:
 		Prerequisite: aircraft.shde
 
-# hpad - black eagle from allies, assault chopper from soviets
+# hpad - phantom from allies, kamov from soviets
 stolentech.hpad:
 	Inherits@DUMMY: ^InvisibleDummy
 	ValidFactions:
 		Factions: england, france, germany, usa, russia, ukraine, iraq, yuri
 	ProvidesPrerequisiteValidatedFaction@STOLENALLIED:
 		Factions: england, france, germany, usa
-		Prerequisite: aircraft.beag
+		Prerequisite: aircraft.phan
 	ProvidesPrerequisiteValidatedFaction@STOLENSOVIET:
 		Factions: russia, ukraine, iraq, yuri
 		Prerequisite: aircraft.kamv
