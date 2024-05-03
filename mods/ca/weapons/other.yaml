@@ -2107,15 +2107,19 @@ V3Launcher:
 			Heavy: 0
 			Brick: 0
 
-THLauncher:
+THTargetter:
 	ReloadDelay: 250
 	Range: 21c511
 	MinRange: 6c0
-	Report: tomahawk.aud
-	ValidTargets: Ground, Water
 	Projectile: InstantHit
+	Warhead@1Dum: Dummy
+
+THLauncher:
+	Inherits: THTargetter
+	Report: tomahawk.aud
+	Projectile: InstantHit
+	-Warhead@1Dum:
 	Warhead@1Dam: TargetDamage
-		ValidTargets: Ground, Water
 		Damage: 50000
 		Versus:
 			None: 0

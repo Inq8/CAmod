@@ -8129,12 +8129,16 @@ THWK:
 		TurnSpeed: 4
 		RealignDelay: 0
 	Armament@TARGETTER:
+		Name: targetter
+		Weapon: THTargetter
+	Armament@PRIMARY:
 		Weapon: THLauncher
 		PauseOnCondition: moving
 	AttackTurreted:
 		TargetFrozenActors: True
 		Voice: Attack
 		PauseOnCondition: empdisable || being-warped
+		Armaments: primary, targetter
 	AttackMove:
 		Voice: Attack
 	WithSpriteTurret@OneMissile:
@@ -8148,12 +8152,13 @@ THWK:
 		LoadedCondition: loaded
 		LaunchingCondition: launching
 		SpawnOffset: 100,426,512
+		PauseOnCondition: moving
 	WithSpawnerMasterPipsDecoration:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
 	GrantConditionOnAttack@AIMING:
-		ArmamentNames: targetter
+		ArmamentNames: primary, targetter
 		Condition: aiming
 		RevokeDelay: 15
 		RevokeAll: false
