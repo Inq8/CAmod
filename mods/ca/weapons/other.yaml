@@ -3281,6 +3281,7 @@ CryoSprayer:
 		Speed: 341
 		ImpactInterval: 1
 		MinimumImpactDistance: 0
+		MaximumImpactDistance: 3751
 	Warhead@1Dam: SpreadDamage
 		Spread: 0c128
 		Falloff: 100, 75, 25, 0
@@ -3304,3 +3305,45 @@ CryoSprayer:
 		Duration: 75
 		Range: 0c341
 		ValidRelationships: Enemy, Neutral
+
+BasiliskPulse:
+	ReloadDelay: 80
+	Burst: 3
+	BurstDelays: 5
+	Range: 3c512
+	StartBurstReport: basiwave.aud
+	TargetActorCenter: true
+	Projectile: LinearPulse
+		Speed: 512
+		ImpactInterval: 1
+		MinimumImpactDistance: 512
+		Image: sparks_overlay
+		Sequences: idle
+		Palette: tseffect-ignore-lighting-alpha75
+	Warhead@1Dam: SpreadDamage
+		Spread: 0c256
+		Falloff: 100, 75, 25, 0
+		Damage: 500
+		Versus:
+			None: 0
+			Wood: 0
+			Light: 100
+			Heavy: 100
+			Concrete: 100
+			Brick: 0
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+		InvalidTargets: EmpImmune
+	Warhead@2Eff: CreateFacingEffect
+		Explosions: basiwave
+		ExplosionPalette: scrin
+		Inaccuracy: 80
+		ValidTargets: Ground, Air, Ship, Trees
+	Warhead@emp: GrantExternalConditionCA
+		Range: 0c511
+		Duration: 100
+		Condition: empdisable
+		ValidTargets: Vehicle, Defense
+		InvalidTargets: EmpImmune
+
+CyclopsZap:
+	Inherits: TTrackZap

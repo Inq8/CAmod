@@ -7742,6 +7742,109 @@ PBUL:
 		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 
+CYCP:
+	Inherits: ^Tank
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@SLOWCRUSH: ^SlowedByCrushing
+	Buildable:
+		Queue: VehicleSQ, VehicleMQ
+		BuildPaletteOrder: 701
+		Prerequisites: anyradar, ~vehicles.cycp
+		Description: Light tank with a Tesla Coil derived weapon.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
+		Weaknesses: • Cannot attack Aircraft
+	Valued:
+		Cost: 1200
+	Tooltip:
+		Name: Cyclops
+		GenericName: Tank
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 20000
+	Armor:
+		Type: Light
+	Mobile:
+		Speed: 82
+		TurnSpeed: 24
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Armament@PRIMARY:
+		Weapon: CyclopsZap
+		LocalOffset: 150,0,213
+	AttackFrontal:
+		PauseOnCondition: empdisable || being-warped
+		FacingTolerance: 20
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
+	Selectable:
+		DecorationBounds: 1280, 1280
+	SpawnActorOnDeath:
+		Actor: CYCP.Husk
+		RequiresCondition: !being-warped
+
+BASI:
+	Inherits: ^TankTD
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@SLOWCRUSH: ^SlowedByCrushing
+	Buildable:
+		Queue: VehicleSQ, VehicleMQ
+		BuildPaletteOrder: 702
+		Prerequisites: anyradar, ~vehicles.basi
+		Description: Tank with a short range EMP weapon.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses
+		Weaknesses: • Cannot attack Aircraft\n• No effect on infantry
+	Valued:
+		Cost: 1350
+	Tooltip:
+		Name: Basilisk
+		GenericName: Tank
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 30000
+	Armor:
+		Type: Heavy
+	Mobile:
+		Speed: 68
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Armament@PRIMARY:
+		Weapon: BasiliskPulse
+		LocalOffset: 0,0,213
+	AttackFrontal:
+		PauseOnCondition: empdisable || being-warped
+		FacingTolerance: 20
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
+	Selectable:
+		DecorationBounds: 1280, 1280
+	SpawnActorOnDeath:
+		Actor: BASI.Husk
+		RequiresCondition: !being-warped
+	Targetable@EmpImmune:
+		TargetTypes: EmpImmune
+
 MANT:
 	Inherits: ^VehicleTD
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
@@ -7751,7 +7854,7 @@ MANT:
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 704
+		BuildPaletteOrder: 703
 		Prerequisites: anyradar, ~vehicles.mant
 		Description: Tracked vehicle armed with anti-aircraft laser cannons.
 		IconPalette: chrometd
@@ -7811,7 +7914,7 @@ VIPR:
 	Inherits@InfiltratorStolenTech: ^InfiltratorStolenTech
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 705
+		BuildPaletteOrder: 704
 		Prerequisites: anyradar, ~stolentech.wsph
 		Description: Medium hover tank.
 		IconPalette: chrometd

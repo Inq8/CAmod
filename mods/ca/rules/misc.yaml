@@ -818,7 +818,7 @@ stolentech.hand:
 	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
 
-# ra weap - reckoner from allies, rhino heavy tank from soviets
+# ra weap - reckoner from allies, cyclops from soviets
 stolentech.weap:
 	Inherits@DUMMY: ^InvisibleDummy
 	ValidFactions:
@@ -828,16 +828,16 @@ stolentech.weap:
 		Prerequisite: vehicles.reck
 	ProvidesPrerequisiteValidatedFaction@STOLENSOVIET:
 		Factions: russia, ukraine, iraq, yuri
-		Prerequisite: vehicles.rhino
+		Prerequisite: vehicles.cycp
 
-# td weap - pitbull from gdi, mantis from legion
+# td weap - basilisk from gdi, mantis from legion
 stolentech.weap.td:
 	Inherits@DUMMY: ^InvisibleDummy
 	ValidFactions:
 		Factions: talon, zocom, eagle, arc, legion
 	ProvidesPrerequisiteValidatedFaction@STOLENGDI:
 		Factions: talon, zocom, eagle, arc
-		Prerequisite: vehicles.pbul
+		Prerequisite: vehicles.basi
 	ProvidesPrerequisiteValidatedFaction@STOLENNOD:
 		Factions: legion
 		Prerequisite: vehicles.mant
