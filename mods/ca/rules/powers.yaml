@@ -254,6 +254,30 @@
 		ShowTargetCircle: true
 		TargetCircleColor: b6f4ff
 
+^CryostormPower:
+	SpawnActorPowerCA@Cryostorm:
+		Actor: cryostorm
+		OrderName: cryostorm
+		Icon: cryostorm
+		Prerequisites: ~disabled, ~atek
+		ChargeInterval: 7500
+		LifeTime: -1
+		Name: Cryostorm
+		Description: \nCreates a turbulent area of extreme cold,\n    reducing movement speed and increasing damage taken.
+		LaunchSound: cryostormstart.aud
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeSpeechNotification: CryostormReady
+		EndChargeTextNotification: Cryostorm ready.
+		PauseOnCondition: disabled || empdisable || being-warped
+		DisplayRadarPing: True
+		Cursor: ability
+		AllowMultiple: false
+		TargetCircleRange: 4c682
+		TargetCircleColor: 5bbde9cc
+		SupportPowerPaletteOrder: 25
+
 ^ChronoshiftPower:
 	ChronoshiftPowerCA@chronoshift:
 		OrderName: Chronoshift

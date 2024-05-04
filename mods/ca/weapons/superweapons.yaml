@@ -1259,6 +1259,21 @@ MineSpawnerWater:
 		ValidTargets: Water, Air
 		InvalidTargets: Structure
 
+Cryostorm:
+	ReloadDelay: 5
+	Range: 1c0
+	Projectile: InstantHit
+	Warhead@1Eff: CreateEffect
+		Explosions: cryoblast, cryohit, cryohit, cryohit
+		ExplosionPalette: ra2effect-ignore-lighting-alpha75
+		Inaccuracy: 3c512
+		Delay: 7
+	Warhead@2Eff: CreateEffect
+		Explosions: cryoblast, cryohit, cryohit, cryohit
+		ExplosionPalette: ra2effect-ignore-lighting-alpha75
+		Inaccuracy: 3c512
+		Delay: 8
+
 SubterraneanStrikeSpawner:
 	ReloadDelay: 1
 	Projectile: InstantExplode

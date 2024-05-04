@@ -42,6 +42,9 @@ namespace OpenRA.Mods.CA.Traits.Render
 			"Valid values are combinations of `None`, `Ally`, `Enemy` and `Neutral`.")]
 		public readonly PlayerRelationship ValidRelationships = PlayerRelationship.Ally;
 
+		[Desc("If set, the color of the owning player will be used instead of `Color`.")]
+		public readonly bool UsePlayerColor = false;
+
 		public override object Create(ActorInitializer init) { return new RenderShroudCircleCA(init.Self, this); }
 	}
 
@@ -81,7 +84,7 @@ namespace OpenRA.Mods.CA.Traits.Render
 					self.CenterPosition,
 					range,
 					0,
-					info.Color,
+					info.UsePlayerColor ? self.Owner.Color : info.Color,
 					info.Width,
 					info.ContrastColor,
 					info.ContrastColorWidth);

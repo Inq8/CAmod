@@ -1006,7 +1006,7 @@ veil:
 		Type: CenterPosition
 	RenderShroudCircleCA:
 		Visible: Always
-		Color: 999999AA
+		UsePlayerColor: true
 		ValidRelationships: Ally, Enemy, Neutral
 	RenderSprites:
 		Image: gpsscrambler
@@ -1026,6 +1026,11 @@ veilofwar1:
 	WithMakeAnimation:
 	SpawnActorOnDeath:
 		Actor: veilofwar2
+	WithRangeCircle@VeilMaxRange:
+		Type: VeilOfWar
+		Range: 7c512
+		Visible: Always
+		Color: 999999AA
 
 veilofwar2:
 	Inherits: veil
@@ -1037,6 +1042,11 @@ veilofwar2:
 		Delay: 60
 	SpawnActorOnDeath:
 		Actor: veilofwar3
+	WithRangeCircle@VeilMaxRange:
+		Type: VeilOfWar
+		Range: 7c512
+		Visible: Always
+		Color: 999999AA
 
 veilofwar3:
 	Inherits: veil
@@ -1085,13 +1095,64 @@ jamming.field:
 	Targetable@JFIELD:
 		TargetTypes: JammingField
 
+cryostorm:
+	Interactable:
+		Bounds: 64, 64
+	ScriptTriggers:
+	EditorOnlyTooltip:
+		Name: (Cryostorm)
+	BodyOrientation:
+		QuantizedFacings: 1
+	MapEditorData:
+		Categories: System
+	WithSpriteBody:
+	HitShape:
+	HiddenUnderFog:
+		Type: GroundPosition
+	Immobile:
+		OccupiesSpace: false
+	RenderSprites:
+		Image: cryostorm
+		Palette: effect
+	KillsSelf:
+		Delay: 225
+	WithRangeCircle@Cryostorm:
+		Type: Cryostorm
+		Range: 4c682
+		Visible: Always
+		ValidRelationships: Ally, Enemy, Neutral
+		UsePlayerColor: true
+	PeriodicExplosion:
+		Weapon: Cryostorm
+	ProximityExternalCondition@Cryostorm1:
+		Range: 4c512
+		Condition: chilled
+		ValidRelationships: Ally, Enemy, Neutral
+	ProximityExternalCondition@Cryostorm2:
+		Range: 4c512
+		Condition: chilled
+		ValidRelationships: Ally, Enemy, Neutral
+	ProximityExternalCondition@Cryostorm3:
+		Range: 3c512
+		Condition: chilled
+		ValidRelationships: Ally, Enemy, Neutral
+	AmbientSound:
+		SoundFiles: cryostorm.aud
+	Health:
+		HP: 1
+	WithMakeAnimation:
+	WithDeathAnimation:
+		UseDeathTypeSuffix: false
+		CrushedSequence: die
+		FallbackSequence: die
+
 nshield:
 	Inherits@1: CAMERA
 	-RevealsShroud:
 	WithRangeCircle:
 		Type: NaniteShield
 		Visible: Always
-		Color: 64a5dcbb
+		UsePlayerColor: true
 		Range: 6c0
 	ProximityExternalCondition@NSHIELD:
 		Range: 6c0

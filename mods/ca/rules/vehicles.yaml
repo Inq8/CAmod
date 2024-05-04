@@ -782,7 +782,7 @@ GTNK.squad:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 701
-		Prerequisites: ~!atomicengines.upgrade, ~vehicles.rhino, ~techlevel.low
+		Prerequisites: ~!atomicengines.upgrade, ~techlevel.low, ~disabled
 		Description: Soviet designed heavy tank.
 	RenderSprites:
 		Image: rhin
@@ -868,7 +868,7 @@ GTNK.squad:
 		Image: rhini
 	Buildable:
 		BuildPaletteOrder: 702
-		Prerequisites: ~atomicengines.upgrade, ~vehicles.rhino, ~techlevel.low
+		Prerequisites: ~atomicengines.upgrade, ~techlevel.low, ~disabled
 	TooltipExtras:
 		Attributes: • Explodes and leaves radiation on death
 	Tooltip:
@@ -7502,6 +7502,10 @@ CDRN:
 	-Targetable@AICAPTURE:
 	Sellable:
 		RequiresCondition: unit-sellable && !c4 && !being-warped
+	WithRangeCircle:
+		Type: ChaosDrone
+		Range: 3c0
+		Color: c33d73
 
 CHPR:
 	Inherits: ^Tank
@@ -7698,7 +7702,7 @@ PBUL:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 703
 		IconPalette: chrometd
-		Prerequisites: anyradar, ~vehicles.pbul
+		Prerequisites: anyradar, ~disabled
 		Description: Fast scout vehicle with EMP rockets.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Defenses, Light Armor
