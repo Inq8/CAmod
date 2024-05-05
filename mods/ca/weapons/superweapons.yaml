@@ -231,6 +231,32 @@ GeneticMutation:
 		DamageTypes: MutatedDeath
 		ValidTargets: GeneticallyMutatable
 
+HeliosBomb:
+	Inherits: ParaBomb
+	Range: 1c0
+	ReloadDelay: 80
+	Projectile: GravityBomb
+		Image: heliosbomb
+		Shadow: true
+		Velocity: 15, 0, -35
+	Warhead@3Eff: CreateEffect
+		Explosions: heliosexplode
+		ImpactSounds: heliosexplode.aud
+		Delay: 1
+		ExplosionPalette: effect-ignore-lighting
+	Warhead@4Eff: CreateEffect
+		Explosions: heliosexplode2
+		Delay: 3
+		ExplosionPalette: effect-ignore-lighting
+	Warhead@Blind: GrantExternalConditionCA
+		Range: 10c0
+		Duration: 200
+		Condition: blinded
+		InvalidTargets: BlindImmune
+	Warhead@Flash: FlashPaletteEffect
+		Duration: 10
+		FlashType: Nuke
+
 Atomic:
 	ValidTargets: Ground, Trees, Water, Underwater, Air, AirSmall
 	Warhead@1Dam_impact: SpreadDamage

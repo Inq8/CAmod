@@ -278,6 +278,36 @@
 		TargetCircleColor: 5bbde9cc
 		SupportPowerPaletteOrder: 25
 
+^HeliosBombPower:
+	AirstrikePowerCA@HeliosBomb:
+		OrderName: heliosbomb
+		Prerequisites: ~disabled, ~atek
+		PauseOnCondition: disabled || empdisable || being-warped
+		Icon: heliosbomb
+		IconPalette: caneon
+		ChargeInterval: 10500
+		Name: Helios Bomb
+		Description: \nCalls in a bomber which drops a\n    Helios bomb, blinding units in a large area.
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		EndChargeSpeechNotification: HeliosBombReady
+		EndChargeTextNotification: Helios bomb ready.
+		CameraActor: camera.paradrop
+		CameraRemoveDelay: 150
+		UnitType: galx.helios
+		QuantizedFacings: 8
+		DisplayBeacon: true
+		BeaconPoster: a10airstrike
+		BeaconPosterPalette: temptd
+		SquadSize: 1
+		SquadOffset: 0,1792,0
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
+		UseDirectionalTarget: True
+		DirectionArrowAnimation: paradirection
+		SupportPowerPaletteOrder: 25
+
 ^ChronoshiftPower:
 	ChronoshiftPowerCA@chronoshift:
 		OrderName: Chronoshift
@@ -530,7 +560,7 @@
 		Icon: abombair
 		ChargeInterval: 10500
 		Name: Atomic Bomb
-		Description: \nCalls in a a Badger bomber which drops an\n    atom bomb on your target.
+		Description: \nCalls in a Badger bomber which drops an\n    atom bomb on your target.
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		EndChargeSpeechNotification: AtomicBombReady

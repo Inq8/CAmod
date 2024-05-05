@@ -505,6 +505,27 @@
 		Condition: warpin
 		Color: FFFFFF
 
+^Blindable:
+	ExternalCondition@Blinded:
+		Condition: blinded
+	RevealsShroudMultiplier@Blinded:
+		RequiresCondition: blinded
+		Modifier: 0
+	RangeMultiplier@Blinded:
+		RequiresCondition: blinded
+		Modifier: 0
+	TimedConditionBar@Blinded:
+		Condition: blinded
+		Color: ffee00
+	WithDecoration@Blinded:
+		Image: blinded
+		Sequence: idle
+		Palette: effect
+		Position: Top
+		ValidRelationships: Ally, Enemy, Neutral
+		Margin: 0, 8
+		RequiresCondition: blinded
+
 ^Suppressable:
 	SpeedMultiplier@SUPPRESSION:
 		RequiresCondition: suppression
@@ -1921,6 +1942,7 @@
 	Inherits@atomize: ^Atomizable
 	Inherits@minidrone: ^MiniDroneAttachable
 	Inherits@lchrheal: ^LeecherHealable
+	Inherits@Blindable: ^Blindable
 	Huntable:
 	OwnerLostAction:
 		Action: Kill
@@ -2116,6 +2138,7 @@
 	Inherits@oilcost: ^OilRefCostReduction
 	Inherits@ionsurge: ^IonSurgableInfantry
 	Inherits@lchrheal: ^LeecherHealable
+	Inherits@Blindable: ^Blindable
 	RenderSprites:
 		PlayerPalette: playertd
 	Huntable:
@@ -2524,6 +2547,7 @@
 	Inherits@C4Plantable: ^C4Plantable
 	Inherits@TNTPlantable: ^TNTPlantable
 	Inherits@minidrone: ^MiniDroneAttachable
+	Inherits@Blindable: ^Blindable
 	Huntable:
 	RenderSprites:
 		PlayerPalette: playernavy
