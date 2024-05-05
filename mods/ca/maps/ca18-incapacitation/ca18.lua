@@ -249,7 +249,7 @@ InitGDI = function()
 
 	local titanTriggerFootprint = { TitanTrigger1.Location, TitanTrigger2.Location, TitanTrigger3.Location, TitanTrigger4.Location, TitanTrigger5.Location }
 	Trigger.OnEnteredFootprint(titanTriggerFootprint, function(a, id)
-		if a.Owner == Scrin and not IsTitanSpotted then
+		if a.Owner == Scrin and not TitanPatroller.IsDead and not IsTitanSpotted then
 			IsTitanSpotted = true
 			Trigger.RemoveProximityTrigger(id)
 			local camera = Actor.Create("smallcamera", true, { Owner = MissionPlayer, Location = TitanPatroller.Location })

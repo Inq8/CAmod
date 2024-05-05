@@ -3306,6 +3306,63 @@ CryoSprayer:
 		Range: 0c341
 		ValidRelationships: Enemy, Neutral
 
+ZeusCloud:
+	ReloadDelay: 150
+	Range: 21c511
+	Report: sweastra.aud, sweastrd.aud
+	Projectile: AthenaProjectile
+		Altitude: 5c768
+	Warhead@1: FireFragment
+		UseZOffsetAsAbsoluteHeight: true
+		Weapon: ZeusBolt
+		ValidTargets: Air, Ground, Water
+		Delay: 28
+	Warhead@TargetValidation: SpreadDamage
+	Warhead@Cloud: CreateEffect
+		Explosions: weathercloud1, weathercloud2, weathercloud1f, weathercloud2f
+		ExplosionPalette: ra2unit
+		ValidTargets: Ground, Air, Water
+		Inaccuracy: 341
+	Warhead@Shadow: FireFragment
+		UseZOffsetAsAbsoluteHeight: true
+		Weapon: ZeusShadow
+		ValidTargets:  Ground, Air, Water
+
+ZeusShadow:
+	Projectile: InstantHit
+	Range: 512
+	Warhead@Shadow: CreateEffect
+		Explosions: weathercloudshadow
+		ValidTargets: Ground, Air, Water
+		Inaccuracy: 341
+
+ZeusBolt:
+	Projectile: InstantHit
+	Range: 512
+	Warhead@1Dam: SpreadDamage
+		Spread: 384
+		Falloff: 1000, 448, 192, 50, 18, 7, 0
+		Damage: 3000
+		DamageTypes: TriggerProne, ElectricityDeath
+		Versus:
+			None: 80
+			Wood: 100
+			Concrete: 70
+			Brick: 50
+			Heavy: 80
+			Light: 80
+	Warhead@4: CreateEffect
+		Explosions: weatherbolt1, weatherbolt2, weatherbolt3, weatherbolt1f, weatherbolt2f, weatherbolt3f
+		ImpactSounds: sweastrb.aud, sweastrc.aud
+		ValidTargets: Ground, Air, Water
+		ExplosionPalette: ra2effect-ignore-lighting-alpha90
+		Inaccuracy: 256
+	Warhead@5: CreateEffect
+		Explosions: large_explosion
+		ValidTargets: Ground, Water
+	Warhead@6Smu: LeaveSmudge
+		SmudgeType: Scorch
+
 BasiliskPulse:
 	ReloadDelay: 80
 	Burst: 3

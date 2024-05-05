@@ -7867,7 +7867,7 @@ MANT:
 	TooltipExtras:
 		Strengths: • Strong vs Aircraft
 		Weaknesses: • Cannot attack ground targets
-		Attributes: • Can detect cloaked aircraft.
+		Attributes: • Can detect cloaked aircraft
 	Valued:
 		Cost: 1000
 	Selectable:
@@ -8325,6 +8325,59 @@ TH:
 		Pieces: 3, 5
 		Range: 1c511, 3c0
 		RequiresCondition: airborne
+
+ZEUS:
+	Inherits: ^Vehicle
+	Inherits@AUTOTARGET: ^AutoTargetGround
+	Valued:
+		Cost: 2000
+	Tooltip:
+		Name: Zeus Artillery
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		Queue: VehicleSQ, VehicleMQ
+		BuildPaletteOrder: 285
+		Prerequisites: atek, ~vehicles.allies, ~techlevel.high, ~disabled
+		Description: Extreme long range artillery that can generate localised storm clouds.
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Defenses
+		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets\n• Cannot fire while moving
+	Selectable:
+		DecorationBounds: 1280, 1280
+	Health:
+		HP: 20000
+	Armor:
+		Type: Light
+	Mobile:
+		Speed: 46
+	RevealsShroud:
+		Range: 5c0
+	Armament:
+		Weapon: ZeusCloud
+	AttackFrontalCharged:
+		ForceFireIgnoresActors: True
+		PauseOnCondition: empdisable || being-warped
+		FacingTolerance: 32
+		ChargeLevel: 75
+		DischargeRate: 5
+		ShotsPerCharge: 1
+		ShowSelectionBar: true
+		SelectionBarColor: d5cfff
+		ChargingCondition: charging
+	AmbientSoundCA:
+		RequiresCondition: charging
+		SoundFiles: zeuscharge.aud
+	WithIdleOverlay@Active:
+		Sequence: active-overlay
+		RequiresCondition: charging
+		Offset: -256,0,256
+		IsDecoration: True
+	WithFacingSpriteBody:
+		RequiresCondition: !charging
+	WithFacingSpriteBody@Active:
+		Sequence: shoot
+		RequiresCondition: charging
 
 MOLE:
 	Inherits: ^Vehicle-NOUPG
