@@ -3823,12 +3823,11 @@ PMAK:
 BEAG:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
-	Inherits@InfiltratorStolenTech: ^InfiltratorStolenTech
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 200
-		Prerequisites: anyradar, ~disabled
+		Prerequisites: alhq, coalition.active, ~korea.coalition, ~techlevel.high
 		Description: Attack aircraft with range and vision reducing missiles.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Aircraft
@@ -3940,6 +3939,7 @@ BEAG:
 
 PHAN:
 	Inherits: BEAG
+	Inherits@InfiltratorStolenTech: ^InfiltratorStolenTech
 	Buildable:
 		Prerequisites: anyradar, ~aircraft.phan
 	Tooltip:

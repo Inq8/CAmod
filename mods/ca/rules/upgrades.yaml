@@ -882,6 +882,69 @@ indp.upgrade:
 #######################ALLIES############################
 #########################################################
 
+ANYCOALITION:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		Name: Coalition
+	Buildable:
+		Description: Coalition
+	ProvidesPrerequisite:
+
+greece.coalition:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Coalition: Greece
+	Buildable:
+		BuildPaletteOrder: 1
+		Prerequisites: ~player.allies, alhq, !greece.coalition, !korea.coalition, !sweden.coalition, ~techlevel.medium
+		Description: Form a coalition with Greece, required for:\n• Zeus Artillery\n• Helios Bomb\n\n
+	TooltipExtras:
+		Attributes: (!) Only ONE Coalition may be chosen.
+	Valued:
+		Cost: 0
+	RenderSprites:
+		Image: greece.coalition
+	AnnounceOnCreation:
+		SpeechNotification: CoalitionSelected
+		Delay: 40
+
+korea.coalition:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Coalition: South Korea
+	Buildable:
+		BuildPaletteOrder: 2
+		Prerequisites: ~player.allies, alhq, !greece.coalition, !korea.coalition, !sweden.coalition, ~techlevel.medium
+		Description: Form a coalition with South Korea, required for:\n• Black Eagle\n• TBC\n\n
+	TooltipExtras:
+		Attributes: (!) Only ONE Coalition may be chosen.
+	Valued:
+		Cost: 0
+	RenderSprites:
+		Image: korea.coalition
+	AnnounceOnCreation:
+		SpeechNotification: CoalitionSelected
+		Delay: 40
+
+sweden.coalition:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Coalition: Sweden
+	Buildable:
+		BuildPaletteOrder: 3
+		Prerequisites: ~player.allies, alhq, !greece.coalition, !korea.coalition, !sweden.coalition, ~techlevel.medium
+		Description: Form a coalition with Sweden, required for:\n• Cryo Trooper\n• Cryostorm\n\n
+	TooltipExtras:
+		Attributes: (!) Only ONE Coalition may be chosen.
+	Valued:
+		Cost: 0
+	RenderSprites:
+		Image: sweden.coalition
+	AnnounceOnCreation:
+		SpeechNotification: CoalitionSelected
+		Delay: 40
+
 rapc.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:

@@ -777,7 +777,6 @@ GTNK.squad:
 	Inherits@SLOWCRUSH: ^SlightlySlowedByCrushing
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	Inherits@ATOMICAMMO: ^AtomicAmmunition
-	Inherits@InfiltratorStolenTech: ^InfiltratorStolenTech
 	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
@@ -7689,7 +7688,6 @@ PBUL:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
-	Inherits@InfiltratorStolenTech: ^InfiltratorStolenTech
 	RenderSprites:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
@@ -7747,6 +7745,7 @@ CYCP:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
+	Inherits@InfiltratorStolenTech: ^InfiltratorStolenTech
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 701
@@ -7798,6 +7797,7 @@ BASI:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
+	Inherits@InfiltratorStolenTech: ^InfiltratorStolenTech
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 702
@@ -8331,7 +8331,7 @@ ZEUS:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 285
-		Prerequisites: atek, ~vehicles.allies, ~techlevel.high, ~disabled
+		Prerequisites: ~vehicles.allies, alhq, coalition.active, ~greece.coalition, ~techlevel.high
 		Description: Extreme long range artillery that can generate localised storm clouds.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses
