@@ -81,7 +81,7 @@ namespace OpenRA.Mods.CA.Activities
 			return new WAngle(effective);
 		}
 
-		public void FlyToward(Actor self, CruiseMissile cm)
+		void FlyToward(Actor self, CruiseMissile cm)
 		{
 			currentPos = GetInterpolatedPos(launchPos, targetPos, launchAngleRad, ticks, length);
 			cm.SetPosition(self, currentPos);
@@ -144,7 +144,7 @@ namespace OpenRA.Mods.CA.Activities
 			else if (wasCruising)
 				cm.SetState(CruiseMissileState.Descending);
 
-        	var finalZ = cm.State == CruiseMissileState.Cruising ? maxAltitude.Length : clampedZ;
+			var finalZ = cm.State == CruiseMissileState.Cruising ? maxAltitude.Length : clampedZ;
 
 			return new WPos(interpolatedX, interpolatedY, finalZ);
 		}

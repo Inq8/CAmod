@@ -917,6 +917,24 @@ TPWRArc2:
 	Inherits: TPWRArc1
 	-Warhead@Burst:
 
+KPAT:
+	ValidTargets: Air, AirSmall
+	Warhead@1Dam: SpreadDamage
+		Damage: 38000
+		Spread: 448
+		ValidTargets: Ground, Air, AirSmall
+		Versus:
+			None: 10
+			Wood: 10
+			Light: 10
+			Heavy: 10
+			Concrete: 10
+			Brick: 10
+	Warhead@3Eff: CreateEffect
+		Explosions: artillery_explosion
+		ImpactSounds: kpat-hit1.aud, kpat-hit2.aud
+		ValidTargets: Ground, Water, Air, AirSmall
+
 Mindblast:
 	ReloadDelay: 200
 	ValidTargets: Ground, Water, Underwater

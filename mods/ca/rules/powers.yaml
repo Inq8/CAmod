@@ -336,6 +336,37 @@
 		DirectionArrowAnimation: paradirection
 		SupportPowerPaletteOrder: 25
 
+^PatriotStrikePower:
+	GuidedMissilePower@PatriotStrike:
+		MissileActor: kpat
+		Range: 7c0
+		OrderName: patriotstrike
+		Prerequisites: ~korea.coalition, ~alhq
+		Icon: kpat
+		IconPalette: chrome
+		ChargeInterval: 9000
+		Name: Patriot Strike
+		Description: \nFires long range guided missiles at multiple air targets.
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		EndChargeSpeechNotification: PatriotStrikeReady
+		EndChargeTextNotification: Patriot Strike ready.
+		CameraActor: camera.dummy
+		CameraRemoveDelay: 150
+		DisplayBeacon: true
+		SupportPowerPaletteOrder: 25
+		ShowSelectionBoxes: true
+		SelectionBoxColor: ffffff
+		ShowTargetCircle: true
+		TargetCircleColor: ffffff
+		TargetTintColor: ffffff44
+		ValidRelationships: Ally, Enemy, Neutral
+		LaunchSounds: kpat-fire.aud
+		MissileCount: 8
+		MissilesPerLaunch: 2
+		MaxTargets: 8
+		ValidTargets: Air, AirSmall
+
 ^ChronoshiftPower:
 	ChronoshiftPowerCA@chronoshift:
 		OrderName: Chronoshift

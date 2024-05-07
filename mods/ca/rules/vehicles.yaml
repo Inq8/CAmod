@@ -6677,8 +6677,6 @@ V3:
 		Cost: 50
 	Tooltip:
 		Name: V3 Rocket
-	Tooltip@NoRow:
-		Name: V3 Rocket
 	Health:
 		HP: 5000
 	BallisticMissile:
@@ -8360,8 +8358,6 @@ TH:
 		Cost: 50
 	Tooltip:
 		Name: Tomahawk Missile
-	Tooltip@NoRow:
-		Name: Tomahawk Missile
 	Health:
 		HP: 5000
 	CruiseMissile:
@@ -8391,6 +8387,33 @@ TH:
 		Pieces: 3, 5
 		Range: 1c511, 3c0
 		RequiresCondition: airborne
+
+KPAT:
+	Inherits: ^ShootableMissile
+	RenderSprites:
+		Image: kpat
+	Valued:
+		Cost: 50
+	Tooltip:
+		Name: Patriot Missile
+	Health:
+		HP: 5000
+	GuidedMissile:
+		Speed: 450
+		AirborneCondition: airborne
+		MaxTargetMovement: 12c0
+		MinAltitude: 128
+	LeavesTrailsCA:
+		Image: icbmsmoke
+		Sequences: idle, idle2, idle3, idle4
+		MovingInterval: 1
+		Type: CenterPosition
+		Offsets: -200, 0, -50
+	RevealsShroud:
+		Range: 3c0
+		Type: GroundPosition
+	Explodes:
+		Weapon: KPAT
 
 ZEUS:
 	Inherits: ^Vehicle
