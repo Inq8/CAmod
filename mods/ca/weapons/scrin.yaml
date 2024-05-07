@@ -148,9 +148,9 @@ GunwalkerZapVisual:
 GunWalkerZapAA:
 	Inherits: GunWalkerZap
 	Range: 8c512
+	-Projectile:
 	Projectile: Bullet
-		Image: scrinzapup
-		Speed: 1c682
+		Speed: 3c0
 		Blockable: false
 	ValidTargets: Air, AirSmall
 	Warhead@1Dam: SpreadDamage
@@ -170,6 +170,15 @@ GunWalkerZapAA:
 		ValidRelationships: Enemy, Neutral
 		Spread: 128
 		Falloff: 100, 50, 14, 0
+
+GunWalkerZapAAVisual:
+	Inherits: GunWalkerZapAA
+	Projectile: Bullet
+		Image: scrinzapup
+		Speed: 1c682
+	-Warhead@1Dam:
+	-Warhead@smallDamage:
+	Warhead@1Dum: Dummy
 	Warhead@2Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: scrin

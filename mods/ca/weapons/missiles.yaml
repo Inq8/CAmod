@@ -264,6 +264,7 @@ Dragon.CRYO:
 		Duration: 75
 		Range: 0c341
 		ValidRelationships: Enemy, Neutral
+		InvalidTargets: Structure
 
 Dragon.TibCore:
 	Inherits: Dragon
@@ -429,16 +430,16 @@ HellfireAG.Harrier:
 		Inaccuracy: 512
 	Warhead@1Dam: SpreadDamage
 		Spread: 448
-		Damage: 1600
+		Damage: 2000
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		ValidTargets: Ground, Water, Trees
 		Versus:
 			None: 100
-			Wood: 80
-			Light: 65
-			Heavy: 35
-			Concrete: 30
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
+			Wood: 65
+			Light: 55
+			Heavy: 28
+			Concrete: 25
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigatedMinor
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
 		ImpactSounds: kaboom15.aud
@@ -2099,7 +2100,7 @@ BlackEagleMissiles:
 	Projectile: MissileCA
 		Image: MISSILE
 	Warhead@1Dam: SpreadDamage
-		Damage: 22000
+		Damage: 24000
 		Versus:
 			Concrete: 75
 	Warhead@VeiledCondition: GrantExternalConditionCA
@@ -2117,13 +2118,15 @@ BlackEagleMissiles:
 
 BlackEagleMissilesAA:
 	Inherits: MaverickAA
+	Range: 8c0
 	Report: beag-fire1.aud, beag-fire2.aud
 	-Burst:
 	-BurstDelays:
 	Projectile: MissileCA
 		Image: MISSILE
+		Speed: 450
 	Warhead@1Dam: SpreadDamage
-		Damage: 12000
+		Damage: 15000
 	Warhead@VeiledCondition: GrantExternalConditionCA
 		Range: 2c512
 		Duration: 175

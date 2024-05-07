@@ -549,7 +549,7 @@ E4:
 	Valued:
 		Cost: 200
 	Tooltip:
-		Name: Flamethrower
+		Name: Soviet Flamethrower
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -1708,7 +1708,7 @@ N4:
 	Valued:
 		Cost: 200
 	Tooltip:
-		Name: Flamethrower
+		Name: Nod Flamethrower
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -2772,6 +2772,7 @@ E8:
 		Weapon: RadBeamWeapon
 	TakeCover:
 		ProneOffset: 0,0,0
+		ProneSequencePrefix:
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped || !undeployed
@@ -4375,7 +4376,7 @@ ZTRP:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 15000
+		HP: 10000
 	Armor:
 		Type: Light
 	Mobile:
@@ -4406,7 +4407,9 @@ ZTRP:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	-Crushable:
-	-TakeCover:
+	TakeCover:
+		ProneOffset: 0,0,0
+		ProneSequencePrefix:
 	WithInfantryBody:
 		IdleSequences: idle, idle2
 		StandSequences: stand, stand2
@@ -4422,27 +4425,6 @@ ZTRP:
 	-GrantConditionOnTerrain@ONTIB:
 	-GrantStackingCondition@TIBEXPOSED:
 	-DamagedByTerrain@TIBDAMAGE:
-	-DamagedByTintedCells@RADSTRONG:
-	-DamagedByTintedCells@RADSTRONGHAZMAT:
-	-DamagedByTintedCells@RADSTRONGHAZMATSOVIET:
-	-DamagedByTintedCells@RADMED:
-	-DamagedByTintedCells@RADMEDHAZMAT:
-	-DamagedByTintedCells@RADWEAK:
-	-DamagedByTintedCells@RADWEAKHAZMAT:
-	-GrantConditionOnPrerequisite@HAZMAT:
-	-GrantConditionOnPrerequisite@HAZMATSOVIET:
-	-GrantConditionOnPrerequisite@HAZMATZOCOM:
-	-GrantConditionOnPrerequisite@BIO:
-	-GrantCondition@HAZMAT:
-	-GrantCondition@HAZMATSOVIET:
-	-WithDecoration@HAZMAT:
-	-WithDecoration@HAZMATSOVIET:
-	-GrantConditionOnTerrain@HAZMATSOVIET:
-	-SpeedMultiplier@HAZMATSOVIET:
-	Targetable@HAZMAT:
-		-RequiresCondition:
-	WithDecoration@BINO:
-		-BlinkPatterns:
 	TargetedLeapAbility:
 		TakeOffSounds: ztrp-jump1.aud, ztrp-jump2.aud
 		LandingSounds: ztrp-land1.aud, ztrp-land2.aud
@@ -4570,7 +4552,7 @@ ENFO:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 32000
+		HP: 18000
 	Armor:
 		Type: Light
 	Mobile:
@@ -4601,7 +4583,9 @@ ENFO:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	-Crushable:
-	-TakeCover:
+	TakeCover:
+		ProneOffset: 0,0,0
+		ProneSequencePrefix:
 	WithInfantryBody:
 		IdleSequences: idle, idle2
 		StandSequences: stand, stand2
@@ -4610,30 +4594,6 @@ ENFO:
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
 		RequiresCondition: parachute
-	-GrantConditionOnTerrain@ONTIB:
-	-GrantStackingCondition@TIBEXPOSED:
-	-DamagedByTerrain@TIBDAMAGE:
-	-DamagedByTintedCells@RADSTRONG:
-	-DamagedByTintedCells@RADSTRONGHAZMAT:
-	-DamagedByTintedCells@RADSTRONGHAZMATSOVIET:
-	-DamagedByTintedCells@RADMED:
-	-DamagedByTintedCells@RADMEDHAZMAT:
-	-DamagedByTintedCells@RADWEAK:
-	-DamagedByTintedCells@RADWEAKHAZMAT:
-	-GrantConditionOnPrerequisite@BIO:
-	-GrantConditionOnPrerequisite@HAZMAT:
-	-GrantConditionOnPrerequisite@HAZMATSOVIET:
-	-GrantConditionOnPrerequisite@HAZMATZOCOM:
-	-GrantCondition@HAZMAT:
-	-GrantCondition@HAZMATSOVIET:
-	-WithDecoration@HAZMAT:
-	-WithDecoration@HAZMATSOVIET:
-	-GrantConditionOnTerrain@HAZMATSOVIET:
-	-SpeedMultiplier@HAZMATSOVIET:
-	Targetable@HAZMAT:
-		-RequiresCondition:
-	WithDecoration@BINO:
-		-BlinkPatterns:
 
 CRYT:
 	Inherits: ^Soldier
@@ -4650,7 +4610,7 @@ CRYT:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Buildings, Defenses\n• Cannot attack Aircraft
 	Valued:
-		Cost: 900
+		Cost: 750
 	Tooltip:
 		Name: Cryo Trooper
 	UpdatesPlayerStatistics:
@@ -4658,6 +4618,7 @@ CRYT:
 	Health:
 		HP: 15000
 	Mobile:
+		Speed: 60
 		Voice: Move
 	RevealsShroud:
 		Range: 6c0
@@ -4685,7 +4646,9 @@ CRYT:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	-Crushable:
-	-TakeCover:
+	TakeCover:
+		ProneOffset: 0,0,0
+		ProneSequencePrefix:
 	WithInfantryBody:
 		IdleSequences: idle, idle2
 		StandSequences: stand, stand2
