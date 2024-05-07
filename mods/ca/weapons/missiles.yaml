@@ -849,52 +849,44 @@ TOW:
 			Light: 40
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster
 
-EMPRockets:
+PitbullRockets:
 	Inherits: ^AntiGroundMissile
-	Range: 7c0
+	Range: 5c0
 	Report: pitbull-fire1.aud, pitbull-fire2.aud
-	ReloadDelay: 150
+	ReloadDelay: 80
 	Burst: 4
-	BurstDelays: 8
-	-Projectile:
-	Projectile: Bullet
-		Inaccuracy: 2c0
-		Image: dragon
+	BurstDelays: 4
+	Projectile: MissileCA
 		Speed: 270
-		LaunchAngle: 70
-		TrailImage: smokey
-		Shadow: true
-		Blockable: false
 		ContrailLength: 17
 		ContrailStartColor: 6c6cd4aa
 		ContrailStartColorAlpha: 170
 		ContrailStartWidth: 0c48
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
-		Damage: 2000
+		Damage: 3000
 		Versus:
 			Wood: 40
 			Concrete: 30
-			Light: 70
-	Warhead@Emp: GrantExternalConditionCA
-		Range: 0c341
-		Duration: 40
-		Condition: empdisable
-		ValidTargets: Ground, Structure, Vehicle
-		InvalidTargets: EmpImmune
-	Warhead@Emp2: GrantExternalConditionCA
-		Range: 0c682
-		Duration: 20
-		Condition: empdisable
-		ValidTargets: Ground, Structure, Vehicle
-		InvalidTargets: EmpImmune
-	Warhead@4Eff: CreateEffect
-		Explosions: med_explosion
-	Warhead@6Eff: CreateEffect
-		Image: sparks_overlay
-		Explosions: idle
-		ExplosionPalette: tseffect-ignore-lighting-alpha75
-		ImpactSounds: expnew16.aud
+			Light: 60
+
+PitbullRocketsAA:
+	Inherits: RedEye
+	Report: pitbull-fire1.aud, pitbull-fire2.aud
+	ReloadDelay: 80
+	Burst: 4
+	BurstDelays: 4
+	Projectile: MissileCA
+		Speed: 270
+		ContrailLength: 17
+		ContrailStartColor: 6c6cd4aa
+		ContrailStartColorAlpha: 170
+		ContrailStartWidth: 0c48
+	Warhead@1Dam: SpreadDamage
+		Range: 0, 0c64, 0c256, 1c768
+		Damage: 3600
+	Warhead@smallDamage: SpreadDamage
+		Damage: 3600
 
 TorpTube:
 	ReloadDelay: 100

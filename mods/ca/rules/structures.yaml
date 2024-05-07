@@ -1078,8 +1078,6 @@ ALHQ:
 	Inherits@Negotiations: ^NegotiationsPower
 	Inherits@CryostormPower: ^CryostormPower
 	Inherits@HeliosBombPower: ^HeliosBombPower
-	RenderSprites:
-		Image: alhq
 	Selectable:
 		Bounds: 3072, 2048
 	Building:
@@ -5243,7 +5241,7 @@ OREP:
 		Dimensions: 3,3
 		LocalCenterOffset: 0,-512,0
 	Health:
-		HP: 120000
+		HP: 100000
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -5257,7 +5255,7 @@ OREP:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.allies, atek, ~techlevel.high
-		Description: Refines ore, gems & Tiberium, increasing income by 10%.\n  Provides access to advanced chrono harvester technology.
+		Description: Refines ore, gems & Tiberium, increasing income by 10%.
 		BuildLimit: 1
 	TooltipExtras:
 		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked
@@ -5267,7 +5265,7 @@ OREP:
 	-CapturableProgressBlink:
 	-CaptureManager:
 	Valued:
-		Cost: 2000
+		Cost: 1500
 	Tooltip:
 		Name: Ore Purifier
 	ResourcePurifierCA@NORMAL:
@@ -5277,7 +5275,7 @@ OREP:
 		Modifier: 15
 		RequiresCondition: !disabled && !being-warped && orep-upgrade
 	Power:
-		Amount: -150
+		Amount: -100
 	WithDeathAnimation:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
@@ -5287,12 +5285,12 @@ OREP:
 		RequiresCondition: !being-warped
 	SpawnRandomActorOnDeath:
 		RequiresCondition: !being-warped
-	GrantConditionOnPrerequisite@Bot:
-		Condition: owned-by-ai
-		Prerequisites: botplayer
 	GrantConditionOnPrerequisite@UPGRADE:
 		Condition: orep-upgrade
 		Prerequisites: orep.upgrade
+	GrantConditionOnPrerequisite@Bot:
+		Condition: owned-by-ai
+		Prerequisites: botplayer
 	GrantRandomCondition@ai-pcan:
 		Conditions: ai-pcan-upgrade, noupgrade
 	ProvidesPrerequisite@ai-pcan:
@@ -5304,10 +5302,6 @@ OREP:
 	ValidFactions:
 		Factions: england, germany, france, usa
 	ProvidesPrerequisite@buildingname:
-		RequiresCondition: !tech-locked
-	ProvidesPrerequisiteValidatedFaction@germanyorep:
-		Factions: germany
-		Prerequisite: orep.germany
 		RequiresCondition: !tech-locked
 	WithDecoration@TechLock:
 		RequiresCondition: tech-locked

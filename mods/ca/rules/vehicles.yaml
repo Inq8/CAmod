@@ -7691,16 +7691,16 @@ PBUL:
 	RenderSprites:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 703
+		BuildPaletteOrder: 195
 		IconPalette: chrometd
-		Prerequisites: anyradar, ~disabled
-		Description: Fast scout vehicle with EMP rockets.
+		Prerequisites: gtek, ~vehicles.eagle, ~techlevel.high
+		Description: Fast scout vehicle with anti-tank and anti-air rockets.
 	TooltipExtras:
-		Strengths: • Strong vs Heavy Armor, Defenses, Light Armor
-		Weaknesses: • Weak vs Infantry, Buildings\n• Inaccurate projectiles\n• Cannot attack Aircraft
+		Strengths: • Strong vs Heavy Armor, Aircraft
+		Weaknesses: • Weak vs Infantry, Buildings, Defenses
 		Attributes: • Can detect spies and cloaked units.
 	Valued:
-		Cost: 900
+		Cost: 850
 	Tooltip:
 		Name: Pitbull
 	UpdatesPlayerStatistics:
@@ -7721,11 +7721,17 @@ PBUL:
 	Turreted:
 		TurnSpeed: 40
 		Offset: -200,0,0
-	Armament:
-		Weapon: EMPRockets
+	Armament@PRIMARY:
+		Weapon: PitbullRockets
 		LocalOffset: 0,-100,250, 0,100,250
+		ReloadingCondition: reloading
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: PitbullRocketsAA
+		LocalOffset: 0,-100,250, 0,100,250
+		ReloadingCondition: reloading
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || reloading
 	WithSpriteTurret:
 		Palette: player
 	IgnoresDisguise:
@@ -7972,6 +7978,73 @@ VIPR:
 		TargetTypes: Water, Ship
 		RequiresCondition: onwater
 
+WOLV:
+	Inherits: ^VehicleTD
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@BERSERK: ^Berserk
+	Inherits@GYRO: ^GyroStabilizers
+	Buildable:
+		Queue: VehicleSQ, VehicleMQ
+		BuildAtProductionType: Vehicle
+		BuildPaletteOrder: 195
+		Prerequisites: gtek, ~vehicles.talon, ~techlevel.high
+		Description: Light battle-mech with dual chainguns.
+		IconPalette: chrometd
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Weak vs Defenses\n• Cannot attack Aircraft
+	Valued:
+		Cost: 800
+	Selectable:
+		Bounds: 1024, 1024
+		DecorationBounds: 1024, 1024, 0, -100
+	Tooltip:
+		Name: Wolverine
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 32000
+	Armor:
+		Type: Light
+	Mobile:
+		TurnSpeed: 54
+		Speed: 54
+		Voice: Move
+	Passenger:
+		Voice: Move
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Voiced:
+		VoiceSet: XOVoice
+	WithMoveAnimation:
+	WithAttackAnimation:
+		Sequence: shoot
+		RequiresCondition: !moving
+	GrantConditionOnMovement@MOVING:
+		ValidMovementTypes: Horizontal, Vertical, Turn
+		Condition: moving
+	Armament@PRIMARY:
+		Weapon: WolverineGun
+		LocalOffset: 300,-220,180, 300,220,180
+		MuzzleSequence: muzzle
+	AttackFollowFrontal:
+		PauseOnCondition: empdisable || being-warped
+		Voice: Attack
+		FacingTolerance: 32
+		RangeMargin: 0
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithMuzzleOverlay:
+	RangeMultiplier@GYRO:
+		Modifier: 140
+	ReloadDelayMultiplier@GYRO:
+		Modifier: 140
+
 XO:
 	Inherits: ^VehicleTD
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -7981,7 +8054,7 @@ XO:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 195
-		Prerequisites: gtek, ~vehicles.talon, ~techlevel.high
+		Prerequisites: gtek, ~vehicles.zocom, ~techlevel.high
 		Description: Light battle-mech with a short-range laser\n  and a machine gun.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
