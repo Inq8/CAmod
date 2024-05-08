@@ -5161,6 +5161,7 @@ IonSurge:
 	MapEditorData:
 		Categories: System
 	WithSpriteBody:
+	WithMakeAnimation:
 	HitShape:
 	HiddenUnderFog:
 		Type: GroundPosition
@@ -5173,6 +5174,9 @@ IonSurge:
 		Weapon: IonSurge
 	KillsSelf:
 		Delay: 200
+	# required for spawning actor on death
+	Health:
+		HP: 1
 	AmbientSound:
 		SoundFiles: ionsurgeloop.aud
 		Interval: 50
@@ -5182,6 +5186,24 @@ IonSurge:
 		Visible: Always
 		ValidRelationships: Ally
 		UsePlayerColor: true
+	SpawnActorOnDeath:
+		Actor: ionsurgefade
+		SkipMakeAnimations: false
+
+IonSurgeFade:
+	Inherits: IonSurge
+	EditorOnlyTooltip:
+		Name: (Ion Surge)
+	WithSpriteBody:
+		Sequence: dead
+	WithMakeAnimation:
+		Sequence: fade
+	KillsSelf:
+		Delay: 24
+	-SpawnActorOnDeath:
+	-PeriodicExplosion:
+	-AmbientSound:
+	-WithRangeCircle@IonSurge:
 
 WORMHOLE:
 	Inherits@1: ^ExistsInWorld
