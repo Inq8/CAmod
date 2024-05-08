@@ -69,6 +69,8 @@ namespace OpenRA.Mods.CA.Traits
 		public Target Target;
 
 		IEnumerable<int> speedModifiers;
+		INotifyCenterPositionChanged[] notifyCenterPositionChanged;
+		bool requiresVisibilityChecks = false;
 
 		[Sync]
 		public WAngle Facing
@@ -116,6 +118,8 @@ namespace OpenRA.Mods.CA.Traits
 		void INotifyCreated.Created(Actor self)
 		{
 			speedModifiers = self.TraitsImplementing<ISpeedModifier>().ToArray().Select(sm => sm.GetSpeedModifier());
+			notifyCenterPositionChanged = self.TraitsImplementing<INotifyCenterPositionChanged>().ToArray();
+			requiresVisibilityChecks = self.TraitsImplementing<AffectsShroud>().Any();
 		}
 
 		void INotifyAddedToWorld.AddedToWorld(Actor self)
@@ -187,6 +191,11 @@ namespace OpenRA.Mods.CA.Traits
 				OnAirborneAltitudeReached();
 			else if (!isAirborne && airborne)
 				OnAirborneAltitudeLeft();
+
+			// NB: This can be called from the constructor before notifyCenterPositionChanged is assigned.
+			if (requiresVisibilityChecks && notifyCenterPositionChanged != null)
+				foreach (var n in notifyCenterPositionChanged)
+					n.CenterPositionChanged(self, 0, 0);
 		}
 
 		#endregion
