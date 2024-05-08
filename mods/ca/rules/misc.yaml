@@ -1122,8 +1122,11 @@ cryostorm:
 	RenderSprites:
 		Image: cryostorm
 		Palette: effect
+	# required for spawning actor on death
+	Health:
+		HP: 1
 	KillsSelf:
-		Delay: 225
+		Delay: 375
 	WithRangeCircle@Cryostorm:
 		Type: Cryostorm
 		Range: 4c682
@@ -1133,26 +1136,44 @@ cryostorm:
 	PeriodicExplosion:
 		Weapon: Cryostorm
 	ProximityExternalCondition@Cryostorm1:
-		Range: 4c512
+		Range: 1c512
 		Condition: chilled
 		ValidRelationships: Ally, Enemy, Neutral
 	ProximityExternalCondition@Cryostorm2:
-		Range: 4c512
+		Range: 3c0
 		Condition: chilled
 		ValidRelationships: Ally, Enemy, Neutral
 	ProximityExternalCondition@Cryostorm3:
-		Range: 3c512
+		Range: 4c512
+		Condition: chilled
+		ValidRelationships: Ally, Enemy, Neutral
+	ProximityExternalCondition@Cryostorm4:
+		Range: 4c512
 		Condition: chilled
 		ValidRelationships: Ally, Enemy, Neutral
 	AmbientSound:
 		SoundFiles: cryostorm.aud
-	Health:
-		HP: 1
 	WithMakeAnimation:
-	WithDeathAnimation:
-		UseDeathTypeSuffix: false
-		CrushedSequence: die
-		FallbackSequence: die
+	SpawnActorOnDeath:
+		Actor: cryostorm.fade
+		SkipMakeAnimations: false
+
+cryostorm.fade:
+	Inherits: cryostorm
+	-WithRangeCircle@Cryostorm:
+	-PeriodicExplosion:
+	-ProximityExternalCondition@Cryostorm1:
+	-ProximityExternalCondition@Cryostorm2:
+	-ProximityExternalCondition@Cryostorm3:
+	-ProximityExternalCondition@Cryostorm4:
+	-AmbientSound:
+	-SpawnActorOnDeath:
+	KillsSelf:
+		Delay: 15
+	WithMakeAnimation:
+		Sequence: die
+	WithSpriteBody:
+		Sequence: dead
 
 nshield:
 	Inherits@1: CAMERA

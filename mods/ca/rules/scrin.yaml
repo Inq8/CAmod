@@ -5072,7 +5072,7 @@ Rift:
 		Weapon: Rift
 	KillsSelf:
 		Delay: 360
-	# required for death animation
+	# required for spawning actor on death
 	Health:
 		HP: 1
 	WithSpriteBody:
@@ -5080,13 +5080,24 @@ Rift:
 	AmbientSound:
 		SoundFiles: rift1.aud, rift2.aud, rift3.aud
 		Interval: 50
-	WithDeathAnimation:
-		UseDeathTypeSuffix: false
-		CrushedSequence: fade
-		FallbackSequence: fade
+	SpawnActorOnDeath:
+		Actor: riftfade
+		SkipMakeAnimations: false
 	RevealsShroud:
 		Range: 10c0
 		Type: CenterPosition
+
+RiftFade:
+	Inherits: Rift
+	WithSpriteBody:
+		Sequence: dead
+	WithMakeAnimation:
+		Sequence: fade
+	KillsSelf:
+		Delay: 24
+	-SpawnActorOnDeath:
+	-PeriodicExplosion:
+	-AmbientSound:
 
 RiftMinor:
 	Inherits: ^RiftBase

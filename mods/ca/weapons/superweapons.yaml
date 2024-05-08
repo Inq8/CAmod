@@ -1289,6 +1289,17 @@ Cryostorm:
 	ReloadDelay: 5
 	Range: 1c0
 	Projectile: InstantHit
+	Warhead@1Dam: SpreadDamage
+		Spread: 4c512
+		Damage: 50
+		Falloff: 100, 0
+		Versus:
+			Wood: 0
+			Light: 10
+			Heavy: 0
+			Concrete: 0
+			Brick: 0
+		DamageTypes: FrozenDeath
 	Warhead@1Eff: CreateEffect
 		Explosions: cryoblast, cryohit, cryohit, cryohit
 		ExplosionPalette: ra2effect-ignore-lighting-alpha75
