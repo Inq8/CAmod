@@ -86,6 +86,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		Target currentTarget;
 		int maxDistanceCheckTicks;
+		int numLaunched = 0;
 
 		public CarrierMaster(ActorInitializer init, CarrierMasterInfo info)
 			: base(init, info)
@@ -159,6 +160,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			SpawnIntoWorld(self, carrierSlaveEntry.Actor, self.CenterPosition);
 			carrierSlaveEntry.IsLaunched = true; // mark as launched
+			numLaunched = SlaveEntries.Count(a => a.IsLaunched);
 
 			if (spawnContainTokens.TryGetValue(a.Info.Name, out var spawnContainToken) && spawnContainToken.Count > 0)
 				self.RevokeCondition(spawnContainToken.Pop());
@@ -224,6 +226,7 @@ namespace OpenRA.Mods.CA.Traits
 				throw new InvalidOperationException("An actor that isn't my slave entered me?");
 
 			slaveEntry.IsLaunched = false;
+			numLaunched = SlaveEntries.Count(a => a.IsLaunched);
 
 			// setup rearm
 			slaveEntry.RearmTicks = Util.ApplyPercentageModifiers(CarrierMasterInfo.RearmTicks, reloadModifiers.Select(rm => rm.GetReloadModifier()));
@@ -294,6 +297,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		protected void RangeCheck(Actor self)
 		{
+			if (numLaunched == 0)
+				return;
+
 			if (--maxDistanceCheckTicks > 0)
 				return;
 
