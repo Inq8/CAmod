@@ -1080,10 +1080,11 @@ ALHQ:
 	Inherits@HeliosBombPower: ^HeliosBombPower
 	Inherits@PatriotStrikePower: ^PatriotStrikePower
 	Selectable:
-		Bounds: 3072, 2048
+		Bounds: 2048, 3072, 0, -512
+		DecorationBounds: 2133, 3157, 0, -512
 	Building:
-		Footprint: xxx xxx ===
-		Dimensions: 3,3
+		Footprint: xx xx ==
+		Dimensions: 2,3
 		LocalCenterOffset: 0,-512,0
 	Health:
 		HP: 120000
@@ -1124,8 +1125,6 @@ ALHQ:
 		RequiresCondition: !being-warped
 	SpawnRandomActorOnDeath:
 		RequiresCondition: !being-warped
-	ValidFactions:
-		Factions: england, germany, france, usa
 	ProvidesPrerequisite@buildingname:
 		RequiresCondition: !tech-locked
 	WithDecoration@TechLock:

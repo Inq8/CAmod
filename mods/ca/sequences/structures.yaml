@@ -1334,27 +1334,32 @@ miss:
 alhq:
 	Inherits: ^StructureOverlays
 	idle:
-		Filename: miss.shp
+		Filename: alhq.shp
+		Offset: 0, -14
 	active:
-		Filename: miss.shp
+		Filename: alhq.shp
 	damaged-idle:
-		Filename: miss.shp
-		Start: 1
+		Filename: alhq.shp
+		Start: 20
+		Offset: 0, -14
 	dead:
-		Filename: miss.shp
-		Start: 2
+		Filename: alhq.shp
+		Start: 20
 		Tick: 800
+		Offset: 0, -14
 	make:
-		Filename: missmake.shp
-		Length: *
+		Filename: alhq.shp
+		Offset: 0, -14
+		Start: 1
+		Length: 19
 	bib:
-		Filename: bib2.tem
+		Filename: bib3.tem
 		TilesetFilenames:
-			SNOW: bib2.sno
-			DESERT: bib2.des
-			JUNGLE: bib2.jun
-			WINTER: bib2.win
-			BARREN: bib2.bar
+			SNOW: bib3.sno
+			DESERT: bib3.des
+			JUNGLE: bib3.jun
+			WINTER: bib3.win
+			BARREN: bib3.bar
 		Length: *
 	icon:
 		Filename: alhqicon.shp
