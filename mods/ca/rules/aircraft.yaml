@@ -4608,3 +4608,82 @@ DISC:
 	-RangeMultiplier@SEEK:
 	-RangeMultiplier@SEEK2:
 	-RangeMultiplier@SEEK3:
+
+JACK:
+	Inherits: ^PlaneTD
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Valued:
+		Cost: 400
+	Tooltip:
+		Name: Jackknife
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		Queue: AircraftSQ, AircraftMQ
+		BuildAtProductionType: Plane
+		BuildPaletteOrder: 125
+		Prerequisites: afld.gdi, ~aircraft.arc, ~techlevel.medium
+		Description: Loitering munition that dives at ground targets and explodes.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses, Infantry
+		Weaknesses: • Weak vs Buildings\n• Cannot attack Aircraft
+	Aircraft:
+		AltitudeVelocity: 0c100
+		TurnSpeed: 20
+		Speed: 135
+		IdleSpeed: 72
+		Repulsable: false
+		Voice: Move
+	Voiced:
+		VoiceSet: JackknifeVoice
+	Health:
+		HP: 4000
+	RevealsShroud:
+		Range: 10c0
+		MinRange: 8c0
+		Type: GroundPosition
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 9c0
+		Type: GroundPosition
+	Armament@PRIMARY:
+		Weapon: JackknifeTargeter
+	Explodes:
+		Weapon: JackknifeExplosion
+		EmptyWeapon: JackknifeExplosion
+		-RequiresCondition:
+	Targetable@AIRBORNE:
+		TargetTypes: AirSmall
+	AttackAircraft:
+		FacingTolerance: 80
+		Voice: Attack
+		OppurtunityFire: false
+		PersistentTargeting: false
+	DiveOnAttack:
+		Speed: 250
+		DiveCondition: diving
+	AutoTarget:
+		InitialStance: HoldFire
+		InitialStanceAI: AttackAnything
+	LeavesTrails:
+		Offsets: -427,0,0
+		MovingInterval: 2
+		Image: smokey
+		StationaryInterval: 2
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
+		RequiresCondition: enable-smoke
+	Selectable:
+		DecorationBounds: 1280, 1024
+	GrantConditionOnDamageState@SmokeTrail:
+		Condition: enable-smoke
+	Contrail@1:
+		StartColor: FFFFFF60
+		StartColorAlpha: 96
+	-EjectOnDeath:
+	-SpawnActorOnDeath:
+	-Contrail@2:
+	-SoundOnDamageTransitionCA:
+	ActorLostNotification:
+		RequiresCondition: !diving
