@@ -1660,13 +1660,6 @@ HARV:
 	GrantConditionOnPrerequisite@OREPUPGRADE:
 		Prerequisites: charv.upgrade
 		Condition: charv-upgrade
-	KillsSelf@OREPUPGRADE:
-		Delay: 1
-		RemoveInstead: true
-		RequiresCondition: charv-upgrade
-	GrantCondition@WARPOUT:
-		Condition: being-warped
-		RequiresCondition: charv-upgrade
 	PeriodicExplosion@WARPOUT:
 		Weapon: HarvSwap
 		RequiresCondition: charv-upgrade
@@ -1693,6 +1686,10 @@ HARV:
 		Step: 2250
 	DamageTypeDamageMultiplier@A2GPROTECTION:
 		Modifier: 60
+	TransformOnCondition:
+		RequiresCondition: charv-upgrade
+		IntoActor: HARV.Chrono
+	TransferResourcesOnTransform:
 
 HARV.Chrono:
 	Inherits: HARV
@@ -1727,9 +1724,9 @@ HARV.Chrono:
 		Actor: HARV.Chrono.EmptyHusk
 		RequiresCondition: !being-warped
 	-GrantConditionOnPrerequisite@OREPUPGRADE:
-	-KillsSelf@OREPUPGRADE:
-	-GrantCondition@WARPOUT:
 	-PeriodicExplosion@WARPOUT:
+	-TransformOnCondition:
+	-TransferResourcesOnTransform:
 
 MCV:
 	Inherits: ^Vehicle-NOUPG
