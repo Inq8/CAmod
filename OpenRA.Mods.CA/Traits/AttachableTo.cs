@@ -20,7 +20,6 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Limit how many specific actors can be attached.")]
 		public readonly Dictionary<string, int> Limits = new Dictionary<string, int>();
 
-		[ActorReference(dictionaryReference: LintDictionaryReference.Keys)]
 		[Desc("Conditions to apply when reaching limits.")]
 		public readonly Dictionary<string, string> LimitConditions = new Dictionary<string, string>();
 

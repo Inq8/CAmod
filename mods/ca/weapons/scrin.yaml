@@ -1203,6 +1203,9 @@ RavagerShards:
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: gshardhitsm1.aud, gshardhitsm2.aud
 
+EvisceratorShards:
+	Inherits: RavagerShards
+
 ShardWalkerShards:
 	Inherits: RavagerShards
 	StartBurstReport: shard-fire1.aud
@@ -1317,6 +1320,36 @@ ImpalerSpike:
 		Duration: 75
 		Condition: slowed
 		ValidTargets: Vehicle, Infantry
+
+WatcherDart:
+	Range: 6c0
+	ReloadDelay: 100
+	Report: wchr-fire1.aud
+	ValidTargets: WatcherParasiteAttachable
+	Projectile: Missile
+		Speed: 750
+		Blockable: false
+		Image: wchrdart
+		Shadow: True
+		HorizontalRateOfTurn: 20
+		RangeLimit: 8c0
+		ContrailLength: 11
+		ContrailStartWidth: 0c48
+		ContrailStartColor: 000000
+		ContrailStartColorAlpha: 128
+		AllowSnapping: true
+	Warhead@Attach: AttachActor
+		Range: 341
+		Actor: watcher.parasite
+		AttachSounds: wchr-hit1.aud
+		MissSounds: dud1.aud
+		ValidTargets: WatcherParasiteAttachable
+		ValidRelationships: Enemy, Neutral
+	Warhead@highlight: GrantExternalConditionCA
+		Range: 341
+		Duration: 2
+		Condition: highlight
+		ValidTargets: WatcherParasiteAttachable
 
 RiftInit:
 	ValidTargets: Ground, Water
@@ -1452,6 +1485,15 @@ IonSurge:
 		Condition: ionsurge
 		ValidTargets: IonSurgable
 		ValidRelationships: Ally
+
+GatewaySpawner:
+	ReloadDelay: 1
+	Projectile: InstantExplode
+	Warhead@Spawn: SpawnActor
+		Actors: rebelgateway
+		Range: 1
+		ForceGround: false
+		ValidTargets: Ground, Water, Trees
 
 MothershipChargeBeam:
 	ReloadDelay: 3
@@ -1870,3 +1912,72 @@ MindSparkZap:
 			Concrete: 10
 			Wood: 5
 		DamageTypes: ElectricityDeath
+
+ObliteratorBolt:
+	Range: 15c0
+	ReloadDelay: 200
+	Report: oblt-fire1.aud
+	Projectile: LinearPulse
+		Speed: 100
+		Image: obltbolt
+		Sequences: idle, idle2
+		Palette: scrin
+		ImpactInterval: 3
+	Warhead@1Dam: SpreadDamage
+		Spread: 256
+		Damage: 5000
+		Versus:
+			None: 100
+			Wood: 100
+			Light: 100
+			Heavy: 100
+			Concrete: 100
+			Brick: 100
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+	Warhead@2Eff: CreateFacingEffect
+		Explosions: trail, trail2
+		ExplosionPalette: scrin
+		Image: obltbolt
+		ValidTargets: Ground, Air, Ship, Trees
+		Inaccuracy: 110
+
+ObliteratorBoltImpact:
+	Inherits: ObliteratorBolt
+
+NullifierBolt:
+	Range: 8c0
+	ReloadDelay: 100
+	Report: null-fire1.aud
+	Projectile: BulletCA
+		Image: nullbolt
+		Palette: caneon
+		Speed: 512
+		TrailImage: nulltrail
+		TrailSequences: idle1, idle2
+		TrailPalette: caneon
+		TrailInterval: 1
+		ContrailStartWidth: 32
+		ContrailStartColor: ffff00
+		ContrailStartColorAlpha: 96
+		ContrailLength: 6
+		TrailSpacing: 512
+	Warhead@1Dam: SpreadDamage
+		Spread: 0c128
+		Damage: 15000
+		Versus:
+			None: 100
+			Wood: 40
+			Light: 75
+			Heavy: 15
+			Concrete: 40
+			Brick: 0
+		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
+	Warhead@3Eff: CreateEffect
+		Explosions: idle
+		ExplosionPalette: caneon
+		Image: nullhit
+		ImpactSounds: null-hit1.aud
+	Warhead@Blind: GrantExternalConditionCA
+		Range: 0c341
+		Duration: 100
+		Condition: blinded

@@ -310,7 +310,13 @@ LST:
 	-Targetable@MINIDRONE:
 	-ChangesHealth@MINIDRONE:
 	-ExternalCondition@MINIDRONE:
-	-AttachableTo:
+	AttachableTo:
+		-Limits:
+		-LimitConditions:
+		Limits:
+			wchrpsite: 1
+		LimitConditions:
+			wchrpsite: wchrpsite-attached
 	Targetable@MINDCONTROL:
 		RequiresCondition: !cargo && !mindcontrolled && !hacked && !restoring
 

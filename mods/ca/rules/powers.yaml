@@ -1471,7 +1471,7 @@
 		Cursor: ability
 		ChargeInterval: 10500
 		Name: Cluster Missile
-		Description: \nLaunches an Cluster Missile which deals heavy\n    damage at the target location.
+		Description: \nLaunches a Cluster Missile which deals heavy\n    damage at the target location.
 		EndChargeSpeechNotification: ClusMissileReady
 		EndChargeTextNotification: Cluster Missile ready.
 		SelectTargetSpeechNotification: SelectTarget
@@ -1794,6 +1794,71 @@
 		SupportPowerPaletteOrder: 40
 		TargetCircleRange: 4c512
 		TargetCircleColor: ff000099
+
+^OverlordsWrathPower:
+	NukePower@OverlordsWrath:
+		OrderName: overlordswrath
+		Icon: owrath
+		IconPalette: chromes
+		Prerequisites: ~loyalist.allegiance, ~techlevel.high
+		Cursor: ability
+		ChargeInterval: 10500
+		Name: Overlord's Wrath
+		Description: \nA Tiberium meteor strikes the target location\n    dealing heavy damage and creating a patch of Tiberium.
+		EndChargeSpeechNotification: OverlordsWrathReady
+		EndChargeTextNotification: Overlord's Wrath ready.
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		InsufficientPowerSpeechNotification: InsufficientPower
+		IncomingSpeechNotification: OverlordsWrathWarning
+		IncomingTextNotification: Tiberium meteor approaching.
+		MissileWeapon: OverlordsWrath
+		MissileImage: tibmeteor
+		MissilePalette: scrin
+		LaunchSound: owrath-launch.aud
+		IncomingSound: owrath-launch.aud
+		SpawnOffset: 1024,80,0
+		RemoveMissileOnDetonation: True
+		FlightDelay: 225
+		FlightVelocity: 0c624
+		DisplayRadarPing: True
+		CameraRange: 10c0
+		CameraRemoveDelay: 50
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
+		PauseOnCondition: disabled || empdisable || being-warped
+		DisplayBeacon: True
+		BeaconPoster: owrath
+		DisplayTimerRelationships: Ally
+		CircleRanges: 3c0
+		CircleColor: 00FF00AA
+		CircleBorderColor: 003300AA
+		SupportPowerPaletteOrder: 30
+
+^GatewayPower:
+	DetonateWeaponPower@Gateway:
+		OrderName: gateway
+		Icon: gateway
+		IconPalette: chromes
+		Prerequisites: ~rebel.allegiance, ~techlevel.high
+		Cursor: ability
+		ChargeInterval: 7500
+		Name: Gateway
+		ActivationDelay: 1
+		Description: \nCreates a temporary Gateway at the target location\n   from which reinforcements are deployed.
+		LaunchSound: wormhole-open.aud
+		Weapon: GatewaySpawner
+		AirburstAltitude: 0c0
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		EndChargeSpeechNotification: GatewayReady
+		EndChargeTextNotification: Gateway ready.
+		PauseOnCondition: disabled || empdisable || being-warped
+		CameraActor: camera.dummy
+		CameraRemoveDelay: 1
+		DisplayRadarPing: True
+		SupportPowerPaletteOrder: 30
 
 ^SuppressionPower:
 	GrantExternalConditionPowerCA@SUPPRESSION:

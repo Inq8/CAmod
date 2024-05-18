@@ -35,7 +35,8 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				tabs.PickUpCompletedBuilding();
 			};
 
-			button.IsDisabled = () => !tabs.Groups[button.ProductionGroup].Tabs.Any(t => t.Queue.BuildableItems().Any());
+			// hard coded to always enable upgrades tab if structures exist to build them, even if all have been acquired already
+			button.IsDisabled = () => !tabs.Groups[button.ProductionGroup].Tabs.Any(t => t.Queue.BuildableItems().Any() || (t.Queue.Info.Type == "Upgrade" && t.Queue.AllItems().Any()));
 			button.OnMouseUp = mi => selectTab(mi.Modifiers.HasModifier(Modifiers.Shift));
 			button.OnKeyPress = e => selectTab(e.Modifiers.HasModifier(Modifiers.Shift));
 			button.IsHighlighted = () => tabs.QueueGroup == button.ProductionGroup;

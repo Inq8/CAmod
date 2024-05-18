@@ -1311,6 +1311,49 @@ Cryostorm:
 		Inaccuracy: 3c512
 		Delay: 8
 
+OverlordsWrath:
+	Projectile: InstantHit
+	Warhead@1Dam: SpreadDamage
+		Spread: 4c512
+		Damage: 50000
+		Falloff: 100, 0
+		Versus:
+			None: 10
+			Light: 50
+			Heavy: 30
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+	Warhead@3Eff_impact: CreateEffect
+		Image: tibmeteor
+		Explosions: hit
+		ExplosionPalette: caneon
+		ImpactSounds: owrath-impact.aud
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Crater
+		Size: 2
+		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
+	Warhead@3Res: CreateResource
+		AddsResourceType: Tiberium
+		Size: 1
+	Warhead@4Res: CreateResource
+		AddsResourceType: Tiberium
+		Size: 2
+		Delay: 5
+	Warhead@Shrap: FireShrapnel
+		Weapon: ChemDebris
+		Amount: 5
+		AimChance: 0
+		ValidTargets: Ground, Water, Infantry, Vehicle
+		ThrowWithoutTarget: true
+	Warhead@18Radio: CreateTintedCells
+		Spread: 1c0
+		Level: 350
+		Falloff: 100, 75, 52, 37, 24, 15, 2
+		MaxLevel: 750
+		LayerName: radioactivity.weak
+	Warhead@22FlashEffect: FlashPaletteEffect
+		Duration: 10
+		FlashType: OverlordsWrath
+
 SubterraneanStrikeSpawner:
 	ReloadDelay: 1
 	Projectile: InstantExplode

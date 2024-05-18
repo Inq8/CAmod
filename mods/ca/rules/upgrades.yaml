@@ -64,7 +64,7 @@ bombard.strat:
 		BuildPaletteOrder: 1
 		Prerequisites: ~player.gdi, anyradar, ~!seek.strat, ~!hold.strat, ~techlevel.medium
 		IconPalette: chrometd
-		Description: Firepower focused strategy, required for:\n• Tomahawk Launcher\n• Hailstorm Missiles Upgrade\n\n
+		Description: Firepower focused strategy, required for:\n• Tomahawk Launcher\n• Bombardier\n• Hailstorm Missiles Upgrade\n\n
 	TooltipExtras:
 		Strengths: + Increases firepower and rate of fire of vehicles and aircraft by 3%
 		Attributes: \n(!) Only ONE Strategy may be chosen.
@@ -99,7 +99,7 @@ seek.strat:
 		BuildPaletteOrder: 4
 		Prerequisites: ~player.gdi, anyradar, ~!bombard.strat, ~!hold.strat, ~techlevel.medium
 		IconPalette: chrometd
-		Description: Speed and weapon range focused strategy, required for:\n• TOW Missile Upgrade\n• Hypersonic Missiles Upgrade\n\n
+		Description: Speed and weapon range focused strategy, required for:\n• TOW Missile Upgrade\n• Zone Raider Upgrade\n• Hypersonic Missiles Upgrade\n\n
 	TooltipExtras:
 		Strengths: + Increases speed and weapon range of vehicles and aircraft by 5%
 		Attributes: \n(!) Only ONE Strategy may be chosen.
@@ -134,7 +134,7 @@ hold.strat:
 		BuildPaletteOrder: 7
 		Prerequisites: ~player.gdi, anyradar, ~!bombard.strat, ~!seek.strat, ~techlevel.medium
 		IconPalette: chrometd
-		Description: Defensive strategy, required for:\n• Point Defense Systems Upgrade\n• Hammerhead Missiles Upgrade\n\n
+		Description: Defensive strategy, required for:\n• Point Defense Systems Upgrade\n• Zone Defender Upgrade\n• Hammerhead Missiles Upgrade\n\n
 	TooltipExtras:
 		Strengths: + Increases armor of vehicles and aircraft by 5%
 		Attributes: \n(!) Only ONE Strategy may be chosen.
@@ -217,7 +217,7 @@ strategic.upgrade1:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.gdi, gtek, anystrategy, ~!bombard.strat, ~!seek.strat, ~!hold.strat, ~techlevel.high
 		IconPalette: chrometd
-		Description: Upgrade depends on chosen strategy.\n\n• Bombardment: Bombardier research\n• Seek & Destroy: Zone Raider researc\n• Hold the Line: Zone Defender research
+		Description: Upgrade depends on chosen strategy.\n\n• Bombardment: Bombardier research\n• Seek & Destroy: Zone Raider research\n• Hold the Line: Zone Defender research
 	Valued:
 		Cost: 750
 	RenderSprites:
@@ -1101,6 +1101,47 @@ orep.upgrade:
 ################################SCRIN##############################
 ###################################################################
 
+ANYALLEGIANCE:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		Name: Allegiance
+	Buildable:
+		Description: Allegiance
+	ProvidesPrerequisite:
+
+loyalist.allegiance:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Allegiance: Loyalist
+	Buildable:
+		BuildPaletteOrder: 1
+		Prerequisites: ~player.scrin, anyradar, scrin.allegiances.available, !rebel.allegiance, ~techlevel.medium
+		Description: Declare your allegiance and side with the Scrin Overlord.\n\nRequired for:\n• Eviscerator\n• Obliterator\n• Overlord's Wrath\n\n
+		IconPalette: chromes
+	TooltipExtras:
+		Attributes: (!) Only ONE allegiance may be chosen.
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: loyalist.allegiance
+
+rebel.allegiance:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Allegiance: Rebel
+	Buildable:
+		BuildPaletteOrder: 2
+		Prerequisites: ~player.scrin, anyradar, scrin.allegiances.available, !loyalist.allegiance, ~techlevel.medium
+		Description: Declare your allegiance and side with the Scrin Rebels.\n\nRequired for:\n• Impaler\n• Nullifier\n• Gateway\n\n
+		IconPalette: chromes
+	TooltipExtras:
+		Attributes: (!) Only ONE allegiance may be chosen.
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: rebel.allegiance
+
 shrw.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -1133,6 +1174,54 @@ advart.upgrade:
 		Cost: 1250
 	RenderSprites:
 		Image: advart.upgrade
+
+allegiance.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Allegiance Dependent Upgrade
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: ~player.scrin, anyradar, anyallegiance, ~!loyalist.allegiance, ~!rebel.allegiance, ~techlevel.medium
+		IconPalette: chromes
+		Description: Upgrade depends on chosen allegiance.\n\n• Loyalist: Eviscerator research\n• Rebel: Impaler research
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: allegiance.upgrade
+
+evis.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Eviscerator
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: ~player.scrin, anyradar, ~loyalist.allegiance, ~techlevel.medium
+		Description: Replaces: Ravager
+		IconPalette: chromes
+	TooltipExtras:
+		Strengths: + Increased damage\n+ Increased health
+		Weaknesses: – Increased cost\n– Reduced range
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: evis.upgrade
+
+impl.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Impaler
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: ~player.scrin, anyradar, ~rebel.allegiance, ~techlevel.medium
+		Description: Replaces: Ravager
+		IconPalette: chromes
+	TooltipExtras:
+		Strengths: + Increased range\n+ Increased damage\n+ Increased health\n+ Slows targets
+		Weaknesses: – Increased cost\n– Reduced speed\n– Reduced rate of fire
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: impl.upgrade
 
 carapace.upgrade:
 	Inherits: ^Upgrade
@@ -1213,23 +1302,6 @@ regen.upgrade:
 		Cost: 1500
 	RenderSprites:
 		Image: regen.upgrade
-
-impl.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Impaler
-	Buildable:
-		BuildPaletteOrder: 30
-		Prerequisites: ~player.scrin, scrt, ~techlevel.high
-		Description: Replaces: Ravager
-		IconPalette: chromes
-	TooltipExtras:
-		Strengths: + Increased range\n+ Increased damage\n+ Increased health\n+ Slows targets
-		Weaknesses: – Increased cost\n– Reduced speed
-	Valued:
-		Cost: 750
-	RenderSprites:
-		Image: impl.upgrade
 
 hyper.upgrade:
 	Inherits: ^Upgrade

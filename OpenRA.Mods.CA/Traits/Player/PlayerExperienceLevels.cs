@@ -38,7 +38,6 @@ namespace OpenRA.Mods.CA.Traits
 
 	public class PlayerExperienceLevels : ConditionalTrait<PlayerExperienceLevelsInfo>, ITick, ITechTreePrerequisite
 	{
-		readonly World world;
 		readonly PlayerExperience playerExperience;
 		readonly TechTree techTree;
 		readonly int maxLevel;
@@ -50,9 +49,8 @@ namespace OpenRA.Mods.CA.Traits
 			: base(info)
 		{
 			var player = self.Owner;
-			validFaction = info.Factions.Contains(player.Faction.InternalName);
+			validFaction = info.Factions.Length == 0 || info.Factions.Contains(player.Faction.InternalName);
 
-			world = self.World;
 			playerExperience = self.Trait<PlayerExperience>();
 			techTree = self.Trait<TechTree>();
 			currentLevel = 0;

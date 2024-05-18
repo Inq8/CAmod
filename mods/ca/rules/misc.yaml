@@ -1204,6 +1204,14 @@ shadow.beacon.camera:
 		Range: 8c0
 		Type: GroundPosition
 
+watcher.parasite:
+	Inherits: shadow.beacon.camera
+	KillsSelf:
+		RemoveInstead: true
+		Delay: 3000
+	Attachable:
+		AttachableType: wchrpsite
+
 SHAB:
 	Inherits: ^Mine
 	Tooltip:
@@ -1241,6 +1249,14 @@ optimized.production2:
 	ProvidesPrerequisite:
 	PopControlled:
 		Limit: 1
+
+scrin.allegiances.available:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		Name: 5x Refineries
+	Buildable:
+		Description: 5x Refineries
 
 # For MQ, ensures production tabs are updated properly
 QueueUpdaterDummy:

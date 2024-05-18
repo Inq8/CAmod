@@ -1781,8 +1781,10 @@
 	AttachableTo:
 		Limits:
 			mdrn: 1
+			wchrpsite: 1
 		LimitConditions:
 			mdrn: mdrn-attached
+			wchrpsite: wchrpsite-attached
 
 ^HoverTrail:
 	LeavesTrails:
@@ -2044,8 +2046,11 @@
 	GpsRadarDot:
 		Sequence: Vehicle
 	TeleportNetworkTransportable:
-	Targetable@SHADOWBEACON:
-		TargetTypes: ShadowBeacon
+	Targetable@ShadowBeaconAttachable:
+		TargetTypes: ShadowBeaconAttachable
+	Targetable@WatcherParasiteAttachable:
+		TargetTypes: WatcherParasiteAttachable
+		RequiresCondition: !wchrpsite-attached
 	Targetable@MINDCONTROL:
 		RequiresCondition: !mindcontrolled && !hacked && !restoring && !invulnerability
 	GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
@@ -2642,6 +2647,10 @@
 		RequiresCondition: (botowner && under-bridge)
 	GpsRadarDot:
 		Sequence: Ship
+	AttachableTo:
+	Targetable@WatcherParasiteAttachable:
+		TargetTypes: WatcherParasiteAttachable
+		RequiresCondition: !wchrpsite-attached
 
 ^Submarine:
 	Inherits@1: ^Ship
@@ -2683,10 +2692,14 @@
 	-Targetable@MINIDRONE:
 	-ChangesHealth@MINIDRONE:
 	-ExternalCondition@MINIDRONE:
-	-AttachableTo:
 	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || underwater
 		ColorSource: Player
+	AttachableTo:
+		-Limits:
+		-LimitConditions:
+	Targetable@WatcherParasiteAttachable:
+		RequiresCondition: !underwater
 
 ^NeutralPlane:
 	Inherits@1: ^ExistsInWorld
@@ -3045,6 +3058,14 @@
 	Targetable@HACKCAPTURABLE:
 		TargetTypes: HackCapturable
 		RequiresCondition: !build-incomplete && !being-warped
+	Targetable@WatcherParasiteAttachable:
+		TargetTypes: WatcherParasiteAttachable
+		RequiresCondition: !wchrpsite-attached
+	AttachableTo:
+		Limits:
+			wchrpsite: 1
+		LimitConditions:
+			wchrpsite: wchrpsite-attached
 	Explodes@TEMPORAL:
 		Weapon: TemporalExplodeLarge
 		EmptyWeapon: TemporalExplodeLarge

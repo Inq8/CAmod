@@ -1502,6 +1502,8 @@ PROC:
 	SequencePlaceBuildingPreview:
 		Sequence: idle
 	CashHackable:
+	UpdatesCount:
+		Name: Refineries
 
 SILO:
 	Inherits: ^Building
@@ -2607,7 +2609,7 @@ INFANTRY.MEDI:
 	Tooltip:
 		Name: Barracks
 	Buildable:
-		Description: Medical Barracks
+		Description: Barracks
 
 INFANTRY.MECH:
 	AlwaysVisible:
@@ -2615,7 +2617,7 @@ INFANTRY.MECH:
 	Tooltip:
 		Name: Barracks
 	Buildable:
-		Description: Mechanical Barracks
+		Description: Barracks
 
 PYLE:
 	Inherits: ^BuildingTD
@@ -2919,11 +2921,12 @@ WEAP.TD:
 		Types: SpyInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
-	InfiltrateForSupportPower@STOLENTECH:
+	InfiltrateForSupportPowerCA@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.weap.td
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
+		UseTargetFaction: true
 	-ActorPreviewPlaceBuildingPreview:
 	SequencePlaceBuildingPreview:
 		Sequence: place
@@ -3034,11 +3037,12 @@ AIRS:
 		TargetTypes: SpyInfiltrate, SabInfiltrate
 	Power:
 		Amount: -30
-	InfiltrateForSupportPower@STOLENTECH:
+	InfiltrateForSupportPowerCA@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.airs
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
+		UseTargetFaction: true
 	ProvidesPrerequisite@buildingname:
 	InfiltrateForSupportPower@spy:
 		Proxy: vehicles.upgraded
@@ -4074,6 +4078,8 @@ PROC.TD:
 	ProvidesPrerequisite@anyrefinery:
 		Prerequisite: anyrefinery
 	CashHackable:
+	UpdatesCount:
+		Name: Refineries
 
 SILO.TD:
 	Inherits: ^BuildingTD
