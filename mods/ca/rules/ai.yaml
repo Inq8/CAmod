@@ -696,6 +696,36 @@ Player:
 					Attractiveness: 1
 					TargetMetric: Value
 					CheckRadius: 6c0
+			owrath:
+				OrderName: overlordswrath
+				MinimumAttractiveness: 3000
+				Consideration@1:
+					Against: Enemy
+					Types: Defense
+					Attractiveness: 1
+					TargetMetric: Value
+					CheckRadius: 3c0
+				Consideration@2:
+					Against: Ally
+					Types: Air, Ground, Water
+					Attractiveness: -10
+					TargetMetric: Value
+					CheckRadius: 5c0
+			gateway:
+				OrderName: gateway
+				MinimumAttractiveness: 5
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 8c0
+				Consideration@2:
+					Against: Enemy
+					Types: Water
+					Attractiveness: -5
+					TargetMetric: None
+					CheckRadius: 8c0
 			suppressionpower:
 				OrderName: suppression
 				MinimumAttractiveness: 1000
@@ -1001,6 +1031,9 @@ Player:
 			carapace.upgrade: 1
 			advart.upgrade: 1
 			shrw.upgrade: 1
+			loyalist.allegiance: 1
+			rebel.allegiance: 1
+			evis.upgrade: 1
 			impl.upgrade: 1
 			stellar.upgrade: 1
 			coalescence.upgrade: 1
@@ -1238,6 +1271,9 @@ Player:
 			carapace.upgrade: 1
 			advart.upgrade: 1
 			shrw.upgrade: 1
+			loyalist.allegiance: 1
+			rebel.allegiance: 1
+			evis.upgrade: 1
 			impl.upgrade: 1
 			stellar.upgrade: 1
 			coalescence.upgrade: 1
@@ -1474,6 +1510,9 @@ Player:
 			carapace.upgrade: 1
 			advart.upgrade: 1
 			shrw.upgrade: 1
+			loyalist.allegiance: 1
+			rebel.allegiance: 1
+			evis.upgrade: 1
 			impl.upgrade: 1
 			stellar.upgrade: 1
 			coalescence.upgrade: 1
@@ -1710,6 +1749,9 @@ Player:
 			carapace.upgrade: 1
 			advart.upgrade: 1
 			shrw.upgrade: 1
+			loyalist.allegiance: 1
+			rebel.allegiance: 1
+			evis.upgrade: 1
 			impl.upgrade: 1
 			stellar.upgrade: 1
 			coalescence.upgrade: 1
@@ -1913,6 +1955,9 @@ Player:
 			carapace.upgrade: 1
 			advart.upgrade: 1
 			shrw.upgrade: 1
+			loyalist.allegiance: 1
+			rebel.allegiance: 1
+			evis.upgrade: 1
 			impl.upgrade: 1
 			stellar.upgrade: 1
 			coalescence.upgrade: 1
@@ -2027,6 +2072,7 @@ Player:
 			zdef: 15
 			enfo: 15
 			cryt: 15
+			evis: 15
 			impl: 15
 			ivan: 15
 			cmsr: 15
@@ -2126,6 +2172,8 @@ Player:
 			corr: 15
 			lchr: 15
 			stcr: 25
+			oblt: 3
+			null: 3
 			hind: 5
 			heli: 5
 			apch: 5
@@ -2204,6 +2252,7 @@ Player:
 			v3rl: 4
 			thwk: 4
 			zeus: 4
+			oblt: 4
 			kiro: 4
 			disc: 4
 			deva: 4
@@ -2323,6 +2372,7 @@ Player:
 			zdef: 15
 			enfo: 15
 			cryt: 15
+			evis: 15
 			impl: 15
 			ivan: 15
 			cmsr: 15
@@ -2421,6 +2471,8 @@ Player:
 			corr: 15
 			lchr: 15
 			stcr: 25
+			oblt: 3
+			null: 3
 			hind: 5
 			heli: 5
 			apch: 5
@@ -2499,6 +2551,7 @@ Player:
 			v3rl: 3
 			thwk: 3
 			zeus: 3
+			oblt: 3
 			kiro: 3
 			disc: 3
 			deva: 3
@@ -2587,6 +2640,7 @@ Player:
 			zdef: 15
 			enfo: 15
 			cryt: 15
+			evis: 15
 			impl: 15
 			ivan: 15
 			cmsr: 15
@@ -2681,6 +2735,8 @@ Player:
 			corr: 15
 			lchr: 15
 			stcr: 25
+			oblt: 3
+			null: 3
 			hind: 5
 			heli: 5
 			apch: 5
@@ -2755,6 +2811,7 @@ Player:
 			v3rl: 2
 			thwk: 2
 			zeus: 2
+			oblt: 2
 			kiro: 2
 			disc: 2
 			deva: 2
@@ -2843,6 +2900,7 @@ Player:
 			zdef: 15
 			enfo: 15
 			cryt: 15
+			evis: 15
 			impl: 15
 			ivan: 15
 			cmsr: 15
@@ -2937,6 +2995,8 @@ Player:
 			corr: 15
 			lchr: 15
 			stcr: 25
+			oblt: 3
+			null: 3
 			hind: 5
 			heli: 5
 			apch: 5
@@ -3011,6 +3071,7 @@ Player:
 			v3rl: 1
 			thwk: 1
 			zeus: 1
+			oblt: 1
 			kiro: 1
 			disc: 1
 			deva: 1

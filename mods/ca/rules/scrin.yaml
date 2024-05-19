@@ -677,6 +677,8 @@ EVIS:
 		Prerequisites: scrt, ~infantry.scrin, ~evis.upgrade, ~techlevel.high
 		IconPalette: chromes
 		Description: Short range anti-infantry unit.
+	Selectable:
+		DecorationBounds: 640, 896, -32, -256
 	Valued:
 		Cost: 600
 	Tooltip:
@@ -699,7 +701,6 @@ EVIS:
 		LocalOffset: 150,0,400
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
-	-TakeCover:
 
 IMPL:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -712,6 +713,8 @@ IMPL:
 		Prerequisites: scrt, ~infantry.scrin, ~impl.upgrade, ~techlevel.high
 		IconPalette: chromes
 		Description: Assault infantry with high burst damage.
+	Selectable:
+		DecorationBounds: 640, 896, -32, -256
 	Valued:
 		Cost: 600
 	Tooltip:
@@ -735,7 +738,6 @@ IMPL:
 		LocalOffset: 150,0,400
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
-	-TakeCover:
 
 SMEDI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -5370,15 +5372,11 @@ camera.resourcescan:
 IchorSeeder:
 	Interactable:
 	ScriptTriggers:
-	EditorOnlyTooltip:
-		Name: (Ichor Seeder)
 	Immobile:
 		OccupiesSpace: false
 	BodyOrientation:
 		QuantizedFacings: 1
 	WithSpriteBody:
-	MapEditorData:
-		Categories: System
 	HitShape:
 	HiddenUnderFog:
 		Type: GroundPosition
@@ -5402,12 +5400,8 @@ IchorSeeder:
 IonSurge:
 	Interactable:
 	ScriptTriggers:
-	EditorOnlyTooltip:
-		Name: (Ion Surge)
 	BodyOrientation:
 		QuantizedFacings: 1
-	MapEditorData:
-		Categories: System
 	WithSpriteBody:
 	WithMakeAnimation:
 	HitShape:
@@ -5440,8 +5434,6 @@ IonSurge:
 
 IonSurgeFade:
 	Inherits: IonSurge
-	EditorOnlyTooltip:
-		Name: (Ion Surge)
 	WithSpriteBody:
 		Sequence: dead
 	WithMakeAnimation:
