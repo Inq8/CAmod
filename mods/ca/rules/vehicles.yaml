@@ -1636,7 +1636,8 @@ HARV:
 	RevealsShroud:
 		Range: 4c0
 	WithHarvestAnimationCA:
-	WithDockingAnimation:
+	WithDockingAnimationCA:
+		RefineryTypes: proc
 	SpawnActorOnDeath:
 		Actor: HARV.EmptyHusk
 		RequiresCondition: !being-warped && !charv-upgrade
@@ -4839,7 +4840,8 @@ HARV.TD:
 		Actor: HARV.TD.Husk
 		RequiresCondition: !being-warped
 	WithHarvestAnimation:
-	WithDockingAnimation:
+	WithDockingAnimationCA:
+		RefineryTypes: proc.td
 	GrantConditionOnTerrain@Tiberium:
 		Condition: ontib
 		TerrainTypes: Tiberium
