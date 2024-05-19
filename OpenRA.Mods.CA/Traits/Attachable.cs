@@ -18,11 +18,16 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("Use on an actor to make it attachable to other actors with the AttachableTo trait.")]
+	[Desc("Use on an actor to make it attachable to other actors with the AttachableTo trait.",
+		"An actor should only have one Attachable trait.")]
 	public class AttachableInfo : TraitInfo, Requires<IPositionableInfo>
 	{
+		[Desc("The attachment type (matches that of the `" + nameof(AttachableTo) + "` trait).")]
+		[FieldLoader.Require]
+		public readonly string Type = null;
+
 		[Desc("The `TargetTypes` from `Targetable` that can be attached to.")]
-		public readonly BitSet<TargetableType> Types = default;
+		public readonly BitSet<TargetableType> TargetTypes = default;
 
 		[VoiceReference]
 		public readonly string Voice = "Action";
@@ -52,9 +57,6 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("The condition to grant when detached.")]
 		public readonly string DetachedCondition = null;
 
-		[Desc("Attachable type to use to check for limits.")]
-		public readonly string AttachableType = null;
-
 		[Desc("On attaching, transform into this actor.")]
 		public readonly string OnAttachTransformInto = null;
 
@@ -67,7 +69,7 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new Attachable(init, this); }
 	}
 
-	public class Attachable : INotifyCreated, INotifyKilled, INotifyActorDisposing, INotifyOwnerChanged, ITick, INotifyAiming,
+	public class Attachable : INotifyCreated, INotifyKilled, INotifyActorDisposing, INotifyOwnerChanged, INotifyAiming,
 		IIssueOrder, IResolveOrder, IOrderVoice
 	{
 		public readonly AttachableInfo Info;
@@ -141,7 +143,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		public void HostTransformed(Actor newActor)
 		{
-			var newAttachableTo = newActor.TraitOrDefault<AttachableTo>();
+			var newAttachableTo = newActor.TraitsImplementing<AttachableTo>().FirstOrDefault(a => a.CanAttach(this));
 			if (newAttachableTo != null && newAttachableTo.Attach(this))
 				return;
 
@@ -166,7 +168,7 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
-		void ITick.Tick(Actor self)
+		public void HostPositionChanged()
 		{
 			if (!IsValid || attachedTo == null)
 				return;
@@ -306,7 +308,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		bool CanAttachToActor(Actor self, in Target target)
 		{
-			return Info.Types.Overlaps(target.Actor.GetEnabledTargetTypes())
+			return (!Info.TargetTypes.Any() || Info.TargetTypes.Overlaps(target.Actor.GetEnabledTargetTypes()))
 				&& Info.ValidRelationships.HasRelationship(self.Owner.RelationshipWith(target.Actor.Owner))
 				&& target.Actor.TraitsImplementing<AttachableTo>().Any(x => x.CanAttach(this));
 		}
@@ -314,7 +316,7 @@ namespace OpenRA.Mods.CA.Traits
 		bool CanAttachToFrozenActor(Actor self, in Target target)
 		{
 			return target.FrozenActor.IsValid
-				&& Info.Types.Overlaps(target.FrozenActor.TargetTypes)
+				&& (!Info.TargetTypes.Any() || Info.TargetTypes.Overlaps(target.FrozenActor.TargetTypes))
 				&& Info.ValidRelationships.HasRelationship(self.Owner.RelationshipWith(target.FrozenActor.Owner))
 				&& target.FrozenActor.Actor.TraitsImplementing<AttachableTo>().Any(x => x.CanAttach(this));
 		}
@@ -348,7 +350,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (!attachable.Info.ValidRelationships.HasRelationship(stance))
 				return false;
 
-			if (!attachable.Info.Types.Overlaps(target.GetEnabledTargetTypes()))
+			if (attachable.Info.TargetTypes.Any() && !attachable.Info.TargetTypes.Overlaps(target.GetEnabledTargetTypes()))
 				return false;
 
 			cursor = target.TraitsImplementing<AttachableTo>().Any(x => x.CanAttach(attachable)) ? attachable.Info.EnterCursor : attachable.Info.BlockedCursor;
@@ -361,7 +363,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (!attachable.Info.ValidRelationships.HasRelationship(stance))
 				return false;
 
-			if (!attachable.Info.Types.Overlaps(target.Info.GetAllTargetTypes()))
+			if (attachable.Info.TargetTypes.Any() && !attachable.Info.TargetTypes.Overlaps(target.Info.GetAllTargetTypes()))
 				return false;
 
 			cursor = target.Actor.TraitsImplementing<AttachableTo>().Any(x => x.CanAttach(attachable)) ? attachable.Info.EnterCursor : attachable.Info.BlockedCursor;

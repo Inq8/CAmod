@@ -71,41 +71,56 @@ namespace OpenRA.Mods.CA.Warheads
 				if (distance > Range)
 					continue;
 
-				var attachableToTrait = actor.TraitsImplementing<AttachableTo>().FirstOrDefault();
+				var actorToAttach = actor.World.CreateActor(false, Actor.ToLowerInvariant(), new TypeDictionary
+				{
+					new OwnerInit(firedBy.Owner),
+				});
+
+				var attachableTrait = actorToAttach.TraitOrDefault<Attachable>();
+				if (attachableTrait == null)
+				{
+					actorToAttach.Dispose();
+					continue;
+				}
+
+				var attachableToTrait = actor.TraitsImplementing<AttachableTo>().FirstOrDefault(a => a.CanAttach(attachableTrait));
 
 				if (attachableToTrait != null)
 				{
-					Attach(actor, firedBy, attachableToTrait);
+					Attach(actor, attachableToTrait, actorToAttach);
 					numAttached++;
-
-					var attachSound = AttachSounds.RandomOrDefault(world.LocalRandom);
-					if (attachSound != null)
-						Game.Sound.Play(SoundType.World, attachSound, pos);
-				}
-				else
-				{
-					var failSound = MissSounds.RandomOrDefault(world.LocalRandom);
-					if (failSound != null)
-						Game.Sound.Play(SoundType.World, failSound, pos);
 				}
 
 				if (numAttached > MaxTargets)
 					break;
 			}
+
+			if (numAttached > 0)
+			{
+				var attachSound = AttachSounds.RandomOrDefault(world.LocalRandom);
+				if (attachSound != null)
+					Game.Sound.Play(SoundType.World, attachSound, pos);
+			}
+			else
+			{
+				var failSound = MissSounds.RandomOrDefault(world.LocalRandom);
+				if (failSound != null)
+					Game.Sound.Play(SoundType.World, failSound, pos);
+			}
 		}
 
-		void Attach(Actor targetActor, Actor firedBy, AttachableTo targetTrait)
+		void Attach(Actor targetActor, AttachableTo targetTrait, Actor actorToAttach)
 		{
-			var map = targetActor.World.Map;
+			var world = targetActor.World;
+			var map = world.Map;
 			var targetCell = map.CellContaining(targetActor.CenterPosition);
 
 			targetActor.World.AddFrameEndTask(w =>
 			{
-				var actorToAttach = targetActor.World.CreateActor(Actor.ToLowerInvariant(), new TypeDictionary
-				{
-					new LocationInit(targetCell),
-					new OwnerInit(firedBy.Owner),
-				});
+				w.Add(actorToAttach);
+				var positionable = actorToAttach.TraitOrDefault<IPositionable>();
+				if (positionable != null)
+					positionable.SetPosition(actorToAttach, targetCell);
 
 				var attached = targetTrait.Attach(actorToAttach.Trait<Attachable>());
 				if (!attached)

@@ -3944,17 +3944,10 @@ MDRN:
 	-Targetable@AICAPTURE:
 	-Targetable@MINIDRONE:
 	-ChangesHealth@MINIDRONE:
-	-ExternalCondition@MINIDRONE:
-	AttachableTo:
-		-Limits:
-		-LimitConditions:
-		Limits:
-			wchrpsite: 1
-		LimitConditions:
-			wchrpsite: wchrpsite-attached
+	-AttachableTo@MINIDRONE:
 	Attachable:
-		Types: MiniDroneAttachable
-		AttachableType: mdrn
+		Type: MiniDrone
+		TargetTypes: MiniDroneAttachable
 		ValidRelationships: Ally
 		MinAttachDistance: 1c512
 		OnAttachTransformInto: mdrn.attached

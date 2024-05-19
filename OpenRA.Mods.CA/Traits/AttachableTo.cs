@@ -17,40 +17,37 @@ namespace OpenRA.Mods.CA.Traits
 	[Desc("Allows actor to have actors with Attachable trait attached to it.")]
 	public class AttachableToInfo : TraitInfo
 	{
+		[Desc("The attachment type (matches that of the `" + nameof(Attachable) + "` trait).")]
+		[FieldLoader.Require]
+		public readonly string Type = null;
+
 		[Desc("Limit how many specific actors can be attached.")]
-		public readonly Dictionary<string, int> Limits = new Dictionary<string, int>();
+		public readonly int Limit = 0;
 
 		[Desc("Conditions to apply when reaching limits.")]
-		public readonly Dictionary<string, string> LimitConditions = new Dictionary<string, string>();
-
 		[GrantedConditionReference]
-		public IEnumerable<string> LinterLimitConditions { get { return LimitConditions.Values; } }
+		public readonly string LimitCondition = null;
 
 		public override object Create(ActorInitializer init) { return new AttachableTo(init, this); }
 	}
 
 	public class AttachableTo : INotifyKilled, INotifyOwnerChanged, IResolveOrder, INotifyStanceChanged,
-		INotifyExitedCargo, INotifyEnteredCargo, INotifyCreated, INotifyTransform, INotifyRemovedFromWorld, INotifyAddedToWorld
+		INotifyExitedCargo, INotifyEnteredCargo, INotifyCreated, INotifyTransform, INotifyRemovedFromWorld, INotifyAddedToWorld,
+		INotifyCenterPositionChanged
 	{
 		public readonly AttachableToInfo Info;
 		public Carryable Carryable { get; private set; }
 		readonly Actor self;
 		readonly HashSet<Attachable> attached = new HashSet<Attachable>();
 		readonly HashSet<Attachable> attachedToTransfer = new HashSet<Attachable>();
-		Dictionary<string, int> attachedCounts = new Dictionary<string, int>();
-		Dictionary<string, int> limitTokens = new Dictionary<string, int>();
+		int attachedCount = 0;
+		int limitToken = Actor.InvalidConditionToken;
 		bool reserved;
 
 		public AttachableTo(ActorInitializer init, AttachableToInfo info)
 		{
 			Info = info;
 			self = init.Self;
-
-			foreach (var type in Info.Limits)
-			{
-				attachedCounts[type.Key] = 0;
-				limitTokens[type.Key] = Actor.InvalidConditionToken;
-			}
 		}
 
 		public WPos CenterPosition { get { return self.CenterPosition; } }
@@ -135,18 +132,27 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
+		void INotifyCenterPositionChanged.CenterPositionChanged(Actor self, byte oldLayer, byte newLayer)
+		{
+			foreach (var attachable in attached)
+			{
+				if (attachable.IsValid)
+					attachable.HostPositionChanged();
+			}
+		}
+
 		public bool CanAttach(Attachable attachable, bool ignoreReservation = false)
 		{
+			if (attachable.Info.Type != Info.Type)
+				return false;
+
 			if (reserved && !ignoreReservation)
 				return false;
 
 			if (!attachable.IsValid)
 				return false;
 
-			if (
-				attachedCounts.ContainsKey(attachable.Info.AttachableType)
-				&& Info.LimitConditions.ContainsKey(attachable.Info.AttachableType)
-				&& attachedCounts[attachable.Info.AttachableType] >= Info.Limits[attachable.Info.AttachableType])
+			if (Info.Limit > 0 && attachedCount >= Info.Limit)
 				return false;
 
 			return true;
@@ -159,17 +165,10 @@ namespace OpenRA.Mods.CA.Traits
 
 			attached.Add(attachable);
 			attachable.AttachTo(this, self.CenterPosition);
+			attachedCount++;
 
-			if (attachedCounts.ContainsKey(attachable.Info.AttachableType))
-			{
-				attachedCounts[attachable.Info.AttachableType]++;
-
-				if (
-					Info.LimitConditions.ContainsKey(attachable.Info.AttachableType)
-					&& attachedCounts[attachable.Info.AttachableType] >= Info.Limits[attachable.Info.AttachableType]
-					&& limitTokens[attachable.Info.AttachableType] == Actor.InvalidConditionToken)
-					limitTokens[attachable.Info.AttachableType] = self.GrantCondition(Info.LimitConditions[attachable.Info.AttachableType]);
-			}
+			if (Info.LimitCondition != null && limitToken == Actor.InvalidConditionToken && Info.Limit > 0 && attachedCount >= Info.Limit)
+				limitToken = self.GrantCondition(Info.LimitCondition);
 
 			reserved = false;
 			return true;
@@ -178,17 +177,10 @@ namespace OpenRA.Mods.CA.Traits
 		public void Detach(Attachable attachable)
 		{
 			attached.Remove(attachable);
+			attachedCount--;
 
-			if (attachedCounts.ContainsKey(attachable.Info.AttachableType))
-			{
-				attachedCounts[attachable.Info.AttachableType]--;
-
-				if (
-					Info.LimitConditions.ContainsKey(attachable.Info.AttachableType)
-					&& attachedCounts[attachable.Info.AttachableType] < Info.Limits[attachable.Info.AttachableType]
-					&& limitTokens[attachable.Info.AttachableType] != Actor.InvalidConditionToken)
-					limitTokens[attachable.Info.AttachableType] = self.RevokeCondition(limitTokens[attachable.Info.AttachableType]);
-			}
+			if (limitToken != Actor.InvalidConditionToken && (Info.Limit == 0 || attachedCount < Info.Limit))
+				limitToken = self.RevokeCondition(limitToken);
 		}
 
 		void INotifyStanceChanged.StanceChanged(Actor self, AutoTarget autoTarget, UnitStance oldStance, UnitStance newStance)

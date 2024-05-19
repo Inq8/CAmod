@@ -37,7 +37,7 @@ namespace OpenRA.Mods.CA.Activities
 			this.attachable = attachable;
 			move = self.TraitOrDefault<IMove>();
 			var moveInfo = self.Info.TraitInfoOrDefault<IMoveInfo>();
-			attachableTo = target.Actor.TraitsImplementing<AttachableTo>().FirstOrDefault();
+			attachableTo = target.Actor.TraitsImplementing<AttachableTo>().FirstOrDefault(a => a.CanAttach(attachable));
 			this.targetLineColor = targetLineColor ?? moveInfo.GetTargetLineColor();
 			state = AttachState.Approaching;
 		}
