@@ -1643,6 +1643,80 @@ shok:
 	icon:
 		Filename: shokicon.shp
 
+ttrp:
+	Inherits: ^CommonDeaths
+	stand:
+		Filename: ttrp.shp
+		Facings: 8
+	stand2:
+		Filename: ttrp.shp
+		Start: 8
+		Facings: 8
+	run:
+		Filename: ttrp.shp
+		Start: 16
+		Length: 6
+		Facings: 8
+		Tick: 120
+	shoot:
+		Filename: ttrp.shp
+		Start: 64
+		Length: 4
+		Facings: 8
+		Tick: 60
+	parachute:
+		Filename: ttrp.shp
+		Start: 2
+	idle1:
+		Filename: ttrp.shp
+		Start: 96
+		Length: 8
+		Tick: 160
+	idle2:
+		Filename: ttrp.shp
+		Start: 104
+		Length: 8
+		Tick: 160
+	die1:
+		Filename: ttrp.shp
+		Start: 111
+		Length: 14
+		Tick: 80
+	die2:
+		Filename: ttrp.shp
+		Start: 125
+		Length: 12
+	die3:
+		Filename: ttrp.shp
+		Start: 125
+		Length: 12
+	die4:
+		Filename: ttrp.shp
+		Start: 125
+		Length: 12
+	die5:
+		Filename: ttrp.shp
+		Start: 125
+		Length: 12
+	die7:
+		Filename: ttrp.shp
+		Start: 125
+		Length: 12
+	chrono-overlay:
+		Filename: chronofade_small.shp
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		ZOffset: 512
+		Tick: 80
+	mind-overlay:
+		Filename: mindanim.shp
+		Length: *
+		Tick: 200
+		BlendMode: Alpha
+		Offset: 0, 0
+	icon:
+		Filename: ttrpicon.shp
 
 c1:
 	Inherits: ^CommonDeaths
@@ -3813,64 +3887,174 @@ e8:
 		Filename: e8.shp
 		Start: 8
 		Facings: 8
-	deploy:
-		Filename: e8.shp
-		Start: 137
-		Length: 9
-		Tick: 80
-	deployed:
-		Filename: e8.shp
-		Start: 146
-		Length: 8
-		Tick: 80
 	run:
 		Filename: e8.shp
 		Start: 16
 		Length: 6
 		Facings: 8
-		Tick: 120
+		Tick: 100
 	shoot:
 		Filename: e8.shp
+		Start: 64
+		Length: 16
+		Facings: 8
+	liedown:
+		Filename: e8.shp
+		Start: 192
+		Length: 2
+		Facings: 8
+	standup:
+		Filename: e8.shp
+		Start: 240
+		Length: 2
+		Facings: 8
+	prone-stand:
+		Filename: e8.shp
+		Start: 208
+		Stride: 4
+		Facings: 8
+	prone-stand2:
+		Filename: e8.shp
+		Start: 208
+		Stride: 4
+		Facings: 8
+	prone-run:
+		Filename: e8.shp
+		Start: 208
+		Length: 4
+		Facings: 8
+		Tick: 100
+	prone-shoot:
+		Filename: e8.shp
+		Start: 256
+		Length: 16
+		Facings: 8
+	parachute:
+		Filename: e8.shp
+		Start: 528
+	idle1:
+		Filename: e8.shp
+		Start: 384
+		Length: 14
+		Tick: 120
+	idle2:
+		Filename: e8.shp
+		Start: 398
+		Length: 18
+		Tick: 120
+	die1:
+		Filename: e8.shp
+		Start: 415
+		Length: 9
+		Tick: 80
+	die2:
+		Filename: e8.shp
+		Start: 424
+		Length: 8
+		Tick: 80
+	die3:
+		Filename: e8.shp
+		Start: 432
+		Length: 8
+		Tick: 80
+	die4:
+		Filename: e8.shp
+		Start: 440
+		Length: 12
+		Tick: 80
+	die5:
+		Filename: e8.shp
+		Start: 452
+		Length: 18
+		Tick: 80
+	die7:
+		Filename: e8.shp
+		Start: 415
+		Length: 9
+		Tick: 80
+	chrono-overlay:
+		Filename: chronofade_small.shp
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		ZOffset: 512
+		Tick: 80
+	mind-overlay:
+		Filename: mindanim.shp
+		Length: *
+		Tick: 200
+		BlendMode: Alpha
+		Offset: 0, 0
+	icon:
+		Filename: e8icon.shp
+
+deso:
+	Inherits: ^CommonDeaths
+	stand:
+		Filename: deso.shp
+		Facings: 8
+	stand2:
+		Filename: deso.shp
+		Start: 8
+		Facings: 8
+	deploy:
+		Filename: deso.shp
+		Start: 137
+		Length: 9
+		Tick: 80
+	deployed:
+		Filename: deso.shp
+		Start: 146
+		Length: 8
+		Tick: 80
+	run:
+		Filename: deso.shp
+		Start: 16
+		Length: 6
+		Facings: 8
+		Tick: 120
+	shoot:
+		Filename: deso.shp
 		Start: 64
 		Length: 4
 		Facings: 8
 		Tick: 60
 	parachute:
-		Filename: e8.shp
+		Filename: deso.shp
 		Start: 2
 	idle1:
-		Filename: e8.shp
+		Filename: deso.shp
 		Start: 96
 		Length: 8
 		Tick: 160
 	idle2:
-		Filename: e8.shp
+		Filename: deso.shp
 		Start: 104
 		Length: 8
 		Tick: 160
 	die1:
-		Filename: e8.shp
+		Filename: deso.shp
 		Start: 111
 		Length: 14
 		Tick: 80
 	die2:
-		Filename: e8.shp
+		Filename: deso.shp
 		Start: 125
 		Length: 12
 	die3:
-		Filename: e8.shp
+		Filename: deso.shp
 		Start: 125
 		Length: 12
 	die4:
-		Filename: e8.shp
+		Filename: deso.shp
 		Start: 125
 		Length: 12
 	die5:
-		Filename: e8.shp
+		Filename: deso.shp
 		Start: 125
 		Length: 12
 	die7:
-		Filename: e8.shp
+		Filename: deso.shp
 		Start: 125
 		Length: 12
 	chrono-overlay:
@@ -5614,3 +5798,77 @@ enfo:
 		ZOffset: 512
 	icon:
 		Filename: enfoicon.shp
+
+hopl:
+	Inherits: ^CommonDeaths
+	stand:
+		Filename: hopl.shp
+		Facings: 8
+	stand2:
+		Filename: hopl.shp
+		Facings: 8
+	run:
+		Filename: hopl.shp
+		Start: 16
+		Length: 6
+		Facings: 8
+		Tick: 120
+	shoot:
+		Filename: hopl.shp
+		Start: 64
+		Length: 4
+		Facings: 8
+		Tick: 60
+	idle:
+		Filename: hopl.shp
+		Start: 96
+		Length: 8
+		Tick: 160
+	idle2:
+		Filename: hopl.shp
+		Start: 104
+		Length: 8
+		Tick: 160
+	die1:
+		Filename: hopl.shp
+		Start: 111
+		Length: 14
+		Tick: 80
+	die2:
+		Filename: hopl.shp
+		Start: 125
+		Length: 12
+	die3:
+		Filename: hopl.shp
+		Start: 125
+		Length: 12
+	die4:
+		Filename: hopl.shp
+		Start: 125
+		Length: 12
+	die5:
+		Filename: hopl.shp
+		Start: 125
+		Length: 12
+	die7:
+		Filename: hopl.shp
+		Start: 125
+		Length: 12
+	parachute:
+		Filename: hopl.shp
+		Start: 2
+	chrono-overlay:
+		Filename: chronofade_small.shp
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		ZOffset: 512
+		Tick: 80
+	emp-overlay:
+		Filename: emp_fx02.shp
+		Length: *
+		BlendMode: Additive
+		Offset: 0, -5
+		ZOffset: 512
+	icon:
+		Filename: hoplicon.shp

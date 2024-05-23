@@ -555,7 +555,7 @@ E4:
 	Health:
 		HP: 9000
 	Mobile:
-		Speed: 54
+		Speed: 46
 	Armament:
 		Weapon: FireballGun
 		LocalOffset: 341,0,256
@@ -1377,7 +1377,7 @@ SHOK:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 80
-		Prerequisites: tslaorstek, anyradar, ~barr, ~techlevel.medium
+		Prerequisites: tslaorstek, anyradar, ~infantry.shok, ~techlevel.medium
 		Description: Elite infantry with portable Tesla weapon.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
@@ -1448,6 +1448,28 @@ SHOK:
 	ProductionCostMultiplier@RussiaBonus:
 		Multiplier: 90
 		Prerequisites: player.russia
+	ReplacedInQueue:
+		Actors: ttrp
+
+TTRP:
+	Inherits: SHOK
+	Tooltip:
+		Name: Tesla Trooper
+	Valued:
+		Cost: 600
+	Health:
+		HP: 20000
+	Voiced:
+		VoiceSet: TeslaTrooperVoice
+	TakeCover:
+		ProneOffset: 0,0,0
+		ProneSequencePrefix:
+	-ReplacedInQueue:
+	Armament@PRIMARY:
+		Weapon: PortaTesla.UPG
+		LocalOffset: 300,0,300
+	Armament@BATF:
+		Weapon: PortaTesla.UPG
 
 N1:
 	Inherits: ^Soldier
@@ -2753,71 +2775,40 @@ E8:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
-		Attributes: • Irradiates vehicles causing them to take more damage,\n     deal less damage, and damage nearby units\n• Special Ability: Desolate Ground
 	Valued:
-		Cost: 650
+		Cost: 425
 	Tooltip:
-		Name: Desolator
+		Name: Rad Trooper
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 22500
-	Mobile:
-		Voice: Move
+		HP: 7500
 	RevealsShroud:
 		Range: 5c0
 	Armament@PRIMARY:
-		Weapon: RadBeamWeapon
-		LocalOffset: 300,0,341
+		Weapon: RadTrooperBeam
+		LocalOffset: 427,0,341
 	Armament@BATF:
 		Name: batf
-		Weapon: RadBeamWeapon
+		Weapon: RadTrooperBeam
 	TakeCover:
-		ProneOffset: 0,0,0
-		ProneSequencePrefix:
+		ProneOffset: 384,0,-395
 	AttackFrontal:
-		Voice: Attack
-		PauseOnCondition: being-warped || !undeployed
+		PauseOnCondition: being-warped
 		FacingTolerance: 0
-	AttackMove:
-		Voice: Move
-	Passenger:
-		Voice: Move
-	Guard:
-		Voice: Move
-	Voiced:
-		VoiceSet: DesVoice
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
-	-Crushable:
-	PeriodicExplosion:
-		Weapon: RadEruptionWeapon
-		RequiresCondition: deployed
 	Targetable@DESOLATOR:
 		TargetTypes: Desolator
-	GrantConditionOnDeploy:
-		DeployedCondition: deployed
-		UndeployedCondition: undeployed
-		UndeployOnMove: True
-		Voice: Attack
-		PauseOnCondition: being-warped
-		SmartDeploy: True
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
-		RequiresCondition: !being-warped && undeployed && !parachute
+		RequiresCondition: !being-warped && !parachute
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
 		RequiresCondition: parachute
-	WithSpriteBody@DEPLOYED:
-		Sequence: deployed
-		RequiresCondition: !undeployed
-		Name: deployed
-	WithMakeAnimation:
-		Sequence: deploy
-		BodyNames: deployed
 	GrantConditionOnPrerequisite@BIO:
 		Condition: biofirepower
 	FirepowerMultiplier@BIOLAB:
@@ -2847,6 +2838,65 @@ E8:
 		-RequiresCondition:
 	WithDecoration@BINO:
 		-BlinkPatterns:
+	ReplacedInQueue:
+		Actors: deso
+
+DESO:
+	Inherits: E8
+	Tooltip:
+		Name: Desolator
+	TooltipExtras:
+		Attributes: • Irradiates vehicles causing them to take more damage,\n     deal less damage, and damage nearby units\n• Special Ability: Desolate Ground
+	Valued:
+		Cost: 600
+	Health:
+		HP: 20000
+	Voiced:
+		VoiceSet: DesVoice
+	Mobile:
+		Voice: Move
+	AttackMove:
+		Voice: Move
+	Passenger:
+		Voice: Move
+	Guard:
+		Voice: Move
+	AttackFrontal:
+		Voice: Attack
+		PauseOnCondition: being-warped || !undeployed
+	GrantConditionOnDeploy:
+		DeployedCondition: deployed
+		UndeployedCondition: undeployed
+		UndeployOnMove: True
+		Voice: Attack
+	-Crushable:
+	TakeCover:
+		ProneOffset: 0,0,0
+		ProneSequencePrefix:
+	WithInfantryBody:
+		RequiresCondition: !being-warped && undeployed && !parachute
+	Armament@PRIMARY:
+		Weapon: DesolatorBeam
+		LocalOffset: 300,0,341
+	Armament@BATF:
+		Weapon: DesolatorBeam
+	PeriodicExplosion:
+		Weapon: RadEruptionWeapon
+		RequiresCondition: deployed
+	GrantConditionOnDeploy:
+		DeployedCondition: deployed
+		UndeployedCondition: undeployed
+		UndeployOnMove: True
+		PauseOnCondition: being-warped
+		SmartDeploy: True
+	WithSpriteBody@DEPLOYED:
+		Sequence: deployed
+		RequiresCondition: !undeployed
+		Name: deployed
+	WithMakeAnimation:
+		Sequence: deploy
+		BodyNames: deployed
+	-ReplacedInQueue:
 	AutoDeployer@AI:
 		RequiresCondition: botowner && !deployed && !parachute
 		DeployChance: 20
@@ -4551,7 +4601,7 @@ ENFO:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 	Valued:
-		Cost: 800
+		Cost: 700
 	Tooltip:
 		Name: Enforcer
 	UpdatesPlayerStatistics:
@@ -4599,6 +4649,24 @@ ENFO:
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
 		RequiresCondition: parachute
+	ReplacedInQueue:
+		Actors: hopl
+
+HOPL:
+	Inherits: ENFO
+	Buildable:
+		Prerequisites: ~tent, atek, ~techlevel.high
+		Description: Elite front-line infantry armed with a prism rifle.
+	Tooltip:
+		Name: Hoplite
+	Armament@PRIMARY:
+		Weapon: HopliteGun
+		LocalOffset: 350,40,341
+	Armament@BATF:
+		Weapon: HopliteGun
+	Voiced:
+		VoiceSet: HopliteVoice
+	-ReplacedInQueue:
 
 CRYT:
 	Inherits: ^Soldier
@@ -4615,7 +4683,7 @@ CRYT:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Buildings, Defenses\n• Cannot attack Aircraft
 	Valued:
-		Cost: 750
+		Cost: 600
 	Tooltip:
 		Name: Cryo Trooper
 	UpdatesPlayerStatistics:

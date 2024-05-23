@@ -816,6 +816,38 @@ seismic.upgrade:
 		SoundNotification: UPG-seismic
 		Delay: 60
 
+ttrp.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Tesla Trooper
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.soviet, ~!player.iraq, stek, ~techlevel.high
+		Description: Shock Troopers are phased out in favor of Tesla Troopers.\n\nReplaces: Shock Trooper
+	TooltipExtras:
+		Strengths: + Increased health\n+ Increased rate of fire
+		Weaknesses: – Increased cost
+	Valued:
+		Cost: 500
+	RenderSprites:
+		Image: ttrp.upgrade
+
+deso.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Desolator
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.soviet, ~player.iraq, stek, ~techlevel.high
+		Description: Rad Troopers are phased out in favor of Desolators.\n\nReplaces: Rad Trooper
+	TooltipExtras:
+		Strengths: + Increased health\n+ Splash damage\n+ Irradiates vehicles\n+ Desolate Ground ability
+		Weaknesses: – Increased cost
+	Valued:
+		Cost: 500
+	RenderSprites:
+		Image: deso.upgrade
+
 atomicengines.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -898,7 +930,7 @@ greece.coalition:
 	Buildable:
 		BuildPaletteOrder: 1
 		Prerequisites: ~player.allies, alhq, !greece.coalition, !korea.coalition, !sweden.coalition, ~techlevel.medium
-		Description: Form a coalition with Greece, required for:\n• Zeus Artillery\n• Helios Bomb\n\n
+		Description: Form a coalition with Greece, required for:\n• Zeus Artillery\n• Helios Bomb\n• Hoplite (replaces Enforcer)\n\n
 	TooltipExtras:
 		Attributes: (!) Only ONE Coalition may be chosen.
 	Valued:
@@ -916,7 +948,7 @@ korea.coalition:
 	Buildable:
 		BuildPaletteOrder: 2
 		Prerequisites: ~player.allies, alhq, !greece.coalition, !korea.coalition, !sweden.coalition, ~techlevel.medium
-		Description: Form a coalition with South Korea, required for:\n• Black Eagle\n• Patriot Strike\n\n
+		Description: Form a coalition with South Korea, required for:\n• Black Eagle\n• Patriot Strike\n• Improved Helipad (repairs without Service Depot, increased HP)\n\n
 	TooltipExtras:
 		Attributes: (!) Only ONE Coalition may be chosen.
 	Valued:
@@ -934,7 +966,7 @@ sweden.coalition:
 	Buildable:
 		BuildPaletteOrder: 3
 		Prerequisites: ~player.allies, alhq, !greece.coalition, !korea.coalition, !sweden.coalition, ~techlevel.medium
-		Description: Form a coalition with Sweden, required for:\n• Cryo Trooper\n• Cryostorm\n\n
+		Description: Form a coalition with Sweden, required for:\n• Cryo Trooper\n• Cryostorm\n• Cryo Rockets for Longbow\n\n
 	TooltipExtras:
 		Attributes: (!) Only ONE Coalition may be chosen.
 	Valued:
@@ -983,7 +1015,7 @@ cryr.upgrade:
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.allies, atek, ~techlevel.high
-		Description: Arms rocket equipped soldiers and Longbows with Cryo warheads which\n  cause targets to move more slowly and take increased damage.\n\nUpgrades: Rocket Soldier\nUpgrades: Guardian GI\nUpgrades: Longbow
+		Description: Arms rocket equipped soldiers with Cryo warheads which\n  cause targets to move more slowly and take increased damage.\n\nUpgrades: Rocket Soldier\nUpgrades: Guardian GI\nUpgrades: Longbow (with Sweden Coalition)
 	TooltipExtras:
 		Strengths: + Equip with Cryo Rockets which slow movement and increase damage taken
 	Valued:
@@ -1199,10 +1231,10 @@ evis.upgrade:
 		Description: Replaces: Ravager
 		IconPalette: chromes
 	TooltipExtras:
-		Strengths: + Increased damage\n+ Increased health
-		Weaknesses: – Increased cost\n– Reduced range
+		Strengths: + Increased damage\n+ Increased health\n+ Increased rate of fire
+		Weaknesses: – Increased cost\n– Reduced speed
 	Valued:
-		Cost: 750
+		Cost: 500
 	RenderSprites:
 		Image: evis.upgrade
 
@@ -1219,7 +1251,7 @@ impl.upgrade:
 		Strengths: + Increased range\n+ Increased damage\n+ Increased health\n+ Slows targets
 		Weaknesses: – Increased cost\n– Reduced speed\n– Reduced rate of fire
 	Valued:
-		Cost: 750
+		Cost: 500
 	RenderSprites:
 		Image: impl.upgrade
 

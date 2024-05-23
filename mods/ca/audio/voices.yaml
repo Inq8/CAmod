@@ -447,13 +447,16 @@ YuriVoice:
 		Build: iyursec
 
 DesVoice:
-	Inherits: ^InfantryDeaths
 	Voices:
 		Select: idesseb,idessec,idessed,idessee
 		Move: idesmoa,idesmob,idesmoc,idesmod,idesmoe
 		Attack: idesata,idesatb,idesatc,idesatd,idesate,idesatf
 		Action:  idesmoa,idesmob,idesmoc,idesmod,idesmoe
 		Build: idessea
+		Die: idesdia, idesdib, idesdic
+		Burned: idesdia, idesdib, idesdic
+		Zapped: idesdia, idesdib, idesdic
+		Poisoned: idesdia, idesdib, idesdic
 
 BorisVoice:
 	Voices:
@@ -657,6 +660,17 @@ TeslaTankRA2Voice:
 		Move: vtesmoa, vtesmob, vtesmoc, vtesmod, vtesmoe
 		Attack: vtesata, vtesatb, vtesatc, vtesatd, vtesate
 		Action: vtesmoa, vtesmob, vtesmoc, vtesmod, vtesmoe
+
+TeslaTrooperVoice:
+	Voices:
+		Select: itessea, itessec, itessed, itessee
+		Move: itesmoa, itesmob, itesmoc, itesmod, itesmoe, itesmof
+		Attack: itesata, itesatb, itesatc, itesatd, itesate
+		Action: itesmoa, itesmob, itesmoc, itesmod, itesmoe, itesmof
+		Die: itesdia, itesdib, itesdic, itesdid
+		Burned: itesdia, itesdib, itesdic, itesdid
+		Zapped: itesdia, itesdib, itesdic, itesdid
+		Poisoned: itesdia, itesdib, itesdic, itesdid
 
 RhinoTankVoice:
 	Voices:
@@ -1067,6 +1081,12 @@ EnforcerVoice:
 		Burned: enfo-die1, enfo-die2, enfo-die3
 		Zapped: enfo-die1, enfo-die2, enfo-die3
 		Poisoned: enfo-die1, enfo-die2, enfo-die3
+
+HopliteVoice:
+	Inherits: EnforcerVoice
+	Voices:
+		Select: hopl-select1, enfo-select2, enfo-select3, enfo-select4
+		Attack: enfo-attack1, enfo-attack2, enfo-attack3, hopli-attack1
 
 CryoTrooperVoice:
 	Voices:
