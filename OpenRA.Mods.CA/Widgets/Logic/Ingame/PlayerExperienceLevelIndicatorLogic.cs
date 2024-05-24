@@ -14,17 +14,17 @@ using OpenRA.Widgets;
 
 namespace OpenRA.Mods.CA.Widgets.Logic
 {
-	class PlayerExperienceRankIndicatorLogic : ChromeLogic
+	class PlayerExperienceLevelIndicatorLogic : ChromeLogic
 	{
 		[TranslationReference("level")]
 		const string PlayerLevel = "label-player-level";
 
 		[ObjectCreator.UseCtor]
-		public PlayerExperienceRankIndicatorLogic(Widget widget, World world)
+		public PlayerExperienceLevelIndicatorLogic(Widget widget, World world)
 		{
 			var playerExperienceLevels = world.LocalPlayer.PlayerActor.Trait<PlayerExperienceLevels>();
-			var rankImage = widget.Get<ImageWidget>("PLAYER_EXPERIENCE_RANK");
-			rankImage.GetImageName = () => "rank" + playerExperienceLevels.CurrentLevel;
+			var rankImage = widget.Get<ImageWidget>("PLAYER_EXPERIENCE_LEVEL");
+			rankImage.GetImageName = () => "level" + playerExperienceLevels.CurrentLevel;
 			rankImage.IsVisible = () => playerExperienceLevels.Enabled;
 
 			var tooltipTextCached = new CachedTransform<string, string>((Level) =>

@@ -3938,16 +3938,85 @@ BEAG:
 		ChuteSound: gejecta.aud
 
 PHAN:
-	Inherits: BEAG
-	Inherits@InfiltratorStolenTech: ^InfiltratorStolenTech
+	Inherits: ^Helicopter
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Buildable:
+		Queue: AircraftSQ, AircraftMQ
+		BuildAtProductionType: Helicopter
+		BuildPaletteOrder: 200
 		Prerequisites: anyradar, ~aircraft.phan
+		Description: Air superiority fighter with range/vision reducing missiles.
+	TooltipExtras:
+		Strengths: • Strong vs Aircraft, Heavy Armor, Light Armor
+		Weaknesses: • Weak vs Infantry, Buildings
+		Attributes: • Reduces range and vision of targets
+	Valued:
+		Cost: 1800
 	Tooltip:
 		Name: Phantom
+		GenericName: Aircraft
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 18000
+	RevealsShroud:
+		Range: 11c0
+		MinRange: 9c0
+		Type: GroundPosition
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 9c0
+		Type: GroundPosition
+	Armament@PRIMARY:
+		Weapon: PhantomMissiles
+		LocalOffset: 150,-400,0, 150,400,0
+		PauseOnCondition: !ammo
+	Armament@SECONDARY:
+		Weapon: PhantomMissilesAA
+		LocalOffset: 150,-400,0, 150,400,0
+		PauseOnCondition: !ammo
+	AttackAircraft:
+		FacingTolerance: 80
+		PersistentTargeting: false
+		OpportunityFire: true
+		PauseOnCondition: empdisable || being-warped
+	Aircraft:
+		CruiseAltitude: 2560
+		TurnSpeed: 16
+		Speed: 225
+		RepulsionSpeed: 40
+		MaximumPitch: 56
+		CanHover: False
+		TakeoffSounds: vblelo1a.aud
+		LandingSounds: vblelo3.aud
+		CanSlide: False
+		AltitudeVelocity: 0c200
+	SoundOnDamageTransitionCA:
+		DestroyedSounds: vblediea.aud, vbledieb.aud
+		RequiresCondition: airborne
+	AutoTarget:
+		InitialStance: HoldFire
+		InitialStanceAI: AttackAnything
+	AmmoPool:
+		Ammo: 4
+		AmmoCondition: ammo
+		ReloadDelay: 35
+	WithAmmoPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
 	Contrail@1:
 		Offset: 50,-680,80
+		StartColorUsePlayerColor: false
+		ZOffset: -512
+		StartColor: FFFFFF80
+		StartColorAlpha: 96
 	Contrail@2:
 		Offset: 50,680,80
+		StartColorUsePlayerColor: false
+		ZOffset: -512
+		StartColor: FFFFFF80
+		StartColorAlpha: 96
 	Contrail@Inner1:
 		TrailLength: 15
 		Offset: -300,-70,80
@@ -3964,12 +4033,40 @@ PHAN:
 		ZOffset: -512
 	SpawnActorOnDeath:
 		Actor: PHAN.Husk
+		RequiresCondition: airborne && ammo && !empdisable && !being-warped
 	SpawnActorOnDeath@Empty:
 		Actor: PHAN.Husk.empty
+		RequiresCondition: airborne && !ammo && !empdisable && !being-warped
 	SpawnActorOnDeath@EMP:
 		Actor: PHAN.Husk.EMP
+		RequiresCondition: airborne && ammo && empdisable && !being-warped
 	SpawnActorOnDeath@EmptyEMP:
 		Actor: PHAN.Husk.empty.EMP
+		RequiresCondition: airborne && !ammo && empdisable && !being-warped
+	LeavesTrails:
+		Offsets: -427,0,0
+		Image: smokey
+		MovingInterval: 3
+		StationaryInterval: 3
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
+		RequiresCondition: enable-smoke
+	Selectable:
+		DecorationBounds: 1536, 1194
+	ProducibleWithLevel:
+		Prerequisites: aircraft.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: aircraft.upgraded
+	Rearmable:
+		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
+	GrantConditionOnDamageState@SmokeTrail:
+		Condition: enable-smoke
+	GpsRadarDot:
+		Sequence: Plane
+	EjectOnDeath:
+		ChuteSound: gejecta.aud
 
 KAMV:
 	Inherits: ^Helicopter
@@ -4625,8 +4722,8 @@ JACK:
 		Prerequisites: afld.gdi, ~aircraft.arc, ~techlevel.medium
 		Description: Loitering munition that dives at ground targets and explodes.
 	TooltipExtras:
-		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses, Infantry
-		Weaknesses: • Weak vs Buildings\n• Cannot attack Aircraft
+		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
+		Weaknesses: • Weak vs Buildings, Defenses\n• Cannot attack Aircraft
 	Aircraft:
 		AltitudeVelocity: 0c100
 		TurnSpeed: 20

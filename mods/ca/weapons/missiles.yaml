@@ -2118,7 +2118,7 @@ BlackEagleMissiles:
 
 BlackEagleMissilesAA:
 	Inherits: MaverickAA
-	Range: 8c0
+	Range: 9c0
 	Report: beag-fire1.aud, beag-fire2.aud
 	-Burst:
 	-BurstDelays:
@@ -2139,6 +2139,36 @@ BlackEagleMissilesAA:
 		ExplosionPalette: effect
 		ImpactSounds: veilblast.aud
 		ValidTargets: Ground, Air, Ship, Trees
+
+PhantomMissiles:
+	Inherits: BlackEagleMissiles
+	Burst: 2
+	BurstDelays: 8
+	Projectile: MissileCA
+		Speed: 550
+		TrailInterval: 1
+	Warhead@1Dam: SpreadDamage
+		Damage: 12000
+	Warhead@VeiledCondition: GrantExternalConditionCA
+		Range: 1c512
+		Duration: 200
+	Warhead@3Eff: CreateEffect
+		Explosions: idlesm
+
+PhantomMissilesAA:
+	Inherits: BlackEagleMissilesAA
+	Burst: 2
+	BurstDelays: 8
+	Projectile: MissileCA
+		Speed: 550
+		TrailInterval: 1
+	Warhead@1Dam: SpreadDamage
+		Damage: 8000
+	Warhead@VeiledCondition: GrantExternalConditionCA
+		Range: 1c512
+		Duration: 200
+	Warhead@3Eff: CreateEffect
+		Explosions: idlesm
 
 RocketShells:
 	Inherits: JuggernautGun

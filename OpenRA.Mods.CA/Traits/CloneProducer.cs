@@ -83,8 +83,6 @@ namespace OpenRA.Mods.Common.Traits
 			var sp = self.TraitsImplementing<Production>()
 				.FirstOrDefault(p => !p.IsTraitDisabled && !p.IsTraitPaused && p.Info.Produces.Where(p => Info.Types.Contains(p)).Any());
 
-			var produced = false;
-
 			if (sp != null)
 			{
 				var inits = new TypeDictionary

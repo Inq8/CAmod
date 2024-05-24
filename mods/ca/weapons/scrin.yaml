@@ -1928,13 +1928,21 @@ ObliteratorBolt:
 		Spread: 256
 		Damage: 5000
 		Versus:
-			None: 100
-			Wood: 100
-			Light: 100
-			Heavy: 100
-			Concrete: 100
-			Brick: 100
+			Wood: 85
+			Concrete: 90
+			Heavy: 75
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		ValidRelationships: Enemy, Neutral
+	Warhead@friendlyFire: SpreadDamage
+		Spread: 256
+		Damage: 1000
+		Versus:
+			Wood: 85
+			Concrete: 90
+			Heavy: 75
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		ValidRelationships: Ally
+		InvalidTargets: Obliterator
 	Warhead@2Eff: CreateFacingEffect
 		Explosions: trail, trail2
 		ExplosionPalette: scrin
@@ -1942,12 +1950,9 @@ ObliteratorBolt:
 		ValidTargets: Ground, Air, Ship, Trees
 		Inaccuracy: 110
 
-ObliteratorBoltImpact:
-	Inherits: ObliteratorBolt
-
 NullifierBolt:
 	Range: 8c0
-	ReloadDelay: 100
+	ReloadDelay: 80
 	Report: null-fire1.aud
 	Projectile: BulletCA
 		Image: nullbolt
@@ -1968,7 +1973,7 @@ NullifierBolt:
 		Versus:
 			None: 100
 			Wood: 40
-			Light: 75
+			Light: 65
 			Heavy: 15
 			Concrete: 40
 			Brick: 0

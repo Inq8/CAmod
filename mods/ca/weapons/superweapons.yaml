@@ -979,7 +979,7 @@ DeathHandCluster:
 			None: 90
 			Concrete: 50
 			Brick: 75
-			Wood: 30
+			Wood: 25
 			Light: 60
 			Heavy: 60
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
@@ -1314,13 +1314,14 @@ Cryostorm:
 OverlordsWrath:
 	Projectile: InstantHit
 	Warhead@1Dam: SpreadDamage
-		Spread: 4c512
-		Damage: 50000
+		Spread: 4c0
+		Damage: 75000
 		Falloff: 100, 0
 		Versus:
 			None: 10
-			Light: 50
-			Heavy: 30
+			Light: 45
+			Heavy: 70
+			Concrete: 80
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@3Eff_impact: CreateEffect
 		Image: tibmeteor

@@ -34,6 +34,13 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("If true, the prerequisite is permanent once the count is reached.")]
 		public readonly bool Permanent = true;
 
+		[NotificationReference("Speech")]
+		[Desc("Speech notification to play when player levels up.")]
+		public readonly string RequiredCountReachedNotification = null;
+
+		[Desc("Text notification to display when player levels up.")]
+		public readonly string RequiredCountReachedTextNotification = null;
+
 		IEnumerable<string> ITechTreePrerequisiteInfo.Prerequisites(ActorInfo info)
 		{
 			return new string[] { Prerequisite };
@@ -67,6 +74,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		public string Name => info.Name;
 		public string[] Factions => info.Factions;
+		public int CurrentCount => count;
 
 		public IEnumerable<string> ProvidesPrerequisites
 		{
@@ -95,8 +103,17 @@ namespace OpenRA.Mods.CA.Traits
 			count++;
 			techTree.ActorChanged(self);
 
-			if (info.Permanent && count >= info.RequiredCount)
-				permanentlyUnlocked = true;
+			if (count >= info.RequiredCount)
+			{
+				if (!permanentlyUnlocked && info.RequiredCountReachedNotification != null)
+					Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", info.RequiredCountReachedNotification, self.Owner.Faction.InternalName);
+
+				if (!permanentlyUnlocked && info.RequiredCountReachedTextNotification != null)
+					TextNotificationsManager.AddTransientLine(info.RequiredCountReachedTextNotification, self.Owner);
+
+				if (info.Permanent)
+					permanentlyUnlocked = true;
+			}
 		}
 
 		public void Decrement()

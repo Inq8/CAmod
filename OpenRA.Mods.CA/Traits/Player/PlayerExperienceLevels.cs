@@ -89,8 +89,12 @@ namespace OpenRA.Mods.CA.Traits
 				nextLevelXpRequired = Info.LevelXpRequirements[currentLevel];
 
 			techTree.ActorChanged(self);
-			Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", Info.LevelUpNotification, self.Owner.Faction.InternalName);
-			TextNotificationsManager.AddTransientLine(string.Format(Info.LevelUpTextNotification, currentLevel), self.Owner);
+
+			if (Info.LevelUpNotification != null)
+				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", Info.LevelUpNotification, self.Owner.Faction.InternalName);
+
+			if (Info.LevelUpTextNotification != null)
+				TextNotificationsManager.AddTransientLine(string.Format(Info.LevelUpTextNotification, currentLevel), self.Owner);
 		}
 	}
 }
