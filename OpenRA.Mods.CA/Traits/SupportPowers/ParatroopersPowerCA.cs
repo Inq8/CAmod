@@ -66,13 +66,19 @@ namespace OpenRA.Mods.Common.Traits
 		[Desc("Weapon range offset to apply during the beacon clock calculation.")]
 		public readonly WDist BeaconDistanceOffset = WDist.FromCells(4);
 
-		[Desc("Overrides UnitType based on prerequsites being met. If multiple are met, the first is used.")]
+		[Desc("Prerequisites grouped together to be referenced by the Prerequisite based overrides.")]
+		public readonly Dictionary<string, string[]> PrerequisiteGroupings = new();
+
+		[Desc("Overrides UnitType based on prerequsites being met. If multiple are met, the first is used.",
+			"Keys can either be a single prerequisite or be a key of PrerequisiteGroupings.")]
 		public readonly Dictionary<string, string> PrerequisiteUnitTypes = new();
 
-		[Desc("Overrides SquadSize based on prerequsites being met. If multiple are met, the first is used.")]
+		[Desc("Overrides SquadSize based on prerequsites being met. If multiple are met, the first is used.",
+			"Keys can either be a single prerequisite or be a key of PrerequisiteGroupings.")]
 		public readonly Dictionary<string, int> PrerequisiteSquadSizes = new();
 
-		[Desc("Overrides DropItems based on prerequsites being met. If multiple are met, the first is used.")]
+		[Desc("Overrides DropItems based on prerequsites being met. If multiple are met, the first is used.",
+			"Keys can either be a single prerequisite or be a key of PrerequisiteGroupings.")]
 		public readonly Dictionary<string, string[]> PrerequisiteDropItems = new();
 
 		public override object Create(ActorInitializer init) { return new ParatroopersPowerCA(init.Self, this); }
@@ -314,7 +320,7 @@ namespace OpenRA.Mods.Common.Traits
 			{
 				foreach (var item in info.PrerequisiteUnitTypes)
 				{
-					if (techTree.HasPrerequisites(new string[] { item.Key }))
+					if (techTree.HasPrerequisites(GetPrerequisitesList(item.Key)))
 						return item.Value;
 				}
 			}
@@ -328,7 +334,7 @@ namespace OpenRA.Mods.Common.Traits
 			{
 				foreach (var item in info.PrerequisiteSquadSizes)
 				{
-					if (techTree.HasPrerequisites(new string[] { item.Key }))
+					if (techTree.HasPrerequisites(GetPrerequisitesList(item.Key)))
 						return item.Value;
 				}
 			}
@@ -342,12 +348,20 @@ namespace OpenRA.Mods.Common.Traits
 			{
 				foreach (var item in info.PrerequisiteDropItems)
 				{
-					if (techTree.HasPrerequisites(new string[] { item.Key }))
+					if (techTree.HasPrerequisites(GetPrerequisitesList(item.Key)))
 						return item.Value;
 				}
 			}
 
 			return info.DropItems;
+		}
+
+		string[] GetPrerequisitesList(string key)
+		{
+			if (info.PrerequisiteGroupings.TryGetValue(key, out var prerequisites))
+				return prerequisites;
+
+			return new string[] { key };
 		}
 	}
 }
