@@ -5,7 +5,7 @@ V2RL:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 170
+		BuildPaletteOrder: 180
 		Prerequisites: anyradar, ~vehicles.v2, ~v2.upgrade, ~techlevel.medium
 		Description: Long-range rocket artillery.
 	TooltipExtras:
@@ -64,7 +64,7 @@ KATY:
 	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 61
+		BuildPaletteOrder: 130
 		IconPalette: chrometd
 		Prerequisites: ~vehicles.soviet, ~!v2.upgrade, ~techlevel.low
 		Description: Long-range rocket artillery.
@@ -125,7 +125,7 @@ KATY:
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 40
+		BuildPaletteOrder: 120
 		Prerequisites: ~vehicles.allies, ~techlevel.low
 		Description: Fast tank, good for scouting.
 	TooltipExtras:
@@ -194,7 +194,7 @@ KATY:
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 30
+		BuildPaletteOrder: 70
 		Prerequisites: ~vehicles.2tnk, ~techlevel.low
 		Description: Allied main battle tank.
 	TooltipExtras:
@@ -292,7 +292,7 @@ GTNK.squad:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildAtProductionType: ParadropVehicle
-		BuildPaletteOrder: 440
+		BuildPaletteOrder: 400
 		Prerequisites: radaroraircraft, ~vehicles.usa, ~techlevel.medium
 		Description: Prepare a pair of  Grizzly Tanks for airdrop.
 	TooltipExtras:
@@ -525,7 +525,7 @@ GTNK.squad:
 	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 32
+		BuildPaletteOrder: 80
 		Prerequisites: ~!atomicengines.upgrade, ~!lasher.upgrade, ~vehicles.3tnk, ~techlevel.low
 		Description: Soviet main battle tank with dual cannons.
 	TooltipExtras:
@@ -608,7 +608,7 @@ GTNK.squad:
 		Image: 3tnki
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 33
+		BuildPaletteOrder: 81
 		Prerequisites: ~atomicengines.upgrade, ~!lasher.upgrade, ~vehicles.3tnk, ~techlevel.low
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
@@ -648,7 +648,7 @@ GTNK.squad:
 		Image: 3tnky
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 34
+		BuildPaletteOrder: 84
 		Prerequisites: ~lasher.upgrade, ~!atomicengines.upgrade, ~vehicles.3tnk, ~techlevel.low
 		Description: Heavy tank with infantry crushing improvements.
 	TooltipExtras:
@@ -715,7 +715,7 @@ GTNK.squad:
 		Image: 3tnkay
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 35
+		BuildPaletteOrder: 85
 		Prerequisites: ~lasher.upgrade, ~atomicengines.upgrade, ~vehicles.3tnk, ~techlevel.low
 		Description: Heavy tank with infantry crushing improvements.
 	TooltipExtras:
@@ -780,7 +780,7 @@ GTNK.squad:
 	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 701
+		BuildPaletteOrder: 82
 		Prerequisites: ~!atomicengines.upgrade, ~techlevel.low, ~disabled
 		Description: Soviet designed heavy tank.
 	RenderSprites:
@@ -866,7 +866,7 @@ GTNK.squad:
 	RenderSprites:
 		Image: rhini
 	Buildable:
-		BuildPaletteOrder: 702
+		BuildPaletteOrder: 83
 		Prerequisites: ~atomicengines.upgrade, ~techlevel.low, ~disabled
 	TooltipExtras:
 		Attributes: • Explodes and leaves radiation on death
@@ -897,7 +897,7 @@ GTNK.squad:
 	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 290
+		BuildPaletteOrder: 231
 		Prerequisites: stek, ~vehicles.soviet, ~!erad.upgrade, ~!atomicengines.upgrade, ~techlevel.high
 		Description: Big and slow tank with anti-air capability.
 	TooltipExtras:
@@ -1014,7 +1014,7 @@ GTNK.squad:
 	RenderSprites:
 		Image: 4tnki
 	Buildable:
-		BuildPaletteOrder: 291
+		BuildPaletteOrder: 235
 		Prerequisites: stek, ~vehicles.soviet, ~atomicengines.upgrade, ~!erad.upgrade, ~techlevel.high
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
@@ -1051,6 +1051,7 @@ GTNK.squad:
 	Buildable:
 		Prerequisites: stek, ~vehicles.soviet, ~!atomicengines.upgrade, ~erad.upgrade, ~techlevel.high
 		Description: Big and slow tank armed with a radiation cannon.
+		BuildPaletteOrder: 232
 	Armament@PRIMARY:
 		Weapon: RadBeamWeaponHeavy
 		LocalOffset: 400,0,340
@@ -1095,6 +1096,7 @@ GTNK.squad:
 	Buildable:
 		Prerequisites: stek, ~vehicles.soviet, ~atomicengines.upgrade, ~erad.upgrade, ~techlevel.high
 		Description: Big and slow tank armed with a radiation cannon.
+		BuildPaletteOrder: 236
 	Armament@PRIMARY:
 		Weapon: RadBeamWeaponHeavy
 		LocalOffset: 400,0,340
@@ -1123,7 +1125,7 @@ ARTY:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 60
+		BuildPaletteOrder: 122
 		Prerequisites: ~vehicles.allies, ~techlevel.low
 		Description: Long-range artillery.
 	TooltipExtras:
@@ -1178,7 +1180,7 @@ ARTY.nod:
 	RenderSprites:
 		Image: artynod
 	Buildable:
-		BuildPaletteOrder: 62
+		BuildPaletteOrder: 151
 		IconPalette: chrometd
 		Prerequisites: ~vehicles.nod, ~!howi.upgrade, ~techlevel.low
 	Armament:
@@ -1201,7 +1203,7 @@ HOWI:
 	Tooltip:
 		Name: Howitzer
 	Buildable:
-		BuildPaletteOrder: 63
+		BuildPaletteOrder: 152
 		Prerequisites: ~vehicles.nod, ~howi.upgrade, ~techlevel.medium
 	-AttackFrontal:
 	AttackTurreted:
@@ -1303,7 +1305,7 @@ ISU:
 	Inherits@ATOMICAMMO: ^AtomicAmmunition
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 180
+		BuildPaletteOrder: 183
 		Prerequisites: anyradar, ~vehicles.ukraine, ~techlevel.medium
 		Description: Powerful medium-range artillery.
 	TooltipExtras:
@@ -1384,7 +1386,7 @@ SPEC:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 241
+		BuildPaletteOrder: 271
 		IconPalette: chrometd
 		Prerequisites: tmpl, ~vehicles.shadow, ~techlevel.high
 		Description: Long-range stealth artillery.
@@ -1474,7 +1476,7 @@ SAPC:
 	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 255
+		BuildPaletteOrder: 272
 		Prerequisites: tmpl, ~vehicles.nod, ~techlevel.high
 		Description: Stealth infantry transport.
 	TooltipExtras:
@@ -1735,7 +1737,7 @@ MCV:
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 435
+		BuildPaletteOrder: 600
 		Prerequisites: vehicles.mcv, ~vehicles.ra, ~techlevel.low
 		Description: Deploys into another Construction Yard.
 		BuildDurationModifier: 50
@@ -1910,7 +1912,7 @@ APC:
 	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 50
+		BuildPaletteOrder: 121
 		Prerequisites: ~vehicles.allies, ~!rapc.upgrade, ~techlevel.low
 		Description: Tough infantry transport.
 	TooltipExtras:
@@ -2047,7 +2049,7 @@ MNLY:
 	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 445
+		BuildPaletteOrder: 340
 		Prerequisites: repair, ~techlevel.low, ~vehicles.human
 		Description: Lays mines to destroy unwary enemy units.
 	TooltipExtras:
@@ -2124,7 +2126,7 @@ TRUK:
 	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 450
+		BuildPaletteOrder: 350
 		Prerequisites: ~techlevel.low, ~vehicles.human
 		Description: Transports cash to other players.
 		BuildDurationModifier: 30
@@ -2182,7 +2184,7 @@ MGG:
 	Inherits@AUTOTARGET: ^AutoTargetGround
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 380
+		BuildPaletteOrder: 301
 		Prerequisites: atek, ~vehicles.allies, ~techlevel.high
 		Description: Regenerates the shroud nearby, obscuring enemy vision.\n  Can channel the effect to reduce enemy weapon range and vision.
 	TooltipExtras:
@@ -2248,7 +2250,7 @@ MRJ:
 		AddToArmyValue: true
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 360
+		BuildPaletteOrder: 300
 		Prerequisites: atek, ~vehicles.allies, ~techlevel.high
 		Description: Support vehicle that can disrupt enemy targeting systems.
 	TooltipExtras:
@@ -2295,7 +2297,7 @@ MSG:
 	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 385
+		BuildPaletteOrder: 330
 		Prerequisites: anyradar, ~vehicles.shadow, ~techlevel.medium
 		Description: Support unit that projects a cloaking field.
 	TooltipExtras:
@@ -2376,7 +2378,7 @@ TTRA:
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 235
+		BuildPaletteOrder: 230
 		Prerequisites: stek, ~vehicles.soviet, ~techlevel.high
 		Description: Half-track with mounted Tesla Coil.
 	TooltipExtras:
@@ -2446,7 +2448,7 @@ TTNK:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 200
+		BuildPaletteOrder: 182
 		Prerequisites: tslaorstek, anyradar, ~vehicles.russia, ~techlevel.medium
 		Description: Tank with twin mounted Tesla Coils.
 	TooltipExtras:
@@ -2512,7 +2514,7 @@ DTRK:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 420
+		BuildPaletteOrder: 312
 		Prerequisites: stek, ~vehicles.soviet, ~techlevel.high
 		Description: Truck carrying nuclear explosives.
 	TooltipExtras:
@@ -2567,7 +2569,7 @@ CTNK:
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 260
+		BuildPaletteOrder: 220
 		Prerequisites: atek, ~vehicles.allies, ~techlevel.high
 		Description: Teleporting tank armed with twin missile launchers.
 	TooltipExtras:
@@ -2638,7 +2640,7 @@ QTNK:
 	Inherits: ^Tank
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 390
+		BuildPaletteOrder: 310
 		Prerequisites: stek, ~vehicles.qtnk, ~techlevel.high
 		Description: Deals seismic damage to nearby vehicles and structures.
 	TooltipExtras:
@@ -2703,7 +2705,7 @@ AMCV:
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 436
+		BuildPaletteOrder: 601
 		Prerequisites: vehicles.mcv, ~vehicles.td, ~techlevel.low
 		IconPalette: chrometd
 		Description: Deploys into another Construction Yard.
@@ -2764,7 +2766,7 @@ HMMV:
 	RenderSprites:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 22
+		BuildPaletteOrder: 40
 		IconPalette: chrometd
 		Prerequisites: ~vehicles.hmmv, ~!tow.upgrade, ~techlevel.low
 		Description: Fast scout & anti-infantry vehicle.
@@ -2876,7 +2878,7 @@ GDRN:
 	RenderSprites:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 22
+		BuildPaletteOrder: 41
 		IconPalette: chrome
 		Prerequisites: ~vehicles.arc, ~!tow.upgrade, ~techlevel.low
 		Description: Fast scout & anti-tank drone.
@@ -2998,7 +3000,7 @@ BGGY:
 	RenderSprites:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 23
+		BuildPaletteOrder: 50
 		IconPalette: chrometd
 		Prerequisites: ~vehicles.nod, ~techlevel.low
 		Description: Fast scout & anti-infantry vehicle.
@@ -3238,7 +3240,7 @@ APC2:
 			shadow: apc2.nod
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 51
+		BuildPaletteOrder: 140
 		Prerequisites: ~vehicles.td, ~!vulcan.upgrade, ~vehicles.apc2, ~techlevel.low
 		IconPalette: chrometd
 		Description: Tough infantry transport.
@@ -3369,7 +3371,7 @@ VULC:
 	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 52
+		BuildPaletteOrder: 141
 		Prerequisites: ~vehicles.gdi, ~vulcan.upgrade, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Tough infantry transport, armed with a powerful chaingun.
@@ -3569,7 +3571,7 @@ LTNK:
 	RenderSprites:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 35
+		BuildPaletteOrder: 100
 		IconPalette: chrometd
 		Prerequisites: ~vehicles.ltnk, ~techlevel.low
 		Description: Fast, light tank.
@@ -3664,7 +3666,7 @@ MTNK:
 			shadow: mtnk.nod
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 34
+		BuildPaletteOrder: 90
 		Prerequisites: ~!bdrone.upgrade, ~vehicles.mtnk, ~techlevel.low
 		IconPalette: chrometd
 		Description: Main battle tank.
@@ -3793,6 +3795,7 @@ MTNK.Drone:
 		Prerequisites: ~bdrone.upgrade, ~vehicles.mtnk, ~techlevel.high
 		IconPalette: chrometd
 		Description: Remotely piloted battle tank.
+		BuildPaletteOrder: 91
 	TooltipExtras:
 		Attributes: • Requires active radar communication\n• Self repairs to 50% out of combat\n• Immune to mind control
 	Valued:
@@ -3869,7 +3872,7 @@ MDRN:
 		Name: Mini Drone
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 105
+		BuildPaletteOrder: 192
 		Prerequisites: anyradar, ~vehicles.arc, ~techlevel.medium
 		Description: Hovering drone with machine gun.
 	TooltipExtras:
@@ -4018,7 +4021,7 @@ HTNK:
 	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 300
+		BuildPaletteOrder: 252
 		IconPalette: chrometd
 		Prerequisites: ~!mdrone.upgrade, gtek, ~vehicles.htnk, ~!ionmam.upgrade, ~!hovermam.upgrade, ~techlevel.high
 		Description: Big and slow tank with anti-air capability.
@@ -4120,7 +4123,7 @@ HTNK:
 HTNK.Ion:
 	Inherits: HTNK
 	Buildable:
-		BuildPaletteOrder: 301
+		BuildPaletteOrder: 253
 		Prerequisites: gtek, ~vehicles.htnk, ~ionmam.upgrade, ~techlevel.high
 	Tooltip:
 		Name: Ion Mammoth Tank
@@ -4143,7 +4146,7 @@ HTNK.Hover:
 		Name: Hover Mammoth Tank
 		GenericName: Tank
 	Buildable:
-		BuildPaletteOrder: 302
+		BuildPaletteOrder: 254
 		Prerequisites: gtek, ~vehicles.htnk, ~hovermam.upgrade, ~techlevel.high
 		Description: Big and fairly mobile tank with anti-air capability.
 	TooltipExtras:
@@ -4183,7 +4186,7 @@ HTNK.Drone:
 	Inherits@HACKABLE: ^Hackable
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 300
+		BuildPaletteOrder: 255
 		IconPalette: chrometd
 		Prerequisites: ~mdrone.upgrade, gtek, ~vehicles.htnk, ~techlevel.high
 		Description: Remotely piloted heavy tank with anti-air capability.
@@ -4380,7 +4383,7 @@ MLRS:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 240
+		BuildPaletteOrder: 270
 		Prerequisites: tmpl, ~vehicles.mlrs, ~techlevel.high
 		Queue: VehicleSQ, VehicleMQ
 		IconPalette: chrometd
@@ -4484,7 +4487,7 @@ STNK.Nod:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 160
+		BuildPaletteOrder: 201
 		Prerequisites: anyradar, ~vehicles.nod, ~techlevel.medium
 		Queue: VehicleSQ, VehicleMQ
 		IconPalette: chrometd
@@ -4580,7 +4583,7 @@ BIKE:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 41
+		BuildPaletteOrder: 150
 		Prerequisites: ~vehicles.nod, ~techlevel.low
 		Queue: VehicleSQ, VehicleMQ
 		IconPalette: chrometd
@@ -4650,7 +4653,7 @@ FTNK:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 130
+		BuildPaletteOrder: 200
 		Prerequisites: anyradar, ~vehicles.ftnk, ~techlevel.medium
 		Queue: VehicleSQ, VehicleMQ
 		IconPalette: chrometd
@@ -4896,7 +4899,7 @@ BTR:
 	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 21
+		BuildPaletteOrder: 30
 		Prerequisites: ~vehicles.soviet, ~!gattling.upgrade, ~techlevel.low
 		Description: Tough infantry transport.
 	TooltipExtras:
@@ -5006,7 +5009,7 @@ BTR.YURI:
 		Cost: 750
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 21
+		BuildPaletteOrder: 31
 		Prerequisites: ~gattling.upgrade, ~vehicles.soviet, ~techlevel.low
 		Description: Tough infantry transport with armament improvements.
 	TooltipExtras:
@@ -5149,7 +5152,7 @@ IFV:
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 120
+		BuildPaletteOrder: 170
 		Prerequisites: infantry.any, radarorrepair, ~vehicles.allies, ~techlevel.medium
 		Description: Adaptable infantry transport.
 	Tooltip:
@@ -5929,7 +5932,7 @@ RECK:
 		Speed: 60
 		TurnSpeed: 24
 	Buildable:
-		BuildPaletteOrder: 700
+		BuildPaletteOrder: 500
 		Prerequisites: infantry.any, radarorrepair, ~vehicles.reck
 	Tooltip:
 		Name: Reckoner
@@ -5996,7 +5999,7 @@ TITN:
 	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 303
+		BuildPaletteOrder: 256
 		IconPalette: chrometd
 		Prerequisites: gtek, ~vehicles.talon, ~!railgun.upgrade, ~techlevel.high
 		Description: Tough, slow combat battle-mech.
@@ -6104,7 +6107,7 @@ TITN.RAIL:
 	Tooltip:
 		Name: Railgun Titan
 	Buildable:
-		BuildPaletteOrder: 304
+		BuildPaletteOrder: 257
 		Prerequisites: gtek, ~vehicles.talon, ~railgun.upgrade, ~techlevel.high
 	Armament@PRIMARY:
 		Weapon: TitanRailgun
@@ -6131,7 +6134,7 @@ JUGG:
 	Tooltip:
 		Name: Juggernaut
 	Buildable:
-		BuildPaletteOrder: 350
+		BuildPaletteOrder: 258
 		Queue: VehicleSQ, VehicleMQ
 		IconPalette: chrometd
 		Description: Tough artillery battle-mech.
@@ -6251,7 +6254,7 @@ TTRK:
 	RenderSprites:
 		PlayerPalette: playertd
 	Buildable:
-		BuildPaletteOrder: 400
+		BuildPaletteOrder: 510
 		Prerequisites: techcenter.any, ~vehicles.ttrk, ~techlevel.high
 		Description: Truck carrying a Tiberium bomb.
 	TooltipExtras:
@@ -6276,7 +6279,7 @@ DISR:
 		AddToArmyValue: true
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 320
+		BuildPaletteOrder: 259
 		IconPalette: chrometd
 		Prerequisites: gtek, ~vehicles.zocom, ~techlevel.high
 		Description: Armored high-tech vehicle with medium-range sonic armament.
@@ -6493,7 +6496,7 @@ RTNK:
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 31
+		BuildPaletteOrder: 71
 		Prerequisites: ~vehicles.england, ~techlevel.low
 		Description: Advanced battle tank that can disguise when stationary.
 	TooltipExtras:
@@ -6596,7 +6599,7 @@ V3RL:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 250
+		BuildPaletteOrder: 181
 		Prerequisites: stek, ~vehicles.soviet, ~techlevel.high
 		Description: Extreme long-range rocket artillery.
 	TooltipExtras:
@@ -6707,7 +6710,7 @@ TNKD:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 110
+		BuildPaletteOrder: 171
 		Prerequisites: ~vehicles.germany, anyradar, ~techlevel.low
 		Description: German tank destroyer.
 	TooltipExtras:
@@ -6807,7 +6810,7 @@ MSAR:
 		AddToArmyValue: true
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 370
+		BuildPaletteOrder: 321
 		IconPalette: chrometd
 		Prerequisites: anyradar, ~vehicles.gdi, ~techlevel.medium
 		Description: When deployed, detects enemy vehicles,\n  aircraft and structures within a large radius.
@@ -6893,7 +6896,7 @@ PTNK:
 	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 230
+		BuildPaletteOrder: 172
 		Prerequisites: anyradar, ~vehicles.allies, ~!pcan.upgrade, ~techlevel.medium
 		Description: Long-range artillery with Prism Tower derived weapon.
 	TooltipExtras:
@@ -6962,7 +6965,7 @@ PTNK:
 PCAN:
 	Inherits: PTNK
 	Buildable:
-		BuildPaletteOrder: 231
+		BuildPaletteOrder: 173
 		Prerequisites: anyradar, ~vehicles.allies, ~pcan.upgrade, ~techlevel.high
 		Description: A prototype long-range artillery that fires highly focused beams of light.
 	Tooltip:
@@ -6998,7 +7001,7 @@ WTNK:
 		Image: mwtnk
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 210
+		BuildPaletteOrder: 202
 		IconPalette: chrometd
 		Prerequisites: anyradar, ~vehicles.legion, ~techlevel.medium
 		Description: Prototype MGT-1A microwave gun tank.
@@ -7081,7 +7084,7 @@ BATF:
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 340
+		BuildPaletteOrder: 223
 		Prerequisites: atek, ~vehicles.france, ~techlevel.high
 		Description: Tough infantry transport with weapon ports\n  for infantry to fire from.
 	TooltipExtras:
@@ -7406,7 +7409,7 @@ CDRN:
 		InvalidTargets: NoAutoTarget, ChaosImmune
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 430
+		BuildPaletteOrder: 311
 		IconPalette: chrometd
 		Prerequisites: stek, ~vehicles.yuri, ~techlevel.high
 		Description: Drone armed with Chaos Gas which causes units\n  to become frenzied and attack indiscriminately.
@@ -7502,7 +7505,7 @@ CHPR:
 		Image: chpr
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 330
+		BuildPaletteOrder: 222
 		IconPalette: chrometd
 		Prerequisites: atek, ~vehicles.germany, ~techlevel.high
 		Description: Advanced heavy tank that can erase targets from existence.
@@ -7629,7 +7632,7 @@ CRYO:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 270
+		BuildPaletteOrder: 221
 		Prerequisites: atek, ~vehicles.allies, ~techlevel.high
 		Queue: VehicleSQ, VehicleMQ
 		IconPalette: chrometd
@@ -7685,7 +7688,7 @@ PBUL:
 	RenderSprites:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 195
+		BuildPaletteOrder: 251
 		IconPalette: chrometd
 		Prerequisites: gtek, ~vehicles.eagle, ~techlevel.high
 		Description: Fast scout vehicle with anti-tank and anti-air rockets.
@@ -7748,7 +7751,7 @@ CYCP:
 	Inherits@InfiltratorStolenTech: ^InfiltratorStolenTech
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 701
+		BuildPaletteOrder: 501
 		Prerequisites: anyradar, ~vehicles.cycp
 		Description: Light tank with a Tesla Coil derived weapon.
 	TooltipExtras:
@@ -7800,7 +7803,7 @@ BASI:
 	Inherits@InfiltratorStolenTech: ^InfiltratorStolenTech
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 702
+		BuildPaletteOrder: 502
 		Prerequisites: anyradar, ~vehicles.basi
 		Description: Tank with a short range EMP weapon.
 	TooltipExtras:
@@ -7853,7 +7856,7 @@ MANT:
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 703
+		BuildPaletteOrder: 503
 		Prerequisites: anyradar, ~vehicles.mant
 		Description: Tracked vehicle armed with anti-aircraft laser cannons.
 		IconPalette: chrometd
@@ -7913,7 +7916,7 @@ VIPR:
 	Inherits@InfiltratorStolenTech: ^InfiltratorStolenTech
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 704
+		BuildPaletteOrder: 504
 		Prerequisites: anyradar, ~stolentech.wsph
 		Description: Medium hover tank.
 		IconPalette: chrometd
@@ -7981,7 +7984,7 @@ WOLV:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildAtProductionType: Vehicle
-		BuildPaletteOrder: 195
+		BuildPaletteOrder: 250
 		Prerequisites: gtek, ~vehicles.talon, ~techlevel.high
 		Description: Light battle-mech with dual chainguns.
 		IconPalette: chrometd
@@ -8047,7 +8050,7 @@ XO:
 	Inherits@GYRO: ^GyroStabilizers
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 195
+		BuildPaletteOrder: 251
 		Prerequisites: gtek, ~vehicles.zocom, ~techlevel.high
 		Description: Light battle-mech with a short-range laser\n  and a machine gun.
 	TooltipExtras:
@@ -8127,7 +8130,7 @@ APOC:
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 300
+		BuildPaletteOrder: 234
 		Prerequisites: npwr, stek, ~vehicles.soviet, ~!atomicengines.upgrade, ~techlevel.high
 		Description: Enormous slow tank with uranium shells and anti-air capability.
 	TooltipExtras:
@@ -8240,7 +8243,7 @@ APOC.ATOMIC:
 		GenericName: Tank
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 301
+		BuildPaletteOrder: 235
 		Prerequisites: npwr, stek, ~vehicles.soviet, ~atomicengines.upgrade, ~techlevel.high
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
@@ -8270,7 +8273,7 @@ THWK:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 245
+		BuildPaletteOrder: 260
 		Prerequisites: gtek, ~thwk.upgrade, ~techlevel.high
 		Queue: VehicleSQ, VehicleMQ
 		IconPalette: chrometd
@@ -8421,7 +8424,7 @@ ZEUS:
 		AddToArmyValue: true
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 285
+		BuildPaletteOrder: 224
 		Prerequisites: ~vehicles.allies, alhq, coalition.active, ~greece.coalition, ~techlevel.high
 		Description: Extreme long range artillery that can generate localised storm clouds.
 	TooltipExtras:

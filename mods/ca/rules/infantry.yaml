@@ -3,7 +3,7 @@ DOG:
 	Buildable:
 		Queue: InfantrySQ, DogMQ
 		BuildAtProductionType: Dog
-		BuildPaletteOrder: 50
+		BuildPaletteOrder: 51
 		Prerequisites: kenn, ~infantry.dog
 		Description: Melee anti-infantry scout unit.
 	TooltipExtras:
@@ -503,7 +503,7 @@ U3.squad:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: ParadropInfantry
-		BuildPaletteOrder: 1000
+		BuildPaletteOrder: 300
 		Prerequisites: radaroraircraft, ~infantry.usa, ~techlevel.medium
 		Description: Prepare five Guardian GIs for airdrop.
 	TooltipExtras:
@@ -652,7 +652,7 @@ SPY:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 100
+		BuildPaletteOrder: 82
 		Prerequisites: ~tent, anyradar, ~techlevel.medium
 		Description: Infiltrates enemy structures for intel or sabotage\n  Effects depend on the building infiltrated.
 	TooltipExtras:
@@ -913,7 +913,7 @@ MECH:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 90
+		BuildPaletteOrder: 80
 		Prerequisites: repair, ~!tmpp, ~infantry.mech, ~techlevel.low
 		Description: Repairs nearby vehicles.
 	TooltipExtras:
@@ -1006,7 +1006,7 @@ CMEC:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
-		BuildPaletteOrder: 90
+		BuildPaletteOrder: 81
 		Prerequisites: repair, tmpp, ~tmpp, ~infantry.mech, ~techlevel.high
 		Description: Repairs nearby vehicles and advanced cyborgs.
 	TooltipExtras:
@@ -1285,7 +1285,7 @@ THF:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 120
+		BuildPaletteOrder: 95
 		Prerequisites: anyradar, ~barr, ~techlevel.medium
 		Description: Steals enemy credits and hijacks enemy vehicles.
 	TooltipExtras:
@@ -1376,7 +1376,7 @@ SHOK:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 80
+		BuildPaletteOrder: 90
 		Prerequisites: tslaorstek, anyradar, ~infantry.shok, ~techlevel.medium
 		Description: Elite infantry with portable Tesla weapon.
 	TooltipExtras:
@@ -1453,6 +1453,8 @@ SHOK:
 
 TTRP:
 	Inherits: SHOK
+	Buildable:
+		BuildPaletteOrder: 91
 	Tooltip:
 		Name: Tesla Trooper
 	Valued:
@@ -1542,7 +1544,7 @@ N2:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 41
+		BuildPaletteOrder: 42
 		Prerequisites: ~pyle
 		IconPalette: chrometd
 		Description: Infantry armed with grenades.
@@ -2059,7 +2061,7 @@ SNIP:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 110
+		BuildPaletteOrder: 83
 		Prerequisites: ~infantry.england, anyradar, ~techlevel.medium
 		Description: Elite marksman infantry armed with\n  a powerful sniper rifle.
 	TooltipExtras:
@@ -2297,7 +2299,7 @@ SAB:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 140
+		BuildPaletteOrder: 113
 		Prerequisites: anyradar, ~hand, ~techlevel.medium
 		Description: Covert infantry that infiltrates enemy structures\n  to steal or lock technology.
 	TooltipExtras:
@@ -2402,7 +2404,7 @@ ACOL:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
-		BuildPaletteOrder: 170
+		BuildPaletteOrder: 111
 		IconPalette: chrometd
 		Prerequisites: obliortmpl, anyradar, ~infantry.marked, ~!tmpp, ~techlevel.medium
 		Description: Cyborg infantry with a laser weapon.
@@ -2472,6 +2474,7 @@ TPLR:
 		HP: 21000
 	Buildable:
 		Prerequisites: obliortmpl, anyradar, ~infantry.marked, ~tmpp, ~techlevel.high
+		BuildPaletteOrder: 112
 	-TakeCover:
 	-Convertible:
 	-ReplacedInQueue:
@@ -2553,7 +2556,7 @@ JJET:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 150
+		BuildPaletteOrder: 100
 		Prerequisites: anyradar, ~pyle, ~!bjet.upgrade, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Flying general-purpose infantry.
@@ -2688,6 +2691,7 @@ BJET:
 		Prerequisites: anyradar, ~pyle, ~bjet.upgrade, ~techlevel.high
 		IconPalette: chrometd
 		Description: Flying infantry with a grenade launcher.
+		BuildPaletteOrder: 101
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Light Armor, Aircraft
 		Weaknesses: • Weak vs Heavy Armor\n• Has difficulty hitting moving targets
@@ -2769,7 +2773,7 @@ E8:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 130
+		BuildPaletteOrder: 92
 		Prerequisites: ~infantry.iraq, tturorstek, anyradar, ~techlevel.medium
 		Description: Anti-infantry unit with radiation based weaponry.
 	TooltipExtras:
@@ -2843,6 +2847,8 @@ E8:
 
 DESO:
 	Inherits: E8
+	Buildable:
+		BuildPaletteOrder: 93
 	Tooltip:
 		Name: Desolator
 	TooltipExtras:
@@ -3071,7 +3077,7 @@ RMBC:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
-		BuildPaletteOrder: 230
+		BuildPaletteOrder: 231
 		IconPalette: chrometd
 		Prerequisites: ~infantry.nod, tmpp, advcyborg.upgrade, ~techlevel.high
 		Description: Elite cyborg infantry unit armed with\n  a plasma cannon.
@@ -3164,7 +3170,7 @@ IVAN:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 42
+		BuildPaletteOrder: 41
 		Prerequisites: ~infantry.ukraine, weap, ~techlevel.low
 		Description: Specialist demolition infantry armed with explosives.
 	TooltipExtras:
@@ -3233,7 +3239,7 @@ BRUT:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 85
+		BuildPaletteOrder: 94
 		Prerequisites: anyradar, ~infantry.yuri, ~techlevel.medium
 		Description: Melee range genetically engineered hulk.
 	TooltipExtras:
@@ -3630,7 +3636,7 @@ BH:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 150
+		BuildPaletteOrder: 110
 		Prerequisites: anyradar, ~infantry.blackh, ~techlevel.medium
 		Description: Elite precision anti-tank flamethrower unit.
 	TooltipExtras:
@@ -3704,7 +3710,7 @@ YURI:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 190
+		BuildPaletteOrder: 206
 		Prerequisites: ~barr, stek, ~infantry.yuri, ~techlevel.high
 		BuildLimit: 1
 		Description: Elite specialist infantry able to mind-control\n  enemy units (up to 3, increases with veterancy).
@@ -3912,7 +3918,7 @@ SEAL:
 	RevealsShroud:
 		Range: 6c0
 	Buildable:
-		BuildPaletteOrder: 185
+		BuildPaletteOrder: 131
 		Prerequisites: ~infantry.usa, atek, ~techlevel.high
 		Queue: InfantrySQ, InfantryMQ
 		IconPalette: chrome
@@ -4039,7 +4045,7 @@ ENLI:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
-		BuildPaletteOrder: 225
+		BuildPaletteOrder: 230
 		IconPalette: chrometd
 		Prerequisites: ~infantry.nod, tmpp, advcyborg.upgrade, ~techlevel.high
 		Description: Heavy cyborg infantry unit armed with\n  a particle cannon that deals area damage.
@@ -4336,7 +4342,7 @@ CMSR:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 186
+		BuildPaletteOrder: 140
 		Prerequisites: stek, ~barr, ~techlevel.high
 		Description: Leads regular infantry into battle, motivating them\n  to move faster and fight harder.
 	TooltipExtras:
@@ -4416,7 +4422,7 @@ ZTRP:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 187
+		BuildPaletteOrder: 150
 		Prerequisites: ~pyle, gtek, ~techlevel.high, ~!zrai.upgrade, ~!zdef.upgrade
 		Description: Elite infantry armed with a railgun and equipped\n  with a jump pack.
 		IconPalette: chrometd
@@ -4512,6 +4518,7 @@ ZRAI:
 	Buildable:
 		Prerequisites: ~pyle, gtek, ~techlevel.high, ~zrai.upgrade
 		Description: Elite infantry armed with a sonic grenade launcher\n  and equipped with a jump pack.
+		BuildPaletteOrder: 151
 	Tooltip:
 		Name: Zone Raider
 	TooltipExtras:
@@ -4536,6 +4543,7 @@ ZDEF:
 	Buildable:
 		Prerequisites: ~pyle, gtek, ~techlevel.high, ~zdef.upgrade
 		Description: Elite infantry armed with an ion rifle\n  and able to shield nearby infantry.
+		BuildPaletteOrder: 152
 	Tooltip:
 		Name: Zone Defender
 	TooltipExtras:
@@ -4594,7 +4602,7 @@ ENFO:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 185
+		BuildPaletteOrder: 130
 		Prerequisites: ~tent, atek, ~techlevel.high
 		Description: Elite short-range front-line infantry.
 	TooltipExtras:
@@ -4676,7 +4684,7 @@ CRYT:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 186
+		BuildPaletteOrder: 132
 		Prerequisites: ~tent, alhq, coalition.active, ~sweden.coalition, ~techlevel.high
 		Description: Elite infantry armed with a cryo sprayer.
 	TooltipExtras:

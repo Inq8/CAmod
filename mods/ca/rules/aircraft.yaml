@@ -212,7 +212,7 @@ MIG:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Plane
-		BuildPaletteOrder: 70
+		BuildPaletteOrder: 31
 		Prerequisites: afld, ~aircraft.soviet, ~techlevel.medium
 		Description: Multi purpose strike aircraft.
 	TooltipExtras:
@@ -329,7 +329,7 @@ SUK:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Plane
-		BuildPaletteOrder: 120
+		BuildPaletteOrder: 80
 		Prerequisites: afld, stek, ~aircraft.soviet, ~!seismic.upgrade, ~techlevel.high
 		Description: Fast ground attack aircraft armed\n  with powerful armor-piercing munitions.
 	TooltipExtras:
@@ -462,6 +462,7 @@ SUK.UPG:
 	Buildable:
 		Prerequisites: afld, stek, ~aircraft.soviet, ~seismic.upgrade, ~techlevel.high
 		Description: Fast ground attack aircraft armed\n  with powerful explosive munitions.
+		BuildPaletteOrder: 81
 	-TooltipExtras:
 	TooltipExtras@SEISMIC:
 		IsStandard: true
@@ -480,7 +481,7 @@ YAK:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Plane
-		BuildPaletteOrder: 25
+		BuildPaletteOrder: 30
 		Prerequisites: afld, ~aircraft.soviet, ~techlevel.medium
 		Description: Fighter plane armed with\n  dual machine guns
 	TooltipExtras:
@@ -1055,7 +1056,7 @@ HELI:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
-		BuildPaletteOrder: 50
+		BuildPaletteOrder: 20
 		Prerequisites: ~aircraft.allies, ~techlevel.medium
 		Description: Helicopter gunship armed with\n  multi-purpose missiles.
 	TooltipExtras:
@@ -1175,7 +1176,7 @@ HIND:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
-		BuildPaletteOrder: 20
+		BuildPaletteOrder: 32
 		Prerequisites: afld, ~aircraft.soviet, ~techlevel.medium
 		Description: Durable helicopter gunship armed with\n  a chaingun and anti-tank rockets.
 	TooltipExtras:
@@ -1438,7 +1439,7 @@ A10:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Plane
-		BuildPaletteOrder: 80
+		BuildPaletteOrder: 41
 		Prerequisites: afld.gdi, ~aircraft.gdi, ~!sidewinders.upgrade, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Attack aircraft armed with incendiary bombs.
@@ -1619,6 +1620,7 @@ A10.UPG:
 	Buildable:
 		Prerequisites: afld.gdi, ~aircraft.gdi, ~sidewinders.upgrade, ~techlevel.medium
 		Description: Attack aircraft with incendiary bombs\n  and air-to-air missiles.
+		BuildPaletteOrder: 42
 	-TooltipExtras:
 	TooltipExtras@UPG:
 		IsStandard: true
@@ -1860,7 +1862,7 @@ APCH:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
-		BuildPaletteOrder: 30
+		BuildPaletteOrder: 50
 		Prerequisites: ~aircraft.apch, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Helicopter gunship armed with a chaingun.
@@ -1973,7 +1975,7 @@ ORCA:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
-		BuildPaletteOrder: 50
+		BuildPaletteOrder: 40
 		Prerequisites: afld.gdi, ~aircraft.gdi, ~techlevel.medium
 		IconPalette: chrometd
 		Description: VTOL gunship armed with\n  multi-purpose missiles.
@@ -2116,7 +2118,7 @@ ORCB:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
-		BuildPaletteOrder: 130
+		BuildPaletteOrder: 90
 		Prerequisites: afld.gdi, ~aircraft.gdi, gtek, ~techlevel.high
 		IconPalette: chrometd
 		Description: Heavy VTOL bomber armed with EMP bombs.
@@ -2326,7 +2328,7 @@ RAH:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
-		BuildPaletteOrder: 60
+		BuildPaletteOrder: 52
 		IconPalette: chrometd
 		Prerequisites: tmpl, ~aircraft.nod, ~techlevel.high
 		Description: Stealth attack helicopter with powerful\n  anti-personnel rockets.
@@ -2514,7 +2516,7 @@ KIRO:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
-		BuildPaletteOrder: 160
+		BuildPaletteOrder: 82
 		Prerequisites: afld, stek, ~aircraft.kiro, ~techlevel.high
 		Description: Heavily armoured airship armed with specialised bombs.
 	TooltipExtras:
@@ -2712,7 +2714,7 @@ OCAR:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
-		BuildPaletteOrder: 100
+		BuildPaletteOrder: 43
 		Prerequisites: afld.gdi, rep, ~aircraft.gdi, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Fast VTOL Vehicle Transporter.
@@ -2925,7 +2927,7 @@ HARR:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
-		BuildPaletteOrder: 110
+		BuildPaletteOrder: 70
 		Prerequisites: atek, ~aircraft.allies, ~techlevel.high
 		Description: Fast VTOL ground attack aircraft armed\n  with powerful explosive missiles.
 	TooltipExtras:
@@ -3047,7 +3049,7 @@ SCRN:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
-		BuildPaletteOrder: 150
+		BuildPaletteOrder: 100
 		IconPalette: chrometd
 		Prerequisites: tmpl, ~aircraft.nod, ~techlevel.high
 		Description: Fast VTOL attack craft armed\n  with powerful plasma cannons.
@@ -3401,7 +3403,7 @@ VENM:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
-		BuildPaletteOrder: 31
+		BuildPaletteOrder: 51
 		Prerequisites: ~aircraft.marked, ~techlevel.medium
 		IconPalette: chrometd
 		Description: VTOL gunship armed with laser.
@@ -3525,7 +3527,7 @@ AURO:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Plane
-		BuildPaletteOrder: 140
+		BuildPaletteOrder: 91
 		Prerequisites: afld.gdi, ~aircraft.eagle, gtek, ~techlevel.high
 		IconPalette: chrometd
 		Description: Supersonic bomber armed with a MOAB.
@@ -3687,7 +3689,7 @@ PMAK:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
-		BuildPaletteOrder: 111
+		BuildPaletteOrder: 71
 		Prerequisites: atek, ~aircraft.allies, ~techlevel.high
 		Description: Heavy VTOL bomber with powerful armor penetrating bombs.
 	TooltipExtras:
@@ -3826,7 +3828,7 @@ BEAG:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
-		BuildPaletteOrder: 200
+		BuildPaletteOrder: 72
 		Prerequisites: alhq, coalition.active, ~korea.coalition, ~techlevel.high
 		Description: Air superiority fighter with range/vision reducing missiles.
 	TooltipExtras:
@@ -4588,7 +4590,7 @@ DISC:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
-		BuildPaletteOrder: 161
+		BuildPaletteOrder: 83
 		Prerequisites: afld, stek, ~aircraft.yuri, ~techlevel.high
 		Description: Heavily armoured attack craft.
 	TooltipExtras:
@@ -4722,7 +4724,7 @@ JACK:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Plane
-		BuildPaletteOrder: 125
+		BuildPaletteOrder: 92
 		Prerequisites: afld.gdi, ~aircraft.arc, ~techlevel.medium
 		Description: Loitering munition that dives at ground targets and explodes.
 	TooltipExtras:
