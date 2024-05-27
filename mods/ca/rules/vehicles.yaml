@@ -5233,6 +5233,12 @@ IFV:
 	Tooltip@psyturr:
 		Name: Psychic IFV
 		RequiresCondition: psyturr
+	Tooltip@cryoturr:
+		Name: Cryo IFV
+		RequiresCondition: cryoturr
+	Tooltip@enfoturr:
+		Name: Enforcer IFV
+		RequiresCondition: enfoturr
 	TooltipExtras:
 		Strengths: • Strong vs Aircraft, Heavy Armor
 		Weaknesses: • Weak vs Infantry
@@ -5242,7 +5248,7 @@ IFV:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 		IsStandard: false
-		RequiresCondition: gunturr
+		RequiresCondition: gunturr || enfoturr
 	TooltipExtras@fragturr:
 		Strengths: • Strong vs Buildings, Defenses, Light Armor
 		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
@@ -5485,6 +5491,15 @@ IFV:
 	Armament@IVAN:
 		Weapon: IvanIFVTargeting
 		RequiresCondition: ivanturr
+	Armament@CryoTrooper:
+		Weapon: CryoSprayer
+		LocalOffset: 150,0,150
+		RequiresCondition: cryoturr
+	Armament@Enforcer:
+		Weapon: EnforcerShotgun
+		LocalOffset: 385,0,300
+		RequiresCondition: enfoturr
+		MuzzleSequence: muzzle
 	Armament@MC:
 		Weapon: PsychicBeamBATF
 		LocalOffset: 200,0,300
@@ -5565,6 +5580,12 @@ IFV:
 	WithSpriteTurret@mort:
 		Sequence: turret17
 		RequiresCondition: mortchemturr || mortcryoturr || mortsonicturr
+	WithSpriteTurret@cryo:
+		Sequence: turret19
+		RequiresCondition: cryoturr
+	WithSpriteTurret@enfo:
+		Sequence: turret20
+		RequiresCondition: enfoturr
 	Cargo:
 		Types: Infantry
 		MaxWeight: 1
@@ -5584,6 +5605,7 @@ IFV:
 			n4: flamturr
 			n5: chemturr
 			e8: desoturr
+			deso: desoturr
 			e6: engturr
 			n6: engturr
 			mech: engturr
@@ -5592,9 +5614,16 @@ IFV:
 			mort.cryo: mortcryoturr
 			mort.sonic: mortsonicturr
 			shok: testurr
+			ttrp: testurr
+			ztrp: samturr
+			zrai: samturr
+			zdef: samturr
 			rmbo: commturr
 			bori: commturr
 			e7: commturr
+			cryt: cryoturr
+			enfo: enfoturr
+			hopl: enfoturr
 			seal: sealturr
 			sab: spyturr
 			snip: snipturr
@@ -5609,6 +5638,8 @@ IFV:
 			rmbc: rmbcturr
 			s1: gunturr
 			s2: sharturr
+			evis: sharturr
+			impl: sharturr
 			s3: samturr
 			s4: discturr
 			s6: engturr
@@ -5622,6 +5653,7 @@ IFV:
 			bh: bhturr
 			shad: spyturr
 			cmsr: spyturr
+			wchr: spyturr
 			tecn: nochange
 			c1: nochange
 			c2: nochange
@@ -5751,15 +5783,26 @@ IFV:
 		RequiresCondition: engturr || medturr || spyturr
 	DamageTypeDamageMultiplier@A2GPROTECTION:
 		RequiresCondition: !full || samturr || ggiturr
-	AmbientSoundCA:
+	AmbientSoundCA@BlackHand:
 		SoundFiles: flamer-loop1.aud
 		InitialSound: flamer-start1.aud
 		FinalSound: flamer-end1.aud
 		RequiresCondition: bhturr && attacking
 		InitialSoundLength: 20
-	GrantConditionOnAttackCA:
+	AmbientSoundCA@Cryo:
+		SoundFiles: cryobeam.aud
+		InitialSound: cryobeamstart.aud
+		FinalSound: cryobeamend.aud
+		RequiresCondition: cryoturr && attacking
+		InitialSoundLength: 10
+	GrantConditionOnAttackCA@BlackHand:
 		Condition: attacking
 		RevokeDelay: 3
+		RequiresCondition: bhturr
+	GrantConditionOnAttackCA@Cryo:
+		Condition: attacking
+		RevokeDelay: 6
+		RequiresCondition: cryoturr
 	ChronoshiftableCA:
 		RequiresCondition: !ivanturr && !being-warped
 	ChronoshiftableCA@Ivan:
@@ -5767,7 +5810,7 @@ IFV:
 		ExplodeInstead: true
 		RequiresCondition: ivanturr && !being-warped
 	DamageMultiplier@GGI:
-		RequiresCondition: ggiturr
+		RequiresCondition: ggiturr || enfoturr
 		Modifier: 80
 	FirepowerMultiplier@GGI:
 		RequiresCondition: ggiturr
