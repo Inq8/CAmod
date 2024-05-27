@@ -163,19 +163,11 @@ namespace OpenRA.Mods.CA.Traits
 
 			targetCell = self.World.Map.CellContaining(order.Target.CenterPosition);
 
-
 			var targets = info.TargetActors ? GetActorTargets(targetCell).Select(t => Target.FromActor(t)).ToList() : GetCellTargets(targetCell).ToList();
-
-
 			var numMissiles = info.MissileCount > 0 ? info.MissileCount : targets.Count;
-			var targetIdx = 0;
 
-			while (numMissiles-- > 0)
-			{
-				targetQueue.Enqueue(targets[targetIdx]);
-				if (++targetIdx >= targets.Count)
-					targetIdx = 0;
-			}
+			for (int i = 0; i < numMissiles; i++)
+				targetQueue.Enqueue(targets[i % targets.Count]);
 
 			startEdge = CalculateStartEdge(targetCell);
 
@@ -228,18 +220,14 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			var numMissiles = info.MissileCount > 0 ? info.MissileCount : info.TargetOffsets.Length;
 			var offsets = info.TargetOffsets.ToList();
+
 			if (info.ShuffleOffsets)
 				offsets = offsets.Shuffle(Self.World.SharedRandom).ToList();
 
-			var offsetIdx = 0;
-
-			while (numMissiles-- > 0)
+			for (int i = 0; i < numMissiles; i++)
 			{
-				var targetCell = xy + offsets[offsetIdx];
+				var targetCell = xy + offsets[i % offsets.Count];
 				yield return Target.FromCell(Self.World, targetCell);
-
-				if (++offsetIdx >= offsets.Count)
-					offsetIdx = 0;
 			}
 		}
 
