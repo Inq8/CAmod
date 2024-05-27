@@ -11,7 +11,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Activities;
-using OpenRA.Mods.CA.Activities;
 using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
@@ -19,8 +18,6 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	public enum MissileType { Ballistic, Cruise };
-
 	[Desc("This unit, when ordered to move, will fly in ballistic path then will detonate itself upon reaching target.")]
 	public abstract class MissileBaseInfo : TraitInfo, IMoveInfo, IPositionableInfo, IFacingInfo
 	{

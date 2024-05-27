@@ -23,49 +23,62 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	public class GuidedMissilePowerInfo : SupportPowerInfo
+	public class MissileStrikePowerInfo : SupportPowerInfo
 	{
-		[Desc("Missile actor. Must have the `" + nameof(GuidedMissile) + "` trait.")]
+		[Desc("Missile actor. Must have a trait that inherits `" + nameof(MissileBase) + "`.")]
 		[ActorReference]
 		[FieldLoader.Require]
 		public readonly string MissileActor = null;
 
+		[Desc("Altitude to launch missiles from. If null, the target's altitude will be used.")]
+		public readonly WDist? LaunchAltitude = null;
+
 		[Desc("Sound to instantly play at the targeted area.")]
 		public readonly string[] LaunchSounds = Array.Empty<string>();
 
-		[Desc("Target types that condition can be applied to. Leave empty for all types.")]
+		[Desc("If true, the power will target actors, otherwise it will target cells according to TargetOffsets.")]
+		public readonly bool TargetActors = true;
+
+		[Desc("If TargetsActors is false, defines impact offsets. Cycled through until all missiles are launched.")]
+		public readonly CVec[] TargetOffsets = new CVec[] { new CVec(0, 0) };
+
+		[Desc("Whether to shuffle the impact offsets. If false, the offsets will be used in the order they are defined.")]
+		public readonly bool ShuffleOffsets = false;
+
+		[Desc("If TargetsActors is true, defines the target types that can be targeted. Leave empty for all types.")]
 		public readonly BitSet<TargetableType> ValidTargets = default;
 
-		[Desc("Target types that condition can be applied to. Leave empty for all types.")]
+		[Desc("If TargetsActors is true, defines the target types that cannot be targeted.")]
 		public readonly BitSet<TargetableType> InvalidTargets = default;
 
-		[Desc("Player relationships which can be targeted.")]
+		[Desc("If TargetsActors is true, defines the player relationships of actors that can be targeted.")]
 		public readonly PlayerRelationship ValidRelationships = PlayerRelationship.Enemy | PlayerRelationship.Neutral;
+
+		[Desc("If TargetsActors is true, maximum number of targets. Zero for no limit.")]
+		public readonly int MaxTargets = 0;
+
+		[Desc("If TargetsActors is true, minimum targets for power to activate.")]
+		public readonly int MinTargets = 1;
+
+		[Desc("Font to use for target count.")]
+		public readonly string TargetCountFont = "Medium";
+
+		[Desc("If true, targets must not be under shroud/fog.")]
+		public readonly bool TargetMustBeVisible = true;
 
 		[CursorReference]
 		[Desc("Cursor to display when there are no units to apply the condition in range.")]
 		public readonly string BlockedCursor = "move-blocked";
 
-		[Desc("If true, targets must not be under shroud/fog.")]
-		public readonly bool TargetMustBeVisible = true;
-
 		[Desc("Ticks between launches.")]
 		public readonly int LaunchInterval = 10;
 
-		[Desc("Total missiles. Zero for equates to one per target. If positive, must be equal to or greater than MaxTargets.")]
+		[Desc("Total missiles. Zero for equates to one per target/offset.",
+			"If positive, must be equal to or greater than MaxTargets, or TargetsActors must be false.")]
 		public readonly int MissileCount = 0;
 
 		[Desc("Missiles per launch.")]
 		public readonly int MissilesPerLaunch = 1;
-
-		[Desc("Maximum number of targets. Zero for no limit.")]
-		public readonly int MaxTargets = 0;
-
-		[Desc("Minimum targets for power to activate.")]
-		public readonly int MinTargets = 1;
-
-		[Desc("Font to use for target count.")]
-		public readonly string TargetCountFont = "Medium";
 
 		[SequenceReference]
 		[Desc("Sequence to play for granting actor when activated.",
@@ -89,12 +102,10 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Target tint colour.")]
 		public readonly Color? TargetTintColor = null;
 
-		public WeaponInfo WeaponInfo { get; private set; }
-
-		[Desc("Range in which to apply condition.")]
+		[Desc("Target selection radius.")]
 		public readonly WDist Range = WDist.Zero;
 
-		public override object Create(ActorInitializer init) { return new GuidedMissilePower(init.Self, this); }
+		public override object Create(ActorInitializer init) { return new MissileStrikePower(init.Self, this); }
 	}
 
 	enum MapEdge
@@ -105,14 +116,14 @@ namespace OpenRA.Mods.CA.Traits
 		Left
 	}
 
-	public class GuidedMissilePower : SupportPower, ITick, INotifyCreated
+	public class MissileStrikePower : SupportPower, ITick, INotifyCreated
 	{
-		readonly GuidedMissilePowerInfo info;
+		readonly MissileStrikePowerInfo info;
 		readonly int halfMapHeight;
 		readonly int halfMapWidth;
 		readonly Rectangle mapBounds;
 
-		Queue<Actor> targetQueue;
+		Queue<Target> targetQueue;
 		CPos targetCell;
 		WPos soundPos;
 		int ticks;
@@ -121,11 +132,11 @@ namespace OpenRA.Mods.CA.Traits
 		[Sync]
 		public int Ticks { get; private set; }
 
-		public GuidedMissilePower(Actor self, GuidedMissilePowerInfo info)
+		public MissileStrikePower(Actor self, MissileStrikePowerInfo info)
 			: base(self, info)
 		{
 			this.info = info;
-			targetQueue = new Queue<Actor>();
+			targetQueue = new Queue<Target>();
 			mapBounds = self.World.Map.Bounds;
 			halfMapHeight = mapBounds.Height / 2;
 			halfMapWidth = mapBounds.Width / 2;
@@ -138,7 +149,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		public override void SelectTarget(Actor self, string order, SupportPowerManager manager)
 		{
-			self.World.OrderGenerator = new SelectGuidedMissileTarget(Self.World, order, manager, this);
+			self.World.OrderGenerator = new SelectMissileStrikeTarget(Self.World, order, manager, this);
 		}
 
 		public override void Activate(Actor self, Order order, SupportPowerManager manager)
@@ -151,7 +162,11 @@ namespace OpenRA.Mods.CA.Traits
 				wsb.PlayCustomAnimation(self, info.ActiveSequence);
 
 			targetCell = self.World.Map.CellContaining(order.Target.CenterPosition);
-			var targets = GetTargets(targetCell).ToList();
+
+
+			var targets = info.TargetActors ? GetActorTargets(targetCell).Select(t => Target.FromActor(t)).ToList() : GetCellTargets(targetCell).ToList();
+
+
 			var numMissiles = info.MissileCount > 0 ? info.MissileCount : targets.Count;
 			var targetIdx = 0;
 
@@ -204,9 +219,28 @@ namespace OpenRA.Mods.CA.Traits
 				ticks = 0;
 		}
 
-		private IEnumerable<Actor> GetTargets(CPos xy)
+		private IEnumerable<Actor> GetActorTargets(CPos xy)
 		{
-			return GetTargetsInCircle(xy);
+			return GetValidTargetActorsInCircle(xy);
+		}
+
+		private IEnumerable<Target> GetCellTargets(CPos xy)
+		{
+			var numMissiles = info.MissileCount > 0 ? info.MissileCount : info.TargetOffsets.Length;
+			var offsets = info.TargetOffsets.ToList();
+			if (info.ShuffleOffsets)
+				offsets = offsets.Shuffle(Self.World.SharedRandom).ToList();
+
+			var offsetIdx = 0;
+
+			while (numMissiles-- > 0)
+			{
+				var targetCell = xy + offsets[offsetIdx];
+				yield return Target.FromCell(Self.World, targetCell);
+
+				if (++offsetIdx >= offsets.Count)
+					offsetIdx = 0;
+			}
 		}
 
 		private MapEdge CalculateStartEdge(CPos targetCell)
@@ -254,11 +288,14 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
-		private void LaunchMissile(Actor self, Actor targetActor)
+		private void LaunchMissile(Actor self, Target target)
 		{
 			self.World.AddFrameEndTask(w =>
 			{
-				if (targetActor.IsDead || !targetActor.IsInWorld)
+				if (target.Type == TargetType.Actor && (target.Actor.IsDead || !target.Actor.IsInWorld))
+					return;
+
+				if (target.Type == TargetType.FrozenActor && (target.FrozenActor.Actor.IsDead || !target.FrozenActor.Actor.IsInWorld))
 					return;
 
 				var startCell = CalculateStartCell(targetCell);
@@ -266,10 +303,11 @@ namespace OpenRA.Mods.CA.Traits
 
 				var spawnDirection = new WVec((targetCell - startCell).X, (targetCell - startCell).Y, 0);
 				var spawnFacing = spawnDirection.Yaw;
+				var targetAltitude = new WDist(target.CenterPosition.Z);
 
 				var actor = w.CreateActor(false, info.MissileActor, new TypeDictionary
 				{
-					new CenterPositionInit(startPos + new WVec(0, 0, targetActor.CenterPosition.Z)),
+					new CenterPositionInit(startPos + new WVec(0, 0, info.LaunchAltitude.GetValueOrDefault(targetAltitude).Length)),
 					new OwnerInit(self.Owner),
 					new FacingInit(spawnFacing)
 				});
@@ -277,14 +315,13 @@ namespace OpenRA.Mods.CA.Traits
 				// todo: implement dynamic speed
 				// var dynamicSpeedMultiplier = actor.TraitOrDefault<DynamicSpeedMultiplier>();
 
-				var gm = actor.Trait<GuidedMissile>();
-				var target = Target.FromActor(targetActor);
+				var gm = actor.Trait<MissileBase>();
 				gm.SetTarget(target);
 				w.Add(actor);
 			});
 		}
 
-		private IEnumerable<Actor> GetTargetsInCircle(CPos xy)
+		private IEnumerable<Actor> GetValidTargetActorsInCircle(CPos xy)
 		{
 			var centerPos = Self.World.Map.CenterOfCell(xy);
 
@@ -304,13 +341,13 @@ namespace OpenRA.Mods.CA.Traits
 			return actorsInRange;
 		}
 
-		class SelectGuidedMissileTarget : OrderGenerator
+		class SelectMissileStrikeTarget : OrderGenerator
 		{
-			readonly GuidedMissilePower power;
+			readonly MissileStrikePower power;
 			readonly SupportPowerManager manager;
 			readonly string order;
 
-			public SelectGuidedMissileTarget(World world, string order, SupportPowerManager manager, GuidedMissilePower power)
+			public SelectMissileStrikeTarget(World world, string order, SupportPowerManager manager, MissileStrikePower power)
 			{
 				// Clear selection if using Left-Click Orders
 				if (Game.Settings.Game.UseClassicMouseStyle)
@@ -324,8 +361,7 @@ namespace OpenRA.Mods.CA.Traits
 			protected override IEnumerable<Order> OrderInner(World world, CPos cell, int2 worldPixel, MouseInput mi)
 			{
 				world.CancelInputMode();
-				var targets = power.GetTargets(cell);
-				if (mi.Button == MouseButton.Left && targets.Count() >= power.info.MinTargets)
+				if (mi.Button == MouseButton.Left && (!power.info.TargetActors || power.GetActorTargets(cell).Count() >= power.info.MinTargets))
 					yield return new Order(order, manager.Self, Target.FromCell(world, cell), false) { SuppressVisualFeedback = true };
 			}
 
@@ -341,20 +377,6 @@ namespace OpenRA.Mods.CA.Traits
 			protected override IEnumerable<IRenderable> RenderAnnotations(WorldRenderer wr, World world)
 			{
 				var xy = wr.Viewport.ViewToWorld(Viewport.LastMousePos);
-				var targetUnits = power.GetTargets(xy);
-
-				if (power.info.ShowSelectionBoxes)
-				{
-					foreach (var unit in targetUnits)
-					{
-						var decorations = unit.TraitsImplementing<ISelectionDecorations>().FirstEnabledTraitOrDefault();
-						if (decorations != null)
-						{
-							foreach (var d in decorations.RenderSelectionAnnotations(unit, wr, power.info.SelectionBoxColor))
-								yield return d;
-						}
-					}
-				}
 
 				if (power.info.ShowTargetCircle)
 				{
@@ -368,14 +390,32 @@ namespace OpenRA.Mods.CA.Traits
 						3);
 				}
 
-				if (power.info.MaxTargets > 0)
+				if (power.info.TargetActors)
 				{
-					var font = Game.Renderer.Fonts[power.info.TargetCountFont];
-					var color = power.info.TargetCircleColor;
-					var text = targetUnits.Count() + " / " + power.info.MaxTargets;
-					var size = font.Measure(text);
-					var textPos = new int2(Viewport.LastMousePos.X - (size.X / 2), Viewport.LastMousePos.Y + size.Y + (size.Y / 3));
-					yield return new UITextRenderable(font, WPos.Zero, textPos, 0, color, text);
+					var targetUnits = power.GetActorTargets(xy);
+
+					if (power.info.ShowSelectionBoxes)
+					{
+						foreach (var unit in targetUnits)
+						{
+							var decorations = unit.TraitsImplementing<ISelectionDecorations>().FirstEnabledTraitOrDefault();
+							if (decorations != null)
+							{
+								foreach (var d in decorations.RenderSelectionAnnotations(unit, wr, power.info.SelectionBoxColor))
+									yield return d;
+							}
+						}
+					}
+
+					if (power.info.MaxTargets > 0)
+					{
+						var font = Game.Renderer.Fonts[power.info.TargetCountFont];
+						var color = power.info.TargetCircleColor;
+						var text = targetUnits.Count() + " / " + power.info.MaxTargets;
+						var size = font.Measure(text);
+						var textPos = new int2(Viewport.LastMousePos.X - (size.X / 2), Viewport.LastMousePos.Y + size.Y + (size.Y / 3));
+						yield return new UITextRenderable(font, WPos.Zero, textPos, 0, color, text);
+					}
 				}
 			}
 
@@ -383,9 +423,9 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				var xy = wr.Viewport.ViewToWorld(Viewport.LastMousePos);
 
-				if (power.info.TargetTintColor != null)
+				if (power.info.TargetActors && power.info.TargetTintColor != null)
 				{
-					var targetUnits = power.GetTargets(xy);
+					var targetUnits = power.GetActorTargets(xy);
 
 					foreach (var unit in targetUnits)
 					{
@@ -409,7 +449,10 @@ namespace OpenRA.Mods.CA.Traits
 
 			protected override string GetCursor(World world, CPos cell, int2 worldPixel, MouseInput mi)
 			{
-				var targets = power.GetTargets(cell);
+				if (!power.info.TargetActors)
+					return power.info.Cursor;
+
+				var targets = power.GetActorTargets(cell);
 				return targets.Count() >= power.info.MinTargets ? power.info.Cursor : power.info.BlockedCursor;
 			}
 		}

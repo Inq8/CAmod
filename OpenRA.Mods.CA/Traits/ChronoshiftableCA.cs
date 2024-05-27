@@ -9,10 +9,7 @@
 #endregion
 
 using System.Collections.Generic;
-using System.Linq;
 using OpenRA.Mods.CA.Activities;
-using OpenRA.Mods.Cnc.Activities;
-using OpenRA.Mods.Cnc.Traits;
 using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Effects;
