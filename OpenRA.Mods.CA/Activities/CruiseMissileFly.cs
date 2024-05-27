@@ -71,7 +71,7 @@ namespace OpenRA.Mods.CA.Activities
 				attitude *= 1.2f;
 			}
 
-			var u = (facing.Angle % 512) / 512f;
+			var u = facing.Angle % 512 / 512f;
 			var scale = 2048 * u * (1 - u);
 
 			var effective = (int)(facing.Angle < 512
