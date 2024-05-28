@@ -966,7 +966,7 @@ sweden.coalition:
 	Buildable:
 		BuildPaletteOrder: 3
 		Prerequisites: ~player.allies, alhq, !greece.coalition, !korea.coalition, !sweden.coalition, ~techlevel.medium
-		Description: Form a coalition with Sweden, required for:\n• Cryo Trooper\n• Cryostorm\n• Cryo Rockets for Longbow\n\n
+		Description: Form a coalition with Sweden, required for:\n• Cryo Trooper\n• Cryostorm\n• Cryo Rockets upgrade applies to Longbow\n\n
 	TooltipExtras:
 		Attributes: (!) Only ONE Coalition may be chosen.
 	Valued:
@@ -1066,7 +1066,7 @@ entrench.upgrade:
 	TooltipExtras:
 		Strengths: + Allows Engineers to deploy, enabling defensive structures to be built
 	Valued:
-		Cost: 1000
+		Cost: 750
 	RenderSprites:
 		Image: entrench.upgrade
 
@@ -1081,7 +1081,7 @@ crym.upgrade:
 	TooltipExtras:
 		Strengths: + Equip with Cryo Missiles which slow movement and increase damage taken
 	Valued:
-		Cost: 1000
+		Cost: 500
 	RenderSprites:
 		Image: crym.upgrade
 
@@ -1096,7 +1096,7 @@ tflx.upgrade:
 	TooltipExtras:
 		Strengths: + Chrono Prison gains teleport ability\n+ Chrono Prison weapon range increased\n+ Chrono Tank teleport range increased\n+ Chrono Tank can teleport twice before recharging
 	Valued:
-		Cost: 1000
+		Cost: 750
 	RenderSprites:
 		Image: tflx.upgrade
 
@@ -1174,39 +1174,6 @@ rebel.allegiance:
 	RenderSprites:
 		Image: rebel.allegiance
 
-shrw.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Research: Shard Walker
-	Buildable:
-		BuildPaletteOrder: 20
-		Prerequisites: ~player.reaper, anyradar, ~techlevel.medium
-		Description: Allows production of Shard Walkers, a heavier and\n  more powerful variant of the Gun Walker.\n\nReplaces: Gun Walker
-		IconPalette: chromes
-	TooltipExtras:
-		Strengths: + Increased durability\n+ Increased damage
-		Weaknesses: – Slower movement\n– Slower projectiles
-	Valued:
-		Cost: 750
-	RenderSprites:
-		Image: shrw.upgrade
-
-advart.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Advanced Articulators
-	Buildable:
-		BuildPaletteOrder: 20
-		Prerequisites: ~player.traveler, anyradar, ~techlevel.medium
-		Description: Enable Scrin infantry to move faster.\n\nUpgrades: Scrin Infantry
-		IconPalette: chromes
-	TooltipExtras:
-		Strengths: + 15% faster movement
-	Valued:
-		Cost: 1250
-	RenderSprites:
-		Image: advart.upgrade
-
 allegiance.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -1254,6 +1221,39 @@ impl.upgrade:
 		Cost: 500
 	RenderSprites:
 		Image: impl.upgrade
+
+shrw.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Shard Walker
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: ~player.reaper, anyradar, ~techlevel.medium
+		Description: Allows production of Shard Walkers, a heavier and\n  more powerful variant of the Gun Walker.\n\nReplaces: Gun Walker
+		IconPalette: chromes
+	TooltipExtras:
+		Strengths: + Increased durability\n+ Increased damage
+		Weaknesses: – Slower movement\n– Slower projectiles
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: shrw.upgrade
+
+advart.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Advanced Articulators
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: ~player.traveler, anyradar, ~techlevel.medium
+		Description: Enable Scrin infantry to move faster.\n\nUpgrades: Scrin Infantry
+		IconPalette: chromes
+	TooltipExtras:
+		Strengths: + 15% faster movement
+	Valued:
+		Cost: 1250
+	RenderSprites:
+		Image: advart.upgrade
 
 carapace.upgrade:
 	Inherits: ^Upgrade
