@@ -16,7 +16,7 @@ using OpenRA.Traits;
 namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("Tracks player experience and sets a level based on it.")]
-	public class PlayerExperienceLevelsInfo : ConditionalTraitInfo, Requires<PlayerExperienceInfo>, Requires<TechTreeInfo>
+	public class PlayerExperienceLevelsInfo : ConditionalTraitInfo, Requires<PlayerExperienceInfo>, Requires<TechTreeInfo>, ITechTreePrerequisiteInfo
 	{
 		[Desc("Experience required to reach each level above level 0.")]
 		public readonly int[] LevelXpRequirements = { 50, 250, 500 };
@@ -32,6 +32,11 @@ namespace OpenRA.Mods.CA.Traits
 
 		[Desc("Text notification to display when player levels up.")]
 		public readonly string LevelUpTextNotification = null;
+
+		IEnumerable<string> ITechTreePrerequisiteInfo.Prerequisites(ActorInfo info)
+		{
+			return LevelPrerequisites;
+		}
 
 		public override object Create(ActorInitializer init) { return new PlayerExperienceLevels(init.Self, this); }
 	}

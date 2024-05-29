@@ -15,7 +15,7 @@ hazmat.upgrade:
 	Tooltip:
 		Name: Upgrade: Hazmat Suits
 	Buildable:
-		BuildPaletteOrder: 10
+		BuildPaletteOrder: 18
 		Prerequisites: anyradar, infantry.any, ~!player.soviet, ~!player.zocom, ~!player.scrin, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Infantry are equiped with hazmat suits which provides\n  protection against Tiberium and radiation.\n\nUpgrades: Infantry
@@ -61,7 +61,7 @@ bombard.strat:
 	Tooltip:
 		Name: Strategy: Bombardment I
 	Buildable:
-		BuildPaletteOrder: 1
+		BuildPaletteOrder: 7
 		Prerequisites: ~player.gdi, anyradar, ~!seek.strat, ~!hold.strat, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Firepower focused strategy, required for:\n• Tomahawk Launcher\n• Bombardier\n• Hailstorm Missiles Upgrade\n\n
@@ -82,7 +82,7 @@ bombard2.strat:
 	Tooltip:
 		Name: Strategy: Bombardment II
 	Buildable:
-		BuildPaletteOrder: 2
+		BuildPaletteOrder: 8
 		Prerequisites: ~player.gdi, gtek, ~bombard.strat, ~techlevel.high
 		Description: Increase Bombardment strategy bonuses.
 	TooltipExtras:
@@ -96,7 +96,7 @@ seek.strat:
 	Tooltip:
 		Name: Strategy: Seek & Destroy
 	Buildable:
-		BuildPaletteOrder: 4
+		BuildPaletteOrder: 10
 		Prerequisites: ~player.gdi, anyradar, ~!bombard.strat, ~!hold.strat, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Speed and weapon range focused strategy, required for:\n• TOW Missile Upgrade\n• Zone Raider Upgrade\n• Hypersonic Missiles Upgrade\n\n
@@ -117,7 +117,7 @@ seek2.strat:
 	Tooltip:
 		Name: Strategy: Seek & Destroy II
 	Buildable:
-		BuildPaletteOrder: 5
+		BuildPaletteOrder: 11
 		Prerequisites: ~player.gdi, gtek, ~seek.strat, ~techlevel.high
 		Description: Increase Seek & Destroy strategy bonuses.
 	TooltipExtras:
@@ -131,7 +131,7 @@ hold.strat:
 	Tooltip:
 		Name: Strategy: Hold the Line
 	Buildable:
-		BuildPaletteOrder: 7
+		BuildPaletteOrder: 13
 		Prerequisites: ~player.gdi, anyradar, ~!bombard.strat, ~!seek.strat, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Defensive strategy, required for:\n• Point Defense Systems Upgrade\n• Zone Defender Upgrade\n• Hammerhead Missiles Upgrade\n\n
@@ -152,7 +152,7 @@ hold2.strat:
 	Tooltip:
 		Name: Strategy: Hold the Line II
 	Buildable:
-		BuildPaletteOrder: 8
+		BuildPaletteOrder: 14
 		Prerequisites: ~player.gdi, gtek, ~hold.strat,  ~techlevel.high
 		Description: Increase Hold the Line strategy bonuses.
 	TooltipExtras:
@@ -727,12 +727,66 @@ cyborgarmor.upgrade:
 #########################SOVIET#########
 ########################################
 
+ANYDOCTRINE:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		Name: Doctrine
+	Buildable:
+		Description: Doctrine
+	ProvidesPrerequisite:
+
+infantry.doctrine:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Doctrine: Infantry
+	Buildable:
+		BuildPaletteOrder: 4
+		Prerequisites: ~player.soviet, !infantry.doctrine, !tank.doctrine, !arty.doctrine, ~player.level1, ~techlevel.medium
+		Description: Specialize in infantry:\n• Troop Crawler\n• Overlord Tank (Replaces Mammoth Tank)\n• Improved Paratroopers\n• TBC\n• Cloning Vat\n\n
+	TooltipExtras:
+		Attributes: (!) Only ONE Doctrine may be chosen.
+	Valued:
+		Cost: 0
+	RenderSprites:
+		Image: infantry.doctrine
+
+tank.doctrine:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Doctrine: Tanks
+	Buildable:
+		BuildPaletteOrder: 5
+		Prerequisites: ~player.soviet, !infantry.doctrine, !tank.doctrine, !arty.doctrine, ~player.level1, ~techlevel.medium
+		Description: Specialize in tanks:\n• Rhino Tank (replaces Heavy Tank)\n• Apocalypse Tank (Replaces Mammoth Tank)\n• Reactive Armor\n• Tank Drop\n• Industrial Plant\n\n
+	TooltipExtras:
+		Attributes: (!) Only ONE Doctrine may be chosen.
+	Valued:
+		Cost: 0
+	RenderSprites:
+		Image: tank.doctrine
+
+arty.doctrine:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Doctrine: Artillery
+	Buildable:
+		BuildPaletteOrder: 6
+		Prerequisites: ~player.soviet, !infantry.doctrine, !tank.doctrine, !arty.doctrine, ~player.level1, ~techlevel.medium
+		Description: Specialize in artillery:\n• Grad (Replaces Katyusha)\n• Smerch (Replaces Grad)\n• TBC\n• TBC\n• Munitions Plant\n\n
+	TooltipExtras:
+		Attributes: (!) Only ONE Doctrine may be chosen.
+	Valued:
+		Cost: 0
+	RenderSprites:
+		Image: arty.doctrine
+
 hazmatsoviet.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
 		Name: Upgrade: Heavy Hazmat Suits
 	Buildable:
-		BuildPaletteOrder: 10
+		BuildPaletteOrder: 19
 		Prerequisites: ~player.soviet, anyradar, infantry.any, ~techlevel.medium
 		Description: Infantry are equipped with heavy hazmat suits which provides\n  protection against Tiberium and radiation.\n\nUpgrades: Infantry
 	TooltipExtras:
@@ -742,28 +796,6 @@ hazmatsoviet.upgrade:
 		Cost: 850
 	RenderSprites:
 		Image: hazmats.upgrade
-
-v2.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Research: V2 Launcher
-	Buildable:
-		BuildPaletteOrder: 20
-		Prerequisites: ~player.soviet, anyradar, ~techlevel.medium
-		Description: Allows construction of the V2 Launcher.\n\nReplaces: Katyusha
-	TooltipExtras:
-		Strengths: + Improved accuracy\n+ Increased range\n+ Increased burst damage\n+ Increased mobility
-		Weaknesses: – Reduced area of effect\n– Increased cost
-	Valued:
-		Cost: 500
-	RenderSprites:
-		Image: v2.upgrade
-	ProductionCostMultiplier@russia:
-		Multiplier: 0
-		Prerequisites: radar.russia
-	ProductionTimeMultiplier@russia:
-		Multiplier: 0
-		Prerequisites: radar.russia
 
 lasher.upgrade:
 	Inherits: ^Upgrade
@@ -796,6 +828,22 @@ gattling.upgrade:
 		Cost: 750
 	RenderSprites:
 		Image: gattling.upgrade
+
+v3.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: V3 Launcher
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.soviet, stek, ~arty.doctrine, ~techlevel.medium
+		Description: Allows construction of the V3 Launcher.\n\nReplaces: V2 Launcher
+	TooltipExtras:
+		Strengths: + Increased range\n+ Increased are of effect
+		Weaknesses: – Slower projectiles\n– Missiles can be shot down\n– Increased cost
+	Valued:
+		Cost: 500
+	RenderSprites:
+		Image: v3.upgrade
 
 seismic.upgrade:
 	Inherits: ^Upgrade
@@ -895,6 +943,54 @@ tarc.upgrade:
 	RenderSprites:
 		Image: tarc.upgrade
 
+ovld.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Apocalypse Tank
+	Buildable:
+		BuildPaletteOrder: 35
+		Prerequisites: ~player.soviet, ~infantry.doctrine, ~techlevel.high
+		Description: Upgrades Mammoth Tanks.\n\nReplaces: Mammoth Tank
+	TooltipExtras:
+		Strengths: + TBC
+		Weaknesses: – TBC
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: ovld.upgrade
+
+apoc.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Apocalypse Tank
+	Buildable:
+		BuildPaletteOrder: 35
+		Prerequisites: ~player.soviet, ~tank.doctrine, ~techlevel.high
+		Description: Upgrades Mammoth Tanks.\n\nReplaces: Mammoth Tank
+	TooltipExtras:
+		Strengths: + TBC
+		Weaknesses: – TBC
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: apoc.upgrade
+
+smer.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Smerch
+	Buildable:
+		BuildPaletteOrder: 35
+		Prerequisites: ~player.soviet, ~arty.doctrine, ~techlevel.high
+		Description: Upgrades Grad.\n\nReplaces: Grad
+	TooltipExtras:
+		Strengths: + TBC
+		Weaknesses: – TBC
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: smer.upgrade
+
 indp.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -909,7 +1005,6 @@ indp.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: indp.upgrade
-
 
 #######################ALLIES############################
 #########################################################
@@ -1147,7 +1242,7 @@ loyalist.allegiance:
 	Tooltip:
 		Name: Allegiance: Loyalist
 	Buildable:
-		BuildPaletteOrder: 1
+		BuildPaletteOrder: 15
 		Prerequisites: ~player.scrin, anyradar, scrin.allegiances.available, !rebel.allegiance, ~techlevel.medium
 		Description: Declare your allegiance and side with the Scrin Overlord.\n\nRequired for:\n• Eviscerator\n• Obliterator\n• Overlord's Wrath\n\n
 		IconPalette: chromes
@@ -1163,7 +1258,7 @@ rebel.allegiance:
 	Tooltip:
 		Name: Allegiance: Rebel
 	Buildable:
-		BuildPaletteOrder: 2
+		BuildPaletteOrder: 16
 		Prerequisites: ~player.scrin, anyradar, scrin.allegiances.available, !loyalist.allegiance, ~techlevel.medium
 		Description: Declare your allegiance and side with the Scrin Rebels.\n\nRequired for:\n• Impaler\n• Nullifier\n• Gateway\n\n
 		IconPalette: chromes

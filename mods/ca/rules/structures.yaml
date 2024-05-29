@@ -1231,9 +1231,6 @@ WEAP:
 	ProvidesPrerequisiteValidatedFaction@2tnk:
 		Factions: france, germany, usa
 		Prerequisite: vehicles.2tnk
-	ProvidesPrerequisiteValidatedFaction@3tnk:
-		Factions: russia, ukraine, iraq, yuri
-		Prerequisite: vehicles.3tnk
 	ProvidesPrerequisiteValidatedFaction@qtnk:
 		Factions: russia, ukraine, iraq
 		Prerequisite: vehicles.qtnk
@@ -5557,7 +5554,7 @@ UPGC.BOMB:
 		Name: Upgrade: Firestorm Missile System
 	Buildable:
 		Queue: Upgrade
-		BuildPaletteOrder: 3
+		BuildPaletteOrder: 9
 		Prerequisites: ~player.gdi, upgc, !upgc.plugged, bombard2.strat, ~bombard.strat, ~!seek.strat, ~!hold.strat, ~techlevel.high
 		Description: Provides an napalm rocket barrage.
 		IconPalette: chrometd
@@ -5579,7 +5576,7 @@ UPGC.SEEK:
 		Name: Upgrade: Advanced Radar System
 	Buildable:
 		Queue: Upgrade
-		BuildPaletteOrder: 6
+		BuildPaletteOrder: 12
 		Prerequisites: ~player.gdi, upgc, !upgc.plugged, seek2.strat, ~seek.strat, ~!bombard.strat, ~!hold.strat, ~techlevel.high
 		Description: Provides detailed information on enemy locations.
 		IconPalette: chrometd
@@ -5601,7 +5598,7 @@ UPGC.HOLD:
 		Name: Upgrade: Nanoshield Generator
 	Buildable:
 		Queue: Upgrade
-		BuildPaletteOrder: 9
+		BuildPaletteOrder: 15
 		Prerequisites: ~player.gdi, upgc, !upgc.plugged, hold2.strat, ~hold.strat, ~!bombard.strat, ~!seek.strat, ~techlevel.high
 		Description: Provides the ability to shield units in an area
 		IconPalette: chrometd
