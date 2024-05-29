@@ -155,6 +155,8 @@
 	ReloadDelay: 75
 	Warhead@1Dam: SpreadDamage
 		Damage: 8500
+	Versus:
+		Light: 100
 
 125mmLasher:
 	Inherits: 125mm
@@ -215,14 +217,13 @@
 	Inherits: ^Cannon
 	ReloadDelay: 80
 	Burst: 2
-	InvalidTargets: Air, AirSmall, Infantry
+	InvalidTargets: Infantry
 	Warhead@1Dam: SpreadDamage
 		Damage: 6000
 		Versus:
 			Concrete: 60
 			Light: 85
 			Heavy: 115
-		InvalidTargets: Air, AirSmall
 
 130mmAtomic:
 	Inherits: 130mm
@@ -253,11 +254,13 @@
 135mm:
 	Inherits: 130mm
 	Report: voveweaa.aud, voveweab.aud, voveweac.aud
+	-InvalidTargets:
 	Warhead@1Dam: SpreadDamage
 		Damage: 8300
 
 135mmAtomic:
 	Inherits: 130mmAtomic
+	-InvalidTargets:
 	Warhead@1Dam: SpreadDamage
 		Damage: 8300
 
@@ -269,8 +272,6 @@
 	Burst: 2
 	BurstDelays: 8
 	InvalidTargets: Air, AirSmall
-	Projectile: Bullet
-		Speed: 600
 	Warhead@1Dam: SpreadDamage
 		Damage: 4750
 		Falloff: 368, 184, 80, 18, 0
