@@ -15,18 +15,15 @@ using OpenRA.Traits;
 namespace OpenRA.Mods.CA.Traits
 {
 	[TraitLocation(SystemActors.Player)]
-	public class ProvidesPrerequisiteOnCountInfo : TraitInfo, ITechTreePrerequisiteInfo
+	public class ProvidesPrerequisiteOnCountsInfo : TraitInfo, ITechTreePrerequisiteInfo
 	{
 		[Desc("The prerequisite type that this provides.")]
 		[FieldLoader.Require]
 		public readonly string Prerequisite = null;
 
-		[Desc("The counter name.")]
+		[Desc("The counts required to enable the prerequisite.")]
 		[FieldLoader.Require]
-		public readonly string Name = null;
-
-		[Desc("The count required to enable the prerequisite.")]
-		public readonly int RequiredCount = 1;
+		public readonly Dictionary<string, int> RequiredCounts = null;
 
 		[Desc("List of factions that can affect this count. Leave blank for any faction.")]
 		public readonly string[] Factions = { };
@@ -41,6 +38,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Text notification to display when player levels up.")]
 		public readonly string RequiredCountReachedTextNotification = null;
 
+		[Desc("Ticks before playing notification.")]
+		public readonly int NotificationDelay = 0;
+
 		IEnumerable<string> ITechTreePrerequisiteInfo.Prerequisites(ActorInfo info)
 		{
 			return new string[] { Prerequisite };
@@ -49,32 +49,48 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new ProvidesPrerequisiteOnCount(init, this); }
 	}
 
-	public class ProvidesPrerequisiteOnCount : ITechTreePrerequisite, INotifyCreated
+	public class ProvidesPrerequisiteOnCount : ITechTreePrerequisite, INotifyCreated, ITick
 	{
-		readonly ProvidesPrerequisiteOnCountInfo info;
+		public readonly ProvidesPrerequisiteOnCountsInfo Info;
 		readonly Actor self;
-		int count;
+		readonly Dictionary<string, int> counts;
 		TechTree techTree;
 		bool permanentlyUnlocked;
+		bool notificationQueued;
+		int ticksUntilNotification;
 
-		public ProvidesPrerequisiteOnCount(ActorInitializer init, ProvidesPrerequisiteOnCountInfo info)
+		public ProvidesPrerequisiteOnCount(ActorInitializer init, ProvidesPrerequisiteOnCountsInfo info)
 		{
-			this.info = info;
+			Info = info;
 			self = init.Self;
+			counts = new Dictionary<string, int>();
 			permanentlyUnlocked = false;
+			ticksUntilNotification = info.NotificationDelay;
 		}
 
 		bool Enabled
 		{
 			get
 			{
-				return permanentlyUnlocked || count >= info.RequiredCount;
+				return permanentlyUnlocked || AllRequiredCountsReached;
 			}
 		}
 
-		public string Name => info.Name;
-		public string[] Factions => info.Factions;
-		public int CurrentCount => count;
+		bool AllRequiredCountsReached
+		{
+			get
+			{
+				foreach (var kvp in Info.RequiredCounts)
+				{
+					if (!counts.ContainsKey(kvp.Key) || counts[kvp.Key] < kvp.Value)
+						return false;
+				}
+
+				return true;
+			}
+		}
+
+		public string[] Factions => Info.Factions;
 
 		public IEnumerable<string> ProvidesPrerequisites
 		{
@@ -83,7 +99,7 @@ namespace OpenRA.Mods.CA.Traits
 				if (!Enabled)
 					yield break;
 
-				yield return info.Prerequisite;
+				yield return Info.Prerequisite;
 			}
 		}
 
@@ -98,27 +114,42 @@ namespace OpenRA.Mods.CA.Traits
 			techTree.ActorChanged(self);
 		}
 
-		public void Increment()
+		void ITick.Tick(Actor self)
 		{
-			count++;
+			if (notificationQueued && --ticksUntilNotification <= 0)
+			{
+				if (Info.RequiredCountReachedNotification != null)
+					Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", Info.RequiredCountReachedNotification, self.Owner.Faction.InternalName);
+
+				if (Info.RequiredCountReachedTextNotification != null)
+					TextNotificationsManager.AddTransientLine(Info.RequiredCountReachedTextNotification, self.Owner);
+
+				notificationQueued = false;
+				ticksUntilNotification = Info.NotificationDelay;
+			}
+		}
+
+		public void Increment(string type)
+		{
+			if (!counts.ContainsKey(type))
+				counts[type] = 0;
+
+			counts[type]++;
 			techTree.ActorChanged(self);
 
-			if (count >= info.RequiredCount)
+			if (AllRequiredCountsReached)
 			{
-				if (!permanentlyUnlocked && info.RequiredCountReachedNotification != null)
-					Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", info.RequiredCountReachedNotification, self.Owner.Faction.InternalName);
+				if (!permanentlyUnlocked)
+					notificationQueued = true;
 
-				if (!permanentlyUnlocked && info.RequiredCountReachedTextNotification != null)
-					TextNotificationsManager.AddTransientLine(info.RequiredCountReachedTextNotification, self.Owner);
-
-				if (info.Permanent)
+				if (Info.Permanent)
 					permanentlyUnlocked = true;
 			}
 		}
 
-		public void Decrement()
+		public void Decrement(string type)
 		{
-			count--;
+			counts[type]--;
 			techTree.ActorChanged(self);
 		}
 	}

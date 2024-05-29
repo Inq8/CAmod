@@ -148,6 +148,8 @@ SMER:
 		Name: Smerch
 	Valued:
 		Cost: 1750
+	Health:
+		HP: 20000
 	Armament@PRIMARY:
 		Weapon: SmerchRockets
 	Armament@SECONDARY:
@@ -567,7 +569,7 @@ GTNK.squad:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 80
-		Prerequisites: ~!atomicengines.upgrade, ~!lasher.upgrade, ~vehicles.soviet, ~techlevel.low
+		Prerequisites: ~!atomicengines.upgrade, ~!lasher.upgrade, ~!tank.doctrine, ~vehicles.soviet, ~techlevel.low
 		Description: Soviet main battle tank with dual cannons.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
@@ -5238,6 +5240,7 @@ TRPC:
 	Inherits: APC
 	Buildable:
 		Prerequisites: ~vehicles.soviet, ~infantry.doctrine, ~techlevel.medium
+		BuildPaletteOrder: 133
 	Tooltip:
 		Name: Troop Crawler
 	ProximityExternalCondition@InspirationVeh:
@@ -6757,7 +6760,7 @@ V3RL:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 181
-		Prerequisites: stek, ~vehicles.soviet, ~techlevel.high
+		Prerequisites: ~vehicles.soviet, ~v3.upgrade, ~techlevel.high
 		Description: Extreme long-range rocket artillery.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor

@@ -1377,7 +1377,7 @@ SHOK:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 90
-		Prerequisites: tslaorstek, anyradar, ~infantry.shok, ~techlevel.medium
+		Prerequisites: tslaorstek, anyradar, ~infantry.shok, ~!ttrp.upgrade, ~techlevel.medium
 		Description: Elite infantry with portable Tesla weapon.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
@@ -1455,6 +1455,7 @@ TTRP:
 	Inherits: SHOK
 	Buildable:
 		BuildPaletteOrder: 91
+		Prerequisites: tslaorstek, anyradar, ~infantry.shok, ~ttrp.upgrade, ~techlevel.medium
 	Tooltip:
 		Name: Tesla Trooper
 	Valued:
@@ -2774,7 +2775,7 @@ E8:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 92
-		Prerequisites: ~infantry.iraq, tturorstek, anyradar, ~techlevel.medium
+		Prerequisites: ~infantry.iraq, tturorstek, anyradar, ~!deso.upgrade, ~techlevel.medium
 		Description: Anti-infantry unit with radiation based weaponry.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
@@ -2849,6 +2850,7 @@ DESO:
 	Inherits: E8
 	Buildable:
 		BuildPaletteOrder: 93
+		Prerequisites: ~infantry.iraq, tturorstek, anyradar, ~deso.upgrade, ~techlevel.medium
 	Tooltip:
 		Name: Desolator
 	TooltipExtras:

@@ -15,7 +15,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("Tracks player experience and sets a level based on it.")]
+	[Desc("Tracks player experience and sets grants prerequisites based on it.")]
 	public class PlayerExperienceLevelsInfo : ConditionalTraitInfo, Requires<PlayerExperienceInfo>, Requires<TechTreeInfo>, ITechTreePrerequisiteInfo
 	{
 		[Desc("Experience required to reach each level above level 0.")]
@@ -33,6 +33,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Text notification to display when player levels up.")]
 		public readonly string LevelUpTextNotification = null;
 
+		[Desc("Ticks before playing notification.")]
+		public readonly int NotificationDelay = 0;
+
 		IEnumerable<string> ITechTreePrerequisiteInfo.Prerequisites(ActorInfo info)
 		{
 			return LevelPrerequisites;
@@ -49,6 +52,8 @@ namespace OpenRA.Mods.CA.Traits
 		readonly bool validFaction;
 		int currentLevel;
 		int nextLevelXpRequired;
+		bool notificationQueued;
+		int ticksUntilNotification;
 
 		public PlayerExperienceLevels(Actor self, PlayerExperienceLevelsInfo info)
 			: base(info)
@@ -61,6 +66,7 @@ namespace OpenRA.Mods.CA.Traits
 			currentLevel = 0;
 			maxLevel = info.LevelXpRequirements.Length;
 			nextLevelXpRequired = info.LevelXpRequirements[currentLevel];
+			ticksUntilNotification = info.NotificationDelay;
 		}
 
 		public bool Enabled => validFaction;
@@ -84,6 +90,18 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				LevelUp(self);
 			}
+
+			if (notificationQueued && --ticksUntilNotification <= 0)
+			{
+				if (Info.LevelUpNotification != null)
+					Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", Info.LevelUpNotification, self.Owner.Faction.InternalName);
+
+				if (Info.LevelUpTextNotification != null)
+					TextNotificationsManager.AddTransientLine(string.Format(Info.LevelUpTextNotification, currentLevel), self.Owner);
+
+				notificationQueued = false;
+				ticksUntilNotification = Info.NotificationDelay;
+			}
 		}
 
 		void LevelUp(Actor self)
@@ -94,12 +112,7 @@ namespace OpenRA.Mods.CA.Traits
 				nextLevelXpRequired = Info.LevelXpRequirements[currentLevel];
 
 			techTree.ActorChanged(self);
-
-			if (Info.LevelUpNotification != null)
-				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", Info.LevelUpNotification, self.Owner.Faction.InternalName);
-
-			if (Info.LevelUpTextNotification != null)
-				TextNotificationsManager.AddTransientLine(string.Format(Info.LevelUpTextNotification, currentLevel), self.Owner);
+			notificationQueued = true;
 		}
 	}
 }

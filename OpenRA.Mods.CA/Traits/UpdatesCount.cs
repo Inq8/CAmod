@@ -19,7 +19,7 @@ namespace OpenRA.Mods.CA.Traits
 	{
 		[FieldLoader.Require]
 		[Desc("Name of the counter to update.")]
-		public readonly string Name = null;
+		public readonly string Type = null;
 
 		public override object Create(ActorInitializer init) { return new UpdatesCount(init, this); }
 	}
@@ -37,17 +37,17 @@ namespace OpenRA.Mods.CA.Traits
 		void INotifyCreated.Created(Actor self)
 		{
 			counters = self.Owner.PlayerActor.TraitsImplementing<ProvidesPrerequisiteOnCount>()
-				.Where(c => c.Name == Info.Name
+				.Where(c => c.Info.RequiredCounts.ContainsKey(Info.Type)
 					&& (c.Factions.Length == 0 || c.Factions.Contains(self.Owner.Faction.InternalName)));
 
 			foreach (var c in counters)
-				c.Increment();
+				c.Increment(Info.Type);
 		}
 
-		void INotifyActorDisposing.Disposing(OpenRA.Actor self)
+		void INotifyActorDisposing.Disposing(Actor self)
 		{
 			foreach (var c in counters)
-				c.Decrement();
+				c.Decrement(Info.Type);
 		}
 	}
 }

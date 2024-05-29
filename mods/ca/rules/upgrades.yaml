@@ -731,9 +731,9 @@ ANYDOCTRINE:
 	AlwaysVisible:
 	Interactable:
 	Tooltip:
-		Name: Doctrine
+		Name: Active Doctrine
 	Buildable:
-		Description: Doctrine
+		Description: Active Doctrine
 	ProvidesPrerequisite:
 
 infantry.doctrine:
@@ -742,7 +742,7 @@ infantry.doctrine:
 		Name: Doctrine: Infantry
 	Buildable:
 		BuildPaletteOrder: 4
-		Prerequisites: ~player.soviet, !infantry.doctrine, !tank.doctrine, !arty.doctrine, ~player.level1, ~techlevel.medium
+		Prerequisites: ~player.soviet, !infantry.doctrine, !tank.doctrine, !arty.doctrine, player.level1, ~techlevel.medium
 		Description: Specialize in infantry:\n• Troop Crawler\n• Overlord Tank (Replaces Mammoth Tank)\n• Improved Paratroopers\n• TBC\n• Cloning Vat\n\n
 	TooltipExtras:
 		Attributes: (!) Only ONE Doctrine may be chosen.
@@ -757,7 +757,7 @@ tank.doctrine:
 		Name: Doctrine: Tanks
 	Buildable:
 		BuildPaletteOrder: 5
-		Prerequisites: ~player.soviet, !infantry.doctrine, !tank.doctrine, !arty.doctrine, ~player.level1, ~techlevel.medium
+		Prerequisites: ~player.soviet, !infantry.doctrine, !tank.doctrine, !arty.doctrine, player.level1, ~techlevel.medium
 		Description: Specialize in tanks:\n• Rhino Tank (replaces Heavy Tank)\n• Apocalypse Tank (Replaces Mammoth Tank)\n• Reactive Armor\n• Tank Drop\n• Industrial Plant\n\n
 	TooltipExtras:
 		Attributes: (!) Only ONE Doctrine may be chosen.
@@ -772,7 +772,7 @@ arty.doctrine:
 		Name: Doctrine: Artillery
 	Buildable:
 		BuildPaletteOrder: 6
-		Prerequisites: ~player.soviet, !infantry.doctrine, !tank.doctrine, !arty.doctrine, ~player.level1, ~techlevel.medium
+		Prerequisites: ~player.soviet, !infantry.doctrine, !tank.doctrine, !arty.doctrine, player.level1, ~techlevel.medium
 		Description: Specialize in artillery:\n• Grad (Replaces Katyusha)\n• Smerch (Replaces Grad)\n• TBC\n• TBC\n• Munitions Plant\n\n
 	TooltipExtras:
 		Attributes: (!) Only ONE Doctrine may be chosen.
@@ -949,7 +949,7 @@ ovld.upgrade:
 		Name: Research: Apocalypse Tank
 	Buildable:
 		BuildPaletteOrder: 35
-		Prerequisites: ~player.soviet, ~infantry.doctrine, ~techlevel.high
+		Prerequisites: player.level3, ~player.soviet, ~infantry.doctrine, ~techlevel.high
 		Description: Upgrades Mammoth Tanks.\n\nReplaces: Mammoth Tank
 	TooltipExtras:
 		Strengths: + TBC
@@ -965,7 +965,7 @@ apoc.upgrade:
 		Name: Research: Apocalypse Tank
 	Buildable:
 		BuildPaletteOrder: 35
-		Prerequisites: ~player.soviet, ~tank.doctrine, ~techlevel.high
+		Prerequisites: player.level3, ~player.soviet, ~tank.doctrine, ~techlevel.high
 		Description: Upgrades Mammoth Tanks.\n\nReplaces: Mammoth Tank
 	TooltipExtras:
 		Strengths: + TBC
@@ -981,7 +981,7 @@ smer.upgrade:
 		Name: Research: Smerch
 	Buildable:
 		BuildPaletteOrder: 35
-		Prerequisites: ~player.soviet, ~arty.doctrine, ~techlevel.high
+		Prerequisites: player.rank3, ~player.soviet, ~arty.doctrine, ~techlevel.high
 		Description: Upgrades Grad.\n\nReplaces: Grad
 	TooltipExtras:
 		Strengths: + TBC
@@ -1013,9 +1013,9 @@ ANYCOALITION:
 	AlwaysVisible:
 	Interactable:
 	Tooltip:
-		Name: Coalition
+		Name: Active Coalition
 	Buildable:
-		Description: Coalition
+		Description: Active Coalition
 	ProvidesPrerequisite:
 
 greece.coalition:
