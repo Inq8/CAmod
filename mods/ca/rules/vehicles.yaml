@@ -823,7 +823,7 @@ GTNK.squad:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 82
-		Prerequisites: ~!atomicengines.upgrade, ~!lasher.upgrade, ~tank.doctrine, ~techlevel.low
+		Prerequisites: ~vehicles.soviet, ~!atomicengines.upgrade, ~!lasher.upgrade, ~tank.doctrine, ~techlevel.low
 		Description: Soviet designed heavy tank.
 	RenderSprites:
 		Image: rhin
@@ -5237,9 +5237,23 @@ BTR.YURI.AI:
 TRPC:
 	Inherits: APC
 	Buildable:
-		Prerequisites: anyradar, ~vehicles.soviet, ~infantry.doctrine, ~techlevel.medium
+		Prerequisites: ~vehicles.soviet, ~infantry.doctrine, ~techlevel.medium
 	Tooltip:
 		Name: Troop Crawler
+	ProximityExternalCondition@InspirationVeh:
+		Range: 3c0
+		Condition: veh-inspiration
+		ValidRelationships: Ally
+		AffectsParent: true
+	WithRadiatingCircle:
+		EndRadius: 3c0
+		Interval: 25
+		Duration: 50
+		ValidRelationships: Ally
+		AlwaysShowMaxRange: true
+	ProximityExternalCondition@HealAura:
+		Condition: hospitalheal
+		Range: 3c0
 
 IFV:
 	Inherits: ^Tank
@@ -8564,6 +8578,17 @@ OVLD:
 	ReloadAmmoPool@ATOMICAMMO:
 		Count: 6
 		RequiresCondition: atomic-ammo && has-atomic-ammo < 6
+	ProximityExternalCondition@InspirationVeh:
+		Range: 4c0
+		Condition: veh-inspiration
+		ValidRelationships: Ally
+		AffectsParent: true
+	WithRadiatingCircle:
+		EndRadius: 4c0
+		Interval: 25
+		Duration: 50
+		ValidRelationships: Ally
+		AlwaysShowMaxRange: true
 	ReplacedInQueue:
 		Actors: ovld.atomic, ovld.erad
 	Upgradeable@ATOMIC:

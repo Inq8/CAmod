@@ -417,22 +417,45 @@
 		Sequence: infantry
 
 ^Inspirable:
-	ExternalCondition@Inspiration:
+	ExternalCondition@InspirationCmsr:
+		Condition: cmsr-inspiration
+	ExternalCondition@InspirationVeh:
+		Condition: veh-inspiration
+	GrantCondition@Inspiration1:
+		RequiresCondition: cmsr-inspiration || veh-inspiration
 		Condition: inspiration
-	ReloadDelayMultiplier@Inspiration:
+	GrantCondition@Inspiration2:
+		RequiresCondition: cmsr-inspiration && veh-inspiration
+		Condition: inspiration
+	ReloadDelayMultiplier@Inspiration1:
 		RequiresCondition: inspiration
-		Modifier: 90
-	ReloadAmmoDelayMultiplier@Inspiration:
+		Modifier: 92
+	ReloadAmmoDelayMultiplier@Inspiration1:
 		RequiresCondition: inspiration
-		Modifier: 90
-	SpeedMultiplier@Inspiration:
-		RequiresCondition: inspiration
-		Modifier: 133
-	WithIdleOverlay@Inspiration:
+		Modifier: 92
+	SpeedMultiplier@Inspiration1:
+		RequiresCondition: inspiration == 1
+		Modifier: 130
+	ReloadDelayMultiplier@Inspiration2:
+		RequiresCondition: inspiration == 2
+		Modifier: 84
+	ReloadAmmoDelayMultiplier@Inspiration2:
+		RequiresCondition: inspiration == 2
+		Modifier: 84
+	SpeedMultiplier@Inspiration2:
+		RequiresCondition: inspiration == 2
+		Modifier: 140
+	WithIdleOverlay@Inspiration1:
 		Image: ussrstar
-		Sequence: idle-overlay
+		Sequence: idle-overlay1
 		Palette: effect
-		RequiresCondition: inspiration
+		RequiresCondition: inspiration == 1
+		IsDecoration: True
+	WithIdleOverlay@Inspiration2:
+		Image: ussrstar
+		Sequence: idle-overlay2
+		Palette: effect
+		RequiresCondition: inspiration == 2
 		IsDecoration: True
 
 ^Chronoshiftable:

@@ -731,7 +731,7 @@ SPY:
 		RequiresCondition: cmsr-disguise
 	WithIdleOverlay@Inspiration:
 		Image: ussrstar
-		Sequence: idle-overlay
+		Sequence: idle-overlay1
 		Palette: effect
 		RequiresCondition: cmsr-disguise
 	AttackMove:
@@ -4339,6 +4339,7 @@ CMSR:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -4393,26 +4394,21 @@ CMSR:
 		Prerequisites: barracks.upgraded
 	ProximityExternalCondition@Inspiration:
 		Range: 7c0
-		Condition: inspiration
+		Condition: cmsr-inspiration
 		ValidRelationships: Ally
+		AffectsParent: true
 	WithDecoration@CMSRPIP:
 		Image: pips
 		Sequence: pip-cmsr
 		Palette: effect
 		Position: TopLeft
 		ValidRelationships: Ally, Enemy, Neutral
-	WithIdleOverlay@Inspiration:
-		Image: ussrstar
-		Sequence: idle-overlay
-		Palette: effect
 	WithRadiatingCircle:
 		EndRadius: 7c0
 		Interval: 25
 		Duration: 50
 		ValidRelationships: Ally
 		AlwaysShowMaxRange: true
-	SpeedMultiplier@Inspiration:
-		Modifier: 133
 
 ZTRP:
 	Inherits: ^Soldier
