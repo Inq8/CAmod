@@ -1036,6 +1036,7 @@ veil:
 	RenderShroudCircleCA:
 		Visible: Always
 		UsePlayerColor: true
+		PlayerColorAlpha: 192
 		ValidRelationships: Ally, Enemy, Neutral
 	RenderSprites:
 		Image: gpsscrambler
@@ -1103,12 +1104,13 @@ jamming.field:
 		Palette: effect
 	KillsSelf:
 		Delay: 225
-	WithRangeCircle@JAMMER:
+	WithRangeCircleCA@JAMMER:
 		Type: JammingField
 		Range: 6c0
 		Visible: Always
 		ValidRelationships: Ally, Enemy, Neutral
 		UsePlayerColor: true
+		PlayerColorAlpha: 160
 	ProximityExternalCondition@WEAPJAMMER:
 		Range: 6c0
 		ValidRelationships: Enemy, Neutral
@@ -1140,12 +1142,13 @@ cryostorm:
 		HP: 1
 	KillsSelf:
 		Delay: 375
-	WithRangeCircle@Cryostorm:
+	WithRangeCircleCA@Cryostorm:
 		Type: Cryostorm
 		Range: 4c682
 		Visible: Always
 		ValidRelationships: Ally, Enemy, Neutral
 		UsePlayerColor: true
+		PlayerColorAlpha: 192
 	PeriodicExplosion:
 		Weapon: Cryostorm
 	ProximityExternalCondition@Cryostorm1:
@@ -1173,7 +1176,7 @@ cryostorm:
 
 cryostorm.fade:
 	Inherits: cryostorm
-	-WithRangeCircle@Cryostorm:
+	-WithRangeCircleCA@Cryostorm:
 	-PeriodicExplosion:
 	-ProximityExternalCondition@Cryostorm1:
 	-ProximityExternalCondition@Cryostorm2:
@@ -1191,10 +1194,11 @@ cryostorm.fade:
 nshield:
 	Inherits@1: CAMERA
 	-RevealsShroud:
-	WithRangeCircle:
+	WithRangeCircleCA:
 		Type: NaniteShield
 		Visible: Always
 		UsePlayerColor: true
+		PlayerColorAlpha: 192
 		Range: 6c0
 	ProximityExternalCondition@NSHIELD:
 		Range: 6c0

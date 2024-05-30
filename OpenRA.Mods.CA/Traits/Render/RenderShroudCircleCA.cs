@@ -20,7 +20,7 @@ namespace OpenRA.Mods.CA.Traits.Render
 {
 	public enum RangeCircleVisibility { Always, WhenSelected }
 
-	[Desc("CA version can be set to be visible either always, or only when actor is selected.")]
+	[Desc("CA version can be set to be visible either always, or only when actor is selected, and allows alpha to be defined for player color.")]
 	public class RenderShroudCircleCAInfo : ConditionalTraitInfo
 	{
 		[Desc("Color of the circle.")]
@@ -44,6 +44,9 @@ namespace OpenRA.Mods.CA.Traits.Render
 
 		[Desc("If set, the color of the owning player will be used instead of `Color`.")]
 		public readonly bool UsePlayerColor = false;
+
+		[Desc("The alpha value [from 0 to 255] of color used for the player color.")]
+		public readonly int PlayerColorAlpha = 255;
 
 		public override object Create(ActorInitializer init) { return new RenderShroudCircleCA(init.Self, this); }
 	}
@@ -84,7 +87,7 @@ namespace OpenRA.Mods.CA.Traits.Render
 					self.CenterPosition,
 					range,
 					0,
-					info.UsePlayerColor ? self.Owner.Color : info.Color,
+					info.UsePlayerColor ? Color.FromArgb(info.PlayerColorAlpha, self.Owner.Color) : info.Color,
 					info.Width,
 					info.ContrastColor,
 					info.ContrastColorWidth);

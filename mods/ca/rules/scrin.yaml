@@ -1699,10 +1699,11 @@ LCHR.Orb:
 	WithColoredSelectionBox@PLAYERBOX:
 		ColorSource: Player
 		ValidRelationships: Ally, Enemy
-	WithRangeCircle:
+	WithRangeCircleCA:
 		Type: LeecherOrb
 		Range: 2c256
 		UsePlayerColor: true
+		PlayerColorAlpha: 160
 		Visible: Always
 
 STCR:
@@ -5244,10 +5245,11 @@ GRCL:
 		StartIfBelow: 101
 		Delay: 25
 		RequiresCondition: !leeching
-	WithRangeCircle:
+	WithRangeCircleCA:
 		Type: GreaterCoalescence
 		Range: 4c512
 		UsePlayerColor: true
+		PlayerColorAlpha: 192
 		Visible: Always
 	ProximityExternalCondition@HEAL:
 		Condition: lchr-healing
@@ -5286,7 +5288,7 @@ TBCL:
 	-ProximityExternalCondition@HEAL:
 	-ConvertsDamageToHealth:
 	-ChangesHealth:
-	-WithRangeCircle:
+	-WithRangeCircleCA:
 	Health:
 		HP: 150000
 	AttackFrontal:
@@ -5429,6 +5431,7 @@ IonSurge:
 		Visible: Always
 		ValidRelationships: Ally
 		UsePlayerColor: true
+		PlayerColorAlpha: 192
 	SpawnActorOnDeath:
 		Actor: ionsurgefade
 		SkipMakeAnimations: false
