@@ -1013,12 +1013,12 @@ HonestJohnSub:
 SCUD:
 	Inherits: ^AntiGroundMissile
 	ReloadDelay: 240
-	Range: 11c0
+	Range: 12c0
 	MinRange: 3c0
 	Report: missile1.aud
 	-Projectile:
 	Projectile: Bullet
-		Speed: 240
+		Speed: 200
 		Blockable: false
 		TrailImage: smokey
 		TrailDelay: 5
@@ -1028,28 +1028,15 @@ SCUD:
 		LaunchAngle: 62
 	Warhead@1Dam: SpreadDamage
 		Spread: 384
-		Damage: 3400
+		Damage: 3800
 		Falloff: 1000, 448, 192, 50, 18, 7, 0
 		Versus:
 			None: 90
 			Wood: 80
 			Light: 65
-			Heavy: 25
+			Heavy: 45
 			Concrete: 50
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
-	Warhead@antiHeavySplash: SpreadDamage
-		Damage: 3400
-		Spread: 448
-		Falloff: 1000, 448, 192, 50, 18, 7, 0
-		ValidTargets: Vehicle, Husk
-		Versus:
-			Heavy: 20
-			None: 0
-			Wood: 0
-			Light: 5
-			Concrete: 0
-			Brick: 0
-		DamageTypes: SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: building, building2
 	Warhead@4EffWater: CreateEffect
@@ -1061,29 +1048,16 @@ V3Weapon:
 	-Report:
 	ValidTargets: Ground, Trees, Water
 	Warhead@1Dam: SpreadDamage
-		Spread: 448
-		Damage: 3400
+		Spread: 384
+		Damage: 3800
 		Falloff: 1000, 448, 192, 50, 18, 7, 0
 		Versus:
 			None: 90
 			Wood: 100
 			Light: 65
-			Heavy: 25
+			Heavy: 45
 			Concrete: 60
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
-	Warhead@antiHeavySplash: SpreadDamage
-		Damage: 3400
-		Spread: 512
-		Falloff: 1000, 448, 192, 50, 18, 7, 0
-		ValidTargets: Vehicle, Husk
-		Versus:
-			Heavy: 35
-			None: 0
-			Wood: 0
-			Light: 5
-			Concrete: 0
-			Brick: 0
-		DamageTypes: SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: building, building2
 		ValidTargets: Ground, Air, Ship, Trees, ICBM
@@ -1097,7 +1071,7 @@ THWeapon:
 	ValidTargets: Ground, Trees, Water
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
-		Damage: 3400
+		Damage: 3600
 		Falloff: 1000, 448, 192, 50, 18, 7, 0
 		ValidTargets: Ground, Water, Trees
 		Versus:
@@ -1117,7 +1091,7 @@ THWeapon:
 
 KatyushaRockets:
 	Inherits: ^AntiGroundMissile
-	ReloadDelay: 240
+	ReloadDelay: 120
 	Range: 8c768
 	MinRange: 3c0
 	Report: katyrocket1.aud, katyrocket2.aud, katyrocket3.aud
@@ -1126,6 +1100,7 @@ KatyushaRockets:
 	-Projectile:
 	Projectile: Bullet
 		Inaccuracy: 1c512
+		InaccuracyType: Absolute
 		Image: dragon
 		Speed: 200
 		LaunchAngle: 70
@@ -1134,12 +1109,12 @@ KatyushaRockets:
 		Blockable: false
 	ValidTargets: Ground, Trees, Water
 	Warhead@1Dam: SpreadDamage
-		Damage: 5000
+		Damage: 2800
 		Spread: 448
 		Versus:
 			None: 100
-			Wood: 95
-			Concrete: 55
+			Wood: 85
+			Concrete: 45
 			Light: 80
 			Heavy: 45
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, FlakVestMitigated
@@ -1158,27 +1133,37 @@ GradRockets:
 	Inherits: KatyushaRockets
 	Range: 10c0
 	Report: grad-fire1.aud, grad-fire2.aud
+	Warhead@1Dam: SpreadDamage
+		Damage: 3000
 
 GradRocketsWide:
 	Inherits: GradRockets
 	Projectile: Bullet
 		Inaccuracy: 2c512
+	Warhead@1Dam: SpreadDamage
+		Damage: 3000
 
 SmerchRockets:
 	Inherits: KatyushaRockets
+	ReloadDelay: 100
 	Report: smer-fire1.aud, smer-fire2.aud
 	Range: 18c0
 	BurstDelays: 40
 	Projectile: Bullet
 		Image: MISSILE
+	Warhead@1Dam: SpreadDamage
+		Damage: 5000
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: xplobig4.aud
 
 SmerchRocketsWide:
 	Inherits: SmerchRockets
+	ReloadDelay: 100
 	BurstDelays: 40
 	Projectile: Bullet
 		Inaccuracy: 2c512
+	Warhead@1Dam: SpreadDamage
+		Damage: 5000
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: xplobig4.aud
 
