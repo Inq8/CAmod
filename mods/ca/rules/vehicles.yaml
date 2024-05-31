@@ -949,6 +949,13 @@ GTNK.squad:
 		Prerequisites: ~!atomicengines.upgrade, ~lasher.upgrade, ~tank.doctrine, ~techlevel.low
 	Tooltip:
 		Name: Thrasher Tank
+	GrantConditionOnMovement@LASHER:
+		ValidMovementTypes: Horizontal, Vertical, Turn
+		Condition: lasher-move
+	PeriodicExplosion@LASHER:
+		RequiresCondition: lasher-move
+		LocalOffset: 896, 0, 0
+		Weapon: Lasher
 	ReplacedInQueue:
 		Actors: 3tnk.rhino.atomicyuri
 	Upgradeable@ATOMIC:
@@ -964,6 +971,13 @@ GTNK.squad:
 		Prerequisites: ~atomicengines.upgrade, ~lasher.upgrade, ~tank.doctrine, ~techlevel.low
 	Tooltip:
 		Name: Atomic Thrasher Tank
+	GrantConditionOnMovement@LASHER:
+		ValidMovementTypes: Horizontal, Vertical, Turn
+		Condition: lasher-move
+	PeriodicExplosion@LASHER:
+		RequiresCondition: lasher-move
+		LocalOffset: 896, 0, 0
+		Weapon: Lasher
 	-ReplacedInQueue:
 	-Upgradeable@LASHER:
 	-WithDecoration@UpgradeOverlay:
@@ -5237,17 +5251,82 @@ BTR.YURI.AI:
 		-EnterSounds:
 
 TRPC:
-	Inherits: APC
+	Inherits: ^Tank
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@TRANSPORT: ^Transport
+	Inherits@NOUNLOADCHRONO: ^NoUnloadWhenChronoshifted
+	Inherits@SLOWCRUSH: ^SlowedByCrushing
+	Inherits@COMMANDOSKULL: ^CommandoSkull
+	Inherits@AIUNLOAD: ^AIUNLOAD
 	Buildable:
-		Prerequisites: ~vehicles.soviet, ~infantry.doctrine, ~techlevel.medium
+		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 133
+		Prerequisites: ~vehicles.soviet, ~infantry.doctrine, ~techlevel.medium
+		Description: Tough infantry transport, pre-loaded with infantry.
+	TooltipExtras:
+		Weaknesses: • Unarmed
+		Attributes: • Empowers and heals nearby infantry
+	Valued:
+		Cost: 1200
 	Tooltip:
 		Name: Troop Crawler
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 40000
+	Armor:
+		Type: Heavy
+	Mobile:
+		Speed: 64
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Cargo:
+		Types: Infantry
+		MaxWeight: 8
+		LoadingCondition: notmobile
+		LoadedCondition: cargo
+		PassengerConditions:
+			e7: loaded-cmdo
+			rmbo: loaded-cmdo
+			bori: loaded-cmdo
+			yuri: loaded-cmdo
+			mast: loaded-cmdo
+		InitialUnits: E1,E1,E1,E1,E1,E1,E3,E3
+	WithCargoSounds:
+		EnterSounds: genter1a.aud
+		ExitSounds: gexit1a.aud
+		RequiresCondition: !no-cargo-sounds
+	GrantTimedCondition@NoPassengerSound:
+		Duration: 10
+		Condition: no-cargo-sounds
+	CargoBlocked:
+		RequiresCondition: mindcontrolled
+	WithDecoration@COMMANDOSKULL:
+		RequiresCondition: loaded-cmdo
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
+	Capturable:
+		RequiresCondition: !being-warped && !cargo
+	Capturable@DRIVER_DEAD:
+		RequiresCondition: driver-dead && !cargo
+	Targetable@MindControlResistant:
+		TargetTypes: MindControlResistant
+		RequiresCondition: cargo
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+		RequiresCondition: loaded-cmdo
+	KeepsDistance:
 	ProximityExternalCondition@InspirationVeh:
 		Range: 3c0
 		Condition: veh-inspiration
 		ValidRelationships: Ally
-		AffectsParent: true
 	WithRadiatingCircle:
 		EndRadius: 3c0
 		Interval: 25
@@ -5257,6 +5336,9 @@ TRPC:
 	ProximityExternalCondition@HealAura:
 		Condition: hospitalheal
 		Range: 3c0
+	-GivesExperienceCA:
+	-GrantConditionOnPrerequisite@GLOBALBOUNTY:
+	-GivesBounty:
 
 IFV:
 	Inherits: ^Tank
