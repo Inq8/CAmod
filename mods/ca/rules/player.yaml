@@ -126,13 +126,16 @@ Player:
 		SpeedUp: False
 	Production@Upgrade:
 		Produces: Upgrade
-		RequiresCondition: specialization-available
+		RequiresCondition: upgrades-available
 	GrantConditionOnPrerequisite@AllegiancesAvailable:
 		Prerequisites: scrin.allegiances.available
-		Condition: specialization-available
+		Condition: upgrades-available
 	GrantConditionOnPrerequisite@DoctrinesAvailable:
 		Prerequisites: player.level1
-		Condition: specialization-available
+		Condition: upgrades-available
+	GrantConditionOnPrerequisite@UpgradesAvailable:
+		Prerequisites: upgrades.producer
+		Condition: upgrades-available
 	PlaceBuilding:
 		NewOptionsNotification: NewOptions
 		CannotPlaceNotification: BuildingCannotPlaceAudio

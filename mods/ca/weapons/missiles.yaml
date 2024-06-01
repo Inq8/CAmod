@@ -1027,7 +1027,7 @@ SCUD:
 		Shadow: True
 		LaunchAngle: 62
 	Warhead@1Dam: SpreadDamage
-		Spread: 384
+		Spread: 341
 		Damage: 3800
 		Falloff: 1000, 448, 192, 50, 18, 7, 0
 		Versus:
@@ -1048,7 +1048,7 @@ V3Weapon:
 	-Report:
 	ValidTargets: Ground, Trees, Water
 	Warhead@1Dam: SpreadDamage
-		Spread: 384
+		Spread: 341
 		Damage: 3800
 		Falloff: 1000, 448, 192, 50, 18, 7, 0
 		Versus:
@@ -1091,7 +1091,7 @@ THWeapon:
 
 KatyushaRockets:
 	Inherits: ^AntiGroundMissile
-	ReloadDelay: 120
+	ReloadDelay: 160
 	Range: 8c768
 	MinRange: 3c0
 	Report: katyrocket1.aud, katyrocket2.aud, katyrocket3.aud
@@ -1109,7 +1109,7 @@ KatyushaRockets:
 		Blockable: false
 	ValidTargets: Ground, Trees, Water
 	Warhead@1Dam: SpreadDamage
-		Damage: 2800
+		Damage: 3500
 		Spread: 448
 		Versus:
 			None: 100
@@ -1134,38 +1134,31 @@ GradRockets:
 	Range: 10c0
 	Report: grad-fire1.aud, grad-fire2.aud
 	Warhead@1Dam: SpreadDamage
-		Damage: 3000
+		Damage: 350
+		Falloff: 1000, 448, 192, 50, 18, 7, 0
 
 GradRocketsWide:
 	Inherits: GradRockets
 	Projectile: Bullet
 		Inaccuracy: 2c512
-	Warhead@1Dam: SpreadDamage
-		Damage: 3000
 
 SmerchRockets:
-	Inherits: KatyushaRockets
-	ReloadDelay: 100
+	Inherits: GradRockets
+	ReloadDelay: 140
 	Report: smer-fire1.aud, smer-fire2.aud
 	Range: 18c0
 	BurstDelays: 40
 	Projectile: Bullet
 		Image: MISSILE
 	Warhead@1Dam: SpreadDamage
-		Damage: 5000
+		Damage: 550
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: xplobig4.aud
 
 SmerchRocketsWide:
 	Inherits: SmerchRockets
-	ReloadDelay: 100
-	BurstDelays: 40
 	Projectile: Bullet
 		Inaccuracy: 2c512
-	Warhead@1Dam: SpreadDamage
-		Damage: 5000
-	Warhead@3Eff: CreateEffect
-		ImpactSounds: xplobig4.aud
 
 HonestJohn:
 	ReloadDelay: 130

@@ -4422,6 +4422,9 @@
 		ProductionType: Upgrade
 	Exit@UPG:
 		ProductionTypes: Upgrade
+	ProvidesPrerequisite@UpgradesProducer:
+		Prerequisite: upgrades.producer
+		RequiresCondition: !(forceshield || being-warped)
 	-GrantConditionOnPrerequisite@MQF:
 	-GrantConditionOnPrerequisite@MQS:
 
