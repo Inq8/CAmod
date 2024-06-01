@@ -124,6 +124,15 @@ Player:
 		OnHoldAudio: OnHold
 		CancelledAudio: Cancelled
 		SpeedUp: False
+	Production@Upgrade:
+		Produces: Upgrade
+		RequiresCondition: specialization-available
+	GrantConditionOnPrerequisite@AllegiancesAvailable:
+		Prerequisites: scrin.allegiances.available
+		Condition: specialization-available
+	GrantConditionOnPrerequisite@DoctrinesAvailable:
+		Prerequisites: player.level1
+		Condition: specialization-available
 	PlaceBuilding:
 		NewOptionsNotification: NewOptions
 		CannotPlaceNotification: BuildingCannotPlaceAudio
@@ -333,6 +342,7 @@ Player:
 		LevelPrerequisites: player.level1, player.level2, player.level3
 		LevelUpTextNotification: You have gained a rank! You are now rank {0}.
 		LevelUpNotification: Promoted
+		DummyActor: QueueUpdaterDummy
 	GameSaveViewportManager:
 	PlayerRadarTerrain:
 	GpsRadarWatcher:
@@ -347,3 +357,6 @@ Player:
 		Prerequisite: scrin.allegiances.available
 		RequiredCounts:
 			Refineries: 5
+		RequiredCountReachedNotification: AllegianceDeclarationAvailable
+		RequiredCountReachedTextNotification: Allegiance declaration available.
+		DummyActor: QueueUpdaterDummy

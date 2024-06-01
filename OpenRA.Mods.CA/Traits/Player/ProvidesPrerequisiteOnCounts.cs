@@ -9,7 +9,9 @@
 #endregion
 
 using System.Collections.Generic;
+using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Traits;
+using OpenRA.Primitives;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
@@ -41,6 +43,10 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Ticks before playing notification.")]
 		public readonly int NotificationDelay = 0;
 
+		[Desc("Actor to spawn when player levels up.")]
+		[ActorReference]
+		public readonly string DummyActor = null;
+
 		IEnumerable<string> ITechTreePrerequisiteInfo.Prerequisites(ActorInfo info)
 		{
 			return new string[] { Prerequisite };
@@ -58,6 +64,8 @@ namespace OpenRA.Mods.CA.Traits
 		bool permanentlyUnlocked;
 		bool notificationQueued;
 		int ticksUntilNotification;
+		bool dummyActorQueued;
+		int ticksUntilSpawnDummyActor;
 
 		public ProvidesPrerequisiteOnCount(ActorInitializer init, ProvidesPrerequisiteOnCountsInfo info)
 		{
@@ -127,6 +135,20 @@ namespace OpenRA.Mods.CA.Traits
 				notificationQueued = false;
 				ticksUntilNotification = Info.NotificationDelay;
 			}
+
+			if (dummyActorQueued && --ticksUntilSpawnDummyActor <= 0)
+			{
+				self.World.AddFrameEndTask(w =>
+				{
+					w.CreateActor(Info.DummyActor, new TypeDictionary
+					{
+						new ParentActorInit(self),
+						new LocationInit(CPos.Zero),
+						new OwnerInit(self.Owner),
+						new FacingInit(WAngle.Zero),
+					});
+				});
+			}
 		}
 
 		public void Increment(string type)
@@ -140,7 +162,15 @@ namespace OpenRA.Mods.CA.Traits
 			if (AllRequiredCountsReached)
 			{
 				if (!permanentlyUnlocked)
+				{
 					notificationQueued = true;
+
+					if (Info.DummyActor != null)
+					{
+						dummyActorQueued = true;
+						ticksUntilSpawnDummyActor = 1;
+					}
+				}
 
 				if (Info.Permanent)
 					permanentlyUnlocked = true;

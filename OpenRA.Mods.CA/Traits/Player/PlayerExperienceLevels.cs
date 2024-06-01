@@ -10,7 +10,9 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Traits;
+using OpenRA.Primitives;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
@@ -36,6 +38,10 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Ticks before playing notification.")]
 		public readonly int NotificationDelay = 0;
 
+		[Desc("Actor to spawn when player levels up.")]
+		[ActorReference]
+		public readonly string DummyActor = null;
+
 		IEnumerable<string> ITechTreePrerequisiteInfo.Prerequisites(ActorInfo info)
 		{
 			return LevelPrerequisites;
@@ -44,16 +50,18 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new PlayerExperienceLevels(init.Self, this); }
 	}
 
-	public class PlayerExperienceLevels : ConditionalTrait<PlayerExperienceLevelsInfo>, ITick, ITechTreePrerequisite
+	public class PlayerExperienceLevels : ConditionalTrait<PlayerExperienceLevelsInfo>, ITick, ITechTreePrerequisite, INotifyCreated
 	{
-		readonly PlayerExperience playerExperience;
-		readonly TechTree techTree;
+		PlayerExperience playerExperience;
+		TechTree techTree;
 		readonly int maxLevel;
 		readonly bool validFaction;
 		int currentLevel;
 		int nextLevelXpRequired;
 		bool notificationQueued;
 		int ticksUntilNotification;
+		bool dummyActorQueued;
+		int ticksUntilSpawnDummyActor;
 
 		public PlayerExperienceLevels(Actor self, PlayerExperienceLevelsInfo info)
 			: base(info)
@@ -61,8 +69,6 @@ namespace OpenRA.Mods.CA.Traits
 			var player = self.Owner;
 			validFaction = info.Factions.Length == 0 || info.Factions.Contains(player.Faction.InternalName);
 
-			playerExperience = self.Trait<PlayerExperience>();
-			techTree = self.Trait<TechTree>();
 			currentLevel = 0;
 			maxLevel = info.LevelXpRequirements.Length;
 			nextLevelXpRequired = info.LevelXpRequirements[currentLevel];
@@ -84,6 +90,18 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
+		protected override void Created(Actor self)
+		{
+			// Special case handling is required for the Player actor.
+			// Created is called before Player.PlayerActor is assigned,
+			// so we must query other player traits from self, knowing that
+			// it refers to the same actor as self.Owner.PlayerActor
+			var playerActor = self.Info.Name == "player" ? self : self.Owner.PlayerActor;
+			playerExperience = playerActor.Trait<PlayerExperience>();
+			techTree = playerActor.Trait<TechTree>();
+			base.Created(self);
+		}
+
 		void ITick.Tick(Actor self)
 		{
 			if (Enabled && currentLevel < maxLevel && playerExperience.Experience >= nextLevelXpRequired)
@@ -102,6 +120,20 @@ namespace OpenRA.Mods.CA.Traits
 				notificationQueued = false;
 				ticksUntilNotification = Info.NotificationDelay;
 			}
+
+			if (dummyActorQueued && --ticksUntilSpawnDummyActor <= 0)
+			{
+				self.World.AddFrameEndTask(w =>
+				{
+					w.CreateActor(Info.DummyActor, new TypeDictionary
+					{
+						new ParentActorInit(self),
+						new LocationInit(CPos.Zero),
+						new OwnerInit(self.Owner),
+						new FacingInit(WAngle.Zero),
+					});
+				});
+			}
 		}
 
 		void LevelUp(Actor self)
@@ -113,6 +145,12 @@ namespace OpenRA.Mods.CA.Traits
 
 			techTree.ActorChanged(self);
 			notificationQueued = true;
+
+			if (Info.DummyActor != null)
+			{
+				dummyActorQueued = true;
+				ticksUntilSpawnDummyActor = 1;
+			}
 		}
 	}
 }
