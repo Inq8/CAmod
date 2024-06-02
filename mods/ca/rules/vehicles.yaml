@@ -884,6 +884,10 @@ GTNK.squad:
 		VoiceSet: RhinoTankVoice
 	WithMuzzleOverlay:
 	WithSpriteTurret:
+		RequiresCondition: !reactive-upgrade
+	WithSpriteTurret@ReactiveArmor:
+		Sequence: turret-upg
+		RequiresCondition: reactive-upgrade
 	WithFacingSpriteBody:
 	SpawnActorOnDeath:
 		Actor: 3TNK.RHIN.Husk
@@ -8527,6 +8531,7 @@ APOC.ERAD:
 		BuildPaletteOrder: 241
 	Armament@PRIMARY:
 		Weapon: ApocRadBeamWeapon
+		LocalOffset: 500,100,240, 500,-100,240
 		-PauseOnCondition:
 		-ReloadingCondition:
 	-Armament@ATOMICAMMO:
@@ -8540,12 +8545,17 @@ APOC.ERAD:
 	-ReloadAmmoPoolCA@ATOMICAMMODECAY:
 	-DamagedByTintedCells@RADSTRONG:
 	-DamagedByTintedCells@RADMED:
+	SpawnActorOnDeath:
+		Actor: APOC.ERAD.Husk
+		RequiresCondition: !being-warped
 	ReplacedInQueue:
 		Actors: apoc.erad.atomic
 	-Upgradeable@ERAD:
 
 APOC.ERAD.ATOMIC:
 	Inherits: APOC.ATOMIC
+	RenderSprites:
+		Image: apoc.eradi
 	Tooltip:
 		Name: Atomic Apocalyptic Eradicator
 	TooltipExtras:
@@ -8556,6 +8566,7 @@ APOC.ERAD.ATOMIC:
 		BuildPaletteOrder: 242
 	Armament@PRIMARY:
 		Weapon: ApocRadBeamWeapon
+		LocalOffset: 500,100,240, 500,-100,240
 		-PauseOnCondition:
 		-ReloadingCondition:
 	-Armament@ATOMICAMMO:
