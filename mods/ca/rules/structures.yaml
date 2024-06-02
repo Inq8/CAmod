@@ -5171,7 +5171,7 @@ INDP:
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 200
-		Prerequisites: ~structures.soviet, stek, ~techlevel.high
+		Prerequisites: ~structures.soviet, stek, ~tank.doctrine, ~techlevel.high
 		Description: Vehicles & aircraft are produced 15% faster and cost 10% less.
 		BuildLimit: 1
 	TooltipExtras:
@@ -5219,11 +5219,6 @@ INDP:
 	GrantConditionOnPrerequisite@Bot:
 		Condition: owned-by-ai
 		Prerequisites: botplayer
-	GrantRandomCondition@ai-v2:
-		Conditions: ai-v2-upgrade, noupgrade
-	ProvidesPrerequisite@ai-v2:
-		Prerequisite: v2.upgrade
-		RequiresCondition: ai-v2-upgrade && owned-by-ai
 	GrantCondition@DUMMY:
 		Condition: noupgrade
 		RequiresCondition: noupgrade
@@ -5234,6 +5229,33 @@ INDP:
 	-MindControllableProgressBar@HACKABLE:
 	-WithDecoration@HACKED:
 	-WithDecoration@RESTORING:
+
+CVAT:
+	Inherits: INDP
+	Tooltip:
+		Name: Cloning Vat
+	Buildable:
+		Prerequisites: ~structures.soviet, stek, player.level3, ~infantry.doctrine, ~techlevel.high
+		Description: Clones infantry trained at a linked barracks.
+	Production:
+		Produces: InfantrySQ, InfantryMQ
+	Exit@1:
+		SpawnOffset: -190,880,0
+		ExitCell: 1,2
+	Exit@2:
+		SpawnOffset: 190,-400,0
+		ExitCell: 1,-1
+	RallyPoint:
+	CloneProducer:
+		Types: InfantrySQ, InfantryMQ
+
+MUNP:
+	Inherits: INDP
+	Tooltip:
+		Name: Munitions Plant
+	Buildable:
+		Prerequisites: ~structures.soviet, stek, player.level3, ~arty.doctrine, ~techlevel.high
+		Description: Vehicles & aircraft are produced 15% faster and cost 10% less.
 
 OREP:
 	Inherits: ^Building

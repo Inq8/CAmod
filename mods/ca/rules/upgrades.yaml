@@ -20,7 +20,7 @@ hazmat.upgrade:
 		IconPalette: chrometd
 		Description: Infantry are equiped with hazmat suits which provides\n  protection against Tiberium and radiation.\n\nUpgrades: Infantry
 	TooltipExtras:
-		Strengths: + Tiberium immunity\n+ 50% resistance to radiation
+		Strengths: + Tiberium immunity\n+ 50% resistance to irradiated terrain
 	Valued:
 		Cost: 750
 	RenderSprites:
@@ -790,7 +790,7 @@ hazmatsoviet.upgrade:
 		Prerequisites: ~player.soviet, anyradar, infantry.any, ~techlevel.medium
 		Description: Infantry are equipped with heavy hazmat suits which provides\n  protection against Tiberium and radiation.\n\nUpgrades: Infantry
 	TooltipExtras:
-		Strengths: + Tiberium immunity\n+ High radiation resistance
+		Strengths: + Tiberium immunity\n+ High resistance to irradiated terrain
 		Weaknesses: – 33% slower movement across resources and rough terrain
 	Valued:
 		Cost: 850
@@ -838,7 +838,7 @@ v3.upgrade:
 		Prerequisites: ~player.soviet, stek, ~arty.doctrine, ~techlevel.medium
 		Description: Allows construction of the V3 Launcher.\n\nReplaces: V2 Launcher
 	TooltipExtras:
-		Strengths: + Increased range\n+ Increased are of effect
+		Strengths: + Significantly increased range
 		Weaknesses: – Slower projectiles\n– Missiles can be shot down\n– Increased cost
 	Valued:
 		Cost: 500
@@ -896,6 +896,109 @@ deso.upgrade:
 	RenderSprites:
 		Image: deso.upgrade
 
+tarc.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Tesla Arcing
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.russia, stek, ~techlevel.medium
+		Description: Upgrades the Tesla Tank and Tesla Track weapon.\n\nUpgrades: Tesla Tank\nUpgrades: Tesla Track
+	TooltipExtras:
+		Strengths: + Shots jump to up to 2 additional targets
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: tarc.upgrade
+
+doctrine.upgrade1:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Doctrine Dependent Upgrade
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.soviet, anydoctrine, player.rank2, ~!infantry.doctrine, ~!tank.doctrine, ~!arty.doctrine, ~techlevel.medium
+		Description: Upgrade depends on chosen doctrine.\n\n• Infantry: Improved Paratroopers\n• Tanks: Reactive Armor\n• Artillery: Rocket Pods
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: doctrine.upgrade1
+
+imppara.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Improved Paratroopers
+	Buildable:
+		BuildPaletteOrder: 35
+		Prerequisites: player.level2, ~player.soviet, ~!player.russia, ~!player.yuri, ~infantry.doctrine, ~techlevel.medium
+		Description: Upgrades the Paratroopers support power.\n\nUpgrades: Paratroopers
+	TooltipExtras:
+		Strengths: + Additional units dropped
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: imppara.upgrade
+
+impstorm.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Improved Stormtroopers
+	Buildable:
+		BuildPaletteOrder: 35
+		Prerequisites: player.level2, ~player.russia, ~infantry.doctrine, ~techlevel.medium
+		Description: Upgrades the Stormtroopers support power.\n\nUpgrades: Stormtroopers
+	TooltipExtras:
+		Strengths: + Additional units dropped
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: impstorm.upgrade
+
+impmuta.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Improved Genetic Mutation Bomb
+	Buildable:
+		BuildPaletteOrder: 35
+		Prerequisites: player.level2, ~player.yuri, ~infantry.doctrine, ~techlevel.medium
+		Description: Enhances Genetic Mutation Bomb.\n\nUpgrades: Genetic Mutation Bomb
+	TooltipExtras:
+		Strengths: + Increased area of effect\n+ Increased maximum number of targets
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: impmuta.upgrade
+
+reactive.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Reactive Armor
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.soviet, ~tank.doctrine, player.rank2, ~techlevel.high
+		Description: Upgrades Rhino Tanks with reactive armor.\n\nUpgrades: Rhino Tank
+	TooltipExtras:
+		Strengths: + Increased armor
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: reactive.upgrade
+
+rocketpods.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Rocket Pods
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.soviet, ~arty.doctrine, player.rank2, ~techlevel.high
+		Description: Upgrades Grad/Smerch rocket pods enabling larger salvos.\n\nUpgrades: Grad\n\nUpgrades: Smerch
+	TooltipExtras:
+		Strengths: + Increased salvo size
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: rocketpods.upgrade
+
 atomicengines.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -928,27 +1031,25 @@ erad.upgrade:
 	RenderSprites:
 		Image: erad.upgrade
 
-tarc.upgrade:
+doctrine.upgrade2:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: Tesla Arcing
+		Name: Doctrine Dependent Upgrade
 	Buildable:
-		BuildPaletteOrder: 30
-		Prerequisites: ~player.russia, stek, ~techlevel.medium
-		Description: Upgrades the Tesla Tank and Tesla Track weapon.\n\nUpgrades: Tesla Tank\nUpgrades: Tesla Track
-	TooltipExtras:
-		Strengths: + Shots jump to up to 2 additional targets
+		BuildPaletteOrder: 40
+		Prerequisites: ~player.soviet, stek, anydoctrine, ~!infantry.doctrine, ~!tank.doctrine, ~!arty.doctrine, ~techlevel.high
+		Description: Upgrade depends on chosen doctrine.\n\n• Infantry: Overlord Tank\n• Tanks: Apocalypse Tank\n• Artillery: Smerch
 	Valued:
 		Cost: 1000
 	RenderSprites:
-		Image: tarc.upgrade
+		Image: doctrine.upgrade2
 
 ovld.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Apocalypse Tank
+		Name: Research: Overlord Tank
 	Buildable:
-		BuildPaletteOrder: 35
+		BuildPaletteOrder: 40
 		Prerequisites: player.level3, ~player.soviet, ~infantry.doctrine, ~techlevel.high
 		Description: Upgrades Mammoth Tanks.\n\nReplaces: Mammoth Tank
 	TooltipExtras:
@@ -964,7 +1065,7 @@ apoc.upgrade:
 	Tooltip:
 		Name: Research: Apocalypse Tank
 	Buildable:
-		BuildPaletteOrder: 35
+		BuildPaletteOrder: 40
 		Prerequisites: player.level3, ~player.soviet, ~tank.doctrine, ~techlevel.high
 		Description: Upgrades Mammoth Tanks.\n\nReplaces: Mammoth Tank
 	TooltipExtras:
@@ -980,7 +1081,7 @@ smer.upgrade:
 	Tooltip:
 		Name: Research: Smerch
 	Buildable:
-		BuildPaletteOrder: 35
+		BuildPaletteOrder: 40
 		Prerequisites: player.level3, ~player.soviet, ~arty.doctrine, ~techlevel.high
 		Description: Upgrades Grad.\n\nReplaces: Grad
 	TooltipExtras:

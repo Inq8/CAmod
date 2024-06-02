@@ -771,6 +771,52 @@
 		TargetCircleColor: ffee00
 		TargetTintColor: ffee0033
 
+^TankDropPower:
+	ParatroopersPowerCA@TankDrop:
+		OrderName: tankdrop
+		SquadSize: 3
+		UnitType: c17
+		Icon: tankdrop
+		ChargeInterval: 13500
+		Name: Tank Drop
+		Description: \nDispatches cargo planes to air drop tanks\n    at the target location.
+		DropItems: 3tnk, 3tnk, 3tnk
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		AllowImpassableCells: false
+		EndChargeSpeechNotification: Reinforce
+		EndChargeTextNotification: Tank Drop ready.
+		LaunchSpeechNotification: ReinforcementsArrived
+		IncomingSpeechNotification: EnemyUnitsApproaching
+		IncomingTextNotification: Enemy air drop detected.
+		PauseOnCondition: empdisable || being-warped
+		CameraActor: camera.paradrop
+		DisplayBeacon: true
+		BeaconPoster: lrairdropicon
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
+		UseDirectionalTarget: True
+		DirectionArrowAnimation: paradirection
+		Prerequisites: ~tank.doctrine, player.level2
+		SupportPowerPaletteOrder: 60
+		PrerequisiteGroupings:
+			AtomicThrasher: tank.doctrine, lasher.upgrade, atomicengines.upgrade
+			Thrasher: tank.doctrine, lasher.upgrade
+			AtomicRhino: tank.doctrine, atomicengines.upgrade
+			Rhino: tank.doctrine
+			AtomicLasher: lasher.upgrade, atomicengines.upgrade
+			Lasher: lasher.upgrade
+			Atomic: atomicengines.upgrade
+		PrerequisiteDropItems:
+			AtomicThrasher: 3tnk.rhino.atomicyuri, 3tnk.rhino.atomicyuri, 3tnk.rhino.atomicyuri
+			Thrasher: 3tnk.rhino.yuri, 3tnk.rhino.yuri, 3tnk.rhino.yuri
+			AtomicRhino: 3tnk.rhino.atomic, 3tnk.rhino.atomic, 3tnk.rhino.atomic
+			Rhino: 3tnk.rhino, 3tnk.rhino, 3tnk.rhino
+			AtomicLasher: 3tnk.atomicyuri, 3tnk.atomicyuri, 3tnk.atomicyuri
+			Lasher: 3tnk.yuri, 3tnk.yuri, 3tnk.yuri
+			Atomic: 3tnk.atomic, 3tnk.atomic, 3tnk.atomic
+
 ^IronCurtainPower:
 	GrantExternalConditionPowerCA@IRONCURTAIN:
 		OrderName: ironcurtain

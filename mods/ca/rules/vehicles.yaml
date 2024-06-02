@@ -896,6 +896,12 @@ GTNK.squad:
 	Selectable:
 		DecorationBounds: 1194, 1194
 		Class: 3tnk
+	GrantConditionOnPrerequisite@ReactiveArmor:
+		Prerequisites: reactive.upgrade
+		Condition: reactive-upgrade
+	DamageMultiplier@ReactiveArmor:
+		Modifier: 80
+		RequiresCondition: reactive-upgrade
 	ReplacedInQueue:
 		Actors: 3tnk.rhino.atomic, 3tnk.rhino.yuri
 	Upgradeable@ATOMIC:
