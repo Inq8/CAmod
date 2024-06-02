@@ -113,7 +113,7 @@ namespace OpenRA.Mods.CA.Traits
 				return;
 			}
 
-			if (--deployTicks < 0 && Info.DeployTrigger.HasFlag(DeployTriggers.Periodically))
+			if (Info.DeployTrigger.HasFlag(DeployTriggers.Periodically) && --deployTicks < 0)
 				TryDeploy(self);
 		}
 

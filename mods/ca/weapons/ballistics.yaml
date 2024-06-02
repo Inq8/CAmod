@@ -81,12 +81,12 @@
 		Speed: 426
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
-		Damage: 5500
+		Damage: 6000
 		Versus:
-			None: 100
-			Wood: 90
-			Concrete: 70
-			Light: 90
+			None: 92
+			Wood: 85
+			Concrete: 75
+			Light: 100
 			Heavy: 15
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
 	Warhead@3Eff: CreateEffect
@@ -154,7 +154,9 @@
 	Burst: 1
 	ReloadDelay: 75
 	Warhead@1Dam: SpreadDamage
-		Damage: 9250
+		Damage: 8500
+		Versus:
+			Light: 100
 
 125mmLasher:
 	Inherits: 125mm
@@ -215,14 +217,13 @@
 	Inherits: ^Cannon
 	ReloadDelay: 80
 	Burst: 2
-	InvalidTargets: Air, AirSmall, Infantry
+	InvalidTargets: Infantry
 	Warhead@1Dam: SpreadDamage
 		Damage: 6000
 		Versus:
 			Concrete: 60
 			Light: 85
 			Heavy: 115
-		InvalidTargets: Air, AirSmall
 
 130mmAtomic:
 	Inherits: 130mm
@@ -250,6 +251,19 @@
 	Warhead@1Dam: SpreadDamage
 		Damage: 2600
 
+135mm:
+	Inherits: 130mm
+	Report: voveweaa.aud, voveweab.aud, voveweac.aud
+	-InvalidTargets:
+	Warhead@1Dam: SpreadDamage
+		Damage: 8300
+
+135mmAtomic:
+	Inherits: 130mmAtomic
+	-InvalidTargets:
+	Warhead@1Dam: SpreadDamage
+		Damage: 8300
+
 152mm:
 	Inherits: ^Cannon
 	ReloadDelay: 135
@@ -258,8 +272,6 @@
 	Burst: 2
 	BurstDelays: 8
 	InvalidTargets: Air, AirSmall
-	Projectile: Bullet
-		Speed: 600
 	Warhead@1Dam: SpreadDamage
 		Damage: 4750
 		Falloff: 368, 184, 80, 18, 0
@@ -408,9 +420,9 @@ TitanGun:
 	Range: 7c768
 	Report: howi-fire1.aud, howi-fire2.aud
 	Projectile: Bullet
-		Speed: 512
+		Speed: 682
 		LaunchAngle: 50
-		Inaccuracy: 512
+		Inaccuracy: 448
 	Warhead@1Dam: SpreadDamage
 		Damage: 7750
 		Spread: 288
@@ -641,21 +653,22 @@ Grenade:
 
 GrenadeJJ:
 	Inherits: Grenade
-	Range: 5c512
+	Range: 6c512
 	Report: jjgren1.aud, jjgren2.aud
 	Projectile: Bullet
 		ContrailLength: 30
-		ContrailStartColorAlpha: 128
-		Speed: 200
+		ContrailStartColorAlpha: 100
+		Speed: 375
+		Inaccuracy: 128
 	Warhead@1Dam: SpreadDamage
+		Damage: 10000
 		Spread: 288
-		Falloff: 100, 50, 28, 18, 12, 6, 0
 		Versus:
-			None: 150
-			Wood: 80
-			Concrete: 80
-			Heavy: 20
-			Light: 95
+			None: 100
+			Wood: 50
+			Concrete: 50
+			Heavy: 10
+			Light: 70
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated, AirToGround
 
 EMPGrenade:
@@ -901,12 +914,14 @@ DoubleDepthCharge:
 GuardianDroneGun:
 	Inherits: 25mm
 	Report: gdrn-fire1.aud, gdrn-fire2.aud
+	Projectile: Bullet
+		Speed: 1c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 2500
 		Versus:
 			Wood: 65
 			Concrete: 35
-			Light: 80
+			Light: 90
 			Heavy: 100
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: kaboom12s.aud

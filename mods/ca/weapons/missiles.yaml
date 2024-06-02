@@ -50,6 +50,7 @@
 	ValidTargets: Air, AirSmall
 	Projectile: MissileCA
 		Inaccuracy: 0
+		AllowSnapping: true
 	Warhead@1Dam: SpreadDamage
 		Range: 0, 0c64, 0c256, 3c0
 		Falloff: 100, 100, 30, 15
@@ -85,7 +86,6 @@
 		Speed: 384
 		HorizontalRateOfTurn: 40
 		RangeLimit: 13c0
-		AllowSnapping: true
 	Warhead@smallDamage: SpreadDamage
 		Spread: 341
 
@@ -264,6 +264,7 @@ Dragon.CRYO:
 		Duration: 75
 		Range: 0c341
 		ValidRelationships: Enemy, Neutral
+		InvalidTargets: Structure
 
 Dragon.TibCore:
 	Inherits: Dragon
@@ -429,16 +430,16 @@ HellfireAG.Harrier:
 		Inaccuracy: 512
 	Warhead@1Dam: SpreadDamage
 		Spread: 448
-		Damage: 1600
+		Damage: 2000
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		ValidTargets: Ground, Water, Trees
 		Versus:
 			None: 100
-			Wood: 80
-			Light: 65
-			Heavy: 35
-			Concrete: 30
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
+			Wood: 65
+			Light: 55
+			Heavy: 28
+			Concrete: 25
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigatedMinor
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
 		ImpactSounds: kaboom15.aud
@@ -495,14 +496,14 @@ HellfireAA.Harrier:
 	Report: migmis.aud, migmis2.aud
 	Burst: 2
 	BurstDelays: 10
-	Range: 7c0
+	Range: 7c512
 	Projectile: MissileCA
 		RangeLimit: 12c512
 		ContrailLength: 10
 	Warhead@1Dam: SpreadDamage
-		Damage: 6750
+		Damage: 8000
 	Warhead@smallDamage: SpreadDamage
-		Damage: 6750
+		Damage: 8000
 
 WidowAA:
 	Inherits: ^AirToAirMissile
@@ -595,12 +596,11 @@ Nike:
 	Report: samshot1.aud
 	ValidTargets: Air, AirSmall, ICBM
 	Projectile: MissileCA
-		Arm: 3
+		Arm: 2
 		Image: MISSILE
 		HorizontalRateOfTurn: 100
 		RangeLimit: 10c512
 		Speed: 341
-		CloseEnough: 341
 	Warhead@1Dam: SpreadDamage
 		Damage: 6750
 		Range: 0, 0c64, 0c256, 4c256
@@ -629,7 +629,7 @@ RedEye:
 	Warhead@1Dam: SpreadDamage
 		Damage: 4000
 	Warhead@smallDamage: SpreadDamage
-		Damage: 4000
+		Damage: 6000
 	Warhead@3Eff: CreateEffect
 		ValidTargets: Air, AirSmall, ICBM, Ground, Water, Trees
 
@@ -850,52 +850,44 @@ TOW:
 			Light: 40
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster
 
-EMPRockets:
+PitbullRockets:
 	Inherits: ^AntiGroundMissile
-	Range: 7c0
+	Range: 5c0
 	Report: pitbull-fire1.aud, pitbull-fire2.aud
-	ReloadDelay: 150
+	ReloadDelay: 80
 	Burst: 4
-	BurstDelays: 8
-	-Projectile:
-	Projectile: Bullet
-		Inaccuracy: 2c0
-		Image: dragon
+	BurstDelays: 4
+	Projectile: MissileCA
 		Speed: 270
-		LaunchAngle: 70
-		TrailImage: smokey
-		Shadow: true
-		Blockable: false
 		ContrailLength: 17
 		ContrailStartColor: 6c6cd4aa
 		ContrailStartColorAlpha: 170
 		ContrailStartWidth: 0c48
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
-		Damage: 2000
+		Damage: 3000
 		Versus:
 			Wood: 40
 			Concrete: 30
-			Light: 70
-	Warhead@Emp: GrantExternalConditionCA
-		Range: 0c341
-		Duration: 40
-		Condition: empdisable
-		ValidTargets: Ground, Structure, Vehicle
-		InvalidTargets: EmpImmune
-	Warhead@Emp2: GrantExternalConditionCA
-		Range: 0c682
-		Duration: 20
-		Condition: empdisable
-		ValidTargets: Ground, Structure, Vehicle
-		InvalidTargets: EmpImmune
-	Warhead@4Eff: CreateEffect
-		Explosions: med_explosion
-	Warhead@6Eff: CreateEffect
-		Image: sparks_overlay
-		Explosions: idle
-		ExplosionPalette: tseffect-ignore-lighting-alpha75
-		ImpactSounds: expnew16.aud
+			Light: 60
+
+PitbullRocketsAA:
+	Inherits: RedEye
+	Report: pitbull-fire1.aud, pitbull-fire2.aud
+	ReloadDelay: 80
+	Burst: 4
+	BurstDelays: 4
+	Projectile: MissileCA
+		Speed: 270
+		ContrailLength: 17
+		ContrailStartColor: 6c6cd4aa
+		ContrailStartColorAlpha: 170
+		ContrailStartWidth: 0c48
+	Warhead@1Dam: SpreadDamage
+		Range: 0, 0c64, 0c256, 1c768
+		Damage: 3600
+	Warhead@smallDamage: SpreadDamage
+		Damage: 3600
 
 TorpTube:
 	ReloadDelay: 100
@@ -1021,12 +1013,12 @@ HonestJohnSub:
 SCUD:
 	Inherits: ^AntiGroundMissile
 	ReloadDelay: 240
-	Range: 11c0
+	Range: 12c0
 	MinRange: 3c0
 	Report: missile1.aud
 	-Projectile:
 	Projectile: Bullet
-		Speed: 240
+		Speed: 200
 		Blockable: false
 		TrailImage: smokey
 		TrailDelay: 5
@@ -1035,29 +1027,16 @@ SCUD:
 		Shadow: True
 		LaunchAngle: 62
 	Warhead@1Dam: SpreadDamage
-		Spread: 384
-		Damage: 3400
+		Spread: 341
+		Damage: 3800
 		Falloff: 1000, 448, 192, 50, 18, 7, 0
 		Versus:
 			None: 90
 			Wood: 80
 			Light: 65
-			Heavy: 25
+			Heavy: 45
 			Concrete: 50
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
-	Warhead@antiHeavySplash: SpreadDamage
-		Damage: 3400
-		Spread: 448
-		Falloff: 1000, 448, 192, 50, 18, 7, 0
-		ValidTargets: Vehicle, Husk
-		Versus:
-			Heavy: 20
-			None: 0
-			Wood: 0
-			Light: 5
-			Concrete: 0
-			Brick: 0
-		DamageTypes: SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: building, building2
 	Warhead@4EffWater: CreateEffect
@@ -1069,29 +1048,16 @@ V3Weapon:
 	-Report:
 	ValidTargets: Ground, Trees, Water
 	Warhead@1Dam: SpreadDamage
-		Spread: 448
-		Damage: 3400
+		Spread: 341
+		Damage: 3800
 		Falloff: 1000, 448, 192, 50, 18, 7, 0
 		Versus:
 			None: 90
 			Wood: 100
 			Light: 65
-			Heavy: 25
+			Heavy: 45
 			Concrete: 60
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
-	Warhead@antiHeavySplash: SpreadDamage
-		Damage: 3400
-		Spread: 512
-		Falloff: 1000, 448, 192, 50, 18, 7, 0
-		ValidTargets: Vehicle, Husk
-		Versus:
-			Heavy: 35
-			None: 0
-			Wood: 0
-			Light: 5
-			Concrete: 0
-			Brick: 0
-		DamageTypes: SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: building, building2
 		ValidTargets: Ground, Air, Ship, Trees, ICBM
@@ -1105,7 +1071,7 @@ THWeapon:
 	ValidTargets: Ground, Trees, Water
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
-		Damage: 3400
+		Damage: 3600
 		Falloff: 1000, 448, 192, 50, 18, 7, 0
 		ValidTargets: Ground, Water, Trees
 		Versus:
@@ -1125,7 +1091,7 @@ THWeapon:
 
 KatyushaRockets:
 	Inherits: ^AntiGroundMissile
-	ReloadDelay: 240
+	ReloadDelay: 160
 	Range: 8c768
 	MinRange: 3c0
 	Report: katyrocket1.aud, katyrocket2.aud, katyrocket3.aud
@@ -1134,6 +1100,7 @@ KatyushaRockets:
 	-Projectile:
 	Projectile: Bullet
 		Inaccuracy: 1c512
+		InaccuracyType: Absolute
 		Image: dragon
 		Speed: 200
 		LaunchAngle: 70
@@ -1142,12 +1109,12 @@ KatyushaRockets:
 		Blockable: false
 	ValidTargets: Ground, Trees, Water
 	Warhead@1Dam: SpreadDamage
-		Damage: 5000
+		Damage: 3500
 		Spread: 448
 		Versus:
 			None: 100
-			Wood: 95
-			Concrete: 55
+			Wood: 85
+			Concrete: 45
 			Light: 80
 			Heavy: 45
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, FlakVestMitigated
@@ -1159,6 +1126,37 @@ KatyushaRockets:
 
 KatyushaRocketsWide:
 	Inherits: KatyushaRockets
+	Projectile: Bullet
+		Inaccuracy: 2c512
+
+GradRockets:
+	Inherits: KatyushaRockets
+	Range: 10c0
+	Report: grad-fire1.aud, grad-fire2.aud
+	Warhead@1Dam: SpreadDamage
+		Damage: 350
+		Falloff: 1000, 448, 192, 50, 18, 7, 0
+
+GradRocketsWide:
+	Inherits: GradRockets
+	Projectile: Bullet
+		Inaccuracy: 2c512
+
+SmerchRockets:
+	Inherits: GradRockets
+	ReloadDelay: 140
+	Report: smer-fire1.aud, smer-fire2.aud
+	Range: 18c0
+	BurstDelays: 40
+	Projectile: Bullet
+		Image: MISSILE
+	Warhead@1Dam: SpreadDamage
+		Damage: 550
+	Warhead@3Eff: CreateEffect
+		ImpactSounds: xplobig4.aud
+
+SmerchRocketsWide:
+	Inherits: SmerchRockets
 	Projectile: Bullet
 		Inaccuracy: 2c512
 
@@ -2108,7 +2106,7 @@ BlackEagleMissiles:
 	Projectile: MissileCA
 		Image: MISSILE
 	Warhead@1Dam: SpreadDamage
-		Damage: 22000
+		Damage: 24000
 		Versus:
 			Concrete: 75
 	Warhead@VeiledCondition: GrantExternalConditionCA
@@ -2126,13 +2124,15 @@ BlackEagleMissiles:
 
 BlackEagleMissilesAA:
 	Inherits: MaverickAA
+	Range: 9c0
 	Report: beag-fire1.aud, beag-fire2.aud
 	-Burst:
 	-BurstDelays:
 	Projectile: MissileCA
 		Image: MISSILE
+		Speed: 450
 	Warhead@1Dam: SpreadDamage
-		Damage: 12000
+		Damage: 16000
 	Warhead@VeiledCondition: GrantExternalConditionCA
 		Range: 2c512
 		Duration: 175
@@ -2145,6 +2145,36 @@ BlackEagleMissilesAA:
 		ExplosionPalette: effect
 		ImpactSounds: veilblast.aud
 		ValidTargets: Ground, Air, Ship, Trees
+
+PhantomMissiles:
+	Inherits: BlackEagleMissiles
+	Burst: 2
+	BurstDelays: 8
+	Projectile: MissileCA
+		Speed: 550
+		TrailInterval: 1
+	Warhead@1Dam: SpreadDamage
+		Damage: 12000
+	Warhead@VeiledCondition: GrantExternalConditionCA
+		Range: 1c512
+		Duration: 200
+	Warhead@3Eff: CreateEffect
+		Explosions: idlesm
+
+PhantomMissilesAA:
+	Inherits: BlackEagleMissilesAA
+	Burst: 2
+	BurstDelays: 8
+	Projectile: MissileCA
+		Speed: 550
+		TrailInterval: 1
+	Warhead@1Dam: SpreadDamage
+		Damage: 8000
+	Warhead@VeiledCondition: GrantExternalConditionCA
+		Range: 1c512
+		Duration: 200
+	Warhead@3Eff: CreateEffect
+		Explosions: idlesm
 
 RocketShells:
 	Inherits: JuggernautGun

@@ -66,6 +66,10 @@ namespace OpenRA.Mods.CA.Traits
 				Game.Sound.PlayNotification(self.World.Map.Rules, infiltrator.Owner, "Speech", info.InfiltrationNotification, infiltrator.Owner.Faction.InternalName);
 
 			ticks = info.Duration;
+
+			if (conditionToken != Actor.InvalidConditionToken)
+				conditionToken = self.RevokeCondition(conditionToken);
+
 			conditionToken = self.GrantCondition(info.Condition);
 		}
 

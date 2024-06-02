@@ -115,6 +115,8 @@ namespace OpenRA.Mods.CA.Warheads
 			var explosion = Explosions.RandomOrDefault(world.LocalRandom);
 			if (Image != null && explosion != null)
 			{
+				var initialPos = pos;
+
 				if (Inaccuracy.Length > 0)
 					pos += WVec.FromPDF(world.SharedRandom, 2) * Inaccuracy.Length / 1024;
 
@@ -133,7 +135,7 @@ namespace OpenRA.Mods.CA.Warheads
 				if (args.Source.HasValue)
 					source = args.Source.Value;
 
-				var facing = (source - pos).Yaw;
+				var facing = (initialPos - source).Yaw;
 				world.AddFrameEndTask(w => w.Add(new SpriteEffect(pos, facing, w, Image, explosion, palette)));
 			}
 

@@ -440,6 +440,18 @@ CRYO:
 	Buildable:
 		Prerequisites: ~player.allies
 
+ZEUS:
+	Buildable:
+		Prerequisites: ~player.allies
+
+WOLV:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+XO:
+	Buildable:
+		Prerequisites: ~player.gdi
+
 APOC:
 	Buildable:
 		Prerequisites: ~player.soviet
@@ -463,9 +475,17 @@ RECK:
 
 3TNK.RHINO:
 	Buildable:
+		Prerequisites: ~player.soviet
+
+CYCP:
+	Buildable:
 		Prerequisites: ~player.nod
 
 PBUL:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+BASI:
 	Buildable:
 		Prerequisites: ~player.nod
 
@@ -658,10 +678,6 @@ SEAL:
 	Buildable:
 		Prerequisites: ~player.allies
 
-XO:
-	Buildable:
-		Prerequisites: ~player.gdi
-
 ENLI:
 	Buildable:
 		Prerequisites: ~player.nod
@@ -674,7 +690,19 @@ ZRAI:
 	Buildable:
 		Prerequisites: ~player.gdi
 
+ZDEF:
+	Buildable:
+		Prerequisites: ~player.gdi
+
 ENFO:
+	Buildable:
+		Prerequisites: ~player.allies
+
+HOPL:
+	Buildable:
+		Prerequisites: ~player.allies
+
+CRYT:
 	Buildable:
 		Prerequisites: ~player.allies
 
@@ -734,6 +762,10 @@ ORCB:
 	Buildable:
 		Prerequisites: ~player.gdi
 
+JACK:
+	Buildable:
+		Prerequisites: ~player.gdi
+
 RAH:
 	Buildable:
 		Prerequisites: ~player.nod
@@ -774,6 +806,10 @@ BEAG:
 	Buildable:
 		Prerequisites: ~player.nod
 
+PHAN:
+	Buildable:
+		Prerequisites: ~player.nod
+
 KAMV:
 	Buildable:
 		Prerequisites: ~player.nod
@@ -807,6 +843,18 @@ S4:
 		Prerequisites: ~player.scrin
 
 S6:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+EVIS:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+IMPL:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+WCHR:
 	Buildable:
 		Prerequisites: ~player.scrin
 
@@ -869,6 +917,14 @@ RUIN:
 		Prerequisites: ~player.scrin
 
 ATMZ:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+OBLT:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+NULL:
 	Buildable:
 		Prerequisites: ~player.scrin
 
@@ -1045,11 +1101,23 @@ empgren.upgrade:
 	Buildable:
 		Prerequisites: ~player.gdi
 
-strategic.upgrade:
+strategic.upgrade1:
+	Buildable:
+		Prerequisites: ~disabled
+
+strategic.upgrade2:
 	Buildable:
 		Prerequisites: ~disabled
 
 bjet.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+zrai.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+zdef.upgrade:
 	Buildable:
 		Prerequisites: ~disabled
 
@@ -1137,6 +1205,10 @@ tibcore.upgrade:
 		Prerequisites: ~player.nod
 
 decoy.upgrade:
+	Buildable:
+		Prerequisites: ~player.nod
+
+lastnk.upgrade:
 	Buildable:
 		Prerequisites: ~player.nod
 
@@ -1253,6 +1325,18 @@ orep.upgrade:
 ################################SCRIN##############################
 ###################################################################
 
+loyalist.allegiance:
+	Buildable:
+		Prerequisites: ~disabled
+
+rebel.allegiance:
+	Buildable:
+		Prerequisites: ~disabled
+
+allegiance.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
 blink.upgrade:
 	Buildable:
 		Prerequisites: ~player.scrin
@@ -1272,6 +1356,14 @@ carapace.upgrade:
 resconv.upgrade:
 	Buildable:
 		Prerequisites: ~player.scrin
+
+evis.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+impl.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
 
 ioncon.upgrade:
 	Buildable:

@@ -1331,6 +1331,39 @@ miss:
 	icon:
 		Filename: missicon.shp
 
+alhq:
+	Inherits: ^StructureOverlays
+	idle:
+		Filename: alhq.shp
+		Offset: 0, -14
+	active:
+		Filename: alhq.shp
+	damaged-idle:
+		Filename: alhq.shp
+		Start: 20
+		Offset: 0, -14
+	dead:
+		Filename: alhq.shp
+		Start: 20
+		Tick: 800
+		Offset: 0, -14
+	make:
+		Filename: alhq.shp
+		Offset: 0, -14
+		Start: 1
+		Length: 19
+	bib:
+		Filename: bib3.tem
+		TilesetFilenames:
+			SNOW: bib3.sno
+			DESERT: bib3.des
+			JUNGLE: bib3.jun
+			WINTER: bib3.win
+			BARREN: bib3.bar
+		Length: *
+	icon:
+		Filename: alhqicon.shp
+
 upgc:
 	Inherits: ^StructureOverlays
 	idle:
@@ -2914,6 +2947,15 @@ indp:
 		Length: *
 	icon:
 		Filename: indpicon.shp
+
+cvat:
+	Inherits: indp
+	icon:
+		Filename: placeholdericon.shp
+
+munp:
+	Inherits: indp
+		Filename: placeholdericon.shp
 
 lasp:
 	Inherits: ^StructureOverlays

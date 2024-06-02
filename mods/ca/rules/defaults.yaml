@@ -417,19 +417,45 @@
 		Sequence: infantry
 
 ^Inspirable:
-	ExternalCondition@Inspiration:
+	ExternalCondition@InspirationCmsr:
+		Condition: cmsr-inspiration
+	ExternalCondition@InspirationVeh:
+		Condition: veh-inspiration
+	GrantCondition@Inspiration1:
+		RequiresCondition: cmsr-inspiration || veh-inspiration
 		Condition: inspiration
-	ReloadDelayMultiplier@Inspiration:
+	GrantCondition@Inspiration2:
+		RequiresCondition: cmsr-inspiration && veh-inspiration
+		Condition: inspiration
+	ReloadDelayMultiplier@Inspiration1:
 		RequiresCondition: inspiration
-		Modifier: 90
-	SpeedMultiplier@Inspiration:
+		Modifier: 92
+	ReloadAmmoDelayMultiplier@Inspiration1:
 		RequiresCondition: inspiration
-		Modifier: 133
-	WithIdleOverlay@Inspiration:
+		Modifier: 92
+	SpeedMultiplier@Inspiration1:
+		RequiresCondition: inspiration == 1
+		Modifier: 130
+	ReloadDelayMultiplier@Inspiration2:
+		RequiresCondition: inspiration == 2
+		Modifier: 84
+	ReloadAmmoDelayMultiplier@Inspiration2:
+		RequiresCondition: inspiration == 2
+		Modifier: 84
+	SpeedMultiplier@Inspiration2:
+		RequiresCondition: inspiration == 2
+		Modifier: 140
+	WithIdleOverlay@Inspiration1:
 		Image: ussrstar
-		Sequence: idle-overlay
+		Sequence: idle-overlay1
 		Palette: effect
-		RequiresCondition: inspiration
+		RequiresCondition: inspiration == 1
+		IsDecoration: True
+	WithIdleOverlay@Inspiration2:
+		Image: ussrstar
+		Sequence: idle-overlay2
+		Palette: effect
+		RequiresCondition: inspiration == 2
 		IsDecoration: True
 
 ^Chronoshiftable:
@@ -504,6 +530,27 @@
 	TimedConditionBar@TEMPINC:
 		Condition: warpin
 		Color: FFFFFF
+
+^Blindable:
+	ExternalCondition@Blinded:
+		Condition: blinded
+	RevealsShroudMultiplier@Blinded:
+		RequiresCondition: blinded
+		Modifier: 0
+	RangeMultiplier@Blinded:
+		RequiresCondition: blinded
+		Modifier: 0
+	TimedConditionBar@Blinded:
+		Condition: blinded
+		Color: ffee00
+	WithDecoration@Blinded:
+		Image: blinded
+		Sequence: idle
+		Palette: effect
+		Position: Top
+		ValidRelationships: Ally, Enemy, Neutral
+		Margin: 0, 8
+		RequiresCondition: blinded
 
 ^Suppressable:
 	SpeedMultiplier@SUPPRESSION:
@@ -1530,6 +1577,22 @@
 		RequiresCondition: weapjammed
 		IsDecoration: True
 
+^ZoneDefenderShieldable:
+	ExternalCondition@ZoneDefenderShield:
+		Condition: zdef-shield
+	WithColoredOverlay@ZoneDefenderShield:
+		Color: 00ffff10
+		RequiresCondition: zdef-shield
+	DamageMultiplier@ZoneDefenderShield:
+		Modifier: 66
+		RequiresCondition: zdef-shield
+	WithIdleOverlay@ZoneDefenderShield:
+		Sequence: idle
+		Image: zdefshield-overlay
+		Palette: tdeffect
+		RequiresCondition: zdef-shield
+		IsDecoration: True
+
 ^C4Plantable:
 	DelayedWeaponAttachable@C4:
 		Type: c4
@@ -1739,13 +1802,25 @@
 		StartIfBelow: 100
 		DamageCooldown: 100
 		RequiresCondition: mdrn-attached
-	ExternalCondition@MINIDRONE:
-		Condition: mdrn-attached
-	AttachableTo:
-		Limits:
-			mdrn: 1
-		LimitConditions:
-			mdrn: mdrn-attached
+	AttachableTo@MINIDRONE:
+		Type: MiniDrone
+		Limit: 1
+		LimitCondition: mdrn-attached
+
+^WatcherParasiteAttachable:
+	Targetable@WatcherParasite:
+		TargetTypes: WatcherParasiteAttachable
+		RequiresCondition: !wchrpsite-attached
+	AttachableTo@WatcherParasite:
+		Type: WatcherParasite
+		Limit: 1
+		LimitCondition: wchrpsite-attached
+
+^ShadowBeaconAttachable:
+	Targetable@ShadowBeacon:
+		TargetTypes: ShadowBeaconAttachable
+	AttachableTo@ShadowBeacon:
+		Type: ShadowBeacon
 
 ^HoverTrail:
 	LeavesTrails:
@@ -1904,7 +1979,10 @@
 	Inherits@ionsurge: ^IonSurgable
 	Inherits@atomize: ^Atomizable
 	Inherits@minidrone: ^MiniDroneAttachable
+	Inherits@WatcherParasite: ^WatcherParasiteAttachable
+	Inherits@ShadowBeacon: ^ShadowBeaconAttachable
 	Inherits@lchrheal: ^LeecherHealable
+	Inherits@Blindable: ^Blindable
 	Huntable:
 	OwnerLostAction:
 		Action: Kill
@@ -2006,8 +2084,6 @@
 	GpsRadarDot:
 		Sequence: Vehicle
 	TeleportNetworkTransportable:
-	Targetable@SHADOWBEACON:
-		TargetTypes: ShadowBeacon
 	Targetable@MINDCONTROL:
 		RequiresCondition: !mindcontrolled && !hacked && !restoring && !invulnerability
 	GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
@@ -2088,6 +2164,7 @@
 	Inherits@14: ^Concussion
 	Inherits@15: ^Suppressable
 	Inherits@16: ^CrateCloak
+	Inherits@17: ^Slowable
 	Inherits@CLOAK: ^Cloakable
 	Inherits@TNTPlantable: ^TNTPlantable
 	Inherits@bounty: ^GlobalBounty
@@ -2099,6 +2176,7 @@
 	Inherits@oilcost: ^OilRefCostReduction
 	Inherits@ionsurge: ^IonSurgableInfantry
 	Inherits@lchrheal: ^LeecherHealable
+	Inherits@Blindable: ^Blindable
 	RenderSprites:
 		PlayerPalette: playertd
 	Huntable:
@@ -2200,7 +2278,7 @@
 		GenericName: Soldier
 	DeathSounds@NORMAL:
 		Voice: Die
-		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath
+		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FrozenDeath
 	DeathSounds@BURNED:
 		Voice: Burned
 		DeathTypes: FireDeath
@@ -2324,6 +2402,7 @@
 ^Soldier:
 	Inherits: ^Infantry
 	Inherits@DRIVER: ^CanCaptureDriverlessVehicles
+	Inherits@ZoneDefenderShieldable: ^ZoneDefenderShieldable
 	UpdatesPlayerStatistics:
 	MustBeDestroyed:
 	RevealsShroud:
@@ -2506,6 +2585,8 @@
 	Inherits@C4Plantable: ^C4Plantable
 	Inherits@TNTPlantable: ^TNTPlantable
 	Inherits@minidrone: ^MiniDroneAttachable
+	Inherits@WatcherParasite: ^WatcherParasiteAttachable
+	Inherits@Blindable: ^Blindable
 	Huntable:
 	RenderSprites:
 		PlayerPalette: playernavy
@@ -2640,11 +2721,12 @@
 		RequiresCondition: (botowner && crossing-ford) ||  (botowner && under-bridge)
 	-Targetable@MINIDRONE:
 	-ChangesHealth@MINIDRONE:
-	-ExternalCondition@MINIDRONE:
-	-AttachableTo:
 	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || underwater
 		ColorSource: Player
+	-AttachableTo@MINIDRONE:
+	Targetable@WatcherParasite:
+		RequiresCondition: !underwater && !wchrpsite-attached
 
 ^NeutralPlane:
 	Inherits@1: ^ExistsInWorld
@@ -2942,6 +3024,7 @@
 	Inherits@gflash: ^GreenFlash
 	Inherits@HACKABLE: ^Hackable
 	Inherits@oilcost: ^OilRefCostReduction
+	Inherits@WatcherParasite: ^WatcherParasiteAttachable
 	WithPalettedOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability && !forceshield
 		Palette: invuln
@@ -4228,6 +4311,7 @@
 	ProductionCostMultiplier@MQS2:
 		Multiplier: 200
 		Prerequisites: infantry.any, global.multiqueuescaled, optimized.production1, !optimized.production2
+	CloneSource:
 
 ^ProducesCyborgs:
 	Inherits: ^ProducesInfantry
@@ -4277,11 +4361,11 @@
 		OnHoldAudio: OnHold
 		CancelledAudio: Cancelled
 	Production@SQVEH:
-		Produces: VehicleSQ, ParadropVehicle, Powersuit
+		Produces: VehicleSQ, ParadropVehicle
 		PauseOnCondition: forceshield || being-warped
 		RequiresCondition: !global-multiqueue
 	Production@MQVEH:
-		Produces: VehicleMQ, ParadropVehicle, Powersuit
+		Produces: VehicleMQ, ParadropVehicle
 		PauseOnCondition: forceshield || being-warped
 		RequiresCondition: global-multiqueue
 	ProductionBar@SQVEH:
@@ -4338,6 +4422,9 @@
 		ProductionType: Upgrade
 	Exit@UPG:
 		ProductionTypes: Upgrade
+	ProvidesPrerequisite@UpgradesProducer:
+		Prerequisite: upgrades.producer
+		RequiresCondition: !(forceshield || being-warped)
 	-GrantConditionOnPrerequisite@MQF:
 	-GrantConditionOnPrerequisite@MQS:
 
@@ -4380,6 +4467,15 @@
 	ProductionCostMultiplier@MQS2:
 		Multiplier: 130
 		Prerequisites: aircraft.any, global.multiqueuescaled, optimized.production1, !optimized.production2
+	GrantConditionOnPrerequisite@KoreanBonus:
+		Prerequisites: korea.coalition
+		Condition: korea-coalition
+	GrantCondition@KoreanBonus:
+		RequiresCondition: korea-coalition
+		Condition: aircraft-repair
+	DamageMultiplier@KoreanBonus:
+		Modifier: 50
+		RequiresCondition: korea-coalition
 
 ^ProducesHelicopters:
 	Inherits@AIR: ^ProducesAircraft

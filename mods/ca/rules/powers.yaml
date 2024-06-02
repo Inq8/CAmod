@@ -218,6 +218,32 @@
 		DisplayTimerRelationships: Ally, Neutral, Enemy
 		SupportPowerPaletteOrder: 35
 
+^NegotiationsPower:
+	ProduceActorPowerCA@Negotiations:
+		Actors: coalition.active
+		Name: Coalition Negotiations
+		Description: Negotiating the use of assets for your chosen coalition.
+		Type: Coalition
+		ChargeInterval: 3750
+		OneShot: true
+		OrderName: Negotiations
+		Icon: negotiations
+		AutoFire: True
+		SupportPowerPaletteOrder: 35
+		PauseOnCondition: disabled || being-warped
+		RequiresCondition: coalition-chosen
+		LaunchSpeechNotification: CoalitionActive
+		DisplayTimerRelationships: Ally
+	GrantConditionOnPrerequisite@Greece:
+		Condition: coalition-chosen
+		Prerequisites: greece.coalition
+	GrantConditionOnPrerequisite@Sweden:
+		Condition: coalition-chosen
+		Prerequisites: sweden.coalition
+	GrantConditionOnPrerequisite@Korea:
+		Condition: coalition-chosen
+		Prerequisites: korea.coalition
+
 ^TimeWarpPower:
 	GrantExternalConditionPowerCA@TimeWarp:
 		OrderName: TimeWarp
@@ -253,6 +279,92 @@
 		SelectionBoxColor: b6f4ff
 		ShowTargetCircle: true
 		TargetCircleColor: b6f4ff
+
+^CryostormPower:
+	SpawnActorPowerCA@Cryostorm:
+		Actor: cryostorm
+		OrderName: cryostorm
+		Icon: cryostorm
+		Prerequisites: ~sweden.coalition, ~coalition.active, ~alhq
+		ChargeInterval: 7500
+		LifeTime: -1
+		Name: Cryostorm
+		Description: \nCreates a turbulent area of extreme cold,\n    reducing movement speed and increasing damage taken.
+		LaunchSound: cryostormstart.aud
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeSpeechNotification: CryostormReady
+		EndChargeTextNotification: Cryostorm ready.
+		PauseOnCondition: disabled || empdisable || being-warped
+		DisplayRadarPing: True
+		Cursor: ability
+		AllowMultiple: false
+		TargetCircleRange: 4c682
+		TargetCircleColor: 5bbde9cc
+		SupportPowerPaletteOrder: 25
+		EffectImage: empty
+		EffectSequence: idle
+		EffectPalette: effect
+
+^HeliosBombPower:
+	AirstrikePowerCA@HeliosBomb:
+		OrderName: heliosbomb
+		Prerequisites: ~greece.coalition, ~coalition.active, ~alhq
+		PauseOnCondition: disabled || empdisable || being-warped
+		Icon: heliosbomb
+		IconPalette: caneon
+		ChargeInterval: 10500
+		Name: Helios Bomb
+		Description: \nCalls in a bomber which drops a\n    Helios bomb, blinding units in a large area.
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		EndChargeSpeechNotification: HeliosBombReady
+		EndChargeTextNotification: Helios bomb ready.
+		CameraActor: camera.paradrop
+		CameraRemoveDelay: 150
+		UnitType: galx.helios
+		QuantizedFacings: 8
+		DisplayBeacon: true
+		BeaconPoster: a10airstrike
+		BeaconPosterPalette: temptd
+		SquadSize: 1
+		SquadOffset: 0,1792,0
+		ArrowSequence: arrow
+		ClockSequence: clockTD
+		CircleSequence: circles
+		UseDirectionalTarget: True
+		DirectionArrowAnimation: paradirection
+		SupportPowerPaletteOrder: 25
+
+^PatriotStrikePower:
+	MissileStrikePower@PatriotStrike:
+		MissileActor: kpat
+		Range: 7c0
+		OrderName: patriotstrike
+		Prerequisites: ~korea.coalition, ~coalition.active, ~alhq
+		Icon: kpat
+		IconPalette: chrome
+		ChargeInterval: 9000
+		Name: Patriot Strike
+		Description: \nFires long range guided missiles at multiple air targets.
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		EndChargeSpeechNotification: PatriotStrikeReady
+		EndChargeTextNotification: Patriot Strike ready.
+		DisplayBeacon: true
+		SupportPowerPaletteOrder: 25
+		ShowSelectionBoxes: true
+		SelectionBoxColor: ffffff
+		ShowTargetCircle: true
+		TargetCircleColor: ffffff
+		TargetTintColor: ffffff44
+		ValidRelationships: Ally, Enemy, Neutral
+		LaunchSounds: kpat-fire.aud
+		MissileCount: 8
+		MissilesPerLaunch: 2
+		MaxTargets: 8
+		ValidTargets: Air, AirSmall
 
 ^ChronoshiftPower:
 	ChronoshiftPowerCA@chronoshift:
@@ -506,7 +618,7 @@
 		Icon: abombair
 		ChargeInterval: 10500
 		Name: Atomic Bomb
-		Description: \nCalls in a a Badger bomber which drops an\n    atom bomb on your target.
+		Description: \nCalls in a Badger bomber which drops an\n    atom bomb on your target.
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		EndChargeSpeechNotification: AtomicBombReady
@@ -658,6 +770,52 @@
 		ShowTargetCircle: true
 		TargetCircleColor: ffee00
 		TargetTintColor: ffee0033
+
+^TankDropPower:
+	ParatroopersPowerCA@TankDrop:
+		OrderName: tankdrop
+		SquadSize: 3
+		UnitType: c17
+		Icon: tankdrop
+		ChargeInterval: 13500
+		Name: Tank Drop
+		Description: \nDispatches cargo planes to air drop tanks\n    at the target location.
+		DropItems: 3tnk, 3tnk, 3tnk
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		AllowImpassableCells: false
+		EndChargeSpeechNotification: Reinforce
+		EndChargeTextNotification: Tank Drop ready.
+		LaunchSpeechNotification: ReinforcementsArrived
+		IncomingSpeechNotification: EnemyUnitsApproaching
+		IncomingTextNotification: Enemy air drop detected.
+		PauseOnCondition: empdisable || being-warped
+		CameraActor: camera.paradrop
+		DisplayBeacon: true
+		BeaconPoster: lrairdropicon
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
+		UseDirectionalTarget: True
+		DirectionArrowAnimation: paradirection
+		Prerequisites: ~tank.doctrine, player.level2
+		SupportPowerPaletteOrder: 60
+		PrerequisiteGroupings:
+			AtomicThrasher: tank.doctrine, lasher.upgrade, atomicengines.upgrade
+			Thrasher: tank.doctrine, lasher.upgrade
+			AtomicRhino: tank.doctrine, atomicengines.upgrade
+			Rhino: tank.doctrine
+			AtomicLasher: lasher.upgrade, atomicengines.upgrade
+			Lasher: lasher.upgrade
+			Atomic: atomicengines.upgrade
+		PrerequisiteDropItems:
+			AtomicThrasher: 3tnk.rhino.atomicyuri, 3tnk.rhino.atomicyuri, 3tnk.rhino.atomicyuri
+			Thrasher: 3tnk.rhino.yuri, 3tnk.rhino.yuri, 3tnk.rhino.yuri
+			AtomicRhino: 3tnk.rhino.atomic, 3tnk.rhino.atomic, 3tnk.rhino.atomic
+			Rhino: 3tnk.rhino, 3tnk.rhino, 3tnk.rhino
+			AtomicLasher: 3tnk.atomicyuri, 3tnk.atomicyuri, 3tnk.atomicyuri
+			Lasher: 3tnk.yuri, 3tnk.yuri, 3tnk.yuri
+			Atomic: 3tnk.atomic, 3tnk.atomic, 3tnk.atomic
 
 ^IronCurtainPower:
 	GrantExternalConditionPowerCA@IRONCURTAIN:
@@ -854,7 +1012,7 @@
 		SelectTargetTextNotification: Select target.
 		EffectImage: empty
 		EffectSequence: idle
-		EffectPalette: tseffect-ignore-lighting-alpha75
+		EffectPalette: effect
 		SupportPowerPaletteOrder: 50
 
 ^GDIRadarPowers:
@@ -1360,7 +1518,7 @@
 		Cursor: ability
 		ChargeInterval: 10500
 		Name: Cluster Missile
-		Description: \nLaunches an Cluster Missile which deals heavy\n    damage at the target location.
+		Description: \nLaunches a Cluster Missile which deals heavy\n    damage at the target location.
 		EndChargeSpeechNotification: ClusMissileReady
 		EndChargeTextNotification: Cluster Missile ready.
 		SelectTargetSpeechNotification: SelectTarget
@@ -1684,6 +1842,69 @@
 		TargetCircleRange: 4c512
 		TargetCircleColor: ff000099
 
+^OverlordsWrathPower:
+	MeteorPower@OverlordsWrath:
+		OrderName: overlordswrath
+		Icon: owrath
+		IconPalette: chromes
+		Prerequisites: ~loyalist.allegiance, ~techlevel.high
+		Cursor: ability
+		ChargeInterval: 10500
+		Name: Overlord's Wrath
+		Description: \nA Tiberium meteor strikes the target location\n    dealing heavy damage and creating a patch of Tiberium.
+		EndChargeSpeechNotification: OverlordsWrathReady
+		EndChargeTextNotification: Overlord's Wrath ready.
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		InsufficientPowerSpeechNotification: InsufficientPower
+		IncomingSpeechNotification: OverlordsWrathWarning
+		IncomingTextNotification: Tiberium meteor approaching.
+		ImpactWeapon: OverlordsWrath
+		MeteorImage: tibmeteor
+		MeteorPalette: scrin
+		LaunchSound: owrath-launch.aud
+		IncomingSound: owrath-launch.aud
+		FlightDelay: 225
+		FlightVelocity: 0c624
+		DisplayRadarPing: True
+		CameraRange: 10c0
+		CameraRemoveDelay: 50
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
+		PauseOnCondition: disabled || empdisable || being-warped
+		DisplayBeacon: True
+		BeaconPoster: owrath
+		DisplayTimerRelationships: Ally
+		CircleRanges: 3c0
+		CircleColor: 00FF00AA
+		CircleBorderColor: 003300AA
+		SupportPowerPaletteOrder: 30
+
+^GatewayPower:
+	DetonateWeaponPower@Gateway:
+		OrderName: gateway
+		Icon: gateway
+		IconPalette: chromes
+		Prerequisites: ~rebel.allegiance, ~techlevel.high
+		Cursor: ability
+		ChargeInterval: 7500
+		Name: Gateway
+		ActivationDelay: 1
+		Description: \nCreates a temporary Gateway at the target location\n   from which reinforcements are deployed.
+		LaunchSound: wormhole-open.aud
+		Weapon: GatewaySpawner
+		AirburstAltitude: 0c0
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		EndChargeSpeechNotification: GatewayReady
+		EndChargeTextNotification: Gateway ready.
+		PauseOnCondition: disabled || empdisable || being-warped
+		CameraActor: camera.dummy
+		CameraRemoveDelay: 1
+		DisplayRadarPing: True
+		SupportPowerPaletteOrder: 30
+
 ^SuppressionPower:
 	GrantExternalConditionPowerCA@SUPPRESSION:
 		PauseOnCondition: disabled || empdisable || being-warped
@@ -1780,7 +2001,7 @@
 		TargetCircleRange: 6c512
 		TargetCircleColor: 0000FF90
 		ActiveCondition: active
-		PaletteEffectType: LightningStorm
+		PaletteEffectType: Rift
 		SupportPowerPaletteOrder: 10
 
 ^FleetRecallPower:

@@ -15,12 +15,12 @@ hazmat.upgrade:
 	Tooltip:
 		Name: Upgrade: Hazmat Suits
 	Buildable:
-		BuildPaletteOrder: 10
+		BuildPaletteOrder: 18
 		Prerequisites: anyradar, infantry.any, ~!player.soviet, ~!player.zocom, ~!player.scrin, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Infantry are equiped with hazmat suits which provides\n  protection against Tiberium and radiation.\n\nUpgrades: Infantry
 	TooltipExtras:
-		Strengths: + Tiberium immunity\n+ 50% resistance to radiation
+		Strengths: + Tiberium immunity\n+ 50% resistance to irradiated terrain
 	Valued:
 		Cost: 750
 	RenderSprites:
@@ -61,10 +61,10 @@ bombard.strat:
 	Tooltip:
 		Name: Strategy: Bombardment I
 	Buildable:
-		BuildPaletteOrder: 1
+		BuildPaletteOrder: 7
 		Prerequisites: ~player.gdi, anyradar, ~!seek.strat, ~!hold.strat, ~techlevel.medium
 		IconPalette: chrometd
-		Description: Firepower focused strategy, required for:\n• Tomahawk Launcher\n• Hailstorm Missiles Upgrade\n\n
+		Description: Firepower focused strategy, required for:\n• Tomahawk Launcher\n• Bombardier\n• Hailstorm Missiles Upgrade\n\n
 	TooltipExtras:
 		Strengths: + Increases firepower and rate of fire of vehicles and aircraft by 3%
 		Attributes: \n(!) Only ONE Strategy may be chosen.
@@ -82,7 +82,7 @@ bombard2.strat:
 	Tooltip:
 		Name: Strategy: Bombardment II
 	Buildable:
-		BuildPaletteOrder: 2
+		BuildPaletteOrder: 8
 		Prerequisites: ~player.gdi, gtek, ~bombard.strat, ~techlevel.high
 		Description: Increase Bombardment strategy bonuses.
 	TooltipExtras:
@@ -96,10 +96,10 @@ seek.strat:
 	Tooltip:
 		Name: Strategy: Seek & Destroy
 	Buildable:
-		BuildPaletteOrder: 4
+		BuildPaletteOrder: 10
 		Prerequisites: ~player.gdi, anyradar, ~!bombard.strat, ~!hold.strat, ~techlevel.medium
 		IconPalette: chrometd
-		Description: Speed and weapon range focused strategy, required for:\n• TOW Missile Upgrade\n• Hypersonic Missiles Upgrade\n\n
+		Description: Speed and weapon range focused strategy, required for:\n• TOW Missile Upgrade\n• Zone Raider Upgrade\n• Hypersonic Missiles Upgrade\n\n
 	TooltipExtras:
 		Strengths: + Increases speed and weapon range of vehicles and aircraft by 5%
 		Attributes: \n(!) Only ONE Strategy may be chosen.
@@ -117,7 +117,7 @@ seek2.strat:
 	Tooltip:
 		Name: Strategy: Seek & Destroy II
 	Buildable:
-		BuildPaletteOrder: 5
+		BuildPaletteOrder: 11
 		Prerequisites: ~player.gdi, gtek, ~seek.strat, ~techlevel.high
 		Description: Increase Seek & Destroy strategy bonuses.
 	TooltipExtras:
@@ -131,10 +131,10 @@ hold.strat:
 	Tooltip:
 		Name: Strategy: Hold the Line
 	Buildable:
-		BuildPaletteOrder: 7
+		BuildPaletteOrder: 13
 		Prerequisites: ~player.gdi, anyradar, ~!bombard.strat, ~!seek.strat, ~techlevel.medium
 		IconPalette: chrometd
-		Description: Defensive strategy, required for:\n• Point Defense Systems Upgrade\n• Hammerhead Missiles Upgrade\n\n
+		Description: Defensive strategy, required for:\n• Point Defense Systems Upgrade\n• Zone Defender Upgrade\n• Hammerhead Missiles Upgrade\n\n
 	TooltipExtras:
 		Strengths: + Increases armor of vehicles and aircraft by 5%
 		Attributes: \n(!) Only ONE Strategy may be chosen.
@@ -152,7 +152,7 @@ hold2.strat:
 	Tooltip:
 		Name: Strategy: Hold the Line II
 	Buildable:
-		BuildPaletteOrder: 8
+		BuildPaletteOrder: 14
 		Prerequisites: ~player.gdi, gtek, ~hold.strat,  ~techlevel.high
 		Description: Increase Hold the Line strategy bonuses.
 	TooltipExtras:
@@ -209,23 +209,69 @@ empgren.upgrade:
 	RenderSprites:
 		Image: empgren.upgrade
 
+strategic.upgrade1:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Strategy Dependent Upgrade
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.gdi, gtek, anystrategy, ~!bombard.strat, ~!seek.strat, ~!hold.strat, ~techlevel.high
+		IconPalette: chrometd
+		Description: Upgrade depends on chosen strategy.\n\n• Bombardment: Bombardier research\n• Seek & Destroy: Zone Raider research\n• Hold the Line: Zone Defender research
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: strategic.upgrade
+
 bjet.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
 		Name: Research: Bombardier
 	Buildable:
 		BuildPaletteOrder: 30
-		Prerequisites: ~player.gdi, gtek, ~techlevel.high
-		Description: Allows construction of Bombardiers.\n\nReplaces: JumpJet Trooper
+		Prerequisites: ~player.gdi, gtek, ~bombard.strat, ~techlevel.high
+		Description: Allows training of Bombardiers.\n\nReplaces: JumpJet Trooper
 	TooltipExtras:
 		Strengths: + Strong vs Buildings\n+ Increased range
 		Weaknesses: – Slow projectiles\n– Increased cost
 	Valued:
-		Cost: 1000
+		Cost: 750
 	RenderSprites:
 		Image: bjet.upgrade
 
-strategic.upgrade:
+zrai.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Zone Raider
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.gdi, gtek, ~seek.strat, ~techlevel.high
+		Description: Allows training of Zone Raiders.\n\nReplaces: Zone Trooper
+	TooltipExtras:
+		Strengths: + Increased damage vs buildings, infantry & light armor\n+ Increased splash damage\n+ Increased speed\n+ Increased jump range
+		Weaknesses: – Reduced damage vs heavy armor & defenses\n– Slower projectiles
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: zrai.upgrade
+
+zdef.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Zone Defender
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.gdi, gtek, ~hold.strat, ~techlevel.high
+		Description: Allows training of Zone Defenders.\n\nReplaces: Zone Trooper
+	TooltipExtras:
+		Strengths: + Increased splash damage\n+ Can shield nearby infantry
+		Weaknesses: – Reduced single-target damage\n– Loses jump ability
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: zdef.upgrade
+
+strategic.upgrade2:
 	Inherits: ^Upgrade
 	Tooltip:
 		Name: Strategy Dependent Upgrade
@@ -551,6 +597,22 @@ decoy.upgrade:
 	RenderSprites:
 		Image: decoy.upgrade
 
+lastnk.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Laser Tanks
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.nod, tmpl, ~techlevel.high
+		Description: Upgrades: Light Tank\nUpgrades: Battle Tank
+	TooltipExtras:
+		Strengths: + Increased damage vs infantry & light armor
+		Weaknesses: – Reduced damage vs heavy armor
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: lastnk.upgrade
+
 blacknapalm.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -665,43 +727,75 @@ cyborgarmor.upgrade:
 #########################SOVIET#########
 ########################################
 
+ANYDOCTRINE:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		Name: Active Doctrine
+	Buildable:
+		Description: Active Doctrine
+	ProvidesPrerequisite:
+
+infantry.doctrine:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Doctrine: Infantry
+	Buildable:
+		BuildPaletteOrder: 4
+		Prerequisites: ~player.soviet, !infantry.doctrine, !tank.doctrine, !arty.doctrine, player.level1, ~techlevel.medium
+		Description: Specialize in infantry:\n• Troop Crawler\n• Overlord Tank (Replaces Mammoth Tank)\n• Improved Paratroopers\n• TBC\n• Cloning Vat\n\n
+	TooltipExtras:
+		Attributes: (!) Only ONE Doctrine may be chosen.
+	Valued:
+		Cost: 0
+	RenderSprites:
+		Image: infantry.doctrine
+
+tank.doctrine:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Doctrine: Tanks
+	Buildable:
+		BuildPaletteOrder: 5
+		Prerequisites: ~player.soviet, !infantry.doctrine, !tank.doctrine, !arty.doctrine, player.level1, ~techlevel.medium
+		Description: Specialize in tanks:\n• Rhino Tank (replaces Heavy Tank)\n• Apocalypse Tank (Replaces Mammoth Tank)\n• Reactive Armor\n• Tank Drop\n• Industrial Plant\n\n
+	TooltipExtras:
+		Attributes: (!) Only ONE Doctrine may be chosen.
+	Valued:
+		Cost: 0
+	RenderSprites:
+		Image: tank.doctrine
+
+arty.doctrine:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Doctrine: Artillery
+	Buildable:
+		BuildPaletteOrder: 6
+		Prerequisites: ~player.soviet, !infantry.doctrine, !tank.doctrine, !arty.doctrine, player.level1, ~techlevel.medium
+		Description: Specialize in artillery:\n• Grad (Replaces Katyusha)\n• Smerch (Replaces Grad)\n• TBC\n• TBC\n• Munitions Plant\n\n
+	TooltipExtras:
+		Attributes: (!) Only ONE Doctrine may be chosen.
+	Valued:
+		Cost: 0
+	RenderSprites:
+		Image: arty.doctrine
+
 hazmatsoviet.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
 		Name: Upgrade: Heavy Hazmat Suits
 	Buildable:
-		BuildPaletteOrder: 10
+		BuildPaletteOrder: 19
 		Prerequisites: ~player.soviet, anyradar, infantry.any, ~techlevel.medium
 		Description: Infantry are equipped with heavy hazmat suits which provides\n  protection against Tiberium and radiation.\n\nUpgrades: Infantry
 	TooltipExtras:
-		Strengths: + Tiberium immunity\n+ High radiation resistance
+		Strengths: + Tiberium immunity\n+ High resistance to irradiated terrain
 		Weaknesses: – 33% slower movement across resources and rough terrain
 	Valued:
 		Cost: 850
 	RenderSprites:
 		Image: hazmats.upgrade
-
-v2.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Research: V2 Launcher
-	Buildable:
-		BuildPaletteOrder: 20
-		Prerequisites: ~player.soviet, anyradar, ~techlevel.medium
-		Description: Allows construction of the V2 Launcher.\n\nReplaces: Katyusha
-	TooltipExtras:
-		Strengths: + Improved accuracy\n+ Increased range\n+ Increased burst damage\n+ Increased mobility
-		Weaknesses: – Reduced area of effect\n– Increased cost
-	Valued:
-		Cost: 500
-	RenderSprites:
-		Image: v2.upgrade
-	ProductionCostMultiplier@russia:
-		Multiplier: 0
-		Prerequisites: radar.russia
-	ProductionTimeMultiplier@russia:
-		Multiplier: 0
-		Prerequisites: radar.russia
 
 lasher.upgrade:
 	Inherits: ^Upgrade
@@ -735,6 +829,22 @@ gattling.upgrade:
 	RenderSprites:
 		Image: gattling.upgrade
 
+v3.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: V3 Launcher
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.soviet, stek, ~arty.doctrine, ~techlevel.medium
+		Description: Allows construction of the V3 Launcher.\n\nReplaces: V2 Launcher
+	TooltipExtras:
+		Strengths: + Significantly increased range
+		Weaknesses: – Slower projectiles\n– Missiles can be shot down\n– Increased cost
+	Valued:
+		Cost: 500
+	RenderSprites:
+		Image: v3.upgrade
+
 seismic.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -753,6 +863,141 @@ seismic.upgrade:
 	AnnounceOnCreation:
 		SoundNotification: UPG-seismic
 		Delay: 60
+
+ttrp.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Tesla Trooper
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.soviet, ~!player.iraq, stek, ~techlevel.high
+		Description: Shock Troopers are phased out in favor of Tesla Troopers.\n\nReplaces: Shock Trooper
+	TooltipExtras:
+		Strengths: + Increased health\n+ Increased rate of fire
+		Weaknesses: – Increased cost
+	Valued:
+		Cost: 500
+	RenderSprites:
+		Image: ttrp.upgrade
+
+deso.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Desolator
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.soviet, ~player.iraq, stek, ~techlevel.high
+		Description: Rad Troopers are phased out in favor of Desolators.\n\nReplaces: Rad Trooper
+	TooltipExtras:
+		Strengths: + Increased health\n+ Splash damage\n+ Irradiates vehicles\n+ Desolate Ground ability
+		Weaknesses: – Increased cost
+	Valued:
+		Cost: 500
+	RenderSprites:
+		Image: deso.upgrade
+
+tarc.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Tesla Arcing
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.russia, stek, ~techlevel.medium
+		Description: Upgrades the Tesla Tank and Tesla Track weapon.\n\nUpgrades: Tesla Tank\nUpgrades: Tesla Track
+	TooltipExtras:
+		Strengths: + Shots jump to up to 2 additional targets
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: tarc.upgrade
+
+doctrine.upgrade1:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Doctrine Dependent Upgrade
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.soviet, anydoctrine, player.rank2, ~!infantry.doctrine, ~!tank.doctrine, ~!arty.doctrine, ~techlevel.medium
+		Description: Upgrade depends on chosen doctrine.\n\n• Infantry: Improved Paratroopers\n• Tanks: Reactive Armor\n• Artillery: Rocket Pods
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: doctrine.upgrade1
+
+imppara.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Improved Paratroopers
+	Buildable:
+		BuildPaletteOrder: 35
+		Prerequisites: player.level2, ~player.soviet, ~!player.russia, ~!player.yuri, ~infantry.doctrine, ~techlevel.medium
+		Description: Upgrades the Paratroopers support power.\n\nUpgrades: Paratroopers
+	TooltipExtras:
+		Strengths: + Additional units dropped
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: imppara.upgrade
+
+impstorm.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Improved Stormtroopers
+	Buildable:
+		BuildPaletteOrder: 35
+		Prerequisites: player.level2, ~player.russia, ~infantry.doctrine, ~techlevel.medium
+		Description: Upgrades the Stormtroopers support power.\n\nUpgrades: Stormtroopers
+	TooltipExtras:
+		Strengths: + Additional units dropped
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: impstorm.upgrade
+
+impmuta.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Improved Genetic Mutation Bomb
+	Buildable:
+		BuildPaletteOrder: 35
+		Prerequisites: player.level2, ~player.yuri, ~infantry.doctrine, ~techlevel.medium
+		Description: Enhances Genetic Mutation Bomb.\n\nUpgrades: Genetic Mutation Bomb
+	TooltipExtras:
+		Strengths: + Increased area of effect\n+ Increased maximum number of targets
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: impmuta.upgrade
+
+reactive.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Reactive Armor
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.soviet, ~tank.doctrine, player.rank2, ~techlevel.high
+		Description: Upgrades Rhino Tanks with reactive armor.\n\nUpgrades: Rhino Tank
+	TooltipExtras:
+		Strengths: + Increased armor
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: reactive.upgrade
+
+rocketpods.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Rocket Pods
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.soviet, ~arty.doctrine, player.rank2, ~techlevel.high
+		Description: Upgrades Grad/Smerch rocket pods enabling larger salvos.\n\nUpgrades: Grad\n\nUpgrades: Smerch
+	TooltipExtras:
+		Strengths: + Increased salvo size
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: rocketpods.upgrade
 
 atomicengines.upgrade:
 	Inherits: ^Upgrade
@@ -786,20 +1031,66 @@ erad.upgrade:
 	RenderSprites:
 		Image: erad.upgrade
 
-tarc.upgrade:
+doctrine.upgrade2:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: Tesla Arcing
+		Name: Doctrine Dependent Upgrade
 	Buildable:
-		BuildPaletteOrder: 30
-		Prerequisites: ~player.russia, stek, ~techlevel.medium
-		Description: Upgrades the Tesla Tank and Tesla Track weapon.\n\nUpgrades: Tesla Tank\nUpgrades: Tesla Track
-	TooltipExtras:
-		Strengths: + Shots jump to up to 2 additional targets
+		BuildPaletteOrder: 40
+		Prerequisites: ~player.soviet, stek, anydoctrine, ~!infantry.doctrine, ~!tank.doctrine, ~!arty.doctrine, ~techlevel.high
+		Description: Upgrade depends on chosen doctrine.\n\n• Infantry: Overlord Tank\n• Tanks: Apocalypse Tank\n• Artillery: Smerch
 	Valued:
 		Cost: 1000
 	RenderSprites:
-		Image: tarc.upgrade
+		Image: doctrine.upgrade2
+
+ovld.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Overlord Tank
+	Buildable:
+		BuildPaletteOrder: 40
+		Prerequisites: player.level3, ~player.soviet, ~infantry.doctrine, ~techlevel.high
+		Description: Upgrades Mammoth Tanks.\n\nReplaces: Mammoth Tank
+	TooltipExtras:
+		Strengths: + TBC
+		Weaknesses: – TBC
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: ovld.upgrade
+
+apoc.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Apocalypse Tank
+	Buildable:
+		BuildPaletteOrder: 40
+		Prerequisites: player.level3, ~player.soviet, ~tank.doctrine, ~techlevel.high
+		Description: Upgrades Mammoth Tanks.\n\nReplaces: Mammoth Tank
+	TooltipExtras:
+		Strengths: + TBC
+		Weaknesses: – TBC
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: apoc.upgrade
+
+smer.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Smerch
+	Buildable:
+		BuildPaletteOrder: 40
+		Prerequisites: player.level3, ~player.soviet, ~arty.doctrine, ~techlevel.high
+		Description: Upgrades Grad.\n\nReplaces: Grad
+	TooltipExtras:
+		Strengths: + TBC
+		Weaknesses: – TBC
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: smer.upgrade
 
 indp.upgrade:
 	Inherits: ^Upgrade
@@ -816,9 +1107,71 @@ indp.upgrade:
 	RenderSprites:
 		Image: indp.upgrade
 
-
 #######################ALLIES############################
 #########################################################
+
+ANYCOALITION:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		Name: Active Coalition
+	Buildable:
+		Description: Active Coalition
+	ProvidesPrerequisite:
+
+greece.coalition:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Coalition: Greece
+	Buildable:
+		BuildPaletteOrder: 1
+		Prerequisites: ~player.allies, alhq, !greece.coalition, !korea.coalition, !sweden.coalition, ~techlevel.medium
+		Description: Form a coalition with Greece, required for:\n• Zeus Artillery\n• Helios Bomb\n• Hoplite (replaces Enforcer)\n\n
+	TooltipExtras:
+		Attributes: (!) Only ONE Coalition may be chosen.
+	Valued:
+		Cost: 500
+	RenderSprites:
+		Image: greece.coalition
+	AnnounceOnCreation:
+		SpeechNotification: CoalitionSelected
+		Delay: 40
+
+korea.coalition:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Coalition: South Korea
+	Buildable:
+		BuildPaletteOrder: 2
+		Prerequisites: ~player.allies, alhq, !greece.coalition, !korea.coalition, !sweden.coalition, ~techlevel.medium
+		Description: Form a coalition with South Korea, required for:\n• Black Eagle\n• Patriot Strike\n• Improved Helipad (repairs without Service Depot, increased HP)\n\n
+	TooltipExtras:
+		Attributes: (!) Only ONE Coalition may be chosen.
+	Valued:
+		Cost: 500
+	RenderSprites:
+		Image: korea.coalition
+	AnnounceOnCreation:
+		SpeechNotification: CoalitionSelected
+		Delay: 40
+
+sweden.coalition:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Coalition: Sweden
+	Buildable:
+		BuildPaletteOrder: 3
+		Prerequisites: ~player.allies, alhq, !greece.coalition, !korea.coalition, !sweden.coalition, ~techlevel.medium
+		Description: Form a coalition with Sweden, required for:\n• Cryo Trooper\n• Cryostorm\n• Cryo Rockets upgrade applies to Longbow\n\n
+	TooltipExtras:
+		Attributes: (!) Only ONE Coalition may be chosen.
+	Valued:
+		Cost: 500
+	RenderSprites:
+		Image: sweden.coalition
+	AnnounceOnCreation:
+		SpeechNotification: CoalitionSelected
+		Delay: 40
 
 rapc.upgrade:
 	Inherits: ^Upgrade
@@ -858,7 +1211,7 @@ cryr.upgrade:
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.allies, atek, ~techlevel.high
-		Description: Arms rocket equipped soldiers and Longbows with Cryo warheads which\n  cause targets to move more slowly and take increased damage.\n\nUpgrades: Rocket Soldier\nUpgrades: Guardian GI\nUpgrades: Longbow
+		Description: Arms rocket equipped soldiers with Cryo warheads which\n  cause targets to move more slowly and take increased damage.\n\nUpgrades: Rocket Soldier\nUpgrades: Guardian GI\nUpgrades: Longbow (with Sweden Coalition)
 	TooltipExtras:
 		Strengths: + Equip with Cryo Rockets which slow movement and increase damage taken
 	Valued:
@@ -909,7 +1262,7 @@ entrench.upgrade:
 	TooltipExtras:
 		Strengths: + Allows Engineers to deploy, enabling defensive structures to be built
 	Valued:
-		Cost: 1000
+		Cost: 750
 	RenderSprites:
 		Image: entrench.upgrade
 
@@ -924,7 +1277,7 @@ crym.upgrade:
 	TooltipExtras:
 		Strengths: + Equip with Cryo Missiles which slow movement and increase damage taken
 	Valued:
-		Cost: 1000
+		Cost: 500
 	RenderSprites:
 		Image: crym.upgrade
 
@@ -939,7 +1292,7 @@ tflx.upgrade:
 	TooltipExtras:
 		Strengths: + Chrono Prison gains teleport ability\n+ Chrono Prison weapon range increased\n+ Chrono Tank teleport range increased\n+ Chrono Tank can teleport twice before recharging
 	Valued:
-		Cost: 1000
+		Cost: 750
 	RenderSprites:
 		Image: tflx.upgrade
 
@@ -949,7 +1302,7 @@ charv.upgrade:
 		Name: Upgrade: Chrono Miner
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~player.allies, orep, ~techlevel.high
+		Prerequisites: ~player.allies, alhq, ~techlevel.high
 		Description: Allows construction of Chrono Miners which\nteleport back to refineries.\n\nUpgrades: Ore Truck
 	TooltipExtras:
 		Strengths: + Teleport back to refinery
@@ -975,6 +1328,95 @@ orep.upgrade:
 
 ################################SCRIN##############################
 ###################################################################
+
+ANYALLEGIANCE:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		Name: Allegiance
+	Buildable:
+		Description: Allegiance
+	ProvidesPrerequisite:
+
+loyalist.allegiance:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Allegiance: Loyalist
+	Buildable:
+		BuildPaletteOrder: 15
+		Prerequisites: ~player.scrin, scrin.allegiances.available, !rebel.allegiance, ~techlevel.medium
+		Description: Declare your allegiance and side with the Scrin Overlord.\n\nRequired for:\n• Eviscerator\n• Obliterator\n• Overlord's Wrath\n\n
+		IconPalette: chromes
+	TooltipExtras:
+		Attributes: (!) Only ONE allegiance may be chosen.
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: loyalist.allegiance
+
+rebel.allegiance:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Allegiance: Rebel
+	Buildable:
+		BuildPaletteOrder: 16
+		Prerequisites: ~player.scrin, scrin.allegiances.available, !loyalist.allegiance, ~techlevel.medium
+		Description: Declare your allegiance and side with the Scrin Rebels.\n\nRequired for:\n• Impaler\n• Nullifier\n• Gateway\n\n
+		IconPalette: chromes
+	TooltipExtras:
+		Attributes: (!) Only ONE allegiance may be chosen.
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: rebel.allegiance
+
+allegiance.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Allegiance Dependent Upgrade
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: ~player.scrin, anyradar, anyallegiance, ~!loyalist.allegiance, ~!rebel.allegiance, ~techlevel.medium
+		IconPalette: chromes
+		Description: Upgrade depends on chosen allegiance.\n\n• Loyalist: Eviscerator research\n• Rebel: Impaler research
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: allegiance.upgrade
+
+evis.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Eviscerator
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: ~player.scrin, anyradar, ~loyalist.allegiance, ~techlevel.medium
+		Description: Replaces: Ravager
+		IconPalette: chromes
+	TooltipExtras:
+		Strengths: + Increased damage\n+ Increased health\n+ Increased rate of fire
+		Weaknesses: – Increased cost\n– Reduced speed
+	Valued:
+		Cost: 500
+	RenderSprites:
+		Image: evis.upgrade
+
+impl.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Impaler
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: ~player.scrin, anyradar, ~rebel.allegiance, ~techlevel.medium
+		Description: Replaces: Ravager
+		IconPalette: chromes
+	TooltipExtras:
+		Strengths: + Increased range\n+ Increased damage\n+ Increased health\n+ Slows targets
+		Weaknesses: – Increased cost\n– Reduced speed\n– Reduced rate of fire
+	Valued:
+		Cost: 500
+	RenderSprites:
+		Image: impl.upgrade
 
 shrw.upgrade:
 	Inherits: ^Upgrade

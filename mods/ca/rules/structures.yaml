@@ -1069,6 +1069,77 @@ ATEK:
 	GrantExternalConditionPowerCA@FSHIELD:
 		ActiveSequence: false-active
 
+ALHQ:
+	Inherits: ^Building
+	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
+	Inherits@SHAPE: ^3x2Shape
+	Inherits@UPG: ^ProducesUpgrades
+	Inherits@TECHLOCKABLE: ^TechLockable
+	Inherits@Negotiations: ^NegotiationsPower
+	Inherits@CryostormPower: ^CryostormPower
+	Inherits@HeliosBombPower: ^HeliosBombPower
+	Inherits@PatriotStrikePower: ^PatriotStrikePower
+	Selectable:
+		Bounds: 2048, 3072, 0, -512
+		DecorationBounds: 2133, 3157, 0, -512
+	Building:
+		Footprint: xx xx ==
+		Dimensions: 2,3
+		LocalCenterOffset: 0,-512,0
+	Health:
+		HP: 120000
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	WithBuildingBib:
+	SupportPowerChargeBar:
+	Buildable:
+		Queue: BuildingSQ, BuildingMQ
+		BuildPaletteOrder: 200
+		Prerequisites: vehicles.any, anyradar, ~structures.allies, ~techlevel.high
+		Description: Provides access to coalition technologies.
+		BuildLimit: 1
+	TooltipExtras:
+		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked
+	-Capturable:
+	-CaptureNotification:
+	-CapturableProgressBar:
+	-CapturableProgressBlink:
+	-CaptureManager:
+	Valued:
+		Cost: 1800
+	Tooltip:
+		Name: Allied HQ
+	Power:
+		Amount: -150
+	WithDeathAnimation:
+		DeathSequence: dead
+		UseDeathTypeSuffix: false
+	Sellable:
+		RequiresCondition: !build-incomplete && !c4 && !being-warped
+	SpawnActorOnDeath:
+		RequiresCondition: !being-warped
+	SpawnRandomActorOnDeath:
+		RequiresCondition: !being-warped
+	ProvidesPrerequisite@buildingname:
+		RequiresCondition: !tech-locked
+	WithDecoration@TechLock:
+		RequiresCondition: tech-locked
+	Production@UPG:
+		Produces: Upgrade, Coalition
+	Exit@UPG:
+		ProductionTypes: Upgrade, Coalition
+	-MindControllable:
+	-Targetable@HACKABLE:
+	-MindControllableProgressBar@HACKABLE:
+	-WithDecoration@HACKED:
+	-WithDecoration@RESTORING:
+
 WEAP:
 	Inherits: ^Building
 	Inherits@SHAPE: ^3x2Shape
@@ -1160,9 +1231,6 @@ WEAP:
 	ProvidesPrerequisiteValidatedFaction@2tnk:
 		Factions: france, germany, usa
 		Prerequisite: vehicles.2tnk
-	ProvidesPrerequisiteValidatedFaction@3tnk:
-		Factions: russia, ukraine, iraq, yuri
-		Prerequisite: vehicles.3tnk
 	ProvidesPrerequisiteValidatedFaction@qtnk:
 		Factions: russia, ukraine, iraq
 		Prerequisite: vehicles.qtnk
@@ -1432,6 +1500,8 @@ PROC:
 	SequencePlaceBuildingPreview:
 		Sequence: idle
 	CashHackable:
+	UpdatesCount:
+		Type: Refineries
 
 SILO:
 	Inherits: ^Building
@@ -2003,6 +2073,9 @@ BARR:
 	ProvidesPrerequisiteValidatedFaction@boris:
 		Factions: russia, iraq, ukraine
 		Prerequisite: infantry.boris
+	ProvidesPrerequisiteValidatedFaction@shok:
+		Factions: russia, ukraine, yuri
+		Prerequisite: infantry.shok
 	Power:
 		Amount: -20
 	ProvidesPrerequisite@buildingname:
@@ -2537,7 +2610,7 @@ INFANTRY.MEDI:
 	Tooltip:
 		Name: Barracks
 	Buildable:
-		Description: Medical Barracks
+		Description: Barracks
 
 INFANTRY.MECH:
 	AlwaysVisible:
@@ -2545,7 +2618,7 @@ INFANTRY.MECH:
 	Tooltip:
 		Name: Barracks
 	Buildable:
-		Description: Mechanical Barracks
+		Description: Barracks
 
 PYLE:
 	Inherits: ^BuildingTD
@@ -2849,11 +2922,12 @@ WEAP.TD:
 		Types: SpyInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
-	InfiltrateForSupportPower@STOLENTECH:
+	InfiltrateForSupportPowerCA@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.weap.td
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
+		UseTargetFaction: true
 	-ActorPreviewPlaceBuildingPreview:
 	SequencePlaceBuildingPreview:
 		Sequence: place
@@ -2909,7 +2983,7 @@ AIRS:
 	-Production@SQVEH:
 	-Production@MQVEH:
 	ProductionAirdropCA@SQVEH:
-		Produces: VehicleSQ, ParadropVehicle, Powersuit
+		Produces: VehicleSQ, ParadropVehicle
 		PauseOnCondition: forceshield || invulnerability || being-warped
 		ActorType: c17.cargo
 		ReadyAudio: ReinforcementsArrived
@@ -2917,7 +2991,7 @@ AIRS:
 		ProportionalSpeed: true
 		RequiresCondition: !global-multiqueue
 	ProductionAirdropCA@MQVEH:
-		Produces: VehicleMQ, ParadropVehicle, Powersuit
+		Produces: VehicleMQ, ParadropVehicle
 		PauseOnCondition: forceshield || invulnerability || being-warped
 		ActorType: c17.cargo
 		ReadyAudio: ReinforcementsArrived
@@ -2964,11 +3038,12 @@ AIRS:
 		TargetTypes: SpyInfiltrate, SabInfiltrate
 	Power:
 		Amount: -30
-	InfiltrateForSupportPower@STOLENTECH:
+	InfiltrateForSupportPowerCA@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.airs
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
+		UseTargetFaction: true
 	ProvidesPrerequisite@buildingname:
 	InfiltrateForSupportPower@spy:
 		Proxy: vehicles.upgraded
@@ -4004,6 +4079,8 @@ PROC.TD:
 	ProvidesPrerequisite@anyrefinery:
 		Prerequisite: anyrefinery
 	CashHackable:
+	UpdatesCount:
+		Type: Refineries
 
 SILO.TD:
 	Inherits: ^BuildingTD
@@ -5094,7 +5171,7 @@ INDP:
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 200
-		Prerequisites: ~structures.soviet, stek, ~techlevel.high
+		Prerequisites: ~structures.soviet, stek, ~tank.doctrine, ~techlevel.high
 		Description: Vehicles & aircraft are produced 15% faster and cost 10% less.
 		BuildLimit: 1
 	TooltipExtras:
@@ -5142,11 +5219,6 @@ INDP:
 	GrantConditionOnPrerequisite@Bot:
 		Condition: owned-by-ai
 		Prerequisites: botplayer
-	GrantRandomCondition@ai-v2:
-		Conditions: ai-v2-upgrade, noupgrade
-	ProvidesPrerequisite@ai-v2:
-		Prerequisite: v2.upgrade
-		RequiresCondition: ai-v2-upgrade && owned-by-ai
 	GrantCondition@DUMMY:
 		Condition: noupgrade
 		RequiresCondition: noupgrade
@@ -5157,6 +5229,33 @@ INDP:
 	-MindControllableProgressBar@HACKABLE:
 	-WithDecoration@HACKED:
 	-WithDecoration@RESTORING:
+
+CVAT:
+	Inherits: INDP
+	Tooltip:
+		Name: Cloning Vat
+	Buildable:
+		Prerequisites: ~structures.soviet, stek, player.level3, ~infantry.doctrine, ~techlevel.high
+		Description: Clones infantry trained at a linked barracks.
+	Production:
+		Produces: InfantrySQ, InfantryMQ
+	Exit@1:
+		SpawnOffset: -190,880,0
+		ExitCell: 1,2
+	Exit@2:
+		SpawnOffset: 190,-400,0
+		ExitCell: 1,-1
+	RallyPoint:
+	CloneProducer:
+		Types: InfantrySQ, InfantryMQ
+
+MUNP:
+	Inherits: INDP
+	Tooltip:
+		Name: Munitions Plant
+	Buildable:
+		Prerequisites: ~structures.soviet, stek, player.level3, ~arty.doctrine, ~techlevel.high
+		Description: Vehicles & aircraft are produced 15% faster and cost 10% less.
 
 OREP:
 	Inherits: ^Building
@@ -5171,7 +5270,7 @@ OREP:
 		Dimensions: 3,3
 		LocalCenterOffset: 0,-512,0
 	Health:
-		HP: 120000
+		HP: 100000
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -5185,7 +5284,7 @@ OREP:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.allies, atek, ~techlevel.high
-		Description: Refines ore, gems & Tiberium, increasing income by 10%.\n  Provides access to advanced chrono harvester technology.
+		Description: Refines ore, gems & Tiberium, increasing income by 10%.
 		BuildLimit: 1
 	TooltipExtras:
 		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked
@@ -5195,7 +5294,7 @@ OREP:
 	-CapturableProgressBlink:
 	-CaptureManager:
 	Valued:
-		Cost: 2000
+		Cost: 1800
 	Tooltip:
 		Name: Ore Purifier
 	ResourcePurifierCA@NORMAL:
@@ -5205,7 +5304,7 @@ OREP:
 		Modifier: 15
 		RequiresCondition: !disabled && !being-warped && orep-upgrade
 	Power:
-		Amount: -150
+		Amount: -100
 	WithDeathAnimation:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
@@ -5215,12 +5314,12 @@ OREP:
 		RequiresCondition: !being-warped
 	SpawnRandomActorOnDeath:
 		RequiresCondition: !being-warped
-	GrantConditionOnPrerequisite@Bot:
-		Condition: owned-by-ai
-		Prerequisites: botplayer
 	GrantConditionOnPrerequisite@UPGRADE:
 		Condition: orep-upgrade
 		Prerequisites: orep.upgrade
+	GrantConditionOnPrerequisite@Bot:
+		Condition: owned-by-ai
+		Prerequisites: botplayer
 	GrantRandomCondition@ai-pcan:
 		Conditions: ai-pcan-upgrade, noupgrade
 	ProvidesPrerequisite@ai-pcan:
@@ -5232,10 +5331,6 @@ OREP:
 	ValidFactions:
 		Factions: england, germany, france, usa
 	ProvidesPrerequisite@buildingname:
-		RequiresCondition: !tech-locked
-	ProvidesPrerequisiteValidatedFaction@germanyorep:
-		Factions: germany
-		Prerequisite: orep.germany
 		RequiresCondition: !tech-locked
 	WithDecoration@TechLock:
 		RequiresCondition: tech-locked
@@ -5481,7 +5576,7 @@ UPGC.BOMB:
 		Name: Upgrade: Firestorm Missile System
 	Buildable:
 		Queue: Upgrade
-		BuildPaletteOrder: 3
+		BuildPaletteOrder: 9
 		Prerequisites: ~player.gdi, upgc, !upgc.plugged, bombard2.strat, ~bombard.strat, ~!seek.strat, ~!hold.strat, ~techlevel.high
 		Description: Provides an napalm rocket barrage.
 		IconPalette: chrometd
@@ -5503,7 +5598,7 @@ UPGC.SEEK:
 		Name: Upgrade: Advanced Radar System
 	Buildable:
 		Queue: Upgrade
-		BuildPaletteOrder: 6
+		BuildPaletteOrder: 12
 		Prerequisites: ~player.gdi, upgc, !upgc.plugged, seek2.strat, ~seek.strat, ~!bombard.strat, ~!hold.strat, ~techlevel.high
 		Description: Provides detailed information on enemy locations.
 		IconPalette: chrometd
@@ -5525,7 +5620,7 @@ UPGC.HOLD:
 		Name: Upgrade: Nanoshield Generator
 	Buildable:
 		Queue: Upgrade
-		BuildPaletteOrder: 9
+		BuildPaletteOrder: 15
 		Prerequisites: ~player.gdi, upgc, !upgc.plugged, hold2.strat, ~hold.strat, ~!bombard.strat, ~!seek.strat, ~techlevel.high
 		Description: Provides the ability to shield units in an area
 		IconPalette: chrometd

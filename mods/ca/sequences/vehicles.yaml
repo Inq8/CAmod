@@ -1032,13 +1032,17 @@ mtnk:
 		Start: 64
 		Facings: 32
 		UseClassicFacings: True
-	turret2:
-		Filename: dronet.shp
+	turretlas:
+		Filename: mtnknod.shp
+		Start: 64
 		Facings: 32
 		UseClassicFacings: True
 	muzzle:
 		Filename: gunfire2.shp
 		Length: 5
+	muzzlelas:
+		Filename: lasermuzzle.shp
+		Length: *
 	icon:
 		Filename: mtnkicnh.shp
 
@@ -1058,13 +1062,17 @@ mtnk.nod:
 		Start: 64
 		Facings: 32
 		UseClassicFacings: True
-	turret2:
-		Filename: dronet.shp
+	turretlas:
+		Filename: mtnknod.shp
+		Start: 64
 		Facings: 32
 		UseClassicFacings: True
 	muzzle:
 		Filename: gunfire2.shp
 		Length: 5
+	muzzlelas:
+		Filename: lasermuzzle.shp
+		Length: *
 	icon:
 		Filename: mtnknodicnh.shp
 
@@ -1544,9 +1552,17 @@ ltnk:
 		Start: 32
 		Facings: 32
 		UseClassicFacings: True
+	turretlas:
+		Filename: ltnk.shp
+		Start: 64
+		Facings: 32
+		UseClassicFacings: True
 	muzzle:
 		Filename: gunfire2.shp
 		Length: 2
+	muzzlelas:
+		Filename: lasermuzzle.shp
+		Length: *
 	icon:
 		Filename: ltnkicnh.shp
 
@@ -1769,6 +1785,16 @@ ifv:
 		Start: 544
 		Facings: 32
 		UseClassicFacings: True
+	turret19:
+		Filename: ifvtur.shp
+		Start: 577
+		Facings: 32
+		UseClassicFacings: True
+	turret20:
+		Filename: ifvtur.shp
+		Start: 609
+		Facings: 32
+		UseClassicFacings: True
 	open:
 		Filename: ifv.shp
 		Start: 32
@@ -1828,6 +1854,38 @@ xo:
 		Tick: 80
 	icon:
 		Filename: xoicon.shp
+
+wolv:
+	Inherits: ^VehicleOverlays
+	Defaults:
+		Offset: 0, 0
+	idle:
+		Filename: wolv.shp
+		Facings: 8
+	move:
+		Filename: wolv.shp
+		Start: 8
+		Length: 4
+		Facings: 8
+		Tick: 200
+	shoot:
+		Filename: wolv.shp
+		Start: 40
+		Length: 2
+		Facings: 8
+		Tick: 40
+	muzzle:
+		Filename: minigun.shp
+		Length: 6
+		Facings: 8
+	chrono-overlay:
+		Filename: chronofade_small.shp
+		Length: *
+		BlendMode: Additive
+		ZOffset: 512
+		Tick: 80
+	icon:
+		Filename: wolvicnh.shp
 
 titn:
 	Inherits: ^VehicleOverlays
@@ -2209,6 +2267,16 @@ katy:
 	icon:
 		Filename: katyicnh.shp
 
+grad:
+	Inherits: v2rl
+	icon:
+		Filename: gradicon.shp
+
+smer:
+	Inherits: v2rl
+	icon:
+		Filename: smericon.shp
+
 chpr:
 	Inherits: ^VehicleOverlays
 	idle:
@@ -2350,6 +2418,34 @@ apoci:
 	icon:
 		Filename: apociicon.shp
 
+apoc.erad:
+	Inherits: apoc
+
+apoc.eradi:
+	Inherits: apoc
+
+ovld:
+	Inherits: apoc
+	icon:
+		Filename: ovldicon.shp
+
+ovldi:
+	Inherits: ovld
+	icon:
+		Filename: ovldiicon.shp
+
+ovld.erad:
+	Inherits: ovld
+
+ovld.eradi:
+	Inherits: ovld
+	icon:
+		Filename: ovldiicon.shp
+
+trpc:
+	Inherits: apc
+	icon:
+		Filename: trpcicon.shp
 
 reck:
 	Inherits: ifv
@@ -2370,6 +2466,40 @@ reck.destroyed:
 	Inherits: ifv.destroyed
 	idle:
 		Filename: reck.shp
+
+cycp:
+	Inherits: ^VehicleOverlays
+	idle:
+		Filename: cycp.shp
+		Facings: 32
+		UseClassicFacings: True
+	icon:
+		Filename: cycpicon.shp
+
+cycp.destroyed:
+	Inherits: ^VehicleOverlays
+	idle:
+		Filename: cycp.shp
+		Facings: 32
+		UseClassicFacings: True
+		ZOffset: -512
+
+basi:
+	Inherits: ^VehicleOverlays
+	idle:
+		Filename: basi.shp
+		Facings: 32
+		UseClassicFacings: True
+	icon:
+		Filename: basiicon.shp
+
+basi.destroyed:
+	Inherits: ^VehicleOverlays
+	idle:
+		Filename: basi.shp
+		Facings: 32
+		UseClassicFacings: True
+		ZOffset: -512
 
 pbul:
 	Inherits: ^VehicleOverlays
@@ -2462,6 +2592,20 @@ rhini:
 	icon:
 		Filename: rhiniicon.shp
 
+rhiny:
+	Inherits: rhin
+	idle:
+		Filename: rhiny.shp
+	icon:
+		Filename: rhinyicon.shp
+
+rhinay:
+	Inherits: rhini
+	idle:
+		Filename: rhinay.shp
+	icon:
+		Filename: rhinayicon.shp
+
 rhin.destroyed:
 	Inherits: ^VehicleOverlays
 	idle:
@@ -2506,6 +2650,26 @@ thwk.destroyed:
 		Facings: 32
 		UseClassicFacings: True
 		ZOffset: -512
+
+zeus:
+	Inherits: ^VehicleOverlays
+	idle:
+		Filename: zeus.shp
+		Facings: 32
+		UseClassicFacings: True
+	shoot:
+		Filename: zeus.shp
+		Facings: 32
+		Start: 32
+		UseClassicFacings: True
+	active-overlay:
+		Filename: emp_fx01.shp
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		ZOffset: 512
+	icon:
+		Filename: zeusicon.shp
 
 mole:
 	Inherits: ^VehicleOverlays

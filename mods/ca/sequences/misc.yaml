@@ -179,6 +179,11 @@ explosion:
 		BlendMode: Alpha
 		Tick: 100
 		ZOffset: 2045
+	shock_wave_sm:
+		Filename: ring1sm.shp
+		BlendMode: Alpha
+		Tick: 60
+		ZOffset: 2045
 	small_chem:
 		Filename: chemball.shp
 	med_chem:
@@ -334,6 +339,11 @@ explosion:
 		ZOffset: 2046
 		Offset: 0, 50, 60
 		ZRamp: 1
+	weathercloudshadow:
+		Filename: veilcloud.shp
+		BlendMode: Subtractive
+		ZOffset: -512
+		Alpha: 0.15
 	veilcloud:
 		Filename: veilcloud.shp
 		ZOffset: 2046
@@ -453,6 +463,15 @@ explosion:
 		Length: 10
 		Tick: 40
 		ZOffset: 2048
+	basiwave:
+		Filename: basiwave.shp
+		Frames: 0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9
+		Length: 5
+		Facings: 4
+		ZOffset: 2046
+		InterpolatedFacings: 32
+		BlendMode: Additive
+		Alpha: 0.3
 	sonicwave1:
 		Filename: sonicwave.shp
 		Frames: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
@@ -500,6 +519,30 @@ explosion:
 		FlipX: true
 		FlipY: true
 		InterpolatedFacings: 32
+		Alpha: 0.22
+	cryobeam1:
+		Filename: cryobeam.shp
+		Frames: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
+		Start: 0
+		Length: 10
+		Tick: 60
+		Facings: 4
+		ZOffset: 2046
+		InterpolatedFacings: 32
+		BlendMode: Additive
+		Alpha: 0.22
+	cryobeam2:
+		Filename: cryobeam.shp
+		Frames: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
+		Start: 0
+		Length: 10
+		Tick: 60
+		Facings: 4
+		ZOffset: 2046
+		FlipX: true
+		FlipY: true
+		InterpolatedFacings: 32
+		BlendMode: Additive
 		Alpha: 0.22
 	fuelbomb1:
 		Filename: moab.shp
@@ -567,6 +610,14 @@ explosion:
 		FlipX: true
 		Tick: 80
 		Offset: -3, 1
+	heliosexplode:
+		Filename: heliosexplode.shp
+		BlendMode: Additive
+		Alpha: 0.9
+	heliosexplode2:
+		Filename: heliosexplode2.shp
+		BlendMode: Additive
+		Alpha: 0.5
 
 veildebuff:
 	Defaults:
@@ -834,12 +885,14 @@ v3:
 		Filename: v3.shp
 		Facings: 32
 		ZOffset: 1023
+		UseClassicFacings: True
 
 th:
 	idle:
 		Filename: thwkm.shp
 		Facings: 32
 		ZOffset: 2046
+		UseClassicFacings: True
 
 thawk:
 	idle:
@@ -852,6 +905,14 @@ empmissile:
 		Filename: empmissile.shp
 		Facings: 32
 		ZOffset: 2046
+		UseClassicFacings: True
+
+kpat:
+	idle:
+		Filename: kpat.shp
+		Facings: 32
+		ZOffset: 2046
+		UseClassicFacings: True
 
 rallypoint:
 	flag:
@@ -965,6 +1026,10 @@ beacon:
 		Offset: 0,-42
 	substrike:
 		Filename: lores-substrikeicon.shp
+		Length: *
+		Offset: 0,-42
+	owrath:
+		Filename: lores-owrathicon.shp
 		Length: *
 		Offset: 0,-42
 
@@ -1093,6 +1158,7 @@ red-missile:
 		Filename: rmissile.shp
 		Facings: 32
 		ZOffset: 2046
+		UseClassicFacings: True
 
 cmiss:
 	idle:
@@ -1649,10 +1715,24 @@ jamfield:
 		Filename: jamfield.shp
 		Length: *
 		BlendMode: Alpha
-		Tick: 60
 		ZOffset: 1023
 		Alpha: 0.07
 		Scale: 1.2
+
+cryostorm:
+	Defaults:
+		Filename: cryostorm.shp
+		Length: *
+		BlendMode: Additive
+		ZOffset: 1023
+	idle:
+		Alpha: 0.6
+	make:
+		Alpha: 0.04, 0.08, 0.12, 0.16, 0.2, 0.24, 0.28, 0.32, 0.36, 0.4, 0.44, 0.48, 0.52, 0.56, 0.6
+	die:
+		Alpha: 0.6, 0.56, 0.52, 0.48, 0.44, 0.4, 0.36, 0.32, 0.28, 0.24, 0.2, 0.16, 0.12, 0.08, 0.04
+	dead:
+		Alpha: 0
 
 gpsdot:
 	Infantry:
@@ -1780,6 +1860,8 @@ icon:
 		Filename: stroopicon.shp
 	atomicammo:
 		Filename: atomicammoicon.shp
+	tankdrop:
+		Filename: tankdropicon.shp
 	tempinc:
 		Filename: tempincicon.shp
 	rescanpower:
@@ -1812,6 +1894,18 @@ icon:
 		Filename: fleetrecallicon.shp
 	substrike:
 		Filename: substrikeicon.shp
+	cryostorm:
+		Filename: cryostormicon.shp
+	heliosbomb:
+		Filename: heliosicon.shp
+	negotiations:
+		Filename: negoticon.shp
+	kpat:
+		Filename: kpaticon.shp
+	owrath:
+		Filename: owrathicon.shp
+	gateway:
+		Filename: gatewayicon.shp
 
 quee:
 	idle:
@@ -2838,6 +2932,16 @@ nshield-overlay-sm:
 		ZOffset: 512
 		Tick: 60
 
+zdefshield-overlay:
+	idle:
+		Filename: zdefshield.shp
+		Length: *
+		BlendMode: Alpha
+		Alpha: 0.3
+		Offset: 0, -5
+		ZOffset: 512
+		Tick: 80
+
 c4:
 	Defaults:
 		Filename: c4.shp
@@ -3032,6 +3136,12 @@ opticsactive:
 		Tick: 500
 		Length: *
 
+blinded:
+	idle:
+		Filename: blinded.shp
+		Tick: 500
+		Length: *
+
 redplasmatorp:
 	Defaults:
 		IgnoreWorldTint: true
@@ -3051,18 +3161,29 @@ veilblast:
 		Filename: veilblast.shp
 		Alpha: 0.8
 	idle:
+	idlesm:
+		Scale: 0.75
 
 ussrstar:
 	Defaults:
+		Filename: ussrstar.shp
 		Length: *
 		ZOffset: -32
-		IgnoreWorldTint: true
-	idle-overlay:
-		Filename: ussrstar.shp
-		ZOffset: -32
-		Frames: 0,0,0,0,0,0,0,0,0,0
 		Alpha: 0.65 ,0.6, 0.55, 0.5, 0.45, 0.4, 0.45, 0.5, 0.55, 0.6
+		IgnoreWorldTint: true
 		Tick: 120
+	idle-overlay1:
+		Frames: 0,0,0,0,0,0,0,0,0,0
+	idle-overlay2:
+		Frames: 1,1,1,1,1,1,1,1,1,1
+
+heliosbomb:
+	Defaults:
+		Filename: heliosbomb.shp
+		Length: *
+		ZOffset: 2047
+	idle:
+	open:
 
 substrikehole:
 	Defaults:

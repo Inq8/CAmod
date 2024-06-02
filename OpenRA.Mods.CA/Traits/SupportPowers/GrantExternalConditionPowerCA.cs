@@ -112,6 +112,13 @@ namespace OpenRA.Mods.CA.Traits
 		[SequenceReference(nameof(FootprintImage))]
 		public readonly string FootprintSequence = "target-select";
 
+		[Desc("Prerequisites grouped together to be referenced by the Prerequisite based overrides.")]
+		public readonly Dictionary<string, string[]> PrerequisiteGroupings = new();
+
+		[Desc("Overrides Condition based on prerequsites being met. If multiple are met, the first is used.",
+			"Keys can either be a single prerequisite or be a key of PrerequisiteGroupings.")]
+		public readonly Dictionary<string, string> PrerequisiteConditions = new();
+
 		public override object Create(ActorInitializer init) { return new GrantExternalConditionPowerCA(init.Self, this); }
 
 		public override void RulesetLoaded(Ruleset rules, ActorInfo ai)
@@ -129,6 +136,7 @@ namespace OpenRA.Mods.CA.Traits
 		int activeToken = Actor.InvalidConditionToken;
 		IConditionTimerWatcher[] watchers;
 		readonly char[] footprint;
+		TechTree techTree;
 
 		[Sync]
 		public int Ticks { get; private set; }
@@ -142,9 +150,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		protected override void Created(Actor self)
 		{
-			watchers = self.TraitsImplementing<IConditionTimerWatcher>().Where(Notifies).ToArray();
-
 			base.Created(self);
+			watchers = self.TraitsImplementing<IConditionTimerWatcher>().Where(Notifies).ToArray();
+			techTree = self.Owner.PlayerActor.Trait<TechTree>();
 		}
 
 		public override void SelectTarget(Actor self, string order, SupportPowerManager manager)
@@ -171,7 +179,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			foreach (var a in GetTargets(self.World.Map.CellContaining(order.Target.CenterPosition)))
 				a.TraitsImplementing<ExternalCondition>()
-					.FirstOrDefault(t => t.Info.Condition == info.Condition && t.CanGrantCondition(self))
+					.FirstOrDefault(t => t.Info.Condition == Condition && t.CanGrantCondition(self))
 					?.GrantCondition(a, self, info.Duration);
 
 			if (info.ExplosionWeapon != null)
@@ -202,7 +210,7 @@ namespace OpenRA.Mods.CA.Traits
 					&& info.ValidRelationships.HasRelationship(Self.Owner.RelationshipWith(a.Owner))
 					&& (info.ValidTargets.IsEmpty || info.ValidTargets.Overlaps(a.GetEnabledTargetTypes()))
 					&& (info.InvalidTargets.IsEmpty || !info.InvalidTargets.Overlaps(a.GetEnabledTargetTypes()))
-					&& a.TraitsImplementing<ExternalCondition>().Any(t => t.Info.Condition == info.Condition && t.CanGrantCondition(Self))
+					&& a.TraitsImplementing<ExternalCondition>().Any(t => t.Info.Condition == Condition && t.CanGrantCondition(Self))
 					&& (!info.TargetMustBeVisible || Self.Owner.Shroud.IsVisible(a.Location))
 					&& a.CanBeViewedByPlayer(Self.Owner)
 					&& a.CenterPosition.Z <= info.MaxAltitude.Length)
@@ -227,7 +235,7 @@ namespace OpenRA.Mods.CA.Traits
 					return false;
 
 				return a.TraitsImplementing<ExternalCondition>()
-					.Any(t => t.Info.Condition == info.Condition && t.CanGrantCondition(Self));
+					.Any(t => t.Info.Condition == Condition && t.CanGrantCondition(Self));
 			});
 		}
 
@@ -256,6 +264,31 @@ namespace OpenRA.Mods.CA.Traits
 		}
 
 		bool Notifies(IConditionTimerWatcher watcher) { return watcher.Condition == info.ActiveCondition; }
+
+		string Condition
+		{
+			get
+			{
+				if (info.PrerequisiteConditions.Any())
+				{
+					foreach (var item in info.PrerequisiteConditions)
+					{
+						if (techTree.HasPrerequisites(GetPrerequisitesList(item.Key)))
+							return item.Value;
+					}
+				}
+
+				return info.Condition;
+			}
+		}
+
+		string[] GetPrerequisitesList(string key)
+		{
+			if (info.PrerequisiteGroupings.TryGetValue(key, out var prerequisites))
+				return prerequisites;
+
+			return new string[] { key };
+		}
 
 		class SelectConditionTarget : OrderGenerator
 		{

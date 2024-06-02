@@ -4,7 +4,7 @@
 	Report: aacanon3.aud
 	ValidTargets: Air, AirSmall
 	Projectile: Bullet
-		Speed: 1c682
+		Speed: 3c0
 		Blockable: false
 	Warhead@1Dam: SpreadDamage
 		Range: 0, 0c64, 0c256, 3c0
@@ -463,9 +463,14 @@ M60mgJJ:
 	Report: vblhatta.aud, vblhattb.aud
 	Burst: 3
 	Warhead@1Dam: SpreadDamage
+		Damage: 3250
 		Versus:
-			None: 165
-			Light: 50
+			None: 100
+			Light: 40
+			Heavy: 4
+			Concrete: 4
+			Wood: 4
+			Brick: 4
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath, AirToGround
 
 M60mgJJ.ground:
@@ -840,6 +845,18 @@ HeliGunAA:
 		-ImpactSounds: flakhit1.aud, flakhit2.aud, flakhit3.aud
 		-ImpactSoundChance: 100
 
+WolverineGun:
+	Inherits: M60mg
+	Range: 5c0
+	BurstDelays: 3
+	-Report:
+	StartBurstReport: wolv-fire1.aud, wolv-fire2.aud
+	Warhead@1Dam: SpreadDamage
+		Damage: 1600
+		Versus:
+			Wood: 60
+			Heavy: 40
+
 EnforcerShotgun:
 	Range: 4c0
 	Report: enfo-fire1.aud, enfo-fire2.aud
@@ -847,8 +864,8 @@ EnforcerShotgun:
 	Projectile: InstantHit
 		Blockable: true
 	Warhead@1Dam: SpreadDamage
-		Spread: 341
-		Damage: 4500
+		Spread: 288
+		Damage: 5000
 		Versus:
 			None: 100
 			Wood: 40

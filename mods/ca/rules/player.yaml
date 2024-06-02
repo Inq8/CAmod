@@ -13,6 +13,7 @@ EditorPlayer:
 
 Player:
 	Inherits: ^BasePlayer
+	Inherits@TankDrop: ^TankDropPower
 	TechTree:
 	ClassicProductionQueue@Building:
 		Type: BuildingSQ
@@ -124,6 +125,18 @@ Player:
 		OnHoldAudio: OnHold
 		CancelledAudio: Cancelled
 		SpeedUp: False
+	Production@Upgrade:
+		Produces: Upgrade
+		RequiresCondition: upgrades-available
+	GrantConditionOnPrerequisite@AllegiancesAvailable:
+		Prerequisites: scrin.allegiances.available
+		Condition: upgrades-available
+	GrantConditionOnPrerequisite@DoctrinesAvailable:
+		Prerequisites: player.level1
+		Condition: upgrades-available
+	GrantConditionOnPrerequisite@UpgradesAvailable:
+		Prerequisites: upgrades.producer
+		Condition: upgrades-available
 	PlaceBuilding:
 		NewOptionsNotification: NewOptions
 		CannotPlaceNotification: BuildingCannotPlaceAudio
@@ -329,9 +342,11 @@ Player:
 	PlayerExperience:
 	PlayerExperienceLevels:
 		Factions: russia, ukraine, iraq, yuri
-		LevelXpRequirements: 100, 200, 300
-		LevelPrerequisites: player.rank1, player.rank2, player.rank3
+		LevelXpRequirements: 100, 300, 600
+		LevelPrerequisites: player.level1, player.level2, player.level3
 		LevelUpTextNotification: You have gained a rank! You are now rank {0}.
+		LevelUpNotification: Promoted
+		DummyActor: QueueUpdaterDummy
 	GameSaveViewportManager:
 	PlayerRadarTerrain:
 	GpsRadarWatcher:
@@ -341,3 +356,11 @@ Player:
 	AutoDeployManager:
 	CapturedFactionsManager:
 	UpgradesManager:
+	ProvidesPrerequisiteOnCounts@ScrinAllegiances:
+		Factions: reaper, traveler, harbinger, collector
+		Prerequisite: scrin.allegiances.available
+		RequiredCounts:
+			Refineries: 5
+		RequiredCountReachedNotification: AllegianceDeclarationAvailable
+		RequiredCountReachedTextNotification: Allegiance declaration available.
+		DummyActor: QueueUpdaterDummy

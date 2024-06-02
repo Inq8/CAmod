@@ -11,7 +11,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Activities;
-using OpenRA.Mods.CA.Activities;
 using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
@@ -19,8 +18,6 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	public enum MissileType { Ballistic, Cruise };
-
 	[Desc("This unit, when ordered to move, will fly in ballistic path then will detonate itself upon reaching target.")]
 	public abstract class MissileBaseInfo : TraitInfo, IMoveInfo, IPositionableInfo, IFacingInfo
 	{
@@ -69,6 +66,8 @@ namespace OpenRA.Mods.CA.Traits
 		public Target Target;
 
 		IEnumerable<int> speedModifiers;
+		INotifyCenterPositionChanged[] notifyCenterPositionChanged;
+		bool requiresVisibilityChecks = false;
 
 		[Sync]
 		public WAngle Facing
@@ -116,6 +115,8 @@ namespace OpenRA.Mods.CA.Traits
 		void INotifyCreated.Created(Actor self)
 		{
 			speedModifiers = self.TraitsImplementing<ISpeedModifier>().ToArray().Select(sm => sm.GetSpeedModifier());
+			notifyCenterPositionChanged = self.TraitsImplementing<INotifyCenterPositionChanged>().ToArray();
+			requiresVisibilityChecks = self.TraitsImplementing<AffectsShroud>().Any();
 		}
 
 		void INotifyAddedToWorld.AddedToWorld(Actor self)
@@ -187,6 +188,11 @@ namespace OpenRA.Mods.CA.Traits
 				OnAirborneAltitudeReached();
 			else if (!isAirborne && airborne)
 				OnAirborneAltitudeLeft();
+
+			// NB: This can be called from the constructor before notifyCenterPositionChanged is assigned.
+			if (requiresVisibilityChecks && notifyCenterPositionChanged != null)
+				foreach (var n in notifyCenterPositionChanged)
+					n.CenterPositionChanged(self, 0, 0);
 		}
 
 		#endregion

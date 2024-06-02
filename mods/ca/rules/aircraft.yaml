@@ -212,7 +212,7 @@ MIG:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Plane
-		BuildPaletteOrder: 70
+		BuildPaletteOrder: 31
 		Prerequisites: afld, ~aircraft.soviet, ~techlevel.medium
 		Description: Multi purpose strike aircraft.
 	TooltipExtras:
@@ -329,7 +329,7 @@ SUK:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Plane
-		BuildPaletteOrder: 120
+		BuildPaletteOrder: 80
 		Prerequisites: afld, stek, ~aircraft.soviet, ~!seismic.upgrade, ~techlevel.high
 		Description: Fast ground attack aircraft armed\n  with powerful armor-piercing munitions.
 	TooltipExtras:
@@ -462,6 +462,7 @@ SUK.UPG:
 	Buildable:
 		Prerequisites: afld, stek, ~aircraft.soviet, ~seismic.upgrade, ~techlevel.high
 		Description: Fast ground attack aircraft armed\n  with powerful explosive munitions.
+		BuildPaletteOrder: 81
 	-TooltipExtras:
 	TooltipExtras@SEISMIC:
 		IsStandard: true
@@ -480,7 +481,7 @@ YAK:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Plane
-		BuildPaletteOrder: 25
+		BuildPaletteOrder: 30
 		Prerequisites: afld, ~aircraft.soviet, ~techlevel.medium
 		Description: Fighter plane armed with\n  dual machine guns
 	TooltipExtras:
@@ -1055,7 +1056,7 @@ HELI:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
-		BuildPaletteOrder: 50
+		BuildPaletteOrder: 20
 		Prerequisites: ~aircraft.allies, ~techlevel.medium
 		Description: Helicopter gunship armed with\n  multi-purpose missiles.
 	TooltipExtras:
@@ -1101,7 +1102,7 @@ HELI:
 		RequiresCondition: cryr-upgrade
 	GrantConditionOnPrerequisite@CRYO:
 		Condition: cryr-upgrade
-		Prerequisites: cryr.upgrade
+		Prerequisites: cryr.upgrade, sweden.coalition
 	AttackAircraft:
 		FacingTolerance: 80
 		AttackType: Hover
@@ -1175,7 +1176,7 @@ HIND:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
-		BuildPaletteOrder: 20
+		BuildPaletteOrder: 32
 		Prerequisites: afld, ~aircraft.soviet, ~techlevel.medium
 		Description: Durable helicopter gunship armed with\n  a chaingun and anti-tank rockets.
 	TooltipExtras:
@@ -1438,7 +1439,7 @@ A10:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Plane
-		BuildPaletteOrder: 80
+		BuildPaletteOrder: 41
 		Prerequisites: afld.gdi, ~aircraft.gdi, ~!sidewinders.upgrade, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Attack aircraft armed with incendiary bombs.
@@ -1619,6 +1620,7 @@ A10.UPG:
 	Buildable:
 		Prerequisites: afld.gdi, ~aircraft.gdi, ~sidewinders.upgrade, ~techlevel.medium
 		Description: Attack aircraft with incendiary bombs\n  and air-to-air missiles.
+		BuildPaletteOrder: 42
 	-TooltipExtras:
 	TooltipExtras@UPG:
 		IsStandard: true
@@ -1837,6 +1839,17 @@ GALX:
 		Actor: GALX.Husk.EMP
 		RequiresCondition: empdisable
 
+GALX.Helios:
+	Inherits: GALX
+	AttackBomber:
+		FacingTolerance: 8
+	Armament:
+		Weapon: HeliosBomb
+	AmmoPool:
+		Ammo: 1
+	RenderSprites:
+		Image: galx
+
 APCH:
 	Inherits: ^HelicopterTD
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
@@ -1849,7 +1862,7 @@ APCH:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
-		BuildPaletteOrder: 30
+		BuildPaletteOrder: 50
 		Prerequisites: ~aircraft.apch, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Helicopter gunship armed with a chaingun.
@@ -1962,7 +1975,7 @@ ORCA:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
-		BuildPaletteOrder: 50
+		BuildPaletteOrder: 40
 		Prerequisites: afld.gdi, ~aircraft.gdi, ~techlevel.medium
 		IconPalette: chrometd
 		Description: VTOL gunship armed with\n  multi-purpose missiles.
@@ -2105,7 +2118,7 @@ ORCB:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
-		BuildPaletteOrder: 130
+		BuildPaletteOrder: 90
 		Prerequisites: afld.gdi, ~aircraft.gdi, gtek, ~techlevel.high
 		IconPalette: chrometd
 		Description: Heavy VTOL bomber armed with EMP bombs.
@@ -2315,7 +2328,7 @@ RAH:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
-		BuildPaletteOrder: 60
+		BuildPaletteOrder: 52
 		IconPalette: chrometd
 		Prerequisites: tmpl, ~aircraft.nod, ~techlevel.high
 		Description: Stealth attack helicopter with powerful\n  anti-personnel rockets.
@@ -2503,7 +2516,7 @@ KIRO:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
-		BuildPaletteOrder: 160
+		BuildPaletteOrder: 82
 		Prerequisites: afld, stek, ~aircraft.kiro, ~techlevel.high
 		Description: Heavily armoured airship armed with specialised bombs.
 	TooltipExtras:
@@ -2701,7 +2714,7 @@ OCAR:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
-		BuildPaletteOrder: 100
+		BuildPaletteOrder: 43
 		Prerequisites: afld.gdi, rep, ~aircraft.gdi, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Fast VTOL Vehicle Transporter.
@@ -2914,7 +2927,7 @@ HARR:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
-		BuildPaletteOrder: 110
+		BuildPaletteOrder: 70
 		Prerequisites: atek, ~aircraft.allies, ~techlevel.high
 		Description: Fast VTOL ground attack aircraft armed\n  with powerful explosive missiles.
 	TooltipExtras:
@@ -2928,7 +2941,7 @@ HARR:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 25000
+		HP: 22500
 	RevealsShroud:
 		Range: 12c0
 		MinRange: 10c0
@@ -2953,8 +2966,8 @@ HARR:
 		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2560
-		TurnSpeed: 16
-		Speed: 180
+		TurnSpeed: 18
+		Speed: 201
 		RepulsionSpeed: 40
 		MaximumPitch: 56
 		CanHover: False
@@ -3036,7 +3049,7 @@ SCRN:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
-		BuildPaletteOrder: 150
+		BuildPaletteOrder: 100
 		IconPalette: chrometd
 		Prerequisites: tmpl, ~aircraft.nod, ~techlevel.high
 		Description: Fast VTOL attack craft armed\n  with powerful plasma cannons.
@@ -3390,7 +3403,7 @@ VENM:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
-		BuildPaletteOrder: 31
+		BuildPaletteOrder: 51
 		Prerequisites: ~aircraft.marked, ~techlevel.medium
 		IconPalette: chrometd
 		Description: VTOL gunship armed with laser.
@@ -3514,7 +3527,7 @@ AURO:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Plane
-		BuildPaletteOrder: 140
+		BuildPaletteOrder: 91
 		Prerequisites: afld.gdi, ~aircraft.eagle, gtek, ~techlevel.high
 		IconPalette: chrometd
 		Description: Supersonic bomber armed with a MOAB.
@@ -3676,7 +3689,7 @@ PMAK:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
-		BuildPaletteOrder: 111
+		BuildPaletteOrder: 71
 		Prerequisites: atek, ~aircraft.allies, ~techlevel.high
 		Description: Heavy VTOL bomber with powerful armor penetrating bombs.
 	TooltipExtras:
@@ -3711,7 +3724,7 @@ PMAK:
 		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2560
-		TurnSpeed: 16
+		TurnSpeed: 14
 		Speed: 157
 		RepulsionSpeed: 40
 		MaximumPitch: 56
@@ -3812,19 +3825,18 @@ PMAK:
 BEAG:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
-	Inherits@InfiltratorStolenTech: ^InfiltratorStolenTech
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
-		BuildPaletteOrder: 200
-		Prerequisites: anyradar, ~aircraft.beag
-		Description: Attack aircraft with range and vision reducing missiles.
+		BuildPaletteOrder: 72
+		Prerequisites: alhq, coalition.active, ~korea.coalition, ~techlevel.high
+		Description: Air superiority fighter with range/vision reducing missiles.
 	TooltipExtras:
-		Strengths: • Strong vs Heavy Armor, Light Armor, Aircraft
+		Strengths: • Strong vs Aircraft, Heavy Armor, Light Armor
 		Weaknesses: • Weak vs Infantry, Buildings
 		Attributes: • Reduces range and vision of targets
 	Valued:
-		Cost: 1600
+		Cost: 1800
 	Tooltip:
 		Name: Black Eagle
 		GenericName: Aircraft
@@ -3853,10 +3865,11 @@ BEAG:
 		PersistentTargeting: false
 		OpportunityFire: true
 		PauseOnCondition: empdisable || being-warped
+		Voice: Attack
 	Aircraft:
 		CruiseAltitude: 2560
 		TurnSpeed: 16
-		Speed: 201
+		Speed: 225
 		RepulsionSpeed: 40
 		MaximumPitch: 56
 		CanHover: False
@@ -3864,6 +3877,7 @@ BEAG:
 		LandingSounds: vblelo3.aud
 		CanSlide: False
 		AltitudeVelocity: 0c200
+		Voice: Move
 	SoundOnDamageTransitionCA:
 		DestroyedSounds: vblediea.aud, vbledieb.aud
 		RequiresCondition: airborne
@@ -3901,6 +3915,139 @@ BEAG:
 		RequiresCondition: airborne && ammo && empdisable && !being-warped
 	SpawnActorOnDeath@EmptyEMP:
 		Actor: BEAG.Husk.empty.EMP
+		RequiresCondition: airborne && !ammo && empdisable && !being-warped
+	LeavesTrails:
+		Offsets: -427,0,0
+		Image: smokey
+		MovingInterval: 3
+		StationaryInterval: 3
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
+		RequiresCondition: enable-smoke
+	Selectable:
+		DecorationBounds: 1536, 1194
+	ProducibleWithLevel:
+		Prerequisites: aircraft.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: aircraft.upgraded
+	Rearmable:
+		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
+	GrantConditionOnDamageState@SmokeTrail:
+		Condition: enable-smoke
+	GpsRadarDot:
+		Sequence: Plane
+	EjectOnDeath:
+		ChuteSound: gejecta.aud
+	Voiced:
+		VoiceSet: BlackEagleVoice
+
+PHAN:
+	Inherits: ^Helicopter
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Buildable:
+		Queue: AircraftSQ, AircraftMQ
+		BuildAtProductionType: Helicopter
+		BuildPaletteOrder: 200
+		Prerequisites: anyradar, ~aircraft.phan
+		Description: Air superiority fighter with range/vision reducing missiles.
+	TooltipExtras:
+		Strengths: • Strong vs Aircraft, Heavy Armor, Light Armor
+		Weaknesses: • Weak vs Infantry, Buildings
+		Attributes: • Reduces range and vision of targets
+	Valued:
+		Cost: 1800
+	Tooltip:
+		Name: Phantom
+		GenericName: Aircraft
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 18000
+	RevealsShroud:
+		Range: 11c0
+		MinRange: 9c0
+		Type: GroundPosition
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 9c0
+		Type: GroundPosition
+	Armament@PRIMARY:
+		Weapon: PhantomMissiles
+		LocalOffset: 150,-400,0, 150,400,0
+		PauseOnCondition: !ammo
+	Armament@SECONDARY:
+		Weapon: PhantomMissilesAA
+		LocalOffset: 150,-400,0, 150,400,0
+		PauseOnCondition: !ammo
+	AttackAircraft:
+		FacingTolerance: 80
+		PersistentTargeting: false
+		OpportunityFire: true
+		PauseOnCondition: empdisable || being-warped
+	Aircraft:
+		CruiseAltitude: 2560
+		TurnSpeed: 16
+		Speed: 225
+		RepulsionSpeed: 40
+		MaximumPitch: 56
+		CanHover: False
+		TakeoffSounds: vblelo1a.aud
+		LandingSounds: vblelo3.aud
+		CanSlide: False
+		AltitudeVelocity: 0c200
+	SoundOnDamageTransitionCA:
+		DestroyedSounds: vblediea.aud, vbledieb.aud
+		RequiresCondition: airborne
+	AutoTarget:
+		InitialStance: HoldFire
+		InitialStanceAI: AttackAnything
+	AmmoPool:
+		Ammo: 4
+		AmmoCondition: ammo
+		ReloadDelay: 35
+	WithAmmoPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
+	Contrail@1:
+		Offset: 50,-680,80
+		StartColorUsePlayerColor: false
+		ZOffset: -512
+		StartColor: FFFFFF80
+		StartColorAlpha: 96
+	Contrail@2:
+		Offset: 50,680,80
+		StartColorUsePlayerColor: false
+		ZOffset: -512
+		StartColor: FFFFFF80
+		StartColorAlpha: 96
+	Contrail@Inner1:
+		TrailLength: 15
+		Offset: -300,-70,80
+		StartColorUsePlayerColor: false
+		StartColor: 00FF00
+		StartColorAlpha: 80
+		ZOffset: -512
+	Contrail@Inner2:
+		TrailLength: 15
+		Offset: -300,70,80
+		StartColorUsePlayerColor: false
+		StartColor: 00FF00
+		StartColorAlpha: 80
+		ZOffset: -512
+	SpawnActorOnDeath:
+		Actor: PHAN.Husk
+		RequiresCondition: airborne && ammo && !empdisable && !being-warped
+	SpawnActorOnDeath@Empty:
+		Actor: PHAN.Husk.empty
+		RequiresCondition: airborne && !ammo && !empdisable && !being-warped
+	SpawnActorOnDeath@EMP:
+		Actor: PHAN.Husk.EMP
+		RequiresCondition: airborne && ammo && empdisable && !being-warped
+	SpawnActorOnDeath@EmptyEMP:
+		Actor: PHAN.Husk.empty.EMP
 		RequiresCondition: airborne && !ammo && empdisable && !being-warped
 	LeavesTrails:
 		Offsets: -427,0,0
@@ -4240,11 +4387,11 @@ VERT:
 	Armament@PRIMARY:
 		Weapon: VertigoBomb
 		LocalOffset: 2,0,-43
-		PauseOnCondition: !ammo || prepping || hidden
+		PauseOnCondition: !ammo || hidden
 	Armament@DECLOAK:
 		Name: secondary
 		Weapon: VertigoBombTargeter
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || !hidden
 	AttackAircraft:
 		FacingTolerance: 40
 		PersistentTargeting: false
@@ -4327,10 +4474,6 @@ VERT:
 	WithShadow@CLOAKED:
 		ShadowColor: 00000033
 		RequiresCondition: invisibility || hidden
-	GrantTimedCondition@Decloak:
-		Condition: prepping
-		Duration: 40
-		RequiresCondition: !hidden
 	Cloak:
 		DetectionTypes: AirCloak
 		InitialDelay: 100
@@ -4447,7 +4590,7 @@ DISC:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
-		BuildPaletteOrder: 161
+		BuildPaletteOrder: 83
 		Prerequisites: afld, stek, ~aircraft.yuri, ~techlevel.high
 		Description: Heavily armoured attack craft.
 	TooltipExtras:
@@ -4568,3 +4711,82 @@ DISC:
 	-RangeMultiplier@SEEK:
 	-RangeMultiplier@SEEK2:
 	-RangeMultiplier@SEEK3:
+
+JACK:
+	Inherits: ^PlaneTD
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Valued:
+		Cost: 400
+	Tooltip:
+		Name: Jackknife
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		Queue: AircraftSQ, AircraftMQ
+		BuildAtProductionType: Plane
+		BuildPaletteOrder: 92
+		Prerequisites: afld.gdi, ~aircraft.arc, ~techlevel.medium
+		Description: Loitering munition that dives at ground targets and explodes.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
+		Weaknesses: • Weak vs Buildings, Defenses\n• Cannot attack Aircraft
+	Aircraft:
+		AltitudeVelocity: 0c100
+		TurnSpeed: 20
+		Speed: 135
+		IdleSpeed: 72
+		Repulsable: false
+		Voice: Move
+	Voiced:
+		VoiceSet: JackknifeVoice
+	Health:
+		HP: 4000
+	RevealsShroud:
+		Range: 10c0
+		MinRange: 8c0
+		Type: GroundPosition
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 9c0
+		Type: GroundPosition
+	Armament@PRIMARY:
+		Weapon: JackknifeTargeter
+	Explodes:
+		Weapon: JackknifeExplosion
+		EmptyWeapon: JackknifeExplosion
+		-RequiresCondition:
+	Targetable@AIRBORNE:
+		TargetTypes: AirSmall
+	AttackAircraft:
+		FacingTolerance: 80
+		Voice: Attack
+		OpportunityFire: false
+		PersistentTargeting: false
+	DiveOnAttack:
+		Speed: 250
+		DiveCondition: diving
+	AutoTarget:
+		InitialStance: HoldFire
+		InitialStanceAI: AttackAnything
+	LeavesTrails:
+		Offsets: -427,0,0
+		MovingInterval: 2
+		Image: smokey
+		StationaryInterval: 2
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
+		RequiresCondition: enable-smoke
+	Selectable:
+		DecorationBounds: 1280, 1024
+	GrantConditionOnDamageState@SmokeTrail:
+		Condition: enable-smoke
+	Contrail@1:
+		StartColor: FFFFFF60
+		StartColorAlpha: 96
+	-EjectOnDeath:
+	-SpawnActorOnDeath:
+	-Contrail@2:
+	-SoundOnDamageTransitionCA:
+	ActorLostNotification:
+		RequiresCondition: !diving

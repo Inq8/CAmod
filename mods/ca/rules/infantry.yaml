@@ -3,7 +3,7 @@ DOG:
 	Buildable:
 		Queue: InfantrySQ, DogMQ
 		BuildAtProductionType: Dog
-		BuildPaletteOrder: 50
+		BuildPaletteOrder: 51
 		Prerequisites: kenn, ~infantry.dog
 		Description: Melee anti-infantry scout unit.
 	TooltipExtras:
@@ -80,6 +80,7 @@ DOG:
 	WithRangeCircle:
 		Type: DogDetection
 		Range: 10c0
+		Color: ffffff60
 	Voiced:
 		VoiceSet: DogVoice
 	-TakeCover:
@@ -502,7 +503,7 @@ U3.squad:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: ParadropInfantry
-		BuildPaletteOrder: 1000
+		BuildPaletteOrder: 300
 		Prerequisites: radaroraircraft, ~infantry.usa, ~techlevel.medium
 		Description: Prepare five Guardian GIs for airdrop.
 	TooltipExtras:
@@ -548,13 +549,13 @@ E4:
 	Valued:
 		Cost: 200
 	Tooltip:
-		Name: Flamethrower
+		Name: Soviet Flamethrower
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
 		HP: 9000
 	Mobile:
-		Speed: 54
+		Speed: 46
 	Armament:
 		Weapon: FireballGun
 		LocalOffset: 341,0,256
@@ -651,7 +652,7 @@ SPY:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 100
+		BuildPaletteOrder: 82
 		Prerequisites: ~tent, anyradar, ~techlevel.medium
 		Description: Infiltrates enemy structures for intel or sabotage\n  Effects depend on the building infiltrated.
 	TooltipExtras:
@@ -730,7 +731,7 @@ SPY:
 		RequiresCondition: cmsr-disguise
 	WithIdleOverlay@Inspiration:
 		Image: ussrstar
-		Sequence: idle-overlay
+		Sequence: idle-overlay1
 		Palette: effect
 		RequiresCondition: cmsr-disguise
 	AttackMove:
@@ -751,7 +752,7 @@ E7:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 190
+		BuildPaletteOrder: 200
 		Prerequisites: ~tent, atek, ~techlevel.high
 		BuildLimit: 1
 		Description: Elite commando infantry armed with dual pistols and C4.
@@ -895,7 +896,6 @@ MEDI:
 		ValidRelationships: Ally
 	Mobile:
 		Voice: Move
-		PauseOnCondition: being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	WithProductionIconOverlay:
@@ -913,7 +913,7 @@ MECH:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 90
+		BuildPaletteOrder: 80
 		Prerequisites: repair, ~!tmpp, ~infantry.mech, ~techlevel.low
 		Description: Repairs nearby vehicles.
 	TooltipExtras:
@@ -929,7 +929,6 @@ MECH:
 		HP: 5000
 	Mobile:
 		Voice: Move
-		PauseOnCondition: being-warped
 	RevealsShroud:
 		Range: 3c0
 	Passenger:
@@ -1007,7 +1006,7 @@ CMEC:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
-		BuildPaletteOrder: 90
+		BuildPaletteOrder: 81
 		Prerequisites: repair, tmpp, ~tmpp, ~infantry.mech, ~techlevel.high
 		Description: Repairs nearby vehicles and advanced cyborgs.
 	TooltipExtras:
@@ -1024,7 +1023,6 @@ CMEC:
 	Mobile:
 		Speed: 46
 		Voice: Move
-		PauseOnCondition: being-warped
 	RevealsShroud:
 		Range: 5c0
 	Passenger:
@@ -1113,7 +1111,6 @@ HACK:
 	Mobile:
 		Speed: 60
 		Voice: Move
-		PauseOnCondition: being-warped
 		RequireForceMoveCondition: hacking
 	RevealsShroud:
 		Range: 5c0
@@ -1288,7 +1285,7 @@ THF:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 120
+		BuildPaletteOrder: 95
 		Prerequisites: anyradar, ~barr, ~techlevel.medium
 		Description: Steals enemy credits and hijacks enemy vehicles.
 	TooltipExtras:
@@ -1329,6 +1326,8 @@ THF:
 		InitialDelay: 250
 		CloakDelay: 120
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Move
+		CloakSound: gstealon.aud
+		UncloakSound: gstealof.aud
 		DetectionTypes: Cloak
 		IsPlayerPalette: false
 		CloakedCondition: hidden
@@ -1377,8 +1376,8 @@ SHOK:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 80
-		Prerequisites: tslaorstek, anyradar, ~barr, ~techlevel.medium
+		BuildPaletteOrder: 90
+		Prerequisites: tslaorstek, anyradar, ~infantry.shok, ~!ttrp.upgrade, ~techlevel.medium
 		Description: Elite infantry with portable Tesla weapon.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
@@ -1449,6 +1448,31 @@ SHOK:
 	ProductionCostMultiplier@RussiaBonus:
 		Multiplier: 90
 		Prerequisites: player.russia
+	ReplacedInQueue:
+		Actors: ttrp
+
+TTRP:
+	Inherits: SHOK
+	Buildable:
+		BuildPaletteOrder: 91
+		Prerequisites: tslaorstek, anyradar, ~infantry.shok, ~ttrp.upgrade, ~techlevel.medium
+	Tooltip:
+		Name: Tesla Trooper
+	Valued:
+		Cost: 600
+	Health:
+		HP: 20000
+	Voiced:
+		VoiceSet: TeslaTrooperVoice
+	TakeCover:
+		ProneOffset: 0,0,0
+		ProneSequencePrefix:
+	-ReplacedInQueue:
+	Armament@PRIMARY:
+		Weapon: PortaTesla.UPG
+		LocalOffset: 300,0,300
+	Armament@BATF:
+		Weapon: PortaTesla.UPG
 
 N1:
 	Inherits: ^Soldier
@@ -1521,7 +1545,7 @@ N2:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 41
+		BuildPaletteOrder: 42
 		Prerequisites: ~pyle
 		IconPalette: chrometd
 		Description: Infantry armed with grenades.
@@ -1711,7 +1735,7 @@ N4:
 	Valued:
 		Cost: 200
 	Tooltip:
-		Name: Flamethrower
+		Name: Nod Flamethrower
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -2038,7 +2062,7 @@ SNIP:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 110
+		BuildPaletteOrder: 83
 		Prerequisites: ~infantry.england, anyradar, ~techlevel.medium
 		Description: Elite marksman infantry armed with\n  a powerful sniper rifle.
 	TooltipExtras:
@@ -2173,7 +2197,7 @@ BORI:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 200
+		BuildPaletteOrder: 205
 		Prerequisites: ~barr, stek, ~infantry.boris, ~techlevel.high
 		BuildLimit: 1
 		Description: Elite commando infantry armed with a\n  high-powered assault rifle.
@@ -2276,13 +2300,13 @@ SAB:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 140
+		BuildPaletteOrder: 113
 		Prerequisites: anyradar, ~hand, ~techlevel.medium
 		Description: Covert infantry that infiltrates enemy structures\n  to steal or lock technology.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry
 		Weaknesses: • Can only attack Infantry
-		Attributes: • Can detect cloaked ground units and spies\n• Limited stealth (drains while moving)\n• Infiltrates production buildings to steal technology\n    • Allies: Cryo Mortar, Reckoner, Black Eagle\n    • Soviets: Cyberdog, Rhino Tank, Kamov\n    • GDI: Sonic Mortar, Pitbull, Shade\n    • Nod: Chem Mortar, Mantis, Vertigo\n    • Scrin: Cyberscrin, Viper, Manticore\n• Infiltrates radars/tech centers to lock technology
+		Attributes: • Can detect cloaked ground units and spies\n• Limited stealth (drains while moving)\n• Infiltrates production buildings to steal technology\n    • Allies: Cryo Mortar, Reckoner, Phantom\n    • Soviets: Cyberdog, Rhino Tank, Kamov\n    • GDI: Sonic Mortar, Pitbull, Shade\n    • Nod: Chem Mortar, Mantis, Vertigo\n    • Scrin: Cyberscrin, Viper, Manticore\n• Infiltrates radars/tech centers to lock technology
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -2381,7 +2405,7 @@ ACOL:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
-		BuildPaletteOrder: 170
+		BuildPaletteOrder: 111
 		IconPalette: chrometd
 		Prerequisites: obliortmpl, anyradar, ~infantry.marked, ~!tmpp, ~techlevel.medium
 		Description: Cyborg infantry with a laser weapon.
@@ -2410,7 +2434,6 @@ ACOL:
 		Weapon: PortaLaser
 	TakeCover:
 		ProneOffset: 227,0,-245
-		PauseOnCondition: being-warped
 		SpeedModifier: 70
 	AttackFrontal:
 		Voice: Attack
@@ -2452,6 +2475,7 @@ TPLR:
 		HP: 21000
 	Buildable:
 		Prerequisites: obliortmpl, anyradar, ~infantry.marked, ~tmpp, ~techlevel.high
+		BuildPaletteOrder: 112
 	-TakeCover:
 	-Convertible:
 	-ReplacedInQueue:
@@ -2533,7 +2557,7 @@ JJET:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 150
+		BuildPaletteOrder: 100
 		Prerequisites: anyradar, ~pyle, ~!bjet.upgrade, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Flying general-purpose infantry.
@@ -2548,7 +2572,7 @@ JJET:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 8000
+		HP: 6000
 	Targetable:
 		RequiresCondition: !airborne && !being-warped
 		TargetTypes: Ground, Infantry
@@ -2586,6 +2610,7 @@ JJET:
 	AttackAircraft:
 		AttackType: Hover
 		FacingTolerance: 40
+		OpportunityFire: false
 		Voice: Attack
 	Armament@AIRBORNE:
 		Weapon: M60mgJJ
@@ -2667,6 +2692,7 @@ BJET:
 		Prerequisites: anyradar, ~pyle, ~bjet.upgrade, ~techlevel.high
 		IconPalette: chrometd
 		Description: Flying infantry with a grenade launcher.
+		BuildPaletteOrder: 101
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Light Armor, Aircraft
 		Weaknesses: • Weak vs Heavy Armor\n• Has difficulty hitting moving targets
@@ -2748,76 +2774,46 @@ E8:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 130
-		Prerequisites: ~infantry.iraq, tturorstek, anyradar, ~techlevel.medium
+		BuildPaletteOrder: 92
+		Prerequisites: ~infantry.iraq, tturorstek, anyradar, ~!deso.upgrade, ~techlevel.medium
 		Description: Anti-infantry unit with radiation based weaponry.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
-		Attributes: • Irradiates vehicles causing them to take more damage,\n     deal less damage, and damage nearby units\n• Special Ability: Desolate Ground
 	Valued:
-		Cost: 650
+		Cost: 425
 	Tooltip:
-		Name: Desolator
+		Name: Rad Trooper
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 22500
-	Mobile:
-		Voice: Move
+		HP: 7500
 	RevealsShroud:
 		Range: 5c0
 	Armament@PRIMARY:
-		Weapon: RadBeamWeapon
-		LocalOffset: 300,0,341
+		Weapon: RadTrooperBeam
+		LocalOffset: 427,0,341
 	Armament@BATF:
 		Name: batf
-		Weapon: RadBeamWeapon
+		Weapon: RadTrooperBeam
 	TakeCover:
-		ProneOffset: 0,0,0
+		ProneOffset: 384,0,-395
 	AttackFrontal:
-		Voice: Attack
-		PauseOnCondition: being-warped || !undeployed
+		PauseOnCondition: being-warped
 		FacingTolerance: 0
-	AttackMove:
-		Voice: Move
-	Passenger:
-		Voice: Move
-	Guard:
-		Voice: Move
-	Voiced:
-		VoiceSet: DesVoice
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
-	-Crushable:
-	PeriodicExplosion:
-		Weapon: RadEruptionWeapon
-		RequiresCondition: deployed
 	Targetable@DESOLATOR:
 		TargetTypes: Desolator
-	GrantConditionOnDeploy:
-		DeployedCondition: deployed
-		UndeployedCondition: undeployed
-		UndeployOnMove: True
-		Voice: Attack
-		PauseOnCondition: being-warped
-		SmartDeploy: True
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
-		RequiresCondition: !being-warped && undeployed && !parachute
+		RequiresCondition: !being-warped && !parachute
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
 		RequiresCondition: parachute
-	WithSpriteBody@DEPLOYED:
-		Sequence: deployed
-		RequiresCondition: !undeployed
-		Name: deployed
-	WithMakeAnimation:
-		Sequence: deploy
-		BodyNames: deployed
 	GrantConditionOnPrerequisite@BIO:
 		Condition: biofirepower
 	FirepowerMultiplier@BIOLAB:
@@ -2847,6 +2843,68 @@ E8:
 		-RequiresCondition:
 	WithDecoration@BINO:
 		-BlinkPatterns:
+	ReplacedInQueue:
+		Actors: deso
+
+DESO:
+	Inherits: E8
+	Buildable:
+		BuildPaletteOrder: 93
+		Prerequisites: ~infantry.iraq, tturorstek, anyradar, ~deso.upgrade, ~techlevel.medium
+	Tooltip:
+		Name: Desolator
+	TooltipExtras:
+		Attributes: • Irradiates vehicles causing them to take more damage,\n     deal less damage, and damage nearby units\n• Special Ability: Desolate Ground
+	Valued:
+		Cost: 600
+	Health:
+		HP: 20000
+	Voiced:
+		VoiceSet: DesVoice
+	Mobile:
+		Voice: Move
+	AttackMove:
+		Voice: Move
+	Passenger:
+		Voice: Move
+	Guard:
+		Voice: Move
+	AttackFrontal:
+		Voice: Attack
+		PauseOnCondition: being-warped || !undeployed
+	GrantConditionOnDeploy:
+		DeployedCondition: deployed
+		UndeployedCondition: undeployed
+		UndeployOnMove: True
+		Voice: Attack
+	-Crushable:
+	TakeCover:
+		ProneOffset: 0,0,0
+		ProneSequencePrefix:
+	WithInfantryBody:
+		RequiresCondition: !being-warped && undeployed && !parachute
+	Armament@PRIMARY:
+		Weapon: DesolatorBeam
+		LocalOffset: 300,0,341
+	Armament@BATF:
+		Weapon: DesolatorBeam
+	PeriodicExplosion:
+		Weapon: RadEruptionWeapon
+		RequiresCondition: deployed
+	GrantConditionOnDeploy:
+		DeployedCondition: deployed
+		UndeployedCondition: undeployed
+		UndeployOnMove: True
+		PauseOnCondition: being-warped
+		SmartDeploy: True
+	WithSpriteBody@DEPLOYED:
+		Sequence: deployed
+		RequiresCondition: !undeployed
+		Name: deployed
+	WithMakeAnimation:
+		Sequence: deploy
+		BodyNames: deployed
+	-ReplacedInQueue:
 	AutoDeployer@AI:
 		RequiresCondition: botowner && !deployed && !parachute
 		DeployChance: 20
@@ -3021,7 +3079,7 @@ RMBC:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
-		BuildPaletteOrder: 230
+		BuildPaletteOrder: 231
 		IconPalette: chrometd
 		Prerequisites: ~infantry.nod, tmpp, advcyborg.upgrade, ~techlevel.high
 		Description: Elite cyborg infantry unit armed with\n  a plasma cannon.
@@ -3114,7 +3172,7 @@ IVAN:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 42
+		BuildPaletteOrder: 41
 		Prerequisites: ~infantry.ukraine, weap, ~techlevel.low
 		Description: Specialist demolition infantry armed with explosives.
 	TooltipExtras:
@@ -3183,7 +3241,7 @@ BRUT:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 85
+		BuildPaletteOrder: 94
 		Prerequisites: anyradar, ~infantry.yuri, ~techlevel.medium
 		Description: Melee range genetically engineered hulk.
 	TooltipExtras:
@@ -3396,6 +3454,9 @@ SHAD:
 		RearmActors: shad.rearm
 	Targetable@STEALTHBUBBLEIMMUNE:
 		TargetTypes: StealthBubbleImmune
+	WithColoredSelectionBox@INVIS:
+		RequiresCondition: invisibility || hidden
+		ColorSource: Player
 
 # ---- dummy actor because RearmableActors is required
 SHAD.REARM:
@@ -3577,7 +3638,7 @@ BH:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 150
+		BuildPaletteOrder: 110
 		Prerequisites: anyradar, ~infantry.blackh, ~techlevel.medium
 		Description: Elite precision anti-tank flamethrower unit.
 	TooltipExtras:
@@ -3651,7 +3712,7 @@ YURI:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 190
+		BuildPaletteOrder: 206
 		Prerequisites: ~barr, stek, ~infantry.yuri, ~techlevel.high
 		BuildLimit: 1
 		Description: Elite specialist infantry able to mind-control\n  enemy units (up to 3, increases with veterancy).
@@ -3859,7 +3920,7 @@ SEAL:
 	RevealsShroud:
 		Range: 6c0
 	Buildable:
-		BuildPaletteOrder: 185
+		BuildPaletteOrder: 131
 		Prerequisites: ~infantry.usa, atek, ~techlevel.high
 		Queue: InfantrySQ, InfantryMQ
 		IconPalette: chrome
@@ -3976,85 +4037,6 @@ SEAL:
 	WithDecoration@COMMANDOSKULL:
 		Sequence: pip-seal
 
-XO:
-	Inherits: ^VehicleTD-NOUPG
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@BERSERK: ^Berserk
-	Inherits@GYRO: ^GyroStabilizers
-	Buildable:
-		Queue: InfantrySQ, InfantryMQ
-		BuildAtProductionType: Powersuit
-		BuildPaletteOrder: 180
-		Prerequisites: gtek, infantry.any, vehicles.any, ~pyle, ~techlevel.high
-		Description: Light battle-mech with a short-range laser\n  and a machine gun.
-	TooltipExtras:
-		Strengths: • Strong vs Heavy Armor, Light Armor
-		Weaknesses: • Weak vs Buildings\n• Cannot attack Aircraft
-	Valued:
-		Cost: 1000
-	Selectable:
-		Bounds: 1024, 1024
-		DecorationBounds: 1024, 1024, 0, -100
-	Tooltip:
-		Name: X-O Powersuit
-	UpdatesPlayerStatistics:
-		AddToArmyValue: true
-	Health:
-		HP: 32000
-	Armor:
-		Type: Light
-	Mobile:
-		TurnSpeed: 54
-		Speed: 54
-		Voice: Move
-	Passenger:
-		Voice: Move
-	RevealsShroud:
-		MinRange: 4c0
-		Range: 6c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4c0
-	Voiced:
-		VoiceSet: XOVoice
-	WithMoveAnimation:
-	WithAttackAnimation:
-		Sequence: shoot
-		RequiresCondition: !moving
-	GrantConditionOnMovement@MOVING:
-		ValidMovementTypes: Horizontal, Vertical, Turn
-		Condition: moving
-	Armament@PRIMARY:
-		Weapon: M60mgXO
-		LocalOffset: 400,-220,180
-		MuzzleSequence: muzzle
-	Armament@SECONDARY:
-		Name: secondary
-		Weapon: XOLaser
-		LocalOffset: 400,220,180
-	AttackFollowFrontal:
-		PauseOnCondition: empdisable || being-warped
-		Voice: Attack
-		FacingTolerance: 32
-		RangeMargin: 0
-	ProducibleWithLevel:
-		Prerequisites: vehicles.upgraded
-	WithMuzzleOverlay:
-	Parachutable:
-		FallRate: 130
-	WithIdleAnimation@DESCENDING:
-		RequiresCondition: parachute
-		Interval: 3
-		Sequences: descend
-	-WithParachute:
-	RangeMultiplier@GYRO:
-		Modifier: 140
-	ReloadDelayMultiplier@GYRO:
-		Modifier: 140
-	GpsRadarDot:
-		Sequence: Infantry
-
 ENLI:
 	Inherits: ^Cyborg
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -4065,14 +4047,14 @@ ENLI:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
-		BuildPaletteOrder: 225
+		BuildPaletteOrder: 230
 		IconPalette: chrometd
 		Prerequisites: ~infantry.nod, tmpp, advcyborg.upgrade, ~techlevel.high
 		Description: Heavy cyborg infantry unit armed with\n  a particle cannon that deals area damage.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
-		Attributes: • Heals on Tiberium\n• EMP blast ability
+		Attributes: • Heals on Tiberium\n• Special Ability: EMP Blast
 	Valued:
 		Cost: 1000
 	Tooltip:
@@ -4359,10 +4341,11 @@ CMSR:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 195
+		BuildPaletteOrder: 140
 		Prerequisites: stek, ~barr, ~techlevel.high
 		Description: Leads regular infantry into battle, motivating them\n  to move faster and fight harder.
 	TooltipExtras:
@@ -4413,26 +4396,21 @@ CMSR:
 		Prerequisites: barracks.upgraded
 	ProximityExternalCondition@Inspiration:
 		Range: 7c0
-		Condition: inspiration
+		Condition: cmsr-inspiration
 		ValidRelationships: Ally
+		AffectsParent: true
 	WithDecoration@CMSRPIP:
 		Image: pips
 		Sequence: pip-cmsr
 		Palette: effect
 		Position: TopLeft
 		ValidRelationships: Ally, Enemy, Neutral
-	WithIdleOverlay@Inspiration:
-		Image: ussrstar
-		Sequence: idle-overlay
-		Palette: effect
 	WithRadiatingCircle:
 		EndRadius: 7c0
 		Interval: 25
 		Duration: 50
 		ValidRelationships: Ally
 		AlwaysShowMaxRange: true
-	SpeedMultiplier@Inspiration:
-		Modifier: 133
 
 ZTRP:
 	Inherits: ^Soldier
@@ -4442,29 +4420,31 @@ ZTRP:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 130
-		Prerequisites: ~disabled, pyle, gtek, ~techlevel.high
+		BuildPaletteOrder: 150
+		Prerequisites: ~pyle, gtek, ~techlevel.high, ~!zrai.upgrade, ~!zdef.upgrade
 		Description: Elite infantry armed with a railgun and equipped\n  with a jump pack.
 		IconPalette: chrometd
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses
 		Weaknesses: • Weak vs Infantry, Buildings\n• Cannot attack Aircraft
-		Attributes: • Can jump short distances.
+		Attributes: • Special Ability: Jump Pack
 	Valued:
-		Cost: 800
+		Cost: 700
 	Tooltip:
 		Name: Zone Trooper
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 15000
+		HP: 10000
+	Armor:
+		Type: Light
 	Mobile:
 		Voice: Move
 	RevealsShroud:
 		Range: 6c0
 	Armament@PRIMARY:
 		Weapon: ZoneTrooperRailgun
-		LocalOffset: 350,0,341
+		LocalOffset: 350,0,300
 	Armament@BATF:
 		Name: batf
 		Weapon: ZoneTrooperRailgun
@@ -4486,7 +4466,9 @@ ZTRP:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	-Crushable:
-	-TakeCover:
+	TakeCover:
+		ProneOffset: 0,0,0
+		ProneSequencePrefix:
 	WithInfantryBody:
 		IdleSequences: idle, idle2
 		StandSequences: stand, stand2
@@ -4502,27 +4484,6 @@ ZTRP:
 	-GrantConditionOnTerrain@ONTIB:
 	-GrantStackingCondition@TIBEXPOSED:
 	-DamagedByTerrain@TIBDAMAGE:
-	-DamagedByTintedCells@RADSTRONG:
-	-DamagedByTintedCells@RADSTRONGHAZMAT:
-	-DamagedByTintedCells@RADSTRONGHAZMATSOVIET:
-	-DamagedByTintedCells@RADMED:
-	-DamagedByTintedCells@RADMEDHAZMAT:
-	-DamagedByTintedCells@RADWEAK:
-	-DamagedByTintedCells@RADWEAKHAZMAT:
-	-GrantConditionOnPrerequisite@HAZMAT:
-	-GrantConditionOnPrerequisite@HAZMATSOVIET:
-	-GrantConditionOnPrerequisite@HAZMATZOCOM:
-	-GrantConditionOnPrerequisite@BIO:
-	-GrantCondition@HAZMAT:
-	-GrantCondition@HAZMATSOVIET:
-	-WithDecoration@HAZMAT:
-	-WithDecoration@HAZMATSOVIET:
-	-GrantConditionOnTerrain@HAZMATSOVIET:
-	-SpeedMultiplier@HAZMATSOVIET:
-	Targetable@HAZMAT:
-		-RequiresCondition:
-	WithDecoration@BINO:
-		-BlinkPatterns:
 	TargetedLeapAbility:
 		TakeOffSounds: ztrp-jump1.aud, ztrp-jump2.aud
 		LandingSounds: ztrp-land1.aud, ztrp-land2.aud
@@ -4553,12 +4514,17 @@ ZTRP:
 ZRAI:
 	Inherits: ZTRP
 	Buildable:
+		Prerequisites: ~pyle, gtek, ~techlevel.high, ~zrai.upgrade
 		Description: Elite infantry armed with a sonic grenade launcher\n  and equipped with a jump pack.
+		BuildPaletteOrder: 151
 	Tooltip:
 		Name: Zone Raider
+	TooltipExtras:
+		Strengths: • Strong vs Light Armor, Buildings
+		Weaknesses: • Cannot attack Aircraft
 	Armament@PRIMARY:
 		Weapon: ZoneRaiderGrenade
-		LocalOffset: 350,0,341
+		LocalOffset: 350,0,300
 	Armament@BATF:
 		Name: batf
 		Weapon: ZoneRaiderGrenade
@@ -4570,6 +4536,62 @@ ZRAI:
 		MaxDistance: 10
 		Speed: 200
 
+ZDEF:
+	Inherits: ZTRP
+	Buildable:
+		Prerequisites: ~pyle, gtek, ~techlevel.high, ~zdef.upgrade
+		Description: Elite infantry armed with an ion rifle\n  and able to shield nearby infantry.
+		BuildPaletteOrder: 152
+	Tooltip:
+		Name: Zone Defender
+	TooltipExtras:
+		Attributes: • Special Ability: Defense Matrix
+	Armament@PRIMARY:
+		Weapon: ZoneDefenderGun
+		LocalOffset: 350,0,300
+	Armament@BATF:
+		Name: batf
+		Weapon: ZoneDefenderGun
+	Voiced:
+		VoiceSet: ZoneDefenderVoice
+	-TargetedLeapAbility:
+	-Contrail@Jumping:
+	-WithShadow@Jump:
+	-Targetable@Jump:
+	WithInfantryBody:
+		RequiresCondition: !being-warped
+	-WithInfantryBody@Jump:
+	Targetable@TEMPORAL:
+		-RequiresCondition:
+	GrantTimedConditionOnDeploy@ZoneDefenderShield:
+		DeployedCondition: shield-active
+		ShowSelectionBar: true
+		StartsFullyCharged: true
+		DeployedTicks: 250
+		CooldownTicks: 750
+		ShowSelectionBarWhenFull: false
+		ChargingColor: 808080
+		DischargingColor: 00eecc
+		DeploySound: zdef-shield.aud
+		UndeploySound: gshielddown.aud
+		Voice: Shield
+	WithRadiatingCircle@ZoneDefenderShield:
+		EndRadius: 2c0
+		Color: 00eecc10
+		MaxRadiusColor: 00eecc66
+		MaxRadiusFlashColor: 00eecc66
+		Interval: 25
+		Duration: 50
+		ValidRelationships: Ally
+		AlwaysShowMaxRange: true
+		RequiresCondition: shield-active
+	ProximityExternalCondition@ZoneDefenderShield:
+		Range: 2c0
+		Condition: zdef-shield
+		ValidRelationships: Ally
+		RequiresCondition: shield-active
+		AffectsParent: true
+
 ENFO:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -4579,19 +4601,21 @@ ENFO:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 130
-		Prerequisites: ~disabled, tent, atek, ~techlevel.high
+		Prerequisites: ~tent, atek, ~!greece.coalition, ~techlevel.high
 		Description: Elite short-range front-line infantry.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 	Valued:
-		Cost: 850
+		Cost: 650
 	Tooltip:
 		Name: Enforcer
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 22500
+		HP: 18000
+	Armor:
+		Type: Light
 	Mobile:
 		Voice: Move
 	RevealsShroud:
@@ -4620,7 +4644,9 @@ ENFO:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	-Crushable:
-	-TakeCover:
+	TakeCover:
+		ProneOffset: 0,0,0
+		ProneSequencePrefix:
 	WithInfantryBody:
 		IdleSequences: idle, idle2
 		StandSequences: stand, stand2
@@ -4629,27 +4655,95 @@ ENFO:
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
 		RequiresCondition: parachute
-	-GrantConditionOnTerrain@ONTIB:
-	-GrantStackingCondition@TIBEXPOSED:
-	-DamagedByTerrain@TIBDAMAGE:
-	-DamagedByTintedCells@RADSTRONG:
-	-DamagedByTintedCells@RADSTRONGHAZMAT:
-	-DamagedByTintedCells@RADSTRONGHAZMATSOVIET:
-	-DamagedByTintedCells@RADMED:
-	-DamagedByTintedCells@RADMEDHAZMAT:
-	-DamagedByTintedCells@RADWEAK:
-	-DamagedByTintedCells@RADWEAKHAZMAT:
-	-GrantConditionOnPrerequisite@BIO:
-	-GrantConditionOnPrerequisite@HAZMAT:
-	-GrantConditionOnPrerequisite@HAZMATSOVIET:
-	-GrantConditionOnPrerequisite@HAZMATZOCOM:
-	-GrantCondition@HAZMAT:
-	-GrantCondition@HAZMATSOVIET:
-	-WithDecoration@HAZMAT:
-	-WithDecoration@HAZMATSOVIET:
-	-GrantConditionOnTerrain@HAZMATSOVIET:
-	-SpeedMultiplier@HAZMATSOVIET:
-	Targetable@HAZMAT:
-		-RequiresCondition:
+	ReplacedInQueue:
+		Actors: hopl
+
+HOPL:
+	Inherits: ENFO
+	Buildable:
+		Prerequisites: ~tent, atek, ~greece.coalition, ~techlevel.high
+		Description: Elite front-line infantry armed with a prism rifle.
+	Tooltip:
+		Name: Hoplite
+	Armament@PRIMARY:
+		Weapon: HopliteGun
+		LocalOffset: 350,40,341
+	Armament@BATF:
+		Weapon: HopliteGun
+	Voiced:
+		VoiceSet: HopliteVoice
+	-ReplacedInQueue:
+
+CRYT:
+	Inherits: ^Soldier
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
+	Buildable:
+		Queue: InfantrySQ, InfantryMQ
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 132
+		Prerequisites: ~tent, alhq, coalition.active, ~sweden.coalition, ~techlevel.high
+		Description: Elite infantry armed with a cryo sprayer.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Weak vs Buildings, Defenses\n• Cannot attack Aircraft
+	Valued:
+		Cost: 600
+	Tooltip:
+		Name: Cryo Trooper
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 15000
+	Mobile:
+		Speed: 60
+		Voice: Move
+	RevealsShroud:
+		Range: 6c0
+	Armament@PRIMARY:
+		Weapon: CryoSprayer
+		LocalOffset: 341,0,341
+	Armament@BATF:
+		Name: batf
+		Weapon: CryoSprayer
+	AttackFrontal:
+		Voice: Attack
+		PauseOnCondition: being-warped
+		FacingTolerance: 0
+	AttackMove:
+		Voice: Move
+	Passenger:
+		Voice: Move
+	Guard:
+		Voice: Move
+	Voiced:
+		VoiceSet: CryoTrooperVoice
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
+	-Crushable:
+	TakeCover:
+		ProneOffset: 0,0,0
+		ProneSequencePrefix:
+	WithInfantryBody:
+		IdleSequences: idle, idle2
+		StandSequences: stand, stand2
+		DefaultAttackSequence: shoot
+		RequiresCondition: !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 	WithDecoration@BINO:
 		-BlinkPatterns:
+	AmbientSoundCA:
+		SoundFiles: cryobeam.aud
+		InitialSound: cryobeamstart.aud
+		FinalSound: cryobeamend.aud
+		RequiresCondition: attacking
+		InitialSoundLength: 10
+	GrantConditionOnAttackCA:
+		Condition: attacking
+		RevokeDelay: 6

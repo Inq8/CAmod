@@ -57,7 +57,7 @@ namespace OpenRA.Mods.CA.Activities
 			return new WAngle(effective);
 		}
 
-		public void FlyToward(Actor self, BallisticMissile sbm)
+		void FlyToward(Actor self, BallisticMissile sbm)
 		{
 			var pos = WPos.LerpQuadratic(initPos, targetPos, sbm.Info.LaunchAngle, ticks, length);
 			sbm.SetPosition(self, pos);

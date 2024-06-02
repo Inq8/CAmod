@@ -447,13 +447,16 @@ YuriVoice:
 		Build: iyursec
 
 DesVoice:
-	Inherits: ^InfantryDeaths
 	Voices:
 		Select: idesseb,idessec,idessed,idessee
 		Move: idesmoa,idesmob,idesmoc,idesmod,idesmoe
 		Attack: idesata,idesatb,idesatc,idesatd,idesate,idesatf
 		Action:  idesmoa,idesmob,idesmoc,idesmod,idesmoe
 		Build: idessea
+		Die: idesdia, idesdib, idesdic
+		Burned: idesdia, idesdib, idesdic
+		Zapped: idesdia, idesdib, idesdic
+		Poisoned: idesdia, idesdib, idesdic
 
 BorisVoice:
 	Voices:
@@ -657,6 +660,17 @@ TeslaTankRA2Voice:
 		Move: vtesmoa, vtesmob, vtesmoc, vtesmod, vtesmoe
 		Attack: vtesata, vtesatb, vtesatc, vtesatd, vtesate
 		Action: vtesmoa, vtesmob, vtesmoc, vtesmod, vtesmoe
+
+TeslaTrooperVoice:
+	Voices:
+		Select: itessea, itessec, itessed, itessee
+		Move: itesmoa, itesmob, itesmoc, itesmod, itesmoe, itesmof
+		Attack: itesata, itesatb, itesatc, itesatd, itesate
+		Action: itesmoa, itesmob, itesmoc, itesmod, itesmoe, itesmof
+		Die: itesdia, itesdib, itesdic, itesdid
+		Burned: itesdia, itesdib, itesdic, itesdid
+		Zapped: itesdia, itesdib, itesdic, itesdid
+		Poisoned: itesdia, itesdib, itesdic, itesdid
 
 RhinoTankVoice:
 	Voices:
@@ -1016,6 +1030,20 @@ XOVoice:
 		Attack: vxoatk1, vxoatk2, vxoatk3, vxoatk4, vxoatk5
 		Action: vxoslt1, vxoslt2, vxoslt3, vxoslt4, vxoslt5
 
+WolverineVoice:
+	Voices:
+		Select: wolv-select1, wolv-select2, wolv-select3, wolv-select4
+		Move: wolv-move1, wolv-move2, wolv-move3, wolv-move4
+		Attack: wolv-attack1, wolv-attack2, wolv-attack3, wolv-attack4
+		Action: wolv-move1, wolv-move2, wolv-move3, wolv-move4
+
+JackknifeVoice:
+	Voices:
+		Select: jack-select1, jack-select2
+		Move: jack-move1, jack-move2, jack-move3
+		Attack: jack-attack1, jack-attack2
+		Action: jack-move1, jack-move2, jack-move3
+
 ZoneTrooperVoice:
 	Voices:
 		Select: ztrp-select1, ztrp-select2, ztrp-select3, ztrp-select4
@@ -1038,6 +1066,18 @@ ZoneRaiderVoice:
 		Zapped: zrai-die1, zrai-die2, zrai-die3
 		Poisoned: zrai-die1, zrai-die2, zrai-die3
 
+ZoneDefenderVoice:
+	Voices:
+		Select: zdef-select1, zdef-select2, zdef-select3, zdef-select4
+		Move: zdef-move1, zdef-move2, zdef-move3, zdef-move4
+		Attack: zdef-attack1, zdef-attack2, zdef-attack3
+		Action: zdef-attack1, zdef-move2, zdef-move4
+		Shield: zdef-shield1, zdef-shield2
+		Die: ztrp-die1, ztrp-die2, ztrp-die3
+		Burned: ztrp-die1, ztrp-die2, ztrp-die3
+		Zapped: ztrp-die1, ztrp-die2, ztrp-die3
+		Poisoned: ztrp-die1, ztrp-die2, ztrp-die3
+
 EnforcerVoice:
 	Voices:
 		Select: enfo-select1, enfo-select2, enfo-select3, enfo-select4
@@ -1048,3 +1088,34 @@ EnforcerVoice:
 		Burned: enfo-die1, enfo-die2, enfo-die3
 		Zapped: enfo-die1, enfo-die2, enfo-die3
 		Poisoned: enfo-die1, enfo-die2, enfo-die3
+
+HopliteVoice:
+	Inherits: EnforcerVoice
+	Voices:
+		Select: hopl-select1, enfo-select2, enfo-select3, enfo-select4
+		Attack: enfo-attack1, enfo-attack2, enfo-attack3, hopli-attack1
+
+BlackEagleVoice:
+	Voices:
+		Select: vblesea, vbleseb, vblesec, vblesed, vblesee, vblesef
+		Move: vblemoa, vblemob, vblemoc
+		Attack: vbleata, vbleatb, vbleatc
+		Action: vblemoa, vblemob, vblemoc
+
+ZeusVoice:
+	Voices:
+		Select: zeus-select1, zeus-select2, zeus-select3, zeus-select4
+		Move: zeus-move1, zeus-move2, zeus-move3, zeus-move4
+		Attack: zeus-attack1, zeus-attack2, zeus-attack3, zeus-attack4
+		Action: zeus-move4, zeus-attack4
+
+CryoTrooperVoice:
+	Voices:
+		Select: cryt-select1, cryt-select2, cryt-select3, cryt-select4
+		Move: cryt-move1, cryt-move2, cryt-move3, cryt-move4, cryt-move5
+		Attack: cryt-attack1, cryt-attack2, cryt-attack3
+		Action: cryt-move1, cryt-move2, cryt-move4, cryt-move5
+		Die: cryt-die1, cryt-die2, cryt-die3
+		Burned: cryt-die1, cryt-die2, cryt-die3
+		Zapped: cryt-die1, cryt-die2, cryt-die3
+		Poisoned: cryt-die1, cryt-die2, cryt-die3

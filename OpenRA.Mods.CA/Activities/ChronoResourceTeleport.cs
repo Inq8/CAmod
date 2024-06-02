@@ -13,6 +13,7 @@ using OpenRA.Mods.CA.Traits;
 using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Effects;
 using OpenRA.Mods.Common.Traits;
+using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Activities
 {
@@ -22,6 +23,7 @@ namespace OpenRA.Mods.CA.Activities
 		readonly CPos destination;
 		readonly ChronoResourceDeliveryInfo info;
 		readonly CPos harvestedField;
+		readonly WAngle dockAngle;
 
 		public ChronoResourceTeleport(CPos destination, ChronoResourceDeliveryInfo info, CPos harvestedField, Actor refinery)
 		{
@@ -29,6 +31,10 @@ namespace OpenRA.Mods.CA.Activities
 			this.info = info;
 			this.harvestedField = harvestedField;
 			this.refinery = refinery;
+
+			var refInfo = refinery.Info.TraitInfoOrDefault<RefineryInfo>();
+			if (refInfo != null)
+				dockAngle = refInfo.DockAngle;
 		}
 
 		public override bool Tick(Actor self)
@@ -45,6 +51,10 @@ namespace OpenRA.Mods.CA.Activities
 
 			self.Trait<IPositionable>().SetPosition(self, destination);
 			self.Generation++;
+
+			var facing = self.TraitOrDefault<IFacing>();
+			if (facing != null)
+				facing.Facing = dockAngle;
 
 			var destinationpos = self.CenterPosition;
 

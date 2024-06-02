@@ -10,13 +10,15 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Traits;
+using OpenRA.Primitives;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("Tracks player experience and sets a level based on it.")]
-	public class PlayerExperienceLevelsInfo : ConditionalTraitInfo, Requires<PlayerExperienceInfo>, Requires<TechTreeInfo>
+	[Desc("Tracks player experience and sets grants prerequisites based on it.")]
+	public class PlayerExperienceLevelsInfo : ConditionalTraitInfo, Requires<PlayerExperienceInfo>, Requires<TechTreeInfo>, ITechTreePrerequisiteInfo
 	{
 		[Desc("Experience required to reach each level above level 0.")]
 		public readonly int[] LevelXpRequirements = { 50, 250, 500 };
@@ -33,31 +35,44 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Text notification to display when player levels up.")]
 		public readonly string LevelUpTextNotification = null;
 
+		[Desc("Ticks before playing notification.")]
+		public readonly int NotificationDelay = 0;
+
+		[Desc("Actor to spawn when player levels up.")]
+		[ActorReference]
+		public readonly string DummyActor = null;
+
+		IEnumerable<string> ITechTreePrerequisiteInfo.Prerequisites(ActorInfo info)
+		{
+			return LevelPrerequisites;
+		}
+
 		public override object Create(ActorInitializer init) { return new PlayerExperienceLevels(init.Self, this); }
 	}
 
-	public class PlayerExperienceLevels : ConditionalTrait<PlayerExperienceLevelsInfo>, ITick, ITechTreePrerequisite
+	public class PlayerExperienceLevels : ConditionalTrait<PlayerExperienceLevelsInfo>, ITick, ITechTreePrerequisite, INotifyCreated
 	{
-		readonly World world;
-		readonly PlayerExperience playerExperience;
-		readonly TechTree techTree;
+		PlayerExperience playerExperience;
+		TechTree techTree;
 		readonly int maxLevel;
 		readonly bool validFaction;
 		int currentLevel;
 		int nextLevelXpRequired;
+		bool notificationQueued;
+		int ticksUntilNotification;
+		bool dummyActorQueued;
+		int ticksUntilSpawnDummyActor;
 
 		public PlayerExperienceLevels(Actor self, PlayerExperienceLevelsInfo info)
 			: base(info)
 		{
 			var player = self.Owner;
-			validFaction = info.Factions.Contains(player.Faction.InternalName);
+			validFaction = info.Factions.Length == 0 || info.Factions.Contains(player.Faction.InternalName);
 
-			world = self.World;
-			playerExperience = self.Trait<PlayerExperience>();
-			techTree = self.Trait<TechTree>();
 			currentLevel = 0;
 			maxLevel = info.LevelXpRequirements.Length;
 			nextLevelXpRequired = info.LevelXpRequirements[currentLevel];
+			ticksUntilNotification = info.NotificationDelay;
 		}
 
 		public bool Enabled => validFaction;
@@ -75,11 +90,49 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
+		protected override void Created(Actor self)
+		{
+			// Special case handling is required for the Player actor.
+			// Created is called before Player.PlayerActor is assigned,
+			// so we must query other player traits from self, knowing that
+			// it refers to the same actor as self.Owner.PlayerActor
+			var playerActor = self.Info.Name == "player" ? self : self.Owner.PlayerActor;
+			playerExperience = playerActor.Trait<PlayerExperience>();
+			techTree = playerActor.Trait<TechTree>();
+			base.Created(self);
+		}
+
 		void ITick.Tick(Actor self)
 		{
 			if (Enabled && currentLevel < maxLevel && playerExperience.Experience >= nextLevelXpRequired)
 			{
 				LevelUp(self);
+			}
+
+			if (notificationQueued && --ticksUntilNotification <= 0)
+			{
+				if (Info.LevelUpNotification != null)
+					Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", Info.LevelUpNotification, self.Owner.Faction.InternalName);
+
+				if (Info.LevelUpTextNotification != null)
+					TextNotificationsManager.AddTransientLine(string.Format(Info.LevelUpTextNotification, currentLevel), self.Owner);
+
+				notificationQueued = false;
+				ticksUntilNotification = Info.NotificationDelay;
+			}
+
+			if (dummyActorQueued && --ticksUntilSpawnDummyActor <= 0)
+			{
+				self.World.AddFrameEndTask(w =>
+				{
+					w.CreateActor(Info.DummyActor, new TypeDictionary
+					{
+						new ParentActorInit(self),
+						new LocationInit(CPos.Zero),
+						new OwnerInit(self.Owner),
+						new FacingInit(WAngle.Zero),
+					});
+				});
 			}
 		}
 
@@ -91,8 +144,13 @@ namespace OpenRA.Mods.CA.Traits
 				nextLevelXpRequired = Info.LevelXpRequirements[currentLevel];
 
 			techTree.ActorChanged(self);
-			Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", Info.LevelUpNotification, self.Owner.Faction.InternalName);
-			TextNotificationsManager.AddTransientLine(string.Format(Info.LevelUpTextNotification, currentLevel), self.Owner);
+			notificationQueued = true;
+
+			if (Info.DummyActor != null)
+			{
+				dummyActorQueued = true;
+				ticksUntilSpawnDummyActor = 1;
+			}
 		}
 	}
 }

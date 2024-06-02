@@ -415,8 +415,8 @@ S2:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 160
-		Prerequisites: anyradar, ~infantry.scrin, ~techlevel.medium
+		BuildPaletteOrder: 120
+		Prerequisites: anyradar, ~infantry.scrin, ~!evis.upgrade, ~!impl.upgrade, ~techlevel.medium
 		IconPalette: chromes
 		Description: Fast moving anti-personnel infantry.
 	TooltipExtras:
@@ -429,7 +429,7 @@ S2:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 8000
+		HP: 7000
 	Mobile:
 		Speed: 92
 	Armament@PRIMARY:
@@ -448,7 +448,8 @@ S2:
 		Prerequisites: barracks.upgraded
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
-	-TakeCover:
+	ReplacedInQueue:
+		Actors: evis, impl
 
 S3:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -513,7 +514,7 @@ S4:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 170
+		BuildPaletteOrder: 123
 		Prerequisites: anyradar, ~infantry.scrin, ~techlevel.medium
 		IconPalette: chrome
 		Description: Heavy assault infantry with high burst damage.
@@ -576,6 +577,55 @@ S6:
 	Voiced:
 		VoiceSet: AssimilatorVoice
 
+WCHR:
+	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Buildable:
+		Queue: InfantrySQ, InfantryMQ
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 160
+		Prerequisites: scrt, ~infantry.scrin, ~techlevel.high
+		Description: Infiltration unit used to gain vision of enemies.
+	Valued:
+		Cost: 500
+	Tooltip:
+		Name: Watcher
+	TooltipExtras:
+		Weaknesses: • Cannot deal damage
+		Attributes: • Can attach parasites to enemy vehicles & structures\n• Cloaked when not moving
+	Health:
+		HP: 5000
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Mobile:
+		Speed: 80
+	RevealsShroud:
+		Range: 6c0
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
+	AttackFrontal:
+		FacingTolerance: 0
+	Armament@PRIMARY:
+		Weapon: WatcherDart
+		LocalOffset: 150,0,400
+	Cloak@NORMAL:
+		InitialDelay: 250
+		CloakDelay: 120
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Move
+		CloakedCondition: hidden
+		CloakSound: gstealon.aud
+		UncloakSound: gstealof.aud
+		DetectionTypes: Cloak
+		IsPlayerPalette: false
+		RequiresCondition: !cloak-force-disabled && !being-warped
+		PauseOnCondition: invisibility
+	GrantConditionOnDamageState@UNCLOAK:
+		Condition: cloak-force-disabled
+		ValidDamageStates: Critical
+	WithColoredSelectionBox@INVIS:
+		RequiresCondition: invisibility || hidden
+		ColorSource: Player
+
 BRST:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -583,7 +633,7 @@ BRST:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 171
+		BuildPaletteOrder: 161
 		Prerequisites: scrt, ~infantry.scrin, ~techlevel.high
 		IconPalette: chromes
 		Description: Explodes on death or when triggered.
@@ -605,7 +655,6 @@ BRST:
 	Explodes:
 		Weapon: BursterExplode
 		EmptyWeapon: BursterExplode
-		DamageSource: Killer
 	AttackFrontal:
 		FacingTolerance: 64
 	Armament@PRIMARY:
@@ -617,6 +666,79 @@ BRST:
 	KillsSelf:
 		RequiresCondition: (triggered || berserk)
 	-TakeCover:
+
+EVIS:
+	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Buildable:
+		Queue: InfantrySQ, InfantryMQ
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 121
+		Prerequisites: scrt, ~infantry.scrin, ~evis.upgrade, ~techlevel.high
+		IconPalette: chromes
+		Description: Short range anti-infantry unit.
+	Selectable:
+		DecorationBounds: 640, 896, -32, -256
+	Valued:
+		Cost: 600
+	Tooltip:
+		Name: Eviscerator
+	TooltipExtras:
+		Strengths: • Strong vs Light Armor, Infantry
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
+	Health:
+		HP: 15000
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Mobile:
+		Speed: 82
+	RevealsShroud:
+		Range: 6c0
+	AttackFrontal:
+		FacingTolerance: 64
+	Armament@PRIMARY:
+		Weapon: EvisceratorShards
+		LocalOffset: 150,0,400
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
+
+IMPL:
+	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Buildable:
+		Queue: InfantrySQ, InfantryMQ
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 122
+		Prerequisites: scrt, ~infantry.scrin, ~impl.upgrade, ~techlevel.high
+		IconPalette: chromes
+		Description: Assault infantry with high burst damage.
+	Selectable:
+		DecorationBounds: 640, 896, -32, -256
+	Valued:
+		Cost: 600
+	Tooltip:
+		Name: Impaler
+	TooltipExtras:
+		Strengths: • Strong vs Light Armor, Infantry
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
+		Attributes: • Slows targets
+	Health:
+		HP: 15000
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Mobile:
+		Speed: 72
+	RevealsShroud:
+		Range: 6c0
+	AttackFrontal:
+		FacingTolerance: 64
+	Armament@PRIMARY:
+		Weapon: ImpalerSpike
+		LocalOffset: 150,0,400
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
 
 SMEDI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -944,9 +1066,7 @@ HARV.Scrin:
 		IconPalette: chrome
 	SpawnActorOnDeath:
 		Actor: HARV.Scrin.Husk
-	WithDockingAnimation:
-		DockSequence: idle
-		DockLoopSequence: idle
+	-WithDockingAnimationCA:
 	-WithHarvestAnimation:
 	WithDamageOverlay:
 		Palette: chrometd
@@ -962,7 +1082,7 @@ GUNW:
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 24
+		BuildPaletteOrder: 60
 		Prerequisites: ~vehicles.scrin, ~!shrw.upgrade, ~techlevel.low
 		Description: Durable light assault walker.
 		IconPalette: chrome
@@ -1004,6 +1124,10 @@ GUNW:
 		LocalOffset: 690,92,0, 690,-92,0
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
+	Armament@SECONDARYVISUAL:
+		Name: secondary
+		Weapon: GunWalkerZapAAVisual
+		LocalOffset: 690,92,0, 690,-92,0
 	WithMuzzleOverlay:
 	AttackFrontal:
 		FacingTolerance: 40
@@ -1076,7 +1200,7 @@ SEEK:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 42
+		BuildPaletteOrder: 160
 		Prerequisites: ~vehicles.seek, ~techlevel.low
 		Queue: VehicleSQ, VehicleMQ
 		Description: Light hover tank.
@@ -1158,7 +1282,7 @@ LACE:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 43
+		BuildPaletteOrder: 161
 		Prerequisites: ~vehicles.traveler, ~techlevel.low
 		Queue: VehicleSQ, VehicleMQ
 		Description: Fast hover tank.
@@ -1245,7 +1369,7 @@ INTL:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 39
+		BuildPaletteOrder: 110
 		Prerequisites: ~vehicles.scrin, ~techlevel.low
 		Queue: VehicleSQ, VehicleMQ
 		Description: Heavily armoured front-line assault vehicle and troop carrier.
@@ -1256,7 +1380,6 @@ INTL:
 		Attributes: • Can traverse water
 	Mobile:
 		Speed: 60
-		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
 		TurnSpeed: 512
 		Locomotor: lighthover
 	Health:
@@ -1379,7 +1502,7 @@ CORR:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 140
+		BuildPaletteOrder: 210
 		Prerequisites: anyradar, ~vehicles.corr, ~techlevel.medium
 		Queue: VehicleSQ, VehicleMQ
 		Description: Medium-ranged anti-infantry/structure unit.
@@ -1441,7 +1564,7 @@ LCHR:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 141
+		BuildPaletteOrder: 211
 		Prerequisites: anyradar, ~vehicles.collector, ~techlevel.medium
 		Queue: VehicleSQ, VehicleMQ
 		Description: Medium-ranged anti-infantry/structure unit.
@@ -1576,10 +1699,11 @@ LCHR.Orb:
 	WithColoredSelectionBox@PLAYERBOX:
 		ColorSource: Player
 		ValidRelationships: Ally, Enemy
-	WithRangeCircle:
+	WithRangeCircleCA:
 		Type: LeecherOrb
 		Range: 2c256
-		Color: ff666633
+		UsePlayerColor: true
+		PlayerColorAlpha: 160
 		Visible: Always
 
 STCR:
@@ -1600,7 +1724,7 @@ STCR:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 150
+		BuildPaletteOrder: 214
 		Prerequisites: anyradar, ~vehicles.reaper, ~techlevel.medium
 		Queue: VehicleSQ, VehicleMQ
 		Description: Slow moving, very durable, short-range assault unit.
@@ -1663,7 +1787,7 @@ DEVO:
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 220
+		BuildPaletteOrder: 212
 		Prerequisites: anyradar, ~vehicles.devo, ~techlevel.medium
 		Description: Medium hover tank.
 		IconPalette: chrome
@@ -1746,7 +1870,7 @@ DARK:
 		PlayerPalette: playerscrin
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 221
+		BuildPaletteOrder: 213
 		Prerequisites: anyradar, ~vehicles.harbinger, ~techlevel.medium
 		Description: Heavy hover tank armed with a rift cannon.
 		IconPalette: chromes
@@ -1992,7 +2116,7 @@ TPOD:
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 310
+		BuildPaletteOrder: 281
 		Prerequisites: scrt, ~vehicles.tpod, ~techlevel.high
 		Description: Heavy assault walker with beam weapons.
 		IconPalette: chrome
@@ -2072,7 +2196,7 @@ RPTP:
 	Inherits: TPOD
 	Inherits@RESCONV: ^ResourceConversion
 	Buildable:
-		BuildPaletteOrder: 311
+		BuildPaletteOrder: 282
 		Prerequisites: scrt, ~vehicles.reaper, ~techlevel.high
 	TooltipExtras:
 		Attributes: • Weapons empowered by Tiberium
@@ -2155,6 +2279,153 @@ RPTP:
 	WithIdleOverlay@RESCONVGEMS:
 		Offset: 0,0,200
 
+OBLT:
+	Inherits: ^Vehicle
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@HOVERTRAIL: ^HoverTrail
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
+	RenderSprites:
+		PlayerPalette: playerscrin
+	Buildable:
+		Queue: VehicleSQ, VehicleMQ
+		BuildPaletteOrder: 290
+		Prerequisites: scrt, ~vehicles.scrin, ~loyalist.allegiance, ~techlevel.high
+		Description: Heavy artillery that fires a plasma ball, damaging everything it passes through.
+		IconPalette: chromes
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Defenses, Light Armor, Infantry
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
+	Valued:
+		Cost: 2000
+	Tooltip:
+		Name: Obliterator
+	Selectable:
+		DecorationBounds: 1877, 1621, 0, -170
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 25000
+	Armor:
+		Type: Heavy
+	Mobile:
+		TurnSpeed: 12
+		Speed: 48
+		Locomotor: lighthover
+	WithShadow:
+		Offset: 43, 128, 0
+		ZOffset: -129
+		RequiresCondition: !invisibility
+	Hovers:
+		BobDistance: -25
+		RequiresCondition: !empdisable && !being-warped && !driver-dead
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Armament@PRIMARY:
+		Weapon: ObliteratorBolt
+		LocalOffset: 850,0,400
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+	WithMuzzleOverlay:
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
+	AttackFrontal:
+		PauseOnCondition: empdisable || being-warped
+		FacingTolerance: 16
+	GrantConditionOnTerrain@ONWATER:
+		TerrainTypes: Water
+		Condition: onwater
+	KillsSelf@SINK:
+		RequiresCondition: onwater && (empdisable || driver-dead)
+	Targetable@ONWATER:
+		TargetTypes: Water, Ship
+		RequiresCondition: onwater
+	SpawnActorOnDeath:
+		Actor: OBLT.Husk
+		RequiresCondition: !being-warped
+	Targetable@Obliterator:
+		TargetTypes: Obliterator
+
+NULL:
+	Inherits: ^Vehicle
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@HOVERTRAIL: ^HoverTrail
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
+	RenderSprites:
+		PlayerPalette: playerscrin
+	Buildable:
+		Queue: VehicleSQ, VehicleMQ
+		BuildPaletteOrder: 291
+		Prerequisites: scrt, ~vehicles.scrin, ~rebel.allegiance, ~techlevel.high
+		Description: Heavy hover tank that disables enemy weapons and vision.
+		IconPalette: chromes
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
+	Valued:
+		Cost: 1500
+	Tooltip:
+		Name: Nullifier
+	Selectable:
+		DecorationBounds: 1877, 1621, 0, -170
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 25000
+	Armor:
+		Type: Heavy
+	Mobile:
+		TurnSpeed: 512
+		Speed: 60
+		Locomotor: lighthover
+	Hovers:
+		BobDistance: -25
+		RequiresCondition: !empdisable && !being-warped && !driver-dead
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Armament@PRIMARY:
+		Weapon: NullifierBolt
+		LocalOffset: 750,0,300
+		MuzzleSequence: muzzle
+	WithMuzzleOverlay:
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
+	TurretedFloating:
+		TurnSpeed: 16
+		Offset: 0,0,0
+		RealignDelay: 100
+	AttackTurreted:
+		PauseOnCondition: empdisable || being-warped
+	WithSpriteTurret:
+	GrantConditionOnTerrain@ONWATER:
+		TerrainTypes: Water
+		Condition: onwater
+	KillsSelf@SINK:
+		RequiresCondition: onwater && (empdisable || driver-dead)
+	Targetable@ONWATER:
+		TargetTypes: Water, Ship
+		RequiresCondition: onwater
+	SpawnActorOnDeath:
+		Actor: NULL.Husk
+		RequiresCondition: !being-warped
+
 SMCV:
 	Inherits: ^Vehicle-NOUPG
 	Inherits@SELECTION: ^SelectableSupportUnit
@@ -2163,7 +2434,7 @@ SMCV:
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 437
+		BuildPaletteOrder: 602
 		Prerequisites: vehicles.mcv, ~vehicles.scrin
 		IconPalette: chrome
 		Description: Deploys into another Colony Platform.
@@ -2234,7 +2505,7 @@ STMR:
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
-		BuildPaletteOrder: 90
+		BuildPaletteOrder: 60
 		Prerequisites: ~aircraft.scrin, ~techlevel.medium
 		Description: Durable patrol craft.
 		IconPalette: chrome
@@ -2372,7 +2643,7 @@ ENRV:
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
-		BuildPaletteOrder: 170
+		BuildPaletteOrder: 110
 		Prerequisites: scrt, ~aircraft.traveler, ~techlevel.high
 		Description: Fast attack craft that creates a focused suppression field.
 		IconPalette: chromes
@@ -2505,7 +2776,7 @@ DEVA:
 	Inherits@FleetRecallable: ^FleetRecallable
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
-		BuildPaletteOrder: 170
+		BuildPaletteOrder: 111
 		Prerequisites: scrt, ~aircraft.scrin, ~techlevel.high
 		Description: Long-range siege warship.
 		IconPalette: chrome
@@ -2524,7 +2795,7 @@ DEVA:
 	Health:
 		HP: 32000
 	Armor:
-		Type: Heavy
+		Type: Aircraft
 	HitShape:
 		TargetableOffsets: 0,0,0, -512,0,0, -1024,0,0
 		Type: Capsule
@@ -2644,7 +2915,7 @@ PAC:
 	Inherits@FleetRecallable: ^FleetRecallable
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
-		BuildPaletteOrder: 180
+		BuildPaletteOrder: 112
 		Prerequisites: sign, scrt, ~aircraft.scrin, ~techlevel.high
 		Description: Warship that launches a squadron\n  of assault craft.
 		IconPalette: chrome
@@ -2663,7 +2934,7 @@ PAC:
 	Health:
 		HP: 52000
 	Armor:
-		Type: Heavy
+		Type: Aircraft
 	HitShape:
 		TargetableOffsets: 0,0,0, 1024,0,0, -1024,0,0
 		Type: Capsule
@@ -2865,7 +3136,7 @@ MSHP:
 	Inherits@FleetRecallable: ^FleetRecallable
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
-		BuildPaletteOrder: 190
+		BuildPaletteOrder: 113
 		Prerequisites: sign, scrt, ~aircraft.scrin, ~techlevel.high
 		Description: Huge craft with powerful anti-structure beam weapon\n  and secondary plasma weapons.
 		IconPalette: chromes
@@ -2888,7 +3159,7 @@ MSHP:
 	Health:
 		HP: 130000
 	Armor:
-		Type: Heavy
+		Type: Aircraft
 	HitShape:
 		TargetableOffsets: 0,0,0, 2560,0,0, -2560,0,0, 0,2560,0, 0,-2560,0
 		Type: Circle
@@ -3154,6 +3425,22 @@ RPTP.Husk:
 		Anim: turret
 	RenderSprites:
 		Image: rptp.destroyed
+		PlayerPalette: playerscrin
+
+OBLT.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Obliterator)
+	RenderSprites:
+		Image: oblt.destroyed
+		PlayerPalette: playerscrin
+
+NULL.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Nullifier)
+	RenderSprites:
+		Image: null.destroyed
 		PlayerPalette: playerscrin
 
 STMR.Husk:
@@ -3708,6 +3995,8 @@ PROC.SCRIN:
 	ProvidesPrerequisite@anyrefinery:
 		Prerequisite: anyrefinery
 	CashHackable:
+	UpdatesCount:
+		Type: Refineries
 
 PORT:
 	Inherits: ^ScrinBuilding
@@ -4002,6 +4291,8 @@ SCRT:
 	Inherits@GREATERCOALESCENCEPOWER: ^GreaterCoalescencePower
 	Inherits@TECHLOCKABLE: ^TechLockable
 	Inherits@ProductionOptimizer2: ^ProductionOptimizer2
+	Inherits@OverlordsWrath: ^OverlordsWrathPower
+	Inherits@GatewayPower: ^GatewayPower
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 150
@@ -4954,10 +5245,11 @@ GRCL:
 		StartIfBelow: 101
 		Delay: 25
 		RequiresCondition: !leeching
-	WithRangeCircle:
+	WithRangeCircleCA:
 		Type: GreaterCoalescence
 		Range: 4c512
-		Color: ff000099
+		UsePlayerColor: true
+		PlayerColorAlpha: 192
 		Visible: Always
 	ProximityExternalCondition@HEAL:
 		Condition: lchr-healing
@@ -4996,7 +5288,7 @@ TBCL:
 	-ProximityExternalCondition@HEAL:
 	-ConvertsDamageToHealth:
 	-ChangesHealth:
-	-WithRangeCircle:
+	-WithRangeCircleCA:
 	Health:
 		HP: 150000
 	AttackFrontal:
@@ -5033,7 +5325,7 @@ Rift:
 		Weapon: Rift
 	KillsSelf:
 		Delay: 360
-	# required for death animation
+	# required for spawning actor on death
 	Health:
 		HP: 1
 	WithSpriteBody:
@@ -5041,13 +5333,24 @@ Rift:
 	AmbientSound:
 		SoundFiles: rift1.aud, rift2.aud, rift3.aud
 		Interval: 50
-	WithDeathAnimation:
-		UseDeathTypeSuffix: false
-		CrushedSequence: fade
-		FallbackSequence: fade
+	SpawnActorOnDeath:
+		Actor: riftfade
+		SkipMakeAnimations: false
 	RevealsShroud:
 		Range: 10c0
 		Type: CenterPosition
+
+RiftFade:
+	Inherits: Rift
+	WithSpriteBody:
+		Sequence: dead
+	WithMakeAnimation:
+		Sequence: fade
+	KillsSelf:
+		Delay: 24
+	-SpawnActorOnDeath:
+	-PeriodicExplosion:
+	-AmbientSound:
 
 RiftMinor:
 	Inherits: ^RiftBase
@@ -5072,15 +5375,11 @@ camera.resourcescan:
 IchorSeeder:
 	Interactable:
 	ScriptTriggers:
-	EditorOnlyTooltip:
-		Name: (Ichor Seeder)
 	Immobile:
 		OccupiesSpace: false
 	BodyOrientation:
 		QuantizedFacings: 1
 	WithSpriteBody:
-	MapEditorData:
-		Categories: System
 	HitShape:
 	HiddenUnderFog:
 		Type: GroundPosition
@@ -5104,13 +5403,10 @@ IchorSeeder:
 IonSurge:
 	Interactable:
 	ScriptTriggers:
-	EditorOnlyTooltip:
-		Name: (Ion Surge)
 	BodyOrientation:
 		QuantizedFacings: 1
-	MapEditorData:
-		Categories: System
 	WithSpriteBody:
+	WithMakeAnimation:
 	HitShape:
 	HiddenUnderFog:
 		Type: GroundPosition
@@ -5123,15 +5419,35 @@ IonSurge:
 		Weapon: IonSurge
 	KillsSelf:
 		Delay: 200
+	# required for spawning actor on death
+	Health:
+		HP: 1
 	AmbientSound:
 		SoundFiles: ionsurgeloop.aud
 		Interval: 50
-	WithRangeCircle@IonSurge:
+	WithRangeCircleCA@IonSurge:
 		Type: IonSurge
 		Range: 5c0
 		Visible: Always
 		ValidRelationships: Ally
-		Color: b070ff90
+		UsePlayerColor: true
+		PlayerColorAlpha: 192
+	SpawnActorOnDeath:
+		Actor: ionsurgefade
+		SkipMakeAnimations: false
+
+IonSurgeFade:
+	Inherits: IonSurge
+	WithSpriteBody:
+		Sequence: dead
+	WithMakeAnimation:
+		Sequence: fade
+	KillsSelf:
+		Delay: 24
+	-SpawnActorOnDeath:
+	-PeriodicExplosion:
+	-AmbientSound:
+	-WithRangeCircleCA@IonSurge:
 
 WORMHOLE:
 	Inherits@1: ^ExistsInWorld
@@ -5176,6 +5492,84 @@ WORMHOLE:
 	WithMakeAnimation:
 	MapEditorData:
 		Categories: System
+
+REBELGATEWAY:
+	Inherits@1: ^ExistsInWorld
+	Inherits@2: ^SpriteActor
+	Inherits@3: ^SelectableBuilding
+	Inherits@shape: ^1x1Shape
+	Tooltip:
+		Name: Gateway
+	RenderSprites:
+		PlayerPalette: playerscrin
+		Image: wormholelg
+	WithSpriteBody:
+	ClassicFacingBodyOrientation:
+		QuantizedFacings: 1
+	Selectable:
+		Bounds: 2048, 2048
+	HiddenUnderFog:
+		Type: CenterPosition
+	HitShape:
+	RevealsShroud:
+		Range: 4c0
+		Type: CenterPosition
+	Immobile:
+		OccupiesSpace: true
+	Targetable:
+		TargetTypes: Ground, Structure, Wormhole
+	Health:
+		HP: 50000
+	Armor:
+		Type: Concrete
+	WithDeathAnimation:
+		UseDeathTypeSuffix: false
+		CrushedSequence: die
+		FallbackSequence: die
+	WithMakeAnimation:
+	KillsSelf:
+		Delay: 625
+	RallyPoint:
+	Exit@1:
+		ProductionTypes: Gateway
+		ExitCell: -1,-1
+	Exit@2:
+		ProductionTypes: Gateway
+		ExitCell: 0,-1
+	Exit@3:
+		ProductionTypes: Gateway
+		ExitCell: 1,-1
+	Exit@4:
+		ProductionTypes: Gateway
+		ExitCell: -1,0
+	Exit@5:
+		ProductionTypes: Gateway
+		ExitCell: 1,0
+	Exit@6:
+		ProductionTypes: Gateway
+		ExitCell: -1,1
+	Exit@7:
+		ProductionTypes: Gateway
+		ExitCell: 0,1
+	Exit@8:
+		ProductionTypes: Gateway
+		ExitCell: 1,1
+	Production:
+		Produces: Gateway
+	GrantDelayedCondition@Wave1:
+		Condition: wave1-deployed
+		Delay: 130
+	PeriodicProducerCA@1:
+		Type: Gateway
+		ChargeDuration: 125
+		Actors: s1, s1, s1, s3, s3, s1, s1
+		ReadyAudio: ReinforcementsArrived
+		RequiresCondition: !wave1-deployed
+	PeriodicProducerCA@2:
+		Type: Gateway
+		ChargeDuration: 500
+		Actors: gunw, gunw, tpod
+		ReadyAudio: ReinforcementsArrived
 
 # infiltrator stolen tech
 

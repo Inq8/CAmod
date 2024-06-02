@@ -53,7 +53,8 @@ namespace OpenRA.Mods.CA.Traits
 			if (!Info.Types.Overlaps(types))
 				return;
 
-			var attachableToTrait = self.TraitsImplementing<AttachableTo>().FirstOrDefault();
+			var attachableTrait = infiltrator.TraitOrDefault<Attachable>();
+			var attachableToTrait = self.TraitsImplementing<AttachableTo>().FirstOrDefault(a => a.CanAttach(attachableTrait));
 
 			if (attachableToTrait == null)
 				return;

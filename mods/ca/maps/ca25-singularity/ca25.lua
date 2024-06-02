@@ -917,7 +917,7 @@ DoFinale = function()
 	Actor.Create("camera", true, { Owner = GDI, Location = WormholeWP.Location })
 
 	Trigger.AfterDelay(1, function()
-		Actor.Create("wormholelg", true, { Owner = Scrin, Location = WormholeWP.Location })
+		Actor.Create("wormholexl", true, { Owner = Scrin, Location = WormholeWP.Location })
 	end)
 
 	Actor.Create("wormhole", true, { Owner = Kane, Location = KaneSpawn.Location })
