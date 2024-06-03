@@ -965,6 +965,14 @@
 		DamageTypes: FlakVestMitigatedMinor
 		Modifier: 95
 
+^RocketPodsUpgrade:
+	GrantConditionOnPrerequisite@RocketPods:
+		Condition: rocketpods-upgrade
+		Prerequisites: rocketpods.upgrade
+	ReloadDelayMultiplier@RocketPods:
+		RequiresCondition: rocketpods-upgrade
+		Modifier: 80
+
 ^BinoUpgrade:
 	ExternalCondition@BINO:
 		Condition: bino
