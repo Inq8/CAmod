@@ -1206,6 +1206,35 @@ nshield:
 		ValidRelationships: Ally
 	ProvidesPrerequisite@NSHIELD:
 
+killzone:
+	Interactable:
+	ScriptTriggers:
+	BodyOrientation:
+		QuantizedFacings: 1
+	RevealsShroud:
+		Range: 8c0
+	ProximityExternalCondition@KillZone:
+		Range: 8c0
+		Condition: killzone
+		ValidRelationships: Enemy, Neutral
+	WithSpriteBody:
+	HitShape:
+	HiddenUnderFog:
+		Type: GroundPosition
+	Immobile:
+		OccupiesSpace: false
+	RenderSprites:
+		Image: killzone
+	KillsSelf:
+		Delay: 375
+		RemoveInstead: true
+	WithRangeCircleCA:
+		Type: KillZone
+		Visible: Always
+		UsePlayerColor: true
+		PlayerColorAlpha: 192
+		Range: 8c0
+
 shadow.beacon.camera:
 	Inherits@1: CAMERA
 	-Immobile:

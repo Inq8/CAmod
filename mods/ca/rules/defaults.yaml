@@ -458,6 +458,48 @@
 		RequiresCondition: inspiration == 2
 		IsDecoration: True
 
+^HeroOfTheUnionTargetable:
+	Targetable@HeroOfTheUnion:
+		TargetTypes: HeroOfUnionTargetable
+		RequiresCondition: !herooftheunion
+	ExternalCondition@HeroOfTheUnion:
+		Condition: herooftheunion
+	DamageMultiplier@HeroOfTheUnion:
+		Modifier: 15
+		RequiresCondition: herooftheunion
+	SpeedMultiplier@HeroOfTheUnion:
+		Modifier: 120
+		RequiresCondition: herooftheunion
+	ReloadDelayMultiplier@HeroOfTheUnion:
+		Modifier: 75
+		RequiresCondition: herooftheunion
+	ReloadAmmoDelayMultiplier@HeroOfTheUnion:
+		Modifier: 75
+		RequiresCondition: herooftheunion
+	RangeMultiplier@HeroOfTheUnion:
+		Modifier: 150
+		RequiresCondition: herooftheunion
+	ChangesHealth@HeroOfTheUnion:
+		PercentageStep: 1
+		Delay: 25
+		StartIfBelow: 100
+		DamageCooldown: 0
+		RequiresCondition: herooftheunion
+	WithIdleOverlay@HeroOfTheUnionLight:
+		Sequence: light
+		Image: hero-overlay
+		Palette: effect
+		RequiresCondition: herooftheunion
+		IsDecoration: True
+	WithIdleOverlay@HeroOfTheUnionCrest:
+		Sequence: star
+		Image: hero-overlay
+		Palette: effect
+		RequiresCondition: herooftheunion
+		IsDecoration: True
+	TakeCover:
+		RequiresCondition: !herooftheunion
+
 ^Chronoshiftable:
 	ChronoshiftableCA:
 		Image: chrono
@@ -1585,6 +1627,14 @@
 		RequiresCondition: weapjammed
 		IsDecoration: True
 
+^KillZoneTargetable:
+	DamageTypeDamageMultiplier@KillZone:
+		DamageTypes: KillZone
+		Modifier: 200
+		RequiresCondition: killzone
+	ExternalCondition@KillZone:
+		Condition: killzone
+
 ^ZoneDefenderShieldable:
 	ExternalCondition@ZoneDefenderShield:
 		Condition: zdef-shield
@@ -1991,6 +2041,7 @@
 	Inherits@ShadowBeacon: ^ShadowBeaconAttachable
 	Inherits@lchrheal: ^LeecherHealable
 	Inherits@Blindable: ^Blindable
+	Inherits@KillZoneTargetable: ^KillZoneTargetable
 	Huntable:
 	OwnerLostAction:
 		Action: Kill
@@ -2185,6 +2236,7 @@
 	Inherits@ionsurge: ^IonSurgableInfantry
 	Inherits@lchrheal: ^LeecherHealable
 	Inherits@Blindable: ^Blindable
+	Inherits@KillZoneTargetable: ^KillZoneTargetable
 	RenderSprites:
 		PlayerPalette: playertd
 	Huntable:
@@ -2595,6 +2647,7 @@
 	Inherits@minidrone: ^MiniDroneAttachable
 	Inherits@WatcherParasite: ^WatcherParasiteAttachable
 	Inherits@Blindable: ^Blindable
+	Inherits@KillZoneTargetable: ^KillZoneTargetable
 	Huntable:
 	RenderSprites:
 		PlayerPalette: playernavy

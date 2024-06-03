@@ -57,6 +57,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Minimum targets for power to activate.")]
 		public readonly int MinTargets = 1;
 
+		[Desc("If true, targets must not be under shroud/fog.")]
+		public readonly bool ShowTargetCount = false;
+
 		[Desc("Font to use for target count.")]
 		public readonly string TargetCountFont = "Medium";
 
@@ -367,11 +370,11 @@ namespace OpenRA.Mods.CA.Traits
 						3);
 				}
 
-				if (power.info.MaxTargets > 0)
+				if (power.info.ShowTargetCount)
 				{
 					var font = Game.Renderer.Fonts[power.info.TargetCountFont];
 					var color = power.info.TargetCircleColor;
-					var text = targetUnits.Count() + " / " + power.info.MaxTargets;
+					var text = power.info.MaxTargets > 0 ? $"{targetUnits.Count()} / {power.info.MaxTargets}" : targetUnits.Count().ToString();
 					var size = font.Measure(text);
 					var textPos = new int2(Viewport.LastMousePos.X - (size.X / 2), Viewport.LastMousePos.Y + size.Y + (size.Y / 3));
 					yield return new UITextRenderable(font, WPos.Zero, textPos, 0, color, text);
