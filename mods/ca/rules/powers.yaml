@@ -495,7 +495,7 @@
 		SupportPowerPaletteOrder: 50
 
 ^ParatroopersPower:
-	ParatroopersPower@paratroopers:
+	ParatroopersPowerCA@paratroopers:
 		OrderName: paratroopers
 		UnitType: halo.paradrop
 		Prerequisites: ~support.paratroopers
@@ -523,9 +523,13 @@
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 		SupportPowerPaletteOrder: 50
+		PrerequisiteDropItems:
+			imppara.upgrade: E1,E1,E1,E1,E2,E4,E3,E3,E3,E1,E1,E1,E1
+		PrerequisiteSquadSizes:
+			imppara.upgrade: 2
 
 ^StormTroopersPower:
-	ParatroopersPower@Russianparatroopers:
+	ParatroopersPowerCA@Russianparatroopers:
 		OrderName: stormtroopers
 		UnitType: halo.paradrop
 		Prerequisites: ~radar.russia
@@ -553,6 +557,15 @@
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 		SupportPowerPaletteOrder: 50
+		PrerequisiteGroupings:
+			ImprovedTeslaTroopers: impstorm.upgrade, ttrp.upgrade
+		PrerequisiteDropItems:
+			ImprovedTeslaTroopers: TTRP,TTRP,TTRP,TTRP,TTRP,TTRP,TTRP
+			impstorm.upgrade: SHOK,SHOK,SHOK,SHOK,SHOK,SHOK,SHOK,SHOK
+			ttrp.upgrade: TTRP,TTRP,TTRP,TTRP
+		PrerequisiteSquadSizes:
+			ImprovedTeslaTroopers: 2
+			impstorm.upgrade: 2
 
 ^ParabombsPower:
 	AirstrikePowerCA@Russianparabombs:
@@ -799,7 +812,7 @@
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 		Prerequisites: ~tank.doctrine, player.level2
-		SupportPowerPaletteOrder: 60
+		SupportPowerPaletteOrder: 30
 		PrerequisiteGroupings:
 			AtomicThrasher: tank.doctrine, lasher.upgrade, atomicengines.upgrade
 			Thrasher: tank.doctrine, lasher.upgrade

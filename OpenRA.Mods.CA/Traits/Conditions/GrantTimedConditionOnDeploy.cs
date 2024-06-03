@@ -67,6 +67,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Sound to play when undeploying.")]
 		public readonly string UndeploySound = null;
 
+		[Desc("If true, deploy/undeploy sounds will be audible through fog of war.")]
+		public readonly bool AudibleThroughFog = true;
+
 		public readonly bool StartsFullyCharged = false;
 
 		[VoiceReference]
@@ -195,7 +198,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			deployState = TimedDeployState.Deploying;
 
-			if (!string.IsNullOrEmpty(Info.DeploySound))
+			if (!string.IsNullOrEmpty(Info.DeploySound) && (Info.AudibleThroughFog || !self.World.FogObscures(self.CenterPosition)))
 				Game.Sound.Play(SoundType.World, Info.DeploySound, self.CenterPosition);
 
 			var wsb = wsbs.FirstEnabledTraitOrDefault();
@@ -227,7 +230,7 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			deployState = TimedDeployState.Undeploying;
 
-			if (!string.IsNullOrEmpty(Info.UndeploySound))
+			if (!string.IsNullOrEmpty(Info.UndeploySound) && (Info.AudibleThroughFog || !self.World.FogObscures(self.CenterPosition)))
 				Game.Sound.Play(SoundType.World, Info.UndeploySound, self.CenterPosition);
 
 			var wsb = wsbs.FirstEnabledTraitOrDefault();

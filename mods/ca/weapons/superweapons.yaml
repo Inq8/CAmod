@@ -212,6 +212,14 @@ GeneticMutationBomb:
 		ExplosionPalette: mutablast
 		ImpactSounds: gmutation.aud
 
+GeneticMutationBomb.UPG:
+	Inherits: GeneticMutationBomb
+	Warhead@COND: GrantExternalConditionCA
+		Range: 5c0
+	Warhead@MUT: FireShrapnel
+		Weapon: GeneticMutation.UPG
+		Amount: 9
+
 GeneticMutation:
 	Range: 4c0
 	ValidTargets: GeneticallyMutatable
@@ -230,6 +238,10 @@ GeneticMutation:
 		Damage: 50000
 		DamageTypes: MutatedDeath
 		ValidTargets: GeneticallyMutatable
+
+GeneticMutation.UPG:
+	Inherits: GeneticMutation
+	Range: 5c0
 
 HeliosBomb:
 	Inherits: ParaBomb

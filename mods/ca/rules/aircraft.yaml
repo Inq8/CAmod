@@ -127,6 +127,13 @@ BADR.MBomber:
 		Ammo: 1
 	Armament:
 		Weapon: GeneticMutationBomb
+		RequiresCondition: !impmuta-upgrade
+	Armament@UPG:
+		Weapon: GeneticMutationBomb.UPG
+		RequiresCondition: impmuta-upgrade
+	GrantConditionOnPrerequisite@UPG:
+		Condition: impmuta-upgrade
+		Prerequisites: impmuta.upgrade
 
 BADR.ChaosBomber:
 	Inherits: BADR.Bomber
