@@ -2885,6 +2885,8 @@ DESO:
 		UndeployedCondition: undeployed
 		UndeployOnMove: True
 		Voice: Attack
+		PauseOnCondition: being-warped
+		SmartDeploy: True
 	-Crushable:
 	TakeCover:
 		ProneOffset: 0,0,0
@@ -2899,12 +2901,6 @@ DESO:
 	PeriodicExplosion:
 		Weapon: RadEruptionWeapon
 		RequiresCondition: deployed
-	GrantConditionOnDeploy:
-		DeployedCondition: deployed
-		UndeployedCondition: undeployed
-		UndeployOnMove: True
-		PauseOnCondition: being-warped
-		SmartDeploy: True
 	WithSpriteBody@DEPLOYED:
 		Sequence: deployed
 		RequiresCondition: !undeployed
