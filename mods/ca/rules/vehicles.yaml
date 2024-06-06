@@ -1175,6 +1175,7 @@ GTNK.squad:
 		BuildPaletteOrder: 233
 	Armament@PRIMARY:
 		Weapon: RadBeamWeaponHeavy
+		MuzzlePalette: caneon
 		LocalOffset: 400,0,340
 		-PauseOnCondition:
 		-ReloadingCondition:
@@ -1218,6 +1219,7 @@ GTNK.squad:
 		BuildPaletteOrder: 234
 	Armament@PRIMARY:
 		Weapon: RadBeamWeaponHeavy
+		MuzzlePalette: caneon
 		LocalOffset: 400,0,340
 		-PauseOnCondition:
 		-ReloadingCondition:
@@ -8386,6 +8388,7 @@ APOC:
 	Inherits@SHRAPNEL: ^ThrowsShrapnel
 	Inherits@ATOMICAMMO: ^AtomicAmmunition
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
+	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 239
@@ -8487,12 +8490,14 @@ APOC:
 		Actors: apoc.atomic, apoc.erad.atomic
 	Upgradeable@ATOMIC:
 		Type: atomicengines.upgrade
+		UpgradingCondition: upgrading
 		Actor: apoc.atomic
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
 	Upgradeable@ERAD:
 		Type: erad.upgrade
+		UpgradingCondition: upgrading
 		Actor: apoc.erad.atomic
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
@@ -8536,6 +8541,7 @@ APOC.ERAD:
 		BuildPaletteOrder: 241
 	Armament@PRIMARY:
 		Weapon: ApocRadBeamWeapon
+		MuzzlePalette: caneon
 		LocalOffset: 500,100,240, 500,-100,240
 		-PauseOnCondition:
 		-ReloadingCondition:
@@ -8556,6 +8562,8 @@ APOC.ERAD:
 	ReplacedInQueue:
 		Actors: apoc.erad.atomic
 	-Upgradeable@ERAD:
+	Voiced:
+		VoiceSet: EradVoice
 
 APOC.ERAD.ATOMIC:
 	Inherits: APOC.ATOMIC
@@ -8571,6 +8579,7 @@ APOC.ERAD.ATOMIC:
 		BuildPaletteOrder: 242
 	Armament@PRIMARY:
 		Weapon: ApocRadBeamWeapon
+		MuzzlePalette: caneon
 		LocalOffset: 500,100,240, 500,-100,240
 		-PauseOnCondition:
 		-ReloadingCondition:
@@ -8587,6 +8596,8 @@ APOC.ERAD.ATOMIC:
 	-DamagedByTintedCells@RADMED:
 	-ReplacedInQueue:
 	-Upgradeable@ERAD:
+	Voiced:
+		VoiceSet: EradVoice
 
 OVLD:
 	Inherits: ^Tank
@@ -8596,11 +8607,12 @@ OVLD:
 	Inherits@SHRAPNEL: ^ThrowsShrapnel
 	Inherits@ATOMICAMMO: ^AtomicAmmunition
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
+	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 235
 		Prerequisites: stek, ~vehicles.soviet, ~ovld.upgrade, ~!erad.upgrade, ~!atomicengines.upgrade, ~techlevel.high
-		Description: Enormous slow tank that supports infantry in battle.
+		Description: Enormous slow tank fitted with a commissar tower\nwhich supports infantry in combat.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
 		Weaknesses: • Cannot attack Aircraft
@@ -8636,7 +8648,7 @@ OVLD:
 		Weapon: 135mm
 		Recoil: 171
 		RecoilRecovery: 30
-		LocalOffset: 1400,100,340, 1400,-100,340
+		LocalOffset: 1400,300,340, 1400,-300,340
 		MuzzleSequence: muzzle
 		PauseOnCondition: has-atomic-ammo || atomic-reloading
 		ReloadingCondition: reloading
@@ -8675,7 +8687,7 @@ OVLD:
 		Offset: 0,0,512
 	-Crushable:
 	Voiced:
-		VoiceSet: ApocalypseVoice
+		VoiceSet: OverlordVoice
 	AttackMove:
 		Voice: Attack
 	WithRestartableIdleOverlay@ATOMICAMMO:
@@ -8702,12 +8714,14 @@ OVLD:
 		Actors: ovld.atomic, ovld.erad
 	Upgradeable@ATOMIC:
 		Type: atomicengines.upgrade
+		UpgradingCondition: upgrading
 		Actor: ovld.atomic
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
 	Upgradeable@ERAD:
 		Type: erad.upgrade
+		UpgradingCondition: upgrading
 		Actor: ovld.erad
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
@@ -8725,7 +8739,7 @@ OVLD.ATOMIC:
 	ReplacedInQueue:
 		Actors: ovld.erad.atomic
 	Upgradeable@ERAD:
-		Actor: apoc.atomic
+		Actor: ovld.erad.atomic
 	-Upgradeable@ATOMIC:
 
 OVLD.ERAD:
@@ -8739,8 +8753,10 @@ OVLD.ERAD:
 		BuildPaletteOrder: 237
 	Armament@PRIMARY:
 		Weapon: OverlordRadBeamWeapon
+		MuzzlePalette: caneon
 		-PauseOnCondition:
 		-ReloadingCondition:
+		LocalOffset: 260,300,240, 260,-300,240
 	-Armament@ATOMICAMMO:
 	-ExternalCondition@ATOMICAMMO:
 	-WithRestartableIdleOverlay@ATOMICAMMO:
@@ -8754,9 +8770,11 @@ OVLD.ERAD:
 	-DamagedByTintedCells@RADMED:
 	ReplacedInQueue:
 		Actors: ovld.erad.atomic
-	Upgradeable@ERAD:
-		Actor: apoc.erad.atomic
+	Upgradeable@ATOMIC:
+		Actor: ovld.erad.atomic
 	-Upgradeable@ERAD:
+	Voiced:
+		VoiceSet: EradVoice
 
 OVLD.ERAD.ATOMIC:
 	Inherits: OVLD.ATOMIC
@@ -8769,8 +8787,10 @@ OVLD.ERAD.ATOMIC:
 		BuildPaletteOrder: 238
 	Armament@PRIMARY:
 		Weapon: OverlordRadBeamWeapon
+		MuzzlePalette: caneon
 		-PauseOnCondition:
 		-ReloadingCondition:
+		LocalOffset: 260,300,240, 260,-300,240
 	-Armament@ATOMICAMMO:
 	-ExternalCondition@ATOMICAMMO:
 	-WithRestartableIdleOverlay@ATOMICAMMO:
@@ -8786,6 +8806,8 @@ OVLD.ERAD.ATOMIC:
 		Image: ovld.eradi
 	-ReplacedInQueue:
 	-Upgradeable@ERAD:
+	Voiced:
+		VoiceSet: EradVoice
 
 THWK:
 	Inherits: ^TankTD

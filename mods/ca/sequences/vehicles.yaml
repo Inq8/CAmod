@@ -417,8 +417,10 @@ gtnk.destroyed:
 		Facings: 32
 		UseClassicFacings: True
 	muzzle:
-		Filename: gunfire2.shp
-		Length: 5
+		Filename: radhitsm.shp
+		IgnoreWorldTint: true
+		BlendMode: Additive
+		Length: *
 	icon:
 		Filename: 4tnkeradicon.shp
 
@@ -433,8 +435,10 @@ gtnk.destroyed:
 		Facings: 32
 		UseClassicFacings: True
 	muzzle:
-		Filename: gunfire2.shp
-		Length: 5
+		Filename: radhitsm.shp
+		IgnoreWorldTint: true
+		BlendMode: Additive
+		Length: *
 	icon:
 		Filename: 4tnkeradiicon.shp
 
@@ -2433,8 +2437,10 @@ apoc.erad:
 		Facings: 32
 		UseClassicFacings: True
 	muzzle:
-		Filename: gunfire2.shp
-		Length: 5
+		Filename: radhitsm.shp
+		IgnoreWorldTint: true
+		BlendMode: Additive
+		Length: *
 	icon:
 		Filename: apoceradicon.shp
 
@@ -2462,28 +2468,114 @@ apoc.eradi:
 		Facings: 32
 		UseClassicFacings: True
 	muzzle:
-		Filename: gunfire2.shp
-		Length: 5
+		Filename: radhitsm.shp
+		IgnoreWorldTint: true
+		BlendMode: Additive
+		Length: *
 	icon:
 		Filename: apoceradiicon.shp
 
 ovld:
-	Inherits: apoc
+	Inherits: ^VehicleOverlays
+	idle:
+		Filename: ovld.shp
+		Facings: 32
+		UseClassicFacings: True
+	idle2:
+		Filename: apoci.shp
+		Facings: 32
+		UseClassicFacings: True
+	turret:
+		Filename: ovldtur.shp
+		Facings: 32
+		UseClassicFacings: True
+	muzzle:
+		Filename: gunfire2.shp
+		Length: 5
 	icon:
 		Filename: ovldicon.shp
 
+ovld.destroyed:
+	Inherits: ^VehicleOverlays
+	idle:
+		Filename: ovld.shp
+		Facings: 32
+		UseClassicFacings: True
+		ZOffset: -512
+	turret:
+		Filename: ovldtur.shp
+		Facings: 32
+		UseClassicFacings: True
+		ZOffset: -512
+
 ovldi:
-	Inherits: ovld
+	Inherits: ^VehicleOverlays
+	idle:
+		Filename: ovldi.shp
+		Facings: 32
+		UseClassicFacings: True
+	turret:
+		Filename: ovldtur.shp
+		Facings: 32
+		UseClassicFacings: True
+	muzzle:
+		Filename: gunfire2.shp
+		Length: 5
 	icon:
 		Filename: ovldiicon.shp
 
 ovld.erad:
-	Inherits: ovld
+	Inherits: ^VehicleOverlays
+	idle:
+		Filename: ovld.shp
+		Facings: 32
+		UseClassicFacings: True
+	idle2:
+		Filename: ovldi.shp
+		Facings: 32
+		UseClassicFacings: True
+	turret:
+		Filename: ovldturi.shp
+		Facings: 32
+		UseClassicFacings: True
+	muzzle:
+		Filename: radhitsm.shp
+		IgnoreWorldTint: true
+		BlendMode: Additive
+		Length: *
+	icon:
+		Filename: ovlderadicon.shp
+
+ovld.erad.destroyed:
+	Inherits: ^VehicleOverlays
+	idle:
+		Filename: ovld.shp
+		Facings: 32
+		UseClassicFacings: True
+		ZOffset: -512
+	turret:
+		Filename: ovldturi.shp
+		Facings: 32
+		UseClassicFacings: True
+		ZOffset: -512
 
 ovld.eradi:
-	Inherits: ovld
+	Inherits: ^VehicleOverlays
+	idle:
+		Filename: ovldi.shp
+		Facings: 32
+		UseClassicFacings: True
+	turret:
+		Filename: ovldturi.shp
+		Facings: 32
+		UseClassicFacings: True
+	muzzle:
+		Filename: radhitsm.shp
+		IgnoreWorldTint: true
+		BlendMode: Additive
+		Length: *
 	icon:
-		Filename: ovldiicon.shp
+		Filename: ovlderadiicon.shp
 
 trpc:
 	Inherits: apc
