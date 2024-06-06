@@ -495,7 +495,7 @@
 		SupportPowerPaletteOrder: 50
 
 ^ParatroopersPower:
-	ParatroopersPower@paratroopers:
+	ParatroopersPowerCA@paratroopers:
 		OrderName: paratroopers
 		UnitType: halo.paradrop
 		Prerequisites: ~support.paratroopers
@@ -523,9 +523,13 @@
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 		SupportPowerPaletteOrder: 50
+		PrerequisiteDropItems:
+			imppara.upgrade: E1,E1,E1,E1,E2,E4,E3,E3,E3,E1,E1,E1,E1
+		PrerequisiteSquadSizes:
+			imppara.upgrade: 2
 
 ^StormTroopersPower:
-	ParatroopersPower@Russianparatroopers:
+	ParatroopersPowerCA@Russianparatroopers:
 		OrderName: stormtroopers
 		UnitType: halo.paradrop
 		Prerequisites: ~radar.russia
@@ -553,6 +557,15 @@
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 		SupportPowerPaletteOrder: 50
+		PrerequisiteGroupings:
+			ImprovedTeslaTroopers: impstorm.upgrade, ttrp.upgrade
+		PrerequisiteDropItems:
+			ImprovedTeslaTroopers: TTRP,TTRP,TTRP,TTRP,TTRP,TTRP,TTRP
+			impstorm.upgrade: SHOK,SHOK,SHOK,SHOK,SHOK,SHOK,SHOK,SHOK
+			ttrp.upgrade: TTRP,TTRP,TTRP,TTRP
+		PrerequisiteSquadSizes:
+			ImprovedTeslaTroopers: 2
+			impstorm.upgrade: 2
 
 ^ParabombsPower:
 	AirstrikePowerCA@Russianparabombs:
@@ -721,6 +734,7 @@
 		Condition: atomic-ammo
 		Range: 4c0
 		MaxTargets: 5
+		ShowTargetCount: true
 		ValidTargets: Vehicle
 		Duration: 1
 		AllowMultiple: false
@@ -750,6 +764,7 @@
 		Condition: atomic-ammo
 		Range: 4c0
 		MaxTargets: 5
+		ShowTargetCount: true
 		ValidTargets: Vehicle
 		Duration: 1
 		AllowMultiple: false
@@ -771,6 +786,35 @@
 		TargetCircleColor: ffee00
 		TargetTintColor: ffee0033
 
+^HeroesOfTheUnionPower:
+	GrantExternalConditionPowerCA@HEROESOFUNION:
+		OrderName: heroesofunion
+		Icon: heroes
+		ChargeInterval: 7500
+		Name: Heroes of the Union
+		Condition: herooftheunion
+		Range: 3c512
+		MaxTargets: 5
+		ValidTargets: HeroOfUnionTargetable
+		Duration: 0
+		AllowMultiple: false
+		Description: \nTargeted infantry units become Heroes of the Union.\n\nCan affect Rifle Infantry, Rocket Soldier, Grenadier, Flamethrower
+		Prerequisites: ~infantry.doctrine, player.level2
+		OnFireSound: heroes.aud
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeTextNotification: Heroes of the Union ready.
+		DisplayRadarPing: True
+		Cursor: ability
+		ActiveSequence: idle
+		SupportPowerPaletteOrder: 30
+		ShowSelectionBoxes: true
+		SelectionBoxColor: ff0000
+		TargetTintColor: ff000040
+		ShowTargetCircle: true
+		TargetCircleColor: ff0000
+
 ^TankDropPower:
 	ParatroopersPowerCA@TankDrop:
 		OrderName: tankdrop
@@ -789,7 +833,6 @@
 		LaunchSpeechNotification: ReinforcementsArrived
 		IncomingSpeechNotification: EnemyUnitsApproaching
 		IncomingTextNotification: Enemy air drop detected.
-		PauseOnCondition: empdisable || being-warped
 		CameraActor: camera.paradrop
 		DisplayBeacon: true
 		BeaconPoster: lrairdropicon
@@ -799,7 +842,7 @@
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 		Prerequisites: ~tank.doctrine, player.level2
-		SupportPowerPaletteOrder: 60
+		SupportPowerPaletteOrder: 30
 		PrerequisiteGroupings:
 			AtomicThrasher: tank.doctrine, lasher.upgrade, atomicengines.upgrade
 			Thrasher: tank.doctrine, lasher.upgrade
@@ -817,6 +860,30 @@
 			Lasher: 3tnk.yuri, 3tnk.yuri, 3tnk.yuri
 			Atomic: 3tnk.atomic, 3tnk.atomic, 3tnk.atomic
 
+^KillZonePower:
+	SpawnActorPowerCA@KillZone:
+		Actor: killzone
+		OrderName: killzone
+		Icon: killzone
+		Prerequisites: ~arty.doctrine, player.level2
+		ChargeInterval: 6000
+		LifeTime: -1
+		Name: Kill Zone
+		Description: \nReveals a target area. Any enemy units within it take increased damage from artillery.
+		LaunchSound: killzone.aud
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeTextNotification: Kill Zone ready.
+		DisplayRadarPing: True
+		Cursor: ability
+		AllowMultiple: false
+		EffectImage: empty
+		EffectSequence: idle
+		TargetCircleRange: 8c0
+		TargetCircleColor: ff0000bb
+		SupportPowerPaletteOrder: 30
+
 ^IronCurtainPower:
 	GrantExternalConditionPowerCA@IRONCURTAIN:
 		OrderName: ironcurtain
@@ -828,6 +895,7 @@
 		Range: 4c0
 		MaxTargets: 5
 		MinTargets: 0
+		ShowTargetCount: true
 		ValidTargets: Vehicle, Ship, Structure
 		InvalidTargets: IronCurtainImmune
 		Duration: 600
@@ -1060,6 +1128,7 @@
 		Condition: nrepair
 		Range: 4c512
 		MaxTargets: 10
+		ShowTargetCount: true
 		Duration: 625
 		Prerequisites: ~gtek.arc
 		ExplosionWeapon: RepairFlash

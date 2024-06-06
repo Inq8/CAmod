@@ -94,6 +94,7 @@ E1:
 	Inherits@BERSERK: ^Berserk
 	Inherits@BOTHELPER: ^BotCaptureHelper
 	Inherits@Inspirable: ^Inspirable
+	Inherits@HeroOfTheUnionTargetable: ^HeroOfTheUnionTargetable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -149,6 +150,7 @@ E2:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@Inspirable: ^Inspirable
+	Inherits@HeroOfTheUnionTargetable: ^HeroOfTheUnionTargetable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -205,6 +207,7 @@ E3:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
 	Inherits@Inspirable: ^Inspirable
+	Inherits@HeroOfTheUnionTargetable: ^HeroOfTheUnionTargetable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -537,6 +540,7 @@ E4:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@Inspirable: ^Inspirable
+	Inherits@HeroOfTheUnionTargetable: ^HeroOfTheUnionTargetable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -1480,6 +1484,7 @@ N1:
 	Inherits@BERSERK: ^Berserk
 	Inherits@BOTHELPER: ^BotCaptureHelper
 	Inherits@Inspirable: ^Inspirable
+	Inherits@HeroOfTheUnionTargetable: ^HeroOfTheUnionTargetable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -1542,6 +1547,7 @@ N2:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@Inspirable: ^Inspirable
+	Inherits@HeroOfTheUnionTargetable: ^HeroOfTheUnionTargetable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -1619,6 +1625,7 @@ N3:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
 	Inherits@Inspirable: ^Inspirable
+	Inherits@HeroOfTheUnionTargetable: ^HeroOfTheUnionTargetable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -1722,6 +1729,7 @@ N4:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@Inspirable: ^Inspirable
+	Inherits@HeroOfTheUnionTargetable: ^HeroOfTheUnionTargetable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -2877,6 +2885,8 @@ DESO:
 		UndeployedCondition: undeployed
 		UndeployOnMove: True
 		Voice: Attack
+		PauseOnCondition: being-warped
+		SmartDeploy: True
 	-Crushable:
 	TakeCover:
 		ProneOffset: 0,0,0
@@ -2891,12 +2901,6 @@ DESO:
 	PeriodicExplosion:
 		Weapon: RadEruptionWeapon
 		RequiresCondition: deployed
-	GrantConditionOnDeploy:
-		DeployedCondition: deployed
-		UndeployedCondition: undeployed
-		UndeployOnMove: True
-		PauseOnCondition: being-warped
-		SmartDeploy: True
 	WithSpriteBody@DEPLOYED:
 		Sequence: deployed
 		RequiresCondition: !undeployed
