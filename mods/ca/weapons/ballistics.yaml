@@ -258,6 +258,8 @@
 	Warhead@1Dam: SpreadDamage
 		Spread: 256
 		Damage: 8300
+		Versus:
+			None: 60
 	Warhead@3EffGround: CreateEffect
 		Explosions: large_explosion
 		ImpactSounds: kaboom12.aud
@@ -758,6 +760,12 @@ ChemicalMortar:
 		Image: radball
 		ContrailStartColor: 00ff0044
 	Warhead@1Dam: SpreadDamage
+		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
+	Warhead@2Dam: SpreadDamage
+		Damage: 10000
+		Spread: 426
+		Falloff: 100, 50, 25, 0
+		ValidTargets: Cyborg
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
