@@ -54,6 +54,8 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly int QuantizedFacings = 32;
 		public readonly WDist Cordon = new WDist(5120);
 
+		public readonly WDist SpawnDistance = WDist.Zero;
+
 		[GrantedConditionReference]
 		public IEnumerable<string> LinterSpawnContainConditions { get { return SpawnContainConditions.Values; } }
 
@@ -80,6 +82,8 @@ namespace OpenRA.Mods.CA.Traits
 		int launchConditionTicks;
 
 		int respawnTicks = 0;
+
+		Target lastTarget;
 
 		public AirstrikeMaster(ActorInitializer init, AirstrikeMasterInfo info)
 			: base(init, info)
@@ -125,6 +129,8 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			if (IsTraitDisabled || IsTraitPaused || !Info.ArmamentNames.Contains(a.Info.Name))
 				return;
+
+			lastTarget = target;
 
 			// Issue retarget order for already launched ones
 			foreach (var slave in SlaveEntries)
@@ -175,14 +181,33 @@ namespace OpenRA.Mods.CA.Traits
 
 			for (var i = -AirstrikeMasterInfo.SquadSize / 2; i <= AirstrikeMasterInfo.SquadSize / 2; i++)
 			{
-				var attackFacing = 256 * self.World.SharedRandom.Next(AirstrikeMasterInfo.QuantizedFacings) / AirstrikeMasterInfo.QuantizedFacings;
+				var aircraftInfo = self.World.Map.Rules.Actors[slave.Info.Name].TraitInfo<AircraftInfo>();
+				var altitude = aircraftInfo.CruiseAltitude.Length;
 
-				var altitude = self.World.Map.Rules.Actors[slave.Info.Name].TraitInfo<AircraftInfo>().CruiseAltitude.Length;
+				int attackFacing;
+
+				if (AirstrikeMasterInfo.SpawnDistance != WDist.Zero)
+					attackFacing = (lastTarget.CenterPosition - centerPosition).Yaw.Facing;
+				else
+					attackFacing = 256 * self.World.SharedRandom.Next(AirstrikeMasterInfo.QuantizedFacings) / AirstrikeMasterInfo.QuantizedFacings;
+
 				var attackRotation = WRot.FromFacing(attackFacing);
+				attackRotation = attackRotation.Rotate(WRot.FromFacing(self.World.SharedRandom.Next(30) - 15));
 				var delta = new WVec(0, -1024, 0).Rotate(attackRotation);
 				target += new WVec(0, 0, altitude);
-				var startEdge = target - (self.World.Map.DistanceToEdge(target, -delta) + AirstrikeMasterInfo.Cordon).Length * delta / 1024;
-				var finishEdge = target + (self.World.Map.DistanceToEdge(target, delta) + AirstrikeMasterInfo.Cordon).Length * delta / 1024;
+
+				WPos startEdge;
+				WPos finishEdge;
+
+				if (AirstrikeMasterInfo.SpawnDistance != WDist.Zero)
+					startEdge = target - AirstrikeMasterInfo.SpawnDistance.Length * delta / 1024;
+				else
+					startEdge = target - (self.World.Map.DistanceToEdge(target, -delta) + AirstrikeMasterInfo.Cordon).Length * delta / 1024;
+
+				if (AirstrikeMasterInfo.SpawnDistance != WDist.Zero)
+					finishEdge = startEdge; // target + AirstrikeMasterInfo.SpawnDistance.Length * delta / 1024;
+				else
+					finishEdge = target + (self.World.Map.DistanceToEdge(target, delta) + AirstrikeMasterInfo.Cordon).Length * delta / 1024;
 
 				var so = AirstrikeMasterInfo.SquadOffset;
 				var spawnOffset = new WVec(i * so.Y, -Math.Abs(i) * so.X, 0).Rotate(attackRotation);
@@ -197,6 +222,11 @@ namespace OpenRA.Mods.CA.Traits
 						w.Add(slave);
 
 					var attack = slave.Trait<AttackAircraft>();
+
+					slave.Trait<IPositionable>().SetCenterPosition(slave, startEdge + spawnOffset);
+					var facing = slave.TraitOrDefault<IFacing>();
+					facing.Facing = WAngle.FromFacing(attackFacing);
+
 					attack.AttackTarget(Target.FromPos(target + targetOffset), AttackSource.Default, false, true);
 				});
 			}
@@ -209,7 +239,10 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				var childSlave = se as AirstrikeSlaveEntry;
 				if (se.IsLaunched && se.IsValid)
+				{
+					childSlave.SpawnerSlave.Stop(se.Actor);
 					childSlave.SpawnerSlave.LeaveMap(se.Actor);
+				}
 			}
 		}
 
@@ -292,7 +325,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		public void ResolveOrder(Actor self, Order order)
 		{
-			if (order.OrderString == "Stop")
+			if (order.Target != lastTarget)
 				Recall();
 		}
 	}
