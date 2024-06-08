@@ -413,6 +413,15 @@ HindRockets.AnyTarget:
 	Inherits: HindRockets
 	-InvalidTargets:
 
+KamovRockets:
+	Inherits: HindRockets
+	Warhead@1Dam: SpreadDamage
+		Damage: 3550
+
+KamovRockets.AnyTarget:
+	Inherits: KamovRockets
+	-InvalidTargets:
+
 HellfireAG.Harrier:
 	Inherits: ^AirToGroundMissile
 	Range: 7c0
