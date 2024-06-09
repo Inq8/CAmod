@@ -451,7 +451,7 @@ FLARE:
 		Type: CenterPosition
 	RenderSprites:
 		Image: smokland
-		Palette: effect
+		PlayerPalette : player
 	WithSpriteBody:
 		StartSequence: open
 	BodyOrientation:
@@ -475,6 +475,13 @@ FLARE.dropzone:
 		DeliveryOffset: -1,1
 		DeliveringActor: ocar.reinforce
 		Facing: 0
+
+FLARE.KillZone:
+	Inherits: FLARE
+	-RevealsShroud:
+	KillsSelf:
+		Delay: 400 # same as for killzone actor
+		RemoveInstead: true
 
 MINE:
 	Inherits@1: ^SpriteActor
@@ -1226,8 +1233,9 @@ killzone:
 		OccupiesSpace: false
 	RenderSprites:
 		Image: killzone
+		PlayerPalette: player
 	KillsSelf:
-		Delay: 375
+		Delay: 400
 		RemoveInstead: true
 	WithRangeCircleCA:
 		Type: KillZone

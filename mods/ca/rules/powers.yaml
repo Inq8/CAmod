@@ -795,6 +795,7 @@
 		Condition: herooftheunion
 		Range: 3c512
 		MaxTargets: 5
+		ShowTargetCount: true
 		ValidTargets: HeroOfUnionTargetable
 		Duration: 0
 		AllowMultiple: false
@@ -804,6 +805,7 @@
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeSpeechNotification: HeroesOfTheUnionReady
 		EndChargeTextNotification: Heroes of the Union ready.
 		DisplayRadarPing: True
 		Cursor: ability
@@ -828,7 +830,7 @@
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		AllowImpassableCells: false
-		EndChargeSpeechNotification: Reinforce
+		EndChargeSpeechNotification: TankDropReady
 		EndChargeTextNotification: Tank Drop ready.
 		LaunchSpeechNotification: ReinforcementsArrived
 		IncomingSpeechNotification: EnemyUnitsApproaching
@@ -861,27 +863,30 @@
 			Atomic: 3tnk.atomic, 3tnk.atomic, 3tnk.atomic
 
 ^KillZonePower:
-	SpawnActorPowerCA@KillZone:
-		Actor: killzone
-		OrderName: killzone
-		Icon: killzone
+	AirstrikePowerCA@KillZone:
+		OrderName: killzone2
 		Prerequisites: ~arty.doctrine, player.level2
+		Icon: killzone
 		ChargeInterval: 6000
-		LifeTime: -1
 		Name: Kill Zone
-		Description: \nReveals a target area. Any enemy units within it take increased damage from artillery.
-		LaunchSound: killzone.aud
+		Description: \nCalls in a Spy Plane which marks a target area. Any enemy units\n    within it take increased damage from artillery.
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
-		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeSpeechNotification: KillZoneReady
 		EndChargeTextNotification: Kill Zone ready.
-		DisplayRadarPing: True
-		Cursor: ability
-		AllowMultiple: false
-		EffectImage: empty
-		EffectSequence: idle
-		TargetCircleRange: 8c0
-		TargetCircleColor: ff0000bb
+		CameraActor: camera.dummy
+		CameraRemoveDelay: 1
+		UnitType: u2.killzone
+		QuantizedFacings: 8
+		DisplayBeacon: true
+		BeaconPoster: killzone
+		SquadSize: 1
+		SquadOffset: 0,1792,0
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
+		UseDirectionalTarget: True
+		DirectionArrowAnimation: paradirection
 		SupportPowerPaletteOrder: 30
 
 ^IronCurtainPower:
