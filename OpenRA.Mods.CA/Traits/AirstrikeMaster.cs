@@ -11,6 +11,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OpenRA.Mods.CA.Activities;
 using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
@@ -84,6 +85,7 @@ namespace OpenRA.Mods.CA.Traits
 		int respawnTicks = 0;
 
 		Target lastTarget;
+		WPos lastTargetPosition;
 
 		public AirstrikeMaster(ActorInitializer init, AirstrikeMasterInfo info)
 			: base(init, info)
@@ -131,6 +133,7 @@ namespace OpenRA.Mods.CA.Traits
 				return;
 
 			lastTarget = target;
+			lastTargetPosition = target.CenterPosition;
 
 			// Issue retarget order for already launched ones
 			foreach (var slave in SlaveEntries)
@@ -204,10 +207,7 @@ namespace OpenRA.Mods.CA.Traits
 				else
 					startEdge = target - (self.World.Map.DistanceToEdge(target, -delta) + AirstrikeMasterInfo.Cordon).Length * delta / 1024;
 
-				if (AirstrikeMasterInfo.SpawnDistance != WDist.Zero)
-					finishEdge = startEdge; // target + AirstrikeMasterInfo.SpawnDistance.Length * delta / 1024;
-				else
-					finishEdge = target + (self.World.Map.DistanceToEdge(target, delta) + AirstrikeMasterInfo.Cordon).Length * delta / 1024;
+				finishEdge = target + (self.World.Map.DistanceToEdge(target, delta) + AirstrikeMasterInfo.Cordon).Length * delta / 1024;
 
 				var so = AirstrikeMasterInfo.SquadOffset;
 				var spawnOffset = new WVec(i * so.Y, -Math.Abs(i) * so.X, 0).Rotate(attackRotation);
@@ -269,11 +269,13 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			AirstrikeSlaveEntry slaveEntry = null;
 			foreach (var se in SlaveEntries)
+			{
 				if (se.Actor == a)
 				{
 					slaveEntry = se as AirstrikeSlaveEntry;
 					break;
 				}
+			}
 
 			if (slaveEntry == null)
 				throw new InvalidOperationException("An actor that isn't my slave entered me?");
@@ -309,12 +311,23 @@ namespace OpenRA.Mods.CA.Traits
 				}
 			}
 
-			// Rearm
+			// Rearm & remove slaves that have gone further than the spawn distance (so a new slave spawns)
 			foreach (var se in SlaveEntries)
 			{
 				var slaveEntry = se as AirstrikeSlaveEntry;
 				if (slaveEntry.RearmTicks > 0)
 					slaveEntry.RearmTicks--;
+
+				if (AirstrikeMasterInfo.SpawnDistance > WDist.Zero && slaveEntry.IsValid && slaveEntry.IsLaunched && slaveEntry.Actor.CurrentActivity is ReturnAirstrikeMaster)
+				{
+					var dist = (lastTargetPosition - slaveEntry.Actor.CenterPosition).Length;
+
+					if (dist > AirstrikeMasterInfo.SpawnDistance.Length)
+					{
+						slaveEntry.Actor = null;
+						respawnTicks = Util.ApplyPercentageModifiers(Info.RespawnTicks, reloadModifiers.Select(rm => rm.GetReloadModifier()));
+					}
+				}
 			}
 		}
 
