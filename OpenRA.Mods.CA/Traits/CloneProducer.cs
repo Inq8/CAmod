@@ -32,6 +32,9 @@ namespace OpenRA.Mods.Common.Traits
 		[Desc("Valid target types, to further limit valid clone sources.")]
 		public readonly BitSet<TargetableType> TargetTypes = default;
 
+		[Desc("List of actors that cannot be cloned.")]
+		public readonly string[] InvalidActors = Array.Empty<string>();
+
 		[CursorReference]
 		[Desc("Cursor to display when selecting a clone source.")]
 		public readonly string Cursor = "chrono-target";
@@ -84,6 +87,9 @@ namespace OpenRA.Mods.Common.Traits
 
 		public void UnitProduced(Actor unit)
 		{
+			if (Info.InvalidActors.Contains(unit.Info.Name))
+				return;
+
 			var sp = self.TraitsImplementing<Production>()
 				.FirstOrDefault(p => !p.IsTraitDisabled && !p.IsTraitPaused && p.Info.Produces.Where(p => Info.CloneType.Contains(p)).Any());
 
