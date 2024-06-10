@@ -5154,79 +5154,6 @@ PATR:
 	CapturableProgressBar:
 	CapturableProgressBlink:
 
-INDP:
-	Inherits: ^Building
-	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
-	Inherits@SHAPE: ^3x2Shape
-	Inherits@UPG: ^ProducesUpgrades
-	Inherits@TECHLOCKABLE: ^TechLockable
-	Selectable:
-		Bounds: 3072, 2816, 0, -256
-	HitShape:
-		Type: Rectangle
-			TopLeft: -1536, -1024
-			BottomRight: 1536, 1280
-	WithSpriteBody:
-		PauseOnCondition: disabled || being-warped
-	Buildable:
-		Queue: BuildingSQ, BuildingMQ
-		BuildPaletteOrder: 200
-		Prerequisites: ~structures.soviet, stek, ~tank.doctrine, ~techlevel.high
-		Description: Vehicles & aircraft are produced 15% faster and cost 10% less.
-		BuildLimit: 1
-	TooltipExtras:
-		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked
-	Valued:
-		Cost: 2000
-	-Capturable:
-	-CaptureNotification:
-	-CapturableProgressBar:
-	-CapturableProgressBlink:
-	-CaptureManager:
-	Tooltip:
-		Name: Industrial Plant
-	Building:
-		Footprint: xxx xxx ===
-		Dimensions: 3,3
-		LocalCenterOffset: 0,-512,0
-	Health:
-		HP: 120000
-	Armor:
-		Type: Wood
-	RevealsShroud:
-		MinRange: 4c0
-		Range: 5c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4c0
-	WithBuildingBib:
-	Power:
-		Amount: -150
-	WithDeathAnimation:
-		DeathSequence: dead
-		UseDeathTypeSuffix: false
-	ProvidesPrerequisite@buildingname:
-		RequiresCondition: !tech-locked
-	ProvidesPrerequisite@disabled:
-		Prerequisite: indplowpower
-		RequiresCondition: disabled || empdisable || being-warped
-	Sellable:
-		RequiresCondition: !build-incomplete && !c4 && !being-warped
-	SpawnActorOnDeath:
-		RequiresCondition: !being-warped
-	SpawnRandomActorOnDeath:
-		RequiresCondition: !being-warped
-	GrantCondition@DUMMY:
-		Condition: noupgrade
-		RequiresCondition: noupgrade
-	WithDecoration@TechLock:
-		RequiresCondition: tech-locked
-	-MindControllable:
-	-Targetable@HACKABLE:
-	-MindControllableProgressBar@HACKABLE:
-	-WithDecoration@HACKED:
-	-WithDecoration@RESTORING:
-
 CVAT:
 	Inherits: INDP
 	Tooltip:
@@ -5248,13 +5175,91 @@ CVAT:
 		CloneType: Clone
 		InvalidActors: rmbo, e7, bori, yuri, mast
 
+INDP:
+	Inherits: ^Building
+	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
+	Inherits@SHAPE: ^3x2Shape
+	Inherits@UPG: ^ProducesUpgrades
+	Inherits@TECHLOCKABLE: ^TechLockable
+	Selectable:
+		Bounds: 3072, 2816, 0, -256
+	HitShape:
+		Type: Rectangle
+			TopLeft: -1536, -1024
+			BottomRight: 1536, 1280
+	WithSpriteBody:
+		PauseOnCondition: disabled || being-warped
+	Buildable:
+		Queue: BuildingSQ, BuildingMQ
+		BuildPaletteOrder: 200
+		Prerequisites: ~structures.soviet, stek, ~tank.doctrine, ~techlevel.high
+		Description: Vehicles & aircraft are produced 15% faster and cost 10% less.\n  Tanks are produced 20% faster and cost 15% less.
+		BuildLimit: 1
+	TooltipExtras:
+		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked
+	Valued:
+		Cost: 2000
+	-Capturable:
+	-CaptureNotification:
+	-CapturableProgressBar:
+	-CapturableProgressBlink:
+	-CaptureManager:
+	Tooltip:
+		Name: Industrial Plant
+	Building:
+		Footprint: xxx xxx ===
+		Dimensions: 3,3
+		LocalCenterOffset: 0,-512,0
+	Health:
+		HP: 100000
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	WithBuildingBib:
+	Power:
+		Amount: -150
+	WithDeathAnimation:
+		DeathSequence: dead
+		UseDeathTypeSuffix: false
+	ProvidesPrerequisite@buildingname:
+		RequiresCondition: !tech-locked
+	ProvidesPrerequisite@IndpOrMunp:
+		Prerequisite: indpormunp
+		RequiresCondition: !tech-locked
+	ProvidesPrerequisite@disabled:
+		Prerequisite: indplowpower
+		RequiresCondition: disabled || empdisable || being-warped
+	Sellable:
+		RequiresCondition: !build-incomplete && !c4 && !being-warped
+	SpawnActorOnDeath:
+		RequiresCondition: !being-warped
+	SpawnRandomActorOnDeath:
+		RequiresCondition: !being-warped
+	GrantCondition@DUMMY:
+		Condition: noupgrade
+		RequiresCondition: noupgrade
+	WithDecoration@TechLock:
+		RequiresCondition: tech-locked
+	-MindControllable:
+	-Targetable@HACKABLE:
+	-MindControllableProgressBar@HACKABLE:
+	-WithDecoration@HACKED:
+	-WithDecoration@RESTORING:
+
 MUNP:
 	Inherits: INDP
 	Tooltip:
 		Name: Munitions Plant
 	Buildable:
 		Prerequisites: ~structures.soviet, stek, player.level3, ~arty.doctrine, ~techlevel.high
-		Description: Vehicles & aircraft are produced 15% faster and cost 10% less.
+		Description: Vehicles & aircraft are produced 15% faster and cost 10% less.\n  Artillery are produced 20% faster and cost 15% less.
+	ProvidesPrerequisite@disabled:
+		Prerequisite: munplowpower
 
 OREP:
 	Inherits: ^Building
@@ -5293,15 +5298,12 @@ OREP:
 	-CapturableProgressBlink:
 	-CaptureManager:
 	Valued:
-		Cost: 1800
+		Cost: 2000
 	Tooltip:
 		Name: Ore Purifier
-	ResourcePurifierCA@NORMAL:
-		Modifier: 10
-		RequiresCondition: !disabled && !being-warped && !orep-upgrade
-	ResourcePurifierCA@UPGRADE:
+	ResourcePurifierCA:
 		Modifier: 15
-		RequiresCondition: !disabled && !being-warped && orep-upgrade
+		RequiresCondition: !disabled && !being-warped && !tech-locked
 	Power:
 		Amount: -100
 	WithDeathAnimation:
@@ -5313,9 +5315,6 @@ OREP:
 		RequiresCondition: !being-warped
 	SpawnRandomActorOnDeath:
 		RequiresCondition: !being-warped
-	GrantConditionOnPrerequisite@UPGRADE:
-		Condition: orep-upgrade
-		Prerequisites: orep.upgrade
 	GrantConditionOnPrerequisite@Bot:
 		Condition: owned-by-ai
 		Prerequisites: botplayer
