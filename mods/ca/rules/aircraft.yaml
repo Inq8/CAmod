@@ -1218,23 +1218,23 @@ HIND:
 		Weapon: HindRockets
 		LocalOffset: 85,-213,-185, 85,213,-185
 		PauseOnCondition: !ammo2
-		RequiresCondition: ammo
-	Armament@SECONDARYANYTARGET:
-		Name: secondary
-		Weapon: HindRockets.AnyTarget
+		RequiresCondition: !rocketpods-upgrade
+		ReloadingCondition: rockets-reloading
+		AmmoUsage: 3
+	Armament@SECONDARYUPG:
+		Name: secondary-upg
+		Weapon: HindRockets.UPG
 		LocalOffset: 85,-213,-185, 85,213,-185
 		PauseOnCondition: !ammo2 || rockets-reloading
-		RequiresCondition: !ammo
-	GrantConditionOnAttack@RocketReload:
-		Condition: rockets-reloading
-		ArmamentNames: secondary
-		RevokeDelay: 12
+		RequiresCondition: rocketpods-upgrade
+		AmmoUsage: 2
 	AttackAircraft:
 		FacingTolerance: 80
 		AttackType: Hover
 		PersistentTargeting: false
 		OpportunityFire: false
 		PauseOnCondition: empdisable || being-warped
+		Armaments: primary, secondary, secondary-upg
 	Aircraft:
 		TurnSpeed: 16
 		Speed: 112
@@ -1259,10 +1259,10 @@ HIND:
 		Armaments: primary
 	AmmoPool@SECONDARY:
 		Name: secondary
-		Ammo: 12
-		ReloadDelay: 12
+		Ammo: 36
+		ReloadDelay: 4
 		AmmoCondition: ammo2
-		Armaments: secondary
+		Armaments: secondary, secondary-upg
 	WithAmmoPipsDecoration@PRIMARY:
 		Position: BottomLeft
 		Margin: 4, 3
@@ -1310,6 +1310,9 @@ HIND:
 		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
+	GrantConditionOnPrerequisite@RocketPods:
+		Prerequisites: rocketpods.upgrade
+		Condition: rocketpods-upgrade
 
 U2:
 	Inherits: ^NeutralPlane
@@ -4143,17 +4146,6 @@ KAMV:
 		Weapon: KamovRockets
 		LocalOffset: 85,-213,-185, 85,213,-185
 		PauseOnCondition: !ammo2
-		RequiresCondition: ammo
-	Armament@SECONDARYANYTARGET:
-		Name: secondary
-		Weapon: KamovRockets.AnyTarget
-		LocalOffset: 85,-213,-185, 85,213,-185
-		PauseOnCondition: !ammo2 || rockets-reloading
-		RequiresCondition: !ammo
-	GrantConditionOnAttack@RocketReload:
-		Condition: rockets-reloading
-		ArmamentNames: secondary
-		RevokeDelay: 12
 	AttackAircraft:
 		FacingTolerance: 80
 		AttackType: Hover

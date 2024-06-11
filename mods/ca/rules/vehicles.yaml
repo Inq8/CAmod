@@ -141,8 +141,22 @@ GRAD:
 		RequiresCondition: !mindcontrolled
 	Armament@PRIMARY:
 		Weapon: GradRockets
+		RequiresCondition: !rocketpods-upgrade
 	Armament@SECONDARY:
 		Weapon: GradRocketsWide
+		RequiresCondition: !rocketpods-upgrade
+	Armament@PRIMARYUPG:
+		Weapon: GradRockets.UPG
+		LocalOffset: 268,-100,440
+		RequiresCondition: rocketpods-upgrade
+	Armament@SECONDARYUPG:
+		Weapon: GradRocketsWide.UPG
+		LocalOffset: 268,100,440
+		FireDelay: 6
+		RequiresCondition: rocketpods-upgrade
+	GrantConditionOnPrerequisite@RocketPods:
+		Prerequisites: rocketpods.upgrade
+		Condition: rocketpods-upgrade
 
 SMER:
 	Inherits: GRAD
