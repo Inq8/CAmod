@@ -1007,14 +1007,6 @@
 		DamageTypes: FlakVestMitigatedMinor
 		Modifier: 95
 
-^RocketPodsUpgrade:
-	GrantConditionOnPrerequisite@RocketPods:
-		Condition: rocketpods-upgrade
-		Prerequisites: rocketpods.upgrade
-	ReloadDelayMultiplier@RocketPods:
-		RequiresCondition: rocketpods-upgrade
-		Modifier: 80
-
 ^BinoUpgrade:
 	ExternalCondition@BINO:
 		Condition: bino
@@ -1983,23 +1975,22 @@
 	GivesBounty:
 		RequiresCondition: global-bounty
 
-^ProductionEfficiencyBoost:
-	ProductionTimeMultiplier@ProductionEfficiency:
+^SovietT4Boost:
+	ProductionTimeMultiplier@IndustrialPlantBoost:
 		Multiplier: 95
-		Prerequisites: indpormunp, !indplowpower
-	ProductionCostMultiplier@ProductionEfficiency:
-		Multiplier: 90
-		Prerequisites: indpormunp, !indplowpower
-
-^TankProductionEfficiencyBoost:
-	ProductionCostMultiplier@ProductionEfficiency:
-		Multiplier: 85
 		Prerequisites: indp, !indplowpower
-
-^ArtilleryProductionEfficiencyBoost:
-	ProductionCostMultiplier@ProductionEfficiency:
+	ProductionCostMultiplier@IndustrialPlantBoost:
+		Multiplier: 90
+		Prerequisites: indp, !indplowpower
+	ProductionTimeMultiplier@MunitionsPlantBoost:
 		Multiplier: 85
 		Prerequisites: munp, !munplowpower
+	GrantConditionOnPrerequisite@MunitionsPlantBoost:
+		Condition: munp-boost
+		Prerequisites: munp, !munplowpower
+	ReloadDelayMultiplier@MunitionsPlantBoost:
+		RequiresCondition: munp-boost
+		Modifier: 85
 
 ^OilRefCostReduction:
 	ProductionCostMultiplier@OilRef:
@@ -2034,7 +2025,7 @@
 	Inherits@rflash: ^RedFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
-	Inherits@production: ^ProductionEfficiencyBoost
+	Inherits@SovietT4Boost: ^SovietT4Boost
 	Inherits@oilcost: ^OilRefCostReduction
 	Inherits@selection: ^SelectableCombatUnit
 	Inherits@chrono: ^Chronoshiftable
@@ -2643,7 +2634,7 @@
 	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
 	Inherits@selection: ^SelectableCombatUnit
-	Inherits@production: ^ProductionEfficiencyBoost
+	Inherits@SovietT4Boost: ^SovietT4Boost
 	Inherits@oilcost: ^OilRefCostReduction
 	Inherits@chrono: ^Chronoshiftable
 	Inherits@mind: ^MindControllable
@@ -2890,13 +2881,15 @@
 	Inherits@gflash: ^GreenFlash
 	Inherits@rflash: ^RedFlash
 	Inherits@wflash: ^WhiteFlash
-	Inherits@production: ^ProductionEfficiencyBoost
+	Inherits@SovietT4Boost: ^SovietT4Boost
 	Inherits@oilcost: ^OilRefCostReduction
 	Inherits@C4: ^C4Plantable
 	Inherits@TNT: ^TNTPlantable
 	Inherits@ionsurge: ^IonSurgable
 	Inherits@atomize: ^Atomizable
 	Inherits@Blindable: ^Blindable
+	-GrantConditionOnPrerequisite@MunitionsPlantBoost:
+	-ReloadDelayMultiplier@MunitionsPlantBoost:
 	Huntable:
 	EjectOnDeath:
 		PilotActor: E1
