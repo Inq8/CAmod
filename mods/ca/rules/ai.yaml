@@ -103,10 +103,10 @@ Player:
 					CheckRadius: 5c0
 			cashhack:
 				OrderName: cashhack
-				MinimumAttractiveness: 5
+				MinimumAttractiveness: 1
 				Consideration@1:
 					Against: Enemy
-					Types: Structure
+					Types: ResourceDrainable
 					Attractiveness: 1
 					TargetMetric: None
 					CheckRadius: 8c0
@@ -516,21 +516,39 @@ Player:
 					Attractiveness: -10
 					TargetMetric: Value
 					CheckRadius: 7c0
-			rocketbarragepower:
-				OrderName: rocketbarrage
+			heroesoftheunionpower:
+				OrderName: heroesofunion
+				MinimumAttractiveness: 5
+				Consideration@1:
+					Against: Ally
+					Types: HeroOfTheUnionTargetable
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 3c512
+			tankdroppower:
+				OrderName: tankdrop
+				MinimumAttractiveness: 5
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 8c0
+				Consideration@2:
+					Against: Enemy
+					Types: Water
+					Attractiveness: -5
+					TargetMetric: None
+					CheckRadius: 8c0
+			killzonepower:
+				OrderName: killzone
 				MinimumAttractiveness: 3000
 				Consideration@1:
 					Against: Enemy
-					Types: Structure, Vehicle, Infantry
+					Types: Infantry, Vehicle
 					Attractiveness: 1
 					TargetMetric: Value
-					CheckRadius: 5c0
-				Consideration@2:
-					Against: Ally
-					Types: Air, Ground, Water
-					Attractiveness: -10
-					TargetMetric: Value
-					CheckRadius: 7c0
+					CheckRadius: 8c0
 			ironcurtainpower:
 				OrderName: ironcurtain
 				MinimumAttractiveness: 1000
@@ -580,7 +598,7 @@ Player:
 					CheckRadius: 4c0
 			stealthgenpower:
 				OrderName: stealthgen
-				MinimumAttractiveness: 1000
+				MinimumAttractiveness: 2500
 				FineScanRadius: 2
 				Consideration@1:
 					Against: Enemy
@@ -608,17 +626,16 @@ Player:
 					CheckRadius: 2c0
 			frenzypower:
 				OrderName: frenzy
-				MinimumAttractiveness: 1000
-				FineScanRadius: 2
+				MinimumAttractiveness: 2500
 				Consideration@3:
 					Against: Ally
 					Types: Vehicle, Infantry
-					Attractiveness: 2
+					Attractiveness: 1
 					TargetMetric: Value
 					CheckRadius: 3c0
 			naniterepairpower:
 				OrderName: nrepair
-				MinimumAttractiveness: 1000
+				MinimumAttractiveness: 2000
 				Consideration@1:
 					Against: Ally
 					Types: Vehicle
@@ -627,7 +644,7 @@ Player:
 					CheckRadius: 4c0
 			veilofwarpower:
 				OrderName: veilofwar
-				MinimumAttractiveness: 1000
+				MinimumAttractiveness: 3000
 				Consideration@2:
 					Against: Enemy
 					Types: Infantry, Vehicle
@@ -642,16 +659,16 @@ Player:
 					CheckRadius: 8c0
 			cryostormpower:
 				OrderName: cryostorm
-				MinimumAttractiveness: 1000
+				MinimumAttractiveness: 3000
 				Consideration@1:
 					Against: Enemy
 					Types: Infantry, Vehicle
-					Attractiveness: 2
+					Attractiveness: 1
 					TargetMetric: Value
 					CheckRadius: 4c512
 			heliosbombpower:
 				OrderName: heliosbomb
-				MinimumAttractiveness: 1000
+				MinimumAttractiveness: 3000
 				Consideration@1:
 					Against: Enemy
 					Types: Infantry, Vehicle
@@ -660,12 +677,12 @@ Player:
 					CheckRadius: 7c0
 			patriotstrikepower:
 				OrderName: patriotstrike
-				MinimumAttractiveness: 1000
+				MinimumAttractiveness: 4000
 				FineScanRadius: 2
 				Consideration@1:
 					Against: Enemy
 					Types: Air
-					Attractiveness: 2
+					Attractiveness: 1
 					TargetMetric: Value
 					CheckRadius: 8c0
 			stormspikepower:
@@ -684,12 +701,12 @@ Player:
 				Consideration@3:
 					Against: Enemy
 					Types: Infantry
-					Attractiveness: 2
+					Attractiveness: 1
 					TargetMetric: Value
 					CheckRadius: 2c0
 			ionsurgepower:
 				OrderName: ionsurge
-				MinimumAttractiveness: 2000
+				MinimumAttractiveness: 2500
 				Consideration@1:
 					Against: Ally
 					Types: Vehicle, Infantry, Air
@@ -728,18 +745,18 @@ Player:
 					CheckRadius: 8c0
 			suppressionpower:
 				OrderName: suppression
-				MinimumAttractiveness: 1000
+				MinimumAttractiveness: 3000
 				FineScanRadius: 2
 				Consideration@3:
 					Against: Enemy
 					Types: Vehicle, Infantry
-					Attractiveness: 2
+					Attractiveness: 1
 					TargetMetric: Value
 					CheckRadius: 3c0
 			suppressionsiphonpower:
 				OrderName: suppressionsiphon
-				MinimumAttractiveness: 1000
-				FineScanRadius: 2
+				MinimumAttractiveness: 3000
+				FineScanRadius: 1
 				Consideration@3:
 					Against: Enemy
 					Types: Vehicle, Infantry
@@ -1018,13 +1035,11 @@ Player:
 			tarc.upgrade: 1
 			ttrp.upgrade: 1
 			deso.upgrade: 1
-			indp.upgrade: 1
 			atomicengines.upgrade: 1
 			erad.upgrade: 1
 			lasher.upgrade: 1
 			gattling.upgrade: 1
 			v3.upgrade: 1
-			orep.upgrade: 1
 			charv.upgrade: 1
 			pcan.upgrade: 1
 			crym.upgrade: 1
@@ -1272,13 +1287,11 @@ Player:
 			tarc.upgrade: 1
 			ttrp.upgrade: 1
 			deso.upgrade: 1
-			indp.upgrade: 1
 			atomicengines.upgrade: 1
 			erad.upgrade: 1
 			lasher.upgrade: 1
 			gattling.upgrade: 1
 			v3.upgrade: 1
-			orep.upgrade: 1
 			charv.upgrade: 1
 			pcan.upgrade: 1
 			crym.upgrade: 1
@@ -1525,13 +1538,11 @@ Player:
 			tarc.upgrade: 1
 			ttrp.upgrade: 1
 			deso.upgrade: 1
-			indp.upgrade: 1
 			atomicengines.upgrade: 1
 			erad.upgrade: 1
 			lasher.upgrade: 1
 			gattling.upgrade: 1
 			v3.upgrade: 1
-			orep.upgrade: 1
 			charv.upgrade: 1
 			pcan.upgrade: 1
 			crym.upgrade: 1
@@ -1778,13 +1789,11 @@ Player:
 			tarc.upgrade: 1
 			ttrp.upgrade: 1
 			deso.upgrade: 1
-			indp.upgrade: 1
 			atomicengines.upgrade: 1
 			erad.upgrade: 1
 			lasher.upgrade: 1
 			gattling.upgrade: 1
 			v3.upgrade: 1
-			orep.upgrade: 1
 			charv.upgrade: 1
 			pcan.upgrade: 1
 			crym.upgrade: 1
@@ -1996,13 +2005,11 @@ Player:
 			tarc.upgrade: 1
 			ttrp.upgrade: 1
 			deso.upgrade: 1
-			indp.upgrade: 1
 			atomicengines.upgrade: 1
 			erad.upgrade: 1
 			lasher.upgrade: 1
 			gattling.upgrade: 1
 			v3.upgrade: 1
-			orep.upgrade: 1
 			charv.upgrade: 1
 			pcan.upgrade: 1
 			crym.upgrade: 1
@@ -2141,6 +2148,7 @@ Player:
 			zrai: 15
 			zdef: 15
 			enfo: 15
+			hopl: 15
 			cryt: 15
 			evis: 15
 			impl: 15
@@ -2456,6 +2464,7 @@ Player:
 			zrai: 15
 			zdef: 15
 			enfo: 15
+			hopl: 15
 			cryt: 15
 			evis: 15
 			impl: 15
@@ -2739,6 +2748,7 @@ Player:
 			zrai: 15
 			zdef: 15
 			enfo: 15
+			hopl: 15
 			cryt: 15
 			evis: 15
 			impl: 15
@@ -3014,6 +3024,7 @@ Player:
 			zrai: 15
 			zdef: 15
 			enfo: 15
+			hopl: 15
 			cryt: 15
 			evis: 15
 			impl: 15

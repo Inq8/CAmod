@@ -1984,15 +1984,22 @@
 		RequiresCondition: global-bounty
 
 ^ProductionEfficiencyBoost:
-	ProductionTimeMultiplier@IndustrialPlant:
+	ProductionTimeMultiplier@ProductionEfficiency:
 		Multiplier: 95
-		Prerequisites: indp, !indplowpower
-	ProductionCostMultiplier@IndustrialPlantLevel1:
+		Prerequisites: indpormunp, !indplowpower
+	ProductionCostMultiplier@ProductionEfficiency:
 		Multiplier: 90
-		Prerequisites: indp, !indp.upgrade, !indplowpower
-	ProductionCostMultiplier@IndustrialPlantLevel2:
+		Prerequisites: indpormunp, !indplowpower
+
+^TankProductionEfficiencyBoost:
+	ProductionCostMultiplier@ProductionEfficiency:
 		Multiplier: 85
-		Prerequisites: indp, indp.upgrade, !indplowpower
+		Prerequisites: indp, !indplowpower
+
+^ArtilleryProductionEfficiencyBoost:
+	ProductionCostMultiplier@ProductionEfficiency:
+		Multiplier: 85
+		Prerequisites: munp, !munplowpower
 
 ^OilRefCostReduction:
 	ProductionCostMultiplier@OilRef:
@@ -2889,6 +2896,7 @@
 	Inherits@TNT: ^TNTPlantable
 	Inherits@ionsurge: ^IonSurgable
 	Inherits@atomize: ^Atomizable
+	Inherits@Blindable: ^Blindable
 	Huntable:
 	EjectOnDeath:
 		PilotActor: E1
@@ -3303,7 +3311,7 @@
 		UndeploySounds: cashturn.aud
 	FootprintPlaceBuildingPreview:
 	RequiresBuildableArea:
-		AreaTypes: building
+		AreaTypes: building, defense
 		Adjacent: 7
 	SoundOnDamageTransition:
 		DamagedSounds: sandbag2.aud

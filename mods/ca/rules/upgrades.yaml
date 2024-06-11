@@ -743,11 +743,11 @@ infantry.doctrine:
 	Buildable:
 		BuildPaletteOrder: 4
 		Prerequisites: ~player.soviet, !infantry.doctrine, !tank.doctrine, !arty.doctrine, player.level1, ~techlevel.medium
-		Description: Specialize in infantry:\n• Troop Crawler\n• Overlord Tank (Replaces Mammoth Tank)\n• Improved Paratroopers\n• TBC\n• Cloning Vat\n\n
+		Description: Specialize in infantry:\n• Troop Crawler\n• Overlord Tank (Replaces Mammoth Tank)\n• Improved Paratroopers\n• Heroes of the Union\n• Cloning Vat\n\n
 	TooltipExtras:
 		Attributes: (!) Only ONE Doctrine may be chosen.
 	Valued:
-		Cost: 0
+		Cost: 250
 	RenderSprites:
 		Image: infantry.doctrine
 
@@ -762,7 +762,7 @@ tank.doctrine:
 	TooltipExtras:
 		Attributes: (!) Only ONE Doctrine may be chosen.
 	Valued:
-		Cost: 0
+		Cost: 250
 	RenderSprites:
 		Image: tank.doctrine
 
@@ -773,11 +773,11 @@ arty.doctrine:
 	Buildable:
 		BuildPaletteOrder: 6
 		Prerequisites: ~player.soviet, !infantry.doctrine, !tank.doctrine, !arty.doctrine, player.level1, ~techlevel.medium
-		Description: Specialize in artillery:\n• Grad (Replaces Katyusha)\n• Smerch (Replaces Grad)\n• TBC\n• TBC\n• Munitions Plant\n\n
+		Description: Specialize in artillery:\n• Grad (Replaces Katyusha)\n• TBC\n• Rocket Pods\n• Kill Zone\n• Munitions Plant\n\n
 	TooltipExtras:
 		Attributes: (!) Only ONE Doctrine may be chosen.
 	Valued:
-		Cost: 0
+		Cost: 250
 	RenderSprites:
 		Image: arty.doctrine
 
@@ -929,7 +929,7 @@ imppara.upgrade:
 	Tooltip:
 		Name: Upgrade: Improved Paratroopers
 	Buildable:
-		BuildPaletteOrder: 35
+		BuildPaletteOrder: 30
 		Prerequisites: player.level2, ~player.soviet, ~!player.russia, ~!player.yuri, ~infantry.doctrine, ~techlevel.medium
 		Description: Upgrades the Paratroopers support power.\n\nUpgrades: Paratroopers
 	TooltipExtras:
@@ -944,7 +944,7 @@ impstorm.upgrade:
 	Tooltip:
 		Name: Upgrade: Improved Stormtroopers
 	Buildable:
-		BuildPaletteOrder: 35
+		BuildPaletteOrder: 30
 		Prerequisites: player.level2, ~player.russia, ~infantry.doctrine, ~techlevel.medium
 		Description: Upgrades the Stormtroopers support power.\n\nUpgrades: Stormtroopers
 	TooltipExtras:
@@ -959,7 +959,7 @@ impmuta.upgrade:
 	Tooltip:
 		Name: Upgrade: Improved Genetic Mutation Bomb
 	Buildable:
-		BuildPaletteOrder: 35
+		BuildPaletteOrder: 30
 		Prerequisites: player.level2, ~player.yuri, ~infantry.doctrine, ~techlevel.medium
 		Description: Enhances Genetic Mutation Bomb.\n\nUpgrades: Genetic Mutation Bomb
 	TooltipExtras:
@@ -1006,7 +1006,7 @@ atomicengines.upgrade:
 	Buildable:
 		BuildPaletteOrder: 35
 		Prerequisites: ~player.soviet, npwr, ~techlevel.high
-		Description: Upgrades Mammoth and Heavy tanks\n  with volatile atomic engines.\n\nReplaces: Heavy Tank\nReplaces: Mammoth Tank\nReplaces: Apocalypse Tank
+		Description: Upgrades tanks with volatile atomic engines.\n\nReplaces: Heavy/Lasher Tank\nReplaces: Rhino/Thrasher Tank\nReplaces: Eradicator\nReplaces: Mammoth Tank\nReplaces: Overlord Tank\nReplaces: Apocalypse Tank
 	TooltipExtras:
 		Strengths: + 25% faster movement
 		Weaknesses: – Explodes on death
@@ -1091,21 +1091,6 @@ smer.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: smer.upgrade
-
-indp.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Rapid Industry
-	Buildable:
-		BuildPaletteOrder: 40
-		Prerequisites: ~player.soviet, indp, ~techlevel.high
-		Description: Increases Industrial Plant performance.\n\nUpgrades: Industrial Plant
-	TooltipExtras:
-		Strengths: + Additional 5% production speed\n+ Additional 5% cost reduction
-	Valued:
-		Cost: 1000
-	RenderSprites:
-		Image: indp.upgrade
 
 #######################ALLIES############################
 #########################################################
@@ -1310,21 +1295,6 @@ charv.upgrade:
 		Cost: 1250
 	RenderSprites:
 		Image: charv.upgrade
-
-orep.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Advanced Ore Processing
-	Buildable:
-		BuildPaletteOrder: 40
-		Prerequisites: ~player.allies, orep, ~techlevel.high
-		Description: Increases Ore Purifier efficiency.\n\nUpgrades: Ore Purifier
-	TooltipExtras:
-		Strengths: + Increase income by a further 5%
-	Valued:
-		Cost: 750
-	RenderSprites:
-		Image: orep.upgrade
 
 ################################SCRIN##############################
 ###################################################################

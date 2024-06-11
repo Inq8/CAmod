@@ -4,6 +4,7 @@ V2RL:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@RocketPodsUpgrade: ^RocketPodsUpgrade
+	Inherits@ArtilleryProductionEfficiencyBoost: ^ArtilleryProductionEfficiencyBoost
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 180
@@ -64,6 +65,7 @@ KATY:
 	Inherits@BERSERK: ^Berserk
 	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	Inherits@RocketPodsUpgrade: ^RocketPodsUpgrade
+	Inherits@ArtilleryProductionEfficiencyBoost: ^ArtilleryProductionEfficiencyBoost
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 130
@@ -570,6 +572,7 @@ GTNK.squad:
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	Inherits@ATOMICAMMO: ^AtomicAmmunition
 	Inherits@UpgradeOverlay: ^UpgradeOverlay
+	Inherits@TankProductionEfficiencyBoost: ^TankProductionEfficiencyBoost
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 80
@@ -826,6 +829,7 @@ GTNK.squad:
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	Inherits@ATOMICAMMO: ^AtomicAmmunition
 	Inherits@UpgradeOverlay: ^UpgradeOverlay
+	Inherits@TankProductionEfficiencyBoost: ^TankProductionEfficiencyBoost
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 82
@@ -1004,6 +1008,7 @@ GTNK.squad:
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	Inherits@ATOMICAMMO: ^AtomicAmmunition
 	Inherits@UpgradeOverlay: ^UpgradeOverlay
+	Inherits@TankProductionEfficiencyBoost: ^TankProductionEfficiencyBoost
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 231
@@ -1428,6 +1433,9 @@ ISU:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@ATOMICAMMO: ^AtomicAmmunition
+	Inherits@TankProductionEfficiencyBoost: ^TankProductionEfficiencyBoost
+	ProductionCostMultiplier@ProductionEfficiency:
+		Prerequisites: indpormunp, !indplowpower, !munplowpower
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 183
@@ -2279,8 +2287,8 @@ TRUK:
 		RequiresCondition: !being-warped
 	Targetable@ChaosImmune:
 		TargetTypes: ChaosImmune
-	-ProductionCostMultiplier@IndustrialPlantLevel1:
-	-ProductionCostMultiplier@IndustrialPlantLevel2:
+	-ProductionTimeMultiplier@ProductionEfficiency:
+	-ProductionCostMultiplier@ProductionEfficiency:
 	-ProductionCostMultiplier@OilRef:
 	-WithDecoration@BOMBARD:
 	-WithDecoration@BOMBARD2:
@@ -2571,6 +2579,7 @@ TTNK:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@TankProductionEfficiencyBoost: ^TankProductionEfficiencyBoost
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 182
@@ -6858,6 +6867,7 @@ V3RL:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@RocketPodsUpgrade: ^RocketPodsUpgrade
+	Inherits@ArtilleryProductionEfficiencyBoost: ^ArtilleryProductionEfficiencyBoost
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 181
@@ -8389,6 +8399,7 @@ APOC:
 	Inherits@ATOMICAMMO: ^AtomicAmmunition
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	Inherits@UpgradeOverlay: ^UpgradeOverlay
+	Inherits@TankProductionEfficiencyBoost: ^TankProductionEfficiencyBoost
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 239
@@ -8594,6 +8605,7 @@ APOC.ERAD.ATOMIC:
 	-ReloadAmmoPoolCA@ATOMICAMMODECAY:
 	-DamagedByTintedCells@RADSTRONG:
 	-DamagedByTintedCells@RADMED:
+	-WithDecoration@UpgradeOverlay:
 	-ReplacedInQueue:
 	-Upgradeable@ERAD:
 	Voiced:
@@ -8612,7 +8624,7 @@ OVLD:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 235
 		Prerequisites: stek, ~vehicles.soviet, ~ovld.upgrade, ~!erad.upgrade, ~!atomicengines.upgrade, ~techlevel.high
-		Description: Enormous slow tank fitted with a commissar tower\nwhich supports infantry in combat.
+		Description: Enormous slow tank fitted with a commissar tower\n  which supports infantry in combat.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
 		Weaknesses: • Cannot attack Aircraft
@@ -8804,6 +8816,7 @@ OVLD.ERAD.ATOMIC:
 	-DamagedByTintedCells@RADMED:
 	RenderSprites:
 		Image: ovld.eradi
+	-WithDecoration@UpgradeOverlay:
 	-ReplacedInQueue:
 	-Upgradeable@ERAD:
 	Voiced:
@@ -9034,6 +9047,7 @@ MOLE:
 	-WithFacingSpriteBody:
 	-ChronoshiftableCA:
 	-HealthCapDamageMultiplier@CHRONO:
+	-Carryable:
 	Tooltip:
 		Name: Subterranean APC
 	Valued:
@@ -9066,19 +9080,16 @@ MOLE:
 	GrantTimedCondition@Unburrow:
 		Condition: unburrowing
 		Duration: 30
-	GrantDelayedCondition@Unload:
-		Delay: 100
+	GrantCondition@Unload:
 		Condition: unload
-		PauseOnCondition: being-warped
 	GrantDelayedCondition@Burrow:
 		Delay: 200
 		Condition: burrowing
 		PauseOnCondition: being-warped
 	ActorLostNotification:
 		RequiresCondition: !burrowing
-	Mobile:
-		Speed: 0
-		Locomotor: tracked
+	-Mobile:
+	Immobile:
 	RejectsOrders:
 	Targetable@MindControlImmune:
 		TargetTypes: MindControlImmune
@@ -9086,6 +9097,7 @@ MOLE:
 		TargetTypes: ChaosImmune
 	Cargo:
 		InitialUnits: acol, acol, acol, acol
+		BeforeUnloadDelay: 100
 	WithCargoSounds:
 		ExitSounds: gexit1a.aud
 	UnloadOnCondition@Unload:

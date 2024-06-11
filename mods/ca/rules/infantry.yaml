@@ -635,7 +635,7 @@ E6:
 	GrantTimedCondition@SETUP:
 		Condition: setting-up
 		RequiresCondition: !undeployed
-		Duration: 125
+		Duration: 50
 	GivesBuildableArea:
 		AreaTypes: defense
 		RequiresCondition: deployed && !setting-up
@@ -2253,6 +2253,9 @@ BORI:
 		SquadSize: 1
 		SquadOffset: 0, 3072, 0
 		ArmamentNames: primary
+		SpawnDistance: 60c0
+		RearmTicks: 25
+		RespawnTicks: 25
 	Demolition:
 		DetonationDelay: 45
 		Voice: Demolish

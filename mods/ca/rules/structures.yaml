@@ -5154,6 +5154,27 @@ PATR:
 	CapturableProgressBar:
 	CapturableProgressBlink:
 
+CVAT:
+	Inherits: INDP
+	Tooltip:
+		Name: Cloning Vat
+	Buildable:
+		Prerequisites: ~structures.soviet, stek, player.level3, ~infantry.doctrine, ~techlevel.high
+		Description: Clones infantry trained at a linked barracks.
+	Production:
+		Produces: Clone
+	Exit@1:
+		SpawnOffset: -190,880,0
+		ExitCell: 1,2
+	Exit@2:
+		SpawnOffset: 190,-400,0
+		ExitCell: 1,-1
+	RallyPoint:
+	CloneProducer:
+		Types: InfantrySQ, InfantryMQ
+		CloneType: Clone
+		InvalidActors: rmbo, e7, bori, yuri, mast
+
 INDP:
 	Inherits: ^Building
 	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
@@ -5172,7 +5193,7 @@ INDP:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.soviet, stek, ~tank.doctrine, ~techlevel.high
-		Description: Vehicles & aircraft are produced 15% faster and cost 10% less.
+		Description: Vehicles & aircraft are produced 15% faster and cost 10% less.\n  Tanks are produced 20% faster and cost 15% less.
 		BuildLimit: 1
 	TooltipExtras:
 		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked
@@ -5190,7 +5211,7 @@ INDP:
 		Dimensions: 3,3
 		LocalCenterOffset: 0,-512,0
 	Health:
-		HP: 120000
+		HP: 100000
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -5206,6 +5227,9 @@ INDP:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
 	ProvidesPrerequisite@buildingname:
+		RequiresCondition: !tech-locked
+	ProvidesPrerequisite@IndpOrMunp:
+		Prerequisite: indpormunp
 		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@disabled:
 		Prerequisite: indplowpower
@@ -5227,32 +5251,15 @@ INDP:
 	-WithDecoration@HACKED:
 	-WithDecoration@RESTORING:
 
-CVAT:
-	Inherits: INDP
-	Tooltip:
-		Name: Cloning Vat
-	Buildable:
-		Prerequisites: ~structures.soviet, stek, player.level3, ~infantry.doctrine, ~techlevel.high
-		Description: Clones infantry trained at a linked barracks.
-	Production:
-		Produces: InfantrySQ, InfantryMQ
-	Exit@1:
-		SpawnOffset: -190,880,0
-		ExitCell: 1,2
-	Exit@2:
-		SpawnOffset: 190,-400,0
-		ExitCell: 1,-1
-	RallyPoint:
-	CloneProducer:
-		Types: InfantrySQ, InfantryMQ
-
 MUNP:
 	Inherits: INDP
 	Tooltip:
 		Name: Munitions Plant
 	Buildable:
 		Prerequisites: ~structures.soviet, stek, player.level3, ~arty.doctrine, ~techlevel.high
-		Description: Vehicles & aircraft are produced 15% faster and cost 10% less.
+		Description: Vehicles & aircraft are produced 15% faster and cost 10% less.\n  Artillery are produced 20% faster and cost 15% less.
+	ProvidesPrerequisite@disabled:
+		Prerequisite: munplowpower
 
 OREP:
 	Inherits: ^Building
@@ -5291,15 +5298,12 @@ OREP:
 	-CapturableProgressBlink:
 	-CaptureManager:
 	Valued:
-		Cost: 1800
+		Cost: 2000
 	Tooltip:
 		Name: Ore Purifier
-	ResourcePurifierCA@NORMAL:
-		Modifier: 10
-		RequiresCondition: !disabled && !being-warped && !orep-upgrade
-	ResourcePurifierCA@UPGRADE:
+	ResourcePurifierCA:
 		Modifier: 15
-		RequiresCondition: !disabled && !being-warped && orep-upgrade
+		RequiresCondition: !disabled && !being-warped && !tech-locked
 	Power:
 		Amount: -100
 	WithDeathAnimation:
@@ -5311,9 +5315,6 @@ OREP:
 		RequiresCondition: !being-warped
 	SpawnRandomActorOnDeath:
 		RequiresCondition: !being-warped
-	GrantConditionOnPrerequisite@UPGRADE:
-		Condition: orep-upgrade
-		Prerequisites: orep.upgrade
 	GrantConditionOnPrerequisite@Bot:
 		Condition: owned-by-ai
 		Prerequisites: botplayer
@@ -5384,7 +5385,7 @@ UPGC:
 	-CapturableProgressBlink:
 	-CaptureManager:
 	Valued:
-		Cost: 2000
+		Cost: 1800
 	Tooltip:
 		Name: Upgrade Center
 	ValidFactions:

@@ -22,11 +22,18 @@ namespace OpenRA.Mods.Common.Traits
 	public class CloneProducerInfo : TraitInfo
 	{
 		[FieldLoader.Require]
-		[Desc("Production types (must share one or more values of the `Produces` property of the target's Production trait).")]
+		[Desc("Production types (must share one or more values of the `Produces` property of the clone source's Production trait).")]
 		public readonly string[] Types = Array.Empty<string>();
+
+		[FieldLoader.Require]
+		[Desc("Clone type. Matches the `Produces` property of the clone producer's Production trait.")]
+		public readonly string CloneType = null;
 
 		[Desc("Valid target types, to further limit valid clone sources.")]
 		public readonly BitSet<TargetableType> TargetTypes = default;
+
+		[Desc("List of actors that cannot be cloned.")]
+		public readonly string[] InvalidActors = Array.Empty<string>();
 
 		[CursorReference]
 		[Desc("Cursor to display when selecting a clone source.")]
@@ -80,8 +87,11 @@ namespace OpenRA.Mods.Common.Traits
 
 		public void UnitProduced(Actor unit)
 		{
+			if (Info.InvalidActors.Contains(unit.Info.Name))
+				return;
+
 			var sp = self.TraitsImplementing<Production>()
-				.FirstOrDefault(p => !p.IsTraitDisabled && !p.IsTraitPaused && p.Info.Produces.Where(p => Info.Types.Contains(p)).Any());
+				.FirstOrDefault(p => !p.IsTraitDisabled && !p.IsTraitPaused && p.Info.Produces.Where(p => Info.CloneType.Contains(p)).Any());
 
 			if (sp != null)
 			{

@@ -38,6 +38,9 @@ namespace OpenRA.Mods.CA.Activities
 				if (self.IsDead || master.IsDead)
 					return;
 
+				if (spawnerMaster == null || !spawnerMaster.SlaveEntries.Select(se => se.Actor).Contains(self))
+					return;
+
 				spawnerMaster.PickupSlave(master, self);
 				w.Remove(self);
 

@@ -413,6 +413,15 @@ HindRockets.AnyTarget:
 	Inherits: HindRockets
 	-InvalidTargets:
 
+KamovRockets:
+	Inherits: HindRockets
+	Warhead@1Dam: SpreadDamage
+		Damage: 3550
+
+KamovRockets.AnyTarget:
+	Inherits: KamovRockets
+	-InvalidTargets:
+
 HellfireAG.Harrier:
 	Inherits: ^AirToGroundMissile
 	Range: 7c0
@@ -2147,34 +2156,48 @@ BlackEagleMissilesAA:
 		ValidTargets: Ground, Air, Ship, Trees
 
 PhantomMissiles:
-	Inherits: BlackEagleMissiles
-	Burst: 2
-	BurstDelays: 8
+	Inherits: Maverick
+	Report: beag-fire1.aud, beag-fire2.aud
 	Projectile: MissileCA
+		Image: MISSILE
 		Speed: 550
 		TrailInterval: 1
 	Warhead@1Dam: SpreadDamage
 		Damage: 12000
-	Warhead@VeiledCondition: GrantExternalConditionCA
-		Range: 1c512
-		Duration: 200
+		Versus:
+			Concrete: 75
 	Warhead@3Eff: CreateEffect
-		Explosions: idlesm
+		Explosions: idle
+		ExplosionPalette: caneon
+		Image: nullhit
+		ImpactSounds: null-hit1.aud
+	Warhead@Blind: GrantExternalConditionCA
+		Range: 0c256
+		Duration: 150
+		Condition: blinded
+		InvalidTargets: Infantry
 
 PhantomMissilesAA:
-	Inherits: BlackEagleMissilesAA
-	Burst: 2
-	BurstDelays: 8
+	Inherits: MaverickAA
+	Range: 9c0
+	Report: beag-fire1.aud, beag-fire2.aud
 	Projectile: MissileCA
+		Image: MISSILE
 		Speed: 550
 		TrailInterval: 1
 	Warhead@1Dam: SpreadDamage
 		Damage: 8000
-	Warhead@VeiledCondition: GrantExternalConditionCA
-		Range: 1c512
-		Duration: 200
 	Warhead@3Eff: CreateEffect
-		Explosions: idlesm
+		Explosions: idle
+		ExplosionPalette: caneon
+		Image: nullhit
+		ImpactSounds: null-hit1.aud
+	Warhead@Blind: GrantExternalConditionCA
+		Range: 0c341
+		Duration: 150
+		Condition: blinded
+		ValidTargets: Air, AirSmall
+		ValidRelationships: Enemy, Neutral
 
 RocketShells:
 	Inherits: JuggernautGun

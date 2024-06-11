@@ -2761,6 +2761,47 @@ U2Camera:
 	TargetActorCenter: true
 	Projectile: InstantHit
 
+KillZoneSpawner:
+	Range: 1c0
+	ReloadDelay: 100
+	Report: chute1.aud
+	Projectile: InstantHit
+	Warhead@Spawn: SpawnActor
+		Delay: 40
+		Actors: killzone
+		Range: 1
+
+KillZoneFlare:
+	Range: 1c0
+	ReloadDelay: 100
+	FirstBurstTargetOffset: -3072, 0, 0
+	Projectile: Bullet
+		LaunchAngle: 0
+		Speed: 100
+		Image: BOMB
+		ContrailLength: 12
+		ContrailStartColorUsePlayerColor: true
+		ContrailEndColorUsePlayerColor: true
+		ContrailStartColorAlpha: 128
+		ContrailStartWidth: 64
+		Shadow: true
+	Warhead@Spawn: SpawnActor
+		Actors: flare.killzone
+		Range: 1
+		Delay: 5
+
+KillZoneFlare2:
+	Inherits: KillZoneFlare
+	FirstBurstTargetOffset: 1550,2720,0
+	Warhead@Spawn: SpawnActor
+		-Delay:
+
+KillZoneFlare3:
+	Inherits: KillZoneFlare
+	FirstBurstTargetOffset: 1550,-2720,0
+	Warhead@Spawn: SpawnActor
+		-Delay:
+
 DummyWeapon:
 	Warhead@Dummy: Dummy
 
@@ -3110,11 +3151,12 @@ VertigoBomb:
 	Warhead@1Dam: SpreadDamage
 		Versus:
 			Wood: 80
+			Concrete: 100
 	-Warhead@Concussion:
 
 VertigoBombTargeter:
-	Range: 9c0
-	MinRange: 7c0
+	Range: 7c0
+	MinRange: 5c0
 	ReloadDelay: 50
 	Projectile: InstantHit
 	Warhead@1Dam: Dummy

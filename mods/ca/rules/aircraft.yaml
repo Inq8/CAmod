@@ -1366,6 +1366,21 @@ U2:
 	EjectOnDeath:
 		ChuteSound: gejecta.aud
 
+U2.KillZone:
+	Inherits: U2
+	RenderSprites:
+		Image: u2
+	Armament:
+		Weapon: KillZoneSpawner
+	Armament@Flare1:
+		Weapon: KillZoneFlare
+	Armament@Flare2:
+		Weapon: KillZoneFlare2
+	Armament@Flare3:
+		Weapon: KillZoneFlare3
+	AttackBomber:
+		FacingTolerance: 512
+
 SMIG:
 	Inherits: ^NeutralPlane
 	Inherits@EMP: ^EmpDisable
@@ -1439,6 +1454,11 @@ SMIG:
 	GivesExperienceToMaster:
 	EjectOnDeath:
 		ChuteSound: gejecta.aud
+	WithEnterExitWorldOverlay:
+		Image: smigboom
+		EnterSequence: enter
+		ExitSequence: exit
+		Palette: effect
 
 A10:
 	Inherits: ^PlaneTD
@@ -3958,11 +3978,11 @@ PHAN:
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 200
 		Prerequisites: anyradar, ~aircraft.phan
-		Description: Air superiority fighter with range/vision reducing missiles.
+		Description: Air superiority fighter with incapacitating missiles.
 	TooltipExtras:
 		Strengths: • Strong vs Aircraft, Heavy Armor, Light Armor
 		Weaknesses: • Weak vs Infantry, Buildings
-		Attributes: • Reduces range and vision of targets
+		Attributes: • Disables weapons and vision of enemy vehicles and aircraft
 	Valued:
 		Cost: 1800
 	Tooltip:
@@ -4111,7 +4131,7 @@ KAMV:
 		Range: 9c0
 		Type: GroundPosition
 	Armament@PRIMARY:
-		Weapon: ChainGun
+		Weapon: KamovChainGun
 		LocalOffset: 500,0,-250
 		MuzzleSequence: muzzle
 		PauseOnCondition: !ammo
@@ -4120,13 +4140,13 @@ KAMV:
 		CasingTargetOffset: 400, -300, 0
 	Armament@SECONDARY:
 		Name: secondary
-		Weapon: HindRockets
+		Weapon: KamovRockets
 		LocalOffset: 85,-213,-185, 85,213,-185
 		PauseOnCondition: !ammo2
 		RequiresCondition: ammo
 	Armament@SECONDARYANYTARGET:
 		Name: secondary
-		Weapon: HindRockets.AnyTarget
+		Weapon: KamovRockets.AnyTarget
 		LocalOffset: 85,-213,-185, 85,213,-185
 		PauseOnCondition: !ammo2 || rockets-reloading
 		RequiresCondition: !ammo
