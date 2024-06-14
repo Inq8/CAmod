@@ -1620,9 +1620,9 @@
 		IsDecoration: True
 
 ^KillZoneTargetable:
-	DamageTypeDamageMultiplier@KillZone:
+	DamageMultiplier@KillZone:
 		DamageTypes: KillZone
-		Modifier: 200
+		Modifier: 125
 		RequiresCondition: killzone
 	ExternalCondition@KillZone:
 		Condition: killzone
@@ -2041,6 +2041,7 @@
 	Inherits@Blindable: ^Blindable
 	Inherits@KillZoneTargetable: ^KillZoneTargetable
 	Huntable:
+	EdibleByLeap:
 	OwnerLostAction:
 		Action: Kill
 	UpdatesPlayerStatistics:
@@ -3058,6 +3059,7 @@
 		Range: 3c0
 	FrozenUnderFog:
 	FrozenUnderFogUpdatedByGpsRadar:
+	EdibleByLeap:
 	Tooltip:
 		GenericName: Structure
 	MapEditorData:

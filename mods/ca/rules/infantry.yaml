@@ -4,7 +4,7 @@ DOG:
 		Queue: InfantrySQ, DogMQ
 		BuildAtProductionType: Dog
 		BuildPaletteOrder: 51
-		Prerequisites: kenn, ~infantry.dog
+		Prerequisites: kenn, ~infantry.dog, ~!tdog.upgrade
 		Description: Melee anti-infantry scout unit.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry
@@ -87,6 +87,30 @@ DOG:
 	-Captures@DRIVER_KILL:
 	-CaptureManager:
 	-Targetable@SpyDisguise:
+
+TDOG:
+	Inherits: DOG
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Buildable:
+		Prerequisites: kenn, ~infantry.dog, ~tdog.upgrade
+		Description: Scout with attached explosives that will detonate on contact with a target.
+	Tooltip:
+		Name: Terror Dog
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor, Heavy Armor
+		Weaknesses: • Cannot attack Aircraft
+		Attributes: • Can detect cloaked units, spies, mines\n• Detects the scent of enemy infantry beyond vision range\n• Immune to mind control\n• Explodes on contact with a target
+	Valued:
+		Cost: 300
+	KillsSelf:
+		RequiresCondition: eating
+	Armament:
+		Weapon: TerrorDogJaw
+	Explodes:
+		Weapon: DogExplode
+		EmptyWeapon: DogExplode
+	AttackLeap:
+		TargetFrozenActors: False
 
 E1:
 	Inherits: ^Soldier
@@ -4214,6 +4238,7 @@ MORT.Cryo:
 CDOG:
 	Inherits: DOG
 	Inherits@InfiltratorStolenTech: ^InfiltratorStolenTech
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -4222,12 +4247,14 @@ CDOG:
 		Description: Melee anti-infantry scout unit.
 	Valued:
 		Cost: 400
+	Mobile:
+		Speed: 100
 	Tooltip:
 		Name: Cyberdog
 	Armor:
 		Type: Light
 	Health:
-		HP: 15000
+		HP: 16000
 	Voiced:
 		VoiceSet: CyberdogVoice
 	Armament:
