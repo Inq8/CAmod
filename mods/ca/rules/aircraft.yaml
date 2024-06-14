@@ -1880,6 +1880,62 @@ GALX.Helios:
 	RenderSprites:
 		Image: galx
 
+ANTO:
+	Inherits: C17
+	RenderSprites:
+		Image: anto
+		PlayerPalette: player
+	Tooltip:
+		Name: Heavy Transport Aircraft
+	Health:
+		HP: 90000
+	Aircraft:
+		Speed: 266
+		TurnSpeed: 26
+	DynamicSpeedMultiplier:
+	SpawnActorOnDeath:
+		Actor: ANTO.Husk
+		RequiresCondition: !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: ANTO.Husk.EMP
+		RequiresCondition: empdisable
+	Contrail@1:
+		Offset: -261,-650,0
+		TrailLength: 15
+		StartColorUsePlayerColor: false
+		StartColor: FFFFFF80
+		StartColorAlpha: 96
+	Contrail@2:
+		Offset: -85,-384,0
+		TrailLength: 16
+		StartColorUsePlayerColor: false
+		StartColor: FFFFFF80
+		StartColorAlpha: 96
+	Contrail@3:
+		Offset: -85,384,0
+		TrailLength: 16
+		StartColorUsePlayerColor: false
+		StartColor: FFFFFF80
+		StartColorAlpha: 96
+	Contrail@4:
+		Offset: -261,650,0
+		TrailLength: 15
+		StartColorUsePlayerColor: false
+		StartColor: FFFFFF80
+		StartColorAlpha: 96
+	Contrail@5:
+		Offset: -400,-925,0
+		TrailLength: 16
+		StartColorUsePlayerColor: false
+		StartColor: FFFFFF80
+		StartColorAlpha: 96
+	Contrail@6:
+		Offset: -400,925,0
+		TrailLength: 15
+		StartColorUsePlayerColor: false
+		StartColor: FFFFFF80
+		StartColorAlpha: 96
+
 APCH:
 	Inherits: ^HelicopterTD
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove

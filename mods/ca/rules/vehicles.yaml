@@ -5307,6 +5307,9 @@ TRPC:
 		Type: Heavy
 	Mobile:
 		Speed: 64
+		Voice: Move
+	Passenger:
+		Voice: Move
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 5c0
@@ -5315,6 +5318,7 @@ TRPC:
 		Range: 4c0
 	Cargo:
 		Types: Infantry
+		UnloadVoice: Unload
 		MaxWeight: 8
 		LoadingCondition: notmobile
 		LoadedCondition: cargo
@@ -5368,6 +5372,8 @@ TRPC:
 	-GivesExperienceCA:
 	-GrantConditionOnPrerequisite@GLOBALBOUNTY:
 	-GivesBounty:
+	Voiced:
+		VoiceSet: TrpcVoice
 
 IFV:
 	Inherits: ^Tank

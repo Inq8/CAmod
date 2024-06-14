@@ -1165,6 +1165,37 @@ GALX.Husk.EMP:
 	Inherits: GALX.Husk
 	Inherits: ^EmpVisualEffect
 
+ANTO.Husk:
+	Inherits: ^PlaneHusk
+	Tooltip:
+		Name: Transport Aircraft
+	Aircraft:
+		TurnSpeed: 5
+		Speed: 266
+	LeavesTrails@0:
+		Offsets: -432,560,0
+		MovingInterval: 2
+		Image: smokey
+		StationaryInterval: 2
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
+	LeavesTrails@1:
+		Offsets: -432,-560,0
+		MovingInterval: 2
+		Image: smokey
+		StationaryInterval: 2
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
+	RenderSprites:
+		Image: anto
+		PlayerPalette: playertd
+
+ANTO.Husk.EMP:
+	Inherits: ANTO.Husk
+	Inherits: ^EmpVisualEffect
+
 BTR.Husk:
 	Inherits: ^Husk
 	Tooltip:
