@@ -129,12 +129,6 @@ GRAD:
 	ReplacedInQueue:
 		Actors: smer
 	-Upgradeable@Grad:
-	Upgradeable@Smerch:
-		Type: smer.upgrade
-		UpgradingCondition: upgrading
-		Actor: smer
-		UpgradeAtActors: fix, rep, srep
-		RequiresCondition: !mindcontrolled
 	Armament@PRIMARY:
 		Weapon: GradRockets
 		RequiresCondition: !rocketpods-upgrade
@@ -154,26 +148,120 @@ GRAD:
 		Prerequisites: rocketpods.upgrade
 		Condition: rocketpods-upgrade
 
-SMER:
-	Inherits: GRAD
+NUKC:
+	Inherits: ^Tank
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@ATOMICAMMO: ^AtomicAmmunition
 	Buildable:
-		BuildPaletteOrder: 132
-		Prerequisites: ~vehicles.soviet, ~arty.doctrine, ~smer.upgrade, ~techlevel.high
-		IconPalette: chrome
-	Tooltip:
-		Name: Smerch
+		Queue: VehicleSQ, VehicleMQ
+		BuildPaletteOrder: 183
+		Prerequisites: anyradar, ~vehicles.soviet, ~techlevel.medium
+		Description: Nuclear long-range artillery.
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
+		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets
+		Attributes: • Can crush concrete walls
 	Valued:
-		Cost: 1750
+		Cost: 2500
+	Tooltip:
+		Name: Nuke Cannon
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
 	Health:
-		HP: 20000
-	Armament@PRIMARY:
-		Weapon: SmerchRockets
-	Armament@SECONDARY:
-		Weapon: SmerchRocketsWide
-		FireDelay: 20
-	-ReplacedInQueue:
-	-Upgradeable@Smerch:
-	-WithDecoration@UpgradeOverlay:
+		HP: 60000
+	Armor:
+		Type: Heavy
+	Mobile:
+		TurnSpeed: 6
+		Speed: 46
+		Locomotor: heavytracked
+		Voice: Move
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Armament:
+		Weapon: 280mmAtomic
+		Turret: deploy
+		LocalOffset: 824,0,758
+		MuzzleSequence: muzzle
+		PauseOnCondition: has-atomic-ammo || atomic-reloading
+		ReloadingCondition: reloading
+		RequiresCondition: deployed
+	Armament@ATOMICAMMO:
+		Weapon: 280mmNeutron
+		Turret: deploy
+		LocalOffset: 824,0,758
+		MuzzleSequence: muzzle
+		PauseOnCondition: !has-atomic-ammo || reloading
+		ReloadingCondition: atomic-reloading
+		RequiresCondition: deployed
+	AttackTurreted@deployed:
+		Voice: Attack
+		Turrets: deploy
+		RequiresCondition: deployed
+		OutsideRangeRequiresForceFire: True
+		RangeMargin: 0
+	GrantConditionOnDeploy:
+		DeployedCondition: deployed
+		UndeployedCondition: undeployed
+		UndeployOnMove: True
+		Voice: Action
+		DeploySounds: vnukde1a.aud
+		UndeploySounds: vnukde2a.aud
+		PauseOnCondition: being-warped
+		SmartDeploy: True
+		Facing: 240
+	WithFacingSpriteBody:
+		RequiresCondition: undeployed	
+	WithSpriteTurret:
+		Turret: deploy
+		Sequence: deployed
+		RequiresCondition: deployed
+		PauseOnCondition: disabled || empdisable || being-warped
+	Turreted:
+		TurnSpeed: 6
+		Turret: deploy
+		InitialFacing: 0
+		RealignDelay: 3
+		RequiresCondition: deployed
+	WithMuzzleOverlay:
+	WithRestartableIdleOverlay@ATOMICAMMO:
+		RequiresCondition: atomic-ammo && has-atomic-ammo < 3
+	WithAmmoPipsDecoration@ATOMICAMMO:
+		PipCount: 1
+	AmmoPool@ATOMICAMMO:
+		Ammo: 1
+	ReloadAmmoPool@ATOMICAMMO:
+		Count: 1
+		RequiresCondition: atomic-ammo && has-atomic-ammo < 3
+	ReloadAmmoPoolCA@ATOMICAMMODECAY:
+		Count: -1
+	Explodes:
+		Weapon: ArtilleryExplode
+		LoadedChance: 75
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
+	Passenger:
+		Voice: Move
+	Voiced:
+		VoiceSet: SiegeTankVoice
+	SpawnActorOnDeath:
+		Actor: NUKC.Husk
+		RequiresCondition: !being-warped
+	AutoDeployer@AI:
+		RequiresCondition: botowner && !deployed
+		DeployChance: 100
+		DeployTrigger: Attack
+		DeployTicks: 5
+		UndeployTicks: 50
 
 1TNK:
 	Inherits: ^Tank

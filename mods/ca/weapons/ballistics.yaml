@@ -556,6 +556,75 @@ TitanGun:
 		Falloff: 100, 55, 32, 5
 		LayerName: radioactivity.weak
 
+280mmAtomic:
+	Inherits: ^Artillery
+	ReloadDelay: 150
+	Report: vnukweaa.aud
+	MinRange: 2c0
+	Range: 10c0
+	TargetActorCenter: true
+	Projectile: Bullet
+		Speed: 145
+		Image: 280mma
+		LaunchAngle: 92
+		Inaccuracy: 1c138
+	Warhead@1Dam: SpreadDamage
+		Damage: 30000
+		Falloff: 100, 55, 20, 5
+		Versus:
+			None: 55
+			Wood: 100
+			Concrete: 100
+			Light: 70
+			Heavy: 26
+	Warhead@2Dam: SpreadDamage
+		Damage: 70000
+		Spread: 341
+		ValidTargets: Infantry
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Warhead@3Eff: CreateEffect
+		Explosions: nuke3
+		ImpactActors: false
+		ImpactSounds: gexpnuka.aud
+	Warhead@Concussion1: GrantExternalConditionCA
+		Range: 0c768
+		Duration: 150
+		Condition: concussion
+		ValidTargets: Ground, Infantry, Vehicle, Ship
+	Warhead@Concussion2: GrantExternalConditionCA
+		Range: 1c768
+		Duration: 50
+		Condition: concussion
+		ValidTargets: Ground, Infantry, Vehicle, Ship
+	Warhead@5Shake: ShakeScreen
+		Duration: 5
+		Intensity: 1
+		Multiplier: 0.5,0.5
+	Warhead@6Smu_areanuke1: LeaveSmudge
+		Size: 1
+		SmudgeType: Scorch
+		InvalidTargets: Vehicle, Structure, Wall, Trees
+	Warhead@18Radio: CreateTintedCells
+		Level: 300
+		Falloff: 100, 55, 32, 5
+		LayerName: radioactivity.weak
+
+280mmNeutron:
+	Inherits: 280mmAtomic
+	Projectile: Bullet
+		Image: 280mmn
+	Warhead@3: ChangeOwnerToNeutral
+		ValidTargets: DriverKill
+		CargoEffect: Kill
+		Range: 3c0
+	Warhead@highlight: GrantExternalConditionCA
+		Range: 3c0
+		Duration: 2
+		Condition: highlight
+		ValidTargets: DriverKill
+	Warhead@3Eff: CreateEffect
+		ImpactSounds: gexpneua.aud, gexpneub.aud, gexpneuc.aud, gexpneud.aud
+
 8Inch:
 	Inherits: ^Artillery
 	MinRange: 3c0
