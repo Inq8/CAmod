@@ -3,8 +3,6 @@ V2RL:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
-	Inherits@RocketPodsUpgrade: ^RocketPodsUpgrade
-	Inherits@ArtilleryProductionEfficiencyBoost: ^ArtilleryProductionEfficiencyBoost
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 180
@@ -64,8 +62,6 @@ KATY:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@UpgradeOverlay: ^UpgradeOverlay
-	Inherits@RocketPodsUpgrade: ^RocketPodsUpgrade
-	Inherits@ArtilleryProductionEfficiencyBoost: ^ArtilleryProductionEfficiencyBoost
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 130
@@ -141,8 +137,22 @@ GRAD:
 		RequiresCondition: !mindcontrolled
 	Armament@PRIMARY:
 		Weapon: GradRockets
+		RequiresCondition: !rocketpods-upgrade
 	Armament@SECONDARY:
 		Weapon: GradRocketsWide
+		RequiresCondition: !rocketpods-upgrade
+	Armament@PRIMARYUPG:
+		Weapon: GradRockets.UPG
+		LocalOffset: 268,-100,440
+		RequiresCondition: rocketpods-upgrade
+	Armament@SECONDARYUPG:
+		Weapon: GradRocketsWide.UPG
+		LocalOffset: 268,100,440
+		FireDelay: 6
+		RequiresCondition: rocketpods-upgrade
+	GrantConditionOnPrerequisite@RocketPods:
+		Prerequisites: rocketpods.upgrade
+		Condition: rocketpods-upgrade
 
 SMER:
 	Inherits: GRAD
@@ -572,7 +582,6 @@ GTNK.squad:
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	Inherits@ATOMICAMMO: ^AtomicAmmunition
 	Inherits@UpgradeOverlay: ^UpgradeOverlay
-	Inherits@TankProductionEfficiencyBoost: ^TankProductionEfficiencyBoost
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 80
@@ -829,7 +838,6 @@ GTNK.squad:
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	Inherits@ATOMICAMMO: ^AtomicAmmunition
 	Inherits@UpgradeOverlay: ^UpgradeOverlay
-	Inherits@TankProductionEfficiencyBoost: ^TankProductionEfficiencyBoost
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 82
@@ -1008,7 +1016,6 @@ GTNK.squad:
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	Inherits@ATOMICAMMO: ^AtomicAmmunition
 	Inherits@UpgradeOverlay: ^UpgradeOverlay
-	Inherits@TankProductionEfficiencyBoost: ^TankProductionEfficiencyBoost
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 231
@@ -1433,9 +1440,6 @@ ISU:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@ATOMICAMMO: ^AtomicAmmunition
-	Inherits@TankProductionEfficiencyBoost: ^TankProductionEfficiencyBoost
-	ProductionCostMultiplier@ProductionEfficiency:
-		Prerequisites: indpormunp, !indplowpower, !munplowpower
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 183
@@ -2287,8 +2291,7 @@ TRUK:
 		RequiresCondition: !being-warped
 	Targetable@ChaosImmune:
 		TargetTypes: ChaosImmune
-	-ProductionTimeMultiplier@ProductionEfficiency:
-	-ProductionCostMultiplier@ProductionEfficiency:
+	-ProductionCostMultiplier@IndustrialPlantBoost:
 	-ProductionCostMultiplier@OilRef:
 	-WithDecoration@BOMBARD:
 	-WithDecoration@BOMBARD2:
@@ -2579,7 +2582,6 @@ TTNK:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
-	Inherits@TankProductionEfficiencyBoost: ^TankProductionEfficiencyBoost
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 182
@@ -6866,8 +6868,6 @@ V3RL:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
-	Inherits@RocketPodsUpgrade: ^RocketPodsUpgrade
-	Inherits@ArtilleryProductionEfficiencyBoost: ^ArtilleryProductionEfficiencyBoost
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 181
@@ -8399,7 +8399,6 @@ APOC:
 	Inherits@ATOMICAMMO: ^AtomicAmmunition
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	Inherits@UpgradeOverlay: ^UpgradeOverlay
-	Inherits@TankProductionEfficiencyBoost: ^TankProductionEfficiencyBoost
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 239

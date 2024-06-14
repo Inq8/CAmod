@@ -397,7 +397,6 @@ HindRockets:
 	ReloadDelay: 70
 	Report: hind-rocket1.aud, hind-rocket2.aud
 	ValidTargets: Ground
-	InvalidTargets: Infantry
 	BurstDelays: 12
 	Burst: 6
 	Warhead@1Dam: SpreadDamage
@@ -409,18 +408,14 @@ HindRockets:
 			Concrete: 30
 			Heavy: 75
 
-HindRockets.AnyTarget:
+HindRockets.UPG:
 	Inherits: HindRockets
-	-InvalidTargets:
+	BurstDelays: 8
 
 KamovRockets:
 	Inherits: HindRockets
 	Warhead@1Dam: SpreadDamage
 		Damage: 3550
-
-KamovRockets.AnyTarget:
-	Inherits: KamovRockets
-	-InvalidTargets:
 
 HellfireAG.Harrier:
 	Inherits: ^AirToGroundMissile
@@ -1100,7 +1095,7 @@ THWeapon:
 
 KatyushaRockets:
 	Inherits: ^AntiGroundMissile
-	ReloadDelay: 160
+	ReloadDelay: 180
 	Range: 8c768
 	MinRange: 3c0
 	Report: katyrocket1.aud, katyrocket2.aud, katyrocket3.aud
@@ -1144,12 +1139,20 @@ GradRockets:
 	Report: grad-fire1.aud, grad-fire2.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 350
-		Falloff: 1000, 448, 192, 50, 18, 7, 0
+		Falloff: 1000, 368, 135, 50, 18, 7, 0
 
 GradRocketsWide:
 	Inherits: GradRockets
 	Projectile: Bullet
 		Inaccuracy: 2c512
+
+GradRockets.UPG:
+	Inherits: GradRockets
+	Burst: 5
+
+GradRocketsWide.UPG:
+	Inherits: GradRocketsWide
+	Burst: 5
 
 SmerchRockets:
 	Inherits: GradRockets

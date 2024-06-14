@@ -5173,7 +5173,6 @@ CVAT:
 	CloneProducer:
 		Types: InfantrySQ, InfantryMQ
 		CloneType: Clone
-		InvalidActors: rmbo, e7, bori, yuri, mast
 
 INDP:
 	Inherits: ^Building
@@ -5193,7 +5192,7 @@ INDP:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.soviet, stek, ~tank.doctrine, ~techlevel.high
-		Description: Vehicles & aircraft are produced 15% faster and cost 10% less.\n  Tanks are produced 20% faster and cost 15% less.
+		Description: Vehicles & aircraft are produced 15% faster and cost 10% less.
 		BuildLimit: 1
 	TooltipExtras:
 		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked
@@ -5257,7 +5256,7 @@ MUNP:
 		Name: Munitions Plant
 	Buildable:
 		Prerequisites: ~structures.soviet, stek, player.level3, ~arty.doctrine, ~techlevel.high
-		Description: Vehicles & aircraft are produced 15% faster and cost 10% less.\n  Artillery are produced 20% faster and cost 15% less.
+		Description: Vehicles & aircraft are produced 15% faster.\n  Vehicles have 15% reduced reload time.
 	ProvidesPrerequisite@disabled:
 		Prerequisite: munplowpower
 
