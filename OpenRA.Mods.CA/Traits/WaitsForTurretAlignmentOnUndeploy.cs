@@ -21,7 +21,7 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new WaitsForTurretAlignmentOnUndeploy(init, this); }
 	}
 
-	public class WaitsForTurretAlignmentOnUndeploy : INotifyCreated, INotifyDeployTriggered, ITick
+	public class WaitsForTurretAlignmentOnUndeploy : INotifyDeployTriggered, ITick
 	{
 		public readonly WaitsForTurretAlignmentOnUndeployInfo Info;
 		readonly IEnumerable<Turreted> turrets;
@@ -39,11 +39,6 @@ namespace OpenRA.Mods.CA.Traits
 		bool AllTurretsAligned()
 		{
 			return turrets.All(t => t.LocalOrientation.Yaw == t.Info.InitialFacing);
-		}
-
-		void INotifyCreated.Created(Actor self)
-		{
-
 		}
 
 		void ITick.Tick(Actor self)

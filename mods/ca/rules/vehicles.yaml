@@ -212,7 +212,10 @@ NUKC:
 		SmartDeploy: True
 		ValidFacings: 0, 256, 512, 768
 	WithFacingSpriteBody@Chassis:
-		RequiresCondition: !deployed
+		RequiresCondition: !deployed && undeployed
+	WithFacingSpriteBody@DeployingChassis:
+		Name: deploying
+		RequiresCondition: !deployed && !undeployed
 	WithFacingSpriteBody@DeployedChassis:
 		Name: deployed
 		Sequence: deployed
@@ -222,7 +225,7 @@ NUKC:
 		Sequence: overlay
 	WaitsForTurretAlignmentOnUndeploy:
 	WithMakeAnimation:
-		BodyNames: body
+		BodyNames: deploying
 	WithSpriteTurret:
 		Sequence: turret
 		PauseOnCondition: disabled || empdisable || being-warped
