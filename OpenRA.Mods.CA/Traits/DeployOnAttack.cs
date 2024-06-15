@@ -8,6 +8,9 @@
  */
 #endregion
 
+using System.Collections.Generic;
+using OpenRA.Mods.CA.Activities;
+using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
 
@@ -15,6 +18,9 @@ namespace OpenRA.Mods.CA.Traits
 {
 	public class DeployOnAttackInfo : PausableConditionalTraitInfo
 	{
+		[Desc("Name of the armaments that trigger deployment.")]
+		public readonly HashSet<string> ArmamentNames = new() { "primary" };
+
 		public override object Create(ActorInitializer init) { return new DeployOnAttack(init, this); }
 	}
 
@@ -25,13 +31,29 @@ namespace OpenRA.Mods.CA.Traits
 
 		void INotifyAttack.Attacking(Actor self, in Target target, Armament a, Barrel barrel)
 		{
+			if (!Info.ArmamentNames.Contains(a.Info.Name))
+				return;
+
 			if (IsTraitDisabled || IsTraitPaused)
 				return;
 
 			var trait = self.TraitOrDefault<GrantConditionOnDeploy>();
 			if (trait != null && trait.DeployState == DeployState.Undeployed)
 			{
-				trait.Deploy();
+				if (self.CurrentActivity == null)
+					self.QueueActivity(new DeployForGrantedCondition(self, trait));
+				else
+					self.CurrentActivity.QueueChild(new DeployForGrantedCondition(self, trait));
+				return;
+			}
+
+			var turretedTrait = self.TraitOrDefault<GrantConditionOnDeployTurreted>();
+			if (turretedTrait != null && turretedTrait.DeployState == DeployState.Undeployed)
+			{
+				if (self.CurrentActivity == null)
+					self.QueueActivity(new DeployForGrantedConditionTurreted(self, turretedTrait));
+				else
+					self.CurrentActivity.QueueChild(new DeployForGrantedConditionTurreted(self, turretedTrait));
 				return;
 			}
 

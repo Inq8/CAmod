@@ -18,10 +18,13 @@ namespace OpenRA.Mods.CA.Traits
 	[Desc(".")]
 	public class WaitsForTurretAlignmentOnUndeployInfo : TraitInfo
 	{
+		[Desc("Turret names")]
+		public readonly string[] Turrets = { "primary" };
+
 		public override object Create(ActorInitializer init) { return new WaitsForTurretAlignmentOnUndeploy(init, this); }
 	}
 
-	public class WaitsForTurretAlignmentOnUndeploy : INotifyCreated, INotifyDeployTriggered, ITick
+	public class WaitsForTurretAlignmentOnUndeploy : INotifyDeployTriggered, ITick
 	{
 		public readonly WaitsForTurretAlignmentOnUndeployInfo Info;
 		readonly IEnumerable<Turreted> turrets;
@@ -32,18 +35,13 @@ namespace OpenRA.Mods.CA.Traits
 		public WaitsForTurretAlignmentOnUndeploy(ActorInitializer init, WaitsForTurretAlignmentOnUndeployInfo info)
 		{
 			Info = info;
-			turrets = init.Self.TraitsImplementing<Turreted>();
+			turrets = init.Self.TraitsImplementing<Turreted>().Where(t => info.Turrets.Contains(t.Info.Turret));
 			notify = init.Self.TraitsImplementing<INotifyDeployComplete>();
 		}
 
 		bool AllTurretsAligned()
 		{
 			return turrets.All(t => t.LocalOrientation.Yaw == t.Info.InitialFacing);
-		}
-
-		void INotifyCreated.Created(Actor self)
-		{
-
 		}
 
 		void ITick.Tick(Actor self)
@@ -69,7 +67,6 @@ namespace OpenRA.Mods.CA.Traits
 		void INotifyDeployTriggered.Deploy(Actor self, bool skipMakeAnim)
 		{
 			deployAligning = true;
-
 		}
 
 		void INotifyDeployTriggered.Undeploy(Actor self, bool skipMakeAnim)

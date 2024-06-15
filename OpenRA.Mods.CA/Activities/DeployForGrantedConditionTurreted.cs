@@ -8,6 +8,7 @@
  */
 #endregion
 
+using System;
 using System.Collections.Generic;
 using OpenRA.Activities;
 using OpenRA.Mods.Common.Activities;
@@ -44,12 +45,15 @@ namespace OpenRA.Mods.CA.Activities
 					var currentFacing = facing.Facing;
 					var nearestFacingDiff = int.MaxValue;
 
-					foreach (var facing in deploy.Info.ValidFacings)
+					foreach (var validDeployFacing in deploy.Info.ValidFacings)
 					{
-						var diff = (currentFacing.Facing - facing.Facing + 1024) % 1024;
+						int diff1 = Math.Abs(validDeployFacing.Facing - currentFacing.Facing);
+						int diff2 = 256 - diff1;
+						int diff = Math.Min(diff1, diff2);
+
 						if (diff < nearestFacingDiff)
 						{
-							desiredFacing = facing;
+							desiredFacing = validDeployFacing;
 							nearestFacingDiff = diff;
 						}
 					}

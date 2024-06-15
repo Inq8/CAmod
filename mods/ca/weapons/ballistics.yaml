@@ -558,18 +558,18 @@ TitanGun:
 
 280mmAtomic:
 	Inherits: ^Artillery
-	ReloadDelay: 150
+	ReloadDelay: 200
 	Report: vnukweaa.aud
-	MinRange: 2c0
-	Range: 10c0
+	MinRange: 4c0
+	Range: 16c0
 	TargetActorCenter: true
 	Projectile: Bullet
 		Speed: 145
 		Image: 280mma
 		LaunchAngle: 92
-		Inaccuracy: 1c138
+		Inaccuracy: 768
 	Warhead@1Dam: SpreadDamage
-		Damage: 30000
+		Damage: 50000
 		Falloff: 100, 55, 20, 5
 		Versus:
 			None: 55
@@ -586,16 +586,6 @@ TitanGun:
 		Explosions: nuke3
 		ImpactActors: false
 		ImpactSounds: gexpnuka.aud
-	Warhead@Concussion1: GrantExternalConditionCA
-		Range: 0c768
-		Duration: 150
-		Condition: concussion
-		ValidTargets: Ground, Infantry, Vehicle, Ship
-	Warhead@Concussion2: GrantExternalConditionCA
-		Range: 1c768
-		Duration: 50
-		Condition: concussion
-		ValidTargets: Ground, Infantry, Vehicle, Ship
 	Warhead@5Shake: ShakeScreen
 		Duration: 5
 		Intensity: 1
@@ -624,6 +614,13 @@ TitanGun:
 		ValidTargets: DriverKill
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: gexpneua.aud, gexpneub.aud, gexpneuc.aud, gexpneud.aud
+
+NukeCannonDeployer:
+	ReloadDelay: 25
+	MinRange: 4c0
+	Range: 16c0
+	Projectile: InstantHit
+	Warhead@Dummy: Dummy
 
 8Inch:
 	Inherits: ^Artillery
