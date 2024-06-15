@@ -127,6 +127,7 @@ GRAD:
 	Health:
 		HP: 15000
 	-Upgradeable@Grad:
+	-WithDecoration@UpgradeOverlay:
 	Armament@PRIMARY:
 		Weapon: GradRockets
 		RequiresCondition: !rocketpods-upgrade
@@ -178,7 +179,7 @@ NUKC:
 		Voice: Move
 	RevealsShroud:
 		MinRange: 4c0
-		Range: 6c0
+		Range: 5c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
@@ -186,21 +187,32 @@ NUKC:
 		Weapon: 280mmAtomic
 		LocalOffset: 824,0,758
 		MuzzleSequence: muzzle
-		PauseOnCondition: has-atomic-ammo || atomic-reloading
+		PauseOnCondition: has-atomic-ammo || atomic-reloading || !deployed
+		RequiresCondition: deployed || undeployed
 		ReloadingCondition: reloading
-		RequiresCondition: deployed
 	Armament@ATOMICAMMO:
 		Weapon: 280mmNeutron
 		LocalOffset: 824,0,758
 		MuzzleSequence: muzzle
-		PauseOnCondition: !has-atomic-ammo || reloading
+		PauseOnCondition: !has-atomic-ammo || reloading || !deployed
+		RequiresCondition: deployed || undeployed
 		ReloadingCondition: atomic-reloading
-		RequiresCondition: deployed
-	AttackTurreted@deployed:
+	Armament@Deployer:
+		Name: deployer
+		Turret: deployer
+		Weapon: NukeCannonDeployer
+		LocalOffset: 824,0,758
+		RequiresCondition: undeployed && botowner
+		PauseOnCondition: moving
+	GrantConditionOnMovement@Moving:
+		ValidMovementTypes: Horizontal, Vertical, Turn
+		Condition: moving
+	AttackTurreted:
+		Armaments: primary, deployer
+		Turrets: primary, deployer
 		Voice: Attack
-		RequiresCondition: deployed
-		OutsideRangeRequiresForceFire: True
 		RangeMargin: 0
+		RequiresCondition: deployed || botowner
 	GrantConditionOnDeployTurreted:
 		DeployedCondition: deployed
 		UndeployedCondition: undeployed
@@ -211,7 +223,7 @@ NUKC:
 		PauseOnCondition: being-warped
 		SmartDeploy: True
 		ValidFacings: 0, 256, 512, 768
-	WithFacingSpriteBody@Chassis:
+	WithFacingSpriteBody:
 		RequiresCondition: !deployed && undeployed
 	WithFacingSpriteBody@DeployingChassis:
 		Name: deploying
@@ -228,12 +240,13 @@ NUKC:
 		BodyNames: deploying
 	WithSpriteTurret:
 		Sequence: turret
-		PauseOnCondition: disabled || empdisable || being-warped
 	Turreted:
 		TurnSpeed: 6
 		InitialFacing: 0
 		RealignDelay: 3
 		PauseOnCondition: !deployed
+	Turreted@Deployer:
+		Turret: deployer
 	WithMuzzleOverlay:
 	WithRestartableIdleOverlay@ATOMICAMMO:
 		RequiresCondition: atomic-ammo && !has-atomic-ammo
@@ -261,12 +274,19 @@ NUKC:
 	SpawnActorOnDeath:
 		Actor: NUKC.Husk
 		RequiresCondition: !being-warped
+	GrantConditionOnBotOwner@BotOwner:
+		Condition: botowner
+		Bots: brutal, vhard, hard, normal, easy, naval
 	AutoDeployer@AI:
-		RequiresCondition: botowner && !deployed
+		RequiresCondition: botowner
 		DeployChance: 100
 		DeployTrigger: Attack
 		DeployTicks: 5
 		UndeployTicks: 50
+	WithRangeCircle:
+		Type: NukeCannon
+		Range: 16c0
+		Color: ffdd0060
 
 1TNK:
 	Inherits: ^Tank

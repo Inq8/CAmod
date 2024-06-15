@@ -18,6 +18,9 @@ namespace OpenRA.Mods.CA.Traits
 	[Desc(".")]
 	public class WaitsForTurretAlignmentOnUndeployInfo : TraitInfo
 	{
+		[Desc("Turret names")]
+		public readonly string[] Turrets = { "primary" };
+
 		public override object Create(ActorInitializer init) { return new WaitsForTurretAlignmentOnUndeploy(init, this); }
 	}
 
@@ -32,7 +35,7 @@ namespace OpenRA.Mods.CA.Traits
 		public WaitsForTurretAlignmentOnUndeploy(ActorInitializer init, WaitsForTurretAlignmentOnUndeployInfo info)
 		{
 			Info = info;
-			turrets = init.Self.TraitsImplementing<Turreted>();
+			turrets = init.Self.TraitsImplementing<Turreted>().Where(t => info.Turrets.Contains(t.Info.Turret));
 			notify = init.Self.TraitsImplementing<INotifyDeployComplete>();
 		}
 
@@ -64,7 +67,6 @@ namespace OpenRA.Mods.CA.Traits
 		void INotifyDeployTriggered.Deploy(Actor self, bool skipMakeAnim)
 		{
 			deployAligning = true;
-
 		}
 
 		void INotifyDeployTriggered.Undeploy(Actor self, bool skipMakeAnim)
