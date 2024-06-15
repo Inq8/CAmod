@@ -138,15 +138,10 @@ VEHICLES.SCRIN:
 	GrantConditionOnPrerequisite@SHIELDS:
 		Condition: shields-upgrade
 		Prerequisites: shields.upgrade
-	WithSpriteTurret@SHIELDS:
-		Turret: shield
-		RequiresCondition: shields-upgrade && shields-up
+	WithFacingSpriteBody@SHIELDS:
 		Sequence: shield
 		Palette: scrinshield-ignore-lighting-alpha50
-	Turreted@SHIELDS:
-		Turret: shield
-		PauseOnCondition: shields-upgrade
-		RequiresCondition: shields-upgrade
+		RequiresCondition: shields-upgrade && shields-up
 	SpeedMultiplier@SHIELDWARP:
 		Modifier: 25
 		RequiresCondition: shield-warped
