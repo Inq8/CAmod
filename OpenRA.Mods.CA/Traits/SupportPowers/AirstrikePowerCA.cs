@@ -12,6 +12,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OpenRA.Mods.CA.Traits;
 using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Effects;
 using OpenRA.Primitives;
@@ -49,6 +50,10 @@ namespace OpenRA.Mods.Common.Traits
 		[Desc("Weapon range offset to apply during the beacon clock calculation")]
 		public readonly WDist BeaconDistanceOffset = WDist.FromCells(6);
 
+		public readonly WDist TargetCircleRange = WDist.Zero;
+		public readonly Color TargetCircleColor = Color.White;
+		public readonly bool TargetCircleUsePlayerColor = false;
+
 		public override object Create(ActorInitializer init) { return new AirstrikePowerCA(init.Self, this); }
 	}
 
@@ -65,7 +70,8 @@ namespace OpenRA.Mods.Common.Traits
 		public override void SelectTarget(Actor self, string order, SupportPowerManager manager)
 		{
 			if (info.UseDirectionalTarget)
-				self.World.OrderGenerator = new SelectDirectionalTarget(self.World, order, manager, Info.Cursor, info.DirectionArrowAnimation, info.DirectionArrowPalette);
+				self.World.OrderGenerator = new SelectDirectionalTargetWithCircle(self.World, order, manager, Info.Cursor, info.DirectionArrowAnimation, info.DirectionArrowPalette,
+					info.TargetCircleRange, info.TargetCircleColor, info.TargetCircleUsePlayerColor);
 			else
 				base.SelectTarget(self, order, manager);
 		}
