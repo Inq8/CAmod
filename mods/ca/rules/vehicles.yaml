@@ -120,14 +120,12 @@ GRAD:
 	Inherits: KATY
 	Buildable:
 		BuildPaletteOrder: 131
-		Prerequisites: ~vehicles.soviet, ~arty.doctrine, ~!smer.upgrade, ~techlevel.medium
+		Prerequisites: ~vehicles.soviet, ~arty.doctrine, ~techlevel.medium
 		IconPalette: chrome
 	Tooltip:
 		Name: Grad
 	Health:
 		HP: 15000
-	ReplacedInQueue:
-		Actors: smer
 	-Upgradeable@Grad:
 	Armament@PRIMARY:
 		Weapon: GradRockets
@@ -156,8 +154,8 @@ NUKC:
 	Inherits@ATOMICAMMO: ^AtomicAmmunition
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 183
-		Prerequisites: anyradar, ~vehicles.soviet, ~techlevel.medium
+		BuildPaletteOrder: 243
+		Prerequisites: ~vehicles.soviet, ~arty.doctrine, ~nukc.upgrade, ~techlevel.high
 		Description: Nuclear long-range artillery.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
@@ -186,7 +184,6 @@ NUKC:
 		Range: 4c0
 	Armament:
 		Weapon: 280mmAtomic
-		Turret: deploy
 		LocalOffset: 824,0,758
 		MuzzleSequence: muzzle
 		PauseOnCondition: has-atomic-ammo || atomic-reloading
@@ -194,7 +191,6 @@ NUKC:
 		RequiresCondition: deployed
 	Armament@ATOMICAMMO:
 		Weapon: 280mmNeutron
-		Turret: deploy
 		LocalOffset: 824,0,758
 		MuzzleSequence: muzzle
 		PauseOnCondition: !has-atomic-ammo || reloading
@@ -202,11 +198,10 @@ NUKC:
 		RequiresCondition: deployed
 	AttackTurreted@deployed:
 		Voice: Attack
-		Turrets: deploy
 		RequiresCondition: deployed
 		OutsideRangeRequiresForceFire: True
 		RangeMargin: 0
-	GrantConditionOnDeploy:
+	GrantConditionOnDeployTurreted:
 		DeployedCondition: deployed
 		UndeployedCondition: undeployed
 		UndeployOnMove: True
@@ -215,30 +210,37 @@ NUKC:
 		UndeploySounds: vnukde2a.aud
 		PauseOnCondition: being-warped
 		SmartDeploy: True
-		Facing: 240
-	WithFacingSpriteBody:
-		RequiresCondition: undeployed	
-	WithSpriteTurret:
-		Turret: deploy
+		ValidFacings: 0, 256, 512, 768
+	WithFacingSpriteBody@Chassis:
+		RequiresCondition: !deployed
+	WithFacingSpriteBody@DeployedChassis:
+		Name: deployed
 		Sequence: deployed
 		RequiresCondition: deployed
+	WithFacingSpriteBody@Overlay:
+		Name: overlay
+		Sequence: overlay
+	WaitsForTurretAlignmentOnUndeploy:
+	WithMakeAnimation:
+		BodyNames: body
+	WithSpriteTurret:
+		Sequence: turret
 		PauseOnCondition: disabled || empdisable || being-warped
 	Turreted:
 		TurnSpeed: 6
-		Turret: deploy
 		InitialFacing: 0
 		RealignDelay: 3
-		RequiresCondition: deployed
+		PauseOnCondition: !deployed
 	WithMuzzleOverlay:
 	WithRestartableIdleOverlay@ATOMICAMMO:
-		RequiresCondition: atomic-ammo && has-atomic-ammo < 3
+		RequiresCondition: atomic-ammo && !has-atomic-ammo
 	WithAmmoPipsDecoration@ATOMICAMMO:
 		PipCount: 1
 	AmmoPool@ATOMICAMMO:
 		Ammo: 1
 	ReloadAmmoPool@ATOMICAMMO:
 		Count: 1
-		RequiresCondition: atomic-ammo && has-atomic-ammo < 3
+		RequiresCondition: atomic-ammo && !has-atomic-ammo
 	ReloadAmmoPoolCA@ATOMICAMMODECAY:
 		Count: -1
 	Explodes:
@@ -5377,7 +5379,7 @@ TRPC:
 	Inherits@AIUNLOAD: ^AIUNLOAD
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 133
+		BuildPaletteOrder: 132
 		Prerequisites: ~vehicles.soviet, ~infantry.doctrine, ~techlevel.medium
 		Description: Tough infantry transport, pre-loaded with infantry.
 	TooltipExtras:
