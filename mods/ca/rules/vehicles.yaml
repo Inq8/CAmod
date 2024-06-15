@@ -205,7 +205,7 @@ NUKC:
 		DeployedCondition: deployed
 		UndeployedCondition: undeployed
 		UndeployOnMove: True
-		Voice: Action
+		Voice: Deploy
 		DeploySounds: vnukde1a.aud
 		UndeploySounds: vnukde2a.aud
 		PauseOnCondition: being-warped
@@ -244,8 +244,8 @@ NUKC:
 	ReloadAmmoPoolCA@ATOMICAMMODECAY:
 		Count: -1
 	Explodes:
-		Weapon: ArtilleryExplode
-		LoadedChance: 75
+		Weapon: UnitExplodeIraqTank
+		LoadedChance: 100
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
@@ -254,7 +254,7 @@ NUKC:
 	Passenger:
 		Voice: Move
 	Voiced:
-		VoiceSet: SiegeTankVoice
+		VoiceSet: NukcVoice
 	SpawnActorOnDeath:
 		Actor: NUKC.Husk
 		RequiresCondition: !being-warped
