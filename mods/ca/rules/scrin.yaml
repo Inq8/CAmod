@@ -397,7 +397,7 @@ S1:
 		MuzzlePalette: scrin
 	WithMuzzleOverlay:
 	AttackFrontal:
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
@@ -436,7 +436,7 @@ S2:
 		Name: batf
 		Weapon: RavagerShards
 	AttackFrontal:
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
@@ -486,7 +486,7 @@ S3:
 		Name: batf
 		Weapon: DisintegratorBeamBATF
 	AttackFrontal:
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
@@ -539,7 +539,7 @@ S4:
 		Name: batf
 		Weapon: IntruderDiscsBATF
 	AttackFrontal:
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
@@ -603,6 +603,7 @@ WCHR:
 		DefaultAttackSequence: shoot
 	AttackFrontal:
 		FacingTolerance: 0
+		PauseOnCondition: being-warped || blinded
 	Armament@PRIMARY:
 		Weapon: WatcherDart
 		LocalOffset: 150,0,400
@@ -655,6 +656,7 @@ BRST:
 		EmptyWeapon: BursterExplode
 	AttackFrontal:
 		FacingTolerance: 64
+		PauseOnCondition: being-warped || blinded
 	Armament@PRIMARY:
 		Weapon: BursterTargeting
 	GrantConditionOnAttack:
@@ -695,6 +697,7 @@ EVIS:
 		Range: 6c0
 	AttackFrontal:
 		FacingTolerance: 64
+		PauseOnCondition: being-warped || blinded
 	Armament@PRIMARY:
 		Weapon: EvisceratorShards
 		LocalOffset: 150,0,400
@@ -732,6 +735,7 @@ IMPL:
 		Range: 6c0
 	AttackFrontal:
 		FacingTolerance: 64
+		PauseOnCondition: being-warped || blinded
 	Armament@PRIMARY:
 		Weapon: ImpalerSpike
 		LocalOffset: 150,0,400
@@ -764,7 +768,7 @@ SMEDI:
 		TargetRelationships: Ally
 		ForceTargetRelationships: None
 	AttackFrontal:
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	AttackSoundsCA@HEALSOUND:
 		Sounds: heal2.aud
@@ -920,7 +924,7 @@ MAST:
 		DischargingColor: bb0000
 		ChargingColor: cc00cc
 	AttackFrontal:
-		PauseOnCondition: being-warped || parachute || !ammo
+		PauseOnCondition: being-warped || blinded || parachute || !ammo
 		FacingTolerance: 0
 	Selectable:
 		DecorationBounds: 640, 896, -32, -256
@@ -1129,7 +1133,7 @@ GUNW:
 	WithMuzzleOverlay:
 	AttackFrontal:
 		FacingTolerance: 40
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
@@ -1240,7 +1244,7 @@ SEEK:
 		LocalOffset: 320,-25,320, 320,25,320
 		RequiresCondition: hypercharged
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	WithSpriteTurret:
 	IgnoresDisguise:
 	DetectCloaked:
@@ -1326,7 +1330,7 @@ LACE:
 		LocalOffset: 0,70,320, 0,-70,320
 		RequiresCondition: hypercharged
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	WithSpriteTurret:
 	IgnoresDisguise:
 	DetectCloaked:
@@ -1447,7 +1451,7 @@ INTL:
 		Offset: 0,0,0
 		RealignDelay: 75
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		Armaments: primary
 	WithSpriteTurret:
 	GrantConditionOnTerrain@ONWATER:
@@ -1525,7 +1529,7 @@ CORR:
 		Weapon: CorrupterSpew
 		LocalOffset: 750,0,100
 	AttackFrontal:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		FacingTolerance: 0
 	Explodes:
 		Weapon: CorrupterExplode
@@ -1591,7 +1595,7 @@ LCHR:
 		MuzzlePalette: scrin
 	WithMuzzleOverlay:
 	AttackFrontal:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -1748,7 +1752,7 @@ STCR:
 		LocalOffset: 0,200,350, -250,-200,350, 250,200,350, 0,-200,350, -250,200,350, 250,-200,350
 	AttackFollowFrontal:
 		FacingTolerance: 512
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		RangeMargin: 0
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -1842,7 +1846,7 @@ DEVO:
 		Offset: 0,0,0
 		RealignDelay: 100
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		Armaments: primary, primary-charged
 	WithSpriteTurret:
 	ProductionCostMultiplier@REAPBONUS:
@@ -1914,7 +1918,7 @@ DARK:
 		TurnSpeed: 20
 		Offset: 0,0,0
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		Armaments: primary
 	WithSpriteTurret:
 	Hovers:
@@ -2011,7 +2015,7 @@ RUIN:
 	AttackTurreted:
 		ForceFireIgnoresActors: True
 		TargetFrozenActors: True
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		Armaments: primary, primary-charged
 	WithSpriteTurret:
 	AmmoPool@RESCONV:
@@ -2092,7 +2096,7 @@ ATMZ:
 		Weapon: AtomizerBoltsAA
 		LocalOffset: 350,0,350
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	WithSpriteTurret:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -2175,7 +2179,7 @@ TPOD:
 		TurnSpeed: 12
 		Offset: 0,0,0
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	WithSpriteTurret:
 	WithMoveAnimation:
 	DeathSounds:
@@ -2339,7 +2343,7 @@ OBLT:
 		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	AttackFrontal:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		FacingTolerance: 16
 	GrantConditionOnTerrain@ONWATER:
 		TerrainTypes: Water
@@ -2414,7 +2418,7 @@ NULL:
 		Offset: 0,0,0
 		RealignDelay: 100
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	WithSpriteTurret:
 	GrantConditionOnTerrain@ONWATER:
 		TerrainTypes: Water
@@ -2549,7 +2553,7 @@ STMR:
 		FacingTolerance: 512
 		PersistentTargeting: false
 		OpportunityFire: true
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	Aircraft:
 		CruiseAltitude: 2560
 		TurnSpeed: 22
@@ -2682,7 +2686,7 @@ ENRV:
 		FacingTolerance: 40
 		PersistentTargeting: false
 		OpportunityFire: false
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	Aircraft:
 		TurnSpeed: 24
 		Speed: 225
@@ -2849,7 +2853,7 @@ DEVA:
 		FacingTolerance: 40
 		ForceFireIgnoresActors: True
 		TargetFrozenActors: True
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		RequiresCondition: !stellar-upgrade
 	AttackFrontalCharged:
 		Armaments: primary-upg
@@ -2863,7 +2867,7 @@ DEVA:
 		ShotsPerCharge: 3
 		ShowSelectionBar: true
 		SelectionBarColor: cc33ff
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		RequiresCondition: stellar-upgrade
 	Aircraft:
 		CruiseAltitude: 2560
@@ -2986,7 +2990,7 @@ PAC:
 		Name: fully-deployed
 	AttackFrontal:
 		FacingTolerance: 384
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	CarrierMaster@carr1:
 		Actors: inva, inva, inva, inva, inva, inva
 		RearmTicks: 0
@@ -3228,7 +3232,7 @@ MSHP:
 	AttackTurreted:
 		Armaments: primary, secondary, tertiary
 		Voice: Attack
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		ForceFireIgnoresActors: true
 		Turrets: body
 	-EjectOnDeath:
