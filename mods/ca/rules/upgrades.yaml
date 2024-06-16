@@ -742,7 +742,7 @@ infantry.doctrine:
 		Name: Doctrine: Infantry
 	Buildable:
 		BuildPaletteOrder: 4
-		Prerequisites: ~player.soviet, !infantry.doctrine, !tank.doctrine, !arty.doctrine, player.level1, ~techlevel.medium
+		Prerequisites: ~player.soviet, !infantry.doctrine, !armor.doctrine, !arty.doctrine, player.level1, ~techlevel.medium
 		Description: Specialize in infantry:\n• Troop Crawler\n• Overlord Tank (Replaces Mammoth Tank)\n• Improved Paratroopers\n• Heroes of the Union\n• Cloning Vat\n\n
 	TooltipExtras:
 		Attributes: (!) Only ONE Doctrine may be chosen.
@@ -751,20 +751,20 @@ infantry.doctrine:
 	RenderSprites:
 		Image: infantry.doctrine
 
-tank.doctrine:
+armor.doctrine:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Doctrine: Tanks
+		Name: Doctrine: Armor
 	Buildable:
 		BuildPaletteOrder: 5
-		Prerequisites: ~player.soviet, !infantry.doctrine, !tank.doctrine, !arty.doctrine, player.level1, ~techlevel.medium
+		Prerequisites: ~player.soviet, !infantry.doctrine, !armor.doctrine, !arty.doctrine, player.level1, ~techlevel.medium
 		Description: Specialize in tanks:\n• Rhino Tank (replaces Heavy Tank)\n• Apocalypse Tank (Replaces Mammoth Tank)\n• Reactive Armor\n• Tank Drop\n• Industrial Plant\n\n
 	TooltipExtras:
 		Attributes: (!) Only ONE Doctrine may be chosen.
 	Valued:
 		Cost: 250
 	RenderSprites:
-		Image: tank.doctrine
+		Image: armor.doctrine
 
 arty.doctrine:
 	Inherits: ^Upgrade
@@ -772,7 +772,7 @@ arty.doctrine:
 		Name: Doctrine: Artillery
 	Buildable:
 		BuildPaletteOrder: 6
-		Prerequisites: ~player.soviet, !infantry.doctrine, !tank.doctrine, !arty.doctrine, player.level1, ~techlevel.medium
+		Prerequisites: ~player.soviet, !infantry.doctrine, !armor.doctrine, !arty.doctrine, player.level1, ~techlevel.medium
 		Description: Specialize in artillery:\n• Grad (Replaces Katyusha)\n• TBC\n• Rocket Pods\n• Kill Zone\n• Munitions Plant\n\n
 	TooltipExtras:
 		Attributes: (!) Only ONE Doctrine may be chosen.
@@ -933,7 +933,7 @@ doctrine.upgrade1:
 		Name: Doctrine Dependent Upgrade
 	Buildable:
 		BuildPaletteOrder: 30
-		Prerequisites: ~player.soviet, anydoctrine, player.level2, ~!infantry.doctrine, ~!tank.doctrine, ~!arty.doctrine, ~techlevel.medium
+		Prerequisites: ~player.soviet, anydoctrine, player.level2, ~!infantry.doctrine, ~!armor.doctrine, ~!arty.doctrine, ~techlevel.medium
 		Description: Upgrade depends on chosen doctrine.\n\n• Infantry: Improved Paratroopers\n• Tanks: Reactive Armor\n• Artillery: Rocket Pods
 	Valued:
 		Cost: 750
@@ -991,7 +991,7 @@ reactive.upgrade:
 		Name: Upgrade: Reactive Armor
 	Buildable:
 		BuildPaletteOrder: 30
-		Prerequisites: ~player.soviet, ~tank.doctrine, player.level2, ~techlevel.high
+		Prerequisites: ~player.soviet, ~armor.doctrine, player.level2, ~techlevel.high
 		Description: Upgrades Rhino Tanks with reactive armor for additional protection.\n\nUpgrades: Rhino Tank
 	TooltipExtras:
 		Strengths: + Increased armor
@@ -1053,7 +1053,7 @@ doctrine.upgrade2:
 		Name: Doctrine Dependent Upgrade
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~player.soviet, stek, anydoctrine, ~!infantry.doctrine, ~!tank.doctrine, ~!arty.doctrine, ~techlevel.high
+		Prerequisites: ~player.soviet, stek, anydoctrine, ~!infantry.doctrine, ~!armor.doctrine, ~!arty.doctrine, ~techlevel.high
 		Description: Upgrade depends on chosen doctrine.\n\n• Infantry: Overlord Tank\n• Tanks: Apocalypse Tank\n• Artillery: Nuke Cannon
 	Valued:
 		Cost: 1000
@@ -1082,7 +1082,7 @@ apoc.upgrade:
 		Name: Research: Apocalypse Tank
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: player.level3, ~player.soviet, ~tank.doctrine, ~techlevel.high
+		Prerequisites: player.level3, ~player.soviet, ~armor.doctrine, ~techlevel.high
 		Description: Allows production of Apocalypse Tanks.\n\nReplaces: Mammoth Tank
 	TooltipExtras:
 		Strengths: + Increased firepower\n+ Increased health\n+ Increased range\n+ Increased splash damage
