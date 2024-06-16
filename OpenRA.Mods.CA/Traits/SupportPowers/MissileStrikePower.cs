@@ -280,6 +280,9 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			self.World.AddFrameEndTask(w =>
 			{
+				if (target.Type == TargetType.Invalid)
+					return;
+
 				if (target.Type == TargetType.Actor && (target.Actor.IsDead || !target.Actor.IsInWorld))
 					return;
 
