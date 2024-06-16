@@ -84,6 +84,13 @@ KATY:
 	Mobile:
 		Speed: 54
 		TurnSpeed: 12
+		Voice: Move
+	Passenger:
+		Voice: Move
+	AttackMove:
+		Voice: Attack
+	Voiced:
+		VoiceSet: GradVoice
 	RevealsShroud:
 		Range: 5c0
 	Armament@PRIMARY:
@@ -98,6 +105,7 @@ KATY:
 		ForceFireIgnoresActors: True
 		PauseOnCondition: empdisable || being-warped
 		FacingTolerance: 0
+		Voice: Attack
 	Explodes:
 		Weapon: BarrelExplode
 	ProducibleWithLevel:
@@ -128,6 +136,22 @@ GRAD:
 		HP: 15000
 	-Upgradeable@Grad:
 	-WithDecoration@UpgradeOverlay:
+	-AttackFrontal:
+	AttackTurreted:
+		TargetFrozenActors: True
+		Voice: Attack
+		ForceFireIgnoresActors: True
+		PauseOnCondition: empdisable || being-warped
+	Turreted:
+		TurnSpeed: 6
+		RealignDelay: 3
+		Offset: -200, 0, 0
+	WithSpriteTurret:
+		Sequence: turret
+		RequiresCondition: !rocketpods-upgrade
+	WithSpriteTurret@UPG:
+		Sequence: turret-upg
+		RequiresCondition: rocketpods-upgrade
 	Armament@PRIMARY:
 		Weapon: GradRockets
 		RequiresCondition: !rocketpods-upgrade
