@@ -59,3 +59,5 @@ options-difficulty =
     .hard = Hard
 
 label-player-level = Current Rank: { $level }
+label-player-level-current-xp = Current XP: { $currentXp }
+label-player-level-required-xp = Next Rank XP: { $nextLevelXp }

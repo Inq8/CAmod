@@ -180,7 +180,7 @@ NUKC:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 243
-		Prerequisites: ~vehicles.soviet, ~arty.doctrine, ~nukc.upgrade, ~techlevel.high
+		Prerequisites: stek, ~vehicles.soviet, ~arty.doctrine, ~nukc.upgrade, ~techlevel.high
 		Description: Nuclear long-range artillery.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
@@ -238,6 +238,8 @@ NUKC:
 		RangeMargin: 0
 		PauseOnCondition: empdisable || being-warped || blinded
 		RequiresCondition: deployed || botowner
+		TargetFrozenActors: True
+		ForceFireIgnoresActors: True
 	GrantConditionOnDeployTurreted:
 		DeployedCondition: deployed
 		UndeployedCondition: undeployed
@@ -2422,7 +2424,6 @@ TRUK:
 		Range: 4c0
 	DeliversCash:
 		Payload: 500
-		PlayerExperience: 50
 	SpawnActorOnDeath:
 		Actor: moneycrate
 		RequiresCondition: !being-warped

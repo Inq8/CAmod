@@ -79,6 +79,8 @@ namespace OpenRA.Mods.CA.Traits
 
 		public int? CurrentLevel => currentLevel;
 
+		public int? XpRequiredForNextLevel => currentLevel >= maxLevel ? null : nextLevelXpRequired;
+
 		public IEnumerable<string> ProvidesPrerequisites
 		{
 			get
