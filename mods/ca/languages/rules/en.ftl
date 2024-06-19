@@ -36,7 +36,7 @@ checkbox-fast-regrowth =
 
 dropdown-queuetype =
     .label = Production Type
-    .description = Single-Queue = One queue per production category\n\nMulti-Queue = One queue per production structure\n\nMulti-Queue Scaled = Multi-Queue, but where additional production structures have increased cost,\n                                   which can be reduced via building T2/T3 structures
+    .description = Single-Queue = One queue per production category\n\nMulti-Queue = One queue per production structure for units (structures/upgrades remain single-queue)\n\nMulti-Queue Scaled = Multi-Queue, but where additional production structures have increased cost,\n                                   which can be reduced via building T2/T3 structures
 
 options-queuetype =
     .singlequeue = Single-Queue

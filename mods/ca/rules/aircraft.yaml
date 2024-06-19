@@ -4792,7 +4792,7 @@ JACK:
 	Inherits: ^PlaneTD
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Valued:
-		Cost: 400
+		Cost: 525
 	Tooltip:
 		Name: Jackknife
 	UpdatesPlayerStatistics:
@@ -4801,11 +4801,11 @@ JACK:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 92
-		Prerequisites: afld.gdi, ~aircraft.arc, ~techlevel.medium
-		Description: Loitering munition that dives at ground targets and explodes.
+		Prerequisites: afld.gdi, gtek, ~aircraft.arc, ~techlevel.high
+		Description: Loitering munition that dives at targets and explodes.
 	TooltipExtras:
-		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
-		Weaknesses: • Weak vs Buildings, Defenses\n• Cannot attack Aircraft
+		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry, Aircraft
+		Weaknesses: • Weak vs Buildings, Defenses
 	Aircraft:
 		AltitudeVelocity: 0c100
 		TurnSpeed: 20

@@ -179,6 +179,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		public void Decrement(string type)
 		{
+			if (!counts.ContainsKey(type))
+				return;
+
 			counts[type]--;
 			techTree.ActorChanged(self);
 		}

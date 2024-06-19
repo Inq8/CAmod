@@ -578,11 +578,12 @@ S6:
 WCHR:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 160
-		Prerequisites: scrt, ~infantry.scrin, ~techlevel.high
+		BuildPaletteOrder: 124
+		Prerequisites: anyradar, ~infantry.scrin, ~techlevel.medium
 		Description: Infiltration unit used to gain vision of enemies.
 	Valued:
 		Cost: 500
@@ -590,7 +591,7 @@ WCHR:
 		Name: Watcher
 	TooltipExtras:
 		Weaknesses: • Cannot deal damage
-		Attributes: • Can attach parasites to enemy vehicles & structures\n• Cloaked when not moving
+		Attributes: • Can attach parasites to enemy vehicles & structures\n• Cloaked when not moving\n• Special Ability: Teleport (with upgrade)
 	Health:
 		HP: 5000
 	UpdatesPlayerStatistics:
@@ -624,6 +625,20 @@ WCHR:
 	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || hidden
 		ColorSource: Player
+	PortableChronoCA:
+		ChargeDelay: 500
+		MaxDistance: 16
+		ChronoshiftSound: scrinport.aud
+		RequiresCondition: blink-upgrade
+		TeleportCondition: blink
+		ConditionDuration: 3
+		ShowSelectionBarWhenFull: false
+	GrantConditionOnPrerequisite@BLINKPACKS:
+		Condition: blink-upgrade
+		Prerequisites: blink.upgrade
+	WithColoredOverlay@BLINKFLASH:
+		Color: ffffff80
+		RequiresCondition: blink
 
 BRST:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -632,7 +647,7 @@ BRST:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 161
+		BuildPaletteOrder: 160
 		Prerequisites: scrt, ~infantry.scrin, ~techlevel.high
 		IconPalette: chromes
 		Description: Explodes on death or when triggered.
@@ -675,7 +690,7 @@ EVIS:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 121
-		Prerequisites: scrt, ~infantry.scrin, ~evis.upgrade, ~techlevel.high
+		Prerequisites: anyradar, ~infantry.scrin, ~evis.upgrade, ~techlevel.medium
 		IconPalette: chromes
 		Description: Short range anti-infantry unit.
 	Selectable:
@@ -688,7 +703,7 @@ EVIS:
 		Strengths: • Strong vs Light Armor, Infantry
 		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
 	Health:
-		HP: 15000
+		HP: 13000
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Mobile:
@@ -712,7 +727,7 @@ IMPL:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 122
-		Prerequisites: scrt, ~infantry.scrin, ~impl.upgrade, ~techlevel.high
+		Prerequisites: anyradar, ~infantry.scrin, ~impl.upgrade, ~techlevel.medium
 		IconPalette: chromes
 		Description: Assault infantry with high burst damage.
 	Selectable:
@@ -726,7 +741,7 @@ IMPL:
 		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
 		Attributes: • Slows targets
 	Health:
-		HP: 15000
+		HP: 10000
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Mobile:
@@ -2303,7 +2318,7 @@ OBLT:
 		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
 		Attributes: • Can traverse water
 	Valued:
-		Cost: 2000
+		Cost: 2300
 	Tooltip:
 		Name: Obliterator
 	Selectable:
@@ -2311,7 +2326,7 @@ OBLT:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 25000
+		HP: 30000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -2345,6 +2360,8 @@ OBLT:
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped || blinded
 		FacingTolerance: 16
+		TargetFrozenActors: True
+		ForceFireIgnoresActors: True
 	GrantConditionOnTerrain@ONWATER:
 		TerrainTypes: Water
 		Condition: onwater
@@ -2379,7 +2396,7 @@ NULL:
 		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
 		Attributes: • Disables enemy weapons and vision\n• Can traverse water
 	Valued:
-		Cost: 1500
+		Cost: 1600
 	Tooltip:
 		Name: Nullifier
 	Selectable:
@@ -5578,6 +5595,23 @@ REBELGATEWAY:
 		ChargeDuration: 500
 		Actors: gunw, gunw, tpod
 		ReadyAudio: ReinforcementsArrived
+	AmmoPool@Wave1:
+		Name: wave1
+		InitialAmmo: 0
+	AmmoPool@Wave2:
+		Name: wave2
+		InitialAmmo: 0
+	ReloadAmmoPoolCA@Wave1:
+		AmmoPool: wave1
+		Delay: 125
+		ShowSelectionBar: true
+		SelectionBarColor: ff00ff
+	ReloadAmmoPoolCA@Wave2:
+		AmmoPool: wave2
+		Delay: 375
+		ShowSelectionBar: true
+		SelectionBarColor: ff00ff
+		RequiresCondition: wave1-deployed
 
 # infiltrator stolen tech
 

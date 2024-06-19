@@ -68,6 +68,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		public WeaponInfo WeaponInfo { get; private set; }
 
+		[Desc("If true, target must not be under shroud/fog.")]
+		public readonly bool TargetMustBeVisible = false;
+
 		public override object Create(ActorInitializer init) { return new DetonateWeaponPower(init.Self, this); }
 		public override void RulesetLoaded(Ruleset rules, ActorInfo ai)
 		{
@@ -203,10 +206,18 @@ namespace OpenRA.Mods.CA.Traits
 			this.power = power;
 		}
 
+		private bool TargetCellIsValid(CPos cell, World world)
+		{
+			if (power.Info.TargetMustBeVisible && !power.Self.Owner.Shroud.IsVisible(cell))
+				return false;
+
+			return world.Map.Contains(cell);
+		}
+
 		protected override IEnumerable<Order> OrderInner(World world, CPos cell, int2 worldPixel, MouseInput mi)
 		{
 			world.CancelInputMode();
-			if (mi.Button == MouseButton.Left && world.Map.Contains(cell))
+			if (mi.Button == MouseButton.Left && TargetCellIsValid(cell, world))
 				yield return new Order(order, manager.Self, Target.FromCell(world, cell), false) { SuppressVisualFeedback = true };
 		}
 
@@ -242,7 +253,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		protected override string GetCursor(World world, CPos cell, int2 worldPixel, MouseInput mi)
 		{
-			return world.Map.Contains(cell) ? power.Info.Cursor : "generic-blocked";
+			return TargetCellIsValid(cell, world) ? power.Info.Cursor : "generic-blocked";
 		}
 	}
 }
