@@ -576,9 +576,6 @@
 	RevealsShroudMultiplier@Blinded:
 		RequiresCondition: blinded
 		Modifier: 0
-	RangeMultiplier@Blinded:
-		RequiresCondition: blinded
-		Modifier: 0
 	TimedConditionBar@Blinded:
 		Condition: blinded
 		Color: ffee00
@@ -1302,7 +1299,6 @@
 		StartRepairingTextNotification: Repairing.
 		FinishRepairingNotification: UnitRepaired
 		FinishRepairingTextNotification: Unit repaired.
-		PlayerExperience: 5
 		RequiresCondition: aircraft-repair && !forceshield && !invulnerability && !being-warped
 	WithDecoration@AIRCRAFTREPAIR:
 		Image: select
@@ -3097,7 +3093,6 @@
 	RepairableBuilding:
 		RepairStep: 500
 		RepairPercent: 30
-		PlayerExperience: 5
 		RepairingNotification: Repairing
 		RequiresCondition: !being-warped
 	InstantlyRepairable:
@@ -4281,56 +4276,14 @@
 ^ProducesBuildings:
 	Inherits@QUEUEUPDATER: ^QueueUpdater
 	Inherits@PRIMARY: ^PrimaryBuilding
-	ProductionQueue@MQBLD:
-		Type: BuildingMQ
-		DisplayOrder: 1
-		Group: Building
-		LowPowerModifier: 250
-		ReadyAudio: ConstructionComplete
-		ReadyTextNotification: Construction complete.
-		BlockedAudio: NoBuild
-		BlockedTextNotification: Unable to build more.
-		LimitedAudio: BuildingInProgress
-		LimitedTextNotification: Unable to comply. Building in progress.
-		QueuedAudio: Building
-		OnHoldAudio: OnHold
-		CancelledAudio: Cancelled
-	ProductionQueue@MQDEF:
-		Type: DefenseMQ
-		DisplayOrder: 2
-		Group: Defense
-		LowPowerModifier: 250
-		ReadyAudio: ConstructionComplete
-		ReadyTextNotification: Construction complete.
-		BlockedAudio: NoBuild
-		BlockedTextNotification: Unable to build more.
-		LimitedAudio: BuildingInProgress
-		LimitedTextNotification: Unable to comply. Building in progress.
-		QueuedAudio: Building
-		OnHoldAudio: OnHold
-		CancelledAudio: Cancelled
 	Production@SQBLD:
 		Produces: BuildingSQ, DefenseSQ
 		PauseOnCondition: forceshield || being-warped
-		RequiresCondition: !global-multiqueue
-	Production@MQBLD:
-		Produces: BuildingMQ, DefenseMQ
-		PauseOnCondition: forceshield || being-warped
-		RequiresCondition: global-multiqueue
 	ProductionBar@SQBLD:
 		ProductionType: BuildingSQ
-		RequiresCondition: !global-multiqueue
 	ProductionBar@SQDEF:
 		ProductionType: DefenseSQ
 		Color: 8A8A8A
-		RequiresCondition: !global-multiqueue
-	ProductionBar@MQBLD:
-		ProductionType: BuildingMQ
-		RequiresCondition: global-multiqueue
-	ProductionBar@MQDEF:
-		ProductionType: DefenseMQ
-		Color: 8A8A8A
-		RequiresCondition: global-multiqueue
 
 ^ProducesInfantry:
 	Inherits@QUEUEUPDATER: ^QueueUpdater

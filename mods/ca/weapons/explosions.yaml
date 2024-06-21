@@ -977,7 +977,7 @@ MindblastSlave:
 
 JackknifeExplosion:
 	Range: 8c0
-	ValidTargets: Ground, Water
+	ValidTargets: Ground, Water, Air, AirSmall
 	Projectile:	InstantHit
 	Warhead@1Dam: SpreadDamage
 		Damage: 30000
@@ -990,7 +990,8 @@ JackknifeExplosion:
 			Concrete: 15
 			Brick: 15
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+		ValidTargets: Ground, Water, Air, AirSmall
 	Warhead@2Eff: CreateEffect
 		Explosions: artillery_explosion
 		ImpactSounds: kaboom15.aud
-		ValidTargets: Ground, Water, Air
+		ValidTargets: Ground, Water, Air, AirSmall

@@ -9,6 +9,7 @@
 #endregion
 
 using OpenRA.Mods.CA.Traits;
+using OpenRA.Mods.Common.Traits;
 using OpenRA.Mods.Common.Widgets;
 using OpenRA.Widgets;
 
@@ -19,24 +20,45 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 		[TranslationReference("level")]
 		const string PlayerLevel = "label-player-level";
 
+		[TranslationReference("currentXp")]
+		const string PlayerLevelCurrentXp = "label-player-level-current-xp";
+
+		[TranslationReference("nextLevelXp")]
+		const string PlayerLevelRequiredXp = "label-player-level-required-xp";
+
 		[ObjectCreator.UseCtor]
 		public PlayerExperienceLevelIndicatorLogic(Widget widget, World world)
 		{
+			var playerExperience = world.LocalPlayer.PlayerActor.Trait<PlayerExperience>();
 			var playerExperienceLevels = world.LocalPlayer.PlayerActor.Trait<PlayerExperienceLevels>();
 			var rankImage = widget.Get<ImageWidget>("PLAYER_EXPERIENCE_LEVEL");
 			rankImage.GetImageName = () => "level" + playerExperienceLevels.CurrentLevel;
 			rankImage.IsVisible = () => playerExperienceLevels.Enabled;
 
-			var tooltipTextCached = new CachedTransform<string, string>((Level) =>
+			var tooltipTextCached = new CachedTransform<int?, string>((CurrentXp) =>
 			{
-				return TranslationProvider.GetString(
+				var tooltip = TranslationProvider.GetString(
 					PlayerLevel,
-					Translation.Arguments("level", Level));
+					Translation.Arguments("level", playerExperienceLevels.CurrentLevel));
+
+				if (playerExperienceLevels.XpRequiredForNextLevel != null) {
+					tooltip = tooltip
+					+ "\n\n"
+					+ TranslationProvider.GetString(
+					PlayerLevelCurrentXp,
+					Translation.Arguments("currentXp", CurrentXp))
+					+ "\n"
+					+ TranslationProvider.GetString(
+					PlayerLevelRequiredXp,
+					Translation.Arguments("nextLevelXp", playerExperienceLevels.XpRequiredForNextLevel));
+				}
+
+				return tooltip;
 			});
 
 			rankImage.GetTooltipText = () =>
 			{
-				return tooltipTextCached.Update(playerExperienceLevels.CurrentLevel.ToString());
+				return tooltipTextCached.Update(playerExperienceLevels.XpRequiredForNextLevel == null ? null : playerExperience.Experience);
 			};
 		}
 	}

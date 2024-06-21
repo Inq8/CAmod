@@ -40,7 +40,7 @@ DOG:
 		ReloadingCondition: attack-cooldown
 	AttackLeap:
 		Voice: Attack
-		PauseOnCondition: attacking || attack-cooldown || being-warped
+		PauseOnCondition: attacking || attack-cooldown || being-warped || blinded
 	AttackMove:
 		Voice: Move
 	GrantConditionOnAttack:
@@ -150,7 +150,7 @@ E1:
 		StandSequences: parachute
 		RequiresCondition: parachute
 	AttackFrontal:
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
@@ -205,7 +205,7 @@ E2:
 	TakeCover:
 		ProneOffset: 256,64,-331
 	AttackFrontal:
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	WithInfantryBody:
 		StandSequences: stand
@@ -292,7 +292,7 @@ E3:
 	TakeCover:
 		ProneOffset: 384,0,-395
 	AttackFrontal:
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
@@ -483,7 +483,7 @@ U3:
 		Name: dot
 		RequiresCondition: !undeployed
 	AttackFrontal:
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		RequiresCondition: undeployed
 		Voice: Attack
 		FacingTolerance: 0
@@ -494,6 +494,7 @@ U3:
 		RequiresCondition: deployed
 		OutsideRangeRequiresForceFire: True
 		RangeMargin: 0
+		PauseOnCondition: being-warped || blinded
 	GrantConditionOnAttack:
 		Condition: animate-turret
 		RevokeDelay: 5
@@ -594,7 +595,7 @@ E4:
 		ProneOffset: 160,0,-256
 	WithMuzzleOverlay:
 	AttackFrontal:
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
@@ -820,7 +821,7 @@ E7:
 		OutsideRangeCursor: c4
 		Name: secondary
 	AttackFrontal:
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		Armaments: primary, secondary
 		FacingTolerance: 0
 	WithInfantryBody:
@@ -904,7 +905,7 @@ MEDI:
 		TargetRelationships: Ally
 		ForceTargetRelationships: None
 	AttackFrontal:
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	AttackSoundsCA@HEALSOUND:
 		Sounds: heal2.aud
@@ -983,7 +984,7 @@ MECH:
 		ValidRelationships: Ally
 	AttackFrontal:
 		Voice: Action
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	AttackSoundsCA@REPAIRSOUND:
 		Sounds: fixit1.aud
@@ -1077,7 +1078,7 @@ CMEC:
 		ValidRelationships: Ally
 	AttackFrontal:
 		Voice: Action
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	AttackSoundsCA@REPAIRSOUND:
 		Sounds: cmecrepair.aud
@@ -1156,7 +1157,7 @@ HACK:
 		Voice: Action
 		FacingTolerance: 512
 		TargetFrozenActors: true
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 	WithInfantryBody:
 		IdleSequences: idle
 		StandSequences: stand
@@ -1290,7 +1291,7 @@ GNRL:
 		Voice: Move
 	AttackFrontal:
 		Voice: Attack
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	AttackMove:
 		Voice: Move
@@ -1338,7 +1339,7 @@ THF:
 		Voice: Steal
 	Captures:
 		CaptureTypes: vehicle
-		PlayerExperience: 15
+		PlayerExperience: 5
 		Voice: Hijack
 	Voiced:
 		VoiceSet: ThiefVoice
@@ -1457,7 +1458,7 @@ SHOK:
 		ProneOffset: 227,0,-245
 	AttackFrontal:
 		Voice: Attack
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	AttackMove:
 		AttackMoveCondition: attack-move
@@ -1489,7 +1490,7 @@ TTRP:
 	Valued:
 		Cost: 600
 	Health:
-		HP: 20000
+		HP: 18000
 	Voiced:
 		VoiceSet: TeslaTrooperVoice
 	TakeCover:
@@ -1534,7 +1535,7 @@ N1:
 		Weapon: M16CarbineBATF
 		MuzzleSequence: garrison-muzzle
 	AttackFrontal:
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
@@ -1607,7 +1608,7 @@ N2:
 		Weapon: Grenade
 		FireDelay: 15
 	AttackFrontal:
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	WithInfantryBody:
 		StandSequences: stand
@@ -1714,7 +1715,7 @@ N3:
 	TakeCover:
 		ProneOffset: 384,0,-395
 	AttackFrontal:
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
@@ -1794,7 +1795,7 @@ N4:
 		StandSequences: parachute
 		RequiresCondition: parachute
 	AttackFrontal:
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	WithMuzzleOverlay:
 	Explodes:
@@ -1867,7 +1868,7 @@ N5:
 		Voice: Move
 	AttackFrontal:
 		Voice: Attack
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	AttackMove:
 		Voice: Move
@@ -1998,7 +1999,7 @@ RMBO:
 	AttackFrontal:
 		Voice: Attack
 		Armaments: primary, secondary
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
@@ -2184,7 +2185,7 @@ SNIP:
 		FacingTolerance: 32
 		ChargeLevel: 20
 		ChargingCondition: aiming
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		ShowSelectionBar: true
 		SelectionBarColor: 117700
 	WithInfantryBody:
@@ -2258,7 +2259,7 @@ BORI:
 		Voice: Move
 	AttackFrontal:
 		Voice: Attack
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	AttackMove:
 		Voice: Move
@@ -2341,7 +2342,7 @@ SAB:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry
 		Weaknesses: • Can only attack Infantry
-		Attributes: • Can detect cloaked ground units and spies\n• Limited stealth (drains while moving)\n• Infiltrates production buildings to steal technology\n    • Allies: Cryo Mortar, Reckoner, Phantom\n    • Soviets: Cyberdog, Rhino Tank, Kamov\n    • GDI: Sonic Mortar, Pitbull, Shade\n    • Nod: Chem Mortar, Mantis, Vertigo\n    • Scrin: Cyberscrin, Viper, Manticore\n• Infiltrates radars/tech centers to lock technology
+		Attributes: • Can detect cloaked ground units and spies\n• Limited stealth (drains while moving)\n• Infiltrates production buildings to steal technology\n    • Allies: Cryo Mortar, Reckoner, Phantom\n    • Soviets: Cyberdog, Cyclops, Kamov\n    • GDI: Sonic Mortar, Basilisk, Shade\n    • Nod: Chem Mortar, Mantis, Vertigo\n    • Scrin: Cyberscrin, Viper, Manticore\n• Infiltrates radars/tech centers to lock technology
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -2384,7 +2385,7 @@ SAB:
 		Weapon: SilencedPPKBATF
 	AttackFrontal:
 		Voice: Attack
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	AutoTarget:
 		InitialStance: HoldFire
@@ -2472,7 +2473,7 @@ ACOL:
 		SpeedModifier: 70
 	AttackFrontal:
 		Voice: Attack
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
@@ -2539,12 +2540,17 @@ JJET:
 	Inherits@5: ^Warpable
 	Inherits@6: ^EmpDisable
 	Inherits@9: ^AuraHealable
+	Inherits@10: ^Chillable
+	Inherits@11: ^Suppressable
 	Inherits@bounty: ^GlobalBounty
 	Inherits@selection: ^SelectableCombatUnit
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
 	Inherits@mind: ^MindControllable
+	Inherits@ionsurge: ^IonSurgable
+	Inherits@atomize: ^Atomizable
+	Inherits@Blindable: ^Blindable
 	Huntable:
 	ClassicFacingBodyOrientation:
 		QuantizedFacings: 8
@@ -2647,6 +2653,7 @@ JJET:
 		FacingTolerance: 40
 		OpportunityFire: false
 		Voice: Attack
+		PauseOnCondition: being-warped || blinded
 	Armament@AIRBORNE:
 		Weapon: M60mgJJ
 		RequiresCondition: airborne
@@ -2657,7 +2664,7 @@ JJET:
 		Weapon: M60mgJJAA
 		RequiresCondition: airborne
 	AttackFrontal:
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		Voice: Attack
 		FacingTolerance: 40
 	WithInfantryBody:
@@ -2834,7 +2841,7 @@ E8:
 	TakeCover:
 		ProneOffset: 384,0,-395
 	AttackFrontal:
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
@@ -2893,7 +2900,7 @@ DESO:
 	Valued:
 		Cost: 600
 	Health:
-		HP: 20000
+		HP: 18000
 	Voiced:
 		VoiceSet: DesVoice
 	Mobile:
@@ -2906,7 +2913,7 @@ DESO:
 		Voice: Move
 	AttackFrontal:
 		Voice: Attack
-		PauseOnCondition: being-warped || !undeployed
+		PauseOnCondition: being-warped || blinded || !undeployed
 	GrantConditionOnDeploy:
 		DeployedCondition: deployed
 		UndeployedCondition: undeployed
@@ -2978,7 +2985,7 @@ N1C:
 		Voice: Move
 	AttackFrontal:
 		Voice: Attack
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	AttackMove:
 		Voice: Move
@@ -3035,7 +3042,7 @@ N3C:
 		Voice: Move
 	AttackFrontal:
 		Voice: Attack
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	AttackMove:
 		Voice: Move
@@ -3136,7 +3143,7 @@ RMBC:
 		Range: 6c0
 	AttackFrontal:
 		Voice: Attack
-		PauseOnCondition: being-warped || empdisable
+		PauseOnCondition: being-warped || blinded || empdisable
 		FacingTolerance: 0
 	AttackMove:
 		Voice: Move
@@ -3239,7 +3246,7 @@ IVAN:
 		ProneOffset: 256,64,-331
 	AttackFrontal:
 		Voice: Attack
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	WithInfantryBody:
 		StandSequences: stand
@@ -3337,7 +3344,7 @@ BRUT:
 		Weapon: BruteBuildingAttack
 		FireDelay: 10
 	AttackFrontal:
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		Voice: Attack
 		FacingTolerance: 0
 	DamageTypeDamageMultiplier@FLAKARMOR:
@@ -3447,7 +3454,7 @@ SHAD:
 		Weapon: ShadowOperativeGun
 	AttackFrontal:
 		Voice: Attack
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	AutoTarget:
 		InitialStance: HoldFire
@@ -3533,7 +3540,7 @@ SGLI:
 		FacingTolerance: 128
 		PersistentTargeting: false
 		OpportunityFire: false
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 	Cloak:
 		InitialDelay: 1
 		CloakDelay: 125
@@ -3698,7 +3705,7 @@ BH:
 		ProneOffset: 160,0,-256
 	WithMuzzleOverlay:
 	AttackFrontal:
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		Voice: Attack
 		FacingTolerance: 0
 	WithInfantryBody:
@@ -3828,7 +3835,7 @@ YURI:
 		DischargingColor: bb0000
 		ChargingColor: cc00cc
 	AttackFrontal:
-		PauseOnCondition: !ammo || being-warped || parachute
+		PauseOnCondition: !ammo || being-warped || blinded || parachute
 		Armaments: primary, secondary, aidummy
 		FacingTolerance: 0
 	RevealsShroud:
@@ -4012,7 +4019,7 @@ SEAL:
 	AttackFrontal:
 		Voice: Attack
 		Armaments: primary, secondary, tertiary
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	Demolition:
 		DetonationDelay: 45
@@ -4203,7 +4210,7 @@ ENLI:
 		Weapon: ChemicalMortar
 		FireDelay: 15
 	AttackFrontal:
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	WithInfantryBody:
 		DefaultAttackSequence: throw
@@ -4335,7 +4342,7 @@ CSCR:
 		Weapon: CyberscrinLaser
 	WithMuzzleOverlay:
 	AttackFrontal:
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
@@ -4421,7 +4428,7 @@ CMSR:
 		RequiresCondition: parachute
 	AttackFrontal:
 		Voice: Attack
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
@@ -4484,7 +4491,7 @@ ZTRP:
 		Weapon: ZoneTrooperRailgun
 	AttackFrontal:
 		Voice: Attack
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	AttackMove:
 		Voice: Move
@@ -4662,7 +4669,7 @@ ENFO:
 		Weapon: EnforcerShotgun
 	AttackFrontal:
 		Voice: Attack
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	AttackMove:
 		Voice: Move
@@ -4743,7 +4750,7 @@ CRYT:
 		Weapon: CryoSprayer
 	AttackFrontal:
 		Voice: Attack
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	AttackMove:
 		Voice: Move

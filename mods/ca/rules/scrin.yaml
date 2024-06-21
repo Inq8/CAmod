@@ -397,7 +397,7 @@ S1:
 		MuzzlePalette: scrin
 	WithMuzzleOverlay:
 	AttackFrontal:
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
@@ -436,7 +436,7 @@ S2:
 		Name: batf
 		Weapon: RavagerShards
 	AttackFrontal:
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
@@ -486,7 +486,7 @@ S3:
 		Name: batf
 		Weapon: DisintegratorBeamBATF
 	AttackFrontal:
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
@@ -539,7 +539,7 @@ S4:
 		Name: batf
 		Weapon: IntruderDiscsBATF
 	AttackFrontal:
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
@@ -578,11 +578,12 @@ S6:
 WCHR:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 160
-		Prerequisites: scrt, ~infantry.scrin, ~techlevel.high
+		BuildPaletteOrder: 124
+		Prerequisites: anyradar, ~infantry.scrin, ~techlevel.medium
 		Description: Infiltration unit used to gain vision of enemies.
 	Valued:
 		Cost: 500
@@ -590,7 +591,7 @@ WCHR:
 		Name: Watcher
 	TooltipExtras:
 		Weaknesses: • Cannot deal damage
-		Attributes: • Can attach parasites to enemy vehicles & structures\n• Cloaked when not moving
+		Attributes: • Can attach parasites to enemy vehicles & structures\n• Cloaked when not moving\n• Special Ability: Teleport (with upgrade)
 	Health:
 		HP: 5000
 	UpdatesPlayerStatistics:
@@ -603,6 +604,7 @@ WCHR:
 		DefaultAttackSequence: shoot
 	AttackFrontal:
 		FacingTolerance: 0
+		PauseOnCondition: being-warped || blinded
 	Armament@PRIMARY:
 		Weapon: WatcherDart
 		LocalOffset: 150,0,400
@@ -623,6 +625,20 @@ WCHR:
 	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || hidden
 		ColorSource: Player
+	PortableChronoCA:
+		ChargeDelay: 500
+		MaxDistance: 16
+		ChronoshiftSound: scrinport.aud
+		RequiresCondition: blink-upgrade
+		TeleportCondition: blink
+		ConditionDuration: 3
+		ShowSelectionBarWhenFull: false
+	GrantConditionOnPrerequisite@BLINKPACKS:
+		Condition: blink-upgrade
+		Prerequisites: blink.upgrade
+	WithColoredOverlay@BLINKFLASH:
+		Color: ffffff80
+		RequiresCondition: blink
 
 BRST:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -631,7 +647,7 @@ BRST:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 161
+		BuildPaletteOrder: 160
 		Prerequisites: scrt, ~infantry.scrin, ~techlevel.high
 		IconPalette: chromes
 		Description: Explodes on death or when triggered.
@@ -655,6 +671,7 @@ BRST:
 		EmptyWeapon: BursterExplode
 	AttackFrontal:
 		FacingTolerance: 64
+		PauseOnCondition: being-warped || blinded
 	Armament@PRIMARY:
 		Weapon: BursterTargeting
 	GrantConditionOnAttack:
@@ -673,7 +690,7 @@ EVIS:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 121
-		Prerequisites: scrt, ~infantry.scrin, ~evis.upgrade, ~techlevel.high
+		Prerequisites: anyradar, ~infantry.scrin, ~evis.upgrade, ~techlevel.medium
 		IconPalette: chromes
 		Description: Short range anti-infantry unit.
 	Selectable:
@@ -686,7 +703,7 @@ EVIS:
 		Strengths: • Strong vs Light Armor, Infantry
 		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
 	Health:
-		HP: 15000
+		HP: 13000
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Mobile:
@@ -695,6 +712,7 @@ EVIS:
 		Range: 6c0
 	AttackFrontal:
 		FacingTolerance: 64
+		PauseOnCondition: being-warped || blinded
 	Armament@PRIMARY:
 		Weapon: EvisceratorShards
 		LocalOffset: 150,0,400
@@ -709,7 +727,7 @@ IMPL:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 122
-		Prerequisites: scrt, ~infantry.scrin, ~impl.upgrade, ~techlevel.high
+		Prerequisites: anyradar, ~infantry.scrin, ~impl.upgrade, ~techlevel.medium
 		IconPalette: chromes
 		Description: Assault infantry with high burst damage.
 	Selectable:
@@ -723,7 +741,7 @@ IMPL:
 		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
 		Attributes: • Slows targets
 	Health:
-		HP: 15000
+		HP: 10000
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Mobile:
@@ -732,6 +750,7 @@ IMPL:
 		Range: 6c0
 	AttackFrontal:
 		FacingTolerance: 64
+		PauseOnCondition: being-warped || blinded
 	Armament@PRIMARY:
 		Weapon: ImpalerSpike
 		LocalOffset: 150,0,400
@@ -764,7 +783,7 @@ SMEDI:
 		TargetRelationships: Ally
 		ForceTargetRelationships: None
 	AttackFrontal:
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	AttackSoundsCA@HEALSOUND:
 		Sounds: heal2.aud
@@ -920,7 +939,7 @@ MAST:
 		DischargingColor: bb0000
 		ChargingColor: cc00cc
 	AttackFrontal:
-		PauseOnCondition: being-warped || parachute || !ammo
+		PauseOnCondition: being-warped || blinded || parachute || !ammo
 		FacingTolerance: 0
 	Selectable:
 		DecorationBounds: 640, 896, -32, -256
@@ -1129,7 +1148,7 @@ GUNW:
 	WithMuzzleOverlay:
 	AttackFrontal:
 		FacingTolerance: 40
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
@@ -1240,7 +1259,7 @@ SEEK:
 		LocalOffset: 320,-25,320, 320,25,320
 		RequiresCondition: hypercharged
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	WithSpriteTurret:
 	IgnoresDisguise:
 	DetectCloaked:
@@ -1326,7 +1345,7 @@ LACE:
 		LocalOffset: 0,70,320, 0,-70,320
 		RequiresCondition: hypercharged
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	WithSpriteTurret:
 	IgnoresDisguise:
 	DetectCloaked:
@@ -1447,7 +1466,7 @@ INTL:
 		Offset: 0,0,0
 		RealignDelay: 75
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		Armaments: primary
 	WithSpriteTurret:
 	GrantConditionOnTerrain@ONWATER:
@@ -1525,7 +1544,7 @@ CORR:
 		Weapon: CorrupterSpew
 		LocalOffset: 750,0,100
 	AttackFrontal:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		FacingTolerance: 0
 	Explodes:
 		Weapon: CorrupterExplode
@@ -1591,7 +1610,7 @@ LCHR:
 		MuzzlePalette: scrin
 	WithMuzzleOverlay:
 	AttackFrontal:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -1748,7 +1767,7 @@ STCR:
 		LocalOffset: 0,200,350, -250,-200,350, 250,200,350, 0,-200,350, -250,200,350, 250,-200,350
 	AttackFollowFrontal:
 		FacingTolerance: 512
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		RangeMargin: 0
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -1842,7 +1861,7 @@ DEVO:
 		Offset: 0,0,0
 		RealignDelay: 100
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		Armaments: primary, primary-charged
 	WithSpriteTurret:
 	ProductionCostMultiplier@REAPBONUS:
@@ -1914,7 +1933,7 @@ DARK:
 		TurnSpeed: 20
 		Offset: 0,0,0
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		Armaments: primary
 	WithSpriteTurret:
 	Hovers:
@@ -2011,7 +2030,7 @@ RUIN:
 	AttackTurreted:
 		ForceFireIgnoresActors: True
 		TargetFrozenActors: True
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		Armaments: primary, primary-charged
 	WithSpriteTurret:
 	AmmoPool@RESCONV:
@@ -2092,7 +2111,7 @@ ATMZ:
 		Weapon: AtomizerBoltsAA
 		LocalOffset: 350,0,350
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	WithSpriteTurret:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -2175,7 +2194,7 @@ TPOD:
 		TurnSpeed: 12
 		Offset: 0,0,0
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	WithSpriteTurret:
 	WithMoveAnimation:
 	DeathSounds:
@@ -2299,7 +2318,7 @@ OBLT:
 		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
 		Attributes: • Can traverse water
 	Valued:
-		Cost: 2000
+		Cost: 2300
 	Tooltip:
 		Name: Obliterator
 	Selectable:
@@ -2307,7 +2326,7 @@ OBLT:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 25000
+		HP: 30000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -2339,8 +2358,10 @@ OBLT:
 		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	AttackFrontal:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		FacingTolerance: 16
+		TargetFrozenActors: True
+		ForceFireIgnoresActors: True
 	GrantConditionOnTerrain@ONWATER:
 		TerrainTypes: Water
 		Condition: onwater
@@ -2375,7 +2396,7 @@ NULL:
 		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
 		Attributes: • Disables enemy weapons and vision\n• Can traverse water
 	Valued:
-		Cost: 1500
+		Cost: 1600
 	Tooltip:
 		Name: Nullifier
 	Selectable:
@@ -2414,7 +2435,7 @@ NULL:
 		Offset: 0,0,0
 		RealignDelay: 100
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	WithSpriteTurret:
 	GrantConditionOnTerrain@ONWATER:
 		TerrainTypes: Water
@@ -2549,7 +2570,7 @@ STMR:
 		FacingTolerance: 512
 		PersistentTargeting: false
 		OpportunityFire: true
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	Aircraft:
 		CruiseAltitude: 2560
 		TurnSpeed: 22
@@ -2682,7 +2703,7 @@ ENRV:
 		FacingTolerance: 40
 		PersistentTargeting: false
 		OpportunityFire: false
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	Aircraft:
 		TurnSpeed: 24
 		Speed: 225
@@ -2849,7 +2870,7 @@ DEVA:
 		FacingTolerance: 40
 		ForceFireIgnoresActors: True
 		TargetFrozenActors: True
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		RequiresCondition: !stellar-upgrade
 	AttackFrontalCharged:
 		Armaments: primary-upg
@@ -2863,7 +2884,7 @@ DEVA:
 		ShotsPerCharge: 3
 		ShowSelectionBar: true
 		SelectionBarColor: cc33ff
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		RequiresCondition: stellar-upgrade
 	Aircraft:
 		CruiseAltitude: 2560
@@ -2986,7 +3007,7 @@ PAC:
 		Name: fully-deployed
 	AttackFrontal:
 		FacingTolerance: 384
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	CarrierMaster@carr1:
 		Actors: inva, inva, inva, inva, inva, inva
 		RearmTicks: 0
@@ -3228,7 +3249,7 @@ MSHP:
 	AttackTurreted:
 		Armaments: primary, secondary, tertiary
 		Voice: Attack
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		ForceFireIgnoresActors: true
 		Turrets: body
 	-EjectOnDeath:
@@ -4555,7 +4576,6 @@ SREP:
 		StartRepairingTextNotification: Repairing.
 		FinishRepairingNotification: UnitRepaired
 		FinishRepairingTextNotification: Unit repaired.
-		PlayerExperience: 5
 		RequiresCondition: !forceshield && !invulnerability && !being-warped
 	WithResupplyAnimation:
 		RequiresCondition: !build-incomplete
@@ -5575,6 +5595,23 @@ REBELGATEWAY:
 		ChargeDuration: 500
 		Actors: gunw, gunw, tpod
 		ReadyAudio: ReinforcementsArrived
+	AmmoPool@Wave1:
+		Name: wave1
+		InitialAmmo: 0
+	AmmoPool@Wave2:
+		Name: wave2
+		InitialAmmo: 0
+	ReloadAmmoPoolCA@Wave1:
+		AmmoPool: wave1
+		Delay: 125
+		ShowSelectionBar: true
+		SelectionBarColor: ff00ff
+	ReloadAmmoPoolCA@Wave2:
+		AmmoPool: wave2
+		Delay: 375
+		ShowSelectionBar: true
+		SelectionBarColor: ff00ff
+		RequiresCondition: wave1-deployed
 
 # infiltrator stolen tech
 

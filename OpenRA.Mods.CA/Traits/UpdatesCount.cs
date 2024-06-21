@@ -14,7 +14,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("Updates a counter when the actor is created/disposed.")]
+	[Desc("Updates a counter when the actor is created/disposed or changes owner.")]
 	public class UpdatesCountInfo : TraitInfo
 	{
 		[FieldLoader.Require]
@@ -24,7 +24,7 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new UpdatesCount(init, this); }
 	}
 
-	public class UpdatesCount : INotifyCreated, INotifyActorDisposing
+	public class UpdatesCount : INotifyCreated, INotifyActorDisposing, INotifyOwnerChanged
 	{
 		public readonly UpdatesCountInfo Info;
 		IEnumerable<ProvidesPrerequisiteOnCount> counters;
@@ -36,9 +36,25 @@ namespace OpenRA.Mods.CA.Traits
 
 		void INotifyCreated.Created(Actor self)
 		{
-			counters = self.Owner.PlayerActor.TraitsImplementing<ProvidesPrerequisiteOnCount>()
+			UpdateCounters(self.Owner);
+
+			foreach (var c in counters)
+				c.Increment(Info.Type);
+		}
+
+		void UpdateCounters(Player owner)
+		{
+			counters = owner.PlayerActor.TraitsImplementing<ProvidesPrerequisiteOnCount>()
 				.Where(c => c.Info.RequiredCounts.ContainsKey(Info.Type)
-					&& (c.Factions.Length == 0 || c.Factions.Contains(self.Owner.Faction.InternalName)));
+					&& (c.Factions.Length == 0 || c.Factions.Contains(owner.Faction.InternalName)));
+		}
+
+		void INotifyOwnerChanged.OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)
+		{
+			foreach (var c in counters)
+				c.Decrement(Info.Type);
+
+			UpdateCounters(newOwner);
 
 			foreach (var c in counters)
 				c.Increment(Info.Type);

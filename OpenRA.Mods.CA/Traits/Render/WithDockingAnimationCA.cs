@@ -44,9 +44,23 @@ namespace OpenRA.Mods.Common.Traits.Render
 			harvester = self.Trait<Harvester>();
 		}
 
+		bool RefineryIsValid
+		{
+			get
+			{
+				if (!info.RefineryTypes.Any())
+					return true;
+
+				if (harvester.LinkedProc != null && info.RefineryTypes.Contains(harvester.LinkedProc.Info.Name))
+					return true;
+
+				return false;
+			}
+		}
+
 		void IDockClientBody.PlayDockAnimation(Actor self, Action after)
 		{
-			if (info.RefineryTypes.Contains(harvester.LinkedProc.Info.Name))
+			if (RefineryIsValid)
 				wsb.PlayCustomAnimation(self, info.DockSequence, () => { wsb.PlayCustomAnimationRepeating(self, info.DockLoopSequence); after(); });
 			else
 				after();
@@ -54,7 +68,7 @@ namespace OpenRA.Mods.Common.Traits.Render
 
 		void IDockClientBody.PlayReverseDockAnimation(Actor self, Action after)
 		{
-			if (info.RefineryTypes.Contains(harvester.LinkedProc.Info.Name))
+			if (RefineryIsValid)
 				wsb.PlayCustomAnimationBackwards(self, info.DockSequence, () => after());
 			else
 				after();

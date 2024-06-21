@@ -37,7 +37,7 @@ SS:
 		FireDelay: 2
 		PauseOnCondition: under-bridge
 	AttackFrontal:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		RequiresCondition: !crossing-ford
 		FacingTolerance: 0
 	AutoTarget:
@@ -107,7 +107,7 @@ MSUB:
 	AttackFrontal:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		FacingTolerance: 70
 	AutoTarget:
 		InitialStance: HoldFire
@@ -178,7 +178,7 @@ DD:
 	AttackTurreted:
 		Turrets: primary, secondary, tertiary
 		Armaments: primary, secondary, tertiary
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	WithSpriteTurret:
 	DetectCloaked:
 		DetectionTypes: Underwater
@@ -251,7 +251,7 @@ CA:
 		Turrets: primary, secondary
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	WithMuzzleOverlay:
 	WithSpriteTurret@PRIMARY:
 		Turret: primary
@@ -360,7 +360,7 @@ PT:
 		MuzzleSequence: muzzle
 		PauseOnCondition: under-bridge
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	DetectCloaked:
@@ -428,7 +428,7 @@ PT2:
 		PauseOnCondition: under-bridge
 	AttackTurreted:
 		Armaments: primary, secondary, tertiary
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	WithIdleOverlay@SPINNER:
@@ -482,7 +482,7 @@ DD2:
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
 		Offset: -90,0,406
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		RequiresCondition: !under-bridge
 	Turreted@PRIMARY:
 		Turret: primary
@@ -583,7 +583,7 @@ SS2:
 		FireDelay: 2
 		PauseOnCondition: under-bridge
 	AttackFrontal:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		RequiresCondition: !crossing-ford
 		FacingTolerance: 0
 	AutoTarget:
@@ -661,7 +661,7 @@ ISUB:
 	AttackFrontalCharged:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
-		PauseOnCondition: under-bridge || empdisable || being-warped
+		PauseOnCondition: under-bridge || empdisable || being-warped || blinded
 		FacingTolerance: 16
 		ChargeLevel: 50
 		DischargeRate: 5
@@ -754,7 +754,7 @@ CV:
 		Voice: Attack
 		TargetFrozenActors: True
 		FacingTolerance: 512
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	CarrierMaster:
 		Actors: horn, horn, horn
 		RearmTicks: 75
@@ -829,7 +829,7 @@ SB:
 		LocalYaw: 100, -100
 		PauseOnCondition: under-bridge
 	AttackFrontal:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		FacingTolerance: 0
 	WithMuzzleOverlay:
 	DetectCloaked:
@@ -885,7 +885,7 @@ SEAS:
 		MuzzleSequence: muzzle
 		PauseOnCondition: under-bridge
 	AttackFrontal:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		FacingTolerance: 0
 	WithMuzzleOverlay:
 	DetectCloaked:

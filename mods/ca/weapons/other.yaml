@@ -610,7 +610,8 @@ DogExplode:
 		Versus:
 			Wood: 75
 			Concrete: 75
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+			Heavy: 75
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster
 		AffectsParent: true
 	Warhead@3Eff: CreateEffect
 		Explosions: artillery_explosion
@@ -3478,7 +3479,7 @@ ZeusBolt:
 		SmudgeType: Scorch
 
 BasiliskPulse:
-	ReloadDelay: 80
+	ReloadDelay: 60
 	Burst: 3
 	BurstDelays: 5
 	Range: 3c512
@@ -3521,6 +3522,7 @@ CyclopsZap:
 
 JackknifeTargeter:
 	Range: 8c0
+	ValidTargets: Ground, Water, Air, AirSmall
 	MinRange: 0c768
 	ReloadDelay: 25
 	Projectile: InstantHit

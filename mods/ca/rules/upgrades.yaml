@@ -773,7 +773,7 @@ arty.doctrine:
 	Buildable:
 		BuildPaletteOrder: 6
 		Prerequisites: ~player.soviet, !infantry.doctrine, !armor.doctrine, !arty.doctrine, player.level1, ~techlevel.medium
-		Description: Specialize in artillery:\n• Grad (Replaces Katyusha)\n• TBC\n• Rocket Pods\n• Kill Zone\n• Munitions Plant\n\n
+		Description: Specialize in artillery:\n• Grad (Replaces Katyusha)\n• Nuke Cannon\n• Rocket Pods\n• Kill Zone\n• Munitions Plant\n\n
 	TooltipExtras:
 		Attributes: (!) Only ONE Doctrine may be chosen.
 	Valued:
@@ -835,34 +835,15 @@ v3.upgrade:
 		Name: Research: V3 Launcher
 	Buildable:
 		BuildPaletteOrder: 30
-		Prerequisites: ~player.soviet, stek, ~arty.doctrine, ~techlevel.medium
+		Prerequisites: ~player.soviet, stek, ~techlevel.high
 		Description: Allows construction of the V3 Launcher.\n\nReplaces: V2 Launcher
 	TooltipExtras:
 		Strengths: + Significantly increased range
 		Weaknesses: – Slower projectiles\n– Missiles can be shot down\n– Increased cost
 	Valued:
-		Cost: 500
+		Cost: 750
 	RenderSprites:
 		Image: v3.upgrade
-
-seismic.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Seismic Missiles
-	Buildable:
-		BuildPaletteOrder: 30
-		Prerequisites: ~player.ukraine, stek, ~techlevel.high
-		Description: Arms the Sukhoi with Seismic Missiles.\n\nUpgrades: Sukhoi
-	TooltipExtras:
-		Strengths: + High area damage vs structures and vehicles\n+ Slows movement and rate of fire of impacted targets
-		Weaknesses: – Slow moving projectiles
-	Valued:
-		Cost: 1000
-	RenderSprites:
-		Image: seismic.upgrade
-	AnnounceOnCreation:
-		SoundNotification: UPG-seismic
-		Delay: 60
 
 ttrp.upgrade:
 	Inherits: ^Upgrade
@@ -926,6 +907,25 @@ tarc.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: tarc.upgrade
+
+seismic.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Seismic Missiles
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.ukraine, stek, ~techlevel.high
+		Description: Arms the Sukhoi with Seismic Missiles.\n\nUpgrades: Sukhoi
+	TooltipExtras:
+		Strengths: + High area damage vs structures and vehicles\n+ Slows movement and rate of fire of impacted targets
+		Weaknesses: – Slow moving projectiles
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: seismic.upgrade
+	AnnounceOnCreation:
+		SoundNotification: UPG-seismic
+		Delay: 60
 
 doctrine.upgrade1:
 	Inherits: ^Upgrade
@@ -1383,7 +1383,7 @@ evis.upgrade:
 		Strengths: + Increased damage\n+ Increased health\n+ Increased rate of fire
 		Weaknesses: – Increased cost\n– Reduced speed
 	Valued:
-		Cost: 500
+		Cost: 750
 	RenderSprites:
 		Image: evis.upgrade
 
@@ -1400,7 +1400,7 @@ impl.upgrade:
 		Strengths: + Increased range\n+ Increased damage\n+ Increased health\n+ Slows targets
 		Weaknesses: – Increased cost\n– Reduced speed\n– Reduced rate of fire
 	Valued:
-		Cost: 500
+		Cost: 750
 	RenderSprites:
 		Image: impl.upgrade
 
@@ -1459,8 +1459,8 @@ blink.upgrade:
 		Name: Upgrade: Blink Packs
 	Buildable:
 		BuildPaletteOrder: 30
-		Prerequisites: ~player.scrin, scrt, ~techlevel.medium
-		Description: Equips Intruders with blink packs allowing\n  them to teleport.\n\nUpgrades: Intruder
+		Prerequisites: ~player.scrin, scrt, ~techlevel.high
+		Description: Equips Intruders and Watchers with blink packs\n  allowing them to teleport.\n\nUpgrades: Intruder\nUpgrades: Watcher
 		IconPalette: chromes
 	TooltipExtras:
 		Strengths: + Teleport ability

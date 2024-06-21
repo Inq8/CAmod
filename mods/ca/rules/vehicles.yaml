@@ -37,7 +37,7 @@ V2RL:
 	AttackFrontal:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		FacingTolerance: 0
 	WithFacingSpriteBody:
 		RequiresCondition: !reloading
@@ -103,7 +103,7 @@ KATY:
 	AttackFrontal:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		FacingTolerance: 0
 		Voice: Attack
 	Explodes:
@@ -141,7 +141,7 @@ GRAD:
 		TargetFrozenActors: True
 		Voice: Attack
 		ForceFireIgnoresActors: True
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	Turreted:
 		TurnSpeed: 6
 		RealignDelay: 3
@@ -180,7 +180,7 @@ NUKC:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 243
-		Prerequisites: ~vehicles.soviet, ~arty.doctrine, ~nukc.upgrade, ~techlevel.high
+		Prerequisites: stek, ~vehicles.soviet, ~arty.doctrine, ~nukc.upgrade, ~techlevel.high
 		Description: Nuclear long-range artillery.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
@@ -236,7 +236,10 @@ NUKC:
 		Turrets: primary, deployer
 		Voice: Attack
 		RangeMargin: 0
+		PauseOnCondition: empdisable || being-warped || blinded
 		RequiresCondition: deployed || botowner
+		TargetFrozenActors: True
+		ForceFireIgnoresActors: True
 	GrantConditionOnDeployTurreted:
 		DeployedCondition: deployed
 		UndeployedCondition: undeployed
@@ -369,7 +372,7 @@ NUKC:
 		LocalOffset: 768,0,90
 		MuzzleSequence: muzzle
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped || parachute
+		PauseOnCondition: empdisable || being-warped || blinded || parachute
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	SpawnActorOnDeath:
@@ -429,7 +432,7 @@ NUKC:
 		LocalOffset: 720,0,80
 		MuzzleSequence: muzzle
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	SpawnActorOnDeath:
@@ -468,7 +471,6 @@ GTNK:
 		Offset: 80,0,0
 	AttackTurreted:
 		Voice: Attack
-		PauseOnCondition: parachute
 	AttackMove:
 		Voice: Attack
 	SpawnActorOnDeath:
@@ -766,7 +768,7 @@ GTNK.squad:
 		PauseOnCondition: !has-atomic-ammo || reloading
 		ReloadingCondition: atomic-reloading
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded || parachute
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	WithFacingSpriteBody:
@@ -1028,7 +1030,7 @@ GTNK.squad:
 		ReloadingCondition: atomic-reloading
 	AttackTurreted:
 		Voice: Attack
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded || parachute
 	AttackMove:
 		Voice: Attack
 	Voiced:
@@ -1211,7 +1213,7 @@ GTNK.squad:
 		Recoil: 43
 		MuzzleSequence: muzzle
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		Voice: Attack
 	AttackMove:
 		Voice: Attack
@@ -1432,7 +1434,7 @@ ARTY:
 	AttackFrontal:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		FacingTolerance: 0
 	WithMuzzleOverlay:
 	Explodes:
@@ -1481,7 +1483,7 @@ HOWI:
 		Prerequisites: ~vehicles.nod, ~howi.upgrade, ~techlevel.medium
 	-AttackFrontal:
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	Turreted:
 		TurnSpeed: 18
 	Armament:
@@ -1622,7 +1624,7 @@ ISU:
 	AttackFrontal:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		Voice: Attack
 		FacingTolerance: 0
 	WithMuzzleOverlay:
@@ -1698,7 +1700,7 @@ SPEC:
 	AttackFrontalCharged:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		FacingTolerance: 32
 		ChargeLevel: 25
 		DischargeRate: 5
@@ -1778,7 +1780,7 @@ SAPC:
 		Weapon: StealthAPCLaser
 		LocalOffset: 85,0,171
 	AttackFrontal:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		FacingTolerance: 0
 	Cargo:
 		Types: Infantry
@@ -2108,7 +2110,7 @@ JEEP:
 		CasingSpawnLocalOffset: 0,-125,200
 		CasingTargetOffset: 0, -500, 0
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	ProducibleWithLevel:
@@ -2216,7 +2218,7 @@ APC:
 		MuzzleSequence: muzzle
 	WithMuzzleOverlay:
 	AttackFrontal:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		FacingTolerance: 0
 	Cargo:
 		Types: Infantry
@@ -2279,7 +2281,7 @@ RAPC:
 		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
 	-AttackFrontal:
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	Turreted:
 		TurnSpeed: 28
 	WithSpriteTurret:
@@ -2388,7 +2390,7 @@ MNLY:
 		FacingTolerance: 0
 		ChargeLevel: 50
 		DischargeRate: 50
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		ShowSelectionBar: true
 		SelectionBarColor: ffff00
 	-WithDecoration@BOMBARD:
@@ -2422,7 +2424,6 @@ TRUK:
 		Range: 4c0
 	DeliversCash:
 		Payload: 500
-		PlayerExperience: 50
 	SpawnActorOnDeath:
 		Actor: moneycrate
 		RequiresCondition: !being-warped
@@ -2548,7 +2549,7 @@ MRJ:
 		LocalOffset: 0,0,0
 	AttackFrontalCharged:
 		ForceFireIgnoresActors: True
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		FacingTolerance: 32
 		ChargeLevel: 75
 		DischargeRate: 5
@@ -2687,7 +2688,7 @@ TTRA:
 		LocalOffset: 0,0,213
 		RequiresCondition: tarc-upgrade
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		Voice: Attack
 	Turreted:
 	WithIdleOverlay@SPINNER:
@@ -2758,7 +2759,7 @@ TTNK:
 		RequiresCondition: tarc-upgrade
 		MuzzleSequence: muzzle
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		Voice: Attack
 	WithMuzzleOverlay:
 	WithSpriteTurret:
@@ -2874,7 +2875,7 @@ CTNK:
 		LocalOffset: -160,-276,232, -160,276,232
 		LocalYaw: 60, -60
 	AttackFrontal:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		FacingTolerance: 0
 	PortableChronoCA:
 		Charges: 1
@@ -3077,7 +3078,7 @@ HMMV:
 		CasingSpawnLocalOffset: 0,-125,200
 		CasingTargetOffset: 0, -500, 0
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	IgnoresDisguise:
@@ -3188,7 +3189,7 @@ GDRN:
 		LocalOffset: 500,0,200
 		MuzzleSequence: muzzle
 	AttackTurreted:
-		PauseOnCondition: gshield || empdisable || being-warped
+		PauseOnCondition: gshield || empdisable || being-warped || blinded
 		Voice: Attack
 	WithMuzzleOverlay:
 	WithSpriteTurret:
@@ -3311,7 +3312,7 @@ BGGY:
 		CasingSpawnLocalOffset: 0,-125,200
 		CasingTargetOffset: 0, -500, 0
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	IgnoresDisguise:
@@ -3545,7 +3546,7 @@ APC2:
 		LocalOffset: 85,0,171
 		MuzzleSequence: muzzle
 	AttackFrontal:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		FacingTolerance: 0
 	WithMuzzleOverlay:
 	Cargo:
@@ -3763,7 +3764,7 @@ VULC:
 		RevokeAll: True
 		RequiresCondition: !attacking-air
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		Armaments: primary, secondary
 	Turreted:
 		TurnSpeed: 28
@@ -3903,7 +3904,7 @@ LTNK:
 		MuzzlePalette: caneon
 		RequiresCondition: lastnk-upgrade
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped || parachute
+		PauseOnCondition: empdisable || being-warped || blinded || parachute
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 		RequiresCondition: !lastnk-upgrade
@@ -4000,7 +4001,7 @@ MTNK:
 		ForceTargetRelationships: Enemy
 	AttackTurreted:
 		Turrets: primary, secondary
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	WithMuzzleOverlay:
 	WithSpriteTurret@default:
 		RequiresCondition: !pointdef-upgrade && !lastnk-upgrade
@@ -4087,7 +4088,7 @@ MTNK.Drone:
 	Armament:
 		Weapon: 120mm.Drone
 	AttackTurreted:
-		PauseOnCondition: !radarenabled || empdisable || being-warped
+		PauseOnCondition: !radarenabled || empdisable || being-warped || blinded
 		Voice: Attack
 	AttackMove:
 		Voice: Attack
@@ -4200,7 +4201,7 @@ MDRN:
 	TurretedFloating:
 		TurnSpeed: 18
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		Turrets: primary
 		Voice: Attack
 	WithSpriteTurret:
@@ -4343,7 +4344,7 @@ HTNK:
 		Recoil: 43
 		MuzzleSequence: muzzle
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		Voice: Attack
 	AttackMove:
 		Voice: Attack
@@ -4479,7 +4480,7 @@ HTNK.Drone:
 	Armament@PRIMARY:
 		Weapon: 130mmTD.Drone
 	AttackTurreted:
-		PauseOnCondition: !radarenabled || empdisable || being-warped
+		PauseOnCondition: !radarenabled || empdisable || being-warped || blinded
 		Voice: Attack
 	AttackMove:
 		Voice: Attack
@@ -4571,7 +4572,7 @@ MSAM:
 		Offset: -256,0,128
 	AttackTurreted:
 		TargetFrozenActors: True
-		PauseOnCondition: empdisable || being-warped || reloading
+		PauseOnCondition: empdisable || being-warped || reloading || blinded
 	WithSpriteTurret:
 	Explodes:
 		Weapon: ArtilleryExplode
@@ -4710,7 +4711,7 @@ MLRS:
 		Armaments: primary, targetter
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	WithSpriteTurret:
 		RequiresCondition: ammo > 1
 	WithSpriteTurret@OneMissile:
@@ -4821,7 +4822,7 @@ STNK.Nod:
 		TurnSpeed: 40
 		Offset: 0,0,10
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped || parachute
+		PauseOnCondition: empdisable || being-warped || blinded || parachute
 	WithSpriteTurret:
 	AutoTarget:
 		InitialStance: HoldFire
@@ -4902,7 +4903,7 @@ BIKE:
 		LocalYaw: 100, -100
 		RequiresCondition: tibcore-upgrade
 	AttackFrontal:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -4958,7 +4959,7 @@ FTNK:
 		LocalOffset: 682,128,42, 682,-128,42
 	WithMuzzleOverlay:
 	AttackFrontal:
-		PauseOnCondition: empdisable || being-warped || parachute
+		PauseOnCondition: empdisable || being-warped || blinded || parachute
 		FacingTolerance: 0
 	Explodes:
 		Weapon: BarrelExplode
@@ -5034,7 +5035,7 @@ HFTK:
 	AttackTurreted:
 		Voice: Attack
 		RangeMargin: 0
-		PauseOnCondition: empdisable || being-warped || parachute
+		PauseOnCondition: empdisable || being-warped || blinded || parachute
 	WithSpriteTurret:
 	WithMuzzleOverlay:
 	Voiced:
@@ -5217,7 +5218,7 @@ BTR:
 		CasingSpawnLocalOffset: 0,-225,200
 		CasingTargetOffset: 0, -600, 0
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	WithMuzzleOverlay:
 	WithSpriteTurret@GROUND:
 		Sequence: turret
@@ -5392,7 +5393,7 @@ BTR.YURI:
 		TurnSpeed: 28
 		Offset: -50,0,0
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		Armaments: primary, secondary
 		Voice: Attack
 	Mobile:
@@ -5433,7 +5434,7 @@ TRPC:
 		Weaknesses: • Unarmed
 		Attributes: • Empowers and heals nearby infantry
 	Valued:
-		Cost: 1350
+		Cost: 1500
 	Tooltip:
 		Name: Troop Crawler
 	UpdatesPlayerStatistics:
@@ -5894,7 +5895,7 @@ IFV:
 		RequiresCondition: psyturr
 		Palette: scrin
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		RequiresCondition: !spyturr
 	WithMuzzleOverlay:
 	WithSpriteTurret@defaultturr:
@@ -6274,7 +6275,7 @@ IFV.AI:
 		LocalOffset: 192,100,176, 192,-100,176
 		RequiresCondition: samturr && cryr-upgrade
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	WithMuzzleOverlay:
 	WithSpriteTurret@default:
 		Sequence: turret
@@ -6480,7 +6481,7 @@ TITN:
 		TurnSpeed: 10
 		Offset: 0,0,0
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		Armaments: primary, secondary
 		Voice: Attack
 	AttackMove:
@@ -6604,7 +6605,7 @@ JUGG:
 		RequiresCondition: attack-move || assault-move
 	AttackTurreted:
 		Armaments: primary, secondary, targetter
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		TargetFrozenActors: True
 		Voice: Attack
 		ForceFireIgnoresActors: True
@@ -6738,7 +6739,7 @@ DISR:
 		TurnSpeed: 16
 		Offset: -300,0,0
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		Voice: Attack
 	AttackMove:
 		Voice: Attack
@@ -6821,7 +6822,7 @@ HSAM:
 	AttackTurreted:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: false
-		PauseOnCondition: empdisable || being-warped || reloading
+		PauseOnCondition: empdisable || being-warped || blinded || reloading
 	WithSpriteTurret:
 	Explodes:
 		Weapon: ArtilleryExplode
@@ -6960,7 +6961,7 @@ RTNK:
 		MuzzleSequence: muzzle
 	AttackTurreted:
 		Voice: Attack
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	AttackMove:
 		Voice: Attack
 	WithMuzzleOverlay:
@@ -7047,7 +7048,7 @@ V3RL:
 	AttackFrontal:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		Voice: Attack
 		FacingTolerance: 0
 	AttackMove:
@@ -7163,7 +7164,7 @@ TNKD:
 		LocalOffset: 868,0,0
 		MuzzleSequence: muzzle
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		Voice: Attack
 	AttackMove:
 		Voice: Attack
@@ -7349,7 +7350,7 @@ PTNK:
 	WithMuzzleOverlay:
 	AttackTurreted:
 		TargetFrozenActors: True
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		Voice: Attack
 	AttackMove:
 		Voice: Attack
@@ -7398,7 +7399,7 @@ PCAN:
 	-AttackTurreted:
 	AttackTurretedCharged:
 		TargetFrozenActors: True
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		Voice: Attack
 		ChargeLevel: 15
 		ChargingSounds: pcancharge.aud
@@ -7461,7 +7462,7 @@ WTNK:
 		MuzzlePalette: tseffect-ignore-lighting-alpha75
 		RequiresCondition: microwave-upgrade
 	AttackTurretedCharged:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		Voice: Attack
 		ChargeLevel: 9
 		ChargingSounds: coreup1.aud
@@ -7533,7 +7534,7 @@ BATF:
 		RequiresCondition: loaded-spy && !(empdisable || being-warped)
 	AttackFrontal:
 		FacingTolerance: 24
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		RequiresCondition: !(loaded || loaded-cmdo || loaded-seal || loaded-air)
 		Voice: Attack
 	AttackMove:
@@ -7631,7 +7632,7 @@ BATF:
 		Voice: Attack
 		Armaments: batf
 		PortOffsets: 825,0,256, 348,-482,256, -348,-482,256, -448,482,256, 448,482,256
-		PauseOnCondition: being-warped || empdisable
+		PauseOnCondition: being-warped || empdisable || blinded
 		RequiresCondition: loaded || loaded-cmdo || loaded-seal || loaded-air
 	Capturable:
 		RequiresCondition: !being-warped && !cargo
@@ -7972,7 +7973,7 @@ CHPR:
 		Weapon: NeutronCannonSound
 		LocalOffset: 600,0,480
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		Voice: Attack
 	WithMuzzleOverlay:
 	WithSpriteTurret@inactiveturret:
@@ -8079,7 +8080,7 @@ CRYO:
 	AttackFrontal:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		FacingTolerance: 0
 		Voice: Attack
 	Voiced:
@@ -8144,7 +8145,7 @@ PBUL:
 		LocalOffset: 0,-100,250, 0,100,250
 		ReloadingCondition: reloading
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped || reloading
+		PauseOnCondition: empdisable || being-warped || blinded || reloading
 	WithSpriteTurret:
 		Palette: player
 	IgnoresDisguise:
@@ -8185,8 +8186,8 @@ CYCP:
 	Armor:
 		Type: Light
 	Mobile:
-		Speed: 82
-		TurnSpeed: 24
+		Speed: 100
+		TurnSpeed: 28
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -8197,7 +8198,7 @@ CYCP:
 		Weapon: CyclopsZap
 		LocalOffset: 150,0,213
 	AttackFrontal:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		FacingTolerance: 20
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -8248,7 +8249,7 @@ BASI:
 		Weapon: BasiliskPulse
 		LocalOffset: 0,0,213
 	AttackFrontal:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		FacingTolerance: 20
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -8309,7 +8310,7 @@ MANT:
 		MuzzleSequence: muzzle
 		MuzzlePalette: caneon
 	AttackFrontal:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		FacingTolerance: 24
 	WithMuzzleOverlay:
 	ProducibleWithLevel:
@@ -8380,7 +8381,7 @@ VIPR:
 		Offset: 0,0,0
 		RealignDelay: 100
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 	WithSpriteTurret:
 	GrantConditionOnTerrain@ONWATER:
 		TerrainTypes: Water
@@ -8445,7 +8446,7 @@ WOLV:
 		LocalOffset: 300,-220,180, 300,220,180
 		MuzzleSequence: muzzle
 	AttackFollowFrontal:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		Voice: Attack
 		FacingTolerance: 32
 		RangeMargin: 0
@@ -8514,7 +8515,7 @@ XO:
 		Weapon: XOLaser
 		LocalOffset: 400,220,180
 	AttackFollowFrontal:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		Voice: Attack
 		FacingTolerance: 32
 		RangeMargin: 0
@@ -8603,7 +8604,7 @@ APOC:
 		Recoil: 43
 		MuzzleSequence: muzzle
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		Voice: Attack
 	WithFacingSpriteBody:
 	WithMuzzleOverlay:
@@ -8817,7 +8818,7 @@ OVLD:
 		PauseOnCondition: !has-atomic-ammo || reloading
 		ReloadingCondition: atomic-reloading
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		Voice: Attack
 	WithFacingSpriteBody:
 	WithMuzzleOverlay:
@@ -9016,7 +9017,7 @@ THWK:
 	AttackTurreted:
 		TargetFrozenActors: True
 		Voice: Attack
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		Armaments: primary, targetter
 	AttackMove:
 		Voice: Attack
@@ -9152,7 +9153,7 @@ ZEUS:
 		Weapon: ZeusCloud
 	AttackFrontalCharged:
 		ForceFireIgnoresActors: True
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || blinded
 		FacingTolerance: 32
 		ChargeLevel: 75
 		DischargeRate: 5
