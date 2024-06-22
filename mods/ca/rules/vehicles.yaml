@@ -122,6 +122,7 @@ KATY:
 		UpgradingCondition: upgrading
 		Actor: grad
 		UpgradeAtActors: fix, rep, srep
+		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
 
 GRAD:
@@ -5255,6 +5256,12 @@ BTR:
 		RequiresCondition: !being-warped && !cargo
 	Capturable@DRIVER_DEAD:
 		RequiresCondition: driver-dead && !cargo
+	GrantConditionOnPrerequisite@ReactiveArmor:
+		Prerequisites: reactive.upgrade
+		Condition: reactive-upgrade
+	DamageMultiplier@ReactiveArmor:
+		Modifier: 90
+		RequiresCondition: reactive-upgrade
 	ReplacedInQueue:
 		Actors: btr.yuri
 	Upgradeable@GATTLING:
@@ -8111,9 +8118,9 @@ PBUL:
 		BuildPaletteOrder: 252
 		IconPalette: chrometd
 		Prerequisites: gtek, ~vehicles.eagle, ~techlevel.high
-		Description: Fast scout vehicle with anti-tank and anti-air rockets.
+		Description: Fast scout vehicle with anti-vehicle and anti-aircraft rockets.
 	TooltipExtras:
-		Strengths: • Strong vs Heavy Armor, Aircraft
+		Strengths: • Strong vs Light Armor, Aircraft
 		Weaknesses: • Weak vs Infantry, Buildings, Defenses
 		Attributes: • Can detect spies and cloaked units.
 	Valued:
@@ -8241,7 +8248,7 @@ BASI:
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 68
+		Speed: 100
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -8473,7 +8480,7 @@ XO:
 		Prerequisites: gtek, ~vehicles.zocom, ~techlevel.high
 		Description: Light battle-mech with a short-range laser\n  and a machine gun.
 	TooltipExtras:
-		Strengths: • Strong vs Heavy Armor, Light Armor
+		Strengths: • Strong vs Light Armor, Heavy Armor
 		Weaknesses: • Weak vs Buildings\n• Cannot attack Aircraft
 	Valued:
 		Cost: 1000
