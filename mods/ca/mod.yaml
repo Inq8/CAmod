@@ -50,6 +50,7 @@ Packages:
 	ca|bits/int
 	ca|bits/snow
 	ca|bits/audio
+	ca|bits/music
 	ca|uibits
 	ca|bits/scrin
 	ca|bits/scrin/audio
@@ -268,7 +269,7 @@ DefaultOrderGenerator: UnitOrderGenerator
 
 SupportsMapsFrom: ca, ra
 
-SoundFormats: Aud, Wav, Mp3
+SoundFormats: Aud, Wav, Mp3, Ogg
 
 SpriteFormats: ShpD2, R8, ShpTD, TmpRA, TmpTD, ShpTS
 
@@ -359,20 +360,17 @@ ModContent:
 			Sources: cnc95, tfd, cnc-steam, cncr-steam, cnc-origin, cncr-origin
 			Required: true
 			Download: cncdesert
-		ContentPackage@music-ca:
-			Title: Combined Arms Music
-			Identifier: music-ca
-			TestFiles: ^SupportDir|Content/ca/music/moi.mp3, ^SupportDir|Content/ca/music/drill.mp3, ^SupportDir|Content/ca/music/creep.mp3, ^SupportDir|Content/ca/music/radio2ca.mp3, ^SupportDir|Content/ca/music/subvn.mp3, ^SupportDir|Content/ca/music/recon.mp3, ^SupportDir|Content/ca/music/moi2.mp3, ^SupportDir|Content/ca/music/gateway.mp3
-			Download: music-ca
 		ContentPackage@music-cnc:
 			Title: Tiberian Dawn Music
 			Identifier: music-cnc
 			TestFiles: ^SupportDir|Content/ca/cnc/scores.mix
+			Download: music-cnc
 			Sources: covertops, cnc95, tfd, cnc-steam, cncr-steam, cnc-origin, cncr-origin
 		ContentPackage@music-ra:
 			Title: Red Alert Music
 			Identifier: music-ra
 			TestFiles: ^SupportDir|Content/ca/ra/scores.mix
+			Download: music-ra
 			Sources: allied, soviet, tfd, ra-steam, cncr-steam, ra-origin, cncr-origin
 		ContentPackage@music-counterstrike:
 			Title: Counterstrike Music
@@ -388,11 +386,13 @@ ModContent:
 			Title: Tiberian Sun Music
 			Identifier: music-ts
 			TestFiles: ^SupportDir|Content/ca/ts/scores.mix
+			Download: music-ts
 			Sources: tibsun, ts-steam, ts-origin
 		ContentPackage@music-firestorm:
 			Title: Firestorm Music
 			Identifier: music-firestorm
 			TestFiles: ^SupportDir|Content/ca/firestorm/dmachine.aud, ^SupportDir|Content/ca/firestorm/elusive.aud, ^SupportDir|Content/ca/firestorm/hacker.aud, ^SupportDir|Content/ca/firestorm/infiltra.aud, ^SupportDir|Content/ca/firestorm/kmachine.aud, ^SupportDir|Content/ca/firestorm/linkup.aud, ^SupportDir|Content/ca/firestorm/rainnite.aud, ^SupportDir|Content/ca/firestorm/slavesys.aud
+			Download: music-fs
 			Sources: firestorm, ts-steam, ts-origin
 		ContentPackage@music-ra2:
 			Title: Red Alert 2 Music
