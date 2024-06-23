@@ -36,12 +36,12 @@ checkbox-fast-regrowth =
 
 dropdown-queuetype =
     .label = Production Type
-    .description = Single-Queue = One queue per production category\n\nMulti-Queue = One queue per production structure (upgrades remain single-queue)\n\nMulti-Queue Scaled = Multi-Queue, but where additional production structures have increased cost\n                                   (which can be reduced via building T2/T3 structures), and structures remain single-queue
+    .description = Single-Queue:\n  • TD / RA1 / TS / RA2 style\n  • One queue per production type\n  • Units created at primary building\n\nMulti-Queue:\n  • C&C3 / RA3 style\n  • One queue per production structure\n  • Upgrades remain single-queue\n\nCompetitive:\n  • Multi-Queue for units\n  • Single-Queue for structures & upgrades\n  • Multiple production structures of the same type have increased cost,\n    which is reduced after building radar/tech center
 
 options-queuetype =
     .singlequeue = Single-Queue
     .multiqueuefull = Multi-Queue
-    .multiqueuescaled = Multi-Queue Scaled
+    .multiqueuescaled = Competitive
 
 ## World
 options-starting-units =

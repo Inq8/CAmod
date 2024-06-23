@@ -5439,7 +5439,7 @@ TRPC:
 		Description: Tough infantry transport pre-loaded with infantry.
 	TooltipExtras:
 		Weaknesses: • Unarmed
-		Attributes: • Empowers nearby basic infantry\n• Heals all nearby infantry
+		Attributes: • Empowers nearby basic infantry\n• Heals all nearby infantry\n• Detects cloaked units and mines
 	Valued:
 		Cost: 1500
 	Tooltip:
@@ -5517,7 +5517,14 @@ TRPC:
 	GivesExperienceCA:
 		ActorExperienceModifier: 2000
 		PlayerExperienceModifier: 0
-	-GrantConditionOnPrerequisite@GLOBALBOUNTY:
+	DetectCloaked:
+		Range: 6c0
+		DetectionTypes: Cloak, Thief, AirCloak
+		RequiresCondition: !(empdisable || being-warped)
+	DetectCloaked@Mines:
+		Range: 4c0
+		DetectionTypes: Mine
+		RequiresCondition: !(empdisable || being-warped)
 	GivesBounty:
 		Percentage: 2
 	Voiced:

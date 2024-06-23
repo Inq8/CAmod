@@ -4254,9 +4254,6 @@
 	GrantConditionOnPrerequisite@MQS:
 		Condition: global-multiqueue
 		Prerequisites: global.multiqueuescaled
-	GrantConditionOnPrerequisite@MQF2:
-		Condition: global-multiqueuefull
-		Prerequisites: global.multiqueuefull
 
 ^ProductionOptimizer1:
 	ProvidesPrerequisite@ProductionOptimizer1:
@@ -4329,6 +4326,9 @@
 		ProductionType: DefenseMQ
 		Color: 8A8A8A
 		RequiresCondition: global-multiqueuefull
+	GrantConditionOnPrerequisite@MQF2:
+		Condition: global-multiqueuefull
+		Prerequisites: global.multiqueuefull
 
 ^ProducesInfantry:
 	Inherits@QUEUEUPDATER: ^QueueUpdater
