@@ -856,7 +856,7 @@ TOW:
 
 PitbullRockets:
 	Inherits: ^AntiGroundMissile
-	Range: 7c0
+	Range: 6c0
 	Report: pitbull-fire1.aud, pitbull-fire2.aud
 	ReloadDelay: 80
 	Burst: 4
@@ -864,7 +864,7 @@ PitbullRockets:
 	Projectile: MissileCA
 		Speed: 270
 		ContrailLength: 17
-		ContrailStartColor: 6c6cd4aa
+		ContrailStartColor: ffff00aa
 		ContrailStartColorAlpha: 170
 		ContrailStartWidth: 0c48
 	Warhead@1Dam: SpreadDamage
@@ -875,6 +875,11 @@ PitbullRockets:
 			Concrete: 30
 			Light: 100
 			Heavy: 60
+	Warhead@Blind: GrantExternalConditionCA
+		Range: 0c256
+		Duration: 25
+		Condition: blinded
+		ValidTargets: Vehicle
 
 PitbullRocketsAA:
 	Inherits: RedEye
@@ -885,7 +890,7 @@ PitbullRocketsAA:
 	Projectile: MissileCA
 		Speed: 270
 		ContrailLength: 17
-		ContrailStartColor: 6c6cd4aa
+		ContrailStartColor: ffff00aa
 		ContrailStartColorAlpha: 170
 		ContrailStartWidth: 0c48
 	Warhead@1Dam: SpreadDamage
@@ -893,6 +898,12 @@ PitbullRocketsAA:
 		Damage: 3600
 	Warhead@smallDamage: SpreadDamage
 		Damage: 3600
+	Warhead@Blind: GrantExternalConditionCA
+		Range: 0c256
+		Duration: 50
+		Condition: blinded
+		ValidTargets: Air, AirSmall
+		ValidRelationships: Enemy, Neutral
 
 TorpTube:
 	ReloadDelay: 100
@@ -1368,8 +1379,8 @@ IFVRockets:
 	Warhead@1Dam: SpreadDamage
 		Damage: 2750
 		Versus:
-			Wood: 55
-			Concrete: 60
+			Wood: 40
+			Concrete: 50
 			Light: 80
 
 IFVRocketsAA:
@@ -1389,20 +1400,6 @@ IFVRocketsE:
 		ContrailLength: 10
 	Warhead@1Dam: SpreadDamage
 		Damage: 3750
-		Versus:
-			Heavy: 0
-	Warhead@antiHeavySplash: SpreadDamage
-		Spread: 341
-		Damage: 3750
-		ValidTargets: Vehicle, Husk
-		Versus:
-			Heavy: 100
-			None: 0
-			Wood: 0
-			Light: 0
-			Concrete: 0
-			Brick: 0
-		DamageTypes: ExplosionDeath
 
 IFVRocketsE.CRYO:
 	Inherits: IFVRocketsE

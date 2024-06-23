@@ -5436,10 +5436,10 @@ TRPC:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 132
 		Prerequisites: ~vehicles.soviet, ~infantry.doctrine, ~techlevel.medium
-		Description: Tough infantry transport, pre-loaded with infantry.
+		Description: Tough infantry transport pre-loaded with infantry.
 	TooltipExtras:
 		Weaknesses: • Unarmed
-		Attributes: • Empowers and heals nearby infantry
+		Attributes: • Empowers nearby basic infantry\n• Heals all nearby infantry
 	Valued:
 		Cost: 1500
 	Tooltip:
@@ -8109,7 +8109,7 @@ CRYO:
 
 PBUL:
 	Inherits: ^VehicleTD
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
@@ -8118,13 +8118,13 @@ PBUL:
 		BuildPaletteOrder: 252
 		IconPalette: chrometd
 		Prerequisites: gtek, ~vehicles.eagle, ~techlevel.high
-		Description: Fast scout vehicle with anti-vehicle and anti-aircraft rockets.
+		Description: Fast scout vehicle with rockets that briefly disable\n  the weapons and vision of vehicles and aircraft.
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor, Aircraft
 		Weaknesses: • Weak vs Infantry, Buildings, Defenses
 		Attributes: • Can detect spies and cloaked units.
 	Valued:
-		Cost: 750
+		Cost: 850
 	Tooltip:
 		Name: Pitbull
 	UpdatesPlayerStatistics:
@@ -8783,7 +8783,7 @@ OVLD:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
 		Weaknesses: • Cannot attack Aircraft
-		Attributes: • Can crush smaller vehicles and concrete walls\n• Self repairs to 50% out of combat
+		Attributes: • Can crush smaller vehicles and concrete walls\n• Self repairs to 50% out of combat\n• Empowers nearby basic infantry
 	Valued:
 		Cost: 2350
 	Tooltip:

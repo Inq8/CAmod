@@ -1390,7 +1390,6 @@ SHOK:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
-	Inherits@Inspirable: ^Inspirable
 	AutoTargetPriority@DEFAULT:
 		InvalidTargets: NoAutoTarget, TeslaBoost
 	AutoTargetPriority@ATTACKANYTHING:
@@ -2811,7 +2810,6 @@ E8:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
-	Inherits@Inspirable: ^Inspirable
 	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
@@ -4392,7 +4390,7 @@ CMSR:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry
 		Weaknesses: • Weak vs Light Armor, Heavy Armor, Defenses, Buildings\n• Cannot attack Aircraft
-		Attributes: • Increases speed and rate of fire of nearby infantry
+		Attributes: • Increases speed and rate of fire of nearby basic infantry
 	Valued:
 		Cost: 800
 	Tooltip:
@@ -4462,7 +4460,7 @@ ZTRP:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 150
-		Prerequisites: ~pyle, gtek, ~techlevel.high, ~!zrai.upgrade, ~!zdef.upgrade
+		Prerequisites: ~pyle, gtek, bomb2.strat. ~techlevel.high
 		Description: Elite infantry armed with a railgun and equipped\n  with a jump pack.
 		IconPalette: chrometd
 	TooltipExtras:
@@ -4555,7 +4553,7 @@ ZTRP:
 ZRAI:
 	Inherits: ZTRP
 	Buildable:
-		Prerequisites: ~pyle, gtek, ~techlevel.high, ~zrai.upgrade
+		Prerequisites: ~pyle, gtek, seek2.strat, ~techlevel.high
 		Description: Elite infantry armed with a sonic grenade launcher\n  and equipped with a jump pack.
 		BuildPaletteOrder: 151
 	Tooltip:
@@ -4580,8 +4578,8 @@ ZRAI:
 ZDEF:
 	Inherits: ZTRP
 	Buildable:
-		Prerequisites: ~pyle, gtek, ~techlevel.high, ~zdef.upgrade
-		Description: Elite infantry armed with an ion rifle\n  and able to shield nearby infantry.
+		Prerequisites: ~pyle, gtek, hold2.strat, ~techlevel.high
+		Description: Elite infantry armed with an ion rifle\n  and an ability which shields nearby infantry.
 		BuildPaletteOrder: 152
 	Tooltip:
 		Name: Zone Defender
@@ -4642,7 +4640,7 @@ ENFO:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 130
-		Prerequisites: ~tent, atek, ~!greece.coalition, ~techlevel.high
+		Prerequisites: ~tent, alhq, ~!greece.coalition, ~techlevel.high
 		Description: Elite short-range front-line infantry.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
@@ -4702,7 +4700,7 @@ ENFO:
 HOPL:
 	Inherits: ENFO
 	Buildable:
-		Prerequisites: ~tent, atek, ~greece.coalition, ~techlevel.high
+		Prerequisites: ~tent, alhq, ~greece.coalition, ~techlevel.high
 		Description: Elite front-line infantry armed with a prism rifle.
 	Tooltip:
 		Name: Hoplite

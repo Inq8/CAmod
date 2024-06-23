@@ -240,16 +240,18 @@ namespace OpenRA.Mods.CA.Traits
 			if (a.IsDead || !a.IsInWorld)
 				return false;
 
-			if (info.ValidRelationships.HasRelationship(Self.Owner.RelationshipWith(a.Owner)))
+			if (!info.ValidRelationships.HasRelationship(Self.Owner.RelationshipWith(a.Owner)))
 				return false;
 
 			if (info.OwnedTargetsOnly && a.Owner != Self.Owner)
 				return false;
 
-			if (!info.ValidTargets.IsEmpty && !info.ValidTargets.Overlaps(a.GetEnabledTargetTypes()))
+			var enabledTargetTypes = a.GetEnabledTargetTypes();
+
+			if (!info.ValidTargets.IsEmpty && !info.ValidTargets.Overlaps(enabledTargetTypes))
 				return false;
 
-			if (!info.InvalidTargets.IsEmpty && info.InvalidTargets.Overlaps(a.GetEnabledTargetTypes()))
+			if (!info.InvalidTargets.IsEmpty && info.InvalidTargets.Overlaps(enabledTargetTypes))
 				return false;
 
 			if (!a.TraitsImplementing<ExternalCondition>().Any(t => t.Info.Condition == Condition && t.CanGrantCondition(Self)))
