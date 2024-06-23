@@ -1,4 +1,4 @@
-ra-origin: C&C Ultimate Collection (Origin version, English)
+ra-origin: C&C Ultimate Collection RA (Origin version, English)
 	Type: RegistryDirectory
 	RegistryPrefixes: HKEY_LOCAL_MACHINE\Software\, HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\
 	RegistryKey: EA Games\Command and Conquer Red Alert
@@ -23,12 +23,6 @@ ra-origin: C&C Ultimate Collection (Origin version, English)
 					^SupportDir|Content/ca/sounds.mix: sounds.mix
 					^SupportDir|Content/ca/snow.mix: snow.mix
 					^SupportDir|Content/ca/russian.mix: russian.mix
-		# Base game music (optional):
-		ContentPackage:
-			Name: music
-			Actions:
-				ExtractMix: MAIN.MIX
-					^SupportDir|Content/ca/scores.mix: scores.mix
 		# Aftermath expansion files:
 		ContentPackage:
 			Name: aftermathbase
@@ -62,6 +56,25 @@ ra-origin: C&C Ultimate Collection (Origin version, English)
 					^SupportDir|Content/ca/expand/mwrench1.aud: mwrench1.aud
 					^SupportDir|Content/ca/expand/myeehaw1.aud: myeehaw1.aud
 					^SupportDir|Content/ca/expand/myes1.aud: myes1.aud
+		# Base game music (optional):
+		ContentPackage:
+			Name: music-ra
+			Actions:
+				ExtractMix: MAIN.MIX
+					^SupportDir|Content/ca/ra/scores.mix: scores.mix
+		# Counterstrike music (optional):
+		ContentPackage:
+			Name: music-counterstrike
+			Actions:
+				Copy: .
+					^SupportDir|Content/ca/expand/2nd_hand.aud: 2nd_hand.aud
+					^SupportDir|Content/ca/expand/araziod.aud: araziod.aud
+					^SupportDir|Content/ca/expand/backstab.aud: backstab.aud
+					^SupportDir|Content/ca/expand/chaos2.aud: chaos2.aud
+					^SupportDir|Content/ca/expand/shut_it.aud: shut_it.aud
+					^SupportDir|Content/ca/expand/twinmix1.aud: twinmix1.aud
+					^SupportDir|Content/ca/expand/under3.aud: under3.aud
+					^SupportDir|Content/ca/expand/vr2.aud: vr2.aud
 		# Aftermath music (optional):
 		ContentPackage:
 			Name: music-aftermath
@@ -76,19 +89,6 @@ ra-origin: C&C Ultimate Collection (Origin version, English)
 					^SupportDir|Content/ca/expand/search.aud: search.aud
 					^SupportDir|Content/ca/expand/traction.aud: traction.aud
 					^SupportDir|Content/ca/expand/wastelnd.aud: wastelnd.aud
-		# Counterstrike music (optional):
-		ContentPackage:
-			Name: music-counterstrike
-			Actions:
-				Copy: .
-					^SupportDir|Content/ca/expand/2nd_hand.aud: 2nd_hand.aud
-					^SupportDir|Content/ca/expand/araziod.aud: araziod.aud
-					^SupportDir|Content/ca/expand/backstab.aud: backstab.aud
-					^SupportDir|Content/ca/expand/chaos2.aud: chaos2.aud
-					^SupportDir|Content/ca/expand/shut_it.aud: shut_it.aud
-					^SupportDir|Content/ca/expand/twinmix1.aud: twinmix1.aud
-					^SupportDir|Content/ca/expand/under3.aud: under3.aud
-					^SupportDir|Content/ca/expand/vr2.aud: vr2.aud
 		# Allied campaign briefings (optional):
 		ContentPackage:
 			Name: movies-allied
@@ -212,7 +212,7 @@ ra-origin: C&C Ultimate Collection (Origin version, English)
 					^SupportDir|Content/ca/movies/cronfail.vqa: cronfail.vqa
 				Delete: ^SupportDir|Content/ca/movies2.mix
 
-cnc-origin: Command & Conquer (Origin version, English)
+cnc-origin: C&C Ultimate Collection TD (Origin version, English)
 	Type: RegistryDirectory
 	RegistryPrefixes: HKEY_LOCAL_MACHINE\Software\, HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\
 	RegistryKey: EA Games\CNC and The Covert Operations
@@ -226,6 +226,12 @@ cnc-origin: Command & Conquer (Origin version, English)
 			Actions:
 				Copy: .
 					^SupportDir|Content/ca/cnc/desert.mix: DESERT.MIX
+		# Base game music (optional):
+		ContentPackage:
+			Name: music-cnc
+			Actions:
+				Copy: .
+					^SupportDir|Content/ca/cnc/scores.mix: covert/SCORES.MIX
 
 cncr-origin: C&C Remastered Collection (Origin version, English)
 	Type: RegistryDirectory
@@ -254,12 +260,42 @@ cncr-origin: C&C Remastered Collection (Origin version, English)
 					^SupportDir|Content/ca/russian.mix: russian.mix
 					^SupportDir|Content/ca/allies.mix: allies.mix
 					^SupportDir|Content/ca/temperat.mix: temperat.mix
-		# Base game music (optional):
+		# Aftermath expansion files:
 		ContentPackage:
-			Name: music
+			Name: aftermathbase
 			Actions:
-				ExtractMix: Data/CNCDATA/RED_ALERT/CD1/MAIN.MIX
-					^SupportDir|Content/ca/scores.mix: scores.mix
+				Copy: Data/CNCDATA/RED_ALERT/AFTERMATH
+					^SupportDir|Content/ca/expand/expand2.mix: expand2.mix
+					^SupportDir|Content/ca/expand/hires1.mix: hires1.mix
+					^SupportDir|Content/ca/expand/lores1.mix: lores1.mix
+				ExtractMix: Data/CNCDATA/RED_ALERT/AFTERMATH/MAIN.MIX
+					^SupportDir|Content/ca/expand/sounds.mix: sounds.mix
+				ExtractMix: ^SupportDir|Content/ca/expand/sounds.mix
+					^SupportDir|Content/ca/expand/chrotnk1.aud: chrotnk1.aud
+					^SupportDir|Content/ca/expand/fixit1.aud: fixit1.aud
+					^SupportDir|Content/ca/expand/jburn1.aud: jburn1.aud
+					^SupportDir|Content/ca/expand/jchrge1.aud: jchrge1.aud
+					^SupportDir|Content/ca/expand/jcrisp1.aud: jcrisp1.aud
+					^SupportDir|Content/ca/expand/jdance1.aud: jdance1.aud
+					^SupportDir|Content/ca/expand/jjuice1.aud: jjuice1.aud
+					^SupportDir|Content/ca/expand/jjump1.aud: jjump1.aud
+					^SupportDir|Content/ca/expand/jlight1.aud: jlight1.aud
+					^SupportDir|Content/ca/expand/jpower1.aud: jpower1.aud
+					^SupportDir|Content/ca/expand/jshock1.aud: jshock1.aud
+					^SupportDir|Content/ca/expand/jyes1.aud: jyes1.aud
+					^SupportDir|Content/ca/expand/madchrg2.aud: madchrg2.aud
+					^SupportDir|Content/ca/expand/madexplo.aud: madexplo.aud
+					^SupportDir|Content/ca/expand/mboss1.aud: mboss1.aud
+					^SupportDir|Content/ca/expand/mhear1.aud: mhear1.aud
+					^SupportDir|Content/ca/expand/mhotdig1.aud: mhotdig1.aud
+					^SupportDir|Content/ca/expand/mhowdy1.aud: mhowdy1.aud
+					^SupportDir|Content/ca/expand/mhuh1.aud: mhuh1.aud
+					^SupportDir|Content/ca/expand/mlaff1.aud: mlaff1.aud
+					^SupportDir|Content/ca/expand/mrise1.aud: mrise1.aud
+					^SupportDir|Content/ca/expand/mwrench1.aud: mwrench1.aud
+					^SupportDir|Content/ca/expand/myeehaw1.aud: myeehaw1.aud
+					^SupportDir|Content/ca/expand/myes1.aud: myes1.aud
+				Delete: ^SupportDir|Content/ca/expand/sounds.mix
 		# Allied campaign briefings (optional):
 		ContentPackage:
 			Name: movies-allied
@@ -319,6 +355,12 @@ cncr-origin: C&C Remastered Collection (Origin version, English)
 					^SupportDir|Content/ca/movies/toofar.vqa: toofar.vqa
 					^SupportDir|Content/ca/movies/trinity.vqa: trinity.vqa
 				Delete: ^SupportDir|Content/ca/movies1.mix
+		# Base game music (optional):
+		ContentPackage:
+			Name: music-ra
+			Actions:
+				ExtractMix: Data/CNCDATA/RED_ALERT/CD1/MAIN.MIX
+					^SupportDir|Content/ca/ra/scores.mix: scores.mix
 		# Counterstrike music (optional):
 		ContentPackage:
 			Name: music-counterstrike
@@ -335,42 +377,6 @@ cncr-origin: C&C Remastered Collection (Origin version, English)
 					^SupportDir|Content/ca/expand/under3.aud: under3.aud
 					^SupportDir|Content/ca/expand/vr2.aud: vr2.aud
 				Delete: ^SupportDir|Content/ca/expand/scores.mix
-		# Aftermath expansion files:
-		ContentPackage:
-			Name: aftermathbase
-			Actions:
-				Copy: Data/CNCDATA/RED_ALERT/AFTERMATH
-					^SupportDir|Content/ca/expand/expand2.mix: expand2.mix
-					^SupportDir|Content/ca/expand/hires1.mix: hires1.mix
-					^SupportDir|Content/ca/expand/lores1.mix: lores1.mix
-				ExtractMix: Data/CNCDATA/RED_ALERT/AFTERMATH/MAIN.MIX
-					^SupportDir|Content/ca/expand/sounds.mix: sounds.mix
-				ExtractMix: ^SupportDir|Content/ca/expand/sounds.mix
-					^SupportDir|Content/ca/expand/chrotnk1.aud: chrotnk1.aud
-					^SupportDir|Content/ca/expand/fixit1.aud: fixit1.aud
-					^SupportDir|Content/ca/expand/jburn1.aud: jburn1.aud
-					^SupportDir|Content/ca/expand/jchrge1.aud: jchrge1.aud
-					^SupportDir|Content/ca/expand/jcrisp1.aud: jcrisp1.aud
-					^SupportDir|Content/ca/expand/jdance1.aud: jdance1.aud
-					^SupportDir|Content/ca/expand/jjuice1.aud: jjuice1.aud
-					^SupportDir|Content/ca/expand/jjump1.aud: jjump1.aud
-					^SupportDir|Content/ca/expand/jlight1.aud: jlight1.aud
-					^SupportDir|Content/ca/expand/jpower1.aud: jpower1.aud
-					^SupportDir|Content/ca/expand/jshock1.aud: jshock1.aud
-					^SupportDir|Content/ca/expand/jyes1.aud: jyes1.aud
-					^SupportDir|Content/ca/expand/madchrg2.aud: madchrg2.aud
-					^SupportDir|Content/ca/expand/madexplo.aud: madexplo.aud
-					^SupportDir|Content/ca/expand/mboss1.aud: mboss1.aud
-					^SupportDir|Content/ca/expand/mhear1.aud: mhear1.aud
-					^SupportDir|Content/ca/expand/mhotdig1.aud: mhotdig1.aud
-					^SupportDir|Content/ca/expand/mhowdy1.aud: mhowdy1.aud
-					^SupportDir|Content/ca/expand/mhuh1.aud: mhuh1.aud
-					^SupportDir|Content/ca/expand/mlaff1.aud: mlaff1.aud
-					^SupportDir|Content/ca/expand/mrise1.aud: mrise1.aud
-					^SupportDir|Content/ca/expand/mwrench1.aud: mwrench1.aud
-					^SupportDir|Content/ca/expand/myeehaw1.aud: myeehaw1.aud
-					^SupportDir|Content/ca/expand/myes1.aud: myes1.aud
-				Delete: ^SupportDir|Content/ca/expand/sounds.mix
 		# Aftermath music (optional):
 		ContentPackage:
 			Name: music-aftermath
@@ -395,6 +401,12 @@ cncr-origin: C&C Remastered Collection (Origin version, English)
 				Copy: Data/CNCDATA/TIBERIAN_DAWN/CD1
 					^SupportDir|Content/ca/cnc/desert.mix: DESERT.MIX
 					^SupportDir|Content/ca/cnc/scores.mix: SCORES.MIX
+		# TD music (optional):
+		ContentPackage:
+			Name: music-cnc
+			Actions:
+				Copy: Data/CNCDATA/TIBERIAN_DAWN/CD3
+					^SupportDir|Content/ca/cnc/scores.mix: SCORES.MIX
 
 ts-origin: C&C Ultimate Collection TS (Origin version, English)
 	Type: RegistryDirectory
@@ -405,17 +417,27 @@ ts-origin: C&C Ultimate Collection TS (Origin version, English)
 		GDFBinary_en_US.dll: 4bb56a449bd0003e7ae67625d90a11ae169319d6
 	Install:
 		# Base game music (optional):
-		ContentPackage@tibsun-music:
-			Name: tibsun-music
+		ContentPackage:
+			Name: music-ts
 			Actions:
 				Copy: .
 					^SupportDir|Content/ca/ts/scores.mix: SCORES.MIX
 		# Firestorm expansion music (optional):
-		ContentPackage@fstorm-music:
-			Name: fstorm-music
+		ContentPackage:
+			Name: music-firestorm
 			Actions:
 				Copy: .
 					^SupportDir|Content/ca/firestorm/scores01.mix: scores01.mix
+				ExtractMix: ^SupportDir|Content/ca/firestorm/scores01.mix
+					^SupportDir|Content/ca/firestorm/dmachine.aud: dmachine.aud
+					^SupportDir|Content/ca/firestorm/elusive.aud: elusive.aud
+					^SupportDir|Content/ca/firestorm/hacker.aud: hacker.aud
+					^SupportDir|Content/ca/firestorm/infiltra.aud: infiltra.aud
+					^SupportDir|Content/ca/firestorm/kmachine.aud: kmachine.aud
+					^SupportDir|Content/ca/firestorm/linkup.aud: linkup.aud
+					^SupportDir|Content/ca/firestorm/rainnite.aud: rainnite.aud
+					^SupportDir|Content/ca/firestorm/slavesys.aud: slavesys.aud
+				Delete: ^SupportDir|Content/ca/firestorm/scores01.mix
 
 ra2-origin: C&C Ultimate Collection RA2 (Origin version, English)
 	Type: RegistryDirectory
@@ -425,13 +447,13 @@ ra2-origin: C&C Ultimate Collection RA2 (Origin version, English)
 	IDFiles:
 		theme.mix: 184f99e3292ab19c71c08a1ad7097ce739396190
 	Install:
-		ContentPackage@ra2music:
-			Name: ra2music
+		ContentPackage:
+			Name: music-ra2
 			Actions:
 				Copy: .
 					^SupportDir|Content/ca/ra2/theme.mix: theme.mix
-		ContentPackage@yrmusic:
-			Name: yrmusic
+		ContentPackage:
+			Name: music-yr
 			Actions:
 				Copy: .
-			^SupportDir|Content/ca/ra2/thememd.mix: thememd.mix
+					^SupportDir|Content/ca/ra2/thememd.mix: thememd.mix

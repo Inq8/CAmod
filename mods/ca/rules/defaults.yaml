@@ -4254,6 +4254,9 @@
 	GrantConditionOnPrerequisite@MQS:
 		Condition: global-multiqueue
 		Prerequisites: global.multiqueuescaled
+	GrantConditionOnPrerequisite@MQF2:
+		Condition: global-multiqueuefull
+		Prerequisites: global.multiqueuefull
 
 ^ProductionOptimizer1:
 	ProvidesPrerequisite@ProductionOptimizer1:
@@ -4276,14 +4279,56 @@
 ^ProducesBuildings:
 	Inherits@QUEUEUPDATER: ^QueueUpdater
 	Inherits@PRIMARY: ^PrimaryBuilding
+	ProductionQueue@MQBLD:
+		Type: BuildingMQ
+		DisplayOrder: 1
+		Group: Building
+		LowPowerModifier: 250
+		ReadyAudio: ConstructionComplete
+		ReadyTextNotification: Construction complete.
+		BlockedAudio: NoBuild
+		BlockedTextNotification: Unable to build more.
+		LimitedAudio: BuildingInProgress
+		LimitedTextNotification: Unable to comply. Building in progress.
+		QueuedAudio: Building
+		OnHoldAudio: OnHold
+		CancelledAudio: Cancelled
+	ProductionQueue@MQDEF:
+		Type: DefenseMQ
+		DisplayOrder: 2
+		Group: Defense
+		LowPowerModifier: 250
+		ReadyAudio: ConstructionComplete
+		ReadyTextNotification: Construction complete.
+		BlockedAudio: NoBuild
+		BlockedTextNotification: Unable to build more.
+		LimitedAudio: BuildingInProgress
+		LimitedTextNotification: Unable to comply. Building in progress.
+		QueuedAudio: Building
+		OnHoldAudio: OnHold
+		CancelledAudio: Cancelled
 	Production@SQBLD:
 		Produces: BuildingSQ, DefenseSQ
 		PauseOnCondition: forceshield || being-warped
+		RequiresCondition: !global-multiqueuefull
+	Production@MQBLD:
+		Produces: BuildingMQ, DefenseMQ
+		PauseOnCondition: forceshield || being-warped
+		RequiresCondition: global-multiqueuefull
 	ProductionBar@SQBLD:
 		ProductionType: BuildingSQ
+		RequiresCondition: !global-multiqueuefull
 	ProductionBar@SQDEF:
 		ProductionType: DefenseSQ
 		Color: 8A8A8A
+		RequiresCondition: !global-multiqueuefull
+	ProductionBar@MQBLD:
+		ProductionType: BuildingMQ
+		RequiresCondition: global-multiqueuefull
+	ProductionBar@MQDEF:
+		ProductionType: DefenseMQ
+		Color: 8A8A8A
+		RequiresCondition: global-multiqueuefull
 
 ^ProducesInfantry:
 	Inherits@QUEUEUPDATER: ^QueueUpdater

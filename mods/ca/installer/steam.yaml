@@ -1,3 +1,243 @@
+ra-steam: C&C Ultimate Collection RA (Steam version, English)
+	Type: Steam
+		AppId: 2229840
+	IDFiles:
+		REDALERT.MIX: 0e58f4b54f44f6cd29fecf8cf379d33cf2d4caef
+	Install:
+		# Base game files:
+		ContentPackage:
+			Name: base
+			Actions:
+				ExtractMix: REDALERT.MIX
+					^SupportDir|Content/ca/hires.mix: hires.mix
+					^SupportDir|Content/ca/local.mix: local.mix
+					^SupportDir|Content/ca/lores.mix: lores.mix
+					^SupportDir|Content/ca/speech.mix: speech.mix
+				ExtractMix: MAIN1.MIX
+					^SupportDir|Content/ca/interior.mix: interior.mix
+					^SupportDir|Content/ca/conquer.mix: conquer.mix
+					^SupportDir|Content/ca/allies.mix: allies.mix
+					^SupportDir|Content/ca/temperat.mix: temperat.mix
+					^SupportDir|Content/ca/sounds.mix: sounds.mix
+					^SupportDir|Content/ca/snow.mix: snow.mix
+					^SupportDir|Content/ca/russian.mix: russian.mix
+		# Aftermath expansion files:
+		ContentPackage:
+			Name: aftermathbase
+			Actions:
+				Copy: .
+					^SupportDir|Content/ca/expand/expand2.mix: EXPAND2.MIX
+					^SupportDir|Content/ca/expand/hires1.mix: HIRES1.MIX
+					^SupportDir|Content/ca/expand/lores1.mix: LORES1.MIX
+				ExtractMix: MAIN4.MIX
+					^SupportDir|Content/ca/expand/sounds-aftermath.mix: sounds.mix
+				ExtractMix: ^SupportDir|Content/ca/expand/sounds-aftermath.mix
+					^SupportDir|Content/ca/expand/chrotnk1.aud: chrotnk1.aud
+					^SupportDir|Content/ca/expand/fixit1.aud: fixit1.aud
+					^SupportDir|Content/ca/expand/jburn1.aud: jburn1.aud
+					^SupportDir|Content/ca/expand/jchrge1.aud: jchrge1.aud
+					^SupportDir|Content/ca/expand/jcrisp1.aud: jcrisp1.aud
+					^SupportDir|Content/ca/expand/jdance1.aud: jdance1.aud
+					^SupportDir|Content/ca/expand/jjuice1.aud: jjuice1.aud
+					^SupportDir|Content/ca/expand/jjump1.aud: jjump1.aud
+					^SupportDir|Content/ca/expand/jlight1.aud: jlight1.aud
+					^SupportDir|Content/ca/expand/jpower1.aud: jpower1.aud
+					^SupportDir|Content/ca/expand/jshock1.aud: jshock1.aud
+					^SupportDir|Content/ca/expand/jyes1.aud: jyes1.aud
+					^SupportDir|Content/ca/expand/madchrg2.aud: madchrg2.aud
+					^SupportDir|Content/ca/expand/madexplo.aud: madexplo.aud
+					^SupportDir|Content/ca/expand/mboss1.aud: mboss1.aud
+					^SupportDir|Content/ca/expand/mhear1.aud: mhear1.aud
+					^SupportDir|Content/ca/expand/mhotdig1.aud: mhotdig1.aud
+					^SupportDir|Content/ca/expand/mhowdy1.aud: mhowdy1.aud
+					^SupportDir|Content/ca/expand/mhuh1.aud: mhuh1.aud
+					^SupportDir|Content/ca/expand/mlaff1.aud: mlaff1.aud
+					^SupportDir|Content/ca/expand/mrise1.aud: mrise1.aud
+					^SupportDir|Content/ca/expand/mwrench1.aud: mwrench1.aud
+					^SupportDir|Content/ca/expand/myeehaw1.aud: myeehaw1.aud
+					^SupportDir|Content/ca/expand/myes1.aud: myes1.aud
+				Delete: ^SupportDir|Content/ca/expand/sounds-aftermath.mix
+		# Base game music (optional):
+		ContentPackage:
+			Name: music-ra
+			Actions:
+				ExtractMix: MAIN1.MIX
+					^SupportDir|Content/ca/ra/scores.mix: scores.mix
+		# Counterstrike music (optional):
+		ContentPackage:
+			Name: music-counterstrike
+			Actions:
+				ExtractMix: MAIN3.MIX
+					^SupportDir|Content/ca/expand/scores-counterstrike.mix: scores.mix
+				ExtractMix: ^SupportDir|Content/ca/expand/scores-counterstrike.mix
+					^SupportDir|Content/ca/expand/2nd_hand.aud: 2nd_hand.aud
+					^SupportDir|Content/ca/expand/araziod.aud: araziod.aud
+					^SupportDir|Content/ca/expand/backstab.aud: backstab.aud
+					^SupportDir|Content/ca/expand/chaos2.aud: chaos2.aud
+					^SupportDir|Content/ca/expand/shut_it.aud: shut_it.aud
+					^SupportDir|Content/ca/expand/twinmix1.aud: twinmix1.aud
+					^SupportDir|Content/ca/expand/under3.aud: under3.aud
+					^SupportDir|Content/ca/expand/vr2.aud: vr2.aud
+				Delete: ^SupportDir|Content/ca/expand/scores-counterstrike.mix
+		# Aftermath music (optional):
+		ContentPackage:
+			Name: music-aftermath
+			Actions:
+				ExtractMix: MAIN4.MIX
+					^SupportDir|Content/ca/expand/scores-aftermath.mix: scores.mix
+				ExtractMix: ^SupportDir|Content/ca/expand/scores-aftermath.mix
+					^SupportDir|Content/ca/expand/await.aud: await.aud
+					^SupportDir|Content/ca/expand/bog.aud: bog.aud
+					^SupportDir|Content/ca/expand/float_v2.aud: float_v2.aud
+					^SupportDir|Content/ca/expand/gloom.aud: gloom.aud
+					^SupportDir|Content/ca/expand/grndwire.aud: grndwire.aud
+					^SupportDir|Content/ca/expand/rpt.aud: rpt.aud
+					^SupportDir|Content/ca/expand/search.aud: search.aud
+					^SupportDir|Content/ca/expand/traction.aud: traction.aud
+					^SupportDir|Content/ca/expand/wastelnd.aud: wastelnd.aud
+				Delete: ^SupportDir|Content/ca/expand/scores-aftermath.mix
+		# Allied campaign briefings (optional):
+		ContentPackage:
+			Name: movies-allied
+			Actions:
+				ExtractMix: MAIN1.MIX
+					^SupportDir|Content/ca/movies1.mix: movies1.mix
+				ExtractMix: ^SupportDir|Content/ca/movies1.mix
+					^SupportDir|Content/ca/movies/aagun.vqa: aagun.vqa
+					^SupportDir|Content/ca/movies/aftrmath.vqa: aftrmath.vqa
+					^SupportDir|Content/ca/movies/ally12.vqa: ally12.vqa
+					^SupportDir|Content/ca/movies/ally14.vqa: ally14.vqa
+					^SupportDir|Content/ca/movies/allyend.vqa: allyend.vqa
+					^SupportDir|Content/ca/movies/allymorf.vqa: allymorf.vqa
+					^SupportDir|Content/ca/movies/apcescpe.vqa: apcescpe.vqa
+					^SupportDir|Content/ca/movies/assess.vqa: assess.vqa
+					^SupportDir|Content/ca/movies/battle.vqa: battle.vqa
+					^SupportDir|Content/ca/movies/binoc.vqa: binoc.vqa
+					^SupportDir|Content/ca/movies/bmap.vqa: bmap.vqa
+					^SupportDir|Content/ca/movies/brdgtilt.vqa: brdgtilt.vqa
+					^SupportDir|Content/ca/movies/cronfail.vqa: cronfail.vqa
+					^SupportDir|Content/ca/movies/crontest.vqa: crontest.vqa
+					^SupportDir|Content/ca/movies/destroyr.vqa: destroyr.vqa
+					^SupportDir|Content/ca/movies/dud.vqa: dud.vqa
+					^SupportDir|Content/ca/movies/elevator.vqa: elevator.vqa
+					^SupportDir|Content/ca/movies/flare.vqa: flare.vqa
+					^SupportDir|Content/ca/movies/frozen.vqa: frozen.vqa
+					^SupportDir|Content/ca/movies/grvestne.vqa: grvestne.vqa
+					^SupportDir|Content/ca/movies/landing.vqa: landing.vqa
+					^SupportDir|Content/ca/movies/masasslt.vqa: masasslt.vqa
+					^SupportDir|Content/ca/movies/mcv.vqa: mcv.vqa
+					^SupportDir|Content/ca/movies/mcv_land.vqa: mcv_land.vqa
+					^SupportDir|Content/ca/movies/montpass.vqa: montpass.vqa
+					^SupportDir|Content/ca/movies/oildrum.vqa: oildrum.vqa
+					^SupportDir|Content/ca/movies/overrun.vqa: overrun.vqa
+					^SupportDir|Content/ca/movies/prolog.vqa: prolog.vqa
+					^SupportDir|Content/ca/movies/redintro.vqa: redintro.vqa
+					^SupportDir|Content/ca/movies/shipsink.vqa: shipsink.vqa
+					^SupportDir|Content/ca/movies/shorbom1.vqa: shorbom1.vqa
+					^SupportDir|Content/ca/movies/shorbom2.vqa: shorbom2.vqa
+					^SupportDir|Content/ca/movies/shorbomb.vqa: shorbomb.vqa
+					^SupportDir|Content/ca/movies/snowbomb.vqa: snowbomb.vqa
+					^SupportDir|Content/ca/movies/soviet1.vqa: soviet1.vqa
+					^SupportDir|Content/ca/movies/sovtstar.vqa: sovtstar.vqa
+					^SupportDir|Content/ca/movies/spy.vqa: spy.vqa
+					^SupportDir|Content/ca/movies/tanya1.vqa: tanya1.vqa
+					^SupportDir|Content/ca/movies/tanya2.vqa: tanya2.vqa
+					^SupportDir|Content/ca/movies/toofar.vqa: toofar.vqa
+					^SupportDir|Content/ca/movies/trinity.vqa: trinity.vqa
+					^SupportDir|Content/ca/movies/ally1.vqa: ally1.vqa
+					^SupportDir|Content/ca/movies/ally2.vqa: ally2.vqa
+					^SupportDir|Content/ca/movies/ally4.vqa: ally4.vqa
+					^SupportDir|Content/ca/movies/ally5.vqa: ally5.vqa
+					^SupportDir|Content/ca/movies/ally6.vqa: ally6.vqa
+					^SupportDir|Content/ca/movies/ally8.vqa: ally8.vqa
+					^SupportDir|Content/ca/movies/ally9.vqa: ally9.vqa
+					^SupportDir|Content/ca/movies/ally10.vqa: ally10.vqa
+					^SupportDir|Content/ca/movies/ally10b.vqa: ally10b.vqa
+					^SupportDir|Content/ca/movies/ally11.vqa: ally11.vqa
+				Delete: ^SupportDir|Content/ca/movies1.mix
+		# Soviet campaign briefings (optional):
+		ContentPackage:
+			Name: movies-soviet
+			Actions:
+				ExtractMix: MAIN2.MIX
+					^SupportDir|Content/ca/movies2.mix: movies2.mix
+				ExtractMix: ^SupportDir|Content/ca/movies2.mix
+					^SupportDir|Content/ca/movies/double.vqa: double.vqa
+					^SupportDir|Content/ca/movies/dpthchrg.vqa: dpthchrg.vqa
+					^SupportDir|Content/ca/movies/execute.vqa: execute.vqa
+					^SupportDir|Content/ca/movies/flare.vqa: flare.vqa
+					^SupportDir|Content/ca/movies/landing.vqa: landing.vqa
+					^SupportDir|Content/ca/movies/mcvbrdge.vqa: mcvbrdge.vqa
+					^SupportDir|Content/ca/movies/mig.vqa: mig.vqa
+					^SupportDir|Content/ca/movies/movingin.vqa: movingin.vqa
+					^SupportDir|Content/ca/movies/mtnkfact.vqa: mtnkfact.vqa
+					^SupportDir|Content/ca/movies/nukestok.vqa: nukestok.vqa
+					^SupportDir|Content/ca/movies/onthprwl.vqa: onthprwl.vqa
+					^SupportDir|Content/ca/movies/periscop.vqa: periscop.vqa
+					^SupportDir|Content/ca/movies/prolog.vqa: prolog.vqa
+					^SupportDir|Content/ca/movies/radrraid.vqa: radrraid.vqa
+					^SupportDir|Content/ca/movies/redintro.vqa: redintro.vqa
+					^SupportDir|Content/ca/movies/search.vqa: search.vqa
+					^SupportDir|Content/ca/movies/sfrozen.vqa: sfrozen.vqa
+					^SupportDir|Content/ca/movies/sitduck.vqa: sitduck.vqa
+					^SupportDir|Content/ca/movies/slntsrvc.vqa: slntsrvc.vqa
+					^SupportDir|Content/ca/movies/snowbomb.vqa: snowbomb.vqa
+					^SupportDir|Content/ca/movies/snstrafe.vqa: snstrafe.vqa
+					^SupportDir|Content/ca/movies/sovbatl.vqa: sovbatl.vqa
+					^SupportDir|Content/ca/movies/sovcemet.vqa: sovcemet.vqa
+					^SupportDir|Content/ca/movies/sovfinal.vqa: sovfinal.vqa
+					^SupportDir|Content/ca/movies/soviet1.vqa: soviet1.vqa
+					^SupportDir|Content/ca/movies/soviet2.vqa: soviet2.vqa
+					^SupportDir|Content/ca/movies/soviet3.vqa: soviet3.vqa
+					^SupportDir|Content/ca/movies/soviet4.vqa: soviet4.vqa
+					^SupportDir|Content/ca/movies/soviet5.vqa: soviet5.vqa
+					^SupportDir|Content/ca/movies/soviet6.vqa: soviet6.vqa
+					^SupportDir|Content/ca/movies/soviet7.vqa: soviet7.vqa
+					^SupportDir|Content/ca/movies/soviet8.vqa: soviet8.vqa
+					^SupportDir|Content/ca/movies/soviet9.vqa: soviet9.vqa
+					^SupportDir|Content/ca/movies/soviet10.vqa: soviet10.vqa
+					^SupportDir|Content/ca/movies/soviet11.vqa: soviet11.vqa
+					^SupportDir|Content/ca/movies/soviet12.vqa: soviet12.vqa
+					^SupportDir|Content/ca/movies/soviet13.vqa: soviet13.vqa
+					^SupportDir|Content/ca/movies/soviet14.vqa: soviet14.vqa
+					^SupportDir|Content/ca/movies/sovmcv.vqa: sovmcv.vqa
+					^SupportDir|Content/ca/movies/sovtstar.vqa: sovtstar.vqa
+					^SupportDir|Content/ca/movies/spotter.vqa: spotter.vqa
+					^SupportDir|Content/ca/movies/strafe.vqa: strafe.vqa
+					^SupportDir|Content/ca/movies/take_off.vqa: take_off.vqa
+					^SupportDir|Content/ca/movies/tesla.vqa: tesla.vqa
+					^SupportDir|Content/ca/movies/v2rocket.vqa: v2rocket.vqa
+					^SupportDir|Content/ca/movies/aagun.vqa: aagun.vqa
+					^SupportDir|Content/ca/movies/airfield.vqa: airfield.vqa
+					^SupportDir|Content/ca/movies/ally1.vqa: ally1.vqa
+					^SupportDir|Content/ca/movies/allymorf.vqa: allymorf.vqa
+					^SupportDir|Content/ca/movies/averted.vqa: averted.vqa
+					^SupportDir|Content/ca/movies/beachead.vqa: beachead.vqa
+					^SupportDir|Content/ca/movies/bmap.vqa: bmap.vqa
+					^SupportDir|Content/ca/movies/bombrun.vqa: bombrun.vqa
+					^SupportDir|Content/ca/movies/countdwn.vqa: countdwn.vqa
+					^SupportDir|Content/ca/movies/cronfail.vqa: cronfail.vqa
+				Delete: ^SupportDir|Content/ca/movies2.mix
+
+cnc-steam: C&C Ultimate Collection TD (Steam version, English)
+	Type: Steam
+		AppId: 2229830
+	IDFiles:
+		CONQUER.MIX: 713b53fa4c188ca9619c6bbeadbfc86513704266
+	Install:
+		# C&C Desert Tileset:
+		ContentPackage:
+			Name: cncdesert
+			Actions:
+				Copy: .
+					^SupportDir|Content/ca/cnc/desert.mix: DESERT.MIX
+		# Base game music (optional):
+		ContentPackage:
+			Name: music-cnc
+			Actions:
+				Copy: .
+					^SupportDir|Content/ca/cnc/scores.mix: SCORES.MIX
+
 cncr-steam: C&C Remastered Collection (Steam version, English)
 	Type: Steam
 		AppId: 1213210
@@ -23,12 +263,42 @@ cncr-steam: C&C Remastered Collection (Steam version, English)
 					^SupportDir|Content/ca/russian.mix: russian.mix
 					^SupportDir|Content/ca/allies.mix: allies.mix
 					^SupportDir|Content/ca/temperat.mix: temperat.mix
-		# Base game music (optional):
+		# Aftermath expansion files:
 		ContentPackage:
-			Name: music
+			Name: aftermathbase
 			Actions:
-				ExtractMix: Data/CNCDATA/RED_ALERT/CD1/MAIN.MIX
-					^SupportDir|Content/ca/scores.mix: scores.mix
+				Copy: Data/CNCDATA/RED_ALERT/AFTERMATH
+					^SupportDir|Content/ca/expand/expand2.mix: expand2.mix
+					^SupportDir|Content/ca/expand/hires1.mix: hires1.mix
+					^SupportDir|Content/ca/expand/lores1.mix: lores1.mix
+				ExtractMix: Data/CNCDATA/RED_ALERT/AFTERMATH/MAIN.MIX
+					^SupportDir|Content/ca/expand/sounds.mix: sounds.mix
+				ExtractMix: ^SupportDir|Content/ca/expand/sounds.mix
+					^SupportDir|Content/ca/expand/chrotnk1.aud: chrotnk1.aud
+					^SupportDir|Content/ca/expand/fixit1.aud: fixit1.aud
+					^SupportDir|Content/ca/expand/jburn1.aud: jburn1.aud
+					^SupportDir|Content/ca/expand/jchrge1.aud: jchrge1.aud
+					^SupportDir|Content/ca/expand/jcrisp1.aud: jcrisp1.aud
+					^SupportDir|Content/ca/expand/jdance1.aud: jdance1.aud
+					^SupportDir|Content/ca/expand/jjuice1.aud: jjuice1.aud
+					^SupportDir|Content/ca/expand/jjump1.aud: jjump1.aud
+					^SupportDir|Content/ca/expand/jlight1.aud: jlight1.aud
+					^SupportDir|Content/ca/expand/jpower1.aud: jpower1.aud
+					^SupportDir|Content/ca/expand/jshock1.aud: jshock1.aud
+					^SupportDir|Content/ca/expand/jyes1.aud: jyes1.aud
+					^SupportDir|Content/ca/expand/madchrg2.aud: madchrg2.aud
+					^SupportDir|Content/ca/expand/madexplo.aud: madexplo.aud
+					^SupportDir|Content/ca/expand/mboss1.aud: mboss1.aud
+					^SupportDir|Content/ca/expand/mhear1.aud: mhear1.aud
+					^SupportDir|Content/ca/expand/mhotdig1.aud: mhotdig1.aud
+					^SupportDir|Content/ca/expand/mhowdy1.aud: mhowdy1.aud
+					^SupportDir|Content/ca/expand/mhuh1.aud: mhuh1.aud
+					^SupportDir|Content/ca/expand/mlaff1.aud: mlaff1.aud
+					^SupportDir|Content/ca/expand/mrise1.aud: mrise1.aud
+					^SupportDir|Content/ca/expand/mwrench1.aud: mwrench1.aud
+					^SupportDir|Content/ca/expand/myeehaw1.aud: myeehaw1.aud
+					^SupportDir|Content/ca/expand/myes1.aud: myes1.aud
+				Delete: ^SupportDir|Content/ca/expand/sounds.mix
 		# Allied campaign briefings (optional):
 		ContentPackage:
 			Name: movies-allied
@@ -88,6 +358,12 @@ cncr-steam: C&C Remastered Collection (Steam version, English)
 					^SupportDir|Content/ca/movies/toofar.vqa: toofar.vqa
 					^SupportDir|Content/ca/movies/trinity.vqa: trinity.vqa
 				Delete: ^SupportDir|Content/ca/movies1.mix
+		# Base game music (optional):
+		ContentPackage:
+			Name: music-ra
+			Actions:
+				ExtractMix: Data/CNCDATA/RED_ALERT/CD1/MAIN.MIX
+					^SupportDir|Content/ca/ra/scores.mix: scores.mix
 		# Counterstrike music (optional):
 		ContentPackage:
 			Name: music-counterstrike
@@ -104,42 +380,6 @@ cncr-steam: C&C Remastered Collection (Steam version, English)
 					^SupportDir|Content/ca/expand/under3.aud: under3.aud
 					^SupportDir|Content/ca/expand/vr2.aud: vr2.aud
 				Delete: ^SupportDir|Content/ca/expand/scores.mix
-		# Aftermath expansion files:
-		ContentPackage:
-			Name: aftermathbase
-			Actions:
-				Copy: Data/CNCDATA/RED_ALERT/AFTERMATH
-					^SupportDir|Content/ca/expand/expand2.mix: expand2.mix
-					^SupportDir|Content/ca/expand/hires1.mix: hires1.mix
-					^SupportDir|Content/ca/expand/lores1.mix: lores1.mix
-				ExtractMix: Data/CNCDATA/RED_ALERT/AFTERMATH/MAIN.MIX
-					^SupportDir|Content/ca/expand/sounds.mix: sounds.mix
-				ExtractMix: ^SupportDir|Content/ca/expand/sounds.mix
-					^SupportDir|Content/ca/expand/chrotnk1.aud: chrotnk1.aud
-					^SupportDir|Content/ca/expand/fixit1.aud: fixit1.aud
-					^SupportDir|Content/ca/expand/jburn1.aud: jburn1.aud
-					^SupportDir|Content/ca/expand/jchrge1.aud: jchrge1.aud
-					^SupportDir|Content/ca/expand/jcrisp1.aud: jcrisp1.aud
-					^SupportDir|Content/ca/expand/jdance1.aud: jdance1.aud
-					^SupportDir|Content/ca/expand/jjuice1.aud: jjuice1.aud
-					^SupportDir|Content/ca/expand/jjump1.aud: jjump1.aud
-					^SupportDir|Content/ca/expand/jlight1.aud: jlight1.aud
-					^SupportDir|Content/ca/expand/jpower1.aud: jpower1.aud
-					^SupportDir|Content/ca/expand/jshock1.aud: jshock1.aud
-					^SupportDir|Content/ca/expand/jyes1.aud: jyes1.aud
-					^SupportDir|Content/ca/expand/madchrg2.aud: madchrg2.aud
-					^SupportDir|Content/ca/expand/madexplo.aud: madexplo.aud
-					^SupportDir|Content/ca/expand/mboss1.aud: mboss1.aud
-					^SupportDir|Content/ca/expand/mhear1.aud: mhear1.aud
-					^SupportDir|Content/ca/expand/mhotdig1.aud: mhotdig1.aud
-					^SupportDir|Content/ca/expand/mhowdy1.aud: mhowdy1.aud
-					^SupportDir|Content/ca/expand/mhuh1.aud: mhuh1.aud
-					^SupportDir|Content/ca/expand/mlaff1.aud: mlaff1.aud
-					^SupportDir|Content/ca/expand/mrise1.aud: mrise1.aud
-					^SupportDir|Content/ca/expand/mwrench1.aud: mwrench1.aud
-					^SupportDir|Content/ca/expand/myeehaw1.aud: myeehaw1.aud
-					^SupportDir|Content/ca/expand/myes1.aud: myes1.aud
-				Delete: ^SupportDir|Content/ca/expand/sounds.mix
 		# Aftermath music (optional):
 		ContentPackage:
 			Name: music-aftermath
@@ -163,3 +403,57 @@ cncr-steam: C&C Remastered Collection (Steam version, English)
 			Actions:
 				Copy: Data/CNCDATA/TIBERIAN_DAWN/CD1
 					^SupportDir|Content/ca/cnc/desert.mix: DESERT.MIX
+		# TD music (optional):
+		ContentPackage:
+			Name: music-cnc
+			Actions:
+				Copy: Data/CNCDATA/TIBERIAN_DAWN/CD3
+					^SupportDir|Content/ca/cnc/scores.mix: SCORES.MIX
+
+ts-steam: C&C Ultimate Collection TS (Steam version, English)
+	Type: Steam
+		AppId: 2229880
+	IDFiles:
+		TIBSUN.MIX: fd298ff16983f226c58136a5345b7d9bf2b5f2e9
+	Install:
+		# Base game music (optional):
+		ContentPackage:
+			Name: music-ts
+			Actions:
+				Copy: .
+					^SupportDir|Content/ca/ts/scores.mix: SCORES.MIX
+		# Firestorm expansion music (optional):
+		ContentPackage:
+			Name: music-firestorm
+			Actions:
+				Copy: .
+					^SupportDir|Content/ca/firestorm/scores01.mix: SCORES01.mix
+				ExtractMix: ^SupportDir|Content/ca/firestorm/SCORES01.mix
+					^SupportDir|Content/ca/firestorm/dmachine.aud: dmachine.aud
+					^SupportDir|Content/ca/firestorm/elusive.aud: elusive.aud
+					^SupportDir|Content/ca/firestorm/hacker.aud: hacker.aud
+					^SupportDir|Content/ca/firestorm/infiltra.aud: infiltra.aud
+					^SupportDir|Content/ca/firestorm/kmachine.aud: kmachine.aud
+					^SupportDir|Content/ca/firestorm/linkup.aud: linkup.aud
+					^SupportDir|Content/ca/firestorm/rainnite.aud: rainnite.aud
+					^SupportDir|Content/ca/firestorm/slavesys.aud: slavesys.aud
+				Delete: ^SupportDir|Content/ca/firestorm/SCORES01.mix
+
+ra2-steam: C&C Ultimate Collection RA2 (Steam version, English)
+	Type: Steam
+		AppId: 2229850
+	IDFiles:
+		THEME.MIX: 184f99e3292ab19c71c08a1ad7097ce739396190
+	Install:
+		# Base game music (optional):
+		ContentPackage:
+			Name: music-ra2
+			Actions:
+				Copy: .
+					^SupportDir|Content/ca/ra2/theme.mix: THEME.MIX
+		# Firestorm expansion music (optional):
+		ContentPackage:
+			Name: music-yr
+			Actions:
+				Copy: .
+					^SupportDir|Content/ca/ra2/thememd.mix: thememd.MIX

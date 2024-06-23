@@ -64,7 +64,7 @@ bombard.strat:
 		BuildPaletteOrder: 7
 		Prerequisites: ~player.gdi, anyradar, ~!seek.strat, ~!hold.strat, ~techlevel.medium
 		IconPalette: chrometd
-		Description: Firepower focused strategy, required for:\n• Tomahawk Launcher\n• Bombardier\n• Hailstorm Missiles Upgrade\n\n
+		Description: Firepower focused strategy, required for:\n• Tomahawk Launcher Research\n• Zone Trooper\n• Hailstorm Missiles Upgrade\n\n
 	TooltipExtras:
 		Strengths: + Increases firepower and rate of fire of vehicles and aircraft by 3%
 		Attributes: \n(!) Only ONE Strategy may be chosen.
@@ -86,7 +86,7 @@ bombard2.strat:
 		Prerequisites: ~player.gdi, gtek, ~bombard.strat, ~techlevel.high
 		Description: Increase Bombardment strategy bonuses.
 	TooltipExtras:
-		Strengths: + Increases firepower and rate of fire of vehicles and aircraft by a further 3%
+		Strengths: + Increases firepower and rate of fire of vehicles and aircraft by a further 3%\n• Allows training of Zone Troopers
 		-Attributes:
 	RenderSprites:
 		Image: bombard2.strat
@@ -99,9 +99,9 @@ seek.strat:
 		BuildPaletteOrder: 10
 		Prerequisites: ~player.gdi, anyradar, ~!bombard.strat, ~!hold.strat, ~techlevel.medium
 		IconPalette: chrometd
-		Description: Speed and weapon range focused strategy, required for:\n• TOW Missile Upgrade\n• Zone Raider Upgrade\n• Hypersonic Missiles Upgrade\n\n
+		Description: Speed and weapon range focused strategy, required for:\n• TOW Missile Upgrade\n• Zone Raider\n• Hypersonic Missiles Upgrade\n\n
 	TooltipExtras:
-		Strengths: + Increases speed and weapon range of vehicles and aircraft by 5%
+		Strengths: + Increases speed and weapon range of vehicles and aircraft by 5%\n• Allows training of Zone Raiders
 		Attributes: \n(!) Only ONE Strategy may be chosen.
 	Valued:
 		Cost: 1000
@@ -121,7 +121,7 @@ seek2.strat:
 		Prerequisites: ~player.gdi, gtek, ~seek.strat, ~techlevel.high
 		Description: Increase Seek & Destroy strategy bonuses.
 	TooltipExtras:
-		Strengths: + Increases speed and weapon range of vehicles and aircraft by a further 5%
+		Strengths: + Increases speed and weapon range of vehicles and aircraft by a further 5%\n• Allows training of Zone Defenders
 		-Attributes:
 	RenderSprites:
 		Image: seek2.strat
@@ -134,7 +134,7 @@ hold.strat:
 		BuildPaletteOrder: 13
 		Prerequisites: ~player.gdi, anyradar, ~!bombard.strat, ~!seek.strat, ~techlevel.medium
 		IconPalette: chrometd
-		Description: Defensive strategy, required for:\n• Point Defense Systems Upgrade\n• Zone Defender Upgrade\n• Hammerhead Missiles Upgrade\n\n
+		Description: Defensive strategy, required for:\n• Point Defense Systems Upgrade\n• Zone Defender\n• Hammerhead Missiles Upgrade\n\n
 	TooltipExtras:
 		Strengths: + Increases armor of vehicles and aircraft by 5%
 		Attributes: \n(!) Only ONE Strategy may be chosen.
@@ -209,27 +209,13 @@ empgren.upgrade:
 	RenderSprites:
 		Image: empgren.upgrade
 
-strategic.upgrade1:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Strategy Dependent Upgrade
-	Buildable:
-		BuildPaletteOrder: 30
-		Prerequisites: ~player.gdi, gtek, anystrategy, ~!bombard.strat, ~!seek.strat, ~!hold.strat, ~techlevel.high
-		IconPalette: chrometd
-		Description: Upgrade depends on chosen strategy.\n\n• Bombardment: Bombardier research\n• Seek & Destroy: Zone Raider research\n• Hold the Line: Zone Defender research
-	Valued:
-		Cost: 750
-	RenderSprites:
-		Image: strategic.upgrade
-
 bjet.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
 		Name: Research: Bombardier
 	Buildable:
 		BuildPaletteOrder: 30
-		Prerequisites: ~player.gdi, gtek, ~bombard.strat, ~techlevel.high
+		Prerequisites: ~player.gdi, gtek, ~techlevel.high
 		Description: Allows training of Bombardiers.\n\nReplaces: JumpJet Trooper
 	TooltipExtras:
 		Strengths: + Strong vs Buildings\n+ Increased range
@@ -239,39 +225,7 @@ bjet.upgrade:
 	RenderSprites:
 		Image: bjet.upgrade
 
-zrai.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Research: Zone Raider
-	Buildable:
-		BuildPaletteOrder: 30
-		Prerequisites: ~player.gdi, gtek, ~seek.strat, ~techlevel.high
-		Description: Allows training of Zone Raiders.\n\nReplaces: Zone Trooper
-	TooltipExtras:
-		Strengths: + Increased damage vs buildings, infantry & light armor\n+ Increased splash damage\n+ Increased speed\n+ Increased jump range
-		Weaknesses: – Reduced damage vs heavy armor & defenses\n– Slower projectiles
-	Valued:
-		Cost: 750
-	RenderSprites:
-		Image: zrai.upgrade
-
-zdef.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Research: Zone Defender
-	Buildable:
-		BuildPaletteOrder: 30
-		Prerequisites: ~player.gdi, gtek, ~hold.strat, ~techlevel.high
-		Description: Allows training of Zone Defenders.\n\nReplaces: Zone Trooper
-	TooltipExtras:
-		Strengths: + Increased splash damage\n+ Can shield nearby infantry
-		Weaknesses: – Reduced single-target damage\n– Loses jump ability
-	Valued:
-		Cost: 750
-	RenderSprites:
-		Image: zdef.upgrade
-
-strategic.upgrade2:
+strategic.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
 		Name: Strategy Dependent Upgrade
@@ -747,7 +701,7 @@ infantry.doctrine:
 	TooltipExtras:
 		Attributes: (!) Only ONE Doctrine may be chosen.
 	Valued:
-		Cost: 250
+		Cost: 500
 	RenderSprites:
 		Image: infantry.doctrine
 
@@ -762,7 +716,7 @@ armor.doctrine:
 	TooltipExtras:
 		Attributes: (!) Only ONE Doctrine may be chosen.
 	Valued:
-		Cost: 250
+		Cost: 500
 	RenderSprites:
 		Image: armor.doctrine
 
@@ -777,7 +731,7 @@ arty.doctrine:
 	TooltipExtras:
 		Attributes: (!) Only ONE Doctrine may be chosen.
 	Valued:
-		Cost: 250
+		Cost: 500
 	RenderSprites:
 		Image: arty.doctrine
 
@@ -992,7 +946,7 @@ reactive.upgrade:
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.soviet, ~armor.doctrine, player.level2, ~techlevel.high
-		Description: Upgrades Rhino Tanks with reactive armor for additional protection.\n\nUpgrades: Rhino Tank
+		Description: Upgrades Rhino Tanks and BTRs with reactive armor for additional protection.\n\nUpgrades: Rhino Tank\nUpgrades: BTR\nUpgrades: Gattling BTR
 	TooltipExtras:
 		Strengths: + Increased armor
 	Valued:
@@ -1007,7 +961,7 @@ rocketpods.upgrade:
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.soviet, ~arty.doctrine, player.level2, ~techlevel.high
-		Description: Upgrades Grad and Hind rocket pods.\n\nUpgrades: Grad\n\nUpgrades: Hind
+		Description: Upgrades Grad and Hind rocket pods.\n\nUpgrades: Grad\nUpgrades: Hind
 	TooltipExtras:
 		Strengths: + Increased salvo size (Grad)\n+ Increased ammo & rate of fire (Hind)
 	Valued:
@@ -1336,7 +1290,7 @@ loyalist.allegiance:
 	TooltipExtras:
 		Attributes: (!) Only ONE allegiance may be chosen.
 	Valued:
-		Cost: 750
+		Cost: 500
 	RenderSprites:
 		Image: loyalist.allegiance
 
@@ -1352,7 +1306,7 @@ rebel.allegiance:
 	TooltipExtras:
 		Attributes: (!) Only ONE allegiance may be chosen.
 	Valued:
-		Cost: 750
+		Cost: 500
 	RenderSprites:
 		Image: rebel.allegiance
 

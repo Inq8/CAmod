@@ -1318,7 +1318,7 @@ ImpalerSpike:
 		Inaccuracy: 64
 		ImpactSounds: gshardhit1.aud, gshardhit2.aud
 		ImpactSoundChance: 100
-	Warhead@Concussion: GrantExternalConditionCA
+	Warhead@Slow: GrantExternalConditionCA
 		Range: 0c256
 		Duration: 75
 		Condition: slowed
@@ -1922,14 +1922,14 @@ ObliteratorBolt:
 	ReloadDelay: 200
 	Report: oblt-fire1.aud
 	Projectile: LinearPulse
-		Speed: 100
+		Speed: 130
 		Image: obltbolt
 		Sequences: idle, idle2
 		Palette: scrin
 		ImpactInterval: 3
 	Warhead@1Dam: SpreadDamage
 		Spread: 256
-		Damage: 7200
+		Damage: 7500
 		Versus:
 			Wood: 50
 			Concrete: 50
@@ -1974,11 +1974,11 @@ NullifierBolt:
 		TrailSpacing: 512
 	Warhead@1Dam: SpreadDamage
 		Spread: 0c128
-		Damage: 15000
+		Damage: 16000
 		Versus:
 			None: 100
 			Wood: 40
-			Light: 65
+			Light: 70
 			Heavy: 15
 			Concrete: 40
 			Brick: 0

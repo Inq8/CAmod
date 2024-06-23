@@ -44,6 +44,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Player relationships which condition can be applied to.")]
 		public readonly PlayerRelationship ValidRelationships = PlayerRelationship.Ally;
 
+		[Desc("If true, targets must be owned by the player using the support power (overrides ValidRelationships).")]
+		public readonly bool OwnedTargetsOnly = false;
+
 		[CursorReference]
 		[Desc("Cursor to display when there are no units to apply the condition in range.")]
 		public readonly string BlockedCursor = "move-blocked";
@@ -208,15 +211,9 @@ namespace OpenRA.Mods.CA.Traits
 			var centerPos = Self.World.Map.CenterOfCell(xy);
 
 			var actorsInRange = Self.World.FindActorsInCircle(centerPos, info.Range)
-				.Where(a => a.IsInWorld
-					&& !a.IsDead
-					&& info.ValidRelationships.HasRelationship(Self.Owner.RelationshipWith(a.Owner))
-					&& (info.ValidTargets.IsEmpty || info.ValidTargets.Overlaps(a.GetEnabledTargetTypes()))
-					&& (info.InvalidTargets.IsEmpty || !info.InvalidTargets.Overlaps(a.GetEnabledTargetTypes()))
-					&& a.TraitsImplementing<ExternalCondition>().Any(t => t.Info.Condition == Condition && t.CanGrantCondition(Self))
-					&& (!info.TargetMustBeVisible || Self.Owner.Shroud.IsVisible(a.Location))
-					&& a.CanBeViewedByPlayer(Self.Owner)
-					&& a.CenterPosition.Z <= info.MaxAltitude.Length)
+				.Where(a => {
+					return IsValidTarget(a);
+				})
 				.OrderBy(a => (a.CenterPosition - centerPos).LengthSquared);
 
 			if (info.MaxTargets > 0)
@@ -234,12 +231,42 @@ namespace OpenRA.Mods.CA.Traits
 
 			return units.Distinct().Where(a =>
 			{
-				if (!info.ValidRelationships.HasRelationship(Self.Owner.RelationshipWith(a.Owner)))
-					return false;
-
-				return a.TraitsImplementing<ExternalCondition>()
-					.Any(t => t.Info.Condition == Condition && t.CanGrantCondition(Self));
+				return IsValidTarget(a);
 			});
+		}
+
+		bool IsValidTarget(Actor a)
+		{
+			if (a.IsDead || !a.IsInWorld)
+				return false;
+
+			if (!info.ValidRelationships.HasRelationship(Self.Owner.RelationshipWith(a.Owner)))
+				return false;
+
+			if (info.OwnedTargetsOnly && a.Owner != Self.Owner)
+				return false;
+
+			var enabledTargetTypes = a.GetEnabledTargetTypes();
+
+			if (!info.ValidTargets.IsEmpty && !info.ValidTargets.Overlaps(enabledTargetTypes))
+				return false;
+
+			if (!info.InvalidTargets.IsEmpty && info.InvalidTargets.Overlaps(enabledTargetTypes))
+				return false;
+
+			if (!a.TraitsImplementing<ExternalCondition>().Any(t => t.Info.Condition == Condition && t.CanGrantCondition(Self)))
+				return false;
+
+			if (info.TargetMustBeVisible && !Self.Owner.Shroud.IsVisible(a.Location))
+				return false;
+
+			if (!a.CanBeViewedByPlayer(Self.Owner))
+				return false;
+
+			if (a.CenterPosition.Z > info.MaxAltitude.Length)
+				return false;
+
+			return true;
 		}
 
 		void RevokeCondition(Actor self)
