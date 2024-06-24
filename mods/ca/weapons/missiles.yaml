@@ -833,7 +833,7 @@ TOW:
 	Range: 5c0
 	ValidTargets: Vehicle, Structure
 	Report: tow1.aud, tow2.aud
-	ReloadDelay: 130
+	ReloadDelay: 175
 	Projectile: MissileCA
 		Speed: 180
 		Inaccuracy: 0
@@ -847,12 +847,14 @@ TOW:
 		MinimumLaunchAngle: 0
 		MaximumLaunchAngle: 48
 	Warhead@1Dam: SpreadDamage
-		Damage: 7500
+		Damage: 10000
 		Versus:
 			Wood: 40
 			Concrete: 30
 			Light: 40
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster
+	Warhead@3Eff: CreateEffect
+		ImpactSounds: tow-hit1.aud
 
 PitbullRockets:
 	Inherits: ^AntiGroundMissile

@@ -1120,6 +1120,10 @@ TankLaser:
 			Concrete: 20
 			Brick: 20
 
+BattleTankLaser:
+	Inherits: TankLaser
+	ReloadDelay: 35
+
 StealthAPCLaser:
 	Inherits: LaserTur
 	ReloadDelay: 30
@@ -2328,10 +2332,12 @@ RadTrooperBeam:
 DesolatorBeam:
 	Inherits: RadTrooperBeam
 	Warhead@1Dam: SpreadDamage
-		Spread: 192
+		Spread: 160
 	Warhead@2Dam: HealthPercentageDamage
 		Spread: 42
 		Damage: 300
+		Versus:
+			Light: 10
 		ValidTargets: Infantry
 		DamageTypes: RadiationDeath
 	Warhead@2irrad: GrantExternalConditionCA
@@ -2352,6 +2358,8 @@ RadBeamWeaponHeavy:
 	Warhead@1Dam: HealthPercentageDamage
 		Spread: 256
 		Damage: 300
+		Versus:
+			Light: 10
 		ValidTargets: Infantry
 		DamageTypes: RadiationDeath
 	Warhead@2Dam: SpreadDamage
@@ -3135,14 +3143,14 @@ ShadeEmp:
 			Brick: 5
 		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath, AirToGround
 	Warhead@1Emp: GrantExternalConditionCA
-		Range: 1c256
-		Duration: 325
+		Range: 1c0
+		Duration: 225
 		Condition: empdisable
 		ValidTargets: Ground, Vehicle, Defense
 		InvalidTargets: Cyborg, EmpImmune
 	Warhead@2Emp: GrantExternalConditionCA
-		Range: 1c256
-		Duration: 125
+		Range: 1c0
+		Duration: 100
 		Condition: empdisable
 		ValidTargets: Cyborg
 		InvalidTargets: EmpImmune

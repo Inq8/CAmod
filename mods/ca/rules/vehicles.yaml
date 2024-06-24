@@ -1122,10 +1122,16 @@ GTNK.squad:
 		RequiresCondition: lasher-move
 		LocalOffset: 896, 0, 0
 		Weapon: Lasher
+	SpeedMultiplier:
+		Modifier: 125
 	ReplacedInQueue:
 		Actors: 3tnk.rhino.atomicyuri
 	Upgradeable@ATOMIC:
 		Actor: 3tnk.rhino.atomicyuri
+	-ExternalCondition@CRUSHATTEMPTSLOW:
+	-ExternalCondition@CRUSHSLOW:
+	-SpeedMultiplier@CRUSHATTEMPTSLOW:
+	-SpeedMultiplier@CRUSHSLOW:
 	-Upgradeable@LASHER:
 
 3TNK.RHINO.ATOMICYURI:
@@ -1144,6 +1150,10 @@ GTNK.squad:
 		RequiresCondition: lasher-move
 		LocalOffset: 896, 0, 0
 		Weapon: Lasher
+	-ExternalCondition@CRUSHATTEMPTSLOW:
+	-ExternalCondition@CRUSHSLOW:
+	-SpeedMultiplier@CRUSHATTEMPTSLOW:
+	-SpeedMultiplier@CRUSHSLOW:
 	-ReplacedInQueue:
 	-Upgradeable@LASHER:
 	-WithDecoration@UpgradeOverlay:
@@ -1172,7 +1182,7 @@ GTNK.squad:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 86000
+		HP: 90000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -3099,9 +3109,9 @@ HMMV:
 		ActiveCondition: gshield
 		ChargingColor: 008888
 		DrainingColor: 00ffff
-		Modifier: 40
-		Duration: 75
-		ChargeTime: 500
+		Modifier: 33
+		Duration: 100
+		ChargeTime: 625
 		ActivateSound: gshieldup.aud
 		DeactivateSound: gshielddown.aud
 		RequiresCondition: pointdef-upgrade
@@ -3138,8 +3148,18 @@ HMMV.TOW:
 		Name: secondary
 		Weapon: TOW
 		LocalOffset: 250,100,150
+		PauseOnCondition: !ammo
 	WithSpriteTurret:
 		Sequence: turrettow
+	AmmoPool:
+		Armaments: secondary
+		Ammo: 1
+		AmmoCondition: ammo
+	ReloadAmmoPoolCA:
+		Delay: 175 # matches reload time of weapon
+		Count: 1
+		ShowSelectionBar: true
+		SelectionBarColor: aaaaaa
 	-ReplacedInQueue:
 	-Upgradeable@TOW:
 	-WithDecoration@UpgradeOverlay:
@@ -3212,9 +3232,9 @@ GDRN:
 		ActiveCondition: gshield
 		ChargingColor: 008888
 		DrainingColor: 00FFFF61
-		Modifier: 40
-		Duration: 75
-		ChargeTime: 500
+		Modifier: 33
+		Duration: 100
+		ChargeTime: 625
 		ActivateSound: gshieldup.aud
 		DeactivateSound: gshielddown.aud
 		RequiresCondition: pointdef-upgrade
@@ -3261,8 +3281,18 @@ GDRN.TOW:
 		Name: secondary
 		Weapon: TOW
 		LocalOffset: 200,-150,250
+		PauseOnCondition: !ammo
 	WithSpriteTurret:
 		Sequence: turrettow
+	AmmoPool:
+		Armaments: secondary
+		Ammo: 1
+		AmmoCondition: ammo
+	ReloadAmmoPoolCA:
+		Delay: 175 # matches reload time of weapon
+		Count: 1
+		ShowSelectionBar: true
+		SelectionBarColor: aaaaaa
 	-ReplacedInQueue:
 	-Upgradeable@TOW:
 	-WithDecoration@UpgradeOverlay:
@@ -3984,7 +4014,7 @@ MTNK:
 		MuzzleSequence: muzzle
 		RequiresCondition: !lastnk-upgrade
 	Armament@UPG:
-		Weapon: TankLaser
+		Weapon: BattleTankLaser
 		Recoil: 128
 		RecoilRecovery: 26
 		LocalOffset: 720,0,90
@@ -4313,7 +4343,7 @@ HTNK:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 86000
+		HP: 90000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -6448,7 +6478,7 @@ TITN:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 98000
+		HP: 102000
 	Armor:
 		Type: Heavy
 	Mobile:
