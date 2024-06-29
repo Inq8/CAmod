@@ -1209,6 +1209,8 @@ EvisceratorShards:
 	Inherits: RavagerShards
 	ReloadDelay: 25
 	BurstDelays: 4
+	Warhead@1Dam: SpreadDamage
+		Spread: 288
 
 ShardWalkerShards:
 	Inherits: RavagerShards
@@ -1305,11 +1307,12 @@ ImpalerSpike:
 		ContrailStartColorAlpha: 64
 		AllowSnapping: true
 	Warhead@1Dam: SpreadDamage
-		Damage: 10000
+		Damage: 12500
 		Spread: 42
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 		Versus:
 			Heavy: 15
+			Light: 80
 			Wood: 30
 			Concrete: 25
 			Brick: 15

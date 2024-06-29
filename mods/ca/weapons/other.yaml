@@ -474,7 +474,12 @@ PortaTesla:
 PortaTesla.UPG:
 	Inherits: PortaTesla
 	Report: itesatta.aud
-	ReloadDelay: 65
+	ReloadDelay: 60
+	Warhead@1Dam: SpreadDamage
+		Damage: 4600
+		Versus:
+			Heavy: 65
+			Light: 120
 
 PortaTeslaCharge:
 	Inherits: ^TeslaWeapon
@@ -2288,12 +2293,12 @@ RadTrooperBeam:
 		Thickness: 32
 		ZOffset: 512
 	Warhead@1Dam: SpreadDamage
-		Spread: 42
+		Spread: 96
 		Damage: 6500
 		Versus:
 			None: 280
 			Light: 100
-			Heavy: 75
+			Heavy: 55
 			Wood: 60
 			Concrete: 70
 			Brick: 12
@@ -2306,6 +2311,8 @@ DesolatorBeam:
 	Inherits: RadTrooperBeam
 	Warhead@1Dam: SpreadDamage
 		Spread: 160
+		Versus:
+			Light: 120
 	Warhead@2Dam: HealthPercentageDamage
 		Spread: 42
 		Damage: 300
@@ -3294,7 +3301,7 @@ ZoneTrooperRailgun:
 		Versus:
 			None: 20
 			Wood: 50
-			Light: 80
+			Light: 85
 			Heavy: 100
 			Concrete: 75
 			Brick: 75
@@ -3316,13 +3323,13 @@ ZoneRaiderGrenade:
 		ContrailStartColorAlpha: 128
 	Warhead@1Dam: SpreadDamage
 		Spread: 448
-		Damage: 7500
+		Damage: 8500
 		Versus:
-			None: 40
-			Wood: 100
+			None: 35
+			Wood: 90
 			Light: 100
-			Heavy: 60
-			Concrete: 60
+			Heavy: 52
+			Concrete: 52
 			Brick: 80
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
 	Warhead@2Smu: LeaveSmudge
@@ -3357,7 +3364,7 @@ ZoneDefenderGun:
 		Versus:
 			None: 10
 			Wood: 50
-			Light: 80
+			Light: 85
 			Heavy: 100
 			Concrete: 75
 			Brick: 75
