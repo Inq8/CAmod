@@ -5559,6 +5559,11 @@ TRPC:
 		Percentage: 2
 	Voiced:
 		VoiceSet: TrpcVoice
+	ExternalCondition@InspirationCmsr:
+		Condition: cmsr-inspiration
+	SpeedMultiplier@InspirationCmsr:
+		Modifier: 112
+		RequiresCondition: cmsr-inspiration
 
 IFV:
 	Inherits: ^Tank
@@ -7624,6 +7629,12 @@ BATF:
 			acol: loaded
 			tplr: loaded
 			cscr: loaded
+			enfo: loaded
+			hopl: loaded
+			cryt: loaded
+			ztrp: loaded
+			zrai: loaded
+			zdef: loaded
 			mort.cryo: loaded
 			mort.sonic: loaded
 			mort.chem: loaded
@@ -7643,6 +7654,8 @@ BATF:
 			s3: loaded
 			s4: loaded
 			s6: loaded-repair
+			evis: loaded
+			impl: loaded
 			mast: loaded-cmdo
 	WithCargoSounds:
 		EnterSounds: genter1a.aud
@@ -7677,7 +7690,7 @@ BATF:
 		AddToArmyValue: true
 	AttackOpenTopped:
 		Voice: Attack
-		Armaments: batf
+		Armaments: batf, batf-bh, batf-cryt
 		PortOffsets: 825,0,256, 348,-482,256, -348,-482,256, -448,482,256, 448,482,256
 		PauseOnCondition: being-warped || empdisable || blinded
 		RequiresCondition: loaded || loaded-cmdo || loaded-seal || loaded-air
@@ -7723,6 +7736,26 @@ BATF:
 		Color: 00FF0080
 		Range: 4c512
 		RequiresCondition: loaded-medic
+	AmbientSoundCA@BlackHand:
+		SoundFiles: flamer-loop1.aud
+		InitialSound: flamer-start1.aud
+		FinalSound: flamer-end1.aud
+		RequiresCondition: attacking-bh
+		InitialSoundLength: 20
+	GrantConditionOnAttackCA@BlackHand:
+		ArmamentNames: batf-bh
+		Condition: attacking-bh
+		RevokeDelay: 3
+	AmbientSoundCA@CryoTrooper:
+		SoundFiles: cryobeam.aud
+		InitialSound: cryobeamstart.aud
+		FinalSound: cryobeamend.aud
+		RequiresCondition: attacking-cryt
+		InitialSoundLength: 10
+	GrantConditionOnAttackCA@CryoTrooper:
+		ArmamentNames: batf-cryt
+		Condition: attacking-cryt
+		RevokeDelay: 6
 
 BATF.AI:
 	Inherits: BATF
@@ -8269,10 +8302,10 @@ BASI:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 502
 		Prerequisites: anyradar, ~vehicles.basi
-		Description: Tank with a short range EMP weapon.
+		Description: Stealth tank with a short range EMP weapon.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses
-		Weaknesses: • Cannot attack Aircraft\n• No effect on infantry
+		Weaknesses: • Cannot attack Aircraft\n• No effect on infantry\n• Can be spotted by nearby infantry and defense structures
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -8281,9 +8314,9 @@ BASI:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 30000
+		HP: 27500
 	Armor:
-		Type: Heavy
+		Type: Light
 	Mobile:
 		Speed: 100
 	RevealsShroud:
@@ -8310,6 +8343,22 @@ BASI:
 		RequiresCondition: !being-warped
 	Targetable@EmpImmune:
 		TargetTypes: EmpImmune
+	Cloak@NORMAL:
+		InitialDelay: 75
+		CloakDelay: 76
+		CloakSound: trans1.aud
+		CloakedCondition: hidden
+		UncloakSound: appear1md.aud
+		Palette: cloak
+		IsPlayerPalette: false
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
+		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead && !parachute
+		PauseOnCondition: invisibility
+	Cloak@CRATE-CLOAK:
+		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
+	GrantConditionOnDamageState@UNCLOAK:
+		Condition: cloak-force-disabled
+		ValidDamageStates: Critical
 
 MANT:
 	Inherits: ^VehicleTD
@@ -9180,7 +9229,7 @@ ZEUS:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 224
-		Prerequisites: ~vehicles.allies, alhq, coalition.active, ~greece.coalition, ~techlevel.high
+		Prerequisites: ~vehicles.allies, alhq, greece.coalition, ~techlevel.high
 		Description: Extreme long range artillery that can generate localised storm clouds.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses

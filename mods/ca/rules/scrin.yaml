@@ -4211,7 +4211,6 @@ NERV:
 	Inherits@RESOURCESCANPOWER: ^ResourceScanPower
 	Inherits@STORMSPIKEPOWER: ^StormSpikePower
 	Inherits@BUZZERSWARMPOWER: ^BuzzerSwarmPower
-	Inherits@IONSURGEPOWER: ^IonSurgePower
 	Inherits@TECHLOCKABLE: ^TechLockable
 	Inherits@ProductionOptimizer1: ^ProductionOptimizer1
 	Buildable:
@@ -4311,6 +4310,7 @@ SCRT:
 	Inherits@UPG: ^ProducesUpgrades
 	Inherits@ICHORSEEDPOWER: ^IchorSeedPower
 	Inherits@FORCESHIELDPOWER: ^ForceShieldPower
+	Inherits@IONSURGEPOWER: ^IonSurgePower
 	Inherits@GREATERCOALESCENCEPOWER: ^GreaterCoalescencePower
 	Inherits@TECHLOCKABLE: ^TechLockable
 	Inherits@ProductionOptimizer2: ^ProductionOptimizer2
@@ -5168,6 +5168,10 @@ BUZZ:
 	TimedConditionBar@ALIVE:
 		Condition: alive
 		Color: 777777
+	ProximityExternalCondition@Blind:
+		Range: 1c0
+		Condition: blinded
+		ValidRelationships: Enemy, Neutral
 
 BUZZ.AI:
 	Inherits: BUZZ

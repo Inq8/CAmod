@@ -361,14 +361,6 @@ gps.satellite.firstscan:
 	Tooltip:
 		Name: GPS Satellite
 
-coalition.active:
-	Inherits@DUMMY: ^InvisibleDummy
-	ProvidesPrerequisite:
-	Buildable:
-		Queue: Active Coalition
-	Tooltip:
-		Name: Active Coalition
-
 ToxicCloud:
 	Interactable:
 	ScriptTriggers:
@@ -1025,7 +1017,7 @@ SPLITBLUE:
 	ProximityExternalCondition@ONTIB:
 		Condition: on-bluetib
 
-veil:
+^Veil:
 	Inherits@DUMMY: ^InvisibleDummy
 	EditorOnlyTooltip:
 		Name: (Veil of War)
@@ -1053,9 +1045,13 @@ veil:
 		TargetTypes: Veil
 	Health:
 		HP: 1
+	ProximityExternalCondition@Veiled:
+		Range: 2c512
+		Condition: veiled
+		ValidRelationships: Enemy, Neutral
 
 veilofwar1:
-	Inherits: veil
+	Inherits: ^Veil
 	CreatesShroud:
 		Range: 3c512
 	KillsSelf:
@@ -1068,9 +1064,11 @@ veilofwar1:
 		Range: 7c512
 		Visible: Always
 		Color: 999999AA
+	ProximityExternalCondition@Veiled:
+		Range: 3c512
 
 veilofwar2:
-	Inherits: veil
+	Inherits: ^Veil
 	CreatesShroud:
 		Range: 5c512
 	PeriodicExplosion:
@@ -1084,15 +1082,19 @@ veilofwar2:
 		Range: 7c512
 		Visible: Always
 		Color: 999999AA
+	ProximityExternalCondition@Veiled:
+		Range: 5c512
 
 veilofwar3:
-	Inherits: veil
+	Inherits: ^Veil
 	CreatesShroud:
 		Range: 7c512
 	PeriodicExplosion:
 		Weapon: VeilLarge
 	KillsSelf:
 		Delay: 300
+	ProximityExternalCondition@Veiled:
+		Range: 7c512
 
 jamming.field:
 	Interactable:

@@ -3776,7 +3776,7 @@ PMAK:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 71
-		Prerequisites: atek, ~aircraft.allies, ~techlevel.high
+		Prerequisites: alhq, ~aircraft.allies, ~techlevel.high
 		Description: Heavy VTOL bomber with powerful armor penetrating bombs.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Defenses, Light Armor
@@ -3915,7 +3915,7 @@ BEAG:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 72
-		Prerequisites: alhq, coalition.active, ~korea.coalition, ~techlevel.high
+		Prerequisites: alhq, korea.coalition, ~techlevel.high
 		Description: Air superiority fighter with range/vision reducing missiles.
 	TooltipExtras:
 		Strengths: • Strong vs Aircraft, Heavy Armor, Light Armor
@@ -3954,7 +3954,8 @@ BEAG:
 		Voice: Attack
 	Aircraft:
 		CruiseAltitude: 2560
-		TurnSpeed: 16
+		TurnSpeed: 20
+		IdleTurnSpeed: 16
 		Speed: 225
 		RepulsionSpeed: 40
 		MaximumPitch: 56
@@ -4792,7 +4793,7 @@ JACK:
 	Inherits: ^PlaneTD
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Valued:
-		Cost: 525
+		Cost: 500
 	Tooltip:
 		Name: Jackknife
 	UpdatesPlayerStatistics:

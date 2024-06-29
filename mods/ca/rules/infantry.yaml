@@ -771,6 +771,9 @@ SPY:
 		TargetTypes: Ground, Infantry
 	Targetable@ChaosImmune:
 		TargetTypes: ChaosImmune
+	Targetable@Disguised:
+		TargetTypes: Disguised
+		RequiresCondition: disguise
 
 E7:
 	Inherits: ^Soldier
@@ -782,7 +785,7 @@ E7:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 200
-		Prerequisites: ~tent, atek, ~techlevel.high
+		Prerequisites: ~tent, atekoralhq, ~techlevel.high
 		BuildLimit: 1
 		Description: Elite commando infantry armed with dual pistols and C4.
 	TooltipExtras:
@@ -1391,9 +1394,9 @@ SHOK:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	AutoTargetPriority@DEFAULT:
-		InvalidTargets: NoAutoTarget, TeslaBoost
+		InvalidTargets: NoAutoTarget, TeslaBoost, Disguised
 	AutoTargetPriority@ATTACKANYTHING:
-		InvalidTargets: NoAutoTarget, TeslaBoost
+		InvalidTargets: NoAutoTarget, TeslaBoost, Disguised
 	AutoTargetPriority@TESLANORMAL:
 		RequiresCondition: !assault-move && !attack-move
 		ValidTargets: TeslaBoost
@@ -3687,7 +3690,7 @@ BH:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 13000
+		HP: 16000
 	Mobile:
 		Speed: 66
 		Voice: Move
@@ -3697,8 +3700,8 @@ BH:
 		Weapon: BlackHandFlamer
 		LocalOffset: 300,0,180
 	Armament@BATF:
-		Name: batf
-		Weapon: BlackHandFlamerWithSound
+		Name: batf-bh
+		Weapon: BlackHandFlamer
 	TakeCover:
 		ProneOffset: 160,0,-256
 	WithMuzzleOverlay:
@@ -4722,7 +4725,7 @@ CRYT:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 132
-		Prerequisites: ~tent, alhq, coalition.active, ~sweden.coalition, ~techlevel.high
+		Prerequisites: ~tent, alhq, sweden.coalition, ~techlevel.high
 		Description: Elite infantry armed with a cryo sprayer.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
@@ -4734,7 +4737,7 @@ CRYT:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 15000
+		HP: 16000
 	Mobile:
 		Speed: 60
 		Voice: Move
@@ -4744,7 +4747,7 @@ CRYT:
 		Weapon: CryoSprayer
 		LocalOffset: 341,0,341
 	Armament@BATF:
-		Name: batf
+		Name: batf-cryt
 		Weapon: CryoSprayer
 	AttackFrontal:
 		Voice: Attack

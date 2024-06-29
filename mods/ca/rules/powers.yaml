@@ -218,32 +218,6 @@
 		DisplayTimerRelationships: Ally, Neutral, Enemy
 		SupportPowerPaletteOrder: 35
 
-^NegotiationsPower:
-	ProduceActorPowerCA@Negotiations:
-		Actors: coalition.active
-		Name: Coalition Negotiations
-		Description: Negotiating the use of assets for your chosen coalition.
-		Type: Coalition
-		ChargeInterval: 3000
-		OneShot: true
-		OrderName: Negotiations
-		Icon: negotiations
-		AutoFire: True
-		SupportPowerPaletteOrder: 35
-		PauseOnCondition: disabled || being-warped
-		RequiresCondition: coalition-chosen
-		LaunchSpeechNotification: CoalitionActive
-		DisplayTimerRelationships: Ally
-	GrantConditionOnPrerequisite@Greece:
-		Condition: coalition-chosen
-		Prerequisites: greece.coalition
-	GrantConditionOnPrerequisite@Sweden:
-		Condition: coalition-chosen
-		Prerequisites: sweden.coalition
-	GrantConditionOnPrerequisite@Korea:
-		Condition: coalition-chosen
-		Prerequisites: korea.coalition
-
 ^TimeWarpPower:
 	GrantExternalConditionPowerCA@TimeWarp:
 		OrderName: TimeWarp
@@ -285,7 +259,7 @@
 		Actor: cryostorm
 		OrderName: cryostorm
 		Icon: cryostorm
-		Prerequisites: ~sweden.coalition, ~coalition.active, ~alhq
+		Prerequisites: ~sweden.coalition, ~alhq
 		ChargeInterval: 8250
 		LifeTime: -1
 		Name: Cryostorm
@@ -310,7 +284,7 @@
 ^HeliosBombPower:
 	AirstrikePowerCA@HeliosBomb:
 		OrderName: heliosbomb
-		Prerequisites: ~greece.coalition, ~coalition.active, ~alhq
+		Prerequisites: ~greece.coalition, ~alhq
 		PauseOnCondition: disabled || empdisable || being-warped
 		Icon: heliosbomb
 		IconPalette: caneon
@@ -342,7 +316,7 @@
 		MissileActor: kpat
 		Range: 7c0
 		OrderName: patriotstrike
-		Prerequisites: ~korea.coalition, ~coalition.active, ~alhq
+		Prerequisites: ~korea.coalition, ~alhq
 		Icon: kpat
 		IconPalette: chrome
 		ChargeInterval: 9000

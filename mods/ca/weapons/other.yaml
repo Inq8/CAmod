@@ -403,11 +403,6 @@ BlackHandFlamer:
 	Warhead@2Smu: LeaveSmudge
 		Chance: 5
 
-# just for BATF
-BlackHandFlamerWithSound:
-	Inherits: BlackHandFlamer
-	StartBurstReport: flamer2.aud
-
 Napalm:
 	Inherits: ^FireWeapon
 	ReloadDelay: 20
@@ -1141,7 +1136,7 @@ XOLaser:
 	Inherits: Laser
 	Report: xo-laser.aud
 	ReloadDelay: 100
-	Range: 5c0
+	Range: 5c768
 	Projectile: LaserZapCA
 		Blockable: true
 		Width: 56
@@ -1821,11 +1816,6 @@ VeilSmall:
 	ReloadDelay: 10
 	Range: 1c0
 	Projectile: InstantHit
-	Warhead@Debuff: GrantExternalConditionCA
-		Range: 2c512
-		Duration: 15
-		Condition: veiled
-		ValidRelationships: Enemy, Neutral
 	Warhead@Cloud: CreateEffect
 		Explosions: veilcloud, veilcloudf
 		ExplosionPalette: effect-ignore-lighting-alpha50
@@ -1834,30 +1824,13 @@ VeilSmall:
 
 VeilMedium:
 	Inherits: VeilSmall
-	Warhead@Debuff: GrantExternalConditionCA
-		Range: 4c768
 	Warhead@Cloud: CreateEffect
 		Inaccuracy: 3c768
 
 VeilLarge:
 	Inherits: VeilSmall
-	Warhead@Debuff: GrantExternalConditionCA
-		Range: 7c0
 	Warhead@Cloud: CreateEffect
 		Inaccuracy: 6c0
-
-VeilFull:
-	Inherits: VeilSmall
-	Warhead@Debuff: GrantExternalConditionCA
-		Range: 9c256
-	Warhead@Cloud: CreateEffect
-		Inaccuracy: 7c512
-	Warhead@Cloud2: CreateEffect
-		Explosions: veilcloud, veilcloudf
-		ExplosionPalette: effect-ignore-lighting-alpha50
-		Inaccuracy: 7c512
-		ValidTargets: Ground, Water, Veil
-		Delay: 5
 
 Railgun:
 	ReloadDelay: 70
@@ -3408,7 +3381,7 @@ CryoSprayer:
 	Warhead@1Dam: SpreadDamage
 		Spread: 0c128
 		Falloff: 100, 75, 25, 0
-		Damage: 300
+		Damage: 400
 		Versus:
 			None: 100
 			Wood: 2
@@ -3425,7 +3398,7 @@ CryoSprayer:
 		Inaccuracy: 110
 	Warhead@chill1: GrantExternalConditionCA
 		Condition: chilled
-		Duration: 75
+		Duration: 125
 		Range: 0c341
 		ValidRelationships: Enemy, Neutral
 
@@ -3465,12 +3438,12 @@ ZeusBolt:
 	Warhead@1Dam: SpreadDamage
 		Spread: 384
 		Falloff: 1000, 448, 192, 50, 18, 7, 0
-		Damage: 3000
+		Damage: 3500
 		DamageTypes: TriggerProne, ElectricityDeath
 		Versus:
 			None: 80
 			Wood: 100
-			Concrete: 70
+			Concrete: 65
 			Brick: 50
 			Heavy: 80
 			Light: 80
