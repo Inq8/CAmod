@@ -13,22 +13,22 @@ WorldLoaded = function()
 	Media.DisplayMessage("Loading...", "Notification", HSLColor.FromHex("1E90FF"))
 
 	PossiblePlayers = {
-		Multi0 = Player.GetPlayer("Multi0"),
-		Multi1 = Player.GetPlayer("Multi1"),
-		Multi2 = Player.GetPlayer("Multi2"),
-		Multi3 = Player.GetPlayer("Multi3"),
-		Multi4 = Player.GetPlayer("Multi4"),
-		Multi5 = Player.GetPlayer("Multi5"),
-		Multi6 = Player.GetPlayer("Multi6"),
-		Multi7 = Player.GetPlayer("Multi7"),
-		Multi8 = Player.GetPlayer("Multi8"),
-		Multi9 = Player.GetPlayer("Multi9"),
-		Multi10 = Player.GetPlayer("Multi10"),
-		Multi11 = Player.GetPlayer("Multi11"),
-		Multi12 = Player.GetPlayer("Multi12"),
-		Multi13 = Player.GetPlayer("Multi13"),
-		Multi14 = Player.GetPlayer("Multi14"),
-		Multi15 = Player.GetPlayer("Multi15")
+		Player.GetPlayer("Multi0"),
+		Player.GetPlayer("Multi1"),
+		Player.GetPlayer("Multi2"),
+		Player.GetPlayer("Multi3"),
+		Player.GetPlayer("Multi4"),
+		Player.GetPlayer("Multi5"),
+		Player.GetPlayer("Multi6"),
+		Player.GetPlayer("Multi7"),
+		Player.GetPlayer("Multi8"),
+		Player.GetPlayer("Multi9"),
+		Player.GetPlayer("Multi10"),
+		Player.GetPlayer("Multi11"),
+		Player.GetPlayer("Multi12"),
+		Player.GetPlayer("Multi13"),
+		Player.GetPlayer("Multi14"),
+		Player.GetPlayer("Multi15")
 	}
 
 	Neutral = Player.GetPlayer("Neutral")
@@ -209,52 +209,41 @@ end
 CalculateMatchups = function()
 	local numPlayers = #Players
 	local matchupsPerRound = numPlayers / 2
+	-- number of rounds (a bunch simultaneous matchups) it takes for every player to play every other player
 	local roundsPerCycle = numPlayers * (numPlayers - 1) / 2 / matchupsPerRound
-
-	local opponentPool = { }
-	Utils.Do(Players, function(p)
-		table.insert(opponentPool, p)
-	end)
-
-	PossibleMatchups = { }
-
-	-- for each player, assign all possible opponents (removing them from pool of possible opponents to prevent duplicates)
-	Utils.Do(Players, function(p)
-		Utils.Do(opponentPool, function(o)
-			if o ~= p then
-				local matchupPlayers = { p, o }
-				matchupPlayers = Utils.Shuffle(matchupPlayers)
-				table.insert(PossibleMatchups, { Player1 = matchupPlayers[1], Player2 = matchupPlayers[2], Winner = nil, Loser = nil, ArenaIdx = nil })
-			end
-		end)
-		table.remove(opponentPool, 1)
-	end)
+	local matchupsPerCycle = roundsPerCycle * matchupsPerRound
 
 	local round = 1
 
-	for i=1, NumCycles do
-		local matchupPool = { }
-		Utils.Do(PossibleMatchups, function(m)
-			table.insert(matchupPool, { Player1 = m.Player1, Player2 = m.Player2, Winner = nil, Loser = nil, ArenaIdx = nil })
-		end)
+	for cycle = 1, NumCycles do
+		local matchupsUsedInCycle = { }
 
 		-- build each round of matchups
-		for j=1, roundsPerCycle do
+		for j = 1, roundsPerCycle do
 			Rounds[round] = { }
 			local playersUsedInRound = { }
 
-			-- while the number of matchups assigned to the round is less than required, add more
-			while #Rounds[round] < matchupsPerRound do
-				local matchupIdx = Utils.RandomInteger(1, #matchupPool + 1)
-				local matchup = matchupPool[matchupIdx]
-				matchup.ArenaIdx = #Rounds[round] + 1
-
-				if not playersUsedInRound[matchup.Player1.InternalName] and not playersUsedInRound[matchup.Player2.InternalName] then
-					table.insert(Rounds[round], matchup)
-					playersUsedInRound[matchup.Player1.InternalName] = true
-					playersUsedInRound[matchup.Player2.InternalName] = true
-					table.remove(matchupPool, matchupIdx)
-					-- Media.Debug("Matchup " .. tostring(#Rounds[j]) .. ": " .. matchup.Player1.InternalName .. " vs " .. matchup.Player2.InternalName .. " on arena " .. matchup.ArenaIdx)
+			-- add matchups to the round until the required number is reached
+			for k = 1, matchupsPerRound do
+				for _, p1 in pairs(Players) do
+					if playersUsedInRound[p1.InternalName] == nil then
+						for p2idx = #Players, 1, -1 do
+							local p2 = Players[p2idx]
+							local matchupId = p1.InternalName .. "vs" .. p2.InternalName
+							if p1 ~= p2 and playersUsedInRound[p2.InternalName] == nil and matchupsUsedInCycle[matchupId] == nil then
+								local matchupPlayers = { p1, p2 }
+								matchupPlayers = Utils.Shuffle(matchupPlayers)
+								local matchup = { Id = matchupId, Player1 = matchupPlayers[1], Player2 = matchupPlayers[2], Winner = nil, Loser = nil, ArenaIdx = nil }
+								matchup.ArenaIdx = #Rounds[round] + 1
+								matchupsUsedInCycle[matchup.Id] = true
+								playersUsedInRound[p1.InternalName] = true
+								playersUsedInRound[p2.InternalName] = true
+								table.insert(Rounds[round], matchup)
+								-- Media.Debug("      " .. tostring(#Rounds[round]) .. ": " .. matchup.Player1.InternalName .. " vs " .. matchup.Player2.InternalName .. " on arena " .. matchup.ArenaIdx)
+								break
+							end
+						end
+					end
 				end
 			end
 

@@ -287,7 +287,7 @@ AutoRepairAndRebuildBuildings = function(player, maxAttempts)
 					Utils.Do(RebuildExcludes[player.InternalName].Actors, function(aa)
 						if aa == a then
 							excludeFromRebuilding = true
-							return;
+							return
 						end
 					end)
 				end
@@ -295,7 +295,7 @@ AutoRepairAndRebuildBuildings = function(player, maxAttempts)
 					Utils.Do(RebuildExcludes[player.InternalName].Types, function(t)
 						if a.Type == t then
 							excludeFromRebuilding = true
-							return;
+							return
 						end
 					end)
 				end
@@ -376,8 +376,8 @@ RebuildBuilding = function(queueItem)
 		-- rebuild if no units are nearby (potentially blocking), no enemy buildings are nearby, and friendly buildings are in the area (but nothing friendly in the same cell)
 		if CanRebuild(queueItem) then
 			local b = Actor.Create(queueItem.Actor.Type, true, { Owner = queueItem.Player, Location = queueItem.Location })
-			AutoRepairBuilding(b, queueItem.Player);
-			AutoRebuildBuilding(b, queueItem.Player, queueItem.MaxAttempts);
+			AutoRepairBuilding(b, queueItem.Player)
+			AutoRebuildBuilding(b, queueItem.Player, queueItem.MaxAttempts)
 			RestoreSquadProduction(queueItem.Actor, b)
 
 		-- otherwise add to back of queue (if attempts remaining)
@@ -522,7 +522,7 @@ CallForHelp = function(self, range, filter, validAttackingPlayerFunc)
 		return
 	end
 
-	local selfId = tostring(self);
+	local selfId = tostring(self)
 	if AlertedUnits[selfId] == nil then
 		if not self.IsDead then
 			AlertedUnits[selfId] = true
@@ -835,7 +835,7 @@ SendAttackSquad = function(squad)
 			if attackPath ~= nil then
 				if not a.IsDead and a.IsInWorld then
 					if squad.FollowLeader ~= nil and squad.FollowLeader == true and squadLeader == nil then
-						squadLeader = a;
+						squadLeader = a
 					end
 
 					-- if squad leader, queue attack move to each attack path waypoint
@@ -847,7 +847,7 @@ SendAttackSquad = function(squad)
 						if squad.IsNaval ~= nil and squad.IsNaval then
 							IdleHunt(a)
 						else
-							AssaultPlayerBaseOrHunt(a, squad.TargetPlayer);
+							AssaultPlayerBaseOrHunt(a, squad.TargetPlayer)
 						end
 
 						-- on damaged or killed
@@ -874,7 +874,7 @@ SendAttackSquad = function(squad)
 				if squad.IsNaval ~= nil and squad.IsNaval then
 					IdleHunt(a)
 				else
-					AssaultPlayerBaseOrHunt(a, squad.TargetPlayer);
+					AssaultPlayerBaseOrHunt(a, squad.TargetPlayer)
 				end
 			end
 		end)
@@ -906,7 +906,7 @@ FollowSquadLeader = function(actor, squad)
 		else
 			actor.Stop()
 			Trigger.ClearAll(actor)
-			AssaultPlayerBaseOrHunt(actor, squad.TargetPlayer);
+			AssaultPlayerBaseOrHunt(actor, squad.TargetPlayer)
 		end
 	end
 end
