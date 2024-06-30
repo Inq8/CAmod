@@ -36,6 +36,7 @@ namespace OpenRA.Mods.Common.Traits.Render
 		readonly WithDockingAnimationCAInfo info;
 		readonly WithSpriteBody wsb;
 		readonly Harvester harvester;
+		bool docked;
 
 		public WithDockingAnimationCA(Actor self, WithDockingAnimationCAInfo info)
 		{
@@ -61,15 +62,21 @@ namespace OpenRA.Mods.Common.Traits.Render
 		void IDockClientBody.PlayDockAnimation(Actor self, Action after)
 		{
 			if (RefineryIsValid)
+			{
 				wsb.PlayCustomAnimation(self, info.DockSequence, () => { wsb.PlayCustomAnimationRepeating(self, info.DockLoopSequence); after(); });
+				docked = true;
+			}
 			else
 				after();
 		}
 
 		void IDockClientBody.PlayReverseDockAnimation(Actor self, Action after)
 		{
-			if (RefineryIsValid)
+			if (RefineryIsValid || docked)
+			{
 				wsb.PlayCustomAnimationBackwards(self, info.DockSequence, () => after());
+				docked = false;
+			}
 			else
 				after();
 		}
