@@ -1377,6 +1377,7 @@ INTL:
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Inherits@COMMANDOSKULL: ^CommandoSkull
+	Inherits@SHIELDS: ^ScrinShields
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Valued:
@@ -1468,6 +1469,7 @@ INTL:
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped || blinded
 		Armaments: primary
+		Turrets: primary, shield
 	WithSpriteTurret:
 	GrantConditionOnTerrain@ONWATER:
 		TerrainTypes: Water
@@ -1481,6 +1483,17 @@ INTL:
 		Range: 4c0
 		DetectionTypes: Mine
 		RequiresCondition: loaded-engi
+	-WithFacingSpriteBody@SHIELDS:
+	WithSpriteTurret@SHIELDS:
+		Turret: shield
+		RequiresCondition: shields-upgrade && shields-up
+		Sequence: shield
+		Palette: scrinshield-ignore-lighting-alpha50
+	TurretedFloating@SHIELDS:
+		Turret: shield
+		TurnSpeed: 16
+		RealignDelay: 75
+		RequiresCondition: shields-upgrade
 
 INTL.AI:
 	Inherits: INTL
@@ -3768,6 +3781,7 @@ SFAC:
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@BOTI: ^BotFallbackInsurance
 	Inherits@BLD: ^ProducesBuildings
+	Inherits@A2GPROTECTION: ^BuildingAirToGroundProtection
 	Building:
 		Footprint: xxx xxx ===
 		Dimensions: 3,3
@@ -4117,6 +4131,7 @@ WSPH:
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@NOMCV: ^UnlocksMcvIfNoneOwned
 	Inherits@VEH: ^ProducesVehicles
+	Inherits@A2GPROTECTION: ^BuildingAirToGroundProtection
 	Selectable:
 		Bounds: 3072, 2048
 	Buildable:

@@ -4552,6 +4552,9 @@ ZTRP:
 	Targetable@TEMPORAL:
 		TargetTypes: Temporal
 		RequiresCondition: !jumping
+	DamageMultiplier@Jumping:
+		Modifier: 50
+		RequiresCondition: jumping
 
 ZRAI:
 	Inherits: ZTRP
@@ -4600,6 +4603,7 @@ ZDEF:
 	-Contrail@Jumping:
 	-WithShadow@Jump:
 	-Targetable@Jump:
+	-DamageMultiplier@Jumping:
 	WithInfantryBody:
 		RequiresCondition: !being-warped
 	-WithInfantryBody@Jump:

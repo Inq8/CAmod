@@ -55,5 +55,11 @@ namespace OpenRA.Mods.CA.Traits
 			lastBodyFacing = facing.Facing;
 			base.Tick(self);
 		}
+
+		protected override void TraitEnabled(Actor self)
+		{
+			base.TraitEnabled(self);
+			realignTick = Info.RealignDelay;
+		}
 	}
 }

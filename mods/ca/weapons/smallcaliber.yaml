@@ -494,6 +494,19 @@ M60mgJJAA:
 			Light: 100
 			Heavy: 100
 
+M60mgNHAW:
+	Inherits: M60mg
+	Range: 4c768
+	Projectile: Bullet
+		Blockable: false
+	Report: vblhatta.aud, vblhattb.aud
+	Burst: 3
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			None: 165
+			Light: 50
+		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath, AirToGround
+
 M60mgIFV:
 	Inherits: M60mg
 	Range: 5c768

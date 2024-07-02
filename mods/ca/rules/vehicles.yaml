@@ -5027,7 +5027,7 @@ HFTK:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 46000
+		HP: 44000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -6454,6 +6454,9 @@ RECK:
 		Name: GGI Reckoner
 	Tooltip@psyturr:
 		Name: Psychic Reckoner
+	ReloadDelayMultiplier@CyborgElite:
+		RequiresCondition: rmbcturr
+		Modifier: 80
 
 TITN:
 	Inherits: ^TankTD
@@ -6739,7 +6742,7 @@ DISR:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Valued:
-		Cost: 1400
+		Cost: 1600
 	Tooltip:
 		Name: Disruptor
 	UpdatesPlayerStatistics:
@@ -6755,7 +6758,7 @@ DISR:
 		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
 		Attributes: • Slows enemy movement and rate of fire (with upgrade)
 	Health:
-		HP: 70000
+		HP: 66000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -8517,7 +8520,7 @@ WOLV:
 	Armor:
 		Type: Light
 	Mobile:
-		TurnSpeed: 54
+		TurnSpeed: 64
 		Speed: 54
 		Voice: Move
 	Passenger:
@@ -8559,15 +8562,15 @@ XO:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
-	Inherits@GYRO: ^GyroStabilizers
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 251
 		Prerequisites: gtek, ~vehicles.zocom, ~techlevel.high
-		Description: Light battle-mech with a short-range laser\n  and a machine gun.
+		Description: Light battle-mech with a short-range laser\n  and a machine gun. Able to\n  jump short distances using its jetpack.
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor, Heavy Armor
 		Weaknesses: • Weak vs Buildings\n• Cannot attack Aircraft
+		Attributes: • Special Ability: Jump Pack
 	Valued:
 		Cost: 1000
 	Selectable:
@@ -8582,7 +8585,7 @@ XO:
 	Armor:
 		Type: Light
 	Mobile:
-		TurnSpeed: 54
+		TurnSpeed: 64
 		Speed: 54
 		Voice: Move
 	Passenger:
@@ -8631,6 +8634,41 @@ XO:
 		Modifier: 140
 	GpsRadarDot:
 		Sequence: Infantry
+	WithFacingSpriteBody:
+		RequiresCondition: !jumping
+	WithFacingSpriteBody@Jump:
+		Name: jump
+		Sequence: descend
+		RequiresCondition: !being-warped && jumping
+	TargetedLeapAbility:
+		TakeOffSounds: xo-jump1.aud
+		LandingSounds: xo-land1.aud
+		LeapCondition: jumping
+		ShowSelectionBarWhenFull: false
+		ChargeDelay: 500
+		SelectionBarColor: ffaa00
+		CircleColor: ffaa00a0
+		MaxDistance: 7
+		Speed: 140
+	Contrail@Jumping:
+		Offset: -30,0,350
+		StartColorUsePlayerColor: false
+		ZOffset: -128
+		StartColor: ff990090
+		StartColorAlpha: 128
+		TrailLength: 12
+		RequiresCondition: jumping
+	WithShadow@Jump:
+		RequiresCondition: jumping
+	Targetable@Jump:
+		RequiresCondition: jumping && !being-warped
+		TargetTypes: AirSmall
+	Targetable@TEMPORAL:
+		TargetTypes: Temporal
+		RequiresCondition: !jumping
+	DamageMultiplier@Jumping:
+		Modifier: 50
+		RequiresCondition: jumping
 
 APOC:
 	Inherits: ^Tank
@@ -8657,7 +8695,7 @@ APOC:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 110000
+		HP: 125000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -8878,12 +8916,12 @@ OVLD:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 115000
+		HP: 120000
 	Armor:
 		Type: Heavy
 	Mobile:
 		Speed: 43
-		TurnSpeed: 8
+		TurnSpeed: 12
 		Locomotor: sheavytracked
 		Voice: Move
 	Passenger:
@@ -8896,7 +8934,7 @@ OVLD:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 8
+		TurnSpeed: 10
 	Armament@PRIMARY:
 		Weapon: 135mm
 		Recoil: 171
