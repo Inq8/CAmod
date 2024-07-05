@@ -10,6 +10,7 @@
 
 using OpenRA.Activities;
 using OpenRA.Mods.CA.Activities;
+using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
@@ -22,6 +23,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		[Desc("If a mobile target moves further than this beyond its initial location, the missile will lose tracking. Zero means infinite tracking.")]
 		public readonly WDist MaxTargetMovement = WDist.Zero;
+
+		[Desc("Added this value multiplied by the speed (i.e. distance travelled per tick) of the target to MaxTargetMovement.")]
+		public readonly int MaxTargetMovementTicks = 0;
 
 		public override object Create(ActorInitializer init) { return new GuidedMissile(init, this); }
 	}
@@ -45,7 +49,38 @@ namespace OpenRA.Mods.CA.Traits
 
 		protected override Activity GetActivity(Actor self, Target target)
 		{
-			return new GuidedMissileFly(self, target, initialTargetPos, this, Info.MaxTargetMovement);
+			return new GuidedMissileFly(self, target, initialTargetPos, this, CalculateMaxTargetMovement(target));
+		}
+
+		private WDist CalculateMaxTargetMovement(Target target)
+		{
+			var scaledMaxDistance = WDist.Zero;
+
+			if (Info.MaxTargetMovementTicks > 0 && target.Type == TargetType.Actor && !target.Actor.IsDead)
+			{
+				scaledMaxDistance = GetActorSpeed(target.Actor) * Info.MaxTargetMovementTicks;
+			}
+
+			TextNotificationsManager.Debug("target {0}: max distance: {1}", target.Actor.Info.Name, Info.MaxTargetMovement + scaledMaxDistance);
+
+			return Info.MaxTargetMovement + scaledMaxDistance;
+		}
+
+		private WDist GetActorSpeed(Actor actor)
+		{
+			var mobileInfo = actor.Info.TraitInfoOrDefault<MobileInfo>();
+			if (mobileInfo != null)
+			{
+				return new WDist(mobileInfo.Speed);
+			}
+
+			var aircraftInfo = actor.Info.TraitInfoOrDefault<AircraftInfo>();
+			if (aircraftInfo != null)
+			{
+				return new WDist(aircraftInfo.Speed);
+			}
+
+			return WDist.Zero;
 		}
 	}
 }

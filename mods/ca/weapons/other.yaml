@@ -1140,8 +1140,8 @@ StealthAPCLaser:
 XOLaser:
 	Inherits: Laser
 	Report: xo-laser.aud
-	ReloadDelay: 100
-	Range: 5c768
+	ReloadDelay: 110
+	Range: 7c512
 	Projectile: LaserZapCA
 		Blockable: true
 		Width: 56
@@ -1153,13 +1153,46 @@ XOLaser:
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
 		Damage: 11000
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath, TankBuster
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		Versus:
 			None: 65
 			Wood: 40
 			Concrete: 75
-			Light: 100
+			Light: 80
 			Heavy: 100
+
+XOCoilGun:
+	Range: 7c512
+	ReloadDelay: 70
+	Report: xo-coil1.aud
+	Burst: 2
+	BurstDelays: 6
+	Projectile: BulletCA
+		Image: flakball
+		Speed: 682
+		TrailImage: coiltrail
+		TrailSequences: idle1, idle2
+		TrailInterval: 1
+		ContrailStartWidth: 32
+		ContrailStartColor: 809acf
+		ContrailStartColorAlpha: 96
+		ContrailLength: 6
+		TrailSpacing: 682
+	Warhead@1Dam: SpreadDamage
+		Spread: 0c128
+		Damage: 2500
+		Versus:
+			None: 100
+			Wood: 10
+			Light: 70
+			Heavy: 10
+			Concrete: 10
+			Brick: 10
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+	Warhead@3Eff: CreateEffect
+		Explosions: piff
+		ValidTargets: Ground, Water, Trees
+		Inaccuracy: 64
 
 PortaLaser:
 	Inherits: Laser

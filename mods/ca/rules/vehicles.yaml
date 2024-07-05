@@ -8566,7 +8566,7 @@ XO:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 251
 		Prerequisites: gtek, ~vehicles.zocom, ~techlevel.high
-		Description: Light battle-mech with a short-range laser\n  and a machine gun. Able to\n  jump short distances using its jetpack.
+		Description: Light battle-mech armed with a laser and a coil-gun.\n  Able to jump short distances using its jetpack.
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor, Heavy Armor
 		Weaknesses: • Weak vs Buildings\n• Cannot attack Aircraft
@@ -8581,7 +8581,7 @@ XO:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 32000
+		HP: 25000
 	Armor:
 		Type: Light
 	Mobile:
@@ -8606,13 +8606,15 @@ XO:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 		Condition: moving
 	Armament@PRIMARY:
-		Weapon: M60mgXO
+		Weapon: XOCoilGun
 		LocalOffset: 400,-220,180
 		MuzzleSequence: muzzle
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: XOLaser
 		LocalOffset: 400,220,180
+		MuzzleSequence: muzzle2
+		MuzzlePalette: scrin
 	AttackFollowFrontal:
 		PauseOnCondition: empdisable || being-warped || blinded
 		Voice: Attack
@@ -8628,10 +8630,6 @@ XO:
 		Interval: 3
 		Sequences: descend
 	-WithParachute:
-	RangeMultiplier@GYRO:
-		Modifier: 140
-	ReloadDelayMultiplier@GYRO:
-		Modifier: 140
 	GpsRadarDot:
 		Sequence: Infantry
 	WithFacingSpriteBody:
@@ -9241,7 +9239,8 @@ KPAT:
 		HP: 5000
 	GuidedMissile:
 		Speed: 450
-		MaxTargetMovement: 12c0
+		MaxTargetMovement: 3c0
+		MaxTargetMovementTicks: 140
 		MinAltitude: 128
 	LeavesTrailsCA:
 		Image: icbmsmoke
