@@ -61,8 +61,6 @@ namespace OpenRA.Mods.CA.Traits
 				scaledMaxDistance = GetActorSpeed(target.Actor) * Info.MaxTargetMovementTicks;
 			}
 
-			TextNotificationsManager.Debug("target {0}: max distance: {1}", target.Actor.Info.Name, Info.MaxTargetMovement + scaledMaxDistance);
-
 			return Info.MaxTargetMovement + scaledMaxDistance;
 		}
 
