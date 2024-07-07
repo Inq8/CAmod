@@ -1141,7 +1141,7 @@ XOLaser:
 	Inherits: Laser
 	Report: xo-laser.aud
 	ReloadDelay: 110
-	Range: 7c512
+	Range: 7c0
 	Projectile: LaserZapCA
 		Blockable: true
 		Width: 56
@@ -1162,7 +1162,7 @@ XOLaser:
 			Heavy: 100
 
 XOCoilGun:
-	Range: 7c512
+	Range: 7c0
 	ReloadDelay: 70
 	Report: xo-coil1.aud
 	Burst: 2
@@ -3549,3 +3549,11 @@ JackknifeTargeter:
 	ReloadDelay: 25
 	Projectile: InstantHit
 	Warhead@1Dam: Dummy
+
+TroopCrawlerDummyWeapon:
+	Range: 1c0
+	ValidTargets: Infantry, Vehicle
+	ReloadDelay: 25
+	Projectile: InstantHit
+	Warhead@1Dam: Dummy
+		ValidRelationships: Ally

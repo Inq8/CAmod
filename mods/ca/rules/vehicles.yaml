@@ -55,6 +55,15 @@ V2RL:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1194, 1194
+	ReplacedInQueue:
+		Actors: v3rl
+	Upgradeable@V3:
+		Type: v3.upgrade
+		UpgradingCondition: upgrading
+		Actor: v3rl
+		UpgradeAtActors: fix, rep, srep
+		BuildDuration: 100
+		RequiresCondition: !mindcontrolled
 
 KATY:
 	Inherits: ^Vehicle
@@ -472,6 +481,7 @@ GTNK:
 		Offset: 80,0,0
 	AttackTurreted:
 		Voice: Attack
+		PauseOnCondition: empdisable || being-warped || blinded || parachute
 	AttackMove:
 		Voice: Attack
 	SpawnActorOnDeath:
@@ -5531,6 +5541,17 @@ TRPC:
 		TargetTypes: MindControlImmune
 		RequiresCondition: loaded-cmdo
 	KeepsDistance:
+	AttackFrontal:
+	AttackMove:
+	AutoTarget:
+		ScanRadius: 3
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Infantry, Vehicle
+		ValidRelationships: Ally
+	Armament:
+		Weapon: TroopCrawlerDummyWeapon
+		TargetRelationships: Ally
+		ForceTargetRelationships: None
 	ProximityExternalCondition@InspirationVeh:
 		Range: 3c0
 		Condition: veh-inspiration
@@ -8643,7 +8664,7 @@ XO:
 		LandingSounds: xo-land1.aud
 		LeapCondition: jumping
 		ShowSelectionBarWhenFull: false
-		ChargeDelay: 500
+		ChargeDelay: 625
 		SelectionBarColor: ffaa00
 		CircleColor: ffaa00a0
 		MaxDistance: 7
