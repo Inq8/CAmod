@@ -492,6 +492,14 @@ GTNK:
 	WithShadow:
 		RequiresCondition: parachute
 
+GTNKR2:
+	Inherits: GTNK
+	RenderSprites:
+		Image: gtnk
+	ProducibleWithLevel:
+		-Prerequisites:
+		InitialLevels: 2
+
 GTNK.squad:
 	AlwaysVisible:
 	Interactable:
@@ -520,6 +528,9 @@ GTNK.squad:
 		AllowMultiple: true
 	Armor:
 		Type: Heavy
+	ProductionTimeMultiplier:
+		Multiplier: 75
+		Prerequisites: airborne.upgrade
 
 2TNK.Chrono:
 	Inherits: 2TNK
@@ -5804,21 +5815,21 @@ IFV:
 	Armament@E3:
 		Weapon: IFVRocketsE
 		LocalOffset: 192,100,176, 192,-100,176
-		RequiresCondition: (samturr || ggiturr) && !cryr-upgrade
+		RequiresCondition: (samturr || ggiturr) && !cryw-upgrade
 	Armament@E3AA:
 		Name: secondary
 		Weapon: IFVRocketsAAE
 		LocalOffset: 192,100,176, 192,-100,176
-		RequiresCondition: (samturr || ggiturr) && !cryr-upgrade
+		RequiresCondition: (samturr || ggiturr) && !cryw-upgrade
 	Armament@E3CRYO:
 		Weapon: IFVRocketsE.CRYO
 		LocalOffset: 192,100,176, 192,-100,176
-		RequiresCondition: (samturr || ggiturr) && cryr-upgrade
+		RequiresCondition: (samturr || ggiturr) && cryw-upgrade
 	Armament@E3CRYOAA:
 		Name: secondary
 		Weapon: IFVRocketsAAE.CRYO
 		LocalOffset: 192,100,176, 192,-100,176
-		RequiresCondition: (samturr || ggiturr) && cryr-upgrade
+		RequiresCondition: (samturr || ggiturr) && cryw-upgrade
 	Armament@E4:
 		Weapon: FireballLauncher
 		Recoil: 85
@@ -6206,8 +6217,8 @@ IFV:
 		Condition: apb-upgrade
 		Prerequisites: apb.upgrade
 	GrantConditionOnPrerequisite@CRYO:
-		Condition: cryr-upgrade
-		Prerequisites: cryr.upgrade
+		Condition: cryw-upgrade
+		Prerequisites: cryw.upgrade
 	GuardsSelection@REPAIR:
 		ValidTargets: Vehicle
 		RequiresCondition: engturr && !stance-attackanything
@@ -6333,21 +6344,21 @@ IFV.AI:
 	Armament@E3:
 		Weapon: IFVRocketsE
 		LocalOffset: 192,100,176, 192,-100,176
-		RequiresCondition: samturr && !cryr-upgrade
+		RequiresCondition: samturr && !cryw-upgrade
 	Armament@E3AA:
 		Name: secondary
 		Weapon: IFVRocketsAAE
 		LocalOffset: 192,100,176, 192,-100,176
-		RequiresCondition: samturr && !cryr-upgrade
+		RequiresCondition: samturr && !cryw-upgrade
 	Armament@E3CRYO:
 		Weapon: IFVRocketsE.CRYO
 		LocalOffset: 192,100,176, 192,-100,176
-		RequiresCondition: samturr && cryr-upgrade
+		RequiresCondition: samturr && cryw-upgrade
 	Armament@E3CRYOAA:
 		Name: secondary
 		Weapon: IFVRocketsAAE.CRYO
 		LocalOffset: 192,100,176, 192,-100,176
-		RequiresCondition: samturr && cryr-upgrade
+		RequiresCondition: samturr && cryw-upgrade
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped || blinded
 	WithMuzzleOverlay:
@@ -6400,13 +6411,13 @@ IFV.AI:
 	AttackMove:
 		AssaultMoveCondition: assault-move
 	GrantConditionOnPrerequisite@CRYO:
-		Condition: cryr-upgrade
-		Prerequisites: cryr.upgrade
+		Condition: cryw-upgrade
+		Prerequisites: cryw.upgrade
 	GrantCondition@CRYO:
-		Condition: cryr-upgrade
-		RequiresCondition: cryr-upgrade
+		Condition: cryw-upgrade
+		RequiresCondition: cryw-upgrade
 	ExternalCondition@CRYO:
-		Condition: cryr-upgrade
+		Condition: cryw-upgrade
 
 RECK:
 	Inherits: IFV

@@ -619,10 +619,6 @@ P51:
 		FireDelay: 2
 		Weapon: Rocket.P51.L
 		LocalOffset: 0,413,0
-	Armament@QUINARY:
-		Name: missile
-		Weapon: CryoMissileP51
-		RequiresCondition: upg-crym
 	AttackBomberCA:
 		Armaments: gunr, gunl, rocketr, rocketl, missile
 		FacingTolerance: 80
@@ -660,9 +656,6 @@ P51:
 		Experience: 1000
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
-	GrantConditionOnPrerequisite@CRYM:
-		Condition: upg-crym
-		Prerequisites: crym.upgrade
 
 TRAN:
 	Inherits: ^Helicopter
@@ -931,16 +924,16 @@ NHAW:
 		RequiresCondition: !airborne
 	SpawnActorOnDeath:
 		Actor: NHAW.Husk
-		RequiresCondition: !upg-crym && !empdisable && !being-warped
+		RequiresCondition: !upg-cryw && !empdisable && !being-warped
 	SpawnActorOnDeath@EMP:
 		Actor: NHAW.Husk.EMP
-		RequiresCondition: !upg-crym && empdisable && !being-warped
+		RequiresCondition: !upg-cryw && empdisable && !being-warped
 	SpawnActorOnDeath@UPG:
 		Actor: NHAW.UPG.Husk
-		RequiresCondition: upg-crym && !empdisable && !being-warped
+		RequiresCondition: upg-cryw && !empdisable && !being-warped
 	SpawnActorOnDeath@UPGEMP:
 		Actor: NHAW.UPG.Husk.EMP
-		RequiresCondition: upg-crym && empdisable && !being-warped
+		RequiresCondition: upg-cryw && empdisable && !being-warped
 	Selectable:
 		DecorationBounds: 1706, 1536
 	Voiced:
@@ -948,18 +941,18 @@ NHAW:
 	AppearsOnRadar:
 		ValidRelationships: Ally
 	WithFacingSpriteBody:
-		RequiresCondition: !upg-crym
+		RequiresCondition: !upg-cryw
 	WithFacingSpriteBody@UPG:
 		Name: body-upg
-		RequiresCondition: upg-crym && ammo > 1
+		RequiresCondition: upg-cryw && ammo > 1
 		Sequence: idle-upg
 	WithFacingSpriteBody@oneshot:
 		Name: body-oneshot
-		RequiresCondition: upg-crym && ammo == 1
+		RequiresCondition: upg-cryw && ammo == 1
 		Sequence: oneshot
 	WithFacingSpriteBody@empty:
 		Name: body-empty
-		RequiresCondition: upg-crym && !ammo
+		RequiresCondition: upg-cryw && !ammo
 		Sequence: empty
 	Armament@PRIMARY:
 		Weapon: M60mgNHAW
@@ -970,7 +963,7 @@ NHAW:
 		Name: cryo
 		Weapon: cryomissilenhaw
 		LocalOffset: 200,300,0, 200,-300,0
-		RequiresCondition: upg-crym && !(cargo && stance-holdfire) && ammo
+		RequiresCondition: upg-cryw && !(cargo && stance-holdfire) && ammo
 	AmmoPool@CRYOMISSILE:
 		Name: cryo
 		Armaments: cryo
@@ -980,7 +973,7 @@ NHAW:
 		AmmoPool: cryo
 		Delay: 375
 		Count: 2
-		RequiresCondition: upg-crym
+		RequiresCondition: upg-cryw
 	AutoTarget:
 		InitialStance: Defend
 		InitialStanceAI: AttackAnything
@@ -995,9 +988,9 @@ NHAW:
 		ForceFireIgnoresActors: True
 		Voice: Attack
 	WithMuzzleOverlay:
-	GrantConditionOnPrerequisite@CRYM:
-		Condition: upg-crym
-		Prerequisites: crym.upgrade
+	GrantConditionOnPrerequisite@CRYW:
+		Condition: upg-cryw
+		Prerequisites: cryw.upgrade
 	ParaDrop:
 		ChuteSound: chute1.aud
 	Armament@DROP:
@@ -1089,27 +1082,27 @@ HELI:
 		Weapon: HellfireAA
 		LocalOffset: 0,213,-85, 0,-213,-85
 		PauseOnCondition: !ammo
-		RequiresCondition: !cryr-upgrade
+		RequiresCondition: !cryw-upgrade
 	Armament@PRIMARYUPG:
 		Weapon: HellfireAA.Cryo
 		LocalOffset: 0,213,-85, 0,-213,-85
 		PauseOnCondition: !ammo
-		RequiresCondition: cryr-upgrade
+		RequiresCondition: cryw-upgrade
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: HellfireAG
 		LocalOffset: 0,213,-85, 0,-213,-85
 		PauseOnCondition: !ammo
-		RequiresCondition: !cryr-upgrade
+		RequiresCondition: !cryw-upgrade
 	Armament@SECONDARYUPG:
 		Name: secondary
 		Weapon: HellfireAG.Cryo
 		LocalOffset: 0,213,-85, 0,-213,-85
 		PauseOnCondition: !ammo
-		RequiresCondition: cryr-upgrade
+		RequiresCondition: cryw-upgrade
 	GrantConditionOnPrerequisite@CRYO:
-		Condition: cryr-upgrade
-		Prerequisites: cryr.upgrade, sweden.coalition
+		Condition: cryw-upgrade
+		Prerequisites: cryw.upgrade, sweden.coalition
 	AttackAircraft:
 		FacingTolerance: 80
 		AttackType: Hover

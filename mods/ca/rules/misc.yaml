@@ -695,7 +695,7 @@ powerproxy.paratroopers.allies:
 
 powerproxy.airborne:
 	Inherits@DUMMY: ^InvisibleDummy
-	ParatroopersPower:
+	ParatroopersPowerCA:
 		OrderName: airborne
 		Icon: airborne
 		SquadSize: 1
@@ -720,6 +720,8 @@ powerproxy.airborne:
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 		SupportPowerPaletteOrder: 70
+		PrerequisiteDropItems:
+			airborne.upgrade: U3R2, U3R2, U3R2, U3R2, U3R2
 	Buildable:
 		Queue: PowerProxy
 	Tooltip:
@@ -727,7 +729,7 @@ powerproxy.airborne:
 
 powerproxy.airborne.tank:
 	Inherits@DUMMY: ^InvisibleDummy
-	ParatroopersPower:
+	ParatroopersPowerCA:
 		OrderName: airbornetank
 		Icon: airdropicon
 		SquadSize: 1
@@ -752,6 +754,8 @@ powerproxy.airborne.tank:
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 		SupportPowerPaletteOrder: 70
+		PrerequisiteDropItems:
+			airborne.upgrade: GTNKR2, GTNKR2
 	Buildable:
 		Queue: PowerProxy
 	Tooltip:

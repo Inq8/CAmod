@@ -255,34 +255,34 @@ E3:
 		Weapon: RedEye
 		LocalOffset: 0,0,500
 		PauseOnCondition: !ammo
-		RequiresCondition: !cryr-upgrade
+		RequiresCondition: !cryw-upgrade
 	Armament@PRIMARYUPG:
 		Weapon: RedEye.CRYO
 		LocalOffset: 0,0,500
 		PauseOnCondition: !ammo
-		RequiresCondition: cryr-upgrade
+		RequiresCondition: cryw-upgrade
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: Dragon
 		LocalOffset: 0,0,500
 		PauseOnCondition: !ammo
-		RequiresCondition: !cryr-upgrade
+		RequiresCondition: !cryw-upgrade
 	Armament@SECONDARYUPG:
 		Name: secondary
 		Weapon: Dragon.CRYO
 		LocalOffset: 0,0,500
 		PauseOnCondition: !ammo
-		RequiresCondition: cryr-upgrade
+		RequiresCondition: cryw-upgrade
 	Armament@BATF:
 		Name: batf
 		Weapon: DragonBATF
 		PauseOnCondition: !ammo
-		RequiresCondition: !cryr-upgrade
+		RequiresCondition: !cryw-upgrade
 	Armament@BATFUPG:
 		Name: batf
 		Weapon: DragonBATF.CRYO
 		PauseOnCondition: !ammo
-		RequiresCondition: cryr-upgrade
+		RequiresCondition: cryw-upgrade
 	AmmoPool:
 		Ammo: 1
 		AmmoCondition: ammo
@@ -303,11 +303,11 @@ E3:
 		ScanRadius: 6
 		MaximumScanTimeInterval: 5
 	GrantConditionOnPrerequisite@CRYO:
-		Condition: cryr-upgrade
-		Prerequisites: cryr.upgrade
+		Condition: cryw-upgrade
+		Prerequisites: cryw.upgrade
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
-		RequiresCondition: !parachute && !cryr-upgrade && !being-warped
+		RequiresCondition: !parachute && !cryw-upgrade && !being-warped
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
 		RequiresCondition: parachute
@@ -317,11 +317,11 @@ E3:
 		AttackSequences: shoot-cryo
 		DefaultAttackSequence: shoot-cryo
 		MoveSequence: run-cryo
-		RequiresCondition: cryr-upgrade && !being-warped
+		RequiresCondition: cryw-upgrade && !being-warped
 	WithDeathAnimation:
-		RequiresCondition: !cryr-upgrade
+		RequiresCondition: !cryw-upgrade
 	WithDeathAnimation@CRYO:
-		RequiresCondition: cryr-upgrade
+		RequiresCondition: cryw-upgrade
 		DeathSequence: die-cryo
 		DeathSequencePalette: playertd
 		DeathTypes:
@@ -372,38 +372,38 @@ U3:
 		Turret: deploy
 		LocalOffset: 0,0,400
 		PauseOnCondition: !ammo
-		RequiresCondition: !cryr-upgrade && deployed
+		RequiresCondition: !cryw-upgrade && deployed
 	Armament@PRIMARYDEPUPG:
 		Weapon: RedEyeGI.CRYO
 		Name: deployed
 		Turret: deploy
 		LocalOffset: 0,0,400
 		PauseOnCondition: !ammo
-		RequiresCondition: cryr-upgrade && deployed
+		RequiresCondition: cryw-upgrade && deployed
 	Armament@SECONDARYDEP:
 		Name: deployed
 		Weapon: DragonGI
 		Turret: deploy
 		LocalOffset: 0,0,400
 		PauseOnCondition: !ammo
-		RequiresCondition: !cryr-upgrade && deployed
+		RequiresCondition: !cryw-upgrade && deployed
 	Armament@SECONDARYDEPUPG:
 		Weapon: DragonGI.CRYO
 		Name: deployed
 		Turret: deploy
 		LocalOffset: 0,0,400
 		PauseOnCondition: !ammo
-		RequiresCondition: cryr-upgrade && deployed
+		RequiresCondition: cryw-upgrade && deployed
 	Armament@BATF:
 		Name: batf
 		Weapon: DragonBATF.CYB
 		PauseOnCondition: !ammo
-		RequiresCondition: !cryr-upgrade
+		RequiresCondition: !cryw-upgrade
 	Armament@BATFUPG:
 		Name: batf
 		Weapon: DragonBATF.CRYO
 		PauseOnCondition: !ammo
-		RequiresCondition: cryr-upgrade
+		RequiresCondition: cryw-upgrade
 	Armament@AIDummyAiming: ## Hack: Make AI deploy to attack air
 		PauseOnCondition: being-warped
 		RequiresCondition: botowner && !deployed
@@ -430,8 +430,8 @@ U3:
 		MaximumScanTimeInterval: 5
 		AllowMovement: False
 	GrantConditionOnPrerequisite@CRYO:
-		Condition: cryr-upgrade
-		Prerequisites: cryr.upgrade
+		Condition: cryw-upgrade
+		Prerequisites: cryw.upgrade
 	GrantConditionOnDeploy:
 		DeployedCondition: deployed
 		UndeployedCondition: undeployed
@@ -465,19 +465,19 @@ U3:
 	WithSpriteTurret@idle:
 		Turret: deploy
 		Sequence: deployed
-		RequiresCondition: deployed && !cryr-upgrade && !animate-turret && !parachute
+		RequiresCondition: deployed && !cryw-upgrade && !animate-turret && !parachute
 	WithSpriteTurret@animated:
 		Turret: deploy
 		Sequence: deploy-shoot
-		RequiresCondition: deployed && !cryr-upgrade && animate-turret && !parachute
+		RequiresCondition: deployed && !cryw-upgrade && animate-turret && !parachute
 	WithSpriteTurret@idleupg:
 		Turret: deploy
 		Sequence: deployedcr
-		RequiresCondition: deployed && cryr-upgrade && !animate-turret && !parachute
+		RequiresCondition: deployed && cryw-upgrade && !animate-turret && !parachute
 	WithSpriteTurret@animatedupg:
 		Turret: deploy
 		Sequence: deploy-shootcr
-		RequiresCondition: deployed && cryr-upgrade && animate-turret && !parachute
+		RequiresCondition: deployed && cryw-upgrade && animate-turret && !parachute
 	WithSpriteBody:
 		Sequence: empty
 		Name: dot
@@ -521,6 +521,14 @@ U3:
 		DeployTicks: 5
 		UndeployTicks: 50
 
+U3R2:
+	Inherits: U3
+	RenderSprites:
+		Image: u3
+	ProducibleWithLevel:
+		-Prerequisites:
+		InitialLevels: 2
+
 U3.squad:
 	AlwaysVisible:
 	Interactable:
@@ -550,6 +558,9 @@ U3.squad:
 		AllowMultiple: true
 	Armor:
 		Type: None
+	ProductionTimeMultiplier:
+		Multiplier: 75
+		Prerequisites: airborne.upgrade
 
 E3R1:
 	Inherits: E3

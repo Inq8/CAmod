@@ -253,7 +253,7 @@ InitGreece = function()
 	Actor.Create("hazmat.upgrade", true, { Owner = Greece })
 
 	if Difficulty == "hard" then
-		Actor.Create("cryr.upgrade", true, { Owner = Greece })
+		Actor.Create("cryw.upgrade", true, { Owner = Greece })
 	end
 
 	if Difficulty == "easy" then
