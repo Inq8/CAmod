@@ -325,6 +325,13 @@ NUKC:
 		Type: NukeCannon
 		Range: 16c0
 		Color: ffdd0060
+		RequiresCondition: !veiled && !gapveiled
+	WithRangeCircle@Veiled:
+		Range: 12c820
+		RequiresCondition: veiled && !gapveiled
+	WithRangeCircle@GapVeiled:
+		Range: 9c614
+		RequiresCondition: gapveiled
 
 1TNK:
 	Inherits: ^Tank
@@ -9407,7 +9414,7 @@ MOLE:
 	Targetable@ChaosImmune:
 		TargetTypes: ChaosImmune
 	Cargo:
-		InitialUnits: acol, acol, acol, acol
+		InitialUnits: acol, acol, acol, n3, n4
 		BeforeUnloadDelay: 100
 	WithCargoSounds:
 		ExitSounds: gexit1a.aud
@@ -9440,4 +9447,4 @@ MOLE.UPG:
 	RenderSprites:
 		Image: mole
 	Cargo:
-		InitialUnits: tplr, tplr, tplr, tplr
+		InitialUnits: tplr, tplr, tplr, n3c, n5

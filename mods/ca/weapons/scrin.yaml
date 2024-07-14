@@ -1292,7 +1292,7 @@ LaceratorShards.Hypercharged:
 
 ImpalerSpike:
 	Range: 7c0
-	ReloadDelay: 75
+	ReloadDelay: 80
 	Report: impl-fire1.aud
 	Projectile: Missile
 		Speed: 750
@@ -1978,14 +1978,14 @@ NullifierBolt:
 		TrailSpacing: 512
 	Warhead@1Dam: SpreadDamage
 		Spread: 0c128
-		Damage: 16000
+		Damage: 25000
 		Versus:
 			None: 100
-			Wood: 40
-			Light: 70
-			Heavy: 15
-			Concrete: 40
-			Brick: 0
+			Wood: 25
+			Light: 50
+			Heavy: 10
+			Concrete: 25
+			Brick: 10
 		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
@@ -1994,5 +1994,5 @@ NullifierBolt:
 		ImpactSounds: null-hit1.aud
 	Warhead@Blind: GrantExternalConditionCA
 		Range: 0c341
-		Duration: 100
+		Duration: 125
 		Condition: blinded
