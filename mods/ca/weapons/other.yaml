@@ -944,7 +944,7 @@ IvanIFVTargeting:
 	Inherits: DemoTruckTargeting
 
 Hack:
-	Range: 12c0
+	Range: 11c0
 	ReloadDelay: 50
 	ValidTargets: Hackable
 	TargetActorCenter: true
@@ -2858,6 +2858,23 @@ Lasher:
 		ValidTargets: Infantry
 		DamageTypes: BulletDeath
 		ValidRelationships: Enemy, Neutral
+
+ShadowBeaconLauncher:
+	ReloadDelay: 25
+	Range: 4c0
+	Report: grenade1.aud
+	Projectile: Bullet
+		Blockable: false
+		LaunchAngle: 62
+		Speed: 180
+		Image: BOMB
+		ContrailLength: 30
+		ContrailStartColor: 8888aa
+		ContrailStartColorAlpha: 100
+	Warhead@Beacon: SpawnActor
+		Actors: shab
+		Range: 1
+		ImpactActors: false
 
 AttachShadowBeacon:
 	Warhead@AttachCamera: AttachActor

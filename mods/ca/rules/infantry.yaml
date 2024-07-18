@@ -3445,6 +3445,7 @@ SHAD:
 		AttackSequences:
 			primary: throw
 			secondary: shoot
+			tertiary: throw
 		MinIdleDelay: 80
 		MaxIdleDelay: 250
 		RequiresCondition: !parachute && !being-warped
@@ -3461,9 +3462,17 @@ SHAD:
 		Weapon: ShadowOperativeGrenade
 		LocalOffset: 0,0,555
 		FireDelay: 15
+		PauseOnCondition: throwing-beacon || beacon-thrown
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: ShadowOperativeGun
+		PauseOnCondition: throwing-beacon || beacon-thrown
+	Armament@TERTIARY:
+		Name: tertiary
+		Weapon: ShadowBeaconLauncher
+		LocalOffset: 0,0,555
+		FireDelay: 15
+		PauseOnCondition: !throwing-beacon
 	Armament@BATF:
 		Name: batf
 		Weapon: ShadowOperativeGun
@@ -3471,6 +3480,7 @@ SHAD:
 		Voice: Attack
 		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
+		Armaments: primary, secondary, tertiary
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: ReturnFire
@@ -3493,27 +3503,28 @@ SHAD:
 		DetectionTypes: Cloak, Thief
 		Range: 4c0
 	-WithParachute:
-	AmmoPool:
-		Ammo: 1
-		Armaments: none
-	WithAmmoPipsDecoration:
-		Position: BottomLeft
-		Margin: 4, 3
-		RequiresSelection: true
-	Minelayer:
-		Mine: SHAB
-		TileUnknownName: build-valid
-	Rearmable:
-		RearmActors: shad.rearm
 	Targetable@STEALTHBUBBLEIMMUNE:
 		TargetTypes: StealthBubbleImmune
 	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || hidden
 		ColorSource: Player
-
-# ---- dummy actor because RearmableActors is required
-SHAD.REARM:
-	AlwaysVisible:
+	TargetedAttackAbility:
+		ActiveCondition: throwing-beacon
+		ArmamentName: tertiary
+		CircleColor: 8888aa
+		Type: ShadowBeacon
+		CancelAfterAttack: true
+	GrantConditionOnAttack@ShadowBeaconCooldown:
+		Condition: beacon-thrown
+		RevokeDelay: 30
+		ArmamentNames: tertiary
+	AmmoPool:
+		Armaments: tertiary
+		Ammo: 2
+	WithAmmoPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
 
 SGLI:
 	Inherits: ^Plane

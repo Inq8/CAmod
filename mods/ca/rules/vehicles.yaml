@@ -7843,13 +7843,14 @@ MEMP:
 		PauseOnCondition: triggered || !radarenabled || empdisable || being-warped || notmobile
 		Speed: 126
 		Voice: Move
+		TurnSpeed: 28
 	Passenger:
 		Voice: Move
 	GrantTimedConditionOnDeploy:
 		DeploySound: mobempcharge1.aud
 		DeployedCondition: triggered
 		CooldownTicks: 450
-		DeployedTicks: 50
+		DeployedTicks: 25
 		RequiresCondition: radarenabled && !(empdisable || being-warped)
 		ChargingColor: 0277bd
 		DischargingColor: 03a9f4
@@ -7858,7 +7859,7 @@ MEMP:
 		Weapon: MEMP
 		RequiresCondition: triggered && ammo
 		AmmoPoolName: explosion
-		InitialDelay: 48
+		InitialDelay: 23
 	AttackFrontal:
 		FacingTolerance: 512
 		PauseOnCondition: !ammo || empdisable || being-warped
@@ -8873,6 +8874,7 @@ APOC.ERAD:
 		LocalOffset: 500,100,240, 500,-100,240
 		-PauseOnCondition:
 		-ReloadingCondition:
+	-Armament@SECONDARY:
 	-Armament@ATOMICAMMO:
 	-ExternalCondition@ATOMICAMMO:
 	-WithRestartableIdleOverlay@ATOMICAMMO:

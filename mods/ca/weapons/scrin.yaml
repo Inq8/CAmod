@@ -271,7 +271,7 @@ DevastatorDiscs:
 	ReloadDelay: 180
 	Report: devastator-fire1.aud, devastator-fire2.aud, devastator-fire3.aud
 	Burst: 7
-	BurstDelays: 4
+	BurstDelays: 3
 	TargetActorCenter: true
 	-Projectile:
 	Projectile: Bullet
@@ -881,20 +881,20 @@ InvaderZap:
 		Blockable: false
 	Warhead@1Dam: SpreadDamage
 		Spread: 448
-		Damage: 900
+		Damage: 1000
 		InvalidTargets: Infantry
 		Versus:
 			None: 65
 			Wood: 10
 			Concrete: 15
-			Light: 85
+			Light: 80
 			Heavy: 100
 			Brick: 20
 		DamageTypes: FireDeath, AirToGround
 	Warhead@2Dam: SpreadDamage
 		Spread: 128
 		ValidTargets: Infantry
-		Damage: 900
+		Damage: 1000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, AirToGround
 	Warhead@2Eff: CreateEffect
 		Explosions: idle
@@ -1845,10 +1845,15 @@ BursterExplode:
 		Damage: 12000
 		Spread: 1c0
 		Falloff: 1000, 368, 135, 50, 25, 12, 0
-		InvalidTargets: Structure
+		InvalidTargets: Structure, Burster
 		Versus:
-			None: 40
+			None: 35
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Warhead@FF: HealthPercentageDamage
+		Spread: 2c0
+		Damage: 25
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+		ValidTargets: Burster
 	Warhead@SDam: SpreadDamage
 		Damage: 4500
 		Spread: 1c0
@@ -1923,7 +1928,7 @@ MindSparkZap:
 
 ObliteratorBolt:
 	Range: 15c0
-	ReloadDelay: 200
+	ReloadDelay: 150
 	Report: oblt-fire1.aud
 	Projectile: LinearPulse
 		Speed: 130
@@ -1933,10 +1938,10 @@ ObliteratorBolt:
 		ImpactInterval: 3
 	Warhead@1Dam: SpreadDamage
 		Spread: 256
-		Damage: 8650
+		Damage: 7500
 		Versus:
-			Wood: 45
-			Concrete: 45
+			Wood: 40
+			Concrete: 40
 			Heavy: 65
 			Light: 65
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
@@ -1945,8 +1950,8 @@ ObliteratorBolt:
 		Spread: 256
 		Damage: 1000
 		Versus:
-			Wood: 45
-			Concrete: 45
+			Wood: 40
+			Concrete: 40
 			Heavy: 65
 			Light: 65
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath

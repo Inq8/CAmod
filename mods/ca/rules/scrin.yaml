@@ -659,11 +659,11 @@ BRST:
 		Strengths: • Strong vs Infantry, Buildings, Light Armor
 		Weaknesses: • Cannot attack Aircraft
 	Health:
-		HP: 7000
+		HP: 5000
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Mobile:
-		Speed: 80
+		Speed: 92
 	RevealsShroud:
 		Range: 7c0
 	Explodes:
@@ -681,6 +681,8 @@ BRST:
 	KillsSelf:
 		RequiresCondition: (triggered || berserk)
 	-TakeCover:
+	Targetable@Burster:
+		TargetTypes: Burster
 
 EVIS:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -1635,6 +1637,7 @@ LCHR:
 	ConvertsDamageToHealth:
 		DamagePercentConverted: 30
 		RequiresCondition: !coalescence-upgrade
+		InvalidTargetTypes: Husk
 	Explodes:
 		Weapon: LeecherExplode
 		EmptyWeapon: LeecherExplode
@@ -2343,7 +2346,7 @@ OBLT:
 	Armor:
 		Type: Heavy
 	Mobile:
-		TurnSpeed: 12
+		TurnSpeed: 14
 		Speed: 48
 		Locomotor: lighthover
 	WithShadow:
@@ -2549,7 +2552,7 @@ STMR:
 		Strengths: • Strong vs Infantry, Light Armor, Buildings, Aircraft
 		Weaknesses: • Weak vs Defenses
 	Valued:
-		Cost: 1750
+		Cost: 1650
 	Tooltip:
 		Name: Stormrider
 		GenericName: Aircraft
@@ -5132,7 +5135,7 @@ BUZZ:
 		Description: Swarm of biometallic shards.
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
-		Attributes: • Untargetable
+		Attributes: • Untargetable\n• Blinds enemies
 	RevealsShroud:
 		MinRange: 1c0
 		Range: 6c0
@@ -5600,16 +5603,16 @@ REBELGATEWAY:
 		Produces: Gateway
 	GrantDelayedCondition@Wave1:
 		Condition: wave1-deployed
-		Delay: 130
+		Delay: 255
 	PeriodicProducerCA@1:
 		Type: Gateway
-		ChargeDuration: 125
+		ChargeDuration: 250
 		Actors: s1, s1, s1, s3, s3, s1, s1
 		ReadyAudio: ReinforcementsArrived
 		RequiresCondition: !wave1-deployed
 	PeriodicProducerCA@2:
 		Type: Gateway
-		ChargeDuration: 500
+		ChargeDuration: 625
 		Actors: gunw, gunw, tpod
 		ReadyAudio: ReinforcementsArrived
 	AmmoPool@Wave1:
@@ -5620,7 +5623,7 @@ REBELGATEWAY:
 		InitialAmmo: 0
 	ReloadAmmoPoolCA@Wave1:
 		AmmoPool: wave1
-		Delay: 125
+		Delay: 250
 		ShowSelectionBar: true
 		SelectionBarColor: ff00ff
 	ReloadAmmoPoolCA@Wave2:
