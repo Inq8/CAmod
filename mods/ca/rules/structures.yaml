@@ -5169,17 +5169,55 @@ PATR:
 	CapturableProgressBlink:
 
 CVAT:
-	Inherits: INDP
+	Inherits: ^Building
+	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
+	Inherits@SHAPE: ^2x2Shape
+	Inherits@UPG: ^ProducesUpgrades
+	Inherits@TECHLOCKABLE: ^TechLockable
+	HitShape:
+		UseTargetableCellsOffsets: false
+		TargetableOffsets: 0,0,0, 630,-512,0, 355,512,0, -281,-512,0, -630,512,0
 	Tooltip:
 		Name: Cloning Vat
+	Building:
+		Footprint: xx xx ++
+		Dimensions: 2,3
+		LocalCenterOffset: 0,-1024,0
 	Buildable:
+		Queue: BuildingSQ, BuildingMQ
+		BuildPaletteOrder: 200
 		Prerequisites: ~structures.soviet, stek, player.level3, ~infantry.doctrine, ~techlevel.high
 		Description: Clones infantry trained at a linked barracks.
+		BuildLimit: 1
+		Footprint: xx xx ++
+		Dimensions: 2,3
+		LocalCenterOffset: 0,-1024,0
+	TooltipExtras:
+		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked
+	Valued:
+		Cost: 2000
+	Health:
+		HP: 100000
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	WithBuildingBib:
+	-Capturable:
+	-CaptureNotification:
+	-CapturableProgressBar:
+	-CapturableProgressBlink:
+	-CaptureManager:
 	Production:
 		Produces: Clone
 	Exit@1:
-		SpawnOffset: -190,880,0
-		ExitCell: 1,2
+		SpawnOffset: -700,1000,0
+		ExitCell: -2,2
+		Facing: 90
 	Exit@2:
 		SpawnOffset: 190,-400,0
 		ExitCell: 1,-1
@@ -5187,6 +5225,35 @@ CVAT:
 	CloneProducer:
 		Types: InfantrySQ, InfantryMQ
 		CloneType: Clone
+	Power:
+		Amount: -150
+	WithDeathAnimation:
+		DeathSequence: dead
+		UseDeathTypeSuffix: false
+	ProvidesPrerequisite@buildingname:
+		RequiresCondition: !tech-locked
+	ProvidesPrerequisite@IndpOrMunp:
+		Prerequisite: indpormunp
+		RequiresCondition: !tech-locked
+	ProvidesPrerequisite@disabled:
+		Prerequisite: indplowpower
+		RequiresCondition: disabled || empdisable || being-warped
+	Sellable:
+		RequiresCondition: !build-incomplete && !c4 && !being-warped
+	SpawnActorOnDeath:
+		RequiresCondition: !being-warped
+	SpawnRandomActorOnDeath:
+		RequiresCondition: !being-warped
+	GrantCondition@DUMMY:
+		Condition: noupgrade
+		RequiresCondition: noupgrade
+	WithDecoration@TechLock:
+		RequiresCondition: tech-locked
+	-MindControllable:
+	-Targetable@HACKABLE:
+	-MindControllableProgressBar@HACKABLE:
+	-WithDecoration@HACKED:
+	-WithDecoration@RESTORING:
 
 INDP:
 	Inherits: ^Building

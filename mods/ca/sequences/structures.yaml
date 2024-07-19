@@ -2949,7 +2949,32 @@ indp:
 		Filename: indpicon.shp
 
 cvat:
-	Inherits: indp
+	Inherits: ^StructureOverlays
+	idle:
+		Filename: cvat.shp
+		Length: 6
+		Tick: 200
+	damaged-idle:
+		Filename: cvat.shp
+		Start: 6
+		Length: 6
+		Tick: 200
+	make:
+		Filename: cvatmk.shp
+		Length: *
+	dead:
+		Filename: cvat.shp
+		Start: 6
+		Tick: 800
+	bib:
+		Filename: bib3.tem
+		TilesetFilenames:
+			SNOW: bib3.sno
+			DESERT: bib3.des
+			JUNGLE: bib3.jun
+			WINTER: bib3.win
+			BARREN: bib3.bar
+		Length: *
 	icon:
 		Filename: cvaticon.shp
 
