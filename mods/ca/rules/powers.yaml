@@ -218,32 +218,6 @@
 		DisplayTimerRelationships: Ally, Neutral, Enemy
 		SupportPowerPaletteOrder: 35
 
-^NegotiationsPower:
-	ProduceActorPowerCA@Negotiations:
-		Actors: coalition.active
-		Name: Coalition Negotiations
-		Description: Negotiating the use of assets for your chosen coalition.
-		Type: Coalition
-		ChargeInterval: 3000
-		OneShot: true
-		OrderName: Negotiations
-		Icon: negotiations
-		AutoFire: True
-		SupportPowerPaletteOrder: 35
-		PauseOnCondition: disabled || being-warped
-		RequiresCondition: coalition-chosen
-		LaunchSpeechNotification: CoalitionActive
-		DisplayTimerRelationships: Ally
-	GrantConditionOnPrerequisite@Greece:
-		Condition: coalition-chosen
-		Prerequisites: greece.coalition
-	GrantConditionOnPrerequisite@Sweden:
-		Condition: coalition-chosen
-		Prerequisites: sweden.coalition
-	GrantConditionOnPrerequisite@Korea:
-		Condition: coalition-chosen
-		Prerequisites: korea.coalition
-
 ^TimeWarpPower:
 	GrantExternalConditionPowerCA@TimeWarp:
 		OrderName: TimeWarp
@@ -285,7 +259,7 @@
 		Actor: cryostorm
 		OrderName: cryostorm
 		Icon: cryostorm
-		Prerequisites: ~sweden.coalition, ~coalition.active, ~alhq
+		Prerequisites: ~sweden.coalition, ~alhq
 		ChargeInterval: 8250
 		LifeTime: -1
 		Name: Cryostorm
@@ -310,7 +284,7 @@
 ^HeliosBombPower:
 	AirstrikePowerCA@HeliosBomb:
 		OrderName: heliosbomb
-		Prerequisites: ~greece.coalition, ~coalition.active, ~alhq
+		Prerequisites: ~greece.coalition, ~alhq
 		PauseOnCondition: disabled || empdisable || being-warped
 		Icon: heliosbomb
 		IconPalette: caneon
@@ -342,7 +316,7 @@
 		MissileActor: kpat
 		Range: 7c0
 		OrderName: patriotstrike
-		Prerequisites: ~korea.coalition, ~coalition.active, ~alhq
+		Prerequisites: ~korea.coalition, ~alhq
 		Icon: kpat
 		IconPalette: chrome
 		ChargeInterval: 9000
@@ -359,7 +333,7 @@
 		ShowTargetCircle: true
 		TargetCircleColor: ffffff
 		TargetTintColor: ffffff44
-		ValidRelationships: Ally, Enemy, Neutral
+		ValidRelationships: Enemy, Neutral
 		LaunchSounds: kpat-fire.aud
 		MissileCount: 8
 		MissilesPerLaunch: 2
@@ -1017,7 +991,7 @@
 		SupportPowerPaletteOrder: 50
 
 ^XODropPower:
-	ParatroopersPower@xodrop:
+	ParatroopersPowerCA@xodrop:
 		OrderName: xodrop
 		Prerequisites: ~radar.talon
 		PauseOnCondition: disabled || empdisable || being-warped
@@ -1319,7 +1293,7 @@
 		SupportPowerPaletteOrder: 10
 
 ^NodAirdropPowers:
-	ParatroopersPower@NodAirDrop:
+	ParatroopersPowerCA@NodAirDrop:
 		OrderName: nodairdrop
 		SquadSize: 3
 		UnitType: c17
@@ -1347,7 +1321,7 @@
 		DirectionArrowAnimation: paradirection
 		Prerequisites: ~disabled
 		SupportPowerPaletteOrder: 60
-	ParatroopersPower@blackhairdrop:
+	ParatroopersPowerCA@blackhairdrop:
 		OrderName: blackhairdrop
 		SquadSize: 2
 		UnitType: c17
@@ -1404,7 +1378,7 @@
 		ArrowSequence: arrow
 		ClockSequence: clock
 		CircleSequence: circles
-	ParatroopersPower@shadowairdrop:
+	ParatroopersPowerCA@shadowairdrop:
 		OrderName: shadowairdrop
 		SquadSize: 2
 		UnitType: c17
@@ -1483,7 +1457,7 @@
 		Prerequisites: ~radar.blackh
 		Icon: infbomb
 		IconPalette: chrometd
-		ChargeInterval: 9000
+		ChargeInterval: 9750
 		Name: Inferno Bomb
 		Description: \nA B2 Stealth Bomber drops inferno bombs on your target.
 		SelectTargetSpeechNotification: SelectTarget
@@ -1789,7 +1763,7 @@
 		ChargeInterval: 7500
 		Name: Buzzer Swarm
 		ActivationDelay: 1
-		Description: \nSpawns a controllable swarm which damages anything nearby;\n    particularly harmful to infantry.
+		Description: \nSpawns a controllable swarm which blinds and damages anything nearby;\n    particularly harmful to infantry.
 		LaunchSound: buzzers-create.aud
 		Weapon: BuzzerSpawner
 		AirburstAltitude: 0c0
@@ -1970,8 +1944,9 @@
 		ChargeInterval: 8250
 		Name: Gateway
 		ActivationDelay: 1
-		Description: \nCreates a temporary Gateway at the target location\n   from which reinforcements are deployed.
+		Description: \nCreates a temporary Gateway at the target location\n   from which reinforcements are deployed.\n\nRequires target location to be within vision.
 		LaunchSound: wormhole-open.aud
+		IncomingSound: wormhole-open.aud
 		Weapon: GatewaySpawner
 		AirburstAltitude: 0c0
 		SelectTargetSpeechNotification: SelectTarget

@@ -37,8 +37,8 @@ namespace OpenRA.Mods.Common.Traits
 		[Desc("Number of facings that the delivery aircraft may approach from.")]
 		public readonly int QuantizedFacings = 32;
 
-		[Desc("Spawn and remove the plane this far outside the map.")]
-		public readonly WDist Cordon = new(5120);
+		[Desc("Minimum distance from the target to spawn the planes.")]
+		public readonly WDist MinDistance = WDist.FromCells(48);
 
 		[ActorReference(typeof(PassengerInfo))]
 		[Desc("Troops to be delivered.  They will be distributed between the planes if SquadSize > 1.")]
@@ -136,8 +136,12 @@ namespace OpenRA.Mods.Common.Traits
 			var dropRotation = WRot.FromYaw(facing.Value);
 			var delta = new WVec(0, -1024, 0).Rotate(dropRotation);
 			target += new WVec(0, 0, altitude);
-			var startEdge = target - (self.World.Map.DistanceToEdge(target, -delta) + info.Cordon).Length * delta / 1024;
-			var finishEdge = target + (self.World.Map.DistanceToEdge(target, delta) + info.Cordon).Length * delta / 1024;
+
+			var distanceFromStartEdgeToTarget = self.World.Map.DistanceToEdge(target, -delta);
+			var extraDistanceToMeetMinimum = info.MinDistance > distanceFromStartEdgeToTarget ? info.MinDistance - distanceFromStartEdgeToTarget : WDist.Zero;
+
+			var startEdge = target - (distanceFromStartEdgeToTarget + WDist.FromCells(1) + extraDistanceToMeetMinimum).Length * delta / 1024;
+			var finishEdge = target + (self.World.Map.DistanceToEdge(target, delta) + WDist.FromCells(5)).Length * delta / 1024;
 
 			Actor camera = null;
 			Beacon beacon = null;

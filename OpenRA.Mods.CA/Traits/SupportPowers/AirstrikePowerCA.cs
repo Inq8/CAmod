@@ -29,7 +29,9 @@ namespace OpenRA.Mods.Common.Traits
 		public readonly WVec SquadOffset = new(-1536, 1536, 0);
 
 		public readonly int QuantizedFacings = 32;
-		public readonly WDist MinDistance = new(16384);
+
+		[Desc("Minimum distance from the target to spawn the planes.")]
+		public readonly WDist MinDistance = WDist.FromCells(32);
 
 		[ActorReference]
 		[Desc("Actor to spawn when the aircraft start attacking")]

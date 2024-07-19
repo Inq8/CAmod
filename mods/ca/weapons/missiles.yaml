@@ -833,7 +833,7 @@ TOW:
 	Range: 5c0
 	ValidTargets: Vehicle, Structure
 	Report: tow1.aud, tow2.aud
-	ReloadDelay: 130
+	ReloadDelay: 175
 	Projectile: MissileCA
 		Speed: 180
 		Inaccuracy: 0
@@ -847,12 +847,14 @@ TOW:
 		MinimumLaunchAngle: 0
 		MaximumLaunchAngle: 48
 	Warhead@1Dam: SpreadDamage
-		Damage: 7500
+		Damage: 10000
 		Versus:
 			Wood: 40
 			Concrete: 30
 			Light: 40
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster
+	Warhead@3Eff: CreateEffect
+		ImpactSounds: tow-hit1.aud
 
 PitbullRockets:
 	Inherits: ^AntiGroundMissile
@@ -903,6 +905,7 @@ PitbullRocketsAA:
 		Duration: 50
 		Condition: blinded
 		ValidTargets: Air, AirSmall
+		InvalidTargets: Shielded
 		ValidRelationships: Enemy, Neutral
 
 TorpTube:
@@ -2034,10 +2037,6 @@ CryoMissileNHAW:
 	Warhead@cryoresidue: CreateTintedCells
 		Level: 150
 
-CryoMissileP51:
-	Inherits: CryoMissileNHAW
-	ReloadDelay: 200
-
 Rocket.P51.R:
 	ReloadDelay: 200
 	Range: 9c0
@@ -2102,7 +2101,7 @@ BlackEagleMissiles:
 		Versus:
 			Concrete: 75
 	Warhead@VeiledCondition: GrantExternalConditionCA
-		Range: 2c512
+		Range: 2c0
 		Duration: 175
 		Condition: gapveiled
 		ValidTargets: Infantry, Vehicle, Ship
@@ -2116,7 +2115,7 @@ BlackEagleMissiles:
 
 BlackEagleMissilesAA:
 	Inherits: MaverickAA
-	Range: 9c0
+	Range: 11c0
 	Report: beag-fire1.aud, beag-fire2.aud
 	-Burst:
 	-BurstDelays:
@@ -2126,7 +2125,7 @@ BlackEagleMissilesAA:
 	Warhead@1Dam: SpreadDamage
 		Damage: 16000
 	Warhead@VeiledCondition: GrantExternalConditionCA
-		Range: 2c512
+		Range: 2c0
 		Duration: 175
 		Condition: gapveiled
 		ValidTargets: Air, AirSmall

@@ -89,7 +89,6 @@ EnslaveVehicle:
 	Warhead@PinkHighlight: GrantExternalConditionCA
 		ValidTargets: Vehicle
 
-
 DetonateSlave:
 	Range: 1c0
 	ReloadDelay: 1
@@ -251,6 +250,7 @@ IntruderDiscs:
 		LockOnProbability: 33
 	Warhead@1Dam: SpreadDamage
 		Damage: 2850
+		Spread: 256
 		Versus:
 			None: 15
 			Wood: 100
@@ -271,7 +271,7 @@ DevastatorDiscs:
 	ReloadDelay: 180
 	Report: devastator-fire1.aud, devastator-fire2.aud, devastator-fire3.aud
 	Burst: 7
-	BurstDelays: 4
+	BurstDelays: 3
 	TargetActorCenter: true
 	-Projectile:
 	Projectile: Bullet
@@ -392,6 +392,7 @@ DevourerLaser:
 		Damage: 1300
 		Versus:
 			None: 20
+			Light: 70
 			Wood: 45
 	Warhead@antiShip: SpreadDamage
 		ValidTargets: Water
@@ -880,20 +881,20 @@ InvaderZap:
 		Blockable: false
 	Warhead@1Dam: SpreadDamage
 		Spread: 448
-		Damage: 900
+		Damage: 1000
 		InvalidTargets: Infantry
 		Versus:
 			None: 65
 			Wood: 10
 			Concrete: 15
-			Light: 85
+			Light: 80
 			Heavy: 100
 			Brick: 20
 		DamageTypes: FireDeath, AirToGround
 	Warhead@2Dam: SpreadDamage
 		Spread: 128
 		ValidTargets: Infantry
-		Damage: 900
+		Damage: 1000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, AirToGround
 	Warhead@2Eff: CreateEffect
 		Explosions: idle
@@ -1208,6 +1209,8 @@ EvisceratorShards:
 	Inherits: RavagerShards
 	ReloadDelay: 25
 	BurstDelays: 4
+	Warhead@1Dam: SpreadDamage
+		Spread: 288
 
 ShardWalkerShards:
 	Inherits: RavagerShards
@@ -1289,7 +1292,7 @@ LaceratorShards.Hypercharged:
 
 ImpalerSpike:
 	Range: 7c0
-	ReloadDelay: 75
+	ReloadDelay: 80
 	Report: impl-fire1.aud
 	Projectile: Missile
 		Speed: 750
@@ -1304,11 +1307,12 @@ ImpalerSpike:
 		ContrailStartColorAlpha: 64
 		AllowSnapping: true
 	Warhead@1Dam: SpreadDamage
-		Damage: 10000
+		Damage: 12500
 		Spread: 42
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 		Versus:
 			Heavy: 15
+			Light: 80
 			Wood: 30
 			Concrete: 25
 			Brick: 15
@@ -1668,7 +1672,7 @@ GreaterCoalescence:
 	Warhead@heal: SpreadDamage
 		Range: 0, 4c512
 		Falloff: 100, 100
-		Damage: -450
+		Damage: -550
 		ValidTargets: Heal, Repair
 		Versus:
 			None: 50
@@ -1841,10 +1845,15 @@ BursterExplode:
 		Damage: 12000
 		Spread: 1c0
 		Falloff: 1000, 368, 135, 50, 25, 12, 0
-		InvalidTargets: Structure
+		InvalidTargets: Structure, Burster
 		Versus:
-			None: 40
+			None: 35
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Warhead@FF: HealthPercentageDamage
+		Spread: 2c0
+		Damage: 25
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+		ValidTargets: Burster
 	Warhead@SDam: SpreadDamage
 		Damage: 4500
 		Spread: 1c0
@@ -1919,7 +1928,7 @@ MindSparkZap:
 
 ObliteratorBolt:
 	Range: 15c0
-	ReloadDelay: 200
+	ReloadDelay: 150
 	Report: oblt-fire1.aud
 	Projectile: LinearPulse
 		Speed: 130
@@ -1931,20 +1940,20 @@ ObliteratorBolt:
 		Spread: 256
 		Damage: 7500
 		Versus:
-			Wood: 50
-			Concrete: 50
-			Heavy: 50
-			Light: 75
+			Wood: 40
+			Concrete: 40
+			Heavy: 65
+			Light: 65
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		ValidRelationships: Enemy, Neutral
 	Warhead@friendlyFire: SpreadDamage
 		Spread: 256
 		Damage: 1000
 		Versus:
-			Wood: 60
-			Concrete: 60
-			Heavy: 60
-			Light: 80
+			Wood: 40
+			Concrete: 40
+			Heavy: 65
+			Light: 65
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		ValidRelationships: Ally
 		InvalidTargets: Obliterator
@@ -1974,14 +1983,14 @@ NullifierBolt:
 		TrailSpacing: 512
 	Warhead@1Dam: SpreadDamage
 		Spread: 0c128
-		Damage: 16000
+		Damage: 25000
 		Versus:
 			None: 100
-			Wood: 40
-			Light: 70
-			Heavy: 15
-			Concrete: 40
-			Brick: 0
+			Wood: 25
+			Light: 50
+			Heavy: 10
+			Concrete: 25
+			Brick: 10
 		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
@@ -1990,5 +1999,5 @@ NullifierBolt:
 		ImpactSounds: null-hit1.aud
 	Warhead@Blind: GrantExternalConditionCA
 		Range: 0c341
-		Duration: 100
+		Duration: 125
 		Condition: blinded

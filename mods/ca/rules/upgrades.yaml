@@ -488,7 +488,7 @@ gyro.upgrade:
 		BuildPaletteOrder: 40
 		Prerequisites: ~player.talon, upgc, ~techlevel.high
 		IconPalette: chrometd
-		Description: Allows mech units to activate gyro stabilizers, greatly increasing range but reducing rate of fire.\n\nUpgrades: Titan\nUpgrades: Railgun Titan\nUpgrades: Juggernaut\nUpgrades: X-O Powersuit
+		Description: Allows mech units to activate gyro stabilizers, greatly increasing range but reducing rate of fire.\n\nUpgrades: Titan\nUpgrades: Railgun Titan\nUpgrades: Juggernaut\nUpgrades: Wolverine\nUpgrades: X-O Powersuit
 	TooltipExtras:
 		Strengths: + Added Gyro Stabilizers ability (increased range, reduced rate of fire)
 	Valued:
@@ -808,7 +808,7 @@ ttrp.upgrade:
 		Prerequisites: ~player.soviet, ~!player.iraq, stek, ~techlevel.high
 		Description: Shock Troopers are phased out in favor of Tesla Troopers.\n\nReplaces: Shock Trooper
 	TooltipExtras:
-		Strengths: + Increased health\n+ Increased rate of fire
+		Strengths: + Increased health\n+ Increased rate of fire\n+ Increased damage
 		Weaknesses: – Increased cost
 	Valued:
 		Cost: 500
@@ -824,7 +824,7 @@ deso.upgrade:
 		Prerequisites: ~player.soviet, ~player.iraq, stek, ~techlevel.high
 		Description: Rad Troopers are phased out in favor of Desolators.\n\nReplaces: Rad Trooper
 	TooltipExtras:
-		Strengths: + Increased health\n+ Splash damage\n+ Irradiates vehicles\n+ Desolate Ground ability
+		Strengths: + Increased health\n+ Increased damage\n+ Irradiates vehicles\n+ Desolate Ground ability
 		Weaknesses: – Increased cost
 	Valued:
 		Cost: 500
@@ -1085,11 +1085,11 @@ greece.coalition:
 	TooltipExtras:
 		Attributes: (!) Only ONE Coalition may be chosen.
 	Valued:
-		Cost: 500
+		Cost: 750
 	RenderSprites:
 		Image: greece.coalition
 	AnnounceOnCreation:
-		SpeechNotification: CoalitionSelected
+		SpeechNotification: CoalitionActive
 		Delay: 40
 
 korea.coalition:
@@ -1103,11 +1103,11 @@ korea.coalition:
 	TooltipExtras:
 		Attributes: (!) Only ONE Coalition may be chosen.
 	Valued:
-		Cost: 500
+		Cost: 750
 	RenderSprites:
 		Image: korea.coalition
 	AnnounceOnCreation:
-		SpeechNotification: CoalitionSelected
+		SpeechNotification: CoalitionActive
 		Delay: 40
 
 sweden.coalition:
@@ -1121,11 +1121,11 @@ sweden.coalition:
 	TooltipExtras:
 		Attributes: (!) Only ONE Coalition may be chosen.
 	Valued:
-		Cost: 500
+		Cost: 750
 	RenderSprites:
 		Image: sweden.coalition
 	AnnounceOnCreation:
-		SpeechNotification: CoalitionSelected
+		SpeechNotification: CoalitionActive
 		Delay: 40
 
 rapc.upgrade:
@@ -1159,20 +1159,20 @@ optics.upgrade:
 	RenderSprites:
 		Image: optics.upgrade
 
-cryr.upgrade:
+cryw.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Cryo Rockets
+		Name: Research: Cryo Warheads
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.allies, atek, ~techlevel.high
-		Description: Arms rocket equipped soldiers with Cryo warheads which\n  cause targets to move more slowly and take increased damage.\n\nUpgrades: Rocket Soldier\nUpgrades: Guardian GI\nUpgrades: Longbow (with Sweden Coalition)
+		Description: Arms rocket equipped soldiers with Cryo warheads which\n  cause targets to move more slowly and take increased damage.\n\nUpgrades: Rocket Soldier\nUpgrades: Longbow (with Sweden Coalition)\nUpgrades: Guardian GI (USA only)\nUpgrades: Nighthawk (USA only)
 	TooltipExtras:
-		Strengths: + Equip with Cryo Rockets which slow movement and increase damage taken
+		Strengths: + Equip with Cryo Warheads which slow movement and increase damage taken
 	Valued:
 		Cost: 1000
 	RenderSprites:
-		Image: cryr.upgrade
+		Image: cryw.upgrade
 
 pcan.upgrade:
 	Inherits: ^Upgrade
@@ -1221,20 +1221,20 @@ entrench.upgrade:
 	RenderSprites:
 		Image: entrench.upgrade
 
-crym.upgrade:
+airborne.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: Cryo Missile
+		Name: Upgrade: Airborne Excellence
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.usa, atek, ~techlevel.high
-		Description: Equips Nighthawks and P51s with large Cryo missiles which reduce\n  target movement speed and increase damage taken.\n\nUpgrades: Nighthawk\nUpgrades: P51 (Strafing Run)
+		Description: Improved training and logistics for airborne troops, resulting in\n  greater effectiveness and faster preparation.\n\nUpgrades: Airdrop: Guardian GIs\nUpgrades: Airdrop: Grizzly Tanks
 	TooltipExtras:
-		Strengths: + Equip with Cryo Missiles which slow movement and increase damage taken
+		Strengths: + Airborne units have veterancy\n+ Airborne units take 25% less time to prepare
 	Valued:
-		Cost: 500
+		Cost: 1000
 	RenderSprites:
-		Image: crym.upgrade
+		Image: airborne.upgrade
 
 tflx.upgrade:
 	Inherits: ^Upgrade
@@ -1335,7 +1335,7 @@ evis.upgrade:
 		IconPalette: chromes
 	TooltipExtras:
 		Strengths: + Increased damage\n+ Increased health\n+ Increased rate of fire
-		Weaknesses: – Increased cost\n– Reduced speed
+		Weaknesses: – Increased cost
 	Valued:
 		Cost: 750
 	RenderSprites:
@@ -1524,14 +1524,14 @@ coalescence.upgrade:
 shields.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: Fleet Shields
+		Name: Upgrade: Shield Generation
 	Buildable:
 		BuildPaletteOrder: 40
 		Prerequisites: ~player.scrin, sign, ~techlevel.high
-		Description: Equip Scrin airborne units with shields.\n\nUpgrades: Stormrider\nUpgrades: Enervator\nUpgrades: Devastator Warship\nUpgrades: Planetary Assault Carrier\nUpgrades: Mothership
+		Description: Equip Scrin airborne units and Interlopers with shields.\n\nUpgrades: Interloper\n\nUpgrades: Stormrider\nUpgrades: Enervator\nUpgrades: Devastator Warship\nUpgrades: Planetary Assault Carrier\nUpgrades: Mothership
 		IconPalette: chromes
 	TooltipExtras:
-		Strengths: + Grants an additonal health pool\n+ Resistance to EMP
+		Strengths: + Grants an additonal health pool\n+ Resistance to EMP for aircraft
 	Valued:
 		Cost: 1500
 	RenderSprites:

@@ -71,7 +71,7 @@ namespace OpenRA.Mods.Common.Traits
 
 		private void SeverConnections()
 		{
-			foreach (var cloningVat in cloneProducers)
+			foreach (var cloningVat in cloneProducers.ToList())
 			{
 				RemoveCloneProducer(cloningVat);
 				cloningVat.SourceInvalidated(this);

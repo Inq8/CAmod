@@ -3,6 +3,7 @@ V2RL:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 180
@@ -55,6 +56,15 @@ V2RL:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1194, 1194
+	ReplacedInQueue:
+		Actors: v3rl
+	Upgradeable@V3:
+		Type: v3.upgrade
+		UpgradingCondition: upgrading
+		Actor: v3rl
+		UpgradeAtActors: fix, rep, srep
+		BuildDuration: 100
+		RequiresCondition: !mindcontrolled
 
 KATY:
 	Inherits: ^Vehicle
@@ -315,6 +325,13 @@ NUKC:
 		Type: NukeCannon
 		Range: 16c0
 		Color: ffdd0060
+		RequiresCondition: !veiled && !gapveiled
+	WithRangeCircle@Veiled:
+		Range: 12c820
+		RequiresCondition: veiled && !gapveiled
+	WithRangeCircle@GapVeiled:
+		Range: 9c614
+		RequiresCondition: gapveiled
 
 1TNK:
 	Inherits: ^Tank
@@ -472,6 +489,7 @@ GTNK:
 		Offset: 80,0,0
 	AttackTurreted:
 		Voice: Attack
+		PauseOnCondition: empdisable || being-warped || blinded || parachute
 	AttackMove:
 		Voice: Attack
 	SpawnActorOnDeath:
@@ -480,6 +498,14 @@ GTNK:
 		VoiceSet: GrizzlyVoice
 	WithShadow:
 		RequiresCondition: parachute
+
+GTNKR2:
+	Inherits: GTNK
+	RenderSprites:
+		Image: gtnk
+	ProducibleWithLevel:
+		-Prerequisites:
+		InitialLevels: 2
 
 GTNK.squad:
 	AlwaysVisible:
@@ -509,6 +535,9 @@ GTNK.squad:
 		AllowMultiple: true
 	Armor:
 		Type: Heavy
+	ProductionTimeMultiplier:
+		Multiplier: 75
+		Prerequisites: airborne.upgrade
 
 2TNK.Chrono:
 	Inherits: 2TNK
@@ -1122,10 +1151,16 @@ GTNK.squad:
 		RequiresCondition: lasher-move
 		LocalOffset: 896, 0, 0
 		Weapon: Lasher
+	SpeedMultiplier:
+		Modifier: 125
 	ReplacedInQueue:
 		Actors: 3tnk.rhino.atomicyuri
 	Upgradeable@ATOMIC:
 		Actor: 3tnk.rhino.atomicyuri
+	-ExternalCondition@CRUSHATTEMPTSLOW:
+	-ExternalCondition@CRUSHSLOW:
+	-SpeedMultiplier@CRUSHATTEMPTSLOW:
+	-SpeedMultiplier@CRUSHSLOW:
 	-Upgradeable@LASHER:
 
 3TNK.RHINO.ATOMICYURI:
@@ -1144,6 +1179,10 @@ GTNK.squad:
 		RequiresCondition: lasher-move
 		LocalOffset: 896, 0, 0
 		Weapon: Lasher
+	-ExternalCondition@CRUSHATTEMPTSLOW:
+	-ExternalCondition@CRUSHSLOW:
+	-SpeedMultiplier@CRUSHATTEMPTSLOW:
+	-SpeedMultiplier@CRUSHSLOW:
 	-ReplacedInQueue:
 	-Upgradeable@LASHER:
 	-WithDecoration@UpgradeOverlay:
@@ -1172,7 +1211,7 @@ GTNK.squad:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 86000
+		HP: 90000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -3099,9 +3138,9 @@ HMMV:
 		ActiveCondition: gshield
 		ChargingColor: 008888
 		DrainingColor: 00ffff
-		Modifier: 40
-		Duration: 75
-		ChargeTime: 500
+		Modifier: 33
+		Duration: 100
+		ChargeTime: 625
 		ActivateSound: gshieldup.aud
 		DeactivateSound: gshielddown.aud
 		RequiresCondition: pointdef-upgrade
@@ -3138,8 +3177,18 @@ HMMV.TOW:
 		Name: secondary
 		Weapon: TOW
 		LocalOffset: 250,100,150
+		PauseOnCondition: !ammo
 	WithSpriteTurret:
 		Sequence: turrettow
+	AmmoPool:
+		Armaments: secondary
+		Ammo: 1
+		AmmoCondition: ammo
+	ReloadAmmoPoolCA:
+		Delay: 175 # matches reload time of weapon
+		Count: 1
+		ShowSelectionBar: true
+		SelectionBarColor: aaaaaa
 	-ReplacedInQueue:
 	-Upgradeable@TOW:
 	-WithDecoration@UpgradeOverlay:
@@ -3212,9 +3261,9 @@ GDRN:
 		ActiveCondition: gshield
 		ChargingColor: 008888
 		DrainingColor: 00FFFF61
-		Modifier: 40
-		Duration: 75
-		ChargeTime: 500
+		Modifier: 33
+		Duration: 100
+		ChargeTime: 625
 		ActivateSound: gshieldup.aud
 		DeactivateSound: gshielddown.aud
 		RequiresCondition: pointdef-upgrade
@@ -3261,8 +3310,18 @@ GDRN.TOW:
 		Name: secondary
 		Weapon: TOW
 		LocalOffset: 200,-150,250
+		PauseOnCondition: !ammo
 	WithSpriteTurret:
 		Sequence: turrettow
+	AmmoPool:
+		Armaments: secondary
+		Ammo: 1
+		AmmoCondition: ammo
+	ReloadAmmoPoolCA:
+		Delay: 175 # matches reload time of weapon
+		Count: 1
+		ShowSelectionBar: true
+		SelectionBarColor: aaaaaa
 	-ReplacedInQueue:
 	-Upgradeable@TOW:
 	-WithDecoration@UpgradeOverlay:
@@ -3984,7 +4043,7 @@ MTNK:
 		MuzzleSequence: muzzle
 		RequiresCondition: !lastnk-upgrade
 	Armament@UPG:
-		Weapon: TankLaser
+		Weapon: BattleTankLaser
 		Recoil: 128
 		RecoilRecovery: 26
 		LocalOffset: 720,0,90
@@ -4313,7 +4372,7 @@ HTNK:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 86000
+		HP: 90000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -4997,7 +5056,7 @@ HFTK:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 46000
+		HP: 44000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -5501,6 +5560,17 @@ TRPC:
 		TargetTypes: MindControlImmune
 		RequiresCondition: loaded-cmdo
 	KeepsDistance:
+	AttackFrontal:
+	AttackMove:
+	AutoTarget:
+		ScanRadius: 3
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Infantry, Vehicle
+		ValidRelationships: Ally
+	Armament:
+		Weapon: TroopCrawlerDummyWeapon
+		TargetRelationships: Ally
+		ForceTargetRelationships: None
 	ProximityExternalCondition@InspirationVeh:
 		Range: 3c0
 		Condition: veh-inspiration
@@ -5529,6 +5599,11 @@ TRPC:
 		Percentage: 2
 	Voiced:
 		VoiceSet: TrpcVoice
+	ExternalCondition@InspirationCmsr:
+		Condition: cmsr-inspiration
+	SpeedMultiplier@InspirationCmsr:
+		Modifier: 112
+		RequiresCondition: cmsr-inspiration
 
 IFV:
 	Inherits: ^Tank
@@ -5747,21 +5822,21 @@ IFV:
 	Armament@E3:
 		Weapon: IFVRocketsE
 		LocalOffset: 192,100,176, 192,-100,176
-		RequiresCondition: (samturr || ggiturr) && !cryr-upgrade
+		RequiresCondition: (samturr || ggiturr) && !cryw-upgrade
 	Armament@E3AA:
 		Name: secondary
 		Weapon: IFVRocketsAAE
 		LocalOffset: 192,100,176, 192,-100,176
-		RequiresCondition: (samturr || ggiturr) && !cryr-upgrade
+		RequiresCondition: (samturr || ggiturr) && !cryw-upgrade
 	Armament@E3CRYO:
 		Weapon: IFVRocketsE.CRYO
 		LocalOffset: 192,100,176, 192,-100,176
-		RequiresCondition: (samturr || ggiturr) && cryr-upgrade
+		RequiresCondition: (samturr || ggiturr) && cryw-upgrade
 	Armament@E3CRYOAA:
 		Name: secondary
 		Weapon: IFVRocketsAAE.CRYO
 		LocalOffset: 192,100,176, 192,-100,176
-		RequiresCondition: (samturr || ggiturr) && cryr-upgrade
+		RequiresCondition: (samturr || ggiturr) && cryw-upgrade
 	Armament@E4:
 		Weapon: FireballLauncher
 		Recoil: 85
@@ -6149,8 +6224,8 @@ IFV:
 		Condition: apb-upgrade
 		Prerequisites: apb.upgrade
 	GrantConditionOnPrerequisite@CRYO:
-		Condition: cryr-upgrade
-		Prerequisites: cryr.upgrade
+		Condition: cryw-upgrade
+		Prerequisites: cryw.upgrade
 	GuardsSelection@REPAIR:
 		ValidTargets: Vehicle
 		RequiresCondition: engturr && !stance-attackanything
@@ -6276,21 +6351,21 @@ IFV.AI:
 	Armament@E3:
 		Weapon: IFVRocketsE
 		LocalOffset: 192,100,176, 192,-100,176
-		RequiresCondition: samturr && !cryr-upgrade
+		RequiresCondition: samturr && !cryw-upgrade
 	Armament@E3AA:
 		Name: secondary
 		Weapon: IFVRocketsAAE
 		LocalOffset: 192,100,176, 192,-100,176
-		RequiresCondition: samturr && !cryr-upgrade
+		RequiresCondition: samturr && !cryw-upgrade
 	Armament@E3CRYO:
 		Weapon: IFVRocketsE.CRYO
 		LocalOffset: 192,100,176, 192,-100,176
-		RequiresCondition: samturr && cryr-upgrade
+		RequiresCondition: samturr && cryw-upgrade
 	Armament@E3CRYOAA:
 		Name: secondary
 		Weapon: IFVRocketsAAE.CRYO
 		LocalOffset: 192,100,176, 192,-100,176
-		RequiresCondition: samturr && cryr-upgrade
+		RequiresCondition: samturr && cryw-upgrade
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped || blinded
 	WithMuzzleOverlay:
@@ -6343,13 +6418,13 @@ IFV.AI:
 	AttackMove:
 		AssaultMoveCondition: assault-move
 	GrantConditionOnPrerequisite@CRYO:
-		Condition: cryr-upgrade
-		Prerequisites: cryr.upgrade
+		Condition: cryw-upgrade
+		Prerequisites: cryw.upgrade
 	GrantCondition@CRYO:
-		Condition: cryr-upgrade
-		RequiresCondition: cryr-upgrade
+		Condition: cryw-upgrade
+		RequiresCondition: cryw-upgrade
 	ExternalCondition@CRYO:
-		Condition: cryr-upgrade
+		Condition: cryw-upgrade
 
 RECK:
 	Inherits: IFV
@@ -6419,6 +6494,9 @@ RECK:
 		Name: GGI Reckoner
 	Tooltip@psyturr:
 		Name: Psychic Reckoner
+	ReloadDelayMultiplier@CyborgElite:
+		RequiresCondition: rmbcturr
+		Modifier: 80
 
 TITN:
 	Inherits: ^TankTD
@@ -6448,7 +6526,7 @@ TITN:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 98000
+		HP: 102000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -6704,7 +6782,7 @@ DISR:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Valued:
-		Cost: 1400
+		Cost: 1600
 	Tooltip:
 		Name: Disruptor
 	UpdatesPlayerStatistics:
@@ -6720,7 +6798,7 @@ DISR:
 		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
 		Attributes: • Slows enemy movement and rate of fire (with upgrade)
 	Health:
-		HP: 70000
+		HP: 66000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -7594,6 +7672,12 @@ BATF:
 			acol: loaded
 			tplr: loaded
 			cscr: loaded
+			enfo: loaded
+			hopl: loaded
+			cryt: loaded
+			ztrp: loaded
+			zrai: loaded
+			zdef: loaded
 			mort.cryo: loaded
 			mort.sonic: loaded
 			mort.chem: loaded
@@ -7613,6 +7697,8 @@ BATF:
 			s3: loaded
 			s4: loaded
 			s6: loaded-repair
+			evis: loaded
+			impl: loaded
 			mast: loaded-cmdo
 	WithCargoSounds:
 		EnterSounds: genter1a.aud
@@ -7647,7 +7733,7 @@ BATF:
 		AddToArmyValue: true
 	AttackOpenTopped:
 		Voice: Attack
-		Armaments: batf
+		Armaments: batf, batf-bh, batf-cryt
 		PortOffsets: 825,0,256, 348,-482,256, -348,-482,256, -448,482,256, 448,482,256
 		PauseOnCondition: being-warped || empdisable || blinded
 		RequiresCondition: loaded || loaded-cmdo || loaded-seal || loaded-air
@@ -7693,6 +7779,26 @@ BATF:
 		Color: 00FF0080
 		Range: 4c512
 		RequiresCondition: loaded-medic
+	AmbientSoundCA@BlackHand:
+		SoundFiles: flamer-loop1.aud
+		InitialSound: flamer-start1.aud
+		FinalSound: flamer-end1.aud
+		RequiresCondition: attacking-bh
+		InitialSoundLength: 20
+	GrantConditionOnAttackCA@BlackHand:
+		ArmamentNames: batf-bh
+		Condition: attacking-bh
+		RevokeDelay: 3
+	AmbientSoundCA@CryoTrooper:
+		SoundFiles: cryobeam.aud
+		InitialSound: cryobeamstart.aud
+		FinalSound: cryobeamend.aud
+		RequiresCondition: attacking-cryt
+		InitialSoundLength: 10
+	GrantConditionOnAttackCA@CryoTrooper:
+		ArmamentNames: batf-cryt
+		Condition: attacking-cryt
+		RevokeDelay: 6
 
 BATF.AI:
 	Inherits: BATF
@@ -7737,13 +7843,14 @@ MEMP:
 		PauseOnCondition: triggered || !radarenabled || empdisable || being-warped || notmobile
 		Speed: 126
 		Voice: Move
+		TurnSpeed: 28
 	Passenger:
 		Voice: Move
 	GrantTimedConditionOnDeploy:
 		DeploySound: mobempcharge1.aud
 		DeployedCondition: triggered
 		CooldownTicks: 450
-		DeployedTicks: 50
+		DeployedTicks: 25
 		RequiresCondition: radarenabled && !(empdisable || being-warped)
 		ChargingColor: 0277bd
 		DischargingColor: 03a9f4
@@ -7752,7 +7859,7 @@ MEMP:
 		Weapon: MEMP
 		RequiresCondition: triggered && ammo
 		AmmoPoolName: explosion
-		InitialDelay: 48
+		InitialDelay: 23
 	AttackFrontal:
 		FacingTolerance: 512
 		PauseOnCondition: !ammo || empdisable || being-warped
@@ -8239,10 +8346,10 @@ BASI:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 502
 		Prerequisites: anyradar, ~vehicles.basi
-		Description: Tank with a short range EMP weapon.
+		Description: Stealth tank with a short range EMP weapon.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses
-		Weaknesses: • Cannot attack Aircraft\n• No effect on infantry
+		Weaknesses: • Cannot attack Aircraft\n• No effect on infantry\n• Can be spotted by nearby infantry and defense structures
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -8251,9 +8358,9 @@ BASI:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 30000
+		HP: 27500
 	Armor:
-		Type: Heavy
+		Type: Light
 	Mobile:
 		Speed: 100
 	RevealsShroud:
@@ -8280,6 +8387,22 @@ BASI:
 		RequiresCondition: !being-warped
 	Targetable@EmpImmune:
 		TargetTypes: EmpImmune
+	Cloak@NORMAL:
+		InitialDelay: 75
+		CloakDelay: 76
+		CloakSound: trans1.aud
+		CloakedCondition: hidden
+		UncloakSound: appear1md.aud
+		Palette: cloak
+		IsPlayerPalette: false
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
+		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead && !parachute
+		PauseOnCondition: invisibility
+	Cloak@CRATE-CLOAK:
+		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
+	GrantConditionOnDamageState@UNCLOAK:
+		Condition: cloak-force-disabled
+		ValidDamageStates: Critical
 
 MANT:
 	Inherits: ^VehicleTD
@@ -8438,7 +8561,7 @@ WOLV:
 	Armor:
 		Type: Light
 	Mobile:
-		TurnSpeed: 54
+		TurnSpeed: 64
 		Speed: 54
 		Voice: Move
 	Passenger:
@@ -8480,15 +8603,15 @@ XO:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
-	Inherits@GYRO: ^GyroStabilizers
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 251
 		Prerequisites: gtek, ~vehicles.zocom, ~techlevel.high
-		Description: Light battle-mech with a short-range laser\n  and a machine gun.
+		Description: Light battle-mech armed with a laser and a coil-gun.\n  Able to jump short distances using its jetpack.
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor, Heavy Armor
 		Weaknesses: • Weak vs Buildings\n• Cannot attack Aircraft
+		Attributes: • Special Ability: Jump Pack
 	Valued:
 		Cost: 1000
 	Selectable:
@@ -8499,11 +8622,11 @@ XO:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 32000
+		HP: 25000
 	Armor:
 		Type: Light
 	Mobile:
-		TurnSpeed: 54
+		TurnSpeed: 64
 		Speed: 54
 		Voice: Move
 	Passenger:
@@ -8524,13 +8647,15 @@ XO:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 		Condition: moving
 	Armament@PRIMARY:
-		Weapon: M60mgXO
+		Weapon: XOCoilGun
 		LocalOffset: 400,-220,180
 		MuzzleSequence: muzzle
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: XOLaser
 		LocalOffset: 400,220,180
+		MuzzleSequence: muzzle2
+		MuzzlePalette: scrin
 	AttackFollowFrontal:
 		PauseOnCondition: empdisable || being-warped || blinded
 		Voice: Attack
@@ -8546,12 +8671,43 @@ XO:
 		Interval: 3
 		Sequences: descend
 	-WithParachute:
-	RangeMultiplier@GYRO:
-		Modifier: 140
-	ReloadDelayMultiplier@GYRO:
-		Modifier: 140
 	GpsRadarDot:
 		Sequence: Infantry
+	WithFacingSpriteBody:
+		RequiresCondition: !jumping
+	WithFacingSpriteBody@Jump:
+		Name: jump
+		Sequence: descend
+		RequiresCondition: !being-warped && jumping
+	TargetedLeapAbility:
+		TakeOffSounds: xo-jump1.aud
+		LandingSounds: xo-land1.aud
+		LeapCondition: jumping
+		ShowSelectionBarWhenFull: false
+		ChargeDelay: 625
+		SelectionBarColor: ffaa00
+		CircleColor: ffaa00a0
+		MaxDistance: 7
+		Speed: 140
+	Contrail@Jumping:
+		Offset: -30,0,350
+		StartColorUsePlayerColor: false
+		ZOffset: -128
+		StartColor: ff990090
+		StartColorAlpha: 128
+		TrailLength: 12
+		RequiresCondition: jumping
+	WithShadow@Jump:
+		RequiresCondition: jumping
+	Targetable@Jump:
+		RequiresCondition: jumping && !being-warped
+		TargetTypes: AirSmall
+	Targetable@TEMPORAL:
+		TargetTypes: Temporal
+		RequiresCondition: !jumping
+	DamageMultiplier@Jumping:
+		Modifier: 50
+		RequiresCondition: jumping
 
 APOC:
 	Inherits: ^Tank
@@ -8578,7 +8734,7 @@ APOC:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 110000
+		HP: 125000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -8718,6 +8874,7 @@ APOC.ERAD:
 		LocalOffset: 500,100,240, 500,-100,240
 		-PauseOnCondition:
 		-ReloadingCondition:
+	-Armament@SECONDARY:
 	-Armament@ATOMICAMMO:
 	-ExternalCondition@ATOMICAMMO:
 	-WithRestartableIdleOverlay@ATOMICAMMO:
@@ -8799,12 +8956,12 @@ OVLD:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 115000
+		HP: 120000
 	Armor:
 		Type: Heavy
 	Mobile:
 		Speed: 43
-		TurnSpeed: 8
+		TurnSpeed: 12
 		Locomotor: sheavytracked
 		Voice: Move
 	Passenger:
@@ -8817,7 +8974,7 @@ OVLD:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 8
+		TurnSpeed: 10
 	Armament@PRIMARY:
 		Weapon: 135mm
 		Recoil: 171
@@ -9124,7 +9281,8 @@ KPAT:
 		HP: 5000
 	GuidedMissile:
 		Speed: 450
-		MaxTargetMovement: 12c0
+		MaxTargetMovement: 3c0
+		MaxTargetMovementTicks: 140
 		MinAltitude: 128
 	LeavesTrailsCA:
 		Image: icbmsmoke
@@ -9150,7 +9308,7 @@ ZEUS:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 224
-		Prerequisites: ~vehicles.allies, alhq, coalition.active, ~greece.coalition, ~techlevel.high
+		Prerequisites: ~vehicles.allies, alhq, ~greece.coalition, ~techlevel.high
 		Description: Extreme long range artillery that can generate localised storm clouds.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses
@@ -9258,7 +9416,7 @@ MOLE:
 	Targetable@ChaosImmune:
 		TargetTypes: ChaosImmune
 	Cargo:
-		InitialUnits: acol, acol, acol, acol
+		InitialUnits: acol, acol, acol, n3, n4
 		BeforeUnloadDelay: 100
 	WithCargoSounds:
 		ExitSounds: gexit1a.aud
@@ -9291,4 +9449,4 @@ MOLE.UPG:
 	RenderSprites:
 		Image: mole
 	Cargo:
-		InitialUnits: tplr, tplr, tplr, tplr
+		InitialUnits: tplr, tplr, tplr, n3c, n5

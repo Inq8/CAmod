@@ -659,11 +659,11 @@ BRST:
 		Strengths: • Strong vs Infantry, Buildings, Light Armor
 		Weaknesses: • Cannot attack Aircraft
 	Health:
-		HP: 7000
+		HP: 5000
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Mobile:
-		Speed: 80
+		Speed: 92
 	RevealsShroud:
 		Range: 7c0
 	Explodes:
@@ -681,6 +681,8 @@ BRST:
 	KillsSelf:
 		RequiresCondition: (triggered || berserk)
 	-TakeCover:
+	Targetable@Burster:
+		TargetTypes: Burster
 
 EVIS:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -692,7 +694,7 @@ EVIS:
 		BuildPaletteOrder: 121
 		Prerequisites: anyradar, ~infantry.scrin, ~evis.upgrade, ~techlevel.medium
 		IconPalette: chromes
-		Description: Short range anti-infantry unit.
+		Description: Fast moving anti-personnel infantry.
 	Selectable:
 		DecorationBounds: 640, 896, -32, -256
 	Valued:
@@ -707,7 +709,7 @@ EVIS:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Mobile:
-		Speed: 82
+		Speed: 92
 	RevealsShroud:
 		Range: 6c0
 	AttackFrontal:
@@ -729,7 +731,7 @@ IMPL:
 		BuildPaletteOrder: 122
 		Prerequisites: anyradar, ~infantry.scrin, ~impl.upgrade, ~techlevel.medium
 		IconPalette: chromes
-		Description: Assault infantry with high burst damage.
+		Description: Assault infantry with high burst damage.\n  Impales targets, slowing their movement.
 	Selectable:
 		DecorationBounds: 640, 896, -32, -256
 	Valued:
@@ -1377,6 +1379,7 @@ INTL:
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Inherits@COMMANDOSKULL: ^CommandoSkull
+	Inherits@SHIELDS: ^ScrinShields
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Valued:
@@ -1468,6 +1471,7 @@ INTL:
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped || blinded
 		Armaments: primary
+		Turrets: primary, shield
 	WithSpriteTurret:
 	GrantConditionOnTerrain@ONWATER:
 		TerrainTypes: Water
@@ -1481,6 +1485,17 @@ INTL:
 		Range: 4c0
 		DetectionTypes: Mine
 		RequiresCondition: loaded-engi
+	-WithFacingSpriteBody@SHIELDS:
+	WithSpriteTurret@SHIELDS:
+		Turret: shield
+		RequiresCondition: shields-upgrade && shields-up
+		Sequence: shield
+		Palette: scrinshield-ignore-lighting-alpha50
+	TurretedFloating@SHIELDS:
+		Turret: shield
+		TurnSpeed: 16
+		RealignDelay: 75
+		RequiresCondition: shields-upgrade
 
 INTL.AI:
 	Inherits: INTL
@@ -1622,6 +1637,7 @@ LCHR:
 	ConvertsDamageToHealth:
 		DamagePercentConverted: 30
 		RequiresCondition: !coalescence-upgrade
+		InvalidTargetTypes: Husk
 	Explodes:
 		Weapon: LeecherExplode
 		EmptyWeapon: LeecherExplode
@@ -2154,7 +2170,7 @@ TPOD:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 76000
+		HP: 82000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -2226,7 +2242,7 @@ RPTP:
 	Tooltip:
 		Name: Reaper Tripod
 	Health:
-		HP: 90000
+		HP: 95000
 	SpawnActorOnDeath:
 		Actor: RPTP.Husk
 	AttackTurreted:
@@ -2330,7 +2346,7 @@ OBLT:
 	Armor:
 		Type: Heavy
 	Mobile:
-		TurnSpeed: 12
+		TurnSpeed: 14
 		Speed: 48
 		Locomotor: lighthover
 	WithShadow:
@@ -2536,7 +2552,7 @@ STMR:
 		Strengths: • Strong vs Infantry, Light Armor, Buildings, Aircraft
 		Weaknesses: • Weak vs Defenses
 	Valued:
-		Cost: 1750
+		Cost: 1650
 	Tooltip:
 		Name: Stormrider
 		GenericName: Aircraft
@@ -2821,9 +2837,8 @@ DEVA:
 		Type: Aircraft
 	HitShape:
 		TargetableOffsets: 0,0,0, -512,0,0, -1024,0,0
-		Type: Capsule
-			PointA: 0,896
-			PointB: 0, -256
+		Type: Circle
+			Radius: 1c256
 	RevealsShroud:
 		Range: 10c0
 		MinRange: 8c0
@@ -2960,9 +2975,8 @@ PAC:
 		Type: Aircraft
 	HitShape:
 		TargetableOffsets: 0,0,0, 1024,0,0, -1024,0,0
-		Type: Capsule
-			PointA: 0,1024
-			PointB: 0,-1024
+		Type: Circle
+			Radius: 1c256
 	RevealsShroud:
 		Range: 11c0
 		MinRange: 9c0
@@ -3768,6 +3782,7 @@ SFAC:
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@BOTI: ^BotFallbackInsurance
 	Inherits@BLD: ^ProducesBuildings
+	Inherits@A2GPROTECTION: ^BuildingAirToGroundProtection
 	Building:
 		Footprint: xxx xxx ===
 		Dimensions: 3,3
@@ -4117,6 +4132,7 @@ WSPH:
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@NOMCV: ^UnlocksMcvIfNoneOwned
 	Inherits@VEH: ^ProducesVehicles
+	Inherits@A2GPROTECTION: ^BuildingAirToGroundProtection
 	Selectable:
 		Bounds: 3072, 2048
 	Buildable:
@@ -4211,7 +4227,6 @@ NERV:
 	Inherits@RESOURCESCANPOWER: ^ResourceScanPower
 	Inherits@STORMSPIKEPOWER: ^StormSpikePower
 	Inherits@BUZZERSWARMPOWER: ^BuzzerSwarmPower
-	Inherits@IONSURGEPOWER: ^IonSurgePower
 	Inherits@TECHLOCKABLE: ^TechLockable
 	Inherits@ProductionOptimizer1: ^ProductionOptimizer1
 	Buildable:
@@ -4311,6 +4326,7 @@ SCRT:
 	Inherits@UPG: ^ProducesUpgrades
 	Inherits@ICHORSEEDPOWER: ^IchorSeedPower
 	Inherits@FORCESHIELDPOWER: ^ForceShieldPower
+	Inherits@IONSURGEPOWER: ^IonSurgePower
 	Inherits@GREATERCOALESCENCEPOWER: ^GreaterCoalescencePower
 	Inherits@TECHLOCKABLE: ^TechLockable
 	Inherits@ProductionOptimizer2: ^ProductionOptimizer2
@@ -5119,7 +5135,7 @@ BUZZ:
 		Description: Swarm of biometallic shards.
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
-		Attributes: • Untargetable
+		Attributes: • Untargetable\n• Blinds enemies
 	RevealsShroud:
 		MinRange: 1c0
 		Range: 6c0
@@ -5168,6 +5184,10 @@ BUZZ:
 	TimedConditionBar@ALIVE:
 		Condition: alive
 		Color: 777777
+	ProximityExternalCondition@Blind:
+		Range: 1c0
+		Condition: blinded
+		ValidRelationships: Enemy, Neutral
 
 BUZZ.AI:
 	Inherits: BUZZ
@@ -5583,16 +5603,16 @@ REBELGATEWAY:
 		Produces: Gateway
 	GrantDelayedCondition@Wave1:
 		Condition: wave1-deployed
-		Delay: 130
+		Delay: 255
 	PeriodicProducerCA@1:
 		Type: Gateway
-		ChargeDuration: 125
+		ChargeDuration: 250
 		Actors: s1, s1, s1, s3, s3, s1, s1
 		ReadyAudio: ReinforcementsArrived
 		RequiresCondition: !wave1-deployed
 	PeriodicProducerCA@2:
 		Type: Gateway
-		ChargeDuration: 500
+		ChargeDuration: 625
 		Actors: gunw, gunw, tpod
 		ReadyAudio: ReinforcementsArrived
 	AmmoPool@Wave1:
@@ -5603,7 +5623,7 @@ REBELGATEWAY:
 		InitialAmmo: 0
 	ReloadAmmoPoolCA@Wave1:
 		AmmoPool: wave1
-		Delay: 125
+		Delay: 250
 		ShowSelectionBar: true
 		SelectionBarColor: ff00ff
 	ReloadAmmoPoolCA@Wave2:

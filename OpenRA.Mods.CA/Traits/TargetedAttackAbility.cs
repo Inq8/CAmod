@@ -80,6 +80,13 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Ability type. When selecting a group, different types will not be activated together.")]
 		public readonly string Type = null;
 
+		[Desc("If true, the unit will stop attacking after firing the ability.")]
+		public readonly bool CancelAfterAttack = false;
+
+		[Desc("Ammo pool to use for the ability. If set, having ammo will determine whether the ability can be activated,",
+			"otherwise this is determined by the armament being not disabled and not reloading.")]
+		public readonly string AmmoPool = null;
+
 		[Desc("Use ClosestOnly so only the unit closest to the target will fire, or All so all will fire. Force firing will result in the opposite.")]
 		public readonly DefaultGroupCastBehaviour DefaultGroupCastBehaviour = DefaultGroupCastBehaviour.ClosestOnly;
 
@@ -93,6 +100,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly Armament Armament;
 		readonly AttackBase attack;
 		int conditionToken = Actor.InvalidConditionToken;
+		AmmoPool ammoPool;
 
 		public TargetedAttackAbility(ActorInitializer init, TargetedAttackAbilityInfo info)
 			: base(info)
@@ -100,6 +108,10 @@ namespace OpenRA.Mods.CA.Traits
 			Info = info;
 			Armament = init.Self.TraitsImplementing<Armament>()
 				.Single(a => a.Info.Name == Info.ArmamentName);
+
+			if (Info.AmmoPool != null)
+				ammoPool = init.Self.TraitsImplementing<AmmoPool>().Single(a => a.Info.Name == Info.AmmoPool);
+
 			attack = init.Self.Trait<AttackBase>();
 		}
 
@@ -173,7 +185,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		public bool IsAvailable
 		{
-			get { return !IsTraitDisabled && !IsTraitPaused && !Armament.IsTraitDisabled && !Armament.IsReloading; }
+			get { return !IsTraitDisabled && !IsTraitPaused && ((ammoPool != null && ammoPool.HasAmmo) || (ammoPool == null && !Armament.IsTraitDisabled && !Armament.IsReloading)); }
 		}
 
 		void Enable(Actor self)
@@ -193,7 +205,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (Info.ArmamentName != a.Info.Name)
 				return;
 
-			if (target.Type == TargetType.Terrain || target.Type == TargetType.Invalid)
+			if (target.Type == TargetType.Terrain || target.Type == TargetType.Invalid || Info.CancelAfterAttack)
 				self.CancelActivity();
 
 			Disable(self);

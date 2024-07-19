@@ -9,6 +9,7 @@
 #endregion
 
 using OpenRA.Mods.Common.Traits;
+using OpenRA.Primitives;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
@@ -18,6 +19,9 @@ namespace OpenRA.Mods.CA.Traits
 	{
 		[Desc("Percentage of damage dealt that is converted to health.")]
 		public readonly int DamagePercentConverted = 100;
+
+		[Desc("The `TargetTypes` from `Targetable` that won't result in damage being converted.")]
+		public readonly BitSet<TargetableType> InvalidTargetTypes = default;
 
 		public override object Create(ActorInitializer init) { return new ConvertsDamageToHealth(init, this); }
 	}
@@ -33,6 +37,9 @@ namespace OpenRA.Mods.CA.Traits
 				return;
 
 			if (e.Damage.Value <= 0 || damaged == self)
+				return;
+
+			if (Info.InvalidTargetTypes.Overlaps(damaged.GetEnabledTargetTypes()))
 				return;
 
 			var health = self.TraitOrDefault<IHealth>();

@@ -277,7 +277,7 @@ ChainGun.Yak.R:
 		Damage: 4000
 		Versus:
 			None: 100
-			Wood: 40
+			Wood: 35
 			Light: 55
 			Heavy: 25
 			Concrete: 25
@@ -447,19 +447,6 @@ M60mgTD:
 	Inherits: M60mg
 	Report: m60.aud
 
-M60mgXO:
-	Inherits: M60mgTD
-	Range: 5c0
-	Burst: 2
-	ReloadDelay: 75
-	Warhead@1Dam: SpreadDamage
-		Damage: 2500
-		Versus:
-			None: 100
-			Light: 40
-	-Report:
-	StartBurstReport: XOgun1.aud, XOgun2.aud
-
 M60mgJJ:
 	Inherits: M60mg
 	Range: 4c768
@@ -493,6 +480,19 @@ M60mgJJAA:
 		Versus:
 			Light: 100
 			Heavy: 100
+
+M60mgNHAW:
+	Inherits: M60mg
+	Range: 4c768
+	Projectile: Bullet
+		Blockable: false
+	Report: vblhatta.aud, vblhattb.aud
+	Burst: 3
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			None: 165
+			Light: 50
+		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath, AirToGround
 
 M60mgIFV:
 	Inherits: M60mg
@@ -799,7 +799,7 @@ SealIFVGun:
 ShadowOperativeGun:
 	Inherits: ^HeavyMG
 	Range: 6c0
-	ReloadDelay: 30
+	ReloadDelay: 25
 	Burst: 2
 	BurstDelays: 3
 	Report: shad-fire1.aud, shad-fire2.aud, shad-fire3.aud
@@ -829,7 +829,7 @@ HeliGunAG:
 		Damage: 5000
 		Versus:
 			None: 144
-			Wood: 45
+			Wood: 35
 			Light: 54
 			Heavy: 25
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath, AirToGround
@@ -870,14 +870,15 @@ EnforcerShotgun:
 		Blockable: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 288
-		Damage: 5000
+		Falloff: 100, 26, 10, 4, 0
+		Damage: 7000
 		Versus:
 			None: 100
-			Wood: 40
-			Light: 70
-			Heavy: 20
-			Concrete: 20
-			Brick: 10
+			Wood: 30
+			Light: 50
+			Heavy: 15
+			Concrete: 15
+			Brick: 30
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: piffs

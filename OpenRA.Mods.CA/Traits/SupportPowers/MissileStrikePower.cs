@@ -166,6 +166,9 @@ namespace OpenRA.Mods.CA.Traits
 			var targets = info.TargetActors ? GetActorTargets(targetCell).Select(t => Target.FromActor(t)).ToList() : GetCellTargets(targetCell).ToList();
 			var numMissiles = info.MissileCount > 0 ? info.MissileCount : targets.Count;
 
+			if (targets.Count == 0)
+				return;
+
 			for (int i = 0; i < numMissiles; i++)
 				targetQueue.Enqueue(targets[i % targets.Count]);
 

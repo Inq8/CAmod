@@ -403,11 +403,6 @@ BlackHandFlamer:
 	Warhead@2Smu: LeaveSmudge
 		Chance: 5
 
-# just for BATF
-BlackHandFlamerWithSound:
-	Inherits: BlackHandFlamer
-	StartBurstReport: flamer2.aud
-
 Napalm:
 	Inherits: ^FireWeapon
 	ReloadDelay: 20
@@ -479,7 +474,12 @@ PortaTesla:
 PortaTesla.UPG:
 	Inherits: PortaTesla
 	Report: itesatta.aud
-	ReloadDelay: 65
+	ReloadDelay: 60
+	Warhead@1Dam: SpreadDamage
+		Damage: 4600
+		Versus:
+			Heavy: 65
+			Light: 120
 
 PortaTeslaCharge:
 	Inherits: ^TeslaWeapon
@@ -554,7 +554,7 @@ TTankZap:
 			None: 380
 			Wood: 55
 			Concrete: 55
-			Heavy: 80
+			Heavy: 70
 
 TTankZap.UPG:
 	Inherits: TTankZap
@@ -944,7 +944,7 @@ IvanIFVTargeting:
 	Inherits: DemoTruckTargeting
 
 Hack:
-	Range: 12c0
+	Range: 11c0
 	ReloadDelay: 50
 	ValidTargets: Hackable
 	TargetActorCenter: true
@@ -1120,6 +1120,10 @@ TankLaser:
 			Concrete: 20
 			Brick: 20
 
+BattleTankLaser:
+	Inherits: TankLaser
+	ReloadDelay: 35
+
 StealthAPCLaser:
 	Inherits: LaserTur
 	ReloadDelay: 30
@@ -1136,8 +1140,8 @@ StealthAPCLaser:
 XOLaser:
 	Inherits: Laser
 	Report: xo-laser.aud
-	ReloadDelay: 100
-	Range: 5c0
+	ReloadDelay: 110
+	Range: 7c0
 	Projectile: LaserZapCA
 		Blockable: true
 		Width: 56
@@ -1149,13 +1153,46 @@ XOLaser:
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
 		Damage: 11000
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath, TankBuster
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		Versus:
 			None: 65
 			Wood: 40
 			Concrete: 75
-			Light: 100
+			Light: 80
 			Heavy: 100
+
+XOCoilGun:
+	Range: 7c0
+	ReloadDelay: 70
+	Report: xo-coil1.aud
+	Burst: 2
+	BurstDelays: 6
+	Projectile: BulletCA
+		Image: flakball
+		Speed: 682
+		TrailImage: coiltrail
+		TrailSequences: idle1, idle2
+		TrailInterval: 1
+		ContrailStartWidth: 32
+		ContrailStartColor: 809acf
+		ContrailStartColorAlpha: 96
+		ContrailLength: 6
+		TrailSpacing: 682
+	Warhead@1Dam: SpreadDamage
+		Spread: 0c128
+		Damage: 2500
+		Versus:
+			None: 100
+			Wood: 10
+			Light: 70
+			Heavy: 10
+			Concrete: 10
+			Brick: 10
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+	Warhead@3Eff: CreateEffect
+		Explosions: piff
+		ValidTargets: Ground, Water, Trees
+		Inaccuracy: 64
 
 PortaLaser:
 	Inherits: Laser
@@ -1526,14 +1563,15 @@ HopliteGun:
 		SecondaryBeamColor: 75D1FF60
 	Warhead@1Dam: SpreadDamage
 		Spread: 288
-		Damage: 5000
+		Falloff: 100, 26, 10, 4, 0
+		Damage: 7000
 		Versus:
 			None: 100
-			Wood: 40
-			Light: 70
-			Heavy: 20
-			Concrete: 20
-			Brick: 10
+			Wood: 30
+			Light: 50
+			Heavy: 15
+			Concrete: 15
+			Brick: 30
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
@@ -1817,11 +1855,6 @@ VeilSmall:
 	ReloadDelay: 10
 	Range: 1c0
 	Projectile: InstantHit
-	Warhead@Debuff: GrantExternalConditionCA
-		Range: 2c512
-		Duration: 15
-		Condition: veiled
-		ValidRelationships: Enemy, Neutral
 	Warhead@Cloud: CreateEffect
 		Explosions: veilcloud, veilcloudf
 		ExplosionPalette: effect-ignore-lighting-alpha50
@@ -1830,30 +1863,13 @@ VeilSmall:
 
 VeilMedium:
 	Inherits: VeilSmall
-	Warhead@Debuff: GrantExternalConditionCA
-		Range: 4c768
 	Warhead@Cloud: CreateEffect
 		Inaccuracy: 3c768
 
 VeilLarge:
 	Inherits: VeilSmall
-	Warhead@Debuff: GrantExternalConditionCA
-		Range: 7c0
 	Warhead@Cloud: CreateEffect
 		Inaccuracy: 6c0
-
-VeilFull:
-	Inherits: VeilSmall
-	Warhead@Debuff: GrantExternalConditionCA
-		Range: 9c256
-	Warhead@Cloud: CreateEffect
-		Inaccuracy: 7c512
-	Warhead@Cloud2: CreateEffect
-		Explosions: veilcloud, veilcloudf
-		ExplosionPalette: effect-ignore-lighting-alpha50
-		Inaccuracy: 7c512
-		ValidTargets: Ground, Water, Veil
-		Delay: 5
 
 Railgun:
 	ReloadDelay: 70
@@ -2311,12 +2327,12 @@ RadTrooperBeam:
 		Thickness: 32
 		ZOffset: 512
 	Warhead@1Dam: SpreadDamage
-		Spread: 42
+		Spread: 96
 		Damage: 6500
 		Versus:
 			None: 280
 			Light: 100
-			Heavy: 75
+			Heavy: 55
 			Wood: 60
 			Concrete: 70
 			Brick: 12
@@ -2328,10 +2344,14 @@ RadTrooperBeam:
 DesolatorBeam:
 	Inherits: RadTrooperBeam
 	Warhead@1Dam: SpreadDamage
-		Spread: 192
+		Spread: 160
+		Versus:
+			Light: 120
 	Warhead@2Dam: HealthPercentageDamage
 		Spread: 42
 		Damage: 300
+		Versus:
+			Light: 10
 		ValidTargets: Infantry
 		DamageTypes: RadiationDeath
 	Warhead@2irrad: GrantExternalConditionCA
@@ -2352,6 +2372,8 @@ RadBeamWeaponHeavy:
 	Warhead@1Dam: HealthPercentageDamage
 		Spread: 256
 		Damage: 300
+		Versus:
+			Light: 10
 		ValidTargets: Infantry
 		DamageTypes: RadiationDeath
 	Warhead@2Dam: SpreadDamage
@@ -2837,6 +2859,23 @@ Lasher:
 		DamageTypes: BulletDeath
 		ValidRelationships: Enemy, Neutral
 
+ShadowBeaconLauncher:
+	ReloadDelay: 25
+	Range: 4c0
+	Report: grenade1.aud
+	Projectile: Bullet
+		Blockable: false
+		LaunchAngle: 62
+		Speed: 180
+		Image: BOMB
+		ContrailLength: 30
+		ContrailStartColor: 8888aa
+		ContrailStartColorAlpha: 100
+	Warhead@Beacon: SpawnActor
+		Actors: shab
+		Range: 1
+		ImpactActors: false
+
 AttachShadowBeacon:
 	Warhead@AttachCamera: AttachActor
 		Range: 341
@@ -3135,14 +3174,14 @@ ShadeEmp:
 			Brick: 5
 		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath, AirToGround
 	Warhead@1Emp: GrantExternalConditionCA
-		Range: 1c256
-		Duration: 325
+		Range: 1c0
+		Duration: 225
 		Condition: empdisable
 		ValidTargets: Ground, Vehicle, Defense
 		InvalidTargets: Cyborg, EmpImmune
 	Warhead@2Emp: GrantExternalConditionCA
-		Range: 1c256
-		Duration: 125
+		Range: 1c0
+		Duration: 100
 		Condition: empdisable
 		ValidTargets: Cyborg
 		InvalidTargets: EmpImmune
@@ -3313,7 +3352,7 @@ ZoneTrooperRailgun:
 		Versus:
 			None: 20
 			Wood: 50
-			Light: 80
+			Light: 85
 			Heavy: 100
 			Concrete: 75
 			Brick: 75
@@ -3334,14 +3373,14 @@ ZoneRaiderGrenade:
 		ContrailStartColor: 5bd8c3
 		ContrailStartColorAlpha: 128
 	Warhead@1Dam: SpreadDamage
-		Spread: 448
-		Damage: 7500
+		Spread: 426
+		Damage: 8500
 		Versus:
-			None: 40
-			Wood: 100
+			None: 35
+			Wood: 90
 			Light: 100
-			Heavy: 60
-			Concrete: 60
+			Heavy: 50
+			Concrete: 50
 			Brick: 80
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
 	Warhead@2Smu: LeaveSmudge
@@ -3372,11 +3411,11 @@ ZoneDefenderGun:
 		SecondaryBeamColor: FFFFFF66
 	Warhead@1Dam: SpreadDamage
 		Spread: 288
-		Damage: 8500
+		Damage: 8250
 		Versus:
 			None: 10
 			Wood: 50
-			Light: 80
+			Light: 85
 			Heavy: 100
 			Concrete: 75
 			Brick: 75
@@ -3388,7 +3427,7 @@ ZoneDefenderGun:
 		SmudgeType: Scorch
 
 CryoSprayer:
-	Range: 4c0
+	Range: 5c768
 	ReloadDelay: 5
 	Burst: 1
 	TargetActorCenter: true
@@ -3396,16 +3435,16 @@ CryoSprayer:
 		Speed: 341
 		ImpactInterval: 1
 		MinimumImpactDistance: 0
-		MaximumImpactDistance: 3751
+		MaximumImpactDistance: 5456
 	Warhead@1Dam: SpreadDamage
 		Spread: 0c128
 		Falloff: 100, 75, 25, 0
-		Damage: 300
+		Damage: 400
 		Versus:
 			None: 100
 			Wood: 2
-			Light: 60
-			Heavy: 20
+			Light: 15
+			Heavy: 10
 			Concrete: 2
 			Brick: 0
 		ValidRelationships: Enemy, Neutral
@@ -3457,12 +3496,12 @@ ZeusBolt:
 	Warhead@1Dam: SpreadDamage
 		Spread: 384
 		Falloff: 1000, 448, 192, 50, 18, 7, 0
-		Damage: 3000
+		Damage: 3500
 		DamageTypes: TriggerProne, ElectricityDeath
 		Versus:
 			None: 80
 			Wood: 100
-			Concrete: 70
+			Concrete: 65
 			Brick: 50
 			Heavy: 80
 			Light: 80
@@ -3527,3 +3566,11 @@ JackknifeTargeter:
 	ReloadDelay: 25
 	Projectile: InstantHit
 	Warhead@1Dam: Dummy
+
+TroopCrawlerDummyWeapon:
+	Range: 1c0
+	ValidTargets: Infantry, Vehicle
+	ReloadDelay: 25
+	Projectile: InstantHit
+	Warhead@1Dam: Dummy
+		ValidRelationships: Ally

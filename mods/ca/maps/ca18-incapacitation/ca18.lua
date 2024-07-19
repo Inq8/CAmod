@@ -219,7 +219,7 @@ end
 InitGreece = function()
 	Actor.Create("POWERCHEAT", true, { Owner = Greece })
 	Actor.Create("hazmat.upgrade", true, { Owner = Greece })
-	Actor.Create("cryr.upgrade", true, { Owner = Greece })
+	Actor.Create("cryw.upgrade", true, { Owner = Greece })
 
 	RebuildExcludes.Greece = { Types = { "powr", "apwr", "hpad", "agun", "pbox", "pris" } }
 

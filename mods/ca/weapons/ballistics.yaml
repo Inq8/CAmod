@@ -122,7 +122,7 @@
 	Inherits: 120mm
 	ReloadDelay: 30
 	Warhead@1Dam: SpreadDamage
-		Damage: 2300
+		Damage: 2500
 
 120mmHEAT:
 	Inherits: 90mm
@@ -154,9 +154,7 @@
 	Burst: 1
 	ReloadDelay: 75
 	Warhead@1Dam: SpreadDamage
-		Damage: 8500
-		Versus:
-			Light: 100
+		Damage: 8350
 
 125mmLasher:
 	Inherits: 125mm
@@ -284,7 +282,7 @@
 	BurstDelays: 8
 	InvalidTargets: Air, AirSmall
 	Warhead@1Dam: SpreadDamage
-		Damage: 4750
+		Damage: 4300
 		Falloff: 368, 184, 80, 18, 0
 		Versus:
 			None: 40
@@ -569,14 +567,15 @@ TitanGun:
 		LaunchAngle: 92
 		Inaccuracy: 768
 	Warhead@1Dam: SpreadDamage
-		Damage: 50000
-		Falloff: 100, 55, 20, 5
+		Spread: 488
+		Damage: 6000
+		Falloff: 1000, 448, 192, 50, 18, 7, 0
 		Versus:
-			None: 55
+			None: 60
 			Wood: 100
 			Concrete: 100
 			Light: 70
-			Heavy: 26
+			Heavy: 55
 	Warhead@2Dam: SpreadDamage
 		Damage: 70000
 		Spread: 341
@@ -897,7 +896,7 @@ SonicMortar:
 			Concrete: 100
 	Warhead@concussion: GrantExternalConditionCA
 		Condition: concussion
-		Duration: 75
+		Duration: 100
 		Range: 1c768
 	Warhead@3Eff: CreateEffect
 		Explosions: sonicimpact

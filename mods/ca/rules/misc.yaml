@@ -361,14 +361,6 @@ gps.satellite.firstscan:
 	Tooltip:
 		Name: GPS Satellite
 
-coalition.active:
-	Inherits@DUMMY: ^InvisibleDummy
-	ProvidesPrerequisite:
-	Buildable:
-		Queue: Active Coalition
-	Tooltip:
-		Name: Active Coalition
-
 ToxicCloud:
 	Interactable:
 	ScriptTriggers:
@@ -428,6 +420,8 @@ ChaosCloud:
 		Weapon: ChaosCloud
 	Aircraft:
 		Speed: 10
+	KillsSelf:
+		Delay: 250
 
 ChaosCloud2:
 	Inherits: ChaosCloud
@@ -703,7 +697,7 @@ powerproxy.paratroopers.allies:
 
 powerproxy.airborne:
 	Inherits@DUMMY: ^InvisibleDummy
-	ParatroopersPower:
+	ParatroopersPowerCA:
 		OrderName: airborne
 		Icon: airborne
 		SquadSize: 1
@@ -728,6 +722,8 @@ powerproxy.airborne:
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 		SupportPowerPaletteOrder: 70
+		PrerequisiteDropItems:
+			airborne.upgrade: U3R2, U3R2, U3R2, U3R2, U3R2
 	Buildable:
 		Queue: PowerProxy
 	Tooltip:
@@ -735,7 +731,7 @@ powerproxy.airborne:
 
 powerproxy.airborne.tank:
 	Inherits@DUMMY: ^InvisibleDummy
-	ParatroopersPower:
+	ParatroopersPowerCA:
 		OrderName: airbornetank
 		Icon: airdropicon
 		SquadSize: 1
@@ -760,6 +756,8 @@ powerproxy.airborne.tank:
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 		SupportPowerPaletteOrder: 70
+		PrerequisiteDropItems:
+			airborne.upgrade: GTNKR2, GTNKR2
 	Buildable:
 		Queue: PowerProxy
 	Tooltip:
@@ -1025,7 +1023,7 @@ SPLITBLUE:
 	ProximityExternalCondition@ONTIB:
 		Condition: on-bluetib
 
-veil:
+^Veil:
 	Inherits@DUMMY: ^InvisibleDummy
 	EditorOnlyTooltip:
 		Name: (Veil of War)
@@ -1053,9 +1051,13 @@ veil:
 		TargetTypes: Veil
 	Health:
 		HP: 1
+	ProximityExternalCondition@Veiled:
+		Range: 2c512
+		Condition: veiled
+		ValidRelationships: Enemy, Neutral
 
 veilofwar1:
-	Inherits: veil
+	Inherits: ^Veil
 	CreatesShroud:
 		Range: 3c512
 	KillsSelf:
@@ -1068,9 +1070,11 @@ veilofwar1:
 		Range: 7c512
 		Visible: Always
 		Color: 999999AA
+	ProximityExternalCondition@Veiled:
+		Range: 3c512
 
 veilofwar2:
-	Inherits: veil
+	Inherits: ^Veil
 	CreatesShroud:
 		Range: 5c512
 	PeriodicExplosion:
@@ -1084,15 +1088,19 @@ veilofwar2:
 		Range: 7c512
 		Visible: Always
 		Color: 999999AA
+	ProximityExternalCondition@Veiled:
+		Range: 5c512
 
 veilofwar3:
-	Inherits: veil
+	Inherits: ^Veil
 	CreatesShroud:
 		Range: 7c512
 	PeriodicExplosion:
 		Weapon: VeilLarge
 	KillsSelf:
 		Delay: 300
+	ProximityExternalCondition@Veiled:
+		Range: 7c512
 
 jamming.field:
 	Interactable:
@@ -1268,7 +1276,7 @@ watcher.parasite:
 	Inherits: shadow.beacon.camera
 	KillsSelf:
 		RemoveInstead: true
-		Delay: 3000
+		Delay: 2250
 	Attachable:
 		Type: WatcherParasite
 		TargetTypes: WatcherParasiteAttachable

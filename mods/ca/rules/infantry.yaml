@@ -255,34 +255,34 @@ E3:
 		Weapon: RedEye
 		LocalOffset: 0,0,500
 		PauseOnCondition: !ammo
-		RequiresCondition: !cryr-upgrade
+		RequiresCondition: !cryw-upgrade
 	Armament@PRIMARYUPG:
 		Weapon: RedEye.CRYO
 		LocalOffset: 0,0,500
 		PauseOnCondition: !ammo
-		RequiresCondition: cryr-upgrade
+		RequiresCondition: cryw-upgrade
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: Dragon
 		LocalOffset: 0,0,500
 		PauseOnCondition: !ammo
-		RequiresCondition: !cryr-upgrade
+		RequiresCondition: !cryw-upgrade
 	Armament@SECONDARYUPG:
 		Name: secondary
 		Weapon: Dragon.CRYO
 		LocalOffset: 0,0,500
 		PauseOnCondition: !ammo
-		RequiresCondition: cryr-upgrade
+		RequiresCondition: cryw-upgrade
 	Armament@BATF:
 		Name: batf
 		Weapon: DragonBATF
 		PauseOnCondition: !ammo
-		RequiresCondition: !cryr-upgrade
+		RequiresCondition: !cryw-upgrade
 	Armament@BATFUPG:
 		Name: batf
 		Weapon: DragonBATF.CRYO
 		PauseOnCondition: !ammo
-		RequiresCondition: cryr-upgrade
+		RequiresCondition: cryw-upgrade
 	AmmoPool:
 		Ammo: 1
 		AmmoCondition: ammo
@@ -303,11 +303,11 @@ E3:
 		ScanRadius: 6
 		MaximumScanTimeInterval: 5
 	GrantConditionOnPrerequisite@CRYO:
-		Condition: cryr-upgrade
-		Prerequisites: cryr.upgrade
+		Condition: cryw-upgrade
+		Prerequisites: cryw.upgrade
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
-		RequiresCondition: !parachute && !cryr-upgrade && !being-warped
+		RequiresCondition: !parachute && !cryw-upgrade && !being-warped
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
 		RequiresCondition: parachute
@@ -317,11 +317,11 @@ E3:
 		AttackSequences: shoot-cryo
 		DefaultAttackSequence: shoot-cryo
 		MoveSequence: run-cryo
-		RequiresCondition: cryr-upgrade && !being-warped
+		RequiresCondition: cryw-upgrade && !being-warped
 	WithDeathAnimation:
-		RequiresCondition: !cryr-upgrade
+		RequiresCondition: !cryw-upgrade
 	WithDeathAnimation@CRYO:
-		RequiresCondition: cryr-upgrade
+		RequiresCondition: cryw-upgrade
 		DeathSequence: die-cryo
 		DeathSequencePalette: playertd
 		DeathTypes:
@@ -372,38 +372,38 @@ U3:
 		Turret: deploy
 		LocalOffset: 0,0,400
 		PauseOnCondition: !ammo
-		RequiresCondition: !cryr-upgrade && deployed
+		RequiresCondition: !cryw-upgrade && deployed
 	Armament@PRIMARYDEPUPG:
 		Weapon: RedEyeGI.CRYO
 		Name: deployed
 		Turret: deploy
 		LocalOffset: 0,0,400
 		PauseOnCondition: !ammo
-		RequiresCondition: cryr-upgrade && deployed
+		RequiresCondition: cryw-upgrade && deployed
 	Armament@SECONDARYDEP:
 		Name: deployed
 		Weapon: DragonGI
 		Turret: deploy
 		LocalOffset: 0,0,400
 		PauseOnCondition: !ammo
-		RequiresCondition: !cryr-upgrade && deployed
+		RequiresCondition: !cryw-upgrade && deployed
 	Armament@SECONDARYDEPUPG:
 		Weapon: DragonGI.CRYO
 		Name: deployed
 		Turret: deploy
 		LocalOffset: 0,0,400
 		PauseOnCondition: !ammo
-		RequiresCondition: cryr-upgrade && deployed
+		RequiresCondition: cryw-upgrade && deployed
 	Armament@BATF:
 		Name: batf
 		Weapon: DragonBATF.CYB
 		PauseOnCondition: !ammo
-		RequiresCondition: !cryr-upgrade
+		RequiresCondition: !cryw-upgrade
 	Armament@BATFUPG:
 		Name: batf
 		Weapon: DragonBATF.CRYO
 		PauseOnCondition: !ammo
-		RequiresCondition: cryr-upgrade
+		RequiresCondition: cryw-upgrade
 	Armament@AIDummyAiming: ## Hack: Make AI deploy to attack air
 		PauseOnCondition: being-warped
 		RequiresCondition: botowner && !deployed
@@ -430,8 +430,8 @@ U3:
 		MaximumScanTimeInterval: 5
 		AllowMovement: False
 	GrantConditionOnPrerequisite@CRYO:
-		Condition: cryr-upgrade
-		Prerequisites: cryr.upgrade
+		Condition: cryw-upgrade
+		Prerequisites: cryw.upgrade
 	GrantConditionOnDeploy:
 		DeployedCondition: deployed
 		UndeployedCondition: undeployed
@@ -465,19 +465,19 @@ U3:
 	WithSpriteTurret@idle:
 		Turret: deploy
 		Sequence: deployed
-		RequiresCondition: deployed && !cryr-upgrade && !animate-turret && !parachute
+		RequiresCondition: deployed && !cryw-upgrade && !animate-turret && !parachute
 	WithSpriteTurret@animated:
 		Turret: deploy
 		Sequence: deploy-shoot
-		RequiresCondition: deployed && !cryr-upgrade && animate-turret && !parachute
+		RequiresCondition: deployed && !cryw-upgrade && animate-turret && !parachute
 	WithSpriteTurret@idleupg:
 		Turret: deploy
 		Sequence: deployedcr
-		RequiresCondition: deployed && cryr-upgrade && !animate-turret && !parachute
+		RequiresCondition: deployed && cryw-upgrade && !animate-turret && !parachute
 	WithSpriteTurret@animatedupg:
 		Turret: deploy
 		Sequence: deploy-shootcr
-		RequiresCondition: deployed && cryr-upgrade && animate-turret && !parachute
+		RequiresCondition: deployed && cryw-upgrade && animate-turret && !parachute
 	WithSpriteBody:
 		Sequence: empty
 		Name: dot
@@ -521,6 +521,14 @@ U3:
 		DeployTicks: 5
 		UndeployTicks: 50
 
+U3R2:
+	Inherits: U3
+	RenderSprites:
+		Image: u3
+	ProducibleWithLevel:
+		-Prerequisites:
+		InitialLevels: 2
+
 U3.squad:
 	AlwaysVisible:
 	Interactable:
@@ -550,6 +558,9 @@ U3.squad:
 		AllowMultiple: true
 	Armor:
 		Type: None
+	ProductionTimeMultiplier:
+		Multiplier: 75
+		Prerequisites: airborne.upgrade
 
 E3R1:
 	Inherits: E3
@@ -771,6 +782,12 @@ SPY:
 		TargetTypes: Ground, Infantry
 	Targetable@ChaosImmune:
 		TargetTypes: ChaosImmune
+	Targetable@Disguised:
+		TargetTypes: Disguised
+		RequiresCondition: disguise
+	WithColoredSelectionBox@Disguised:
+		RequiresCondition: disguise
+		ColorSource: Player
 
 E7:
 	Inherits: ^Soldier
@@ -782,7 +799,7 @@ E7:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 200
-		Prerequisites: ~tent, atek, ~techlevel.high
+		Prerequisites: ~tent, atekoralhq, ~techlevel.high
 		BuildLimit: 1
 		Description: Elite commando infantry armed with dual pistols and C4.
 	TooltipExtras:
@@ -1391,9 +1408,9 @@ SHOK:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	AutoTargetPriority@DEFAULT:
-		InvalidTargets: NoAutoTarget, TeslaBoost
+		InvalidTargets: NoAutoTarget, TeslaBoost, Disguised
 	AutoTargetPriority@ATTACKANYTHING:
-		InvalidTargets: NoAutoTarget, TeslaBoost
+		InvalidTargets: NoAutoTarget, TeslaBoost, Disguised
 	AutoTargetPriority@TESLANORMAL:
 		RequiresCondition: !assault-move && !attack-move
 		ValidTargets: TeslaBoost
@@ -1489,7 +1506,7 @@ TTRP:
 	Valued:
 		Cost: 600
 	Health:
-		HP: 18000
+		HP: 18500
 	Voiced:
 		VoiceSet: TeslaTrooperVoice
 	TakeCover:
@@ -2898,7 +2915,7 @@ DESO:
 	Valued:
 		Cost: 600
 	Health:
-		HP: 18000
+		HP: 18500
 	Voiced:
 		VoiceSet: DesVoice
 	Mobile:
@@ -3428,6 +3445,7 @@ SHAD:
 		AttackSequences:
 			primary: throw
 			secondary: shoot
+			tertiary: throw
 		MinIdleDelay: 80
 		MaxIdleDelay: 250
 		RequiresCondition: !parachute && !being-warped
@@ -3444,9 +3462,17 @@ SHAD:
 		Weapon: ShadowOperativeGrenade
 		LocalOffset: 0,0,555
 		FireDelay: 15
+		PauseOnCondition: throwing-beacon || beacon-thrown
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: ShadowOperativeGun
+		PauseOnCondition: throwing-beacon || beacon-thrown
+	Armament@TERTIARY:
+		Name: tertiary
+		Weapon: ShadowBeaconLauncher
+		LocalOffset: 0,0,555
+		FireDelay: 15
+		PauseOnCondition: !throwing-beacon
 	Armament@BATF:
 		Name: batf
 		Weapon: ShadowOperativeGun
@@ -3454,6 +3480,7 @@ SHAD:
 		Voice: Attack
 		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
+		Armaments: primary, secondary, tertiary
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: ReturnFire
@@ -3476,27 +3503,28 @@ SHAD:
 		DetectionTypes: Cloak, Thief
 		Range: 4c0
 	-WithParachute:
-	AmmoPool:
-		Ammo: 1
-		Armaments: none
-	WithAmmoPipsDecoration:
-		Position: BottomLeft
-		Margin: 4, 3
-		RequiresSelection: true
-	Minelayer:
-		Mine: SHAB
-		TileUnknownName: build-valid
-	Rearmable:
-		RearmActors: shad.rearm
 	Targetable@STEALTHBUBBLEIMMUNE:
 		TargetTypes: StealthBubbleImmune
 	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || hidden
 		ColorSource: Player
-
-# ---- dummy actor because RearmableActors is required
-SHAD.REARM:
-	AlwaysVisible:
+	TargetedAttackAbility:
+		ActiveCondition: throwing-beacon
+		ArmamentName: tertiary
+		CircleColor: 8888aa
+		Type: ShadowBeacon
+		CancelAfterAttack: true
+	GrantConditionOnAttack@ShadowBeaconCooldown:
+		Condition: beacon-thrown
+		RevokeDelay: 30
+		ArmamentNames: tertiary
+	AmmoPool:
+		Armaments: tertiary
+		Ammo: 2
+	WithAmmoPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
 
 SGLI:
 	Inherits: ^Plane
@@ -3687,7 +3715,7 @@ BH:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 13000
+		HP: 16000
 	Mobile:
 		Speed: 66
 		Voice: Move
@@ -3697,8 +3725,8 @@ BH:
 		Weapon: BlackHandFlamer
 		LocalOffset: 300,0,180
 	Armament@BATF:
-		Name: batf
-		Weapon: BlackHandFlamerWithSound
+		Name: batf-bh
+		Weapon: BlackHandFlamer
 	TakeCover:
 		ProneOffset: 160,0,-256
 	WithMuzzleOverlay:
@@ -4549,6 +4577,9 @@ ZTRP:
 	Targetable@TEMPORAL:
 		TargetTypes: Temporal
 		RequiresCondition: !jumping
+	DamageMultiplier@Jumping:
+		Modifier: 50
+		RequiresCondition: jumping
 
 ZRAI:
 	Inherits: ZTRP
@@ -4597,6 +4628,7 @@ ZDEF:
 	-Contrail@Jumping:
 	-WithShadow@Jump:
 	-Targetable@Jump:
+	-DamageMultiplier@Jumping:
 	WithInfantryBody:
 		RequiresCondition: !being-warped
 	-WithInfantryBody@Jump:
@@ -4722,7 +4754,7 @@ CRYT:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 132
-		Prerequisites: ~tent, alhq, coalition.active, ~sweden.coalition, ~techlevel.high
+		Prerequisites: ~tent, alhq, ~sweden.coalition, ~techlevel.high
 		Description: Elite infantry armed with a cryo sprayer.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
@@ -4744,7 +4776,7 @@ CRYT:
 		Weapon: CryoSprayer
 		LocalOffset: 341,0,341
 	Armament@BATF:
-		Name: batf
+		Name: batf-cryt
 		Weapon: CryoSprayer
 	AttackFrontal:
 		Voice: Attack

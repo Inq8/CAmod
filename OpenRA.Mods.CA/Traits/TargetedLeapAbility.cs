@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Graphics;
 using OpenRA.Mods.CA.Activities;
+using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Graphics;
 using OpenRA.Mods.Common.Orders;
 using OpenRA.Mods.Common.Traits;
@@ -224,6 +225,12 @@ namespace OpenRA.Mods.CA.Traits
 				self.QueueActivity(mobile.MoveWithinRange(order.Target, WDist.FromCells(Info.MaxDistance), targetLineColor: Info.TargetLineColor));
 
 				var facing = self.TraitOrDefault<IFacing>();
+
+				if (facing != null)
+				{
+					var desiredFacing = (order.Target.CenterPosition - self.CenterPosition).Yaw;
+					self.QueueActivity(new Turn(self, desiredFacing));
+				}
 
 				self.QueueActivity(new TargetedLeap(self, cell, this, mobile, facing, WAngle.FromDegrees(60)));
 
