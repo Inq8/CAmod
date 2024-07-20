@@ -617,7 +617,7 @@ IVAN:
 		ShowSelectionBar: true
 		SelectionBarColor: ff6600
 	Rearmable:
-		RearmActors: shad.rearm
+		RearmActors: ivan.rearm
 	GrantConditionOnBotOwner@ISBOT:
 		Bots: bot
 		Condition: is-bot
@@ -639,6 +639,10 @@ IVAN:
 		RequiresCondition: is-bot
 		ValidTargets: Defense
 		Priority: 10
+
+# ---- dummy actor because RearmableActors is required
+IVAN.REARM:
+	AlwaysVisible:
 
 SNIP:
 	Inherits@TFUNIT: ^TFUnit
