@@ -5332,14 +5332,80 @@ INDP:
 	-WithDecoration@RESTORING:
 
 MUNP:
-	Inherits: INDP
-	Tooltip:
-		Name: Munitions Plant
+	Inherits: ^Building
+	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
+	Inherits@SHAPE: ^3x2Shape
+	Inherits@UPG: ^ProducesUpgrades
+	Inherits@TECHLOCKABLE: ^TechLockable
+	Selectable:
+		Bounds: 3072, 2816, 0, -256
+	HitShape:
+		Type: Rectangle
+			TopLeft: -1536, -1024
+			BottomRight: 1536, 1280
+	WithSpriteBody:
+		PauseOnCondition: disabled || being-warped
 	Buildable:
+		Queue: BuildingSQ, BuildingMQ
+		BuildPaletteOrder: 200
 		Prerequisites: ~structures.soviet, stek, player.level3, ~arty.doctrine, ~techlevel.high
 		Description: Vehicles & aircraft are produced 15% faster.\n  Vehicles have 15% reduced reload time.
+		BuildLimit: 1
+	TooltipExtras:
+		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked
+	Valued:
+		Cost: 2000
+	-Capturable:
+	-CaptureNotification:
+	-CapturableProgressBar:
+	-CapturableProgressBlink:
+	-CaptureManager:
+	Tooltip:
+		Name: Munition Plant
+	Building:
+		Footprint: xxx xxx ===
+		Dimensions: 3,3
+		LocalCenterOffset: 0,-512,0
+	Health:
+		HP: 100000
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	WithBuildingBib:
+	Power:
+		Amount: -150
+	WithDeathAnimation:
+		DeathSequence: dead
+		UseDeathTypeSuffix: false
+	ProvidesPrerequisite@buildingname:
+		RequiresCondition: !tech-locked
+	ProvidesPrerequisite@IndpOrMunp:
+		Prerequisite: indpormunp
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@disabled:
 		Prerequisite: munplowpower
+		RequiresCondition: disabled || empdisable || being-warped
+	Sellable:
+		RequiresCondition: !build-incomplete && !c4 && !being-warped
+	SpawnActorOnDeath:
+		RequiresCondition: !being-warped
+	SpawnRandomActorOnDeath:
+		RequiresCondition: !being-warped
+	GrantCondition@DUMMY:
+		Condition: noupgrade
+		RequiresCondition: noupgrade
+	WithDecoration@TechLock:
+		RequiresCondition: tech-locked
+	-MindControllable:
+	-Targetable@HACKABLE:
+	-MindControllableProgressBar@HACKABLE:
+	-WithDecoration@HACKED:
+	-WithDecoration@RESTORING:
 
 OREP:
 	Inherits: ^Building

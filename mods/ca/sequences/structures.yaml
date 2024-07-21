@@ -2979,7 +2979,36 @@ cvat:
 		Filename: cvaticon.shp
 
 munp:
-	Inherits: indp
+	Inherits: ^StructureOverlays
+	idle:
+		Filename: munp.shp
+		Length: 6
+		Tick: 200
+		Offset: 0, -8
+	damaged-idle:
+		Filename: munp.shp
+		Start: 6
+		Length: 6
+		Tick: 200
+		Offset: 0, -8
+	make:
+		Filename: munpmk.shp
+		Offset: 0, -8
+		Length: *
+	dead:
+		Filename: munp.shp
+		Start: 6
+		Tick: 800
+		Offset: 0, -8
+	bib:
+		Filename: bib2.tem
+		TilesetFilenames:
+			SNOW: bib2.sno
+			DESERT: bib2.des
+			JUNGLE: bib2.jun
+			WINTER: bib2.win
+			BARREN: bib2.bar
+		Length: *
 	icon:
 		Filename: munpicon.shp
 
