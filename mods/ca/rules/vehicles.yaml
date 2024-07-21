@@ -5451,10 +5451,16 @@ BTR.YURI:
 		RevokeAll: True
 		RequiresCondition: !attacking-air
 	WithSpriteTurret@AIR:
-		RequiresCondition: !attacking-ground
+		RequiresCondition: !attacking-ground && !reactive-upgrade
 	WithSpriteTurret@GROUND:
 		Sequence: turret-ground
-		RequiresCondition: attacking-ground
+		RequiresCondition: attacking-ground && !reactive-upgrade
+	WithSpriteTurret@AIRReactiveArmor:
+		Sequence: turret-air-upg
+		RequiresCondition: !attacking-ground && reactive-upgrade
+	WithSpriteTurret@GROUNDReactiveArmor:
+		Sequence: turret-ground-upg
+		RequiresCondition: attacking-ground && reactive-upgrade
 	Turreted:
 		TurnSpeed: 28
 		Offset: -50,0,0
