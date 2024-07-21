@@ -5189,9 +5189,6 @@ CVAT:
 		Prerequisites: ~structures.soviet, stek, player.level3, ~infantry.doctrine, ~techlevel.high
 		Description: Clones infantry trained at a linked barracks.
 		BuildLimit: 1
-		Footprint: xx xx ++
-		Dimensions: 2,3
-		LocalCenterOffset: 0,-1024,0
 	TooltipExtras:
 		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked
 	Valued:
@@ -5214,6 +5211,7 @@ CVAT:
 	-CaptureManager:
 	Production:
 		Produces: Clone
+		PauseOnCondition: tech-locked || being-warped
 	Exit@1:
 		SpawnOffset: -700,1000,0
 		ExitCell: -2,2
@@ -5232,21 +5230,12 @@ CVAT:
 		UseDeathTypeSuffix: false
 	ProvidesPrerequisite@buildingname:
 		RequiresCondition: !tech-locked
-	ProvidesPrerequisite@IndpOrMunp:
-		Prerequisite: indpormunp
-		RequiresCondition: !tech-locked
-	ProvidesPrerequisite@disabled:
-		Prerequisite: indplowpower
-		RequiresCondition: disabled || empdisable || being-warped
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
 	SpawnActorOnDeath:
 		RequiresCondition: !being-warped
 	SpawnRandomActorOnDeath:
 		RequiresCondition: !being-warped
-	GrantCondition@DUMMY:
-		Condition: noupgrade
-		RequiresCondition: noupgrade
 	WithDecoration@TechLock:
 		RequiresCondition: tech-locked
 	-MindControllable:
@@ -5308,9 +5297,6 @@ INDP:
 		UseDeathTypeSuffix: false
 	ProvidesPrerequisite@buildingname:
 		RequiresCondition: !tech-locked
-	ProvidesPrerequisite@IndpOrMunp:
-		Prerequisite: indpormunp
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@disabled:
 		Prerequisite: indplowpower
 		RequiresCondition: disabled || empdisable || being-warped
@@ -5320,9 +5306,6 @@ INDP:
 		RequiresCondition: !being-warped
 	SpawnRandomActorOnDeath:
 		RequiresCondition: !being-warped
-	GrantCondition@DUMMY:
-		Condition: noupgrade
-		RequiresCondition: noupgrade
 	WithDecoration@TechLock:
 		RequiresCondition: tech-locked
 	-MindControllable:

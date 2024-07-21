@@ -3426,7 +3426,7 @@ SHAD:
 		Description: Cloaked infantry deployed via glider.
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft\n• Has difficulty hitting moving vehicles
-		Attributes: • Cloaked when not in combat\n• Can place shadow beacons which provide vision\n• Shadow beacons attach to enemy vehicles that pass over them\n• Can detect cloaked ground units and spies
+		Attributes: • Cloaked when not in combat\n• Shadow beacons attach to enemy vehicles that pass over them\n• Can detect cloaked ground units and spies\n• Special Ability: Shadow Beacon
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	RevealsShroud:
@@ -3514,6 +3514,7 @@ SHAD:
 		CircleColor: 8888aa
 		Type: ShadowBeacon
 		CancelAfterAttack: true
+		RequiresCondition: has-beacon
 	GrantConditionOnAttack@ShadowBeaconCooldown:
 		Condition: beacon-thrown
 		RevokeDelay: 30
@@ -3521,6 +3522,7 @@ SHAD:
 	AmmoPool:
 		Armaments: tertiary
 		Ammo: 2
+		AmmoCondition: has-beacon
 	WithAmmoPipsDecoration:
 		Position: BottomLeft
 		Margin: 4, 3
