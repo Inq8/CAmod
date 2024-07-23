@@ -5261,18 +5261,17 @@ BTR:
 		Range: 4c0
 	Turreted:
 		TurnSpeed: 40
-		Offset: 5,0,70
 	Armament@GROUND:
 		Name: secondary
 		Weapon: FLAK-23-AG
-		LocalOffset: 392,0,276
+		LocalOffset: 592,0,376
 		MuzzleSequence: muzzle
 		CasingWeapon: BrassDebris
 		CasingSpawnLocalOffset: 0,-225,200
 		CasingTargetOffset: 0, -600, 0
 	Armament@AIR:
 		Weapon: FLAK-23-AA
-		LocalOffset: 392,0,276
+		LocalOffset: 592,0,376
 		MuzzleSequence: muzzle
 		CasingWeapon: BrassDebris
 		CasingSpawnLocalOffset: 0,-225,200
@@ -5282,6 +5281,10 @@ BTR:
 	WithMuzzleOverlay:
 	WithSpriteTurret@GROUND:
 		Sequence: turret
+		RequiresCondition: !reactive-upgrade
+	WithSpriteTurret@GROUNDReactiveArmor:
+		Sequence: turret-upg
+		RequiresCondition: reactive-upgrade
 	Cargo:
 		Types: Infantry
 		MaxWeight: 5
