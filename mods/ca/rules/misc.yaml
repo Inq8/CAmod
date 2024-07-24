@@ -8,7 +8,7 @@ MINV:
 			ukraine: minp
 			iraq: minp
 	GrantConditionOnFaction@Soviets:
-		Factions: russia, ukraine, iraq, yuri
+		Factions: soviet, russia, ukraine, iraq, yuri
 		Condition: soviet
 	Explodes@Allies:
 		Weapon: ATMine
@@ -103,10 +103,20 @@ CRATE:
 		NoBaseSelectionShares: 100
 		ValidFactions: gdi, talon, zocom, eagle, arc, nod, blackh, marked, legion, shadow
 		Units: amcv
+	GiveBaseBuilderCrateAction@Scrin:
+		SelectionShares: 0
+		NoBaseSelectionShares: 100
+		ValidFactions: scrin, reaper, travel, harbinger, collector
+		Units: smcv
 	GiveUnitCrateAction@jeep:
 		SelectionShares: 7
 		Units: jeep
 		ValidFactions: allies, england, france, germany, usa
+		Prerequisites: techlevel.low
+	GiveUnitCrateAction@btr:
+		SelectionShares: 7
+		Units: btr
+		ValidFactions: soviet, russia, ukraine, iraq, yuri
 		Prerequisites: techlevel.low
 	GiveUnitCrateAction@hmmv:
 		SelectionShares: 7
@@ -118,26 +128,31 @@ CRATE:
 		Units: bggy
 		ValidFactions: nod, marked, blackh, legion, shadow
 		Prerequisites: techlevel.low
+	GiveUnitCrateAction@gunw:
+		SelectionShares: 7
+		Units: gunw
+		ValidFactions: scrin, reaper, travel, harbinger, collector
+		Prerequisites: techlevel.low
 	GiveUnitCrateAction@arty:
 		SelectionShares: 6
 		Units: arty
 		ValidFactions: allies, england, france, germany, usa, nod, blackh, marked, legion, shadow
-		Prerequisites: techlevel.medium, radar
+		Prerequisites: techlevel.medium, anyradar
 	GiveUnitCrateAction@v2rl:
 		SelectionShares: 6
 		Units: v2rl
 		ValidFactions: soviet, russia, ukraine, iraq, yuri
-		Prerequisites: techlevel.medium, radar
+		Prerequisites: techlevel.medium, anyradar
 	GiveUnitCrateAction@msam:
 		SelectionShares: 6
 		Units: msam
 		ValidFactions: gdi, talon, zocom, eagle, arc
-		Prerequisites: techlevel.medium, radar
-	GiveUnitCrateAction@mtnk:
-		SelectionShares: 5
-		Units: mtnk
-		ValidFactions: gdi, talon, zocom, eagle, arc, nod, blackh, marked, legion, shadow
-		Prerequisites: techlevel.medium
+		Prerequisites: techlevel.medium, anyradar
+	GiveUnitCrateAction@corr:
+		SelectionShares: 6
+		Units: corr
+		ValidFactions: scrin, reaper, travel, harbinger, collector
+		Prerequisites: techlevel.medium, anyradar
 	GiveUnitCrateAction@2tnk:
 		SelectionShares: 4
 		Units: 2tnk
@@ -148,6 +163,26 @@ CRATE:
 		Units: 3tnk
 		ValidFactions: soviet, russia, ukraine, iraq, yuri
 		Prerequisites: techlevel.medium
+	GiveUnitCrateAction@mtnk:
+		SelectionShares: 5
+		Units: mtnk
+		ValidFactions: gdi, talon, zocom, eagle, arc, legion
+		Prerequisites: techlevel.medium
+	GiveUnitCrateAction@ltnk:
+		SelectionShares: 5
+		Units: ltnk
+		ValidFactions: nod, blackh, marked, shadow
+		Prerequisites: techlevel.medium
+	GiveUnitCrateAction@intl:
+		SelectionShares: 5
+		Units: intl
+		ValidFactions: scrin, reaper, travel, harbinger, collector
+		Prerequisites: techlevel.medium
+	GiveUnitCrateAction@ptnk:
+		SelectionShares: 3
+		Units: ptnk
+		ValidFactions: allies, england, france, germany, usa
+		Prerequisites: techlevel.high, techcenter.any
 	GiveUnitCrateAction@4tnk:
 		SelectionShares: 3
 		Units: 4tnk
@@ -163,6 +198,11 @@ CRATE:
 		Units: stnk.nod
 		ValidFactions: nod, marked, blackh, legion, shadow
 		Prerequisites: techlevel.high, techcenter.any
+	GiveUnitCrateAction@devo:
+		SelectionShares: 3
+		Units: devo
+		ValidFactions: scrin, reaper, travel, harbinger, collector
+		Prerequisites: techlevel.high, techcenter.any
 	GiveUnitCrateAction@squadlight:
 		SelectionShares: 7
 		Units: e1,e1,e1,e3,e3
@@ -171,6 +211,10 @@ CRATE:
 		SelectionShares: 7
 		Units: n1,n1,n1,n3,n3
 		ValidFactions: gdi, talon, zocom, eagle, arc, nod, blackh, marked, legion, shadow
+	GiveUnitCrateAction@squadlightscrin:
+		SelectionShares: 7
+		Units: s1,s1,s1,s3,s3
+		ValidFactions: scrin, reaper, travel, harbinger, collector
 	GiveUnitCrateAction@squadheavyallies:
 		SelectionShares: 7
 		Units: e1,e1,e1,e1,e3,e3,e3,e6,medi
@@ -190,6 +234,11 @@ CRATE:
 		SelectionShares: 7
 		Units: n1,n1,n1,n1,n3,n3,n2,n2
 		ValidFactions: gdi, talon, zocom, eagle, arc
+		TimeDelay: 4500
+	GiveUnitCrateAction@squadheavyscrin:
+		SelectionShares: 7
+		Units: s1,s1,s1,s1,s3,s3,s2,s2
+		ValidFactions: scrin, reaper, travel, harbinger, collector
 		TimeDelay: 4500
 	GrantExternalConditionCrateAction@invuln:
 		SelectionShares: 5
@@ -856,21 +905,21 @@ stolentech.hand:
 stolentech.weap:
 	Inherits@DUMMY: ^InvisibleDummy
 	ValidFactions:
-		Factions: england, france, germany, usa, russia, ukraine, iraq, yuri
+		Factions: allies, england, france, germany, usa, soviet, russia, ukraine, iraq, yuri
 	ProvidesPrerequisiteValidatedFaction@STOLENALLIED:
-		Factions: england, france, germany, usa
+		Factions: allies, england, france, germany, usa
 		Prerequisite: vehicles.reck
 	ProvidesPrerequisiteValidatedFaction@STOLENSOVIET:
-		Factions: russia, ukraine, iraq, yuri
+		Factions: soviet, russia, ukraine, iraq, yuri
 		Prerequisite: vehicles.cycp
 
 # td weap - basilisk from gdi, mantis from legion
 stolentech.weap.td:
 	Inherits@DUMMY: ^InvisibleDummy
 	ValidFactions:
-		Factions: talon, zocom, eagle, arc, legion
+		Factions: gdi, talon, zocom, eagle, arc, legion
 	ProvidesPrerequisiteValidatedFaction@STOLENGDI:
-		Factions: talon, zocom, eagle, arc
+		Factions: gdi, talon, zocom, eagle, arc
 		Prerequisite: vehicles.basi
 	ProvidesPrerequisiteValidatedFaction@STOLENNOD:
 		Factions: legion
@@ -898,24 +947,24 @@ stolentech.afld.gdi:
 stolentech.hpad:
 	Inherits@DUMMY: ^InvisibleDummy
 	ValidFactions:
-		Factions: england, france, germany, usa, russia, ukraine, iraq, yuri
+		Factions: allies, england, france, germany, usa, soviet, russia, ukraine, iraq, yuri
 	ProvidesPrerequisiteValidatedFaction@STOLENALLIED:
-		Factions: england, france, germany, usa
+		Factions: allies, england, france, germany, usa
 		Prerequisite: aircraft.phan
 	ProvidesPrerequisiteValidatedFaction@STOLENSOVIET:
-		Factions: russia, ukraine, iraq, yuri
+		Factions: soviet, russia, ukraine, iraq, yuri
 		Prerequisite: aircraft.kamv
 
 # hpad.td - shade from gdi, vertigo from nod
 stolentech.hpad.td:
 	Inherits@DUMMY: ^InvisibleDummy
 	ValidFactions:
-		Factions: talon, zocom, eagle, arc, blackh, marked, legion, shadow
+		Factions: gdi, talon, zocom, eagle, arc, nod, blackh, marked, legion, shadow
 	ProvidesPrerequisiteValidatedFaction@STOLENGDI:
-		Factions: talon, zocom, eagle, arc
+		Factions: gdi, talon, zocom, eagle, arc
 		Prerequisite: aircraft.shde
 	ProvidesPrerequisiteValidatedFaction@STOLENNOD:
-		Factions: blackh, marked, legion, shadow
+		Factions: nod, blackh, marked, legion, shadow
 		Prerequisite: aircraft.vert
 
 mpspawn:

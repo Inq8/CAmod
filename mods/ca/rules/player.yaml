@@ -260,7 +260,7 @@ Player:
 		Id: unrestricted
 	ProvidesPrerequisite@allies:
 		Prerequisite: player.allies
-		Factions: england, france, germany, usa
+		Factions: allies, england, france, germany, usa
 	ProvidesPrerequisite@england:
 		Prerequisite: player.england
 		Factions: england
@@ -275,7 +275,7 @@ Player:
 		Factions: usa
 	ProvidesPrerequisite@soviet:
 		Prerequisite: player.soviet
-		Factions: russia, ukraine, iraq, yuri
+		Factions: soviet, russia, ukraine, iraq, yuri
 	ProvidesPrerequisite@russia:
 		Prerequisite: player.russia
 		Factions: russia
@@ -290,7 +290,7 @@ Player:
 		Factions: yuri
 	ProvidesPrerequisite@gdi:
 		Prerequisite: player.gdi
-		Factions: talon, zocom, eagle, arc
+		Factions: gdi, talon, zocom, eagle, arc
 	ProvidesPrerequisite@talon:
 		Prerequisite: player.talon
 		Factions: talon
@@ -305,7 +305,7 @@ Player:
 		Factions: arc
 	ProvidesPrerequisite@nod:
 		Prerequisite: player.nod
-		Factions: blackh, marked, legion, shadow
+		Factions: nod, blackh, marked, legion, shadow
 	ProvidesPrerequisite@blackh:
 		Prerequisite: player.blackh
 		Factions: blackh
@@ -320,7 +320,7 @@ Player:
 		Factions: shadow
 	ProvidesPrerequisite@scrin:
 		Prerequisite: player.scrin
-		Factions: reaper, traveler, harbinger, collector
+		Factions: scrin, reaper, traveler, harbinger, collector
 	ProvidesPrerequisite@reaper:
 		Prerequisite: player.reaper
 		Factions: reaper
@@ -345,7 +345,7 @@ Player:
 		AdviceInterval: 40000
 	PlayerExperience:
 	PlayerExperienceLevels:
-		Factions: russia, ukraine, iraq, yuri
+		Factions: soviet, russia, ukraine, iraq, yuri
 		LevelXpRequirements: 75, 250, 450
 		LevelPrerequisites: player.level1, player.level2, player.level3
 		LevelUpTextNotification: You have gained a rank! You are now rank {0}.
@@ -361,7 +361,7 @@ Player:
 	CapturedFactionsManager:
 	UpgradesManager:
 	ProvidesPrerequisiteOnCounts@ScrinAllegiances:
-		Factions: reaper, traveler, harbinger, collector
+		Factions: scrin, reaper, traveler, harbinger, collector
 		Prerequisite: scrin.allegiances.available
 		RequiredCounts:
 			Refineries: 4

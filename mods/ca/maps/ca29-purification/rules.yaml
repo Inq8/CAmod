@@ -88,21 +88,8 @@ Player:
 					TargetMetric: Value
 					CheckRadius: 7c0
 
-LTNK:
-	Buildable:
-		Prerequisites: ~vehicles.nod
-
-WEAP.TD:
-	-ProvidesPrerequisiteValidatedFaction@mtnk:
-	-ProvidesPrerequisite@apc2:
-
-MTNK:
-	Buildable:
-		Prerequisites: ~!bdrone.upgrade, ~vehicles.gdi
-
-MTNK.Drone:
-	Buildable:
-		Prerequisites: ~bdrone.upgrade, ~vehicles.gdi
+APC2:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
 
 blacknapalm.upgrade:
 	Buildable:
@@ -139,11 +126,6 @@ BH:
 HFTK:
 	Buildable:
 		Prerequisites: anyradar, ~vehicles.nod
-
-HQ:
-	-ProduceActorPowerCA@hackercell:
-	-ProduceActorPowerCA@hackercellAI:
-	-CashHackPower@Legion:
 
 LQTF:
 	Inherits: ^Building

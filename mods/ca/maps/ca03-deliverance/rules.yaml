@@ -91,18 +91,6 @@ JJET:
 RMBO:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-bombard.strat:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-seek.strat:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-hold.strat:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-tflx.upgrade:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
 charv.upgrade:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
@@ -115,6 +103,18 @@ rapc.upgrade:
 		Prerequisites: anyradar, ~radar.allies
 
 A10:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+XO:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+PBUL:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+WOLV:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+DISR:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
 MSAR:
@@ -132,22 +132,10 @@ OCAR:
 ORCB:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-DISR:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-XO:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-CHPR:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
 AMCV:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
 CA:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-TNKD:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
 E7:
@@ -157,17 +145,12 @@ BORI:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
 HQ:
-	-DropPodsPowerCA@Zocom:
 	-AirstrikePowerCA@uav:
 
 ^BuildingTD:
 	WithDeathAnimation:
 		DeathSequencePalette: temptd
 		DeathPaletteIsPlayerPalette: false
-
-PYLE:
-
-WEAP.TD:
 
 HPAD.TD:
 	-InterceptorPower@AirDef:
@@ -177,16 +160,6 @@ REP:
 		Range: 12c0
 	WithRangeCircle@AIRCRAFTREPAIR:
 		Range: 12c0
-
-ATEK:
-	-DummyGpsPower@NOFOG:
-	-DummyGpsPower@FOG:
-	-ProduceActorPowerCA@SatelliteLaunched:
-	-ProduceActorPowerCA@InitialSatelliteScan:
-	-ProduceActorPowerCA@SatelliteScan:
-	-ProduceActorPowerCA@SatelliteScanNoFog:
-	-GrantExternalConditionPowerCA@FSHIELD:
-	-DetonateWeaponPower@TEMPINC:
 
 PDOX:
 	Inherits@CAMPAIGNDISABLED: ^Disabled

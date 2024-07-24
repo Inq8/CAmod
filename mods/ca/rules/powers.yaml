@@ -546,7 +546,7 @@
 ^ParabombsPower:
 	AirstrikePowerCA@Russianparabombs:
 		OrderName: parabombs
-		Prerequisites: ~aircraft.russia
+		Prerequisites: ~support.parabombs
 		PauseOnCondition: empdisable || being-warped
 		Icon: parabombs
 		ChargeInterval: 7500
@@ -691,7 +691,7 @@
 	Inherits@STORMTROOPERSPOWER: ^StormTroopersPower
 	Inherits@MUTABOMBPOWER: ^MutaBombPower
 	ProvidesPrerequisiteValidatedFaction@paratroopers:
-		Factions: ukraine, iraq
+		Factions: soviet, ukraine, iraq
 		Prerequisite: support.paratroopers
 
 ^SovietBombingPowers:
@@ -699,6 +699,9 @@
 	Inherits@CARPETBOMBPOWER: ^CarpetBombPower
 	Inherits@ATOMBOMBPOWER: ^AtomBombPower
 	Inherits@CHAOSBOMBPOWER: ^ChaosBombsPower
+	ProvidesPrerequisiteValidatedFaction@parabombs:
+		Factions: soviet, russia
+		Prerequisite: support.parabombs
 
 ^AtomicAmmoPower:
 	GrantExternalConditionPowerCA@ATOMICAMMO:

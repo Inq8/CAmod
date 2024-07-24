@@ -74,13 +74,6 @@ Player:
 EYE:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-ATWR:
-	Buildable:
-		Prerequisites: vehicles.any, ~structures.gdi, ~techlevel.medium
-
-STWR:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
 TSLA:
 	-Targetable@TeslaBoost:
 	ExternalCondition@BUFFREMOVED:
@@ -119,11 +112,9 @@ SAM:
 
 DOME:
 	ParatroopersPowerCA@paratroopers:
-		-Prerequisites:
 		RequiresCondition: paratroopers-enabled
 	ExternalCondition@paratroopers:
 		Condition: paratroopers-enabled
-	-ParatroopersPowerCA@Russianparatroopers:
 
 AFLD:
 	AirstrikePowerCA@Russianparabombs:
@@ -213,6 +204,21 @@ KIRO:
 SPY:
 	RevealsShroud:
 		Range: 8c512
+
+MSAM:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+HSAM:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.gdi
+
+AURO:
+	Buildable:
+		Prerequisites: afld.gdi, gtek
+
+hovermam.upgrade:
+	Buildable:
+		Prerequisites: upgc
 
 V3RL:
 	AutoTargetPriority@DEFAULT:
