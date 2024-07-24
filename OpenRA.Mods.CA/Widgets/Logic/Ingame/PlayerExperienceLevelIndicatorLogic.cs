@@ -26,12 +26,23 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 		[TranslationReference("nextLevelXp")]
 		const string PlayerLevelRequiredXp = "label-player-level-required-xp";
 
+		const string DisabledImage = "disabled";
+
 		[ObjectCreator.UseCtor]
 		public PlayerExperienceLevelIndicatorLogic(Widget widget, World world)
 		{
 			var playerExperience = world.LocalPlayer.PlayerActor.Trait<PlayerExperience>();
-			var playerExperienceLevels = world.LocalPlayer.PlayerActor.Trait<PlayerExperienceLevels>();
+			var playerExperienceLevels = world.LocalPlayer.PlayerActor.TraitOrDefault<PlayerExperienceLevels>();
 			var rankImage = widget.Get<ImageWidget>("PLAYER_EXPERIENCE_LEVEL");
+
+			if (playerExperienceLevels == null)
+			{
+				rankImage.GetImageName = () => DisabledImage;
+				rankImage.IsVisible = () => true;
+				rankImage.GetTooltipText = () => TranslationProvider.GetString(PlayerLevel, Translation.Arguments("level", "N/A"));
+				return;
+			}
+
 			rankImage.GetImageName = () => "level" + playerExperienceLevels.CurrentLevel;
 			rankImage.IsVisible = () => playerExperienceLevels.Enabled;
 
