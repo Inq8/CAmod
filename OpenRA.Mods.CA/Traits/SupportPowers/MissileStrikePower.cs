@@ -11,7 +11,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenRA.GameRules;
 using OpenRA.Graphics;
 using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Graphics;
@@ -23,12 +22,31 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
+	public enum MissileStrikeSpawnDirection {
+		NearestMapEdge,
+		Launcher
+	}
+
+	enum MapEdge
+	{
+		Top,
+		Right,
+		Bottom,
+		Left
+	}
+
 	public class MissileStrikePowerInfo : SupportPowerInfo
 	{
 		[Desc("Missile actor. Must have a trait that inherits `" + nameof(MissileBase) + "`.")]
 		[ActorReference]
 		[FieldLoader.Require]
 		public readonly string MissileActor = null;
+
+		[Desc("Direction from which to spawn the missiles.")]
+		public readonly MissileStrikeSpawnDirection SpawnFromDirection = MissileStrikeSpawnDirection.NearestMapEdge;
+
+		[Desc("Distance to from target to spawn the missiles (if set to zero, half map distance will be used).")]
+		public readonly WDist SpawnDistance = WDist.Zero;
 
 		[Desc("Altitude to launch missiles from. If null, the target's altitude will be used.")]
 		public readonly WDist? LaunchAltitude = null;
@@ -108,14 +126,6 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new MissileStrikePower(init.Self, this); }
 	}
 
-	enum MapEdge
-	{
-		Top,
-		Right,
-		Bottom,
-		Left
-	}
-
 	public class MissileStrikePower : SupportPower, ITick, INotifyCreated
 	{
 		readonly MissileStrikePowerInfo info;
@@ -127,7 +137,8 @@ namespace OpenRA.Mods.CA.Traits
 		CPos targetCell;
 		WPos soundPos;
 		int ticks;
-		MapEdge startEdge;
+		MapEdge nearestMapEdge;
+		WDist spawnDistance;
 
 		[Sync]
 		public int Ticks { get; private set; }
@@ -172,26 +183,9 @@ namespace OpenRA.Mods.CA.Traits
 			for (int i = 0; i < numMissiles; i++)
 				targetQueue.Enqueue(targets[i % targets.Count]);
 
-			startEdge = CalculateStartEdge(targetCell);
-
-			switch (startEdge)
-			{
-				case MapEdge.Top:
-					soundPos = self.World.Map.CenterOfCell(new CPos(targetCell.X, 0));
-					break;
-
-				case MapEdge.Right:
-					soundPos = self.World.Map.CenterOfCell(new CPos(mapBounds.Width, targetCell.Y));
-					break;
-
-				case MapEdge.Bottom:
-					soundPos = self.World.Map.CenterOfCell(new CPos(targetCell.X, mapBounds.Height));
-					break;
-
-				case MapEdge.Left:
-					soundPos = self.World.Map.CenterOfCell(new CPos(0, targetCell.Y));
-					break;
-			}
+			nearestMapEdge = CalculateNearestMapEdge();
+			spawnDistance = CalculateSpawnDistance();
+			soundPos = CalculateLaunchSoundPos();
 		}
 
 		void ITick.Tick(Actor self)
@@ -234,12 +228,14 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
-		private MapEdge CalculateStartEdge(CPos targetCell)
+		private MapEdge CalculateNearestMapEdge()
 		{
-			var distFromTopEdge = targetCell.Y;
-			var distFromLeftEdge = targetCell.X;
-			var distFromBottomEdge = mapBounds.Height - targetCell.Y;
-			var distFromRightEdge = mapBounds.Width - targetCell.X;
+			var referenceCell = info.SpawnFromDirection == MissileStrikeSpawnDirection.NearestMapEdge ? targetCell : Self.World.Map.CellContaining(Self.CenterPosition);
+
+			var distFromTopEdge = referenceCell.Y;
+			var distFromLeftEdge = referenceCell.X;
+			var distFromBottomEdge = mapBounds.Height - referenceCell.Y;
+			var distFromRightEdge = mapBounds.Width - referenceCell.X;
 
 			if (distFromTopEdge <= distFromLeftEdge && distFromTopEdge <= distFromBottomEdge && distFromTopEdge <= distFromRightEdge)
 			{
@@ -259,23 +255,90 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
-		private CPos CalculateStartCell(CPos targetCell)
+		private WDist CalculateSpawnDistance()
 		{
-			var scatter = Self.World.SharedRandom.Next(-25, 25);
-			switch (startEdge)
+			if (info.SpawnDistance.Length > 0)
+				return info.SpawnDistance;
+
+			switch (nearestMapEdge)
 			{
 				case MapEdge.Top:
-					return new CPos(targetCell.X, targetCell.Y - halfMapHeight) + new CVec(scatter, 0);
+					return new WDist(halfMapHeight);
+
+				case MapEdge.Left:
+				case MapEdge.Right:
+				default:
+					return new WDist(halfMapWidth);
+			}
+		}
+
+		private CPos CalculateLaunchCell(CPos targetCell)
+		{
+			WPos launchReferencePos;
+
+			if (info.SpawnFromDirection == MissileStrikeSpawnDirection.Launcher && !Self.IsDead && Self.IsInWorld)
+			{
+				launchReferencePos = Self.CenterPosition;
+			}
+			else
+			{
+				CPos sourceCell;
+
+				var scatter = Self.World.SharedRandom.Next(-25, 25);
+
+				switch (nearestMapEdge)
+				{
+					case MapEdge.Top:
+						sourceCell = new CPos(targetCell.X, targetCell.Y - halfMapHeight) + new CVec(scatter, 0);
+						break;
+
+					case MapEdge.Right:
+						sourceCell = new CPos(targetCell.X + halfMapWidth, targetCell.Y) + new CVec(0, scatter);
+						break;
+
+					case MapEdge.Bottom:
+						sourceCell = new CPos(targetCell.X, targetCell.Y + halfMapHeight) + new CVec(scatter, 0);
+						break;
+
+					case MapEdge.Left:
+					default:
+						sourceCell = new CPos(targetCell.X - halfMapWidth, targetCell.Y) + new CVec(0, scatter);
+						break;
+				}
+
+				launchReferencePos = Self.World.Map.CenterOfCell(sourceCell);
+			}
+
+			var targetPos = Self.World.Map.CenterOfCell(targetCell);
+			var launchFacing = (targetPos - launchReferencePos).Yaw.Facing;
+			var launchRotation = WRot.FromFacing(launchFacing);
+
+			// random rotation
+			launchRotation = launchRotation.Rotate(WRot.FromFacing(Self.World.SharedRandom.Next(30) - 15));
+			var delta = new WVec(0, -1024, 0).Rotate(launchRotation);
+			var launchPos = targetPos - spawnDistance.Length * delta / 1024;
+			return Self.World.Map.CellContaining(launchPos);
+		}
+
+		private WPos CalculateLaunchSoundPos()
+		{
+			if (info.SpawnFromDirection == MissileStrikeSpawnDirection.Launcher)
+				return Self.CenterPosition;
+
+			switch (nearestMapEdge)
+			{
+				case MapEdge.Top:
+					return Self.World.Map.CenterOfCell(new CPos(targetCell.X, 0));
 
 				case MapEdge.Right:
-					return new CPos(targetCell.X + halfMapWidth, targetCell.Y) + new CVec(0, scatter);
+					return Self.World.Map.CenterOfCell(new CPos(mapBounds.Width, targetCell.Y));
 
 				case MapEdge.Bottom:
-					return new CPos(targetCell.X, targetCell.Y + halfMapHeight) + new CVec(scatter, 0);
+					return Self.World.Map.CenterOfCell(new CPos(targetCell.X, mapBounds.Height));
 
 				case MapEdge.Left:
 				default:
-					return new CPos(targetCell.X - halfMapWidth, targetCell.Y) + new CVec(0, scatter);
+					return Self.World.Map.CenterOfCell(new CPos(0, targetCell.Y));
 			}
 		}
 
@@ -292,22 +355,19 @@ namespace OpenRA.Mods.CA.Traits
 				if (target.Type == TargetType.FrozenActor && (target.FrozenActor.Actor.IsDead || !target.FrozenActor.Actor.IsInWorld))
 					return;
 
-				var startCell = CalculateStartCell(targetCell);
-				var startPos = 	self.World.Map.CenterOfCell(startCell);
+				var launchCell = CalculateLaunchCell(targetCell);
+				var launchPos = self.World.Map.CenterOfCell(launchCell);
 
-				var spawnDirection = new WVec((targetCell - startCell).X, (targetCell - startCell).Y, 0);
+				var spawnDirection = new WVec((targetCell - launchCell).X, (targetCell - launchCell).Y, 0);
 				var spawnFacing = spawnDirection.Yaw;
 				var targetAltitude = new WDist(target.CenterPosition.Z);
 
 				var actor = w.CreateActor(false, info.MissileActor, new TypeDictionary
 				{
-					new CenterPositionInit(startPos + new WVec(0, 0, info.LaunchAltitude.GetValueOrDefault(targetAltitude).Length)),
+					new CenterPositionInit(launchPos + new WVec(0, 0, info.LaunchAltitude.GetValueOrDefault(targetAltitude).Length)),
 					new OwnerInit(self.Owner),
 					new FacingInit(spawnFacing)
 				});
-
-				// todo: implement dynamic speed
-				// var dynamicSpeedMultiplier = actor.TraitOrDefault<DynamicSpeedMultiplier>();
 
 				var gm = actor.Trait<MissileBase>();
 				gm.SetTarget(target);

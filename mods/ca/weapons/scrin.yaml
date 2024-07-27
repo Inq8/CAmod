@@ -45,11 +45,6 @@ DisintegratorBeamAA:
 		Range: 0, 0c64, 0c256, 3c0
 		Falloff: 100, 100, 30, 15
 		Damage: 2500
-		Versus:
-			None: 100
-			Wood: 100
-			Concrete: 100
-			Light: 100
 	Warhead@smallDamage: SpreadDamage
 		ValidTargets: AirSmall
 		ValidRelationships: Enemy, Neutral
@@ -158,11 +153,6 @@ GunWalkerZapAA:
 		ValidRelationships: Enemy, Neutral
 		Range: 0, 0c64, 0c256, 3c0
 		Falloff: 100, 100, 30, 15
-		Versus:
-			Wood: 100
-			Concrete: 100
-			Light: 100
-			Heavy: 100
 	Warhead@smallDamage: SpreadDamage
 		Damage: 1800
 		ValidTargets: AirSmall
@@ -764,11 +754,6 @@ StormRiderZapAA:
 		Falloff: 100, 100, 30, 15
 		ValidTargets: Air
 		ValidRelationships: Enemy, Neutral
-		Versus:
-			Wood: 100
-			Concrete: 100
-			Light: 100
-			Heavy: 100
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@smallDamage: SpreadDamage
 		Damage: 1800
@@ -836,12 +821,6 @@ EnervatorBoltsAA:
 		Falloff: 100, 100, 30, 15
 		ValidRelationships: Enemy, Neutral
 		Damage: 6000
-		Versus:
-			None: 100
-			Wood: 100
-			Light: 100
-			Concrete: 100
-			Brick: 100
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@smallDamage: SpreadDamage
 		Damage: 6000
@@ -919,11 +898,6 @@ InvaderZapAA:
 		Falloff: 100, 100, 30, 15
 		ValidTargets: Air
 		ValidRelationships: Enemy, Neutral
-		Versus:
-			Light: 100
-			Concrete: 100
-			Wood: 100
-			None: 100
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	-Warhead@2Dam:
 	Warhead@smallDamage: SpreadDamage
@@ -1387,11 +1361,20 @@ Rift:
 			Brick: 75
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 
-SuppressionSiphonField:
+SuppressionField:
 	Projectile: InstantExplode
 	ReloadDelay: 1
 	ValidTargets: Ground, Air, AirSmall, Ship
-	Warhead@3siphon: GrantExternalConditionCA
+	# extra suppression range vs aircraft
+	Warhead@Suppression: GrantExternalConditionCA
+		Range: 4c512
+		Duration: 600
+		Condition: suppression
+		ValidTargets: Air, AirSmall
+
+SuppressionSiphonField:
+	Inherits: SuppressionField
+	Warhead@Siphon: GrantExternalConditionCA
 		Range: 3c0
 		Duration: 600
 		Condition: suppression-siphon
@@ -1802,12 +1785,6 @@ AtomizerBoltsAA:
 		Speed: 300
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Air, AirSmall
-		Versus:
-			None: 100
-			Wood: 100
-			Light: 100
-			Concrete: 100
-			Brick: 100
 	Warhead@atomize: GrantExternalConditionCA
 		ValidTargets: Air, AirSmall
 	Warhead@3Eff: CreateEffect

@@ -13,7 +13,7 @@ V2RL:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
 		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets
 	Valued:
-		Cost: 850
+		Cost: 900
 	Tooltip:
 		Name: V2 Rocket Launcher
 	UpdatesPlayerStatistics:
@@ -212,6 +212,7 @@ NUKC:
 		Speed: 46
 		Locomotor: heavytracked
 		Voice: Move
+		ImmovableCondition: deployed
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 5c0
@@ -343,7 +344,7 @@ NUKC:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 120
-		Prerequisites: ~vehicles.allies, ~techlevel.low
+		Prerequisites: ~vehicles.1tnk, ~techlevel.low
 		Description: Fast tank, good for scouting.
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor
@@ -412,7 +413,7 @@ NUKC:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 70
-		Prerequisites: ~vehicles.2tnk, ~techlevel.low
+		Prerequisites: ~vehicles.allies, ~techlevel.low
 		Description: Allied main battle tank.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
@@ -5613,6 +5614,8 @@ TRPC:
 	SpeedMultiplier@InspirationCmsr:
 		Modifier: 112
 		RequiresCondition: cmsr-inspiration
+	Targetable@TroopCrawler:
+		TargetTypes: TroopCrawler
 
 IFV:
 	Inherits: ^Tank
@@ -7016,15 +7019,15 @@ RTNK:
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 71
+		BuildPaletteOrder: 120
 		Prerequisites: ~vehicles.england, ~techlevel.low
 		Description: Advanced battle tank that can disguise when stationary.
 	TooltipExtras:
-		Strengths: • Strong vs Heavy Armor, Light Armor
+		Strengths: • Strong vs Light Armor, Heavy Armor
 		Weaknesses: • Weak vs Defenses, Infantry\n• Cannot attack Aircraft
-		Attributes: • Disguised when not moving
+		Attributes: • Disguised when not moving\n• Deals additional damage firing from disguised state
 	Valued:
-		Cost: 825
+		Cost: 800
 	Tooltip:
 		Name: Mirage Tank
 	Mirage:
@@ -7042,11 +7045,11 @@ RTNK:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 47000
+		HP: 34000
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 72
+		Speed: 100
 		Voice: Move
 	Passenger:
 		Voice: Move
@@ -7111,6 +7114,9 @@ RTNK:
 	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || hidden
 		ColorSource: Player
+	FirepowerMultiplier@Ambush:
+		Modifier: 175
+		RequiresCondition: hidden
 
 V3RL:
 	Inherits: ^Vehicle
@@ -8632,7 +8638,7 @@ XO:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 25000
+		HP: 26000
 	Armor:
 		Type: Light
 	Mobile:
@@ -9291,8 +9297,7 @@ KPAT:
 		HP: 5000
 	GuidedMissile:
 		Speed: 450
-		MaxTargetMovement: 3c0
-		MaxTargetMovementTicks: 140
+		MaxTargetMovementTicks: 170
 		MinAltitude: 128
 	LeavesTrailsCA:
 		Image: icbmsmoke
@@ -9305,6 +9310,11 @@ KPAT:
 		Type: GroundPosition
 	Explodes:
 		Weapon: KPAT
+	WithEnterExitWorldOverlay:
+		Image: smigboom
+		EnterSequence: enter
+		ExitSequence: exit
+		Palette: effect
 
 ZEUS:
 	Inherits: ^Vehicle
