@@ -2009,6 +2009,8 @@ HARV:
 	TransformOnCondition:
 		RequiresCondition: charv-upgrade
 		IntoActor: HARV.Chrono
+	RejectsOrders@Transforming:
+		RequiresCondition: charv-upgrade
 	TransferResourcesOnTransform:
 
 HARV.Chrono:
@@ -2047,6 +2049,7 @@ HARV.Chrono:
 	-PeriodicExplosion@WARPOUT:
 	-TransformOnCondition:
 	-TransferResourcesOnTransform:
+	-RejectsOrders@Transforming:
 
 MCV:
 	Inherits: ^Vehicle-NOUPG
