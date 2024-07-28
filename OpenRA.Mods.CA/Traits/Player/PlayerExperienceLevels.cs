@@ -62,7 +62,14 @@ namespace OpenRA.Mods.CA.Traits
 		int ticksUntilNotification;
 		bool dummyActorQueued;
 		int ticksUntilSpawnDummyActor;
-		int showLevelUpTicks;
+
+		int fadeInMaxTicks = 5;
+		int waitMaxTicks = 85;
+		int fadeOutMaxTicks = 15;
+
+		int fadeInTicks = 0;
+		int waitTicks = 0;
+		int fadeOutTicks = 0;
 
 		public PlayerExperienceLevels(Actor self, PlayerExperienceLevelsInfo info)
 			: base(info)
@@ -71,7 +78,6 @@ namespace OpenRA.Mods.CA.Traits
 			validFaction = info.Factions.Length == 0 || info.Factions.Contains(player.Faction.InternalName);
 
 			currentLevel = 0;
-			showLevelUpTicks = 0;
 			maxLevel = info.LevelXpRequirements.Length;
 			nextLevelXpRequired = info.LevelXpRequirements[currentLevel];
 			ticksUntilNotification = info.NotificationDelay;
@@ -83,7 +89,18 @@ namespace OpenRA.Mods.CA.Traits
 
 		public int? XpRequiredForNextLevel => currentLevel >= maxLevel ? null : nextLevelXpRequired;
 
-		public bool ShowLevelUp => showLevelUpTicks > 0;
+		public float LevelUpImageAlpha {
+			get {
+				if (fadeInTicks > 0)
+					return 1f - (float)fadeInTicks / fadeInMaxTicks;
+				else if (waitTicks > 0)
+					return 1f;
+				else if (fadeOutTicks > 0)
+					return (float)fadeOutTicks / fadeOutMaxTicks;
+				else
+					return 0f;
+			}
+		}
 
 		public IEnumerable<string> ProvidesPrerequisites
 		{
@@ -115,8 +132,12 @@ namespace OpenRA.Mods.CA.Traits
 				LevelUp(self);
 			}
 
-			if (showLevelUpTicks > 0)
-				showLevelUpTicks--;
+			if (fadeInTicks > 0)
+				fadeInTicks--;
+			else if (waitTicks > 0)
+				waitTicks--;
+			else if (fadeOutTicks > 0)
+				fadeOutTicks--;
 
 			if (notificationQueued && --ticksUntilNotification <= 0)
 			{
@@ -147,7 +168,10 @@ namespace OpenRA.Mods.CA.Traits
 
 		void LevelUp(Actor self)
 		{
-			showLevelUpTicks = 100;
+			fadeInTicks = fadeInMaxTicks;
+			waitTicks = waitMaxTicks;
+			fadeOutTicks = fadeOutMaxTicks;
+
 			currentLevel++;
 
 			if (currentLevel < maxLevel)
