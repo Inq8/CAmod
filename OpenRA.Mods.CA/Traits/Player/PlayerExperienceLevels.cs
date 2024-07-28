@@ -62,6 +62,7 @@ namespace OpenRA.Mods.CA.Traits
 		int ticksUntilNotification;
 		bool dummyActorQueued;
 		int ticksUntilSpawnDummyActor;
+		int showLevelUpTicks;
 
 		public PlayerExperienceLevels(Actor self, PlayerExperienceLevelsInfo info)
 			: base(info)
@@ -70,6 +71,7 @@ namespace OpenRA.Mods.CA.Traits
 			validFaction = info.Factions.Length == 0 || info.Factions.Contains(player.Faction.InternalName);
 
 			currentLevel = 0;
+			showLevelUpTicks = 0;
 			maxLevel = info.LevelXpRequirements.Length;
 			nextLevelXpRequired = info.LevelXpRequirements[currentLevel];
 			ticksUntilNotification = info.NotificationDelay;
@@ -80,6 +82,8 @@ namespace OpenRA.Mods.CA.Traits
 		public int? CurrentLevel => currentLevel;
 
 		public int? XpRequiredForNextLevel => currentLevel >= maxLevel ? null : nextLevelXpRequired;
+
+		public bool ShowLevelUp => showLevelUpTicks > 0;
 
 		public IEnumerable<string> ProvidesPrerequisites
 		{
@@ -111,6 +115,9 @@ namespace OpenRA.Mods.CA.Traits
 				LevelUp(self);
 			}
 
+			if (showLevelUpTicks > 0)
+				showLevelUpTicks--;
+
 			if (notificationQueued && --ticksUntilNotification <= 0)
 			{
 				if (Info.LevelUpNotification != null)
@@ -140,6 +147,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		void LevelUp(Actor self)
 		{
+			showLevelUpTicks = 100;
 			currentLevel++;
 
 			if (currentLevel < maxLevel)

@@ -33,18 +33,22 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 		{
 			var playerExperience = world.LocalPlayer.PlayerActor.Trait<PlayerExperience>();
 			var playerExperienceLevels = world.LocalPlayer.PlayerActor.TraitOrDefault<PlayerExperienceLevels>();
-			var rankImage = widget.Get<ImageWidget>("PLAYER_EXPERIENCE_LEVEL");
+			var container = widget.Get<ContainerWidget>("PLAYER_EXPERIENCE");
+			var rankImage = container.Get<ImageWidget>("PLAYER_EXPERIENCE_LEVEL");
+			var rankUpImage = container.Get<ImageWidget>("PLAYER_EXPERIENCE_LEVEL_UP");
 
 			if (playerExperienceLevels == null)
 			{
 				rankImage.GetImageName = () => DisabledImage;
 				rankImage.IsVisible = () => true;
 				rankImage.GetTooltipText = () => TranslationProvider.GetString(PlayerLevel, Translation.Arguments("level", "N/A"));
+				rankUpImage.IsVisible = () => false;
 				return;
 			}
 
 			rankImage.GetImageName = () => "level" + playerExperienceLevels.CurrentLevel;
 			rankImage.IsVisible = () => playerExperienceLevels.Enabled;
+			rankUpImage.IsVisible = () => playerExperienceLevels.ShowLevelUp;
 
 			var tooltipTextCached = new CachedTransform<int?, string>((CurrentXp) =>
 			{
