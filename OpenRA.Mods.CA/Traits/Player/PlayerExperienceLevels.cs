@@ -35,6 +35,10 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Text notification to display when player levels up.")]
 		public readonly string LevelUpTextNotification = null;
 
+		[NotificationReference("Sounds")]
+		[Desc("Sound notification to play when player levels up.")]
+		public readonly string LevelUpSound = null;
+
 		[Desc("Ticks before playing notification.")]
 		public readonly int NotificationDelay = 0;
 
@@ -168,6 +172,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		void LevelUp(Actor self)
 		{
+			if (Info.LevelUpSound != null)
+				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Sounds", Info.LevelUpSound, self.Owner.Faction.InternalName);
+
 			fadeInTicks = fadeInMaxTicks;
 			waitTicks = waitMaxTicks;
 			fadeOutTicks = fadeOutMaxTicks;
