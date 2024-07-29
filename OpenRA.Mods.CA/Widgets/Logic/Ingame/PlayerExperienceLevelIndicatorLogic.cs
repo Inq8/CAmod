@@ -36,20 +36,29 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			var container = widget.Get<ContainerWidget>("PLAYER_EXPERIENCE");
 			var rankImage = container.Get<ImageWidget>("PLAYER_EXPERIENCE_LEVEL");
 			var rankUpImage = container.Get<ImageWithAlphaWidget>("PLAYER_EXPERIENCE_LEVEL_UP");
+			var rankImageGlow = container.Get<ImageWithAlphaWidget>("PLAYER_EXPERIENCE_LEVEL_GLOW");
 
 			if (playerExperienceLevels == null)
 			{
 				rankImage.GetImageName = () => DisabledImage;
 				rankImage.IsVisible = () => true;
+
+				rankImageGlow.GetImageName = () => DisabledImage;
+				rankImageGlow.IsVisible = () => false;
+
 				rankImage.GetTooltipText = () => TranslationProvider.GetString(PlayerLevel, Translation.Arguments("level", "N/A"));
 				rankUpImage.IsVisible = () => false;
 				return;
 			}
 
-			rankImage.GetImageName = () => "level" + playerExperienceLevels.CurrentLevel;
+			rankImage.GetImageName = () =>  $"level{playerExperienceLevels.CurrentLevel}";
 			rankImage.IsVisible = () => playerExperienceLevels.Enabled;
 			rankUpImage.IsVisible = () => playerExperienceLevels.LevelUpImageAlpha > 0;
 			rankUpImage.GetAlpha = () => playerExperienceLevels.LevelUpImageAlpha;
+
+			rankImageGlow.GetImageName = () => $"level{playerExperienceLevels.CurrentLevel}-glow";
+			rankImageGlow.IsVisible = () => playerExperienceLevels.LevelUpImageAlpha > 0;
+			rankImageGlow.GetAlpha = () => playerExperienceLevels.LevelUpImageAlpha;
 
 			var tooltipTextCached = new CachedTransform<int?, string>((CurrentXp) =>
 			{
