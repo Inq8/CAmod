@@ -1185,7 +1185,7 @@ XOCoilGun:
 			None: 100
 			Wood: 10
 			Light: 70
-			Heavy: 10
+			Heavy: 35
 			Concrete: 10
 			Brick: 10
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
@@ -1810,6 +1810,7 @@ GapBeam:
 	ReloadDelay: 15
 	Range: 8c0
 	Report: gaploop1.aud, gaploop2.aud, gaploop3.aud
+	ValidTargets: Ground, Water, Air, AirSmall
 	Projectile: ElectricBolt
 		Colors: 111111CC,223333CC,11222299,222233CC,44444466,436a6666
 		Duration: 16
@@ -1825,18 +1826,21 @@ GapBeam:
 		Duration: 15
 		Condition: gapveiled
 		ValidRelationships: Enemy, Neutral
+		ValidTargets: Ground, Water, Air, AirSmall
 	Warhead@2Eff: CreateEffect
 		Image: gap
 		Explosions: muzzle
-		ValidTargets: Ground, Ship, Trees
+		ValidTargets: Ground, Water, Trees, Air, AirSmall
 		Inaccuracy: 128
 	Warhead@3Eff: CreateEffect
 		Explosions: veilcloudsm, veilcloudsmf
 		ExplosionPalette: effect-ignore-lighting-alpha40
 		Inaccuracy: 1c512
+		ValidTargets: Ground, Water, Trees, Air, AirSmall
 
 MobileGapBeam:
 	Inherits: GapBeam
+	-ValidTargets:
 	Range: 7c0
 
 RadarJammer:
@@ -2785,7 +2789,7 @@ JDAM:
 		ThrowWithoutTarget: true
 
 HarvSwap:
-	ReloadDelay: 50
+	ReloadDelay: 500
 	Projectile: InstantExplode
 	Warhead@2Eff: CreateEffect
 		Explosions: chronowarp_effect
@@ -3570,6 +3574,7 @@ JackknifeTargeter:
 TroopCrawlerDummyWeapon:
 	Range: 1c0
 	ValidTargets: Infantry, Vehicle
+	InvalidTargets: TroopCrawler
 	ReloadDelay: 25
 	Projectile: InstantHit
 	Warhead@1Dam: Dummy

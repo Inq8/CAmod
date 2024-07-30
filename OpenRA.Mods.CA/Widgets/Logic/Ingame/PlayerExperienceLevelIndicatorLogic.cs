@@ -26,14 +26,39 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 		[TranslationReference("nextLevelXp")]
 		const string PlayerLevelRequiredXp = "label-player-level-required-xp";
 
+		const string DisabledImage = "disabled";
+
 		[ObjectCreator.UseCtor]
 		public PlayerExperienceLevelIndicatorLogic(Widget widget, World world)
 		{
 			var playerExperience = world.LocalPlayer.PlayerActor.Trait<PlayerExperience>();
-			var playerExperienceLevels = world.LocalPlayer.PlayerActor.Trait<PlayerExperienceLevels>();
-			var rankImage = widget.Get<ImageWidget>("PLAYER_EXPERIENCE_LEVEL");
-			rankImage.GetImageName = () => "level" + playerExperienceLevels.CurrentLevel;
+			var playerExperienceLevels = world.LocalPlayer.PlayerActor.TraitOrDefault<PlayerExperienceLevels>();
+			var container = widget.Get<ContainerWidget>("PLAYER_EXPERIENCE");
+			var rankImage = container.Get<ImageWidget>("PLAYER_EXPERIENCE_LEVEL");
+			var rankUpImage = container.Get<ImageWithAlphaWidget>("PLAYER_EXPERIENCE_LEVEL_UP");
+			var rankImageGlow = container.Get<ImageWithAlphaWidget>("PLAYER_EXPERIENCE_LEVEL_GLOW");
+
+			if (playerExperienceLevels == null)
+			{
+				rankImage.GetImageName = () => DisabledImage;
+				rankImage.IsVisible = () => true;
+
+				rankImageGlow.GetImageName = () => DisabledImage;
+				rankImageGlow.IsVisible = () => false;
+
+				rankImage.GetTooltipText = () => TranslationProvider.GetString(PlayerLevel, Translation.Arguments("level", "N/A"));
+				rankUpImage.IsVisible = () => false;
+				return;
+			}
+
+			rankImage.GetImageName = () =>  $"level{playerExperienceLevels.CurrentLevel}";
 			rankImage.IsVisible = () => playerExperienceLevels.Enabled;
+			rankUpImage.IsVisible = () => playerExperienceLevels.LevelUpImageAlpha > 0;
+			rankUpImage.GetAlpha = () => playerExperienceLevels.LevelUpImageAlpha;
+
+			rankImageGlow.GetImageName = () => $"level{playerExperienceLevels.CurrentLevel}-glow";
+			rankImageGlow.IsVisible = () => playerExperienceLevels.LevelUpImageAlpha > 0;
+			rankImageGlow.GetAlpha = () => playerExperienceLevels.LevelUpImageAlpha;
 
 			var tooltipTextCached = new CachedTransform<int?, string>((CurrentXp) =>
 			{

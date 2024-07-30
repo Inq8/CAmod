@@ -35,7 +35,7 @@ Players:
 		Playable: True
 		Required: True
 		LockFaction: True
-		Faction: russia
+		Faction: soviet
 		LockColor: True
 		Color: FE1100
 		LockSpawn: True
@@ -44,21 +44,21 @@ Players:
 	PlayerReference@Greece:
 		Name: Greece
 		Bot: campaign
-		Faction: germany
+		Faction: allies
 		Color: 99ACF2
 		Allies: Traitor
 		Enemies: USSR, Creeps
 	PlayerReference@Traitor:
 		Name: Traitor
 		Bot: campaign
-		Faction: russia
+		Faction: soviet
 		Color: FF9922
 		Allies: Greece
 		Enemies: USSR, Creeps
 	PlayerReference@USSRAbandoned:
 		Name: USSRAbandoned
 		NonCombatant: True
-		Faction: russia
+		Faction: soviet
 		Color: FE1100
 
 Actors:
@@ -3429,6 +3429,6 @@ Actors:
 		Location: 24,106
 		Facing: 118
 
-Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, rules.yaml
+Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-doctrines.yaml, rules.yaml
 
 Weapons: ca|weapons/custom/campaign.yaml

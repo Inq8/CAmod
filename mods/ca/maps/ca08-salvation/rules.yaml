@@ -8,6 +8,7 @@ World:
 		Briefing: The visitors, the Scrin, have taken control of a peninsula that is home to many innocent people, in order to seed it with Tiberium.\n\nThese peoples' cries for help have been predictably ignored. The Brotherhood is their only hope. Their homes, and indeed their lives, are in our hands.\n\nTake a detachment and liberate the peninsula. Show these people that after having being forsaken by all others, the Brotherhood of Nod will protect them, and in turn I am certain that many of them will join our cause.\n\nAs the Scrin control the Tiberium fields here, you will need to take control of the oil derricks here to fund your efforts.
 	MapOptions:
 		ShortGameCheckboxEnabled: False
+		TechLevel: medium
 	ScriptLobbyDropdown@DIFFICULTY:
 		ID: difficulty
 		Label: dropdown-difficulty.label
@@ -24,28 +25,19 @@ Player:
 	PlayerResources:
 		DefaultCash: 0
 
+BH:
+	Buildable:
+		Prerequisites: anyradar
+
 SAPC:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
 AMCV:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-AIRS:
-	ParatroopersPowerCA@NodAirDrop:
-		-Prerequisites:
-	-ParatroopersPowerCA@blackhairdrop:
-
 HQ:
 	-SpawnActorPowerCA@sathack:
 	-SpawnActorPowerCA@sathacklegion:
-	-AirstrikePowerCA@BlackhandFirebomb:
-
-FTNK:
-	Buildable:
-		Prerequisites: anyradar, airs
-
-HFTK:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
 
 MLRS:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
@@ -60,24 +52,6 @@ RMBC:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
 hazmat.upgrade:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-howi.upgrade:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-tibcore.upgrade:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-blacknapalm.upgrade:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-advcyborg.upgrade:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-cyborgarmor.upgrade:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-cyborgspeed.upgrade:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
 HOSP:

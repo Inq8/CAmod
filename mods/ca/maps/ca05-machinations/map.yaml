@@ -23,11 +23,11 @@ Players:
 		Name: Neutral
 		OwnsWorld: True
 		NonCombatant: True
-		Faction: england
+		Faction: Random
 	PlayerReference@Creeps:
 		Name: Creeps
 		NonCombatant: True
-		Faction: england
+		Faction: Random
 		Enemies: Nod, Greece
 	PlayerReference@Greece:
 		Name: Greece
@@ -35,7 +35,7 @@ Players:
 		Playable: True
 		Required: True
 		LockFaction: True
-		Faction: germany
+		Faction: allies
 		LockColor: True
 		Color: 99ACF2
 		LockSpawn: True
@@ -44,7 +44,7 @@ Players:
 	PlayerReference@Nod:
 		Name: Nod
 		Bot: campaign
-		Faction: blackh
+		Faction: nod
 		Color: FE1100
 		Enemies: Greece, Creeps
 
@@ -2323,6 +2323,6 @@ Actors:
 		Owner: Neutral
 		Location: 88,37
 
-Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, rules.yaml
+Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-coalitions.yaml, rules.yaml
 
 Weapons: ca|weapons/custom/campaign.yaml

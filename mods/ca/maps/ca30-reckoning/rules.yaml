@@ -94,11 +94,6 @@ Player:
 	DamagedByTerrain@TIBDAMAGE:
 		Terrain: Tiberium
 
-HQ:
-	-ProduceActorPowerCA@hackercell:
-	-ProduceActorPowerCA@hackercellAI:
-	-CashHackPower@Legion:
-
 TMPL:
 	GrantExternalConditionPowerCA@Frenzy:
 		-Prerequisites:
@@ -127,21 +122,8 @@ HFTK:
 	Buildable:
 		Prerequisites: anyradar, ~vehicles.nod
 
-LTNK:
-	Buildable:
-		Prerequisites: ~vehicles.nod
-
-WEAP.TD:
-	-ProvidesPrerequisiteValidatedFaction@mtnk:
-	-ProvidesPrerequisite@apc2:
-
-MTNK:
-	Buildable:
-		Prerequisites: ~!bdrone.upgrade, ~vehicles.gdi
-
-MTNK.Drone:
-	Buildable:
-		Prerequisites: ~bdrone.upgrade, ~vehicles.gdi
+APC2:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
 
 blacknapalm.upgrade:
 	Buildable:

@@ -76,7 +76,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		readonly Stack<int> loadedTokens = new Stack<int>();
 
-		WPos finishEdge;
+		WPos finishPos;
 		WVec spawnOffset;
 
 		int launchCondition = Actor.InvalidConditionToken;
@@ -156,7 +156,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			SpawnIntoWorld(self, se.Actor, self.CenterPosition);
 
-			se.SpawnerSlave.SetSpawnInfo(finishEdge, spawnOffset);
+			se.SpawnerSlave.SetSpawnInfo(finishPos, spawnOffset);
 
 			// Lambdas can't use 'in' variables, so capture a copy for later
 			var delayedTarget = target;
@@ -199,22 +199,22 @@ namespace OpenRA.Mods.CA.Traits
 				var delta = new WVec(0, -1024, 0).Rotate(attackRotation);
 				target += new WVec(0, 0, altitude);
 
-				WPos startEdge;
-				WPos finishEdge;
+				WPos startPos;
+				WPos finishPos;
 
 				if (AirstrikeMasterInfo.SpawnDistance != WDist.Zero)
-					startEdge = target - AirstrikeMasterInfo.SpawnDistance.Length * delta / 1024;
+					startPos = target - AirstrikeMasterInfo.SpawnDistance.Length * delta / 1024;
 				else
-					startEdge = target - (self.World.Map.DistanceToEdge(target, -delta) + AirstrikeMasterInfo.Cordon).Length * delta / 1024;
+					startPos = target - (self.World.Map.DistanceToEdge(target, -delta) + AirstrikeMasterInfo.Cordon).Length * delta / 1024;
 
-				finishEdge = target + (self.World.Map.DistanceToEdge(target, delta) + AirstrikeMasterInfo.Cordon).Length * delta / 1024;
+				finishPos = target + (self.World.Map.DistanceToEdge(target, delta) + AirstrikeMasterInfo.Cordon).Length * delta / 1024;
 
 				var so = AirstrikeMasterInfo.SquadOffset;
 				var spawnOffset = new WVec(i * so.Y, -Math.Abs(i) * so.X, 0).Rotate(attackRotation);
 				var targetOffset = new WVec(i * so.Y, 0, 0).Rotate(attackRotation);
 
 				this.spawnOffset = spawnOffset;
-				this.finishEdge = finishEdge;
+				this.finishPos = finishPos;
 
 				w.AddFrameEndTask(_ =>
 				{
@@ -223,7 +223,7 @@ namespace OpenRA.Mods.CA.Traits
 
 					var attack = slave.Trait<AttackAircraft>();
 
-					slave.Trait<IPositionable>().SetCenterPosition(slave, startEdge + spawnOffset);
+					slave.Trait<IPositionable>().SetCenterPosition(slave, startPos + spawnOffset);
 					var facing = slave.TraitOrDefault<IFacing>();
 					facing.Facing = WAngle.FromFacing(attackFacing);
 

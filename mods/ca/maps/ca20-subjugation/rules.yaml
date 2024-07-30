@@ -201,15 +201,14 @@ BIO:
 	-ProvidesPrerequisite@toxintruck:
 
 TTRK:
-	Buildable:
-		Prerequisites: bio
+	-Buildable:
 
 DOME:
 	-AirstrikePowerCA@spyplane:
-	-AirstrikePowerCA@MutaBomb:
+	-ParatroopersPowerCA@paratroopers:
 
 HPAD:
-	-AirstrikePowerCA@ChaosBombs:
+	-AirstrikePowerCA@Russianparabombs:
 
 SILO:
 	Power:
@@ -232,10 +231,6 @@ THF:
 
 DOG:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-V2RL:
-	Buildable:
-		Prerequisites: anyradar
 
 HALO:
 	Inherits@MC: ^MindControllable
@@ -293,12 +288,3 @@ E6:
 		-Voice:
 	Passenger:
 		-Voice:
-
-loyalist.allegiance:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-rebel.allegiance:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-allegiance.upgrade:
-	Inherits@CAMPAIGNDISABLED: ^Disabled

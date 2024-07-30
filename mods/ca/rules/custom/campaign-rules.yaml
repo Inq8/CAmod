@@ -58,7 +58,6 @@ Player:
 		Visible: False
 		Values:
 			global.singlequeue: options-queuetype.singlequeue
-	-ProvidesPrerequisiteOnCounts@ScrinAllegiances:
 
 World:
 	CrateSpawner:
@@ -96,10 +95,6 @@ World:
 ^AffectedByDriverKill:
 	ChangesHealth@DRIVER_DEAD:
 		PercentageStep: 0
-
-^HazmatUpgrade:
-	GrantConditionOnPrerequisite@HAZMATZOCOM:
-		Prerequisites: ~disabled
 
 ^Disabled:
 	Buildable:
@@ -273,14 +268,6 @@ hazmat.upgrade:
 	Buildable:
 		Prerequisites: anyradar, infantry.any, ~!player.soviet, ~!player.scrin, ~techlevel.medium
 
-loyalist.allegiance:
-	Buildable:
-		Prerequisites: ~disabled
-
-rebel.allegiance:
-	Buildable:
-		Prerequisites: ~disabled
-
 radar.dummy:
 	AlwaysVisible:
 	Interactable:
@@ -353,32 +340,21 @@ PROC.SCRIN:
 	InfiltrateForCash:
 		Maximum: 600
 
+WOLV:
+	Buildable:
+		Prerequisites: gtek, ~vehicles.gdi
+
 XO:
 	Buildable:
 		Prerequisites: gtek, ~vehicles.gdi
 
-# Remove faction bonuses
+PBUL:
+	Buildable:
+		Prerequisites: gtek, ~vehicles.gdi
 
-MLRS:
-	-ProductionCostMultiplier@BlackhBonus:
-
-SHOK:
-	-ProductionCostMultiplier@RussiaBonus:
-
-TSLA:
-	-ProductionCostMultiplier@RussiaBonus:
-
-DEVO:
-	-ProductionCostMultiplier@REAPBONUS:
-
-PDOX:
-	-ProductionCostMultiplier@GermanyBonus:
-
-RFGN:
-	-ProductionCostMultiplier@HarbingerBonus:
-
-EYE:
-	-ProductionCostMultiplier@ZocomBonus:
+DISR:
+	Buildable:
+		Prerequisites: gtek, ~vehicles.gdi
 
 # For attack interval calculations, factoring in extra value from cargo
 

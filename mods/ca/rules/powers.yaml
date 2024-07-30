@@ -339,6 +339,8 @@
 		MissilesPerLaunch: 2
 		MaxTargets: 8
 		ValidTargets: Air, AirSmall
+		SpawnFromDirection: Launcher
+		SpawnDistance: 96c0
 
 ^ChronoshiftPower:
 	ChronoshiftPowerCA@chronoshift:
@@ -546,7 +548,7 @@
 ^ParabombsPower:
 	AirstrikePowerCA@Russianparabombs:
 		OrderName: parabombs
-		Prerequisites: ~aircraft.russia
+		Prerequisites: ~support.parabombs
 		PauseOnCondition: empdisable || being-warped
 		Icon: parabombs
 		ChargeInterval: 7500
@@ -691,7 +693,7 @@
 	Inherits@STORMTROOPERSPOWER: ^StormTroopersPower
 	Inherits@MUTABOMBPOWER: ^MutaBombPower
 	ProvidesPrerequisiteValidatedFaction@paratroopers:
-		Factions: ukraine, iraq
+		Factions: soviet, ukraine, iraq
 		Prerequisite: support.paratroopers
 
 ^SovietBombingPowers:
@@ -699,6 +701,9 @@
 	Inherits@CARPETBOMBPOWER: ^CarpetBombPower
 	Inherits@ATOMBOMBPOWER: ^AtomBombPower
 	Inherits@CHAOSBOMBPOWER: ^ChaosBombsPower
+	ProvidesPrerequisiteValidatedFaction@parabombs:
+		Factions: soviet, russia
+		Prerequisite: support.parabombs
 
 ^AtomicAmmoPower:
 	GrantExternalConditionPowerCA@ATOMICAMMO:
@@ -714,7 +719,7 @@
 		ValidTargets: Vehicle
 		Duration: 1
 		AllowMultiple: false
-		Description: \nGrants tanks a limited supply of atomic shells (also for a limited duration).\n\nAffects Soviet tanks only (Heavy Tank, Lasher Tank, Siege Tank, Mammoth Tank, Apocalypse Tank)
+		Description: \nGrants tanks a limited supply of atomic shells (also for a limited duration).\n\nAffects Soviet tanks only (Heavy/Rhino Tank, Lasher/Thrasher Tank, Siege Tank, Mammoth Tank, Overlord Tank, Apocalypse Tank)
 		OnFireSound: atomshell.aud
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
@@ -744,7 +749,7 @@
 		ValidTargets: Vehicle
 		Duration: 1
 		AllowMultiple: false
-		Description: \nGrants tanks a limited supply of atomic shells (also for a limited duration).\n\nAffects Soviet tanks only (Heavy Tank, Lasher Tank, Mammoth Tank, Apocalypse Tank)
+		Description: \nGrants tanks a limited supply of atomic shells (also for a limited duration).\n\nAffects Soviet tanks only (Heavy/Rhino Tank, Lasher/Thrasher Tank, Siege Tank, Mammoth Tank, Overlord Tank, Apocalypse Tank)
 		OnFireSound: atomshell.aud
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
@@ -1991,6 +1996,7 @@
 		Duration: 600
 		AllowMultiple: false
 		Cursor: ability
+		ExplosionWeapon: SuppressionField
 	GrantExternalConditionPowerCA@SUPPRESSIONSIPHON:
 		PauseOnCondition: disabled || empdisable || being-warped
 		OrderName: suppressionsiphon

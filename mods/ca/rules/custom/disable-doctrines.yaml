@@ -1,0 +1,64 @@
+Player:
+	-PlayerExperienceLevels:
+
+infantry.doctrine:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+armor.doctrine:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+arty.doctrine:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+doctrine.upgrade1:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+doctrine.upgrade2:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+^HeroesOfTheUnionPower:
+	GrantExternalConditionPowerCA@HEROESOFUNION:
+		Prerequisites: ~disabled
+
+^TankDropPower:
+	ParatroopersPowerCA@TankDrop:
+		Prerequisites: ~disabled
+
+^KillZonePower:
+	AirstrikePowerCA@KillZone:
+		Prerequisites: ~disabled
+
+CVAT:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+MUNP:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+imppara.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+impstorm.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+impmuta.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+reactive.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+rocketpods.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+ovld.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+nukc.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+apoc.upgrade:
+	Buildable:
+		Prerequisites: ~player.soviet, npwr, ~techlevel.high
+
+INDP:
+	Buildable:
+		Prerequisites: ~structures.soviet, stek, ~techlevel.high

@@ -57,7 +57,7 @@ MSLO:
 GAP:
 	Inherits: ^Defense
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
-	Inherits@AUTOTARGET: ^AutoTargetGround
+	Inherits@AUTOTARGET: ^AutoTargetAll
 	Valued:
 		Cost: 1000
 	Tooltip:
@@ -415,7 +415,7 @@ PDOX:
 	WithBuildingBib:
 		HasMinibib: true
 	ValidFactions:
-		Factions: england, france, germany, usa
+		Factions: allies, england, france, germany, usa
 	ProvidesPrerequisiteValidatedFaction@germany:
 		Factions: germany
 		Prerequisite: pdox.germany
@@ -646,7 +646,7 @@ DOME:
 	Power:
 		Amount: -40
 	ValidFactions:
-		Factions: england, france, germany, usa, russia, ukraine, iraq, yuri
+		Factions: allies, england, france, germany, usa, soviet, russia, ukraine, iraq, yuri
 	ProvidesPrerequisite@buildingname:
 		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@anyradar:
@@ -662,7 +662,7 @@ DOME:
 		Prerequisite: fturorradar
 		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@allrad:
-		Factions: england, france, germany, usa
+		Factions: allies, england, france, germany, usa
 		Prerequisite: radar.allies
 		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@engrad:
@@ -674,7 +674,7 @@ DOME:
 		Prerequisite: radar.france
 		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@sovrad:
-		Factions: russia, ukraine, iraq, yuri
+		Factions: soviet, russia, ukraine, iraq, yuri
 		Prerequisite: radar.soviet
 		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@rusrad:
@@ -1042,7 +1042,7 @@ ATEK:
 		Prerequisite: fogenabled
 		RequiresCondition: fogenabled
 	ValidFactions:
-		Factions: england, germany, france, usa
+		Factions: allies, england, germany, france, usa
 	ProvidesPrerequisite@buildingname:
 		RequiresCondition: !tech-locked
 	ProvidesPrerequisite:
@@ -1188,13 +1188,13 @@ WEAP:
 		ExitCell: 1,2
 	TracksCapturedFaction:
 	ValidFactions:
-		Factions: england, france, germany, usa, russia, ukraine, iraq, yuri
+		Factions: allies, england, france, germany, usa, soviet, russia, ukraine, iraq, yuri
 	ProvidesPrerequisite@any:
 		Prerequisite: vehicles.any
 	ProvidesPrerequisite@human:
 		Prerequisite: vehicles.human
 	ProvidesPrerequisiteValidatedFaction@allies:
-		Factions: england, france, germany, usa
+		Factions: allies, england, france, germany, usa
 		Prerequisite: vehicles.allies
 	ProvidesPrerequisite@ra:
 		Prerequisite: vehicles.ra
@@ -1211,7 +1211,7 @@ WEAP:
 		Factions: usa
 		Prerequisite: vehicles.usa
 	ProvidesPrerequisiteValidatedFaction@soviet:
-		Factions: russia, ukraine, iraq, yuri
+		Factions: soviet, russia, ukraine, iraq, yuri
 		Prerequisite: vehicles.soviet
 	ProvidesPrerequisiteValidatedFaction@russia:
 		Factions: russia
@@ -1225,20 +1225,11 @@ WEAP:
 	ProvidesPrerequisiteValidatedFaction@yuri:
 		Factions: yuri
 		Prerequisite: vehicles.yuri
-	ProvidesPrerequisiteValidatedFaction@mgg:
-		Factions: england, france, germany, usa
-		Prerequisite: vehicles.mgg
-	ProvidesPrerequisiteValidatedFaction@ifv:
-		Factions: england, france, germany, usa
-		Prerequisite: vehicles.ifv
-	ProvidesPrerequisiteValidatedFaction@v2:
-		Factions: russia, ukraine, iraq, yuri
-		Prerequisite: vehicles.v2
-	ProvidesPrerequisiteValidatedFaction@2tnk:
-		Factions: france, germany, usa
-		Prerequisite: vehicles.2tnk
+	ProvidesPrerequisiteValidatedFaction@1tnk:
+		Factions: allies, france, germany, usa
+		Prerequisite: vehicles.1tnk
 	ProvidesPrerequisiteValidatedFaction@qtnk:
-		Factions: russia, ukraine, iraq
+		Factions: soviet, russia, ukraine, iraq
 		Prerequisite: vehicles.qtnk
 	Power:
 		Amount: -30
@@ -1282,11 +1273,11 @@ FACT:
 		Description: Produces structures.
 	TracksCapturedFaction:
 	ValidFactions:
-		Factions: england, france, germany, usa, russia, ukraine, iraq, yuri
+		Factions: allies, england, france, germany, usa, soviet, russia, ukraine, iraq, yuri
 	ProvidesPrerequisite@ra:
 		Prerequisite: structures.ra
 	ProvidesPrerequisiteValidatedFaction@allies:
-		Factions: england, france, germany, usa
+		Factions: allies, england, france, germany, usa
 		Prerequisite: structures.allies
 	ProvidesPrerequisiteValidatedFaction@england:
 		Factions: england
@@ -1301,7 +1292,7 @@ FACT:
 		Factions: usa
 		Prerequisite: structures.usa
 	ProvidesPrerequisiteValidatedFaction@soviet:
-		Factions: russia, ukraine, iraq, yuri
+		Factions: soviet, russia, ukraine, iraq, yuri
 		Prerequisite: structures.soviet
 	ProvidesPrerequisiteValidatedFaction@russia:
 		Factions: russia
@@ -1318,19 +1309,19 @@ FACT:
 	ProvidesPrerequisite@wall:
 		Prerequisite: structures.wall
 	ProvidesPrerequisiteValidatedFaction@sandbag:
-		Factions: england, france, germany, usa
+		Factions: allies, england, france, germany, usa
 		Prerequisite: structures.sandbag
 	ProvidesPrerequisiteValidatedFaction@apwr:
-		Factions: england, france, germany, usa, ukraine, iraq, yuri
+		Factions: allies, england, france, germany, usa, soviet, ukraine, iraq, yuri
 		Prerequisite: structures.apwr
 	ProvidesPrerequisiteValidatedFaction@pbox:
-		Factions: france, germany, usa
+		Factions: allies, france, germany, usa
 		Prerequisite: structures.pbox
 	ProvidesPrerequisiteValidatedFaction@pris:
-		Factions: england, germany, usa
+		Factions: allies, england, germany, usa
 		Prerequisite: structures.pris
 	ProvidesPrerequisiteValidatedFaction@ftur:
-		Factions: russia, ukraine, yuri
+		Factions: soviet, russia, ukraine, yuri
 		Prerequisite: structures.ftur
 	ProvidesPrerequisite@anyconyard:
 		Prerequisite: anyconyard
@@ -1598,15 +1589,15 @@ HPAD:
 	Power:
 		Amount: -20
 	ValidFactions:
-		Factions: england, france, germany, usa, russia, ukraine, iraq, yuri
+		Factions: allies, england, france, germany, usa, russia, ukraine, iraq, yuri
 	ProvidesPrerequisiteValidatedFaction@allies:
-		Factions: england, france, germany, usa
+		Factions: allies, england, france, germany, usa
 		Prerequisite: aircraft.allies
 	ProvidesPrerequisiteValidatedFaction@usa:
 		Factions: usa
 		Prerequisite: aircraft.usa
 	ProvidesPrerequisiteValidatedFaction@soviets:
-		Factions: russia, ukraine, iraq, yuri
+		Factions: soviet, russia, ukraine, iraq, yuri
 		Prerequisite: aircraft.soviet
 	ProvidesPrerequisiteValidatedFaction@russia:
 		Factions: russia
@@ -1621,7 +1612,7 @@ HPAD:
 		Factions: yuri
 		Prerequisite: aircraft.yuri
 	ProvidesPrerequisiteValidatedFaction@kiro:
-		Factions: russia, ukraine, iraq
+		Factions: soviet, russia, ukraine, iraq
 		Prerequisite: aircraft.kiro
 	ProvidesPrerequisiteValidatedFaction@chinookvisible:
 		Factions: allies, england, france, germany, gdi, zocom, eagle, talon, arc, nod, blackh, legion, marked, shadow
@@ -1632,9 +1623,6 @@ HPAD:
 	ProvidesPrerequisiteValidatedFaction@nhaw:
 		Factions: usa
 		Prerequisite: aircraft.nhaw
-	ProvidesPrerequisiteValidatedFaction@hind:
-		Factions: russia, ukraine, yuri
-		Prerequisite: aircraft.hind
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite@RadarOrAircraft:
 		Prerequisite: radaroraircraft
@@ -1694,7 +1682,7 @@ AFLD:
 		ForceSetType: Aircraft
 	Reservable:
 	ValidFactions:
-		Factions: russia, ukraine, iraq, yuri
+		Factions: soviet, russia, ukraine, iraq, yuri
 	ProvidesPrerequisite@soviet:
 		Prerequisite: aircraft.soviet
 	ProvidesPrerequisiteValidatedFaction@russia:
@@ -1710,7 +1698,7 @@ AFLD:
 		Factions: yuri
 		Prerequisite: aircraft.yuri
 	ProvidesPrerequisiteValidatedFaction@kiro:
-		Factions: russia, ukraine, iraq
+		Factions: soviet, russia, ukraine, iraq
 		Prerequisite: aircraft.kiro
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite@RadarOrAircraft:
@@ -1899,7 +1887,7 @@ NPWR:
 		EmptyWeapon: CrateNuke
 	ProvidesPrerequisite@buildingname:
 	ValidFactions:
-		Factions: russia, ukraine, iraq, yuri
+		Factions: soviet, russia, ukraine, iraq, yuri
 	ProvidesPrerequisiteValidatedFaction@iraq:
 		Factions: iraq
 		Prerequisite: npwr.iraq
@@ -1985,7 +1973,7 @@ STEK:
 		Prerequisite: tturorstek
 		RequiresCondition: !tech-locked
 	ValidFactions:
-		Factions: russia, ukraine, iraq, yuri
+		Factions: soviet, russia, ukraine, iraq, yuri
 	ProvidesPrerequisiteValidatedFaction@russia:
 		Factions: russia
 		Prerequisite: stek.russia
@@ -2053,7 +2041,7 @@ BARR:
 		ExitCell: 2,2
 		Priority: 0
 	ValidFactions:
-		Factions: russia, ukraine, iraq, yuri
+		Factions: soviet, russia, ukraine, iraq, yuri
 	ProvidesPrerequisite@infantryany:
 		Prerequisite: infantry.any
 	ProvidesPrerequisite@human:
@@ -2073,15 +2061,15 @@ BARR:
 		Factions: yuri
 		Prerequisite: infantry.yuri
 	ProvidesPrerequisiteValidatedFaction@e2:
-		Factions: russia, iraq, yuri
+		Factions: soviet, russia, iraq, yuri
 		Prerequisite: infantry.e2
 	ProvidesPrerequisite@dog:
 		Prerequisite: infantry.dog
 	ProvidesPrerequisiteValidatedFaction@boris:
-		Factions: russia, iraq, ukraine
+		Factions: soviet, russia, iraq, ukraine
 		Prerequisite: infantry.boris
 	ProvidesPrerequisiteValidatedFaction@shok:
-		Factions: russia, ukraine, yuri
+		Factions: soviet, russia, ukraine, yuri
 		Prerequisite: infantry.shok
 	Power:
 		Amount: -20
@@ -2193,7 +2181,7 @@ TENT:
 		ExitCell: 2,2
 		Priority: 0
 	ValidFactions:
-		Factions: england, germany, france, usa
+		Factions: allies, england, germany, france, usa
 	ProvidesPrerequisite@infantryany:
 		Prerequisite: infantry.any
 	ProvidesPrerequisite@human:
@@ -2692,7 +2680,7 @@ PYLE:
 		ExitCell: 2,2
 		Priority: 0
 	ValidFactions:
-		Factions: talon, zocom, eagle, arc
+		Factions: gdi, talon, zocom, eagle, arc
 	ProvidesPrerequisite@infantryany:
 		Prerequisite: infantry.any
 	ProvidesPrerequisite@human:
@@ -2789,7 +2777,7 @@ HAND:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
 	ValidFactions:
-		Factions: blackh, marked, legion, shadow
+		Factions: nod, blackh, marked, legion, shadow
 	ProvidesPrerequisite@infantryany:
 		Prerequisite: infantry.any
 	ProvidesPrerequisite@human:
@@ -2862,7 +2850,7 @@ WEAP.TD:
 		Range: 4c0
 	TracksCapturedFaction:
 	ValidFactions:
-		Factions: talon, zocom, eagle, arc, legion
+		Factions: gdi, talon, zocom, eagle, arc, legion
 	ProvidesPrerequisite@any:
 		Prerequisite: vehicles.any
 	ProvidesPrerequisite@human:
@@ -2870,7 +2858,7 @@ WEAP.TD:
 	ProvidesPrerequisite@td:
 		Prerequisite: vehicles.td
 	ProvidesPrerequisiteValidatedFaction@gdi:
-		Factions: talon, zocom, eagle, arc
+		Factions: gdi, talon, zocom, eagle, arc
 		Prerequisite: vehicles.gdi
 	ProvidesPrerequisiteValidatedFaction@talon:
 		Factions: talon
@@ -2885,33 +2873,27 @@ WEAP.TD:
 		Factions: arc
 		Prerequisite: vehicles.arc
 	ProvidesPrerequisiteValidatedFaction@nod:
-		Factions: legion
+		Factions: nod, legion
 		Prerequisite: vehicles.nod
 	ProvidesPrerequisiteValidatedFaction@legion:
 		Factions: legion
 		Prerequisite: vehicles.legion
 	ProvidesPrerequisiteValidatedFaction@hmmv:
-		Factions: talon, zocom, eagle
+		Factions: gdi, talon, zocom, eagle
 		Prerequisite: vehicles.hmmv
-	ProvidesPrerequisiteValidatedFaction@nodarty:
-		Factions: legion
-		Prerequisite: vehicles.arty
 	ProvidesPrerequisiteValidatedFaction@ftnk:
 		Factions: legion
 		Prerequisite: vehicles.ftnk
 	ProvidesPrerequisite@apc2:
 		Prerequisite: vehicles.apc2
 	ProvidesPrerequisiteValidatedFaction@mtnk:
-		Factions: talon, zocom, eagle, arc, legion
+		Factions: gdi, talon, zocom, eagle, arc, legion
 		Prerequisite: vehicles.mtnk
-	ProvidesPrerequisiteValidatedFaction@memp:
-		Factions: talon, zocom, eagle, arc
-		Prerequisite: vehicles.memp
 	ProvidesPrerequisiteValidatedFaction@msam:
-		Factions: talon, zocom, arc
+		Factions: gdi, talon, zocom, arc
 		Prerequisite: vehicles.msam
 	ProvidesPrerequisiteValidatedFaction@htnk:
-		Factions: zocom, eagle, arc
+		Factions: gdi, zocom, eagle, arc
 		Prerequisite: vehicles.htnk
 	ProvidesPrerequisiteValidatedFaction@mlrs:
 		Factions: legion
@@ -3016,7 +2998,7 @@ AIRS:
 		RequiresCondition: global-multiqueue
 	TracksCapturedFaction:
 	ValidFactions:
-		Factions: blackh, marked, shadow
+		Factions: nod, blackh, marked, shadow
 	ProvidesPrerequisite@any:
 		Prerequisite: vehicles.any
 	ProvidesPrerequisite@human:
@@ -3036,18 +3018,12 @@ AIRS:
 	ProvidesPrerequisiteValidatedFaction@shadow:
 		Factions: shadow
 		Prerequisite: vehicles.shadow
-	ProvidesPrerequisiteValidatedFaction@nodarty:
-		Factions: blackh, marked, shadow
-		Prerequisite: vehicles.arty
 	ProvidesPrerequisiteValidatedFaction@ftnk:
-		Factions: marked, legion, shadow
+		Factions: nod, marked, shadow
 		Prerequisite: vehicles.ftnk
 	ProvidesPrerequisiteValidatedFaction@mlrs:
-		Factions: blackh, marked
+		Factions: nod, blackh, marked
 		Prerequisite: vehicles.mlrs
-	ProvidesPrerequisite@apc2:
-		Prerequisite: vehicles.apc2
-		RequiresPrerequisites: inf.gdi.stolen
 	WithDeliveryAnimation:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
@@ -3251,11 +3227,11 @@ AFAC:
 		Prerequisites: global-factundeploy
 	TracksCapturedFaction:
 	ValidFactions:
-		Factions: talon, zocom, eagle, arc, blackh, marked, legion, shadow
+		Factions: gdi, talon, zocom, eagle, arc, nod, blackh, marked, legion, shadow
 	ProvidesPrerequisite@td:
 		Prerequisite: structures.td
 	ProvidesPrerequisiteValidatedFaction@gdi:
-		Factions: talon, zocom, eagle, arc
+		Factions: gdi, talon, zocom, eagle, arc
 		Prerequisite: structures.gdi
 	ProvidesPrerequisiteValidatedFaction@talon:
 		Factions: talon
@@ -3270,7 +3246,7 @@ AFAC:
 		Factions: arc
 		Prerequisite: structures.arc
 	ProvidesPrerequisiteValidatedFaction@nod:
-		Factions: blackh, marked, legion, shadow
+		Factions: nod, blackh, marked, legion, shadow
 		Prerequisite: structures.nod
 	ProvidesPrerequisiteValidatedFaction@blackh:
 		Factions: blackh
@@ -3285,18 +3261,18 @@ AFAC:
 		Factions: shadow
 		Prerequisite: structures.shadow
 	ProvidesPrerequisiteValidatedFaction@weap.tdFAC:
-		Factions: talon, zocom, eagle, arc, legion
+		Factions: gdi, talon, zocom, eagle, arc, legion
 		Prerequisite: structures.weap.td
 	ProvidesPrerequisiteValidatedFaction@airs:
-		Factions: blackh, marked, shadow
+		Factions: nod, blackh, marked, shadow
 		Prerequisite: structures.airs
 	ProvidesPrerequisite@wall:
 		Prerequisite: structures.wall
 	ProvidesPrerequisiteValidatedFaction@sandbag:
-		Factions: talon, zocom, eagle, arc
+		Factions: gdi, talon, zocom, eagle, arc
 		Prerequisite: structures.sandbag
 	ProvidesPrerequisiteValidatedFaction@atwr:
-		Factions: talon, eagle, arc
+		Factions: gdi, talon, eagle, arc
 		Prerequisite: structures.atwr
 	ProvidesPrerequisite@anyconyard:
 		Prerequisite: anyconyard
@@ -3695,7 +3671,7 @@ HQ:
 	Power:
 		Amount: -40
 	ValidFactions:
-		Factions: talon, zocom, eagle, arc, blackh, marked, legion, shadow
+		Factions: gdi, talon, zocom, eagle, arc, blackh, marked, legion, shadow
 	ProvidesPrerequisite@buildingname:
 		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@anyradar:
@@ -3711,7 +3687,7 @@ HQ:
 		Prerequisite: fturorradar
 		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@gdirad:
-		Factions: talon, zocom, eagle, arc
+		Factions: gdi, talon, zocom, eagle, arc
 		Prerequisite: radar.gdi
 		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@talrad:
@@ -3731,7 +3707,7 @@ HQ:
 		Prerequisite: radar.arc
 		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@nodrad:
-		Factions: blackh, marked, legion, shadow
+		Factions: nod, blackh, marked, legion, shadow
 		Prerequisite: radar.nod
 		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@bhrad:
@@ -3828,7 +3804,7 @@ EYE:
 	Power:
 		Amount: -200
 	ValidFactions:
-		Factions: talon, zocom, eagle, arc
+		Factions: gdi, talon, zocom, eagle, arc
 	ProvidesPrerequisiteValidatedFaction@zoceye:
 		Factions: zocom
 		Prerequisite: eye.zocom
@@ -3962,9 +3938,9 @@ HPAD.TD:
 	Power:
 		Amount: -20
 	ValidFactions:
-		Factions: talon, zocom, eagle, arc, blackh, marked, legion, shadow
+		Factions: gdi, talon, zocom, eagle, arc, nod, blackh, marked, legion, shadow
 	ProvidesPrerequisiteValidatedFaction@gdi:
-		Factions: talon, zocom, eagle, arc
+		Factions: gdi, talon, zocom, eagle, arc
 		Prerequisite: aircraft.gdi
 	ProvidesPrerequisiteValidatedFaction@talon:
 		Factions: talon
@@ -3976,7 +3952,7 @@ HPAD.TD:
 		Factions: arc
 		Prerequisite: aircraft.arc
 	ProvidesPrerequisiteValidatedFaction@nod:
-		Factions: blackh, marked, legion, shadow
+		Factions: nod, blackh, marked, legion, shadow
 		Prerequisite: aircraft.nod
 	ProvidesPrerequisiteValidatedFaction@marked:
 		Factions: marked
@@ -3985,7 +3961,7 @@ HPAD.TD:
 		Factions: shadow
 		Prerequisite: aircraft.shadow
 	ProvidesPrerequisiteValidatedFaction@apch:
-		Factions: blackh, legion, shadow
+		Factions: nod, blackh, legion, shadow
 		Prerequisite: aircraft.apch
 	ProvidesPrerequisite@chinookvisible:
 		Prerequisite: aircraft.chinookvisible
@@ -4189,7 +4165,7 @@ AFLD.GDI:
 		ForceSetType: Aircraft
 	Reservable:
 	ValidFactions:
-		Factions: talon, zocom, eagle, arc
+		Factions: gdi, talon, zocom, eagle, arc
 	ProvidesPrerequisite@gdi:
 		Prerequisite: aircraft.gdi
 	ProvidesPrerequisiteValidatedFaction@eagle:
@@ -4274,7 +4250,7 @@ GTEK:
 	Power:
 		Amount: -150
 	ValidFactions:
-		Factions: talon, zocom, eagle, arc
+		Factions: gdi, talon, zocom, eagle, arc
 	ProvidesPrerequisite@buildingname:
 		RequiresCondition: !tech-locked
 	ProvidesPrerequisite:
@@ -4362,7 +4338,7 @@ TMPL:
 		RequiresCondition: !being-warped
 		TargetTypes: SabInfiltrate
 	ValidFactions:
-		Factions: blackh, marked, legion, shadow
+		Factions: nod, blackh, marked, legion, shadow
 	ProvidesPrerequisite@buildingname:
 		RequiresCondition: !tech-locked
 	ProvidesPrerequisite:
@@ -5456,7 +5432,7 @@ OREP:
 		Condition: noupgrade
 		RequiresCondition: noupgrade
 	ValidFactions:
-		Factions: england, germany, france, usa
+		Factions: allies, england, germany, france, usa
 	ProvidesPrerequisite@buildingname:
 		RequiresCondition: !tech-locked
 	WithDecoration@TechLock:
@@ -5518,7 +5494,7 @@ UPGC:
 	Tooltip:
 		Name: Upgrade Center
 	ValidFactions:
-		Factions: talon, zocom, eagle, arc
+		Factions: gdi, talon, zocom, eagle, arc
 	ProvidesPrerequisiteValidatedFaction@talonupgc:
 		Factions: talon
 		Prerequisite: upgc.talon

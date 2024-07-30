@@ -35,7 +35,7 @@ Players:
 		Playable: True
 		Required: True
 		LockFaction: True
-		Faction: russia
+		Faction: soviet
 		LockColor: True
 		Color: FE1100
 		LockSpawn: True
@@ -45,21 +45,21 @@ Players:
 	PlayerReference@Scrin:
 		Name: Scrin
 		Bot: campaign
-		Faction: reaper
+		Faction: scrin
 		Color: 7700FF
 		Enemies: USSR, Nod, Creeps
 	PlayerReference@Nod:
 		Name: Nod
 		Bot: campaign
-		Faction: blackh
-		Color: FE1100
+		Faction: nod
+		Color: 82878f
 		Allies: USSR
 		Enemies: Scrin, Creeps
 	PlayerReference@NodAbandoned:
 		Name: NodAbandoned
 		Bot: campaign
-		Faction: blackh
-		Color: FE1100
+		Faction: nod
+		Color: 82878f
 
 Actors:
 	SignalTransmitter: sign
@@ -2099,6 +2099,6 @@ Actors:
 		Owner: Neutral
 		Location: 91,17
 
-Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, rules.yaml
+Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-doctrines.yaml, rules.yaml
 
 Weapons: ca|weapons/custom/campaign.yaml

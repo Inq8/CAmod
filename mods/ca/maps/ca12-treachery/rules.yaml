@@ -30,31 +30,14 @@ MCV:
 MSLO:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-TPWR:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-APWR:
-	Buildable:
-		Prerequisites: ~structures.ra, anyradar
-
 DOME:
-	-ParatroopersPowerCA@Russianparatroopers:
+	-ParatroopersPowerCA@paratroopers:
 	AirstrikePowerCA@spyplane:
 		ChargeInterval: 4500
 
 PROC:
 	StoresResources:
 		Capacity: 30000
-
-ATEK:
-	-DummyGpsPower@NOFOG:
-	-DummyGpsPower@FOG:
-	-ProduceActorPowerCA@SatelliteLaunched:
-	-ProduceActorPowerCA@InitialSatelliteScan:
-	-ProduceActorPowerCA@SatelliteScan:
-	-ProduceActorPowerCA@SatelliteScanNoFog:
-	-GrantExternalConditionPowerCA@FSHIELD:
-	-DetonateWeaponPower@TEMPINC:
 
 HPAD.Abandoned:
 	Inherits: HPAD

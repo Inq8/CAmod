@@ -66,27 +66,3 @@ TMPL:
 
 TMPP:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-HQ:
-	-SpawnActorPowerCA@sathack:
-	-AirstrikePowerCA@BlackhandFirebomb:
-
-BH:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-HFTK:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-FTNK:
-	Buildable:
-		Prerequisites: ~vehicles.nod, anyradar, ~techlevel.low
-
-ATEK:
-	-DummyGpsPower@NOFOG:
-	-DummyGpsPower@FOG:
-	-ProduceActorPowerCA@SatelliteLaunched:
-	-ProduceActorPowerCA@InitialSatelliteScan:
-	-ProduceActorPowerCA@SatelliteScan:
-	-ProduceActorPowerCA@SatelliteScanNoFog:
-	-GrantExternalConditionPowerCA@FSHIELD:
-	-DetonateWeaponPower@TEMPINC:
