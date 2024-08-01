@@ -769,6 +769,28 @@ Container@PLAYER_WIDGETS:
 							Height: 54
 							ImageCollection: soviet-player-ranks
 							ImageName: rank-up
+				Container@SCRIN_ALLEGIANCE:
+					Logic: ScrinAllegianceIndicatorLogic
+					Children:
+						Image@SCRIN_ALLEGIANCE_LEVEL:
+							X: 19
+							Y: 526
+							Width: 37
+							Height: 71
+							ImageCollection: scrin-allegiance
+						ImageWithAlpha@SCRIN_ALLEGIANCE_LEVEL_GLOW:
+							X: 19
+							Y: 526
+							Width: 37
+							Height: 71
+							ImageCollection: scrin-allegiance
+						ImageWithAlpha@SCRIN_ALLEGIANCE_LEVEL_UP:
+							X: 0 - WIDTH + 18
+							Y: 532
+							Width: 115
+							Height: 54
+							ImageCollection: scrin-allegiance
+							ImageName: ref-added
 		Container@HPF_OVERLAY:
 			Logic: HierarchicalPathFinderOverlayLogic
 			X: WINDOW_RIGHT - WIDTH - 260
