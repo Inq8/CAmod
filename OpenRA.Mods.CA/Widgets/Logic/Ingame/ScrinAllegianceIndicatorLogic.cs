@@ -21,7 +21,6 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 		const string DisabledImage = "disabled";
 
 		readonly ProvidesPrerequisiteOnCount counter;
-		readonly UpgradesManager upgradesManager;
 
 		string chosenAllegiance;
 
@@ -38,8 +37,6 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 		{
 			counter = world.LocalPlayer.PlayerActor.TraitsImplementing<ProvidesPrerequisiteOnCount>()
 				.FirstOrDefault(c => c.Info.RequiredCounts.ContainsKey("Refineries"));
-
-			upgradesManager = world.LocalPlayer.PlayerActor.Trait<UpgradesManager>();
 
 			var container = widget.Get<ContainerWidget>("SCRIN_ALLEGIANCE");
 			var countImage = container.Get<ImageWidget>("SCRIN_ALLEGIANCE_LEVEL");
