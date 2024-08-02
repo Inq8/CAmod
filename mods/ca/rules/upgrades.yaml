@@ -1159,6 +1159,21 @@ optics.upgrade:
 	RenderSprites:
 		Image: optics.upgrade
 
+entrench.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Entrenchment
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: ~player.france, anyradar, ~techlevel.medium
+		Description: Enables Engineers to facilitate the building of defenses.\n\nUpgrades: Engineer
+	TooltipExtras:
+		Strengths: + Allows Engineers to deploy, enabling defensive structures to be built
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: entrench.upgrade
+
 cryw.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -1205,21 +1220,6 @@ apb.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: apb.upgrade
-
-entrench.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Entrenchment
-	Buildable:
-		BuildPaletteOrder: 30
-		Prerequisites: ~player.france, atek, ~techlevel.high
-		Description: Enables Engineers to facilitate the building of defenses.\n\nUpgrades: Engineer
-	TooltipExtras:
-		Strengths: + Allows Engineers to deploy, enabling defensive structures to be built
-	Valued:
-		Cost: 750
-	RenderSprites:
-		Image: entrench.upgrade
 
 airborne.upgrade:
 	Inherits: ^Upgrade

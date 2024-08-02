@@ -39,6 +39,8 @@ namespace OpenRA.Mods.CA.Traits
 			Hash = 0;
 		}
 
+		public event Action<string> UpgradeCompleted;
+
 		public UpgradeInfo UpgradeableActorCreated(Upgradeable upgradeable, string upgradeType, string sourceActorType, string targetActorType, string condition, int cost, int buildDuration, int buildDurationModifier)
 		{
 			if (upgrades.ContainsKey(upgradeType))
@@ -85,6 +87,8 @@ namespace OpenRA.Mods.CA.Traits
 
 			foreach (var p in upgradeables)
 				p.Trait.Unlock();
+
+			UpgradeCompleted?.Invoke(type);
 		}
 
 		public bool IsUnlocked(string upgradeType)

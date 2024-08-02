@@ -45,8 +45,7 @@ namespace OpenRA.Mods.CA.Traits
 		void UpdateCounters(Player owner)
 		{
 			counters = owner.PlayerActor.TraitsImplementing<ProvidesPrerequisiteOnCount>()
-				.Where(c => c.Info.RequiredCounts.ContainsKey(Info.Type)
-					&& (c.Factions.Length == 0 || c.Factions.Contains(owner.Faction.InternalName)));
+				.Where(c => c.Info.RequiredCounts.ContainsKey(Info.Type) && c.Enabled);
 		}
 
 		void INotifyOwnerChanged.OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)

@@ -28,11 +28,21 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 		const string DisabledImage = "disabled";
 
+		readonly PlayerExperienceLevels playerExperienceLevels;
+
+		int fadeInMaxTicks = 5;
+		int waitMaxTicks = 85;
+		int fadeOutMaxTicks = 15;
+
+		int fadeInTicks = 0;
+		int waitTicks = 0;
+		int fadeOutTicks = 0;
+
 		[ObjectCreator.UseCtor]
 		public PlayerExperienceLevelIndicatorLogic(Widget widget, World world)
 		{
 			var playerExperience = world.LocalPlayer.PlayerActor.Trait<PlayerExperience>();
-			var playerExperienceLevels = world.LocalPlayer.PlayerActor.TraitOrDefault<PlayerExperienceLevels>();
+			playerExperienceLevels = world.LocalPlayer.PlayerActor.TraitOrDefault<PlayerExperienceLevels>();
 			var container = widget.Get<ContainerWidget>("PLAYER_EXPERIENCE");
 			var rankImage = container.Get<ImageWidget>("PLAYER_EXPERIENCE_LEVEL");
 			var rankUpImage = container.Get<ImageWithAlphaWidget>("PLAYER_EXPERIENCE_LEVEL_UP");
@@ -42,23 +52,31 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			{
 				rankImage.GetImageName = () => DisabledImage;
 				rankImage.IsVisible = () => true;
+				rankImage.GetTooltipText = () => TranslationProvider.GetString(PlayerLevel, Translation.Arguments("level", "N/A"));
 
 				rankImageGlow.GetImageName = () => DisabledImage;
 				rankImageGlow.IsVisible = () => false;
 
-				rankImage.GetTooltipText = () => TranslationProvider.GetString(PlayerLevel, Translation.Arguments("level", "N/A"));
 				rankUpImage.IsVisible = () => false;
 				return;
 			}
 
+			playerExperienceLevels.LevelledUp += (level) =>
+			{
+				fadeInTicks = fadeInMaxTicks;
+				waitTicks = waitMaxTicks;
+				fadeOutTicks = fadeOutMaxTicks;
+			};
+
 			rankImage.GetImageName = () =>  $"level{playerExperienceLevels.CurrentLevel}";
 			rankImage.IsVisible = () => playerExperienceLevels.Enabled;
-			rankUpImage.IsVisible = () => playerExperienceLevels.LevelUpImageAlpha > 0;
-			rankUpImage.GetAlpha = () => playerExperienceLevels.LevelUpImageAlpha;
 
 			rankImageGlow.GetImageName = () => $"level{playerExperienceLevels.CurrentLevel}-glow";
-			rankImageGlow.IsVisible = () => playerExperienceLevels.LevelUpImageAlpha > 0;
-			rankImageGlow.GetAlpha = () => playerExperienceLevels.LevelUpImageAlpha;
+			rankImageGlow.IsVisible = () => LevelUpImageAlpha > 0;
+			rankImageGlow.GetAlpha = () => LevelUpImageAlpha;
+
+			rankUpImage.IsVisible = () => LevelUpImageAlpha > 0;
+			rankUpImage.GetAlpha = () => LevelUpImageAlpha;
 
 			var tooltipTextCached = new CachedTransform<int?, string>((CurrentXp) =>
 			{
@@ -85,6 +103,32 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			{
 				return tooltipTextCached.Update(playerExperienceLevels.XpRequiredForNextLevel == null ? null : playerExperience.Experience);
 			};
+		}
+
+		public override void Tick()
+		{
+			if (playerExperienceLevels == null || !playerExperienceLevels.Enabled)
+				return;
+
+			if (fadeInTicks > 0)
+				fadeInTicks--;
+			else if (waitTicks > 0)
+				waitTicks--;
+			else if (fadeOutTicks > 0)
+				fadeOutTicks--;
+		}
+
+		public float LevelUpImageAlpha {
+			get {
+				if (fadeInTicks > 0)
+					return 1f - (float)fadeInTicks / fadeInMaxTicks;
+				else if (waitTicks > 0)
+					return 1f;
+				else if (fadeOutTicks > 0)
+					return (float)fadeOutTicks / fadeOutMaxTicks;
+				else
+					return 0f;
+			}
 		}
 	}
 }

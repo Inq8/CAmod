@@ -8,6 +8,7 @@
  */
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Mods.Common;
@@ -67,13 +68,7 @@ namespace OpenRA.Mods.CA.Traits
 		bool dummyActorQueued;
 		int ticksUntilSpawnDummyActor;
 
-		int fadeInMaxTicks = 5;
-		int waitMaxTicks = 85;
-		int fadeOutMaxTicks = 15;
-
-		int fadeInTicks = 0;
-		int waitTicks = 0;
-		int fadeOutTicks = 0;
+		public event Action<int> LevelledUp;
 
 		public PlayerExperienceLevels(Actor self, PlayerExperienceLevelsInfo info)
 			: base(info)
@@ -92,19 +87,6 @@ namespace OpenRA.Mods.CA.Traits
 		public int? CurrentLevel => currentLevel;
 
 		public int? XpRequiredForNextLevel => currentLevel >= maxLevel ? null : nextLevelXpRequired;
-
-		public float LevelUpImageAlpha {
-			get {
-				if (fadeInTicks > 0)
-					return 1f - (float)fadeInTicks / fadeInMaxTicks;
-				else if (waitTicks > 0)
-					return 1f;
-				else if (fadeOutTicks > 0)
-					return (float)fadeOutTicks / fadeOutMaxTicks;
-				else
-					return 0f;
-			}
-		}
 
 		public IEnumerable<string> ProvidesPrerequisites
 		{
@@ -135,13 +117,6 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				LevelUp(self);
 			}
-
-			if (fadeInTicks > 0)
-				fadeInTicks--;
-			else if (waitTicks > 0)
-				waitTicks--;
-			else if (fadeOutTicks > 0)
-				fadeOutTicks--;
 
 			if (notificationQueued && --ticksUntilNotification <= 0)
 			{
@@ -175,11 +150,9 @@ namespace OpenRA.Mods.CA.Traits
 			if (Info.LevelUpSound != null)
 				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Sounds", Info.LevelUpSound, self.Owner.Faction.InternalName);
 
-			fadeInTicks = fadeInMaxTicks;
-			waitTicks = waitMaxTicks;
-			fadeOutTicks = fadeOutMaxTicks;
-
 			currentLevel++;
+
+			LevelledUp?.Invoke(currentLevel);
 
 			if (currentLevel < maxLevel)
 				nextLevelXpRequired = Info.LevelXpRequirements[currentLevel];
