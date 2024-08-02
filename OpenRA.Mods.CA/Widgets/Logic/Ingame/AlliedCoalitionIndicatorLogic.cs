@@ -46,7 +46,8 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			upgradesManager.UpgradeCompleted += (coalitionName) =>
 			{
-				chosenCoalition = coalitionName.Split('.')[0];
+				if (coalitionName.EndsWith(".coalition"))
+					chosenCoalition = coalitionName.Split('.')[0];
 			};
 
 			coalitionImage.GetImageName = () =>  $"{chosenCoalition ?? NoneImage}";
