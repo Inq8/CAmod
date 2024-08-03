@@ -62,6 +62,30 @@ Squads = {
 				{ Aircraft = { "hind", "hind", "hind" } }
 			}
 		},
+	},
+	Naval = {
+		Player = nil,
+		ActiveCondition = function()
+			return PlayerHasICBMSubs()
+		end,
+		Interval = {
+			normal = DateTime.Seconds(60),
+			hard = DateTime.Seconds(30)
+		},
+		QueueProductionStatuses = {
+			Ships = false
+		},
+		IdleUnits = { },
+		ProducerTypes = { Ships = { "spen" } },
+		Units = {
+			hard = {
+				{ Ships = { "ss" } }
+			}
+		},
+		AttackPaths = {
+			{ SubPatrol1.Location, SubPatrol2.Location, SubPatrol3.Location, SubPatrol4.Location, SubPatrol5.Location, SubPatrol6.Location },
+			{ SubPatrol1.Location, SubPatrol6.Location, SubPatrol5.Location, SubPatrol4.Location, SubPatrol3.Location, SubPatrol2.Location },
+		},
 	}
 }
 
@@ -243,6 +267,10 @@ InitUSSR = function()
 		end
 	end)
 
+	if Difficulty ~= "easy" then
+		InitNavalAttackSquad(Squads.Naval, USSR)
+	end
+
 	Trigger.AfterDelay(Squads.Planes.Delay[Difficulty], function()
 		InitAirAttackSquad(Squads.Planes, USSR, Nod, { "ltnk", "ftnk", "mlrs", "bggy", "bike", "arty.nod", "nuke", "nuk2" })
 	end)
@@ -288,4 +316,9 @@ DoHaloDrop = function()
 	)
 
 	Trigger.AfterDelay(HaloDropInterval[Difficulty], DoHaloDrop)
+end
+
+PlayerHasICBMSubs = function()
+	local icbmSubs = Nod.GetActorsByType("isub")
+	return #icbmSubs > 0
 end
