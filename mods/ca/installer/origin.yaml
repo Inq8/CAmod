@@ -15,7 +15,7 @@ ra-origin: C&C Ultimate Collection RA (Origin version, English)
 					^SupportDir|Content/ca/local.mix: local.mix
 					^SupportDir|Content/ca/lores.mix: lores.mix
 					^SupportDir|Content/ca/speech.mix: speech.mix
-				ExtractMix: MAIN.MIX
+				ExtractMix: MAIN1.MIX
 					^SupportDir|Content/ca/interior.mix: interior.mix
 					^SupportDir|Content/ca/conquer.mix: conquer.mix
 					^SupportDir|Content/ca/allies.mix: allies.mix
@@ -31,7 +31,9 @@ ra-origin: C&C Ultimate Collection RA (Origin version, English)
 					^SupportDir|Content/ca/expand/expand2.mix: EXPAND2.MIX
 					^SupportDir|Content/ca/expand/hires1.mix: HIRES1.MIX
 					^SupportDir|Content/ca/expand/lores1.mix: LORES1.MIX
-				ExtractMix: ^SupportDir|Content/ca/sounds.mix
+				ExtractMix: MAIN4.MIX
+					^SupportDir|Content/ca/expand/sounds.mix: sounds.mix
+				ExtractMix: ^SupportDir|Content/ca/expand/sounds.mix
 					^SupportDir|Content/ca/expand/chrotnk1.aud: chrotnk1.aud
 					^SupportDir|Content/ca/expand/fixit1.aud: fixit1.aud
 					^SupportDir|Content/ca/expand/jburn1.aud: jburn1.aud
@@ -56,17 +58,20 @@ ra-origin: C&C Ultimate Collection RA (Origin version, English)
 					^SupportDir|Content/ca/expand/mwrench1.aud: mwrench1.aud
 					^SupportDir|Content/ca/expand/myeehaw1.aud: myeehaw1.aud
 					^SupportDir|Content/ca/expand/myes1.aud: myes1.aud
+				Delete: ^SupportDir|Content/ca/expand/sounds.mix
 		# Base game music (optional):
 		ContentPackage:
 			Name: music-ra
 			Actions:
-				ExtractMix: MAIN.MIX
+				ExtractMix: MAIN1.MIX
 					^SupportDir|Content/ca/ra/scores.mix: scores.mix
 		# Counterstrike music (optional):
 		ContentPackage:
 			Name: music-counterstrike
 			Actions:
-				Copy: .
+				ExtractMix: MAIN3.MIX
+					^SupportDir|Content/ca/expand/scores.mix: scores.mix
+				ExtractMix: ^SupportDir|Content/ca/expand/scores.mix
 					^SupportDir|Content/ca/expand/2nd_hand.aud: 2nd_hand.aud
 					^SupportDir|Content/ca/expand/araziod.aud: araziod.aud
 					^SupportDir|Content/ca/expand/backstab.aud: backstab.aud
@@ -75,25 +80,29 @@ ra-origin: C&C Ultimate Collection RA (Origin version, English)
 					^SupportDir|Content/ca/expand/twinmix1.aud: twinmix1.aud
 					^SupportDir|Content/ca/expand/under3.aud: under3.aud
 					^SupportDir|Content/ca/expand/vr2.aud: vr2.aud
+				Delete: ^SupportDir|Content/ca/expand/scores.mix
 		# Aftermath music (optional):
 		ContentPackage:
 			Name: music-aftermath
 			Actions:
-				Copy: .
+				ExtractMix: MAIN4.MIX
+					^SupportDir|Content/ca/expand/scores.mix: scores.mix
+				ExtractMix: ^SupportDir|Content/ca/expand/scores.mix
 					^SupportDir|Content/ca/expand/await.aud: await.aud
 					^SupportDir|Content/ca/expand/bog.aud: bog.aud
 					^SupportDir|Content/ca/expand/float_v2.aud: float_v2.aud
-					^SupportDir|Content/ca/expand/gloom.aud: gloom.aud
+					^SupportDir|Content/ca/expand/gloom_ra.aud: gloom.aud
 					^SupportDir|Content/ca/expand/grndwire.aud: grndwire.aud
 					^SupportDir|Content/ca/expand/rpt.aud: rpt.aud
 					^SupportDir|Content/ca/expand/search.aud: search.aud
 					^SupportDir|Content/ca/expand/traction.aud: traction.aud
 					^SupportDir|Content/ca/expand/wastelnd.aud: wastelnd.aud
+				Delete: ^SupportDir|Content/ca/expand/scores.mix
 		# Allied campaign briefings (optional):
 		ContentPackage:
 			Name: movies-allied
 			Actions:
-				ExtractMix: MAIN.MIX
+				ExtractMix: MAIN1.MIX
 					^SupportDir|Content/ca/movies1.mix: movies1.mix
 				ExtractMix: ^SupportDir|Content/ca/movies1.mix
 					^SupportDir|Content/ca/movies/aagun.vqa: aagun.vqa
@@ -152,7 +161,7 @@ ra-origin: C&C Ultimate Collection RA (Origin version, English)
 		ContentPackage:
 			Name: movies-soviet
 			Actions:
-				ExtractMix: MAIN.MIX
+				ExtractMix: MAIN2.MIX
 					^SupportDir|Content/ca/movies2.mix: movies2.mix
 				ExtractMix: ^SupportDir|Content/ca/movies2.mix
 					^SupportDir|Content/ca/movies/double.vqa: double.vqa
@@ -387,7 +396,7 @@ cncr-origin: C&C Remastered Collection (Origin version, English)
 					^SupportDir|Content/ca/expand/await.aud: await.aud
 					^SupportDir|Content/ca/expand/bog.aud: bog.aud
 					^SupportDir|Content/ca/expand/float_v2.aud: float_v2.aud
-					^SupportDir|Content/ca/expand/gloom.aud: gloom.aud
+					^SupportDir|Content/ca/expand/gloom_ra.aud: gloom.aud
 					^SupportDir|Content/ca/expand/grndwire.aud: grndwire.aud
 					^SupportDir|Content/ca/expand/rpt.aud: rpt.aud
 					^SupportDir|Content/ca/expand/search.aud: search.aud
