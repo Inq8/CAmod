@@ -213,6 +213,7 @@ NUKC:
 		Locomotor: heavytracked
 		Voice: Move
 		ImmovableCondition: deployed
+		RequireForceMoveCondition: !undeployed
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 5c0
@@ -326,13 +327,20 @@ NUKC:
 		Type: NukeCannon
 		Range: 16c0
 		Color: ffdd0060
-		RequiresCondition: !veiled && !gapveiled
+		RequiresCondition: !deployed && !veiled && !gapveiled
 	WithRangeCircle@Veiled:
+		Type: NukeCannon
 		Range: 12c820
-		RequiresCondition: veiled && !gapveiled
+		Color: ffdd0060
+		RequiresCondition: !deployed && veiled && !gapveiled
 	WithRangeCircle@GapVeiled:
+		Type: NukeCannon
 		Range: 9c614
-		RequiresCondition: gapveiled
+		Color: ffdd0060
+		RequiresCondition: !deployed && gapveiled
+	RenderRangeCircle@Deployed:
+		RangeCircleType: NukeCannon
+		Color: ff880090
 
 1TNK:
 	Inherits: ^Tank
@@ -1522,6 +1530,8 @@ HOWI:
 		Prerequisites: ~vehicles.nod, ~howi.upgrade, ~techlevel.medium
 	-AttackFrontal:
 	AttackTurreted:
+		TargetFrozenActors: True
+		ForceFireIgnoresActors: True
 		PauseOnCondition: empdisable || being-warped || blinded
 	Turreted:
 		TurnSpeed: 18
@@ -2638,6 +2648,7 @@ MSG:
 	Mobile:
 		Speed: 60
 		ImmovableCondition: deployed
+		RequireForceMoveCondition: !undeployed
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -7347,6 +7358,7 @@ MSAR:
 	Mobile:
 		Speed: 72
 		ImmovableCondition: deployed
+		RequireForceMoveCondition: !undeployed
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -9351,6 +9363,7 @@ ZEUS:
 	Armament:
 		Weapon: ZeusCloud
 	AttackFrontalCharged:
+		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
 		PauseOnCondition: empdisable || being-warped || blinded
 		FacingTolerance: 32
