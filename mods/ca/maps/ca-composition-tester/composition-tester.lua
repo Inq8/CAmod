@@ -4,17 +4,11 @@ SavedCash = { }
 WorldLoaded = function()
 	Multi0 = Player.GetPlayer("Multi0")
 	Multi1 = Player.GetPlayer("Multi1")
-	Multi2 = Player.GetPlayer("Multi2")
-	Multi3 = Player.GetPlayer("Multi3")
 
 	if Multi0 ~= nil then
 		StartingCash = Multi0.Cash
 	elseif Multi1 ~= nil then
 		StartingCash = Multi1.Cash
-	elseif Multi2 ~= nil then
-		StartingCash = Multi2.Cash
-	elseif Multi3 ~= nil then
-		StartingCash = Multi3.Cash
 	else
 		StartingCash = 20000
 	end
@@ -64,52 +58,7 @@ WorldLoaded = function()
 		Restore({ Multi1 })
 	end)
 
-	Trigger.OnEnteredFootprint({ ResetTopWH.Location }, function(a, id)
-		Media.DisplayMessage("Resetting players 3/4...", "Notification", HSLColor.FromHex("FF0000"))
-		Reset({ Multi2, Multi3 })
-	end)
-
-	Trigger.OnEnteredFootprint({ SaveTopWH.Location }, function(a, id)
-		Media.DisplayMessage("Player 3/4 compositions saved.", "Notification", HSLColor.FromHex("00FF00"))
-		Save({ MMulti2, Multi3 })
-	end)
-
-	Trigger.OnEnteredFootprint({ RestoreTopWH.Location }, function(a, id)
-		Media.DisplayMessage("Restoring player 3/4 compositions...", "Notification", HSLColor.FromHex("00FFFF"))
-		Restore({ Multi2, Multi3 })
-	end)
-
-	Trigger.OnEnteredFootprint({ Reset3WH.Location }, function(a, id)
-		Media.DisplayMessage("Resetting player 3...", "Notification", HSLColor.FromHex("FF0000"))
-		Reset({ Multi2 })
-	end)
-
-	Trigger.OnEnteredFootprint({ Save3WH.Location }, function(a, id)
-		Media.DisplayMessage("Player 3 composition saved.", "Notification", HSLColor.FromHex("00FF00"))
-		Save({ Multi2 })
-	end)
-
-	Trigger.OnEnteredFootprint({ Restore3WH.Location }, function(a, id)
-		Media.DisplayMessage("Restoring player 3 composition...", "Notification", HSLColor.FromHex("00FFFF"))
-		Restore({ Multi2 })
-	end)
-
-	Trigger.OnEnteredFootprint({ Reset4WH.Location }, function(a, id)
-		Media.DisplayMessage("Resetting player 4...", "Notification", HSLColor.FromHex("FF0000"))
-		Reset({ Multi3 })
-	end)
-
-	Trigger.OnEnteredFootprint({ Save4WH.Location }, function(a, id)
-		Media.DisplayMessage("Player 4 composition saved.", "Notification", HSLColor.FromHex("00FF00"))
-		Save({ Multi3 })
-	end)
-
-	Trigger.OnEnteredFootprint({ Restore4WH.Location }, function(a, id)
-		Media.DisplayMessage("Restoring player 4 composition...", "Notification", HSLColor.FromHex("00FFFF"))
-		Restore({ Multi3 })
-	end)
-
-	RestoreTrucks({ Multi0, Multi1, Multi2, Multi3 })
+	RestoreTrucks({ Multi0, Multi1 })
 end
 
 Tick = function()
@@ -145,18 +94,6 @@ RestoreTrucks = function(players)
 			Actor.Create("truk", true, { Owner = Multi1, Location = Truck2A.Location, Facing = Angle.East })
 			Actor.Create("truk", true, { Owner = Multi1, Location = Truck2B.Location, Facing = Angle.East })
 			Actor.Create("truk", true, { Owner = Multi1, Location = Truck2C.Location, Facing = Angle.East })
-		end
-
-		if p ~= nil and p == Multi2 then
-			Actor.Create("truk", true, { Owner = Multi2, Location = Truck3A.Location, Facing = Angle.West })
-			Actor.Create("truk", true, { Owner = Multi2, Location = Truck3B.Location, Facing = Angle.West })
-			Actor.Create("truk", true, { Owner = Multi2, Location = Truck3C.Location, Facing = Angle.West })
-		end
-
-		if p ~= nil and p == Multi3 then
-			Actor.Create("truk", true, { Owner = Multi3, Location = Truck3A.Location, Facing = Angle.East })
-			Actor.Create("truk", true, { Owner = Multi3, Location = Truck3B.Location, Facing = Angle.East })
-			Actor.Create("truk", true, { Owner = Multi3, Location = Truck3C.Location, Facing = Angle.East })
 		end
 	end)
 end
