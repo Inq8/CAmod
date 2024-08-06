@@ -78,6 +78,9 @@ Squads = {
 		IdleUnits = { },
 		ProducerTypes = { Ships = { "spen" } },
 		Units = {
+			normal = {
+				{ Ships = { "ss" } }
+			},
 			hard = {
 				{ Ships = { "ss" } }
 			}

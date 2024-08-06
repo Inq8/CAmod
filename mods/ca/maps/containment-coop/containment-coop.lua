@@ -1,4 +1,3 @@
-
 RespawnEnabled = Map.LobbyOption("respawn") == "enabled"
 
 Patrols = {
@@ -479,7 +478,7 @@ RespawnTrigger = function(a)
 				local respawnedActor = Actor.Create(a.Type, true, { Owner = a.Owner, Location = PlayerStart.Location })
 				Beacon.New(a.Owner, PlayerStart.CenterPosition)
 				Media.PlaySpeechNotification(a.Owner, "ReinforcementsArrived")
-				if a.Type == "seal" then
+				if a.Type == "seal" and Difficulty ~= "hard" then
 					respawnedActor.GrantCondition("difficulty-" .. Difficulty)
 				end
 				RespawnTrigger(respawnedActor)

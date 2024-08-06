@@ -1,3 +1,5 @@
+RespawnEnabled = Map.LobbyOption("respawn") == "enabled"
+
 Patrols = {
 	{
 		Units = { PatrollerA1, PatrollerA2, PatrollerA3, PatrollerA4, PatrollerA5, PatrollerA6 },
@@ -69,6 +71,10 @@ WorldLoaded = function()
 	LandingCraft.Move(LandingCraftExit.Location)
 	LandingCraft.Destroy()
 
+	RespawnTrigger(Seal1)
+	RespawnTrigger(Seal2)
+	RespawnTrigger(Spy)
+
 	local seals = { Seal1, Seal2 }
 	Utils.Do(seals, function(a)
 		Trigger.OnKilled(a, function(self, killer)
@@ -78,7 +84,7 @@ WorldLoaded = function()
 				BothSealsDead = true
 			end
 
-			if BothSealsDead then
+			if BothSealsDead and not RespawnEnabled then
 				if not AllReactorsDead then
 					Greece.MarkFailedObjective(ObjectiveKillReactors)
 				end
@@ -391,4 +397,27 @@ DropChronoPrison = function()
 			end
 		end)
 	end)
+end
+
+RespawnTrigger = function(a)
+	if RespawnEnabled then
+		Trigger.OnKilled(a, function()
+			local name
+			if a.Type == "spy" then
+				name = "Spy"
+			else
+				name = "SEAL"
+			end
+			Notification(name .. " respawns in 30 seconds.")
+			Trigger.AfterDelay(DateTime.Seconds(30), function()
+				local respawnedActor = Actor.Create(a.Type, true, { Owner = a.Owner, Location = PlayerStart.Location })
+				Beacon.New(a.Owner, PlayerStart.CenterPosition)
+				Media.PlaySpeechNotification(a.Owner, "ReinforcementsArrived")
+				if a.Type == "seal" and Difficulty ~= "hard" then
+					respawnedActor.GrantCondition("difficulty-" .. Difficulty)
+				end
+				RespawnTrigger(respawnedActor)
+			end)
+		end)
+	end
 end
