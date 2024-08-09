@@ -675,6 +675,9 @@ ISUB:
 	Cloak:
 		PauseOnCondition: launching || cloak-force-disabled || invisibility || being-warped || crossing-ford
 		CloakDelay: 100
+	RenderRangeCircle@Attack:
+		RangeCircleType: ISUBRange
+		Color: ffdd0060
 
 ICBM:
 	Inherits: ^ShootableMissile
@@ -780,7 +783,7 @@ CV:
 		VoiceSet: DroneCarrVoice
 	RenderRangeCircle@Attack:
 		RangeCircleType: CarrierRange
-		Color: 0000FF80
+		Color: 0000FF60
 	ProductionCostMultiplier@arcBonus:
 		Multiplier: 90
 		Prerequisites: player.arc

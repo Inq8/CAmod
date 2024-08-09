@@ -361,6 +361,7 @@ U3:
 		Speed: 41
 		Voice: Move
 		PauseOnCondition: !undeployed || being-warped
+		ImmovableCondition: deployed
 		RequireForceMoveCondition: !undeployed
 	Armament@PRIMARY:
 		Weapon: M14
@@ -632,6 +633,9 @@ E6:
 	Inherits: ^Soldier
 	Inherits@ENGINEER: ^EngineerBase
 	Inherits@Inspirable: ^Inspirable
+	Mobile:
+		ImmovableCondition: deployed
+		RequireForceMoveCondition: !undeployed
 	Buildable:
 		BuildPaletteOrder: 31
 		Prerequisites: ~infantry.ra
@@ -1506,7 +1510,7 @@ TTRP:
 	Valued:
 		Cost: 600
 	Health:
-		HP: 18500
+		HP: 17000
 	Voiced:
 		VoiceSet: TeslaTrooperVoice
 	TakeCover:
@@ -2915,7 +2919,7 @@ DESO:
 	Valued:
 		Cost: 600
 	Health:
-		HP: 18500
+		HP: 17000
 	Voiced:
 		VoiceSet: DesVoice
 	Mobile:
@@ -4238,6 +4242,7 @@ ENLI:
 		Weapon: ChemicalMortar
 		FireDelay: 15
 	AttackFrontal:
+		TargetFrozenActors: True
 		PauseOnCondition: being-warped || blinded
 		FacingTolerance: 0
 	WithInfantryBody:
