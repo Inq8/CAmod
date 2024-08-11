@@ -8900,6 +8900,7 @@ APOC.ERAD:
 	Buildable:
 		Prerequisites: stek, ~vehicles.soviet, ~!atomicengines.upgrade, ~erad.upgrade, ~apoc.upgrade, ~techlevel.high
 		BuildPaletteOrder: 241
+		Description: Enormous slow tank with twin heavy radiation cannons.
 	Armament@PRIMARY:
 		Weapon: ApocRadBeamWeapon
 		MuzzlePalette: caneon
@@ -8939,12 +8940,14 @@ APOC.ERAD.ATOMIC:
 	Buildable:
 		Prerequisites: stek, ~vehicles.soviet, ~atomicengines.upgrade, ~erad.upgrade, ~apoc.upgrade, ~techlevel.high
 		BuildPaletteOrder: 242
+		Description: Enormous slow tank with twin heavy radiation cannons.
 	Armament@PRIMARY:
 		Weapon: ApocRadBeamWeapon
 		MuzzlePalette: caneon
 		LocalOffset: 500,100,240, 500,-100,240
 		-PauseOnCondition:
 		-ReloadingCondition:
+	-Armament@SECONDARY:
 	-Armament@ATOMICAMMO:
 	-ExternalCondition@ATOMICAMMO:
 	-WithRestartableIdleOverlay@ATOMICAMMO:
@@ -9097,6 +9100,10 @@ OVLD.ATOMIC:
 	Buildable:
 		Prerequisites: stek, ~vehicles.soviet, ~ovld.upgrade, ~!erad.upgrade, ~atomicengines.upgrade, ~techlevel.high
 		BuildPaletteOrder: 236
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor
+		Weaknesses: • Cannot attack Aircraft
+		Attributes: • Can crush smaller vehicles and concrete walls\n• Self repairs to 50% out of combat\n• Empowers nearby basic infantry\n• Explodes and leaves radiation on death
 	RenderSprites:
 		Image: ovldi
 	ReplacedInQueue:
@@ -9104,6 +9111,13 @@ OVLD.ATOMIC:
 	Upgradeable@ERAD:
 		Actor: ovld.erad.atomic
 	-Upgradeable@ATOMIC:
+	Explodes@ATOMICENGINES:
+		Weapon: UnitExplodeIraqTank
+		EmptyWeapon: UnitExplodeIraqTank
+		RequiresCondition: !being-warped
+	SpeedMultiplier:
+		Modifier: 125
+	-SpawnActorOnDeath:
 
 OVLD.ERAD:
 	Inherits: OVLD
@@ -9114,6 +9128,7 @@ OVLD.ERAD:
 	Buildable:
 		Prerequisites: stek, ~vehicles.soviet, ~ovld.upgrade, ~erad.upgrade, ~!atomicengines.upgrade, ~techlevel.high
 		BuildPaletteOrder: 237
+		Description: Enormous slow tank equipped with radiation cannons and a\ncommissar tower which supports infantry in combat.
 	Armament@PRIMARY:
 		Weapon: OverlordRadBeamWeapon
 		MuzzlePalette: caneon
@@ -9148,6 +9163,7 @@ OVLD.ERAD.ATOMIC:
 	Buildable:
 		Prerequisites: stek, ~vehicles.soviet, ~ovld.upgrade, ~erad.upgrade, ~atomicengines.upgrade, ~techlevel.high
 		BuildPaletteOrder: 238
+		Description: Enormous slow tank equipped with radiation cannons and a\ncommissar tower which supports infantry in combat.
 	Armament@PRIMARY:
 		Weapon: OverlordRadBeamWeapon
 		MuzzlePalette: caneon

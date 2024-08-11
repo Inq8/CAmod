@@ -601,16 +601,21 @@ TitanGun:
 	Inherits: 280mmAtomic
 	Projectile: Bullet
 		Image: 280mmn
+	Warhead@1Dam: SpreadDamage
+		Damage: 3000
 	Warhead@3: ChangeOwnerToNeutral
 		ValidTargets: DriverKill
+		ValidRelationships: Enemy, Ally
 		CargoEffect: Kill
-		Range: 3c0
+		Range: 3c511
 	Warhead@highlight: GrantExternalConditionCA
-		Range: 3c0
+		Range: 3c511
+		ValidRelationships: Enemy, Ally
 		Duration: 2
 		Condition: highlight
 		ValidTargets: DriverKill
 	Warhead@3Eff: CreateEffect
+		Explosions: fuelbomb1, fuelbomb2
 		ImpactSounds: gexpneua.aud, gexpneub.aud, gexpneuc.aud, gexpneud.aud
 
 NukeCannonDeployer:

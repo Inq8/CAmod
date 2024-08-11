@@ -32,17 +32,15 @@ namespace OpenRA.Mods.CA.Warheads
 		public override void DoImpact(in Target target, WarheadArgs args)
 		{
 			var firedBy = args.SourceActor;
+
+			if (target.Type == TargetType.Invalid)
+				return;
+
 			var actors = target.Type == TargetType.Actor ? new[] { target.Actor } :
 				firedBy.World.FindActorsInCircle(target.CenterPosition, Range);
 
 			foreach (var a in actors)
 			{
-				// Don't do anything on friendly fire
-				if (a.Owner == firedBy.Owner)
-					continue;
-
-				if (!target.IsValidFor(firedBy))
-					continue;
 
 				if (!IsValidAgainst(a, firedBy))
 					continue;
