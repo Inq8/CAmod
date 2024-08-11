@@ -107,7 +107,7 @@ Squads = {
 		ProducerActors = { Infantry = { GDINorthWestBarracks }, Vehicles = { GDINorthWestFactory } },
 		ProducerTypes = { Infantry = { "pyle" }, Vehicles = { "weap.td" } },
 		Units = UnitCompositionsShellmap.GDI,
-		AttackPaths = { { SovietAttack2.Location, SovietAttack1.Location, SovietBase.Location } },
+		AttackPaths = { { SovietGroup1.Location, SovietBase.Location } },
 	},
 	SovietVsGDI = {
 		AttackValuePerSecond = {
@@ -120,7 +120,7 @@ Squads = {
 		Units = UnitCompositionsShellmap.Soviet,
 		AttackPaths = { { SovietAttack1.Location, SovietAttack2.Location, GDIBase.Location }, { SovietAttack3a.Location, SovietAttack3b.Location, GDIBase.Location} },
 	},
-	ScrinVsGDI = {
+	ScrinVsSoviets = {
 		AttackValuePerSecond = {
 			normal = { { MinTime = 0, Value = 125 } },
 		},
@@ -129,9 +129,9 @@ Squads = {
 		IdleUnits = { },
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
 		Units = UnitCompositionsShellmap.Scrin,
-		AttackPaths = { { ScrinAttack1.Location, AlliedCamp.Location, ScrinAttack2a.Location, GDIBase.Location }, { ScrinAttack1.Location, AlliedCamp.Location, ScrinAttack2b.Location, GDIBase.Location } },
+		AttackPaths = { { ScrinAttack1.Location, AlliedCamp.Location, ScrinAttack2a.Location, SovietBase.Location }, { ScrinAttack1.Location, AlliedCamp.Location, ScrinAttack2b.Location, SovietBase.Location } },
 	},
-	ScrinVsNod = {
+	ScrinVsGDI = {
 		AttackValuePerSecond = {
 			normal = { { MinTime = 0, Value = 90 } },
 		},
@@ -140,7 +140,7 @@ Squads = {
 		IdleUnits = { },
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
 		Units = UnitCompositionsShellmap.Scrin,
-		AttackPaths = { { GDICamp.Location, NodBase.Location } },
+		AttackPaths = { { GDICamp.Location, GDIBase.Location } },
 	},
 	GDIAir = {
 		Interval = {
@@ -420,7 +420,7 @@ WorldLoaded = function()
 			InitAttackSquad(Squads.GDIVsScrin, GDI, Scrin)
 			InitAttackSquad(Squads.SovietVsGDI, USSR, GDI)
 			InitAttackSquad(Squads.NodVsScrin, Nod, Scrin)
-			InitAttackSquad(Squads.ScrinVsNod, Scrin, Nod)
+			InitAttackSquad(Squads.ScrinVsSoviets, Scrin, Nod)
 
 			InitAirAttackSquad(Squads.GDIAir, GDI, Scrin, { "stmr", "enrv", "tpod", "devo", "ruin", "pac", "deva" })
 			InitAirAttackSquad(Squads.SovietAir, USSR, GDI, { "orca", "a10", "msam", "htnk", "titn", "htnk.ion", "htnk.hover", "htnk.drone", "jugg" })

@@ -1115,7 +1115,7 @@ IsGreeceGroundHunterUnit = function(actor)
 end
 
 IsUSSRGroundHunterUnit = function(actor)
-	return actor.Owner == USSR and IsGroundHunterUnit(actor) and actor.Type ~= "v2rl" and actor.Type ~= "katy"
+	return actor.Owner == USSR and IsGroundHunterUnit(actor) and actor.Type ~= "v2rl" and actor.Type ~= "v3rl" and actor.Type ~= "katy" and actor.Type ~= "grad" and actor.Type ~= "nukc"
 end
 
 IsGDIGroundHunterUnit = function(actor)

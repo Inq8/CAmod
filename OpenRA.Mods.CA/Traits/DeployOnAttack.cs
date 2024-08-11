@@ -26,8 +26,17 @@ namespace OpenRA.Mods.CA.Traits
 
 	public class DeployOnAttack : PausableConditionalTrait<DeployOnAttackInfo>, INotifyAttack
 	{
+		private readonly GrantConditionOnDeploy trait;
+		private readonly GrantConditionOnDeployTurreted turretedTrait;
+		private readonly GrantTimedConditionOnDeploy timedTrait;
+
 		public DeployOnAttack(ActorInitializer init, DeployOnAttackInfo info)
-			: base(info) { }
+			: base(info)
+		{
+			trait = init.Self.TraitOrDefault<GrantConditionOnDeploy>();
+			turretedTrait = init.Self.TraitOrDefault<GrantConditionOnDeployTurreted>();
+			timedTrait = init.Self.TraitOrDefault<GrantTimedConditionOnDeploy>();
+		}
 
 		void INotifyAttack.Attacking(Actor self, in Target target, Armament a, Barrel barrel)
 		{
@@ -37,7 +46,6 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled || IsTraitPaused)
 				return;
 
-			var trait = self.TraitOrDefault<GrantConditionOnDeploy>();
 			if (trait != null && trait.DeployState == DeployState.Undeployed)
 			{
 				if (self.CurrentActivity == null)
@@ -47,7 +55,6 @@ namespace OpenRA.Mods.CA.Traits
 				return;
 			}
 
-			var turretedTrait = self.TraitOrDefault<GrantConditionOnDeployTurreted>();
 			if (turretedTrait != null && turretedTrait.DeployState == DeployState.Undeployed)
 			{
 				if (self.CurrentActivity == null)
@@ -57,7 +64,6 @@ namespace OpenRA.Mods.CA.Traits
 				return;
 			}
 
-			var timedTrait = self.TraitOrDefault<GrantTimedConditionOnDeploy>();
 			if (timedTrait != null && timedTrait.DeployState == TimedDeployState.Ready)
 			{
 				timedTrait.Deploy();
