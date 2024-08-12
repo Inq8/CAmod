@@ -240,10 +240,6 @@ NUKC:
 		Weapon: NukeCannonDeployer
 		LocalOffset: 824,0,758
 		RequiresCondition: undeployed && botowner
-		PauseOnCondition: moving
-	GrantConditionOnMovement@Moving:
-		ValidMovementTypes: Horizontal, Vertical, Turn
-		Condition: moving
 	AttackTurreted:
 		Armaments: primary, deployer
 		Turrets: primary, deployer
@@ -317,12 +313,9 @@ NUKC:
 	GrantConditionOnBotOwner@BotOwner:
 		Condition: botowner
 		Bots: brutal, vhard, hard, normal, easy, naval
-	AutoDeployer@AI:
-		RequiresCondition: botowner
-		DeployChance: 100
-		DeployTrigger: Attack
-		DeployTicks: 5
-		UndeployTicks: 1500
+	DeployOnAttack:
+		RequiresCondition: undeployed && botowner
+		ArmamentNames: deployer
 	WithRangeCircle:
 		Type: NukeCannon
 		Range: 16c0
