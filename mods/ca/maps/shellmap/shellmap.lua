@@ -9,11 +9,21 @@ UnitCompositionsShellmap = {
 	Soviet = {
 		normal = {
 			{ Infantry = { "e3", "e1", "e1", "e3", "e4" }, Vehicles = { "btr.ai" } },
-			{ Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "shok", "e3", "e4" }, Vehicles = { TeslaVariant, "btr.ai", SovietMammothVariant, SovietBasicArty } },
-			{ Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e4" }, Vehicles = { "3tnk", "btr.ai", SovietMammothVariant, SovietBasicArty } },
-			{ Infantry = { "e3", "e1", "e1", "shok", "e8", "e1", "e2", "e3", "e4" }, Vehicles = { "3tnk.atomic", "btr.ai", SovietMammothVariant, SovietBasicArty } },
-			{ Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e4" }, Vehicles = { "3tnk", "btr.ai", SovietMammothVariant, SovietBasicArty } },
-			{ Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e4" }, Vehicles = { "3tnk", "btr.ai", "isu", SovietBasicArty } }
+			{ Infantry = { "e3", "e1", "e1", "ttrp", "shok", "e1", "shok", "e3", "e4" }, Vehicles = { TeslaVariant, "btr.ai", SovietMammothVariant, "grad" } },
+			{ Infantry = { "e3", "e1", "e1", "ttrp", "shok", "e1", "e2", "e3", "e4" }, Vehicles = { "3tnk.rhino.atomic", "btr.ai", SovietMammothVariant, "grad" } },
+			{ Infantry = { "e3", "e1", "e1", "ttrp", "e8", "e1", "e2", "e3", "e4" }, Vehicles = { "3tnk.rhino.yuri", "btr.ai", SovietMammothVariant, "grad" } },
+			{ Infantry = { "e3", "e1", "e1", "ttrp", "deso", "e1", "e2", "e3", "e4" }, Vehicles = { "3tnk.rhino", "btr.yuri.ai", SovietMammothVariant, SovietBasicArty } },
+			{ Infantry = { "e3", "e1", "e1", "ttrp", "deso", "e1", "e2", "e3", "e4" }, Vehicles = { "3tnk", "btr.yuri.ai", "isu", SovietBasicArty } }
+		}
+	},
+	Allies = {
+		normal = {
+			{ Infantry = { "e3", "e1", "e1", "e3", "e1" }, Vehicles = { "apc.ai" } },
+			{ Infantry = { "e3", "e1", "e1", "cryt", "cryt", "e1", "cryt", "e3", "snip" }, Vehicles = { "arty", "apc.ai", "pcan", "ptnk" } },
+			{ Infantry = { "e3", "e1", "e1", "cryt", "cryt", "e1", "e1", "e3", "snip" }, Vehicles = { "2tnk", "apc.ai", "batf.ai", "ptnk" } },
+			{ Infantry = { "e3", "e1", "e1", "cryt", "enfo", "e1", "e1", "e3", "snip" }, Vehicles = { "gtnk", "apc.ai", "chpr", "ptnk" } },
+			{ Infantry = { "e3", "e1", "e1", "cryt", "cryt", "e1", "e1", "e3", "snip" }, Vehicles = { "tnkd", "rapc.ai", "batf.ai", "ptnk" } },
+			{ Infantry = { "e3", "e1", "e1", "cryt", "cryt", "e1", "e1", "e3", "snip" }, Vehicles = { "2tnk", "rapc.ai", "cryo", "ptnk" } }
 		}
 	},
 	GDI = {
@@ -95,7 +105,7 @@ Squads = {
 		ProducerActors = { Infantry = { GDINorthEastBarracks }, Vehicles = { GDINorthEastFactory } },
 		ProducerTypes = { Infantry = { "pyle" }, Vehicles = { "weap.td" } },
 		Units = UnitCompositionsShellmap.GDI,
-		AttackPaths = { { ScrinAttack2a.Location, ScrinBase.Location }, { ScrinAttack2b.Location, ScrinBase.Location } },
+		AttackPaths = { { SovietAttack3a.Location, SovietBase.Location }, { NodAttack1.Location, NodBase.Location } },
 	},
 	GDIVsSoviets = {
 		AttackValuePerSecond = {
@@ -109,6 +119,30 @@ Squads = {
 		Units = UnitCompositionsShellmap.GDI,
 		AttackPaths = { { SovietGroup1.Location, SovietBase.Location } },
 	},
+	AlliesVsSoviets = {
+		AttackValuePerSecond = {
+			normal = { { MinTime = 0, Value = 80 } },
+		},
+		QueueProductionStatuses = { Infantry = false, Vehicles = false },
+		FollowLeader = false,
+		IdleUnits = { },
+		ProducerActors = { Infantry = { AlliesNorthWestBarracks }, Vehicles = { AlliesNorthWestFactory } },
+		ProducerTypes = { Infantry = { "tent" }, Vehicles = { "weap" } },
+		Units = UnitCompositionsShellmap.Allies,
+		AttackPaths = { { SovietGroup1.Location, SovietBase.Location } },
+	},
+	SovietVsAllies = {
+		AttackValuePerSecond = {
+			normal = { { MinTime = 0, Value = 110 } },
+		},
+		QueueProductionStatuses = { Infantry = false, Vehicles = false },
+		FollowLeader = false,
+		IdleUnits = { },
+		ProducerActors = { Infantry = { SovietNorthBarracks }, Vehicles = { SovietNorthFactory } },
+		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
+		Units = UnitCompositionsShellmap.Soviet,
+		AttackPaths = { { SovietAttack1.Location, SovietAttack2.Location, GDIBase.Location }, { SovietAttack3a.Location, SovietAttack3b.Location, AlliesBase.Location} },
+	},
 	SovietVsGDI = {
 		AttackValuePerSecond = {
 			normal = { { MinTime = 0, Value = 110 } },
@@ -116,6 +150,7 @@ Squads = {
 		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = false,
 		IdleUnits = { },
+		ProducerActors = { Infantry = { SovietSouthBarracks }, Vehicles = { SovietSouthFactory } },
 		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
 		Units = UnitCompositionsShellmap.Soviet,
 		AttackPaths = { { SovietAttack1.Location, SovietAttack2.Location, GDIBase.Location }, { SovietAttack3a.Location, SovietAttack3b.Location, GDIBase.Location} },
@@ -330,7 +365,7 @@ WorldLoaded = function()
 			return a.Owner == GDI and not a.IsDead and a.HasProperty("AttackMove")
 		end)
 		Utils.Do(gdiGroup1, function(a)
-			a.AttackMove(NodGroup1.Location)
+			a.AttackMove(SovietGroup1.Location)
 		end)
 		local nodGroup1 = Map.ActorsInCircle(NodGroup1.CenterPosition, WDist.FromCells(10), function(a)
 			return a.Owner == Nod and not a.IsDead and a.HasProperty("AttackMove")
@@ -417,8 +452,10 @@ WorldLoaded = function()
 
 		Trigger.AfterDelay(DateTime.Seconds(85), function()
 			InitAttackSquad(Squads.GDIVsSoviets, GDI, USSR)
+			InitAttackSquad(Squads.AlliesVsSoviets, Greece, USSR)
 			InitAttackSquad(Squads.GDIVsScrin, GDI, Scrin)
 			InitAttackSquad(Squads.SovietVsGDI, USSR, GDI)
+			InitAttackSquad(Squads.SovietVsAllies, USSR, Greece)
 			InitAttackSquad(Squads.NodVsScrin, Nod, Scrin)
 			InitAttackSquad(Squads.ScrinVsSoviets, Scrin, Nod)
 
