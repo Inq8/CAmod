@@ -308,7 +308,7 @@ namespace OpenRA.Mods.CA.Traits
 			}
 
 			// For all other orders, if target has changed, reset progress
-			if (order.Target.Actor != currentTarget.Actor)
+			if (order.Target.Actor != currentTarget.Actor && !order.Queued)
 			{
 				if (Info.AutoUndeploy && deployTrait != null && deployTrait.DeployState == DeployState.Deployed && currentTarget.Actor != null && order.OrderString != "GrantConditionOnDeploy")
 					deployTrait.Undeploy();

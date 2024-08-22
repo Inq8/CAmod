@@ -80,6 +80,7 @@ namespace OpenRA.Mods.CA.Traits
 		protected PlayerResources playerResources;
 		int conditionToken = Actor.InvalidConditionToken;
 		bool eject = false;
+		bool blocked = false;
 
 		public UnitConverter(ActorInitializer init, UnitConverterInfo info)
 			: base(info)
@@ -147,26 +148,31 @@ namespace OpenRA.Mods.CA.Traits
 			var outputActor = eject ? nextItem.InputActor : nextItem.OutputActor;
 			var exitSound = info.ReadyAudio;
 
-			if (!eject)
+			if (!blocked)
 			{
-				var expectedRemainingCost = nextItem.BuildDurationRemaining == 1 ? 0 : nextItem.ConversionCost * nextItem.BuildDurationRemaining / Math.Max(1, nextItem.BuildDuration);
-				var costThisFrame = nextItem.ConversionCostRemaining - expectedRemainingCost;
+				if (!eject)
+				{
+					var expectedRemainingCost = nextItem.BuildDurationRemaining == 1 ? 0 : nextItem.ConversionCost * nextItem.BuildDurationRemaining / Math.Max(1, nextItem.BuildDuration);
+					var costThisFrame = nextItem.ConversionCostRemaining - expectedRemainingCost;
 
-				if (costThisFrame != 0 && !playerResources.TakeCash(costThisFrame, true))
-					return;
+					if (costThisFrame != 0 && !playerResources.TakeCash(costThisFrame, true))
+						return;
 
-				nextItem.ConversionCostRemaining -= costThisFrame;
-				nextItem.BuildDurationRemaining -= 1;
-				if (nextItem.BuildDurationRemaining > 0)
-					return;
-			}
-			else
-			{
-				playerResources.GiveCash(nextItem.ConversionCost - nextItem.ConversionCostRemaining);
+					nextItem.ConversionCostRemaining -= costThisFrame;
+					nextItem.BuildDurationRemaining -= 1;
+					if (nextItem.BuildDurationRemaining > 0)
+						return;
+				}
+				else
+				{
+					playerResources.GiveCash(nextItem.ConversionCost - nextItem.ConversionCostRemaining);
+				}
 			}
 
 			if (nextItem.Producer.Produce(nextItem.Actor, outputActor, nextItem.ProductionType, nextItem.Inits, 0))
 			{
+				blocked = false;
+
 				if (!eject)
 					Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", exitSound, self.Owner.Faction.InternalName);
 
@@ -178,9 +184,10 @@ namespace OpenRA.Mods.CA.Traits
 					RevokeCondition(self);
 				}
 			}
-			else if (!eject)
+			else if (!eject && !blocked)
 			{
 				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", Info.BlockedAudio, self.Owner.Faction.InternalName);
+				blocked = true;
 			}
 		}
 

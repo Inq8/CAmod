@@ -259,6 +259,10 @@ NUKC:
 		PauseOnCondition: being-warped
 		SmartDeploy: True
 		ValidFacings: 0, 256, 512, 768
+	GrantTimedCondition@InitialLoad:
+		Condition: reloading
+		Duration: 15
+		RequiresCondition: deployed
 	WithFacingSpriteBody:
 		RequiresCondition: !deployed && undeployed
 	WithFacingSpriteBody@DeployingChassis:

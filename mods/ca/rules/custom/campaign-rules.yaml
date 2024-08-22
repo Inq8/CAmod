@@ -356,6 +356,14 @@ DISR:
 	Buildable:
 		Prerequisites: gtek, ~vehicles.gdi
 
+^GpsPower:
+	ProduceActorPowerCA@InitialSatelliteScan:
+		Prerequisites: anyradar, ~!gps.satellite.firstscan, ~fogenabled, ~!botplayer
+	ProduceActorPowerCA@SatelliteScan:
+		Prerequisites: anyradar, ~gps.satellite, ~gps.satellite.firstscan, ~fogenabled, ~!botplayer
+	ProduceActorPowerCA@SatelliteScanNoFog:
+		Prerequisites: anyradar, ~!fogenabled, ~!botplayer
+
 # For attack interval calculations, factoring in extra value from cargo
 
 SAPC.AI:

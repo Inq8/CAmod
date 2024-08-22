@@ -329,6 +329,12 @@ Player:
 	ProvidesPrerequisite@collector:
 		Prerequisite: player.collector
 		Factions: collector
+	ProvidesPrerequisite@BotPlayer:
+		Prerequisite: botplayer
+		RequiresCondition: botplayer
+	GrantConditionOnBotOwner@BotPlayer:
+		Condition: botplayer
+		Bots: brutal, vhard, hard, normal, easy, naval, campaign
 	GrantConditionOnPrerequisiteManager:
 	GrantConditionOnPrerequisiteManagerCA:
 	EnemyWatcher:
