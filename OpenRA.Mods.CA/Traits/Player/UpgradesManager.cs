@@ -31,6 +31,8 @@ namespace OpenRA.Mods.CA.Traits
 
 		public int Hash { get; private set; }
 
+		public HashSet<string> UnlockedUpgradeTypes => unlockedUpgradeTypes;
+
 		public UpgradesManager(Actor self, UpgradesManagerInfo info)
 		{
 			this.self = self;
