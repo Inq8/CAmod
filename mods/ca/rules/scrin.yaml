@@ -1641,24 +1641,24 @@ LCHR:
 	Explodes:
 		Weapon: LeecherExplode
 		EmptyWeapon: LeecherExplode
-		RequiresCondition: !coalescence-upgrade
+		RequiresCondition: !coalescence-upgrade && !being-warped
 	Explodes@COALESCENCE:
 		Weapon: LeecherCoalesce
 		EmptyWeapon: LeecherCoalesce
-		RequiresCondition: coalescence-upgrade
+		RequiresCondition: coalescence-upgrade && !being-warped
 	GrantConditionOnPrerequisite@COALESCENCE:
 		Condition: coalescence-upgrade
 		Prerequisites: coalescence.upgrade
 	SpawnActorOnDeath:
 		Actor: lchr.orb
-		RequiresCondition: coalescence-upgrade
+		RequiresCondition: coalescence-upgrade && !being-warped
 	KillsSelf:
 		RequiresCondition: triggered
 	ActorLostNotification:
 		RequiresCondition: !coalescence-upgrade
 	GrantConditionOnDeploy:
 		DeployedCondition: triggered
-		RequiresCondition: coalescence-upgrade
+		RequiresCondition: coalescence-upgrade && !being-warped
 	GivesBounty:
 		RequiresCondition: global-bounty && !coalescence-upgrade
 	TransfersStanceToDeathActor:
@@ -1667,6 +1667,7 @@ LCHR.Orb:
 	Inherits@1: ^1x1Shape
 	Inherits@2: ^SelectableSupportUnit
 	Inherits@bounty: ^GlobalBounty
+	Inherits@Warpable: ^Warpable
 	Selectable:
 		DecorationBounds: 1536, 1536, 0, -128
 	Tooltip:
@@ -1677,6 +1678,10 @@ LCHR.Orb:
 		Image: lchr.orb
 		Palette: caneon
 	WithSpriteBody:
+		RequiresCondition: being-warped
+	WithSpriteBody@Warped:
+		Sequence: warped
+		RequiresCondition: being-warped
 	ClassicFacingBodyOrientation:
 		QuantizedFacings: 1
 	Targetable:
@@ -1720,6 +1725,7 @@ LCHR.Orb:
 		Count: 1
 		ShowSelectionBar: true
 		SelectionBarColor: ff0000
+		PauseOnCondition: being-warped
 	SpawnActorOnDeath:
 		Actor: lchr
 		RequiresCondition: resurrect

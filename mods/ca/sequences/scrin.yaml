@@ -1435,11 +1435,14 @@ lchr.destroyed:
 		ZOffset: -512
 
 lchr.orb:
-	idle:
+	Inherits: ^VehicleOverlays
+	Defaults:
 		Filename: lchrorb.shp
 		Alpha: 0.75
-		Length: *
 		ZOffset: 512
+	idle:
+		Length: *
+	warped:
 
 stcr:
 	Inherits: ^VehicleOverlays
