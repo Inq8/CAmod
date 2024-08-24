@@ -574,6 +574,42 @@ Container@OBSERVER_WIDGETS:
 									Font: Bold
 									Text: Upgrades
 									Shadow: True
+						Container@BUILD_ORDER_HEADERS:
+							X: 0
+							Y: 0
+							Width: 400
+							Height: PARENT_BOTTOM
+							Children:
+								ColorBlock@HEADER_COLOR:
+									X: 0
+									Y: 0
+									Color: 00000090
+									Width: PARENT_RIGHT - 200
+									Height: PARENT_BOTTOM
+								GradientColorBlock@HEADER_GRADIENT:
+									X: PARENT_RIGHT - 200
+									Y: 0
+									TopLeftColor: 00000090
+									BottomLeftColor: 00000090
+									Width: 200
+									Height: PARENT_BOTTOM
+								Label@PLAYER_HEADER:
+									X: 40
+									Y: 0
+									Width: 120
+									Height: PARENT_BOTTOM
+									Font: Bold
+									Text: Player
+									Align: Left
+									Shadow: True
+								Label@BUILD_ORDER_HEADER:
+									X: 160
+									Y: 0
+									Width: 100
+									Height: PARENT_BOTTOM
+									Font: Bold
+									Text: Build Order
+									Shadow: True
 						Container@COMBAT_STATS_HEADERS:
 							X: 0
 							Y: 0
@@ -1006,6 +1042,43 @@ Container@OBSERVER_WIDGETS:
 									Font: Bold
 									Shadow: True
 								ObserverUpgradeIcons@UPGRADES_ICONS:
+									X: 155
+									Y: 0
+									Width: 0
+									Height: PARENT_BOTTOM
+									TooltipContainer: TOOLTIP_CONTAINER
+						ScrollItem@BUILD_ORDER_PLAYER_TEMPLATE:
+							X: 0
+							Y: 0
+							Width: 400
+							Height: 25
+							Background: scrollitem-nohover
+							Children:
+								ColorBlock@PLAYER_COLOR:
+									X: 0
+									Y: 0
+									Width: PARENT_RIGHT - 200
+									Height: PARENT_BOTTOM
+								GradientColorBlock@PLAYER_GRADIENT:
+									X: PARENT_RIGHT - 200
+									Y: 0
+									Width: 200
+									Height: PARENT_BOTTOM
+								Image@FLAG:
+									X: 5
+									Y: 4
+									Width: 35
+									Height: PARENT_BOTTOM - 4
+									ImageName: random
+									ImageCollection: flags
+								Label@PLAYER:
+									X: 35
+									Y: 0
+									Width: 120
+									Height: PARENT_BOTTOM
+									Font: Bold
+									Shadow: True
+								ObserverBuildOrderIcons@BUILD_ORDER_ICONS:
 									X: 155
 									Y: 0
 									Width: 0

@@ -72,6 +72,7 @@ options-observer-stats =
     .combat = Combat
     .army = Army
     .upgrades = Upgrades
+    .build-order = Build Order
     .earnings-graph = Earnings (graph)
     .army-graph = Army Value (graph)
     .team-army-graph = Team Value (graph)

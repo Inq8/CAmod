@@ -21,7 +21,7 @@ using OpenRA.Widgets;
 
 namespace OpenRA.Mods.CA.Widgets.Logic
 {
-	public enum ObserverStatsPanel { None, Basic, Economy, Production, SupportPowers, Combat, Army, Upgrades, Graph, ArmyGraph, TeamArmyGraph }
+	public enum ObserverStatsPanel { None, Basic, Economy, Production, SupportPowers, Combat, Army, Upgrades, BuildOrder, Graph, ArmyGraph, TeamArmyGraph }
 
 	[ChromeLogicArgsHotkeys("StatisticsBasicKey", "StatisticsEconomyKey", "StatisticsProductionKey", "StatisticsSupportPowersKey", "StatisticsCombatKey", "StatisticsArmyKey", "StatisticsGraphKey",
 		"StatisticsArmyGraphKey")]
@@ -52,6 +52,9 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 		const string Upgrades = "options-observer-stats.upgrades";
 
 		[TranslationReference]
+		const string BuildOrder = "options-observer-stats.build-order";
+
+		[TranslationReference]
 		const string EarningsGraph = "options-observer-stats.earnings-graph";
 
 		[TranslationReference]
@@ -73,6 +76,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 		readonly ContainerWidget combatStatsHeaders;
 		readonly ContainerWidget armyHeaders;
 		readonly ContainerWidget upgradesHeaders;
+		readonly ContainerWidget buildOrderHeaders;
 		readonly ScrollPanelWidget playerStatsPanel;
 		readonly ScrollItemWidget basicPlayerTemplate;
 		readonly ScrollItemWidget economyPlayerTemplate;
@@ -80,6 +84,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 		readonly ScrollItemWidget supportPowersPlayerTemplate;
 		readonly ScrollItemWidget armyPlayerTemplate;
 		readonly ScrollItemWidget upgradesPlayerTemplate;
+		readonly ScrollItemWidget buildOrderPlayerTemplate;
 		readonly ScrollItemWidget combatPlayerTemplate;
 		readonly ContainerWidget incomeGraphContainer;
 		readonly ContainerWidget armyValueGraphContainer;
@@ -121,6 +126,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			supportPowerStatsHeaders = widget.Get<ContainerWidget>("SUPPORT_POWERS_HEADERS");
 			armyHeaders = widget.Get<ContainerWidget>("ARMY_HEADERS");
 			upgradesHeaders = widget.Get<ContainerWidget>("UPGRADES_HEADERS");
+			buildOrderHeaders = widget.Get<ContainerWidget>("BUILD_ORDER_HEADERS");
 			combatStatsHeaders = widget.Get<ContainerWidget>("COMBAT_STATS_HEADERS");
 
 			playerStatsPanel = widget.Get<ScrollPanelWidget>("PLAYER_STATS_PANEL");
@@ -138,6 +144,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				AdjustHeader(combatStatsHeaders);
 				AdjustHeader(armyHeaders);
 				AdjustHeader(upgradesHeaders);
+				AdjustHeader(buildOrderHeaders);
 			}
 
 			basicPlayerTemplate = playerStatsPanel.Get<ScrollItemWidget>("BASIC_PLAYER_TEMPLATE");
@@ -146,6 +153,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			supportPowersPlayerTemplate = playerStatsPanel.Get<ScrollItemWidget>("SUPPORT_POWERS_PLAYER_TEMPLATE");
 			armyPlayerTemplate = playerStatsPanel.Get<ScrollItemWidget>("ARMY_PLAYER_TEMPLATE");
 			upgradesPlayerTemplate = playerStatsPanel.Get<ScrollItemWidget>("UPGRADES_PLAYER_TEMPLATE");
+			buildOrderPlayerTemplate = playerStatsPanel.Get<ScrollItemWidget>("BUILD_ORDER_PLAYER_TEMPLATE");
 
 			combatPlayerTemplate = playerStatsPanel.Get<ScrollItemWidget>("COMBAT_PLAYER_TEMPLATE");
 
@@ -205,6 +213,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				CreateStatsOption(Combat, ObserverStatsPanel.Combat, combatPlayerTemplate, () => DisplayStats(CombatStats)),
 				CreateStatsOption(Army, ObserverStatsPanel.Army, armyPlayerTemplate, () => DisplayStats(ArmyStats)),
 				CreateStatsOption(Upgrades, ObserverStatsPanel.Upgrades, upgradesPlayerTemplate, () => DisplayStats(UpgradeStats)),
+				CreateStatsOption(BuildOrder, ObserverStatsPanel.BuildOrder, buildOrderPlayerTemplate, () => DisplayStats(BuildOrderStats)),
 				CreateStatsOption(EarningsGraph, ObserverStatsPanel.Graph, null, () => IncomeGraph()),
 				CreateStatsOption(ArmyGraph, ObserverStatsPanel.ArmyGraph, null, () => ArmyValueGraph()),
 				CreateStatsOption(TeamArmyGraph, ObserverStatsPanel.TeamArmyGraph, null, () => TeamArmyValueGraph())
@@ -274,6 +283,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			supportPowerStatsHeaders.Visible = false;
 			armyHeaders.Visible = false;
 			upgradesHeaders.Visible = false;
+			buildOrderHeaders.Visible = false;
 			combatStatsHeaders.Visible = false;
 
 			incomeGraphContainer.Visible = false;
@@ -482,6 +492,27 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			SetupPlayerColor(player, template, playerColor, playerGradient);
 
 			template.Get<ObserverUpgradeIconsWidget>("UPGRADES_ICONS").GetPlayer = () => player;
+			template.IgnoreChildMouseOver = false;
+
+			return template;
+		}
+
+		ScrollItemWidget BuildOrderStats(Player player)
+		{
+			buildOrderHeaders.Visible = true;
+			var template = SetupPlayerScrollItemWidget(buildOrderPlayerTemplate, player);
+
+			AddPlayerFlagAndName(template, player);
+
+			var playerName = template.Get<LabelWidget>("PLAYER");
+			playerName.GetColor = () => Color.White;
+
+			var playerColor = template.Get<ColorBlockWidget>("PLAYER_COLOR");
+			var playerGradient = template.Get<GradientColorBlockWidget>("PLAYER_GRADIENT");
+
+			SetupPlayerColor(player, template, playerColor, playerGradient);
+
+			template.Get<ObserverBuildOrderIconsWidget>("BUILD_ORDER_ICONS").GetPlayer = () => player;
 			template.IgnoreChildMouseOver = false;
 
 			return template;
