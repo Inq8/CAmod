@@ -326,7 +326,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			teamArmyValueGraph.GetSeries = () =>
 				teams.Select(t => new LineGraphSeries(
-					t.Key > 0 ? TranslationProvider.GetString(TeamNumber, Translation.Arguments("team", t.Key)) : TranslationProvider.GetString(NoTeam),
+					t.Key > 0 ? TranslationProvider.GetString(TeamNumber, Translation.Arguments("team", $"{t.Key} ({t.First().PlayerName})")) : TranslationProvider.GetString(NoTeam),
 					teamColors[t.Key],
 					t.Select(p => (p.PlayerActor.TraitOrDefault<PlayerStatistics>() ?? new PlayerStatistics(p.PlayerActor)).ArmySamples.Select(s => (float)s)).Aggregate((a, b) => a.Zip(b, (x, y) => x + y))));
 		}

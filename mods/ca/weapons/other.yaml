@@ -612,7 +612,12 @@ DogExplode:
 			Concrete: 75
 			Heavy: 70
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster
-		AffectsParent: true
+		InvalidTargets: TerrorDog
+	Warhead@FF: HealthPercentageDamage
+		Spread: 2c0
+		Damage: 25
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+		ValidTargets: TerrorDog
 	Warhead@3Eff: CreateEffect
 		Explosions: artillery_explosion
 		ImpactSounds: xplosml2.aud
@@ -1228,13 +1233,14 @@ PortaLaser.UPG:
 
 IFVLaser:
 	Inherits: PortaLaser
+	Range: 7c0
 	-Burst:
 	-StartBurstReport:
 	Report: venmfireupg1.aud, venmfireupg1.aud
 	Projectile: LaserZapCA
 		SecondaryBeamWidth: 75
 	Warhead@1Dam: SpreadDamage
-		Damage: 3750
+		Damage: 4250
 
 EnlightenedBeam:
 	ReloadDelay: 65
@@ -2691,7 +2697,7 @@ DisruptorPulse:
 			Wood: 60
 			Light: 28
 			Heavy: 12
-			Concrete: 35
+			Concrete: 45
 		ValidRelationships: Ally
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 		InvalidTargets: Disruptor
@@ -3147,6 +3153,8 @@ ViperLaser:
 	Report: viper-fire1.aud
 	Projectile: PlasmaBeam
 		Colors: ff0000E6, cc0000E6
+	Warhead@1Dam: SpreadDamage
+		Damage: 1550
 
 ShadeEmp:
 	Inherits: EnlightenedEmp
@@ -3564,6 +3572,7 @@ BasiliskPulse:
 
 CyclopsZap:
 	Inherits: TTrackZap
+	Range: 9c0
 
 JackknifeTargeter:
 	Range: 8c0

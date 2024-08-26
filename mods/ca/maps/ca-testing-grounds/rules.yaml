@@ -69,14 +69,35 @@ SYRD:
 
 TSLA:
 	AttackTesla:
-		PauseOnCondition: dormant
+		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped || dormant
+	GrantConditionOnBotOwner@dormant:
+		Condition: dormant
+		Bots: dormant
+
+ATWR:
+	AttackTurreted:
+		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped || dormant
+	GrantConditionOnBotOwner@dormant:
+		Condition: dormant
+		Bots: dormant
+
+OBLI:
+	AttackCharges:
+		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped || dormant
+	GrantConditionOnBotOwner@dormant:
+		Condition: dormant
+		Bots: dormant
+
+GTWR:
+	AttackTurreted:
+		PauseOnCondition: build-incomplete || empdisable || being-warped || dormant
 	GrantConditionOnBotOwner@dormant:
 		Condition: dormant
 		Bots: dormant
 
 FTUR:
 	AttackTurreted:
-		PauseOnCondition: dormant
+		PauseOnCondition: build-incomplete || empdisable || being-warped || dormant
 	GrantConditionOnBotOwner@dormant:
 		Condition: dormant
 		Bots: dormant
