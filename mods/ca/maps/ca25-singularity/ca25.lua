@@ -391,8 +391,9 @@ WorldLoaded = function()
 			CyborgsProvoked = true
 			Utils.Do(cyborgs, function(c)
 				if not c.IsDead then
-					TargetSwapChance(c, 10)
+					c.Stop()
 					c.GrantCondition("provoked")
+					ClearCyborgTarget(c)
 				end
 			end)
 		end
@@ -417,6 +418,17 @@ Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
 	PanToFinale()
+end
+
+ClearCyborgTarget = function(cyborg)
+	if not IsFinaleStarted then
+		Trigger.AfterDelay(DateTime.Seconds(5), function()
+			if not cyborg.IsDead then
+				cyborg.Stop()
+				ClearCyborgTarget(cyborg)
+			end
+		end)
+	end
 end
 
 OncePerSecondChecks = function()
@@ -896,6 +908,10 @@ FlipSlaveFaction = function(player)
 end
 
 DoFinale = function()
+	if IsFinaleStarted then
+		return
+	end
+	IsFinaleStarted = true
 	local pacs = Scrin.GetActorsByTypes({ "pac", "deva", "stmr" })
 	Utils.Do(pacs, function(a)
 		if not a.IsDead then
@@ -923,7 +939,8 @@ DoFinale = function()
 	Actor.Create("wormhole", true, { Owner = Kane, Location = KaneSpawn.Location })
 	local kane = Actor.Create("kane", true, { Owner = Kane, Location = KaneSpawn.Location, Facing = Angle.South })
 
-	Trigger.AfterDelay(DateTime.Seconds(3), function()
+	Trigger.AfterDelay(DateTime.Seconds(5), function()
+		kane.Stop()
 		kane.Move(KaneSpawn.Location + CVec.New(0, 3))
 	end)
 
@@ -965,6 +982,7 @@ DoFinale = function()
 
 		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(27)), function()
 			if not kane.IsDead then
+				kane.Stop()
 				kane.Move(WormholeWP.Location)
 			end
 			UserInterface.SetMissionText("To be continued...", HSLColor.Red)

@@ -15,6 +15,8 @@ ScrinGroundAttackPaths = {
 
 Masterminds = { Mastermind1, Mastermind2, Mastermind3, Mastermind4, Mastermind5 }
 
+MastermindsLocated = {}
+
 MaxEnslavedUnitsKilled = {
 	normal = 20,
 	hard = 10
@@ -283,7 +285,8 @@ WorldLoaded = function()
 			end)
 
 			Trigger.OnEnteredProximityTrigger(m.CenterPosition, WDist.New(11 * 1024), function(a, id)
-				if a.Owner == GDI and a.Type ~= "smallcamera" and not m.IsDead then
+				if a.Owner == GDI and a.Type ~= "smallcamera" and not m.IsDead and not MastermindsLocated[tostring(m)] then
+					MastermindsLocated[tostring(m)] = true
 					Trigger.RemoveProximityTrigger(id)
 					local camera = Actor.Create("smallcamera", true, { Owner = GDI, Location = m.Location })
 					Notification("A Mastermind has been located.")

@@ -280,6 +280,11 @@ mothership.shields:
 		Condition: provoked
 	AttackFrontal:
 		PauseOnCondition: !kane-revealed && bluebuff && !provoked
+	RangeMultiplier@PROVOKED:
+		Modifier: 125
+		RequiresCondition: provoked
+	AttackFrontal:
+		FacingTolerance: 128
 
 RMBC:
 	Inherits@BLUEBUFF: ^BlueBuff
@@ -310,6 +315,7 @@ SIGN:
 		RepairPercent: 0
 	Power:
 		Amount: 0
+	-RecallPower@Recall:
 
 YF23.Interceptor:
 	Inherits: MIG

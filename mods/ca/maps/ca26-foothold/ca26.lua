@@ -376,7 +376,7 @@ InitTibLifeforms = function()
 	local blobs = TibLifeforms.GetActorsByType("tbcl")
 
 	local patrolPath2 = { BlobPatrol4.Location, BlobPatrol5.Location, BlobPatrol6.Location, BlobPatrol7.Location, BlobPatrol8.Location, BlobPatrol9.Location, BlobPatrol10.Location, BlobPatrol11.Location, BlobPatrol1.Location, BlobPatrol2.Location, BlobPatrol3.Location }
-	local patrolPath3 = { BlobPatrolB1.Location, BlobPatrolB2.Location, BlobPatrolB3.Location, BlobPatrolB4.Location, BlobPatrolB5.Location }
+	local patrolPath3 = { BlobPatrolB1.Location, BlobPatrolB2.Location, BlobPatrolB3.Location, BlobPatrolB4.Location, BlobPatrolB5.Location, BlobPatrolB6.Location }
 
 	Blob2.Patrol(patrolPath2, true)
 	Blob3.Patrol(patrolPath3, true)
