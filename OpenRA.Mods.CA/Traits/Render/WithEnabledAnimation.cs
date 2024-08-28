@@ -15,7 +15,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits.Render
 {
-	[Desc("Plays an animation when trait is enabled or re-enabled, replacing the default body animation (plays once, unlike WithEnabledAnimation).")]
+	[Desc("Plays an animation when trait is enabled or re-enabled, replacing the default body animation (plays once, unlike WithIdleAnimation).")]
 	public class WithEnabledAnimationInfo : ConditionalTraitInfo, Requires<WithSpriteBodyInfo>
 	{
 		[SequenceReference]

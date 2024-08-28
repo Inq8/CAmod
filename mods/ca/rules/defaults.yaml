@@ -115,9 +115,6 @@
 	ProvidesPrerequisite@NavalAI:
 		Prerequisite: is-naval-ai
 		RequiresCondition: owned-by-naval-ai
-	ProvidesPrerequisite@AI:
-		Prerequisite: botplayer
-		RequiresCondition: owned-by-brutal-ai || owned-by-vhard-ai || owned-by-hard-ai || owned-by-normal-ai || owned-by-easy-ai || owned-by-naval-ai
 	ProductionCostMultiplier@brutalbonus:
 		Multiplier: 90
 		Prerequisites: is-brutal-ai
@@ -3165,6 +3162,7 @@
 	Cloak@SGENCLOAK:
 		CloakSound: cloak5.aud
 		UncloakSound: appear1.aud
+	UpdatesBuildOrder:
 
 ^BuildingTD:
 	Inherits@1: ^Building
@@ -3260,6 +3258,7 @@
 		AreaTypes: building, defense
 	GivesExperienceCA:
 		ActorExperienceModifier: 10000
+	-UpdatesBuildOrder:
 
 ^DefenseTD:
 	Inherits@1: ^Defense

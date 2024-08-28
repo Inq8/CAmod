@@ -1,0 +1,239 @@
+Player:
+	Inherits@FORCESHIELDPOWER: ^ForceShieldPower
+	Inherits@VEILOFWARPOWER: ^VeilOfWarPower
+	Inherits@CLUSTERMINESPOWER: ^ClusterMinesPower
+	Inherits@STRAFINGRUNPOWER: ^StrafingRunPower
+	Inherits@TIMEWARPPOWER: ^TimeWarpPower
+	Inherits@CRYOSTORMPOWER: ^CryostormPower
+	Inherits@HELIOSBOMBPOWER: ^HeliosBombPower
+	Inherits@CHRONOSHIFTPOWER: ^ChronoshiftPower
+	Inherits@PARABOMBSPOWER: ^ParabombsPower
+	Inherits@CARPETBOMBPOWER: ^CarpetBombPower
+	Inherits@ATOMBOMBPOWER: ^AtomBombPower
+	Inherits@MUTABOMBPOWER: ^MutaBombPower
+	Inherits@CHAOSBOMBSPOWER: ^ChaosBombsPower
+	Inherits@ATOMICAMMOPOWER: ^AtomicAmmoPower
+	Inherits@IRONCURTAINPOWER: ^IronCurtainPower
+	Inherits@INTERCEPTORSPOWER: ^InterceptorsPower
+	Inherits@NANITEREPAIRPOWER: ^NaniteRepairPower
+	Inherits@SURGICALSTRIKEPOWER: ^SurgicalStrikePower
+	Inherits@NANITESHIELDPOWER: ^NaniteShieldPower
+	Inherits@HACKERCELLPOWER: ^HackerCellPower
+	Inherits@SHADOWTEAMPOWER: ^ShadowTeamPower
+	Inherits@@INFERNOBOMBPOWER: ^InfernoBombPower
+	Inherits@FRENZYPOWER: ^FrenzyPower
+	Inherits@TIBSTEALTHPOWER: ^TibStealthPower
+	Inherits@STORMSPIKEPOWER: ^StormSpikePower
+	Inherits@BUZZERSWARMPOWER: ^BuzzerSwarmPower
+	Inherits@IONSURGEPOWER: ^IonSurgePower
+	Inherits@GREATERCOALESCENCEPOWER: ^GreaterCoalescencePower
+	Inherits@OVERLORDSWRATHPOWER: ^OverlordsWrathPower
+	Inherits@SUPPRESSIONPOWER: ^SuppressionPower
+	GrantExternalConditionPowerCA@FSHIELD:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		DisplayTimerRelationships: None
+		ChargeInterval: 1
+	SpawnActorPowerCA@VeilOfWar:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		ChargeInterval: 1
+	AirstrikePowerCA@clustermines:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		ChargeInterval: 1
+	ClassicAirstrikePower@Strafe:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		ChargeInterval: 1
+	GrantExternalConditionPowerCA@TimeWarp:
+		-Prerequisites:
+		-BeginChargeSpeechNotification:
+		-EndChargeSpeechNotification:
+		ChargeInterval: 1
+	SpawnActorPowerCA@Cryostorm:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		ChargeInterval: 1
+	AirstrikePowerCA@HeliosBomb:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		ChargeInterval: 1
+	ChronoshiftPowerCA@chronoshift:
+		-Prerequisites:
+		-BeginChargeSpeechNotification:
+		-EndChargeSpeechNotification:
+		DisplayTimerRelationships: None
+		ChargeInterval: 1
+	AirstrikePowerCA@Russianparabombs:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		ChargeInterval: 1
+	AirstrikePowerCA@CarpetBomb:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		ChargeInterval: 1
+	AirstrikePowerCA@Iraqiparabombs:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		ChargeInterval: 1
+	AirstrikePowerCA@ChaosBombs:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		ChargeInterval: 1
+	AirstrikePowerCA@MutaBomb:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		ChargeInterval: 1
+	GrantExternalConditionPowerCA@ATOMICAMMO:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		ChargeInterval: 1
+	GrantExternalConditionPowerCA@HEROESOFUNION:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		ChargeInterval: 1
+	AirstrikePowerCA@KillZone:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		ChargeInterval: 1
+	GrantExternalConditionPowerCA@IRONCURTAIN:
+		-BeginChargeSpeechNotification:
+		-EndChargeSpeechNotification:
+		DisplayTimerRelationships: None
+		ChargeInterval: 1
+	GrantExternalConditionPowerCA@NREPAIR:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		ChargeInterval: 1
+	SpawnActorPowerCA@NSHIELD:
+		-Prerequisites:
+		-BeginChargeSpeechNotification:
+		-EndChargeSpeechNotification:
+		ChargeInterval: 1
+	InterceptorPower@AirDef:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		ChargeInterval: 1
+	ProduceActorPowerCA@hackercell:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		ChargeInterval: 1
+	AirReinforcementsPower@ShadowTeam:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		ChargeInterval: 1
+	AirstrikePowerCA@BlackhandFirebomb:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		ChargeInterval: 1
+	GrantExternalConditionPowerCA@Frenzy:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		ChargeInterval: 1
+	GrantExternalConditionPowerCA@SGEN:
+		-ActiveCondition:
+		-BeginChargeSpeechNotification:
+		-EndChargeSpeechNotification:
+		DisplayTimerRelationships: None
+		ChargeInterval: 1
+	DetonateWeaponPower@STORMSPIKE:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		ChargeInterval: 1
+	DetonateWeaponPower@BUZZERSWARM:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		ChargeInterval: 1
+	DetonateWeaponPower@IONSURGE:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		ChargeInterval: 1
+	DetonateWeaponPower@GREATERCOALESCENCE:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		ChargeInterval: 1
+	MeteorPower@OverlordsWrath:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		DisplayTimerRelationships: None
+		ChargeInterval: 1
+	GrantExternalConditionPowerCA@SUPPRESSION:
+		-Prerequisites:
+		-BeginChargeSpeechNotification:
+		-EndChargeSpeechNotification:
+		DisplayTimerRelationships: None
+		ChargeInterval: 1
+	ExternalCondition@1:
+		Condition: disabled
+	ExternalCondition@2:
+		Condition: empdisable
+	ExternalCondition@3:
+		Condition: being-warped
+	ExternalCondition@4:
+		Condition: build-incomplete
+	ExternalCondition@5:
+		Condition: tower.shield
+
+ALHQ:
+	MissileStrikePower@PatriotStrike:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		ChargeInterval: 1
+
+PATR:
+	AttackOrderPowerCA@EMPMISSILE:
+		-BeginChargeSpeechNotification:
+		-EndChargeSpeechNotification:
+		DisplayTimerRelationships: None
+		ChargeInterval: 1
+
+TMPL:
+	NukePower@Cluster:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		DisplayTimerRelationships: None
+		ChargeInterval: 1
+
+SIGN:
+	RecallPower@Recall:
+		-EndChargeSpeechNotification:
+		DisplayTimerRelationships: None
+		ChargeInterval: 1
+
+WEAT:
+	DetonateWeaponPower@LightningStorm:
+		-EndChargeSpeechNotification:
+		DisplayTimerRelationships: None
+		ChargeInterval: 1
+
+MSLO:
+	NukePower@ABomb:
+		-BeginChargeSpeechNotification:
+		-EndChargeSpeechNotification:
+		DisplayTimerRelationships: None
+		ChargeInterval: 1
+
+EYE:
+	IonCannonPower@surgicals:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		DisplayTimerRelationships: None
+		ChargeInterval: 1
+	DetonateWeaponPower@IonStorm:
+		-BeginChargeSpeechNotification:
+		-EndChargeSpeechNotification:
+		DisplayTimerRelationships: None
+		ChargeInterval: 1
+
+MSLO.Nod:
+	NukePower@Chemmiss:
+		-EndChargeSpeechNotification:
+		DisplayTimerRelationships: None
+		ChargeInterval: 1
+
+RFGN:
+	DetonateWeaponPower@RiftGenerator:
+		-EndChargeSpeechNotification:
+		DisplayTimerRelationships: None
+		ChargeInterval: 1

@@ -214,6 +214,7 @@ NUKC:
 		Voice: Move
 		ImmovableCondition: deployed
 		RequireForceMoveCondition: !undeployed
+		PauseOnCondition: being-captured || empdisable || being-warped || driver-dead || notmobile || undeploying
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 5c0
@@ -259,21 +260,32 @@ NUKC:
 		PauseOnCondition: being-warped
 		SmartDeploy: True
 		ValidFacings: 0, 256, 512, 768
+	GrantTimedCondition@Deploying:
+		Condition: reloading
+		Duration: 25
+		RequiresCondition: deployed
+	GrantTimedCondition@Undeploying:
+		Condition: undeploying
+		Duration: 25
+		RequiresCondition: undeployed
+	WithEnabledAnimation@Deploying:
+		RequiresCondition: deployed
+		Sequence: make
+		Body: deployed
+	WithEnabledAnimation@Undeploying:
+		RequiresCondition: undeployed
+		Sequence: undeploy
+		Body: body
 	WithFacingSpriteBody:
-		RequiresCondition: !deployed && undeployed
-	WithFacingSpriteBody@DeployingChassis:
-		Name: deploying
-		RequiresCondition: !deployed && !undeployed
+		RequiresCondition: undeployed
 	WithFacingSpriteBody@DeployedChassis:
 		Name: deployed
 		Sequence: deployed
-		RequiresCondition: deployed
+		RequiresCondition: !undeployed
 	WithFacingSpriteBody@Overlay:
 		Name: overlay
 		Sequence: overlay
 	WaitsForTurretAlignmentOnUndeploy:
-	WithMakeAnimation:
-		BodyNames: deploying
 	WithSpriteTurret:
 		Sequence: turret
 	Turreted:
@@ -4361,7 +4373,7 @@ HTNK:
 	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 252
+		BuildPaletteOrder: 253
 		IconPalette: chrometd
 		Prerequisites: ~!mdrone.upgrade, gtek, ~vehicles.htnk, ~!ionmam.upgrade, ~!hovermam.upgrade, ~techlevel.high
 		Description: Big and slow tank with anti-air capability.
@@ -4463,7 +4475,7 @@ HTNK:
 HTNK.Ion:
 	Inherits: HTNK
 	Buildable:
-		BuildPaletteOrder: 253
+		BuildPaletteOrder: 254
 		Prerequisites: gtek, ~vehicles.htnk, ~ionmam.upgrade, ~techlevel.high
 	Tooltip:
 		Name: Ion Mammoth Tank
@@ -4486,7 +4498,7 @@ HTNK.Hover:
 		Name: Hover Mammoth Tank
 		GenericName: Tank
 	Buildable:
-		BuildPaletteOrder: 254
+		BuildPaletteOrder: 255
 		Prerequisites: gtek, ~vehicles.htnk, ~hovermam.upgrade, ~techlevel.high
 		Description: Big and fairly mobile tank with anti-air capability.
 	TooltipExtras:
@@ -4526,7 +4538,7 @@ HTNK.Drone:
 	Inherits@HACKABLE: ^Hackable
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 255
+		BuildPaletteOrder: 256
 		IconPalette: chrometd
 		Prerequisites: ~mdrone.upgrade, gtek, ~vehicles.htnk, ~techlevel.high
 		Description: Remotely piloted heavy tank with anti-air capability.
@@ -5507,11 +5519,12 @@ TRPC:
 		Weaknesses: • Unarmed
 		Attributes: • Empowers nearby basic infantry\n• Heals all nearby infantry\n• Detects cloaked units and mines
 	Valued:
-		Cost: 1500
+		Cost: 1600
 	Tooltip:
 		Name: Troop Crawler
 	UpdatesPlayerStatistics:
-		AddToArmyValue: true
+		AddToArmyValue: false
+		AddToAssetsValue: false
 	Health:
 		HP: 36000
 	Armor:
@@ -5617,6 +5630,8 @@ TRPC:
 		RequiresCondition: cmsr-inspiration
 	Targetable@TroopCrawler:
 		TargetTypes: TroopCrawler
+	Sellable:
+		RefundPercent: 10
 
 IFV:
 	Inherits: ^Tank
@@ -5835,12 +5850,12 @@ IFV:
 	Armament@E3:
 		Weapon: IFVRocketsE
 		LocalOffset: 192,100,176, 192,-100,176
-		RequiresCondition: (samturr || ggiturr) && !cryw-upgrade
+		RequiresCondition: (samturr || ggiturr) && !cryw-upgrade && !tibcore-upgrade
 	Armament@E3AA:
 		Name: secondary
 		Weapon: IFVRocketsAAE
 		LocalOffset: 192,100,176, 192,-100,176
-		RequiresCondition: (samturr || ggiturr) && !cryw-upgrade
+		RequiresCondition: (samturr || ggiturr) && !cryw-upgrade && !tibcore-upgrade
 	Armament@E3CRYO:
 		Weapon: IFVRocketsE.CRYO
 		LocalOffset: 192,100,176, 192,-100,176
@@ -5850,6 +5865,18 @@ IFV:
 		Weapon: IFVRocketsAAE.CRYO
 		LocalOffset: 192,100,176, 192,-100,176
 		RequiresCondition: (samturr || ggiturr) && cryw-upgrade
+
+	Armament@E3TIB:
+		Weapon: IFVRocketsE.TibCore
+		LocalOffset: 192,100,176, 192,-100,176
+		RequiresCondition: (samturr || ggiturr) && tibcore-upgrade && !cryw-upgrade
+	Armament@E3TIBAA:
+		Name: secondary
+		Weapon: IFVRocketsAAE.TibCore
+		LocalOffset: 192,100,176, 192,-100,176
+		RequiresCondition: (samturr || ggiturr) && tibcore-upgrade && !cryw-upgrade
+
+
 	Armament@E4:
 		Weapon: FireballLauncher
 		Recoil: 85
@@ -6240,6 +6267,9 @@ IFV:
 	GrantConditionOnPrerequisite@CRYO:
 		Condition: cryw-upgrade
 		Prerequisites: cryw.upgrade
+	GrantConditionOnPrerequisite@TibCore:
+		Condition: tibcore-upgrade
+		Prerequisites: tibcore.upgrade
 	GuardsSelection@REPAIR:
 		ValidTargets: Vehicle
 		RequiresCondition: engturr && !stance-attackanything
@@ -6523,7 +6553,7 @@ TITN:
 	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 256
+		BuildPaletteOrder: 257
 		IconPalette: chrometd
 		Prerequisites: gtek, ~vehicles.talon, ~!railgun.upgrade, ~techlevel.high
 		Description: Tough, slow combat battle-mech.
@@ -6631,7 +6661,7 @@ TITN.RAIL:
 	Tooltip:
 		Name: Railgun Titan
 	Buildable:
-		BuildPaletteOrder: 257
+		BuildPaletteOrder: 258
 		Prerequisites: gtek, ~vehicles.talon, ~railgun.upgrade, ~techlevel.high
 	Armament@PRIMARY:
 		Weapon: TitanRailgun
@@ -6658,7 +6688,7 @@ JUGG:
 	Tooltip:
 		Name: Juggernaut
 	Buildable:
-		BuildPaletteOrder: 258
+		BuildPaletteOrder: 259
 		Queue: VehicleSQ, VehicleMQ
 		IconPalette: chrometd
 		Description: Tough artillery battle-mech.
@@ -6803,7 +6833,7 @@ DISR:
 		AddToArmyValue: true
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 259
+		BuildPaletteOrder: 260
 		IconPalette: chrometd
 		Prerequisites: gtek, ~vehicles.zocom, ~techlevel.high
 		Description: Armored high-tech vehicle with medium-range sonic armament.
@@ -9196,7 +9226,7 @@ THWK:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 260
+		BuildPaletteOrder: 261
 		Prerequisites: gtek, ~thwk.upgrade, ~techlevel.high
 		Queue: VehicleSQ, VehicleMQ
 		IconPalette: chrometd

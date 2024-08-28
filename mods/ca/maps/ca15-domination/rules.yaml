@@ -34,6 +34,8 @@ YURI:
 		Range: 10c0
 	AutoTarget:
 		InitialStance: HoldFire
+	Buildable:
+		Description: Elite specialist infantry able to mind-control\n  enemy units (up to 3).
 	-Captures@DRIVER_KILL:
 	-GainsExperience:
 	-ProducibleWithLevel:
@@ -44,6 +46,7 @@ YURI:
 	DamageMultiplier@YAMLFIX:
 		Modifier: 100
 		RequiresCondition: maxcontrolled
+	-ChangesHealth@CommandoRegen:
 	-RangedGpsRadarProvider:
 	-WithRangeCircle:
 

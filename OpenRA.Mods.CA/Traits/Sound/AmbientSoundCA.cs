@@ -69,7 +69,7 @@ namespace OpenRA.Mods.CA.Traits.Sound
 			if (IsTraitDisabled)
 				return;
 
-			if (self.World.IsGameOver)
+			if (self.World.IsGameOver || self.World.Paused)
 				StopSounds(self, false);
 
 			if (Info.InitialSound != null && !initialSoundComplete)

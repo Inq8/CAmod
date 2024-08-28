@@ -133,6 +133,9 @@ namespace OpenRA.Mods.CA.Widgets
 			var powers = spm.Powers.Values.Where(p => !p.Disabled)
 				.OrderBy(p => p.Info.SupportPowerPaletteOrder);
 
+			if (CurrentStartIndex > powers.Count() - 1)
+				CurrentStartIndex = 0;
+
 			var oldVisibleIconCount = VisibleIconCount;
 			VisibleIconCount = 0;
 			IconCount = 0;

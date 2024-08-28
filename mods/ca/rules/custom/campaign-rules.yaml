@@ -340,21 +340,21 @@ PROC.SCRIN:
 	InfiltrateForCash:
 		Maximum: 600
 
-WOLV:
-	Buildable:
-		Prerequisites: gtek, ~vehicles.gdi
-
-XO:
-	Buildable:
-		Prerequisites: gtek, ~vehicles.gdi
-
-PBUL:
-	Buildable:
-		Prerequisites: gtek, ~vehicles.gdi
-
 DISR:
 	Buildable:
 		Prerequisites: gtek, ~vehicles.gdi
+
+sonic.upgrade:
+	Buildable:
+		Prerequisites: gtek
+
+^GpsPower:
+	ProduceActorPowerCA@InitialSatelliteScan:
+		Prerequisites: anyradar, ~!gps.satellite.firstscan, ~fogenabled, ~!botplayer
+	ProduceActorPowerCA@SatelliteScan:
+		Prerequisites: anyradar, ~gps.satellite, ~gps.satellite.firstscan, ~fogenabled, ~!botplayer
+	ProduceActorPowerCA@SatelliteScanNoFog:
+		Prerequisites: anyradar, ~!fogenabled, ~!botplayer
 
 # For attack interval calculations, factoring in extra value from cargo
 

@@ -87,7 +87,7 @@ namespace OpenRA.Mods.Common.Traits
 
 		public void UnitProduced(Actor unit)
 		{
-			if (Info.InvalidActors.Contains(unit.Info.Name))
+			if (self.IsDead || Info.InvalidActors.Contains(unit.Info.Name))
 				return;
 
 			var sp = self.TraitsImplementing<Production>()

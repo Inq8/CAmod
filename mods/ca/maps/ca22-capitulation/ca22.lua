@@ -75,7 +75,7 @@ Squads = {
 		AttackValuePerSecond = {
 			easy = { { MinTime = 0, Value = 5 }, { MinTime = DateTime.Minutes(14), Value = 10 } },
 			normal = { { MinTime = 0, Value = 9 }, { MinTime = DateTime.Minutes(12), Value = 12 }, { MinTime = DateTime.Minutes(16), Value = 15 } },
-			hard = { { MinTime = 0, Value = 13 }, { MinTime = DateTime.Minutes(10), Value = 20 }, { MinTime = DateTime.Minutes(14), Value = 25 } },
+			hard = { { MinTime = 0, Value = 13 }, { MinTime = DateTime.Minutes(10), Value = 20 }, { MinTime = DateTime.Minutes(14), Value = 30 } },
 		},
 		QueueProductionStatuses = {
 			Aircraft = false
@@ -105,7 +105,7 @@ Squads = {
 		AttackValuePerSecond = {
 			easy = { { MinTime = 0, Value = 5 }, { MinTime = DateTime.Minutes(14), Value = 10 } },
 			normal = { { MinTime = 0, Value = 9 }, { MinTime = DateTime.Minutes(12), Value = 12 }, { MinTime = DateTime.Minutes(16), Value = 15 } },
-			hard = { { MinTime = 0, Value = 13 }, { MinTime = DateTime.Minutes(10), Value = 20 }, { MinTime = DateTime.Minutes(14), Value = 25 } },
+			hard = { { MinTime = 0, Value = 13 }, { MinTime = DateTime.Minutes(10), Value = 20 }, { MinTime = DateTime.Minutes(14), Value = 30 } },
 		},
 		QueueProductionStatuses = {
 			Aircraft = false
@@ -180,8 +180,15 @@ Squads = {
 				{ Aircraft = { "kiro" } },
 			},
 			hard = {
-				{ Aircraft = { "kiro", "kiro" } },
+				{ Aircraft = { "kiro", "kiro" }, MaxTime = DateTime.Minutes(15) },
+				{ Aircraft = { "kiro", "kiro", "kiro" }, MinTime = DateTime.Minutes(15), MaxTime = DateTime.Minutes(20) },
+				{ Aircraft = { "kiro", "kiro", "kiro", "kiro" }, MinTime = DateTime.Minutes(20), },
 			}
+		},
+		AttackPaths = {
+			{ KirovPath1_1.Location, KirovPath1_2.Location, KirovPath1_3.Location, KirovPath1_4.Location },
+			{ KirovPath2_1.Location, KirovPath2_2.Location, KirovPath2_3.Location },
+			{ AttackRally2.Location },
 		},
 	},
 }
@@ -317,17 +324,17 @@ InitUSSR = function()
 	end)
 
 	Trigger.AfterDelay(Squads.AirAntiLight.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.AirAntiLight, USSR, GDI, { "msam", "xo", "rmbo", "nuk2", "hq", "gtek", "n3" })
+		InitAirAttackSquad(Squads.AirAntiLight, USSR, GDI, { "msam", "xo", "rmbo", "nuk2", "hq", "gtek", "n3", "hsam" })
 	end)
 
 	Trigger.AfterDelay(Squads.AirAntiHeavy.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.AirAntiHeavy, USSR, GDI, { "atwr", "htnk", "htnk.ion", "mtnk", "disr" })
+		InitAirAttackSquad(Squads.AirAntiHeavy, USSR, GDI, { "atwr", "htnk", "htnk.ion", "mtnk", "disr", "thwk" })
 	end)
 
 	InitAirAttackSquad(Squads.AirAntiAir, USSR, GDI, { "orca", "a10", "a10.upg", "auro" })
 
 	Trigger.AfterDelay(Squads.Kirovs.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.Kirovs, USSR, GDI, { "proc.td", "nuk2", "hq", "gtek", "atwr", "nuke", "weap.td", "eye", "patr", "pyle" })
+		InitAttackSquad(Squads.Kirovs, USSR, GDI)
 	end)
 
 	Trigger.AfterDelay(ParabombsEnabledDelay[Difficulty], function()

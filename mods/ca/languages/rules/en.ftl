@@ -61,3 +61,18 @@ options-difficulty =
 label-player-level = Current Rank: { $level }
 label-player-level-current-xp = Current XP: { $currentXp }
 label-player-level-required-xp = Next Rank XP: { $nextLevelXp }
+
+## ObserverStatsLogic
+options-observer-stats =
+    .none = Information: None
+    .basic = Basic
+    .economy = Economy
+    .production = Production
+    .support-powers = Support Powers
+    .combat = Combat
+    .army = Army
+    .upgrades = Upgrades
+    .build-order = Build Order
+    .earnings-graph = Earnings (graph)
+    .army-graph = Army Value (graph)
+    .team-army-graph = Team Value (graph)
