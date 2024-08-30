@@ -2664,7 +2664,7 @@ JJET:
 		Voice: Poisoned
 		DeathTypes: PoisonDeath, ToxinDeath, ToxicDeath, MutatedDeath
 	Armor:
-		Type: Light
+		Type: Aircraft
 	Aircraft:
 		CruiseAltitude: 1c0
 		IdealSeparation: 0c384
@@ -2751,6 +2751,8 @@ JJET:
 		ValidDamageStates: Light, Medium, Heavy, Critical
 	ReplacedInQueue:
 		Actors: bjet
+	Targetable@MINDCONTROL:
+		RequiresCondition: !mindcontrolled && !airborne
 
 BJET:
 	Inherits: JJET
