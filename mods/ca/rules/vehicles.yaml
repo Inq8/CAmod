@@ -8298,6 +8298,9 @@ PBUL:
 	Mobile:
 		TurnSpeed: 40
 		Speed: 130
+		Voice: Move
+	Passenger:
+		Voice: Move
 	RevealsShroud:
 		MinRange: 6c0
 		Range: 8c0
@@ -8306,7 +8309,7 @@ PBUL:
 		Range: 6c0
 	Turreted:
 		TurnSpeed: 40
-		Offset: -200,0,0
+		Offset: -200,0,120
 	Armament@PRIMARY:
 		Weapon: PitbullRockets
 		LocalOffset: 0,-100,250, 0,100,250
@@ -8318,8 +8321,12 @@ PBUL:
 		ReloadingCondition: reloading
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped || blinded || reloading
+		Voice: Attack
+	AttackMove:
+		Voice: Attack
 	WithSpriteTurret:
-		Palette: player
+	Voiced:
+		VoiceSet: PitbVoice
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
@@ -9397,6 +9404,8 @@ ZEUS:
 	Mobile:
 		Speed: 46
 		Voice: Move
+	Passenger:
+		Voice: Move
 	RevealsShroud:
 		Range: 5c0
 	Armament:
@@ -9412,6 +9421,8 @@ ZEUS:
 		ShowSelectionBar: true
 		SelectionBarColor: d5cfff
 		ChargingCondition: charging
+		Voice: Attack
+	AttackMove:
 		Voice: Attack
 	AmbientSoundCA:
 		RequiresCondition: charging
