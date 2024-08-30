@@ -5263,6 +5263,9 @@ BTR:
 		Type: Heavy
 	Mobile:
 		Speed: 100
+		Voice: Move
+	Passenger:
+		Voice: Move
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -5288,6 +5291,9 @@ BTR:
 		CasingTargetOffset: 0, -600, 0
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped || blinded
+		Voice: Attack
+	AttackMove:
+		Voice: Attack
 	WithMuzzleOverlay:
 	WithSpriteTurret@GROUND:
 		Sequence: turret
@@ -5343,6 +5349,8 @@ BTR:
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
+	Voiced:
+		VoiceSet: BtrVoice
 
 BTR.AI:
 	Inherits: BTR
