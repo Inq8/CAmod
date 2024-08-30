@@ -200,14 +200,16 @@ OncePerSecondChecks = function()
 			end)
 
 			Utils.Do(nearbyTrucks, function(t)
-				if t.AmmoCount("primary") == 0 then
+				if t.AmmoCount("primary") == 0 and not TibLoaded then
+					TibLoaded = true
 					t.Reload("primary", 1)
 					LiquidTibFacility.Reload("primary", -1)
 					Notification("Liquid Tiberium transfer complete.")
 					Beacon.New(Nod, t.CenterPosition)
-					return
 				end
 			end)
+
+			TibLoaded = false
 		end
 
 		if ObjectiveDestroyRemainingLoyalists ~= nil then

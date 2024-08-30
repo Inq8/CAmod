@@ -40,7 +40,7 @@ WorldLoaded = function()
 		end)
 	end)
 
-	Trigger.AfterDelay(1, function()
+	Trigger.AfterDelay(10, function()
 		BotSetup()
 
 		Utils.Do(Players, function(p)
