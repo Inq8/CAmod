@@ -4633,6 +4633,9 @@ MSAM:
 		Weaknesses: • Weak vs Heavy Armor
 	Mobile:
 		Speed: 72
+		Voice: Move
+	Passenger:
+		Voice: Move
 	Health:
 		HP: 22000
 	Armor:
@@ -4648,7 +4651,10 @@ MSAM:
 		Offset: -256,0,128
 	AttackTurreted:
 		TargetFrozenActors: True
-		PauseOnCondition: empdisable || being-warped || reloading || blinded
+		PauseOnCondition: empdisable || being-warped || blinded
+		Voice: Attack
+	AttackMove:
+		Voice: Attack
 	WithSpriteTurret:
 	Explodes:
 		Weapon: ArtilleryExplode
@@ -4673,53 +4679,47 @@ MSAM:
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
 		RequiresCondition: !hypersonic-upgrade && !hammerhead-upgrade && !hailstorm-upgrade
-		ReloadingCondition: reloading
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: 227mmAA
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
 		RequiresCondition: !hypersonic-upgrade && !hammerhead-upgrade && !hailstorm-upgrade
-		ReloadingCondition: reloading
 	Armament@PRIMARYUPG1:
 		Weapon: 227mm.Hypersonic
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 75, -75
 		RequiresCondition: hypersonic-upgrade
-		ReloadingCondition: reloading
 	Armament@SECONDARYUPG1:
 		Name: secondary
 		Weapon: 227mmAA.Hypersonic
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 75, -75
 		RequiresCondition: hypersonic-upgrade
-		ReloadingCondition: reloading
 	Armament@PRIMARYUPG2:
 		Weapon: 227mm.Hammerhead
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hammerhead-upgrade
-		ReloadingCondition: reloading
 	Armament@SECONDARYUPG2:
 		Name: secondary
 		Weapon: 227mmAA.Hammerhead
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hammerhead-upgrade
-		ReloadingCondition: reloading
 	Armament@PRIMARYUPG3:
 		Weapon: 227mm.Hailstorm
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hailstorm-upgrade
-		ReloadingCondition: reloading
 	Armament@SECONDARYUPG3:
 		Name: secondary
 		Weapon: 227mmAA.Hailstorm
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hailstorm-upgrade
-		ReloadingCondition: reloading
+	Voiced:
+		VoiceSet: MsamVoice
 
 MLRS:
 	Inherits: ^TankTD
@@ -6936,6 +6936,9 @@ HSAM:
 	Mobile:
 		Speed: 92
 		Locomotor: hover
+		Voice: Move
+	Passenger:
+		Voice: Move
 	Health:
 		HP: 20000
 	Armor:
@@ -6961,7 +6964,10 @@ HSAM:
 	AttackTurreted:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: false
-		PauseOnCondition: empdisable || being-warped || blinded || reloading
+		PauseOnCondition: empdisable || being-warped || blinded
+		Voice: Attack
+	AttackMove:
+		Voice: Attack
 	WithSpriteTurret:
 	Explodes:
 		Weapon: ArtilleryExplode
@@ -6985,53 +6991,45 @@ HSAM:
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
 		RequiresCondition: !hypersonic-upgrade && !hammerhead-upgrade && !hailstorm-upgrade
-		ReloadingCondition: reloading
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: 227mmAAH
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
 		RequiresCondition: !hypersonic-upgrade && !hammerhead-upgrade && !hailstorm-upgrade
-		ReloadingCondition: reloading
 	Armament@PRIMARYUPG1:
 		Weapon: 227mm.Hypersonic
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 75, -75
 		RequiresCondition: hypersonic-upgrade
-		ReloadingCondition: reloading
 	Armament@SECONDARYUPG1:
 		Name: secondary
 		Weapon: 227mmAA.Hypersonic
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 75, -75
 		RequiresCondition: hypersonic-upgrade
-		ReloadingCondition: reloading
 	Armament@PRIMARYUPG2:
 		Weapon: 227mm.Hammerhead
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hammerhead-upgrade
-		ReloadingCondition: reloading
 	Armament@SECONDARYUPG2:
 		Name: secondary
 		Weapon: 227mmAA.Hammerhead
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hammerhead-upgrade
-		ReloadingCondition: reloading
 	Armament@PRIMARYUPG3:
 		Weapon: 227mm.Hailstorm
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hailstorm-upgrade
-		ReloadingCondition: reloading
 	Armament@SECONDARYUPG3:
 		Name: secondary
 		Weapon: 227mmAA.Hailstorm
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hailstorm-upgrade
-		ReloadingCondition: reloading
 	GrantConditionOnTerrain@ONWATER:
 		TerrainTypes: Water
 		Condition: onwater
@@ -7040,6 +7038,8 @@ HSAM:
 	Targetable@ONWATER:
 		TargetTypes: Water, Ship
 		RequiresCondition: onwater
+	Voiced:
+		VoiceSet: MsamVoice
 
 RTNK:
 	Inherits: ^Tank
