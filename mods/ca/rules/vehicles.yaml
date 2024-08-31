@@ -1025,7 +1025,7 @@ GTNK.squad:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 82
 		Prerequisites: ~vehicles.soviet, ~!atomicengines.upgrade, ~!lasher.upgrade, ~armor.doctrine, ~techlevel.low
-		Description: Soviet designed heavy tank.
+		Description: Soviet main battle tank with a single powerful cannon.
 	RenderSprites:
 		Image: rhin
 	TooltipExtras:
@@ -1156,8 +1156,13 @@ GTNK.squad:
 	Buildable:
 		BuildPaletteOrder: 86
 		Prerequisites: ~!atomicengines.upgrade, ~lasher.upgrade, ~armor.doctrine, ~techlevel.low
+		Description: Soviet main battle tank with infantry crushing improvements.
 	Tooltip:
 		Name: Thrasher Tank
+	Health:
+		HP: 65000
+	FirepowerMultiplier@Lasher:
+		Modifier: 95
 	GrantConditionOnMovement@LASHER:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 		Condition: lasher-move
@@ -1184,8 +1189,13 @@ GTNK.squad:
 	Buildable:
 		BuildPaletteOrder: 87
 		Prerequisites: ~atomicengines.upgrade, ~lasher.upgrade, ~armor.doctrine, ~techlevel.low
+		Description: Soviet main battle tank with infantry crushing improvements.
 	Tooltip:
 		Name: Atomic Thrasher Tank
+	Health:
+		HP: 65000
+	FirepowerMultiplier@Lasher:
+		Modifier: 95
 	GrantConditionOnMovement@LASHER:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 		Condition: lasher-move
@@ -1193,6 +1203,8 @@ GTNK.squad:
 		RequiresCondition: lasher-move
 		LocalOffset: 896, 0, 0
 		Weapon: Lasher
+	SpeedMultiplier:
+		Modifier: 135
 	-ExternalCondition@CRUSHATTEMPTSLOW:
 	-ExternalCondition@CRUSHSLOW:
 	-SpeedMultiplier@CRUSHATTEMPTSLOW:
