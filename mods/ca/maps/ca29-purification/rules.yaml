@@ -88,8 +88,66 @@ Player:
 					TargetMetric: Value
 					CheckRadius: 7c0
 
+ACOL:
+	Buildable:
+		Prerequisites: anyradar, obli, ~infantry.nod, ~!tmpp
+
+TPLR:
+	Buildable:
+		Prerequisites: anyradar, obli, ~infantry.nod, ~tmpp
+
+BH:
+	Buildable:
+		Prerequisites: anyradar, ~infantry.nod, ~techlevel.medium
+
+LTNK:
+	Buildable:
+		Prerequisites: ~vehicles.nod, ~!lastnk.upgrade
+
+LTNK.Laser:
+	Buildable:
+		Prerequisites: ~vehicles.nod, ~lastnk.upgrade
+
+MTNK:
+	Buildable:
+		Prerequisites: ~!bdrone.upgrade, ~vehicles.gdi, ~techlevel.low
+
+MTNK.Laser:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+FTNK:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.nod
+
+HFTK:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.nod
+
+WTNK:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.nod
+
+MLRS:
+	Buildable:
+		Prerequisites: tmpl, ~vehicles.nod
+
+SPEC:
+	Buildable:
+		Prerequisites: tmpl, ~vehicles.nod
+
+VENM:
+	Buildable:
+		Prerequisites: ~aircraft.nod
+
 APC2:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+AIRS:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+WEAP.TD:
+	Buildable:
+		Prerequisites: anyrefinery, ~structures.td
 
 blacknapalm.upgrade:
 	Buildable:
@@ -106,34 +164,6 @@ alphacomanche.upgrade:
 microwave.upgrade:
 	Buildable:
 		Prerequisites: tmpl
-
-VENM:
-	Buildable:
-		Prerequisites: ~aircraft.nod
-
-SPEC:
-	Buildable:
-		Prerequisites: tmpl, ~vehicles.nod
-
-ACOL:
-	Buildable:
-		Prerequisites: anyradar, obli, ~infantry.nod, ~!tmpp
-
-TPLR:
-	Buildable:
-		Prerequisites: anyradar, obli, ~infantry.nod, ~tmpp
-
-BH:
-	Buildable:
-		Prerequisites: anyradar, ~infantry.nod, ~techlevel.medium
-
-HFTK:
-	Buildable:
-		Prerequisites: anyradar, ~vehicles.nod
-
-WTNK:
-	Buildable:
-		Prerequisites: anyradar, ~vehicles.nod
 
 LQTF:
 	Inherits: ^Building
