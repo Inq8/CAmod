@@ -808,6 +808,90 @@ SMEDI:
 		ValidTargets: Infantry
 	KeepsDistance:
 
+ARTI:
+	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Buildable:
+		Queue: InfantrySQ, InfantryMQ
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 240
+		Prerequisites: ~disabled, ~infantry.scrin
+		IconPalette: chromes
+		Description: Repairs nearby vehicles.
+	TooltipExtras:
+		Weaknesses: • Unarmed
+		Attributes: • Can salvage destroyed vehicles for credits
+	Valued:
+		Cost: 400
+	Tooltip:
+		Name: Artificer
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 5000
+	Armament:
+		Weapon: ScrinRepair
+		Cursor: repair
+		OutsideRangeCursor: repair
+		TargetRelationships: Ally
+		ForceTargetRelationships: None
+	Armament@defuse:
+		Weapon: DefuseKit
+		Cursor: goldwrench
+		OutsideRangeCursor: goldwrench
+		TargetRelationships: Ally
+		ForceTargetRelationships: None
+		Name: secondary
+	AutoTargetPriority@defuse:
+		ValidTargets: C4Attached
+		InvalidTargets: NoAutoTarget
+		ValidRelationships: Ally
+	AttackFrontal:
+		PauseOnCondition: being-warped || blinded
+		FacingTolerance: 0
+	AttackSoundsCA@REPAIRSOUND:
+		Sounds: floatk1.aud
+	WithInfantryBody:
+		IdleSequences: idle1, idle2, idle3, idle4
+		DefaultAttackSequence: repair
+		StandSequences: stand, stand2
+		RequiresCondition: !parachute && !being-warped && !salvaging
+	WithInfantryBody@SALVAGE:
+		StandSequences: repair
+		RequiresCondition: salvaging
+	CaptureManager:
+		CapturingCondition: salvaging
+	Captures:
+		CaptureTypes: husk
+		PlayerExperience: 5
+		ConsumedByCapture: False
+		CaptureDelay: 75
+		PlayerExperienceRelationships: Neutral, Enemy
+		EnterCursor: sell2
+		EnterBlockedCursor: move-blocked
+	WithInfantryBody:
+		DefaultAttackSequence: heal
+	Passenger:
+		CustomPipType: blue
+		Voice: Move
+	Guard:
+		Voice: Move
+	AutoTarget:
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Repair
+		ValidRelationships: Ally
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
+	Voiced:
+		VoiceSet: AssimilatorVoice
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
+	GuardsSelection:
+		ValidTargets: Vehicle
+	KeepsDistance:
+
 GSCR:
 	Inherits: BRUT
 	RenderSprites:

@@ -1059,6 +1059,24 @@
 		BlinkPatterns:
 			damaged && hospitalheal: On, Off
 
+^AuraRepairable:
+	ChangesHealth@MACS:
+		Step: 500
+		Delay: 75
+		StartIfBelow: 100
+		DamageCooldown: 100
+		RequiresCondition: macsrepair
+	ExternalCondition@MACS:
+		Condition: macsrepair
+	WithDecoration@MACSREPAIR:
+		Image: select
+		Palette: chrome
+		Sequence: repair-small
+		Position: Center
+		RequiresCondition: macsrepair && damaged
+		BlinkInterval: 32
+		BlinkPattern: on, off
+
 ^LeecherHealable:
 	ExternalCondition@LCHRHEAL:
 		Condition: lchr-healing
@@ -2013,6 +2031,7 @@
 	Inherits@18: ^Suppressable
 	Inherits@19: ^CrateCloak
 	Inherits@20: ^WeaponJammable
+	Inherits@21: ^AuraRepairable
 	Inherits@C4Plantable: ^C4Plantable
 	Inherits@TNTPlantable: ^TNTPlantable
 	Inherits@gflash: ^GreenFlash
@@ -2625,6 +2644,7 @@
 	Inherits@17: ^Suppressable
 	Inherits@18: ^CrateCloak
 	Inherits@19: ^WeaponJammable
+	Inherits@20: ^AuraRepairable
 	Inherits@slowable: ^Slowable
 	Inherits@gflash: ^GreenFlash
 	Inherits@rflash: ^RedFlash

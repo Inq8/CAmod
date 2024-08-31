@@ -170,6 +170,86 @@ HOSP:
 		Condition: scrinplayer
 		Prerequisites: player.scrin
 
+MACS:
+	Inherits: ^TechBuilding
+	Inherits@2: ^Cloakable
+	Inherits@shape: ^2x2Shape
+	OwnerLostAction:
+		Action: ChangeOwner
+	Selectable:
+		Priority: 0
+		Bounds: 2048, 2048
+	Building:
+		Footprint: xx xx
+		Dimensions: 2,2
+	Health:
+		HP: 80000
+	CaptureManager:
+	Capturable:
+		Types: building
+	CapturableProgressBar:
+	CapturableProgressBlink:
+	InstantlyRepairable:
+	Tooltip:
+		Name: Machine Shop
+	TooltipExtras:
+		Description: When controlled, repairs nearby vehicles and trains\n  a Mechanic or Artificer unit every three minutes.
+	RevealsShroud:
+		Range: 4c0
+	WithBuildingBib:
+		HasMinibib: true
+	WithDeathAnimation:
+		DeathSequence: dead
+		UseDeathTypeSuffix: false
+	SpawnActorOnDeath:
+		Actor: MACS.Husk
+		OwnerType: InternalName
+	-Explodes:
+	AppearsOnMapPreview:
+	ProximityExternalCondition@MACS:
+		Condition: macsrepair
+		Range: 9c0
+	WithRangeCircle@MACS:
+		Type: macsrepair
+		Range: 9c0
+		Color: 00FF0080
+	RallyPoint:
+	PeriodicProducerCA@MECHANIC:
+		Type: Macs
+		ChargeDuration: 4500
+		Actors: mech
+		ShowSelectionBar: true
+		RequiresCondition: !is-neutral && !scrinplayer
+		ResetTraitOnOwnerChange: true
+		Immediate: true
+		ReadyAudio: UnitReady
+		ChargeColor: ffffff
+	PeriodicProducerCA@ARTIFICER:
+		Type: Macs
+		ChargeDuration: 4500
+		Actors: arti
+		ShowSelectionBar: true
+		RequiresCondition: !is-neutral && scrinplayer
+		ResetTraitOnOwnerChange: true
+		Immediate: true
+		ReadyAudio: UnitReady
+		ChargeColor: ffffff
+	Exit@1:
+		SpawnOffset: -190,880,0
+		ExitCell: 1,2
+		ProductionTypes: Macs
+	Exit@2:
+		SpawnOffset: 190,-400,0
+		ExitCell: 1,-1
+		ProductionTypes: Macs
+	Production:
+		Produces: Macs
+	GrantConditionIfOwnerIsNeutral:
+		Condition: is-neutral
+	GrantConditionOnPrerequisite@SCRIN:
+		Condition: scrinplayer
+		Prerequisites: player.scrin
+
 V01:
 	Inherits: ^CivBuilding
 	Building:

@@ -1980,3 +1980,24 @@ NullifierBolt:
 		Range: 0c341
 		Duration: 125
 		Condition: blinded
+
+ScrinRepair:
+	Inherits: Heal
+	Range: 2c512
+	ValidTargets: Repair
+	Projectile: LaserZapCA
+		Width: 48
+		Duration: 4
+		Color: FFFFFF80
+	Warhead@1Dam: SpreadDamage
+		Damage: -3000
+		ValidTargets: Repair
+		DamageTypes: DirectRepair
+	-Warhead@2Dam:
+	-Warhead@3Dam:
+	-Warhead@4Dam:
+	Warhead@highlight: GrantExternalConditionCA
+		Range: 0c511
+		Duration: 2
+		Condition: highlight
+		ValidTargets: Repair
