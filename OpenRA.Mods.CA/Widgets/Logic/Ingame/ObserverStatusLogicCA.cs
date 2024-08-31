@@ -102,8 +102,6 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 		readonly string clickSound = ChromeMetrics.Get<string>("ClickSound");
 		ObserverStatsPanel activePanel;
 
-		readonly Dictionary<int, Color> teamColors;
-
 		[ObjectCreator.UseCtor]
 		public ObserverStatsLogicCA(World world, ModData modData, WorldRenderer worldRenderer, Widget widget, Dictionary<string, MiniYaml> logicArgs)
 		{
@@ -252,26 +250,6 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			if (logicArgs.TryGetValue("ClickSound", out yaml))
 				clickSound = yaml.Value;
-
-			teamColors = new Dictionary<int, Color>
-			{
-				{ 0, Color.White },
-				{ 1, Color.DodgerBlue },
-				{ 2, Color.Red },
-				{ 3, Color.Green },
-				{ 4, Color.Yellow },
-				{ 5, Color.Cyan },
-				{ 6, Color.Magenta },
-				{ 7, Color.Orange },
-				{ 8, Color.Purple },
-				{ 9, Color.Lime },
-				{ 10, Color.Teal },
-				{ 11, Color.Pink },
-				{ 12, Color.Olive },
-				{ 13, Color.Maroon },
-				{ 14, Color.Navy },
-				{ 15, Color.Gray }
-			};
 		}
 
 		void ClearStats()
@@ -327,7 +305,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			teamArmyValueGraph.GetSeries = () =>
 				teams.Select(t => new LineGraphSeries(
 					t.Key > 0 ? TranslationProvider.GetString(TeamNumber, Translation.Arguments("team", $"{t.Key} ({t.First().PlayerName})")) : TranslationProvider.GetString(NoTeam),
-					teamColors[t.Key],
+					t.First().Color,
 					t.Select(p => (p.PlayerActor.TraitOrDefault<PlayerStatistics>() ?? new PlayerStatistics(p.PlayerActor)).ArmySamples.Select(s => (float)s)).Aggregate((a, b) => a.Zip(b, (x, y) => x + y))));
 		}
 
