@@ -416,7 +416,7 @@ WorldLoaded = function()
 		end)
 	end)
 
-	Trigger.AfterDelay(DateTime.Seconds(28), function()
+	Trigger.AfterDelay(DateTime.Seconds(20), function()
 		Utils.Do({ Warthog1, Warthog2, Warthog3, Aurora1, Aurora2 }, function(a)
 			if not a.IsDead then
 				if a.Type == "a10" then

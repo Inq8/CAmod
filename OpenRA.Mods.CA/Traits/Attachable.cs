@@ -268,7 +268,8 @@ namespace OpenRA.Mods.CA.Traits
 		void INotifyAiming.StartedAiming(Actor self, AttackBase attack) { }
 		void INotifyAiming.StoppedAiming(Actor self, AttackBase attack)
 		{
-			Stop();
+			if (attachedTo != null)
+				Stop();
 		}
 
 		public IEnumerable<IOrderTargeter> Orders

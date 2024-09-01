@@ -1025,7 +1025,7 @@ GTNK.squad:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 82
 		Prerequisites: ~vehicles.soviet, ~!atomicengines.upgrade, ~!lasher.upgrade, ~armor.doctrine, ~techlevel.low
-		Description: Soviet designed heavy tank.
+		Description: Soviet main battle tank with a single powerful cannon.
 	RenderSprites:
 		Image: rhin
 	TooltipExtras:
@@ -1156,8 +1156,13 @@ GTNK.squad:
 	Buildable:
 		BuildPaletteOrder: 86
 		Prerequisites: ~!atomicengines.upgrade, ~lasher.upgrade, ~armor.doctrine, ~techlevel.low
+		Description: Soviet main battle tank with infantry crushing improvements.
 	Tooltip:
 		Name: Thrasher Tank
+	Health:
+		HP: 65000
+	FirepowerMultiplier@Lasher:
+		Modifier: 95
 	GrantConditionOnMovement@LASHER:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 		Condition: lasher-move
@@ -1184,8 +1189,13 @@ GTNK.squad:
 	Buildable:
 		BuildPaletteOrder: 87
 		Prerequisites: ~atomicengines.upgrade, ~lasher.upgrade, ~armor.doctrine, ~techlevel.low
+		Description: Soviet main battle tank with infantry crushing improvements.
 	Tooltip:
 		Name: Atomic Thrasher Tank
+	Health:
+		HP: 65000
+	FirepowerMultiplier@Lasher:
+		Modifier: 95
 	GrantConditionOnMovement@LASHER:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 		Condition: lasher-move
@@ -1193,6 +1203,8 @@ GTNK.squad:
 		RequiresCondition: lasher-move
 		LocalOffset: 896, 0, 0
 		Weapon: Lasher
+	SpeedMultiplier:
+		Modifier: 135
 	-ExternalCondition@CRUSHATTEMPTSLOW:
 	-ExternalCondition@CRUSHSLOW:
 	-SpeedMultiplier@CRUSHATTEMPTSLOW:
@@ -3929,16 +3941,26 @@ LTNK:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 100
 		IconPalette: chrometd
-		Prerequisites: ~vehicles.ltnk, ~techlevel.low
-		Description: Fast, light tank.
+		Prerequisites: ~vehicles.ltnk, ~!lastnk.upgrade, ~techlevel.low
+		Description: Standard front-line tank.
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor
 		Weaknesses: • Weak vs Infantry, Defenses\n• Cannot attack Aircraft
 		Attributes: • Amphibious
+		RequiresCondition: !lastnk-upgrade
+	TooltipExtras@LaserTank:
+		Strengths: • Strong vs Light Armor, Infantry
+		Weaknesses: • Weak vs Defenses\n• Cannot attack Aircraft
+		Attributes: • Amphibious
+		RequiresCondition: lastnk-upgrade
 	Valued:
 		Cost: 700
 	Tooltip:
 		Name: Light Tank
+		RequiresCondition: !lastnk-upgrade
+	Tooltip@LaserTank:
+		Name: Laser Light Tank
+		RequiresCondition: lastnk-upgrade
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -4002,6 +4024,31 @@ LTNK:
 	GrantConditionOnPrerequisite@LaserTank:
 		Condition: lastnk-upgrade
 		Prerequisites: lastnk.upgrade
+	ReplacedInQueue:
+		Actors: ltnk.laser
+
+LTNK.Laser:
+	Inherits: LTNK
+	RenderSprites:
+		Image: ltnk
+	Buildable:
+		Prerequisites: ~vehicles.ltnk, ~lastnk.upgrade, ~techlevel.low
+	-Tooltip:
+	Tooltip@LaserTank:
+		-RequiresCondition:
+	-TooltipExtras:
+	TooltipExtras@LaserTank:
+		-RequiresCondition:
+	-GrantConditionOnPrerequisite@LaserTank:
+	-Armament:
+	Armament@UPG:
+		-RequiresCondition:
+	-WithSpriteTurret:
+	WithSpriteTurret@LaserTank:
+		-RequiresCondition:
+	Selectable:
+		Class: ltnk
+	-ReplacedInQueue:
 
 MTNK:
 	Inherits: ^TankTD
@@ -4021,17 +4068,27 @@ MTNK:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 90
-		Prerequisites: ~!bdrone.upgrade, ~vehicles.mtnk, ~techlevel.low
+		Prerequisites: ~!bdrone.upgrade, ~!lastnk.upgrade, ~vehicles.mtnk, ~techlevel.low
 		IconPalette: chrometd
 		Description: Main battle tank.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
 		Weaknesses: • Weak vs Infantry, Defenses\n• Cannot attack Aircraft
+		RequiresCondition: !lastnk-upgrade
+	TooltipExtras@LaserTank:
+		Strengths: • Strong vs Light Armor, Infantry
+		Weaknesses: • Weak vs Defenses\n• Cannot attack Aircraft
+		RequiresCondition: lastnk-upgrade
 	Valued:
 		Cost: 900
 	Tooltip:
 		Name: Battle Tank
 		GenericName: Tank
+		RequiresCondition: !lastnk-upgrade
+	Tooltip@LaserTank:
+		Name: Laser Battle Tank
+		GenericName: Tank
+		RequiresCondition: lastnk-upgrade
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -4127,7 +4184,7 @@ MTNK:
 	WithIdleOverlay@NSHIELD:
 		RequiresCondition: (nshield || gshieldvisual) && !(empdisable || invulnerability || invisibility)
 	ReplacedInQueue:
-		Actors: mtnk.drone
+		Actors: mtnk.drone, mtnk.laser
 	Upgradeable@BDRONE:
 		Type: bdrone.upgrade
 		UpgradingCondition: upgrading
@@ -4152,10 +4209,14 @@ MTNK.Drone:
 		BuildPaletteOrder: 91
 	TooltipExtras:
 		Attributes: • Requires active radar communication\n• Self repairs to 50% out of combat\n• Immune to mind control
+		-RequiresCondition:
+	-Tooltip@LaserTank:
+	-TooltipExtras@LaserTank:
 	Valued:
 		Cost: 800
 	Tooltip:
 		Name: Battle Drone
+		-RequiresCondition:
 	Mobile:
 		PauseOnCondition: !radarenabled || empdisable || being-warped || notmobile
 		Voice: Move
@@ -4217,6 +4278,39 @@ MTNK.Drone:
 	-WithDecoration@UpgradeOverlay:
 	Sellable:
 		RequiresCondition: unit-sellable && !c4 && !being-warped
+
+MTNK.Laser:
+	Inherits: MTNK
+	RenderSprites:
+		Image: mtnk
+	Buildable:
+		Prerequisites: ~vehicles.mtnk, ~lastnk.upgrade, ~techlevel.low
+	-Tooltip:
+	Tooltip@LaserTank:
+		-RequiresCondition:
+	-TooltipExtras:
+	TooltipExtras@LaserTank:
+		-RequiresCondition:
+	-GrantConditionOnPrerequisite@POINTDEF:
+	-GrantConditionOnPrerequisite@LaserTank:
+	-PointDefense:
+	-TimedDamageMultiplier@GSHIELD:
+	-GrantTimedCondition@NSHIELDVISUAL:
+	WithIdleOverlay@NSHIELD:
+		RequiresCondition: nshield && !(empdisable || invulnerability || invisibility)
+	-Armament:
+	-Armament@SECONDARY:
+	Armament@UPG:
+		-RequiresCondition:
+	-WithSpriteTurret@default:
+	-WithSpriteTurret@pointlaser:
+	-WithDecoration@UpgradeOverlay:
+	WithSpriteTurret@LaserTank:
+		-RequiresCondition:
+	Selectable:
+		Class: mtnk
+	-ReplacedInQueue:
+	-Upgradeable@BDRONE:
 
 MDRN:
 	Inherits: ^Vehicle
@@ -8922,7 +9016,7 @@ APOC:
 		Count: 6
 		RequiresCondition: atomic-ammo && has-atomic-ammo < 6
 	ReplacedInQueue:
-		Actors: apoc.atomic, apoc.erad.atomic
+		Actors: apoc.atomic, apoc.erad
 	Upgradeable@ATOMIC:
 		Type: atomicengines.upgrade
 		UpgradingCondition: upgrading
@@ -8933,7 +9027,7 @@ APOC:
 	Upgradeable@ERAD:
 		Type: erad.upgrade
 		UpgradingCondition: upgrading
-		Actor: apoc.erad.atomic
+		Actor: apoc.erad
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
@@ -8962,6 +9056,8 @@ APOC.ATOMIC:
 	-SpawnActorOnDeath:
 	ReplacedInQueue:
 		Actors: apoc.erad.atomic
+	Upgradeable@ERAD:
+		Actor: apoc.erad.atomic
 	-Upgradeable@ATOMIC:
 
 APOC.ERAD:
@@ -8998,6 +9094,8 @@ APOC.ERAD:
 		RequiresCondition: !being-warped
 	ReplacedInQueue:
 		Actors: apoc.erad.atomic
+	Upgradeable@ATOMIC:
+		Actor: apoc.erad.atomic
 	-Upgradeable@ERAD:
 	Voiced:
 		VoiceSet: EradVoice
