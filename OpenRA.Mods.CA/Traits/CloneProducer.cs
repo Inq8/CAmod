@@ -35,6 +35,9 @@ namespace OpenRA.Mods.Common.Traits
 		[Desc("List of actors that cannot be cloned.")]
 		public readonly string[] InvalidActors = Array.Empty<string>();
 
+		[Desc("Actors to use instead of specific source actors.")]
+		public readonly Dictionary<string, string> CloneActors = new Dictionary<string, string>();
+
 		[CursorReference]
 		[Desc("Cursor to display when selecting a clone source.")]
 		public readonly string Cursor = "chrono-target";
@@ -87,8 +90,12 @@ namespace OpenRA.Mods.Common.Traits
 
 		public void UnitProduced(Actor unit)
 		{
-			if (self.IsDead || Info.InvalidActors.Contains(unit.Info.Name))
+			var actorName = unit.Info.Name.ToLowerInvariant();
+
+			if (self.IsDead || Info.InvalidActors.Contains(actorName))
 				return;
+
+			var cloneActor = self.World.Map.Rules.Actors[Info.CloneActors.ContainsKey(actorName) ? Info.CloneActors[actorName] : actorName];
 
 			var sp = self.TraitsImplementing<Production>()
 				.FirstOrDefault(p => !p.IsTraitDisabled && !p.IsTraitPaused && p.Info.Produces.Where(p => Info.CloneType.Contains(p)).Any());
@@ -101,7 +108,7 @@ namespace OpenRA.Mods.Common.Traits
 					new FactionInit(sp.Faction)
 				};
 
-				sp.Produce(self, self.World.Map.Rules.Actors[unit.Info.Name.ToLowerInvariant()], sp.Info.Produces.First(), inits, 0);
+				sp.Produce(self, cloneActor, sp.Info.Produces.First(), inits, 0);
 			}
 		}
 
@@ -114,16 +121,17 @@ namespace OpenRA.Mods.Common.Traits
 		private void SetSourceToPreferred()
 		{
 			var producer = self.World.ActorsWithTrait<CloneSource>()
-				.Where(a => !a.Actor.IsDead && a.Actor.Owner == self.Owner && a.Trait.ProductionTypes.Where(t => Info.Types.Contains(t)).Any())
+				.Where(a => !a.Actor.IsDead && a.Actor.IsInWorld && a.Actor.Owner == self.Owner && a.Trait.ProductionTypes.Where(t => Info.Types.Contains(t)).Any())
 				.OrderByDescending(p => p.Actor.TraitOrDefault<PrimaryBuilding>()?.IsPrimary)
 				.ThenByDescending(p => p.Actor.ActorID)
 				.FirstOrDefault();
+
+			LinkNodes.Clear();
 
 			if (producer.Actor != null)
 			{
 				cloneSource = producer.Trait;
 				cloneSource.AddCloneProducer(this);
-				LinkNodes.Clear();
 				LinkNodes.Add(producer.Actor.CenterPosition);
 			}
 		}

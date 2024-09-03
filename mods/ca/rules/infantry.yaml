@@ -176,7 +176,6 @@ E2:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@Inspirable: ^Inspirable
-	Inherits@HeroOfTheUnionTargetable: ^HeroOfTheUnionTargetable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -227,9 +226,6 @@ E2:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
-	DamageMultiplier@HeroOfTheUnion:
-		Modifier: 30
-		RequiresCondition: herooftheunion
 
 E3:
 	Inherits: ^Soldier
@@ -582,7 +578,6 @@ E4:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@Inspirable: ^Inspirable
-	Inherits@HeroOfTheUnionTargetable: ^HeroOfTheUnionTargetable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -633,9 +628,6 @@ E4:
 		Prerequisites: barracks.upgraded
 	Convertible:
 		SpawnActors: N5
-	DamageMultiplier@HeroOfTheUnion:
-		Modifier: 30
-		RequiresCondition: herooftheunion
 
 E6:
 	Inherits: ^Soldier
@@ -1600,7 +1592,6 @@ N2:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@Inspirable: ^Inspirable
-	Inherits@HeroOfTheUnionTargetable: ^HeroOfTheUnionTargetable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -1782,7 +1773,6 @@ N4:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@Inspirable: ^Inspirable
-	Inherits@HeroOfTheUnionTargetable: ^HeroOfTheUnionTargetable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -3979,6 +3969,21 @@ YURI:
 	ChangesHealth@ELITE:
 		Delay: 50
 
+YURI.Clone:
+	Inherits: YURI
+	Buildable:
+		Prerequisites: ~disabled
+	RenderSprites:
+		Image: yuri
+	Tooltip:
+		Name: Yuri Clone
+	Valued:
+		Cost: 1000
+	Health:
+		HP: 14000
+	RangeMultiplier@Clone:
+		Modifier: 80
+
 SEAL:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -4365,6 +4370,7 @@ CSCR:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
+		Attributes: • Heals on Tiberium
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -4399,6 +4405,9 @@ CSCR:
 		VoiceSet: CyberscrinVoice
 	Targetable:
 		TargetTypes: Ground, Infantry, Cyborg
+	GrantConditionOnTerrain@ONTIB:
+		Condition: on-tib
+		TerrainTypes: Tiberium, BlueTiberium
 	ExternalCondition@ONTIB:
 		Condition: on-tib
 	ChangesHealth@THEAL:
