@@ -6347,7 +6347,7 @@ IFV:
 		ScanRadius: 6
 	AutoTargetPriority@DEFAULTAA:
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Defense
-		InvalidTargets: NoAutoTarget
+		InvalidTargets: NoAutoTarget, WaterStructure, AntiAirDefense
 		RequiresCondition: (!stance-attackanything && !assault-move) && (!full || samturr || ggiturr)
 	AutoTargetPriority@ATTACKANYTHINGAA:
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Structure, Defense
@@ -6366,7 +6366,7 @@ IFV:
 	AutoTargetPriority@DEFAULTG:
 		RequiresCondition: !stance-attackanything && !assault-move && full && !(samturr || ggiturr)
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
-		InvalidTargets: NoAutoTarget
+		InvalidTargets: NoAutoTarget, WaterStructure, AntiAirDefense
 	AutoTargetPriority@ATTACKANYTHINGG:
 		RequiresCondition: (stance-attackanything || assault-move) && full && !(samturr || ggiturr)
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Structure, Defense, Mine
@@ -6555,7 +6555,7 @@ IFV.AI:
 		ScanRadius: 6
 	AutoTargetPriority@DEFAULTAA:
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Defense
-		InvalidTargets: NoAutoTarget
+		InvalidTargets: NoAutoTarget, WaterStructure, AntiAirDefense
 		RequiresCondition: (!stance-attackanything && !assault-move) && (defturr || samturr)
 	AutoTargetPriority@ATTACKANYTHINGAA:
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Structure, Defense
@@ -6574,7 +6574,7 @@ IFV.AI:
 	AutoTargetPriority@DEFAULTG:
 		RequiresCondition: !stance-attackanything && !assault-move && !defturr && !samturr
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
-		InvalidTargets: NoAutoTarget
+		InvalidTargets: NoAutoTarget, WaterStructure, AntiAirDefense
 	AutoTargetPriority@ATTACKANYTHINGG:
 		RequiresCondition: (stance-attackanything || assault-move) && !defturr && !samturr
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Structure, Defense, Mine
@@ -7905,11 +7905,11 @@ BATF:
 		RequiresCondition: (stance-attackanything || assault-move) && !loaded-air
 	AutoTargetPriority@DEFAULT_AIR:
 		RequiresCondition: !stance-attackanything && !assault-move && loaded-air
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Defense
-		InvalidTargets: NoAutoTarget
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Defense
+		InvalidTargets: NoAutoTarget, WaterStructure, AntiAirDefense
 	AutoTargetPriority@ATTACKANYTHING_AIR:
 		RequiresCondition: (stance-attackanything || assault-move) && loaded-air
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Structure, Defense
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Structure, Defense
 		InvalidTargets: NoAutoTarget
 	Voiced:
 		VoiceSet: BattleFortressVoice
@@ -8312,7 +8312,7 @@ CHPR:
 	AutoTargetPriority@DEFAULT:
 		RequiresCondition: !stance-attackanything && !assault-move
 		ValidTargets: Temporal
-		InvalidTargets: NoAutoTarget, Building
+		InvalidTargets: NoAutoTarget, Building, WaterStructure, AntiAirDefense
 	AutoTargetPriority@ATTACKANYTHING:
 		RequiresCondition: stance-attackanything || assault-move
 		ValidTargets: Temporal
