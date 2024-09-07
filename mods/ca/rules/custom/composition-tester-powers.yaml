@@ -16,7 +16,6 @@ Player:
 	Inherits@IRONCURTAINPOWER: ^IronCurtainPower
 	Inherits@INTERCEPTORSPOWER: ^InterceptorsPower
 	Inherits@NANITEREPAIRPOWER: ^NaniteRepairPower
-	Inherits@SURGICALSTRIKEPOWER: ^SurgicalStrikePower
 	Inherits@NANITESHIELDPOWER: ^NaniteShieldPower
 	Inherits@HACKERCELLPOWER: ^HackerCellPower
 	Inherits@SHADOWTEAMPOWER: ^ShadowTeamPower
@@ -225,13 +224,13 @@ MSLO:
 		ChargeInterval: 1
 
 EYE:
-	IonCannonPower@surgicals:
-		-Prerequisites:
+	DetonateWeaponPower@IonStorm:
+		-BeginChargeSpeechNotification:
 		-EndChargeSpeechNotification:
 		DisplayTimerRelationships: None
 		ChargeInterval: 1
-	DetonateWeaponPower@IonStorm:
-		-BeginChargeSpeechNotification:
+	IonCannonPower@SurgicalStrike:
+		-Prerequisites:
 		-EndChargeSpeechNotification:
 		DisplayTimerRelationships: None
 		ChargeInterval: 1
