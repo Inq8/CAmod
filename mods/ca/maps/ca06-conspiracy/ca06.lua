@@ -164,11 +164,11 @@ WorldLoaded = function()
 			Prism2.Destroy()
 			Prism3.Destroy()
 		end
-
-		Trigger.AfterDelay(DateTime.Seconds(3), function()
-			Tip("Stealth units can be detected by enemy defenses, as well as infantry at close range.")
-		end)
 	end
+
+	Trigger.AfterDelay(DateTime.Seconds(3), function()
+		Tip("Stealth units can be detected by enemy defenses and certain units (see tooltips), as well as all infantry at close range.")
+	end)
 
 	ObjectiveTakeOverBase = Nod.AddObjective("Take control of the GDI base due south.")
 	UserInterface.SetMissionText("Take control of the GDI base due south.", HSLColor.Yellow)
