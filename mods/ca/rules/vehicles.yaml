@@ -8,7 +8,7 @@ V2RL:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 180
 		Prerequisites: anyradar, ~vehicles.soviet, ~!v3.upgrade, ~techlevel.medium
-		Description: Long-range rocket artillery.
+		Description: Long-range rocket artillery with low rate of fire.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
 		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets
@@ -77,7 +77,7 @@ KATY:
 		BuildPaletteOrder: 130
 		IconPalette: chrometd
 		Prerequisites: ~vehicles.soviet, ~!arty.doctrine, ~techlevel.low
-		Description: Long-range rocket artillery.
+		Description: Long-range rocket barrage artillery.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor, Buildings, Defenses
 		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets
@@ -360,7 +360,7 @@ NUKC:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 120
 		Prerequisites: ~vehicles.1tnk, ~techlevel.low
-		Description: Fast tank, good for scouting.
+		Description: Fast tank, good for scouting and skirmishes.
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor
 		Weaknesses: • Weak vs Infantry, Defenses\n• Cannot attack Aircraft
@@ -4775,61 +4775,61 @@ MSAM:
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
 		RequiresCondition: !hypersonic-upgrade && !hammerhead-upgrade && !hailstorm-upgrade
-		PauseOnCondition: reloading
-		ReloadingCondition: reloading
+		PauseOnCondition: reloading-secondary
+		ReloadingCondition: reloading-primary
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: 227mmAA
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
 		RequiresCondition: !hypersonic-upgrade && !hammerhead-upgrade && !hailstorm-upgrade
-		PauseOnCondition: reloading
-		ReloadingCondition: reloading
+		PauseOnCondition: reloading-primary
+		ReloadingCondition: reloading-secondary
 	Armament@PRIMARYUPG1:
 		Weapon: 227mm.Hypersonic
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 75, -75
 		RequiresCondition: hypersonic-upgrade
-		PauseOnCondition: reloading
-		ReloadingCondition: reloading
+		PauseOnCondition: reloading-secondary
+		ReloadingCondition: reloading-primary
 	Armament@SECONDARYUPG1:
 		Name: secondary
 		Weapon: 227mmAA.Hypersonic
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 75, -75
 		RequiresCondition: hypersonic-upgrade
-		PauseOnCondition: reloading
-		ReloadingCondition: reloading
+		PauseOnCondition: reloading-primary
+		ReloadingCondition: reloading-secondary
 	Armament@PRIMARYUPG2:
 		Weapon: 227mm.Hammerhead
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hammerhead-upgrade
-		PauseOnCondition: reloading
-		ReloadingCondition: reloading
+		PauseOnCondition: reloading-secondary
+		ReloadingCondition: reloading-primary
 	Armament@SECONDARYUPG2:
 		Name: secondary
 		Weapon: 227mmAA.Hammerhead
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hammerhead-upgrade
-		PauseOnCondition: reloading
-		ReloadingCondition: reloading
+		PauseOnCondition: reloading-primary
+		ReloadingCondition: reloading-secondary
 	Armament@PRIMARYUPG3:
 		Weapon: 227mm.Hailstorm
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hailstorm-upgrade
-		PauseOnCondition: reloading
-		ReloadingCondition: reloading
+		PauseOnCondition: reloading-secondary
+		ReloadingCondition: reloading-primary
 	Armament@SECONDARYUPG3:
 		Name: secondary
 		Weapon: 227mmAA.Hailstorm
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hailstorm-upgrade
-		PauseOnCondition: reloading
-		ReloadingCondition: reloading
+		PauseOnCondition: reloading-primary
+		ReloadingCondition: reloading-secondary
 	Voiced:
 		VoiceSet: MsamVoice
 
@@ -6347,7 +6347,7 @@ IFV:
 		ScanRadius: 6
 	AutoTargetPriority@DEFAULTAA:
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Defense
-		InvalidTargets: NoAutoTarget
+		InvalidTargets: NoAutoTarget, WaterStructure, AntiAirDefense
 		RequiresCondition: (!stance-attackanything && !assault-move) && (!full || samturr || ggiturr)
 	AutoTargetPriority@ATTACKANYTHINGAA:
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Structure, Defense
@@ -6366,7 +6366,7 @@ IFV:
 	AutoTargetPriority@DEFAULTG:
 		RequiresCondition: !stance-attackanything && !assault-move && full && !(samturr || ggiturr)
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
-		InvalidTargets: NoAutoTarget
+		InvalidTargets: NoAutoTarget, WaterStructure, AntiAirDefense
 	AutoTargetPriority@ATTACKANYTHINGG:
 		RequiresCondition: (stance-attackanything || assault-move) && full && !(samturr || ggiturr)
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Structure, Defense, Mine
@@ -6555,7 +6555,7 @@ IFV.AI:
 		ScanRadius: 6
 	AutoTargetPriority@DEFAULTAA:
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Defense
-		InvalidTargets: NoAutoTarget
+		InvalidTargets: NoAutoTarget, WaterStructure, AntiAirDefense
 		RequiresCondition: (!stance-attackanything && !assault-move) && (defturr || samturr)
 	AutoTargetPriority@ATTACKANYTHINGAA:
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Structure, Defense
@@ -6574,7 +6574,7 @@ IFV.AI:
 	AutoTargetPriority@DEFAULTG:
 		RequiresCondition: !stance-attackanything && !assault-move && !defturr && !samturr
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
-		InvalidTargets: NoAutoTarget
+		InvalidTargets: NoAutoTarget, WaterStructure, AntiAirDefense
 	AutoTargetPriority@ATTACKANYTHINGG:
 		RequiresCondition: (stance-attackanything || assault-move) && !defturr && !samturr
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Structure, Defense, Mine
@@ -7079,8 +7079,6 @@ HSAM:
 		Offset: 43, 128, 0
 		ZOffset: -129
 		RequiresCondition: !invisibility
-	AutoTarget:
-		ScanRadius: 10
 	AttackTurreted:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: false
@@ -7111,61 +7109,61 @@ HSAM:
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
 		RequiresCondition: !hypersonic-upgrade && !hammerhead-upgrade && !hailstorm-upgrade
-		PauseOnCondition: reloading
-		ReloadingCondition: reloading
+		PauseOnCondition: reloading-secondary
+		ReloadingCondition: reloading-primary
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: 227mmAAH
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
 		RequiresCondition: !hypersonic-upgrade && !hammerhead-upgrade && !hailstorm-upgrade
-		PauseOnCondition: reloading
-		ReloadingCondition: reloading
+		PauseOnCondition: reloading-primary
+		ReloadingCondition: reloading-secondary
 	Armament@PRIMARYUPG1:
 		Weapon: 227mm.Hypersonic
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 75, -75
 		RequiresCondition: hypersonic-upgrade
-		PauseOnCondition: reloading
-		ReloadingCondition: reloading
+		PauseOnCondition: reloading-secondary
+		ReloadingCondition: reloading-primary
 	Armament@SECONDARYUPG1:
 		Name: secondary
 		Weapon: 227mmAA.Hypersonic
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 75, -75
 		RequiresCondition: hypersonic-upgrade
-		PauseOnCondition: reloading
-		ReloadingCondition: reloading
+		PauseOnCondition: reloading-primary
+		ReloadingCondition: reloading-secondary
 	Armament@PRIMARYUPG2:
 		Weapon: 227mm.Hammerhead
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hammerhead-upgrade
-		PauseOnCondition: reloading
-		ReloadingCondition: reloading
+		PauseOnCondition: reloading-secondary
+		ReloadingCondition: reloading-primary
 	Armament@SECONDARYUPG2:
 		Name: secondary
 		Weapon: 227mmAA.Hammerhead
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hammerhead-upgrade
-		PauseOnCondition: reloading
-		ReloadingCondition: reloading
+		PauseOnCondition: reloading-primary
+		ReloadingCondition: reloading-secondary
 	Armament@PRIMARYUPG3:
 		Weapon: 227mm.Hailstorm
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hailstorm-upgrade
-		PauseOnCondition: reloading
-		ReloadingCondition: reloading
+		PauseOnCondition: reloading-secondary
+		ReloadingCondition: reloading-primary
 	Armament@SECONDARYUPG3:
 		Name: secondary
 		Weapon: 227mmAA.Hailstorm
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hailstorm-upgrade
-		PauseOnCondition: reloading
-		ReloadingCondition: reloading
+		PauseOnCondition: reloading-primary
+		ReloadingCondition: reloading-secondary
 	GrantConditionOnTerrain@ONWATER:
 		TerrainTypes: Water
 		Condition: onwater
@@ -7905,11 +7903,11 @@ BATF:
 		RequiresCondition: (stance-attackanything || assault-move) && !loaded-air
 	AutoTargetPriority@DEFAULT_AIR:
 		RequiresCondition: !stance-attackanything && !assault-move && loaded-air
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Defense
-		InvalidTargets: NoAutoTarget
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Defense
+		InvalidTargets: NoAutoTarget, WaterStructure, AntiAirDefense
 	AutoTargetPriority@ATTACKANYTHING_AIR:
 		RequiresCondition: (stance-attackanything || assault-move) && loaded-air
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Structure, Defense
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Structure, Defense
 		InvalidTargets: NoAutoTarget
 	Voiced:
 		VoiceSet: BattleFortressVoice
@@ -8312,7 +8310,7 @@ CHPR:
 	AutoTargetPriority@DEFAULT:
 		RequiresCondition: !stance-attackanything && !assault-move
 		ValidTargets: Temporal
-		InvalidTargets: NoAutoTarget, Building
+		InvalidTargets: NoAutoTarget, Building, WaterStructure, AntiAirDefense
 	AutoTargetPriority@ATTACKANYTHING:
 		RequiresCondition: stance-attackanything || assault-move
 		ValidTargets: Temporal
@@ -8750,12 +8748,12 @@ WOLV:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 27500
+		HP: 30000
 	Armor:
 		Type: Light
 	Mobile:
 		TurnSpeed: 64
-		Speed: 54
+		Speed: 60
 		Voice: Move
 	Passenger:
 		Voice: Move
@@ -8820,7 +8818,7 @@ XO:
 		Type: Light
 	Mobile:
 		TurnSpeed: 64
-		Speed: 54
+		Speed: 60
 		Voice: Move
 	Passenger:
 		Voice: Move
@@ -8850,7 +8848,7 @@ XO:
 		MuzzleSequence: muzzle2
 		MuzzlePalette: scrin
 	AttackFollowFrontal:
-		PauseOnCondition: empdisable || being-warped || blinded
+		PauseOnCondition: empdisable || being-warped || blinded || parachute
 		Voice: Attack
 		FacingTolerance: 32
 		RangeMargin: 0

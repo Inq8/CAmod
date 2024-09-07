@@ -1142,6 +1142,23 @@ MAST:
 	ChangesHealth@ELITE:
 		Delay: 50
 
+MAST.Clone:
+	Inherits: MAST
+	Buildable:
+		Prerequisites: ~disabled
+	RenderSprites:
+		Image: mast
+	Tooltip:
+		Name: Mastermind Clone
+	Tooltip@PRODIGY:
+		Name: Prodigy Clone
+	Valued:
+		Cost: 1000
+	Health:
+		HP: 14000
+	RangeMultiplier@Clone:
+		Modifier: 80
+
 #
 # ---- Vehicles
 #
@@ -1911,7 +1928,7 @@ DEVO:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 212
 		Prerequisites: anyradar, ~vehicles.devo, ~techlevel.medium
-		Description: Medium hover tank.
+		Description: Maneuverable medium-range hover tank.
 		IconPalette: chrome
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses
@@ -4163,7 +4180,6 @@ PORT:
 		Range: 4c0
 	WithBuildingBib:
 	RallyPoint:
-		ForceSetType: Infantry
 	Exit@1:
 		RequiresCondition: !being-captured
 		SpawnOffset: 0,512,0
@@ -4284,7 +4300,6 @@ WSPH:
 		Prerequisite: vehicles.tpod
 	WithBuildingBib:
 	RallyPoint:
-		ForceSetType: Vehicle
 	Exit@1:
 		RequiresCondition: !being-captured
 		SpawnOffset: 0,0,0
@@ -4517,7 +4532,6 @@ GRAV:
 		SpawnOffset: -128,0,0
 	Reservable:
 	RallyPoint:
-		ForceSetType: Aircraft
 	ValidFactions:
 		Factions: scrin, reaper, traveler, harbinger, collector
 	ProvidesPrerequisiteValidatedFaction@traveler:
@@ -4992,6 +5006,7 @@ SHAR:
 		Amount: -40
 	ClassicFacingBodyOrientation:
 	DetectCloaked:
+		Range: 7c0
 		DetectionTypes: AirCloak
 		RequiresCondition: !(disabled || empdisable || being-warped)
 	SpawnActorOnDeath:
@@ -5440,6 +5455,7 @@ TBCL:
 
 ^RiftBase:
 	Interactable:
+		Bounds: 64, 64
 	ScriptTriggers:
 	RenderSprites:
 	WithSpriteBody:
@@ -5539,6 +5555,7 @@ IchorSeeder:
 
 IonSurge:
 	Interactable:
+		Bounds: 64, 64
 	ScriptTriggers:
 	BodyOrientation:
 		QuantizedFacings: 1

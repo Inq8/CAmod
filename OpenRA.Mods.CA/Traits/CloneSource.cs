@@ -21,7 +21,7 @@ namespace OpenRA.Mods.Common.Traits
 		public override object Create(ActorInitializer init) { return new CloneSource(init.Self, this); }
 	}
 
-	public class CloneSource : INotifyProduction, INotifyOwnerChanged, INotifyKilled, INotifySold, IResolveOrder, INotifyCreated
+	public class CloneSource : INotifyProduction, INotifyOwnerChanged, INotifyKilled, INotifyActorDisposing, IResolveOrder, INotifyCreated
 	{
 		HashSet<CloneProducer> cloneProducers = new HashSet<CloneProducer>();
 		public IEnumerable<string> ProductionTypes { get; private set; }
@@ -51,12 +51,11 @@ namespace OpenRA.Mods.Common.Traits
 			SeverConnections();
 		}
 
-		void INotifySold.Selling(Actor self)
+		void INotifyActorDisposing.Disposing(Actor self)
 		{
-			SeverConnections();
+			if (!self.IsDead)
+				SeverConnections();
 		}
-
-		void INotifySold.Sold(Actor self) {}
 
 		void INotifyOwnerChanged.OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)
 		{
