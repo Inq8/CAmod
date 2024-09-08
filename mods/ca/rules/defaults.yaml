@@ -1401,7 +1401,7 @@
 		Condition: tibstealth
 		Color: 66dd00
 	Cloak@TIBSTEALTH:
-		RequiresCondition: tibstealth
+		RequiresCondition: tibstealth && !cloak-force-disabled
 		InitialDelay: 0
 		CloakDelay: 25
 		IsPlayerPalette: false
@@ -1415,7 +1415,7 @@
 	ExternalCondition@TIBSTEALTH:
 		Condition: tibstealth
 	Cloak@SGENCLOAK:
-		RequiresCondition: sgencloak
+		RequiresCondition: sgencloak && !cloak-force-disabled
 		PauseOnCondition: tibstealth
 		InitialDelay: 0
 		CloakDelay: 150
@@ -1426,6 +1426,8 @@
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Damage, Heal
 	ExternalCondition@SGENCLOAK:
 		Condition: sgencloak
+	ExternalCondition@CloakForceDisabled:
+		Condition: cloak-force-disabled
 	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility
 		ColorSource: Player
@@ -4101,6 +4103,10 @@
 	RepairsBridges:
 		EnterBehaviour: Exit
 	CaptureManager:
+		CapturingCondition: capturing
+	GrantCondition@CapturingDecloak:
+		Condition: cloak-force-disabled
+		RequiresCondition: capturing
 	Captures:
 		CaptureTypes: building
 		PlayerExperience: 25
