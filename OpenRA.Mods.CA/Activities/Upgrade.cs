@@ -64,6 +64,8 @@ namespace OpenRA.Mods.CA.Activities
 				host = Target.FromActor(hostActor);
 				notifyResupplies = host.Actor.TraitsImplementing<INotifyResupply>().ToArray();
 			}
+			else
+				notifyResupplies = Array.Empty<INotifyResupply>();
 		}
 
 		/* Return true to complete. */
@@ -98,6 +100,9 @@ namespace OpenRA.Mods.CA.Activities
 
 			if (!isCloseEnough)
 			{
+				if (move == null)
+					return true;
+
 				QueueChild(move.MoveWithinRange(host, upgradeable.Info.UpgradeAtRange - WDist.FromCells(1), targetLineColor: targetLineColor));
 				return false;
 			}
