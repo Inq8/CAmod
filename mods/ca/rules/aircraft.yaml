@@ -2476,7 +2476,7 @@ RAH:
 		UncloakSound: appear1md.aud
 		Palette: cloak
 		IsPlayerPalette: false
-		UncloakOn: Attack, Dock, Damage, Heal
+		UncloakOn: Attack, Damage, Heal
 		CloakedCondition: hidden
 		RequiresCondition: !cloak-force-disabled && airborne && !being-warped && !alphacomanche-upgrade
 		PauseOnCondition: invisibility
@@ -2488,10 +2488,12 @@ RAH:
 		UncloakSound: appear1md.aud
 		Palette: cloak
 		IsPlayerPalette: false
-		UncloakOn: Attack, Dock, Heal
+		UncloakOn: Attack, Heal
 		CloakedCondition: hidden
 		RequiresCondition: airborne && !being-warped && alphacomanche-upgrade
 		PauseOnCondition: invisibility
+	GrantConditionOnResupply@DecloakOnResupply:
+		Condition: cloak-force-disabled
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical

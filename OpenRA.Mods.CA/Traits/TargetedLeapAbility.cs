@@ -49,7 +49,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		[CursorReference]
 		[Desc("Cursor to display when targeting a teleport location.")]
-		public readonly string TargetCursor = "chrono-target";
+		public readonly string TargetCursor = "ability";
 
 		[CursorReference]
 		[Desc("Cursor to display when the targeted location is blocked.")]

@@ -175,6 +175,9 @@
 	GrantConditionOnPlayerResources@botinsurance:
 		Condition: noinsurance
 		Threshold: 2500
+	GrantTimedCondition@botinsurance:
+		Condition: noinsurance
+		Duration: 3000
 	CashTrickler@brutalinsurance:
 		Interval: 450
 		Amount: 1250
@@ -631,18 +634,6 @@
 	SpeedMultiplier@ATOMIZED:
 		RequiresCondition: atomized
 		Modifier: 75
-	PeriodicExplosion@ATOMIZED:
-		Weapon: AtomizedEcho
-		RequiresCondition: atomized
-		InitialDelay: 50
-	PeriodicExplosion@ATOMIZED2:
-		Weapon: AtomizedEcho
-		RequiresCondition: atomized >= 2
-		InitialDelay: 50
-	PeriodicExplosion@ATOMIZED3:
-		Weapon: AtomizedEcho
-		RequiresCondition: atomized >= 3
-		InitialDelay: 50
 
 ^IonSurgable:
 	TimedConditionBar@IONSURGE:
@@ -1879,6 +1870,26 @@
 		Type: WatcherParasite
 		Limit: 1
 		LimitCondition: wchrpsite-attached
+	GrantTimedCondition@WatcherParasite:
+		Condition: wchrpsite-hidden
+		Duration: 750
+		RequiresCondition: wchrpsite-attached
+	WithDecoration@WatcherParasiteWatched:
+		Image: watched
+		Sequence: idle
+		Palette: scrineffect
+		Position: Top
+		ValidRelationships: Ally
+		Margin: 0, 8
+		RequiresCondition: wchrpsite-attached && !wchrpsite-hidden
+	WithDecoration@WatcherParasiteWatcher:
+		Image: watched
+		Sequence: idle
+		Palette: scrineffect
+		Position: Top
+		ValidRelationships: Enemy, Neutral
+		Margin: 0, 8
+		RequiresCondition: wchrpsite-attached
 
 ^ShadowBeaconAttachable:
 	Targetable@ShadowBeacon:

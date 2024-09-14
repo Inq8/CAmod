@@ -351,7 +351,10 @@ namespace OpenRA.Mods.CA.Projectiles
 					ImpactPosition = target,
 				};
 
-				args.Weapon.Impact(Target.FromPos(target), warheadArgs);
+				if (info.TrackTarget && args.Weapon.TargetActorCenter)
+					args.Weapon.Impact(args.GuidedTarget, warheadArgs);
+				else
+					args.Weapon.Impact(Target.FromPos(target), warheadArgs);
 			}
 		}
 
