@@ -488,7 +488,7 @@ gyro.upgrade:
 		BuildPaletteOrder: 40
 		Prerequisites: ~player.talon, upgc, ~techlevel.high
 		IconPalette: chrometd
-		Description: Allows mech units to activate gyro stabilizers, greatly increasing range but reducing rate of fire.\n\nUpgrades: Titan\nUpgrades: Railgun Titan\nUpgrades: Juggernaut\nUpgrades: Wolverine\nUpgrades: X-O Powersuit
+		Description: Allows large mech units to activate gyro stabilizers, greatly increasing range but reducing rate of fire.\n\nUpgrades: Titan\nUpgrades: Railgun Titan\nUpgrades: Juggernaut
 	TooltipExtras:
 		Strengths: + Added Gyro Stabilizers ability (increased range, reduced rate of fire)
 	Valued:
@@ -751,6 +751,22 @@ hazmatsoviet.upgrade:
 	RenderSprites:
 		Image: hazmats.upgrade
 
+tdog.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Terror Dog
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: ~player.soviet, stek, ~techlevel.medium
+		Description: Attack Dogs are strapped with explosives.\n\nReplaces: Attack Dog
+	TooltipExtras:
+		Strengths: + Able to damage vehicles and buildings
+		Weaknesses: – Explodes on attack or on death\n– Increased cost
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: tdog.upgrade
+
 lasher.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -830,22 +846,6 @@ deso.upgrade:
 		Cost: 500
 	RenderSprites:
 		Image: deso.upgrade
-
-tdog.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Research: Terror Dog
-	Buildable:
-		BuildPaletteOrder: 30
-		Prerequisites: ~player.soviet, stek, ~techlevel.high
-		Description: Attack Dogs are strapped with explosives.\n\nReplaces: Attack Dog
-	TooltipExtras:
-		Strengths: + Able to damage vehicles and buildings
-		Weaknesses: – Explodes on attack or on death\n– Increased cost
-	Valued:
-		Cost: 500
-	RenderSprites:
-		Image: tdog.upgrade
 
 tarc.upgrade:
 	Inherits: ^Upgrade
@@ -1324,6 +1324,22 @@ allegiance.upgrade:
 	RenderSprites:
 		Image: allegiance.upgrade
 
+hyper.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Hypercharge
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: ~player.scrin, anyradar, ~techlevel.medium
+		Description: Seekers and Lacerators gain Hypercharge ability, allow them to fire an uninterrupted barrage for a limited time.\n    After use, weapons are disabled and speed is reduced for a short time.\n\nUpgrades: Seeker\nUpgrades: Lacerator
+		IconPalette: chromes
+	TooltipExtras:
+		Strengths: + Hypercharge ability
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: hyper.upgrade
+
 evis.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -1470,22 +1486,6 @@ regen.upgrade:
 		Cost: 1500
 	RenderSprites:
 		Image: regen.upgrade
-
-hyper.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Hypercharge
-	Buildable:
-		BuildPaletteOrder: 30
-		Prerequisites: ~player.scrin, scrt, ~techlevel.high
-		Description: Seekers and Lacerators gain Hypercharge ability, allow them to fire an uninterrupted barrage for a limited time.\n    After use, weapons are disabled and speed is reduced for a short time.\n\nUpgrades: Seeker\nUpgrades: Lacerator
-		IconPalette: chromes
-	TooltipExtras:
-		Strengths: + Hypercharge ability
-	Valued:
-		Cost: 750
-	RenderSprites:
-		Image: hyper.upgrade
 
 stellar.upgrade:
 	Inherits: ^Upgrade

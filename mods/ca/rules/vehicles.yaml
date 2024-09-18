@@ -2213,6 +2213,7 @@ JEEP:
 		DischargingColor: ffffff
 		DeploySound: optics-enable.aud
 		UndeploySound: optics-disable.aud
+		Instant: true
 	GrantConditionOnPrerequisite@Optics:
 		Condition: optics-upgrade
 		Prerequisites: optics.upgrade
@@ -3440,6 +3441,7 @@ BGGY:
 		CooldownTicks: 1500
 		DeploySound: decoyspawn.aud
 		AudibleThroughFog: false
+		Instant: true
 	GrantConditionOnPrerequisite@BlackHandPlayer:
 		Condition: player-blackh
 		Prerequisites: player.blackh
@@ -5985,7 +5987,6 @@ IFV:
 		Weapon: IFVRocketsAAE.CRYO
 		LocalOffset: 192,100,176, 192,-100,176
 		RequiresCondition: (samturr || ggiturr) && cryw-upgrade
-
 	Armament@E3TIB:
 		Weapon: IFVRocketsE.TibCore
 		LocalOffset: 192,100,176, 192,-100,176
@@ -5995,8 +5996,6 @@ IFV:
 		Weapon: IFVRocketsAAE.TibCore
 		LocalOffset: 192,100,176, 192,-100,176
 		RequiresCondition: (samturr || ggiturr) && tibcore-upgrade && !cryw-upgrade
-
-
 	Armament@E4:
 		Weapon: FireballLauncher
 		Recoil: 85
@@ -8022,7 +8021,7 @@ MEMP:
 	Selectable:
 		Voice: SelectEMP
 	Mobile:
-		PauseOnCondition: triggered || !radarenabled || empdisable || being-warped || notmobile
+		PauseOnCondition: !radarenabled || empdisable || being-warped || notmobile
 		Speed: 126
 		Voice: Move
 		TurnSpeed: 28
@@ -8037,6 +8036,7 @@ MEMP:
 		ChargingColor: 0277bd
 		DischargingColor: 03a9f4
 		Voice: Unload
+		Instant: true
 	PeriodicExplosion:
 		Weapon: MEMP
 		RequiresCondition: triggered && ammo
@@ -8190,6 +8190,7 @@ CDRN:
 		CooldownTicks: 100
 		DeployedTicks: 10
 		RequiresCondition: !(empdisable || being-warped)
+		Instant: true
 	PeriodicExplosion:
 		Weapon: ChaosGas
 		RequiresCondition: triggered && ammo
@@ -8728,18 +8729,17 @@ WOLV:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
-	Inherits@GYRO: ^GyroStabilizers
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 250
-		Prerequisites: gtek, ~vehicles.talon, ~techlevel.high
+		BuildPaletteOrder: 193
+		Prerequisites: anyradar, ~vehicles.talon, ~techlevel.medium
 		Description: Light battle-mech with dual chainguns.
 		IconPalette: chrometd
 	TooltipExtras:
-		Strengths: • Strong vs Infantry, Light Armor
-		Weaknesses: • Weak vs Defenses\n• Cannot attack Aircraft
+		Strengths: • Strong vs Infantry, Buildings, Light Armor
+		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 	Valued:
-		Cost: 800
+		Cost: 900
 	Selectable:
 		Bounds: 1024, 1024
 		DecorationBounds: 1024, 1024, 0, -100
@@ -8784,10 +8784,34 @@ WOLV:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithMuzzleOverlay:
-	RangeMultiplier@GYRO:
-		Modifier: 140
-	ReloadDelayMultiplier@GYRO:
-		Modifier: 140
+	SpeedMultiplier@SpeedBoost:
+		RequiresCondition: speedboost
+		Modifier: 180
+	TimedConditionBar@SpeedBoost:
+		Condition: speedboost
+	GrantTimedConditionOnDeploy@SpeedBoost:
+		DeployedCondition: speedboost
+		CooldownTicks: 1500
+		DeployedTicks: 250
+		StartsFullyCharged: true
+		ChargingColor: 808000
+		DischargingColor: ffbb00
+		ShowSelectionBarWhenFull: false
+		DeploySound: gyrostabilizers.aud
+		Instant: true
+	GrantTimedCondition@SpeedBoost:
+		Duration: 2
+		Condition: highlight
+		RequiresCondition: speedboost
+	Contrail@SpeedBoost:
+		Offset: -30,0,200
+		StartColorUsePlayerColor: false
+		ZOffset: -128
+		StartColor: ffbb0080
+		StartColorAlpha: 128
+		StartWidth: 96
+		TrailLength: 12
+		RequiresCondition: speedboost
 
 XO:
 	Inherits: ^VehicleTD
@@ -8796,13 +8820,13 @@ XO:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 251
-		Prerequisites: gtek, ~vehicles.zocom, ~techlevel.high
-		Description: Light battle-mech armed with a laser and a coil-gun.\n  Able to jump short distances using its jetpack.
+		BuildPaletteOrder: 194
+		Prerequisites: anyradar, ~vehicles.zocom, ~techlevel.medium
+		Description: Light battle-mech armed with a laser and a coil-gun.\n  Able to jump short distances using its jump-pack.
 	TooltipExtras:
-		Strengths: • Strong vs Light Armor, Heavy Armor
-		Weaknesses: • Weak vs Buildings\n• Cannot attack Aircraft
-		Attributes: • Special Ability: Jump Pack
+		Strengths: • Strong vs Light Armor, Heavy Armor, Buildings
+		Weaknesses: • Weak vs Defenses\n• Cannot attack Aircraft
+		Attributes: • Special Ability: Jump-Pack
 	Valued:
 		Cost: 1000
 	Selectable:
@@ -8813,12 +8837,12 @@ XO:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 26000
+		HP: 24000
 	Armor:
 		Type: Light
 	Mobile:
 		TurnSpeed: 64
-		Speed: 60
+		Speed: 68
 		Voice: Move
 	Passenger:
 		Voice: Move
@@ -8885,7 +8909,7 @@ XO:
 		ChargeDelay: 625
 		SelectionBarColor: ffaa00
 		CircleColor: ffaa00a0
-		MaxDistance: 7
+		MaxDistance: 8
 		Speed: 140
 	Contrail@Jumping:
 		Offset: -30,0,350

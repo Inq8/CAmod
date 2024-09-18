@@ -3852,7 +3852,6 @@ YURI:
 		CooldownTicks: 150
 		DeployedCondition: deployed
 		DeployingCondition: deploying
-		DeployAnimation: deployed
 		ShowSelectionBar: true
 		ShowSelectionBarWhenFull: false
 		StartsFullyCharged: true
@@ -3860,6 +3859,7 @@ YURI:
 		PauseOnCondition: being-warped || parachute
 		DischargingColor: bb0000
 		ChargingColor: cc00cc
+		Instant: true
 	AttackFrontal:
 		PauseOnCondition: !ammo || being-warped || blinded || parachute
 		Armaments: primary, secondary, aidummy
@@ -4509,12 +4509,12 @@ ZTRP:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 150
 		Prerequisites: ~pyle, gtek, bombard2.strat, ~bombard.strat, ~techlevel.high
-		Description: Elite infantry armed with a railgun and equipped\n  with a jump pack.
+		Description: Elite infantry armed with a railgun and equipped\n  with a jump-pack.
 		IconPalette: chrometd
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses
 		Weaknesses: • Weak vs Infantry, Buildings\n• Cannot attack Aircraft
-		Attributes: • Special Ability: Jump Pack
+		Attributes: • Special Ability: Jump-Pack
 	Valued:
 		Cost: 700
 	Tooltip:
@@ -4605,7 +4605,7 @@ ZRAI:
 	Inherits: ZTRP
 	Buildable:
 		Prerequisites: ~pyle, gtek, seek2.strat, ~seek.strat, ~techlevel.high
-		Description: Elite infantry armed with a sonic grenade launcher\n  and equipped with a jump pack.
+		Description: Elite infantry armed with a sonic grenade launcher\n  and equipped with a jump-pack.
 		BuildPaletteOrder: 151
 	Tooltip:
 		Name: Zone Raider
@@ -4668,6 +4668,7 @@ ZDEF:
 		DeploySound: zdef-shield.aud
 		UndeploySound: gshielddown.aud
 		Voice: Shield
+		Instant: true
 	WithRadiatingCircle@ZoneDefenderShield:
 		EndRadius: 2c0
 		Color: 00eecc10

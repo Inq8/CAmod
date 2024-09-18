@@ -4801,12 +4801,12 @@ JACK:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Plane
-		BuildPaletteOrder: 92
-		Prerequisites: afld.gdi, gtek, ~aircraft.arc, ~techlevel.high
+		BuildPaletteOrder: 44
+		Prerequisites: afld.gdi, anyradar, ~aircraft.arc, ~techlevel.medium
 		Description: Loitering munition that dives at targets and explodes.
 	TooltipExtras:
-		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry, Aircraft
-		Weaknesses: • Weak vs Buildings, Defenses
+		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
+		Weaknesses: • Weak vs Buildings, Defenses\n• Cannot attack Aircraft
 	Aircraft:
 		AltitudeVelocity: 0c100
 		TurnSpeed: 20
@@ -4817,7 +4817,7 @@ JACK:
 	Voiced:
 		VoiceSet: JackknifeVoice
 	Health:
-		HP: 4000
+		HP: 3500
 	RevealsShroud:
 		Range: 10c0
 		MinRange: 8c0

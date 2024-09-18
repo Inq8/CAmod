@@ -277,6 +277,7 @@ VEHICLES.SCRIN:
 		RequiresCondition: hyper-upgrade
 		DischargeOnAttack: true
 		MaxTicksBeforeDischarge: 375
+		Instant: true
 	WithPalettedOverlay@HYPERCHARGE:
 		RequiresCondition: hypercharged && !(empdisable || invulnerability || invisibility)
 		Palette: hypercharge
@@ -1022,6 +1023,7 @@ MAST:
 		PauseOnCondition: being-warped
 		DischargingColor: bb0000
 		ChargingColor: cc00cc
+		Instant: true
 	AttackFrontal:
 		PauseOnCondition: being-warped || blinded || parachute || !ammo
 		FacingTolerance: 0
@@ -3396,7 +3398,7 @@ MSHP:
 	GrantConditionOnAttack@ATTACKING:
 		Condition: attacking
 		ArmamentNames: primary
-		RevokeDelay: 240
+		RevokeDelay: 125
 	AmbientSoundCA@CHARGING:
 		SoundFiles: mshp-charge.aud
 		RequiresCondition: charging
@@ -3413,7 +3415,7 @@ MSHP:
 		AmmoCondition: ammo
 		Armaments: primary
 	ReloadAmmoPoolCA@CHARGE:
-		Delay: 150
+		Delay: 100
 		Count: 1
 		RequiresCondition: charging && !attacking
 		Sound: mshp-fire1.aud
