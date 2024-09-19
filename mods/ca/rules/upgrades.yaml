@@ -488,7 +488,7 @@ gyro.upgrade:
 		BuildPaletteOrder: 40
 		Prerequisites: ~player.talon, upgc, ~techlevel.high
 		IconPalette: chrometd
-		Description: Allows large mech units to activate gyro stabilizers, greatly increasing range but reducing rate of fire.\n\nUpgrades: Titan\nUpgrades: Railgun Titan\nUpgrades: Juggernaut
+		Description: Allows mech units to activate gyro stabilizers, greatly increasing range but reducing rate of fire.\n\nUpgrades: Wolverine\nUpgrades: Titan\nUpgrades: Railgun Titan\nUpgrades: Juggernaut
 	TooltipExtras:
 		Strengths: + Added Gyro Stabilizers ability (increased range, reduced rate of fire)
 	Valued:
@@ -521,6 +521,21 @@ howi.upgrade:
 		Multiplier: 0
 		Prerequisites: radar.blackh
 
+decoy.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Decoy Projectors
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: ~player.nod, anyradar, ~techlevel.medium
+		Description: Grant Buggies the ability to project a pair of decoy Flame Tanks.\n\nUpgrades: Buggy
+	TooltipExtras:
+		Strengths: + Decoy projection ability
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: decoy.upgrade
+
 tibcore.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -535,21 +550,6 @@ tibcore.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: tibcore.upgrade
-
-decoy.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Decoy Projectors
-	Buildable:
-		BuildPaletteOrder: 30
-		Prerequisites: ~player.nod, tmpl, ~techlevel.high
-		Description: Grant Buggies the ability to project a pair of decoy Flame Tanks.\n\nUpgrades: Buggy
-	TooltipExtras:
-		Strengths: + Decoy projection ability
-	Valued:
-		Cost: 750
-	RenderSprites:
-		Image: decoy.upgrade
 
 lastnk.upgrade:
 	Inherits: ^Upgrade

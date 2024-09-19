@@ -8729,6 +8729,7 @@ WOLV:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
+	Inherits@GYRO: ^GyroStabilizers
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 193
@@ -8748,7 +8749,7 @@ WOLV:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 30000
+		HP: 34000
 	Armor:
 		Type: Light
 	Mobile:
@@ -8784,34 +8785,10 @@ WOLV:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithMuzzleOverlay:
-	SpeedMultiplier@SpeedBoost:
-		RequiresCondition: speedboost
-		Modifier: 180
-	TimedConditionBar@SpeedBoost:
-		Condition: speedboost
-	GrantTimedConditionOnDeploy@SpeedBoost:
-		DeployedCondition: speedboost
-		CooldownTicks: 1500
-		DeployedTicks: 250
-		StartsFullyCharged: true
-		ChargingColor: 808000
-		DischargingColor: ffbb00
-		ShowSelectionBarWhenFull: false
-		DeploySound: gyrostabilizers.aud
-		Instant: true
-	GrantTimedCondition@SpeedBoost:
-		Duration: 2
-		Condition: highlight
-		RequiresCondition: speedboost
-	Contrail@SpeedBoost:
-		Offset: -30,0,200
-		StartColorUsePlayerColor: false
-		ZOffset: -128
-		StartColor: ffbb0080
-		StartColorAlpha: 128
-		StartWidth: 96
-		TrailLength: 12
-		RequiresCondition: speedboost
+	RangeMultiplier@GYRO:
+		Modifier: 140
+	ReloadDelayMultiplier@GYRO:
+		Modifier: 140
 
 XO:
 	Inherits: ^VehicleTD
