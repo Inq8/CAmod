@@ -1592,7 +1592,7 @@ LeecherBeam:
 	Warhead@1Dam: SpreadDamage
 		Spread: 288
 		Falloff: 100, 45, 20, 7, 0
-		Damage: 3250
+		Damage: 3400
 		DamageTypes: Prone50Percent, TriggerProne, AtomizedDeath, FlakVestMitigatedMinor
 		Versus:
 			None: 100
@@ -1957,7 +1957,7 @@ NullifierBolt:
 	Projectile: BulletCA
 		Image: nullbolt
 		Palette: caneon
-		Speed: 512
+		Speed: 600
 		TrailImage: nulltrail
 		TrailSequences: idle1, idle2
 		TrailPalette: caneon
@@ -1966,7 +1966,15 @@ NullifierBolt:
 		ContrailStartColor: ffff00
 		ContrailStartColorAlpha: 96
 		ContrailLength: 6
-		TrailSpacing: 512
+		TrailSpacing: 600
+	Warhead@Arc: FireShrapnel
+		Weapon: NullifierBlind
+		TargetClosest: true
+		Amount: 1
+		AimChance: 100
+		ThrowWithoutTarget: false
+		AimTargetStances: Enemy, Neutral
+		AllowDirectHit: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 0c128
 		Damage: 25000
@@ -1983,6 +1991,12 @@ NullifierBolt:
 		ExplosionPalette: caneon
 		Image: nullhit
 		ImpactSounds: null-hit1.aud
+
+NullifierBlind:
+	Range: 1c768
+	ValidTargets: Infantry, Vehicle, Ship, Defense
+	TargetActorCenter: true
+	Projectile: InstantHit
 	Warhead@Blind: GrantExternalConditionCA
 		Range: 0c341
 		Duration: 125

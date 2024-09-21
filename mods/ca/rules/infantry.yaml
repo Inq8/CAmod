@@ -2617,7 +2617,7 @@ JJET:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 100
-		Prerequisites: anyradar, ~pyle, ~!bjet.upgrade, ~techlevel.medium
+		Prerequisites: anyradar, ~pyle, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Flying general-purpose infantry.
 	TooltipExtras:
@@ -2733,8 +2733,6 @@ JJET:
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
 		ValidDamageStates: Light, Medium, Heavy, Critical
-	ReplacedInQueue:
-		Actors: bjet
 	Targetable@MINDCONTROL:
 		RequiresCondition: !mindcontrolled && !hacked && !restoring && !airborne
 
@@ -2745,13 +2743,13 @@ BJET:
 	Valued:
 		Cost: 525
 	Buildable:
-		Prerequisites: anyradar, ~pyle, ~bjet.upgrade, ~techlevel.high
+		Prerequisites: anyradar, ~pyle, bjet.upgrade, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Flying infantry with a grenade launcher.
 		BuildPaletteOrder: 101
 	TooltipExtras:
-		Strengths: • Strong vs Buildings, Defenses, Light Armor, Aircraft
-		Weaknesses: • Weak vs Heavy Armor\n• Has difficulty hitting moving targets
+		Strengths: • Strong vs Buildings, Defenses, Light Armor
+		Weaknesses: • Weak vs Heavy Armor\n• Has difficulty hitting moving targets\n• Cannot attack Aircraft
 		Attributes: • Can detect cloaked units
 	Tooltip:
 		Name: Bombardier
@@ -2761,6 +2759,7 @@ BJET:
 	Armament@GROUND:
 		Weapon: GrenadeJJ
 		LocalOffset: 0,0,180
+	-Armament@AA:
 	SpawnActorOnDeath@airborne:
 		Actor: JJET.UPG.Husk
 		RequiresCondition: airborne
@@ -2776,7 +2775,6 @@ BJET:
 		StandSequences: stand-upg
 		DefaultAttackSequence: attack-upg
 		RequiresCondition: !airborne
-	-ReplacedInQueue:
 
 JJET.Husk:
 	ClassicFacingBodyOrientation:
@@ -4438,7 +4436,7 @@ CMSR:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry
 		Weaknesses: • Weak vs Light Armor, Heavy Armor, Defenses, Buildings\n• Cannot attack Aircraft
-		Attributes: • Increases speed and rate of fire of nearby basic infantry
+		Attributes: • Increases speed and rate of fire of nearby basic infantry\n• Can detect cloaked units and spies
 	Valued:
 		Cost: 800
 	Tooltip:
@@ -4498,6 +4496,10 @@ CMSR:
 		Duration: 50
 		ValidRelationships: Ally
 		AlwaysShowMaxRange: true
+	IgnoresDisguise:
+	DetectCloaked:
+		DetectionTypes: Cloak, AirCloak, Thief
+		Range: 6c0
 
 ZTRP:
 	Inherits: ^Soldier

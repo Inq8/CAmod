@@ -177,6 +177,22 @@ vulcan.upgrade:
 	RenderSprites:
 		Image: vulcan.upgrade
 
+bjet.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Bombardier
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: ~player.gdi, anyradar, ~techlevel.medium
+		Description: Allows training of Bombardiers.
+	TooltipExtras:
+		Strengths: + Strong vs Buildings, Defenses, Light Armor
+		Weaknesses: – Weak vs Heavy Armor\n– Has difficulty hitting moving targets\n– Cannot attack Aircraft
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: bjet.upgrade
+
 sidewinders.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -208,22 +224,6 @@ empgren.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: empgren.upgrade
-
-bjet.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Research: Bombardier
-	Buildable:
-		BuildPaletteOrder: 30
-		Prerequisites: ~player.gdi, gtek, ~techlevel.high
-		Description: Allows training of Bombardiers.\n\nReplaces: JumpJet Trooper
-	TooltipExtras:
-		Strengths: + Strong vs Buildings\n+ Increased range
-		Weaknesses: – Slow projectiles\n– Increased cost
-	Valued:
-		Cost: 750
-	RenderSprites:
-		Image: bjet.upgrade
 
 strategic.upgrade:
 	Inherits: ^Upgrade

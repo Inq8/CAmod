@@ -6437,7 +6437,7 @@ IFV:
 		ExplodeInstead: true
 		RequiresCondition: ivanturr && !being-warped
 	DamageMultiplier@GGI:
-		RequiresCondition: ggiturr || enfoturr
+		RequiresCondition: ggiturr
 		Modifier: 80
 	FirepowerMultiplier@GGI:
 		RequiresCondition: ggiturr
@@ -6445,6 +6445,9 @@ IFV:
 	RangeMultiplier@GGI:
 		RequiresCondition: ggiturr
 		Modifier: 115
+	DamageMultiplier@Enforcer:
+		RequiresCondition: enfoturr
+		Modifier: 70
 
 IFV.AI:
 	Inherits: ^Tank
