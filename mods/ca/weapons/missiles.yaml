@@ -861,17 +861,17 @@ PitbullRockets:
 	Range: 6c0
 	Report: pitbull-fire1.aud, pitbull-fire2.aud
 	ReloadDelay: 80
-	Burst: 4
+	Burst: 2
 	BurstDelays: 4
 	Projectile: MissileCA
 		Speed: 270
 		ContrailLength: 17
-		ContrailStartColor: ffff00aa
+		ContrailStartColor: ffaa00aa
 		ContrailStartColorAlpha: 170
 		ContrailStartWidth: 0c48
 	Warhead@1Dam: SpreadDamage
 		Spread: 256
-		Damage: 3500
+		Damage: 7000
 		Versus:
 			Wood: 40
 			Concrete: 30
@@ -882,24 +882,29 @@ PitbullRockets:
 		Duration: 35
 		Condition: blinded
 		ValidTargets: Vehicle
+	Warhead@3Eff: CreateEffect
+		Explosions: idle
+		ExplosionPalette: caneon
+		Image: nullhit
+		ImpactSounds: pitbull-hit1.aud
 
 PitbullRocketsAA:
 	Inherits: RedEye
 	Report: pitbull-fire1.aud, pitbull-fire2.aud
 	ReloadDelay: 80
-	Burst: 4
+	Burst: 2
 	BurstDelays: 4
 	Projectile: MissileCA
 		Speed: 270
 		ContrailLength: 17
-		ContrailStartColor: ffff00aa
+		ContrailStartColor: ffaa00aa
 		ContrailStartColorAlpha: 170
 		ContrailStartWidth: 0c48
 	Warhead@1Dam: SpreadDamage
 		Range: 0, 0c64, 0c256, 1c768
-		Damage: 3600
+		Damage: 7200
 	Warhead@smallDamage: SpreadDamage
-		Damage: 3600
+		Damage: 7200
 	Warhead@Blind: GrantExternalConditionCA
 		Range: 0c256
 		Duration: 50
@@ -907,6 +912,11 @@ PitbullRocketsAA:
 		ValidTargets: Air, AirSmall
 		InvalidTargets: Shielded
 		ValidRelationships: Enemy, Neutral
+	Warhead@3Eff: CreateEffect
+		Explosions: idle
+		ExplosionPalette: caneon
+		Image: nullhit
+		ImpactSounds: pitbull-hit1.aud
 
 TorpTube:
 	ReloadDelay: 100
