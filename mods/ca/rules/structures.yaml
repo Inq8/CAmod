@@ -5752,10 +5752,17 @@ UPGC.DROP:
 TMPP:
 	Inherits: ^BuildingTD
 	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
-	Inherits@SHAPE: ^3x2Shape
 	Inherits@INF: ^ProducesCyborgs
 	Inherits@UPG: ^ProducesUpgrades
 	Inherits@TECHLOCKABLE: ^TechLockable
+	HitShape:
+		Type: Rectangle
+			TopLeft: -1536, -512
+			BottomRight: 1536, 853
+	HitShape@TOP:
+		Type: Rectangle
+			TopLeft: -512, -1450
+			BottomRight: 896, -512
 	RenderSprites:
 		PlayerPalette: playertd
 	Selectable:
@@ -5767,8 +5774,8 @@ TMPP:
 			TopLeft: -1536, -1024
 			BottomRight: 1536, 1536
 	Building:
-		Footprint: XxX xxx X+X
-		Dimensions: 3,3
+		Footprint: ___ xxx xxx ===
+		Dimensions: 3,4
 		LocalCenterOffset: 0,-512,0
 	Health:
 		HP: 120000
