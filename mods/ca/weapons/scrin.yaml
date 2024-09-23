@@ -258,7 +258,7 @@ DevastatorDiscs:
 	Inherits: PlasmaDiscs
 	Range: 16c0
 	MinRange: 3c0
-	ReloadDelay: 180
+	ReloadDelay: 160
 	Report: devastator-fire1.aud, devastator-fire2.aud, devastator-fire3.aud
 	Burst: 7
 	BurstDelays: 3
@@ -273,7 +273,7 @@ DevastatorDiscs:
 		Speed: 220
 		LaunchAngle: 50
 	Warhead@1Dam: SpreadDamage
-		Spread: 384
+		Spread: 448
 		Damage: 4675
 		Versus:
 			None: 100
@@ -291,7 +291,7 @@ DevastatorTorpedo:
 	Burst: 3
 	Report: plasmatorp.aud
 	BurstDelays: 8
-	ReloadDelay: 80
+	ReloadDelay: 60
 	Projectile: Bullet
 		Image: plasmatorp3
 		Palette: scrin
@@ -1505,13 +1505,13 @@ MothershipChargeBeam:
 	Warhead@1Dum: Dummy
 
 MothershipBeam:
-	ReloadDelay: 340
+	ReloadDelay: 150
 	Range: 0c512
 	TargetActorCenter: true
 	ValidTargets: Structure
 	Projectile: PlasmaBeam
 		ForceVertical: true
-		Duration: 240
+		Duration: 125
 		Colors: 461fc609, 98177809
 		InnerLightness: 240
 		Radius: 7
@@ -1530,7 +1530,7 @@ MothershipBeam:
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
 		Falloff: 100, 75, 56, 42, 31, 23, 17, 13, 10, 7
-		Damage: 8000
+		Damage: 9000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@5Eff: CreateEffect
 		Image: mshpshockwave
@@ -1564,13 +1564,12 @@ MothershipDiscs:
 		ShadowColor: 00000033
 		Speed: 280
 	Warhead@1Dam: SpreadDamage
-		Spread: 448
-		Damage: 4500
+		Damage: 5000
 		Versus:
 			None: 100
 			Wood: 45
 			Concrete: 45
-			Light: 70
+			Light: 80
 			Heavy: 100
 
 LeecherBeam:
@@ -1593,7 +1592,7 @@ LeecherBeam:
 	Warhead@1Dam: SpreadDamage
 		Spread: 288
 		Falloff: 100, 45, 20, 7, 0
-		Damage: 3250
+		Damage: 3400
 		DamageTypes: Prone50Percent, TriggerProne, AtomizedDeath, FlakVestMitigatedMinor
 		Versus:
 			None: 100
@@ -1720,13 +1719,11 @@ AtomizerBolts:
 	Report: atomizer-fire1.aud
 	ReloadDelay: 150
 	Range: 9c0
-	TargetActorCenter: true
 	MinRange: 1c512
 	Projectile: Missile
 		Speed: 200
 		Image: atmzbolt
 		Palette: scrin
-		Inaccuracy: 128
 		Jammable: true
 		RangeLimit: 12c0
 		CruiseAltitude: 1c512
@@ -1734,9 +1731,8 @@ AtomizerBolts:
 		TrailPalette: scrin
 		TrailInterval: 1
 	Warhead@1Dam: SpreadDamage
-		Spread: 512
-		Falloff: 100, 85, 60, 35, 20, 0
-		Damage: 5500
+		Spread: 341
+		Damage: 4000
 		ValidTargets: Ground, Water
 		Versus:
 			None: 15
@@ -1745,70 +1741,81 @@ AtomizerBolts:
 			Heavy: 100
 			Concrete: 90
 		DamageTypes: Prone50Percent, AtomizedDeath
-	Warhead@atomize: GrantExternalConditionCA
-		Range: 0c341
-		Duration: 155
-		Condition: atomized
-		ValidTargets: Vehicle, Ship, Defense
-		ValidRelationships: Enemy, Neutral
-	Warhead@3Eff: CreateEffect
-		Explosions: idle
-		ExplosionPalette: scrin
-		Image: atmzbolthit
-		ImpactSounds: atomizer-hit1.aud
+	Warhead@Arc: FireShrapnel
+		Weapon: AtomizerArc
+		TargetClosest: true
+		Amount: 4
+		AimChance: 100
+		ThrowWithoutTarget: false
+		AimTargetStances: Enemy, Neutral
+		AllowDirectHit: true
 	Warhead@red: GrantExternalConditionCA
 		Range: 0c341
 		Duration: 2
 		Condition: redhighlight
 		ValidTargets: Vehicle, Ship, Defense
-
-AtomizedEcho:
-	Inherits: AtomizerBolts
-	ReloadDelay: 50
-	Report: atomizer-echo1.aud
-	-Projectile:
-	Projectile: InstantHit
-	-Warhead@atomize:
-	Warhead@1Dam: SpreadDamage
-		Damage: 3000
-		AffectsParent: true
-		ValidTargets: Vehicle, Ship, Defense, Air, AirSmall
-	Warhead@3Eff: CreateEffect
-		ValidTargets: Ground, Air, AirSmall
-		-ImpactSounds:
-
-AtomizerBoltsAA:
-	Inherits: AtomizerBolts
-	Range: 7c512
-	ValidTargets: Air, AirSmall
-	Projectile: Missile
-		Speed: 300
-	Warhead@1Dam: SpreadDamage
-		ValidTargets: Air, AirSmall
 	Warhead@atomize: GrantExternalConditionCA
-		ValidTargets: Air, AirSmall
-	Warhead@3Eff: CreateEffect
-		ValidTargets: Air, AirSmall
-	Warhead@red: GrantExternalConditionCA
-		ValidTargets: Air, AirSmall
-
-AtomizeSpreadInit:
-	Projectile: InstantHit
-	Warhead@Arc: FireShrapnel
-		Weapon: AtomizeSpread
-		Amount: 2
-		AimChance: 100
-		ThrowWithoutTarget: false
-
-AtomizeSpread:
-	Range: 1c512
-	Projectile: InstantHit
-	Warhead@cond: GrantExternalConditionCA
-		Range: 0c512
-		Duration: 120
+		Range: 0c341
+		Duration: 150
 		Condition: atomized
-		ValidTargets: Vehicle, Ship, Defense, Air
-		ValidRelationships: Ally
+		ValidTargets: Vehicle, Ship, Defense
+	Warhead@3Eff: CreateEffect
+		Explosions: idle
+		ExplosionPalette: scrin
+		Image: atmzbolthit
+		ImpactSounds: atomizer-hit1.aud
+
+AtomizerArc:
+	Inherits: AtomizerBolts
+	Range: 1c768
+	ValidTargets: Vehicle, Ship, Defense
+	TargetActorCenter: true
+	-MinRange:
+	-Report:
+	-Projectile:
+	-Warhead@1Dam:
+	-Warhead@Arc:
+	Projectile: PlasmaBeam
+		Duration: 7
+		Colors: ee000008
+		InnerLightness: 200
+		OuterLightness: 100
+		Radius: 2
+		Distortion: 150
+		DistortionAnimation: 150
+		SegmentLength: 350
+		TrackTarget: true
+	Warhead@2Dam: TargetDamage
+		ValidTargets: Vehicle, Ship, Defense
+		DamageTypes: Prone50Percent, AtomizedDeath
+		Damage: 2600
+		Delay: 35
+		Versus:
+			Light: 65
+	Warhead@3Dam: TargetDamage
+		ValidTargets: Vehicle, Ship, Defense
+		DamageTypes: Prone50Percent, AtomizedDeath
+		Damage: 2600
+		Delay: 70
+		Versus:
+			Light: 65
+	Warhead@4Dam: TargetDamage
+		ValidTargets: Vehicle, Ship, Defense
+		DamageTypes: Prone50Percent, AtomizedDeath
+		Damage: 2600
+		Delay: 105
+		Versus:
+			Light: 65
+	Warhead@5Dam: TargetDamage
+		ValidTargets: Vehicle, Ship, Defense
+		DamageTypes: Prone50Percent, AtomizedDeath
+		Damage: 2600
+		Delay: 140
+		Versus:
+			Light: 65
+	Warhead@3Eff: CreateEffect
+		Image: leechhitlg
+		-ImpactSounds:
 
 BursterTargeting:
 	ValidTargets: Vehicle, Infantry, Structure
@@ -1950,7 +1957,7 @@ NullifierBolt:
 	Projectile: BulletCA
 		Image: nullbolt
 		Palette: caneon
-		Speed: 512
+		Speed: 600
 		TrailImage: nulltrail
 		TrailSequences: idle1, idle2
 		TrailPalette: caneon
@@ -1959,7 +1966,15 @@ NullifierBolt:
 		ContrailStartColor: ffff00
 		ContrailStartColorAlpha: 96
 		ContrailLength: 6
-		TrailSpacing: 512
+		TrailSpacing: 600
+	Warhead@Arc: FireShrapnel
+		Weapon: NullifierBlind
+		TargetClosest: true
+		Amount: 1
+		AimChance: 100
+		ThrowWithoutTarget: false
+		AimTargetStances: Enemy, Neutral
+		AllowDirectHit: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 0c128
 		Damage: 25000
@@ -1976,6 +1991,12 @@ NullifierBolt:
 		ExplosionPalette: caneon
 		Image: nullhit
 		ImpactSounds: null-hit1.aud
+
+NullifierBlind:
+	Range: 1c768
+	ValidTargets: Infantry, Vehicle, Ship, Defense
+	TargetActorCenter: true
+	Projectile: InstantHit
 	Warhead@Blind: GrantExternalConditionCA
 		Range: 0c341
 		Duration: 125

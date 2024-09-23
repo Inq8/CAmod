@@ -277,6 +277,7 @@ VEHICLES.SCRIN:
 		RequiresCondition: hyper-upgrade
 		DischargeOnAttack: true
 		MaxTicksBeforeDischarge: 375
+		Instant: true
 	WithPalettedOverlay@HYPERCHARGE:
 		RequiresCondition: hypercharged && !(empdisable || invulnerability || invisibility)
 		Palette: hypercharge
@@ -1022,6 +1023,7 @@ MAST:
 		PauseOnCondition: being-warped
 		DischargingColor: bb0000
 		ChargingColor: cc00cc
+		Instant: true
 	AttackFrontal:
 		PauseOnCondition: being-warped || blinded || parachute || !ammo
 		FacingTolerance: 0
@@ -1777,7 +1779,7 @@ LCHR.Orb:
 		Image: lchr.orb
 		Palette: caneon
 	WithSpriteBody:
-		RequiresCondition: being-warped
+		RequiresCondition: !being-warped
 	WithSpriteBody@Warped:
 		Name: warped
 		Sequence: warped
@@ -2179,7 +2181,7 @@ RUIN:
 ATMZ:
 	Inherits: ^Vehicle
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
@@ -2197,12 +2199,12 @@ ATMZ:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 285
 		Prerequisites: scrt, ~vehicles.collector, ~techlevel.high
-		Description: Lightly armored long-range AoE anti-tank unit.
+		Description: Lightly armored long-range anti-tank unit\n  that atomizes vehicles and defenses.
 		IconPalette: chrome
 	TooltipExtras:
-		Strengths: • Strong vs Heavy Armor, Light Armor, Aircraft, Defenses
+		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses
 		Weaknesses: • Weak vs Infantry, Buildings
-		Attributes: • Target and nearby units take damage over time\n• Targets have reduced speed\n• Can traverse water
+		Attributes: • Atomizes up to 4 targets\n• Affected targets take damage over time\n• Affected targets have reduced speed\n• Can traverse water
 	Mobile:
 		Speed: 72
 		Locomotor: lighthover
@@ -2227,10 +2229,6 @@ ATMZ:
 		RequiresCondition: !invisibility
 	Armament:
 		Weapon: AtomizerBolts
-		LocalOffset: 350,0,350
-	Armament@SECONDARY:
-		Name: secondary
-		Weapon: AtomizerBoltsAA
 		LocalOffset: 350,0,350
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped || blinded
@@ -2696,7 +2694,7 @@ STMR:
 	Aircraft:
 		CruiseAltitude: 2560
 		TurnSpeed: 22
-		Speed: 135
+		Speed: 146
 		IdleSpeed: 135
 		IdleTurnSpeed: 15
 		RepulsionSpeed: 40
@@ -3400,7 +3398,7 @@ MSHP:
 	GrantConditionOnAttack@ATTACKING:
 		Condition: attacking
 		ArmamentNames: primary
-		RevokeDelay: 240
+		RevokeDelay: 125
 	AmbientSoundCA@CHARGING:
 		SoundFiles: mshp-charge.aud
 		RequiresCondition: charging
@@ -3417,7 +3415,7 @@ MSHP:
 		AmmoCondition: ammo
 		Armaments: primary
 	ReloadAmmoPoolCA@CHARGE:
-		Delay: 150
+		Delay: 100
 		Count: 1
 		RequiresCondition: charging && !attacking
 		Sound: mshp-fire1.aud

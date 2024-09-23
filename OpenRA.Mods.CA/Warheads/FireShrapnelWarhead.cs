@@ -48,6 +48,9 @@ namespace OpenRA.Mods.CA.Warheads
 		[Desc("List of sounds that can be played on impact.")]
 		public readonly string[] ImpactSounds = Array.Empty<string>();
 
+		[Desc("Should the shrapnel target actors in order of distance?")]
+		public readonly bool TargetClosest = false;
+
 		WeaponInfo weapon;
 
 		public void RulesetLoaded(Ruleset rules, WeaponInfo info)
@@ -103,8 +106,12 @@ namespace OpenRA.Mods.CA.Warheads
 						return true;
 
 					return false;
-				})
-				.Shuffle(world.SharedRandom);
+				});
+
+			if (TargetClosest)
+				availableTargetActors = availableTargetActors.OrderBy(x => (x.CenterPosition - epicenter).Length);
+			else
+				availableTargetActors = availableTargetActors.Shuffle(world.SharedRandom);
 
 			var targetActor = availableTargetActors.GetEnumerator();
 

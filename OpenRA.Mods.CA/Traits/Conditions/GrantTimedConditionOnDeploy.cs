@@ -72,6 +72,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		public readonly bool StartsFullyCharged = false;
 
+		[Desc("If true, the condition will be granted instantly (not delayed by animations/activities).")]
+		public readonly bool Instant = false;
+
 		[VoiceReference]
 		public readonly string Voice = "Action";
 
@@ -171,7 +174,15 @@ namespace OpenRA.Mods.CA.Traits
 				return;
 
 			if (!order.Queued)
-				self.CancelActivity();
+			{
+				if (Info.Instant)
+				{
+					Deploy();
+					return;
+				}
+				else
+					self.CancelActivity();
+			}
 
 			// Turn to the required facing.
 			if (Info.Facing != -1 && canTurn)
@@ -202,11 +213,17 @@ namespace OpenRA.Mods.CA.Traits
 				Game.Sound.Play(SoundType.World, Info.DeploySound, self.CenterPosition);
 
 			var wsb = wsbs.FirstEnabledTraitOrDefault();
+			var hasDeployAnimation = wsb != null && !string.IsNullOrEmpty(Info.DeployAnimation);
 
 			// If there is no animation to play just grant the upgrades that are used while deployed.
 			// Alternatively, play the deploy animation and then grant the upgrades.
-			if (string.IsNullOrEmpty(Info.DeployAnimation) || wsb == null)
+			if (Info.Instant || !hasDeployAnimation)
+			{
 				OnDeployCompleted();
+
+				if (hasDeployAnimation)
+					wsb.PlayCustomAnimation(self, Info.DeployAnimation);
+			}
 			else
 			{
 				if (deployingToken == Actor.InvalidConditionToken)

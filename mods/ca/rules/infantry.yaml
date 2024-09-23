@@ -2617,7 +2617,7 @@ JJET:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 100
-		Prerequisites: anyradar, ~pyle, ~!bjet.upgrade, ~techlevel.medium
+		Prerequisites: anyradar, ~pyle, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Flying general-purpose infantry.
 	TooltipExtras:
@@ -2666,12 +2666,6 @@ JJET:
 		CanHover: true
 		CanSlide: true
 		VTOL: true
-	AttackAircraft:
-		AttackType: Hover
-		FacingTolerance: 40
-		OpportunityFire: false
-		Voice: Attack
-		PauseOnCondition: being-warped || blinded
 	Armament@AIRBORNE:
 		Weapon: M60mgJJ
 		RequiresCondition: airborne
@@ -2739,8 +2733,6 @@ JJET:
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
 		ValidDamageStates: Light, Medium, Heavy, Critical
-	ReplacedInQueue:
-		Actors: bjet
 	Targetable@MINDCONTROL:
 		RequiresCondition: !mindcontrolled && !hacked && !restoring && !airborne
 
@@ -2751,13 +2743,13 @@ BJET:
 	Valued:
 		Cost: 525
 	Buildable:
-		Prerequisites: anyradar, ~pyle, ~bjet.upgrade, ~techlevel.high
+		Prerequisites: anyradar, ~pyle, bjet.upgrade, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Flying infantry with a grenade launcher.
 		BuildPaletteOrder: 101
 	TooltipExtras:
-		Strengths: • Strong vs Buildings, Defenses, Light Armor, Aircraft
-		Weaknesses: • Weak vs Heavy Armor\n• Has difficulty hitting moving targets
+		Strengths: • Strong vs Buildings, Defenses, Light Armor
+		Weaknesses: • Weak vs Heavy Armor\n• Has difficulty hitting moving targets\n• Cannot attack Aircraft
 		Attributes: • Can detect cloaked units
 	Tooltip:
 		Name: Bombardier
@@ -2767,6 +2759,7 @@ BJET:
 	Armament@GROUND:
 		Weapon: GrenadeJJ
 		LocalOffset: 0,0,180
+	-Armament@AA:
 	SpawnActorOnDeath@airborne:
 		Actor: JJET.UPG.Husk
 		RequiresCondition: airborne
@@ -2782,7 +2775,6 @@ BJET:
 		StandSequences: stand-upg
 		DefaultAttackSequence: attack-upg
 		RequiresCondition: !airborne
-	-ReplacedInQueue:
 
 JJET.Husk:
 	ClassicFacingBodyOrientation:
@@ -3858,7 +3850,6 @@ YURI:
 		CooldownTicks: 150
 		DeployedCondition: deployed
 		DeployingCondition: deploying
-		DeployAnimation: deployed
 		ShowSelectionBar: true
 		ShowSelectionBarWhenFull: false
 		StartsFullyCharged: true
@@ -3866,6 +3857,7 @@ YURI:
 		PauseOnCondition: being-warped || parachute
 		DischargingColor: bb0000
 		ChargingColor: cc00cc
+		Instant: true
 	AttackFrontal:
 		PauseOnCondition: !ammo || being-warped || blinded || parachute
 		Armaments: primary, secondary, aidummy
@@ -4444,7 +4436,7 @@ CMSR:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry
 		Weaknesses: • Weak vs Light Armor, Heavy Armor, Defenses, Buildings\n• Cannot attack Aircraft
-		Attributes: • Increases speed and rate of fire of nearby basic infantry
+		Attributes: • Increases speed and rate of fire of nearby basic infantry\n• Can detect cloaked units and spies
 	Valued:
 		Cost: 800
 	Tooltip:
@@ -4504,6 +4496,10 @@ CMSR:
 		Duration: 50
 		ValidRelationships: Ally
 		AlwaysShowMaxRange: true
+	IgnoresDisguise:
+	DetectCloaked:
+		DetectionTypes: Cloak, AirCloak, Thief
+		Range: 6c0
 
 ZTRP:
 	Inherits: ^Soldier
@@ -4514,13 +4510,13 @@ ZTRP:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 150
-		Prerequisites: ~pyle, gtek, bombard2.strat, ~bombard.strat, ~techlevel.high
-		Description: Elite infantry armed with a railgun and equipped\n  with a jump pack.
+		Prerequisites: ~pyle, gtek, ~bombard.strat, ~techlevel.high
+		Description: Elite infantry armed with a railgun and equipped\n  with a jump-pack.
 		IconPalette: chrometd
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses
 		Weaknesses: • Weak vs Infantry, Buildings\n• Cannot attack Aircraft
-		Attributes: • Special Ability: Jump Pack
+		Attributes: • Special Ability: Jump-Pack
 	Valued:
 		Cost: 700
 	Tooltip:
@@ -4610,8 +4606,8 @@ ZTRP:
 ZRAI:
 	Inherits: ZTRP
 	Buildable:
-		Prerequisites: ~pyle, gtek, seek2.strat, ~seek.strat, ~techlevel.high
-		Description: Elite infantry armed with a sonic grenade launcher\n  and equipped with a jump pack.
+		Prerequisites: ~pyle, gtek, ~seek.strat, ~techlevel.high
+		Description: Elite infantry armed with a sonic grenade launcher\n  and equipped with a jump-pack.
 		BuildPaletteOrder: 151
 	Tooltip:
 		Name: Zone Raider
@@ -4637,7 +4633,7 @@ ZRAI:
 ZDEF:
 	Inherits: ZTRP
 	Buildable:
-		Prerequisites: ~pyle, gtek, hold2.strat, ~hold.strat, ~techlevel.high
+		Prerequisites: ~pyle, gtek, ~hold.strat, ~techlevel.high
 		Description: Elite infantry armed with an ion rifle\n  and an ability which shields nearby infantry.
 		BuildPaletteOrder: 152
 	Tooltip:
@@ -4674,6 +4670,7 @@ ZDEF:
 		DeploySound: zdef-shield.aud
 		UndeploySound: gshielddown.aud
 		Voice: Shield
+		Instant: true
 	WithRadiatingCircle@ZoneDefenderShield:
 		EndRadius: 2c0
 		Color: 00eecc10

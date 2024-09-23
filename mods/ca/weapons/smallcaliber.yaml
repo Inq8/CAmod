@@ -497,16 +497,21 @@ M60mgNHAW:
 M60mgIFV:
 	Inherits: M60mg
 	Range: 5c768
-	Report: ifvmg1.aud, ifvmg2.aud, ifvmg3.aud
+	-Report:
+	StartBurstReport: ifvmg1.aud, ifvmg2.aud
 	BurstDelays: 2
-	Burst: 6
-	ReloadDelay: 40
+	Burst: 3
+	ReloadDelay: 45
 	Warhead@1Dam: SpreadDamage
-		Damage: 1200
+		Damage: 2500
 		Versus:
 			Wood: 40
 			Light: 85
 			None: 180
+	Warhead@2Eff: CreateEffect
+		Explosions: piff
+	Warhead@3EffWater: CreateEffect
+		Explosions: water_piff
 
 M60mgMD:
 	Inherits: M60mgTD
@@ -820,7 +825,7 @@ ShadowOperativeGun:
 HeliGunAG:
 	Inherits: ^HeavyMG
 	Report: mgbtr1.aud, mgbtr2.aud, mgbtr3.aud
-	ReloadDelay: 12
+	ReloadDelay: 14
 	Range: 5c512
 	MinRange: 0c768
 	Projectile: Bullet
@@ -836,7 +841,7 @@ HeliGunAG:
 
 HeliGunAA:
 	Inherits: ^AACannon
-	ReloadDelay: 12
+	ReloadDelay: 14
 	Burst: 1
 	Report: mgbtr1.aud, mgbtr2.aud, mgbtr3.aud
 	Range: 5c0
@@ -852,7 +857,8 @@ HeliGunAA:
 
 WolverineGun:
 	Inherits: M60mg
-	Range: 5c0
+	Range: 4c768
+	ReloadDelay: 15
 	BurstDelays: 3
 	-Report:
 	StartBurstReport: wolv-fire1.aud, wolv-fire2.aud
@@ -861,7 +867,8 @@ WolverineGun:
 		Damage: 1600
 		Versus:
 			Wood: 60
-			Heavy: 35
+			Light: 55
+			Heavy: 12
 
 EnforcerShotgun:
 	Range: 4c0

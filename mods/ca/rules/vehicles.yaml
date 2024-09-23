@@ -2213,6 +2213,7 @@ JEEP:
 		DischargingColor: ffffff
 		DeploySound: optics-enable.aud
 		UndeploySound: optics-disable.aud
+		Instant: true
 	GrantConditionOnPrerequisite@Optics:
 		Condition: optics-upgrade
 		Prerequisites: optics.upgrade
@@ -3440,6 +3441,7 @@ BGGY:
 		CooldownTicks: 1500
 		DeploySound: decoyspawn.aud
 		AudibleThroughFog: false
+		Instant: true
 	GrantConditionOnPrerequisite@BlackHandPlayer:
 		Condition: player-blackh
 		Prerequisites: player.blackh
@@ -5985,7 +5987,6 @@ IFV:
 		Weapon: IFVRocketsAAE.CRYO
 		LocalOffset: 192,100,176, 192,-100,176
 		RequiresCondition: (samturr || ggiturr) && cryw-upgrade
-
 	Armament@E3TIB:
 		Weapon: IFVRocketsE.TibCore
 		LocalOffset: 192,100,176, 192,-100,176
@@ -5995,8 +5996,6 @@ IFV:
 		Weapon: IFVRocketsAAE.TibCore
 		LocalOffset: 192,100,176, 192,-100,176
 		RequiresCondition: (samturr || ggiturr) && tibcore-upgrade && !cryw-upgrade
-
-
 	Armament@E4:
 		Weapon: FireballLauncher
 		Recoil: 85
@@ -6438,7 +6437,7 @@ IFV:
 		ExplodeInstead: true
 		RequiresCondition: ivanturr && !being-warped
 	DamageMultiplier@GGI:
-		RequiresCondition: ggiturr || enfoturr
+		RequiresCondition: ggiturr
 		Modifier: 80
 	FirepowerMultiplier@GGI:
 		RequiresCondition: ggiturr
@@ -6446,6 +6445,9 @@ IFV:
 	RangeMultiplier@GGI:
 		RequiresCondition: ggiturr
 		Modifier: 115
+	DamageMultiplier@Enforcer:
+		RequiresCondition: enfoturr
+		Modifier: 70
 
 IFV.AI:
 	Inherits: ^Tank
@@ -8022,7 +8024,7 @@ MEMP:
 	Selectable:
 		Voice: SelectEMP
 	Mobile:
-		PauseOnCondition: triggered || !radarenabled || empdisable || being-warped || notmobile
+		PauseOnCondition: !radarenabled || empdisable || being-warped || notmobile
 		Speed: 126
 		Voice: Move
 		TurnSpeed: 28
@@ -8037,6 +8039,7 @@ MEMP:
 		ChargingColor: 0277bd
 		DischargingColor: 03a9f4
 		Voice: Unload
+		Instant: true
 	PeriodicExplosion:
 		Weapon: MEMP
 		RequiresCondition: triggered && ammo
@@ -8190,6 +8193,7 @@ CDRN:
 		CooldownTicks: 100
 		DeployedTicks: 10
 		RequiresCondition: !(empdisable || being-warped)
+		Instant: true
 	PeriodicExplosion:
 		Weapon: ChaosGas
 		RequiresCondition: triggered && ammo
@@ -8447,14 +8451,14 @@ PBUL:
 	Armament@PRIMARY:
 		Weapon: PitbullRockets
 		LocalOffset: 0,-100,250, 0,100,250
-		PauseOnCondition: reloading
-		ReloadingCondition: reloading
+		PauseOnCondition: reloading-secondary
+		ReloadingCondition: reloading-primary
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: PitbullRocketsAA
 		LocalOffset: 0,-100,250, 0,100,250
-		PauseOnCondition: reloading
-		ReloadingCondition: reloading
+		PauseOnCondition: reloading-primary
+		ReloadingCondition: reloading-secondary
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped || blinded
 		Voice: Attack
@@ -8732,14 +8736,14 @@ WOLV:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 250
-		Prerequisites: gtek, ~vehicles.talon, ~techlevel.high
+		Prerequisites: gtek, ~vehicles.talon, ~techlevel.medium
 		Description: Light battle-mech with dual chainguns.
 		IconPalette: chrometd
 	TooltipExtras:
-		Strengths: • Strong vs Infantry, Light Armor
-		Weaknesses: • Weak vs Defenses\n• Cannot attack Aircraft
+		Strengths: • Strong vs Infantry, Buildings, Light Armor
+		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 	Valued:
-		Cost: 800
+		Cost: 900
 	Selectable:
 		Bounds: 1024, 1024
 		DecorationBounds: 1024, 1024, 0, -100
@@ -8748,7 +8752,7 @@ WOLV:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 30000
+		HP: 36000
 	Armor:
 		Type: Light
 	Mobile:
@@ -8797,12 +8801,12 @@ XO:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 251
-		Prerequisites: gtek, ~vehicles.zocom, ~techlevel.high
-		Description: Light battle-mech armed with a laser and a coil-gun.\n  Able to jump short distances using its jetpack.
+		Prerequisites: gtek, ~vehicles.zocom, ~techlevel.medium
+		Description: Light battle-mech armed with a laser and a coil-gun.\n  Able to jump short distances using its jump-pack.
 	TooltipExtras:
-		Strengths: • Strong vs Light Armor, Heavy Armor
-		Weaknesses: • Weak vs Buildings\n• Cannot attack Aircraft
-		Attributes: • Special Ability: Jump Pack
+		Strengths: • Strong vs Light Armor, Heavy Armor, Buildings
+		Weaknesses: • Weak vs Defenses\n• Cannot attack Aircraft
+		Attributes: • Special Ability: Jump-Pack
 	Valued:
 		Cost: 1000
 	Selectable:
@@ -8818,7 +8822,7 @@ XO:
 		Type: Light
 	Mobile:
 		TurnSpeed: 64
-		Speed: 60
+		Speed: 68
 		Voice: Move
 	Passenger:
 		Voice: Move
