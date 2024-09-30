@@ -145,7 +145,7 @@ Container@OBSERVER_WIDGETS:
 							Height: 25
 							Shadow: True
 				Container@REPLAY_PLAYER:
-					Logic: ReplayControlBarLogic
+					Logic: ReplayControlBarLogicCA
 					Y: 39
 					Width: 160
 					Height: 35
@@ -182,37 +182,48 @@ Container@OBSERVER_WIDGETS:
 									ImageCollection: music
 									ImageName: play
 						Button@BUTTON_SLOW:
-							X: 55
+							X: 52
 							Y: 13
-							Width: 36
+							Width: 34
 							Height: 20
 							Key: ReplaySpeedSlow
-							TooltipText: Slow speed
+							TooltipText: 50% speed
 							TooltipContainer: TOOLTIP_CONTAINER
-							Text: 50%
+							Text: 0.5x
 							Font: TinyBold
 						Button@BUTTON_REGULAR:
-							X: 55 + 45
+							X: 52 + 36
 							Y: 13
-							Width: 38
+							Width: 34
 							Height: 20
 							Key: ReplaySpeedRegular
-							TooltipText: Regular speed
+							TooltipText: 100% speed
 							TooltipContainer: TOOLTIP_CONTAINER
-							Text: 100%
+							Text: 1x
 							Font: TinyBold
 						Button@BUTTON_FAST:
-							X: 55 + 45 * 2
+							X: 52 + 36 * 2
 							Y: 13
-							Width: 38
+							Width: 34
 							Height: 20
 							Key: ReplaySpeedFast
-							TooltipText: Fast speed
+							TooltipText: 133% speed
 							TooltipContainer: TOOLTIP_CONTAINER
-							Text: 200%
+							VisualHeight: 0
+							Text: 1.33x
+							Font: TinyBold
+						Button@BUTTON_FASTER:
+							X: 52 + 36 * 3
+							Y: 13
+							Width: 34
+							Height: 20
+							TooltipText: 200% speed
+							TooltipContainer: TOOLTIP_CONTAINER
+							VisualHeight: 0
+							Text: 2x
 							Font: TinyBold
 						Button@BUTTON_MAXIMUM:
-							X: 55 + 45 * 3
+							X: 52 + 36 * 4
 							Y: 13
 							Width: 38
 							Height: 20
