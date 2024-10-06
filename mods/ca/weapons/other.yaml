@@ -1685,7 +1685,8 @@ KirovChaosBomb:
 	Warhead@Cloud1: SpawnActor
 		Actors: chaoscloud, chaoscloud2
 		Range: 5
-		ValidTargets: Ground, Water, Trees
+		ValidTargets: Ground, Water
+		ImpactActors: false
 	Warhead@3Eff: CreateEffect
 		Explosions: chaosexplosion
 		ExplosionPalette: caneon
@@ -1857,7 +1858,8 @@ RadarJammer:
 		Actors: jamming.field
 		Range: 1
 		ForceGround: false
-		ValidTargets: Ground, Water, JammingField, Trees
+		ValidTargets: Ground, Water
+		ImpactActors: false
 
 VeilSmall:
 	ReloadDelay: 10
@@ -1867,7 +1869,8 @@ VeilSmall:
 		Explosions: veilcloud, veilcloudf
 		ExplosionPalette: effect-ignore-lighting-alpha50
 		Inaccuracy: 2c0
-		ValidTargets: Ground, Water, Veil
+		ValidTargets: Ground, Water
+		ImpactActors: false
 
 VeilMedium:
 	Inherits: VeilSmall
@@ -2821,6 +2824,7 @@ KillZoneSpawner:
 		Delay: 40
 		Actors: killzone
 		Range: 1
+		ImpactActors: false
 
 KillZoneFlare:
 	Range: 1c0
@@ -2840,6 +2844,7 @@ KillZoneFlare:
 		Actors: flare.killzone
 		Range: 1
 		Delay: 5
+		ImpactActors: false
 
 KillZoneFlare2:
 	Inherits: KillZoneFlare
@@ -3114,7 +3119,8 @@ DecoyFlameTankSpawner:
 		Range: 3
 		ForceGround: false
 		MatchSourceFacing: true
-		ValidTargets: Ground, Water, Trees
+		ValidTargets: Ground, Water
+		ImpactActors: false
 
 DecoyHeavyFlameTankSpawner:
 	Inherits: DecoyFlameTankSpawner

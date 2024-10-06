@@ -7,6 +7,9 @@ loyalist.allegiance:
 rebel.allegiance:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
+malefic.allegiance:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
 allegiance.upgrade:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
@@ -16,10 +19,16 @@ EVIS:
 IMPL:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
+MUTI:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
 OBLT:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
 NULL:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+TORM:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
 ^OverlordsWrathPower:
@@ -28,4 +37,8 @@ NULL:
 
 ^GatewayPower:
 	DetonateWeaponPower@Gateway:
+		Prerequisites: ~disabled
+
+^AnathemaPower:
+	AnathemaPower@Anathema:
 		Prerequisites: ~disabled

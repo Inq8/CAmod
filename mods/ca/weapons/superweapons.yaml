@@ -47,7 +47,8 @@ ChaosBomb:
 	Warhead@Cloud1: SpawnActor
 		Actors: chaoscloud, chaoscloud2
 		Range: 5
-		ValidTargets: Ground, Water, Trees
+		ValidTargets: Ground, Water
+		ImpactActors: false
 
 CarpetBomb:
 	Inherits: ParaBomb
@@ -819,6 +820,7 @@ Chemicbm:
 		Image: Cloud1d
 		Palette: tseffect-ignore-lighting-alpha75
 		ValidTargets: Ground, Water
+		ImpactActors: false
 	Warhead@14Spawn: SpawnActor
 		Actors: toxiccloud2, toxiccloud
 		Range: 5
@@ -826,6 +828,7 @@ Chemicbm:
 		Image: Cloud1d
 		Palette: tseffect-ignore-lighting-alpha75
 		ValidTargets: Ground, Water
+		ImpactActors: false
 	Warhead@15Spawn: SpawnActor
 		Actors: toxiccloud2, toxiccloud
 		Range: 5
@@ -833,6 +836,7 @@ Chemicbm:
 		Image: Cloud1d
 		Palette: tseffect-ignore-lighting-alpha75
 		ValidTargets: Ground, Water
+		ImpactActors: false
 	Warhead@16Spawn: SpawnActor
 		Actors: toxiccloud2
 		Range: 5
@@ -840,6 +844,7 @@ Chemicbm:
 		Image: Cloud2d
 		Palette: tseffect-ignore-lighting-alpha75
 		ValidTargets: Ground, Water
+		ImpactActors: false
 	Warhead@17Spawn: SpawnActor
 		Actors: toxiccloud2
 		Range: 5
@@ -847,6 +852,7 @@ Chemicbm:
 		Image: Cloud2d
 		Palette: tseffect-ignore-lighting-alpha75
 		ValidTargets: Ground, Water
+		ImpactActors: false
 	Warhead@Shrap: FireShrapnel
 		Weapon: ChemDebris
 		Amount: 10
@@ -1173,7 +1179,8 @@ TemporalIncursion:
 		Range: 5
 		Image: chronoappear
 		Sequence: idle
-		ValidTargets: Air, Ground, Water, Trees
+		ValidTargets: Ground, Water
+		ImpactActors: false
 	Warhead@3Flash: ChronoFlashEffect
 
 ChronoAI:
@@ -1373,13 +1380,15 @@ SubterraneanStrikeSpawner:
 	Warhead@Spawn: SpawnActor
 		Actors: mole
 		Range: 3
-		ValidTargets: Ground, Water, Trees
+		ValidTargets: Ground, Water
+		ImpactActors: false
 		AvoidActors: true
 		Prerequisites: !tmpp
 	Warhead@SpawnUpg: SpawnActor
 		Actors: mole.upg
 		Range: 3
-		ValidTargets: Ground, Water, Trees
+		ValidTargets: Ground, Water
+		ImpactActors: false
 		AvoidActors: true
 		Prerequisites: tmpp
 	Warhead@Shake: ShakeScreen

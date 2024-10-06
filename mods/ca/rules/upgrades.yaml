@@ -1284,7 +1284,7 @@ loyalist.allegiance:
 		Name: Allegiance: Loyalist
 	Buildable:
 		BuildPaletteOrder: 15
-		Prerequisites: ~player.scrin, scrin.allegiances.available, !rebel.allegiance, ~techlevel.medium
+		Prerequisites: ~player.scrin, scrin.allegiances.available, !rebel.allegiance, !malefic.allegiance, ~techlevel.medium
 		Description: Declare your allegiance and side with the Scrin Overlord.\n\nRequired for:\n• Eviscerator\n• Obliterator\n• Overlord's Wrath\n\n
 		IconPalette: chromes
 	TooltipExtras:
@@ -1300,7 +1300,7 @@ rebel.allegiance:
 		Name: Allegiance: Rebel
 	Buildable:
 		BuildPaletteOrder: 16
-		Prerequisites: ~player.scrin, scrin.allegiances.available, !loyalist.allegiance, ~techlevel.medium
+		Prerequisites: ~player.scrin, scrin.allegiances.available, !loyalist.allegiance, !malefic.allegiance, ~techlevel.medium
 		Description: Declare your allegiance and side with the Scrin Rebels.\n\nRequired for:\n• Impaler\n• Nullifier\n• Gateway\n\n
 		IconPalette: chromes
 	TooltipExtras:
@@ -1309,6 +1309,22 @@ rebel.allegiance:
 		Cost: 500
 	RenderSprites:
 		Image: rebel.allegiance
+
+malefic.allegiance:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Allegiance: Malefic
+	Buildable:
+		BuildPaletteOrder: 17
+		Prerequisites: ~player.scrin, scrin.allegiances.available, !loyalist.allegiance, !rebel.allegiance, ~techlevel.medium
+		Description: Declare your allegiance and side with the Malefic Scrin.\n\nRequired for:\n• Mutilator\n• Tormentor\n• Nihilism\n\n
+		IconPalette: chromes
+	TooltipExtras:
+		Attributes: (!) Only ONE allegiance may be chosen.
+	Valued:
+		Cost: 500
+	RenderSprites:
+		Image: malefic.allegiance
 
 allegiance.upgrade:
 	Inherits: ^Upgrade
@@ -1373,6 +1389,23 @@ impl.upgrade:
 		Cost: 750
 	RenderSprites:
 		Image: impl.upgrade
+
+muti.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Mutilator
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: ~player.scrin, anyradar, ~malefic.allegiance, ~techlevel.medium
+		Description: Replaces: Ravager
+		IconPalette: chromes
+	TooltipExtras:
+		Strengths: + Increased speed\n+ Increased damage\n+ Increased health
+		Weaknesses: – Increased cost\n– Reduced range
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: muti.upgrade
 
 shrw.upgrade:
 	Inherits: ^Upgrade
