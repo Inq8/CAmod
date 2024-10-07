@@ -1856,7 +1856,7 @@ N5:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 17000
+		HP: 15000
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		AttackSequences:
@@ -1871,17 +1871,11 @@ N5:
 		LocalOffset: 341,0,254
 		MuzzleSequence: muzzle
 		MuzzlePalette: tdeffect
-		PauseOnCondition: surge-targeted || surge-cooldown
 	Armament@FF:
 		Weapon: ChemsprayTDFF
-		PauseOnCondition: surge-targeted || surge-cooldown
 	Armament@BATF:
 		Name: batf
 		Weapon: ChemsprayTDBATF
-	Armament@Surge:
-		Name: secondary
-		Weapon: TibSurgeTargeter
-		PauseOnCondition: !surge-targeted
 	Mobile:
 		Speed: 60
 		Voice: Move
@@ -1917,13 +1911,6 @@ N5:
 	FirepowerMultiplier@BIOLAB:
 		RequiresCondition: biofirepower
 		Modifier: 110
-	TargetedAttackAbility@Surge:
-		ActiveCondition: surge-targeted
-		CircleColor: 00ff0066
-		Type: TibSurge
-		TargetModifiedCursor: ability2
-		DefaultGroupCastBehaviour: All
-		ArmamentName: secondary
 	Contrail@Surge:
 		Offset: -30,0,200
 		StartColorUsePlayerColor: false
@@ -1935,24 +1922,19 @@ N5:
 	SpeedMultiplier@Surge:
 		RequiresCondition: surge-active
 		Modifier: 200
-	GrantConditionOnAttack@SurgeActive:
 		Condition: surge-active
-		RevokeDelay: 50
-		ArmamentNames: secondary
-	GrantConditionOnAttack@SurgeCooldown:
-		Condition: surge-cooldown
-		RevokeDelay: 1
-		ArmamentNames: secondary
-	AmmoPool@Surge:
-		Armaments: secondary
-		Ammo: 1
-	ReloadAmmoPool@Surge:
-		Delay: 750 # equal to reload time of weapon
-		Count: 1
-	WithAmmoPipsDecoration@Surge:
-		Position: BottomLeft
-		Margin: 4, 3
-		RequiresSelection: true
+	GrantTimedConditionOnDeploy@Surge:
+		DeployedTicks: 75
+		CooldownTicks: 750
+		DeployedCondition: surge-active
+		ShowSelectionBar: true
+		ShowSelectionBarWhenFull: false
+		StartsFullyCharged: true
+		PauseOnCondition: being-warped || parachute
+		DischargingColor: 00ff00
+		ChargingColor: 008800
+		Instant: true
+		DeploySound: tibsurge.aud
 	Targetable@ChemWarrior:
 		TargetTypes: ChemWarrior
 

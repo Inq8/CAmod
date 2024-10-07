@@ -835,7 +835,7 @@ MUTI:
 	Selectable:
 		DecorationBounds: 640, 896, -32, -256
 	Valued:
-		Cost: 450
+		Cost: 475
 	Tooltip:
 		Name: Mutilator
 	TooltipExtras:
@@ -2924,12 +2924,17 @@ TORM:
 		Type: GroundPosition
 	Armament@PRIMARY:
 		Weapon: TormentorZap
-		LocalOffset: 350,300,0, 350,-300,0
+		LocalOffset: 450,300,100, 450,-300,100
 		PauseOnCondition: !ammo
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
 	Armament@SECONDARY:
 		Weapon: TormentorZapAA
-		LocalOffset: 350,300,0, 350,-300,0
+		LocalOffset: 450,300,100, 450,-300,100
 		PauseOnCondition: !ammo
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+	WithMuzzleOverlay:
 	AttackAircraft:
 		FacingTolerance: 80
 		PersistentTargeting: false
