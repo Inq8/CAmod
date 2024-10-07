@@ -574,7 +574,7 @@ S4:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 123
+		BuildPaletteOrder: 124
 		Prerequisites: anyradar, ~infantry.scrin, ~techlevel.medium
 		IconPalette: chrome
 		Description: Heavy assault infantry with high burst damage.
@@ -644,7 +644,7 @@ WCHR:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 124
+		BuildPaletteOrder: 125
 		Prerequisites: anyradar, ~infantry.scrin, ~techlevel.medium
 		Description: Infiltration unit used to gain vision of enemies.
 	Valued:
@@ -828,8 +828,8 @@ MUTI:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 121
-		Prerequisites: anyradar, ~infantry.scrin, ~evis.upgrade, ~techlevel.medium
+		BuildPaletteOrder: 123
+		Prerequisites: anyradar, ~infantry.scrin, ~muti.upgrade, ~techlevel.medium
 		IconPalette: chromes
 		Description: Fast moving anti-personnel infantry.
 	Selectable:
@@ -841,6 +841,7 @@ MUTI:
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor, Infantry
 		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
+		Attributes: • Special Ability: Teleport (with upgrade)
 	Health:
 		HP: 13000
 	UpdatesPlayerStatistics:
@@ -857,6 +858,20 @@ MUTI:
 		LocalOffset: 150,0,400
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
+	PortableChronoCA:
+		ChargeDelay: 500
+		MaxDistance: 16
+		ChronoshiftSound: scrinport.aud
+		RequiresCondition: blink-upgrade
+		TeleportCondition: blink
+		ConditionDuration: 3
+		ShowSelectionBarWhenFull: false
+	GrantConditionOnPrerequisite@BLINKPACKS:
+		Condition: blink-upgrade
+		Prerequisites: blink.upgrade
+	WithColoredOverlay@BLINKFLASH:
+		Color: ffffff80
+		RequiresCondition: blink
 
 SMEDI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -2883,7 +2898,7 @@ TORM:
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
-		BuildPaletteOrder: 110
+		BuildPaletteOrder: 61
 		Prerequisites: nerv, ~aircraft.scrin, ~malefic.allegiance, ~techlevel.medium
 		Description: Small anti-vehicle harrasser aircraft.
 		IconPalette: chromes

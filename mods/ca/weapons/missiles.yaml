@@ -92,7 +92,7 @@
 Maverick:
 	Inherits: ^AirToGroundMissile
 	Range: 7c0
-	MinRange: 1c256
+	MinRange: 0c768
 	Report: missile7.aud
 	Burst: 2
 	BurstDelays: 7
@@ -176,7 +176,7 @@ MaverickSU:
 SeismicMissile:
 	ReloadDelay: 70
 	Range: 7c0
-	MinRange: 1c256
+	MinRange: 0c768
 	Report: rocket1.aud
 	Burst: 2
 	BurstDelays: 2
@@ -357,7 +357,7 @@ HellfireAG:
 	Inherits: ^AirToGroundMissile
 	Range: 6c0
 	ReloadDelay: 70
-	MinRange: 1c256
+	MinRange: 0c768
 	Burst: 4
 	BurstDelays: 10
 	Projectile: MissileCA
@@ -420,7 +420,7 @@ KamovRockets:
 HellfireAG.Harrier:
 	Inherits: ^AirToGroundMissile
 	Range: 7c0
-	MinRange: 1c256
+	MinRange: 0c768
 	ReloadDelay: 70
 	Report: migmis.aud, migmis2.aud
 	Burst: 2
@@ -454,7 +454,7 @@ HellfireAG.Horn:
 	Inherits: HellfireAG.Harrier
 	ReloadDelay: 50
 	Range: 5c0
-	MinRange: 1c0
+	MinRange: 0c768
 	Burst: 2
 	Projectile: MissileCA
 		RangeLimit: 7c512
@@ -1251,6 +1251,7 @@ HonestJohn:
 	Warhead@3Eff: CreateEffect
 		Explosions: large_napalm
 		ImpactSounds: firebl3.aud
+		ImpactActors: false
 	Warhead@Flames: FireCluster
 		Weapon: BurnFx
 		RandomClusterCount: 5

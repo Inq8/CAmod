@@ -1516,6 +1516,7 @@ TTRP:
 	TakeCover:
 		ProneOffset: 0,0,0
 		ProneSequencePrefix:
+	-Crushable:
 	-ReplacedInQueue:
 	Armament@PRIMARY:
 		Weapon: PortaTesla.UPG
@@ -2198,14 +2199,10 @@ SNIP:
 		Palette: temptd
 		Position: TopRight
 		RequiresCondition: hidden
-	AttackFrontalCharged:
+	AttackFrontal:
 		Voice: Attack
-		FacingTolerance: 32
-		ChargeLevel: 20
-		ChargingCondition: aiming
+		FacingTolerance: 0
 		PauseOnCondition: being-warped || blinded
-		ShowSelectionBar: true
-		SelectionBarColor: 117700
 	WithInfantryBody:
 		AttackSequences:
 			primary: shoot
