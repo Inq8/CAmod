@@ -3085,33 +3085,40 @@ ichorseed:
 		BlendMode: Additive
 
 resconv:
-	green:
-		Filename: resconv.shp
-		Length: 17
+	Defaults:
 		ZOffset: 1023
 		BlendMode: Additive
 		Tick: 80
+	green:
+		Filename: resconv.shp
+		Length: 17
 	yellow:
 		Filename: resconv.shp
 		Length: 17
 		Start: 17
-		ZOffset: 1023
-		BlendMode: Additive
-		Tick: 80
 	blue:
 		Filename: resconv.shp
 		Length: 17
 		Start: 34
-		ZOffset: 1023
-		BlendMode: Additive
-		Tick: 80
 	red:
 		Filename: resconv.shp
 		Length: 17
 		Start: 51
-		ZOffset: 1023
-		BlendMode: Additive
-		Tick: 80
+	greensm:
+		Filename: resconvsm.shp
+		Length: 10
+	yellowsm:
+		Filename: resconvsm.shp
+		Length: 10
+		Start: 10
+	bluesm:
+		Filename: resconvsm.shp
+		Length: 10
+		Start: 20
+	redsm:
+		Filename: resconvsm.shp
+		Length: 10
+		Start: 30
 
 lchrheal:
 	vehicle:
@@ -3122,8 +3129,9 @@ lchrheal:
 		Tick: 80
 		Alpha: 0.8
 	infantry:
-		Filename: lchrinfheal.shp
-		Length: *
+		Filename: resconvsm.shp
+		Length: 10
+		Start: 30
 		ZOffset: 1023
 		Tick: 80
 		Alpha: 0.8

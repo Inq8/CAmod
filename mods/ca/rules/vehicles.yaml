@@ -8784,11 +8784,14 @@ WOLV:
 		Weapon: WolverineGun
 		LocalOffset: 300,-220,180, 300,220,180
 		MuzzleSequence: muzzle
-	AttackFollowFrontal:
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: WolverineGunLine
+		LocalOffset: 300,-220,180, 300,220,180
+	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped || blinded
 		Voice: Attack
 		FacingTolerance: 32
-		RangeMargin: 0
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithMuzzleOverlay:
