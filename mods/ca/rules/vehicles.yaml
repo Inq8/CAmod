@@ -227,14 +227,14 @@ NUKC:
 		Weapon: 280mmAtomic
 		LocalOffset: 824,0,758
 		MuzzleSequence: muzzle
-		PauseOnCondition: has-atomic-ammo || atomic-reloading || !deployed
+		PauseOnCondition: has-atomic-ammo || atomic-reloading || !deployed || deploying
 		RequiresCondition: deployed || undeployed
 		ReloadingCondition: reloading
 	Armament@ATOMICAMMO:
 		Weapon: 280mmNeutron
 		LocalOffset: 824,0,758
 		MuzzleSequence: muzzle
-		PauseOnCondition: !has-atomic-ammo || reloading || !deployed
+		PauseOnCondition: !has-atomic-ammo || reloading || !deployed || deploying
 		RequiresCondition: deployed || undeployed
 		ReloadingCondition: atomic-reloading
 	Armament@Deployer:
@@ -249,7 +249,7 @@ NUKC:
 		Voice: Attack
 		RangeMargin: 0
 		PauseOnCondition: empdisable || being-warped || blinded
-		RequiresCondition: deployed || botowner
+		RequiresCondition: deployed || (botowner && !deploying)
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
 	GrantConditionOnDeployTurreted:
@@ -263,7 +263,7 @@ NUKC:
 		SmartDeploy: True
 		ValidFacings: 0, 256, 512, 768
 	GrantTimedCondition@Deploying:
-		Condition: reloading
+		Condition: deploying
 		Duration: 25
 		RequiresCondition: deployed
 	GrantTimedCondition@Undeploying:
@@ -328,7 +328,7 @@ NUKC:
 		Condition: botowner
 		Bots: brutal, vhard, hard, normal, easy, naval
 	DeployOnAttack:
-		RequiresCondition: undeployed && botowner
+		RequiresCondition: undeployed && botowner && !moving
 		ArmamentNames: deployer
 	WithRangeCircle:
 		Type: NukeCannon
@@ -348,6 +348,10 @@ NUKC:
 	RenderRangeCircle@Deployed:
 		RangeCircleType: NukeCannon
 		Color: ff880090
+	GrantConditionOnMovement@Moving:
+		Condition: moving
+		RequiresCondition: botowner
+		ValidMovementTypes: Horizontal, Vertical, Turn
 
 1TNK:
 	Inherits: ^Tank
@@ -7194,7 +7198,7 @@ RTNK:
 		Weaknesses: • Weak vs Defenses, Infantry\n• Cannot attack Aircraft
 		Attributes: • Disguised when not moving\n• Deals additional damage firing from disguised state
 	Valued:
-		Cost: 800
+		Cost: 750
 	Tooltip:
 		Name: Mirage Tank
 	Mirage:

@@ -1969,6 +1969,36 @@
 		SupportPowerPaletteOrder: 30
 		TargetMustBeVisible: true
 
+^AnathemaPower:
+	GrantExternalConditionPowerCA@Anathema:
+		OrderName: anathema
+		Icon: anathema
+		IconPalette: chromes
+		ChargeInterval: 1500
+		Name: Anathema
+		Condition: anathema
+		Range: 1c512
+		MaxTargets: 1
+		ValidTargets: AnathemaTargetable
+		OwnedTargetsOnly: true
+		Duration: 0
+		AllowMultiple: false
+		Description: \nTargeted vehicle greatly increases in power over time.\n    After 30 seconds the unit explodes.\n\nNot usable on allied players' units.
+		Prerequisites: ~malefic.allegiance, ~techlevel.high
+		OnFireSound: anathema.aud
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeSpeechNotification: AnathemaReady
+		EndChargeTextNotification: Anathema ready.
+		DisplayRadarPing: True
+		Cursor: ability
+		ActiveSequence: idle
+		SupportPowerPaletteOrder: 30
+		ShowSelectionBoxes: true
+		SelectionBoxColor: 7e00f1
+		TargetTintColor: 7e00f140
+
 ^SuppressionPower:
 	GrantExternalConditionPowerCA@SUPPRESSION:
 		PauseOnCondition: disabled || empdisable || being-warped

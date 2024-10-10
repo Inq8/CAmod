@@ -455,7 +455,8 @@ RiftCannon:
 		Actors: riftminor
 		Range: 1
 		ForceGround: false
-		ValidTargets: Ground, Water, Rift, Trees
+		ValidTargets: Ground, Water
+		ImpactActors: false
 
 MiniRift:
 	ReloadDelay: 10
@@ -764,6 +765,46 @@ StormRiderZapAA:
 	-Warhead@2Smu:
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: irocataa.aud, irocatab.aud, irocatac.aud, irocatad.aud
+
+TormentorZap:
+	ReloadDelay: 70
+	Burst: 4
+	BurstDelays: 0, 4, 0
+	ValidTargets: Ground, Water
+	Range: 6c0
+	Report: torm-fire1.aud, torm-fire2.aud
+	Projectile: LaserZapCA
+		Width: 56
+		HitAnim: laserfire
+		Color: 954fffAA
+		ZOffset: 512
+		SecondaryBeam: true
+		SecondaryBeamWidth: 90
+		SecondaryBeamZOffset: 511
+		SecondaryBeamColor: 7d00fe30
+		Duration: 3
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 1700
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		Versus:
+			None: 20
+			Light: 65
+			Wood: 30
+			Heavy: 100
+			Concrete: 95
+			Brick: 50
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Scorch-NoFlame
+		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees, Creep
+
+TormentorZapAA:
+	Inherits: TormentorZap
+	ValidTargets: Air, AirSmall
+	Warhead@1Dam: SpreadDamage
+		Damage: 1000
+		ValidTargets: Air, AirSmall
+	-Warhead@2Smu: LeaveSmudge
 
 EnervatorBolts:
 	Inherits: ^AntiGroundMissile
@@ -1186,6 +1227,31 @@ EvisceratorShards:
 	Warhead@1Dam: SpreadDamage
 		Spread: 288
 
+MutilatorShards:
+	Inherits: RavagerShards
+	StartBurstReport: muti-fire1.aud, muti-fire2.aud
+	Range: 3c512
+	Burst: 2
+	BurstDelays: 4
+	ReloadDelay: 50
+	Projectile: Missile
+		Image: scrinzap
+		ContrailStartColor: 954fff44
+	Warhead@1Dam: SpreadDamage
+		Damage: 6500
+		ValidRelationships: Enemy, Neutral
+	Warhead@3Eff: CreateEffect
+		Explosions: idle
+		ExplosionPalette: scrin
+		Image: scrinzaphit
+		ValidTargets: Ground, Ship, Trees
+		Inaccuracy: 128
+		-ImpactSounds:
+	Warhead@3EffWater: CreateEffect
+		Explosions: water_piffs
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure, Bridge
+
 ShardWalkerShards:
 	Inherits: RavagerShards
 	StartBurstReport: shard-fire1.aud
@@ -1340,7 +1406,8 @@ RiftInit:
 		Actors: rift
 		Range: 1
 		ForceGround: false
-		ValidTargets: Ground, Water, Trees
+		ValidTargets: Ground, Water
+		ImpactActors: false
 
 Rift:
 	ReloadDelay: 5
@@ -1399,7 +1466,8 @@ BuzzerSpawner:
 		Actors: buzz
 		Range: 1
 		ForceGround: false
-		ValidTargets: Ground, Water, Trees
+		ValidTargets: Ground, Water
+		ImpactActors: false
 
 BuzzerSpawnerAI:
 	Inherits: BuzzerSpawner
@@ -1463,7 +1531,8 @@ IonSurgeSpawner:
 		Actors: ionsurge
 		Range: 1
 		ForceGround: false
-		ValidTargets: Ground, Water, Trees
+		ValidTargets: Ground, Water
+		ImpactActors: false
 
 IonSurge:
 	ReloadDelay: 20
@@ -1483,7 +1552,8 @@ GatewaySpawner:
 		Actors: rebelgateway
 		Range: 3
 		ForceGround: false
-		ValidTargets: Ground, Water, Trees
+		ValidTargets: Ground, Water
+		ImpactActors: false
 		AvoidActors: true
 
 MothershipChargeBeam:
@@ -1592,7 +1662,7 @@ LeecherBeam:
 	Warhead@1Dam: SpreadDamage
 		Spread: 288
 		Falloff: 100, 45, 20, 7, 0
-		Damage: 3400
+		Damage: 3250
 		DamageTypes: Prone50Percent, TriggerProne, AtomizedDeath, FlakVestMitigatedMinor
 		Versus:
 			None: 100
@@ -1646,7 +1716,8 @@ GreaterCoalescenceSpawner:
 		Actors: grcl
 		Range: 1
 		ForceGround: false
-		ValidTargets: Ground, Water, Trees
+		ValidTargets: Ground, Water
+		ImpactActors: false
 
 GreaterCoalescence:
 	ReloadDelay: 5
@@ -1657,8 +1728,8 @@ GreaterCoalescence:
 		Damage: -550
 		ValidTargets: Heal, Repair
 		Versus:
-			None: 50
-			Light: 75
+			None: 40
+			Light: 65
 			Heavy: 100
 		ValidRelationships: Ally
 	Warhead@zaps: FireShrapnel
@@ -1869,7 +1940,8 @@ MindSparkSpawnerMaster:
 		Actors: mspk
 		Range: 1
 		ForceGround: false
-		ValidTargets: Ground, Water, Trees
+		ValidTargets: Ground, Water
+		ImpactActors: false
 		Delay: 8
 	Warhead@Suppress: GrantExternalConditionCA
 		Range: 2c0

@@ -30,6 +30,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Amount of ticks required to pass while trait is disabled before removing instances. Use -1 to make condition permanent.")]
 		public readonly int RevokeDelay = 25;
 
+		[Desc("Grant the first stack immediately.")]
+		public readonly bool FirstStackImmediate = false;
+
 		public override object Create(ActorInitializer init) { return new GrantStackingCondition(init, this); }
 	}
 
@@ -41,7 +44,11 @@ namespace OpenRA.Mods.CA.Traits
 		int revokeDelayTicks = 0;
 
 		public GrantStackingCondition(ActorInitializer init, GrantStackingConditionInfo info)
-			: base(info) { }
+			: base(info)
+		{
+			if (info.FirstStackImmediate)
+				delayTicks = info.DelayPerInstance;
+		}
 
 		void GrantInstance(Actor self, string cond)
 		{

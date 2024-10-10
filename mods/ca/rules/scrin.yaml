@@ -293,6 +293,67 @@ VEHICLES.SCRIN:
 		Modifier: 75
 		RequiresCondition: hyperchargedebuff
 
+^Anathema:
+	GrantStackingCondition@Anathema:
+		Condition: anathema
+		DelayPerInstance: 75
+		MaximumInstances: 4
+		RevokeDelay: -1
+		RequiresCondition: anathema
+	ExternalCondition@Anathema:
+		Condition: anathema
+	WithIdleOverlay@Anathema:
+		Sequence: idle
+		Image: anathema
+		Palette: caneon
+		RequiresCondition: anathema
+		IsDecoration: True
+	ReloadDelayMultiplier@Anathema1:
+		Modifier: 80
+		RequiresCondition: anathema == 1
+	FirepowerMultiplier@Anathema1:
+		Modifier: 130
+		RequiresCondition: anathema == 1
+	ReloadDelayMultiplier@Anathema2:
+		Modifier: 65
+		RequiresCondition: anathema == 2
+	FirepowerMultiplier@Anathema2:
+		Modifier: 160
+		RequiresCondition: anathema == 2
+	ReloadDelayMultiplier@Anathema3:
+		Modifier: 50
+		RequiresCondition: anathema == 3
+	FirepowerMultiplier@Anathema3:
+		Modifier: 190
+		RequiresCondition: anathema == 3
+	ReloadDelayMultiplier@Anathema4:
+		Modifier: 35
+		RequiresCondition: anathema >= 4
+	FirepowerMultiplier@Anathema4:
+		Modifier: 220
+		RequiresCondition: anathema >= 4
+	DamageMultiplier@Anathema:
+		Modifier: 50
+		RequiresCondition: anathema
+	GrantTimedCondition@Anathema:
+		Condition: anathema-alive
+		Duration: 750
+		RequiresCondition: anathema
+	TimedConditionBar@Anathema:
+		Color: 9133ff
+		Condition: anathema-alive
+	Targetable@Anathema:
+		TargetTypes: AnathemaTargetable
+	KillsSelf@Anathema:
+		RequiresCondition: anathema && !anathema-alive
+	Explodes@Anathema:
+		Weapon: KirovExplode
+		EmptyWeapon: KirovExplode
+		RequiresCondition: anathema && !anathema-alive
+	WithPalettedOverlay@Anathema:
+		RequiresCondition: anathema
+		Palette: anathema
+
 ^ScrinVehicleVoice:
 	Voiced:
 		VoiceSet: ScrinVehicleVoice
@@ -513,7 +574,7 @@ S4:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 123
+		BuildPaletteOrder: 124
 		Prerequisites: anyradar, ~infantry.scrin, ~techlevel.medium
 		IconPalette: chrome
 		Description: Heavy assault infantry with high burst damage.
@@ -583,7 +644,7 @@ WCHR:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 124
+		BuildPaletteOrder: 125
 		Prerequisites: anyradar, ~infantry.scrin, ~techlevel.medium
 		Description: Infiltration unit used to gain vision of enemies.
 	Valued:
@@ -759,6 +820,58 @@ IMPL:
 		LocalOffset: 150,0,400
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
+
+MUTI:
+	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Buildable:
+		Queue: InfantrySQ, InfantryMQ
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 123
+		Prerequisites: anyradar, ~infantry.scrin, ~muti.upgrade, ~techlevel.medium
+		IconPalette: chromes
+		Description: Fast moving anti-personnel infantry.
+	Selectable:
+		DecorationBounds: 640, 896, -32, -256
+	Valued:
+		Cost: 475
+	Tooltip:
+		Name: Mutilator
+	TooltipExtras:
+		Strengths: • Strong vs Light Armor, Infantry
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
+		Attributes: • Special Ability: Teleport (with upgrade)
+	Health:
+		HP: 13000
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Mobile:
+		Speed: 108
+	RevealsShroud:
+		Range: 6c0
+	AttackFrontal:
+		FacingTolerance: 64
+		PauseOnCondition: being-warped || blinded
+	Armament@PRIMARY:
+		Weapon: MutilatorShards
+		LocalOffset: 150,0,400
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
+	PortableChronoCA:
+		ChargeDelay: 500
+		MaxDistance: 16
+		ChronoshiftSound: scrinport.aud
+		RequiresCondition: blink-upgrade
+		TeleportCondition: blink
+		ConditionDuration: 3
+		ShowSelectionBarWhenFull: false
+	GrantConditionOnPrerequisite@BLINKPACKS:
+		Condition: blink-upgrade
+		Prerequisites: blink.upgrade
+	WithColoredOverlay@BLINKFLASH:
+		Color: ffffff80
+		RequiresCondition: blink
 
 SMEDI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -2777,6 +2890,140 @@ STMR:
 		Sequence: Plane
 	-SoundOnDamageTransitionCA:
 
+TORM:
+	Inherits: ^Helicopter
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@HULLREGEN: ^HullRegen
+	Inherits@MothershipRearmable: ^MothershipRearmable
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
+	Buildable:
+		Queue: AircraftSQ, AircraftMQ
+		BuildPaletteOrder: 61
+		Prerequisites: nerv, ~aircraft.scrin, ~malefic.allegiance, ~techlevel.medium
+		Description: Small anti-vehicle harrasser aircraft.
+		IconPalette: chromes
+	TooltipExtras:
+		Strengths: • Strong vs Vehicles, Defenses, Aircraft
+		Weaknesses: • Weak vs Infantry
+	Valued:
+		Cost: 900
+	Tooltip:
+		Name: Tormentor
+		GenericName: Aircraft
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 10000
+	RevealsShroud:
+		Range: 11c0
+		MinRange: 9c0
+		Type: GroundPosition
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 9c0
+		Type: GroundPosition
+	Armament@PRIMARY:
+		Weapon: TormentorZap
+		LocalOffset: 450,300,100, 450,-300,100
+		PauseOnCondition: !ammo
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+	Armament@SECONDARY:
+		Weapon: TormentorZapAA
+		LocalOffset: 450,300,100, 450,-300,100
+		PauseOnCondition: !ammo
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+	WithMuzzleOverlay:
+	AttackAircraft:
+		FacingTolerance: 80
+		PersistentTargeting: false
+		OpportunityFire: false
+		PauseOnCondition: empdisable || being-warped || blinded
+	Aircraft:
+		TurnSpeed: 28
+		Speed: 201
+		IdleSpeed: 146
+		IdleTurnSpeed: 15
+		RepulsionSpeed: 40
+		MaximumPitch: 56
+		CanHover: False
+		TakeoffSounds: dropup1.aud
+		LandingSounds: dropdwn1.aud
+		CanSlide: False
+		AltitudeVelocity: 0c120
+		IdealSeparation: 0c768
+	AutoTarget:
+		InitialStance: HoldFire
+		InitialStanceAI: AttackAnything
+	Contrail@1:
+		Offset: -750,-200,300
+		StartColorUsePlayerColor: true
+		StartColorAlpha: 64
+		EndColorUsePlayerColor: true
+		ZOffset: -512
+		TrailLength: 18
+		StartWidth: 48
+	Contrail@2:
+		Offset: -750,200,300
+		StartColorUsePlayerColor: true
+		StartColorAlpha: 64
+		EndColorUsePlayerColor: true
+		ZOffset: -512
+		TrailLength: 18
+		StartWidth: 48
+	SpawnActorOnDeath:
+		Actor: TORM.Husk
+		RequiresCondition: !empdisable && !being-warped
+	SpawnActorOnDeath@EMP:
+		Actor: TORM.Husk.EMP
+		RequiresCondition: empdisable && !being-warped
+	LeavesTrails:
+		Offsets: -427,0,0
+		Image: smokey
+		MovingInterval: 3
+		StationaryInterval: 3
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
+		RequiresCondition: enable-smoke
+	Selectable:
+		DecorationBounds: 1536, 1536
+	ProducibleWithLevel:
+		Prerequisites: aircraft.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: aircraft.upgraded
+	-EjectOnDeath:
+	AmmoPool:
+		Ammo: 16
+		AmmoCondition: ammo
+		ReloadDelay: 8
+		ReloadCount: 1
+	WithAmmoPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
+		PipCount: 4
+	Rearmable:
+		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
+	GrantConditionOnDamageState@SmokeTrail:
+		Condition: enable-smoke
+	GrantConditionOnResupply:
+		Condition: resupplying
+	Targetable@RESUPPLYING:
+		TargetTypes: Resupplying
+		RequiresCondition: resupplying
+	KillsSelf@Emp:
+		RequiresCondition: empdisable && cruising
+	GpsRadarDot:
+		Sequence: Plane
+	Targetable@MothershipRearmable:
+		RequiresCondition: ammo < 5
+	ReloadAmmoPool@MothershipRearmable:
+		Count: 1
+	-SoundOnDamageTransitionCA:
+
 ENRV:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
@@ -3590,7 +3837,7 @@ STMR.Husk:
 		Name: Stormrider
 	Aircraft:
 		TurnSpeed: 16
-		Speed: 157
+		Speed: 146
 	LeavesTrails:
 		Offsets: -427,0,0
 		Image: smokey
@@ -3623,6 +3870,45 @@ STMR.Husk:
 
 STMR.Husk.EMP:
 	Inherits: STMR.Husk
+	Inherits@EMP: ^EmpVisualEffect
+
+TORM.Husk:
+	Inherits: ^PlaneHusk
+	Tooltip:
+		Name: Tormentor
+	Aircraft:
+		TurnSpeed: 28
+		Speed: 201
+	LeavesTrails:
+		Offsets: -427,0,0
+		Image: smokey
+		MovingInterval: 3
+		StationaryInterval: 3
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
+	Contrail@1:
+		Offset: -750,-200,300
+		StartColorUsePlayerColor: true
+		EndColorUsePlayerColor: true
+	Contrail@2:
+		Offset: -750,200,300
+		StartColorUsePlayerColor: true
+		EndColorUsePlayerColor: true
+	RevealsShroud:
+		Range: 11c0
+		MinRange: 9c0
+		Type: GroundPosition
+		RevealGeneratedShroud: false
+	RevealsShroud@GAPGEN:
+		Range: 9c0
+		Type: GroundPosition
+	RenderSprites:
+		Image: torm
+		PlayerPalette: playerscrin
+
+TORM.Husk.EMP:
+	Inherits: TORM.Husk
 	Inherits@EMP: ^EmpVisualEffect
 
 ENRV.Husk:
@@ -4437,6 +4723,7 @@ SCRT:
 	Inherits@ProductionOptimizer2: ^ProductionOptimizer2
 	Inherits@OverlordsWrath: ^OverlordsWrathPower
 	Inherits@GatewayPower: ^GatewayPower
+	Inherits@AnathemaPower: ^AnathemaPower
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 150
@@ -5513,8 +5800,6 @@ RiftMinor:
 		Weapon: MiniRift
 	KillsSelf:
 		Delay: 120
-	Targetable@RIFT:
-		TargetTypes: Rift
 
 camera.resourcescan:
 	Inherits: CAMERA

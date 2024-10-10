@@ -56,7 +56,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly string TargetBlockedCursor = "move-blocked";
 
 		[GrantedConditionReference]
-		[Desc("The condition to grant after teleporting.")]
+		[Desc("The condition to grant while leaping.")]
 		public readonly string LeapCondition = null;
 
 		[VoiceReference]
@@ -116,10 +116,7 @@ namespace OpenRA.Mods.CA.Traits
 		int chargeTick = 0;
 
 		[Sync]
-		int conditionTicks = 0;
 		int cooldownTicks = 0;
-
-		int token = Actor.InvalidConditionToken;
 
 		public int ChargeDelay { get; private set; }
 		public int MaxDistance { get; private set; }
@@ -165,9 +162,6 @@ namespace OpenRA.Mods.CA.Traits
 					}
 				}
 			}
-
-			if (--conditionTicks < 0 && token != Actor.InvalidConditionToken)
-				token = self.RevokeCondition(token);
 		}
 
 		Order IIssueDeployOrder.IssueDeployOrder(Actor self, bool queued)
@@ -284,9 +278,6 @@ namespace OpenRA.Mods.CA.Traits
 		protected override void TraitDisabled(Actor self)
 		{
 			chargeTick = 0;
-
-			if (token != Actor.InvalidConditionToken)
-				token = self.RevokeCondition(token);
 		}
 	}
 

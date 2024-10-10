@@ -86,7 +86,12 @@ namespace OpenRA.Mods.CA.Activities
 		{
 			// Correct the visual position after we jumped
 			if (jumpComplete || canceling)
+			{
+				if (token != Actor.InvalidConditionToken)
+					token = self.RevokeCondition(token);
+
 				return true;
+			}
 
 			if (--delayTicks > 0)
 				return false;
@@ -111,12 +116,7 @@ namespace OpenRA.Mods.CA.Activities
 				// Update movement which results in movementType set to MovementType.None.
 				// This is needed to prevent the move animation from playing.
 				mobile.UpdateMovement();
-
 				Game.Sound.Play(SoundType.World, landingSounds, self.World, self.CenterPosition);
-
-				if (token != Actor.InvalidConditionToken)
-					token = self.RevokeCondition(token);
-
 				jumpComplete = true;
 				QueueChild(mobile.LocalMove(self, position, self.World.Map.CenterOfSubCell(destinationCell, destinationSubCell)));
 			}
