@@ -1922,7 +1922,6 @@ N5:
 	SpeedMultiplier@Surge:
 		RequiresCondition: surge-active
 		Modifier: 200
-		Condition: surge-active
 	GrantTimedConditionOnDeploy@Surge:
 		DeployedTicks: 75
 		CooldownTicks: 750
@@ -2190,14 +2189,7 @@ SNIP:
 			primary: shoot
 			secondary: shoot
 		StandSequences: stand, stand2
-		RequiresCondition: !parachute && !being-warped && !aiming
-	WithInfantryBody@AIMING:
-		AttackSequences:
-			primary: aim
-			secondary: aim
-		RequiresCondition: !parachute && !being-warped && aiming
-		IdleSequences: aim
-		StandSequences: aim
+		RequiresCondition: !parachute && !being-warped
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
 		RequiresCondition: parachute
