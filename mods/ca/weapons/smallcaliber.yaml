@@ -687,7 +687,7 @@ AKMBATF:
 	Range: 5c768
 
 SNIPER:
-	ReloadDelay: 110
+	ReloadDelay: 105
 	Range: 8c512
 	Report: snipe.aud
 	Projectile: InstantHit
@@ -774,7 +774,7 @@ SNIPERBATF.UPG:
 
 SniperIFVGun.UPG:
 	Inherits: SNIPER.vehicle
-	ReloadDelay: 110
+	ReloadDelay: 105
 	Warhead@1Dam: SpreadDamage
 		Versus:
 			Light: 40
@@ -858,17 +858,40 @@ HeliGunAA:
 WolverineGun:
 	Inherits: M60mg
 	Range: 4c768
-	ReloadDelay: 15
+	ReloadDelay: 25
 	BurstDelays: 3
 	-Report:
 	StartBurstReport: wolv-fire1.aud, wolv-fire2.aud
 	Warhead@1Dam: SpreadDamage
 		Spread: 256
-		Damage: 1600
+		Damage: 800
 		Versus:
-			Wood: 60
-			Light: 55
+			Wood: 45
+			Light: 70
 			Heavy: 12
+	Warhead@2Eff: CreateEffect
+		Explosions: piff
+		Inaccuracy: 256
+
+WolverineGunLine:
+	Inherits: WolverineGun
+	-StartBurstReport:
+	-Projectile:
+	Projectile: RailgunCA
+		Blockable: true
+		Invisible: true
+		PassthroughToMaxRange: true
+		PassthroughParallelToMuzzleOffset: true
+		DamageActorsInLine: true
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 800
+		ValidRelationships: Enemy, Neutral
+	Warhead@2Eff: CreateEffect
+		Explosions: piff, empty
+		ValidTargets: Infantry, Structure, Vehicle, Ship, Trees
+		ValidRelationships: Enemy, Neutral
+	-Warhead@3EffWater:
 
 EnforcerShotgun:
 	Range: 4c0

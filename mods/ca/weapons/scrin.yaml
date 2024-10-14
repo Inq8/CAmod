@@ -965,7 +965,7 @@ PlasmaTurretGun:
 			Wood: 50
 			Concrete: 30
 			Light: 55
-			Heavy: 40
+			Heavy: 35
 			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 	Warhead@2Dam: HealthPercentageDamage
@@ -1157,7 +1157,7 @@ ShardLauncher:
 		Palette: scrin
 		ContrailStartWidth: 0c48
 		ContrailLength: 12
-		ContrailStartColor: 00FF00AA
+		ContrailStartColor: 00FF00
 		ContrailStartColorAlpha: 170
 		Jammable: true
 		Blockable: false
@@ -1192,14 +1192,14 @@ RavagerShards:
 	Inherits: ShardLauncher
 	StartBurstReport: ravager-fire1.aud
 	ValidTargets: Ground, Water, Trees
-	ReloadDelay: 40
+	ReloadDelay: 45
 	BurstDelays: 5
 	Range: 5c0
 	Projectile: Missile
 		Speed: 265
 		CloseEnough: 265
 		ContrailLength: 9
-		ContrailStartColor: 00FF0044
+		ContrailStartColor: 00FF00
 		ContrailStartColorAlpha: 68
 		Inaccuracy: 128
 		RangeLimit: 7c0
@@ -1209,11 +1209,11 @@ RavagerShards:
 		-ValidRelationships:
 		-Range:
 		-Falloff:
-		Spread: 256
-		Damage: 2200
+		Spread: 224
+		Damage: 2000
 		Versus:
 			Wood: 20
-			Light: 50
+			Light: 65
 			Heavy: 10
 			Concrete: 15
 			Brick: 5
@@ -1222,10 +1222,23 @@ RavagerShards:
 
 EvisceratorShards:
 	Inherits: RavagerShards
-	ReloadDelay: 25
+	ReloadDelay: 30
 	BurstDelays: 4
 	Warhead@1Dam: SpreadDamage
+		Damage: 2100
 		Spread: 288
+		Versus:
+			Light: 60
+
+EvisceratorShardsCharged:
+	Inherits: EvisceratorShards
+	StartBurstReport: shard-fire1.aud
+	Projectile: Missile
+		ContrailStartColorAlpha: 128
+	Warhead@1Dam: SpreadDamage
+		Damage: 2600
+		Versus:
+			Wood: 30
 
 MutilatorShards:
 	Inherits: RavagerShards
@@ -1233,12 +1246,18 @@ MutilatorShards:
 	Range: 3c512
 	Burst: 2
 	BurstDelays: 4
-	ReloadDelay: 50
+	ReloadDelay: 40
 	Projectile: Missile
 		Image: scrinzap
-		ContrailStartColor: 954fff44
+		ContrailStartColor: 954fff
 	Warhead@1Dam: SpreadDamage
-		Damage: 6500
+		Damage: 7500
+		Spread: 320
+		Versus:
+			Wood: 15
+			Concrete: 10
+			Light: 40
+			Heavy: 8
 		ValidRelationships: Enemy, Neutral
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
@@ -1348,7 +1367,7 @@ ImpalerSpike:
 		AllowSnapping: true
 	Warhead@1Dam: SpreadDamage
 		Damage: 12500
-		Spread: 42
+		Spread: 128
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 		Versus:
 			Heavy: 15
@@ -1666,8 +1685,8 @@ LeecherBeam:
 		DamageTypes: Prone50Percent, TriggerProne, AtomizedDeath, FlakVestMitigatedMinor
 		Versus:
 			None: 100
-			Light: 50
-			Wood: 65
+			Light: 45
+			Wood: 60
 			Heavy: 15
 			Concrete: 15
 			Brick: 5

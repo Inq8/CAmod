@@ -1160,8 +1160,8 @@ XOLaser:
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		Versus:
 			None: 65
-			Wood: 60
-			Concrete: 40
+			Wood: 40
+			Concrete: 75
 			Light: 80
 			Heavy: 100
 
@@ -1187,7 +1187,7 @@ XOCoilGun:
 		Damage: 2500
 		Versus:
 			None: 100
-			Wood: 50
+			Wood: 10
 			Light: 70
 			Heavy: 35
 			Concrete: 10
@@ -2341,8 +2341,8 @@ RadTrooperBeam:
 		Thickness: 32
 		ZOffset: 512
 	Warhead@1Dam: SpreadDamage
-		Spread: 96
-		Damage: 6500
+		Spread: 128
+		Damage: 7000
 		Versus:
 			None: 280
 			Light: 100
@@ -2358,7 +2358,7 @@ RadTrooperBeam:
 DesolatorBeam:
 	Inherits: RadTrooperBeam
 	Warhead@1Dam: SpreadDamage
-		Spread: 160
+		Spread: 180
 		Versus:
 			Light: 120
 	Warhead@2Dam: HealthPercentageDamage
@@ -3341,7 +3341,7 @@ FloatingDiscResourceDrainer:
 		ValidTargets: ResourceDrainable
 
 ZoneTrooperRailgun:
-	ReloadDelay: 70
+	ReloadDelay: 65
 	Range: 6c0
 	Report: ztrp-fire1.aud, ztrp-fire2.aud, ztrp-fire3.aud
 	Projectile: RailgunCA
@@ -3357,7 +3357,7 @@ ZoneTrooperRailgun:
 		ZOffset: 2046
 	Warhead@1Dam: SpreadDamage
 		Spread: 0c64
-		Damage: 9500
+		Damage: 10000
 		Versus:
 			None: 20
 			Wood: 50
@@ -3406,7 +3406,7 @@ ZoneRaiderGrenade:
 		InvalidTargets: Ship, Structure, Bridge
 
 ZoneDefenderGun:
-	ReloadDelay: 75
+	ReloadDelay: 70
 	Range: 6c0
 	Report: ionrifle1.aud, ionrifle2.aud
 	Projectile: LaserZap

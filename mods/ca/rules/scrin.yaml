@@ -475,7 +475,7 @@ S2:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 120
-		Prerequisites: anyradar, ~infantry.scrin, ~!evis.upgrade, ~!impl.upgrade, ~techlevel.medium
+		Prerequisites: anyradar, ~infantry.scrin, ~!evis.upgrade, ~!impl.upgrade, ~!muti.upgrade, ~techlevel.medium
 		IconPalette: chromes
 		Description: Fast moving anti-personnel infantry.
 	TooltipExtras:
@@ -488,7 +488,7 @@ S2:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 7000
+		HP: 6000
 	Mobile:
 		Speed: 92
 	Armament@PRIMARY:
@@ -508,7 +508,7 @@ S2:
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 	ReplacedInQueue:
-		Actors: evis, impl
+		Actors: evis, impl, muti
 
 S3:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -670,6 +670,9 @@ WCHR:
 	Armament@PRIMARY:
 		Weapon: WatcherDart
 		LocalOffset: 150,0,400
+	AutoTarget:
+		InitialStance: HoldFire
+		InitialStanceAI: ReturnFire
 	Cloak@NORMAL:
 		InitialDelay: 250
 		CloakDelay: 120
@@ -750,6 +753,7 @@ EVIS:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@RESCONV: ^ResourceConversion
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -777,9 +781,40 @@ EVIS:
 	AttackFrontal:
 		FacingTolerance: 64
 		PauseOnCondition: being-warped || blinded
+		Armaments: primary, primary-charged
 	Armament@PRIMARY:
 		Weapon: EvisceratorShards
-		LocalOffset: 150,0,400
+		LocalOffset: 0,-100,250, 0,100,250
+		PauseOnCondition: (ammo || charged-fire) && !uncharged-fire
+	Armament@PRIMARYCHARGED:
+		Name: primary-charged
+		Weapon: EvisceratorShardsCharged
+		PauseOnCondition: !ammo || uncharged-fire
+		LocalOffset: 0,-100,250, 0,100,250
+	AmmoPool@RESCONV:
+		Ammo: 20
+	ReloadAmmoPool@RESCONV:
+		Count: 5
+	WithAmmoPipsDecoration@RESCONV:
+		PipCount: 4
+	GrantCondition@RESCONVCHARGE:
+		RequiresCondition: resconv-upgrade && on-resource && (ammo < 20 || charged-fire)
+	GrantConditionOnAttack@PRIMARY:
+		RevokeDelay: 28
+	GrantConditionOnAttack@PRIMARYCHARGED:
+		RevokeDelay: 28
+	WithIdleOverlay@RESCONVTIB:
+		Offset: 0,0,150
+		Sequence: greensm
+	WithIdleOverlay@RESCONVORE:
+		Offset: 0,0,150
+		Sequence: yellowsm
+	WithIdleOverlay@RESCONVBLUETIB:
+		Offset: 0,0,150
+		Sequence: bluesm
+	WithIdleOverlay@RESCONVGEMS:
+		Offset: 0,0,150
+		Sequence: redsm
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 
@@ -843,7 +878,7 @@ MUTI:
 		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
 		Attributes: • Special Ability: Teleport (with upgrade)
 	Health:
-		HP: 13000
+		HP: 15000
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Mobile:
@@ -855,7 +890,9 @@ MUTI:
 		PauseOnCondition: being-warped || blinded
 	Armament@PRIMARY:
 		Weapon: MutilatorShards
-		LocalOffset: 150,0,400
+		LocalOffset: 0,-100,250, 0,100,250
+	AutoTarget:
+		ScanRadius: 5
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 	PortableChronoCA:
@@ -2024,6 +2061,7 @@ STCR:
 		KillOnRemove: false
 		RemoveOnDisable: false
 		RecreationInterval: 100
+		RequiresCondition: storm-active
 	RangeMultiplier@IONSTORM1:
 		Modifier: 110
 	RangeMultiplier@IONSTORM2:

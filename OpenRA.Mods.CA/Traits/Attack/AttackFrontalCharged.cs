@@ -22,8 +22,8 @@ namespace OpenRA.Mods.CA.Traits
 		"Note: All armaments will share the charge, so its best suited for units with a single weapon.")]
 	public class AttackFrontalChargedInfo : AttackFrontalInfo, Requires<IFacingInfo>
 	{
-		[Desc("Amount of charge required to attack.")]
-		public readonly int ChargeLevel = 25;
+		[Desc("Amount of charge required to attack. Use two numbers to represent a random number in a range (lower value included, upper excluded).")]
+		public readonly int[] ChargeLevel = { 25 };
 
 		[Desc("Amount to increase the charge level each tick with a valid target.")]
 		public readonly int ChargeRate = 1;
@@ -55,6 +55,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		bool charging;
 		int shotsFired;
+		int requiredChargeLevel;
 
 		public int ChargeLevel { get; private set; }
 
@@ -81,7 +82,7 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			get
 			{
-				return ChargeLevel >= Info.ChargeLevel;
+				return ChargeLevel >= requiredChargeLevel;
 			}
 		}
 
@@ -99,6 +100,7 @@ namespace OpenRA.Mods.CA.Traits
 			Info = info;
 			shotsFired = 0;
 			movement = self.TraitOrDefault<IMove>();
+			requiredChargeLevel = Common.Util.RandomInRange(self.World.SharedRandom, info.ChargeLevel);
 		}
 
 		protected override void TraitEnabled(Actor self)
@@ -126,7 +128,7 @@ namespace OpenRA.Mods.CA.Traits
 			charging = (self.CurrentActivity is AttackCharged || self.CurrentActivity is AttackMoveActivity) && !reloading && IsAiming && (ChargeLevel > 0 || !IsTurning);
 
 			var delta = charging ? Info.ChargeRate : -Info.DischargeRate;
-			ChargeLevel = (ChargeLevel + delta).Clamp(0, Info.ChargeLevel);
+			ChargeLevel = (ChargeLevel + delta).Clamp(0, requiredChargeLevel);
 
 			if (!charging)
 				shotsFired = 0;
@@ -163,6 +165,7 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				shotsFired = 0;
 				ChargeLevel = 0;
+				requiredChargeLevel = Common.Util.RandomInRange(self.World.SharedRandom, Info.ChargeLevel);
 			}
 		}
 
@@ -172,10 +175,10 @@ namespace OpenRA.Mods.CA.Traits
 
 		float ISelectionBar.GetValue()
 		{
-			if (!Info.ShowSelectionBar || ChargeLevel == Info.ChargeLevel)
+			if (!Info.ShowSelectionBar || ChargeLevel == requiredChargeLevel)
 				return 0;
 
-			return (float)ChargeLevel / Info.ChargeLevel;
+			return (float)ChargeLevel / requiredChargeLevel;
 		}
 
 		bool ISelectionBar.DisplayWhenEmpty { get { return false; } }

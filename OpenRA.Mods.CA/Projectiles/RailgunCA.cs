@@ -103,6 +103,9 @@ namespace OpenRA.Mods.Common.Projectiles
 		[Desc("If true, full passthroughs will travel parallel to the weapon muzzle offset.")]
 		public readonly bool PassthroughParallelToMuzzleOffset = false;
 
+		[Desc("If true, the projectile will not be rendered.")]
+		public readonly bool Invisible = false;
+
 		public IProjectile Create(ProjectileArgs args)
 		{
 			var bc = BeamPlayerColor ? Color.FromArgb(BeamColor.A, args.SourceActor.Owner.Color) : BeamColor;
@@ -263,6 +266,9 @@ namespace OpenRA.Mods.Common.Projectiles
 
 		public IEnumerable<IRenderable> Render(WorldRenderer wr)
 		{
+			if (info.Invisible)
+				yield break;
+
 			if (wr.World.FogObscures(target) &&
 				wr.World.FogObscures(args.Source))
 				yield break;
