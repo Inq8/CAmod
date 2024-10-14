@@ -3147,9 +3147,10 @@
 		Types: building
 	CapturableProgressBar:
 	CapturableProgressBlink:
-	SpawnActorsOnSell:
+	SpawnActorsOnSellCA:
 		ActorTypes: e1,e1,e1,e1,e1,e1,e1,e1,e1,e1,c1,c1,c1,c1,c7,c7,c7,c7,c10,c10
-		GuaranteedActorTypes: e1,e1
+		GuaranteedActorTypes: e1, e1
+		GuaranteedActorsLimitedByValue: true
 	SpawnActorOnDeath:
 		Actor: e1
 		Probability: 5
@@ -3205,9 +3206,9 @@
 	Inherits@TDPAL: ^TDPalette
 	SpawnActorOnDeath:
 		Actor: n1
-	SpawnActorsOnSell:
+	SpawnActorsOnSellCA:
 		ActorTypes: n1,n1,n1,n1,n1,n1,n1,n1,n1,n1,c1,c1,c1,c1,c7,c7,c7,c7,c10,c10
-		GuaranteedActorTypes: n1,n1
+		GuaranteedActorTypes: n1, n1
 	ActorPreviewPlaceBuildingPreview:
 	WithDeathAnimation:
 		DeathSequence: dead
@@ -3251,7 +3252,7 @@
 	-Capturable:
 	-CapturableProgressBar:
 	-CapturableProgressBlink:
-	-SpawnActorsOnSell:
+	-SpawnActorsOnSellCA:
 	RepairableBuilding:
 		RepairStep: 700
 		-RepairPercent:
@@ -3425,7 +3426,7 @@
 		Sequence: tag-fake
 		Position: Top
 		Margin: 0, 4
-	-SpawnActorsOnSell:
+	-SpawnActorsOnSellCA:
 	-SpawnActorOnDeath:
 	-SpawnRandomActorOnDeath:
 	-MustBeDestroyed:

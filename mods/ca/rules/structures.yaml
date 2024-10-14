@@ -194,7 +194,7 @@ SPEN:
 		SpawnOffset: 1024,-1024,0
 		Facing: 128
 		ExitCell: 2,0
-	-SpawnActorsOnSell:
+	-SpawnActorsOnSellCA:
 	RepairsUnits:
 		HpPerStep: 1000
 		StartRepairingNotification: Repairing
@@ -287,7 +287,7 @@ SYRD:
 		SpawnOffset: 1024,-1024,0
 		Facing: 128
 		ExitCell: 2,0
-	-SpawnActorsOnSell:
+	-SpawnActorsOnSellCA:
 	RepairsUnits:
 		HpPerStep: 1000
 		StartRepairingNotification: Repairing
@@ -1389,7 +1389,7 @@ FACT:
 		Condition: invulnerability
 	TransferTimedExternalConditionOnTransform@INVIS:
 		Condition: invisibility
-	SpawnActorsOnSell:
+	SpawnActorsOnSellCA:
 		ActorTypes: e1,e1,e1,e1,e6
 	-UpdatesBuildOrder:
 
@@ -1535,7 +1535,7 @@ SILO:
 		PipCount: 5
 		FullSequence: pip-yellow
 	-MustBeDestroyed:
-	-SpawnActorsOnSell:
+	-SpawnActorsOnSellCA:
 	Power:
 		Amount: -10
 	Explodes:
@@ -2119,7 +2119,7 @@ KENN:
 		ExitCell: -1,0
 	ProvidesPrerequisite@dog:
 		Prerequisite: infantry.dog
-	-SpawnActorsOnSell:
+	-SpawnActorsOnSellCA:
 	Power:
 		Amount: -10
 	ProvidesPrerequisite@buildingname:
@@ -3284,7 +3284,7 @@ AFAC:
 		Condition: invulnerability
 	TransferTimedExternalConditionOnTransform@INVIS:
 		Condition: invisibility
-	SpawnActorsOnSell:
+	SpawnActorsOnSellCA:
 		ActorTypes: n1,n1,n1,n1,n6
 	-UpdatesBuildOrder:
 
@@ -4105,8 +4105,9 @@ SILO.TD:
 		RequiresSelection: true
 		PipCount: 5
 	-MustBeDestroyed:
-	SpawnActorsOnSell:
+	SpawnActorsOnSellCA:
 		ActorTypes: c1,c7
+		-GuaranteedActorTypes:
 	Power:
 		Amount: -10
 	Selectable:
@@ -4193,9 +4194,9 @@ AFLD.GDI:
 		InfiltratedNotification: OurTechnologyStolen
 	SpawnActorOnDeath:
 		Actor: n1
-	SpawnActorsOnSell:
+	SpawnActorsOnSellCA:
 		ActorTypes: n1,n1,n1,n1,n1,n1,n1,n1,n1,n1,c1,c1,c1,c1,c7,c7,c7,c7,c10,c10
-		GuaranteedActorTypes: n1,n1
+		GuaranteedActorTypes: n1, n1
 
 GTEK:
 	Inherits: ^Building
@@ -4520,7 +4521,7 @@ SPEN.nod:
 			BottomRight: 555, 1110
 	-SpawnActorOnDeath:
 	-SpawnRandomActorOnDeath:
-	-SpawnActorsOnSell:
+	-SpawnActorsOnSellCA:
 
 SYRD.gdi:
 	Inherits: ^Building
@@ -4613,7 +4614,7 @@ SYRD.gdi:
 			BottomRight: 512, 1110
 	-SpawnActorOnDeath:
 	-SpawnRandomActorOnDeath:
-	-SpawnActorsOnSell:
+	-SpawnActorsOnSellCA:
 
 HTUR:
 	Inherits: ^Defense

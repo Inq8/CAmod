@@ -5,9 +5,9 @@
 		PlayerPalette: playerscrin
 	SpawnActorOnDeath:
 		Actor: s1
-	SpawnActorsOnSell:
+	SpawnActorsOnSellCA:
 		ActorTypes: s1
-		GuaranteedActorTypes: s1,s1
+		GuaranteedActorTypes: s1, s1
 	-SpawnRandomActorOnDeath:
 	Building:
 		BuildSounds: scrinbuild.aud
@@ -1886,7 +1886,7 @@ LCHR:
 	WithMoveAnimation:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 	ConvertsDamageToHealth:
-		DamagePercentConverted: 30
+		DamagePercentConverted: 25
 		RequiresCondition: !coalescence-upgrade
 		InvalidTargetTypes: Husk
 	Explodes:
@@ -4299,9 +4299,9 @@ SFAC:
 		Condition: invulnerability
 	TransferTimedExternalConditionOnTransform@INVIS:
 		Condition: invisibility
-	SpawnActorsOnSell:
+	SpawnActorsOnSellCA:
 		ActorTypes: s1,s1,s1,s1,s6
-		GuaranteedActorTypes: s1,s1
+		GuaranteedActorTypes: s1, s1
 	-UpdatesBuildOrder:
 
 REAC:
@@ -5080,7 +5080,7 @@ SILO.SCRIN:
 		RequiresSelection: true
 		PipCount: 5
 	-MustBeDestroyed:
-	-SpawnActorsOnSell:
+	-SpawnActorsOnSellCA:
 	Power:
 		Amount: -10
 	Selectable:
