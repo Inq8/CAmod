@@ -28,7 +28,33 @@ VEHICLES.SCRIN:
 	Buildable:
 		Description: Vehicle Production
 
+^OnResourceConditions:
+	ExternalCondition@RESCONVTIB:
+		Condition: on-tib
+	ExternalCondition@RESCONVORE:
+		Condition: on-ore
+	ExternalCondition@RESCONVBLUETIB:
+		Condition: on-bluetib
+	ExternalCondition@RESCONVGEMS:
+		Condition: on-gems
+	GrantCondition@RESCONV:
+		Condition: on-resource
+		RequiresCondition: on-tib || on-ore || on-bluetib || on-gems
+	GrantConditionOnTerrain@RESCONVTIB:
+		Condition: on-tib
+		TerrainTypes: Tiberium
+	GrantConditionOnTerrain@RESCONVORE:
+		Condition: on-ore
+		TerrainTypes: Ore
+	GrantConditionOnTerrain@RESCONVBLUETIB:
+		Condition: on-bluetib
+		TerrainTypes: BlueTiberium
+	GrantConditionOnTerrain@RESCONVGEMS:
+		Condition: on-gems
+		TerrainTypes: Gems
+
 ^ResourceConversion:
+	Inherits: ^OnResourceConditions
 	AmmoPool@RESCONV:
 		Ammo: 5
 		InitialAmmo: 0
@@ -44,32 +70,9 @@ VEHICLES.SCRIN:
 		RequiresSelection: true
 		Position: BottomLeft
 		Margin: 4, 3
-	ExternalCondition@RESCONVTIB:
-		Condition: on-tib
-	ExternalCondition@RESCONVORE:
-		Condition: on-ore
-	ExternalCondition@RESCONVBLUETIB:
-		Condition: on-bluetib
-	ExternalCondition@RESCONVGEMS:
-		Condition: on-gems
-	GrantCondition@RESCONV:
-		Condition: on-resource
-		RequiresCondition: on-tib || on-ore || on-bluetib || on-gems
 	GrantCondition@RESCONVCHARGE:
 		Condition: charging-on-resource
 		RequiresCondition: resconv-upgrade && on-resource && (ammo < 5 || charged-fire)
-	GrantConditionOnTerrain@RESCONVTIB:
-		Condition: on-tib
-		TerrainTypes: Tiberium
-	GrantConditionOnTerrain@RESCONVORE:
-		Condition: on-ore
-		TerrainTypes: Ore
-	GrantConditionOnTerrain@RESCONVBLUETIB:
-		Condition: on-bluetib
-		TerrainTypes: BlueTiberium
-	GrantConditionOnTerrain@RESCONVGEMS:
-		Condition: on-gems
-		TerrainTypes: Gems
 	GrantConditionOnAttack@PRIMARY:
 		ArmamentNames: primary
 		Condition: uncharged-fire
@@ -2184,7 +2187,7 @@ DARK:
 	Armor:
 		Type: Heavy
 	Mobile:
-		TurnSpeed: 20
+		TurnSpeed: 16
 		Speed: 60
 		Locomotor: hover
 	RevealsShroud:
@@ -2205,7 +2208,7 @@ DARK:
 		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	Turreted:
-		TurnSpeed: 20
+		TurnSpeed: 16
 		Offset: 0,0,0
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped || blinded
@@ -2404,6 +2407,7 @@ TPOD:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
+	Inherits@ONRESOURCE: ^OnResourceConditions
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 281
@@ -2413,7 +2417,7 @@ TPOD:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
 		Weaknesses: • Cannot attack Aircraft
-		Attributes: • Can crush concrete walls.
+		Attributes: • Can crush concrete walls.\n• Self repairs on Tiberium or other resources when not in combat.
 	Voiced:
 		VoiceSet: TripodVoice
 	Valued:
@@ -2481,6 +2485,21 @@ TPOD:
 		Modifier: 115
 	WithIdleOverlay@MINDCONTROL:
 		Offset: 0,0,1024
+	ChangesHealth@THEAL:
+		Step: 0
+		PercentageStep: 1
+		Delay: 15
+		StartIfBelow: 100
+		DamageCooldown: 150
+		RequiresCondition: on-resource
+	WithDecoration@TibRepair:
+		Image: select
+		Palette: chrome
+		Sequence: repair-small
+		Position: Center
+		RequiresCondition: on-resource && damaged
+		BlinkInterval: 15
+		BlinkPattern: on, off
 
 RPTP:
 	Inherits: TPOD
@@ -2489,7 +2508,7 @@ RPTP:
 		BuildPaletteOrder: 282
 		Prerequisites: scrt, ~vehicles.reaper, ~techlevel.high
 	TooltipExtras:
-		Attributes: • Weapons empowered by Tiberium
+		Attributes: • Can crush concrete walls.\n• Weapons empowered by Tiberium or other resources\n• Self repairs on Tiberium or other resources when not in combat.
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Valued:
@@ -2497,7 +2516,7 @@ RPTP:
 	Tooltip:
 		Name: Reaper Tripod
 	Health:
-		HP: 95000
+		HP: 98000
 	SpawnActorOnDeath:
 		Actor: RPTP.Husk
 	AttackTurreted:
@@ -5615,6 +5634,7 @@ BUZZ:
 		Condition: alive
 		Color: 777777
 	ProximityExternalCondition@Blind:
+		MaximumVerticalOffset: 512
 		Range: 1c0
 		Condition: blinded
 		ValidRelationships: Enemy, Neutral

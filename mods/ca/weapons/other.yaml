@@ -459,25 +459,24 @@ TeslaZapBoost3:
 
 PortaTesla:
 	Inherits: ^TeslaWeapon
-	ReloadDelay: 75
+	ReloadDelay: 100
 	Range: 6c0
 	Report: shktrop1.aud
 	Warhead@1Dam: SpreadDamage
-		Damage: 4600
+		Damage: 5300
 		Versus:
-			None: 280
+			None: 240
 			Wood: 60
-			Heavy: 70
+			Heavy: 75
 			Concrete: 70
 
 PortaTesla.UPG:
 	Inherits: PortaTesla
 	Report: itesatta.aud
-	ReloadDelay: 60
+	ReloadDelay: 70
 	Warhead@1Dam: SpreadDamage
-		Damage: 4600
 		Versus:
-			Heavy: 65
+			Heavy: 75
 			Light: 120
 
 PortaTeslaCharge:
@@ -1200,7 +1199,7 @@ XOCoilGun:
 
 PortaLaser:
 	Inherits: Laser
-	ReloadDelay: 35
+	ReloadDelay: 40
 	Burst: 2
 	BurstDelays: 3
 	Range: 6c0
@@ -1213,22 +1212,28 @@ PortaLaser:
 		SecondaryBeamColor: FF000030
 		Blockable: true
 	Warhead@1Dam: SpreadDamage
-		Damage: 1700
+		Damage: 1900
 		Versus:
-			None: 175
+			None: 155
 			Wood: 55
 			Heavy: 48
 			Concrete: 40
 
-PortaLaser.UPG:
+PortaLaser.Templar:
 	Inherits: PortaLaser
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			None: 175
+
+PortaLaser.Templar.UPG:
+	Inherits: PortaLaser.Templar
 	Range: 6c512
 	StartBurstReport: lasgunupg.aud
 	Projectile: LaserZapCA
 		SecondaryBeamWidth: 75
 		SecondaryBeamColor: FF006660
 	Warhead@1Dam: SpreadDamage
-		Damage: 1800
+		Damage: 2000
 
 IFVLaser:
 	Inherits: PortaLaser
@@ -2333,7 +2338,7 @@ MempTargeting:
 
 RadTrooperBeam:
 	Range: 6c0
-	ReloadDelay: 100
+	ReloadDelay: 110
 	Report: idesat1a.aud
 	Projectile: RadBeam
 		Amplitude: 176
@@ -2342,11 +2347,11 @@ RadTrooperBeam:
 		ZOffset: 512
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
-		Damage: 7000
+		Damage: 7600
 		Versus:
-			None: 280
+			None: 240
 			Light: 100
-			Heavy: 55
+			Heavy: 45
 			Wood: 60
 			Concrete: 70
 			Brick: 12

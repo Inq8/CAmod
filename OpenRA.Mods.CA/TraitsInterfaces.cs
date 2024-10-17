@@ -35,6 +35,16 @@ namespace OpenRA.Mods.CA.Traits
 		int RandomRate { get; }
 	}
 
+	[RequireExplicitImplementation]
+	public interface IMultiWeaponImpactInfo
+	{
+		WeaponInfo Weapon { get; }
+		CVec[] ImpactOffsets { get; }
+		WDist RandomOffset { get; }
+		bool RandomImpactSequence { get; }
+		int[] Interval { get; }
+	}
+
 	public interface INotifyActivate { void Launching(Actor self); }
 
 	[RequireExplicitImplementation]
