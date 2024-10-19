@@ -279,7 +279,7 @@ Atomic:
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		ValidTargets: Ground, Trees, Water, Underwater, Air, AirSmall
 		Versus:
-			Wood: 25
+			Wood: 28
 			Heavy: 80
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@2Res_impact: DestroyResource
@@ -300,7 +300,7 @@ Atomic:
 		Delay: 5
 		ValidTargets: Ground, Trees, Water, Underwater, Air, AirSmall
 		Versus:
-			Wood: 25
+			Wood: 28
 			Heavy: 80
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@6Res_areanuke1: DestroyResource
@@ -745,7 +745,7 @@ Chemicbm:
 		InvalidTargets: Creep
 		Versus:
 			None: 36
-			Wood: 20
+			Wood: 60
 			Concrete: 100
 			Light: 65
 			Heavy: 100
@@ -764,7 +764,7 @@ Chemicbm:
 		InvalidTargets: Creep
 		Versus:
 			None: 36
-			Wood: 45
+			Wood: 50
 			Concrete: 120
 			Light: 65
 			Heavy: 100
@@ -780,7 +780,7 @@ Chemicbm:
 		InvalidTargets: Creep
 		Versus:
 			None: 36
-			Wood: 140
+			Wood: 145
 			Concrete: 210
 			Light: 85
 			Heavy: 140
@@ -796,7 +796,7 @@ Chemicbm:
 		InvalidTargets: Creep
 		Versus:
 			None: 36
-			Wood: 170
+			Wood: 175
 			Concrete: 210
 			Light: 85
 			Heavy: 140
@@ -899,6 +899,7 @@ IonBolt:
 			Concrete: 300
 			Heavy: 120
 			Light: 75
+			Wood: 105
 	Warhead@4Effect: CreateEffect
 		Explosions: ionbeam
 		ExplosionPalette: tdeffect-ignore-lighting-alpha85
@@ -1022,6 +1023,9 @@ WeatherStormInit:
 		RandomImpactSequence: true
 		RandomOffset: 512
 		Interval: 5,8
+	Warhead@DirectDamage: SpreadDamage
+		Damage: 35000
+		Delay: 78
 	Warhead@4: CreateEffect
 		Delay: 50
 		ImpactSounds: sweaintr.aud
@@ -1068,7 +1072,7 @@ WeatherBolt:
 		DamageTypes: TriggerProne, ElectricityDeath
 		Versus:
 			None: 35
-			Wood: 70
+			Wood: 65
 			Concrete: 150
 			Brick: 5
 			Heavy: 85
