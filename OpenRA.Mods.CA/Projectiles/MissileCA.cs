@@ -125,6 +125,9 @@ namespace OpenRA.Mods.CA.Projectiles
 		[Desc("Use the Player Palette to render the trail sequence.")]
 		public readonly bool TrailUsePlayerPalette = false;
 
+		[Desc("Fixed distance between Trail animations. Overrides the distance calculated using projectile speed.")]
+		public readonly WDist TrailSpacing = WDist.Zero;
+
 		[Desc("Interval in ticks between spawning trail animation.")]
 		public readonly int TrailInterval = 2;
 
@@ -245,6 +248,8 @@ namespace OpenRA.Mods.CA.Projectiles
 
 		[Sync]
 		int vFacing;
+
+		List<Animation> trailItems = new List<Animation>();
 
 		public MissileCA(MissileCAInfo info, ProjectileArgs args)
 		{
@@ -890,11 +895,23 @@ namespace OpenRA.Mods.CA.Projectiles
 				shouldExplode = true;
 			}
 
+			foreach (var t in trailItems)
+				t.Tick();
+
 			// Create the sprite trail effect
 			if (!string.IsNullOrEmpty(info.TrailImage) && --ticksToNextSmoke < 0 && (state != States.Freefall || info.TrailWhenDeactivated))
 			{
-				world.AddFrameEndTask(w => w.Add(new SpriteEffect(pos - 3 * move / 2, renderFacing, w,
-					info.TrailImage, info.TrailSequences.Random(world.SharedRandom), trailPalette)));
+				if (info.TrailSpacing != WDist.Zero)
+				{
+					var trailAnim = new Animation(world, info.TrailImage, () => renderFacing);
+					trailItems.Add(trailAnim);
+					trailAnim.PlayThen(info.TrailSequences.Random(world.SharedRandom), () => world.AddFrameEndTask(w => { trailItems.Remove(trailAnim); }));
+				}
+				else
+				{
+					world.AddFrameEndTask(w => w.Add(new SpriteEffect(pos - 3 * move / 2, renderFacing, w,
+						info.TrailImage, info.TrailSequences.Random(world.SharedRandom), trailPalette)));
+				}
 
 				ticksToNextSmoke = info.TrailInterval;
 			}
@@ -968,6 +985,24 @@ namespace OpenRA.Mods.CA.Projectiles
 
 				foreach (var r in anim.Render(pos, palette))
 					yield return r;
+
+				if (trailItems.Count > 0)
+				{
+					var trailPalette = wr.Palette(info.TrailPalette + (info.TrailUsePlayerPalette ? args.SourceActor.Owner.InternalName : ""));
+					var trailMult = 1;
+
+					for (var i = trailItems.Count - 1; i >= 0; i--)
+					{
+						var trailOffset = new WVec(0, info.TrailSpacing.Length, 0);
+						trailOffset = trailOffset.Rotate(WRot.FromYaw(renderFacing));
+						var trailPos = pos + (trailOffset * trailMult);
+
+						foreach (var r in trailItems[i].Render(trailPos, trailPalette))
+							yield return r;
+
+						trailMult++;
+					}
+				}
 			}
 		}
 	}
