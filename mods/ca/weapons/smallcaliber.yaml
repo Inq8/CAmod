@@ -501,13 +501,21 @@ M60mgIFV:
 	StartBurstReport: ifvmg1.aud, ifvmg2.aud
 	BurstDelays: 2
 	Burst: 3
-	ReloadDelay: 45
+	ReloadDelay: 42
 	Warhead@1Dam: SpreadDamage
 		Damage: 2500
 		Versus:
 			Wood: 40
 			Light: 85
-			None: 180
+			None: 120
+		DamageTypes: Prone50Percent, BulletDeath
+	Warhead@PercDam: HealthPercentageDamage
+		Spread: 42
+		Damage: 30
+		Versus:
+			Light: 1
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+		ValidTargets: Infantry
 	Warhead@2Eff: CreateEffect
 		Explosions: piff
 	Warhead@3EffWater: CreateEffect
@@ -527,7 +535,7 @@ MGattG:
 	ReloadDelay: 5
 	-Report:
 	Warhead@1Dam: SpreadDamage
-		Spread: 256
+		Spread: 128
 		Damage: 300
 		Versus:
 			None: 250
@@ -535,6 +543,14 @@ MGattG:
 			Concrete: 35
 			Light: 155
 			Heavy: 35
+		DamageTypes: Prone50Percent, BulletDeath
+	Warhead@PercDam: HealthPercentageDamage
+		Spread: 42
+		Damage: 8
+		Versus:
+			Light: 1
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+		ValidTargets: Infantry
 	Warhead@2Eff: CreateEffect
 		Explosions: piffs
 		Inaccuracy: 64

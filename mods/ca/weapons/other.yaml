@@ -1116,12 +1116,20 @@ TankLaser:
 	Warhead@1Dam: SpreadDamage
 		Damage: 5800
 		Versus:
-			None: 65
+			None: 40
 			Wood: 40
 			Light: 100
 			Heavy: 25
 			Concrete: 25
 			Brick: 20
+		DamageTypes: Prone50Percent, FireDeath
+	Warhead@PercDam: HealthPercentageDamage
+		Spread: 42
+		Damage: 50
+		Versus:
+			Light: 1
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		ValidTargets: Infantry
 
 BattleTankLaser:
 	Inherits: TankLaser
