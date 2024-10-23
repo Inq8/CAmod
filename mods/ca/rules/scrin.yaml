@@ -3427,9 +3427,11 @@ PAC:
 		RequiresCondition: inva-loaded == 0
 		Sequence: fully-deployed
 		Name: fully-deployed
-	AttackFrontal:
-		FacingTolerance: 384
+	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped || blinded
+	Turreted:
+		TurnSpeed: 512
+		RealignDelay: 0
 	CarrierMaster@carr1:
 		Actors: inva, inva, inva, inva, inva, inva
 		RearmTicks: 0
@@ -3641,7 +3643,7 @@ MSHP:
 		CruiseAltitude: 3c512
 		InitialFacing: 768
 		TurnSpeed: 512
-		Speed: 49
+		Speed: 72
 		AltitudeVelocity: 0c50
 		CanForceLand: False
 		Voice: Move
@@ -3740,7 +3742,7 @@ MSHP:
 	SpawnActorAbility:
 		Actor: wormhole
 		SkipMakeAnimations: false
-		Range: 28c0
+		Range: 18c0
 		CircleColor: 9988ff
 		SpawnSounds: wormhole-open.aud
 		SelectTargetSpeechNotification: SelectTarget
