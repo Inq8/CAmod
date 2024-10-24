@@ -172,6 +172,14 @@ VEHICLES.SCRIN:
 	Targetable@FleetRecallable:
 		TargetTypes: FleetRecallable
 
+^SignalTransmitterSpeedBoost:
+	GrantConditionOnPrerequisite@SignalTransmitterSpeedBoost:
+		Condition: sign-speed
+		Prerequisites: sign
+	SpeedMultiplier@SignalTransmitterSpeedBoost:
+		Modifier: 115
+		RequiresCondition: sign-speed
+
 ^IonConduits:
 	GrantConditionOnPrerequisite@IONCON:
 		Condition: ioncon-upgrade
@@ -594,7 +602,7 @@ S4:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 11000
+		HP: 10000
 	RevealsShroud:
 		Range: 5c0
 	Armament@PRIMARY:
@@ -3221,6 +3229,7 @@ DEVA:
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
 	Inherits@FleetRecallable: ^FleetRecallable
+	Inherits@SignalTransmitterSpeedBoost: ^SignalTransmitterSpeedBoost
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 111
@@ -3313,7 +3322,7 @@ DEVA:
 		CruiseAltitude: 2560
 		InitialFacing: 768
 		TurnSpeed: 16
-		Speed: 72
+		Speed: 62
 		AltitudeVelocity: 0c50
 		CanForceLand: False
 	Selectable:
@@ -3359,6 +3368,7 @@ PAC:
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
 	Inherits@FleetRecallable: ^FleetRecallable
+	Inherits@SignalTransmitterSpeedBoost: ^SignalTransmitterSpeedBoost
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 112
@@ -3400,7 +3410,7 @@ PAC:
 		CruiseAltitude: 2560
 		InitialFacing: 768
 		TurnSpeed: 16
-		Speed: 72
+		Speed: 62
 		AltitudeVelocity: 0c50
 		CanForceLand: False
 	Selectable:
@@ -3581,6 +3591,7 @@ MSHP:
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
 	Inherits@FleetRecallable: ^FleetRecallable
+	Inherits@SignalTransmitterSpeedBoost: ^SignalTransmitterSpeedBoost
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 113
@@ -3643,7 +3654,7 @@ MSHP:
 		CruiseAltitude: 3c512
 		InitialFacing: 768
 		TurnSpeed: 512
-		Speed: 72
+		Speed: 62
 		AltitudeVelocity: 0c50
 		CanForceLand: False
 		Voice: Move
@@ -4970,7 +4981,7 @@ SIGN:
 		BuildLimit: 1
 		IconPalette: chromes
 	TooltipExtras:
-		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked
+		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked\n• Boosts speed of fleet ships by 15%
 	-Capturable:
 	-CaptureNotification:
 	-CapturableProgressBar:
