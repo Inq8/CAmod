@@ -501,17 +501,17 @@ M60mgIFV:
 	StartBurstReport: ifvmg1.aud, ifvmg2.aud
 	BurstDelays: 2
 	Burst: 3
-	ReloadDelay: 42
+	ReloadDelay: 50
 	Warhead@1Dam: SpreadDamage
 		Damage: 2500
 		Versus:
 			Wood: 40
-			Light: 85
-			None: 120
+			Light: 90
+			None: 100
 		DamageTypes: Prone50Percent, BulletDeath
 	Warhead@PercDam: HealthPercentageDamage
 		Spread: 42
-		Damage: 30
+		Damage: 20
 		Versus:
 			Light: 1
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
@@ -538,7 +538,7 @@ MGattG:
 		Spread: 128
 		Damage: 300
 		Versus:
-			None: 250
+			None: 160
 			Wood: 35
 			Concrete: 35
 			Light: 155
@@ -546,7 +546,7 @@ MGattG:
 		DamageTypes: Prone50Percent, BulletDeath
 	Warhead@PercDam: HealthPercentageDamage
 		Spread: 42
-		Damage: 8
+		Damage: 6
 		Versus:
 			Light: 1
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
@@ -880,7 +880,7 @@ WolverineGun:
 	StartBurstReport: wolv-fire1.aud, wolv-fire2.aud
 	Warhead@1Dam: SpreadDamage
 		Spread: 256
-		Damage: 800
+		Damage: 750
 		Versus:
 			Wood: 45
 			Light: 70
@@ -901,7 +901,7 @@ WolverineGunLine:
 		DamageActorsInLine: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
-		Damage: 800
+		Damage: 750
 		ValidRelationships: Enemy, Neutral
 	Warhead@2Eff: CreateEffect
 		Explosions: piff, empty

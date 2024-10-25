@@ -79,7 +79,7 @@ EnslaveInfantry:
 
 EnslaveVehicle:
 	Inherits: EnslaveInfantry
-	Range: 5c512
+	Range: 4c512
 	InvalidTargets: Infantry, MindControlImmune
 	Warhead@PinkHighlight: GrantExternalConditionCA
 		ValidTargets: Vehicle
@@ -1165,6 +1165,7 @@ ShardLauncher:
 		Image: shard
 		HorizontalRateOfTurn: 140
 		RangeLimit: 10c512
+		AllowSnapping: true
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Air
 		ValidRelationships: Enemy, Neutral
@@ -1204,6 +1205,8 @@ RavagerShards:
 		Inaccuracy: 128
 		RangeLimit: 7c0
 		Jammable: false
+		AllowSnapping: false
+	-Warhead@smallDamage:
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Ground, Water
 		-ValidRelationships:
@@ -1273,18 +1276,20 @@ MutilatorShards:
 
 ShardWalkerShards:
 	Inherits: RavagerShards
+	ReloadDelay: 35
 	StartBurstReport: shard-fire1.aud
 	Projectile: Missile
-		Speed: 265
 		ContrailStartColor: 00FF0066
 		ContrailStartColorAlpha: 102
 		MinimumLaunchAngle: 80
 		MaximumLaunchAngle: 112
 		Inaccuracy: 0
+		AllowSnapping: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
-		Damage: 2600
+		Damage: 2650
 		Versus:
+			None: 115
 			Wood: 10
 			Light: 32
 			Heavy: 10
@@ -1292,7 +1297,7 @@ ShardWalkerShards:
 
 ShardWalkerShardsAA:
 	Inherits: ShardLauncher
-	ReloadDelay: 40
+	ReloadDelay: 35
 	BurstDelays: 5
 	Range: 8c512
 	Projectile: Missile
@@ -1351,7 +1356,9 @@ LaceratorShards.Hypercharged:
 
 ImpalerSpike:
 	Range: 7c0
-	ReloadDelay: 80
+	ReloadDelay: 120
+	Burst: 2
+	BurstDelays: 35
 	Report: impl-fire1.aud
 	Projectile: Missile
 		Speed: 750
