@@ -1382,7 +1382,7 @@ GUNW:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 31000
+		HP: 30000
 	Armor:
 		Type: Light
 	Mobile:
@@ -2962,6 +2962,7 @@ TORM:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@HULLREGEN: ^HullRegen
+	Inherits@SHIELDS: ^ScrinShields
 	Inherits@MothershipRearmable: ^MothershipRearmable
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Buildable:
@@ -3084,6 +3085,8 @@ TORM:
 		RequiresCondition: resupplying
 	KillsSelf@Emp:
 		RequiresCondition: empdisable && cruising
+	Shielded:
+		MaxStrength: 4000
 	GpsRadarDot:
 		Sequence: Plane
 	Targetable@MothershipRearmable:
