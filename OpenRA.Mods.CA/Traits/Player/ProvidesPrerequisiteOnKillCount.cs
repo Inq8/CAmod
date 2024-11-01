@@ -19,7 +19,7 @@ using OpenRA.Traits;
 namespace OpenRA.Mods.CA.Traits
 {
 	[TraitLocation(SystemActors.Player)]
-	public class ProvidesPrerequisiteOnCountsInfo : TraitInfo, ITechTreePrerequisiteInfo
+	public class ProvidesPrerequisiteOnKillCountInfo : TraitInfo, ITechTreePrerequisiteInfo
 	{
 		[Desc("The prerequisite type that this provides.")]
 		[FieldLoader.Require]
@@ -27,16 +27,10 @@ namespace OpenRA.Mods.CA.Traits
 
 		[Desc("The counts required to enable the prerequisite.")]
 		[FieldLoader.Require]
-		public readonly Dictionary<string, int> RequiredCounts = null;
+		public readonly Dictionary<string, int> RequiredKills = null;
 
 		[Desc("List of factions that can affect this count. Leave blank for any faction.")]
 		public readonly string[] Factions = { };
-
-		[Desc("If true, the prerequisite is permanent once the count is reached.")]
-		public readonly bool Permanent = false;
-
-		[Desc("If true, the prerequisite is permanent if an upgrade is acquired.")]
-		public readonly string[] PermanentAfterUpgrades = null;
 
 		[NotificationReference("Speech")]
 		[Desc("Speech notification to play when player reaches the required count.")]
@@ -48,7 +42,7 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Ticks before playing notification.")]
 		public readonly int NotificationDelay = 0;
 
-		[Desc("Actor to spawn when player reaches the required count.")]
+		[Desc("Actor to spawn when player levels up.")]
 		[ActorReference]
 		public readonly string DummyActor = null;
 
@@ -61,34 +55,31 @@ namespace OpenRA.Mods.CA.Traits
 			return new string[] { Prerequisite };
 		}
 
-		public override object Create(ActorInitializer init) { return new ProvidesPrerequisiteOnCount(init, this); }
+		public override object Create(ActorInitializer init) { return new ProvidesPrerequisiteOnKillCount(init, this); }
 	}
 
-	public class ProvidesPrerequisiteOnCount : ITechTreePrerequisite, INotifyCreated, ITick
+	public class ProvidesPrerequisiteOnKillCount : ITechTreePrerequisite, INotifyCreated, ITick
 	{
-		public readonly ProvidesPrerequisiteOnCountsInfo Info;
+		public readonly ProvidesPrerequisiteOnKillCountInfo Info;
 		readonly Actor self;
 		readonly Dictionary<string, int> counts;
 		readonly bool validFaction;
 		TechTree techTree;
-		UpgradesManager upgradesManager;
-		bool permanentlyUnlocked;
+		bool unlocked;
 		bool notificationQueued;
 		int ticksUntilNotification;
 		bool dummyActorQueued;
 		int ticksUntilSpawnDummyActor;
 
 		public event Action Incremented;
-		public event Action Decremented;
 		public event Action Unlocked;
-		public event Action<string> UnlockedPermanently;
 
-		public ProvidesPrerequisiteOnCount(ActorInitializer init, ProvidesPrerequisiteOnCountsInfo info)
+		public ProvidesPrerequisiteOnKillCount(ActorInitializer init, ProvidesPrerequisiteOnKillCountInfo info)
 		{
 			Info = info;
 			self = init.Self;
 			counts = new Dictionary<string, int>();
-			permanentlyUnlocked = false;
+			unlocked = false;
 			ticksUntilNotification = info.NotificationDelay;
 
 			var player = self.Owner;
@@ -107,7 +98,7 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			get
 			{
-				return permanentlyUnlocked || AllRequiredCountsReached;
+				return unlocked || AllRequiredCountsReached;
 			}
 		}
 
@@ -115,7 +106,7 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			get
 			{
-				foreach (var kvp in Info.RequiredCounts)
+				foreach (var kvp in Info.RequiredKills)
 				{
 					if (!counts.ContainsKey(kvp.Key) || counts[kvp.Key] < kvp.Value)
 						return false;
@@ -149,7 +140,6 @@ namespace OpenRA.Mods.CA.Traits
 			var playerActor = self.Info.Name == "player" ? self : self.Owner.PlayerActor;
 			techTree = playerActor.Trait<TechTree>();
 			techTree.ActorChanged(self);
-			upgradesManager = playerActor.TraitOrDefault<UpgradesManager>();
 		}
 
 		void ITick.Tick(Actor self)
@@ -182,30 +172,17 @@ namespace OpenRA.Mods.CA.Traits
 					});
 				});
 			}
-
-			if (!permanentlyUnlocked && Info.PermanentAfterUpgrades != null)
-			{
-				foreach (var upgrade in Info.PermanentAfterUpgrades)
-				{
-					if (upgradesManager.IsUnlocked(upgrade))
-					{
-						permanentlyUnlocked = true;
-						UnlockedPermanently?.Invoke(upgrade);
-						break;
-					}
-				}
-			}
 		}
 
 		public void Increment(string type)
 		{
-			if (!Enabled || permanentlyUnlocked)
+			if (!Enabled || unlocked)
 				return;
 
 			if (!counts.ContainsKey(type))
 				counts[type] = 0;
 
-			if (counts[type] >= Info.RequiredCounts[type])
+			if (counts[type] >= Info.RequiredKills[type])
 				return;
 
 			counts[type]++;
@@ -227,22 +204,8 @@ namespace OpenRA.Mods.CA.Traits
 					ticksUntilSpawnDummyActor = 1;
 				}
 
-				if (Info.Permanent)
-				{
-					permanentlyUnlocked = true;
-					UnlockedPermanently?.Invoke(null);
-				}
+				unlocked = true;
 			}
-		}
-
-		public void Decrement(string type)
-		{
-			if (!Enabled || permanentlyUnlocked || !counts.ContainsKey(type))
-				return;
-
-			counts[type]--;
-			techTree.ActorChanged(self);
-			Decremented?.Invoke();
 		}
 	}
 }

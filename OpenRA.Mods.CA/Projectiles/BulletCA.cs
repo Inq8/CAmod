@@ -357,19 +357,22 @@ namespace OpenRA.Mods.CA.Projectiles
 				foreach (var r in anim.Render(pos, palette))
 					yield return r;
 
-				var trailPalette = wr.Palette(info.TrailPalette + (info.TrailUsePlayerPalette ? args.SourceActor.Owner.InternalName : ""));
-				var trailMult = 1;
-
-				for (var i = trailItems.Count - 1; i >= 0; i--)
+				if (trailItems.Count > 0)
 				{
-					var trailOffset = new WVec(0, info.TrailSpacing.Length, 0);
-					trailOffset = trailOffset.Rotate(WRot.FromYaw(facing));
-					var trailPos = pos + (trailOffset * trailMult);
+					var trailPalette = wr.Palette(info.TrailPalette + (info.TrailUsePlayerPalette ? args.SourceActor.Owner.InternalName : ""));
+					var trailMult = 1;
 
-					foreach (var r in trailItems[i].Render(trailPos, trailPalette))
-						yield return r;
+					for (var i = trailItems.Count - 1; i >= 0; i--)
+					{
+						var trailOffset = new WVec(0, info.TrailSpacing.Length, 0);
+						trailOffset = trailOffset.Rotate(WRot.FromYaw(facing));
+						var trailPos = pos + (trailOffset * trailMult);
 
-					trailMult++;
+						foreach (var r in trailItems[i].Render(trailPos, trailPalette))
+							yield return r;
+
+						trailMult++;
+					}
 				}
 			}
 		}

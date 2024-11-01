@@ -279,7 +279,7 @@ Atomic:
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		ValidTargets: Ground, Trees, Water, Underwater, Air, AirSmall
 		Versus:
-			Wood: 25
+			Wood: 28
 			Heavy: 80
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@2Res_impact: DestroyResource
@@ -300,7 +300,7 @@ Atomic:
 		Delay: 5
 		ValidTargets: Ground, Trees, Water, Underwater, Air, AirSmall
 		Versus:
-			Wood: 25
+			Wood: 28
 			Heavy: 80
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@6Res_areanuke1: DestroyResource
@@ -745,7 +745,7 @@ Chemicbm:
 		InvalidTargets: Creep
 		Versus:
 			None: 36
-			Wood: 20
+			Wood: 60
 			Concrete: 100
 			Light: 65
 			Heavy: 100
@@ -764,7 +764,7 @@ Chemicbm:
 		InvalidTargets: Creep
 		Versus:
 			None: 36
-			Wood: 45
+			Wood: 50
 			Concrete: 120
 			Light: 65
 			Heavy: 100
@@ -780,7 +780,7 @@ Chemicbm:
 		InvalidTargets: Creep
 		Versus:
 			None: 36
-			Wood: 140
+			Wood: 145
 			Concrete: 210
 			Light: 85
 			Heavy: 140
@@ -796,7 +796,7 @@ Chemicbm:
 		InvalidTargets: Creep
 		Versus:
 			None: 36
-			Wood: 170
+			Wood: 175
 			Concrete: 210
 			Light: 85
 			Heavy: 140
@@ -864,27 +864,15 @@ Chemicbm:
 IonStormInit:
 	Projectile: InstantExplode
 	ReloadDelay: 1
-	Warhead@2: SpawnSmokeParticle
+	Warhead@2: SpawnMultiWeaponImpact
 		ValidTargets: Ground, Air, Water
-		Delay: 0
-		Sequences: inviso
-		Palette: effect
-		Weapon: IonCloudRandomInit
-		Duration: 220
-		ImpactActors: false
-
-IonCloudRandomInit:
-	Projectile: InstantHit
-	ReloadDelay: 25
-	Warhead@barrage3: FireShrapnel
 		Weapon: IonCloud
-		Amount: 1
-		AimChance: 50
-		ValidTargets: Air, Ground, Water
 		ImpactActors: false
+		ImpactOffsets: 0,0, -4,0, 4,0, 0,-4, 0,4, -2,-2, 2,2, -2,2, 2,-2
+		RandomImpactSequence: true
 
 IonCloud:
-	ReloadDelay: 220
+	ReloadDelay: 25
 	Range: 5c0
 	Projectile: AthenaProjectile
 		Altitude: 5c768
@@ -903,14 +891,15 @@ IonBolt:
 		Range: 0, 1c1, 2c1, 3c1, 4c1
 		Delay: 1
 		Damage: 2650
-		Falloff: 1000, 1000, 250, 100, 75
+		Falloff: 1000, 1000, 200, 100, 75
 		ValidTargets: Ground, Water, Underwater, Air, AirSmall
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 		Versus:
-			None: 30
+			None: 50
 			Concrete: 300
-			Heavy: 80
-			Light: 55
+			Heavy: 120
+			Light: 75
+			Wood: 105
 	Warhead@4Effect: CreateEffect
 		Explosions: ionbeam
 		ExplosionPalette: tdeffect-ignore-lighting-alpha85
@@ -1025,74 +1014,25 @@ DeathHandCluster:
 WeatherStormInit:
 	Projectile: InstantExplode
 	ReloadDelay: 1
-	Warhead@1: SpawnSmokeParticle
-		ValidTargets: Ground, Air, Water
-		Sequences: inviso
-		Palette: ra2effect
-		Weapon: WeatherCloudDirectInit
-		Duration: 210
-		Delay: 50
-		ImpactActors: false
-	Warhead@2: SpawnSmokeParticle
+	Warhead@1: SpawnMultiWeaponImpact
 		ValidTargets: Ground, Air, Water
 		Delay: 50
-		Sequences: inviso
-		Palette: ra2effect
-		Weapon: WeatherCloudRandomInit
-		Duration: 210
+		Weapon: WeatherCloud
 		ImpactActors: false
+		ImpactOffsets: 0,0, -1,-1, 1,-1, -1,1, 1,1, -2,-2, 0,-2, 2,-2, -2,0, 2,0, -2,2, 0,2, 2,2, -3,-3, -1,-3, 1,-3, 3,-3, -3,-1, 3,-1, -3,1, 3,1, -3,3, -1,3, 1,3, 3,3, -5,-1, -5,1, -4,-2, -4,0, -4,2, -1,-5, 1,-5, -2,-4, 0,-4, 2,-4, 4,-2, 4,0, 4,2, 5,-1, 5,1, -2,4, 0,4, 2,4, -1,5, 1,5
+		RandomImpactSequence: true
+		RandomOffset: 512
+		Interval: 5
+	Warhead@DirectDamage: SpreadDamage
+		Damage: 35000
+		Delay: 78
 	Warhead@4: CreateEffect
 		Delay: 50
 		ImpactSounds: sweaintr.aud
 		ValidTargets: Ground, Air, Water
 
-WeatherCloudDirectInit:
-	Projectile: InstantHit
-	ReloadDelay: 140
-	ValidTargets: Air
-	Warhead@Dam1: SpreadDamage
-		Range: 0, 1c1, 2c1, 3c1
-		Falloff: 1000, 660, 330, 0
-		Damage: 500
-		AffectsParent: true
-		ValidTargets: Air, AirSmall
-		Delay: 28
-		DamageTypes: TriggerProne, ElectritcyDeath
-		Versus:
-			Wood: 85
-			Heavy: 75
-			Concrete: 45
-			Brick: 5
-	Warhead@barrage3: FireFragment
-		Weapon: WeatherCloud
-		ValidTargets: Air, Ground, Water
-		ImpactActors: false
-
-WeatherCloudRandomInit:
-	Projectile: InstantHit
-	ReloadDelay: 8
-	Warhead@Dam1: SpreadDamage
-		Spread: 3c0
-		Falloff: 100, 66, 33, 0
-		Damage: 180
-		AffectsParent: true
-		ValidTargets: Air, AirSmall
-		Delay: 28
-		DamageTypes: TriggerProne, ElectricityDeath
-		Versus:
-			Wood: 85
-			Heavy: 75
-			Concrete: 15
-			Brick: 5
-	Warhead@barrage3: FireShrapnel
-		Weapon: WeatherCloud
-		Amount: 2
-		AimChance: 50
-		ValidTargets: Air, Ground, Water
-		ImpactActors: false
-
 WeatherCloud:
-	ReloadDelay: 120
+	ReloadDelay: 8
 	Range: 6c512
 	Projectile: AthenaProjectile
 		Altitude: 5c768
@@ -1106,6 +1046,18 @@ WeatherCloud:
 		Explosions: weathercloud1, weathercloud2, weathercloud1f, weathercloud2f
 		ExplosionPalette: ra2unit
 		ValidTargets: Ground, Air, Water
+	Warhead@Shadow: FireFragment
+		UseZOffsetAsAbsoluteHeight: true
+		Weapon: WeatherCloudShadow
+		ValidTargets:  Ground, Air, Water
+
+WeatherCloudShadow:
+	Projectile: InstantHit
+	Range: 512
+	Warhead@Shadow: CreateEffect
+		Explosions: weathercloudshadow
+		ValidTargets: Ground, Air, Water
+		Inaccuracy: 341
 
 WeatherBolt:
 	Projectile: InstantHit
@@ -1119,12 +1071,12 @@ WeatherBolt:
 		ValidTargets: Ground, Air, AirSmall, Underwater, Water
 		DamageTypes: TriggerProne, ElectricityDeath
 		Versus:
-			None: 20
-			Wood: 70
+			None: 35
+			Wood: 65
 			Concrete: 150
 			Brick: 5
-			Heavy: 65
-			Light: 35
+			Heavy: 85
+			Light: 55
 	Warhead@4: CreateEffect
 		Explosions: weatherbolt1, weatherbolt2, weatherbolt3, weatherbolt1f, weatherbolt2f, weatherbolt3f
 		ImpactSounds: sweastra.aud, sweastrb.aud, sweastrc.aud, sweastrd.aud
@@ -1222,17 +1174,17 @@ ClusterMineSpawner:
 		ImpactSounds: scluster.aud
 		Delay: 15
 		ValidTargets: Air, Structure, Bridge
-	Warhead@Cluster: FireCluster
+	Warhead@Cluster: FireClusterCA
 		Weapon: MineSpawner
 		RandomClusterCount: 5
 		Dimensions: 3,3
-		Footprint: xXx x_x xXx
+		Footprint: xxx x_x xxx
 		ValidTargets: Ground, Air
-	Warhead@ClusterWater: FireCluster
+	Warhead@ClusterWater: FireClusterCA
 		Weapon: MineSpawnerWater
 		RandomClusterCount: 5
 		Dimensions: 3,3
-		Footprint: xXx x_x xXx
+		Footprint: xxx x_x xxx
 		ValidTargets: Water, Air
 
 MineSpawner:

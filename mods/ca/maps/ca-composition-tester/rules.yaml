@@ -21,7 +21,7 @@ FACT:
 	DamageMultiplier@1:
 		Modifier: 0
 	-Sellable:
-	-SpawnActorsOnSell:
+	-SpawnActorsOnSellCA:
 	-SpawnActorOnDeath:
 	-SpawnRandomActorOnDeath:
 	Capturable:
@@ -36,7 +36,7 @@ WEAP:
 	DamageMultiplier@1:
 		Modifier: 0
 	-Sellable:
-	-SpawnActorsOnSell:
+	-SpawnActorsOnSellCA:
 	-SpawnActorOnDeath:
 	-SpawnRandomActorOnDeath:
 	Capturable:
@@ -51,7 +51,7 @@ TENT:
 	DamageMultiplier@1:
 		Modifier: 0
 	-Sellable:
-	-SpawnActorsOnSell:
+	-SpawnActorsOnSellCA:
 	-SpawnActorOnDeath:
 	-SpawnRandomActorOnDeath:
 	Capturable:
@@ -66,7 +66,7 @@ AFLD:
 	DamageMultiplier@1:
 		Modifier: 0
 	-Sellable:
-	-SpawnActorsOnSell:
+	-SpawnActorsOnSellCA:
 	-SpawnActorOnDeath:
 	-SpawnRandomActorOnDeath:
 	Capturable:
@@ -81,7 +81,7 @@ DOME:
 	DamageMultiplier@1:
 		Modifier: 0
 	-Sellable:
-	-SpawnActorsOnSell:
+	-SpawnActorsOnSellCA:
 	-SpawnActorOnDeath:
 	-SpawnRandomActorOnDeath:
 	Capturable:
@@ -101,7 +101,7 @@ FIX:
 	DamageMultiplier@1:
 		Modifier: 0
 	-Sellable:
-	-SpawnActorsOnSell:
+	-SpawnActorsOnSellCA:
 	-SpawnActorOnDeath:
 	-SpawnRandomActorOnDeath:
 	-GrantConditionOnResupplying@Resupplying:
@@ -117,7 +117,7 @@ NUK2:
 	DamageMultiplier@1:
 		Modifier: 0
 	-Sellable:
-	-SpawnActorsOnSell:
+	-SpawnActorsOnSellCA:
 	-SpawnActorOnDeath:
 	-SpawnRandomActorOnDeath:
 	Capturable:
@@ -198,6 +198,12 @@ RESTOREWORMHOLE:
 		Text: Restore
 		Color: 00FFFF
 
+CASHWORMHOLE:
+	Inherits: CONFIGWORMHOLE
+	WithTextDecoration:
+		Text: Cash
+		Color: FFFF00
+
 RESETWORMHOLE1:
 	Inherits: RESETWORMHOLE
 	WithTextDecoration:
@@ -228,32 +234,12 @@ RESTOREWORMHOLE2:
 	WithTextDecoration:
 		Text: Restore P2
 
-RESETWORMHOLE3:
-	Inherits: RESETWORMHOLE
+CASHWORMHOLE1:
+	Inherits: CASHWORMHOLE
 	WithTextDecoration:
-		Text: Reset P3
+		Text: Cash P1
 
-SAVEWORMHOLE3:
-	Inherits: SAVEWORMHOLE
+CASHWORMHOLE2:
+	Inherits: CASHWORMHOLE
 	WithTextDecoration:
-		Text: Save P3
-
-RESTOREWORMHOLE3:
-	Inherits: RESTOREWORMHOLE
-	WithTextDecoration:
-		Text: Restore P3
-
-RESETWORMHOLE4:
-	Inherits: RESETWORMHOLE
-	WithTextDecoration:
-		Text: Reset P4
-
-SAVEWORMHOLE4:
-	Inherits: SAVEWORMHOLE
-	WithTextDecoration:
-		Text: Save P4
-
-RESTOREWORMHOLE4:
-	Inherits: RESTOREWORMHOLE
-	WithTextDecoration:
-		Text: Restore P4
+		Text: Cash P2

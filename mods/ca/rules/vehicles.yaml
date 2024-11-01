@@ -457,7 +457,6 @@ NUKC:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 20
 		Offset: 0,0,20
 	QuantizeFacingsFromSequence:
 		Sequence: idle
@@ -505,7 +504,6 @@ GTNK:
 		Weapon: 105mm
 		LocalOffset: 720,0,80
 	Turreted:
-		TurnSpeed: 20
 		Offset: 80,0,0
 	AttackTurreted:
 		Voice: Attack
@@ -797,7 +795,6 @@ GTNK.squad:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 20
 		Offset: 0,0,60
 	Armament:
 		Weapon: 125mm
@@ -1058,7 +1055,6 @@ GTNK.squad:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 20
 		Offset: 0,0,0
 	Armament:
 		Weapon: 125mmRhino
@@ -1752,7 +1748,6 @@ SPEC:
 	Armor:
 		Type: Light
 	Mobile:
-		TurnSpeed: 20
 		Speed: 92
 		Locomotor: lighttracked
 		Voice: Move
@@ -2043,6 +2038,8 @@ HARV:
 	RejectsOrders@Transforming:
 		RequiresCondition: charv-upgrade
 	TransferResourcesOnTransform:
+	UpdatesKillCount:
+		Type: BuildingsOrHarvesters
 
 HARV.Chrono:
 	Inherits: HARV
@@ -2748,8 +2745,9 @@ TTRA:
 	Armor:
 		Type: Light
 	Mobile:
-		Speed: 68
+		Speed: 60
 		Voice: Move
+		TurnSpeed: 16
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -3244,9 +3242,9 @@ GDRN:
 		Prerequisites: ~vehicles.arc, ~!tow.upgrade, ~techlevel.low
 		Description: Fast scout & anti-tank drone.
 	TooltipExtras:
-		Strengths: • Strong vs Heavy Armor, Light Armor, Buildings
+		Strengths: • Strong vs Heavy Armor, Light Armor, Buildings\n• Immune to mind control
 		Weaknesses: • Weak vs Infantry, Defenses\n• Cannot attack Aircraft
-		Attributes: • Can detect spies and cloaked units.\n• Immune to mind control
+		Attributes: • Can detect spies and cloaked units.
 	Valued:
 		Cost: 450
 	Tooltip:
@@ -3491,6 +3489,8 @@ BGGY:
 		TargetTypes: IronCurtainImmune
 	Targetable@ChronoshiftImmune:
 		TargetTypes: ChronoshiftImmune
+	SpawnActorOnDeath:
+		Actor: camera.decoy
 
 FTNK.Decoy:
 	Inherits: FTNK
@@ -3533,7 +3533,7 @@ FTNK.Decoy:
 	-Targetable@AICAPTURE:
 	-GivesExperienceCA:
 	-GrantConditionOnPrerequisite@GLOBALBOUNTY:
-	-GivesBounty:
+	-GivesBountyCA:
 	-Targetable@REPAIR:
 	-GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
 	-UpdatesPlayerStatistics:
@@ -3587,7 +3587,7 @@ HFTK.Decoy:
 	-Targetable@AICAPTURE:
 	-GivesExperienceCA:
 	-GrantConditionOnPrerequisite@GLOBALBOUNTY:
-	-GivesBounty:
+	-GivesBountyCA:
 	-Targetable@REPAIR:
 	-GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
 	-UpdatesPlayerStatistics:
@@ -5353,6 +5353,8 @@ HARV.TD:
 		Step: 2250
 	DamageTypeDamageMultiplier@A2GPROTECTION:
 		Modifier: 60
+	UpdatesKillCount:
+		Type: BuildingsOrHarvesters
 
 BTR:
 	Inherits: ^Tank
@@ -5749,7 +5751,7 @@ TRPC:
 		Range: 4c0
 		DetectionTypes: Mine
 		RequiresCondition: !(empdisable || being-warped)
-	GivesBounty:
+	GivesBountyCA:
 		Percentage: 2
 	Voiced:
 		VoiceSet: TrpcVoice
@@ -7064,13 +7066,13 @@ HSAM:
 		Weaknesses: • Weak vs Heavy Armor
 		Attributes: • Can traverse water
 	Mobile:
-		Speed: 92
+		Speed: 86
 		Locomotor: hover
 		Voice: Move
 	Passenger:
 		Voice: Move
 	Health:
-		HP: 20000
+		HP: 19000
 	Armor:
 		Type: Light
 	RevealsShroud:

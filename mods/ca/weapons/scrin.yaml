@@ -79,7 +79,7 @@ EnslaveInfantry:
 
 EnslaveVehicle:
 	Inherits: EnslaveInfantry
-	Range: 5c512
+	Range: 4c512
 	InvalidTargets: Infantry, MindControlImmune
 	Warhead@PinkHighlight: GrantExternalConditionCA
 		ValidTargets: Vehicle
@@ -258,7 +258,7 @@ DevastatorDiscs:
 	Inherits: PlasmaDiscs
 	Range: 16c0
 	MinRange: 3c0
-	ReloadDelay: 160
+	ReloadDelay: 170
 	Report: devastator-fire1.aud, devastator-fire2.aud, devastator-fire3.aud
 	Burst: 7
 	BurstDelays: 3
@@ -273,7 +273,7 @@ DevastatorDiscs:
 		Speed: 220
 		LaunchAngle: 50
 	Warhead@1Dam: SpreadDamage
-		Spread: 448
+		Spread: 416
 		Damage: 4675
 		Versus:
 			None: 100
@@ -291,7 +291,7 @@ DevastatorTorpedo:
 	Burst: 3
 	Report: plasmatorp.aud
 	BurstDelays: 8
-	ReloadDelay: 60
+	ReloadDelay: 70
 	Projectile: Bullet
 		Image: plasmatorp3
 		Palette: scrin
@@ -821,7 +821,7 @@ EnervatorBolts:
 		ContrailStartColor: FF00FF77
 		ContrailStartColorAlpha: 119
 		ContrailStartWidth: 32
-		Jammable: true
+		Jammable: false
 		LockOnProbability: 100
 		RangeLimit: 8c0
 		TrailImage: smokey
@@ -1165,6 +1165,7 @@ ShardLauncher:
 		Image: shard
 		HorizontalRateOfTurn: 140
 		RangeLimit: 10c512
+		AllowSnapping: true
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Air
 		ValidRelationships: Enemy, Neutral
@@ -1204,6 +1205,8 @@ RavagerShards:
 		Inaccuracy: 128
 		RangeLimit: 7c0
 		Jammable: false
+		AllowSnapping: false
+	-Warhead@smallDamage:
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Ground, Water
 		-ValidRelationships:
@@ -1273,18 +1276,20 @@ MutilatorShards:
 
 ShardWalkerShards:
 	Inherits: RavagerShards
+	ReloadDelay: 35
 	StartBurstReport: shard-fire1.aud
 	Projectile: Missile
-		Speed: 265
 		ContrailStartColor: 00FF0066
 		ContrailStartColorAlpha: 102
 		MinimumLaunchAngle: 80
 		MaximumLaunchAngle: 112
 		Inaccuracy: 0
+		AllowSnapping: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
-		Damage: 2600
+		Damage: 2650
 		Versus:
+			None: 115
 			Wood: 10
 			Light: 32
 			Heavy: 10
@@ -1292,7 +1297,7 @@ ShardWalkerShards:
 
 ShardWalkerShardsAA:
 	Inherits: ShardLauncher
-	ReloadDelay: 40
+	ReloadDelay: 35
 	BurstDelays: 5
 	Range: 8c512
 	Projectile: Missile
@@ -1351,7 +1356,9 @@ LaceratorShards.Hypercharged:
 
 ImpalerSpike:
 	Range: 7c0
-	ReloadDelay: 80
+	ReloadDelay: 120
+	Burst: 2
+	BurstDelays: 35
 	Report: impl-fire1.aud
 	Projectile: Missile
 		Speed: 750
@@ -1436,11 +1443,11 @@ Rift:
 	Warhead@1Dam: SpreadDamage
 		Spread: 1c0
 		Damage: 2300
-		Falloff: 100, 95, 50, 45, 40, 30, 15, 10, 5
+		Falloff: 100, 95, 50, 40, 35, 30, 15, 10, 5
 		ValidTargets: Ground, Trees, Underwater, Air, AirSmall
 		Versus:
 			None: 30
-			Wood: 100
+			Wood: 115
 			Light: 70
 			Heavy: 90
 			Concrete: 120
@@ -1685,8 +1692,8 @@ LeecherBeam:
 		DamageTypes: Prone50Percent, TriggerProne, AtomizedDeath, FlakVestMitigatedMinor
 		Versus:
 			None: 100
-			Light: 45
-			Wood: 60
+			Light: 50
+			Wood: 65
 			Heavy: 15
 			Concrete: 15
 			Brick: 5
@@ -2045,7 +2052,7 @@ NullifierBolt:
 	Range: 8c0
 	ReloadDelay: 80
 	Report: null-fire1.aud
-	Projectile: BulletCA
+	Projectile: MissileCA
 		Image: nullbolt
 		Palette: caneon
 		Speed: 600
@@ -2053,19 +2060,14 @@ NullifierBolt:
 		TrailSequences: idle1, idle2
 		TrailPalette: caneon
 		TrailInterval: 1
+		TrailSpacing: 600
 		ContrailStartWidth: 32
 		ContrailStartColor: ffff00
 		ContrailStartColorAlpha: 96
 		ContrailLength: 6
-		TrailSpacing: 600
-	Warhead@Arc: FireShrapnel
-		Weapon: NullifierBlind
-		TargetClosest: true
-		Amount: 1
-		AimChance: 100
-		ThrowWithoutTarget: false
-		AimTargetStances: Enemy, Neutral
-		AllowDirectHit: true
+		RangeLimit: 9c0
+		Jammable: false
+		AllowSnapping: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 0c128
 		Damage: 25000
@@ -2077,21 +2079,16 @@ NullifierBolt:
 			Concrete: 25
 			Brick: 10
 		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
+	Warhead@Blind: GrantExternalConditionCA
+		Range: 0c341
+		Duration: 125
+		Condition: blinded
+		ValidTargets: Infantry, Vehicle, Ship, Defense
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: caneon
 		Image: nullhit
 		ImpactSounds: null-hit1.aud
-
-NullifierBlind:
-	Range: 1c768
-	ValidTargets: Infantry, Vehicle, Ship, Defense
-	TargetActorCenter: true
-	Projectile: InstantHit
-	Warhead@Blind: GrantExternalConditionCA
-		Range: 0c341
-		Duration: 125
-		Condition: blinded
 
 ScrinRepair:
 	Inherits: Heal

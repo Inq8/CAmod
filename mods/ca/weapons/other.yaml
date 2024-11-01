@@ -260,7 +260,7 @@ BigFlamerTD:
 		Damage: 925
 		Versus:
 			Light: 100
-			Concrete: 45
+			Concrete: 50
 
 BigFlamerTD.Decoy:
 	Inherits: BigFlamerTD
@@ -459,26 +459,26 @@ TeslaZapBoost3:
 
 PortaTesla:
 	Inherits: ^TeslaWeapon
-	ReloadDelay: 75
+	ReloadDelay: 100
 	Range: 6c0
 	Report: shktrop1.aud
 	Warhead@1Dam: SpreadDamage
-		Damage: 4600
+		Damage: 5300
 		Versus:
-			None: 280
+			None: 240
 			Wood: 60
-			Heavy: 70
+			Heavy: 75
 			Concrete: 70
+			Light: 110
 
 PortaTesla.UPG:
 	Inherits: PortaTesla
 	Report: itesatta.aud
-	ReloadDelay: 60
+	ReloadDelay: 70
 	Warhead@1Dam: SpreadDamage
-		Damage: 4600
 		Versus:
-			Heavy: 65
-			Light: 120
+			Heavy: 75
+			Light: 125
 
 PortaTeslaCharge:
 	Inherits: ^TeslaWeapon
@@ -1115,14 +1115,22 @@ TankLaser:
 	ReloadDelay: 45
 	Report: tnklaser.aud
 	Warhead@1Dam: SpreadDamage
-		Damage: 6250
+		Damage: 5800
 		Versus:
-			None: 60
-			Wood: 35
+			None: 40
+			Wood: 40
 			Light: 100
 			Heavy: 25
-			Concrete: 20
+			Concrete: 25
 			Brick: 20
+		DamageTypes: Prone50Percent, FireDeath
+	Warhead@PercDam: HealthPercentageDamage
+		Spread: 42
+		Damage: 50
+		Versus:
+			Light: 1
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		ValidTargets: Infantry
 
 BattleTankLaser:
 	Inherits: TankLaser
@@ -1171,7 +1179,7 @@ XOCoilGun:
 	Report: xo-coil1.aud
 	Burst: 2
 	BurstDelays: 6
-	Projectile: BulletCA
+	Projectile: MissileCA
 		Image: flakball
 		Speed: 682
 		TrailImage: coiltrail
@@ -1182,6 +1190,7 @@ XOCoilGun:
 		ContrailStartColorAlpha: 96
 		ContrailLength: 6
 		TrailSpacing: 682
+		AllowSnapping: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 0c128
 		Damage: 2500
@@ -1200,7 +1209,7 @@ XOCoilGun:
 
 PortaLaser:
 	Inherits: Laser
-	ReloadDelay: 35
+	ReloadDelay: 40
 	Burst: 2
 	BurstDelays: 3
 	Range: 6c0
@@ -1213,22 +1222,29 @@ PortaLaser:
 		SecondaryBeamColor: FF000030
 		Blockable: true
 	Warhead@1Dam: SpreadDamage
-		Damage: 1700
+		Damage: 1900
 		Versus:
-			None: 175
+			None: 155
 			Wood: 55
-			Heavy: 48
+			Heavy: 40
 			Concrete: 40
 
-PortaLaser.UPG:
+PortaLaser.Templar:
 	Inherits: PortaLaser
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			None: 175
+			Heavy: 45
+
+PortaLaser.Templar.UPG:
+	Inherits: PortaLaser.Templar
 	Range: 6c512
 	StartBurstReport: lasgunupg.aud
 	Projectile: LaserZapCA
 		SecondaryBeamWidth: 75
 		SecondaryBeamColor: FF006660
 	Warhead@1Dam: SpreadDamage
-		Damage: 1800
+		Damage: 2000
 
 IFVLaser:
 	Inherits: PortaLaser
@@ -1316,7 +1332,7 @@ EnlightenedEmp:
 		InvalidTargets: Cyborg, Defense, EmpImmune
 	Warhead@2Emp: GrantExternalConditionCA
 		Range: 0c896
-		Duration: 50
+		Duration: 75
 		Condition: empdisable
 		ValidTargets: Cyborg, Defense
 		InvalidTargets: EmpImmune
@@ -1348,7 +1364,7 @@ VenomLaser:
 			Wood: 50
 			Concrete: 40
 			Light: 95
-			Heavy: 50
+			Heavy: 55
 			Brick: 50
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
@@ -1553,7 +1569,7 @@ PrisCLaser:
 	-Warhead@Burst:
 
 HopliteGun:
-	ReloadDelay: 35
+	ReloadDelay: 55
 	Range: 5c0
 	Report: hopl-fire1.aud
 	Projectile: LaserZapCA
@@ -1566,13 +1582,13 @@ HopliteGun:
 		SecondaryBeamZOffset: 511
 		SecondaryBeamColor: 75D1FF60
 	Warhead@1Dam: SpreadDamage
-		Spread: 288
+		Spread: 320
 		Falloff: 100, 26, 10, 4, 0
 		Damage: 7000
 		Versus:
 			None: 100
 			Wood: 30
-			Light: 50
+			Light: 80
 			Heavy: 15
 			Concrete: 15
 			Brick: 30
@@ -2333,7 +2349,7 @@ MempTargeting:
 
 RadTrooperBeam:
 	Range: 6c0
-	ReloadDelay: 100
+	ReloadDelay: 110
 	Report: idesat1a.aud
 	Projectile: RadBeam
 		Amplitude: 176
@@ -2341,12 +2357,12 @@ RadTrooperBeam:
 		Thickness: 32
 		ZOffset: 512
 	Warhead@1Dam: SpreadDamage
-		Spread: 128
-		Damage: 7000
+		Spread: 136
+		Damage: 7600
 		Versus:
-			None: 280
+			None: 240
 			Light: 100
-			Heavy: 55
+			Heavy: 45
 			Wood: 60
 			Concrete: 70
 			Brick: 12

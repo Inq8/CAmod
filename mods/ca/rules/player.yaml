@@ -347,15 +347,6 @@ Player:
 	ResourceStorageWarning:
 		TextNotification: Silos needed.
 		AdviceInterval: 40000
-	PlayerExperience:
-	PlayerExperienceLevels:
-		Factions: soviet, russia, ukraine, iraq, yuri
-		LevelXpRequirements: 75, 250, 450
-		LevelPrerequisites: player.level1, player.level2, player.level3
-		LevelUpTextNotification: You have gained a rank! You are now rank {0}.
-		LevelUpNotification: Promoted
-		LevelUpSound: PlayerRankUp
-		DummyActor: QueueUpdaterDummy
 	GameSaveViewportManager:
 	PlayerRadarTerrain:
 	GpsRadarWatcher:
@@ -366,6 +357,16 @@ Player:
 	CapturedFactionsManager:
 	UpgradesManager:
 	BuildOrderTracker:
+	PlayerBountyPool:
+	PlayerExperience:
+	PlayerExperienceLevels:
+		Factions: soviet, russia, ukraine, iraq, yuri
+		LevelXpRequirements: 75, 250, 450
+		LevelPrerequisites: player.level1, player.level2, player.level3
+		LevelUpTextNotification: You have gained a rank! You are now rank {0}.
+		LevelUpNotification: Promoted
+		LevelUpSound: PlayerRankUp
+		DummyActor: QueueUpdaterDummy
 	ProvidesPrerequisiteOnCounts@ScrinAllegiances:
 		Factions: scrin, reaper, traveler, harbinger, collector
 		Prerequisite: scrin.allegiances.available
@@ -376,3 +377,11 @@ Player:
 		DummyActor: QueueUpdaterDummy
 		IncrementSound: PlayerRankUp
 		PermanentAfterUpgrades: loyalist.allegiance, rebel.allegiance, malefic.allegiance
+	ProvidesPrerequisiteOnKillCount@NodCovenants:
+		Factions: nod, blackh, marked, legion, shadow
+		Prerequisite: nod.covenants.available
+		RequiredKills:
+			BuildingsOrHarvesters: 3
+		RequiredCountReachedTextNotification: Covenants available.
+		DummyActor: QueueUpdaterDummy
+		IncrementSound: PlayerRankUp

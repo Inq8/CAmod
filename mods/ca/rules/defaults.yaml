@@ -1545,10 +1545,10 @@
 	ExternalCondition@slowed:
 		Condition: slowed
 	SpeedMultiplier@slowed1:
-		Modifier: 70
+		Modifier: 75
 		RequiresCondition: slowed == 1
 	SpeedMultiplier@slowed2:
-		Modifier: 40
+		Modifier: 50
 		RequiresCondition: slowed > 1
 
 ^Concussion:
@@ -1999,7 +1999,7 @@
 	GrantConditionOnPrerequisite@GLOBALBOUNTY:
 		Condition: global-bounty
 		Prerequisites: global-bounty
-	GivesBounty:
+	GivesBountyCA:
 		RequiresCondition: global-bounty
 
 ^SovietT4Boost:
@@ -3147,9 +3147,10 @@
 		Types: building
 	CapturableProgressBar:
 	CapturableProgressBlink:
-	SpawnActorsOnSell:
+	SpawnActorsOnSellCA:
 		ActorTypes: e1,e1,e1,e1,e1,e1,e1,e1,e1,e1,c1,c1,c1,c1,c7,c7,c7,c7,c10,c10
-		GuaranteedActorTypes: e1,e1
+		GuaranteedActorTypes: e1, e1
+		GuaranteedActorsLimitedByValue: true
 	SpawnActorOnDeath:
 		Actor: e1
 		Probability: 5
@@ -3199,15 +3200,17 @@
 		CloakSound: cloak5.aud
 		UncloakSound: appear1.aud
 	UpdatesBuildOrder:
+	UpdatesKillCount:
+		Type: BuildingsOrHarvesters
 
 ^BuildingTD:
 	Inherits@1: ^Building
 	Inherits@TDPAL: ^TDPalette
 	SpawnActorOnDeath:
 		Actor: n1
-	SpawnActorsOnSell:
+	SpawnActorsOnSellCA:
 		ActorTypes: n1,n1,n1,n1,n1,n1,n1,n1,n1,n1,c1,c1,c1,c1,c7,c7,c7,c7,c10,c10
-		GuaranteedActorTypes: n1,n1
+		GuaranteedActorTypes: n1, n1
 	ActorPreviewPlaceBuildingPreview:
 	WithDeathAnimation:
 		DeathSequence: dead
@@ -3251,7 +3254,7 @@
 	-Capturable:
 	-CapturableProgressBar:
 	-CapturableProgressBlink:
-	-SpawnActorsOnSell:
+	-SpawnActorsOnSellCA:
 	RepairableBuilding:
 		RepairStep: 700
 		-RepairPercent:
@@ -3425,7 +3428,7 @@
 		Sequence: tag-fake
 		Position: Top
 		Margin: 0, 4
-	-SpawnActorsOnSell:
+	-SpawnActorsOnSellCA:
 	-SpawnActorOnDeath:
 	-SpawnRandomActorOnDeath:
 	-MustBeDestroyed:

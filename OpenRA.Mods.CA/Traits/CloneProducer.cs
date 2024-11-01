@@ -63,12 +63,14 @@ namespace OpenRA.Mods.Common.Traits
 		CloneSourceIndicator effect;
 
 		public List<WPos> LinkNodes;
+		bool delayUntilNext;
 
 		public CloneProducer(Actor self, CloneProducerInfo info)
 		{
 			Info = info;
 			this.self = self;
 			LinkNodes = new List<WPos>();
+			delayUntilNext = false;
 		}
 
 		void INotifyCreated.Created(Actor self)
@@ -95,6 +97,12 @@ namespace OpenRA.Mods.Common.Traits
 			if (self.IsDead || Info.InvalidActors.Contains(actorName))
 				return;
 
+			if (delayUntilNext)
+			{
+				delayUntilNext = false;
+				return;
+			}
+
 			var cloneActor = self.World.Map.Rules.Actors[Info.CloneActors.ContainsKey(actorName) ? Info.CloneActors[actorName] : actorName];
 
 			var sp = self.TraitsImplementing<Production>()
@@ -120,20 +128,20 @@ namespace OpenRA.Mods.Common.Traits
 
 		private void SetSourceToPreferred()
 		{
-			var producer = self.World.ActorsWithTrait<CloneSource>()
-				.Where(a => !a.Actor.IsDead && a.Actor.IsInWorld && a.Actor.Owner == self.Owner && a.Trait.ProductionTypes.Where(t => Info.Types.Contains(t)).Any())
-				.OrderByDescending(p => p.Actor.TraitOrDefault<PrimaryBuilding>()?.IsPrimary)
-				.ThenByDescending(p => p.Actor.ActorID)
-				.FirstOrDefault();
+			self.World.AddFrameEndTask(w => {
+				var producer = self.World.ActorsWithTrait<CloneSource>()
+					.Where(a => !a.Actor.IsDead && a.Actor.IsInWorld && a.Actor.Owner == self.Owner && a.Trait.ProductionTypes.Where(t => Info.Types.Contains(t)).Any())
+					.OrderByDescending(p => p.Actor.TraitOrDefault<PrimaryBuilding>()?.IsPrimary)
+					.ThenByDescending(p => p.Actor.ActorID)
+					.FirstOrDefault();
 
-			LinkNodes.Clear();
+				LinkNodes.Clear();
 
-			if (producer.Actor != null)
-			{
-				cloneSource = producer.Trait;
-				cloneSource.AddCloneProducer(this);
-				LinkNodes.Add(producer.Actor.CenterPosition);
-			}
+				if (producer.Actor != null)
+				{
+					SetSource(producer.Actor, producer.Trait);
+				}
+			});
 		}
 
 		public IEnumerable<IOrderTargeter> Orders
@@ -170,17 +178,23 @@ namespace OpenRA.Mods.Common.Traits
 			if (order.OrderString == "Stop")
 			{
 				UnlinkSource();
-				cloneSource = null;
 			}
 			else if (order.OrderString == OrderID)
 			{
 				UnlinkSource();
-				cloneSource = null;
-				cloneSource = order.Target.Actor.Trait<CloneSource>();
-				cloneSource.AddCloneProducer(this);
-				LinkNodes.Clear();
-				LinkNodes.Add(order.Target.Actor.CenterPosition);
+				SetSource(order.Target.Actor, order.Target.Actor.Trait<CloneSource>());
 			}
+		}
+
+		void SetSource(Actor producer, CloneSource source)
+		{
+			cloneSource = source;
+			cloneSource.AddCloneProducer(this);
+			LinkNodes.Clear();
+			LinkNodes.Add(producer.CenterPosition);
+
+			if (!singleQueue && producer.TraitsImplementing<ProductionQueue>().Any(q => q.CurrentItem() != null))
+				delayUntilNext = true;
 		}
 
 		void INotifyKilled.Killed(Actor self, AttackInfo e)
@@ -212,6 +226,8 @@ namespace OpenRA.Mods.Common.Traits
 		{
 			if (cloneSource != null)
 				cloneSource.RemoveCloneProducer(this);
+
+			cloneSource = null;
 		}
 
 		sealed class CloneProducerSetSourceOrderTargeter : UnitOrderTargeter

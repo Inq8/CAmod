@@ -5,9 +5,9 @@
 		PlayerPalette: playerscrin
 	SpawnActorOnDeath:
 		Actor: s1
-	SpawnActorsOnSell:
+	SpawnActorsOnSellCA:
 		ActorTypes: s1
-		GuaranteedActorTypes: s1,s1
+		GuaranteedActorTypes: s1, s1
 	-SpawnRandomActorOnDeath:
 	Building:
 		BuildSounds: scrinbuild.aud
@@ -28,7 +28,33 @@ VEHICLES.SCRIN:
 	Buildable:
 		Description: Vehicle Production
 
+^OnResourceConditions:
+	ExternalCondition@RESCONVTIB:
+		Condition: on-tib
+	ExternalCondition@RESCONVORE:
+		Condition: on-ore
+	ExternalCondition@RESCONVBLUETIB:
+		Condition: on-bluetib
+	ExternalCondition@RESCONVGEMS:
+		Condition: on-gems
+	GrantCondition@RESCONV:
+		Condition: on-resource
+		RequiresCondition: on-tib || on-ore || on-bluetib || on-gems
+	GrantConditionOnTerrain@RESCONVTIB:
+		Condition: on-tib
+		TerrainTypes: Tiberium
+	GrantConditionOnTerrain@RESCONVORE:
+		Condition: on-ore
+		TerrainTypes: Ore
+	GrantConditionOnTerrain@RESCONVBLUETIB:
+		Condition: on-bluetib
+		TerrainTypes: BlueTiberium
+	GrantConditionOnTerrain@RESCONVGEMS:
+		Condition: on-gems
+		TerrainTypes: Gems
+
 ^ResourceConversion:
+	Inherits: ^OnResourceConditions
 	AmmoPool@RESCONV:
 		Ammo: 5
 		InitialAmmo: 0
@@ -44,32 +70,9 @@ VEHICLES.SCRIN:
 		RequiresSelection: true
 		Position: BottomLeft
 		Margin: 4, 3
-	ExternalCondition@RESCONVTIB:
-		Condition: on-tib
-	ExternalCondition@RESCONVORE:
-		Condition: on-ore
-	ExternalCondition@RESCONVBLUETIB:
-		Condition: on-bluetib
-	ExternalCondition@RESCONVGEMS:
-		Condition: on-gems
-	GrantCondition@RESCONV:
-		Condition: on-resource
-		RequiresCondition: on-tib || on-ore || on-bluetib || on-gems
 	GrantCondition@RESCONVCHARGE:
 		Condition: charging-on-resource
 		RequiresCondition: resconv-upgrade && on-resource && (ammo < 5 || charged-fire)
-	GrantConditionOnTerrain@RESCONVTIB:
-		Condition: on-tib
-		TerrainTypes: Tiberium
-	GrantConditionOnTerrain@RESCONVORE:
-		Condition: on-ore
-		TerrainTypes: Ore
-	GrantConditionOnTerrain@RESCONVBLUETIB:
-		Condition: on-bluetib
-		TerrainTypes: BlueTiberium
-	GrantConditionOnTerrain@RESCONVGEMS:
-		Condition: on-gems
-		TerrainTypes: Gems
 	GrantConditionOnAttack@PRIMARY:
 		ArmamentNames: primary
 		Condition: uncharged-fire
@@ -168,6 +171,14 @@ VEHICLES.SCRIN:
 ^FleetRecallable:
 	Targetable@FleetRecallable:
 		TargetTypes: FleetRecallable
+
+^SignalTransmitterSpeedBoost:
+	GrantConditionOnPrerequisite@SignalTransmitterSpeedBoost:
+		Condition: sign-speed
+		Prerequisites: sign
+	SpeedMultiplier@SignalTransmitterSpeedBoost:
+		Modifier: 115
+		RequiresCondition: sign-speed
 
 ^IonConduits:
 	GrantConditionOnPrerequisite@IONCON:
@@ -292,6 +303,9 @@ VEHICLES.SCRIN:
 	SpeedMultiplier@HYPERCHARGEDEBUFF:
 		Modifier: 75
 		RequiresCondition: hyperchargedebuff
+	FirepowerMultiplier@HyperAnathema:
+		Modifier: 35
+		RequiresCondition: hypercharged && anathema > 1
 
 ^Anathema:
 	GrantStackingCondition@Anathema:
@@ -591,7 +605,7 @@ S4:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 11000
+		HP: 10000
 	RevealsShroud:
 		Range: 5c0
 	Armament@PRIMARY:
@@ -1368,7 +1382,7 @@ GUNW:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 31000
+		HP: 30000
 	Armor:
 		Type: Light
 	Mobile:
@@ -1860,7 +1874,7 @@ LCHR:
 		Speed: 82
 		TurnSpeed: 20
 	Health:
-		HP: 30000
+		HP: 28000
 	Armor:
 		Type: Light
 	RevealsShroud:
@@ -1910,7 +1924,7 @@ LCHR:
 	GrantConditionOnDeploy:
 		DeployedCondition: triggered
 		RequiresCondition: coalescence-upgrade && !being-warped
-	GivesBounty:
+	GivesBountyCA:
 		RequiresCondition: global-bounty && !coalescence-upgrade
 	TransfersStanceToDeathActor:
 
@@ -2184,7 +2198,7 @@ DARK:
 	Armor:
 		Type: Heavy
 	Mobile:
-		TurnSpeed: 20
+		TurnSpeed: 16
 		Speed: 60
 		Locomotor: hover
 	RevealsShroud:
@@ -2205,7 +2219,7 @@ DARK:
 		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	Turreted:
-		TurnSpeed: 20
+		TurnSpeed: 16
 		Offset: 0,0,0
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped || blinded
@@ -2354,7 +2368,7 @@ ATMZ:
 		IconPalette: chrome
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses
-		Weaknesses: • Weak vs Infantry, Buildings
+		Weaknesses: • Weak vs Infantry, Buildings\n• Cannot attack Aircraft
 		Attributes: • Atomizes up to 4 targets\n• Affected targets take damage over time\n• Affected targets have reduced speed\n• Can traverse water
 	Mobile:
 		Speed: 72
@@ -2404,6 +2418,7 @@ TPOD:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
+	Inherits@ONRESOURCE: ^OnResourceConditions
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 281
@@ -2413,7 +2428,7 @@ TPOD:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
 		Weaknesses: • Cannot attack Aircraft
-		Attributes: • Can crush concrete walls.
+		Attributes: • Can crush concrete walls.\n• Self repairs on Tiberium or other resources when not in combat.
 	Voiced:
 		VoiceSet: TripodVoice
 	Valued:
@@ -2481,6 +2496,21 @@ TPOD:
 		Modifier: 115
 	WithIdleOverlay@MINDCONTROL:
 		Offset: 0,0,1024
+	ChangesHealth@THEAL:
+		Step: 0
+		PercentageStep: 1
+		Delay: 15
+		StartIfBelow: 100
+		DamageCooldown: 150
+		RequiresCondition: on-resource
+	WithDecoration@TibRepair:
+		Image: select
+		Palette: chrome
+		Sequence: repair-small
+		Position: Center
+		RequiresCondition: on-resource && damaged
+		BlinkInterval: 15
+		BlinkPattern: on, off
 
 RPTP:
 	Inherits: TPOD
@@ -2489,7 +2519,7 @@ RPTP:
 		BuildPaletteOrder: 282
 		Prerequisites: scrt, ~vehicles.reaper, ~techlevel.high
 	TooltipExtras:
-		Attributes: • Weapons empowered by Tiberium
+		Attributes: • Can crush concrete walls.\n• Weapons empowered by Tiberium or other resources\n• Self repairs on Tiberium or other resources when not in combat.
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Valued:
@@ -2497,7 +2527,7 @@ RPTP:
 	Tooltip:
 		Name: Reaper Tripod
 	Health:
-		HP: 95000
+		HP: 98000
 	SpawnActorOnDeath:
 		Actor: RPTP.Husk
 	AttackTurreted:
@@ -2932,6 +2962,7 @@ TORM:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@HULLREGEN: ^HullRegen
+	Inherits@SHIELDS: ^ScrinShields
 	Inherits@MothershipRearmable: ^MothershipRearmable
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Buildable:
@@ -3054,12 +3085,14 @@ TORM:
 		RequiresCondition: resupplying
 	KillsSelf@Emp:
 		RequiresCondition: empdisable && cruising
+	Shielded:
+		MaxStrength: 4000
 	GpsRadarDot:
 		Sequence: Plane
 	Targetable@MothershipRearmable:
-		RequiresCondition: ammo < 5
+		RequiresCondition: ammo < 16
 	ReloadAmmoPool@MothershipRearmable:
-		Count: 1
+		Count: 4
 	-SoundOnDamageTransitionCA:
 
 ENRV:
@@ -3202,6 +3235,7 @@ DEVA:
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
 	Inherits@FleetRecallable: ^FleetRecallable
+	Inherits@SignalTransmitterSpeedBoost: ^SignalTransmitterSpeedBoost
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 111
@@ -3294,7 +3328,7 @@ DEVA:
 		CruiseAltitude: 2560
 		InitialFacing: 768
 		TurnSpeed: 16
-		Speed: 56
+		Speed: 62
 		AltitudeVelocity: 0c50
 		CanForceLand: False
 	Selectable:
@@ -3340,6 +3374,7 @@ PAC:
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
 	Inherits@FleetRecallable: ^FleetRecallable
+	Inherits@SignalTransmitterSpeedBoost: ^SignalTransmitterSpeedBoost
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 112
@@ -3381,7 +3416,7 @@ PAC:
 		CruiseAltitude: 2560
 		InitialFacing: 768
 		TurnSpeed: 16
-		Speed: 60
+		Speed: 62
 		AltitudeVelocity: 0c50
 		CanForceLand: False
 	Selectable:
@@ -3408,9 +3443,11 @@ PAC:
 		RequiresCondition: inva-loaded == 0
 		Sequence: fully-deployed
 		Name: fully-deployed
-	AttackFrontal:
-		FacingTolerance: 384
+	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped || blinded
+	Turreted:
+		TurnSpeed: 512
+		RealignDelay: 0
 	CarrierMaster@carr1:
 		Actors: inva, inva, inva, inva, inva, inva
 		RearmTicks: 0
@@ -3560,6 +3597,7 @@ MSHP:
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
 	Inherits@FleetRecallable: ^FleetRecallable
+	Inherits@SignalTransmitterSpeedBoost: ^SignalTransmitterSpeedBoost
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 113
@@ -3622,7 +3660,7 @@ MSHP:
 		CruiseAltitude: 3c512
 		InitialFacing: 768
 		TurnSpeed: 512
-		Speed: 38
+		Speed: 62
 		AltitudeVelocity: 0c50
 		CanForceLand: False
 		Voice: Move
@@ -3721,7 +3759,7 @@ MSHP:
 	SpawnActorAbility:
 		Actor: wormhole
 		SkipMakeAnimations: false
-		Range: 28c0
+		Range: 18c0
 		CircleColor: 9988ff
 		SpawnSounds: wormhole-open.aud
 		SelectTargetSpeechNotification: SelectTarget
@@ -4299,9 +4337,9 @@ SFAC:
 		Condition: invulnerability
 	TransferTimedExternalConditionOnTransform@INVIS:
 		Condition: invisibility
-	SpawnActorsOnSell:
+	SpawnActorsOnSellCA:
 		ActorTypes: s1,s1,s1,s1,s6
-		GuaranteedActorTypes: s1,s1
+		GuaranteedActorTypes: s1, s1
 	-UpdatesBuildOrder:
 
 REAC:
@@ -4949,7 +4987,7 @@ SIGN:
 		BuildLimit: 1
 		IconPalette: chromes
 	TooltipExtras:
-		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked
+		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked\n• Boosts speed of fleet ships by 15%
 	-Capturable:
 	-CaptureNotification:
 	-CapturableProgressBar:
@@ -5080,7 +5118,7 @@ SILO.SCRIN:
 		RequiresSelection: true
 		PipCount: 5
 	-MustBeDestroyed:
-	-SpawnActorsOnSell:
+	-SpawnActorsOnSellCA:
 	Power:
 		Amount: -10
 	Selectable:
@@ -5615,6 +5653,7 @@ BUZZ:
 		Condition: alive
 		Color: 777777
 	ProximityExternalCondition@Blind:
+		MaximumVerticalOffset: 512
 		Range: 1c0
 		Condition: blinded
 		ValidRelationships: Enemy, Neutral

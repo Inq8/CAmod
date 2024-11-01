@@ -1476,10 +1476,11 @@ SHOK:
 		RequiresCondition: charge-fire
 	TakeCover:
 		ProneOffset: 227,0,-245
-	AttackFrontal:
+	AttackFrontalCharged:
 		Voice: Attack
+		FacingTolerance: 32
+		ChargeLevel: 0,2
 		PauseOnCondition: being-warped || blinded
-		FacingTolerance: 0
 	AttackMove:
 		AttackMoveCondition: attack-move
 		Voice: Move
@@ -2180,9 +2181,10 @@ SNIP:
 		Palette: temptd
 		Position: TopRight
 		RequiresCondition: hidden
-	AttackFrontal:
+	AttackFrontalCharged:
 		Voice: Attack
-		FacingTolerance: 0
+		FacingTolerance: 32
+		ChargeLevel: 0,2
 		PauseOnCondition: being-warped || blinded
 	WithInfantryBody:
 		AttackSequences:
@@ -2460,10 +2462,11 @@ ACOL:
 	TakeCover:
 		ProneOffset: 227,0,-245
 		SpeedModifier: 70
-	AttackFrontal:
+	AttackFrontalCharged:
 		Voice: Attack
+		FacingTolerance: 32
+		ChargeLevel: 0,2
 		PauseOnCondition: being-warped || blinded
-		FacingTolerance: 0
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		IdleSequences: idle3
@@ -2511,11 +2514,11 @@ TPLR:
 	Voiced:
 		VoiceSet: TemplarVoice
 	Armament@PRIMARY:
-		Weapon: PortaLaser
+		Weapon: PortaLaser.Templar
 		LocalOffset: 427,0,341
 		RequiresCondition: !quantum-upgrade
 	Armament@PRIMARYUPG:
-		Weapon: PortaLaser.UPG
+		Weapon: PortaLaser.Templar.UPG
 		LocalOffset: 427,0,341
 		RequiresCondition: quantum-upgrade
 	GrantConditionOnPrerequisite@QUANTUM:
@@ -2822,9 +2825,10 @@ E8:
 		Weapon: RadTrooperBeam
 	TakeCover:
 		ProneOffset: 384,0,-395
-	AttackFrontal:
+	AttackFrontalCharged:
+		FacingTolerance: 32
+		ChargeLevel: 0,2
 		PauseOnCondition: being-warped || blinded
-		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	WithProductionIconOverlay:
@@ -2893,7 +2897,7 @@ DESO:
 		Voice: Move
 	Guard:
 		Voice: Move
-	AttackFrontal:
+	AttackFrontalCharged:
 		Voice: Attack
 		PauseOnCondition: being-warped || blinded || !undeployed
 	GrantConditionOnDeploy:
@@ -4473,7 +4477,7 @@ CMSR:
 	IgnoresDisguise:
 	DetectCloaked:
 		DetectionTypes: Cloak, AirCloak, Thief
-		Range: 6c0
+		Range: 7c0
 
 ZTRP:
 	Inherits: ^Soldier
@@ -4552,7 +4556,7 @@ ZTRP:
 		LandingSounds: ztrp-land1.aud, ztrp-land2.aud
 		LeapCondition: jumping
 		ShowSelectionBarWhenFull: false
-		ChargeDelay: 150
+		ChargeDelay: 175
 		SelectionBarColor: ffaa00
 		CircleColor: ffaa00a0
 		MaxDistance: 7
@@ -4696,10 +4700,11 @@ ENFO:
 	Armament@BATF:
 		Name: batf
 		Weapon: EnforcerShotgun
-	AttackFrontal:
+	AttackFrontalCharged:
 		Voice: Attack
+		FacingTolerance: 32
+		ChargeLevel: 0,2
 		PauseOnCondition: being-warped || blinded
-		FacingTolerance: 0
 	AttackMove:
 		Voice: Move
 	Passenger:
