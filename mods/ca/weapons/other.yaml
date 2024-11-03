@@ -785,7 +785,6 @@ PlaceC4:
 
 PlaceC4Seal:
 	Inherits: PlaceC4
-	ValidTargets: C4Plantable
 	InvalidTargets: Vehicle, C4Attached, TNTAttached, C4Immune
 	Warhead@AttachDelayedWeapon: AttachDelayedWeapon
 		TriggerTime: 20
@@ -793,6 +792,11 @@ PlaceC4Seal:
 		ScaleTriggerTimeWithValue: true
 	Warhead@highlight: GrantExternalConditionCA
 		ValidTargets: Ground, Structure
+
+PlaceC4Assassin:
+	Inherits: PlaceC4
+	Warhead@AttachDelayedWeapon: AttachDelayedWeapon
+		Weapon: AssassinC4
 
 PrepareC4Seal:
 	Inherits: PlaceC4Seal
@@ -829,6 +833,11 @@ C4:
 		RandomClusterCount: 3
 		Dimensions: 3,3
 		Footprint: xxx xxx xxx
+
+AssassinC4:
+	Inherits: C4
+	Warhead@1Dam: HealthPercentageDamage
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, AssassinC4
 
 Ivanbomb:
 	Inherits: ^Artillery

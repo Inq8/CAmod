@@ -1247,6 +1247,13 @@ WEAP:
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
 		UseTargetFaction: true
+	SpawnActorOnDeath@STOLENTECH:
+		Actor: stolentech.weap
+		OwnerType: Killer
+		DeathType: AssassinC4
+	SpawnActorOnMindControlled@STOLENTECH:
+		Actor: stolentech.weap
+		OwnerType: Master
 	-ActorPreviewPlaceBuildingPreview:
 	SequencePlaceBuildingPreview:
 		Sequence: place
@@ -1639,6 +1646,13 @@ HPAD:
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
 		UseTargetFaction: true
+	SpawnActorOnDeath@STOLENTECH:
+		Actor: stolentech.hpad
+		OwnerType: Killer
+		DeathType: AssassinC4
+	SpawnActorOnMindControlled@STOLENTECH:
+		Actor: stolentech.hpad
+		OwnerType: Master
 
 AFLD:
 	Inherits: ^Building
@@ -1717,6 +1731,13 @@ AFLD:
 		Proxy: stolentech.afld
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
+	SpawnActorOnDeath@STOLENTECH:
+		Actor: stolentech.afld
+		OwnerType: Killer
+		DeathType: AssassinC4
+	SpawnActorOnMindControlled@STOLENTECH:
+		Actor: stolentech.afld
+		OwnerType: Master
 	WithResupplyAnimation:
 		RequiresCondition: !build-incomplete
 
@@ -2081,6 +2102,13 @@ BARR:
 		Proxy: stolentech.barr
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
+	SpawnActorOnDeath@STOLENTECH:
+		Actor: stolentech.barr
+		OwnerType: Killer
+		DeathType: AssassinC4
+	SpawnActorOnMindControlled@STOLENTECH:
+		Actor: stolentech.barr
+		OwnerType: Master
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
@@ -2213,6 +2241,13 @@ TENT:
 		Proxy: stolentech.tent
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
+	SpawnActorOnDeath@STOLENTECH:
+		Actor: stolentech.tent
+		OwnerType: Killer
+		DeathType: AssassinC4
+	SpawnActorOnMindControlled@STOLENTECH:
+		Actor: stolentech.tent
+		OwnerType: Master
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
@@ -2707,6 +2742,13 @@ PYLE:
 		Proxy: stolentech.pyle
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
+	SpawnActorOnDeath@STOLENTECH:
+		Actor: stolentech.pyle
+		OwnerType: Killer
+		DeathType: AssassinC4
+	SpawnActorOnMindControlled@STOLENTECH:
+		Actor: stolentech.pyle
+		OwnerType: Master
 	InfiltrateForSupportPower@spy:
 		Proxy: barracks.upgraded
 		Types: SpyInfiltrate
@@ -2799,6 +2841,13 @@ HAND:
 		Proxy: stolentech.hand
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
+	SpawnActorOnDeath@STOLENTECH:
+		Actor: stolentech.hand
+		OwnerType: Killer
+		DeathType: AssassinC4
+	SpawnActorOnMindControlled@STOLENTECH:
+		Actor: stolentech.hand
+		OwnerType: Master
 	Power:
 		Amount: -20
 	ProvidesPrerequisite@buildingname:
@@ -2918,6 +2967,13 @@ WEAP.TD:
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
 		UseTargetFaction: true
+	SpawnActorOnDeath@STOLENTECH:
+		Actor: stolentech.weap.td
+		OwnerType: Killer
+		DeathType: AssassinC4
+	SpawnActorOnMindControlled@STOLENTECH:
+		Actor: stolentech.weap.td
+		OwnerType: Master
 	-ActorPreviewPlaceBuildingPreview:
 	SequencePlaceBuildingPreview:
 		Sequence: place
@@ -3028,6 +3084,13 @@ AIRS:
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
 		UseTargetFaction: true
+	SpawnActorOnDeath@STOLENTECH:
+		Actor: stolentech.airs
+		OwnerType: Killer
+		DeathType: AssassinC4
+	SpawnActorOnMindControlled@STOLENTECH:
+		Actor: stolentech.airs
+		OwnerType: Master
 	ProvidesPrerequisite@buildingname:
 	InfiltrateForSupportPower@spy:
 		Proxy: vehicles.upgraded
@@ -3979,6 +4042,13 @@ HPAD.TD:
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
 		UseTargetFaction: true
+	SpawnActorOnDeath@STOLENTECH:
+		Actor: stolentech.hpad.td
+		OwnerType: Killer
+		DeathType: AssassinC4
+	SpawnActorOnMindControlled@STOLENTECH:
+		Actor: stolentech.hpad.td
+		OwnerType: Master
 
 PROC.TD:
 	Inherits: ^BuildingTD
@@ -4192,6 +4262,13 @@ AFLD.GDI:
 		Proxy: stolentech.afld.gdi
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
+	SpawnActorOnDeath@STOLENTECH:
+		Actor: stolentech.afld.gdi
+		OwnerType: Killer
+		DeathType: AssassinC4
+	SpawnActorOnMindControlled@STOLENTECH:
+		Actor: stolentech.afld.gdi
+		OwnerType: Master
 	SpawnActorOnDeath:
 		Actor: n1
 	SpawnActorsOnSellCA:

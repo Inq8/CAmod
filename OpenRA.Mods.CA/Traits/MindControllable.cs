@@ -63,13 +63,10 @@ namespace OpenRA.Mods.CA.Traits
 
 		public Actor Master { get; private set; }
 
-		readonly INotifyMindControlled[] notifiers;
-
 		public MindControllable(Actor self, MindControllableInfo info)
 			: base(info)
 		{
 			this.info = info;
-			notifiers = self.TraitsImplementing<INotifyMindControlled>().ToArray();
 		}
 
 		public void LinkMaster(Actor self, Actor master)
@@ -101,8 +98,8 @@ namespace OpenRA.Mods.CA.Traits
 				revoking = false;
 			});
 
-			foreach (var n in notifiers)
-				n.MindControlled(self, master);
+			foreach (var notify in self.TraitsImplementing<INotifyMindControlled>())
+				notify.MindControlled(self, master);
 		}
 
 		void UnlinkMaster(Actor self, Actor master)
@@ -122,8 +119,8 @@ namespace OpenRA.Mods.CA.Traits
 
 			Master = null;
 
-			foreach (var n in notifiers)
-				n.Released(self, master);
+			foreach (var notify in self.TraitsImplementing<INotifyMindControlled>())
+				notify.Released(self, master);
 		}
 
 		public void RevokeMindControl(Actor self, int ticks)

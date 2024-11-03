@@ -1153,7 +1153,7 @@ HACK:
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Drones
 		Weaknesses: • Cannot attack Infantry, Aircraft, Vehicles (other than Drones)
-		Attributes: • Can capture enemy structures from range\n• Control lost if the Hacker dies
+		Attributes: • Can take control of enemy structures from range\n• Control lost if the Hacker dies\n• Hack production buildings to steal technology\n    • Allies: Cryo Mortar, Reckoner, Phantom\n    • Soviets: Cyberdog, Cyclops, Kamov\n    • GDI: Sonic Mortar, Basilisk, Shade\n    • Nod: Chem Mortar, Mantis, Vertigo\n    • Scrin: Cyberscrin, Viper, Manticore
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -2431,7 +2431,7 @@ ASSA:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Buildings, Defenses
 		Weaknesses: • Weak vs Heavy Armor, Light Armor\n• Cannot attack aircraft
-		Attributes: • Camouflaged when not moving\n• Plants C4 to destroy structures
+		Attributes: • Camouflaged when not moving\n• Plants C4 to destroy structures\n• Destroy production buildings to steal technology\n    • Allies: Cryo Mortar, Reckoner, Phantom\n    • Soviets: Cyberdog, Cyclops, Kamov\n    • GDI: Sonic Mortar, Basilisk, Shade\n    • Nod: Chem Mortar, Mantis, Vertigo\n    • Scrin: Cyberscrin, Viper, Manticore
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -2458,7 +2458,7 @@ ASSA:
 		Name: batf
 		MuzzleSequence: garrison-muzzle
 	Armament@C4Place:
-		Weapon: PlaceC4Seal
+		Weapon: PlaceC4Assassin
 		Cursor: c4
 		OutsideRangeCursor: c4
 		Name: secondary
@@ -3465,6 +3465,12 @@ BRUT:
 		Delay: 25
 		StartIfBelow: 50
 		DamageCooldown: 150
+	GrantConditionOnPrerequisite@Improved:
+		Condition: impmuta-upgrade
+		Prerequisites: impmuta.upgrade
+	SpeedMultiplier@Improved:
+		RequiresCondition: impmuta-upgrade
+		Modifier: 120
 	-TakeCover:
 	-Captures@DRIVER_KILL:
 	-CaptureManager:
