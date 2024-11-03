@@ -3163,10 +3163,26 @@ SCRN:
 		Weapon: ScrinTorp
 		LocalOffset: 0,213,-85, 0,-213,-85
 		PauseOnCondition: !ammo
+		RequiresCondition: !wrath-covenant
+		AmmoUsage: 4
 	Armament@SECONDARY:
 		Weapon: ScrinTorpAA
 		LocalOffset: 0,213,-85, 0,-213,-85
 		PauseOnCondition: !ammo
+		RequiresCondition: !wrath-covenant
+		AmmoUsage: 4
+	Armament@PRIMARYUPG:
+		Weapon: ScrinTorp
+		LocalOffset: 0,213,-85, 0,-213,-85
+		PauseOnCondition: !ammo
+		RequiresCondition: wrath-covenant
+		AmmoUsage: 3
+	Armament@SECONDARYUPG:
+		Weapon: ScrinTorpAA
+		LocalOffset: 0,213,-85, 0,-213,-85
+		PauseOnCondition: !ammo
+		RequiresCondition: wrath-covenant
+		AmmoUsage: 3
 	AttackAircraft:
 		FacingTolerance: 80
 		Voice: Attack
@@ -3191,14 +3207,21 @@ SCRN:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
 	AmmoPool:
-		Ammo: 9
-		ReloadDelay: 20
+		Ammo: 36
+		ReloadDelay: 5
 		AmmoCondition: ammo
 	WithAmmoPipsDecoration:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
 		PipCount: 3
+		RequiresCondition: !wrath-covenant
+	WithAmmoPipsDecoration@UPG:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
+		PipCount: 4
+		RequiresCondition: wrath-covenant
 	Contrail@1:
 		Offset: -300,-143,0
 		StartColorUsePlayerColor: false
@@ -3254,6 +3277,9 @@ SCRN:
 		DestroyedSounds: vcomdi1a.aud, vcomdi2a.aud
 	EjectOnDeath:
 		ChuteSound: gejecta.aud
+	GrantConditionOnPrerequisite@Wrath:
+		Condition: wrath-covenant
+		Prerequisites: wrath.covenant
 
 HORN:
 	Inherits: ^NeutralPlane

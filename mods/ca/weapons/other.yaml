@@ -804,7 +804,7 @@ PrepareC4Seal:
 	Warhead@ProgressBar: GrantExternalConditionCA
 		Range: 0c256
 		Condition: c4seal-preparing
-		Duration: 25
+		Duration: 26
 		ValidTargets: Structure
 
 C4:
@@ -3176,6 +3176,33 @@ ViperLaser:
 		Colors: ff0000E6, cc0000E6
 	Warhead@1Dam: SpreadDamage
 		Damage: 1550
+
+AvatarLaser:
+	ReloadDelay: 105
+	ValidTargets: Ground, Water
+	Range: 7c0
+	Report: avtr-fire1.aud, avtr-fire2.aud, avtr-fire3.aud
+	Projectile: LaserZapCA
+		Width: 56
+		HitAnim: laserfire
+		Color: FF000080
+		ZOffset: 512
+		SecondaryBeam: true
+		SecondaryBeamWidth: 90
+		SecondaryBeamZOffset: 511
+		SecondaryBeamColor: FF000040
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 25000
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		Versus:
+			None: 250
+			Wood: 65
+			Concrete: 60
+			Brick: 50
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Scorch-NoFlame
+		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees, Creep
 
 ShadeEmp:
 	Inherits: EnlightenedEmp

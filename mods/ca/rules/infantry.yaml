@@ -2325,12 +2325,9 @@ SAB:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Buildable:
-		Queue: InfantrySQ, InfantryMQ
-		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 113
-		Prerequisites: anyradar, ~hand, ~techlevel.medium
-		Description: Covert infantry that infiltrates enemy structures\n  to steal or lock technology.
+		Queue: Infiltrators
 	TooltipExtras:
+		Description: Covert infantry that infiltrates enemy structures\n  to steal or lock technology.
 		Strengths: • Strong vs Infantry
 		Weaknesses: • Can only attack Infantry
 		Attributes: • Can detect cloaked ground units and spies\n• Limited stealth (drains while moving)\n• Infiltrates production buildings to steal technology\n    • Allies: Cryo Mortar, Reckoner, Phantom\n    • Soviets: Cyberdog, Cyclops, Kamov\n    • GDI: Sonic Mortar, Basilisk, Shade\n    • Nod: Chem Mortar, Mantis, Vertigo\n    • Scrin: Cyberscrin, Viper, Manticore\n• Infiltrates radars/tech centers to lock technology
@@ -2347,7 +2344,7 @@ SAB:
 	RevealsShroud@GAPGEN:
 		Range: 6c0
 	Passenger:
-		CustomPipType: red
+		CustomPipType: blue
 		Voice: Move
 	Guard:
 		Voice: Move
@@ -2421,6 +2418,132 @@ SAB:
 		DischargingColor: EEEEEE
 		ChargeDelay: 75
 		ShowSelectionBarWhenFull: false
+	WithColoredSelectionBox@INVIS:
+		RequiresCondition: invisibility || hidden
+		ColorSource: Player
+
+ASSA:
+	Inherits: ^Soldier
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Buildable:
+		Queue: AssassinSquad
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Buildings, Defenses
+		Weaknesses: • Weak vs Heavy Armor, Light Armor\n• Cannot attack aircraft
+		Attributes: • Camouflaged when not moving\n• Plants C4 to destroy structures
+	Valued:
+		Cost: 500
+	Tooltip:
+		Name: Assassin
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 4500
+	Mobile:
+		Speed: 46
+		Voice: Move
+	RevealsShroud:
+		Range: 7c0
+		MinRange: 6c0
+		RevealGeneratedShroud: false
+	RevealsShroud@GAPGEN:
+		Range: 6c0
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Infantry
+	Armament@PRIMARY:
+		Weapon: sniper.assa
+	Armament@BATF:
+		Weapon: sniperBATF
+		Name: batf
+		MuzzleSequence: garrison-muzzle
+	Armament@C4Place:
+		Weapon: PlaceC4Seal
+		Cursor: c4
+		OutsideRangeCursor: c4
+		Name: secondary
+		PauseOnCondition: !prepared
+	Armament@C4Prepare:
+		Weapon: PrepareC4Seal
+		Cursor: c4
+		OutsideRangeCursor: c4
+		Name: tertiary
+	AmmoPool@PreparedC4:
+		Name: prepared-c4
+		Ammo: 1
+		InitialAmmo: 0
+		AmmoCondition: prepared
+		Armaments: secondary
+	ReloadAmmoPoolCA@PreparedC4:
+		AmmoPool: prepared-c4
+		Delay: 100
+		RequiresCondition: preparing-c4
+		ShowSelectionBar: false
+	ReloadAmmoPoolCA@CancelC4:
+		AmmoPool: prepared-c4
+		Delay: 1
+		Count: -1
+		ShowSelectionBar: false
+		RequiresCondition: !preparing-c4 && prepared
+	GrantConditionOnAttack@PreparingC4:
+		Condition: preparing-c4
+		ArmamentNames: tertiary
+		RevokeDelay: 27
+	Demolition:
+		DetonationDelay: 45
+		Voice: Attack
+		DamageTypes: ExplosionDeath
+	Cloak@NORMAL:
+		InitialDelay: 200
+		CloakDelay: 200
+		CloakedCondition: hidden
+		Palette: cloaktd
+		CloakSound: gstealon.aud
+		UncloakSound: gstealof.aud
+		IsPlayerPalette: true
+		DetectionTypes: Cloak
+		RequiresCondition: !cloak-force-disabled && !being-warped
+		PauseOnCondition: invisibility
+		UncloakOn: Move, Unload, Infiltrate, Demolish, Dock, Attack
+	Cloak@CRATE-CLOAK:
+		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden)
+	GrantConditionOnDamageState@UNCLOAK:
+		Condition: cloak-force-disabled
+		ValidDamageStates: Heavy, Critical
+	WithDecoration@hidden:
+		Image: pips
+		Sequence: pip-hidden
+		Palette: temptd
+		Position: TopRight
+		RequiresCondition: hidden
+	AttackFrontalCharged:
+		Voice: Attack
+		FacingTolerance: 32
+		ChargeLevel: 0,2
+		PauseOnCondition: being-warped || blinded
+		Armaments: primary, secondary, tertiary
+	WithInfantryBody:
+		AttackSequences:
+			primary: shoot
+			secondary: stand
+			tertiary: stand
+		StandSequences: stand
+		RequiresCondition: !parachute && !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
+	Passenger:
+		CustomPipType: blue
+		Voice: Move
+	Guard:
+		Voice: Move
+	Voiced:
+		VoiceSet: SniperVoice
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || hidden
 		ColorSource: Player
@@ -3017,7 +3140,7 @@ N3C:
 	Valued:
 		Cost: 400
 	Tooltip:
-		Name: Cyborg Reaper
+		Name: Cyborg Rocket Soldier
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	-TakeCover:
@@ -3037,7 +3160,7 @@ N3C:
 	Guard:
 		Voice: Move
 	Voiced:
-		VoiceSet: ReaperVoice
+		VoiceSet: CyborgVoice
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		RequiresCondition: !parachute && !being-warped
@@ -3103,9 +3226,9 @@ RMBC:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
-		BuildPaletteOrder: 231
+		BuildPaletteOrder: 232
 		IconPalette: chrometd
-		Prerequisites: ~infantry.nod, tmpp, advcyborg.upgrade, ~techlevel.high
+		Prerequisites: ~infantry.nod, tmpp, advcyber.upgrade, ~!wrath.covenant, ~techlevel.high
 		Description: Elite cyborg infantry unit armed with\n  a plasma cannon.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
@@ -4104,7 +4227,7 @@ ENLI:
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 230
 		IconPalette: chrometd
-		Prerequisites: ~infantry.nod, tmpp, advcyborg.upgrade, ~techlevel.high
+		Prerequisites: ~infantry.nod, tmpp, advcyber.upgrade, ~!unity.covenant, ~techlevel.high
 		Description: Heavy cyborg infantry unit armed with\n  a particle cannon that deals area damage.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
@@ -4824,3 +4947,90 @@ CRYT:
 	GrantConditionOnAttackCA:
 		Condition: attacking
 		RevokeDelay: 6
+
+REAP:
+	Inherits: ^Cyborg
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@EMP: ^EmpDisable
+	Inherits@chrono: ^Chronoshiftable
+	Inherits@C4Plantable: ^C4Plantable
+	RenderSprites:
+	Buildable:
+		Queue: InfantrySQ, InfantryMQ, CyborgMQ
+		BuildAtProductionType: Cyborg
+		BuildPaletteOrder: 231
+		IconPalette: chrometd
+		Prerequisites: ~infantry.nod, tmpp, advcyber.upgrade, unity.covenant, ~techlevel.high
+		Description: Heavy cyborg with concussive missiles.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Aircraft
+		Weaknesses: • Weak vs Infantry
+		Attributes: • Heals on Tiberium
+	Valued:
+		Cost: 1000
+	Tooltip:
+		Name: Cyborg Reaper
+	-TakeCover:
+	-Crushable:
+	-KillsSelf@Immolate:
+	Targetable:
+		TargetTypes: Ground, Vehicle
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
+	-Targetable@HEAL:
+	Targetable@REPAIR:
+		RequiresCondition: !parachute && damaged && !being-warped && !repair-cooldown
+		TargetTypes: Repair
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Armor:
+		Type: Heavy
+	Health:
+		HP: 30000
+	Mobile:
+		Speed: 72
+		Voice: Move
+		PauseOnCondition: being-warped || empdisable
+	AttackFrontal:
+		Voice: Attack
+		PauseOnCondition: being-warped || empdisable
+		FacingTolerance: 0
+	AttackMove:
+		Voice: Move
+	Passenger:
+		Voice: Move
+		CargoType: Vehicle
+	Guard:
+		Voice: Move
+	Voiced:
+		VoiceSet: ReaperVoice
+	Armament@PRIMARY:
+		Weapon: Dragon
+		LocalOffset: 300,0,300
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
+	WithInfantryBody:
+		-IdleSequences:
+		DefaultAttackSequence: shoot
+		StandSequences: stand, stand2
+		RequiresCondition: !parachute && !being-warped && !empdisable
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
+	WithInfantryBody@Warped:
+		RequiresCondition: being-warped || empdisable
+	-WithDeathAnimation:
+	GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
+		Condition: repair-cooldown
+		RequiredHealing: 85000
+		StackDuration: 1000
+		MinimumHealing: 2500
+		DamageTypes: DirectRepair
+		ShowSelectionBar: true
+	Explodes:
+		Weapon: UnitExplodeSmall
+		EmptyWeapon: UnitExplodeSmall
+		RequiresCondition: !being-warped

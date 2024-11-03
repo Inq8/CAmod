@@ -3591,7 +3591,7 @@ HQ:
 	Inherits@SHADOWTEAMPOWER: ^ShadowTeamPower
 	Inherits@@INFERNOBOMBPOWER: ^InfernoBombPower
 	Inherits@CASHHACKPOWER: ^CashHackPower
-	Inherits@HACKERCELLPOWER: ^HackerCellPower
+	Inherits@OVERLOADPOWER: ^OverloadPower
 	Inherits@TECHLOCKABLE: ^TechLockable
 	Inherits@ProductionOptimizer1: ^ProductionOptimizer1
 	Selectable:
@@ -5670,7 +5670,7 @@ UPGC.BOMB:
 		Name: Upgrade: Firestorm Missile System
 	Buildable:
 		Queue: Upgrade
-		BuildPaletteOrder: 9
+		BuildPaletteOrder: 8
 		Prerequisites: ~player.gdi, upgc, !upgc.plugged, bombard2.strat, ~bombard.strat, ~!seek.strat, ~!hold.strat, ~techlevel.high
 		Description: Provides an napalm rocket barrage.
 		IconPalette: chrometd
@@ -5692,7 +5692,7 @@ UPGC.SEEK:
 		Name: Upgrade: Advanced Radar System
 	Buildable:
 		Queue: Upgrade
-		BuildPaletteOrder: 12
+		BuildPaletteOrder: 10
 		Prerequisites: ~player.gdi, upgc, !upgc.plugged, seek2.strat, ~seek.strat, ~!bombard.strat, ~!hold.strat, ~techlevel.high
 		Description: Provides detailed information on enemy locations.
 		IconPalette: chrometd
@@ -5714,7 +5714,7 @@ UPGC.HOLD:
 		Name: Upgrade: Nanoshield Generator
 	Buildable:
 		Queue: Upgrade
-		BuildPaletteOrder: 15
+		BuildPaletteOrder: 12
 		Prerequisites: ~player.gdi, upgc, !upgc.plugged, hold2.strat, ~hold.strat, ~!bombard.strat, ~!seek.strat, ~techlevel.high
 		Description: Provides the ability to shield units in an area
 		IconPalette: chrometd
@@ -5793,7 +5793,7 @@ TMPP:
 		Description: Provides access to cybernetic upgrades.
 		BuildLimit: 1
 	TooltipExtras:
-		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked\n• Special Ability: Cyborg Converter
+		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked\n• Can convert regular infantry to cyborgs
 	-Capturable:
 	-CaptureNotification:
 	-CapturableProgressBar:

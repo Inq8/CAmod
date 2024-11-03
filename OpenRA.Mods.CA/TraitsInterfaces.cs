@@ -78,4 +78,10 @@ namespace OpenRA.Mods.CA.Traits
 
 	[RequireExplicitImplementation]
 	public interface INotifyFallDown { void OnLanded(Actor self); }
+
+	[RequireExplicitImplementation]
+	public interface INotifyMindControlled { void MindControlled(Actor self, Actor master); void Released(Actor self, Actor master); }
+
+	[RequireExplicitImplementation]
+	public interface INotifyMindControlling { void MindControlling(Actor self, Actor slave); }
 }

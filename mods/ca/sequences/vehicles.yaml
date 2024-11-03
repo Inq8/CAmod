@@ -2937,3 +2937,42 @@ mole.destroyed:
 		Frames: 18
 		Filename: mole.shp
 		ZOffset: -512
+
+avtr:
+	Inherits: ^VehicleOverlays
+	idle:
+		Filename: avtr.shp
+		Facings: 32
+		UseClassicFacings: True
+	muzzle:
+		Filename: lasermuzzle.shp
+		Frames: 0,1,2,1,2
+		Length: *
+	move:
+		Filename: avtr.shp
+		Start: 32
+		Facings: 16
+		Length: 10
+		Tick: 140
+	shoot:
+		Filename: avtr.shp
+		Start: 192
+		Facings: 32
+		Length: 1
+		Tick: 420
+	make:
+		Filename: avtr.shp
+		Start: 224
+		Facings: 16
+		Length: 10
+		Tick: 140
+	icon:
+		Filename: avtricnh.shp
+
+avtr.destroyed:
+	Inherits: ^VehicleOverlays
+	idle:
+		Filename: avtr.shp
+		Facings: 32
+		UseClassicFacings: True
+		ZOffset: -512

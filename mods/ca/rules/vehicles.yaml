@@ -2044,6 +2044,22 @@ HARV:
 	TransferResourcesOnTransform:
 	UpdatesKillCount:
 		Type: BuildingsOrHarvesters
+	Cloak@Deceit:
+		InitialDelay: 75
+		CloakDelay: 76
+		CloakSound: trans1.aud
+		CloakedCondition: hidden
+		UncloakSound: appear1md.aud
+		Palette: cloak
+		IsPlayerPalette: false
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
+		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead && !parachute && deceit-covenant
+		PauseOnCondition: invisibility
+	Cloak@CRATE-CLOAK:
+		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
+	GrantConditionOnPrerequisite@Deceit:
+		Condition: deceit-covenant
+		Prerequisites: deceit.covenant
 
 HARV.Chrono:
 	Inherits: HARV
@@ -5359,6 +5375,22 @@ HARV.TD:
 		Modifier: 60
 	UpdatesKillCount:
 		Type: BuildingsOrHarvesters
+	Cloak@Deceit:
+		InitialDelay: 75
+		CloakDelay: 76
+		CloakSound: trans1.aud
+		CloakedCondition: hidden
+		UncloakSound: appear1md.aud
+		Palette: cloak
+		IsPlayerPalette: false
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
+		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead && !parachute && deceit-covenant
+		PauseOnCondition: invisibility
+	Cloak@CRATE-CLOAK:
+		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
+	GrantConditionOnPrerequisite@Deceit:
+		Condition: deceit-covenant
+		Prerequisites: deceit.covenant
 
 BTR:
 	Inherits: ^Tank
@@ -9698,3 +9730,83 @@ MOLE.UPG:
 		Image: mole
 	Cargo:
 		InitialUnits: tplr, tplr, tplr, n3c, n5
+
+AVTR:
+	Inherits: ^TankTD
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@SHRAPNEL: ^ThrowsShrapnel
+	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
+	Buildable:
+		Queue: VehicleSQ, VehicleMQ
+		BuildPaletteOrder: 273
+		Prerequisites: ~vehicles.nod, ~wrath.covenant, ~techlevel.high
+		Description: Heavy mech armed with a laser cannon.
+		IconPalette: chrometd
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
+		Weaknesses: • Cannot attack Aircraft
+		Attributes: • Can crush smaller vehicles and concrete walls\n• Self repairs to 50% out of combat
+	Valued:
+		Cost: 2000
+	Tooltip:
+		Name: Avatar
+	Selectable:
+		Bounds: 1280, 1900, 0, -250
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 78000
+	Armor:
+		Type: Heavy
+	Mobile:
+		TurnSpeed: 14
+		Speed: 56
+		Locomotor: sheavytracked
+		Voice: Move
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Armament:
+		Weapon: AvatarLaser
+		LocalOffset: 750,400,350
+		MuzzleSequence: muzzle
+		MuzzlePalette: caneon
+	AttackFrontal:
+		TargetFrozenActors: True
+		PauseOnCondition: empdisable || being-warped || blinded
+		FacingTolerance: 32
+		Voice: Attack
+	WithMuzzleOverlay:
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
+	Voiced:
+		VoiceSet: AvatarVoice
+	SpawnActorOnDeath:
+		Actor: AVTR.Husk
+		RequiresCondition: !being-warped
+	WithMoveAnimation:
+		ValidMovementTypes: Horizontal, Vertical, Turn
+		RequiresCondition: !unfolding && !attacking
+	WithAttackAnimation:
+		Sequence: shoot
+	WithEnabledAnimation:
+		Sequence: make
+	GrantTimedCondition@Make:
+		Condition: unfolding
+		Duration: 40
+	GrantConditionOnAttack@Attack:
+		Condition: attacking
+		RevokeDelay: 8
+	ChangesHealth:
+		PercentageStep: 1
+		Delay: 25
+		StartIfBelow: 50
+		DamageCooldown: 150

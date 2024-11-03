@@ -151,6 +151,8 @@ namespace OpenRA.Mods.CA.Traits
 		HashSet<Actor> slaveHistory;
 		GainsExperience gainsExperience;
 
+		readonly INotifyMindControlling[] notifiers;
+
 		public MindController(Actor self, MindControllerInfo info)
 			: base(info)
 		{
@@ -160,6 +162,8 @@ namespace OpenRA.Mods.CA.Traits
 			ResetProgress(self);
 			capacityModifiers = self.TraitsImplementing<MindControllerCapacityModifier>();
 			UpdateCapacity(self);
+
+			notifiers = self.TraitsImplementing<INotifyMindControlling>().ToArray();
 		}
 
 		protected override void Created(Actor self)
@@ -447,6 +451,9 @@ namespace OpenRA.Mods.CA.Traits
 			GiveExperience(currentTarget.Actor);
 			ControlComplete(self);
 			MaxControlledCheck(self);
+
+			foreach (var n in notifiers)
+				n.MindControlling(self, currentTarget.Actor);
 		}
 
 		void ControlComplete(Actor self)

@@ -17,7 +17,7 @@ Player:
 	Inherits@INTERCEPTORSPOWER: ^InterceptorsPower
 	Inherits@NANITEREPAIRPOWER: ^NaniteRepairPower
 	Inherits@NANITESHIELDPOWER: ^NaniteShieldPower
-	Inherits@HACKERCELLPOWER: ^HackerCellPower
+	Inherits@OVERLOADPOWER: ^OverloadPower
 	Inherits@SHADOWTEAMPOWER: ^ShadowTeamPower
 	Inherits@@INFERNOBOMBPOWER: ^InfernoBombPower
 	Inherits@FRENZYPOWER: ^FrenzyPower
@@ -117,11 +117,23 @@ Player:
 		-Prerequisites:
 		-EndChargeSpeechNotification:
 		ChargeInterval: 1
-	ProduceActorPowerCA@hackercell:
+	ProduceActorPowerCA@AssassinSquad:
 		-Prerequisites:
 		-EndChargeSpeechNotification:
 		ChargeInterval: 1
-	-ProduceActorPowerCA@hackercellAI:
+	ProduceActorPowerCA@HackerCell:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		ChargeInterval: 1
+	-ProduceActorPowerCA@HackerCellAI:
+	ProduceActorPowerCA@Infiltrators:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		ChargeInterval: 1
+	GrantExternalConditionPowerCA@Overload:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		ChargeInterval: 1
 	AirReinforcementsPower@ShadowTeam:
 		-Prerequisites:
 		-EndChargeSpeechNotification:
