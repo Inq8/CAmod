@@ -303,6 +303,12 @@ VEHICLES.SCRIN:
 	SpeedMultiplier@HYPERCHARGEDEBUFF:
 		Modifier: 75
 		RequiresCondition: hyperchargedebuff
+	FirepowerMultiplier@HYPERCHARGEDEBUFF:
+		Modifier: 80
+		RequiresCondition: hyperchargedebuff
+	ReloadDelayMultiplier@HYPERCHARGEDEBUFF:
+		Modifier: 150
+		RequiresCondition: hyperchargedebuff
 	FirepowerMultiplier@HyperAnathema:
 		Modifier: 35
 		RequiresCondition: hypercharged && anathema > 1
@@ -1519,7 +1525,6 @@ SEEK:
 	Armament@PRIMARY:
 		Weapon: PlasmaDiscs
 		LocalOffset: 320,-25,320, 320,25,320
-		PauseOnCondition: hyperchargedebuff
 		RequiresCondition: !hypercharged
 	Armament@PRIMARYCHARGED:
 		Weapon: PlasmaDiscs.Hypercharged
@@ -1605,7 +1610,6 @@ LACE:
 	Armament@PRIMARY:
 		Weapon: LaceratorShards
 		LocalOffset: 0,70,320, 0,-70,320
-		PauseOnCondition: hyperchargedebuff
 		RequiresCondition: !hypercharged
 	Armament@PRIMARYCHARGED:
 		Weapon: LaceratorShards.Hypercharged
@@ -4587,6 +4591,13 @@ PORT:
 		Proxy: stolentech.port
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
+	SpawnActorOnDeath@STOLENTECH:
+		Actor: stolentech.port
+		OwnerType: Killer
+		DeathType: AssassinC4
+	SpawnActorOnMindControlled@STOLENTECH:
+		Actor: stolentech.port
+		OwnerType: Master
 	InfiltrateForSupportPower@spy:
 		Proxy: barracks.upgraded
 		Types: SpyInfiltrate
@@ -4680,6 +4691,13 @@ WSPH:
 		Proxy: stolentech.wsph
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
+	SpawnActorOnDeath@STOLENTECH:
+		Actor: stolentech.wsph
+		OwnerType: Killer
+		DeathType: AssassinC4
+	SpawnActorOnMindControlled@STOLENTECH:
+		Actor: stolentech.wsph
+		OwnerType: Master
 	WithIdleOverlay:
 		RequiresCondition: !build-incomplete
 	GrantExternalConditionToProduced@DRONEEXIT:
@@ -4951,6 +4969,13 @@ GRAV:
 		Proxy: stolentech.grav
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
+	SpawnActorOnDeath@STOLENTECH:
+		Actor: stolentech.grav
+		OwnerType: Killer
+		DeathType: AssassinC4
+	SpawnActorOnMindControlled@STOLENTECH:
+		Actor: stolentech.grav
+		OwnerType: Master
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SabInfiltrate
@@ -5654,7 +5679,7 @@ BUZZ:
 		Color: 777777
 	ProximityExternalCondition@Blind:
 		MaximumVerticalOffset: 512
-		Range: 1c0
+		Range: 1c256
 		Condition: blinded
 		ValidRelationships: Enemy, Neutral
 

@@ -97,9 +97,12 @@ namespace OpenRA.Mods.CA.Traits
 				controlChanging = false;
 				revoking = false;
 			});
+
+			foreach (var notify in self.TraitsImplementing<INotifyMindControlled>())
+				notify.MindControlled(self, master);
 		}
 
-		public void UnlinkMaster(Actor self, Actor master)
+		void UnlinkMaster(Actor self, Actor master)
 		{
 			if (master == null)
 				return;
@@ -115,6 +118,9 @@ namespace OpenRA.Mods.CA.Traits
 			});
 
 			Master = null;
+
+			foreach (var notify in self.TraitsImplementing<INotifyMindControlled>())
+				notify.Released(self, master);
 		}
 
 		public void RevokeMindControl(Actor self, int ticks)

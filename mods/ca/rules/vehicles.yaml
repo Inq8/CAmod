@@ -457,6 +457,7 @@ NUKC:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
+		TurnSpeed: 20
 		Offset: 0,0,20
 	QuantizeFacingsFromSequence:
 		Sequence: idle
@@ -504,6 +505,7 @@ GTNK:
 		Weapon: 105mm
 		LocalOffset: 720,0,80
 	Turreted:
+		TurnSpeed: 20
 		Offset: 80,0,0
 	AttackTurreted:
 		Voice: Attack
@@ -795,6 +797,7 @@ GTNK.squad:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
+		TurnSpeed: 20
 		Offset: 0,0,60
 	Armament:
 		Weapon: 125mm
@@ -1055,6 +1058,7 @@ GTNK.squad:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
+		TurnSpeed: 20
 		Offset: 0,0,0
 	Armament:
 		Weapon: 125mmRhino
@@ -2040,6 +2044,22 @@ HARV:
 	TransferResourcesOnTransform:
 	UpdatesKillCount:
 		Type: BuildingsOrHarvesters
+	Cloak@Deceit:
+		InitialDelay: 75
+		CloakDelay: 76
+		CloakSound: trans1.aud
+		CloakedCondition: hidden
+		UncloakSound: appear1md.aud
+		Palette: cloak
+		IsPlayerPalette: false
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
+		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead && !parachute && deceit-covenant
+		PauseOnCondition: invisibility
+	Cloak@CRATE-CLOAK:
+		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
+	GrantConditionOnPrerequisite@Deceit:
+		Condition: deceit-covenant
+		Prerequisites: deceit.covenant
 
 HARV.Chrono:
 	Inherits: HARV
@@ -3242,9 +3262,9 @@ GDRN:
 		Prerequisites: ~vehicles.arc, ~!tow.upgrade, ~techlevel.low
 		Description: Fast scout & anti-tank drone.
 	TooltipExtras:
-		Strengths: • Strong vs Heavy Armor, Light Armor, Buildings\n• Immune to mind control
+		Strengths: • Strong vs Heavy Armor, Light Armor, Buildings
 		Weaknesses: • Weak vs Infantry, Defenses\n• Cannot attack Aircraft
-		Attributes: • Can detect spies and cloaked units.
+		Attributes: • Can detect spies and cloaked units\n• Immune to mind control
 	Valued:
 		Cost: 450
 	Tooltip:
@@ -4214,9 +4234,9 @@ MTNK.Drone:
 		Description: Remotely piloted battle tank.
 		BuildPaletteOrder: 91
 	TooltipExtras:
-		Strengths: • Strong vs Heavy Armor, Light Armor\n• Immune to mind control
-		Weaknesses: • Weak vs Infantry, Defenses\n• Cannot attack Aircraft\n• Requires active radar communication
-		Attributes: • Self repairs to 50% out of combat
+		Strengths: • Strong vs Heavy Armor, Light Armor
+		Weaknesses: • Weak vs Infantry, Defenses\n• Cannot attack Aircraft
+		Attributes: • Self repairs to 50% out of combat\n• Immune to mind control\n• Requires active radar communication
 		-RequiresCondition:
 	-Tooltip@LaserTank:
 	-TooltipExtras@LaserTank:
@@ -4332,9 +4352,9 @@ MDRN:
 		Prerequisites: anyradar, ~vehicles.arc, ~techlevel.medium
 		Description: Hovering drone with machine gun.
 	TooltipExtras:
-		Strengths: • Strong vs Infantry, Light Armor\n• Immune to mind control
+		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
-		Attributes: • Attaches to vehicles to provide support and repairs
+		Attributes: • Attaches to vehicles to provide support and repairs\n• Immune to mind control
 	Valued:
 		Cost: 225
 	UpdatesPlayerStatistics:
@@ -4647,9 +4667,9 @@ HTNK.Drone:
 		Prerequisites: ~mdrone.upgrade, gtek, ~vehicles.htnk, ~techlevel.high
 		Description: Remotely piloted heavy tank with anti-air capability.
 	TooltipExtras:
-		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry\n• Immune to mind control
+		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
 		Weaknesses: • Requires active radar communication
-		Attributes: • Can crush concrete walls\n• Self repairs out of combat
+		Attributes: • Can crush concrete walls\n• Self repairs out of combat\n• Immune to mind control
 	Valued:
 		Cost: 1500
 	Tooltip:
@@ -5355,6 +5375,22 @@ HARV.TD:
 		Modifier: 60
 	UpdatesKillCount:
 		Type: BuildingsOrHarvesters
+	Cloak@Deceit:
+		InitialDelay: 75
+		CloakDelay: 76
+		CloakSound: trans1.aud
+		CloakedCondition: hidden
+		UncloakSound: appear1md.aud
+		Palette: cloak
+		IsPlayerPalette: false
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
+		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead && !parachute && deceit-covenant
+		PauseOnCondition: invisibility
+	Cloak@CRATE-CLOAK:
+		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
+	GrantConditionOnPrerequisite@Deceit:
+		Condition: deceit-covenant
+		Prerequisites: deceit.covenant
 
 BTR:
 	Inherits: ^Tank
@@ -8017,9 +8053,9 @@ MEMP:
 		Prerequisites: gtek, ~vehicles.gdi, ~techlevel.high
 		Description: Remotely piloted vehicle, deploys to disable nearby vehicles & structures.
 	TooltipExtras:
-		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses, Buildings\n• Immune to mind control
-		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft\n• Requires active radar communication
-		Attributes: • Special Ability: EMP Shockwave
+		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses, Buildings
+		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
+		Attributes: • Special Ability: EMP Shockwave\n• Immune to mind control\n• Requires active radar communication
 	Valued:
 		Cost: 1150
 	Tooltip:
@@ -9694,3 +9730,83 @@ MOLE.UPG:
 		Image: mole
 	Cargo:
 		InitialUnits: tplr, tplr, tplr, n3c, n5
+
+AVTR:
+	Inherits: ^TankTD
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@SHRAPNEL: ^ThrowsShrapnel
+	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
+	Buildable:
+		Queue: VehicleSQ, VehicleMQ
+		BuildPaletteOrder: 273
+		Prerequisites: ~vehicles.nod, ~wrath.covenant, ~techlevel.high
+		Description: Heavy mech armed with a laser cannon.
+		IconPalette: chrometd
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
+		Weaknesses: • Cannot attack Aircraft
+		Attributes: • Can crush smaller vehicles and concrete walls\n• Self repairs to 50% out of combat
+	Valued:
+		Cost: 2000
+	Tooltip:
+		Name: Avatar
+	Selectable:
+		Bounds: 1280, 1900, 0, -250
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 78000
+	Armor:
+		Type: Heavy
+	Mobile:
+		TurnSpeed: 14
+		Speed: 56
+		Locomotor: sheavytracked
+		Voice: Move
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Armament:
+		Weapon: AvatarLaser
+		LocalOffset: 750,400,350
+		MuzzleSequence: muzzle
+		MuzzlePalette: caneon
+	AttackFrontal:
+		TargetFrozenActors: True
+		PauseOnCondition: empdisable || being-warped || blinded
+		FacingTolerance: 32
+		Voice: Attack
+	WithMuzzleOverlay:
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
+	Voiced:
+		VoiceSet: AvatarVoice
+	SpawnActorOnDeath:
+		Actor: AVTR.Husk
+		RequiresCondition: !being-warped
+	WithMoveAnimation:
+		ValidMovementTypes: Horizontal, Vertical, Turn
+		RequiresCondition: !unfolding && !attacking
+	WithAttackAnimation:
+		Sequence: shoot
+	WithEnabledAnimation:
+		Sequence: make
+	GrantTimedCondition@Make:
+		Condition: unfolding
+		Duration: 40
+	GrantConditionOnAttack@Attack:
+		Condition: attacking
+		RevokeDelay: 8
+	ChangesHealth:
+		PercentageStep: 1
+		Delay: 25
+		StartIfBelow: 50
+		DamageCooldown: 150

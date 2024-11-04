@@ -447,6 +447,9 @@ namespace OpenRA.Mods.CA.Traits
 			GiveExperience(currentTarget.Actor);
 			ControlComplete(self);
 			MaxControlledCheck(self);
+
+			foreach (var notify in self.TraitsImplementing<INotifyMindControlling>())
+				notify.MindControlling(self, currentTarget.Actor);
 		}
 
 		void ControlComplete(Actor self)

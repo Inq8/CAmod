@@ -1247,6 +1247,13 @@ WEAP:
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
 		UseTargetFaction: true
+	SpawnActorOnDeath@STOLENTECH:
+		Actor: stolentech.weap
+		OwnerType: Killer
+		DeathType: AssassinC4
+	SpawnActorOnMindControlled@STOLENTECH:
+		Actor: stolentech.weap
+		OwnerType: Master
 	-ActorPreviewPlaceBuildingPreview:
 	SequencePlaceBuildingPreview:
 		Sequence: place
@@ -1639,6 +1646,13 @@ HPAD:
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
 		UseTargetFaction: true
+	SpawnActorOnDeath@STOLENTECH:
+		Actor: stolentech.hpad
+		OwnerType: Killer
+		DeathType: AssassinC4
+	SpawnActorOnMindControlled@STOLENTECH:
+		Actor: stolentech.hpad
+		OwnerType: Master
 
 AFLD:
 	Inherits: ^Building
@@ -1717,6 +1731,13 @@ AFLD:
 		Proxy: stolentech.afld
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
+	SpawnActorOnDeath@STOLENTECH:
+		Actor: stolentech.afld
+		OwnerType: Killer
+		DeathType: AssassinC4
+	SpawnActorOnMindControlled@STOLENTECH:
+		Actor: stolentech.afld
+		OwnerType: Master
 	WithResupplyAnimation:
 		RequiresCondition: !build-incomplete
 
@@ -2081,6 +2102,13 @@ BARR:
 		Proxy: stolentech.barr
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
+	SpawnActorOnDeath@STOLENTECH:
+		Actor: stolentech.barr
+		OwnerType: Killer
+		DeathType: AssassinC4
+	SpawnActorOnMindControlled@STOLENTECH:
+		Actor: stolentech.barr
+		OwnerType: Master
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
@@ -2213,6 +2241,13 @@ TENT:
 		Proxy: stolentech.tent
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
+	SpawnActorOnDeath@STOLENTECH:
+		Actor: stolentech.tent
+		OwnerType: Killer
+		DeathType: AssassinC4
+	SpawnActorOnMindControlled@STOLENTECH:
+		Actor: stolentech.tent
+		OwnerType: Master
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
@@ -2707,6 +2742,13 @@ PYLE:
 		Proxy: stolentech.pyle
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
+	SpawnActorOnDeath@STOLENTECH:
+		Actor: stolentech.pyle
+		OwnerType: Killer
+		DeathType: AssassinC4
+	SpawnActorOnMindControlled@STOLENTECH:
+		Actor: stolentech.pyle
+		OwnerType: Master
 	InfiltrateForSupportPower@spy:
 		Proxy: barracks.upgraded
 		Types: SpyInfiltrate
@@ -2799,6 +2841,13 @@ HAND:
 		Proxy: stolentech.hand
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
+	SpawnActorOnDeath@STOLENTECH:
+		Actor: stolentech.hand
+		OwnerType: Killer
+		DeathType: AssassinC4
+	SpawnActorOnMindControlled@STOLENTECH:
+		Actor: stolentech.hand
+		OwnerType: Master
 	Power:
 		Amount: -20
 	ProvidesPrerequisite@buildingname:
@@ -2918,6 +2967,13 @@ WEAP.TD:
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
 		UseTargetFaction: true
+	SpawnActorOnDeath@STOLENTECH:
+		Actor: stolentech.weap.td
+		OwnerType: Killer
+		DeathType: AssassinC4
+	SpawnActorOnMindControlled@STOLENTECH:
+		Actor: stolentech.weap.td
+		OwnerType: Master
 	-ActorPreviewPlaceBuildingPreview:
 	SequencePlaceBuildingPreview:
 		Sequence: place
@@ -3028,6 +3084,13 @@ AIRS:
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
 		UseTargetFaction: true
+	SpawnActorOnDeath@STOLENTECH:
+		Actor: stolentech.airs
+		OwnerType: Killer
+		DeathType: AssassinC4
+	SpawnActorOnMindControlled@STOLENTECH:
+		Actor: stolentech.airs
+		OwnerType: Master
 	ProvidesPrerequisite@buildingname:
 	InfiltrateForSupportPower@spy:
 		Proxy: vehicles.upgraded
@@ -3591,7 +3654,7 @@ HQ:
 	Inherits@SHADOWTEAMPOWER: ^ShadowTeamPower
 	Inherits@@INFERNOBOMBPOWER: ^InfernoBombPower
 	Inherits@CASHHACKPOWER: ^CashHackPower
-	Inherits@HACKERCELLPOWER: ^HackerCellPower
+	Inherits@OVERLOADPOWER: ^OverloadPower
 	Inherits@TECHLOCKABLE: ^TechLockable
 	Inherits@ProductionOptimizer1: ^ProductionOptimizer1
 	Selectable:
@@ -3979,6 +4042,13 @@ HPAD.TD:
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
 		UseTargetFaction: true
+	SpawnActorOnDeath@STOLENTECH:
+		Actor: stolentech.hpad.td
+		OwnerType: Killer
+		DeathType: AssassinC4
+	SpawnActorOnMindControlled@STOLENTECH:
+		Actor: stolentech.hpad.td
+		OwnerType: Master
 
 PROC.TD:
 	Inherits: ^BuildingTD
@@ -4192,6 +4262,13 @@ AFLD.GDI:
 		Proxy: stolentech.afld.gdi
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
+	SpawnActorOnDeath@STOLENTECH:
+		Actor: stolentech.afld.gdi
+		OwnerType: Killer
+		DeathType: AssassinC4
+	SpawnActorOnMindControlled@STOLENTECH:
+		Actor: stolentech.afld.gdi
+		OwnerType: Master
 	SpawnActorOnDeath:
 		Actor: n1
 	SpawnActorsOnSellCA:
@@ -5670,7 +5747,7 @@ UPGC.BOMB:
 		Name: Upgrade: Firestorm Missile System
 	Buildable:
 		Queue: Upgrade
-		BuildPaletteOrder: 9
+		BuildPaletteOrder: 8
 		Prerequisites: ~player.gdi, upgc, !upgc.plugged, bombard2.strat, ~bombard.strat, ~!seek.strat, ~!hold.strat, ~techlevel.high
 		Description: Provides an napalm rocket barrage.
 		IconPalette: chrometd
@@ -5692,7 +5769,7 @@ UPGC.SEEK:
 		Name: Upgrade: Advanced Radar System
 	Buildable:
 		Queue: Upgrade
-		BuildPaletteOrder: 12
+		BuildPaletteOrder: 10
 		Prerequisites: ~player.gdi, upgc, !upgc.plugged, seek2.strat, ~seek.strat, ~!bombard.strat, ~!hold.strat, ~techlevel.high
 		Description: Provides detailed information on enemy locations.
 		IconPalette: chrometd
@@ -5714,7 +5791,7 @@ UPGC.HOLD:
 		Name: Upgrade: Nanoshield Generator
 	Buildable:
 		Queue: Upgrade
-		BuildPaletteOrder: 15
+		BuildPaletteOrder: 12
 		Prerequisites: ~player.gdi, upgc, !upgc.plugged, hold2.strat, ~hold.strat, ~!bombard.strat, ~!seek.strat, ~techlevel.high
 		Description: Provides the ability to shield units in an area
 		IconPalette: chrometd
@@ -5793,7 +5870,7 @@ TMPP:
 		Description: Provides access to cybernetic upgrades.
 		BuildLimit: 1
 	TooltipExtras:
-		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked\n• Special Ability: Cyborg Converter
+		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked\n• Can convert regular infantry to cyborgs
 	-Capturable:
 	-CaptureNotification:
 	-CapturableProgressBar:

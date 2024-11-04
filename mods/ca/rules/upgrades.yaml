@@ -82,7 +82,7 @@ bombard2.strat:
 	Tooltip:
 		Name: Strategy: Bombardment II
 	Buildable:
-		BuildPaletteOrder: 8
+		BuildPaletteOrder: 7
 		Prerequisites: ~player.gdi, gtek, ~bombard.strat, ~techlevel.high
 		Description: Increase Bombardment strategy bonuses.
 	TooltipExtras:
@@ -96,7 +96,7 @@ seek.strat:
 	Tooltip:
 		Name: Strategy: Seek & Destroy
 	Buildable:
-		BuildPaletteOrder: 10
+		BuildPaletteOrder: 9
 		Prerequisites: ~player.gdi, anyradar, ~!bombard.strat, ~!hold.strat, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Speed and weapon range focused strategy, required for:\n• TOW Missile Upgrade\n• Zone Raider\n• Hypersonic Missiles Upgrade\n\n
@@ -117,7 +117,7 @@ seek2.strat:
 	Tooltip:
 		Name: Strategy: Seek & Destroy II
 	Buildable:
-		BuildPaletteOrder: 11
+		BuildPaletteOrder: 9
 		Prerequisites: ~player.gdi, gtek, ~seek.strat, ~techlevel.high
 		Description: Increase Seek & Destroy strategy bonuses.
 	TooltipExtras:
@@ -131,7 +131,7 @@ hold.strat:
 	Tooltip:
 		Name: Strategy: Hold the Line
 	Buildable:
-		BuildPaletteOrder: 13
+		BuildPaletteOrder: 11
 		Prerequisites: ~player.gdi, anyradar, ~!bombard.strat, ~!seek.strat, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Defensive strategy, required for:\n• Point Defense Systems Upgrade\n• Zone Defender\n• Hammerhead Missiles Upgrade\n\n
@@ -152,7 +152,7 @@ hold2.strat:
 	Tooltip:
 		Name: Strategy: Hold the Line II
 	Buildable:
-		BuildPaletteOrder: 14
+		BuildPaletteOrder: 11
 		Prerequisites: ~player.gdi, gtek, ~hold.strat,  ~techlevel.high
 		Description: Increase Hold the Line strategy bonuses.
 	TooltipExtras:
@@ -302,22 +302,6 @@ stratmiss.upgrade:
 	RenderSprites:
 		Image: strategic.upgrade
 
-hypersonic.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Hypersonic Missiles
-	Buildable:
-		BuildPaletteOrder: 30
-		Prerequisites: ~player.gdi, gtek, ~seek.strat,~techlevel.high, ~!hailstorm.upgrade, ~!hammerhead.upgrade
-		IconPalette: chrometd
-		Description: Equip the MLRS/HMLRS with Hypersonic Missiles.\n\nUpgrades: MLRS/HMLRS
-	TooltipExtras:
-		Strengths: + Increased range, speed, precision and damage
-	Valued:
-		Cost: 1000
-	RenderSprites:
-		Image: hypersonic.upgrade
-
 hailstorm.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -334,6 +318,22 @@ hailstorm.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: hailstorm.upgrade
+
+hypersonic.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Hypersonic Missiles
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.gdi, gtek, ~seek.strat,~techlevel.high, ~!hailstorm.upgrade, ~!hammerhead.upgrade
+		IconPalette: chrometd
+		Description: Equip the MLRS/HMLRS with Hypersonic Missiles.\n\nUpgrades: MLRS/HMLRS
+	TooltipExtras:
+		Strengths: + Increased range, speed, precision and damage
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: hypersonic.upgrade
 
 hammerhead.upgrade:
 	Inherits: ^Upgrade
@@ -499,6 +499,51 @@ gyro.upgrade:
 #########################NOD#########
 ########################################
 
+wrath.covenant:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Covenant of Wrath
+	Buildable:
+		BuildPaletteOrder: 13
+		Prerequisites: ~player.nod, nod.covenants.available, ~!unity.covenant, ~!deceit.covenant, ~techlevel.medium
+		Description: Required for:\n• Avatar (replaces Cyborg Elite)\n• Assassin Squad\n• Compressed Plasma\n\n
+	TooltipExtras:
+		Attributes: (!) Only ONE Covenant may be chosen.
+	Valued:
+		Cost: 500
+	RenderSprites:
+		Image: wrath.covenant
+
+unity.covenant:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Covenant of Unity
+	Buildable:
+		BuildPaletteOrder: 14
+		Prerequisites: ~player.nod, nod.covenants.available, ~!wrath.covenant, ~!deceit.covenant, ~techlevel.medium
+		Description: Required for:\n• Cyborg Reaper (Replaces Enlightened)\n• Hacker Cell\n• Siphoned Funds\n\n
+	TooltipExtras:
+		Attributes: (!) Only ONE Covenant may be chosen.
+	Valued:
+		Cost: 500
+	RenderSprites:
+		Image: unity.covenant
+
+deceit.covenant:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Covenant of Deceit
+	Buildable:
+		BuildPaletteOrder: 15
+		Prerequisites: ~player.nod, nod.covenants.available, ~!unity.covenant, ~!wrath.covenant, ~techlevel.medium
+		Description: Required for:\n• Heavy Stealth Tank\n• Infiltrator Squad\n• Stealth Harvesters\n\n
+	TooltipExtras:
+		Attributes: (!) Only ONE Covenant may be chosen.
+	Valued:
+		Cost: 500
+	RenderSprites:
+		Image: deceit.covenant
+
 howi.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -543,7 +588,7 @@ tibcore.upgrade:
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.nod, tmpl, ~techlevel.high
-		Description: Upgrade to Tib Core missiles.\n\nUpgrades: Recon Bike\nUpgrades: Stealth Tank\nUpgrades: Cyborg Reaper\nUpgrades: Rocket Soldier
+		Description: Upgrade to Tib Core missiles.\n\nUpgrades: Recon Bike\nUpgrades: Stealth Tank\nUpgrades: Cyborg Rocket Soldier\nUpgrades: Rocket Soldier
 	TooltipExtras:
 		Strengths: + Increased range\n+ Increased damage\n+ Increased projectile speed
 	Valued:
@@ -632,19 +677,19 @@ alphacomanche.upgrade:
 	RenderSprites:
 		Image: alphacomanche.upgrade
 
-advcyborg.upgrade:
+advcyber.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Advanced Cyborgs
+		Name: Research: Advanced Cybernetics
 	Buildable:
 		BuildPaletteOrder: 40
 		Prerequisites: ~player.nod, tmpp, ~techlevel.high
 		IconPalette: chrometd
-		Description: Allows production of advanced cyborgs.\n\nUnlocks: Enlightened\nUnlocks: Cyborg Elite
+		Description: Allows production of advanced cybernetic units.\n\nUnlocks: Enlightened (Wrath/Deceit Covenants Only)\nUnlocks: Cyborg Elite (Unity/Deceit Covenants Only)\nUnlocks: Avatar (Wrath Covenant Only)\nUnlocks: Cyborg Reaper (Unity Convenant only)
 	Valued:
 		Cost: 1000
 	RenderSprites:
-		Image: advcyborg.upgrade
+		Image: advcyber.upgrade
 
 cyborgspeed.upgrade:
 	Inherits: ^Upgrade
@@ -654,7 +699,7 @@ cyborgspeed.upgrade:
 		BuildPaletteOrder: 40
 		Prerequisites: ~player.nod, tmpp, ~techlevel.high
 		IconPalette: chrometd
-		Description: Improves cyborg movement speed.\n\nUpgrades: Cyborg\nUpgrades: Cyborg Reaper\nUpgrades: Chemical Warrior\nUpgrades: Acolyte/Templar\nUpgrades: Cyborg Mechanic\nUpgrades: Enlightened\nUpgrades: Cyborg Elite
+		Description: Improves cyborg movement speed.\n\nUpgrades: Cyborg\nUpgrades: Cyborg Rocket Soldier\nUpgrades: Chemical Warrior\nUpgrades: Acolyte/Templar\nUpgrades: Cyborg Mechanic\nUpgrades: Enlightened\nUpgrades: Cyborg Reaper\nUpgrades: Cyborg Elite
 	TooltipExtras:
 		Strengths: + 20% faster movement
 	Valued:
@@ -670,7 +715,7 @@ cyborgarmor.upgrade:
 		BuildPaletteOrder: 40
 		Prerequisites: ~player.nod, tmpp, ~techlevel.high
 		IconPalette: chrometd
-		Description: Improves cyborg armor.\n\nUpgrades: Cyborg\nUpgrades: Cyborg Reaper\nUpgrades: Chemical Warrior\nUpgrades: Acolyte/Templar\nUpgrades: Cyborg Mechanic\nUpgrades: Enlightened\nUpgrades: Cyborg Elite
+		Description: Improves cyborg armor.\n\nUpgrades: Cyborg\nUpgrades: Cyborg Rocket Soldier\nUpgrades: Chemical Warrior\nUpgrades: Acolyte/Templar\nUpgrades: Cyborg Mechanic\nUpgrades: Enlightened\nUpgrades: Cyborg Reaper\nUpgrades: Cyborg Elite
 	TooltipExtras:
 		Strengths: + 20% reduced damage taken\n+ Additional 10% reduced damage from explosives
 	Valued:
@@ -927,13 +972,13 @@ impstorm.upgrade:
 impmuta.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: Improved Genetic Mutation Bomb
+		Name: Upgrade: Improved Genetic Mutation
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: player.level2, ~player.yuri, ~infantry.doctrine, ~techlevel.medium
-		Description: Enhances Genetic Mutation Bomb.\n\nUpgrades: Genetic Mutation Bomb
+		Description: Enhances Genetic Mutation Bomb and Brutes.\n\nUpgrades: Genetic Mutation Bomb\nUpgrades: Brute
 	TooltipExtras:
-		Strengths: + Increased area of effect\n+ Increased maximum number of targets
+		Strengths: + Increased area of effect (Mutation Bomb)\n+ Increased maximum number of targets (Mutation Bomb)\n+ Increased movement speed (Brute)
 	Valued:
 		Cost: 750
 	RenderSprites:
@@ -1283,7 +1328,7 @@ loyalist.allegiance:
 	Tooltip:
 		Name: Allegiance: Loyalist
 	Buildable:
-		BuildPaletteOrder: 15
+		BuildPaletteOrder: 16
 		Prerequisites: ~player.scrin, scrin.allegiances.available, !rebel.allegiance, !malefic.allegiance, ~techlevel.medium
 		Description: Declare your allegiance and side with the Scrin Overlord.\n\nRequired for:\n• Eviscerator\n• Obliterator\n• Overlord's Wrath\n\n
 		IconPalette: chromes
@@ -1299,7 +1344,7 @@ rebel.allegiance:
 	Tooltip:
 		Name: Allegiance: Rebel
 	Buildable:
-		BuildPaletteOrder: 16
+		BuildPaletteOrder: 17
 		Prerequisites: ~player.scrin, scrin.allegiances.available, !loyalist.allegiance, !malefic.allegiance, ~techlevel.medium
 		Description: Declare your allegiance and side with the Scrin Rebels.\n\nRequired for:\n• Impaler\n• Nullifier\n• Gateway\n\n
 		IconPalette: chromes
@@ -1315,7 +1360,7 @@ malefic.allegiance:
 	Tooltip:
 		Name: Allegiance: Malefic
 	Buildable:
-		BuildPaletteOrder: 17
+		BuildPaletteOrder: 18
 		Prerequisites: ~player.scrin, scrin.allegiances.available, !loyalist.allegiance, !rebel.allegiance, ~techlevel.medium
 		Description: Declare your allegiance and side with the Malefic Scrin.\n\nRequired for:\n• Mutilator\n• Tormentor\n• Anathema\n\n
 		IconPalette: chromes
@@ -1347,7 +1392,7 @@ hyper.upgrade:
 	Buildable:
 		BuildPaletteOrder: 20
 		Prerequisites: ~player.scrin, anyradar, ~techlevel.medium
-		Description: Seekers and Lacerators gain Hypercharge ability, allow them to fire an uninterrupted barrage for a limited time.\n    After use, weapons are disabled and speed is reduced for a short time.\n\nUpgrades: Seeker\nUpgrades: Lacerator
+		Description: Seekers and Lacerators gain Hypercharge ability, allow them to fire an uninterrupted barrage for a limited time.\n    After use, weapon damage and speed is reduced for a short time.\n\nUpgrades: Seeker\nUpgrades: Lacerator
 		IconPalette: chromes
 	TooltipExtras:
 		Strengths: + Hypercharge ability

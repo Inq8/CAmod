@@ -545,6 +545,8 @@ SAB:
 	Buildable:
 		Description: Stealth infantry.
 		BuildPaletteOrder: 8
+		Queue: InfantrySQ, InfantryMQ
+		BuildAtProductionType: Soldier
 	TooltipExtras:
 		Strengths: • High single-target burst damage
 		Weaknesses: • Short range\n• Fragile
@@ -760,10 +762,9 @@ HQ:
 	-WithRangeCircle:
 	-SpawnActorPowerCA@sathack:
 	-SpawnActorPowerCA@sathacklegion:
-	-ProduceActorPowerCA@hackercell:
-	-ProduceActorPowerCA@hackercellAI:
 	-DropPodsPowerCA@Zocom:
 	-CashHackPower@Legion:
+	-GrantExternalConditionPowerCA@Overload:
 	-AirstrikePowerCA@BlackhandFirebomb:
 	-AirReinforcementsPower@ShadowTeam:
 

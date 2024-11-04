@@ -1488,40 +1488,33 @@
 		PauseOnCondition: disabled || empdisable || being-warped
 		SupportPowerPaletteOrder: 50
 
-^HackerCellPower:
-	ProduceActorPowerCA@hackercell:
-		OrderName: hackercell
-		Prerequisites: infantry.any, ~radar.legion, ~!botplayer
-		Icon: hackercell
-		Type: ParadropInfantry
+^OverloadPower:
+	GrantExternalConditionPowerCA@Overload:
+		OrderName: overload
+		Icon: overload
+		ChargeInterval: 6000
+		Prerequisites: ~radar.legion
+		Name: Overload
+		Condition: overloading
+		ActiveSequence: idle
+		ValidRelationships: Ally, Neutral, Enemy
+		Range: 4c512
+		Duration: 375
+		AllowMultiple: false
+		Description: \nOverloads targeted power plants\n    causing them to take damage over time.
+		OnFireSound: overload.aud
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
-		ChargeInterval: 6750
-		Name: Hacker Cell
-		Description: \nDeploy a squad of hackers that can remotely\n    capture buildings and take control of defenses.\n\nTarget infantry production structure to deploy.
-		Actors: hack, hack, hack
-		LaunchSpeechNotification: ReinforcementsArrived
-		EndChargeSpeechNotification: HackerCellReady
-		EndChargeTextNotification: Hacker Cell ready.
+		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeSpeechNotification: OverloadReady
+		EndChargeTextNotification: Overload ready.
+		DisplayRadarPing: True
+		Cursor: empmissile
 		PauseOnCondition: disabled || empdisable || being-warped
 		SupportPowerPaletteOrder: 50
-	ProduceActorPowerCA@hackercellAI:
-		OrderName: hackercellai
-		Prerequisites: infantry.any, ~radar.legion, ~botplayer
-		Icon: hackercell
-		Type: ParadropInfantry
-		SelectTargetSpeechNotification: SelectTarget
-		SelectTargetTextNotification: Select target.
-		ChargeInterval: 6750
-		Name: Hacker Cell (AI)
-		Description: \nDeploy a squad of hackers that can remotely\n    capture buildings and take control of defenses.
-		Actors: hack, hack, hack
-		LaunchSpeechNotification: ReinforcementsArrived
-		EndChargeSpeechNotification: HackerCellReady
-		EndChargeTextNotification: Hacker Cell ready.
-		PauseOnCondition: disabled || empdisable || being-warped
-		SupportPowerPaletteOrder: 50
-		SelectProducer: false
+		ShowTargetCircle: true
+		TargetCircleColor: ffcc00
+		TargetTintColor: ffcc0033
 
 ^CashHackPower:
 	CashHackPower@Legion:
@@ -1643,6 +1636,75 @@
 		ShowTargetCircle: true
 		TargetCircleColor: ff7700
 		TargetTintColor: ff770033
+
+^AssassinSquadPower:
+	ProduceActorPowerCA@AssassinSquad:
+		OrderName: assassinsquad
+		Prerequisites: wrath.covenant, ~!botplayer
+		Icon: assassinsquad
+		IconPalette: chrometd
+		Type: ParadropInfantry
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		ChargeInterval: 6750
+		Name: Assassin Squad
+		Description: \nDeploy a squad of Assassins that can\n    destroy buildings and salvage technology.\n\nTarget infantry production structure to deploy.
+		Actors: assa, assa, assa
+		LaunchSpeechNotification: ReinforcementsArrived
+		EndChargeSpeechNotification: AssassinSquadReady
+		EndChargeTextNotification: Assassin Squad ready.
+		SupportPowerPaletteOrder: 50
+
+^HackerCellPower:
+	ProduceActorPowerCA@HackerCell:
+		OrderName: hackercell
+		Prerequisites: unity.covenant, ~!botplayer
+		Icon: hackercell
+		Type: ParadropInfantry
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		ChargeInterval: 6750
+		Name: Hacker Cell
+		Description: \nDeploy a squad of Hackers that can remotely\n    capture buildings and take control of defenses.\n\nTarget infantry production structure to deploy.
+		Actors: hack, hack, hack
+		LaunchSpeechNotification: ReinforcementsArrived
+		EndChargeSpeechNotification: HackerCellReady
+		EndChargeTextNotification: Hacker Cell ready.
+		SupportPowerPaletteOrder: 50
+	ProduceActorPowerCA@HackerCellAI:
+		OrderName: hackercellai
+		Prerequisites: unity.covenant, ~botplayer
+		Icon: hackercell
+		Type: ParadropInfantry
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		ChargeInterval: 6750
+		Name: Hacker Cell (AI)
+		Description: \nDeploy a squad of Hackers that can remotely\n    capture buildings and take control of defenses.
+		Actors: hack, hack, hack
+		LaunchSpeechNotification: ReinforcementsArrived
+		EndChargeSpeechNotification: HackerCellReady
+		EndChargeTextNotification: Hacker Cell ready.
+		SupportPowerPaletteOrder: 50
+		SelectProducer: false
+
+^InfiltratorsPower:
+	ProduceActorPowerCA@Infiltrators:
+		OrderName: infiltrators
+		Prerequisites: deceit.covenant, ~!botplayer
+		Icon: infiltrators
+		IconPalette: chrometd
+		Type: ParadropInfantry
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		ChargeInterval: 6750
+		Name: Infiltrators
+		Description: \nDeploy a squad of Infiltrators that can\n    infiltrate buildings to steal or lock technology.\n\nTarget infantry production structure to deploy.
+		Actors: sab, sab, sab
+		LaunchSpeechNotification: ReinforcementsArrived
+		EndChargeSpeechNotification: InfiltratorsReady
+		EndChargeTextNotification: Infiltrators ready.
+		SupportPowerPaletteOrder: 50
 
 ^TibStealthPower:
 	GrantExternalConditionPowerCA@SGEN:
