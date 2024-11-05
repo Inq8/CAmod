@@ -1654,6 +1654,17 @@
 		EndChargeSpeechNotification: AssassinSquadReady
 		EndChargeTextNotification: Assassin Squad ready.
 		SupportPowerPaletteOrder: 50
+	ProduceActorPowerCA@AssassinSquadAI:
+		OrderName: assassinsquad
+		Prerequisites: wrath.covenant, ~botplayer
+		Icon: assassinsquadai
+		IconPalette: chrometd
+		Type: ParadropInfantry
+		ChargeInterval: 6750
+		Name: Assassin Squad (AI)
+		Description: \nDeploy a squad of Assassins that can\n    destroy buildings and salvage technology.
+		Actors: assa, assa, assa
+		SupportPowerPaletteOrder: 50
 
 ^HackerCellPower:
 	ProduceActorPowerCA@HackerCell:
@@ -1676,15 +1687,10 @@
 		Prerequisites: unity.covenant, ~botplayer
 		Icon: hackercell
 		Type: ParadropInfantry
-		SelectTargetSpeechNotification: SelectTarget
-		SelectTargetTextNotification: Select target.
 		ChargeInterval: 6750
 		Name: Hacker Cell (AI)
 		Description: \nDeploy a squad of Hackers that can remotely\n    capture buildings and take control of defenses.
 		Actors: hack, hack, hack
-		LaunchSpeechNotification: ReinforcementsArrived
-		EndChargeSpeechNotification: HackerCellReady
-		EndChargeTextNotification: Hacker Cell ready.
 		SupportPowerPaletteOrder: 50
 		SelectProducer: false
 
@@ -1705,6 +1711,18 @@
 		EndChargeSpeechNotification: InfiltratorsReady
 		EndChargeTextNotification: Infiltrators ready.
 		SupportPowerPaletteOrder: 50
+	ProduceActorPowerCA@InfiltratorsAI:
+		OrderName: infiltrators
+		Prerequisites: deceit.covenant, ~botplayer
+		Icon: infiltratorsai
+		IconPalette: chrometd
+		Type: ParadropInfantry
+		ChargeInterval: 6750
+		Name: Infiltrators (AI)
+		Description: \nDeploy a squad of Infiltrators that can\n    infiltrate buildings to steal or lock technology.
+		Actors: sab, sab, sab
+		SupportPowerPaletteOrder: 50
+		SelectProducer: false
 
 ^TibStealthPower:
 	GrantExternalConditionPowerCA@SGEN:

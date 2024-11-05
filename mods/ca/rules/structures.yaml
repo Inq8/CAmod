@@ -3790,6 +3790,34 @@ HQ:
 	GrantConditionOnFaction@ARC:
 		Factions: arc
 		Condition: arc-built
+	Cargo:
+		Types: Hacker
+		MaxWeight: 5
+		LoadedCondition: cargo
+	WithCargoPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
+	CashTrickler@Hacker1:
+		Interval: 375
+		Amount: 40
+		RequiresCondition: cargo == 1
+	CashTrickler@Hacker2:
+		Interval: 375
+		Amount: 80
+		RequiresCondition: cargo == 2
+	CashTrickler@Hacker3:
+		Interval: 375
+		Amount: 120
+		RequiresCondition: cargo == 3
+	CashTrickler@Hacker4:
+		Interval: 375
+		Amount: 160
+		RequiresCondition: cargo == 4
+	CashTrickler@Hacker5:
+		Interval: 375
+		Amount: 200
+		RequiresCondition: cargo == 5
 
 EYE:
 	Inherits: ^BuildingTD

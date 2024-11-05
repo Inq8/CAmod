@@ -1167,6 +1167,7 @@ HACK:
 	Passenger:
 		CustomPipType: blue
 		Voice: Move
+		CargoType: Hacker
 	Armament@PRIMARY:
 		Weapon: PrepareHack
 		PauseOnCondition: deployed || bothacking
@@ -2441,7 +2442,7 @@ ASSA:
 	Health:
 		HP: 4500
 	Mobile:
-		Speed: 46
+		Speed: 54
 		Voice: Move
 	RevealsShroud:
 		Range: 7c0
@@ -4994,7 +4995,7 @@ REAP:
 	Health:
 		HP: 30000
 	Mobile:
-		Speed: 72
+		Speed: 60
 		Voice: Move
 		PauseOnCondition: being-warped || empdisable
 	AttackFrontal:
@@ -5011,8 +5012,8 @@ REAP:
 	Voiced:
 		VoiceSet: ReaperVoice
 	Armament@PRIMARY:
-		Weapon: Dragon
-		LocalOffset: 300,0,300
+		Weapon: CyborgReaperMissiles
+		LocalOffset: 150,150,500, 150,-150,500
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	WithProductionIconOverlay:
@@ -5028,7 +5029,10 @@ REAP:
 		RequiresCondition: parachute
 	WithInfantryBody@Warped:
 		RequiresCondition: being-warped || empdisable
-	-WithDeathAnimation:
+	WithDeathAnimation:
+		-DeathTypes:
+		UseDeathTypeSuffix: false
+		-CrushedSequence:
 	GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
 		Condition: repair-cooldown
 		RequiredHealing: 85000
