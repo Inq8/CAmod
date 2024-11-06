@@ -21,12 +21,11 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 		string chosenCoalition;
 
+		private readonly UpgradesManager upgradesManager;
+
 		[ObjectCreator.UseCtor]
 		public AlliedCoalitionIndicatorLogic(Widget widget, World world)
 		{
-			UpgradesManager upgradesManager = null;
-
-			upgradesManager = world.LocalPlayer.PlayerActor.Trait<UpgradesManager>();
 			var container = widget.Get<ContainerWidget>("ALLIED_COALITION");
 			var coalitionImage = container.Get<ImageWidget>("ALLIED_COALITION_IMAGE");
 
@@ -37,6 +36,8 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				return;
 			}
 
+			upgradesManager = world.LocalPlayer.PlayerActor.Trait<UpgradesManager>();
+
 			if (upgradesManager == null)
 			{
 				coalitionImage.GetImageName = () => NoneImage;
@@ -44,14 +45,19 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				return;
 			}
 
-			upgradesManager.UpgradeCompleted += (coalitionName) =>
-			{
-				if (coalitionName.EndsWith(".coalition"))
-					chosenCoalition = coalitionName.Split('.')[0];
-			};
+			upgradesManager.UpgradeCompleted += HandleUpdatedCompleted;
 
 			coalitionImage.GetImageName = () =>  $"{chosenCoalition ?? NoneImage}";
 			coalitionImage.IsVisible = () => true;
+		}
+
+		private void HandleUpdatedCompleted(string coalitionName)
+		{
+			if (coalitionName.EndsWith(".coalition"))
+			{
+				chosenCoalition = coalitionName.Split('.')[0];
+				upgradesManager.UpgradeCompleted -= HandleUpdatedCompleted;
+			}
 		}
 	}
 }

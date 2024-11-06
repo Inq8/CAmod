@@ -30,7 +30,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly string Actor = null;
 
 		[GrantedConditionReference]
-		[Desc("Condition to apply.")]
+		[Desc("Condition to apply when upgrade is complete.")]
 		public readonly string Condition = null;
 
 		[Desc("Cost (-1 indicates to use the difference between source and target actor cost, or zero if no target actor).")]
@@ -120,7 +120,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		protected override void Created(Actor self)
 		{
-			var upgradeInfo = upgradesManager.UpgradeableActorCreated(this, Info.Type, self.Info.Name, Info.Actor, Info.Condition, Info.Cost, Info.BuildDuration, Info.BuildDurationModifier);
+			var upgradeInfo = upgradesManager.UpgradeableActorCreated(this, Info.Type, self.Info.Name, Info.Actor, Info.Cost, Info.BuildDuration, Info.BuildDurationModifier);
 			UpgradeInfo.BuildDuration = upgradeInfo.BuildDuration;
 			UpgradeInfo.Cost = upgradeInfo.Cost;
 			UpgradeInfo.ActorName = upgradeInfo.ActorName;

@@ -47,7 +47,7 @@ namespace OpenRA.Mods.CA.Activities
 
 		public override bool Tick(Actor self)
 		{
-			if (trackingActive && maxTargetMovement > WDist.Zero && target.Type == TargetType.Actor && (initTargetPos - target.CenterPosition).Length > maxTargetMovement.Length)
+			if (trackingActive && maxTargetMovement > WDist.Zero && target.Type == TargetType.Actor && (initTargetPos - target.CenterPosition).HorizontalLengthSquared > maxTargetMovement.LengthSquared)
 				trackingActive = false;
 
 			if (trackingActive && ((target.Type == TargetType.Actor && !target.Actor.IsDead) || (target.Type == TargetType.FrozenActor && target.FrozenActor != null)))

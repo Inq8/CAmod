@@ -21,6 +21,10 @@ namespace OpenRA.Mods.CA.Traits
 	[TraitLocation(SystemActors.Player)]
 	public class ProvidesPrerequisiteOnKillCountInfo : TraitInfo, ITechTreePrerequisiteInfo
 	{
+		[Desc("Identifier for the counts.")]
+		[FieldLoader.Require]
+		public readonly string Type = null;
+
 		[Desc("The prerequisite type that this provides.")]
 		[FieldLoader.Require]
 		public readonly string Prerequisite = null;
@@ -84,6 +88,9 @@ namespace OpenRA.Mods.CA.Traits
 
 			var player = self.Owner;
 			validFaction = info.Factions.Length == 0 || info.Factions.Contains(player.Faction.InternalName);
+
+			foreach (var count in Info.RequiredKills)
+				counts[count.Key] = 0;
 		}
 
 		public bool Enabled
@@ -176,11 +183,8 @@ namespace OpenRA.Mods.CA.Traits
 
 		public void Increment(string type)
 		{
-			if (!Enabled || unlocked)
+			if (!Enabled || unlocked || !counts.ContainsKey(type))
 				return;
-
-			if (!counts.ContainsKey(type))
-				counts[type] = 0;
 
 			if (counts[type] >= Info.RequiredKills[type])
 				return;

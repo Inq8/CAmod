@@ -84,4 +84,7 @@ namespace OpenRA.Mods.CA.Traits
 
 	[RequireExplicitImplementation]
 	public interface INotifyMindControlling { void MindControlling(Actor self, Actor slave); }
+
+	[RequireExplicitImplementation]
+	public interface INotifyCountChanged { void Incremented(string type); void Decremented(string type); }
 }

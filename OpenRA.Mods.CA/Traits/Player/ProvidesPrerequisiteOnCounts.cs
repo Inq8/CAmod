@@ -19,8 +19,12 @@ using OpenRA.Traits;
 namespace OpenRA.Mods.CA.Traits
 {
 	[TraitLocation(SystemActors.Player)]
-	public class ProvidesPrerequisiteOnCountsInfo : TraitInfo, ITechTreePrerequisiteInfo
+	public class ProvidesPrerequisiteOnCountInfo : TraitInfo, ITechTreePrerequisiteInfo
 	{
+		[Desc("Identifier for the counts.")]
+		[FieldLoader.Require]
+		public readonly string Type = null;
+
 		[Desc("The prerequisite type that this provides.")]
 		[FieldLoader.Require]
 		public readonly string Prerequisite = null;
@@ -64,9 +68,9 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new ProvidesPrerequisiteOnCount(init, this); }
 	}
 
-	public class ProvidesPrerequisiteOnCount : ITechTreePrerequisite, INotifyCreated, ITick
+	public class ProvidesPrerequisiteOnCount : ITechTreePrerequisite, INotifyCreated, ITick, INotifyCountChanged
 	{
-		public readonly ProvidesPrerequisiteOnCountsInfo Info;
+		public readonly ProvidesPrerequisiteOnCountInfo Info;
 		readonly Actor self;
 		readonly Dictionary<string, int> counts;
 		readonly bool validFaction;
@@ -83,7 +87,7 @@ namespace OpenRA.Mods.CA.Traits
 		public event Action Unlocked;
 		public event Action<string> UnlockedPermanently;
 
-		public ProvidesPrerequisiteOnCount(ActorInitializer init, ProvidesPrerequisiteOnCountsInfo info)
+		public ProvidesPrerequisiteOnCount(ActorInitializer init, ProvidesPrerequisiteOnCountInfo info)
 		{
 			Info = info;
 			self = init.Self;
@@ -93,6 +97,9 @@ namespace OpenRA.Mods.CA.Traits
 
 			var player = self.Owner;
 			validFaction = info.Factions.Length == 0 || info.Factions.Contains(player.Faction.InternalName);
+
+			foreach (var count in Info.RequiredCounts)
+				counts[count.Key] = 0;
 		}
 
 		public bool Enabled
@@ -197,13 +204,10 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
-		public void Increment(string type)
+		void INotifyCountChanged.Incremented(string type)
 		{
-			if (!Enabled || permanentlyUnlocked)
+			if (!Enabled || permanentlyUnlocked || !counts.ContainsKey(type))
 				return;
-
-			if (!counts.ContainsKey(type))
-				counts[type] = 0;
 
 			if (counts[type] >= Info.RequiredCounts[type])
 				return;
@@ -235,7 +239,7 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
-		public void Decrement(string type)
+		void INotifyCountChanged.Decremented(string type)
 		{
 			if (!Enabled || permanentlyUnlocked || !counts.ContainsKey(type))
 				return;

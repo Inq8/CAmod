@@ -8,61 +8,76 @@
  */
 #endregion
 
-using System.Collections.Generic;
 using System.Linq;
+using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("Updates a counter when the actor is created/disposed or changes owner.")]
-	public class UpdatesCountInfo : TraitInfo
+	public class UpdatesCountInfo : ConditionalTraitInfo
 	{
 		[FieldLoader.Require]
 		[Desc("Name of the counter to update.")]
 		public readonly string Type = null;
 
-		public override object Create(ActorInitializer init) { return new UpdatesCount(init, this); }
+		public override object Create(ActorInitializer init) { return new UpdatesCount(this); }
 	}
 
-	public class UpdatesCount : INotifyCreated, INotifyActorDisposing, INotifyOwnerChanged
+	public class UpdatesCount : ConditionalTrait<UpdatesCountInfo>, INotifyCreated, INotifyActorDisposing, INotifyOwnerChanged
 	{
-		public readonly UpdatesCountInfo Info;
-		IEnumerable<ProvidesPrerequisiteOnCount> counters;
+		public readonly UpdatesCountInfo info;
+		INotifyCountChanged[] counters;
 
-		public UpdatesCount(ActorInitializer init, UpdatesCountInfo info)
+		public UpdatesCount(UpdatesCountInfo info)
+			: base(info)
 		{
-			Info = info;
+			this.info = info;
 		}
 
 		void INotifyCreated.Created(Actor self)
 		{
 			UpdateCounters(self.Owner);
 
+			if (IsTraitDisabled)
+				return;
+
 			foreach (var c in counters)
-				c.Increment(Info.Type);
+				c.Incremented(info.Type);
 		}
 
 		void UpdateCounters(Player owner)
 		{
-			counters = owner.PlayerActor.TraitsImplementing<ProvidesPrerequisiteOnCount>()
-				.Where(c => c.Info.RequiredCounts.ContainsKey(Info.Type) && c.Enabled);
+			counters = owner.PlayerActor.TraitsImplementing<INotifyCountChanged>().ToArray();
 		}
 
 		void INotifyOwnerChanged.OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)
 		{
 			foreach (var c in counters)
-				c.Decrement(Info.Type);
+				c.Decremented(info.Type);
 
 			UpdateCounters(newOwner);
 
 			foreach (var c in counters)
-				c.Increment(Info.Type);
+				c.Incremented(info.Type);
 		}
 
 		void INotifyActorDisposing.Disposing(Actor self)
 		{
 			foreach (var c in counters)
-				c.Decrement(Info.Type);
+				c.Decremented(info.Type);
+		}
+
+		protected override void TraitEnabled(Actor self)
+		{
+			foreach (var c in counters)
+				c.Incremented(info.Type);
+		}
+
+		protected override void TraitDisabled(Actor self)
+		{
+			foreach (var c in counters)
+				c.Decremented(info.Type);
 		}
 	}
 }
