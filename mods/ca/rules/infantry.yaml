@@ -689,6 +689,11 @@ E6:
 	GrantConditionOnPrerequisite@ENTRENCH:
 		Condition: entrench-upgrade
 		Prerequisites: entrench.upgrade
+	WithRangeCircle:
+		Type: EngineerRange
+		Range: 5c0
+		Color: ffffff50
+		RequiresCondition: entrench-upgrade
 
 SPY:
 	Inherits: ^Soldier
@@ -4973,6 +4978,8 @@ REAP:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Aircraft
 		Weaknesses: • Weak vs Infantry
 		Attributes: • Heals on Tiberium
+	Selectable:
+		DecorationBounds: 640, 896, -32, -256
 	Valued:
 		Cost: 1000
 	Tooltip:
