@@ -6104,11 +6104,24 @@ REBELGATEWAY:
 		Actors: s1, s1, s1, s3, s3, s1, s1
 		ReadyAudio: ReinforcementsArrived
 		RequiresCondition: !wave1-deployed
-	PeriodicProducerCA@2:
+	PeriodicProducerCA@2Standard:
 		Type: Gateway
 		ChargeDuration: 625
 		Actors: gunw, gunw, tpod
 		ReadyAudio: ReinforcementsArrived
+		RequiresCondition: !reaper && !shard
+	PeriodicProducerCA@2Reaper:
+		Type: Gateway
+		ChargeDuration: 625
+		Actors: gunw, gunw, rptp
+		ReadyAudio: ReinforcementsArrived
+		RequiresCondition: reaper && !shard
+	PeriodicProducerCA@2ReaperShard:
+		Type: Gateway
+		ChargeDuration: 625
+		Actors: shrw, shrw, rptp
+		ReadyAudio: ReinforcementsArrived
+		RequiresCondition: reaper && shard
 	AmmoPool@Wave1:
 		Name: wave1
 		InitialAmmo: 0
@@ -6126,6 +6139,12 @@ REBELGATEWAY:
 		ShowSelectionBar: true
 		SelectionBarColor: ff00ff
 		RequiresCondition: wave1-deployed
+	GrantConditionOnPrerequisite@Reaper:
+		Prerequisites: player.reaper
+		Condition: reaper
+	GrantConditionOnPrerequisite@Shard:
+		Prerequisites: shrw.upgrade
+		Condition: shard
 
 # infiltrator stolen tech
 
