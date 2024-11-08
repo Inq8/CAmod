@@ -36,7 +36,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 		public ScrinAllegianceIndicatorLogic(Widget widget, World world)
 		{
 			counter = world.LocalPlayer.PlayerActor.TraitsImplementing<ProvidesPrerequisiteOnCount>()
-				.FirstOrDefault(c => c.Info.RequiredCounts.ContainsKey("Refineries"));
+				.FirstOrDefault(c => c.Info.Type == "ScrinAllegiance");
 
 			var container = widget.Get<ContainerWidget>("SCRIN_ALLEGIANCE");
 			var countImage = container.Get<ImageWidget>("SCRIN_ALLEGIANCE_LEVEL");
@@ -55,18 +55,8 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				return;
 			}
 
-			counter.Incremented += () => {
-				fadeInTicks = fadeInMaxTicks;
-				waitTicks = waitMaxTicks;
-				fadeOutTicks = fadeOutMaxTicks;
-			};
-
-			counter.UnlockedPermanently += (allegiance) => {
-				chosenAllegiance = allegiance.Split('.')[0];
-				fadeInTicks = fadeInMaxTicks;
-				waitTicks = waitMaxTicks;
-				fadeOutTicks = fadeOutMaxTicks;
-			};
+			counter.Incremented += HandleIncremented;
+			counter.UnlockedPermanently += HandleUnlockedPermanently;
 
 			countImage.GetImageName = () =>  GetCountImageName();
 			countImage.IsVisible = () => counter.Enabled;
@@ -77,6 +67,21 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			incrementImage.IsVisible = () => chosenAllegiance == null && IncrementImageAlpha > 0;
 			incrementImage.GetAlpha = () => chosenAllegiance == null ? IncrementImageAlpha : 0f;
+		}
+
+		private void HandleIncremented()
+		{
+			fadeInTicks = fadeInMaxTicks;
+			waitTicks = waitMaxTicks;
+			fadeOutTicks = fadeOutMaxTicks;
+		}
+
+		private void HandleUnlockedPermanently(string allegiance)
+		{
+			chosenAllegiance = allegiance.Split('.')[0];
+			fadeInTicks = fadeInMaxTicks;
+			waitTicks = waitMaxTicks;
+			fadeOutTicks = fadeOutMaxTicks;
 		}
 
 		private string GetCountImageName()

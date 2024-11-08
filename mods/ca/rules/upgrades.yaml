@@ -15,7 +15,7 @@ hazmat.upgrade:
 	Tooltip:
 		Name: Upgrade: Hazmat Suits
 	Buildable:
-		BuildPaletteOrder: 18
+		BuildPaletteOrder: 19
 		Prerequisites: anyradar, infantry.any, ~!player.soviet, ~!player.zocom, ~!player.scrin, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Infantry are equiped with hazmat suits which provides\n  protection against Tiberium and radiation.\n\nUpgrades: Infantry
@@ -75,6 +75,8 @@ bombard.strat:
 	AnnounceOnCreation:
 		SpeechNotification: Bombardment
 		Delay: 60
+	UpdatesCount:
+		Type: StrategyLevel
 
 bombard2.strat:
 	Inherits: bombard.strat
@@ -90,6 +92,8 @@ bombard2.strat:
 		-Attributes:
 	RenderSprites:
 		Image: bombard2.strat
+	UpdatesCount:
+		Type: StrategyLevel
 
 seek.strat:
 	Inherits: ^Upgrade
@@ -110,6 +114,8 @@ seek.strat:
 	AnnounceOnCreation:
 		SpeechNotification: SeekAndDestroy
 		Delay: 60
+	UpdatesCount:
+		Type: StrategyLevel
 
 seek2.strat:
 	Inherits: seek.strat
@@ -125,6 +131,8 @@ seek2.strat:
 		-Attributes:
 	RenderSprites:
 		Image: seek2.strat
+	UpdatesCount:
+		Type: StrategyLevel
 
 hold.strat:
 	Inherits: ^Upgrade
@@ -145,6 +153,8 @@ hold.strat:
 	AnnounceOnCreation:
 		SpeechNotification: HoldTheLine
 		Delay: 60
+	UpdatesCount:
+		Type: StrategyLevel
 
 hold2.strat:
 	Inherits: hold.strat
@@ -160,6 +170,8 @@ hold2.strat:
 		-Attributes:
 	RenderSprites:
 		Image: hold2.strat
+	UpdatesCount:
+		Type: StrategyLevel
 
 vulcan.upgrade:
 	Inherits: ^Upgrade
@@ -507,6 +519,7 @@ wrath.covenant:
 		BuildPaletteOrder: 13
 		Prerequisites: ~player.nod, nod.covenants.available, ~!unity.covenant, ~!deceit.covenant, ~techlevel.medium
 		Description: Required for:\n• Avatar (replaces Cyborg Elite)\n• Assassin Squad\n• Compressed Plasma\n\n
+		IconPalette: chrometd
 	TooltipExtras:
 		Attributes: (!) Only ONE Covenant may be chosen.
 	Valued:
@@ -522,6 +535,7 @@ unity.covenant:
 		BuildPaletteOrder: 14
 		Prerequisites: ~player.nod, nod.covenants.available, ~!wrath.covenant, ~!deceit.covenant, ~techlevel.medium
 		Description: Required for:\n• Cyborg Reaper (Replaces Enlightened)\n• Hacker Cell\n• Siphoned Funds\n\n
+		IconPalette: chrometd
 	TooltipExtras:
 		Attributes: (!) Only ONE Covenant may be chosen.
 	Valued:
@@ -537,6 +551,7 @@ deceit.covenant:
 		BuildPaletteOrder: 15
 		Prerequisites: ~player.nod, nod.covenants.available, ~!unity.covenant, ~!wrath.covenant, ~techlevel.medium
 		Description: Required for:\n• Heavy Stealth Tank\n• Infiltrator Squad\n• Stealth Harvesters\n\n
+		IconPalette: chrometd
 	TooltipExtras:
 		Attributes: (!) Only ONE Covenant may be chosen.
 	Valued:

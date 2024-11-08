@@ -816,7 +816,7 @@ C4:
 	Warhead@1Dam: HealthPercentageDamage
 		ValidTargets: Air, Ground, Water
 		Spread: 64
-		Damage: 100
+		Damage: 200
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 		Versus:
 			Light: 150
@@ -838,6 +838,13 @@ AssassinC4:
 	Inherits: C4
 	Warhead@1Dam: HealthPercentageDamage
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, AssassinC4
+		ValidRelationships: Enemy, Neutral
+	Warhead@2Dam: HealthPercentageDamage
+		ValidRelationships: Ally
+		ValidTargets: Air, Ground, Water
+		Spread: 64
+		Damage: 200
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 
 Ivanbomb:
 	Inherits: ^Artillery

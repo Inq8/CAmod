@@ -370,7 +370,17 @@ Player:
 		LevelUpNotification: Promoted
 		LevelUpSound: PlayerRankUp
 		DummyActor: QueueUpdaterDummy
-	ProvidesPrerequisiteOnCounts@ScrinAllegiances:
+	CountManager:
+	ProvidesPrerequisiteOnKillCount@NodCovenants:
+		Type: NodCovenant
+		Factions: nod, blackh, marked, legion, shadow
+		Prerequisite: nod.covenants.available
+		RequiredKills:
+			BuildingsOrHarvesters: 3
+		RequiredCountReachedTextNotification: Covenants available.
+		DummyActor: QueueUpdaterDummy
+	ProvidesPrerequisiteOnCount@ScrinAllegiances:
+		Type: ScrinAllegiance
 		Factions: scrin, reaper, traveler, harbinger, collector
 		Prerequisite: scrin.allegiances.available
 		RequiredCounts:
@@ -380,11 +390,3 @@ Player:
 		DummyActor: QueueUpdaterDummy
 		IncrementSound: PlayerRankUp
 		PermanentAfterUpgrades: loyalist.allegiance, rebel.allegiance, malefic.allegiance
-	ProvidesPrerequisiteOnKillCount@NodCovenants:
-		Factions: nod, blackh, marked, legion, shadow
-		Prerequisite: nod.covenants.available
-		RequiredKills:
-			BuildingsOrHarvesters: 3
-		RequiredCountReachedTextNotification: Covenants available.
-		DummyActor: QueueUpdaterDummy
-		IncrementSound: PlayerRankUp

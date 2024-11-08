@@ -8,6 +8,7 @@
  */
 #endregion
 
+using System.Linq;
 using OpenRA.Activities;
 using OpenRA.Mods.CA.Activities;
 using OpenRA.Mods.Common.Traits;
@@ -66,16 +67,20 @@ namespace OpenRA.Mods.CA.Traits
 
 		private WDist GetActorSpeed(Actor actor)
 		{
+			var speedModifiers = actor.TraitsImplementing<ISpeedModifier>().ToArray().Select(sm => sm.GetSpeedModifier());
+
 			var mobileInfo = actor.Info.TraitInfoOrDefault<MobileInfo>();
 			if (mobileInfo != null)
 			{
-				return new WDist(mobileInfo.Speed);
+				var speed = Common.Util.ApplyPercentageModifiers(mobileInfo.Speed, speedModifiers);
+				return new WDist(speed);
 			}
 
 			var aircraftInfo = actor.Info.TraitInfoOrDefault<AircraftInfo>();
 			if (aircraftInfo != null)
 			{
-				return new WDist(aircraftInfo.Speed);
+				var speed = Common.Util.ApplyPercentageModifiers(aircraftInfo.Speed, speedModifiers);
+				return new WDist(speed);
 			}
 
 			return WDist.Zero;

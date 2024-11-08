@@ -43,7 +43,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		public event Action<string> UpgradeCompleted;
 
-		public UpgradeInfo UpgradeableActorCreated(Upgradeable upgradeable, string upgradeType, string sourceActorType, string targetActorType, string condition, int cost, int buildDuration, int buildDurationModifier)
+		public UpgradeInfo UpgradeableActorCreated(Upgradeable upgradeable, string upgradeType, string sourceActorType, string targetActorType, int cost, int buildDuration, int buildDurationModifier)
 		{
 			if (upgrades.ContainsKey(upgradeType))
 			{

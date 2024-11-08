@@ -745,6 +745,15 @@ Container@PLAYER_WIDGETS:
 					Y: 295
 					Width: 204
 					Height: 24
+				Container@ALLIED_COALITION:
+					Logic: AlliedCoalitionIndicatorLogic
+					Children:
+						Image@ALLIED_COALITION_IMAGE:
+							X: 18
+							Y: 518
+							Width: 43
+							Height: 78
+							ImageCollection: allied-coalition
 				Container@PLAYER_EXPERIENCE:
 					Logic: PlayerExperienceLevelIndicatorLogic
 					Children:
@@ -769,6 +778,24 @@ Container@PLAYER_WIDGETS:
 							Height: 54
 							ImageCollection: soviet-player-ranks
 							ImageName: rank-up
+				Container@GDI_STRATEGY:
+					Logic: GDIStrategyIndicatorLogic
+					Children:
+						Image@GDI_STRATEGY_LEVEL:
+							X: 25
+							Y: 525
+							Width: 29
+							Height: 65
+							ImageCollection: gdi-strategy
+				Container@NOD_COVENANT:
+					Logic: NodCovenantIndicatorLogic
+					Children:
+						Image@NOD_COVENANT_LEVEL:
+							X: 25
+							Y: 525
+							Width: 29
+							Height: 65
+							ImageCollection: nod-covenant
 				Container@SCRIN_ALLEGIANCE:
 					Logic: ScrinAllegianceIndicatorLogic
 					Children:
@@ -791,15 +818,6 @@ Container@PLAYER_WIDGETS:
 							Height: 54
 							ImageCollection: scrin-allegiance
 							ImageName: ref-added
-				Container@ALLIED_COALITION:
-					Logic: AlliedCoalitionIndicatorLogic
-					Children:
-						Image@ALLIED_COALITION_IMAGE:
-							X: 18
-							Y: 518
-							Width: 43
-							Height: 78
-							ImageCollection: allied-coalition
 		Container@HPF_OVERLAY:
 			Logic: HierarchicalPathFinderOverlayLogic
 			X: WINDOW_RIGHT - WIDTH - 260

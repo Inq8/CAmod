@@ -13,7 +13,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("Lists actors this actor may be upgraded to (to replace in production queue).")]
+	[Desc("Provides a prerequisite that is used for upgrades.")]
 	public class ProvidesUpgradeInfo : ConditionalTraitInfo
 	{
 		[Desc("Type.")]
