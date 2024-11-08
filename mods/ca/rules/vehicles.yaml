@@ -4982,7 +4982,7 @@ STNK.Nod:
 		AddToArmyValue: true
 	Buildable:
 		BuildPaletteOrder: 202
-		Prerequisites: anyradar, ~vehicles.nod, ~techlevel.medium
+		Prerequisites: anyradar, ~vehicles.nod, ~!deceit.covenant, ~techlevel.medium
 		Queue: VehicleSQ, VehicleMQ
 		IconPalette: chrometd
 		Description: Medium-range missile tank that can cloak.
@@ -5039,6 +5039,103 @@ STNK.Nod:
 	Turreted:
 		TurnSpeed: 40
 		Offset: 0,0,10
+	AttackTurreted:
+		PauseOnCondition: empdisable || being-warped || blinded || parachute
+	WithSpriteTurret:
+	AutoTarget:
+		InitialStance: HoldFire
+		InitialStanceAI: ReturnFire
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
+	ProductionCostMultiplier@ShadowBonus:
+		Multiplier: 90
+		Prerequisites: player.shadow
+	GrantConditionOnPrerequisite@UPG:
+		Condition: tibcore-upgrade
+		Prerequisites: tibcore.upgrade
+	WithColoredSelectionBox@INVIS:
+		RequiresCondition: invisibility || hidden
+		ColorSource: Player
+	DamageTypeDamageMultiplier@A2GPROTECTION:
+		Modifier: 60
+
+HSTK:
+	Inherits: ^VehicleTD
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
+	Inherits@BERSERK: ^Berserk
+	Inherits@A2GPROTECTION: ^AirToGroundProtection
+	RenderSprites:
+		Image: HSTK
+	Valued:
+		Cost: 1350
+	Tooltip:
+		Name: Heavy Stealth Tank
+		GenericName: Tank
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		BuildPaletteOrder: 202
+		Prerequisites: anyradar, ~vehicles.nod, ~deceit.covenant, ~techlevel.medium
+		Queue: VehicleSQ, VehicleMQ
+		IconPalette: chrometd
+		Description: Medium-range missile heavy tank that can cloak.
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Defenses, Heavy Armor, Light Armor, Aircraft
+		Weaknesses: • Weak vs Infantry
+		Attributes: • Can be spotted by nearby infantry and defense structures
+	Mobile:
+		Speed: 100
+	Health:
+		HP: 25000
+	Armor:
+		Type: Heavy
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Cloak@NORMAL:
+		InitialDelay: 125
+		CloakDelay: 126
+		CloakSound: trans1.aud
+		CloakedCondition: hidden
+		UncloakSound: appear1md.aud
+		Palette: cloak
+		IsPlayerPalette: false
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
+		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead && !parachute
+		PauseOnCondition: invisibility
+	Cloak@CRATE-CLOAK:
+		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
+	GrantConditionOnDamageState@UNCLOAK:
+		Condition: cloak-force-disabled
+		ValidDamageStates: Critical
+	Armament@PRIMARY:
+		Weapon: StnkMissile
+		LocalOffset: 213,43,128, 213,-43,128
+		RequiresCondition: !tibcore-upgrade
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: StnkMissileAA
+		LocalOffset: 213,43,128, 213,-43,128
+		RequiresCondition: !tibcore-upgrade
+	Armament@PRIMARYUPG:
+		Weapon: StnkMissile.TibCore
+		LocalOffset: 213,150,128, 213,-150,128
+		RequiresCondition: tibcore-upgrade
+	Armament@SECONDARYUPG:
+		Name: secondary
+		Weapon: StnkMissileAA.TibCore
+		LocalOffset: 213,150,128, 213,-150,128
+		RequiresCondition: tibcore-upgrade
+	Turreted:
+		TurnSpeed: 40
+		Offset: 0,0,0
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped || blinded || parachute
 	WithSpriteTurret:
