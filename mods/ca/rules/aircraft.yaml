@@ -245,18 +245,18 @@ MIG:
 		Weapon: Maverick
 		LocalOffset: 0,-640,0, 0,640,0
 		LocalYaw: -40, 40
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || blinded
 	Armament@AA:
 		Weapon: MaverickAA
 		LocalOffset: 0,-640,0, 0,640,0
 		LocalYaw: -40, 40
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || blinded
 		Name: secondary
 	AttackAircraft:
 		FacingTolerance: 80
 		PersistentTargeting: false
 		OpportunityFire: true
-		PauseOnCondition: empdisable || being-warped || blinded
+		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2560
 		InitialFacing: 192
@@ -367,12 +367,12 @@ SUK:
 	Armament:
 		Weapon: MaverickSU
 		LocalOffset: 0,-640,0, 0,640,0
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || blinded
 		RequiresCondition: !seismic-upgrade
 	Armament@UPGRADE:
 		Weapon: SeismicMissile
 		LocalOffset: 0,-640,0, 0,640,0
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || blinded
 		RequiresCondition: seismic-upgrade
 		AmmoUsage: 2
 	AttackAircraft:
@@ -380,7 +380,7 @@ SUK:
 		Voice: Attack
 		PersistentTargeting: false
 		OpportunityFire: true
-		PauseOnCondition: empdisable || being-warped || blinded
+		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2560
 		InitialFacing: 192
@@ -513,29 +513,29 @@ YAK:
 		Weapon: ChainGun.Yak.L
 		LocalOffset: 256,-213,0
 		MuzzleSequence: muzzle
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || blinded
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: ChainGun.Yak.R
 		LocalOffset: 256,213,0
 		MuzzleSequence: muzzle
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || blinded
 	Armament@PRIMARYAA:
 		Weapon: ChainGun.Yak.AA
 		LocalOffset: 256,-213,0
 		MuzzleSequence: muzzle
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || blinded
 	Armament@SECONDARYAA:
 		Name: secondary
 		Weapon: ChainGun.Yak.AA
 		LocalOffset: 256,213,0
 		MuzzleSequence: muzzle
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || blinded
 	AttackAircraft:
 		FacingTolerance: 80
 		PersistentTargeting: false
 		OpportunityFire: true
-		PauseOnCondition: empdisable || being-warped || blinded
+		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2560
 		InitialFacing: 192
@@ -1493,23 +1493,23 @@ A10:
 	Armament@PRIMARYBLD:
 		Weapon: NapalmTDBuilding
 		LocalOffset: 2,-256,-43, 2,256,-43
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || blinded
 		Name: primarybld
 	Armament@PRIMARY:
 		Weapon: NapalmTD
 		LocalOffset: 2,-256,-43, 2,256,-43
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || blinded
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: Sidewinder
 		LocalOffset: 0,500,-85, 0,-500,-85
-		PauseOnCondition: !ammo2 || bombing-run
+		PauseOnCondition: !ammo2 || bombing-run || blinded
 		RequiresCondition: sidewinders-upgrade && resupplied-with-sidewinders
 	AttackAircraftCA:
 		FacingTolerance: 512
 		PersistentTargeting: false
 		OpportunityFire: true
-		PauseOnCondition: empdisable || being-warped || blinded
+		PauseOnCondition: empdisable || being-warped
 		AirFacingTolerance: 80
 		Armaments: primary, primarybld, secondary
 	Aircraft:
@@ -2224,7 +2224,7 @@ ORCB:
 	Armament:
 		Weapon: OrcaBomb
 		LocalOffset: 2,-256,-43, 2,256,-43
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || blinded
 	AttackAircraft:
 		FacingTolerance: 512
 		Voice: Attack
@@ -2232,7 +2232,7 @@ ORCB:
 		StrafeRunLength: 3c0
 		PersistentTargeting: false
 		OpportunityFire: true
-		PauseOnCondition: empdisable || being-warped || blinded
+		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2560
 		AltitudeVelocity: 0c120
@@ -3039,17 +3039,17 @@ HARR:
 	Armament@PRIMARY:
 		Weapon: HellfireAA.Harrier
 		LocalOffset: 0,500,-85, 0,-500,-85
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || blinded
 	Armament@SECONDARY:
 		Weapon: HellfireAG.Harrier
 		LocalOffset: 0,500,-85, 0,-500,-85
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || blinded
 	AttackAircraft:
 		FacingTolerance: 80
 		Voice: Attack
 		PersistentTargeting: false
 		OpportunityFire: true
-		PauseOnCondition: empdisable || being-warped || blinded
+		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2560
 		TurnSpeed: 18
@@ -3162,25 +3162,25 @@ SCRN:
 	Armament@PRIMARY:
 		Weapon: ScrinTorp
 		LocalOffset: 0,213,-85, 0,-213,-85
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || blinded
 		RequiresCondition: !wrath-covenant
 		AmmoUsage: 4
 	Armament@SECONDARY:
 		Weapon: ScrinTorpAA
 		LocalOffset: 0,213,-85, 0,-213,-85
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || blinded
 		RequiresCondition: !wrath-covenant
 		AmmoUsage: 4
 	Armament@PRIMARYUPG:
 		Weapon: ScrinTorp
 		LocalOffset: 0,213,-85, 0,-213,-85
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || blinded
 		RequiresCondition: wrath-covenant
 		AmmoUsage: 3
 	Armament@SECONDARYUPG:
 		Weapon: ScrinTorpAA
 		LocalOffset: 0,213,-85, 0,-213,-85
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || blinded
 		RequiresCondition: wrath-covenant
 		AmmoUsage: 3
 	AttackAircraft:
@@ -3188,7 +3188,7 @@ SCRN:
 		Voice: Attack
 		PersistentTargeting: false
 		OpportunityFire: true
-		PauseOnCondition: empdisable || being-warped || blinded
+		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2560
 		TurnSpeed: 20
@@ -3666,12 +3666,12 @@ AURO:
 	Armament:
 		Weapon: JDAM
 		LocalOffset: 2,0,-43
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || blinded
 	AttackAircraft:
 		FacingTolerance: 128
 		PersistentTargeting: false
 		OpportunityFire: true
-		PauseOnCondition: empdisable || being-warped || blinded
+		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
 	Aircraft:
 		CruiseAltitude: 2560
@@ -3833,13 +3833,13 @@ PMAK:
 	Armament@PRIMARY:
 		Weapon: PeacemakerBombs
 		LocalOffset: 0,0,-85
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || blinded
 	AttackAircraft:
 		FacingTolerance: 512
 		PersistentTargeting: false
 		Voice: Attack
 		OpportunityFire: true
-		PauseOnCondition: empdisable || being-warped || blinded
+		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2560
 		TurnSpeed: 14
@@ -3973,16 +3973,16 @@ BEAG:
 	Armament@PRIMARY:
 		Weapon: BlackEagleMissiles
 		LocalOffset: 150,0,-85
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || blinded
 	Armament@SECONDARY:
 		Weapon: BlackEagleMissilesAA
 		LocalOffset: 150,0,-85
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || blinded
 	AttackAircraft:
 		FacingTolerance: 80
 		PersistentTargeting: false
 		OpportunityFire: true
-		PauseOnCondition: empdisable || being-warped || blinded
+		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
 	Aircraft:
 		CruiseAltitude: 2560
@@ -4095,16 +4095,16 @@ PHAN:
 	Armament@PRIMARY:
 		Weapon: PhantomMissiles
 		LocalOffset: 150,-400,0, 150,400,0
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || blinded
 	Armament@SECONDARY:
 		Weapon: PhantomMissilesAA
 		LocalOffset: 150,-400,0, 150,400,0
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || blinded
 	AttackAircraft:
 		FacingTolerance: 80
 		PersistentTargeting: false
 		OpportunityFire: true
-		PauseOnCondition: empdisable || being-warped || blinded
+		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2560
 		TurnSpeed: 16
@@ -4365,12 +4365,12 @@ SHDE:
 	Armament@PRIMARY:
 		Weapon: ShadeEmp
 		LocalOffset: 0,0,-85
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || blinded
 	AttackAircraft:
 		FacingTolerance: 80
 		PersistentTargeting: false
 		OpportunityFire: true
-		PauseOnCondition: empdisable || being-warped || blinded
+		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2560
 		TurnSpeed: 20
@@ -4495,16 +4495,16 @@ VERT:
 	Armament@PRIMARY:
 		Weapon: VertigoBomb
 		LocalOffset: 2,0,-43
-		PauseOnCondition: !ammo || hidden
+		PauseOnCondition: !ammo || hidden || blinded
 	Armament@DECLOAK:
 		Name: secondary
 		Weapon: VertigoBombTargeter
-		PauseOnCondition: !ammo || !hidden
+		PauseOnCondition: !ammo || !hidden || blinded
 	AttackAircraft:
 		FacingTolerance: 40
 		PersistentTargeting: false
 		OpportunityFire: true
-		PauseOnCondition: empdisable || being-warped || blinded
+		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2560
 		TurnSpeed: 16
@@ -4860,6 +4860,7 @@ JACK:
 		Type: GroundPosition
 	Armament@PRIMARY:
 		Weapon: JackknifeTargeter
+		PauseOnCondition:  blinded
 	Explodes:
 		Weapon: JackknifeExplosion
 		EmptyWeapon: JackknifeExplosion
@@ -4871,7 +4872,7 @@ JACK:
 		Voice: Attack
 		OpportunityFire: false
 		PersistentTargeting: false
-		PauseOnCondition: empdisable || being-warped || blinded
+		PauseOnCondition: empdisable || being-warped
 	DiveOnAttack:
 		Speed: 250
 		DiveCondition: diving

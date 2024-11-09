@@ -2366,11 +2366,10 @@
 	AttackMove:
 	Passenger:
 		CargoType: Infantry
-		CargoCondition: disable-experience
 	PassengerBlocked:
-	GainsExperienceMultiplier:
-		Modifier: 0
-		RequiresCondition: disable-experience
+	ScatterOnExitCargo:
+		CargoActors: batf, batf.ai
+		OnlyIfCargoIsDead: true
 	HiddenUnderFog:
 	ActorLostNotification:
 		TextNotification: Unit lost.
