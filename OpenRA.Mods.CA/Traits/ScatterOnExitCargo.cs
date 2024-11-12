@@ -40,7 +40,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		void INotifyExitedCargo.OnExitedCargo(Actor self, Actor cargo)
 		{
-			if (info.CargoActors.Any() && info.CargoActors.Contains(cargo.Info.Name) && cargo.IsDead)
+			if (info.CargoActors.Any() && info.CargoActors.Contains(cargo.Info.Name) && (cargo.IsDead || !info.OnlyIfCargoIsDead))
 			{
 				self.TraitOrDefault<Mobile>()?.Nudge(self);
 			}
