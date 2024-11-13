@@ -107,6 +107,9 @@ Player:
 
 ^Defense:
 	Inherits@INDESTRUCTIBLE: ^IndestructibleWhenNeutral
+	Targetable@MINDCONTROL:
+		TargetTypes: MindControllable
+		RequiresCondition: !mindcontrolled
 
 ^AffectedByDriverKill:
 	GrantConditionIfOwnerIsNeutral:
@@ -120,15 +123,12 @@ MAST:
 	Inherits@SATHACKPOWER: ^SatHackPower
 	-Passenger:
 	-PassengerBlocked:
-	-GainsExperienceMultiplier:
 	-TakeCover:
 	-PeriodicExplosion:
 	-PeriodicExplosionOnSlaves:
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: HoldFire
-	AttackFrontal:
-		-Armaments:
 	Health:
 		HP: 120000
 	Mobile:

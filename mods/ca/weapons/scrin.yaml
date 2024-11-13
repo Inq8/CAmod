@@ -55,12 +55,7 @@ DisintegratorBeamAA:
 EnslaveInfantry:
 	Range: 7c0
 	ReloadDelay: 35
-	Projectile: ArcLaserZap
-		Color: c7158537
-		Angle: 60
-		Width: 86
-		Duration: 20
-		HitAnim: empty
+	Projectile: InstantHit
 	ValidTargets: MindControllable
 	InvalidTargets: Vehicle, Ship, MindControlImmune
 	Warhead@1Dam: TargetDamage
@@ -1693,7 +1688,7 @@ LeecherBeam:
 		Versus:
 			None: 100
 			Light: 50
-			Wood: 65
+			Wood: 60
 			Heavy: 15
 			Concrete: 15
 			Brick: 5
@@ -1827,6 +1822,7 @@ AtomizerBolts:
 		TrailImage: atmzbolttrail
 		TrailPalette: scrin
 		TrailInterval: 1
+		Blockable: false
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
 		Damage: 4000

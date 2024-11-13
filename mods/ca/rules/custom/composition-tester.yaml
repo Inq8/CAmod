@@ -376,6 +376,10 @@ STNK.Nod:
 	Buildable:
 		Prerequisites: ~player.nod
 
+HSTK:
+	Buildable:
+		Prerequisites: ~player.nod
+
 BIKE:
 	Buildable:
 		Prerequisites: ~player.nod
@@ -594,12 +598,6 @@ SPY:
 	Buildable:
 		Prerequisites: ~player.allies
 
-E7:
-	Buildable:
-		Prerequisites: ~player.allies, !gunhero
-	ProvidesPrerequisite@GUNHERO:
-		Prerequisite: gunhero
-
 MEDI:
 	Buildable:
 		Prerequisites: ~player.alliesorgdi
@@ -644,11 +642,7 @@ N5:
 	Buildable:
 		Prerequisites: ~player.nod
 
-RMBO:
-	Buildable:
-		Prerequisites: ~player.td, !gunhero
-	ProvidesPrerequisite@GUNHERO:
-		Prerequisite: gunhero
+
 
 N6:
 	Buildable:
@@ -661,12 +655,6 @@ SNIP:
 CMSR:
 	Buildable:
 		Prerequisites: ~player.soviet
-
-BORI:
-	Buildable:
-		Prerequisites: ~player.soviet, !gunhero
-	ProvidesPrerequisite@GUNHERO:
-		Prerequisite: gunhero
 
 MORT.Chem:
 	Buildable:
@@ -735,12 +723,6 @@ BRUT:
 BH:
 	Buildable:
 		Prerequisites: ~player.nod
-
-YURI:
-	Buildable:
-		Prerequisites: ~player.soviet, !mchero
-	ProvidesPrerequisite@MCHERO:
-		Prerequisite: mchero
 
 SEAL:
 	Buildable:
@@ -938,11 +920,30 @@ BRST:
 	Buildable:
 		Prerequisites: ~player.scrin
 
+E7:
+	Buildable:
+		Prerequisites: ~player.allies
+		BuildLimit: 0
+
+BORI:
+	Buildable:
+		Prerequisites: ~player.soviet
+		BuildLimit: 0
+
+RMBO:
+	Buildable:
+		Prerequisites: ~player.td
+		BuildLimit: 0
+
+YURI:
+	Buildable:
+		Prerequisites: ~player.soviet
+		BuildLimit: 0
+
 MAST:
 	Buildable:
-		Prerequisites: ~player.scrin, !mchero
-	ProvidesPrerequisite@MCHERO:
-		Prerequisite: mchero
+		Prerequisites: ~player.scrin
+		BuildLimit: 0
 
 HARV.Scrin:
 	Buildable:

@@ -811,6 +811,9 @@ EVIS:
 		Weapon: EvisceratorShardsCharged
 		PauseOnCondition: !ammo || uncharged-fire
 		LocalOffset: 0,-100,250, 0,100,250
+	Armament@BATF:
+		Name: batf
+		Weapon: EvisceratorShards
 	AmmoPool@RESCONV:
 		Ammo: 20
 	ReloadAmmoPool@RESCONV:
@@ -873,6 +876,9 @@ IMPL:
 	Armament@PRIMARY:
 		Weapon: ImpalerSpike
 		LocalOffset: 150,0,400
+	Armament@BATF:
+		Name: batf
+		Weapon: ImpalerSpike
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 
@@ -911,6 +917,9 @@ MUTI:
 	Armament@PRIMARY:
 		Weapon: MutilatorShards
 		LocalOffset: 0,-100,250, 0,100,250
+	Armament@BATF:
+		Name: batf
+		Weapon: MutilatorShards
 	AutoTarget:
 		ScanRadius: 5
 	WithInfantryBody:
@@ -1388,7 +1397,7 @@ GUNW:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 30000
+		HP: 28000
 	Armor:
 		Type: Light
 	Mobile:
@@ -1455,7 +1464,7 @@ SHRW:
 	Armor:
 		Type: Light
 	Health:
-		HP: 38000
+		HP: 36000
 	Mobile:
 		Speed: 92
 		TurnSpeed: 36
@@ -1815,7 +1824,7 @@ CORR:
 		Speed: 72
 		TurnSpeed: 16
 	Health:
-		HP: 38000
+		HP: 36000
 	Armor:
 		Type: Light
 	RevealsShroud:
@@ -6104,11 +6113,24 @@ REBELGATEWAY:
 		Actors: s1, s1, s1, s3, s3, s1, s1
 		ReadyAudio: ReinforcementsArrived
 		RequiresCondition: !wave1-deployed
-	PeriodicProducerCA@2:
+	PeriodicProducerCA@2Standard:
 		Type: Gateway
 		ChargeDuration: 625
 		Actors: gunw, gunw, tpod
 		ReadyAudio: ReinforcementsArrived
+		RequiresCondition: !reaper && !shard
+	PeriodicProducerCA@2Reaper:
+		Type: Gateway
+		ChargeDuration: 625
+		Actors: gunw, gunw, rptp
+		ReadyAudio: ReinforcementsArrived
+		RequiresCondition: reaper && !shard
+	PeriodicProducerCA@2ReaperShard:
+		Type: Gateway
+		ChargeDuration: 625
+		Actors: shrw, shrw, rptp
+		ReadyAudio: ReinforcementsArrived
+		RequiresCondition: reaper && shard
 	AmmoPool@Wave1:
 		Name: wave1
 		InitialAmmo: 0
@@ -6126,6 +6148,12 @@ REBELGATEWAY:
 		ShowSelectionBar: true
 		SelectionBarColor: ff00ff
 		RequiresCondition: wave1-deployed
+	GrantConditionOnPrerequisite@Reaper:
+		Prerequisites: player.reaper
+		Condition: reaper
+	GrantConditionOnPrerequisite@Shard:
+		Prerequisites: shrw.upgrade
+		Condition: shard
 
 # infiltrator stolen tech
 

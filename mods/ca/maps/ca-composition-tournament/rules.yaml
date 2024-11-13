@@ -377,6 +377,36 @@ DOME:
 	-AirstrikePowerCA@MutaBomb:
 	-AirstrikePowerCA@spyplane:
 
+E7:
+	Buildable:
+		Prerequisites: ~player.allies, !gunhero
+	ProvidesPrerequisite@GUNHERO:
+		Prerequisite: gunhero
+
+BORI:
+	Buildable:
+		Prerequisites: ~player.soviet, !gunhero
+	ProvidesPrerequisite@GUNHERO:
+		Prerequisite: gunhero
+
+RMBO:
+	Buildable:
+		Prerequisites: ~player.td, !gunhero
+	ProvidesPrerequisite@GUNHERO:
+		Prerequisite: gunhero
+
+YURI:
+	Buildable:
+		Prerequisites: ~player.soviet, !mchero
+	ProvidesPrerequisite@MCHERO:
+		Prerequisite: mchero
+
+MAST:
+	Buildable:
+		Prerequisites: ~player.scrin, !mchero
+	ProvidesPrerequisite@MCHERO:
+		Prerequisite: mchero
+
 # ####
 
 hazmat.upgrade:
