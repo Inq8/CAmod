@@ -24,8 +24,8 @@ Squads = {
 		},
 		AttackValuePerSecond = {
 			easy = { { MinTime = 0, Value = 8 }, { MinTime = DateTime.Minutes(14), Value = 20 }, { MinTime = DateTime.Minutes(18), Value = 35 } },
-			normal = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(12), Value = 35 }, { MinTime = DateTime.Minutes(18), Value = 45 } },
-			hard = { { MinTime = 0, Value = 30 }, { MinTime = DateTime.Minutes(10), Value = 50 }, { MinTime = DateTime.Minutes(18), Value = 65 } },
+			normal = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(10), Value = 35 }, { MinTime = DateTime.Minutes(15), Value = 45 } },
+			hard = { { MinTime = 0, Value = 30 }, { MinTime = DateTime.Minutes(6), Value = 50 }, { MinTime = DateTime.Minutes(12), Value = 75 }, { MinTime = DateTime.Minutes(18), Value = 100 } },
 		},
 		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = true,
