@@ -2,7 +2,7 @@
 Fields = {
 	{ Reinforced = false, Waypoint = NWField, Reinforcements = { "gunw", "intl", "s1", "s1", "s3", "s1", "s1", "s3", "s1", "s4" } },
 	{ Reinforced = false, Waypoint = NField, Reinforcements = { "devo", "corr", "s1", "s1", "s3", "s1", "s2", "s1", "s1", "s3" } },
-	{ Reinforced = false, Waypoint = NEField, Reinforcements = { "rptp", "lchr", "s4", "s4", "s2", "s1", "s1", "s1", "s1", "s1" } },
+	{ Reinforced = false, Waypoint = NEField, Reinforcements = { "rtpd", "lchr", "s4", "s4", "s2", "s1", "s1", "s1", "s1", "s1" } },
 	{ Reinforced = false, Waypoint = SEField, Reinforcements = { "tpod", "seek", "shrw", "s1", "s1", "s3", "s2", "s1", "s1", "s1" } },
 	{ Reinforced = false, Waypoint = SField, Reinforcements = { "devo", "shrw", "seek", "s3", "s3", "s4", "s1", "s1", "s1", "s1" } },
 	{ Reinforced = true, Waypoint = SWField, Reinforcements = nil }

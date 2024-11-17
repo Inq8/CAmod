@@ -25,7 +25,7 @@ ReinforcementGroups = {
 	{
 		Waypoint = MWormhole,
 		Targets = { MBuilding1, MBuilding2, MBuilding3, MBuilding4, MBuilding5, MBuilding6 },
-		Units = { "rptp", "s1", "s1", "s4", "s2", "ruin" }
+		Units = { "rtpd", "s1", "s1", "s4", "s2", "ruin" }
 	},
 }
 

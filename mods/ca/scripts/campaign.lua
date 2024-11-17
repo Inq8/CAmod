@@ -1127,14 +1127,14 @@ IsNodGroundHunterUnit = function(actor)
 end
 
 IsScrinGroundHunterUnit = function(actor)
-	return actor.Owner == Scrin and IsGroundHunterUnit(actor) and actor.Type ~= "mast"
+	return actor.Owner == Scrin and IsGroundHunterUnit(actor) and actor.Type ~= "mast" and actor.Type ~= "pdgy"
 end
 
 -- Units
 
 GunWalkerSeekerOrLacerator = { "gunw", "seek", "lace", "shrw" }
 CorrupterDevourerOrDarkener = { "corr", "devo", "dark" }
-TripodReaperOrRuiner = { "tpod", "tpod", "rptp", "ruin" }
+TripodReaperOrRuiner = { "tpod", "tpod", "rtpd", "ruin" }
 PacOrDevastator = { "pac", "deva" }
 GDIMammothVariant = { "titn.rail", "htnk.ion", "htnk.hover", "htnk.drone" }
 SovietMammothVariant = { "4tnk", "4tnk", "4tnk.atomic", "4tnk.erad" }

@@ -49,8 +49,10 @@ namespace OpenRA.Mods.Common.Traits
 			if (attackingPlayer.RelationshipWith(self.Owner) != PlayerRelationship.Enemy)
 				return;
 
-			var attackerCount = attackingPlayer.PlayerActor.Trait<ProvidesPrerequisiteOnKillCount>();
-			attackerCount.Increment(actorName);
+			var attackerCounters = attackingPlayer.PlayerActor.TraitsImplementing<ProvidesPrerequisiteOnKillCount>();
+
+			foreach (var counter in attackerCounters)
+				counter.Increment(actorName);
 		}
 	}
 }
