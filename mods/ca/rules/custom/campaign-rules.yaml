@@ -24,8 +24,8 @@ Player:
 	GrantConditionOnBotOwner@CampaignAI:
 		Condition: enable-campaign-ai
 		Bots: campaign
-	SupportPowerBotModule@CAMPAIGN:
-		RequiresCondition: enable-campaign-ai
+	SupportPowerBotModule:
+		RequiresCondition: enable-brutal-ai || enable-vhard-ai || enable-hard-ai || enable-normal-ai || enable-easy-ai || enable-naval-ai || enable-campaign-ai
 	LobbyPrerequisiteCheckbox@GLOBALBOUNTY:
 		Enabled: False
 		Locked: True
@@ -102,11 +102,12 @@ World:
 		Prerequisites: ~disabled
 
 ^AiExtraPower:
-	GrantConditionOnBotOwnerCA@EXTRAPOWER:
-		Condition: ai-extra-power
+	GrantConditionOnPrerequisite@OwnedByAi:
+		Condition: owned-by-ai
+		Prerequisites: botplayer
 	PowerMultiplier@EXTRAPOWER:
 		Modifier: 130
-		RequiresCondition: ai-extra-power
+		RequiresCondition: owned-by-ai
 
 POWR:
 	Inherits@EXTRAPOWER: ^AiExtraPower
@@ -218,6 +219,24 @@ TRAN.evac:
 	-SpawnRandomActorOnDeath@2:
 	-SpawnRandomActorOnDeath@3:
 
+HOSP:
+	GrantConditionOnPrerequisite@OwnedByAi:
+		Condition: owned-by-ai
+		Prerequisites: botplayer
+	PeriodicProducerCA@MEDIC:
+		RequiresCondition: !is-neutral && !scrinplayer && !owned-by-ai
+	PeriodicProducerCA@REJUVENATOR:
+		RequiresCondition: !is-neutral && scrinplayer && !owned-by-ai
+
+MACS:
+	GrantConditionOnPrerequisite@OwnedByAi:
+		Condition: owned-by-ai
+		Prerequisites: botplayer
+	PeriodicProducerCA@MECHANIC:
+		RequiresCondition: !is-neutral && !scrinplayer && !owned-by-ai
+	PeriodicProducerCA@ARTIFICER:
+		RequiresCondition: !is-neutral && scrinplayer && !owned-by-ai
+
 MONEYCRATE:
 	Tooltip:
 		Name: Crate
@@ -252,27 +271,26 @@ WARPIN:
 		Sequence: warpin
 		Palette: ra2effect-ignore-lighting-alpha75
 
-POWERCHEAT:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
+ai.unlimited.power:
+	Inherits@DUMMY: ^InvisibleDummy
 	Power:
 		Amount: 10000
 
+ai.superweapons.enabled:
+	Inherits@DUMMY: ^InvisibleDummy
+	ProvidesPrerequisite:
+
+ai.reveal.map:
+	Inherits@DUMMY: ^InvisibleDummy
+	RevealsMap:
+		RevealGeneratedShroud: false
+
 hold3.strat:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
+	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite@upgradename:
 
-hazmat.upgrade:
-	Buildable:
-		Prerequisites: anyradar, infantry.any, ~!player.soviet, ~!player.scrin, ~techlevel.medium
-
 radar.dummy:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
+	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesRadar:
 
 HIDDENSPAWNER:
@@ -359,14 +377,6 @@ SILO.SCRIN:
 	StoresPlayerResourcesCA:
 		DisableTransferFromBotOwner: true
 
-DISR:
-	Buildable:
-		Prerequisites: gtek, ~vehicles.gdi
-
-sonic.upgrade:
-	Buildable:
-		Prerequisites: gtek, ~player.gdi
-
 ^GpsPower:
 	ProduceActorPowerCA@InitialSatelliteScan:
 		Prerequisites: anyradar, ~!gps.satellite.firstscan, ~fogenabled, ~!botplayer
@@ -374,6 +384,207 @@ sonic.upgrade:
 		Prerequisites: anyradar, ~gps.satellite, ~gps.satellite.firstscan, ~fogenabled, ~!botplayer
 	ProduceActorPowerCA@SatelliteScanNoFog:
 		Prerequisites: anyradar, ~!fogenabled, ~!botplayer
+
+SHOK:
+	-AutoTargetPriority@TESLANORMAL:
+
+PDGY:
+	Inherits: MAST
+	-Buildable:
+	RenderSprites:
+		Image: mast
+	GrantCondition@Elite:
+		Condition: rank-elite
+
+ETPD:
+	Inherits: TPOD
+	Inherits@SHIELDS: ^ScrinShields
+	Inherits@A2GPROTECTION: ^AirToGroundProtection
+	Inherits@SHRAPNEL: ^ThrowsShrapnelBig
+	Turreted@SHIELDS:
+		Offset: 0,0,0
+	GrantCondition@SHIELDS:
+		Condition: shields-upgrade
+	Tooltip:
+		Name: Exterminator Tripod
+	-Buildable:
+	-CaptureManager:
+	-Capturable:
+	-CaptureNotification:
+	-Capturable@DRIVER_DEAD:
+	-GrantConditionIfOwnerIsNeutral:
+	-ChangesHealth@DRIVER_DEAD:
+	-TooltipDescription@DRIVER_DEAD:
+	-Targetable@DRIVERKILL:
+	-Targetable@DRIVERKILLLOWHP:
+	-GrantConditionOnDamageState@DriverKillLessThan50:
+	-GrantConditionOnDamageState@DriverKillLessThan75:
+	-Targetable@AICAPTURE:
+	TooltipExtras:
+		Description: Super heavy assault walker with beam weapons.
+		Strengths: Strong vs all ground units and structures.
+	Mobile:
+		Speed: 36
+		PauseOnCondition: empdisable || being-warped || notmobile
+		ImmovableCondition: alive
+	GrantCondition@ALIVE:
+		Condition: alive
+	Armament@PRIMARY:
+		Weapon: ExterminatorLaser
+		LocalOffset: 800,650,1000
+	Armament@PRIMARY2:
+		Weapon: ExterminatorLaser
+		LocalOffset: 800,450,1500
+		FireDelay: 2
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: ExterminatorLaserReversed
+		LocalOffset: 800,-650,1000
+	Armament@SECONDARY2:
+		Name: secondary
+		Weapon: ExterminatorLaserReversed
+		LocalOffset: 800,-450,1500
+		FireDelay: 22
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+	Health:
+		HP: 900000
+	Shielded:
+		MaxStrength: 650000
+		RegenAmount: 1000
+	Valued:
+		Cost: 10000
+	RevealsShroud:
+		Range: 7c0
+	TurretedFloating:
+		TurnSpeed: 8
+	Selectable:
+		Bounds: 1800, 3200, 0, -600
+	AutoTarget:
+		InitialStanceAI: AttackAnything
+	SpawnActorOnDeath:
+		Actor: ETPD.Husk
+	ExternalCondition@NORMAL:
+		Condition: difficulty-normal
+	ExternalCondition@EASY:
+		Condition: difficulty-easy
+	FirepowerMultiplier@NORMAL:
+		Modifier: 75
+		RequiresCondition: difficulty-normal
+	FirepowerMultiplier@EASY:
+		Modifier: 50
+		RequiresCondition: difficulty-easy
+	DamageMultiplier@NORMAL:
+		Modifier: 125
+		RequiresCondition: difficulty-normal
+	DamageMultiplier@EASY:
+		Modifier: 150
+		RequiresCondition: difficulty-easy
+	MustBeDestroyed:
+		RequiredForShortGame: true
+	Targetable@ETPD:
+		TargetTypes: ExterminatorTripod
+	Targetable@SHIELDED:
+		TargetTypes: Shielded
+		RequiresCondition: shields-up
+	Targetable@MindControlResistant:
+		TargetTypes: MindControlResistant
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+		RequiresCondition: shields-up
+	DamageTypeDamageMultiplier@A2GPROTECTION:
+		Modifier: 75
+		RequiresCondition: !difficulty-easy
+	-ExternalCondition@UNITSELL:
+	-Sellable:
+	ChangesHealth@THEAL:
+		Step: 2000
+		PercentageStep: 0
+	Explodes:
+		Weapon: 380mm
+		EmptyWeapon: 380mm
+
+ETPD.Husk:
+	Inherits: TPOD.Husk
+	Tooltip:
+		Name: Husk (Exterminator Tripod)
+	RenderSprites:
+		Image: etpd.destroyed
+
+SCRINPURIFIER:
+	Inherits: ^TechBuilding
+	Inherits@shape: ^2x2Shape
+	Selectable:
+		Bounds: 2048, 2048
+	Building:
+		Footprint: xx xx
+		Dimensions: 2,2
+	RevealsShroud:
+		Range: 10c0
+	CaptureManager:
+	CapturableProgressBlink:
+	Capturable:
+		Types: building
+	CapturableProgressBar:
+	Tooltip:
+		Name: Scrin Tiberium Purifier
+	WithIdleOverlay@ACTIVE:
+		Sequence: purification
+		RequiresCondition: !is-neutral
+		Offset: 800,50,-150
+	GrantConditionIfOwnerIsNeutral@NEUTRAL:
+		Condition: is-neutral
+	SeedsResource:
+		ResourceType: BlueTiberium
+		Interval: 2
+		RequiresCondition: !is-neutral
+	Health:
+		HP: 150000
+	-CaptureNotification:
+
+# Enable subfaction specific units/upgrades for all campaign missions
+
+## Soviets
+
+E8:
+	Buildable:
+		Prerequisites: ~barr, anyradar, ~!deso.upgrade, ~techlevel.medium
+
+DESO:
+	Buildable:
+		Prerequisites: ~barr, anyradar, ~deso.upgrade, ~techlevel.medium
+
+TTNK:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.soviet, ~techlevel.medium
+
+ISU:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.soviet, ~techlevel.medium
+
+deso.upgrade:
+	Buildable:
+		Prerequisites: ~player.soviet, stek, ~techlevel.high
+
+tarc.upgrade:
+	Buildable:
+		Prerequisites: ~player.soviet, stek, ~techlevel.high
+
+seismic.upgrade:
+	Buildable:
+		Prerequisites: ~player.soviet, stek, ~techlevel.high
+
+## GDI
+
+DISR:
+	Buildable:
+		Prerequisites: gtek, ~vehicles.gdi, ~techlevel.high
+
+sonic.upgrade:
+	Buildable:
+		Prerequisites: gtek, ~player.gdi, ~techlevel.high
 
 # For attack interval calculations, factoring in extra value from cargo
 

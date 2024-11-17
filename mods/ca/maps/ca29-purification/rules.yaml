@@ -35,58 +35,6 @@ World:
 Player:
 	PlayerResources:
 		DefaultCash: 6500
-	SupportPowerBotModule@CAMPAIGN:
-		Decisions:
-			stormspikepower:
-				OrderName: stormspike
-				MinimumAttractiveness: 5
-				Consideration@1:
-					Against: Enemy
-					Types: Structure
-					Attractiveness: 1
-					TargetMetric: None
-					CheckRadius: 8c0
-				Consideration@2:
-					Against: Enemy
-					Types: TibTruck
-					Attractiveness: -5000
-					TargetMetric: None
-					CheckRadius: 8c0
-			buzzerswarmpower:
-				OrderName: buzzerswarmai
-				MinimumAttractiveness: 1000
-				FineScanRadius: 2
-				Consideration@3:
-					Against: Enemy
-					Types: Infantry
-					Attractiveness: 2
-					TargetMetric: Value
-					CheckRadius: 2c0
-			suppressionpower:
-				OrderName: suppression
-				MinimumAttractiveness: 2000
-				FineScanRadius: 2
-				Consideration@3:
-					Against: Enemy
-					Types: Vehicle, Infantry
-					Attractiveness: 2
-					TargetMetric: Value
-					CheckRadius: 3c0
-			riftpower:
-				OrderName: rift
-				MinimumAttractiveness: 3000
-				Consideration@1:
-					Against: Enemy
-					Types: Structure
-					Attractiveness: 1
-					TargetMetric: Value
-					CheckRadius: 5c0
-				Consideration@2:
-					Against: Ally
-					Types: Air, Ground, Water
-					Attractiveness: -10
-					TargetMetric: Value
-					CheckRadius: 7c0
 
 ACOL:
 	Buildable:
@@ -259,11 +207,14 @@ NERV:
 		ChargeInterval: 8250
 
 RFGN:
+	GrantConditionOnPrerequisite@OwnedByAi:
+		Condition: owned-by-ai
+		Prerequisites: botplayer
 	DetonateWeaponPower@RiftGenerator:
-		ChargeInterval: 13500
-		RequiresCondition: rift-enabled
-	ExternalCondition@RIFTENABLED:
-		Condition: rift-enabled
+		RequiresCondition: ai-superweapons-enabled || !owned-by-ai
+	GrantConditionOnPrerequisite@SWENABLED:
+		Condition: ai-superweapons-enabled
+		Prerequisites: ai.superweapons.enabled
 
 MANI:
 	GrantExternalConditionPowerCA@SUPPRESSION:

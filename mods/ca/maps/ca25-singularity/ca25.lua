@@ -541,7 +541,7 @@ InitScrin = function()
 	end)
 
 	Mothership.Attack(Wormhole, true, true)
-	Actor.Create("POWERCHEAT", true, { Owner = Scrin })
+	Actor.Create("ai.unlimited.power", true, { Owner = Scrin })
 	Actor.Create("shields.upgrade", true, { Owner = Scrin })
 	ScrinDefenseBuff1 = Actor.Create("scrindefensebuff1", true, { Owner = Scrin })
 	ScrinDefenseBuff2 = Actor.Create("scrindefensebuff2", true, { Owner = Scrin })
@@ -555,9 +555,7 @@ InitScrin = function()
 	end
 
 	Trigger.AfterDelay(RiftEnabledTime[Difficulty], function()
-		if not RiftGenerator.IsDead then
-			RiftGenerator.GrantCondition("rift-enabled")
-		end
+		Actor.Create("ai.superweapons.enabled", true, { Owner = Scrin })
 	end)
 
 	Trigger.AfterDelay(Squads.ScrinAir.Delay[Difficulty], function()
@@ -942,7 +940,7 @@ DoFinale = function()
 	Actor.Create("camera", true, { Owner = GDI, Location = WormholeWP.Location })
 
 	Trigger.AfterDelay(1, function()
-		Actor.Create("wormholexl", true, { Owner = Scrin, Location = WormholeWP.Location })
+		Actor.Create("wormholexxl", true, { Owner = Scrin, Location = WormholeWP.Location })
 	end)
 
 	Actor.Create("wormhole", true, { Owner = Kane, Location = KaneSpawn.Location })

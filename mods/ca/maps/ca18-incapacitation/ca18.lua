@@ -217,7 +217,7 @@ OncePerFiveSecondChecks = function()
 end
 
 InitGreece = function()
-	Actor.Create("POWERCHEAT", true, { Owner = Greece })
+	Actor.Create("ai.unlimited.power", true, { Owner = Greece })
 	Actor.Create("hazmat.upgrade", true, { Owner = Greece })
 	Actor.Create("cryw.upgrade", true, { Owner = Greece })
 
@@ -236,7 +236,7 @@ InitGreece = function()
 end
 
 InitGDI = function()
-	Actor.Create("POWERCHEAT", true, { Owner = GDI })
+	Actor.Create("ai.unlimited.power", true, { Owner = GDI })
 	Actor.Create("hazmat.upgrade", true, { Owner = GDI })
 	Actor.Create("hold.strat", true, { Owner = GDI })
 	Actor.Create("hold2.strat", true, { Owner = GDI })

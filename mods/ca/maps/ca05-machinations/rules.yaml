@@ -24,22 +24,6 @@ Player:
 	PlayerResources:
 		DefaultCash: 6500
 
-SNIP:
-	Buildable:
-		Prerequisites: tent, anyradar
-
-BATF:
-	Buildable:
-		Prerequisites: atek, ~vehicles.allies
-
-NHAW:
-	Buildable:
-		Prerequisites: ~aircraft.allies
-
-apb.upgrade:
-	Buildable:
-		Prerequisites: atek
-
 LST.INIT:
 	Inherits: LST
 	RenderSprites:
@@ -66,3 +50,35 @@ TMPL:
 
 TMPP:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+ENLI:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+RMBC:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+# Enable subfaction specific units/upgrades
+
+SNIP:
+	Buildable:
+		Prerequisites: tent, anyradar
+
+TNKD:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.allies
+
+CHPR:
+	Buildable:
+		Prerequisites: atek, ~vehicles.allies
+
+BATF:
+	Buildable:
+		Prerequisites: atek, ~vehicles.allies
+
+NHAW:
+	Buildable:
+		Prerequisites: ~aircraft.allies
+
+apb.upgrade:
+	Buildable:
+		Prerequisites: atek

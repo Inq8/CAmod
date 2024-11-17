@@ -52,6 +52,11 @@ Player:
 	Voiced:
 		VoiceSet: GenericTDVoice
 
+^BuildingTD:
+	WithDeathAnimation:
+		DeathSequencePalette: temptd
+		DeathPaletteIsPlayerPalette: false
+
 CRYO:
 	RenderSprites:
 		-Palette:
@@ -70,29 +75,17 @@ N6:
 	Buildable:
 		Prerequisites: ~infantry.any
 
-E6:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
 MEDI:
 	Buildable:
 		Prerequisites: ~tent
-
-ORCA:
-	Buildable:
-		Prerequisites: hpad.td
 
 MNLY:
 	Buildable:
 		Prerequisites: ~vehicles.allies, repair
 
-JJET:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-RMBO:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-charv.upgrade:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
+ORCA:
+	Buildable:
+		Prerequisites: hpad.td
 
 vulcan.upgrade:
 	Buildable:
@@ -102,7 +95,22 @@ rapc.upgrade:
 	Buildable:
 		Prerequisites: anyradar, ~radar.allies
 
-A10:
+E6:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+JJET:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+BJET:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+RMBO:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+E7:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+BORI:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
 XO:
@@ -126,6 +134,9 @@ HTNK:
 MEMP:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
+A10:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
 OCAR:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
@@ -137,29 +148,6 @@ AMCV:
 
 CA:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-E7:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-BORI:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-HQ:
-	-AirstrikePowerCA@uav:
-
-^BuildingTD:
-	WithDeathAnimation:
-		DeathSequencePalette: temptd
-		DeathPaletteIsPlayerPalette: false
-
-HPAD.TD:
-	-InterceptorPower@AirDef:
-
-REP:
-	ProximityExternalCondition@AIRCRAFTREPAIR:
-		Range: 12c0
-	WithRangeCircle@AIRCRAFTREPAIR:
-		Range: 12c0
 
 PDOX:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
@@ -179,8 +167,20 @@ WEAT:
 MSLO:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-TSLA:
-	-Targetable@TeslaBoost:
+charv.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+HQ:
+	-AirstrikePowerCA@uav:
+
+HPAD.TD:
+	-InterceptorPower@AirDef:
+
+REP:
+	ProximityExternalCondition@AIRCRAFTREPAIR:
+		Range: 12c0
+	WithRangeCircle@AIRCRAFTREPAIR:
+		Range: 12c0
 
 MISS:
 	Tooltip:
@@ -190,10 +190,6 @@ MISS:
 		ValidRelationships: Ally
 	Health:
 		HP: 200000
-
-FCOM:
-	Tooltip:
-		Name: Command Center
 
 GNRL:
 	Tooltip:

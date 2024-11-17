@@ -1,0 +1,75 @@
+MapFormat: 12
+
+RequiresMod: ca
+
+Title: Mission Template
+
+Author: Darkademic
+
+Tileset: TEMPERAT
+
+MapSize: 146,146
+
+Bounds: 1,1,144,144
+
+Visibility: MissionSelector
+
+Categories: Conquest
+
+LockPreview: True
+
+Players:
+	PlayerReference@Neutral:
+		Name: Neutral
+		OwnsWorld: True
+		NonCombatant: True
+		Faction: Random
+	PlayerReference@Creeps:
+		Name: Creeps
+		NonCombatant: True
+		Faction: Random
+		Enemies: Greece, USSR, GDI, Nod, Scrin
+	PlayerReference@Greece:
+		Name: Greece
+		AllowBots: False
+		Playable: True
+		Required: True
+		LockFaction: True
+		Faction: allies
+		LockColor: True
+		Color: 99ACF2
+		LockSpawn: True
+		LockTeam: True
+		Allies: GDI
+		Enemies: USSR, Nod, Scrin, Creeps
+	PlayerReference@USSR:
+		Name: USSR
+		Bot: campaign
+		Faction: soviet
+		Color: FE1100
+		Enemies: Greece, GDI, Nod, Scrin, Creeps
+	PlayerReference@GDI:
+		Name: GDI
+		Bot: campaign
+		Faction: gdi
+		Color: F2CF74
+		Allies: Greece
+		Enemies: USSR, Nod, Scrin, Creeps
+	PlayerReference@Nod:
+		Name: Nod
+		Bot: campaign
+		Faction: nod
+		Color: FE1100
+		Enemies: USSR, GDI, Scrin, Creeps
+	PlayerReference@Scrin:
+		Name: Scrin
+		Bot: campaign
+		Faction: scrin
+		Color: 7700FF
+		Enemies: Greece, USSR, GDI, Nod, Creeps
+
+Actors:
+
+Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, template-rules.yaml
+
+Weapons: ca|weapons/custom/campaign.yaml

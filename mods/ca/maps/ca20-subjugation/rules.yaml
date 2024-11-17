@@ -171,8 +171,9 @@ MISS:
 	RangeMultiplier@3:
 		Modifier: 190
 		RequiresCondition: enriched >= 3
-	GrantConditionOnBotOwnerCA@BOTOWNER:
+	GrantConditionOnPrerequisite@OwnedByAi:
 		Condition: owned-by-ai
+		Prerequisites: botplayer
 	AttackOmni:
 		RequiresCondition: owned-by-ai
 	Armament@0:
@@ -244,7 +245,8 @@ HALO:
 		HP: 17000
 	KillsSelf@YURIMC:
 		RequiresCondition: yurimc
-	GrantConditionOnBotOwnerCA@YURIMC:
+	GrantConditionOnBotOwner@YURIMC:
+		Bots: campaign
 		Condition: yurimc
 	-EjectOnDeath:
 

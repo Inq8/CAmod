@@ -289,7 +289,7 @@ InitGreece = function()
 	SetupRefAndSilosCaptureCredits(Greece)
 	AutoReplaceHarvesters(Greece)
 
-	Actor.Create("POWERCHEAT", true, { Owner = Traitor })
+	Actor.Create("ai.unlimited.power", true, { Owner = Traitor })
 	Actor.Create("hazmatsoviet.upgrade", true, { Owner = Traitor })
 
 	local alliedGroundAttackers = Greece.GetGroundAttackers()

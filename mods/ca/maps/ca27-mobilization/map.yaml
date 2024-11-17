@@ -1,0 +1,55 @@
+MapFormat: 12
+
+RequiresMod: ca
+
+Title: 27: Mobilization
+
+Author: Darkademic
+
+Tileset: TEMPERAT
+
+MapSize: 98,98
+
+Bounds: 1,1,96,96
+
+Visibility: MissionSelector
+
+Categories: Campaign
+
+LockPreview: True
+
+Players:
+	PlayerReference@Neutral:
+		Name: Neutral
+		OwnsWorld: True
+		NonCombatant: True
+		Faction: Random
+	PlayerReference@Creeps:
+		Name: Creeps
+		NonCombatant: True
+		Faction: Random
+		Enemies: GDI, Scrin
+	PlayerReference@GDI:
+		Name: GDI
+		AllowBots: False
+		Playable: True
+		Required: True
+		LockFaction: True
+		Faction: gdi
+		LockColor: True
+		Color: F2CF74
+		LockSpawn: True
+		LockTeam: True
+		Enemies: Scrin, Creeps
+	PlayerReference@Scrin:
+		Name: Scrin
+		Bot: campaign
+		Faction: scrin
+		Color: 7700FF
+		Enemies: GDI, Creeps
+
+Actors:
+
+Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-coalitions.yaml, mobilization-rules.yaml
+
+Weapons: ca|weapons/custom/campaign.yaml

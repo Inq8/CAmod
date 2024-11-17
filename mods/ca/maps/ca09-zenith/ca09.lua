@@ -217,7 +217,7 @@ InitUSSR = function()
 
 	SetupRefAndSilosCaptureCredits(USSR)
 
-	Actor.Create("POWERCHEAT", true, { Owner = USSR })
+	Actor.Create("ai.unlimited.power", true, { Owner = USSR })
 	Actor.Create("hazmatsoviet.upgrade", true, { Owner = USSR })
 
 	if Difficulty == "hard" then

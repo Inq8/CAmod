@@ -1,0 +1,75 @@
+MapFormat: 12
+
+RequiresMod: ca
+
+Title: 24: Culmination
+
+Author: Darkademic
+
+Tileset: TEMPERAT
+
+MapSize: 98,98
+
+Bounds: 1,1,96,96
+
+Visibility: MissionSelector
+
+Categories: Campaign
+
+LockPreview: True
+
+Players:
+	PlayerReference@Neutral:
+		Name: Neutral
+		OwnsWorld: True
+		NonCombatant: True
+		Faction: Random
+	PlayerReference@Creeps:
+		Name: Creeps
+		NonCombatant: True
+		Faction: Random
+		Enemies: USSR, Greece, GDI, Nod, Scrin
+	PlayerReference@Scrin:
+		Name: Scrin
+		AllowBots: False
+		Playable: True
+		Required: True
+		LockFaction: True
+		Faction: scrin
+		LockColor: True
+		Color: 7700FF
+		LockSpawn: True
+		LockTeam: True
+		Enemies: USSR, Greece, GDI, Nod, Creeps
+	PlayerReference@Greece:
+		Name: Greece
+		Bot: campaign
+		Faction: allies
+		Color: 99ACF2
+		Allies: GDI
+		Enemies: USSR, Scrin, Nod, Creeps
+	PlayerReference@USSR:
+		Name: USSR
+		Bot: campaign
+		Faction: soviet
+		Color: FE1100
+		Enemies: Greece, GDI, Nod, Scrin, Creeps
+	PlayerReference@GDI:
+		Name: GDI
+		Bot: campaign
+		Faction: gdi
+		Color: F2CF74
+		Allies: Greece
+		Enemies: USSR, Nod, Scrin, Creeps
+	PlayerReference@Nod:
+		Name: Nod
+		Bot: campaign
+		Faction: nod
+		Color: FE1100
+		Enemies: USSR, Greece, GDI, Scrin, Creeps
+
+Actors:
+
+Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-coalitions.yaml, culmination-rules.yaml
+
+Weapons: ca|weapons/custom/campaign.yaml

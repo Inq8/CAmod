@@ -276,7 +276,7 @@ InitScrin = function()
 end
 
 InitNod = function()
-	Actor.Create("POWERCHEAT", true, { Owner = Nod })
+	Actor.Create("ai.unlimited.power", true, { Owner = Nod })
 	Actor.Create("hazmat.upgrade", true, { Owner = Nod })
 
 	-- Prevent Nod forces destroying Signal Transmitter

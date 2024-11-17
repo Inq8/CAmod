@@ -153,7 +153,7 @@ WorldLoaded = function()
 		NormalEasyOnlyUnit3.Destroy()
 	end
 
-	Trigger.OnKilled(NerveCenter1, function(self, killer)
+	Trigger.OnRemovedFromWorld(NerveCenter1, function()
 		if not GDI.IsObjectiveCompleted(ObjectiveCaptureNerveCenter) then
 			GDI.MarkFailedObjective(ObjectiveCaptureNerveCenter)
 		end

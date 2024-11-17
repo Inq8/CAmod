@@ -283,11 +283,11 @@ WorldLoaded = function()
 	Camera.Position = CameraStart.CenterPosition
 	ViewportOrigin = Camera.Position
 
-	Actor.Create("POWERCHEAT", true, { Owner = Greece })
-	Actor.Create("POWERCHEAT", true, { Owner = USSR })
-	Actor.Create("POWERCHEAT", true, { Owner = GDI })
-	Actor.Create("POWERCHEAT", true, { Owner = Nod })
-	Actor.Create("POWERCHEAT", true, { Owner = Scrin })
+	Actor.Create("ai.unlimited.power", true, { Owner = Greece })
+	Actor.Create("ai.unlimited.power", true, { Owner = USSR })
+	Actor.Create("ai.unlimited.power", true, { Owner = GDI })
+	Actor.Create("ai.unlimited.power", true, { Owner = Nod })
+	Actor.Create("ai.unlimited.power", true, { Owner = Scrin })
 
 	Actor.Create("sonic.upgrade", true, { Owner = GDI })
 	Actor.Create("empgren.upgrade", true, { Owner = GDI })

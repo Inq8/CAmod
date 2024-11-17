@@ -23,57 +23,6 @@ World:
 Player:
 	PlayerResources:
 		DefaultCash: 6500
-	SupportPowerBotModule@CAMPAIGN:
-		Decisions:
-			spyplane:
-				OrderName: spyplane
-				MinimumAttractiveness: 1
-				Consideration@1:
-					Against: Enemy
-					Types: Structure
-					Attractiveness: 1
-					TargetMetric: None
-					CheckRadius: 5c0
-			parabombs:
-				OrderName: parabombs
-				MinimumAttractiveness: 1
-				Consideration@1:
-					Against: Enemy
-					Types: Structure
-					Attractiveness: 1
-					TargetMetric: None
-					CheckRadius: 5c0
-			paratroopers:
-				OrderName: paratroopers
-				MinimumAttractiveness: 5
-				Consideration@1:
-					Against: Enemy
-					Types: Structure
-					Attractiveness: 1
-					TargetMetric: None
-					CheckRadius: 8c0
-				Consideration@2:
-					Against: Enemy
-					Types: Water
-					Attractiveness: -5
-					TargetMetric: None
-					CheckRadius: 8c0
-			ironcurtainpower:
-				OrderName: ironcurtain
-				MinimumAttractiveness: 1000
-				FineScanRadius: 2
-				Consideration@3:
-					Against: Ally
-					Types: Vehicle, Tank
-					Attractiveness: 5
-					TargetMetric: Value
-					CheckRadius: 2c0
-				Consideration@4:
-					Against: Ally
-					Types: Infantry
-					Attractiveness: -2
-					TargetMetric: Value
-					CheckRadius: 2c0
 
 INTL.Loaded:
 	Inherits: INTL

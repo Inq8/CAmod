@@ -180,7 +180,6 @@ ATEK:
 	-ProduceActorPowerCA@SatelliteScan:
 	-ProduceActorPowerCA@SatelliteScanNoFog:
 	-GrantExternalConditionPowerCA@FSHIELD:
-	-DetonateWeaponPower@TEMPINC:
 
 BRIDGEHUT:
 	-Targetable:
@@ -198,6 +197,7 @@ REP:
 
 HOSP:
 	Inherits@HACKABLE: ^Hackable
+	-GrantConditionOnPrerequisite@OwnedByAi:
 	-PeriodicProducerCA@MEDIC:
 	-PeriodicProducerCA@REJUVENATOR:
 	-GrantConditionIfOwnerIsNeutral:

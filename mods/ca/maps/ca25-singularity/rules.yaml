@@ -37,52 +37,6 @@ World:
 Player:
 	PlayerResources:
 		DefaultCash: 6500
-	SupportPowerBotModule@CAMPAIGN:
-		Decisions:
-			stormspikepower:
-				OrderName: stormspike
-				MinimumAttractiveness: 5
-				Consideration@1:
-					Against: Enemy
-					Types: Structure
-					Attractiveness: 1
-					TargetMetric: None
-					CheckRadius: 8c0
-			buzzerswarmpower:
-				OrderName: buzzerswarmai
-				MinimumAttractiveness: 1000
-				FineScanRadius: 2
-				Consideration@3:
-					Against: Enemy
-					Types: Infantry
-					Attractiveness: 2
-					TargetMetric: Value
-					CheckRadius: 2c0
-			suppressionpower:
-				OrderName: suppression
-				MinimumAttractiveness: 1000
-				FineScanRadius: 2
-				Consideration@3:
-					Against: Enemy
-					Types: Vehicle, Infantry
-					Attractiveness: 2
-					TargetMetric: Value
-					CheckRadius: 3c0
-			riftpower:
-				OrderName: rift
-				MinimumAttractiveness: 3000
-				Consideration@1:
-					Against: Enemy
-					Types: Structure
-					Attractiveness: 1
-					TargetMetric: Value
-					CheckRadius: 5c0
-				Consideration@2:
-					Against: Ally
-					Types: Air, Ground, Water
-					Attractiveness: -10
-					TargetMetric: Value
-					CheckRadius: 7c0
 
 ^AiExtraPower:
 	PowerMultiplier@EXTRAPOWER:
@@ -107,7 +61,7 @@ WORMHOLE:
 		BlueTint: 1
 		RedTint: 0.2
 
-WORMHOLEXL:
+WORMHOLEXXL:
 	Inherits: WORMHOLE
 	-Targetable:
 
@@ -391,6 +345,77 @@ AFLD.GDI:
 HPAD.TD:
 	-InterceptorPower@AirDef:
 
+KANE:
+	Inherits: ^Soldier
+	Tooltip:
+		Name: Kane
+	Health:
+		HP: 500000
+	Mobile:
+		Speed: 60
+	RevealsShroud:
+		Range: 10c0
+	-Crushable:
+	-TakeCover:
+	WithInfantryBody:
+		IdleSequences: stand
+		StandSequences: stand
+	-Targetable:
+	DamageMultiplier@invulv:
+		Modifier: 0
+
+HACK:
+	-Valued:
+	Health:
+		HP: 10000
+
+GTEK:
+	GrantExternalConditionPowerCA@NREPAIR:
+		Prerequisites: ~gtek
+
+HQ:
+	SpawnActorPower@GDIEagleDropzone:
+		Prerequisites: ~radar.gdi
+	ParatroopersPowerCA@xodrop:
+		Prerequisites: ~radar.gdi
+	DropPodsPowerCA@Zocom:
+		Prerequisites: ~radar.gdi
+
+NERV:
+	DetonateWeaponPower@BUZZERSWARMAI:
+		Prerequisites: nerv
+		ChargeInterval: 6750
+	DetonateWeaponPower@STORMSPIKE:
+		Prerequisites: nerv
+
+RFGN:
+	GrantConditionOnPrerequisite@OwnedByAi:
+		Condition: owned-by-ai
+		Prerequisites: botplayer
+	DetonateWeaponPower@RiftGenerator:
+		RequiresCondition: ai-superweapons-enabled || !owned-by-ai
+	GrantConditionOnPrerequisite@SWENABLED:
+		Condition: ai-superweapons-enabled
+		Prerequisites: ai.superweapons.enabled
+
+MANI:
+	GrantExternalConditionPowerCA@SUPPRESSION:
+		DisplayTimerRelationships: Ally
+
+TMPL:
+	NukePower@Cluster:
+		DisplayTimerRelationships: None
+
+UAV:
+	-Targetable@AIRBORNE:
+	RevealsShroud:
+		Range: 10c0
+		MinRange: 8c0
+	RevealsShroud@GAPGEN:
+		Range: 8c0
+
+# Enable subfaction specific units/upgrades
+
 STWR:
 	Buildable:
 		Prerequisites: vehicles.any, ~structures.gdi
@@ -472,72 +497,6 @@ mdrone.upgrade:
 		Prerequisites: upgc, !ionmam.upgrade, !hovermam.upgrade
 	TooltipExtras:
 		Attributes: \n(!) Only ONE Mammoth Tank upgrade can be chosen
-
-KANE:
-	Inherits: ^Soldier
-	Tooltip:
-		Name: Kane
-	Health:
-		HP: 500000
-	Mobile:
-		Speed: 60
-	RevealsShroud:
-		Range: 10c0
-	-Crushable:
-	-TakeCover:
-	WithInfantryBody:
-		IdleSequences: stand
-		StandSequences: stand
-	-Targetable:
-	DamageMultiplier@invulv:
-		Modifier: 0
-
-HACK:
-	-Valued:
-	Health:
-		HP: 10000
-
-GTEK:
-	GrantExternalConditionPowerCA@NREPAIR:
-		Prerequisites: ~gtek
-
-HQ:
-	SpawnActorPower@GDIEagleDropzone:
-		Prerequisites: ~radar.gdi
-	ParatroopersPowerCA@xodrop:
-		Prerequisites: ~radar.gdi
-	DropPodsPowerCA@Zocom:
-		Prerequisites: ~radar.gdi
-
-NERV:
-	DetonateWeaponPower@BUZZERSWARMAI:
-		Prerequisites: nerv
-		ChargeInterval: 6750
-	DetonateWeaponPower@STORMSPIKE:
-		Prerequisites: nerv
-
-RFGN:
-	DetonateWeaponPower@RiftGenerator:
-		ChargeInterval: 13500
-		RequiresCondition: rift-enabled
-	ExternalCondition@RIFTENABLED:
-		Condition: rift-enabled
-
-MANI:
-	GrantExternalConditionPowerCA@SUPPRESSION:
-		DisplayTimerRelationships: Ally
-
-TMPL:
-	NukePower@Cluster:
-		DisplayTimerRelationships: None
-
-UAV:
-	-Targetable@AIRBORNE:
-	RevealsShroud:
-		Range: 10c0
-		MinRange: 8c0
-	RevealsShroud@GAPGEN:
-		Range: 8c0
 
 # Hunt() requires only 1 AttackBase
 DEVA:

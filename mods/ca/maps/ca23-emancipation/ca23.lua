@@ -369,7 +369,7 @@ OncePerFiveSecondChecks = function()
 end
 
 InitScrin = function()
-	Actor.Create("POWERCHEAT", true, { Owner = GDISlaves })
+	Actor.Create("ai.unlimited.power", true, { Owner = GDISlaves })
 
 	AutoRepairAndRebuildBuildings(Scrin, 15)
 	SetupRefAndSilosCaptureCredits(Scrin)

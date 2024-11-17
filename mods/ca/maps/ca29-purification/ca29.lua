@@ -260,9 +260,7 @@ InitScrin = function()
 	BeginScrinAttacks()
 
 	Trigger.AfterDelay(RiftEnabledTime[Difficulty], function()
-		if not RiftGenerator.IsDead then
-			RiftGenerator.GrantCondition("rift-enabled")
-		end
+		Actor.Create("ai.superweapons.enabled", true, { Owner = Scrin })
 	end)
 end
 

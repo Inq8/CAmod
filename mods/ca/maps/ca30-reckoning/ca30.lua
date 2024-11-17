@@ -415,9 +415,7 @@ InitScrin = function()
 	end)
 
 	Trigger.AfterDelay(RiftEnabledTime[Difficulty], function()
-		if not RiftGenerator.IsDead then
-			RiftGenerator.GrantCondition("rift-enabled")
-		end
+		Actor.Create("ai.superweapons.enabled", true, { Owner = Scrin })
 	end)
 
 	Utils.Do({ Exterminator1, Exterminator2, Exterminator3, Exterminator4, Exterminator5, Exterminator6, Exterminator7, Exterminator8 }, function(a)

@@ -1,0 +1,250 @@
+TimeLimit = {
+	normal = DateTime.Minutes(120),
+	hard = DateTime.Minutes(60),
+}
+
+CyborgSquad = { "rmbc", "rmbc", "enli", "tplr", "tplr", "tplr", "reap", "n1c", "n1c", "n1c", "n1c", "n1c", "n3c", "n3c" }
+CyborgSquadInterval = {
+	normal = DateTime.Minutes(2),
+	hard = DateTime.Minutes(1),
+}
+
+Squads = {
+	Main1 = {
+		AttackValuePerSecond = {
+			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(14), Value = 25 } },
+			normal = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(12), Value = 35 }, { MinTime = DateTime.Minutes(16), Value = 50 } },
+			hard = { { MinTime = 0, Value = 40 }, { MinTime = DateTime.Minutes(10), Value = 60 }, { MinTime = DateTime.Minutes(14), Value = 80 } },
+		},
+		ActiveCondition = function()
+			return NodEastOrWestNeutralized()
+		end,
+		FollowLeader = true,
+		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
+		Units = UnitCompositions.Nod.Main,
+		AttackPaths = {
+			{ NodRally1.Location },
+			{ NodRally2.Location },
+			{ NodRally3.Location },
+			{ NodRally4.Location },
+			{ NodRally5.Location },
+			{ NodRally6.Location },
+		},
+	},
+	Main2 = {
+		Delay = {
+			easy = DateTime.Minutes(8),
+			normal = DateTime.Minutes(6),
+			hard = DateTime.Minutes(4),
+		},
+		AttackValuePerSecond = {
+			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(14), Value = 25 } },
+			normal = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(12), Value = 35 }, { MinTime = DateTime.Minutes(16), Value = 50 } },
+			hard = { { MinTime = 0, Value = 40 }, { MinTime = DateTime.Minutes(10), Value = 60 }, { MinTime = DateTime.Minutes(14), Value = 80 } },
+		},
+		FollowLeader = true,
+		ProducerActors = nil,
+		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
+		Units = UnitCompositions.Nod.Main,
+		AttackPaths = {
+			{ NodRally4.Location },
+			{ NodRally5.Location },
+			{ NodRally6.Location },
+		},
+	},
+	Main3 = {
+		Delay = {
+			easy = DateTime.Minutes(8),
+			normal = DateTime.Minutes(6),
+			hard = DateTime.Minutes(4),
+		},
+		AttackValuePerSecond = {
+			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(14), Value = 25 } },
+			normal = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(12), Value = 35 }, { MinTime = DateTime.Minutes(16), Value = 50 } },
+			hard = { { MinTime = 0, Value = 40 }, { MinTime = DateTime.Minutes(10), Value = 60 }, { MinTime = DateTime.Minutes(14), Value = 80 } },
+		},
+		FollowLeader = true,
+		ProducerActors = nil,
+		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
+		Units = UnitCompositions.Nod.Main,
+		AttackPaths = {
+			{ NodRally1.Location },
+			{ NodRally2.Location },
+			{ NodRally3.Location },
+			{ NodRally4.Location },
+		},
+	},
+	Air = {
+		Player = nil,
+		Delay = {
+			easy = DateTime.Minutes(13),
+			normal = DateTime.Minutes(12),
+			hard = DateTime.Minutes(11)
+		},
+		Interval = {
+			easy = DateTime.Minutes(3),
+			normal = DateTime.Seconds(165),
+			hard = DateTime.Seconds(150)
+		},
+		QueueProductionStatuses = {
+			Aircraft = false
+		},
+		IdleUnits = { },
+		ProducerActors = nil,
+		ProducerTypes = { Aircraft = { "hpad.td" } },
+		Units = {
+			easy = {
+				{ Aircraft = { "apch" } }
+			},
+			normal = {
+				{ Aircraft = { "apch", "apch" } },
+				{ Aircraft = { "venm", "venm" } },
+				{ Aircraft = { "scrn" } },
+				{ Aircraft = { "rah" } }
+			},
+			hard = {
+				{ Aircraft = { "apch", "apch", "apch" } },
+				{ Aircraft = { "venm", "venm", "venm" } },
+				{ Aircraft = { "scrn", "scrn" } },
+				{ Aircraft = { "rah", "rah" } }
+			}
+		},
+	},
+}
+
+-- Setup and Tick
+
+WorldLoaded = function()
+	USSR = Player.GetPlayer("USSR")
+	Nod1 = Player.GetPlayer("Nod1")
+	Nod2 = Player.GetPlayer("Nod2")
+	Nod3 = Player.GetPlayer("Nod3")
+	Neutral = Player.GetPlayer("Neutral")
+	MissionPlayers = { USSR }
+	TimerTicks = TimeLimit[Difficulty]
+
+	Camera.Position = PlayerStart.CenterPosition
+
+	InitObjectives(USSR)
+	InitNod()
+
+	ObjectiveSecureGateway = USSR.AddObjective("Eliminate Nod forces near gateway.")
+
+	Trigger.OnAllKilledOrCaptured({ NodEastAirstrip, NodEastHand }, function()
+		InitNodSouth()
+	end)
+
+	Trigger.OnAllKilledOrCaptured({ NodWestAirstrip, NodWestHand }, function()
+		InitNodSouth()
+	end)
+
+	Trigger.OnKilledOrCaptured(MainTemple, function()
+		MainTempleKilledOrCaptured = true
+	end)
+end
+
+Tick = function()
+	OncePerSecondChecks()
+	OncePerFiveSecondChecks()
+end
+
+OncePerSecondChecks = function()
+	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
+		Nod1.Resources = Nod1.ResourceCapacity - 500
+
+		if TimerTicks > 0 and Difficulty ~= "easy" then
+			if TimerTicks > 25 then
+				TimerTicks = TimerTicks - 25
+				UserInterface.SetMissionText("Kane's forces return in " .. UtilsCA.FormatTimeForGameSpeed(TimerTicks), HSLColor.Yellow)
+			else
+				TimerTicks = 0
+				UserInterface.SetMissionText("")
+				InitKaneReturn()
+			end
+		end
+
+		if USSR.HasNoRequiredUnits() then
+			if not USSR.IsObjectiveCompleted(ObjectiveSecureGateway) then
+				USSR.MarkFailedObjective(ObjectiveSecureGateway)
+			end
+		end
+	end
+end
+
+OncePerFiveSecondChecks = function()
+	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
+		UpdatePlayerBaseLocations()
+
+		if MainTempleKilledOrCaptured then
+			local nodForces = Map.ActorsInBox(NodMainTopLeft.CenterPosition, NodMainBottomRight.CenterPosition, function(a)
+				return a.Owner == Nod1 and not a.IsDead and a.HasProperty("Health") and a.Type ~= "brik"
+			end)
+
+			if #nodForces == 0 and not USSR.IsObjectiveCompleted(ObjectiveSecureGateway) then
+				USSR.MarkCompletedObjective(ObjectiveSecureGateway)
+			end
+		end
+	end
+end
+
+-- Functions
+
+InitNod = function()
+	NodPlayers = { Nod1, Nod2, Nod3 }
+
+	Utils.Do(NodPlayers, function(p)
+		AutoRepairBuildings(p)
+		SetupRefAndSilosCaptureCredits(p)
+		AutoReplaceHarvesters(p)
+
+		local nodGroundAttackers = p.GetGroundAttackers()
+
+		Utils.Do(nodGroundAttackers, function(a)
+			TargetSwapChance(a, 10)
+			CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsNodGroundHunterUnit)
+		end)
+	end)
+
+	Trigger.AfterDelay(Squads.Main2.Delay[Difficulty], function()
+		InitAttackSquad(Squads.Main2, Nod2)
+	end)
+
+	Trigger.AfterDelay(Squads.Main3.Delay[Difficulty], function()
+		InitAttackSquad(Squads.Main3, Nod3)
+	end)
+
+	Trigger.AfterDelay(Squads.Air.Delay[Difficulty], function()
+		InitAirAttackSquad(Squads.Air, Nod1, USSR, { "harv", "4tnk", "4tnk.atomic", "3tnk", "3tnk.atomic", "3tnk.rhino", "3tnk.rhino.atomic",
+			"katy", "v3rl", "ttra", "v3rl", "apwr", "tpwr", "npwr", "tsla", "proc", "nukc", "ovld", "apoc", "apoc.atomic", "ovld.atomic" })
+	end)
+end
+
+InitNodSouth = function()
+	InitAttackSquad(Squads.Main1, Nod1)
+end
+
+NodEastOrWestNeutralized = function()
+	local westCount = Nod2.GetActorsByTypes({ "airs", "hand" })
+	local eastCount = Nod3.GetActorsByTypes({ "airs", "hand" })
+	return #westCount == 0 or #eastCount == 0
+end
+
+InitKaneReturn = function()
+	if not KaneReturnInitiated then
+		KaneReturnInitiated = true
+		Media.DisplayMessage("The Overlord will not be your salvation. Your empire is dead. Surrender, or be destroyed. My return will not be stopped.", "Kane", HSLColor.FromHex("FF0000"))
+		MediaCA.PlaySound("kane_return.aud", 2.5)
+		DeployCyborgs()
+	end
+end
+
+DeployCyborgs = function()
+	local units = Reinforcements.Reinforce(Nod1, Utils.Shuffle(CyborgSquad), { Gateway.Location }, 5)
+	Utils.Do(units, function(unit)
+		unit.Scatter()
+		Trigger.AfterDelay(5, function()
+			AssaultPlayerBaseOrHunt(unit, USSR)
+		end)
+	end)
+	Trigger.AfterDelay(CyborgSquadInterval[Difficulty], DeployCyborgs)
+end

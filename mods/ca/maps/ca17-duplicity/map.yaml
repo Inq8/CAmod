@@ -1,0 +1,202 @@
+MapFormat: 12
+
+RequiresMod: ca
+
+Title: 17: Duplicity
+
+Author: Darkademic
+
+Tileset: DESERT
+
+MapSize: 98,98
+
+Bounds: 1,1,96,96
+
+Visibility: MissionSelector
+
+Categories: Campaign
+
+LockPreview: True
+
+Players:
+	PlayerReference@Neutral:
+		Name: Neutral
+		OwnsWorld: True
+		NonCombatant: True
+		Faction: Random
+	PlayerReference@Creeps:
+		Name: Creeps
+		NonCombatant: True
+		Faction: Random
+		Enemies: USSR, Nod
+	PlayerReference@USSR:
+		Name: USSR
+		AllowBots: False
+		Playable: True
+		Required: True
+		LockFaction: True
+		Faction: soviet
+		LockColor: True
+		Color: FE1100
+		LockSpawn: True
+		LockTeam: True
+		Enemies: Nod, Creeps
+	PlayerReference@Nod:
+		Name: Nod
+		Bot: campaign
+		Faction: nod
+		Color: 6D738C
+		Enemies: USSR, Creeps
+
+Actors:
+	Actor0: tc01.husk
+		Owner: Neutral
+		Location: 78,29
+	Actor1: tc01
+		Owner: Neutral
+		Location: 79,30
+	Actor2: t09
+		Owner: Neutral
+		Location: 87,32
+	Actor3: t08
+		Owner: Neutral
+		Location: 76,72
+	Actor4: t04
+		Owner: Neutral
+		Location: 83,30
+	Actor5: t04
+		Owner: Neutral
+		Location: 53,78
+	Actor6: t09
+		Owner: Neutral
+		Location: 86,33
+	Actor7: t04
+		Owner: Neutral
+		Location: 74,68
+	Actor8: t09
+		Owner: Neutral
+		Location: 54,56
+	Actor9: t08
+		Owner: Neutral
+		Location: 85,33
+	Actor10: t04
+		Owner: Neutral
+		Location: 73,70
+	Actor11: t08
+		Owner: Neutral
+		Location: 84,30
+	Actor12: t09
+		Owner: Neutral
+		Location: 73,70
+	Actor13: t08
+		Owner: Neutral
+		Location: 72,70
+	Actor14: t08
+		Owner: Neutral
+		Location: 54,57
+	Actor15: t04
+		Owner: Neutral
+		Location: 23,84
+	Actor16: t08
+		Owner: Neutral
+		Location: 81,31
+	Actor17: t04.husk
+		Owner: Neutral
+		Location: 69,70
+	Actor18: t04
+		Owner: Neutral
+		Location: 86,31
+	Actor19: t08
+		Owner: Neutral
+		Location: 77,30
+	Actor20: t09
+		Owner: Neutral
+		Location: 83,30
+	Actor21: t04
+		Owner: Neutral
+		Location: 82,29
+	Actor22: t04
+		Owner: Neutral
+		Location: 80,29
+	Actor23: t04
+		Owner: Neutral
+		Location: 82,31
+	Actor24: t09
+		Owner: Neutral
+		Location: 90,31
+	Actor25: t09
+		Owner: Neutral
+		Location: 71,70
+	Actor26: t04
+		Owner: Neutral
+		Location: 85,31
+	Actor27: t08
+		Owner: Neutral
+		Location: 55,80
+	Actor28: t09
+		Owner: Neutral
+		Location: 46,2
+	Actor29: t09
+		Owner: Neutral
+		Location: 82,31
+	Actor30: t09
+		Owner: Neutral
+		Location: 84,32
+	Actor31: t04
+		Owner: Neutral
+		Location: 70,70
+	Actor32: t09
+		Owner: Neutral
+		Location: 74,71
+	Actor33: t09.husk
+		Owner: Neutral
+		Location: 83,33
+	Actor34: t04
+		Owner: Neutral
+		Location: 83,31
+	Actor35: t09
+		Owner: Neutral
+		Location: 49,0
+	Actor36: t08
+		Owner: Neutral
+		Location: 73,72
+	Actor37: t08
+		Owner: Neutral
+		Location: 87,31
+	Actor38: t08
+		Owner: Neutral
+		Location: 87,30
+	Actor39: t09
+		Owner: Neutral
+		Location: 51,80
+	Actor40: t08
+		Owner: Neutral
+		Location: 68,72
+	Actor41: t04
+		Owner: Neutral
+		Location: 54,78
+	Actor42: t09
+		Owner: Neutral
+		Location: 78,31
+	Actor43: t09
+		Owner: Neutral
+		Location: 22,86
+	Actor44: t08
+		Owner: Neutral
+		Location: 86,30
+	Actor45: t08
+		Owner: Neutral
+		Location: 96,74
+	Actor46: t04
+		Owner: Neutral
+		Location: 75,69
+	Actor47: t04
+		Owner: Neutral
+		Location: 76,69
+	Actor48: t09.husk
+		Owner: Neutral
+		Location: 83,34
+
+Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-coalitions.yaml, duplicity-rules.yaml
+
+Weapons: ca|weapons/custom/campaign.yaml

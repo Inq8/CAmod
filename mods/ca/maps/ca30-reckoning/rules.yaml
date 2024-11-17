@@ -43,67 +43,6 @@ World:
 Player:
 	PlayerResources:
 		DefaultCash: 6500
-	SupportPowerBotModule@CAMPAIGN:
-		Decisions:
-			stormspikepower:
-				OrderName: stormspike
-				MinimumAttractiveness: 5
-				Consideration@1:
-					Against: Enemy
-					Types: Structure
-					Attractiveness: 1
-					TargetMetric: None
-					CheckRadius: 8c0
-			buzzerswarmpower:
-				OrderName: buzzerswarmai
-				MinimumAttractiveness: 1000
-				FineScanRadius: 2
-				Consideration@3:
-					Against: Enemy
-					Types: Infantry
-					Attractiveness: 2
-					TargetMetric: Value
-					CheckRadius: 2c0
-			suppressionpower:
-				OrderName: suppression
-				MinimumAttractiveness: 3000
-				FineScanRadius: 2
-				Consideration@3:
-					Against: Enemy
-					Types: Vehicle, Infantry
-					Attractiveness: 2
-					TargetMetric: Value
-					CheckRadius: 3c0
-			riftpower:
-				OrderName: rift
-				MinimumAttractiveness: 3000
-				Consideration@1:
-					Against: Enemy
-					Types: Structure
-					Attractiveness: 1
-					TargetMetric: Value
-					CheckRadius: 5c0
-				Consideration@2:
-					Against: Ally
-					Types: Air, Ground, Water
-					Attractiveness: -10
-					TargetMetric: Value
-					CheckRadius: 7c0
-			owrath:
-				OrderName: overlordswrath
-				MinimumAttractiveness: 3000
-				Consideration@1:
-					Against: Enemy
-					Types: Defense, Vehicle
-					Attractiveness: 1
-					TargetMetric: Value
-					CheckRadius: 3c0
-				Consideration@2:
-					Against: Ally
-					Types: Air, Ground, Water
-					Attractiveness: -10
-					TargetMetric: Value
-					CheckRadius: 5c0
 
 ^Infantry:
 	DamagedByTerrain@TIBDAMAGE:
@@ -191,131 +130,6 @@ microwave.upgrade:
 	Buildable:
 		Prerequisites: ~player.nod, tmpl
 
-ETPD:
-	Inherits: TPOD
-	Inherits@SHIELDS: ^ScrinShields
-	Inherits@A2GPROTECTION: ^AirToGroundProtection
-	Inherits@SHRAPNEL: ^ThrowsShrapnelBig
-	Turreted@SHIELDS:
-		Offset: 0,0,0
-	GrantCondition@SHIELDS:
-		Condition: shields-upgrade
-	Tooltip:
-		Name: Exterminator Tripod
-	-Buildable:
-	-CaptureManager:
-	-Capturable:
-	-CaptureNotification:
-	-Capturable@DRIVER_DEAD:
-	-GrantConditionIfOwnerIsNeutral:
-	-ChangesHealth@DRIVER_DEAD:
-	-TooltipDescription@DRIVER_DEAD:
-	-Targetable@DRIVERKILL:
-	-Targetable@DRIVERKILLLOWHP:
-	-GrantConditionOnDamageState@DriverKillLessThan50:
-	-GrantConditionOnDamageState@DriverKillLessThan75:
-	-Targetable@AICAPTURE:
-	TooltipExtras:
-		Description: Super heavy assault walker with beam weapons.
-		Strengths: Strong vs all ground units and structures.
-	Mobile:
-		Speed: 36
-		PauseOnCondition: empdisable || being-warped || notmobile
-		ImmovableCondition: alive
-	GrantCondition@ALIVE:
-		Condition: alive
-	Armament@PRIMARY:
-		Weapon: ExterminatorLaser
-		LocalOffset: 800,650,1000
-	Armament@PRIMARY2:
-		Weapon: ExterminatorLaser
-		LocalOffset: 800,450,1500
-		FireDelay: 2
-		MuzzleSequence: muzzle
-		MuzzlePalette: scrin
-	Armament@SECONDARY:
-		Name: secondary
-		Weapon: ExterminatorLaserReversed
-		LocalOffset: 800,-650,1000
-	Armament@SECONDARY2:
-		Name: secondary
-		Weapon: ExterminatorLaserReversed
-		LocalOffset: 800,-450,1500
-		FireDelay: 22
-		MuzzleSequence: muzzle
-		MuzzlePalette: scrin
-	Health:
-		HP: 900000
-	Shielded:
-		MaxStrength: 650000
-		RegenAmount: 1000
-	Valued:
-		Cost: 10000
-	RevealsShroud:
-		Range: 7c0
-	TurretedFloating:
-		TurnSpeed: 8
-	Selectable:
-		Bounds: 1800, 3200, 0, -600
-	AutoTarget:
-		InitialStanceAI: AttackAnything
-	SpawnActorOnDeath:
-		Actor: ETPD.Husk
-	ExternalCondition@NORMAL:
-		Condition: difficulty-normal
-	ExternalCondition@EASY:
-		Condition: difficulty-easy
-	FirepowerMultiplier@NORMAL:
-		Modifier: 75
-		RequiresCondition: difficulty-normal
-	FirepowerMultiplier@EASY:
-		Modifier: 50
-		RequiresCondition: difficulty-easy
-	DamageMultiplier@NORMAL:
-		Modifier: 125
-		RequiresCondition: difficulty-normal
-	DamageMultiplier@EASY:
-		Modifier: 150
-		RequiresCondition: difficulty-easy
-	MustBeDestroyed:
-		RequiredForShortGame: true
-	Targetable@ETPD:
-		TargetTypes: ExterminatorTripod
-	Targetable@SHIELDED:
-		TargetTypes: Shielded
-		RequiresCondition: shields-up
-	Targetable@MindControlResistant:
-		TargetTypes: MindControlResistant
-	Targetable@MindControlImmune:
-		TargetTypes: MindControlImmune
-		RequiresCondition: shields-up
-	DamageTypeDamageMultiplier@A2GPROTECTION:
-		Modifier: 75
-		RequiresCondition: !difficulty-easy
-	-ExternalCondition@UNITSELL:
-	-Sellable:
-	ChangesHealth@THEAL:
-		Step: 2000
-		PercentageStep: 0
-	Explodes:
-		Weapon: 380mm
-		EmptyWeapon: 380mm
-
-ETPD.Husk:
-	Inherits: TPOD.Husk
-	Tooltip:
-		Name: Husk (Exterminator Tripod)
-	RenderSprites:
-		Image: etpd.destroyed
-
-PDGY:
-	Inherits: MAST
-	-Buildable:
-	RenderSprites:
-		Image: mast
-	GrantCondition@Elite:
-		Condition: rank-elite
-
 SFAC:
 	Health:
 		HP: 275000
@@ -333,11 +147,14 @@ SCRT:
 		Prerequisites: botplayer
 
 RFGN:
+	GrantConditionOnPrerequisite@OwnedByAi:
+		Condition: owned-by-ai
+		Prerequisites: botplayer
 	DetonateWeaponPower@RiftGenerator:
-		ChargeInterval: 13500
-		RequiresCondition: rift-enabled
-	ExternalCondition@RIFTENABLED:
-		Condition: rift-enabled
+		RequiresCondition: ai-superweapons-enabled || !owned-by-ai
+	GrantConditionOnPrerequisite@SWENABLED:
+		Condition: ai-superweapons-enabled
+		Prerequisites: ai.superweapons.enabled
 
 MANI:
 	GrantExternalConditionPowerCA@SUPPRESSION:

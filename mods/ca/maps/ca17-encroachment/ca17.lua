@@ -249,7 +249,7 @@ OncePerFiveSecondChecks = function()
 end
 
 InitGreece = function()
-	Actor.Create("POWERCHEAT", true, { Owner = Greece })
+	Actor.Create("ai.unlimited.power", true, { Owner = Greece })
 	Actor.Create("hazmat.upgrade", true, { Owner = Greece })
 
 	if Difficulty == "hard" then
@@ -289,7 +289,7 @@ InitGreece = function()
 end
 
 InitGDI = function()
-	Actor.Create("POWERCHEAT", true, { Owner = GDI })
+	Actor.Create("ai.unlimited.power", true, { Owner = GDI })
 	Actor.Create("hazmat.upgrade", true, { Owner = GDI })
 	Actor.Create("hold.strat", true, { Owner = GDI })
 

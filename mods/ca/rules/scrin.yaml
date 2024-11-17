@@ -5640,6 +5640,7 @@ SCOL.Temp:
 		RequiresCondition: ioncon-upgrade && !(empdisable || being-warped)
 	GrantConditionOnDamage@IONSTORM:
 		RequiresCondition: ioncon-upgrade && !(empdisable || being-warped)
+	-MapEditorData:
 
 #
 # ---- misc
@@ -5934,9 +5935,7 @@ RiftMinor:
 		Delay: 120
 
 camera.resourcescan:
-	Inherits: CAMERA
-	EditorOnlyTooltip:
-		Name: (Resource Scan Camera)
+	Inherits: ^CameraBase
 	RevealsShroud:
 		Range: 5c0
 
@@ -6018,10 +6017,9 @@ IonSurgeFade:
 	-AmbientSound:
 	-WithRangeCircleCA@IonSurge:
 
-WORMHOLE:
+^WormholeBase:
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^SpriteActor
-	Inherits@3: ^SelectableBuilding
 	Inherits@shape: ^1x1Shape
 	Tooltip:
 		Name: Wormhole
@@ -6030,22 +6028,28 @@ WORMHOLE:
 	WithSpriteBody:
 	ClassicFacingBodyOrientation:
 		QuantizedFacings: 1
-	Selectable:
-		Bounds: 1365, 1365
 	HiddenUnderFog:
-		Type: CenterPosition
-	HitShape:
-	RevealsShroud:
-		Range: 4c0
 		Type: CenterPosition
 	Immobile:
 		OccupiesSpace: true
+	Interactable:
+
+WORMHOLE:
+	Inherits: ^WormholeBase
+	Inherits@3: ^SelectableBuilding
+	-Interactable:
+	Selectable:
+		Bounds: 1365, 1365
+	HitShape:
 	Targetable:
 		TargetTypes: Ground, Structure, Wormhole
 	Health:
 		HP: 100000
 	Armor:
 		Type: Concrete
+	RevealsShroud:
+		Range: 4c0
+		Type: CenterPosition
 	TeleportNetwork:
 		Type: Wormhole
 		Delay: 0
@@ -6054,48 +6058,34 @@ WORMHOLE:
 	Exit:
 	PopControlled:
 		Limit: 2
+	MapEditorData:
+		Categories: System
 	WithDeathAnimation:
 		UseDeathTypeSuffix: false
 		CrushedSequence: die
 		FallbackSequence: die
 	WithMakeAnimation:
-	MapEditorData:
-		Categories: System
 
 REBELGATEWAY:
-	Inherits@1: ^ExistsInWorld
-	Inherits@2: ^SpriteActor
+	Inherits: ^WormholeBase
 	Inherits@3: ^SelectableBuilding
-	Inherits@shape: ^1x1Shape
+	-Interactable:
 	Tooltip:
 		Name: Gateway
 	RenderSprites:
-		PlayerPalette: playerscrin
 		Image: wormholelg
-	WithSpriteBody:
-	ClassicFacingBodyOrientation:
-		QuantizedFacings: 1
 	Selectable:
 		Bounds: 2048, 2048
-	HiddenUnderFog:
-		Type: CenterPosition
-	HitShape:
 	RevealsShroud:
 		Range: 4c0
 		Type: CenterPosition
-	Immobile:
-		OccupiesSpace: true
+	HitShape:
 	Targetable:
 		TargetTypes: Ground, Structure, Wormhole
-	Health:
-		HP: 50000
 	Armor:
 		Type: Concrete
-	WithDeathAnimation:
-		UseDeathTypeSuffix: false
-		CrushedSequence: die
-		FallbackSequence: die
-	WithMakeAnimation:
+	Health:
+		HP: 50000
 	KillsSelf:
 		Delay: 625
 	RallyPoint:
@@ -6175,6 +6165,11 @@ REBELGATEWAY:
 	GrantConditionOnPrerequisite@Shard:
 		Prerequisites: shrw.upgrade
 		Condition: shard
+	WithDeathAnimation:
+		UseDeathTypeSuffix: false
+		CrushedSequence: die
+		FallbackSequence: die
+	WithMakeAnimation:
 
 # infiltrator stolen tech
 

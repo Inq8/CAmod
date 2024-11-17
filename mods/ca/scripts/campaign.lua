@@ -39,11 +39,15 @@ EnforceAiBuildRadius = false
 
 ConyardTypes = { "fact", "afac", "sfac" }
 
-HarvesterTypes = { "harv", "harv.td", "harv.td.upg", "harv.scrin", "harv.chrono" }
+HarvesterTypes = { "harv", "harv.td", "harv.td.upg", "harv.scrin", "harv.chrono", "harv.td.upg" }
+
+BarracksTypes = { "tent", "barr", "pyle", "hand", "port" }
 
 FactoryTypes = { "weap", "weap.td", "wsph", "airs" }
 
 RefineryTypes = { "proc", "proc.td", "proc.scrin" }
+
+AirProductionTypes = { "hpad", "afld", "afld.gdi", "hpad.td", "grav" }
 
 NavalProductionTypes = { "syrd", "spen", "syrd.gdi", "spen.nod" }
 
@@ -943,7 +947,7 @@ ClearSquadLeader = function(squadLeader)
 end
 
 FollowSquadLeader = function(actor, squad)
-	if not actor.IsDead and actor.IsInWorld then
+	if not actor.IsDead and actor.IsInWorld and squad.Player == actor.Owner then
 		local actorId = tostring(actor)
 
 		if SquadLeaders[actorId] ~= nil and not SquadLeaders[actorId].IsDead then

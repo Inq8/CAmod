@@ -388,7 +388,7 @@ end
 InitUSSR = function()
 	AutoRepairBuildings(USSR)
 
-	Actor.Create("POWERCHEAT", true, { Owner = USSR })
+	Actor.Create("ai.unlimited.power", true, { Owner = USSR })
 
 	local ussrGroundAttackers = USSR.GetGroundAttackers()
 

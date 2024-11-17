@@ -244,7 +244,7 @@ InitUSSR = function()
 	AutoRepairAndRebuildBuildings(USSR, 15)
 	SetupRefAndSilosCaptureCredits(USSR)
 
-	Actor.Create("POWERCHEAT", true, { Owner = USSR })
+	Actor.Create("ai.unlimited.power", true, { Owner = USSR })
 	Actor.Create("hazmatsoviet.upgrade", true, { Owner = USSR })
 	Actor.Create("tarc.upgrade", true, { Owner = USSR })
 

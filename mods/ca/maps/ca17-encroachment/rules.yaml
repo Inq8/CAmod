@@ -23,48 +23,6 @@ World:
 Player:
 	PlayerResources:
 		DefaultCash: 6500
-	SupportPowerBotModule@CAMPAIGN:
-		Decisions:
-			ioncannonpower:
-				OrderName: ioncannon
-				MinimumAttractiveness: 2500
-				Consideration@1:
-					Against: Enemy
-					Types: Structure
-					Attractiveness: 1
-					TargetMetric: Value
-					CheckRadius: 5c0
-				Consideration@2:
-					Against: Ally
-					Types: Air, Ground, Water
-					Attractiveness: -10
-					TargetMetric: Value
-					CheckRadius: 7c0
-			stormpower:
-				OrderName: storm
-				MinimumAttractiveness: 2500
-				Consideration@1:
-					Against: Enemy
-					Types: Structure
-					Attractiveness: 1
-					TargetMetric: Value
-					CheckRadius: 5c0
-				Consideration@2:
-					Against: Ally
-					Types: Air, Ground, Water
-					Attractiveness: -10
-					TargetMetric: Value
-					CheckRadius: 7c0
-			surgicalstrikepower:
-				OrderName: surgicalstrike
-				MinimumAttractiveness: 750
-				FineScanRadius: 2
-				Consideration@1:
-					Against: Enemy
-					Types: Defense
-					Attractiveness: 1
-					TargetMetric: Value
-					CheckRadius: 2c0
 
 TPOD:
 	Buildable:
@@ -112,7 +70,6 @@ ATEK:
 	-ProduceActorPowerCA@SatelliteScan:
 	-ProduceActorPowerCA@SatelliteScanNoFog:
 	-GrantExternalConditionPowerCA@FSHIELD:
-	-DetonateWeaponPower@TEMPINC:
 
 EYE:
 	DetonateWeaponPower@IonStorm:
