@@ -2944,9 +2944,9 @@ CTNK:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses, Buildings
 		Weaknesses: • Weak vs Infantry
-		Attributes: • Special Ability: Teleport
+		Attributes: • Special Ability: Teleport\n• Teleporting longer distances requires charge up
 	Valued:
-		Cost: 1350
+		Cost: 1500
 	Tooltip:
 		Name: Chrono Tank
 		GenericName: Tank
@@ -2958,6 +2958,7 @@ CTNK:
 		Type: Light
 	Mobile:
 		Speed: 92
+		TurnSpeed: 24
 		Locomotor: heavywheeled
 	RevealsShroud:
 		MinRange: 4c0
@@ -2976,12 +2977,28 @@ CTNK:
 		Charges: 1
 		ChargeDelay: 375
 		Cooldown: 75
-		MaxDistance: 16
+		HasDistanceLimit: true
+		MaxDistance: 48
+		MaxInstantDistance: 12
+		PreChargeTicksPerCell: 7
+		MaxPreChargeTicks: 250
 		ResetRechargeOnUse: false
 		RequiresCondition: !empdisable && !being-warped && !chronoshifted
 		ShowSelectionBarWhenFull: false
 		ShowCooldownSelectionBar: true
 		RequireEmptyDestination: true
+		PreChargeCondition: chronoprep
+		MaxInstantCircleColor: EEEEEE44
+		MaxInstantCircleBorderColor: 00000044
+	WithColoredOverlay@PreCharge:
+		RequiresCondition: chronoprep
+		Color: 00eeff22
+	WithIdleOverlay@PreCharge:
+		Sequence: idle
+		Image: chronocharge-overlay
+		Palette: effect
+		RequiresCondition: chronoprep
+		IsDecoration: True
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:

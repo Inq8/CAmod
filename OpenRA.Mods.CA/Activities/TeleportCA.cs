@@ -13,6 +13,7 @@ using System.Linq;
 using OpenRA.Activities;
 using OpenRA.Mods.CA.Traits;
 using OpenRA.Mods.Cnc.Traits;
+using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Mods.Common.Traits.Render;
 using OpenRA.Primitives;
@@ -32,11 +33,15 @@ namespace OpenRA.Mods.CA.Activities
 		readonly bool screenFlash;
 		readonly string sound;
 		readonly bool requireEmptyDestination;
+		int delayRemaining;
+		readonly Action<Actor> onPreChargeStart;
+		readonly Action<Actor> onPreChargeComplete;
 
 		public TeleportCA(Actor teleporter, CPos destination, int? maximumDistance,
 			bool killCargo, bool screenFlash, string sound, bool interruptable = true,
-			bool killOnFailure = false, BitSet<DamageType> killDamageTypes = default(BitSet<DamageType>),
-			bool requireEmptyDestination = false)
+			bool killOnFailure = false, BitSet<DamageType> killDamageTypes = default,
+			bool requireEmptyDestination = false, int delay = 0,
+			Action<Actor> onPreChargeStart = null, Action<Actor> onPreChargeComplete = null)
 		{
 			var max = teleporter.World.Map.Grid.MaximumTileSearchRange;
 			if (maximumDistance > max)
@@ -51,13 +56,26 @@ namespace OpenRA.Mods.CA.Activities
 			this.killOnFailure = killOnFailure;
 			this.killDamageTypes = killDamageTypes;
 			this.requireEmptyDestination = requireEmptyDestination;
+			delayRemaining = delay;
+			this.onPreChargeStart = onPreChargeStart;
+			this.onPreChargeComplete = onPreChargeComplete;
 
 			if (!interruptable)
 				IsInterruptible = false;
 		}
 
+		protected override void OnFirstRun(Actor self)
+		{
+			onPreChargeStart?.Invoke(self);
+		}
+
 		public override bool Tick(Actor self)
 		{
+			if (delayRemaining-- > 0)
+			    return false;
+			else
+			    onPreChargeComplete?.Invoke(self);
+
 			var pc = self.TraitOrDefault<PortableChronoCA>();
 			if (teleporter == self && pc != null && !pc.CanTeleport)
 			{
