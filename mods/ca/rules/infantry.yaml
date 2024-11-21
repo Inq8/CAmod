@@ -2437,7 +2437,7 @@ ASSA:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Buildings, Defenses
 		Weaknesses: • Weak vs Heavy Armor, Light Armor\n• Cannot attack aircraft
-		Attributes: • Camouflaged when not moving\n• Plants C4 to destroy structures\n• Destroy production buildings to steal technology\n    • Allies: Cryo Mortar, Reckoner, Phantom\n    • Soviets: Cyberdog, Cyclops, Kamov\n    • GDI: Sonic Mortar, Basilisk, Shade\n    • Nod: Chem Mortar, Mantis, Vertigo\n    • Scrin: Cyberscrin, Viper, Manticore
+		Attributes: • Plants C4 to destroy structures\n• Destroy production buildings to steal technology\n    • Allies: Cryo Mortar, Reckoner, Phantom\n    • Soviets: Cyberdog, Cyclops, Kamov\n    • GDI: Sonic Mortar, Basilisk, Shade\n    • Nod: Chem Mortar, Mantis, Vertigo\n    • Scrin: Cyberscrin, Viper, Manticore
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -2460,7 +2460,7 @@ ASSA:
 	Armament@PRIMARY:
 		Weapon: sniper.assa
 	Armament@BATF:
-		Weapon: sniperBATF
+		Weapon: sniperBATF.assa
 		Name: batf
 		MuzzleSequence: garrison-muzzle
 	Armament@C4Place:
@@ -2499,23 +2499,6 @@ ASSA:
 		DetonationDelay: 45
 		Voice: Demolish
 		DamageTypes: ExplosionDeath
-	Cloak@NORMAL:
-		InitialDelay: 200
-		CloakDelay: 200
-		CloakedCondition: hidden
-		Palette: cloaktd
-		CloakSound: gstealon.aud
-		UncloakSound: gstealof.aud
-		IsPlayerPalette: true
-		DetectionTypes: Cloak
-		RequiresCondition: !cloak-force-disabled && !being-warped
-		PauseOnCondition: invisibility
-		UncloakOn: Move, Unload, Infiltrate, Demolish, Dock, Attack
-	Cloak@CRATE-CLOAK:
-		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden)
-	GrantConditionOnDamageState@UNCLOAK:
-		Condition: cloak-force-disabled
-		ValidDamageStates: Heavy, Critical
 	WithDecoration@hidden:
 		Image: pips
 		Sequence: pip-hidden
