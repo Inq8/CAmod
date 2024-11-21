@@ -75,7 +75,7 @@ Squads = {
 		AttackValuePerSecond = {
 			easy = { { MinTime = 0, Value = 5 }, { MinTime = DateTime.Minutes(14), Value = 10 } },
 			normal = { { MinTime = 0, Value = 9 }, { MinTime = DateTime.Minutes(12), Value = 12 }, { MinTime = DateTime.Minutes(16), Value = 15 } },
-			hard = { { MinTime = 0, Value = 13 }, { MinTime = DateTime.Minutes(10), Value = 20 }, { MinTime = DateTime.Minutes(14), Value = 30 } },
+			hard = { { MinTime = 0, Value = 13 }, { MinTime = DateTime.Minutes(10), Value = 20 }, { MinTime = DateTime.Minutes(14), Value = 30 }, { MinTime = DateTime.Minutes(25), Value = 40 } },
 		},
 		QueueProductionStatuses = {
 			Aircraft = false
@@ -105,7 +105,7 @@ Squads = {
 		AttackValuePerSecond = {
 			easy = { { MinTime = 0, Value = 5 }, { MinTime = DateTime.Minutes(14), Value = 10 } },
 			normal = { { MinTime = 0, Value = 9 }, { MinTime = DateTime.Minutes(12), Value = 12 }, { MinTime = DateTime.Minutes(16), Value = 15 } },
-			hard = { { MinTime = 0, Value = 13 }, { MinTime = DateTime.Minutes(10), Value = 20 }, { MinTime = DateTime.Minutes(14), Value = 30 } },
+			hard = { { MinTime = 0, Value = 13 }, { MinTime = DateTime.Minutes(10), Value = 20 }, { MinTime = DateTime.Minutes(14), Value = 30 }, { MinTime = DateTime.Minutes(25), Value = 40 } },
 		},
 		QueueProductionStatuses = {
 			Aircraft = false
@@ -164,7 +164,7 @@ Squads = {
 		AttackValuePerSecond = {
 			easy = { { MinTime = 0, Value = 5 }, { MinTime = DateTime.Minutes(14), Value = 10 } },
 			normal = { { MinTime = 0, Value = 9 }, { MinTime = DateTime.Minutes(12), Value = 12 }, { MinTime = DateTime.Minutes(16), Value = 15 } },
-			hard = { { MinTime = 0, Value = 13 }, { MinTime = DateTime.Minutes(10), Value = 20 }, { MinTime = DateTime.Minutes(14), Value = 25 } },
+			hard = { { MinTime = 0, Value = 13 }, { MinTime = DateTime.Minutes(10), Value = 20 }, { MinTime = DateTime.Minutes(14), Value = 30 }, { MinTime = DateTime.Minutes(25), Value = 40 } },
 		},
 		QueueProductionStatuses = {
 			Aircraft = false
@@ -180,9 +180,9 @@ Squads = {
 				{ Aircraft = { "kiro" } },
 			},
 			hard = {
-				{ Aircraft = { "kiro", "kiro" }, MaxTime = DateTime.Minutes(15) },
-				{ Aircraft = { "kiro", "kiro", "kiro" }, MinTime = DateTime.Minutes(15), MaxTime = DateTime.Minutes(20) },
-				{ Aircraft = { "kiro", "kiro", "kiro", "kiro" }, MinTime = DateTime.Minutes(20), },
+				{ Aircraft = { "kiro" }, MaxTime = DateTime.Minutes(15) },
+				{ Aircraft = { "kiro", "kiro" }, MinTime = DateTime.Minutes(15), MaxTime = DateTime.Minutes(30) },
+				{ Aircraft = { "kiro", "kiro", "kiro" }, MinTime = DateTime.Minutes(30), },
 			}
 		},
 		AttackPaths = {

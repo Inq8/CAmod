@@ -101,24 +101,23 @@ E7:
 	AutoTarget:
 		InitialStance: HoldFire
 
-MAST:
+PDGY:
+	Inherits: MAST
+	RenderSprites:
+		Image: mast
+	GrantCondition@Elite:
+		Condition: rank-elite
 	Mobile:
 		Speed: 36
 	RevealsShroud:
 		Range: 12c0
-	GrantCondition@VET1:
-		Condition: rank-veteran
-	GrantCondition@VET2:
-		Condition: rank-veteran
-	GrantCondition@VET3:
-		Condition: rank-veteran
 	WithRangeCircle@ZAPRANGENORMAL:
 		Type: Psi
 		Visible: Always
 		ValidRelationships: Ally, Enemy
 		Color: 9b25ffaa
 		Range: 12c0
-		RequiresCondition: rank-elite && activated
+		RequiresCondition: activated
 	ExternalCondition@ACTIVATED:
 		Condition: activated
 	Armament@PRIMARY:

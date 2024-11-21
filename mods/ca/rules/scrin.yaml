@@ -2525,7 +2525,7 @@ TPOD:
 		BlinkInterval: 15
 		BlinkPattern: on, off
 
-RPTP:
+RTPD:
 	Inherits: TPOD
 	Inherits@RESCONV: ^ResourceConversion
 	Buildable:
@@ -2542,7 +2542,7 @@ RPTP:
 	Health:
 		HP: 98000
 	SpawnActorOnDeath:
-		Actor: RPTP.Husk
+		Actor: RTPD.Husk
 	AttackTurreted:
 		Armaments: primary, secondary, primary-charged, secondary-charged
 	Armament@PRIMARY:
@@ -3392,11 +3392,12 @@ PAC:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 112
 		Prerequisites: sign, scrt, ~aircraft.scrin, ~techlevel.high
-		Description: Warship that launches a squadron\n  of assault craft.
+		Description: Warship that launches a squadron\n  of Invader assault craft.
 		IconPalette: chrome
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
 		Weaknesses: • Weak vs Buildings, Defenses
+		Attributes: • Invaders only targetable by static anti-air defenses
 	Voiced:
 		VoiceSet: PlanetaryAssaultCarrierVoice
 	Valued:
@@ -3894,14 +3895,14 @@ TPOD.Husk:
 		Image: tpod.destroyed
 		PlayerPalette: playerscrin
 
-RPTP.Husk:
+RTPD.Husk:
 	Inherits: ^Husk
 	Tooltip:
 		Name: Husk (Reaper Tripod)
 	ThrowsParticle@turret:
 		Anim: turret
 	RenderSprites:
-		Image: rptp.destroyed
+		Image: rtpd.destroyed
 		PlayerPalette: playerscrin
 
 OBLT.Husk:
@@ -6122,13 +6123,13 @@ REBELGATEWAY:
 	PeriodicProducerCA@2Reaper:
 		Type: Gateway
 		ChargeDuration: 625
-		Actors: gunw, gunw, rptp
+		Actors: gunw, gunw, rtpd
 		ReadyAudio: ReinforcementsArrived
 		RequiresCondition: reaper && !shard
 	PeriodicProducerCA@2ReaperShard:
 		Type: Gateway
 		ChargeDuration: 625
-		Actors: shrw, shrw, rptp
+		Actors: shrw, shrw, rtpd
 		ReadyAudio: ReinforcementsArrived
 		RequiresCondition: reaper && shard
 	AmmoPool@Wave1:

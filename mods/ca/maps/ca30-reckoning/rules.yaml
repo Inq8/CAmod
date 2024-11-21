@@ -175,7 +175,7 @@ microwave.upgrade:
 	Buildable:
 		Prerequisites: tmpl
 
-OTPD:
+ETPD:
 	Inherits: TPOD
 	Inherits@SHIELDS: ^ScrinShields
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
@@ -242,7 +242,7 @@ OTPD:
 	AutoTarget:
 		InitialStanceAI: AttackAnything
 	SpawnActorOnDeath:
-		Actor: OTPD.Husk
+		Actor: ETPD.Husk
 	ExternalCondition@NORMAL:
 		Condition: difficulty-normal
 	ExternalCondition@EASY:
@@ -261,7 +261,7 @@ OTPD:
 		RequiresCondition: difficulty-easy
 	MustBeDestroyed:
 		RequiredForShortGame: true
-	Targetable@OTPD:
+	Targetable@ETPD:
 		TargetTypes: ExterminatorTripod
 	Targetable@SHIELDED:
 		TargetTypes: Shielded
@@ -272,12 +272,19 @@ OTPD:
 	-ExternalCondition@UNITSELL:
 	-Sellable:
 
-OTPD.Husk:
+ETPD.Husk:
 	Inherits: TPOD.Husk
 	Tooltip:
 		Name: Husk (Exterminator Tripod)
 	RenderSprites:
-		Image: otpd.destroyed
+		Image: etpd.destroyed
+
+PDGY:
+	Inherits: MAST
+	RenderSprites:
+		Image: mast
+	GrantCondition@Elite:
+		Condition: rank-elite
 
 SFAC:
 	Health:

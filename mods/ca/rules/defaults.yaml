@@ -2548,16 +2548,18 @@
 		RequiresCondition: !parachute && !being-warped
 	ExternalCondition@ONTIB:
 		Condition: on-tib
+	ExternalCondition@ONBLUETIB:
+		Condition: on-bluetib
 	ChangesHealth@THEAL:
 		Step: 0
 		PercentageStep: 1
 		Delay: 15
 		StartIfBelow: 100
 		DamageCooldown: 150
-		RequiresCondition: on-tib
+		RequiresCondition: on-tib || on-bluetib
 		DamageTypes: ToxinDeath
 	WithDecoration@REDCROSS:
-		RequiresCondition: on-tib || (hospitalheal && damaged)
+		RequiresCondition: on-tib || on-bluetib || (hospitalheal && damaged)
 	WithDecoration@RANK-1:
 		BlinkPatterns:
 			on-tib || (damaged && hospitalheal): On, Off

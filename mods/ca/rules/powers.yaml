@@ -256,7 +256,7 @@
 
 ^CryostormPower:
 	SpawnActorPowerCA@Cryostorm:
-		Actor: cryostorm
+		Actor: cryostorm.init
 		OrderName: cryostorm
 		Icon: cryostorm
 		Prerequisites: ~sweden.coalition, ~alhq
@@ -264,12 +264,12 @@
 		LifeTime: -1
 		Name: Cryostorm
 		Description: \nCreates a turbulent area of extreme cold,\n    reducing movement speed and increasing damage taken.
-		LaunchSound: cryostormstart.aud
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
 		EndChargeSpeechNotification: CryostormReady
 		EndChargeTextNotification: Cryostorm ready.
+		IncomingSpeechNotification: CryostormWarning
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayRadarPing: True
 		Cursor: ability
@@ -280,6 +280,12 @@
 		EffectImage: empty
 		EffectSequence: idle
 		EffectPalette: effect
+		DisplayBeacon: true
+		BeaconDuration: 125
+		BeaconPoster: cryostorm
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
 
 ^HeliosBombPower:
 	AirstrikePowerCA@HeliosBomb:

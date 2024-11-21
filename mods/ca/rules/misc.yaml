@@ -1192,7 +1192,7 @@ jamming.field:
 		ValidRelationships: Enemy, Neutral
 		Condition: jammed
 
-cryostorm:
+cryostorm.init:
 	Interactable:
 		Bounds: 64, 64
 	ScriptTriggers:
@@ -1205,20 +1205,31 @@ cryostorm:
 	Immobile:
 		OccupiesSpace: false
 	RenderSprites:
-		Image: cryostorm
-		Palette: effect
+		Image: empty
 	# required for spawning actor on death
 	Health:
 		HP: 1
 	KillsSelf:
-		Delay: 375
+		Delay: 125
+	SpawnActorOnDeath:
+		Actor: cryostorm
+		SkipMakeAnimations: false
 	WithRangeCircleCA@Cryostorm:
 		Type: Cryostorm
 		Range: 4c682
 		Visible: Always
-		ValidRelationships: Ally, Enemy, Neutral
+		ValidRelationships: Ally
 		UsePlayerColor: true
 		PlayerColorAlpha: 192
+
+cryostorm:
+	Inherits: cryostorm.init
+	RenderSprites:
+		Image: cryostorm
+	KillsSelf:
+		Delay: 375
+	SpawnActorOnDeath:
+		Actor: cryostorm.fade
 	PeriodicExplosion:
 		Weapon: Cryostorm
 	ProximityExternalCondition@Cryostorm1:
@@ -1244,9 +1255,10 @@ cryostorm:
 	AmbientSound:
 		SoundFiles: cryostorm.aud
 	WithMakeAnimation:
-	SpawnActorOnDeath:
-		Actor: cryostorm.fade
-		SkipMakeAnimations: false
+	AmbientSound@Start:
+		SoundFiles: cryostormstart.aud
+		Interval: 400
+		AudibleThroughFog: true
 
 cryostorm.fade:
 	Inherits: cryostorm
@@ -1256,8 +1268,9 @@ cryostorm.fade:
 	-ProximityExternalCondition@Cryostorm2:
 	-ProximityExternalCondition@Cryostorm3:
 	-ProximityExternalCondition@Cryostorm4:
-	-AmbientSound:
 	-SpawnActorOnDeath:
+	-AmbientSound:
+	-AmbientSound@Start:
 	KillsSelf:
 		Delay: 15
 	WithMakeAnimation:

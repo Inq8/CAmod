@@ -10,6 +10,8 @@
 
 using System.Collections.Generic;
 using OpenRA.Graphics;
+using OpenRA.Mods.CA.Effects;
+using OpenRA.Mods.Common.Effects;
 using OpenRA.Mods.Common.Graphics;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
@@ -24,6 +26,9 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly Color TargetCircleColor = Color.White;
 		public readonly bool TargetCircleUsePlayerColor = false;
 
+		[Desc("Beacon duration.")]
+		public readonly int BeaconDuration = 0;
+
 		public override object Create(ActorInitializer init) { return new SpawnActorPowerCA(init.Self, this); }
 	}
 
@@ -35,6 +40,38 @@ namespace OpenRA.Mods.CA.Traits
 			: base(self, info)
 		{
 			Info = info;
+		}
+
+		public override void Activate(Actor self, Order order, SupportPowerManager manager)
+		{
+			base.Activate(self, order, manager);
+
+
+			if (Info.DisplayBeacon)
+			{
+				var timer = new Countdown(Info.BeaconDuration);
+
+				var beacon = new Beacon(
+					self.Owner,
+					order.Target.CenterPosition,
+					Info.BeaconPaletteIsPlayerPalette,
+					Info.BeaconPalette,
+					Info.BeaconImage,
+					Info.BeaconPoster,
+					Info.BeaconPosterPalette,
+					Info.BeaconSequence,
+					Info.ArrowSequence,
+					Info.CircleSequence,
+					Info.ClockSequence,
+					() => 1 - timer.TicksRemaining / (float)Info.BeaconDuration,
+					Info.BeaconDelay,
+					Info.BeaconDuration);
+
+				self.World.AddFrameEndTask(w => {
+					w.Add(beacon);
+					w.Add(timer);
+				});
+			}
 		}
 
 		public override void SelectTarget(Actor self, string order, SupportPowerManager manager)

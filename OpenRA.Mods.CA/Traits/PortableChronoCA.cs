@@ -8,10 +8,13 @@
  */
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using OpenRA.Graphics;
 using OpenRA.Mods.CA.Activities;
+using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Graphics;
 using OpenRA.Mods.Common.Orders;
 using OpenRA.Mods.Common.Traits;
@@ -112,6 +115,28 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Cursor to display when targeting a teleport location with modifier key held.")]
 		public readonly string TargetModifiedCursor = null;
 
+		[Desc("The maximum distance that can be teleported instantly. Use zero to match MaxDistance.")]
+		public readonly int MaxInstantDistance = 0;
+
+		[GrantedConditionReference]
+		[Desc("Condition to grant while charging.")]
+		public readonly string PreChargeCondition = null;
+
+		[Desc("If teleporting beyond MaxInstantDistance, the ticks per cell of charge up time before teleport occurs.")]
+		public readonly int PreChargeTicksPerCell = 0;
+
+		[Desc("Maximum ticks of charge up time.")]
+		public readonly int MaxPreChargeTicks = 0;
+
+		[Desc("Max instant range circle color.")]
+		public readonly Color MaxInstantCircleColor = Color.FromArgb(128, Color.LawnGreen);
+
+		[Desc("Max instant range circle border color.")]
+		public readonly Color MaxInstantCircleBorderColor = Color.FromArgb(96, Color.Black);
+
+		[Desc("Color to use for the pre-charge selection bar.")]
+		public readonly Color PreChargeSelectionBarColor = Color.Cyan;
+
 		public override object Create(ActorInitializer init) { return new PortableChronoCA(init.Self, this); }
 	}
 
@@ -126,8 +151,11 @@ namespace OpenRA.Mods.CA.Traits
 		[Sync]
 		int conditionTicks = 0;
 		int cooldownTicks = 0;
+		int preChargeTicks = 0;
+		int maxPreChargeTicks = 0;
 
 		int token = Actor.InvalidConditionToken;
+		int preChargeToken = Actor.InvalidConditionToken;
 		IPortableChronoModifier[] modifiers;
 
 		public int ChargeDelay { get; private set; }
@@ -155,6 +183,9 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			if (IsTraitDisabled || IsTraitPaused)
 				return;
+
+			if (preChargeTicks > 0)
+				preChargeTicks--;
 
 			if (cooldownTicks > 0)
 				cooldownTicks--;
@@ -239,10 +270,37 @@ namespace OpenRA.Mods.CA.Traits
 				if (maxDistance != null)
 					self.QueueActivity(move.MoveWithinRange(order.Target, WDist.FromCells(maxDistance.Value), targetLineColor: Info.TargetLineColor));
 
-				self.QueueActivity(new TeleportCA(self, cell, maxDistance, Info.KillCargo, Info.FlashScreen, Info.ChronoshiftSound, true, false, default(BitSet<DamageType>), Info.RequireEmptyDestination));
+				var distance = (cell - self.Location).Length;
+				var cellsBeyondInstant = Info.MaxInstantDistance > 0 ? distance - Info.MaxInstantDistance : 0;
+				var delay = cellsBeyondInstant * Info.PreChargeTicksPerCell;
+				if (Info.MaxPreChargeTicks > 0 && delay > Info.MaxPreChargeTicks)
+					delay = Info.MaxPreChargeTicks;
+
+				maxPreChargeTicks = delay;
+
+				self.QueueActivity(new TeleportCA(self, cell, maxDistance, Info.KillCargo, Info.FlashScreen, Info.ChronoshiftSound,
+					true, false, default, Info.RequireEmptyDestination, delay, PreChargeStarted, RevokePreChargeCondition));
 				self.QueueActivity(move.MoveTo(cell, 5, targetLineColor: Info.TargetLineColor));
 				self.ShowTargetLines();
 			}
+		}
+
+		void PreChargeStarted(Actor self)
+		{
+			preChargeTicks = maxPreChargeTicks;
+			GrantPreChargeCondition(self);
+		}
+
+		void GrantPreChargeCondition(Actor self)
+		{
+			if (!string.IsNullOrEmpty(Info.PreChargeCondition) && preChargeToken == Actor.InvalidConditionToken)
+				preChargeToken = self.GrantCondition(Info.PreChargeCondition);
+		}
+
+		void  RevokePreChargeCondition(Actor self)
+		{
+			if (preChargeToken != Actor.InvalidConditionToken)
+				preChargeToken = self.RevokeCondition(preChargeToken);
 		}
 
 		string IOrderVoice.VoicePhraseForOrder(Actor self, Order order)
@@ -302,6 +360,9 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled)
 				return 0f;
 
+			if (preChargeTicks > 0)
+				return 1 - (float)preChargeTicks / maxPreChargeTicks;
+
 			if (Info.ShowCooldownSelectionBar && cooldownTicks > 0 && Charges > 0)
 				return (float)(Info.Cooldown - cooldownTicks) / Info.Cooldown;
 
@@ -314,7 +375,17 @@ namespace OpenRA.Mods.CA.Traits
 			return (float)(ChargeDelay - chargeTick) / ChargeDelay;
 		}
 
-		Color ISelectionBar.GetColor() { return Info.ShowCooldownSelectionBar && cooldownTicks > 0 && Charges > 0 ? Info.CooldownSelectionBarColor : Info.SelectionBarColor; }
+		Color ISelectionBar.GetColor()
+		{
+			if (preChargeTicks > 0)
+				return Info.PreChargeSelectionBarColor;
+
+			if (Info.ShowCooldownSelectionBar && cooldownTicks > 0 && Charges > 0)
+				return Info.CooldownSelectionBarColor;
+
+			return Info.SelectionBarColor;
+		}
+
 		bool ISelectionBar.DisplayWhenEmpty => false;
 
 		protected override void TraitDisabled(Actor self)
@@ -437,23 +508,38 @@ namespace OpenRA.Mods.CA.Traits
 			if (!self.IsInWorld || self.Owner != self.World.LocalPlayer)
 				yield break;
 
-			if (!info.HasDistanceLimit)
+			if (!info.HasDistanceLimit && info.MaxInstantDistance == 0)
 				yield break;
 
 			if (info.CircleWidth > 0)
 			{
 				foreach (var s in selectedWithAbility)
 				{
-					if (s.Actor.IsInWorld && s.Trait.Info.HasDistanceLimit && s.Trait.CanTeleport && self.Owner == self.World.LocalPlayer)
+					if (s.Actor.IsInWorld && s.Trait.CanTeleport && self.Owner == self.World.LocalPlayer)
 					{
-						yield return new RangeCircleAnnotationRenderable(
-							s.Actor.CenterPosition + new WVec(0, s.Actor.CenterPosition.Z, 0),
-							WDist.FromCells(s.Trait.Info.MaxDistance),
-							0,
-							s.Trait.Info.CircleColor,
-							s.Trait.Info.CircleWidth,
-							s.Trait.Info.CircleBorderColor,
-							s.Trait.Info.CircleBorderWidth);
+						if (s.Trait.Info.HasDistanceLimit)
+						{
+							yield return new RangeCircleAnnotationRenderable(
+								s.Actor.CenterPosition + new WVec(0, s.Actor.CenterPosition.Z, 0),
+								WDist.FromCells(s.Trait.Info.MaxDistance),
+								0,
+								s.Trait.Info.CircleColor,
+								s.Trait.Info.CircleWidth,
+								s.Trait.Info.CircleBorderColor,
+								s.Trait.Info.CircleBorderWidth);
+						}
+
+						if (s.Trait.Info.MaxInstantDistance > 0)
+						{
+							yield return new RangeCircleAnnotationRenderable(
+								s.Actor.CenterPosition + new WVec(0, s.Actor.CenterPosition.Z, 0),
+								WDist.FromCells(s.Trait.Info.MaxInstantDistance),
+								0,
+								s.Trait.Info.MaxInstantCircleColor,
+								s.Trait.Info.CircleWidth,
+								s.Trait.Info.MaxInstantCircleBorderColor,
+								s.Trait.Info.CircleBorderWidth);
+						}
 					}
 				}
 			}
