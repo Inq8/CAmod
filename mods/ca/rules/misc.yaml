@@ -1210,7 +1210,7 @@ cryostorm.init:
 	Health:
 		HP: 1
 	KillsSelf:
-		Delay: 125
+		Delay: 100
 	SpawnActorOnDeath:
 		Actor: cryostorm
 		SkipMakeAnimations: false
@@ -1221,6 +1221,8 @@ cryostorm.init:
 		ValidRelationships: Ally
 		UsePlayerColor: true
 		PlayerColorAlpha: 192
+	PeriodicExplosion:
+		Weapon: CryostormInit
 
 cryostorm:
 	Inherits: cryostorm.init
@@ -1258,7 +1260,6 @@ cryostorm:
 	AmbientSound@Start:
 		SoundFiles: cryostormstart.aud
 		Interval: 400
-		AudibleThroughFog: true
 
 cryostorm.fade:
 	Inherits: cryostorm

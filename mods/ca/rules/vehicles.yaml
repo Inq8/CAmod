@@ -1988,7 +1988,7 @@ HARV:
 	WithDockingAnimationCA:
 		RefineryTypes: proc
 	SpawnActorOnDeath:
-		Actor: HARV.EmptyHusk
+		Actor: HARV.Husk
 		RequiresCondition: !being-warped && !charv-upgrade
 	GrantConditionOnTerrain@Tiberium:
 		Condition: ontib
@@ -2091,7 +2091,7 @@ HARV.Chrono:
 	Voiced:
 		VoiceSet: ChronoMinerVoice
 	SpawnActorOnDeath:
-		Actor: HARV.Chrono.EmptyHusk
+		Actor: HARV.Chrono.Husk
 		RequiresCondition: !being-warped
 	-GrantConditionOnPrerequisite@OREPUPGRADE:
 	-PeriodicExplosion@WARPOUT:
@@ -5942,8 +5942,11 @@ IFV:
 		Name: Missile IFV
 		RequiresCondition: samturr
 	Tooltip@engturr:
-		Name: Repair IFV
+		Name: Engineer IFV
 		RequiresCondition: engturr
+	Tooltip@mechturr:
+		Name: Repair IFV
+		RequiresCondition: mechturr
 	Tooltip@commturr:
 		Name: Commando IFV
 		RequiresCondition: commturr
@@ -6028,9 +6031,14 @@ IFV:
 		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
 		IsStandard: false
 		RequiresCondition: fragturr
-	TooltipExtras@engturr:
+	TooltipExtras@mechturr:
 		Weaknesses: • Unarmed
 		Attributes: • Repairs friendly vehicles
+		IsStandard: false
+		RequiresCondition: mechturr
+	TooltipExtras@engturr:
+		Weaknesses: • Unarmed
+		Attributes: • Captures structures
 		IsStandard: false
 		RequiresCondition: engturr
 	TooltipExtras@commturr:
@@ -6232,7 +6240,7 @@ IFV:
 		OutsideRangeCursor: repair
 		TargetRelationships: Ally
 		ForceTargetRelationships: None
-		RequiresCondition: engturr
+		RequiresCondition: mechturr
 		MuzzleSequence: emp-overlay
 		MuzzlePalette: tseffect-ignore-lighting-alpha75
 	Armament@defuse:
@@ -6243,10 +6251,6 @@ IFV:
 		RequiresCondition: engturr
 		ForceTargetRelationships: None
 		Name: secondary
-	AutoTargetPriority@defuse:
-		ValidTargets: C4Attached
-		InvalidTargets: NoAutoTarget
-		ValidRelationships: Ally
 	Armament@Acol:
 		Weapon: IFVLaser
 		LocalOffset: 385,0,300
@@ -6289,7 +6293,7 @@ IFV:
 		RequiresCondition: psyturr
 	AttackSoundsCA@REPAIRSOUND:
 		Sounds: repair11.aud
-		RequiresCondition: engturr
+		RequiresCondition: mechturr
 		Armaments: primary
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
@@ -6339,9 +6343,9 @@ IFV:
 	WithSpriteTurret@com:
 		Sequence: turret9
 		RequiresCondition: commturr || sealturr
-	WithSpriteTurret@rep:
+	WithSpriteTurret@mech:
 		Sequence: turret10
-		RequiresCondition: engturr
+		RequiresCondition: mechturr
 	WithSpriteTurret@snip:
 		Sequence: turret11
 		RequiresCondition: snipturr
@@ -6369,6 +6373,9 @@ IFV:
 	WithSpriteTurret@enfo:
 		Sequence: turret20
 		RequiresCondition: enfoturr
+	WithSpriteTurret@engi:
+		Sequence: turret21
+		RequiresCondition: engturr
 	Cargo:
 		Types: Infantry, Hacker
 		MaxWeight: 1
@@ -6391,8 +6398,8 @@ IFV:
 			deso: desoturr
 			e6: engturr
 			n6: engturr
-			mech: engturr
-			cmec: engturr
+			mech: mechturr
+			cmec: mechturr
 			mort.chem: mortchemturr
 			mort.cryo: mortcryoturr
 			mort.sonic: mortsonicturr
@@ -6536,11 +6543,15 @@ IFV:
 		AssaultMoveCondition: assault-move
 	AutoTargetPriority@REPAIR:
 		ValidTargets: Repair
-		RequiresCondition: engturr
+		RequiresCondition: mechturr
 		ValidRelationships: Ally
 	AutoTargetPriority@HEAL:
 		ValidTargets: Heal
 		RequiresCondition: medturr
+		ValidRelationships: Ally
+	AutoTargetPriority@defuse:
+		ValidTargets: C4Attached, TNTAttached
+		InvalidTargets: NoAutoTarget
 		ValidRelationships: Ally
 	GrantConditionOnPrerequisite@APB:
 		Condition: apb-upgrade
@@ -6553,7 +6564,7 @@ IFV:
 		Prerequisites: tibcore.upgrade
 	GuardsSelection@REPAIR:
 		ValidTargets: Vehicle
-		RequiresCondition: engturr && !stance-attackanything
+		RequiresCondition: mechturr && !stance-attackanything
 	GuardsSelection@MEDIC:
 		ValidTargets: Infantry
 		RequiresCondition: medturr && !stance-attackanything
@@ -6569,7 +6580,7 @@ IFV:
 		Position: TopLeft
 		ValidRelationships: Ally, Enemy, Neutral
 	KeepsDistance:
-		RequiresCondition: engturr || medturr || spyturr
+		RequiresCondition: engturr || mechturr || medturr || spyturr
 	DamageTypeDamageMultiplier@A2GPROTECTION:
 		RequiresCondition: !full || samturr || ggiturr
 	AmbientSoundCA@BlackHand:
@@ -6610,6 +6621,11 @@ IFV:
 	DamageMultiplier@Enforcer:
 		RequiresCondition: enfoturr
 		Modifier: 70
+	Captures@Engineer:
+		CaptureTypes: building
+		PlayerExperience: 25
+		CaptureDelay: 300
+		ConsumedByCapture: false
 
 IFV.AI:
 	Inherits: ^Tank
@@ -6778,8 +6794,10 @@ RECK:
 		Name: Grenade Reckoner
 	Tooltip@samturr:
 		Name: Missile Reckoner
-	Tooltip@engturr:
+	Tooltip@mechturr:
 		Name: Repair Reckoner
+	Tooltip@engturr:
+		Name: Engineer Reckoner
 	Tooltip@commturr:
 		Name: Commando Reckoner
 	Tooltip@chemturr:
@@ -6822,6 +6840,8 @@ RECK:
 		Name: GGI Reckoner
 	Tooltip@psyturr:
 		Name: Psychic Reckoner
+	Tooltip@enfoturr:
+		Name: Enforcer Reckoner
 	ReloadDelayMultiplier@CyborgElite:
 		RequiresCondition: rmbcturr
 		Modifier: 80
