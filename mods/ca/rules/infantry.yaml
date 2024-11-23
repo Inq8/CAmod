@@ -4949,11 +4949,11 @@ REAP:
 		BuildPaletteOrder: 231
 		IconPalette: chrometd
 		Prerequisites: ~infantry.nod, tmpp, advcyber.upgrade, unity.covenant, ~techlevel.high
-		Description: Heavy cyborg with concussive missiles.
+		Description: Heavy cyborg with dual missile launchers and a inhibitor grenade launcher\n  which greatly slows infantry movement.
 	TooltipExtras:
-		Strengths: • Strong vs Heavy Armor, Light Armor, Aircraft
-		Weaknesses: • Weak vs Infantry
-		Attributes: • Heals on Tiberium
+		Strengths: • Strong vs Infantry, Light Armor, Buildings
+		Weaknesses: • Weak vs Heavy Armor
+		Attributes: • Heals on Tiberium\n• Special Ability: Inhibitor Grenade
 	Selectable:
 		DecorationBounds: 640, 896, -32, -256
 	Valued:
@@ -4997,6 +4997,12 @@ REAP:
 	Armament@PRIMARY:
 		Weapon: CyborgReaperMissiles
 		LocalOffset: 150,150,500, 150,-150,500
+		PauseOnCondition: snare-attack || snare-fired
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: CyborgReaperSnare
+		LocalOffset: 0,150,700
+		PauseOnCondition: !snare-attack
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	WithProductionIconOverlay:
@@ -5027,3 +5033,21 @@ REAP:
 		Weapon: UnitExplodeSmall
 		EmptyWeapon: UnitExplodeSmall
 		RequiresCondition: !being-warped
+	TargetedAttackAbility:
+		ActiveCondition: snare-attack
+		ArmamentName: secondary
+		CircleColor: 00cc0088
+		Type: ReaperSnare
+		TargetModifiedCursor: ability2
+	GrantConditionOnAttack@SnareCooldown:
+		Condition: snare-fired
+		RevokeDelay: 30
+		ArmamentNames: secondary
+	AmmoPool:
+		Armaments: secondary
+		Ammo: 1
+	ReloadAmmoPoolCA:
+		Delay: 300 # equal to reload time of weapon
+		Count: 1
+		ShowSelectionBar: true
+		SelectionBarColor: 00cc00

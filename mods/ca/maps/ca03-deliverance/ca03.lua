@@ -243,7 +243,7 @@ WorldLoaded = function()
 		HardOnlyKatyusha2.Destroy()
 
 		Trigger.AfterDelay(DateTime.Seconds(3), function()
-			Tip("If you put a Mechanic or Engineer inside an IFV it becomes a repair vehicle.")
+			Tip("If you put a Mechanic inside an IFV it becomes a repair vehicle.")
 		end)
 
 		if Difficulty == "easy" then

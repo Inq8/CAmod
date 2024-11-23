@@ -302,7 +302,7 @@ Tick = function()
 			end)
 
 			Trigger.AfterDelay(DateTime.Minutes(2), function()
-				Tip("Mechanics can repair your vehicles in the field. Putting a Mechanic or Engineer inside an IFV turns it into a repair vehicle. Build a Supply Depot for access to Mechanics.")
+				Tip("Mechanics can repair your vehicles in the field. Putting a Mechanic inside an IFV turns it into a repair vehicle. Build a Supply Depot for access to Mechanics.")
 			end)
 
 			Trigger.AfterDelay(DateTime.Minutes(3), function()

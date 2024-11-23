@@ -816,8 +816,9 @@ APTusk:
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Ground, Water, Air, AirSmall
 		Damage: 8000
+		Spread: 256
 		Versus:
-			None: 20
+			None: 15
 			Wood: 55
 			Light: 60
 			Heavy: 100
@@ -2231,7 +2232,7 @@ CyborgReaperMissiles:
 	ReloadDelay: 65
 	Burst: 2
 	BurstDelays: 10
-	Range: 6c512
+	Range: 5c768
 	Report: reap-fire1.aud, reap-fire2.aud
 	ValidTargets: Ground, Water, Air, AirSmall
 	Projectile: MissileCA
@@ -2241,21 +2242,42 @@ CyborgReaperMissiles:
 		ContrailStartColorAlpha: 200
 		ContrailStartWidth: 0c40
 	Warhead@1Dam: SpreadDamage
-		Spread: 448
-		Damage: 3600
+		Spread: 341
+		Damage: 5500
 		Versus:
-			None: 5
-			Wood: 70
-			Light: 70
-			Heavy: 100
-			Concrete: 45
+			None: 100
+			Wood: 75
+			Light: 75
+			Heavy: 25
+			Concrete: 50
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
 		ValidTargets: Ground, Water, Air, AirSmall
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
 		ImpactSounds: reap-explosion1.aud
 		ValidTargets: Ground, Air, AirSmall, Ship, Trees
-	Warhead@concussion: GrantExternalConditionCA
-		Condition: concussion
-		Duration: 75
-		Range: 1c0
+
+CyborgReaperSnare:
+	ReloadDelay: 300
+	Range: 9c0
+	Report: reap-snarefire.aud
+	Projectile: Bullet
+		Blockable: false
+		ContrailLength: 30
+		ContrailStartColorAlpha: 100
+		ContrailStartColor: 00FF00
+		Speed: 250
+		Inaccuracy: 128
+		Image: flakball
+		Shadow: true
+		LaunchAngle: 120
+	Warhead@1Dam: SpreadDamage
+		Damage: 1
+	Warhead@Snare: GrantExternalConditionCA
+		Condition: reapersnare
+		Duration: 200
+		Range: 0c768
+	Warhead@3Eff: CreateEffect
+		Explosions: reap-snarehit
+		ImpactSounds: reap-snarehit.aud
+		ValidTargets: Ground, Ship, Trees
