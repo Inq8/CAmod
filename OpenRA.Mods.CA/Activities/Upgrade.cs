@@ -82,6 +82,7 @@ namespace OpenRA.Mods.CA.Activities
 
 			if (isHostInvalid)
 			{
+				CancelUpgrade(self);
 				// This ensures transports are also cancelled when the host becomes invalid
 				Cancel(self, true);
 				return true;
