@@ -3002,7 +3002,7 @@ CTNK:
 		Color: 00eeff22
 	WithIdleOverlay@PreCharge:
 		Sequence: idle
-		Image: chronocharge-overlay
+		Image: chronoprep-overlay
 		Palette: effect
 		RequiresCondition: chronoprep
 		IsDecoration: True
@@ -3028,6 +3028,10 @@ CTNK:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresCondition: tflx-upgrade
+	AmbientSoundCA@Prep:
+		SoundFiles: chronoprep.aud
+		RequiresCondition: chronoprep
+		Interval: 1000
 
 QTNK:
 	Inherits: ^Tank
