@@ -2163,6 +2163,7 @@ DEVO:
 		Offset: 0,0,0
 		RealignDelay: 100
 	AttackTurreted:
+		TargetFrozenActors: True
 		PauseOnCondition: empdisable || being-warped || blinded
 		Armaments: primary, primary-charged
 	WithSpriteTurret:
@@ -2235,6 +2236,7 @@ DARK:
 		TurnSpeed: 16
 		Offset: 0,0,0
 	AttackTurreted:
+		TargetFrozenActors: True
 		PauseOnCondition: empdisable || being-warped || blinded
 		Armaments: primary
 	WithSpriteTurret:
@@ -2409,6 +2411,7 @@ ATMZ:
 		Weapon: AtomizerBolts
 		LocalOffset: 350,0,350
 	AttackTurreted:
+		TargetFrozenActors: True
 		PauseOnCondition: empdisable || being-warped || blinded
 	WithSpriteTurret:
 	ProducibleWithLevel:
@@ -5050,6 +5053,7 @@ SIGN:
 
 SREP:
 	Inherits: ^ScrinBuilding
+	Inherits@ProductionOptimizer1: ^ProductionOptimizer1
 	HitShape:
 		TargetableOffsets: 840,0,0, 598,-640,0, 598,640,0, -1060,0,0, -768,-640,0, -768,640,0
 		Type: Polygon

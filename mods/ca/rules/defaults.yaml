@@ -492,7 +492,7 @@
 		RequiresCondition: herooftheunion
 		IsDecoration: True
 	TakeCover:
-		RequiresCondition: !herooftheunion
+		RequiresCondition: !herooftheunion && !reapersnare
 	GrantCondition@HeroElite:
 		RequiresCondition: herooftheunion
 		Condition: rank-elite
@@ -1575,6 +1575,19 @@
 		RequiresSelection: False
 		ValidRelationships: Ally, Neutral, Enemy
 
+^ReaperSnareable:
+	WithIdleOverlay@ReaperSnare:
+		Sequence: infantry
+		Image: reap-snareoverlay
+		Palette: effect
+		RequiresCondition: reapersnare
+		IsDecoration: True
+	ExternalCondition@ReaperSnare:
+		Condition: reapersnare
+	SpeedMultiplier@ReaperSnare:
+		Modifier: 10
+		RequiresCondition: reapersnare
+
 ^HarvesterBalancer:
 	GrantConditionOnPrerequisite@HARVBALANCE:
 		Condition: global-balancedharvesting
@@ -2282,6 +2295,7 @@
 	Inherits@lchrheal: ^LeecherHealable
 	Inherits@Blindable: ^Blindable
 	Inherits@KillZoneTargetable: ^KillZoneTargetable
+	Inherits@ReaperSnareable: ^ReaperSnareable
 	RenderSprites:
 		PlayerPalette: playertd
 	Huntable:
@@ -2297,7 +2311,7 @@
 	Mobile:
 		Speed: 46
 		Locomotor: foot
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || reapersnare
 	GrantConditionOnTerrain@ONTIB:
 		Condition: on-tib
 		TerrainTypes: Tiberium, BlueTiberium
@@ -2515,6 +2529,7 @@
 			Prone50Percent: 50
 		DamageTriggers: TriggerProne
 		PauseOnCondition: being-warped
+		RequiresCondition: !reapersnare
 	WithInfantryBody:
 		IdleSequences: idle1,idle2
 		StandSequences: stand,stand2
