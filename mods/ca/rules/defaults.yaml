@@ -1585,7 +1585,7 @@
 	ExternalCondition@ReaperSnare:
 		Condition: reapersnare
 	SpeedMultiplier@ReaperSnare:
-		Modifier: 10
+		Modifier: 0
 		RequiresCondition: reapersnare
 
 ^HarvesterBalancer:
@@ -2355,7 +2355,10 @@
 	QuantizeFacingsFromSequence:
 		Sequence: stand
 	WithInfantryBody:
-		RequiresCondition: !being-warped
+		RequiresCondition: !parachute && !being-warped && !reapersnare
+	WithInfantryBody@Parachute:
+		StandSequences: parachute
+		RequiresCondition: parachute || reapersnare
 	WithInfantryBody@Warped:
 		StandSequences: stand
 		RequiresCondition: being-warped

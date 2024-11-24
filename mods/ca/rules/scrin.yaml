@@ -479,7 +479,7 @@ S1:
 		MuzzlePalette: scrin
 	WithMuzzleOverlay:
 	AttackFrontal:
-		PauseOnCondition: being-warped || blinded
+		PauseOnCondition: being-warped || blinded || reapersnare
 		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
@@ -518,7 +518,7 @@ S2:
 		Name: batf
 		Weapon: RavagerShards
 	AttackFrontal:
-		PauseOnCondition: being-warped || blinded
+		PauseOnCondition: being-warped || blinded || reapersnare
 		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
@@ -568,7 +568,7 @@ S3:
 		Name: batf
 		Weapon: DisintegratorBeamBATF
 	AttackFrontal:
-		PauseOnCondition: being-warped || blinded
+		PauseOnCondition: being-warped || blinded || reapersnare
 		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
@@ -621,7 +621,7 @@ S4:
 		Name: batf
 		Weapon: IntruderDiscsBATF
 	AttackFrontal:
-		PauseOnCondition: being-warped || blinded
+		PauseOnCondition: being-warped || blinded || reapersnare
 		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
@@ -686,7 +686,7 @@ WCHR:
 		DefaultAttackSequence: shoot
 	AttackFrontal:
 		FacingTolerance: 0
-		PauseOnCondition: being-warped || blinded
+		PauseOnCondition: being-warped || blinded || reapersnare
 	Armament@PRIMARY:
 		Weapon: WatcherDart
 		LocalOffset: 150,0,400
@@ -756,7 +756,7 @@ BRST:
 		EmptyWeapon: BursterExplode
 	AttackFrontal:
 		FacingTolerance: 64
-		PauseOnCondition: being-warped || blinded
+		PauseOnCondition: being-warped || blinded || reapersnare
 	Armament@PRIMARY:
 		Weapon: BursterTargeting
 	GrantConditionOnAttack:
@@ -800,7 +800,7 @@ EVIS:
 		Range: 6c0
 	AttackFrontal:
 		FacingTolerance: 64
-		PauseOnCondition: being-warped || blinded
+		PauseOnCondition: being-warped || blinded || reapersnare
 		Armaments: primary, primary-charged
 	Armament@PRIMARY:
 		Weapon: EvisceratorShards
@@ -913,7 +913,7 @@ MUTI:
 		Range: 6c0
 	AttackFrontal:
 		FacingTolerance: 64
-		PauseOnCondition: being-warped || blinded
+		PauseOnCondition: being-warped || blinded || reapersnare
 	Armament@PRIMARY:
 		Weapon: MutilatorShards
 		LocalOffset: 0,-100,250, 0,100,250
@@ -965,7 +965,7 @@ SMEDI:
 		TargetRelationships: Ally
 		ForceTargetRelationships: None
 	AttackFrontal:
-		PauseOnCondition: being-warped || blinded
+		PauseOnCondition: being-warped || blinded || reapersnare
 		FacingTolerance: 0
 	AttackSoundsCA@HEALSOUND:
 		Sounds: heal2.aud
@@ -1026,7 +1026,7 @@ ARTI:
 		InvalidTargets: NoAutoTarget
 		ValidRelationships: Ally
 	AttackFrontal:
-		PauseOnCondition: being-warped || blinded
+		PauseOnCondition: being-warped || blinded || reapersnare
 		FacingTolerance: 0
 	AttackSoundsCA@REPAIRSOUND:
 		Sounds: floatk1.aud
@@ -1204,7 +1204,7 @@ MAST:
 		ChargingColor: cc00cc
 		Instant: true
 	AttackFrontal:
-		PauseOnCondition: being-warped || blinded || parachute || !ammo
+		PauseOnCondition: being-warped || blinded || reapersnare || parachute || !ammo
 		FacingTolerance: 0
 	Selectable:
 		DecorationBounds: 640, 896, -32, -256
@@ -1281,6 +1281,8 @@ MAST:
 		TargetTypes: MindControlImmune
 	Targetable@ChaosImmune:
 		TargetTypes: ChaosImmune
+	Targetable@ReaperSnareImmune:
+		TargetTypes: ReaperSnareImmune
 	WithIdleOverlay@mindcontrolling:
 		Sequence: mc
 		Palette: scrin
