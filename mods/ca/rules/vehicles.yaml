@@ -6638,6 +6638,10 @@ IFV:
 		PlayerExperience: 25
 		CaptureDelay: 300
 		ConsumedByCapture: false
+		RequiresCondition: !capture-interrupt
+	GrantConditionOnDamage@InterruptCapture:
+		Condition: capture-interrupt
+		Duration: 1
 
 IFV.AI:
 	Inherits: ^Tank
