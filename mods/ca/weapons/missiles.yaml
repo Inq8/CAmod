@@ -1737,6 +1737,81 @@ StnkMissileAA.TibCore:
 		Image: shardhit
 		ValidTargets: Air, AirSmall
 
+HstkMissile:
+	Inherits: StnkMissile
+	ReloadDelay: 75
+	Burst: 4
+	BurstDelays: 4, 7, 4
+	Projectile: MissileCA
+		HomingActivationDelay: 2
+		CruiseAltitude: 256
+		MinimumLaunchSpeed: 12
+		MaximumLaunchSpeed: 36
+		MinimumLaunchAngle: 128
+		MaximumLaunchAngle: 64
+		Acceleration: 768
+	Warhead@1Dam: SpreadDamage
+		Damage: 3650
+	Warhead@tankbuster: SpreadDamage
+		Damage: 3650
+
+HstkMissileAA:
+	Inherits: StnkMissileAA
+	ReloadDelay: 75
+	Burst: 4
+	BurstDelays: 4, 7, 4
+	Projectile: MissileCA
+		HomingActivationDelay: 2
+		CruiseAltitude: 256
+		MinimumLaunchSpeed: 12
+		MaximumLaunchSpeed: 36
+		MinimumLaunchAngle: 128
+		MaximumLaunchAngle: 64
+		Acceleration: 768
+	Warhead@1Dam: SpreadDamage
+		Damage: 3100
+	Warhead@smallDamage: SpreadDamage
+		Damage: 3100
+
+HstkMissile.TibCore:
+	Inherits: StnkMissile.TibCore
+	Projectile: MissileCA
+		HomingActivationDelay: 2
+		CruiseAltitude: 256
+		MinimumLaunchSpeed: 12
+		MaximumLaunchSpeed: 36
+		MinimumLaunchAngle: 128
+		MaximumLaunchAngle: 64
+		Acceleration: 768
+		Speed: 266
+	Warhead@3Eff: CreateEffect
+		Explosions: large_explosion
+		ImpactSounds: expnew16.aud, expnew17.aud
+	Warhead@green: GrantExternalConditionCA
+		Range: 0c511
+		Duration: 2
+		Condition: greenhighlight
+		ValidTargets: Ground, Vehicle
+
+HstkMissileAA.TibCore:
+	Inherits: StnkMissileAA.TibCore
+	Projectile: MissileCA
+		HomingActivationDelay: 2
+		CruiseAltitude: 256
+		MinimumLaunchSpeed: 12
+		MaximumLaunchSpeed: 36
+		MinimumLaunchAngle: 128
+		MaximumLaunchAngle: 64
+		Acceleration: 768
+		Speed: 357
+	Warhead@3Eff: CreateEffect
+		ImpactSounds: expnew17.aud
+	Warhead@green: GrantExternalConditionCA
+		Range: 0c511
+		Duration: 2
+		Condition: greenhighlight
+		ValidTargets: Air, AirSmall
+
 BoatMissile:
 	Inherits: Stinger
 	Report: rocket2.aud
