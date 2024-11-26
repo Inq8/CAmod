@@ -18,6 +18,7 @@
 		Explosions: self_destruct
 		ImpactSounds: kaboom22.aud
 		ValidTargets: Ground, Air, Ship, Trees
+		ImpactActors: false
 	Warhead@3EffWater: CreateEffect
 		Explosions: large_splash
 		ImpactSounds: splash9.aud
@@ -63,8 +64,6 @@ UnitExplode:
 	Inherits: ^Explosion
 	Warhead@1Dam: SpreadDamage
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
-	Warhead@2Eff: CreateEffect
-		ImpactActors: false
 
 UnitExplodePlane:
 	Inherits: UnitExplode

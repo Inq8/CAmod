@@ -2319,6 +2319,20 @@ ChaosCloud:
 		Duration: 50
 		Condition: berserk
 
+VirusCloud:
+	Inherits: Cloud
+	-Warhead@18Radio:
+	Warhead@1Dam: SpreadDamage
+		Damage: 1000
+		Spread: 256
+		Falloff: 100, 37, 14, 5, 0
+		DamageTypes: PoisonDeath
+		Versus:
+			Light: 35
+			Wood: 10
+			Concrete: 10
+			Brick: 0
+
 IrradiatedUnit:
 	Inherits: Cloud
 	Warhead@18Radio: CreateTintedCells
@@ -3199,14 +3213,15 @@ AvatarLaser:
 	Range: 7c0
 	Report: avtr-fire1.aud, avtr-fire2.aud, avtr-fire3.aud
 	Projectile: LaserZapCA
-		Width: 56
+		Width: 45
+		Duration: 12
 		HitAnim: laserfire
-		Color: FF000080
+		Color: ff7143bb
 		ZOffset: 512
 		SecondaryBeam: true
 		SecondaryBeamWidth: 90
 		SecondaryBeamZOffset: 511
-		SecondaryBeamColor: FF000040
+		SecondaryBeamColor: FF000088
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
 		Damage: 25000

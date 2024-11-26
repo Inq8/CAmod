@@ -5070,6 +5070,7 @@ STNK.Nod:
 		Offset: 0,0,10
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped || blinded || parachute
+		PersistentTargeting: false
 	WithSpriteTurret:
 	AutoTarget:
 		InitialStance: HoldFire
@@ -5167,6 +5168,7 @@ HSTK:
 		Offset: 0,0,0
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped || blinded || parachute
+		PersistentTargeting: false
 	WithSpriteTurret:
 	AutoTarget:
 		InitialStance: HoldFire
@@ -6638,7 +6640,7 @@ IFV:
 		PlayerExperience: 25
 		CaptureDelay: 300
 		ConsumedByCapture: false
-		RequiresCondition: !capture-interrupt
+		RequiresCondition: !capture-interrupt && engturr
 	GrantConditionOnDamage@InterruptCapture:
 		Condition: capture-interrupt
 		Duration: 1
