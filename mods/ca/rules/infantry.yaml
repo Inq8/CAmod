@@ -109,10 +109,18 @@ TDOG:
 	Explodes:
 		Weapon: DogExplode
 		EmptyWeapon: DogExplode
+		RequiresCondition: !being-warped
 	AttackLeap:
 		TargetFrozenActors: False
 	Targetable@TerrorDog:
 		TargetTypes: TerrorDog
+	GrantTimedConditionOnDeploy:
+		DeployedCondition: eating
+		CooldownTicks: 2
+		DeployedTicks: 1
+		RequiresCondition: !being-warped
+		Instant: true
+		ShowSelectionBar: false
 
 E1:
 	Inherits: ^Soldier
