@@ -5000,6 +5000,7 @@ STNK.Nod:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
+	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	RenderSprites:
 		Image: STNKTnod
 	Valued:
@@ -5091,6 +5092,14 @@ STNK.Nod:
 		ColorSource: Player
 	DamageTypeDamageMultiplier@A2GPROTECTION:
 		Modifier: 60
+	ReplacedInQueue:
+		Actors: hstk
+	Upgradeable@HSTK:
+		Type: deceit.covenant
+		UpgradingCondition: upgrading
+		Actor: hstk
+		UpgradeAtActors: fix, rep, srep
+		RequiresCondition: !mindcontrolled
 
 HSTK:
 	Inherits: ^TankTD
@@ -5120,7 +5129,7 @@ HSTK:
 	Mobile:
 		Speed: 100
 	Health:
-		HP: 30000
+		HP: 28000
 	Armor:
 		Type: Heavy
 	RevealsShroud:
@@ -6414,6 +6423,7 @@ IFV:
 			n6: engturr
 			mech: mechturr
 			cmec: mechturr
+			arti: mechturr
 			mort.chem: mortchemturr
 			mort.cryo: mortcryoturr
 			mort.sonic: mortsonicturr
@@ -9960,7 +9970,7 @@ AVTR:
 		Duration: 40
 	GrantConditionOnAttack@Attack:
 		Condition: attacking
-		RevokeDelay: 8
+		RevokeDelay: 18
 	ChangesHealth:
 		PercentageStep: 1
 		Delay: 25
