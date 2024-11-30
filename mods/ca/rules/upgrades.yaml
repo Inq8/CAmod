@@ -176,7 +176,7 @@ hold2.strat:
 vulcan.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: Vulcan
+		Name: Research: Vulcan
 	Buildable:
 		BuildPaletteOrder: 20
 		Prerequisites: ~player.gdi, anyradar, ~techlevel.medium
@@ -550,7 +550,7 @@ deceit.covenant:
 	Buildable:
 		BuildPaletteOrder: 15
 		Prerequisites: ~player.nod, nod.covenants.available, ~!unity.covenant, ~!wrath.covenant, ~techlevel.medium
-		Description: Required for:\n• Heavy Stealth Tank (replaces Stealth Tank)\n• Infiltrator Squad\n• Stealth Harvesters\n\n
+		Description: Required for:\n• Heavy Stealth Tank Upgrade\n• Infiltrator Squad\n• Stealth Harvesters\n\n
 		IconPalette: chrometd
 	TooltipExtras:
 		Attributes: (!) Only ONE Covenant may be chosen.
@@ -692,6 +692,22 @@ alphacomanche.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: alphacomanche.upgrade
+
+hstk.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Heavy Stealth Tank
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.nod, ~deceit.covenant, tmpl, ~techlevel.high
+		Description: Upgrades: Stealth Tank
+	TooltipExtras:
+		Strengths: + Increased damage\n+ Increased durability
+		Weaknesses: – Reduced mobility\n– Increased cost\n– Increased cloaking delay
+	Valued:
+		Cost: 500
+	RenderSprites:
+		Image: hstk.upgrade
 
 advcyber.upgrade:
 	Inherits: ^Upgrade
@@ -1420,7 +1436,7 @@ hyper.upgrade:
 evis.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: Eviscerator
+		Name: Research: Eviscerator
 	Buildable:
 		BuildPaletteOrder: 20
 		Prerequisites: ~player.scrin, anyradar, ~loyalist.allegiance, ~techlevel.medium
@@ -1437,7 +1453,7 @@ evis.upgrade:
 impl.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: Impaler
+		Name: Research: Impaler
 	Buildable:
 		BuildPaletteOrder: 20
 		Prerequisites: ~player.scrin, anyradar, ~rebel.allegiance, ~techlevel.medium
@@ -1454,7 +1470,7 @@ impl.upgrade:
 muti.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: Mutilator
+		Name: Research: Mutilator
 	Buildable:
 		BuildPaletteOrder: 20
 		Prerequisites: ~player.scrin, anyradar, ~malefic.allegiance, ~techlevel.medium

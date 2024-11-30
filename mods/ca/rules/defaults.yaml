@@ -1831,7 +1831,7 @@
 		Palette: effect
 		ValidRelationships: Ally, Neutral, Enemy
 	ChangesHealth@HACKED:
-		Step: -2000
+		Step: -1500
 		StartIfBelow: 101
 		Delay: 20
 		RequiresCondition: (hacked && !restoring) || overloading
@@ -1840,9 +1840,9 @@
 	PowerMultiplier@OVERLOADING:
 		Modifier: 0
 		RequiresCondition: overloading
-	WithColoredOverlay@OVERLOADING:
+	WithPalettedOverlay@OVERLOADING:
 		RequiresCondition: overloading
-		Color: ff660033
+		Palette: overload
 
 ^TechLockable:
 	InfiltrateForTimedCondition@TechLock:

@@ -2790,7 +2790,7 @@ TTRA:
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
 	ProximityExternalCondition@JAMMER:
-		Range: 8c0
+		Range: 1c512
 		ValidRelationships: Enemy, Neutral
 		Condition: jammed
 	ProducibleWithLevel:
@@ -5093,7 +5093,7 @@ STNK.Nod:
 	ReplacedInQueue:
 		Actors: hstk
 	Upgradeable@HSTK:
-		Type: deceit.covenant
+		Type: hstk.upgrade
 		UpgradingCondition: upgrading
 		Actor: hstk
 		UpgradeAtActors: fix, rep, srep
@@ -5116,7 +5116,7 @@ HSTK:
 		AddToArmyValue: true
 	Buildable:
 		BuildPaletteOrder: 202
-		Prerequisites: anyradar, ~vehicles.nod, ~deceit.covenant, ~techlevel.medium
+		Prerequisites: anyradar, ~vehicles.nod, ~hstk.upgrade, ~techlevel.medium
 		Queue: VehicleSQ, VehicleMQ
 		IconPalette: chrometd
 		Description: Medium-range missile heavy tank that can cloak.
