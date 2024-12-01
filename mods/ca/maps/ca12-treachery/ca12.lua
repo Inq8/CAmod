@@ -106,7 +106,7 @@ WorldLoaded = function()
 	Greece = Player.GetPlayer("Greece")
 	Traitor = Player.GetPlayer("Traitor")
 	USSRAbandoned = Player.GetPlayer("USSRAbandoned")
-	MissionPlayer = USSR
+	MissionPlayers = { USSR }
 	TimerTicks = 0
 
 	Camera.Position = PlayerStart.CenterPosition
@@ -270,7 +270,7 @@ end
 
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
-		UpdatePlayerBaseLocation()
+		UpdatePlayerBaseLocations()
 
 		if USSR.HasNoRequiredUnits() then
 			if ObjectiveKillTraitor ~= nil and not USSR.IsObjectiveCompleted(ObjectiveKillTraitor) then

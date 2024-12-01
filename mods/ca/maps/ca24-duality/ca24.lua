@@ -10,7 +10,7 @@ ScrinReinforcementInterval = {
 WorldLoaded = function()
 	GDI = Player.GetPlayer("GDI")
 	Scrin = Player.GetPlayer("Scrin")
-	MissionPlayer = GDI
+	MissionPlayers = { GDI }
 	TimerTicks = 0
 
 	Camera.Position = Commando.CenterPosition

@@ -53,7 +53,7 @@ WorldLoaded = function()
 	Scrin = Player.GetPlayer("Scrin")
 	Greece = Player.GetPlayer("Greece")
 	GDI = Player.GetPlayer("GDI")
-	MissionPlayer = Scrin
+	MissionPlayers = { Scrin }
 	TimerTicks = 0
 	StormsEnded = false
 
@@ -154,7 +154,7 @@ WorldLoaded = function()
 
 	Utils.Do(AircraftStructures, function(actor)
 		Trigger.OnDamaged(actor, function(self, attacker, damage)
-			if attacker.Owner == MissionPlayer then
+			if attacker.Owner == Scrin then
 				local nearbyUnits = Map.ActorsInCircle(self.CenterPosition, WDist.New(3072), function(a) return IsGroundHunterUnit(a) and (a.Owner == GDI or a.Owner == Greece) end)
 				Utils.Do(nearbyUnits, function(nearbyUnit)
 					nearbyUnit.Attack(attacker)
@@ -212,7 +212,7 @@ end
 
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
-		UpdatePlayerBaseLocation()
+		UpdatePlayerBaseLocations()
 	end
 end
 
@@ -252,7 +252,7 @@ InitGDI = function()
 		if a.Owner == Scrin and not TitanPatroller.IsDead and not IsTitanSpotted then
 			IsTitanSpotted = true
 			Trigger.RemoveProximityTrigger(id)
-			local camera = Actor.Create("smallcamera", true, { Owner = MissionPlayer, Location = TitanPatroller.Location })
+			local camera = Actor.Create("smallcamera", true, { Owner = Scrin, Location = TitanPatroller.Location })
 			Trigger.AfterDelay(DateTime.Seconds(4), function()
 				camera.Destroy()
 			end)

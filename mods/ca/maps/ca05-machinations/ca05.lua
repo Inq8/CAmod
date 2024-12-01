@@ -178,7 +178,7 @@ Squads = {
 WorldLoaded = function()
 	Greece = Player.GetPlayer("Greece")
 	Nod = Player.GetPlayer("Nod")
-	MissionPlayer = Greece
+	MissionPlayers = { Greece }
 	TimerTicks = 0
 
 	Camera.Position = McvLanding.CenterPosition
@@ -287,7 +287,7 @@ end
 
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
-		UpdatePlayerBaseLocation()
+		UpdatePlayerBaseLocations()
 	end
 end
 

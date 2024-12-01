@@ -278,7 +278,7 @@ WorldLoaded = function()
 	NeutralGDI = Player.GetPlayer("NeutralGDI")
 	NeutralScrin = Player.GetPlayer("NeutralScrin")
 	SignalTransmitterPlayer = Player.GetPlayer("SignalTransmitter") -- separate player to prevent AI from attacking it
-	MissionPlayer = GDI
+	MissionPlayers = { GDI }
 	TimerTicks = 0
 
 	Camera.Position = PlayerStart.CenterPosition
@@ -460,7 +460,7 @@ end
 
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
-		UpdatePlayerBaseLocation()
+		UpdatePlayerBaseLocations()
 
 		if not ShieldsOffline and not SignalTransmitter.IsDead and SignalTransmitter.Owner == GDI then
 			ShieldsOffline = true

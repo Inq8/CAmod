@@ -127,7 +127,7 @@ WorldLoaded = function()
 	Scrin = Player.GetPlayer("Scrin")
 	GDI = Player.GetPlayer("GDI")
 	TibLifeforms = Player.GetPlayer("TibLifeforms")
-	MissionPlayer = GDI
+	MissionPlayers = { GDI }
 	TimerTicks = 0
 	WavesRemaining = #WaveSpawns
 	NumBreakthroughs = 0
@@ -213,7 +213,7 @@ end
 
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
-		UpdatePlayerBaseLocation()
+		UpdatePlayerBaseLocations()
 	end
 end
 

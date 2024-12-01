@@ -68,7 +68,7 @@ WorldLoaded = function()
 	Nod = Player.GetPlayer("Nod")
 	TibLifeforms = Player.GetPlayer("TibLifeforms")
 	Neutral = Player.GetPlayer("Neutral")
-	MissionPlayer = Nod
+	MissionPlayers = { Nod }
 	TimerTicks = 0
 	FragmentsAcquired = {}
 	FragmentsAcquiredCount = 0
@@ -314,7 +314,7 @@ end
 
 ca28_CallForHelpOnDamagedOrKilled = function(actor, range, filter, validAttackingPlayerFunc)
 	if validAttackingPlayerFunc == nil then
-		validAttackingPlayerFunc = function(p) return p == MissionPlayer end
+		validAttackingPlayerFunc = function(p) return p == Nod end
 	end
 	Trigger.OnDamaged(actor, function(self, attacker, damage)
 		if validAttackingPlayerFunc(attacker.Owner) then
@@ -330,7 +330,7 @@ end
 
 ca28_CallForHelp = function(self, range, attacker, filter, validAttackingPlayerFunc)
 	if validAttackingPlayerFunc == nil then
-		validAttackingPlayerFunc = function(p) return p == MissionPlayer end
+		validAttackingPlayerFunc = function(p) return p == Nod end
 	end
 	if validAttackingPlayerFunc(self.Owner) then
 		return

@@ -26,7 +26,7 @@ NorthPowerPlants = { NorthPower1, NorthPower2, NorthPower3, NorthPower4 }
 WorldLoaded = function()
 	USSR = Player.GetPlayer("USSR")
 	Nod = Player.GetPlayer("Nod")
-	MissionPlayer = USSR
+	MissionPlayers = { USSR }
 	TimerTicks = 0
 	TempleOfNodLocation = TempleOfNod.Location
 
@@ -208,7 +208,7 @@ end
 
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
-		UpdatePlayerBaseLocation()
+		UpdatePlayerBaseLocations()
 	end
 end
 

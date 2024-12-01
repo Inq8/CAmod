@@ -196,7 +196,7 @@ Squads = {
 WorldLoaded = function()
 	GDI = Player.GetPlayer("GDI")
 	USSR = Player.GetPlayer("USSR")
-	MissionPlayer = GDI
+	MissionPlayers = { GDI }
 	TimerTicks = MaxReactorFuelTime
 	CurrentDelivery = 1
 	McvArrived = false
@@ -292,7 +292,7 @@ end
 
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
-		UpdatePlayerBaseLocation()
+		UpdatePlayerBaseLocations()
 	end
 end
 

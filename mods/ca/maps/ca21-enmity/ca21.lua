@@ -162,7 +162,7 @@ Squads = {
 WorldLoaded = function()
 	GDI = Player.GetPlayer("GDI")
 	Nod = Player.GetPlayer("Nod")
-	MissionPlayer = GDI
+	MissionPlayers = { GDI }
 	EnforceAiBuildRadius = true
 
 	Camera.Position = PlayerStart.CenterPosition
@@ -266,7 +266,7 @@ end
 
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
-		UpdatePlayerBaseLocation()
+		UpdatePlayerBaseLocations()
 	end
 end
 

@@ -166,7 +166,7 @@ WorldLoaded = function()
 	Nod = Player.GetPlayer("Nod")
 	NodAbandoned = Player.GetPlayer("NodAbandoned")
 	Scrin = Player.GetPlayer("Scrin")
-	MissionPlayer = USSR
+	MissionPlayers = { USSR }
 	TimerTicks = 0
 
 	NodAbandoned.Cash = 0
@@ -232,7 +232,7 @@ end
 
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
-		UpdatePlayerBaseLocation()
+		UpdatePlayerBaseLocations()
 		CheckNorthBase()
 		CheckSouthBase()
 	end

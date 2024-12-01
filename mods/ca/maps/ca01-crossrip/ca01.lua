@@ -210,7 +210,7 @@ WorldLoaded = function()
 	USSR = Player.GetPlayer("USSR")
 	Scrin = Player.GetPlayer("Scrin")
 	Neutral = Player.GetPlayer("Neutral")
-	MissionPlayer = Greece
+	MissionPlayers = { Greece }
 	TimerTicks = 0
 
 	Camera.Position = PlayerMcv.CenterPosition
@@ -349,7 +349,7 @@ end
 
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
-		UpdatePlayerBaseLocation()
+		UpdatePlayerBaseLocations()
 	end
 end
 
@@ -436,7 +436,7 @@ ScrinInvasion = function()
 		Utils.Do(units, function(unit)
 			unit.Scatter()
 			Trigger.AfterDelay(5, function()
-				AssaultPlayerBaseOrHunt(unit, MissionPlayer, GetScrinAssaultWaypoints())
+				AssaultPlayerBaseOrHunt(unit, Greece, GetScrinAssaultWaypoints())
 			end)
 		end)
 	end)
@@ -456,7 +456,7 @@ CreateScrinVehicles = function()
 		Utils.Do(units, function(unit)
 			unit.Scatter()
 			Trigger.AfterDelay(5, function()
-				AssaultPlayerBaseOrHunt(unit, MissionPlayer, GetScrinAssaultWaypoints())
+				AssaultPlayerBaseOrHunt(unit, Greece, GetScrinAssaultWaypoints())
 			end)
 		end)
 	end)

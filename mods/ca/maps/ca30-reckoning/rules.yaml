@@ -89,6 +89,21 @@ Player:
 					Attractiveness: -10
 					TargetMetric: Value
 					CheckRadius: 7c0
+			owrath:
+				OrderName: overlordswrath
+				MinimumAttractiveness: 3000
+				Consideration@1:
+					Against: Enemy
+					Types: Defense
+					Attractiveness: 1
+					TargetMetric: Value
+					CheckRadius: 3c0
+				Consideration@2:
+					Against: Ally
+					Types: Air, Ground, Water
+					Attractiveness: -10
+					TargetMetric: Value
+					CheckRadius: 5c0
 
 ^Infantry:
 	DamagedByTerrain@TIBDAMAGE:
@@ -298,6 +313,10 @@ NERV:
 		Prerequisites: nerv
 		ChargeInterval: 8250
 
+SCRT:
+	MeteorPower@OverlordsWrath:
+		Prerequisites: botplayer
+
 RFGN:
 	DetonateWeaponPower@RiftGenerator:
 		ChargeInterval: 13500
@@ -316,6 +335,8 @@ SPLITBLUE:
 WORMHOLE:
 	-PopControlled:
 	-Targetable:
+	RenderSprites:
+		Image: wormholelg
 
 # Hunt() requires only 1 AttackBase
 DEVA:

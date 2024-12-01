@@ -179,7 +179,7 @@ WorldLoaded = function()
 	Scrin = Player.GetPlayer("Scrin")
 	USSR = Player.GetPlayer("USSR")
 	Neutral = Player.GetPlayer("Neutral")
-	MissionPlayer = Greece
+	MissionPlayers = { Greece }
 	TimerTicks = 0
 	TrucksLost = 0
 	TrucksLostCurrentConvoy = 0
@@ -301,7 +301,7 @@ end
 
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
-		UpdatePlayerBaseLocation()
+		UpdatePlayerBaseLocations()
 	end
 end
 
