@@ -731,7 +731,7 @@ SPY:
 			seal: seal-disguise
 			cmsr: cmsr-disguise
 	Infiltrates:
-		Types: SpyInfiltrate
+		Types: ResetSupportPowerInfiltrate, PowerOutageInfiltrate, VetInfiltrate, ResetShroudInfiltrate, GrantSupportPowerInfiltrate
 		Notification: BuildingInfiltrated
 		TextNotification: Building infiltrated.
 	-WithInfantryBody:
@@ -1338,7 +1338,7 @@ THF:
 	Passenger:
 		CustomPipType: blue
 	Infiltrates:
-		Types: ThiefInfiltrate
+		Types: StealCreditsInfiltrate
 		Notification: BuildingInfiltrated
 		TextNotification: Building infiltrated.
 		Voice: Steal
@@ -2293,7 +2293,7 @@ SAB:
 	Guard:
 		Voice: Move
 	Infiltrates:
-		Types: SabInfiltrate, PowerInfiltrate, TechLockInfiltrate
+		Types: ResetSupportPowerInfiltrate, PowerOutageInfiltrate, StealTechInfiltrate, TechLockInfiltrate
 		TextNotification: Building infiltrated.
 	Voiced:
 		VoiceSet: InfilVoice

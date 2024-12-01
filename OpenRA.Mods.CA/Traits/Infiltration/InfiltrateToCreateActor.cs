@@ -8,7 +8,6 @@
  */
 #endregion
 
-using System;
 using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
@@ -16,16 +15,16 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("CA version allows the spawned proxy actor to inherit the faction of the infiltrated actor,",
+	[Desc("Replaces InfiltrateForSupportPower. Allows the spawned proxy actor to inherit the faction of the infiltrated actor,",
 		"or to be owned by the target.")]
-	class InfiltrateForSupportPowerCAInfo : TraitInfo
+	class InfiltrateToCreateProxyActorInfo : TraitInfo
 	{
 		[ActorReference]
 		[FieldLoader.Require]
 		public readonly string Proxy = null;
 
 		[Desc("The `TargetTypes` from `Targetable` that are allowed to enter.")]
-		public readonly BitSet<TargetableType> Types = default(BitSet<TargetableType>);
+		public readonly BitSet<TargetableType> Types = default;
 
 		[NotificationReference("Speech")]
 		[Desc("Sound the victim will hear when technology gets stolen.")]
@@ -41,14 +40,14 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("If true, the spawned actor will be owned by the target.")]
 		public readonly bool UseTargetOwner = false;
 
-		public override object Create(ActorInitializer init) { return new InfiltrateForSupportPowerCA(this); }
+		public override object Create(ActorInitializer init) { return new InfiltrateToCreateProxyActor(this); }
 	}
 
-	class InfiltrateForSupportPowerCA : INotifyInfiltrated
+	class InfiltrateToCreateProxyActor : INotifyInfiltrated
 	{
-		readonly InfiltrateForSupportPowerCAInfo info;
+		readonly InfiltrateToCreateProxyActorInfo info;
 
-		public InfiltrateForSupportPowerCA(InfiltrateForSupportPowerCAInfo info)
+		public InfiltrateToCreateProxyActor(InfiltrateToCreateProxyActorInfo info)
 		{
 			this.info = info;
 		}

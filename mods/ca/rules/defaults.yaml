@@ -3487,9 +3487,9 @@
 
 ^InfiltratableFake:
 	Targetable@Infiltration:
-		TargetTypes: SpyInfiltrate, SabInfiltrate
+		TargetTypes: PowerOutageInfiltrate
 	InfiltrateForDecoration:
-		Types: SpyInfiltrate, SabInfiltrate
+		Types: PowerOutageInfiltrate
 		RequiresSelection: true
 		Image: pips
 		Palette: chrome
@@ -4074,8 +4074,11 @@
 		Condition: disabled
 	AffectedByPowerOutage:
 		Condition: power-outage
+	Targetable@PowerOutageInfiltrate:
+		TargetTypes: PowerOutageInfiltrate
+		RequiresCondition: !being-warped
 	InfiltrateForPowerOutage:
-		Types: SpyInfiltrate, SabInfiltrate
+		Types: PowerOutageInfiltrate
 	PowerMultiplier@FORCEDISABLE:
 		RequiresCondition: forcedisabled
 		Modifier: 0
