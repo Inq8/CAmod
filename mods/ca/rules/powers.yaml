@@ -1647,6 +1647,24 @@
 		TargetCircleColor: ff7700
 		TargetTintColor: ff770033
 
+^TechnologyHackPower:
+	InfiltratePower@TechnologyHack:
+		Prerequisites: anycovenant
+		OrderName: techhack
+		Icon: techhack
+		ChargeInterval: 3750
+		Name: Technology Hack
+		Description: \nSteal technology from the targeted enemy production structure.\n\n(!) Can only be used once.
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeSpeechNotification: TechHackReady
+		EndChargeTextNotification: Technology Hack ready.
+		LaunchSound: techhack.aud
+		SupportPowerPaletteOrder: 50
+		Types: StealTechInfiltrate
+		OneShot: true
+
 ^AssassinSquadPower:
 	ProduceActorPowerCA@AssassinSquad:
 		OrderName: assassinsquad

@@ -40,6 +40,12 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("If true, the spawned actor will be owned by the target.")]
 		public readonly bool UseTargetOwner = false;
 
+		[Desc("If true, spawn at the location of the infiltrated actor.")]
+		public readonly bool UseLocation = false;
+
+		[Desc("If true, spawn at the location of the infiltrated actor.")]
+		public readonly bool UseCenterPosition = false;
+
 		public override object Create(ActorInitializer init) { return new InfiltrateToCreateProxyActor(this); }
 	}
 
@@ -72,6 +78,16 @@ namespace OpenRA.Mods.CA.Traits
 				td.Add(new OwnerInit(self.Owner));
 			else
 				td.Add(new OwnerInit(infiltrator.Owner));
+
+			if (info.UseCenterPosition)
+			{
+				td.Add(new CenterPositionInit(self.CenterPosition));
+
+				if (info.UseLocation)
+					td.Add(new LocationInit(self.World.Map.CellContaining(self.CenterPosition)));
+			}
+			else if (info.UseLocation)
+				td.Add(new LocationInit(self.Location));
 
 			infiltrator.World.AddFrameEndTask(w => w.CreateActor(info.Proxy, td));
 		}

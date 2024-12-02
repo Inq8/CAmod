@@ -30,6 +30,13 @@ RiftEnabledTime = {
 	hard = DateTime.Seconds((60 * 20) + 17),
 }
 
+table.insert(UnitCompositions.Scrin.Main.hard, {
+	Infantry = { "s4", "evis", "evis", "evis", "evis", "s4", "s4", "s4", "mast" },
+	Vehicles = { TripodVariant, TripodVariant, GunWalkerSeekerOrLacerator, CorrupterDevourerOrDarkener, "oblt" },
+	Aircraft = { PacOrDevastator, "pac" },
+	MinTime = DateTime.Minutes(22)
+})
+
 Squads = {
 	ScrinMain = {
 		Delay = {
@@ -75,7 +82,7 @@ Squads = {
 		},
 		FollowLeader = true,
 		IdleUnits = { },
-		ProducerActors = { Infantry = { Portal1 }, Vehicles = { WarpSphere1 }, Aircraft = { GravityStabilizer1, GravityStabilizer2 } },
+		ProducerActors = { Infantry = { Portal2 }, Vehicles = { WarpSphere2 }, Aircraft = { GravityStabilizer1, GravityStabilizer2, GravityStabilizer3 } },
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
 		Units = UnitCompositions.Scrin.Main,
 		AttackPaths = {
@@ -96,7 +103,7 @@ Squads = {
 		},
 		FollowLeader = true,
 		IdleUnits = { },
-		ProducerActors = { Infantry = { Portal3 }, Vehicles = { WarpSphere4 }, Aircraft = { GravityStabilizer2 } },
+		ProducerActors = { Infantry = { Portal3 }, Vehicles = { WarpSphere4 }, Aircraft = { GravityStabilizer3 } },
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
 		Units = UnitCompositions.Scrin.Main,
 		AttackPaths = {
@@ -473,14 +480,21 @@ InitGDI = function()
 		InitAttackSquad(Squads.GDIMain, GDI, Scrin)
 
 		Trigger.AfterDelay(Squads.GDIAir.Delay[Difficulty], function()
-			InitAirAttackSquad(Squads.GDIAir, GDI, Scrin, { "scol", "tpod", "reac", "rea2", "harv.scrin", "proc.scrin" })
+			InitAirAttackSquad(Squads.GDIAir, GDI, Scrin, { "scol", "tpod", "reac", "rea2", "harv.scrin", "proc.scrin", "etpd" })
 		end)
 	end
 end
 
 SendNextExterminator = function()
 	if NextExterminatorIndex <= ExterminatorAttackCount[Difficulty] and not Victory then
-		local wormhole = Actor.Create("wormhole", true, { Owner = Scrin, Location = ExterminatorSpawnWest.Location })
+
+		if Exterminators[NextExterminatorIndex] ~= nil then
+			exterminator = Exterminators[NextExterminatorIndex]
+		else
+			exterminator = { SpawnLocation = Utils.Random({ ExterminatorSpawnWest.Location, ExterminatorSpawnEast.Location }) }
+		end
+
+		local wormhole = Actor.Create("wormhole", true, { Owner = Scrin, Location = exterminator.SpawnLocation })
 
 		Trigger.AfterDelay(DateTime.Seconds(2), function()
 			MediaCA.PlaySound("etpd-aggro.aud", 2)
@@ -492,12 +506,6 @@ SendNextExterminator = function()
 				end)
 			else
 				Notification("Exterminator Tripod detected.")
-			end
-
-			if Exterminators[NextExterminatorIndex] ~= nil then
-				exterminator = Exterminators[NextExterminatorIndex]
-			else
-				exterminator = { SpawnLocation = Utils.Random({ ExterminatorSpawnWest.Location, ExterminatorSpawnEast.Location }) }
 			end
 
 			local reinforcements = Reinforcements.Reinforce(Scrin, { "etpd" }, { exterminator.SpawnLocation }, 10, function(a)
@@ -546,14 +554,9 @@ AggroExterminator = function(a)
 		Trigger.ClearAll(a)
 		a.Stop()
 		Trigger.AfterDelay(1, function()
-			a.AttackMove(ExterminatorPatrolPaths[5][1])
-			a.AttackMove(ExterminatorPatrolPaths[5][2])
-			a.AttackMove(ExterminatorPatrolPaths[5][3])
-			a.AttackMove(ExterminatorPatrolPaths[5][4])
-			a.AttackMove(ExterminatorPatrolPaths[5][5])
-			a.AttackMove(ExterminatorPatrolPaths[5][6])
-			a.AttackMove(ExterminatorPatrolPaths[5][7])
-			IdleHunt(a)
+			if not a.IsDead then
+				AssaultPlayerBaseOrHunt(a, Nod)
+			end
 		end)
 	end
 end

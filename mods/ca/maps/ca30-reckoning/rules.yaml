@@ -215,6 +215,7 @@ ETPD:
 	-Targetable@AICAPTURE:
 	TooltipExtras:
 		Description: Super heavy assault walker with beam weapons.
+		Strengths: Strong vs all ground units and structures.
 	Mobile:
 		Speed: 36
 		PauseOnCondition: empdisable || being-warped || notmobile
@@ -281,11 +282,19 @@ ETPD:
 	Targetable@SHIELDED:
 		TargetTypes: Shielded
 		RequiresCondition: shields-up
+	Targetable@MindControlResistant:
+		TargetTypes: MindControlResistant
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+		RequiresCondition: shields-up
 	DamageTypeDamageMultiplier@A2GPROTECTION:
 		Modifier: 75
 		RequiresCondition: !difficulty-easy
 	-ExternalCondition@UNITSELL:
 	-Sellable:
+	ChangesHealth@THEAL:
+		Step: 2000
+		PercentageStep: 0
 
 ETPD.Husk:
 	Inherits: TPOD.Husk
@@ -296,6 +305,7 @@ ETPD.Husk:
 
 PDGY:
 	Inherits: MAST
+	-Buildable:
 	RenderSprites:
 		Image: mast
 	GrantCondition@Elite:

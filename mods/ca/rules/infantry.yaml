@@ -121,6 +121,8 @@ TDOG:
 		RequiresCondition: !being-warped
 		Instant: true
 		ShowSelectionBar: false
+	AutoTarget:
+		ScanRadius: 4
 
 E1:
 	Inherits: ^Soldier
@@ -2274,7 +2276,7 @@ SAB:
 		Description: Covert infantry that infiltrates enemy structures\n  to steal or lock technology.
 		Strengths: • Strong vs Infantry
 		Weaknesses: • Can only attack Infantry
-		Attributes: • Can detect cloaked ground units and spies\n• Limited stealth (drains while moving)\n• Infiltrates production buildings to steal technology\n    • Allies: Cryo Mortar, Reckoner, Phantom\n    • Soviets: Cyberdog, Cyclops, Kamov\n    • GDI: Sonic Mortar, Basilisk, Shade\n    • Nod: Chem Mortar, Mantis, Vertigo\n    • Scrin: Cyberscrin, Viper, Manticore\n• Infiltrates radars/tech centers to lock technology
+		Attributes: • Can detect cloaked ground units and spies\n• Limited stealth (drains while moving)\n• Infiltrates production buildings to steal technology\n    • Allies: Cryo Mortar, Reckoner, Phantom\n    • Soviets: Cyberdog, Cyclops, Kamov\n    • GDI: Sonic Mortar, Basilisk, Shade\n    • Nod: Chem Mortar, Mantis, Vertigo\n    • Scrin: Cyberscrin, Viper, Manticore\n• Infiltrates radars/tech centers to lock technology\n• Infiltrates any building for vision
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -2293,7 +2295,7 @@ SAB:
 	Guard:
 		Voice: Move
 	Infiltrates:
-		Types: ResetSupportPowerInfiltrate, PowerOutageInfiltrate, StealTechInfiltrate, TechLockInfiltrate
+		Types: ResetSupportPowerInfiltrate, PowerOutageInfiltrate, StealTechInfiltrate, TechLockInfiltrate, VisionInfiltrate
 		TextNotification: Building infiltrated.
 	Voiced:
 		VoiceSet: InfilVoice
@@ -2349,8 +2351,8 @@ SAB:
 		Prerequisites: barracks.upgraded
 	GrantChargingCondition@CLOAK:
 		Condition: can-cloak
-		InitialCharge: 500
-		MaxCharge: 500
+		InitialCharge: 600
+		MaxCharge: 600
 		ChargeRate: 2
 		PauseOnCondition: moving
 		RequiresCondition: !cloak-force-disabled

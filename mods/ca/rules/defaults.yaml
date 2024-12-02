@@ -3232,6 +3232,14 @@
 	UpdatesBuildOrder:
 	UpdatesKillCount:
 		Type: BuildingsOrHarvesters
+	InfiltrateToCreateProxyActor@InfiltratorVision:
+		Proxy: camera.infiltrator
+		Types: VisionInfiltrate
+		UseLocation: true
+		UseCenterPosition: true
+	Targetable@InfiltratorVision:
+		TargetTypes: VisionInfiltrate
+		RequiresCondition: !being-warped
 
 ^BuildingTD:
 	Inherits@1: ^Building
@@ -3285,6 +3293,7 @@
 	-CapturableProgressBar:
 	-CapturableProgressBlink:
 	-SpawnActorsOnSellCA:
+	-InfiltrateToCreateProxyActor@InfiltratorVision:
 	RepairableBuilding:
 		RepairStep: 700
 		-RepairPercent:
