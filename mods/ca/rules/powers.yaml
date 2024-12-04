@@ -1498,33 +1498,23 @@
 		PauseOnCondition: disabled || empdisable || being-warped
 		SupportPowerPaletteOrder: 50
 
-^OverloadPower:
-	GrantExternalConditionPowerCA@Overload:
-		OrderName: overload
-		Icon: overload
-		ChargeInterval: 6000
+^TechnologyHackPower:
+	InfiltratePower@TechnologyHack:
 		Prerequisites: ~radar.legion
-		Name: Overload
-		Condition: overloading
-		ActiveSequence: idle
-		ValidRelationships: Ally, Neutral, Enemy
-		Range: 4c512
-		Duration: 375
-		AllowMultiple: false
-		Description: \nOverloads targeted power plants\n    causing them to take damage over time.
-		OnFireSound: overload.aud
+		OrderName: techhack
+		Icon: techhack
+		ChargeInterval: 18000
+		Name: Technology Hack
+		Description: \nHack the targeted enemy production structure, providing access to a unit developed using enemy technology.
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
-		EndChargeSpeechNotification: OverloadReady
-		EndChargeTextNotification: Overload ready.
-		DisplayRadarPing: True
-		Cursor: empmissile
-		PauseOnCondition: disabled || empdisable || being-warped
+		EndChargeSpeechNotification: TechHackReady
+		EndChargeTextNotification: Technology Hack ready.
+		LaunchSound: techhack.aud
 		SupportPowerPaletteOrder: 50
-		ShowTargetCircle: true
-		TargetCircleColor: ffcc00
-		TargetTintColor: ffcc0033
+		Types: StealTechInfiltrate
+		StartsFullyCharged: true
 
 ^CashHackPower:
 	CashHackPower@Legion:
@@ -1646,24 +1636,6 @@
 		ShowTargetCircle: true
 		TargetCircleColor: ff7700
 		TargetTintColor: ff770033
-
-^TechnologyHackPower:
-	InfiltratePower@TechnologyHack:
-		Prerequisites: anycovenant
-		OrderName: techhack
-		Icon: techhack
-		ChargeInterval: 3750
-		Name: Technology Hack
-		Description: \nSteal technology from the targeted enemy production structure.\n\n(!) Can only be used once.
-		SelectTargetSpeechNotification: SelectTarget
-		SelectTargetTextNotification: Select target.
-		InsufficientPowerSpeechNotification: InsufficientPower
-		EndChargeSpeechNotification: TechHackReady
-		EndChargeTextNotification: Technology Hack ready.
-		LaunchSound: techhack.aud
-		SupportPowerPaletteOrder: 50
-		Types: StealTechInfiltrate
-		OneShot: true
 
 ^AssassinSquadPower:
 	ProduceActorPowerCA@AssassinSquad:

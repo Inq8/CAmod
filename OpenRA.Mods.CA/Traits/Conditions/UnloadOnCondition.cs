@@ -35,7 +35,7 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			int unloadRange = 5;
 
-			if ((info.BotOnly && self.Owner.IsBot) || !self.Owner.IsBot)
+			if ((info.BotOnly && self.Owner.IsBot) || !info.BotOnly)
 			{
 				self.CancelActivity();
 				self.QueueActivity(new UnloadCargo(self, WDist.FromCells(unloadRange)));
