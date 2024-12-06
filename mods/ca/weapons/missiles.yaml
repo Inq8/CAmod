@@ -803,8 +803,8 @@ StingerGTWR:
 APTusk:
 	Inherits: ^AntiGroundMissile
 	ValidTargets: Ground, Water, Air, AirSmall
-	ReloadDelay: 80
-	Range: 6c0
+	ReloadDelay: 75
+	Range: 7c0
 	Burst: 2
 	BurstDelays: 0
 	-Report:
@@ -819,10 +819,10 @@ APTusk:
 		Spread: 256
 		Versus:
 			None: 15
-			Wood: 55
-			Light: 60
+			Wood: 65
+			Concrete: 70
+			Light: 85
 			Heavy: 100
-			Concrete: 85
 			Aircraft: 25
 	Warhead@5EffAir: CreateEffect
 		Explosions: med_explosion_air
@@ -2352,7 +2352,7 @@ CyborgReaperSnare:
 		Damage: 1
 	Warhead@Snare: GrantExternalConditionCA
 		Condition: reapersnare
-		Duration: 200
+		Duration: 150
 		Range: 1c0
 		InvalidTargets: ReaperSnareImmune
 	Warhead@3Eff: CreateEffect

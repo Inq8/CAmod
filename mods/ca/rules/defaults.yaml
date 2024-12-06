@@ -1653,9 +1653,24 @@
 	WithColoredOverlay@ZoneDefenderShield:
 		Color: 00ffff10
 		RequiresCondition: zdef-shield
-	DamageMultiplier@ZoneDefenderShield:
+	DamageMultiplier@ZoneDefenderShield1:
+		Modifier: 75
+		RequiresCondition: zdef-shield == 1
+	DamageMultiplier@ZoneDefenderShield2:
 		Modifier: 70
-		RequiresCondition: zdef-shield
+		RequiresCondition: zdef-shield == 2
+	DamageMultiplier@ZoneDefenderShield3:
+		Modifier: 65
+		RequiresCondition: zdef-shield == 3
+	DamageMultiplier@ZoneDefenderShield4:
+		Modifier: 60
+		RequiresCondition: zdef-shield == 4
+	DamageMultiplier@ZoneDefenderShield5:
+		Modifier: 55
+		RequiresCondition: zdef-shield == 5
+	DamageMultiplier@ZoneDefenderShield6:
+		Modifier: 50
+		RequiresCondition: zdef-shield >= 6
 	WithIdleOverlay@ZoneDefenderShield:
 		Sequence: idle
 		Image: zdefshield-overlay
@@ -2710,6 +2725,7 @@
 	Inherits@WatcherParasite: ^WatcherParasiteAttachable
 	Inherits@Blindable: ^Blindable
 	Inherits@KillZoneTargetable: ^KillZoneTargetable
+	Inherits@Anathema: ^Anathema
 	Huntable:
 	RenderSprites:
 		PlayerPalette: playernavy

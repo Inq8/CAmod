@@ -904,9 +904,7 @@ WolverineGun:
 			Wood: 45
 			Light: 70
 			Heavy: 12
-	Warhead@2Eff: CreateEffect
-		Explosions: piff
-		Inaccuracy: 256
+	-Warhead@2Eff:
 
 WolverineGunLine:
 	Inherits: WolverineGun
@@ -928,6 +926,26 @@ WolverineGunLine:
 		ValidTargets: Infantry, Structure, Vehicle, Ship, Trees
 		ValidRelationships: Enemy, Neutral
 	-Warhead@3EffWater:
+
+WolverineGunTracer:
+	Inherits: WolverineGun
+	-StartBurstReport:
+	-Projectile:
+	-Warhead@1Dam:
+	-Warhead@3EffWater:
+	Projectile: BulletCA
+		Speed: 1350
+		ContrailStartWidth: 40
+		ContrailLength: 9
+		ContrailStartColor: d6b4a044
+		ContrailStartColorAlpha: 68
+		Inaccuracy: 128
+		PassthroughToMaxRange: true
+		PassthroughParallelToMuzzleOffset: true
+	Warhead@2Eff: CreateEffect
+		Inaccuracy: 0
+		Explosions: piff
+		ValidTargets: Ground, Ship, Air, AirSmall, Trees
 
 EnforcerShotgun:
 	Range: 4c0

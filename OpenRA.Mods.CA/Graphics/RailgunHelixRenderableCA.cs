@@ -10,10 +10,10 @@
 #endregion
 
 using OpenRA.Graphics;
-using OpenRA.Mods.Common.Projectiles;
+using OpenRA.Mods.CA.Projectiles;
 using OpenRA.Primitives;
 
-namespace OpenRA.Mods.Common.Graphics
+namespace OpenRA.Mods.CA.Graphics
 {
 	[Desc("Exact copy of base version just replacing Railgun with RailgunCA.")]
 	public class RailgunHelixRenderableCA : IRenderable, IFinalizedRenderable

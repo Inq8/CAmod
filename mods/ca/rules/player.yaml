@@ -377,8 +377,11 @@ Player:
 		Prerequisite: nod.covenants.available
 		RequiredKills:
 			BuildingsOrHarvesters: 3
-		RequiredCountReachedTextNotification: Covenants available.
+		IncrementSound: PlayerRankUp
+		RequiredCountReachedNotification: CovenantsAvailable
+		RequiredCountReachedTextNotification: Covenants are now available.
 		DummyActor: QueueUpdaterDummy
+		NotificationDelay: 35
 	ProvidesPrerequisiteOnCount@ScrinAllegiances:
 		Type: ScrinAllegiance
 		Factions: scrin, reaper, traveler, harbinger, collector
@@ -390,3 +393,4 @@ Player:
 		DummyActor: QueueUpdaterDummy
 		IncrementSound: PlayerRankUp
 		PermanentAfterUpgrades: loyalist.allegiance, rebel.allegiance, malefic.allegiance
+		NotificationDelay: 35

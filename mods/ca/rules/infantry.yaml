@@ -2666,7 +2666,7 @@ JJET:
 		CruiseAltitude: 1c0
 		IdealSeparation: 0c384
 		InitialFacing: 92
-		Speed: 108
+		Speed: 118
 		LandableTerrainTypes: Clear,Rough,Road,Ore,Beach,Gems,Tiberium,BlueTiberium
 		AirborneCondition: airborne
 		CruisingCondition: cruising
@@ -2740,8 +2740,9 @@ JJET:
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
 		ValidDamageStates: Light, Medium, Heavy, Critical
-	Targetable@MINDCONTROL:
-		RequiresCondition: !mindcontrolled && !hacked && !restoring && !airborne
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+		RequiresCondition: airborne
 
 BJET:
 	Inherits: JJET

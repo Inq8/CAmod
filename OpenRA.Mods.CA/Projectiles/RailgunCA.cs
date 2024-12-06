@@ -13,12 +13,14 @@ using System.Collections.Generic;
 using System.Linq;
 using OpenRA.GameRules;
 using OpenRA.Graphics;
+using OpenRA.Mods.CA.Graphics;
+using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Graphics;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
 using OpenRA.Traits;
 
-namespace OpenRA.Mods.Common.Projectiles
+namespace OpenRA.Mods.CA.Projectiles
 {
 	[Desc("Laser effect with helix coiling around.")]
 	public class RailgunCAInfo : IProjectileInfo
@@ -121,7 +123,6 @@ namespace OpenRA.Mods.Common.Projectiles
 		readonly Animation hitanim;
 		public readonly Color BeamColor;
 		public readonly Color HelixColor;
-		readonly IEnumerable<int> rangeModifiers;
 
 		int ticks;
 		bool animationComplete;
@@ -147,11 +148,9 @@ namespace OpenRA.Mods.Common.Projectiles
 			BeamColor = beamColor;
 			HelixColor = helixColor;
 
-			rangeModifiers = args.SourceActor.TraitsImplementing<IRangeModifier>().ToArray().Select(m => m.GetRangeModifier());
-
 			if (info.Inaccuracy.Length > 0)
 			{
-				var maxInaccuracyOffset = Util.GetProjectileInaccuracy(info.Inaccuracy.Length, info.InaccuracyType, args);
+				var maxInaccuracyOffset = Common.Util.GetProjectileInaccuracy(info.Inaccuracy.Length, info.InaccuracyType, args);
 				target += WVec.FromPDF(args.SourceActor.World.SharedRandom, 2) * maxInaccuracyOffset / 1024;
 			}
 
@@ -165,7 +164,8 @@ namespace OpenRA.Mods.Common.Projectiles
 		{
 			if (info.PassthroughToMaxRange && (info.PassthroughMinDistance.Length == 0 || (target - args.Source).Length >= info.PassthroughMinDistance.Length))
 			{
-			 	var weaponRange = new WDist(Util.ApplyPercentageModifiers(args.Weapon.Range.Length, rangeModifiers));
+				var rangeModifiers = args.SourceActor.TraitsImplementing<IRangeModifier>().ToArray().Select(m => m.GetRangeModifier());
+			 	var weaponRange = new WDist(Common.Util.ApplyPercentageModifiers(args.Weapon.Range.Length, rangeModifiers));
 				var speed = new WVec(0, -weaponRange.Length, 0);
 
 				if (info.PassthroughParallelToMuzzleOffset)
@@ -232,7 +232,7 @@ namespace OpenRA.Mods.Common.Projectiles
 				{
 					var warheadArgs = new WarheadArgs(args)
 					{
-						ImpactOrientation = new WRot(WAngle.Zero, Util.GetVerticalAngle(args.Source, target), args.Facing),
+						ImpactOrientation = new WRot(WAngle.Zero, Common.Util.GetVerticalAngle(args.Source, target), args.Facing),
 						ImpactPosition = target,
 					};
 
@@ -245,7 +245,7 @@ namespace OpenRA.Mods.Common.Projectiles
 					{
 						var warheadArgs = new WarheadArgs(args)
 						{
-							ImpactOrientation = new WRot(WAngle.Zero, Util.GetVerticalAngle(args.Source, target), args.Facing),
+							ImpactOrientation = new WRot(WAngle.Zero, Common.Util.GetVerticalAngle(args.Source, target), args.Facing),
 
 							// Calculating an impact position is bogus for line damage.
 							// FindActorsOnLine guarantees that the beam touches the target's HitShape,

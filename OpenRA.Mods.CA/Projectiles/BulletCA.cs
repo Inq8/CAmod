@@ -141,6 +141,19 @@ namespace OpenRA.Mods.CA.Projectiles
 		[Desc("The alpha value [from 0 to 255] of color at the contrail end.")]
 		public readonly int ContrailEndColorAlpha = 0;
 
+
+
+		[Desc("If true, projectile will pass through targets to max range (subject to minimum distance).")]
+		public readonly bool PassthroughToMaxRange = false;
+
+		[Desc("Target must be this far away for a full passthrough, otherwise the projectile stops at the target.")]
+		public readonly WDist PassthroughMinDistance = WDist.Zero;
+
+		[Desc("If true, full passthroughs will travel parallel to the weapon muzzle offset.")]
+		public readonly bool PassthroughParallelToMuzzleOffset = false;
+
+
+
 		public IProjectile Create(ProjectileArgs args) { return new BulletCA(this, args); }
 	}
 
@@ -195,6 +208,22 @@ namespace OpenRA.Mods.CA.Projectiles
 
 			if (info.AirburstAltitude > WDist.Zero)
 				target += new WVec(WDist.Zero, WDist.Zero, info.AirburstAltitude);
+
+			if (info.PassthroughToMaxRange && (info.PassthroughMinDistance.Length == 0 || (target - args.Source).Length >= info.PassthroughMinDistance.Length))
+			{
+				var rangeModifiers = args.SourceActor.TraitsImplementing<IRangeModifier>().ToArray().Select(m => m.GetRangeModifier());
+			 	var weaponRange = new WDist(Common.Util.ApplyPercentageModifiers(args.Weapon.Range.Length, rangeModifiers));
+				var speed = new WVec(0, -weaponRange.Length, 0);
+
+				if (info.PassthroughParallelToMuzzleOffset)
+				{
+					var offsetFromCenter = args.Source - args.SourceActor.CenterPosition;
+					target += offsetFromCenter;
+				}
+
+				var fullRangeVector = speed.Rotate(WRot.FromYaw((target - args.Source).Yaw));
+				target = args.Source + fullRangeVector;
+			}
 
 			facing = (target - pos).Yaw;
 			length = Math.Max((target - pos).Length / speed.Length, 1);
