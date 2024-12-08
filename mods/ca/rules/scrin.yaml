@@ -1685,7 +1685,7 @@ INTL:
 		TurnSpeed: 512
 		Locomotor: lighthover
 	Health:
-		HP: 42000
+		HP: 44000
 	Armor:
 		Type: Heavy
 	RevealsShroud:
@@ -1778,6 +1778,8 @@ INTL:
 		TurnSpeed: 16
 		RealignDelay: 75
 		RequiresCondition: shields-upgrade
+	Shielded:
+		MaxStrength: 6000
 
 INTL.AI:
 	Inherits: INTL
@@ -3027,7 +3029,7 @@ TORM:
 	AttackAircraft:
 		FacingTolerance: 80
 		PersistentTargeting: false
-		OpportunityFire: false
+		OpportunityFire: true
 		PauseOnCondition: empdisable || being-warped || blinded
 	Aircraft:
 		TurnSpeed: 28
@@ -3085,15 +3087,15 @@ TORM:
 		Prerequisites: aircraft.upgraded
 	-EjectOnDeath:
 	AmmoPool:
-		Ammo: 16
+		Ammo: 12
 		AmmoCondition: ammo
-		ReloadDelay: 8
+		ReloadDelay: 12
 		ReloadCount: 1
 	WithAmmoPipsDecoration:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
-		PipCount: 4
+		PipCount: 3
 	Rearmable:
 		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
 	GrantConditionOnDamageState@SmokeTrail:
