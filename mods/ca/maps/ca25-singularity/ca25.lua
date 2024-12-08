@@ -504,19 +504,22 @@ OncePerFiveSecondChecks = function()
 			end)
 		end
 
-		local hackers = GDI.GetActorsByType("hack")
-		if NodFreed and #hackers == 0 and not ShieldsOffline and FirstHackersArrived and not MoreHackersRequested and not SignalTransmitter.IsDead then
-			MoreHackersRequested = true
+		if NodFreed and FirstHackersArrived and not MoreHackersRequested and not ShieldsOffline and not SignalTransmitter.IsDead then
+			local hackers = GDI.GetActorsByType("hack")
 
-			Trigger.AfterDelay(HackersDelay[Difficulty], function()
-				if SignalTransmitter.IsDead then
-					return
-				end
+			if #hackers == 0 then
+				MoreHackersRequested = true
 
-				MediaCA.PlaySound("seth_morehackers.aud", 2)
-				Media.DisplayMessage("We are sending you another squad of hackers. Perhaps you'll be more careful with them this time.", "Nod Commander", HSLColor.FromHex("FF0000"))
-				DropHackers()
-			end)
+				Trigger.AfterDelay(HackersDelay[Difficulty], function()
+					if SignalTransmitter.IsDead then
+						return
+					end
+
+					MediaCA.PlaySound("seth_morehackers.aud", 2)
+					Media.DisplayMessage("We are sending you another squad of hackers. Perhaps you'll be more careful with them this time.", "Nod Commander", HSLColor.FromHex("FF0000"))
+					DropHackers()
+				end)
+			end
 		end
 	end
 end
@@ -645,6 +648,12 @@ InitGreece = function()
 end
 
 InitHackers = function()
+	if FirstHackersRequested then
+		return
+	end
+
+	FirstHackersRequested = true
+
 	Trigger.AfterDelay(HackersDelay[Difficulty], function()
 		if SignalTransmitter.IsDead then
 			return
