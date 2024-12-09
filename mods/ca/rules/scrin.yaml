@@ -2215,7 +2215,7 @@ DARK:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 40000
+		HP: 36000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -3107,7 +3107,10 @@ TORM:
 		TargetTypes: Resupplying
 		RequiresCondition: resupplying
 	KillsSelf@Emp:
-		RequiresCondition: empdisable && cruising
+		RequiresCondition: empdisable && cruising && !shields-upgrade
+	SpeedMultiplier@EMPDISABLE:
+		Modifier: 0
+		RequiresCondition: empdisable
 	Shielded:
 		MaxStrength: 4000
 	GpsRadarDot:

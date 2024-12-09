@@ -802,7 +802,7 @@ MEMP:
 		Range: 5c0
 		Duration: 300
 		Condition: empdisable
-		ValidTargets: Ground, Vehicle, Air
+		ValidTargets: Ground, Vehicle
 		InvalidTargets: Defense, EmpImmune
 	Warhead@empdef: GrantExternalConditionCA
 		Range: 5c0
@@ -810,6 +810,13 @@ MEMP:
 		Condition: empdisable
 		ValidTargets: Defense
 		InvalidTargets: EmpImmune
+	Warhead@empAir: GrantExternalConditionCA
+		Range: 2c0
+		Duration: 300
+		Condition: empdisable
+		ValidTargets: Air
+		InvalidTargets: EmpImmune
+		HitShapeCheck: false
 	Warhead@2Smu_impact: LeaveSmudge
 		SmudgeType: Scorch
 	Warhead@3Smu_area: LeaveSmudge

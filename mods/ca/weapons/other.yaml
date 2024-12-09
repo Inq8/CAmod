@@ -503,7 +503,7 @@ PortaTeslaCharge:
 TTrackZap:
 	Inherits: ^TeslaWeapon
 	ReloadDelay: 125
-	Range: 8c0
+	Range: 7c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 18500
 		Versus:
@@ -519,6 +519,7 @@ TTrackZap.UPG:
 		AimChance: 100
 		ThrowWithoutTarget: false
 		AimTargetStances: Enemy, Neutral
+		ValidTargets: Vehicle, Ship, Structure
 
 TTrackArc1:
 	Inherits: TTrackZap.UPG
@@ -527,7 +528,6 @@ TTrackArc1:
 	ValidTargets: Vehicle, Ship
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Vehicle, Ship
-		ValidRelationships: Enemy, Neutral
 		Versus:
 			Light: 15
 			Heavy: 15
@@ -570,7 +570,6 @@ TTankArc:
 	Range: 2c512
 	ValidTargets: Infantry, Vehicle, Defense
 	Warhead@1Dam: SpreadDamage
-		ValidRelationships: Enemy, Neutral
 		ValidTargets: Infantry, Vehicle, Defense
 		Damage: 1000
 		Versus:

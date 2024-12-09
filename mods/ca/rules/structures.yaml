@@ -5574,6 +5574,8 @@ UPGC:
 	ProvidesPrerequisiteValidatedFaction@arcupgc:
 		Factions: arc
 		Prerequisite: upgc.arc
+	ProvidesPrerequisite@GDIORUPGC:
+		Prerequisite: gdiorupgc
 	ProvidesPrerequisite@Name:
 	Power:
 		Amount: -150
@@ -5816,7 +5818,7 @@ UPGC.DROP:
 	Buildable:
 		Queue: Upgrade
 		BuildPaletteOrder: 90
-		Prerequisites: ~player.gdi, upgc, !upgc.plugged, ~techlevel.high
+		Prerequisites: ~gdiorupgc, upgc, !upgc.plugged, ~techlevel.high
 		Description: Provides a dropzone for emergency supplies.
 		IconPalette: chrometd
 	TooltipExtras:

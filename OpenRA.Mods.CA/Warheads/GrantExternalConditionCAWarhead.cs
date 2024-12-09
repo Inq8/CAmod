@@ -30,6 +30,8 @@ namespace OpenRA.Mods.Common.Warheads
 
 		public readonly WDist RangeLimit = WDist.FromCells(2);
 
+		public readonly bool HitShapeCheck = true;
+
 		public override void DoImpact(in Target target, WarheadArgs args)
 		{
 			var firedBy = args.SourceActor;
@@ -45,30 +47,33 @@ namespace OpenRA.Mods.Common.Warheads
 				if (!IsValidAgainst(a, firedBy))
 					continue;
 
-				HitShape closestActiveShape = null;
-				var closestDistance = int.MaxValue;
-
-				// PERF: Avoid using TraitsImplementing<HitShape> that needs to find the actor in the trait dictionary.
-				foreach (var targetPos in a.EnabledTargetablePositions)
+				if (HitShapeCheck)
 				{
-					if (targetPos is HitShape hitshape)
+					HitShape closestActiveShape = null;
+					var closestDistance = int.MaxValue;
+
+					// PERF: Avoid using TraitsImplementing<HitShape> that needs to find the actor in the trait dictionary.
+					foreach (var targetPos in a.EnabledTargetablePositions)
 					{
-						var distance = hitshape.DistanceFromEdge(a, target.CenterPosition).Length;
-						if (distance < closestDistance)
+						if (targetPos is HitShape hitshape)
 						{
-							closestDistance = distance;
-							closestActiveShape = hitshape;
+							var distance = hitshape.DistanceFromEdge(a, target.CenterPosition).Length;
+							if (distance < closestDistance)
+							{
+								closestDistance = distance;
+								closestActiveShape = hitshape;
+							}
 						}
 					}
+
+					// Cannot be damaged without an active HitShape.
+					if (closestActiveShape == null)
+						continue;
+
+					// Cannot be damaged if HitShape is outside Spread.
+					if (closestDistance > Range.Length)
+						continue;
 				}
-
-				// Cannot be damaged without an active HitShape.
-				if (closestActiveShape == null)
-					continue;
-
-				// Cannot be damaged if HitShape is outside Spread.
-				if (closestDistance > Range.Length)
-					continue;
 
 				a.TraitsImplementing<ExternalCondition>()
 					.FirstOrDefault(t => t.Info.Condition == Condition && t.CanGrantCondition(firedBy))
