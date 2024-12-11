@@ -66,7 +66,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			IOrderedEnumerable<Actor> targets;
 
-			targets = UnitsInRange(self.World.Map.CellContaining(order.Target.CenterPosition))
+			targets = UnitsInRange(self.World.Map.CellContaining(order.Target.CenterPosition), true)
 				.OrderByDescending(x => x.ActorID);
 
 			foreach (var t in targets)
@@ -77,7 +77,7 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
-		public IEnumerable<Actor> UnitsInRange(CPos xy)
+		public IEnumerable<Actor> UnitsInRange(CPos xy, bool skipVisibilityCheck = false)
 		{
 			var range = 0;
 			var tiles = Self.World.Map.FindTilesInCircle(xy, range);
@@ -93,7 +93,7 @@ namespace OpenRA.Mods.CA.Traits
 				if (!a.GetAllTargetTypes().Overlaps(info.Types))
 					return false;
 
-				if (info.RequireVisibleTarget && !a.CanBeViewedByPlayer(Self.Owner))
+				if (!skipVisibilityCheck && info.RequireVisibleTarget && !a.CanBeViewedByPlayer(Self.Owner))
 					return false;
 
 				return true;

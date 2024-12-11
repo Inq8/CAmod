@@ -209,11 +209,10 @@ namespace OpenRA.Mods.CA.Traits
 			if (!Enabled || permanentlyUnlocked || !counts.ContainsKey(type))
 				return;
 
-			if (counts[type] >= Info.RequiredCounts[type])
-				return;
+			counts[type]++;
 
-			if (counts[type] < Info.RequiredCounts[type])
-				counts[type]++;
+			if (counts[type] > Info.RequiredCounts[type])
+				return;
 
 			techTree.ActorChanged(self);
 
