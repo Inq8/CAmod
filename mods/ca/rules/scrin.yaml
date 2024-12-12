@@ -2185,6 +2185,13 @@ DEVO:
 	Targetable@ONWATER:
 		TargetTypes: Water, Ship
 		RequiresCondition: onwater
+	GrantConditionOnAttack@PRIMARYCHARGED:
+		RequiresCondition: !anathema
+	GrantConditionOnAttack@PRIMARYCHARGEDANATHEMA:
+		ArmamentNames: primary-charged
+		Condition: charged-fire
+		RevokeDelay: 40
+		RequiresCondition: anathema
 
 DARK:
 	Inherits: ^Vehicle

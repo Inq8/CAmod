@@ -768,7 +768,7 @@ TormentorZap:
 	Burst: 4
 	BurstDelays: 0, 4, 0
 	ValidTargets: Ground, Water
-	Range: 6c0
+	Range: 7c0
 	Report: torm-fire1.aud, torm-fire2.aud
 	Projectile: LaserZapCA
 		Width: 56
@@ -782,7 +782,7 @@ TormentorZap:
 		Duration: 3
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
-		Damage: 2300
+		Damage: 2400
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, TankBuster, AirToGround
 		Versus:
 			None: 20
@@ -797,9 +797,10 @@ TormentorZap:
 
 TormentorZapAA:
 	Inherits: TormentorZap
+	Range: 6c0
 	ValidTargets: Air, AirSmall
 	Warhead@1Dam: SpreadDamage
-		Damage: 1000
+		Damage: 1100
 		ValidTargets: Air, AirSmall
 	-Warhead@2Smu:
 
