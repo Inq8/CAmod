@@ -3209,8 +3209,8 @@ ViperLaser:
 AvatarLaser:
 	ReloadDelay: 100
 	ValidTargets: Ground, Water
-	Range: 7c0
-	Report: avtr-fire1.aud, avtr-fire2.aud, avtr-fire3.aud
+	Range: 5c768
+	Report: oblfire.aud
 	Projectile: LaserZapCA
 		Width: 45
 		Duration: 18
@@ -3239,6 +3239,32 @@ AvatarLaser:
 		ExplosionPalette: caneon
 		ValidTargets: Ground, Ship, Trees
 
+AvatarLaser.Adv:
+	Inherits: Laser
+	Report: obelmod2.aud
+	Range: 6c0
+	-Projectile:
+	Projectile: PlasmaBeam
+		Duration: 8
+		SecondaryCenterBeam: true
+		Colors: FF00BB80, FF0000A0, FF002270
+		InnerLightness: 200
+		OuterLightness: 115
+		Radius: 2
+		Distortion: 0
+		DistortionAnimation: 96
+		StartOffset: 0,80,0
+		FollowingOffset: 0,-8,0
+		RecalculateColors: true
+		TrackTarget: true
+		ImpactTicks: 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20
+	Warhead@1Dam: SpreadDamage
+		InvalidTargets: Air
+		Spread: 128
+		Damage: 3000
+	Warhead@3Eff: CreateEffect
+		Explosions: small_explosion, small_explosion_alt1, small_explosion_alt2, small_explosion_alt3
+		
 ShadeEmp:
 	ReloadDelay: 100
 	Range: 7c0

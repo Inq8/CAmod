@@ -9910,7 +9910,7 @@ AVTR:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 273
 		Prerequisites: ~vehicles.nod, tmpp, advcyber.upgrade, ~wrath.covenant, ~techlevel.high
-		Description: Heavy mech armed with a laser cannon.
+		Description: Heavy mech armed with a powerful laser and a flame thrower.
 		IconPalette: chrometd
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
@@ -9929,7 +9929,7 @@ AVTR:
 	Armor:
 		Type: Heavy
 	Mobile:
-		TurnSpeed: 14
+		TurnSpeed: 18
 		Speed: 56
 		Locomotor: sheavytracked
 		Voice: Move
@@ -9939,15 +9939,68 @@ AVTR:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
-	Armament:
+	Armament@PRIMARY:
 		Weapon: AvatarLaser
 		LocalOffset: 750,400,350
 		MuzzleSequence: muzzle
 		MuzzlePalette: caneon
+		RequiresCondition: !quantum-upgrade
+	Armament@PRIMARYUPG:
+		Name: primary-upg
+		Weapon: AvatarLaser.Adv
+		LocalOffset: 750,400,350
+		MuzzleSequence: muzzle
+		MuzzlePalette: caneon
+		RequiresCondition: quantum-upgrade
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: HeavyFlameTankFlamer
+		LocalOffset: 750,400,350
+		MuzzleSequence: muzzle-flame
+		MuzzlePalette: tdeffect
+		RequiresCondition: !blacknapalm-upgrade
+	Armament@SECONDARYUPG:
+		Name: secondary
+		Weapon: HeavyFlameTankFlamer.UPG
+		MuzzleSequence: muzzle-black
+		MuzzlePalette: scrin-ignore-lighting-alpha85
+		LocalOffset: 750,400,350
+		RequiresCondition: blacknapalm-upgrade
+	Armament@FF:
+		Name: secondary
+		Weapon: HeavyFlameTankFlamerFF
+		LocalOffset: 750,400,350
+		RequiresCondition: !blacknapalm-upgrade
+	Armament@FFUPG:
+		Name: secondary
+		Weapon: HeavyFlameTankFlamerFF
+		LocalOffset: 750,400,350
+		RequiresCondition: blacknapalm-upgrade
+	AmbientSoundCA@1:
+		RequiresCondition: aiming && !quantum-upgrade
+		SoundFiles: obelpowr.aud
+		Interval: 20
+	AmbientSoundCA@2:
+		RequiresCondition: aiming && quantum-upgrade
+		SoundFiles: obelpowr2.aud
+		Interval: 20
+	AmbientSoundCA@3:
+		SoundFiles: bigflamer-loop1.aud
+		InitialSound: bigflamer-start1.aud
+		FinalSound: bigflamer-end1.aud
+		RequiresCondition: attacking
+		InitialSoundLength: 24
+	GrantConditionOnAttackCA:
+		ArmamentNames: secondary
+		Condition: attacking
+		RevokeDelay: 10
+	GrantConditionWhileAiming:
+		Condition: aiming
 	AttackFrontal:
+		Armaments: primary, primary-upg, secondary
 		TargetFrozenActors: True
 		PauseOnCondition: empdisable || being-warped || blinded
-		FacingTolerance: 32
+		FacingTolerance: 48
 		Voice: Attack
 	WithMuzzleOverlay:
 	ProducibleWithLevel:
@@ -9963,8 +10016,12 @@ AVTR:
 	WithMoveAnimation:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 		RequiresCondition: !unfolding && !attacking
-	WithAttackAnimation:
+	WithAttackAnimation@primary:
 		Sequence: shoot
+		Armament: primary
+	WithAttackAnimation@primary-upg:
+		Sequence: shoot
+		Armament: primary-upg
 	WithEnabledAnimation:
 		Sequence: make
 	GrantTimedCondition@Make:
@@ -9978,3 +10035,9 @@ AVTR:
 		Delay: 25
 		StartIfBelow: 50
 		DamageCooldown: 150
+	GrantConditionOnPrerequisite@UPG:
+		Condition: blacknapalm-upgrade
+		Prerequisites: blacknapalm.upgrade
+	GrantConditionOnPrerequisite@QUANTUM:
+		Condition: quantum-upgrade
+		Prerequisites: quantum.upgrade
