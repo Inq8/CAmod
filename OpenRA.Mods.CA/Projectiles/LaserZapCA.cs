@@ -9,6 +9,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Linq;
 using OpenRA.GameRules;
 using OpenRA.Graphics;
 using OpenRA.Mods.Common;
@@ -97,6 +98,15 @@ namespace OpenRA.Mods.CA.Projectiles
 		[Desc("Palette to use for launch effect.")]
 		public readonly string LaunchEffectPalette = "effect";
 
+		[Desc("If true, projectile will pass through targets to max range (subject to minimum distance).")]
+		public readonly bool PassthroughToMaxRange = false;
+
+		[Desc("Target must be this far away for a full passthrough, otherwise the projectile stops at the target.")]
+		public readonly WDist PassthroughMinDistance = WDist.Zero;
+
+		[Desc("If true, full passthroughs will travel parallel to the weapon muzzle offset.")]
+		public readonly bool PassthroughParallelToMuzzleOffset = false;
+
 		public IProjectile Create(ProjectileArgs args)
 		{
 			var c = UsePlayerColor ? args.SourceActor.Owner.Color : Color;
@@ -133,7 +143,7 @@ namespace OpenRA.Mods.CA.Projectiles
 
 			if (info.Inaccuracy.Length > 0)
 			{
-				var maxInaccuracyOffset = OpenRA.Mods.Common.Util.GetProjectileInaccuracy(info.Inaccuracy.Length, info.InaccuracyType, args);
+				var maxInaccuracyOffset = Common.Util.GetProjectileInaccuracy(info.Inaccuracy.Length, info.InaccuracyType, args);
 				target += WVec.FromPDF(args.SourceActor.World.SharedRandom, 2) * maxInaccuracyOffset / 1024;
 			}
 
@@ -144,6 +154,22 @@ namespace OpenRA.Mods.CA.Projectiles
 			}
 
 			hasLaunchEffect = !string.IsNullOrEmpty(info.LaunchEffectImage) && !string.IsNullOrEmpty(info.LaunchEffectSequence);
+
+			if (info.PassthroughToMaxRange && (info.PassthroughMinDistance.Length == 0 || (target - args.Source).Length >= info.PassthroughMinDistance.Length))
+			{
+				var rangeModifiers = args.SourceActor.TraitsImplementing<IRangeModifier>().ToArray().Select(m => m.GetRangeModifier());
+			 	var weaponRange = new WDist(Common.Util.ApplyPercentageModifiers(args.Weapon.Range.Length, rangeModifiers));
+				var speed = new WVec(0, -weaponRange.Length, 0);
+
+				if (info.PassthroughParallelToMuzzleOffset)
+				{
+					var offsetFromCenter = args.Source - args.SourceActor.CenterPosition;
+					target += offsetFromCenter;
+				}
+
+				var fullRangeVector = speed.Rotate(WRot.FromYaw((target - args.Source).Yaw));
+				target = args.Source + fullRangeVector;
+			}
 		}
 
 		public void Tick(World world)

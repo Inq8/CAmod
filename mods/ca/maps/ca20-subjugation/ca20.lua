@@ -61,7 +61,7 @@ HindPatrolPath = { HindPatrol1.Location, HindPatrol2.Location, HindPatrol3.Locat
 WorldLoaded = function()
 	Scrin = Player.GetPlayer("Scrin")
 	USSR = Player.GetPlayer("USSR")
-	MissionPlayer = Scrin
+	MissionPlayers = { Scrin }
 	TimerTicks = 0
 	TibFacilitiesCaptured = 0
 
@@ -215,7 +215,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnEnteredProximityTrigger(YuriHQ.CenterPosition, WDist.New(18 * 1024), function(a, id)
-		if a.Owner == MissionPlayer and a.Type ~= cameraType then
+		if a.Owner == Scrin and a.Type ~= cameraType then
 			Trigger.RemoveProximityTrigger(id)
 			if not YuriDefenderTipShown then
 				YuriDefenderTipShown = true
@@ -252,7 +252,7 @@ end
 
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
-		UpdatePlayerBaseLocation()
+		UpdatePlayerBaseLocations()
 
 		Utils.Do(TibTrucks, function(t)
 			if not t.Actor.IsDead and t.Actor.Owner == Scrin then

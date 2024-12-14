@@ -17,20 +17,11 @@ ExterminatorAttackCount = {
 	hard = 10
 }
 
-ExterminatorFinalPath1 = { Exterminator5Patrol1.Location, Exterminator5Patrol2.Location, Exterminator5Patrol3.Location, Exterminator5Patrol4.Location, Exterminator5Patrol5.Location, Exterminator5Patrol6.Location, Exterminator5Patrol7.Location }
-ExterminatorFinalPath2 = { R1.Location, R2.Location, Exterminator6Patrol1.Location, Exterminator6Patrol2.Location, R5.Location, Exterminator5Patrol1.Location, M2.Location }
-
-ExterminatorPatrolPaths = {
-	{ Exterminator1Patrol1.Location, Exterminator1Patrol2.Location, Exterminator1Patrol3.Location, Exterminator1Patrol4.Location },
-	{ Exterminator2Patrol1.Location, Exterminator2Patrol2.Location, Exterminator2Patrol3.Location, Exterminator2Patrol4.Location },
-	{ Exterminator3Patrol1.Location, Exterminator3Patrol2.Location, Exterminator3Patrol3.Location, Exterminator3Patrol4.Location },
-	{ Exterminator4Patrol1.Location, Exterminator4Patrol2.Location, Exterminator4Patrol3.Location, Exterminator4Patrol4.Location },
-	ExterminatorFinalPath1,
-	ExterminatorFinalPath2,
-	ExterminatorFinalPath1,
-	ExterminatorFinalPath2,
-	ExterminatorFinalPath1,
-	ExterminatorFinalPath2
+Exterminators = {
+	{ SpawnLocation = ExterminatorSpawnWest.Location, Path = { Exterminator1Patrol1.Location, Exterminator1Patrol2.Location, Exterminator1Patrol3.Location, Exterminator1Patrol4.Location } },
+	{ SpawnLocation = ExterminatorSpawnWest.Location, Path = { Exterminator2Patrol1.Location, Exterminator2Patrol2.Location, Exterminator2Patrol3.Location, Exterminator2Patrol4.Location } },
+	{ SpawnLocation = ExterminatorSpawnWest.Location, Path = { Exterminator3Patrol1.Location, Exterminator3Patrol2.Location, Exterminator3Patrol3.Location, Exterminator3Patrol4.Location } },
+	{ SpawnLocation = ExterminatorSpawnEast.Location, Path = { Exterminator4Patrol1.Location, Exterminator4Patrol2.Location, Exterminator4Patrol3.Location, Exterminator4Patrol4.Location } },
 }
 
 RiftEnabledTime = {
@@ -38,6 +29,13 @@ RiftEnabledTime = {
 	normal = DateTime.Seconds((60 * 35) + 17),
 	hard = DateTime.Seconds((60 * 20) + 17),
 }
+
+table.insert(UnitCompositions.Scrin.Main.hard, {
+	Infantry = { "s4", "evis", "evis", "evis", "evis", "s4", "s4", "s4", "mast" },
+	Vehicles = { TripodVariant, TripodVariant, GunWalkerSeekerOrLacerator, CorrupterDevourerOrDarkener, "oblt" },
+	Aircraft = { PacOrDevastator, "pac" },
+	MinTime = DateTime.Minutes(22)
+})
 
 Squads = {
 	ScrinMain = {
@@ -74,8 +72,8 @@ Squads = {
 	ScrinRebelKiller = {
 		AttackValuePerSecond = {
 			easy = { { MinTime = 0, Value = 20 } },
-			normal = { { MinTime = 0, Value = 30 } },
-			hard = { { MinTime = 0, Value = 40 }, { MinTime = DateTime.Minutes(30), Value = 60 } },
+			normal = { { MinTime = 0, Value = 40 } },
+			hard = { { MinTime = 0, Value = 60 }, { MinTime = DateTime.Minutes(30), Value = 80 } },
 		},
 		QueueProductionStatuses = {
 			Infantry = false,
@@ -84,7 +82,7 @@ Squads = {
 		},
 		FollowLeader = true,
 		IdleUnits = { },
-		ProducerActors = { Infantry = { Portal1 }, Vehicles = { WarpSphere1 }, Aircraft = { GravityStabilizer1, GravityStabilizer2 } },
+		ProducerActors = { Infantry = { Portal2 }, Vehicles = { WarpSphere2 }, Aircraft = { GravityStabilizer1, GravityStabilizer2, GravityStabilizer3 } },
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
 		Units = UnitCompositions.Scrin.Main,
 		AttackPaths = {
@@ -94,9 +92,9 @@ Squads = {
 	},
 	ScrinGDIKiller = {
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 30 } },
-			normal = { { MinTime = 0, Value = 40 } },
-			hard = { { MinTime = 0, Value = 50 }, { MinTime = DateTime.Minutes(30), Value = 70 } },
+			easy = { { MinTime = 0, Value = 60 } },
+			normal = { { MinTime = 0, Value = 75 } },
+			hard = { { MinTime = 0, Value = 90 }, { MinTime = DateTime.Minutes(30), Value = 130 } },
 		},
 		QueueProductionStatuses = {
 			Infantry = false,
@@ -105,19 +103,19 @@ Squads = {
 		},
 		FollowLeader = true,
 		IdleUnits = { },
-		ProducerActors = { Infantry = { Portal3 }, Vehicles = { WarpSphere4 }, Aircraft = { GravityStabilizer2 } },
+		ProducerActors = { Infantry = { Portal3 }, Vehicles = { WarpSphere4 }, Aircraft = { GravityStabilizer3 } },
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
 		Units = UnitCompositions.Scrin.Main,
 		AttackPaths = {
 			{ R7.Location, R6.Location, GDIBase.Location },
-			{ Exterminator6Patrol2.Location, R6.Location, GDIBase.Location },
+			{ R10.Location, R6.Location, GDIBase.Location },
 		},
 	},
 	ScrinRebelsMain = {
 		AttackValuePerSecond = {
 			easy = { { MinTime = 0, Value = 35 } },
-			normal = { { MinTime = 0, Value = 25 } },
-			hard = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(20), Value = 35 } },
+			normal = { { MinTime = 0, Value = 35 } },
+			hard = { { MinTime = 0, Value = 35 }, { MinTime = DateTime.Minutes(20), Value = 55 } },
 		},
 		QueueProductionStatuses = {
 			Infantry = false,
@@ -137,9 +135,9 @@ Squads = {
 	},
 	GDIMain = {
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 45 } },
-			normal = { { MinTime = 0, Value = 35 } },
-			hard = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(20), Value = 45 } },
+			easy = { { MinTime = 0, Value = 80 } },
+			normal = { { MinTime = 0, Value = 80 } },
+			hard = { { MinTime = 0, Value = 80 }, { MinTime = DateTime.Minutes(20), Value = 120 } },
 		},
 		QueueProductionStatuses = {
 			Infantry = false,
@@ -152,7 +150,7 @@ Squads = {
 		Units = UnitCompositions.GDI.Main,
 		AttackPaths = {
 			{ R6.Location, R7.Location, ScrinBase2.Location },
-			{ R6.Location, Exterminator6Patrol2.Location, Exterminator6Patrol1.Location, ScrinBase2.Location },
+			{ R6.Location, R10.Location, R9.Location, ScrinBase2.Location },
 		},
 	},
 	ScrinAir = {
@@ -285,7 +283,7 @@ WorldLoaded = function()
 	ScrinRebels = Player.GetPlayer("ScrinRebels")
 	GDIHostile = Player.GetPlayer("GDIHostile")
 	GDI = Player.GetPlayer("GDI")
-	MissionPlayer = Nod
+	MissionPlayers = { Nod }
 	NextExterminatorIndex = 1
 
 	Camera.Position = PlayerStart.CenterPosition
@@ -334,7 +332,7 @@ end
 
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
-		UpdatePlayerBaseLocation()
+		UpdatePlayerBaseLocations()
 
 		if Scrin.HasNoRequiredUnits() and not Victory then
 			Victory = true
@@ -374,7 +372,7 @@ InitScrin = function()
 
 	Utils.Do(scrinGroundAttackers, function(a)
 		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnitExcludingExterminators, function(p) return p == Nod or p == ScrinRebels end)
+		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnitExcludingExterminators, function(p) return p == Nod or p == ScrinRebels or p == GDI end)
 	end)
 
 	if Difficulty == "hard" then
@@ -430,7 +428,7 @@ InitScrin = function()
 			a.GrantCondition("difficulty-" .. Difficulty)
 		end
 		Trigger.OnDamaged(a, function(self, attacker, damage)
-			if attacker.Owner == MissionPlayer and damage > 500 then
+			if IsMissionPlayer(attacker.Owner) and damage > 500 then
 				AggroExterminator(self)
 			end
 		end)
@@ -482,14 +480,21 @@ InitGDI = function()
 		InitAttackSquad(Squads.GDIMain, GDI, Scrin)
 
 		Trigger.AfterDelay(Squads.GDIAir.Delay[Difficulty], function()
-			InitAirAttackSquad(Squads.GDIAir, GDI, Scrin, { "scol", "tpod", "reac", "rea2", "harv.scrin", "proc.scrin" })
+			InitAirAttackSquad(Squads.GDIAir, GDI, Scrin, { "scol", "tpod", "reac", "rea2", "harv.scrin", "proc.scrin", "etpd" })
 		end)
 	end
 end
 
 SendNextExterminator = function()
 	if NextExterminatorIndex <= ExterminatorAttackCount[Difficulty] and not Victory then
-		local wormhole = Actor.Create("wormhole", true, { Owner = Scrin, Location = ExterminatorSpawn.Location })
+
+		if Exterminators[NextExterminatorIndex] ~= nil then
+			exterminator = Exterminators[NextExterminatorIndex]
+		else
+			exterminator = { SpawnLocation = Utils.Random({ ExterminatorSpawnWest.Location, ExterminatorSpawnEast.Location }) }
+		end
+
+		local wormhole = Actor.Create("wormhole", true, { Owner = Scrin, Location = exterminator.SpawnLocation })
 
 		Trigger.AfterDelay(DateTime.Seconds(2), function()
 			MediaCA.PlaySound("etpd-aggro.aud", 2)
@@ -503,13 +508,18 @@ SendNextExterminator = function()
 				Notification("Exterminator Tripod detected.")
 			end
 
-			local reinforcements = Reinforcements.Reinforce(Scrin, { "etpd" }, { ExterminatorSpawn.Location }, 10, function(a)
-				local path = ExterminatorPatrolPaths[NextExterminatorIndex]
-				a.Patrol(path)
+			local reinforcements = Reinforcements.Reinforce(Scrin, { "etpd" }, { exterminator.SpawnLocation }, 10, function(a)
 
-				Trigger.OnIdle(a, function(self)
-					self.Patrol(path)
-				end)
+				if exterminator.Path ~= nil then
+					local path = exterminator.Path
+					a.Patrol(path)
+
+					Trigger.OnIdle(a, function(self)
+						self.Patrol(path)
+					end)
+				else
+					AssaultPlayerBaseOrHunt(a, Nod)
+				end
 
 				if Difficulty ~= "hard" then
 					a.GrantCondition("difficulty-" .. Difficulty)
@@ -520,7 +530,7 @@ SendNextExterminator = function()
 				end)
 
 				Trigger.OnDamaged(a, function(self, attacker, damage)
-					if attacker.Owner == MissionPlayer and damage > 500 then
+					if IsMissionPlayer(attacker.Owner) and damage > 500 then
 						AggroExterminator(self)
 					end
 				end)
@@ -544,14 +554,9 @@ AggroExterminator = function(a)
 		Trigger.ClearAll(a)
 		a.Stop()
 		Trigger.AfterDelay(1, function()
-			a.AttackMove(ExterminatorPatrolPaths[5][1])
-			a.AttackMove(ExterminatorPatrolPaths[5][2])
-			a.AttackMove(ExterminatorPatrolPaths[5][3])
-			a.AttackMove(ExterminatorPatrolPaths[5][4])
-			a.AttackMove(ExterminatorPatrolPaths[5][5])
-			a.AttackMove(ExterminatorPatrolPaths[5][6])
-			a.AttackMove(ExterminatorPatrolPaths[5][7])
-			IdleHunt(a)
+			if not a.IsDead then
+				AssaultPlayerBaseOrHunt(a, Nod)
+			end
 		end)
 	end
 end

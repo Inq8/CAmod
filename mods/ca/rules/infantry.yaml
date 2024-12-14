@@ -80,7 +80,7 @@ DOG:
 	WithRangeCircle:
 		Type: DogDetection
 		Range: 10c0
-		Color: ffffff60
+		Color: ffffff50
 	Voiced:
 		VoiceSet: DogVoice
 	-TakeCover:
@@ -91,6 +91,7 @@ DOG:
 TDOG:
 	Inherits: DOG
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
 		Prerequisites: kenn, ~infantry.dog, ~tdog.upgrade
 		Description: Scout with attached explosives that will detonate on contact with a target.
@@ -109,10 +110,20 @@ TDOG:
 	Explodes:
 		Weapon: DogExplode
 		EmptyWeapon: DogExplode
+		RequiresCondition: !being-warped
 	AttackLeap:
 		TargetFrozenActors: False
 	Targetable@TerrorDog:
 		TargetTypes: TerrorDog
+	GrantTimedConditionOnDeploy:
+		DeployedCondition: eating
+		CooldownTicks: 2
+		DeployedTicks: 1
+		RequiresCondition: !being-warped
+		Instant: true
+		ShowSelectionBar: false
+	AutoTarget:
+		ScanRadius: 4
 
 E1:
 	Inherits: ^Soldier
@@ -723,7 +734,7 @@ SPY:
 			seal: seal-disguise
 			cmsr: cmsr-disguise
 	Infiltrates:
-		Types: SpyInfiltrate
+		Types: ResetSupportPowerInfiltrate, PowerOutageInfiltrate, VetInfiltrate, ResetShroudInfiltrate, GrantSupportPowerInfiltrate
 		Notification: BuildingInfiltrated
 		TextNotification: Building infiltrated.
 	-WithInfantryBody:
@@ -1330,7 +1341,7 @@ THF:
 	Passenger:
 		CustomPipType: blue
 	Infiltrates:
-		Types: ThiefInfiltrate
+		Types: StealCreditsInfiltrate
 		Notification: BuildingInfiltrated
 		TextNotification: Building infiltrated.
 		Voice: Steal
@@ -2266,7 +2277,7 @@ SAB:
 		Description: Covert infantry that infiltrates enemy structures\n  to steal or lock technology.
 		Strengths: • Strong vs Infantry
 		Weaknesses: • Can only attack Infantry
-		Attributes: • Can detect cloaked ground units and spies\n• Limited stealth (drains while moving)\n• Infiltrates production buildings to steal technology\n    • Allies: Cryo Mortar, Reckoner, Phantom\n    • Soviets: Cyberdog, Cyclops, Kamov\n    • GDI: Sonic Mortar, Basilisk, Shade\n    • Nod: Chem Mortar, Mantis, Vertigo\n    • Scrin: Cyberscrin, Viper, Manticore\n• Infiltrates radars/tech centers to lock technology
+		Attributes: • Can detect cloaked ground units and spies\n• Limited stealth (drains while moving)\n• Infiltrates production buildings to steal technology\n    • Allies: Cryo Mortar, Reckoner, Phantom\n    • Soviets: Cyberdog, Cyclops, Kamov\n    • GDI: Sonic Mortar, Basilisk, Shade\n    • Nod: Chem Mortar, Mantis, Vertigo\n    • Scrin: Cyberscrin, Viper, Manticore\n• Infiltrates radars/tech centers to lock technology\n• Infiltrates any building for vision
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -2285,7 +2296,7 @@ SAB:
 	Guard:
 		Voice: Move
 	Infiltrates:
-		Types: SabInfiltrate, PowerInfiltrate, TechLockInfiltrate
+		Types: ResetSupportPowerInfiltrate, PowerOutageInfiltrate, StealTechInfiltrate, TechLockInfiltrate, VisionInfiltrate
 		TextNotification: Building infiltrated.
 	Voiced:
 		VoiceSet: InfilVoice
@@ -2341,8 +2352,8 @@ SAB:
 		Prerequisites: barracks.upgraded
 	GrantChargingCondition@CLOAK:
 		Condition: can-cloak
-		InitialCharge: 500
-		MaxCharge: 500
+		InitialCharge: 600
+		MaxCharge: 600
 		ChargeRate: 2
 		PauseOnCondition: moving
 		RequiresCondition: !cloak-force-disabled
@@ -2656,7 +2667,7 @@ JJET:
 		CruiseAltitude: 1c0
 		IdealSeparation: 0c384
 		InitialFacing: 92
-		Speed: 108
+		Speed: 118
 		LandableTerrainTypes: Clear,Rough,Road,Ore,Beach,Gems,Tiberium,BlueTiberium
 		AirborneCondition: airborne
 		CruisingCondition: cruising
@@ -2730,8 +2741,9 @@ JJET:
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
 		ValidDamageStates: Light, Medium, Heavy, Critical
-	Targetable@MINDCONTROL:
-		RequiresCondition: !mindcontrolled && !hacked && !restoring && !airborne
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+		RequiresCondition: airborne
 
 BJET:
 	Inherits: JJET
@@ -3552,7 +3564,7 @@ SGLI:
 		CloakDelay: 125
 		Palette: cloakra
 		IsPlayerPalette: true
-		DetectionTypes: Cloak
+		DetectionTypes: AirCloak
 		UncloakOn: Attack, Damage
 		CloakSound: gstealon.aud
 		UncloakSound: gstealof.aud
@@ -4340,7 +4352,7 @@ CSCR:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 15000
+		HP: 16000
 	Mobile:
 		Speed: 77
 	Armament@PRIMARY:
@@ -4541,7 +4553,7 @@ ZTRP:
 		LandingSounds: ztrp-land1.aud, ztrp-land2.aud
 		LeapCondition: jumping
 		ShowSelectionBarWhenFull: false
-		ChargeDelay: 175
+		ChargeDelay: 250
 		SelectionBarColor: ffaa00
 		CircleColor: ffaa00a0
 		MaxDistance: 7
@@ -4612,6 +4624,8 @@ ZDEF:
 		Weapon: ZoneDefenderGun
 	Voiced:
 		VoiceSet: ZoneDefenderVoice
+	Health:
+		HP: 18000
 	-TargetedLeapAbility:
 	-Contrail@Jumping:
 	-WithShadow@Jump:
@@ -4815,7 +4829,7 @@ REAP:
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 231
 		IconPalette: chrometd
-		Prerequisites: ~infantry.nod, tmpp, advcyber.upgrade, unity.covenant, ~techlevel.high
+		Prerequisites: ~infantry.nod, tmpp, advcyber.upgrade, ~unity.covenant, ~techlevel.high
 		Description: Heavy cyborg with dual missile launchers\n  and an infantry incapacitating grenade launcher.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor, Buildings

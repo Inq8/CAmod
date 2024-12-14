@@ -789,10 +789,9 @@
 		MaxTargets: 5
 		ShowTargetCount: true
 		ValidTargets: HeroOfUnionTargetable
-		OwnedTargetsOnly: true
 		Duration: 0
 		AllowMultiple: false
-		Description: \nTargeted basic infantry units become Heroes of the Union,\n    significantly increasing their damage, speed and resilience.\n\nCan affect Rifle Infantry and Rocket Soldiers.\n\nNot usable on allied players' units.
+		Description: \nTargeted basic infantry units become Heroes of the Union,\n    significantly increasing their damage, speed and resilience.\n\nCan affect Rifle Infantry and Rocket Soldiers.
 		Prerequisites: ~infantry.doctrine, player.level2
 		OnFireSound: heroes.aud
 		SelectTargetSpeechNotification: SelectTarget
@@ -1499,33 +1498,23 @@
 		PauseOnCondition: disabled || empdisable || being-warped
 		SupportPowerPaletteOrder: 50
 
-^OverloadPower:
-	GrantExternalConditionPowerCA@Overload:
-		OrderName: overload
-		Icon: overload
-		ChargeInterval: 6000
+^TechnologyHackPower:
+	InfiltratePower@TechnologyHack:
 		Prerequisites: ~radar.legion
-		Name: Overload
-		Condition: overloading
-		ActiveSequence: idle
-		ValidRelationships: Ally, Neutral, Enemy
-		Range: 4c512
-		Duration: 375
-		AllowMultiple: false
-		Description: \nOverloads targeted power plants\n    causing them to take damage over time.
-		OnFireSound: overload.aud
+		OrderName: techhack
+		Icon: techhack
+		ChargeInterval: 18000
+		Name: Technology Hack
+		Description: \nHack the targeted enemy production structure, providing access to a unit developed using enemy technology.
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
-		EndChargeSpeechNotification: OverloadReady
-		EndChargeTextNotification: Overload ready.
-		DisplayRadarPing: True
-		Cursor: empmissile
-		PauseOnCondition: disabled || empdisable || being-warped
+		EndChargeSpeechNotification: TechHackReady
+		EndChargeTextNotification: Technology Hack ready.
+		LaunchSound: techhack.aud
 		SupportPowerPaletteOrder: 50
-		ShowTargetCircle: true
-		TargetCircleColor: ffcc00
-		TargetTintColor: ffcc0033
+		Types: StealTechInfiltrate
+		StartFullyCharged: true
 
 ^CashHackPower:
 	CashHackPower@Legion:
@@ -2068,13 +2057,12 @@
 		ChargeInterval: 2250
 		Name: Anathema
 		Condition: anathema
-		Range: 1c512
+		Range: 2c0
 		MaxTargets: 1
 		ValidTargets: AnathemaTargetable
-		OwnedTargetsOnly: true
 		Duration: 0
 		AllowMultiple: false
-		Description: \nTargeted vehicle greatly increases in power over time.\n    After 30 seconds the unit explodes.\n\nNot usable on allied players' units.
+		Description: \nTargeted vehicle greatly increases in power over time.\n    After 30 seconds the unit explodes.
 		Prerequisites: ~malefic.allegiance, ~techlevel.high
 		OnFireSound: anathema.aud
 		SelectTargetSpeechNotification: SelectTarget

@@ -30,18 +30,6 @@ ExterminatorLaserReversed:
 		StartOffset: -150,-300,0
 		FollowingOffset: 50,100,0
 
-MicrowaveZap:
-	Warhead@emp: GrantExternalConditionCA
-		InvalidTargets: ExterminatorTripod
-
-MicrowaveZap.UPG:
-	Warhead@emp2: GrantExternalConditionCA
-		Range: 0c511
-		Duration: 50
-		Condition: empdisable
-		ValidTargets: ExterminatorTripod
-		InvalidTargets: Shielded
-
 C4:
 	Warhead@1Dam: HealthPercentageDamage
 		InvalidTargets: ExterminatorTripod
@@ -49,12 +37,76 @@ C4:
 		Damage: 300000
 		ValidTargets: ExterminatorTripod
 
-EnlightenedEmp:
-	Warhead@1Emp: GrantExternalConditionCA
-		InvalidTargets: ExterminatorTripod
+^VsExterminatorEmp:
 	Warhead@empExterminator: GrantExternalConditionCA
 		Range: 0c896
-		Duration: 30
+		Duration: 20
 		Condition: empdisable
 		ValidTargets: ExterminatorTripod
 		InvalidTargets: Shielded
+
+MicrowaveZap:
+	Warhead@emp: GrantExternalConditionCA
+		InvalidTargets: EmpImmune, ExterminatorTripod
+
+MicrowaveZap.UPG:
+	Warhead@emp: GrantExternalConditionCA
+		InvalidTargets: EmpImmune, ExterminatorTripod
+	Warhead@emp2: GrantExternalConditionCA
+		InvalidTargets: EmpImmune, ExterminatorTripod
+	Inherits@VsExterminatorEmp: ^VsExterminatorEmp
+	Warhead@empExterminator: GrantExternalConditionCA
+		Duration: 40
+
+EnlightenedEmp:
+	Warhead@1Emp: GrantExternalConditionCA
+		InvalidTargets: Cyborg, EmpImmune, ExterminatorTripod
+	Inherits@VsExterminatorEmp: ^VsExterminatorEmp
+	Warhead@empExterminator: GrantExternalConditionCA
+		Duration: 20
+
+EMPGrenade:
+	Warhead@5emp: GrantExternalConditionCA
+		InvalidTargets: EmpImmune, ExterminatorTripod
+	Inherits@VsExterminatorEmp: ^VsExterminatorEmp
+	Warhead@empExterminator: GrantExternalConditionCA
+		Duration: 5
+
+OrcaBomb:
+	Warhead@emp: GrantExternalConditionCA
+		InvalidTargets: Defense, EmpImmune, ExterminatorTripod
+	Inherits@VsExterminatorEmp: ^VsExterminatorEmp
+	Warhead@empExterminator: GrantExternalConditionCA
+		Duration: 20
+
+BasiliskPulse:
+	Warhead@emp: GrantExternalConditionCA
+		InvalidTargets: EmpImmune, ExterminatorTripod
+	Inherits@VsExterminatorEmp: ^VsExterminatorEmp
+	Warhead@empExterminator: GrantExternalConditionCA
+		Duration: 40
+
+EMPMissileLauncher:
+	Warhead@emp1: GrantExternalConditionCA
+		InvalidTargets: EmpImmune, ExterminatorTripod
+	Warhead@emp2: GrantExternalConditionCA
+		InvalidTargets: EmpImmune, ExterminatorTripod
+	Warhead@emp3: GrantExternalConditionCA
+		InvalidTargets: EmpImmune, ExterminatorTripod
+	Inherits@VsExterminatorEmp: ^VsExterminatorEmp
+	Warhead@empExterminator: GrantExternalConditionCA
+		Range: 4c512
+		Duration: 75
+
+ShadeEmp:
+	Warhead@1Emp: GrantExternalConditionCA
+		InvalidTargets: Cyborg, EmpImmune, ExterminatorTripod
+	Warhead@2Emp: GrantExternalConditionCA
+		InvalidTargets: EmpImmune, ExterminatorTripod
+	Inherits@VsExterminatorEmp: ^VsExterminatorEmp
+	Warhead@empExterminator: GrantExternalConditionCA
+		Duration: 20
+
+PitbullRockets:
+	Warhead@Blind: GrantExternalConditionCA
+		InvalidTargets: ExterminatorTripod

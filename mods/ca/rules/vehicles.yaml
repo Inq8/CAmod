@@ -2790,7 +2790,7 @@ TTRA:
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
 	ProximityExternalCondition@JAMMER:
-		Range: 8c0
+		Range: 1c512
 		ValidRelationships: Enemy, Neutral
 		Condition: jammed
 	ProducibleWithLevel:
@@ -2960,12 +2960,12 @@ CTNK:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 45000
+		HP: 32000
 	Armor:
 		Type: Light
 	Mobile:
 		Speed: 92
-		TurnSpeed: 24
+		TurnSpeed: 30
 		Locomotor: heavywheeled
 	RevealsShroud:
 		MinRange: 4c0
@@ -3017,8 +3017,6 @@ CTNK:
 		Multiplier: 90
 		Prerequisites: player.germany
 	PortableChronoModifier@TEMPORALFLUX:
-		RangeModifier: 125
-		CooldownModifier: 180
 		ExtraCharges: 1
 		RequiresCondition: tflx-upgrade
 	GrantConditionOnPrerequisite@TEMPORALFLUX:
@@ -3269,7 +3267,7 @@ HMMV.TOW:
 		Ammo: 1
 		AmmoCondition: ammo
 	ReloadAmmoPoolCA:
-		Delay: 175 # matches reload time of weapon
+		Delay: 200 # matches reload time of weapon
 		Count: 1
 		ShowSelectionBar: true
 		SelectionBarColor: aaaaaa
@@ -3402,7 +3400,7 @@ GDRN.TOW:
 		Ammo: 1
 		AmmoCondition: ammo
 	ReloadAmmoPoolCA:
-		Delay: 175 # matches reload time of weapon
+		Delay: 200 # matches reload time of weapon
 		Count: 1
 		ShowSelectionBar: true
 		SelectionBarColor: aaaaaa
@@ -5000,6 +4998,7 @@ STNK.Nod:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
+	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	RenderSprites:
 		Image: STNKTnod
 	Valued:
@@ -5070,6 +5069,7 @@ STNK.Nod:
 		Offset: 0,0,10
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped || blinded || parachute
+		PersistentTargeting: false
 	WithSpriteTurret:
 	AutoTarget:
 		InitialStance: HoldFire
@@ -5090,6 +5090,14 @@ STNK.Nod:
 		ColorSource: Player
 	DamageTypeDamageMultiplier@A2GPROTECTION:
 		Modifier: 60
+	ReplacedInQueue:
+		Actors: hstk
+	Upgradeable@HSTK:
+		Type: hstk.upgrade
+		UpgradingCondition: upgrading
+		Actor: hstk
+		UpgradeAtActors: fix, rep, srep
+		RequiresCondition: !mindcontrolled
 
 HSTK:
 	Inherits: ^TankTD
@@ -5108,7 +5116,7 @@ HSTK:
 		AddToArmyValue: true
 	Buildable:
 		BuildPaletteOrder: 202
-		Prerequisites: anyradar, ~vehicles.nod, ~deceit.covenant, ~techlevel.medium
+		Prerequisites: anyradar, ~vehicles.nod, ~hstk.upgrade, ~techlevel.medium
 		Queue: VehicleSQ, VehicleMQ
 		IconPalette: chrometd
 		Description: Medium-range missile heavy tank that can cloak.
@@ -5119,7 +5127,7 @@ HSTK:
 	Mobile:
 		Speed: 100
 	Health:
-		HP: 30000
+		HP: 28000
 	Armor:
 		Type: Heavy
 	RevealsShroud:
@@ -5167,6 +5175,7 @@ HSTK:
 		Offset: 0,0,0
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped || blinded || parachute
+		PersistentTargeting: false
 	WithSpriteTurret:
 	AutoTarget:
 		InitialStance: HoldFire
@@ -6412,6 +6421,7 @@ IFV:
 			n6: engturr
 			mech: mechturr
 			cmec: mechturr
+			arti: mechturr
 			mort.chem: mortchemturr
 			mort.cryo: mortcryoturr
 			mort.sonic: mortsonicturr
@@ -6638,6 +6648,10 @@ IFV:
 		PlayerExperience: 25
 		CaptureDelay: 300
 		ConsumedByCapture: false
+		RequiresCondition: !capture-interrupt && engturr
+	GrantConditionOnDamage@InterruptCapture:
+		Condition: capture-interrupt
+		Duration: 1
 
 IFV.AI:
 	Inherits: ^Tank
@@ -8980,6 +8994,10 @@ WOLV:
 		Name: secondary
 		Weapon: WolverineGunLine
 		LocalOffset: 300,-220,180, 300,220,180
+	Armament@TERTIARY:
+		Name: secondary
+		Weapon: WolverineGunTracer
+		LocalOffset: 300,-220,180, 300,220,180
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped || blinded
 		Voice: Attack
@@ -9954,7 +9972,7 @@ AVTR:
 		Duration: 40
 	GrantConditionOnAttack@Attack:
 		Condition: attacking
-		RevokeDelay: 8
+		RevokeDelay: 18
 	ChangesHealth:
 		PercentageStep: 1
 		Delay: 25

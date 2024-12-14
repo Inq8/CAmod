@@ -64,15 +64,14 @@ WorldLoaded = function()
 	England = Player.GetPlayer("England")
 	USSR = Player.GetPlayer("USSR")
 	Nod = Player.GetPlayer("Nod")
-	MissionPlayer = USA1
+	MissionPlayers = { USA1, USA2 }
 	TimerTicks = 0
-	Players = { USA1, USA2 }
 
 	InitObjectives(USA1)
 	InitObjectives(USA2)
 
 	if England ~= nil then
-		table.insert(Players, England)
+		table.insert(MissionPlayers, England)
 		InitObjectives(England)
 	else
 		Spy.Owner = USA1
@@ -90,7 +89,7 @@ WorldLoaded = function()
 	Sunrise()
 
 	Utils.Do(Objectives, function(o)
-		Utils.Do(Players, function(p)
+		Utils.Do(MissionPlayers, function(p)
 			o[p.InternalName] = p.AddObjective(o.Text)
 		end)
 	end)
@@ -105,25 +104,25 @@ WorldLoaded = function()
 	Trigger.OnAllKilled({ Seal1, Seal2 }, function(self, killer)
 		if not RespawnEnabled then
 			if not AllReactorsDead then
-				Utils.Do(Players, function(p)
+				Utils.Do(MissionPlayers, function(p)
 					p.MarkFailedObjective(Objectives.KillReactors[p.InternalName])
 				end)
 			end
 
 			if not BothNukeSilosDead then
-				Utils.Do(Players, function(p)
+				Utils.Do(MissionPlayers, function(p)
 					p.MarkFailedObjective(Objectives.KillSilos[p.InternalName])
 				end)
 			end
 
 			if not AllSAMSitesDead then
-				Utils.Do(Players, function(p)
+				Utils.Do(MissionPlayers, function(p)
 					p.MarkFailedObjective(Objectives.KillSAMSites[p.InternalName])
 				end)
 			end
 
 			if not AllReactorsDead or not BothNukeSilosDead or not AllSAMSitesDead then
-				Utils.Do(Players, function(p)
+				Utils.Do(MissionPlayers, function(p)
 					p.MarkFailedObjective(Objectives.NeutralizeChronosphere[p.InternalName])
 				end)
 			end
@@ -152,7 +151,7 @@ WorldLoaded = function()
 	Trigger.OnAllKilled(Reactors, function()
 		AllReactorsDead = true
 
-		Utils.Do(Players, function(p)
+		Utils.Do(MissionPlayers, function(p)
 			p.MarkCompletedObjective(Objectives.KillReactors[p.InternalName])
 		end)
 	end)
@@ -160,7 +159,7 @@ WorldLoaded = function()
 	Trigger.OnAllKilled(ShoreSAMs, function()
 		AllSAMSitesDead = true
 
-		Utils.Do(Players, function(p)
+		Utils.Do(MissionPlayers, function(p)
 			p.MarkCompletedObjective(Objectives.KillSAMSites[p.InternalName])
 		end)
 
@@ -176,7 +175,7 @@ WorldLoaded = function()
 			NukeDummy.Destroy()
 		end
 
-		Utils.Do(Players, function(p)
+		Utils.Do(MissionPlayers, function(p)
 			p.MarkCompletedObjective(Objectives.KillSilos[p.InternalName])
 		end)
 
@@ -186,7 +185,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnKilled(Chronosphere, function(self, killer)
-		Utils.Do(Players, function(p)
+		Utils.Do(MissionPlayers, function(p)
 			p.MarkCompletedObjective(Objectives.NeutralizeChronosphere[p.InternalName])
 		end)
 	end)
@@ -242,7 +241,7 @@ WorldLoaded = function()
 			NukeDummy.Destroy()
 			Media.PlaySound("nukelaunch.aud")
 
-			Utils.Do(Players, function(p)
+			Utils.Do(MissionPlayers, function(p)
 				Media.PlaySpeechNotification(p, "AbombLaunchDetected")
 			end)
 
@@ -252,7 +251,7 @@ WorldLoaded = function()
 				WhiteOut = true
 				Media.PlaySound("crossrip.aud")
 				Trigger.AfterDelay(DateTime.Seconds(2), function()
-					Utils.Do(Players, function(p)
+					Utils.Do(MissionPlayers, function(p)
 						if not p.IsObjectiveCompleted(Objectives.KillReactors[p.InternalName]) then
 							p.MarkFailedObjective(Objectives.KillReactors[p.InternalName])
 						end
@@ -339,7 +338,7 @@ end
 DoShoreSAMFlare = function()
 	Trigger.AfterDelay(DateTime.Seconds(4), function()
 
-		Utils.Do(Players, function(p)
+		Utils.Do(MissionPlayers, function(p)
 			Media.PlaySpeechNotification(p, "SignalFlare")
 		end)
 
@@ -431,7 +430,7 @@ DropChronoPrison = function()
 
 	ChronoPrisonFlare = Actor.Create("flare", true, { Owner = ChronoPrisonPlayer, Location = CarryallDropPoint.Location })
 
-	Utils.Do(Players, function(p)
+	Utils.Do(MissionPlayers, function(p)
 		Media.PlaySpeechNotification(p, "SignalFlare")
 	end)
 

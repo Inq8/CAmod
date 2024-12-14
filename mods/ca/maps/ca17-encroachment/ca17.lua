@@ -168,7 +168,7 @@ WorldLoaded = function()
 	Scrin = Player.GetPlayer("Scrin")
 	Greece = Player.GetPlayer("Greece")
 	GDI = Player.GetPlayer("GDI")
-	MissionPlayer = Scrin
+	MissionPlayers = { Scrin }
 
 	Camera.Position = PlayerStart.CenterPosition
 
@@ -244,7 +244,7 @@ end
 
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
-		UpdatePlayerBaseLocation()
+		UpdatePlayerBaseLocations()
 	end
 end
 

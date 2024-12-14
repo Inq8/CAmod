@@ -323,6 +323,12 @@ camera.dummy:
 	KillsSelf:
 		Delay: 25
 
+camera.infiltrator:
+	Inherits: CAMERA
+	KillsSelf:
+		RemoveInstead: true
+		Delay: 6000
+
 camera.paradrop:
 	Inherits: CAMERA
 	EditorOnlyTooltip:
@@ -468,6 +474,18 @@ ToxicCloud2:
 	KillsSelf:
 		Delay: 500
 
+VirusCloud:
+	Inherits: ToxicCloud
+	RenderSprites:
+		Image: cloud1sm
+	PeriodicExplosion:
+		Weapon: VirusCloud
+	Aircraft:
+		Speed: 1
+	KillsSelf:
+		Delay: 125
+	-WithDeathAnimation:
+
 ChaosCloud:
 	Inherits: ToxicCloud
 	RenderSprites:
@@ -525,7 +543,7 @@ FLARE.dropzone:
 		Name: Dropzone Flare
 	FreeActorWithDelivery@2:
 		Actor: vulc.reinforce
-		DeliveryOffset: -1,1
+		DeliveryOffset: 0,0
 		DeliveringActor: ocar.reinforce
 		Facing: 0
 

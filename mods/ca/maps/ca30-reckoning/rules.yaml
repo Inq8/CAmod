@@ -89,6 +89,21 @@ Player:
 					Attractiveness: -10
 					TargetMetric: Value
 					CheckRadius: 7c0
+			owrath:
+				OrderName: overlordswrath
+				MinimumAttractiveness: 3000
+				Consideration@1:
+					Against: Enemy
+					Types: Defense
+					Attractiveness: 1
+					TargetMetric: Value
+					CheckRadius: 3c0
+				Consideration@2:
+					Against: Ally
+					Types: Air, Ground, Water
+					Attractiveness: -10
+					TargetMetric: Value
+					CheckRadius: 5c0
 
 ^Infantry:
 	DamagedByTerrain@TIBDAMAGE:
@@ -100,11 +115,11 @@ TMPL:
 
 ACOL:
 	Buildable:
-		Prerequisites: anyradar, obli, ~infantry.nod, ~!tmpp
+		Prerequisites: obliortmpl, anyradar, ~infantry.nod, ~!tmpp
 
 TPLR:
 	Buildable:
-		Prerequisites: anyradar, obli, ~infantry.nod, ~tmpp
+		Prerequisites: obliortmpl, anyradar, ~infantry.nod, ~tmpp
 
 BH:
 	Buildable:
@@ -200,6 +215,7 @@ ETPD:
 	-Targetable@AICAPTURE:
 	TooltipExtras:
 		Description: Super heavy assault walker with beam weapons.
+		Strengths: Strong vs all ground units and structures.
 	Mobile:
 		Speed: 36
 		PauseOnCondition: empdisable || being-warped || notmobile
@@ -266,11 +282,19 @@ ETPD:
 	Targetable@SHIELDED:
 		TargetTypes: Shielded
 		RequiresCondition: shields-up
+	Targetable@MindControlResistant:
+		TargetTypes: MindControlResistant
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+		RequiresCondition: shields-up
 	DamageTypeDamageMultiplier@A2GPROTECTION:
 		Modifier: 75
 		RequiresCondition: !difficulty-easy
 	-ExternalCondition@UNITSELL:
 	-Sellable:
+	ChangesHealth@THEAL:
+		Step: 2000
+		PercentageStep: 0
 
 ETPD.Husk:
 	Inherits: TPOD.Husk
@@ -281,6 +305,7 @@ ETPD.Husk:
 
 PDGY:
 	Inherits: MAST
+	-Buildable:
 	RenderSprites:
 		Image: mast
 	GrantCondition@Elite:
@@ -298,6 +323,10 @@ NERV:
 		Prerequisites: nerv
 		ChargeInterval: 8250
 
+SCRT:
+	MeteorPower@OverlordsWrath:
+		Prerequisites: botplayer
+
 RFGN:
 	DetonateWeaponPower@RiftGenerator:
 		ChargeInterval: 13500
@@ -309,9 +338,6 @@ MANI:
 	GrantExternalConditionPowerCA@SUPPRESSION:
 		DisplayTimerRelationships: Ally
 
-SWAL:
-	-ChangesHealth:
-
 SPLITBLUE:
 	Tooltip:
 		Name: Blossom Tree
@@ -319,6 +345,8 @@ SPLITBLUE:
 WORMHOLE:
 	-PopControlled:
 	-Targetable:
+	RenderSprites:
+		Image: wormholelg
 
 # Hunt() requires only 1 AttackBase
 DEVA:

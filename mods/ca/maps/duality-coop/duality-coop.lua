@@ -34,9 +34,8 @@ WorldLoaded = function()
 	GDI = Player.GetPlayer("GDI")
 	Greece = Player.GetPlayer("Greece")
 	Scrin = Player.GetPlayer("Scrin")
-	MissionPlayer = GDI
+	MissionPlayers = { GDI, Greece }
 	TimerTicks = TimeLimit[Difficulty]
-	Players = { GDI, Greece }
 
 	Camera.Position = Commando.CenterPosition
 
@@ -44,12 +43,12 @@ WorldLoaded = function()
 	InitObjectives(Greece)
 	InitScrin()
 
-	Utils.Do(Players, function(p)
+	Utils.Do(MissionPlayers, function(p)
 		Objectives.DestroyTiberiumStores[p.InternalName] = p.AddObjective(Objectives.DestroyTiberiumStores.Text)
 	end)
 
 	if not RespawnEnabled then
-		Utils.Do(Players, function(p)
+		Utils.Do(MissionPlayers, function(p)
 			Objectives.CommandoSurvives[p.InternalName] = p.AddObjective(Objectives.CommandoSurvives.Text)
 			Objectives.TanyaSurvives[p.InternalName] = p.AddObjective(Objectives.TanyaSurvives.Text)
 		end)
@@ -104,13 +103,13 @@ OncePerSecondChecks = function()
 				TimerTicks = 0
 
 				if NumSilosRemaining > 0 then
-					Utils.Do(Players, function(p)
+					Utils.Do(MissionPlayers, function(p)
 						if not p.IsObjectiveCompleted(Objectives.DestroyTiberiumStores[p.InternalName]) then
 							p.MarkFailedObjective(Objectives.DestroyTiberiumStores[p.InternalName])
 						end
 					end)
 				elseif IsExitActive then
-					Utils.Do(Players, function(p)
+					Utils.Do(MissionPlayers, function(p)
 						if not p.IsObjectiveCompleted(Objectives.Escape[p.InternalName]) then
 							p.MarkFailedObjective(Objectives.Escape[p.InternalName])
 						end
@@ -125,12 +124,12 @@ OncePerSecondChecks = function()
 			UpdateObjectiveText()
 
 			if RespawnEnabled then
-				Utils.Do(Players, function(p)
+				Utils.Do(MissionPlayers, function(p)
 					Objectives.Escape[p.InternalName] = p.AddObjective(Objectives.Escape.Text)
 				end)
 			end
 
-			Utils.Do(Players, function(p)
+			Utils.Do(MissionPlayers, function(p)
 				if not p.IsObjectiveFailed(Objectives.DestroyTiberiumStores[p.InternalName]) then
 					p.MarkCompletedObjective(Objectives.DestroyTiberiumStores[p.InternalName])
 				end
@@ -162,7 +161,7 @@ OncePerSecondChecks = function()
 
 		if CommandoEscaped then
 			if not RespawnEnabled then
-				Utils.Do(Players, function(p)
+				Utils.Do(MissionPlayers, function(p)
 					p.MarkCompletedObjective(Objectives.CommandoSurvives[p.InternalName])
 				end)
 			elseif not IsCommandoExitNotified then
@@ -173,7 +172,7 @@ OncePerSecondChecks = function()
 
 		if TanyaEscaped then
 			if not RespawnEnabled then
-				Utils.Do(Players, function(p)
+				Utils.Do(MissionPlayers, function(p)
 					p.MarkCompletedObjective(Objectives.TanyaSurvives[p.InternalName])
 				end)
 			elseif not IsTanyaExitNotified then
@@ -183,7 +182,7 @@ OncePerSecondChecks = function()
 		end
 
 		if RespawnEnabled and CommandoEscaped and TanyaEscaped then
-			Utils.Do(Players, function(p)
+			Utils.Do(MissionPlayers, function(p)
 				p.MarkCompletedObjective(Objectives.Escape[p.InternalName])
 			end)
 		end
@@ -267,7 +266,7 @@ end
 CommandoDeathTrigger = function(commando)
 	Trigger.OnKilled(commando, function()
 		if not RespawnEnabled and not CommandoEscaped then
-			Utils.Do(Players, function(p)
+			Utils.Do(MissionPlayers, function(p)
 				p.MarkFailedObjective(Objectives.CommandoSurvives[p.InternalName])
 			end)
 		elseif RespawnEnabled then
@@ -290,7 +289,7 @@ end
 TanyaDeathTrigger = function(tanya)
 	Trigger.OnKilled(tanya, function()
 		if not RespawnEnabled and not TanyaEscaped then
-			Utils.Do(Players, function(p)
+			Utils.Do(MissionPlayers, function(p)
 				p.MarkFailedObjective(Objectives.TanyaSurvives[p.InternalName])
 			end)
 		elseif RespawnEnabled then

@@ -99,7 +99,7 @@ WorldLoaded = function()
 	USSR = Player.GetPlayer("USSR")
 	GDI = Player.GetPlayer("GDI")
 	Greece = Player.GetPlayer("Greece")
-	MissionPlayer = USSR
+	MissionPlayers = { USSR }
 	TimerTicks = 0
 	SiegeLosses = 0
 	SiegeBroken = false
@@ -172,7 +172,7 @@ end
 
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
-		UpdatePlayerBaseLocation()
+		UpdatePlayerBaseLocations()
 	end
 end
 

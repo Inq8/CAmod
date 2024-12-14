@@ -58,7 +58,7 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("If true, producer must be selected, otherwise chosen automatically.")]
 		public readonly bool SelectProducer = true;
 
-		[Desc("Cursor to display when unable to Cash Hack.")]
+		[Desc("Cursor to display when unable to target.")]
 		public readonly string BlockedCursor = "move-blocked";
 
 		public override object Create(ActorInitializer init) { return new ProduceActorPowerCA(init, this); }

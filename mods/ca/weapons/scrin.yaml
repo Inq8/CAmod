@@ -217,12 +217,14 @@ PlasmaDiscs.Hypercharged:
 	Report: seeker-hyperfire1.aud, seeker-hyperfire2.aud
 	Burst: 1
 	ReloadDelay: 4
-	Range: 7c0
+	Range: 6c0
 	Projectile: Missile
 		RangeLimit: 7c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 1600
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated, TankBuster
+		Versus:
+			None: 15
 
 IntruderDiscs:
 	Inherits: PlasmaDiscs
@@ -417,7 +419,7 @@ RiftCannon:
 		SecondaryBeamColor: 00000099
 		SecondaryBeamWidth: 90
 	Warhead@1Dam: SpreadDamage
-		Spread: 512
+		Spread: 341
 		Falloff: 100, 37, 23, 10, 0
 		Damage: 2500
 		Versus:
@@ -427,7 +429,7 @@ RiftCannon:
 			Brick: 75
 		DamageTypes: BulletDeath
 	Warhead@2Dam: HealthPercentageDamage
-		Spread: 512
+		Spread: 341
 		Damage: 10
 		InvalidTargets: Air, AirSmall
 		Versus:
@@ -766,7 +768,7 @@ TormentorZap:
 	Burst: 4
 	BurstDelays: 0, 4, 0
 	ValidTargets: Ground, Water
-	Range: 6c0
+	Range: 7c0
 	Report: torm-fire1.aud, torm-fire2.aud
 	Projectile: LaserZapCA
 		Width: 56
@@ -780,8 +782,8 @@ TormentorZap:
 		Duration: 3
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
-		Damage: 1700
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		Damage: 2400
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, TankBuster, AirToGround
 		Versus:
 			None: 20
 			Light: 65
@@ -795,9 +797,10 @@ TormentorZap:
 
 TormentorZapAA:
 	Inherits: TormentorZap
+	Range: 6c0
 	ValidTargets: Air, AirSmall
 	Warhead@1Dam: SpreadDamage
-		Damage: 1000
+		Damage: 1100
 		ValidTargets: Air, AirSmall
 	-Warhead@2Smu:
 
@@ -900,7 +903,7 @@ InvaderZap:
 		InvalidTargets: Infantry
 		Versus:
 			None: 65
-			Wood: 10
+			Wood: 30
 			Concrete: 15
 			Light: 80
 			Heavy: 100
@@ -1210,7 +1213,7 @@ RavagerShards:
 		Spread: 224
 		Damage: 2000
 		Versus:
-			Wood: 20
+			Wood: 15
 			Light: 65
 			Heavy: 10
 			Concrete: 15
@@ -1226,6 +1229,7 @@ EvisceratorShards:
 		Damage: 2100
 		Spread: 288
 		Versus:
+			Wood: 20
 			Light: 60
 
 EvisceratorShardsCharged:
@@ -1340,7 +1344,7 @@ LaceratorShards.Hypercharged:
 	Burst: 1
 	ReloadDelay: 5
 	-StartBurstReport:
-	Range: 7c0
+	Range: 6c0
 	Report: lacerator-hyperfire1.aud, lacerator-hyperfire2.aud
 	Projectile: Missile
 		ContrailStartWidth: 0c48
@@ -1348,6 +1352,8 @@ LaceratorShards.Hypercharged:
 	Warhead@1Dam: SpreadDamage
 		Damage: 2000
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath, TankBuster
+		Versus:
+			None: 10
 
 ImpalerSpike:
 	Range: 7c0

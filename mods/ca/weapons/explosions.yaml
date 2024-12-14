@@ -18,6 +18,7 @@
 		Explosions: self_destruct
 		ImpactSounds: kaboom22.aud
 		ValidTargets: Ground, Air, Ship, Trees
+		ImpactActors: false
 	Warhead@3EffWater: CreateEffect
 		Explosions: large_splash
 		ImpactSounds: splash9.aud
@@ -63,8 +64,6 @@ UnitExplode:
 	Inherits: ^Explosion
 	Warhead@1Dam: SpreadDamage
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
-	Warhead@2Eff: CreateEffect
-		ImpactActors: false
 
 UnitExplodePlane:
 	Inherits: UnitExplode
@@ -803,7 +802,7 @@ MEMP:
 		Range: 5c0
 		Duration: 300
 		Condition: empdisable
-		ValidTargets: Ground, Vehicle, Air
+		ValidTargets: Ground, Vehicle
 		InvalidTargets: Defense, EmpImmune
 	Warhead@empdef: GrantExternalConditionCA
 		Range: 5c0
@@ -811,6 +810,13 @@ MEMP:
 		Condition: empdisable
 		ValidTargets: Defense
 		InvalidTargets: EmpImmune
+	Warhead@empAir: GrantExternalConditionCA
+		Range: 2c0
+		Duration: 300
+		Condition: empdisable
+		ValidTargets: Air
+		InvalidTargets: EmpImmune
+		HitShapeCheck: false
 	Warhead@2Smu_impact: LeaveSmudge
 		SmudgeType: Scorch
 	Warhead@3Smu_area: LeaveSmudge

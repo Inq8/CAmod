@@ -729,6 +729,7 @@ BRST:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -768,6 +769,8 @@ BRST:
 	-TakeCover:
 	Targetable@Burster:
 		TargetTypes: Burster
+	AutoTarget:
+		ScanRadius: 4
 
 EVIS:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -896,7 +899,7 @@ MUTI:
 	Selectable:
 		DecorationBounds: 640, 896, -32, -256
 	Valued:
-		Cost: 475
+		Cost: 500
 	Tooltip:
 		Name: Mutilator
 	TooltipExtras:
@@ -904,7 +907,7 @@ MUTI:
 		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
 		Attributes: • Special Ability: Teleport (with upgrade)
 	Health:
-		HP: 15000
+		HP: 13000
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Mobile:
@@ -1683,7 +1686,7 @@ INTL:
 		TurnSpeed: 512
 		Locomotor: lighthover
 	Health:
-		HP: 42000
+		HP: 44000
 	Armor:
 		Type: Heavy
 	RevealsShroud:
@@ -1776,6 +1779,8 @@ INTL:
 		TurnSpeed: 16
 		RealignDelay: 75
 		RequiresCondition: shields-upgrade
+	Shielded:
+		MaxStrength: 6000
 
 INTL.AI:
 	Inherits: INTL
@@ -2180,6 +2185,13 @@ DEVO:
 	Targetable@ONWATER:
 		TargetTypes: Water, Ship
 		RequiresCondition: onwater
+	GrantConditionOnAttack@PRIMARYCHARGED:
+		RequiresCondition: !anathema
+	GrantConditionOnAttack@PRIMARYCHARGEDANATHEMA:
+		ArmamentNames: primary-charged
+		Condition: charged-fire
+		RevokeDelay: 40
+		RequiresCondition: anathema
 
 DARK:
 	Inherits: ^Vehicle
@@ -2210,7 +2222,7 @@ DARK:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 40000
+		HP: 36000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -3025,7 +3037,7 @@ TORM:
 	AttackAircraft:
 		FacingTolerance: 80
 		PersistentTargeting: false
-		OpportunityFire: false
+		OpportunityFire: true
 		PauseOnCondition: empdisable || being-warped || blinded
 	Aircraft:
 		TurnSpeed: 28
@@ -3039,7 +3051,7 @@ TORM:
 		LandingSounds: dropdwn1.aud
 		CanSlide: False
 		AltitudeVelocity: 0c120
-		IdealSeparation: 0c768
+		IdealSeparation: 1c256
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
@@ -3083,15 +3095,15 @@ TORM:
 		Prerequisites: aircraft.upgraded
 	-EjectOnDeath:
 	AmmoPool:
-		Ammo: 16
+		Ammo: 12
 		AmmoCondition: ammo
-		ReloadDelay: 8
+		ReloadDelay: 12
 		ReloadCount: 1
 	WithAmmoPipsDecoration:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
-		PipCount: 4
+		PipCount: 3
 	Rearmable:
 		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
 	GrantConditionOnDamageState@SmokeTrail:
@@ -3102,7 +3114,10 @@ TORM:
 		TargetTypes: Resupplying
 		RequiresCondition: resupplying
 	KillsSelf@Emp:
-		RequiresCondition: empdisable && cruising
+		RequiresCondition: empdisable && cruising && !shields-upgrade
+	SpeedMultiplier@EMPDISABLE:
+		Modifier: 0
+		RequiresCondition: empdisable
 	Shielded:
 		MaxStrength: 4000
 	GpsRadarDot:
@@ -4252,6 +4267,9 @@ SWAL:
 		Delay: 10
 		StartIfBelow: 100
 		DamageCooldown: 25
+		RequiresCondition: !is-neutral
+	GrantConditionIfOwnerIsNeutral:
+		Condition: is-neutral
 	Armor:
 		Type: Brick
 	Crushable:
@@ -4396,13 +4414,8 @@ REAC:
 	WithBuildingBib:
 	Power:
 		Amount: 100
-	Targetable@INFILTRATION:
-		RequiresCondition: !being-warped
-		TargetTypes: SpyInfiltrate, PowerInfiltrate
 	ScalePowerWithHealth:
 	ProvidesPrerequisite@buildingname:
-	InfiltrateForPowerOutage:
-		Types: SpyInfiltrate, PowerInfiltrate
 
 REA2:
 	Inherits: ^ScrinBuilding
@@ -4439,13 +4452,8 @@ REA2:
 	WithBuildingBib:
 	Power:
 		Amount: 200
-	Targetable@INFILTRATION:
-		RequiresCondition: !being-warped
-		TargetTypes: SpyInfiltrate, PowerInfiltrate
 	ProvidesPrerequisite@buildingname:
 	ScalePowerWithHealth:
-	InfiltrateForPowerOutage:
-		Types: SpyInfiltrate, PowerInfiltrate
 
 PROC.SCRIN:
 	Inherits: ^ScrinBuilding
@@ -4489,7 +4497,7 @@ PROC.SCRIN:
 	WithBuildingBib:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
-		TargetTypes: ThiefInfiltrate
+		TargetTypes: StealCreditsInfiltrate
 	Refinery:
 		DockAngle: 448
 		DockOffset: 0,2
@@ -4508,7 +4516,7 @@ PROC.SCRIN:
 		Bounds: 3072, 2389, 0, 512
 		DecorationBounds: 3114, 3072
 	InfiltrateForCash:
-		Types: ThiefInfiltrate
+		Types: StealCreditsInfiltrate
 		Percentage: 50
 		InfiltrationNotification: CreditsStolen
 	FreeActor:
@@ -4600,9 +4608,9 @@ PORT:
 	ProvidesPrerequisite@buildingname:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
-		TargetTypes: SpyInfiltrate, SabInfiltrate
-	InfiltrateForSupportPower@STOLENTECH:
-		Types: SabInfiltrate
+		TargetTypes: VetInfiltrate, StealTechInfiltrate
+	InfiltrateToCreateProxyActor@STOLENTECH:
+		Types: StealTechInfiltrate
 		Proxy: stolentech.port
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
@@ -4613,9 +4621,9 @@ PORT:
 	SpawnActorOnMindControlled@STOLENTECH:
 		Actor: stolentech.port
 		OwnerType: Master
-	InfiltrateForSupportPower@spy:
+	InfiltrateToCreateProxyActor@spy:
 		Proxy: barracks.upgraded
-		Types: SpyInfiltrate
+		Types: VetInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
 	WithIdleOverlay:
@@ -4692,17 +4700,17 @@ WSPH:
 		ExitCell: 0,2
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
-		TargetTypes: SpyInfiltrate, SabInfiltrate
+		TargetTypes: VetInfiltrate, StealTechInfiltrate
 	Power:
 		Amount: -30
 	ProvidesPrerequisite@buildingname:
-	InfiltrateForSupportPower@spy:
+	InfiltrateToCreateProxyActor@spy:
 		Proxy: vehicles.upgraded
-		Types: SpyInfiltrate
+		Types: VetInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
-	InfiltrateForSupportPower@STOLENTECH:
-		Types: SabInfiltrate
+	InfiltrateToCreateProxyActor@STOLENTECH:
+		Types: StealTechInfiltrate
 		Proxy: stolentech.wsph
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
@@ -4747,7 +4755,7 @@ NERV:
 		LocalCenterOffset: 0,-512,0
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
-		TargetTypes: SpyInfiltrate
+		TargetTypes: ResetShroudInfiltrate
 	Health:
 		HP: 110000
 	Armor:
@@ -4775,7 +4783,7 @@ NERV:
 		RequiresCondition: !jammed && !disabled && !being-warped
 	WithBuildingBib:
 	InfiltrateForExploration:
-		Types: SpyInfiltrate
+		Types: ResetShroudInfiltrate
 	Power:
 		Amount: -40
 	ValidFactions:
@@ -4979,8 +4987,8 @@ GRAV:
 	AutoTarget:
 	AutoTargetPriority@DEFAULT:
 		ValidRelationships: Ally
-	InfiltrateForSupportPower@STOLENTECH:
-		Types: SabInfiltrate
+	InfiltrateToCreateProxyActor@STOLENTECH:
+		Types: StealTechInfiltrate
 		Proxy: stolentech.grav
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
@@ -4993,7 +5001,7 @@ GRAV:
 		OwnerType: Master
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
-		TargetTypes: SabInfiltrate
+		TargetTypes: StealTechInfiltrate
 
 SIGN:
 	Inherits: ^ScrinBuilding
@@ -5211,12 +5219,12 @@ MANI:
 	MustBeDestroyed:
 		RequiredForShortGame: false
 	InfiltrateForSupportPowerReset:
-		Types: SpyInfiltrate, SabInfiltrate
+		Types: ResetSupportPowerInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
-		TargetTypes: SpyInfiltrate, SabInfiltrate
+		TargetTypes: ResetSupportPowerInfiltrate
 	ValidFactions:
 		Factions: scrin, reaper, traveler, harbinger, collector
 	ProductionCostMultiplier@COLLECTOR:
@@ -5277,12 +5285,12 @@ RFGN:
 	MustBeDestroyed:
 		RequiredForShortGame: false
 	InfiltrateForSupportPowerReset:
-		Types: SpyInfiltrate, SabInfiltrate
+		Types: ResetSupportPowerInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
-		TargetTypes: SpyInfiltrate, SabInfiltrate
+		TargetTypes: ResetSupportPowerInfiltrate
 	WithBuildingBib:
 		HasMinibib: true
 	ProductionCostMultiplier@HarbingerBonus:

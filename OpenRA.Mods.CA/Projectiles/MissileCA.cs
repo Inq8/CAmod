@@ -188,6 +188,9 @@ namespace OpenRA.Mods.CA.Projectiles
 		[Desc("Type defined for point-defense logic.")]
 		public readonly string PointDefenseType = null;
 
+		[Desc("Ignore variable launch angle and speed when target is below this distance.")]
+		public readonly WDist DirectFireMaxRange = WDist.Zero;
+
 		public IProjectile Create(ProjectileArgs args) { return new MissileCA(this, args); }
 	}
 
@@ -262,11 +265,14 @@ namespace OpenRA.Mods.CA.Projectiles
 			targetPosition = args.PassiveTarget;
 			var limit = info.RangeLimit != WDist.Zero ? info.RangeLimit : args.Weapon.Range;
 			rangeLimit = new WDist(Util.ApplyPercentageModifiers(limit.Length, args.RangeModifiers));
-			minLaunchSpeed = info.MinimumLaunchSpeed.Length > -1 ? info.MinimumLaunchSpeed.Length : info.Speed.Length;
-			maxLaunchSpeed = info.MaximumLaunchSpeed.Length > -1 ? info.MaximumLaunchSpeed.Length : info.Speed.Length;
+
+			var directFire = info.DirectFireMaxRange > WDist.Zero && (targetPosition - pos).HorizontalLength < info.DirectFireMaxRange.Length;
+
+			minLaunchSpeed = info.MinimumLaunchSpeed.Length > -1 && !directFire ? info.MinimumLaunchSpeed.Length : info.Speed.Length;
+			maxLaunchSpeed = info.MaximumLaunchSpeed.Length > -1 && !directFire ? info.MaximumLaunchSpeed.Length : info.Speed.Length;
 			maxSpeed = info.Speed.Length;
-			minLaunchAngle = info.MinimumLaunchAngle;
-			maxLaunchAngle = info.MaximumLaunchAngle;
+			minLaunchAngle = directFire ? WAngle.Zero : info.MinimumLaunchAngle;
+			maxLaunchAngle = directFire ? WAngle.Zero : info.MaximumLaunchAngle;
 
 			var world = args.SourceActor.World;
 

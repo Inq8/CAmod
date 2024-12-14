@@ -7,7 +7,7 @@ WorldLoaded = function()
 	USSR = Player.GetPlayer("USSR")
 	HiddenGDI = Player.GetPlayer("HiddenGDI")
 	Neutral = Player.GetPlayer("Neutral")
-	MissionPlayer = GDI
+	MissionPlayers = { GDI }
 	TimerTicks = 0
 	GroupsFound = {}
 	ExitDefendersDead = false
@@ -32,7 +32,7 @@ WorldLoaded = function()
 	}
 
 	Trigger.OnEnteredProximityTrigger(Reveal2.CenterPosition, WDist.New(11 * 1024), function(a, id)
-		if a.Owner == MissionPlayer and a.Type ~= cameraType and not FirstRevealComplete then
+		if a.Owner == Greece and a.Type ~= cameraType and not FirstRevealComplete then
 			Trigger.RemoveProximityTrigger(id)
 			FirstRevealComplete = true
 			local camera = Actor.Create("smallcamera", true, { Owner = GDI, Location = Reveal2.Location })

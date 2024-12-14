@@ -14,7 +14,7 @@ WorldLoaded = function()
 	Nod = Player.GetPlayer("Nod")
 	Greece = Player.GetPlayer("Greece")
 	GDI = Player.GetPlayer("GDI")
-	MissionPlayer = Nod
+	MissionPlayers = { Nod }
 	TimerTicks = 0
 
 	Camera.Position = Commando.CenterPosition

@@ -146,7 +146,7 @@ Squads = {
 WorldLoaded = function()
 	Scrin = Player.GetPlayer("Scrin")
 	Nod = Player.GetPlayer("Nod")
-	MissionPlayer = Scrin
+	MissionPlayers = { Scrin }
 	TimerTicks = MaintenanceDuration[Difficulty]
 	FieldsClearedAndBeingHarvested = 0
 	NextReinforcementThreshold = ReinforcementInitialThreshold[Difficulty]
@@ -382,7 +382,7 @@ UpdateRaidTarget = function()
 	end)
 
 	local randomRaidTarget = Utils.Random(possibleRaidTargets)
-	PlayerBaseLocation = randomRaidTarget.Location
+	PlayerBaseLocations[Scrin.InternalName] = randomRaidTarget.Location
 end
 
 DoReinforcements = function()

@@ -142,7 +142,7 @@ WorldLoaded = function()
 	GDI = Player.GetPlayer("GDI")
 	Scrin = Player.GetPlayer("Scrin")
 	GDISlaves = Player.GetPlayer("GDISlaves")
-	MissionPlayer = GDI
+	MissionPlayers = { GDI }
 	EnslavedUnitsKilled = 0
 
 	Camera.Position = PlayerStart.CenterPosition
@@ -364,7 +364,7 @@ end
 
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
-		UpdatePlayerBaseLocation()
+		UpdatePlayerBaseLocations()
 	end
 end
 
