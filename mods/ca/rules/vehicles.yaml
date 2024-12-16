@@ -198,7 +198,7 @@ NUKC:
 		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets
 		Attributes: • Can crush concrete walls
 	Valued:
-		Cost: 2500
+		Cost: 2300
 	Tooltip:
 		Name: Nuke Cannon
 	UpdatesPlayerStatistics:
@@ -242,16 +242,17 @@ NUKC:
 		Turret: deployer
 		Weapon: NukeCannonDeployer
 		LocalOffset: 824,0,758
-		RequiresCondition: undeployed && botowner
+		RequiresCondition: undeployed && !undeploying
 	AttackTurreted:
 		Armaments: primary, deployer
 		Turrets: primary, deployer
 		Voice: Attack
 		RangeMargin: 0
-		PauseOnCondition: empdisable || being-warped || blinded
-		RequiresCondition: deployed || (botowner && !deploying)
+		PauseOnCondition: empdisable || being-warped || blinded || deploying
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
+		PersistentTargeting: false
+		RequiresCondition: !undeploying
 	GrantConditionOnDeployTurreted:
 		DeployedCondition: deployed
 		UndeployedCondition: undeployed
@@ -288,6 +289,7 @@ NUKC:
 		Name: overlay
 		Sequence: overlay
 	WaitsForTurretAlignmentOnUndeploy:
+		AligningCondition: undeploying
 	WithSpriteTurret:
 		Sequence: turret
 	Turreted:
@@ -328,8 +330,13 @@ NUKC:
 		Condition: botowner
 		Bots: brutal, vhard, hard, normal, easy, naval
 	DeployOnAttack:
-		RequiresCondition: undeployed && botowner && !moving
+		RequiresCondition: undeployed && !moving && !deploying && !undeploying
 		ArmamentNames: deployer
+	AutoTarget:
+		RequiresCondition: (botowner || deployed || attack-move) && !undeploying && !deploying
+	AttackMove:
+		AttackMoveCondition: attack-move
+		AssaultMoveCondition: attack-move
 	WithRangeCircle:
 		Type: NukeCannon
 		Range: 16c0
@@ -350,8 +357,10 @@ NUKC:
 		Color: ff880090
 	GrantConditionOnMovement@Moving:
 		Condition: moving
-		RequiresCondition: botowner
-		ValidMovementTypes: Horizontal, Vertical, Turn
+		ValidMovementTypes: Horizontal, Vertical
+	RejectsOrders:
+		Reject: AttackMove
+		RequiresCondition: !undeployed
 
 1TNK:
 	Inherits: ^Tank

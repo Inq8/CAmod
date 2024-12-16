@@ -48,8 +48,8 @@ namespace OpenRA.Mods.CA.Traits
 
 			if (trait != null && trait.DeployState == DeployState.Undeployed)
 			{
-				if (self.CurrentActivity == null)
-					self.QueueActivity(new DeployForGrantedCondition(self, trait));
+				if (self.CurrentActivity == null || !self.CurrentActivity.ChildHasPriority)
+					self.QueueActivity(false, new DeployForGrantedCondition(self, trait));
 				else
 					self.CurrentActivity.QueueChild(new DeployForGrantedCondition(self, trait));
 				return;
@@ -57,8 +57,8 @@ namespace OpenRA.Mods.CA.Traits
 
 			if (turretedTrait != null && turretedTrait.DeployState == DeployState.Undeployed)
 			{
-				if (self.CurrentActivity == null)
-					self.QueueActivity(new DeployForGrantedConditionTurreted(self, turretedTrait));
+				if (self.CurrentActivity == null || !self.CurrentActivity.ChildHasPriority)
+					self.QueueActivity(false, new DeployForGrantedConditionTurreted(self, turretedTrait));
 				else
 					self.CurrentActivity.QueueChild(new DeployForGrantedConditionTurreted(self, turretedTrait));
 				return;

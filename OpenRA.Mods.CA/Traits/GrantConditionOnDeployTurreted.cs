@@ -366,7 +366,7 @@ namespace OpenRA.Mods.Common.Traits
 			if (deployedToken != Actor.InvalidConditionToken)
 				deployedToken = self.RevokeCondition(deployedToken);
 
-			DeployState = DeployState.Deploying;
+			DeployState = DeployState.Undeploying;
 		}
 
 		void OnUndeployCompleted()
