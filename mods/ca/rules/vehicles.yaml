@@ -9966,7 +9966,7 @@ AVTR:
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: AvatarFlamer
-		LocalOffset: 500,200,550
+		LocalOffset: 550,200,600
 		MuzzleSequence: muzzle-flame
 		MuzzlePalette: tdeffect
 		RequiresCondition: !blacknapalm-upgrade
@@ -9975,17 +9975,17 @@ AVTR:
 		Weapon: AvatarFlamer.UPG
 		MuzzleSequence: muzzle-black
 		MuzzlePalette: scrin-ignore-lighting-alpha85
-		LocalOffset: 500,200,550
+		LocalOffset: 550,200,600
 		RequiresCondition: blacknapalm-upgrade
 	Armament@FF:
 		Name: secondary
 		Weapon: AvatarFlamerFF
-		LocalOffset: 500,200,550
+		LocalOffset: 550,200,600
 		RequiresCondition: !blacknapalm-upgrade
 	Armament@FFUPG:
 		Name: secondary
 		Weapon: AvatarFlamerFF.UPG
-		LocalOffset: 500,200,550
+		LocalOffset: 550,200,600
 		RequiresCondition: blacknapalm-upgrade
 	AmbientSoundCA@3:
 		SoundFiles: bigflamer-loop1.aud
@@ -10016,21 +10016,36 @@ AVTR:
 	SpawnActorOnDeath:
 		Actor: AVTR.Husk
 		RequiresCondition: !being-warped
-	WithMoveAnimation:
-		ValidMovementTypes: Horizontal, Vertical, Turn
-		RequiresCondition: !unfolding && !attacking
-	WithMoveAnimation@MoveShoot:
-		MoveSequence: moveshoot
-		ValidMovementTypes: Horizontal, Vertical, Turn
-		RequiresCondition: !unfolding && attacking
+	WithFacingSpriteBody:
+		Sequence: bodyidle
+	WithFacingSpriteBody@LegsIdle:
+		Sequence: legsidle
+		Name: legs
+		RequiresCondition: !moving && !movecooldown
+	WithFacingSpriteBody@LegsWalk:
+		Sequence: legsmove
+		Name: legsmove
+		RequiresCondition: moving || movecooldown
+	WithMoveAnimation@BodyMove:
+		ValidMovementTypes: Horizontal, Vertical
+		RequiresCondition: !unfolding
+		MoveSequence: bodymove
+		Body: body
 	WithAttackAnimation@primary:
-		Sequence: shoot
+		Sequence: bodyshoot
 		Armament: primary
 	WithAttackAnimation@primary-upg:
-		Sequence: shoot
+		Sequence: bodyshoot
 		Armament: primary-upg
 	WithEnabledAnimation:
-		Sequence: make
+		Sequence: bodymake
+	GrantConditionOnMovement@Moving:
+		Condition: moving
+		ValidMovementTypes: Horizontal, Vertical, Turn
+	GrantTimedCondition@StoppedMoving:
+		Condition: movecooldown
+		Duration: 3
+		RequiresCondition: !moving
 	GrantTimedCondition@Make:
 		Condition: unfolding
 		Duration: 40
