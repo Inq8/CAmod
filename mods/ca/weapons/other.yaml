@@ -110,7 +110,6 @@ FireballGun:
 
 Napalmtd:
 	ValidTargets: Ground, Water, Trees
-	InvalidTargets: Air
 	ReloadDelay: 50
 	Report: chute1.aud
 	Burst: 7
@@ -370,6 +369,32 @@ HeavyFlameTankFlamerFF:
 		ValidRelationships: Ally
 		DebugOverlayColor: ffaa00
 	-Warhead@2Smu:
+
+HeavyFlameTankFlamerFF.UPG:
+	Inherits: HeavyFlameTankFlamerFF
+	ReloadDelay: 95
+
+AvatarFlamer:
+	Inherits: HeavyFlameTankFlamer
+	Burst: 13
+	BurstDelays: 4
+	Warhead@1Dam: SpreadDamage
+		Damage: 350
+
+AvatarFlamer.UPG:
+	Inherits: HeavyFlameTankFlamer.UPG
+	Burst: 13
+	BurstDelays: 4
+	Warhead@1Dam: SpreadDamage
+		Damage: 360
+
+AvatarFlamerFF:
+	Inherits: HeavyFlameTankFlamerFF
+	Burst: 13
+	BurstDelays: 4
+
+AvatarFlamerFF.UPG:
+	ReloadDelay: 95
 
 BlackHandFlamer:
 	Inherits: HeavyFlameTankFlamer
@@ -1087,7 +1112,6 @@ Laser.Adv:
 		TrackTarget: true
 		ImpactTicks: 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20
 	Warhead@1Dam: SpreadDamage
-		InvalidTargets: Air
 		Spread: 128
 		Damage: 4000
 	Warhead@3Eff: CreateEffect
@@ -1168,7 +1192,7 @@ XOLaser:
 	Inherits: Laser
 	Report: xo-laser.aud
 	ReloadDelay: 110
-	Range: 6c0
+	Range: 7c0
 	Projectile: LaserZapCA
 		Blockable: true
 		Width: 56
@@ -1189,7 +1213,7 @@ XOLaser:
 			Heavy: 100
 
 XOCoilGun:
-	Range: 6c0
+	Range: 7c0
 	ReloadDelay: 70
 	Report: xo-coil1.aud
 	Burst: 2
@@ -1615,7 +1639,6 @@ HopliteGun:
 KirovBomb:
 	ReloadDelay: 25
 	ValidTargets: Ground, Water
-	InvalidTargets: Air
 	Report: bwhis.aud
 	Range: 0c480
 	Projectile: GravityBomb
@@ -1628,7 +1651,6 @@ KirovBomb:
 		Spread: 1c0
 		Falloff: 100, 40, 20, 5
 		Damage: 13000
-		InvalidTargets: Air
 		Versus:
 			None: 40
 			Wood: 100
@@ -1918,7 +1940,7 @@ Railgun:
 	ReloadDelay: 70
 	Range: 8c0
 	Report: railuse5.aud
-	InvalidTargets: Air, Submarine
+	InvalidTargets: Submarine
 	Projectile: RailgunCA
 		Duration: 10
 		Blockable: true
@@ -1935,7 +1957,7 @@ Railgun:
 		Falloff: 100, 37, 14, 5, 0
 		Damage: 9500
 		ValidRelationships: Ally, Neutral, Enemy
-		InvalidTargets: Air, Submarine
+		InvalidTargets: Submarine
 		Versus:
 			None: 100
 			Wood: 65
@@ -1998,7 +2020,6 @@ IonZap:
 	ReloadDelay: 85
 	Range: 5c768
 	Report: ion1.aud
-	InvalidTargets: Air
 	Projectile: Railgun
 		Duration: 7
 		Blockable: true
@@ -2022,7 +2043,6 @@ IonZap:
 	Warhead@1Dam: SpreadDamage
 		Damage: 12000
 		Spread: 448
-		InvalidTargets: Air
 		AffectsParent: false
 		Versus:
 			None: 30
@@ -2040,7 +2060,6 @@ IonZap:
 
 BurnFX:
 	ValidTargets: Ground, Water, Trees
-	InvalidTargets: Air
 	ReloadDelay: 20
 	Range: 0c128
 	Projectile: Bullet
@@ -2068,7 +2087,6 @@ LaserFence:
 
 OrcaBomb:
 	ValidTargets: Ground, Water
-	InvalidTargets: Air
 	ReloadDelay: 50
 	Report: chute1.aud
 	Burst: 3
@@ -2297,7 +2315,7 @@ Cloud:
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Delay: 5
 		ValidTargets: Ground, Trees
-		InvalidTargets: Air, Creep
+		InvalidTargets: Creep
 		Versus:
 			None: 120
 			Wood: 0
@@ -2781,7 +2799,6 @@ DisruptorPulse.Amp.Seek3:
 
 JDAM:
 	ValidTargets: Ground, Water, Trees
-	InvalidTargets: Air
 	ReloadDelay: 50
 	Report: bwhis.aud
 	Range: 3c0
@@ -3222,7 +3239,7 @@ AvatarLaser:
 		SecondaryBeamZOffset: 511
 		SecondaryBeamColor: FF000099
 	Warhead@1Dam: SpreadDamage
-		Spread: 128
+		Spread: 42
 		Damage: 26000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		Versus:
@@ -3245,7 +3262,7 @@ AvatarLaser.Adv:
 	Range: 6c0
 	-Projectile:
 	Projectile: PlasmaBeam
-		Duration: 8
+		Duration: 9
 		SecondaryCenterBeam: true
 		Colors: FF00BB80, FF0000A0, FF002270
 		InnerLightness: 200
@@ -3254,17 +3271,16 @@ AvatarLaser.Adv:
 		Distortion: 0
 		DistortionAnimation: 96
 		StartOffset: 0,80,0
-		FollowingOffset: 0,-8,0
+		FollowingOffset: 0,-20,0
 		RecalculateColors: true
 		TrackTarget: true
-		ImpactTicks: 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20
+		ImpactTicks: 0, 2, 4, 6, 8
 	Warhead@1Dam: SpreadDamage
-		InvalidTargets: Air
 		Spread: 128
-		Damage: 3000
+		Damage: 5500
 	Warhead@3Eff: CreateEffect
 		Explosions: small_explosion, small_explosion_alt1, small_explosion_alt2, small_explosion_alt3
-		
+
 ShadeEmp:
 	ReloadDelay: 100
 	Range: 7c0

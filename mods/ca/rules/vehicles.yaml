@@ -2060,6 +2060,8 @@ HARV:
 	GrantConditionOnPrerequisite@Deceit:
 		Condition: deceit-covenant
 		Prerequisites: deceit.covenant
+	ReplacedInQueue:
+		Actors: harv.Chrono
 
 HARV.Chrono:
 	Inherits: HARV
@@ -5378,7 +5380,7 @@ HFTK:
 		LocalOffset: 750,200,150, 750,-200,150
 		RequiresCondition: !blacknapalm-upgrade
 	Armament@FFUPG:
-		Weapon: HeavyFlameTankFlamerFF
+		Weapon: HeavyFlameTankFlamerFF.UPG
 		LocalOffset: 750,200,150, 750,-200,150
 		RequiresCondition: blacknapalm-upgrade
 	AttackTurreted:
@@ -9034,12 +9036,12 @@ XO:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 26000
+		HP: 22500
 	Armor:
 		Type: Light
 	Mobile:
 		TurnSpeed: 64
-		Speed: 68
+		Speed: 60
 		Voice: Move
 	Passenger:
 		Voice: Move
@@ -9941,67 +9943,59 @@ AVTR:
 		Range: 4c0
 	Armament@PRIMARY:
 		Weapon: AvatarLaser
-		LocalOffset: 750,400,350
+		LocalOffset: 850,400,250
 		MuzzleSequence: muzzle
 		MuzzlePalette: caneon
 		RequiresCondition: !quantum-upgrade
 	Armament@PRIMARYUPG:
 		Name: primary-upg
 		Weapon: AvatarLaser.Adv
-		LocalOffset: 750,400,350
+		LocalOffset: 850,400,250
 		MuzzleSequence: muzzle
 		MuzzlePalette: caneon
 		RequiresCondition: quantum-upgrade
 	Armament@SECONDARY:
 		Name: secondary
-		Weapon: HeavyFlameTankFlamer
-		LocalOffset: 750,400,350
+		Weapon: AvatarFlamer
+		LocalOffset: 500,200,550
 		MuzzleSequence: muzzle-flame
 		MuzzlePalette: tdeffect
 		RequiresCondition: !blacknapalm-upgrade
 	Armament@SECONDARYUPG:
 		Name: secondary
-		Weapon: HeavyFlameTankFlamer.UPG
+		Weapon: AvatarFlamer.UPG
 		MuzzleSequence: muzzle-black
 		MuzzlePalette: scrin-ignore-lighting-alpha85
-		LocalOffset: 750,400,350
+		LocalOffset: 500,200,550
 		RequiresCondition: blacknapalm-upgrade
 	Armament@FF:
 		Name: secondary
-		Weapon: HeavyFlameTankFlamerFF
-		LocalOffset: 750,400,350
+		Weapon: AvatarFlamerFF
+		LocalOffset: 500,200,550
 		RequiresCondition: !blacknapalm-upgrade
 	Armament@FFUPG:
 		Name: secondary
-		Weapon: HeavyFlameTankFlamerFF
-		LocalOffset: 750,400,350
+		Weapon: AvatarFlamerFF.UPG
+		LocalOffset: 500,200,550
 		RequiresCondition: blacknapalm-upgrade
-	AmbientSoundCA@1:
-		RequiresCondition: aiming && !quantum-upgrade
-		SoundFiles: obelpowr.aud
-		Interval: 20
-	AmbientSoundCA@2:
-		RequiresCondition: aiming && quantum-upgrade
-		SoundFiles: obelpowr2.aud
-		Interval: 20
 	AmbientSoundCA@3:
 		SoundFiles: bigflamer-loop1.aud
 		InitialSound: bigflamer-start1.aud
 		FinalSound: bigflamer-end1.aud
-		RequiresCondition: attacking
+		RequiresCondition: flaming
 		InitialSoundLength: 24
-	GrantConditionOnAttackCA:
+	GrantConditionOnAttack@Flaming:
 		ArmamentNames: secondary
-		Condition: attacking
+		Condition: flaming
 		RevokeDelay: 10
-	GrantConditionWhileAiming:
-		Condition: aiming
-	AttackFrontal:
+	AttackFollowFrontal:
 		Armaments: primary, primary-upg, secondary
 		TargetFrozenActors: True
 		PauseOnCondition: empdisable || being-warped || blinded
-		FacingTolerance: 48
+		FacingTolerance: 64
 		Voice: Attack
+		MustFaceTarget: true
+		FireWhileMoving: false
 	WithMuzzleOverlay:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -10016,6 +10010,10 @@ AVTR:
 	WithMoveAnimation:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 		RequiresCondition: !unfolding && !attacking
+	WithMoveAnimation@MoveShoot:
+		MoveSequence: moveshoot
+		ValidMovementTypes: Horizontal, Vertical, Turn
+		RequiresCondition: !unfolding && attacking
 	WithAttackAnimation@primary:
 		Sequence: shoot
 		Armament: primary
@@ -10027,9 +10025,10 @@ AVTR:
 	GrantTimedCondition@Make:
 		Condition: unfolding
 		Duration: 40
-	GrantConditionOnAttack@Attack:
+	GrantConditionOnAttack@Laser:
+		ArmamentNames: primary, primary-upg
 		Condition: attacking
-		RevokeDelay: 18
+		RevokeDelay: 25
 	ChangesHealth:
 		PercentageStep: 1
 		Delay: 25
