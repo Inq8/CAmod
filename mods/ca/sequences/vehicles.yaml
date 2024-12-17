@@ -2972,14 +2972,52 @@ mole.destroyed:
 
 avtr:
 	Inherits: ^VehicleOverlays
+	Defaults:
+		Offset: 0, -3
 	idle:
-		Filename: avtr.shp
+		Filename: avtrbody.shp
 		Facings: 32
 		UseClassicFacings: True
+		ZOffset: 512
+	bodyidle:
+		Filename: avtrbody.shp
+		Facings: 32
+		UseClassicFacings: True
+		ZOffset: 512
+	bodymove:
+		Filename: avtrbody.shp
+		Start: 32
+		Facings: 32
+		UseClassicFacings: True
+		ZOffset: 512
+	bodyshoot:
+		Filename: avtrbody.shp
+		Start: 64
+		Facings: 32
+		UseClassicFacings: True
+		ZOffset: 512
+		Tick: 750
+	bodymake:
+		Filename: avtrbody.shp
+		Start: 96
+		Facings: 16
+		Length: 10
+		Tick: 140
+		ZOffset: 512
+	legsidle:
+		Filename: avtrlegs.shp
+		Facings: 32
+	legsmove:
+		Filename: avtrlegs.shp
+		Start: 32
+		Facings: 32
+		Length: 10
+		Tick: 140
 	muzzle:
 		Filename: lasermuzzle.shp
 		Frames: 0,1,2,1,2,1,2,1,2
 		Length: *
+		Offset:	0, 0
 	muzzle-flame:
 		Combine:
 			0:
@@ -3016,42 +3054,20 @@ avtr:
 				Offset: -7,8
 		Facings: 8
 		Length: 13
+		Offset:	0, 0
 	muzzle-black:
 		Filename: flameblack.shp
 		Length: 13
 		Facings: 8
-	move:
-		Filename: avtr.shp
-		Start: 32
-		Facings: 16
-		Length: 10
-		Tick: 140
-	shoot:
-		Filename: avtr.shp
-		Start: 192
-		Facings: 32
-		Length: 1
-		Tick: 750
-	moveshoot:
-		Filename: avtr.shp
-		Start: 384
-		Facings: 16
-		Length: 10
-		Tick: 140
-	make:
-		Filename: avtr.shp
-		Start: 224
-		Facings: 16
-		Length: 10
-		Tick: 140
+		Offset:	0, 0
 	icon:
 		Filename: avtricnh.shp
+		Offset:	0, 0
 
 avtr.destroyed:
 	Inherits: ^VehicleOverlays
 	idle:
-		Filename: avtr.shp
-		Start: 224
-		Facings: 16
-		Stride: 10
+		Filename: avtrlegs.shp
+		Facings: 32
 		ZOffset: -512
+		Offset: 0, -3

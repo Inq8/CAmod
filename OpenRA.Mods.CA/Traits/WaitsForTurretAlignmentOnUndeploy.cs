@@ -21,6 +21,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Turret names")]
 		public readonly string[] Turrets = { "primary" };
 
+		[Desc("Condition to grant while aligning turrets.")]
+		public readonly string AligningCondition = null;
+
 		public override object Create(ActorInitializer init) { return new WaitsForTurretAlignmentOnUndeploy(init, this); }
 	}
 
@@ -31,6 +34,8 @@ namespace OpenRA.Mods.CA.Traits
 		readonly IEnumerable<INotifyDeployComplete> notify;
 		bool deployAligning;
 		bool undeployAligning;
+
+		int aligningToken = Actor.InvalidConditionToken;
 
 		public WaitsForTurretAlignmentOnUndeploy(ActorInitializer init, WaitsForTurretAlignmentOnUndeployInfo info)
 		{
@@ -61,17 +66,26 @@ namespace OpenRA.Mods.CA.Traits
 				}
 
 				deployAligning = undeployAligning = false;
+
+				if (Info.AligningCondition != null && aligningToken != Actor.InvalidConditionToken)
+					aligningToken = self.RevokeCondition(aligningToken);
 			}
 		}
 
 		void INotifyDeployTriggered.Deploy(Actor self, bool skipMakeAnim)
 		{
 			deployAligning = true;
+
+			if (Info.AligningCondition != null && aligningToken == Actor.InvalidConditionToken)
+				aligningToken = self.GrantCondition(Info.AligningCondition);
 		}
 
 		void INotifyDeployTriggered.Undeploy(Actor self, bool skipMakeAnim)
 		{
 			undeployAligning = true;
+
+			if (Info.AligningCondition != null && aligningToken == Actor.InvalidConditionToken)
+				aligningToken = self.GrantCondition(Info.AligningCondition);
 		}
 	}
 }
