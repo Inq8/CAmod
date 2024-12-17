@@ -5033,6 +5033,7 @@ STNK.Nod:
 		Attributes: • Can be spotted by nearby infantry and defense structures
 	Mobile:
 		Speed: 126
+		Voice: Move
 	Health:
 		HP: 20000
 	Armor:
@@ -5083,6 +5084,7 @@ STNK.Nod:
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped || blinded || parachute
 		PersistentTargeting: false
+		Voice: Attack
 	WithSpriteTurret:
 	AutoTarget:
 		InitialStance: HoldFire
@@ -5111,6 +5113,12 @@ STNK.Nod:
 		Actor: hstk
 		UpgradeAtActors: fix, rep, srep
 		RequiresCondition: !mindcontrolled
+	Voiced:
+		VoiceSet: STNKVoice
+	Passenger:
+		Voice: Move
+	AttackMove:
+		Voice: Attack
 
 HSTK:
 	Inherits: ^TankTD
@@ -5139,6 +5147,7 @@ HSTK:
 		Attributes: • Can be spotted by nearby infantry and defense structures
 	Mobile:
 		Speed: 100
+		Voice: Move
 	Health:
 		HP: 28000
 	Armor:
@@ -5189,6 +5198,7 @@ HSTK:
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped || blinded || parachute
 		PersistentTargeting: false
+		Voice: Attack
 	WithSpriteTurret:
 	AutoTarget:
 		InitialStance: HoldFire
@@ -5209,6 +5219,12 @@ HSTK:
 		ColorSource: Player
 	DamageTypeDamageMultiplier@A2GPROTECTION:
 		Modifier: 60
+	Voiced:
+		VoiceSet: HSTKVoice
+	Passenger:
+		Voice: Move
+	AttackMove:
+		Voice: Attack
 
 BIKE:
 	Inherits: ^VehicleTD
