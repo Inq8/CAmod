@@ -39,7 +39,7 @@ EnforceAiBuildRadius = false
 
 ConyardTypes = { "fact", "afac", "sfac" }
 
-HarvesterTypes = { "harv", "harv.td", "harv.scrin", "harv.chrono" }
+HarvesterTypes = { "harv", "harv.td", "harv.td.upg", "harv.scrin", "harv.chrono" }
 
 FactoryTypes = { "weap", "weap.td", "wsph", "airs" }
 

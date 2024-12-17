@@ -274,11 +274,6 @@ namespace OpenRA.Mods.CA.Traits
 
 		Color ISelectionBar.GetColor() { return Info.ShowCooldownSelectionBar && cooldownTicks > 0 && Charges > 0 ? Info.CooldownSelectionBarColor : Info.SelectionBarColor; }
 		bool ISelectionBar.DisplayWhenEmpty => false;
-
-		protected override void TraitDisabled(Actor self)
-		{
-			chargeTick = 0;
-		}
 	}
 
 	class TargetableLeapOrderTargeterOrderTargeter : IOrderTargeter

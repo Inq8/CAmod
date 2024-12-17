@@ -49,12 +49,14 @@ namespace OpenRA.Mods.Common.Traits.Render
 
 		void INotifyAddedToWorld.AddedToWorld(Actor self)
 		{
-			self.World.AddFrameEndTask(w => w.Add(new SpriteEffect(self.CenterPosition, w, info.Image, info.EnterSequence, info.Palette, delay: 0)));
+			if (info.EnterSequence != null)
+				self.World.AddFrameEndTask(w => w.Add(new SpriteEffect(self.CenterPosition, w, info.Image, info.EnterSequence, info.Palette, delay: 0)));
 		}
 
 		void INotifyRemovedFromWorld.RemovedFromWorld(Actor self)
 		{
-			self.World.AddFrameEndTask(w => w.Add(new SpriteEffect(self.CenterPosition, w, info.Image, info.ExitSequence, info.Palette, delay: 0)));
+			if (info.ExitSequence != null)
+				self.World.AddFrameEndTask(w => w.Add(new SpriteEffect(self.CenterPosition, w, info.Image, info.ExitSequence, info.Palette, delay: 0)));
 		}
 	}
 }

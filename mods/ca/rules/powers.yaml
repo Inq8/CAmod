@@ -320,23 +320,23 @@
 		TargetCircleRange: 8c0
 		TargetCircleColor: ffff00AA
 
-^PatriotStrikePower:
-	MissileStrikePower@PatriotStrike:
-		MissileActor: kpat
-		Range: 7c0
-		OrderName: patriotstrike
+^BlackSkyStrikePower:
+	MissileStrikePower@BlackSkyStrike:
+		MissileActor: bsky
+		Range: 6c0
+		OrderName: blackskystrike
 		Prerequisites: ~korea.coalition, ~alhq
-		Icon: kpat
+		Icon: bsky
 		IconPalette: chrome
 		ChargeInterval: 9000
-		Name: Patriot Strike
-		Description: \nFires long range guided missiles at multiple air targets.\n    Tracking can be lost if targets move far enough from their initial location.
+		Name: Black Sky Strike
+		Description: \nFires long range guided missiles at multiple ground targets prioritized by value.\n    Tracking can be lost if targets move far enough from their initial location.
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
-		EndChargeSpeechNotification: PatriotStrikeReady
-		EndChargeTextNotification: Patriot Strike ready.
-		IncomingSpeechNotification: PatriotStrikeWarning
-		IncomingTextNotification: Patriot missiles approaching.
+		EndChargeSpeechNotification: BlackSkyStrikeReady
+		EndChargeTextNotification: Black Sky Strike ready.
+		IncomingSpeechNotification: BlackSkyStrikeWarning
+		IncomingTextNotification: Black Sky missiles approaching.
 		DisplayBeacon: true
 		SupportPowerPaletteOrder: 25
 		ShowSelectionBoxes: true
@@ -345,13 +345,15 @@
 		TargetCircleColor: ffffff
 		TargetTintColor: ffffff44
 		ValidRelationships: Enemy, Neutral
-		LaunchSounds: kpat-fire.aud
-		MissileCount: 8
+		LaunchSounds: bsky-fire.aud
+		MissileCount: 6
 		MissilesPerLaunch: 2
-		MaxTargets: 8
-		ValidTargets: Air, AirSmall
+		MaxTargets: 6
+		ValidTargets: Vehicle, Infantry, Defense
 		SpawnFromDirection: Launcher
 		SpawnDistance: 96c0
+		LaunchAltitude: 10c0
+		PrioritizeTargetsBy: Value
 
 ^ChronoshiftPower:
 	ChronoshiftPowerCA@chronoshift:

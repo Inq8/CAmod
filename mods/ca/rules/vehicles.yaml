@@ -333,12 +333,9 @@ NUKC:
 		RequiresCondition: undeployed && !moving && !deploying && !undeploying
 		ArmamentNames: deployer
 	AutoTarget:
-		RequiresCondition: (botowner || deployed || attack-move) && !undeploying && !deploying
+		RequiresCondition: (botowner || deployed || attack-move || assault-move) && !undeploying && !deploying
 	AttackMove:
 		AttackMoveCondition: attack-move
-		AssaultMoveCondition: attack-move
-	AutoTargetPriority@ATTACKANYTHING:
-		RequiresCondition: stance-attackanything || attack-move
 	WithRangeCircle:
 		Type: NukeCannon
 		Range: 16c0
@@ -2055,24 +2052,8 @@ HARV:
 	TransferResourcesOnTransform:
 	UpdatesKillCount:
 		Type: BuildingsOrHarvesters
-	Cloak@Deceit:
-		InitialDelay: 75
-		CloakDelay: 76
-		CloakSound: trans1.aud
-		CloakedCondition: hidden
-		UncloakSound: appear1md.aud
-		Palette: cloak
-		IsPlayerPalette: false
-		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
-		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead && !parachute && deceit-covenant
-		PauseOnCondition: invisibility
-	Cloak@CRATE-CLOAK:
-		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
-	GrantConditionOnPrerequisite@Deceit:
-		Condition: deceit-covenant
-		Prerequisites: deceit.covenant
 	ReplacedInQueue:
-		Actors: harv.Chrono
+		Actors: harv.chrono
 
 HARV.Chrono:
 	Inherits: HARV
@@ -5573,13 +5554,10 @@ HARV.TD.UPG:
 		Palette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
-		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead && !parachute && deceit-covenant
+		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead && !parachute
 		PauseOnCondition: invisibility
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
-	GrantConditionOnPrerequisite@Deceit:
-		Condition: deceit-covenant
-		Prerequisites: deceit.covenant
 	SpawnActorOnDeath:
 		Actor: HARV.TD.UPG.Husk
 	-Upgradeable@SHARV:
@@ -5880,7 +5858,7 @@ TRPC:
 		Weaknesses: • Unarmed
 		Attributes: • Empowers nearby basic infantry\n• Heals all nearby infantry\n• Detects cloaked units and mines
 	Valued:
-		Cost: 1600
+		Cost: 1500
 	Tooltip:
 		Name: Troop Crawler
 	UpdatesPlayerStatistics:
@@ -9766,14 +9744,14 @@ TH:
 		Range: 1c511, 3c0
 		RequiresCondition: airborne
 
-KPAT:
+BSKY:
 	Inherits: ^ShootableMissile
 	RenderSprites:
-		Image: kpat
+		Image: bsky
 	Valued:
 		Cost: 50
 	Tooltip:
-		Name: Patriot Missile
+		Name: Black Sky Missile
 	Health:
 		HP: 5000
 	GuidedMissile:
@@ -9790,11 +9768,10 @@ KPAT:
 		Range: 3c512
 		Type: GroundPosition
 	Explodes:
-		Weapon: KPAT
+		Weapon: BSKY
 	WithEnterExitWorldOverlay:
 		Image: smigboom
 		EnterSequence: enter
-		ExitSequence: exit
 		Palette: effect
 
 ZEUS:

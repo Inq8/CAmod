@@ -4735,17 +4735,32 @@ HOPL:
 	Inherits: ENFO
 	Buildable:
 		Prerequisites: ~tent, alhq, ~greece.coalition, ~techlevel.high
-		Description: Elite front-line infantry armed with a prism rifle.
+		Description: Elite front-line infantry armed with a prism rifle\n  which periodically fires charged shots to blind enemies.
 	Tooltip:
 		Name: Hoplite
 	Armament@PRIMARY:
 		Weapon: HopliteGun
 		LocalOffset: 350,40,341
+		PauseOnCondition: ammo || secondary-charging
+		ReloadingCondition: primary-charging
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: HopliteGunCharged
+		LocalOffset: 350,0,341
+		PauseOnCondition: !ammo || primary-charging
+		ReloadingCondition: secondary-charging
 	Armament@BATF:
 		Weapon: HopliteGun
 	Voiced:
 		VoiceSet: HopliteVoice
 	-ReplacedInQueue:
+	AmmoPool@Charged:
+		Ammo: 1
+		AmmoCondition: ammo
+		Armaments: secondary
+	ReloadAmmoPool@Charged:
+		Delay: 220
+		Count: 1
 
 CRYT:
 	Inherits: ^Soldier
@@ -4762,7 +4777,7 @@ CRYT:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Buildings, Defenses\n• Cannot attack Aircraft
 	Valued:
-		Cost: 600
+		Cost: 700
 	Tooltip:
 		Name: Cryo Trooper
 	UpdatesPlayerStatistics:

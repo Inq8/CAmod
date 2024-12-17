@@ -390,7 +390,10 @@ namespace OpenRA.Mods.CA.Traits
 
 		protected override void TraitDisabled(Actor self)
 		{
-			chargeTick = 0;
+			if (self.CurrentActivity is TeleportCA)
+				self.CancelActivity();
+
+			preChargeTicks = 0;
 
 			if (token != Actor.InvalidConditionToken)
 				token = self.RevokeCondition(token);

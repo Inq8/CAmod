@@ -1609,7 +1609,7 @@ PrisCLaser:
 
 HopliteGun:
 	ReloadDelay: 55
-	Range: 5c0
+	Range: 4c0
 	Report: hopl-fire1.aud
 	Projectile: LaserZapCA
 		Width: 40
@@ -1635,6 +1635,22 @@ HopliteGun:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees, Creep
+
+HopliteGunCharged:
+	Inherits: HopliteGun
+	Report: hopl-cfire1.aud
+	Projectile: LaserZapCA
+		Color: fffdcdC8
+		SecondaryBeamColor: fff30060
+	Warhead@Blind: GrantExternalConditionCA
+		Range: 0c341
+		Duration: 50
+		Condition: blinded
+		ValidTargets: Infantry, Vehicle, Ship
+	Warhead@3Eff: CreateEffect
+		Explosions: idle
+		ExplosionPalette: caneon
+		Image: nullhit
 
 KirovBomb:
 	ReloadDelay: 25
