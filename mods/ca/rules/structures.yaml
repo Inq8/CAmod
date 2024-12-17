@@ -4127,10 +4127,30 @@ PROC.TD:
 		Types: StealCreditsInfiltrate
 		Percentage: 50
 		InfiltrationNotification: CreditsStolen
+	GrantConditionOnPrerequisite@SHARVUPG:
+		Prerequisites: sharv.upgrade
+		Condition: sharv-upgraded
+	GrantConditionOnPrerequisite@NOSHARVUPG:
+		Prerequisites: !sharv.upgrade
+		Condition: sharv-notupgraded
+	GrantCondition@SPAWNHARV:
+		Condition: spawn-harv
+		GrantPermanently: true
+		RequiresCondition: sharv-notupgraded
+	GrantCondition@SPAWNSHARV:
+		Condition: spawn-sharv
+		GrantPermanently: true
+		RequiresCondition: sharv-upgraded
 	FreeActor:
 		Actor: HARV.TD
 		SpawnOffset: 1,2
 		Facing: 256
+		RequiresCondition: spawn-harv && !spawn-sharv && !build-incomplete
+	FreeActor@SHARV:
+		Actor: HARV.TD.UPG
+		SpawnOffset: 1,2
+		Facing: 256
+		RequiresCondition: spawn-sharv && !spawn-harv && !build-incomplete
 	WithResourceLevelOverlay:
 		RequiresCondition: !build-incomplete
 	Power:

@@ -788,7 +788,7 @@ Player:
 					CheckRadius: 7c0
 	HarvesterBotModuleCA:
 		RequiresCondition: enable-brutal-ai || enable-vhard-ai || enable-hard-ai || enable-normal-ai || enable-easy-ai || enable-naval-ai
-		HarvesterTypes: harv,harv.td,harv.scrin,harv.chrono
+		HarvesterTypes: harv,harv.td,harv.td.upg,harv.scrin,harv.chrono
 		RefineryTypes: proc,proc.td,proc.scrin
 	CaptureManagerBotModuleCA:
 		RequiresCondition: enable-brutal-ai || enable-vhard-ai || enable-hard-ai || enable-normal-ai || enable-easy-ai
@@ -2081,7 +2081,7 @@ Player:
 		SquadSize: 25
 		SquadSizeRandomBonus: 11
 		AirUnitsTypes: heli, harr, pmak, beag, hind, yak, mig, suk, suk.upg, kiro, orca, a10, a10.upg, orcb, auro, apch, venm, rah, scrn, stmr, torm, enrv, mshp, phan, kamv, shde, vert, mcor
-		ExcludeFromSquadsTypes: harv, harv.td, harv.scrin, harv.chrono, mcv, amcv, smcv, dog, e6, n6, s6, badr, badr.bomber, badr.cbomber, badr.nbomber, badr.mbomber, b2b, p51, tran.paradrop, halo.paradrop, nhaw.paradrop, u2, smig, a10.bomber, c17, c17.cargo, c17.clustermines, c17.xo, galx, uav, ocar.reinforce, ocar.xo, ocar.pod, horn, yf23.bomber, pod, pod2, pod3, buzz, buzz.ai, mspk
+		ExcludeFromSquadsTypes: harv, harv.td, harv.td.upg, harv.scrin, harv.chrono, mcv, amcv, smcv, dog, e6, n6, s6, badr, badr.bomber, badr.cbomber, badr.nbomber, badr.mbomber, b2b, p51, tran.paradrop, halo.paradrop, nhaw.paradrop, u2, smig, a10.bomber, c17, c17.cargo, c17.clustermines, c17.xo, galx, uav, ocar.reinforce, ocar.xo, ocar.pod, horn, yf23.bomber, pod, pod2, pod3, buzz, buzz.ai, mspk
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,dd2,pt2,ss2,isub,sb,seas
 		NavalProductionTypes: syrd, spen, syrd.gdi, spen.nod
 		ConstructionYardTypes: fact,afac,sfac
@@ -2133,6 +2133,7 @@ Player:
 			smcv: 3000
 			harv: 2250
 			harv.td: 2250
+			harv.td.upg: 2250
 			harv.scrin: 2250
 			harv.chrono: 2250
 			rmbo: 2250
@@ -2393,6 +2394,7 @@ Player:
 			seas: 10
 			harv: 8
 			harv.td: 8
+			harv.td.upg: 8
 			harv.scrin: 8
 			harv.chrono: 8
 	SquadManagerBotModuleCA@hard:
@@ -2403,7 +2405,7 @@ Player:
 		SquadSize: 22
 		SquadSizeRandomBonus: 9
 		AirUnitsTypes: heli, harr, pmak, beag, hind, yak, mig, suk, suk.upg, kiro, orca, a10, a10.upg, orcb, auro, apch, venm, rah, scrn, stmr, torm, enrv, mshp, phan, kamv, shde, vert, mcor
-		ExcludeFromSquadsTypes: harv, harv.td, harv.scrin, harv.chrono, mcv, amcv, smcv, dog, e6, n6, s6, badr, badr.bomber, badr.cbomber, badr.nbomber, badr.mbomber, b2b, p51, tran.paradrop, halo.paradrop, nhaw.paradrop, u2, smig, a10.bomber, c17, c17.cargo, c17.clustermines, c17.xo, galx, uav, ocar.reinforce, ocar.xo, ocar.pod, horn, yf23.bomber, pod, pod2, pod3, buzz, buzz.ai, mspk
+		ExcludeFromSquadsTypes: harv, harv.td, harv.td.upg, harv.scrin, harv.chrono, mcv, amcv, smcv, dog, e6, n6, s6, badr, badr.bomber, badr.cbomber, badr.nbomber, badr.mbomber, b2b, p51, tran.paradrop, halo.paradrop, nhaw.paradrop, u2, smig, a10.bomber, c17, c17.cargo, c17.clustermines, c17.xo, galx, uav, ocar.reinforce, ocar.xo, ocar.pod, horn, yf23.bomber, pod, pod2, pod3, buzz, buzz.ai, mspk
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,dd2,pt2,ss2,isub,sb,seas
 		NavalProductionTypes: syrd, spen, syrd.gdi, spen.nod
 		ConstructionYardTypes: fact,afac,sfac
@@ -2455,6 +2457,7 @@ Player:
 			smcv: 3750
 			harv: 2250
 			harv.td: 2250
+			harv.td.upg: 2250
 			harv.scrin: 2250
 			harv.chrono: 2250
 			rmbo: 3000
@@ -2715,6 +2718,7 @@ Player:
 			seas: 10
 			harv: 8
 			harv.td: 8
+			harv.td.upg: 8
 			harv.scrin: 8
 			harv.chrono: 8
 	SquadManagerBotModuleCA@normal:
@@ -2725,7 +2729,7 @@ Player:
 		SquadSize: 18
 		SquadSizeRandomBonus: 8
 		AirUnitsTypes: heli, harr, pmak, beag, hind, yak, mig, suk, suk.upg, kiro, orca, a10, a10.upg, orcb, auro, apch, venm, rah, scrn, stmr, torm, enrv, mshp, phan, kamv, shde, vert, mcor
-		ExcludeFromSquadsTypes: harv, harv.td, harv.scrin, harv.chrono, mcv, amcv, smcv, dog, e6, n6, s6, badr, badr.bomber, badr.cbomber, badr.nbomber, badr.mbomber, b2b, p51, tran.paradrop, halo.paradrop, nhaw.paradrop, u2, smig, a10.bomber, c17, c17.cargo, c17.clustermines, c17.xo, galx, uav, ocar.reinforce, ocar.xo, ocar.pod, horn, yf23.bomber, pod, pod2, pod3, buzz, buzz.ai, mspk
+		ExcludeFromSquadsTypes: harv, harv.td, harv.td.upg, harv.scrin, harv.chrono, mcv, amcv, smcv, dog, e6, n6, s6, badr, badr.bomber, badr.cbomber, badr.nbomber, badr.mbomber, b2b, p51, tran.paradrop, halo.paradrop, nhaw.paradrop, u2, smig, a10.bomber, c17, c17.cargo, c17.clustermines, c17.xo, galx, uav, ocar.reinforce, ocar.xo, ocar.pod, horn, yf23.bomber, pod, pod2, pod3, buzz, buzz.ai, mspk
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,pt2,ss2,dd2,isub,sb,seas
 		ConstructionYardTypes: fact,afac,sfac
 		StaticAntiAirTypes: agun, sam, nsam, cram, shar
@@ -2745,6 +2749,7 @@ Player:
 			mshp: 7500
 			harv: 2250
 			harv.td: 2250
+			harv.td.upg: 2250
 			harv.scrin: 2250
 			harv.chrono: 2250
 			rmbo: 3750
@@ -2997,6 +3002,7 @@ Player:
 			seas: 10
 			harv: 8
 			harv.td: 8
+			harv.td.upg: 8
 			harv.scrin: 8
 			harv.chrono: 8
 	SquadManagerBotModuleCA@easy:
@@ -3007,7 +3013,7 @@ Player:
 		SquadSize: 14
 		SquadSizeRandomBonus: 5
 		AirUnitsTypes: heli, harr, pmak, beag, hind, yak, mig, suk, suk.upg, kiro, orca, a10, a10.upg, orcb, auro, apch, venm, rah, scrn, stmr, torm, enrv, mshp, phan, kamv, shde, vert, mcor
-		ExcludeFromSquadsTypes: harv, harv.td, harv.scrin, harv.chrono, mcv, amcv, smcv, dog, e6, n6, s6, badr, badr.bomber, badr.cbomber, badr.nbomber, badr.mbomber, b2b, p51, tran.paradrop, halo.paradrop, nhaw.paradrop, u2, smig, a10.bomber, c17, c17.cargo, c17.clustermines, c17.xo, galx, uav, ocar.reinforce, ocar.xo, ocar.pod, horn, yf23.bomber, pod, pod2, pod3, buzz, buzz.ai, mspk
+		ExcludeFromSquadsTypes: harv, harv.td, harv.td.upg, harv.scrin, harv.chrono, mcv, amcv, smcv, dog, e6, n6, s6, badr, badr.bomber, badr.cbomber, badr.nbomber, badr.mbomber, b2b, p51, tran.paradrop, halo.paradrop, nhaw.paradrop, u2, smig, a10.bomber, c17, c17.cargo, c17.clustermines, c17.xo, galx, uav, ocar.reinforce, ocar.xo, ocar.pod, horn, yf23.bomber, pod, pod2, pod3, buzz, buzz.ai, mspk
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,pt2,ss2,dd2,isub,sb,seas
 		ConstructionYardTypes: fact,afac,sfac
 		StaticAntiAirTypes: agun, sam, nsam, cram, shar
@@ -3027,6 +3033,7 @@ Player:
 			mshp: 7500
 			harv: 2250
 			harv.td: 2250
+			harv.td.upg: 2250
 			harv.scrin: 2250
 			harv.chrono: 2250
 			rmbo: 4500
@@ -3279,6 +3286,7 @@ Player:
 			seas: 10
 			harv: 8
 			harv.td: 8
+			harv.td.upg: 8
 			harv.scrin: 8
 			harv.chrono: 8
 	SquadManagerBotModuleCA@naval:
@@ -3286,7 +3294,7 @@ Player:
 		MinimumAttackForceDelay: 25
 		SquadSize: 1
 		AirUnitsTypes: heli, harr, pmak, beag, hind, yak, mig, suk, suk.upg, kiro, orca, a10, a10.upg, orcb, auro, apch, venm, rah, scrn, stmr, torm, enrv, mshp, phan, kamv, shde, vert, mcor
-		ExcludeFromSquadsTypes: harv, harv.td, harv.scrin, harv.chrono, mcv, amcv, smcv, dog, e6, n6, s6, badr, badr.bomber, badr.cbomber, badr.nbomber, badr.mbomber, b2b, p51, tran.paradrop, halo.paradrop, nhaw.paradrop, u2, smig, a10.bomber, c17, c17.cargo, c17.clustermines, c17.xo, galx, uav, ocar.reinforce, ocar.xo, ocar.pod, horn, yf23.bomber, pod, pod2, pod3, buzz, buzz.ai, mspk
+		ExcludeFromSquadsTypes: harv, harv.td, harv.td.upg, harv.scrin, harv.chrono, mcv, amcv, smcv, dog, e6, n6, s6, badr, badr.bomber, badr.cbomber, badr.nbomber, badr.mbomber, b2b, p51, tran.paradrop, halo.paradrop, nhaw.paradrop, u2, smig, a10.bomber, c17, c17.cargo, c17.clustermines, c17.xo, galx, uav, ocar.reinforce, ocar.xo, ocar.pod, horn, yf23.bomber, pod, pod2, pod3, buzz, buzz.ai, mspk
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,pt2,dd2,ss2,isub,sb,seas
 		ConstructionYardTypes: fact,afac,sfac
 		StaticAntiAirTypes: agun, sam, nsam, cram, shar
@@ -3300,6 +3308,7 @@ Player:
 			mshp: 7500
 			harv: 2250
 			harv.td: 2250
+			harv.td.upg: 2250
 			harv.scrin: 2250
 			harv.chrono: 2250
 		UnitsToBuild:

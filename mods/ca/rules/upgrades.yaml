@@ -550,7 +550,7 @@ deceit.covenant:
 	Buildable:
 		BuildPaletteOrder: 15
 		Prerequisites: ~player.nod, nod.covenants.available, ~!unity.covenant, ~!wrath.covenant, ~techlevel.medium
-		Description: Required for:\n• Heavy Stealth Tank Upgrade\n• Infiltrator Squad\n• Stealth Harvesters\n\n
+		Description: Required for:\n• Heavy Stealth Tank Upgrade\n• Infiltrator Squad\n• Stealth Harvester Upgrade\n\n
 		IconPalette: chrometd
 	TooltipExtras:
 		Attributes: (!) Only ONE Covenant may be chosen.
@@ -708,6 +708,23 @@ hstk.upgrade:
 		Cost: 500
 	RenderSprites:
 		Image: hstk.upgrade
+
+sharv.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Stealth Harvester
+	Buildable:
+		BuildPaletteOrder: 30
+		IconPalette: chrometd
+		Prerequisites: ~player.nod, ~deceit.covenant, tmpp, ~techlevel.high
+		Description: Allows construction of Stealth Harvesters which\nare cloaked while moving.\n\nUpgrades: Harvester
+	TooltipExtras:
+		Strengths: + Hidden while moving
+		Weaknesses: – Reduced health
+	Valued:
+		Cost: 1250
+	RenderSprites:
+		Image: sharv.upgrade
 
 advcyber.upgrade:
 	Inherits: ^Upgrade
