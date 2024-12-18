@@ -596,6 +596,22 @@ decoy.upgrade:
 	RenderSprites:
 		Image: decoy.upgrade
 
+sharv.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Stealth Harvester
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: ~player.nod, ~deceit.covenant, anyradar, ~techlevel.medium
+		Description: Allows construction of Stealth Harvesters which\n  are cloaked while moving.\n\nUpgrades: Harvester
+	TooltipExtras:
+		Strengths: + Hidden while moving
+		Weaknesses: – Reduced health
+	Valued:
+		Cost: 1250
+	RenderSprites:
+		Image: sharv.upgrade
+
 tibcore.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -638,7 +654,7 @@ blacknapalm.upgrade:
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.blackh, tmpl, ~techlevel.high
-		Description: Superheated flame weapons that can melt armored targets.\n\nUpgrades: Heavy Flame Tank\nUpgrades: SSM Launcher
+		Description: Superheated flame weapons that can melt armored targets.\n\nUpgrades: Heavy Flame Tank\nUpgrades: SSM Launcher\nUpgrades: Avatar
 	TooltipExtras:
 		Strengths: + Increased damage against vehicles and defenses
 		Weaknesses: – Reduced rate of fire
@@ -673,7 +689,7 @@ quantum.upgrade:
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.marked, tmpl, ~techlevel.high
-		Description: Enhances heavy laser weapons.\n\nUpgrades: Obelisk of Light\nUpgrades: Laser Turret\nUpgrades: Venom\nUpgrades: Templar
+		Description: Enhances heavy laser weapons.\n\nUpgrades: Obelisk of Light\nUpgrades: Avatar\nUpgrades: Laser Turret\nUpgrades: Venom\nUpgrades: Templar
 	TooltipExtras:
 		Strengths: + Increased range\n+ Increased damage
 	Valued:
@@ -711,22 +727,6 @@ hstk.upgrade:
 		Cost: 500
 	RenderSprites:
 		Image: hstk.upgrade
-
-sharv.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Research: Stealth Harvester
-	Buildable:
-		BuildPaletteOrder: 30
-		Prerequisites: ~player.nod, ~deceit.covenant, tmpp, ~techlevel.high
-		Description: Allows construction of Stealth Harvesters which\n  are cloaked while moving.\n\nReplaces: Harvester
-	TooltipExtras:
-		Strengths: + Hidden while moving
-		Weaknesses: – Reduced health
-	Valued:
-		Cost: 1250
-	RenderSprites:
-		Image: sharv.upgrade
 
 advcyber.upgrade:
 	Inherits: ^Upgrade

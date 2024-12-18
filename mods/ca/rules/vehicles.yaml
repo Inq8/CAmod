@@ -5425,7 +5425,6 @@ HARV.TD:
 	Inherits@HARVBALANCE: ^HarvesterBalancer
 	Inherits@SELECTION: ^SelectableEconomicUnit
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
-	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	RenderSprites:
 		Image: harv2
 	Valued:
@@ -5521,15 +5520,15 @@ HARV.TD:
 		Modifier: 60
 	UpdatesKillCount:
 		Type: BuildingsOrHarvesters
-	Cloak@CRATE-CLOAK:
-		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || driver-dead)
-	Upgradeable@SHARV:
-		Type: sharv.upgrade
-		UpgradingCondition: upgrading
-		Actor: harv.td.upg
-		UpgradeAtActors: fix, rep, srep
-		BuildDuration: 100
-		RequiresCondition: !mindcontrolled
+	GrantConditionOnPrerequisite@Stealth:
+		Condition: sharv-upgrade
+		Prerequisites: sharv.upgrade
+	TransformOnCondition:
+		RequiresCondition: sharv-upgrade
+		IntoActor: HARV.TD.UPG
+	RejectsOrders@Transforming:
+		RequiresCondition: sharv-upgrade
+	TransferResourcesOnTransform:
 	ReplacedInQueue:
 		Actors: harv.td.upg
 
@@ -5560,8 +5559,11 @@ HARV.TD.UPG:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
 	SpawnActorOnDeath:
 		Actor: HARV.TD.UPG.Husk
-	-Upgradeable@SHARV:
-	-WithDecoration@UpgradeOverlay:
+	-GrantConditionOnPrerequisite@Stealth:
+	-TransformOnCondition:
+	-RejectsOrders@Transforming:
+	-TransferResourcesOnTransform:
+	-ReplacedInQueue:
 
 BTR:
 	Inherits: ^Tank
@@ -8869,12 +8871,12 @@ MANT:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 30000
+		HP: 28000
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 100
-		TurnSpeed: 28
+		Speed: 126
+		TurnSpeed: 30
 	Tooltip:
 		Name: Mantis
 	WithMoveAnimation:

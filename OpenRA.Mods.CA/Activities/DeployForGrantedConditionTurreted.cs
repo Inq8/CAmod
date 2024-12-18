@@ -11,6 +11,7 @@
 using System;
 using System.Collections.Generic;
 using OpenRA.Activities;
+using OpenRA.Mods.CA.Traits;
 using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
@@ -23,13 +24,15 @@ namespace OpenRA.Mods.CA.Activities
 		readonly bool canTurn;
 		readonly bool moving;
 		readonly IFacing facing;
+		readonly Action onComplete;
 
-		public DeployForGrantedConditionTurreted(Actor self, GrantConditionOnDeployTurreted deploy, bool moving = false)
+		public DeployForGrantedConditionTurreted(Actor self, GrantConditionOnDeployTurreted deploy, bool moving = false, Action onComplete = null)
 		{
 			this.deploy = deploy;
 			this.moving = moving;
 			canTurn = self.Info.HasTraitInfo<IFacingInfo>();
 			facing = self.TraitOrDefault<IFacing>();
+			this.onComplete = onComplete;
 		}
 
 		protected override void OnFirstRun(Actor self)
@@ -61,6 +64,11 @@ namespace OpenRA.Mods.CA.Activities
 
 				QueueChild(new Turn(self, desiredFacing));
 			}
+		}
+
+		protected override void OnLastRun(Actor self)
+		{
+			onComplete?.Invoke();
 		}
 
 		public override bool Tick(Actor self)

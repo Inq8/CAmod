@@ -29,6 +29,7 @@ namespace OpenRA.Mods.CA.Traits
 		private readonly GrantConditionOnDeploy trait;
 		private readonly GrantConditionOnDeployTurreted turretedTrait;
 		private readonly GrantTimedConditionOnDeploy timedTrait;
+		bool pending;
 
 		public DeployOnAttack(ActorInitializer init, DeployOnAttackInfo info)
 			: base(info)
@@ -36,6 +37,7 @@ namespace OpenRA.Mods.CA.Traits
 			trait = init.Self.TraitOrDefault<GrantConditionOnDeploy>();
 			turretedTrait = init.Self.TraitOrDefault<GrantConditionOnDeployTurreted>();
 			timedTrait = init.Self.TraitOrDefault<GrantTimedConditionOnDeploy>();
+			pending = false;
 		}
 
 		void INotifyAttack.Attacking(Actor self, in Target target, Armament a, Barrel barrel)
@@ -59,8 +61,11 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				if (self.CurrentActivity == null || !self.CurrentActivity.ChildHasPriority)
 					self.QueueActivity(false, new DeployForGrantedConditionTurreted(self, turretedTrait));
-				else
-					self.CurrentActivity.QueueChild(new DeployForGrantedConditionTurreted(self, turretedTrait));
+				else if (!pending)
+				{
+					pending = true;
+					self.CurrentActivity.QueueChild(new DeployForGrantedConditionTurreted(self, turretedTrait, false, () => pending = false));
+				}
 				return;
 			}
 

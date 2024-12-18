@@ -13,9 +13,10 @@ using System.Linq;
 using OpenRA.Activities;
 using OpenRA.Mods.CA.Activities;
 using OpenRA.Mods.Common.Orders;
+using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
 
-namespace OpenRA.Mods.Common.Traits
+namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("Grants a condition when a deploy order is issued." +
 		"Can be paused with the granted condition to disable undeploying.")]
