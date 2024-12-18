@@ -1643,7 +1643,7 @@ HopliteGunCharged:
 		Color: fffdcdC8
 		SecondaryBeamColor: fff30060
 	Warhead@Blind: GrantExternalConditionCA
-		Range: 0c341
+		Range: 0c512
 		Duration: 50
 		Condition: blinded
 		ValidTargets: Infantry, Vehicle, Ship
@@ -1651,6 +1651,15 @@ HopliteGunCharged:
 		Explosions: idle
 		ExplosionPalette: caneon
 		Image: nullhit
+
+HopliteTargeter:
+	Inherits: HopliteGun
+	-Report:
+	-Projectile:
+	Projectile: InstantHit
+	-Warhead@1Dam:
+	-Warhead@2Smu:
+	Warhead@Dummy: Dummy
 
 KirovBomb:
 	ReloadDelay: 25

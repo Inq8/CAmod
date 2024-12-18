@@ -4739,28 +4739,51 @@ HOPL:
 	Tooltip:
 		Name: Hoplite
 	Armament@PRIMARY:
-		Weapon: HopliteGun
+		Weapon: HopliteGunCharged
 		LocalOffset: 350,40,341
-		PauseOnCondition: ammo || secondary-charging
-		ReloadingCondition: primary-charging
+		PauseOnCondition: !primary-ammo || secondary-reloading
+		ReloadingCondition: primary-reloading
 	Armament@SECONDARY:
 		Name: secondary
-		Weapon: HopliteGunCharged
+		Weapon: HopliteGun
 		LocalOffset: 350,0,341
-		PauseOnCondition: !ammo || primary-charging
-		ReloadingCondition: secondary-charging
+		PauseOnCondition: !secondary-ammo || primary-reloading
+		ReloadingCondition: secondary-reloading
+	# to prevent moving forward while real weapons are paused
+	Armament@Targeter:
+		Name: tertiary
+		Weapon: HopliteTargeter
+		LocalOffset: 350,0,341
 	Armament@BATF:
 		Weapon: HopliteGun
 	Voiced:
 		VoiceSet: HopliteVoice
 	-ReplacedInQueue:
-	AmmoPool@Charged:
+	AmmoPool@Primary:
 		Ammo: 1
-		AmmoCondition: ammo
+		AmmoCondition: primary-ammo
+		Armaments: primary
+	AmmoPool@Secondary:
+		Name: secondary
+		Ammo: 3
+		InitialAmmo: 0
+		AmmoCondition: secondary-ammo
 		Armaments: secondary
-	ReloadAmmoPool@Charged:
-		Delay: 220
+	ReloadAmmoPoolCA@Primary:
+		AmmoPool: primary
+		Delay: 5
 		Count: 1
+		ShowSelectionBar: true
+		RequiresCondition: secondary-ammo == 0 && !primary-reloading
+	ReloadAmmoPoolCA@Secondary:
+		AmmoPool: secondary
+		Delay: 5
+		Count: 3
+		ShowSelectionBar: true
+		RequiresCondition: primary-ammo == 0 && !secondary-reloading
+	AttackFrontalCharged:
+		Armaments: primary, secondary, tertiary
+		ChargeConsumingArmaments: primary, secondary
 
 CRYT:
 	Inherits: ^Soldier
