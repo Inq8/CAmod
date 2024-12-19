@@ -105,6 +105,45 @@ MAST:
 	Buildable:
 		BuildLimit: 0
 
+bombard.strat:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+bombard2.strat:
+	Buildable:
+		Prerequisites: ~player.gdi, ~bombard.strat
+
+seek.strat:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+seek2.strat:
+	Buildable:
+		Prerequisites: ~player.gdi, ~seek.strat
+
+hold.strat:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+hold2.strat:
+	Buildable:
+		Prerequisites: ~player.gdi, ~hold.strat
+
+UPGC.BOMB:
+	Buildable:
+		Prerequisites: ~player.gdi, upgc, !upgc.plugged
+		BuildDurationModifier: 0
+
+UPGC.SEEK:
+	Buildable:
+		Prerequisites: ~player.gdi, upgc, !upgc.plugged
+		BuildDurationModifier: 0
+
+UPGC.HOLD:
+	Buildable:
+		Prerequisites: ~player.gdi, upgc, !upgc.plugged
+		BuildDurationModifier: 0
+
 #####################
 
 ActionWormhole:
