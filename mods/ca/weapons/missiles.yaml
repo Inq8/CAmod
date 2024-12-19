@@ -2142,7 +2142,6 @@ Rocket.P51.R:
 	BurstDelays: 4
 	FirstBurstTargetOffset: -1024,-613,0
 	FollowingBurstTargetOffset: 682,0,0
-	ValidTargets: Ground, Water
 	TargetActorCenter: true
 	Projectile: Bullet
 		Blockable: false
@@ -2183,6 +2182,57 @@ Rocket.P51.R:
 Rocket.P51.L:
 	Inherits: Rocket.P51.R
 	FirstBurstTargetOffset: -1024,613,0
+
+Hydra.R:
+	ReloadDelay: 200
+	Range: 7c0
+	MinRange: 0c256
+	Report: iggiat2a.aud, iggiat2b.aud
+	Burst: 6
+	BurstDelays: 7
+	FirstBurstTargetOffset: -512,-613,0
+	FollowingBurstTargetOffset: 1024,0,0
+	TargetActorCenter: true
+	Projectile: Bullet
+		Speed: 350
+		LaunchAngle: 0
+		Blockable: false
+		Shadow: true
+		Inaccuracy: 0c256
+		Image: dragon
+		TrailImage: smokey
+		TrailDelay: 3
+		ContrailStartColor: ebb968aa
+		ContrailLength: 10
+		ContrailStartWidth: 0c42
+	Warhead@1Dam: SpreadDamage
+		Spread: 512
+		Damage: 500
+		Falloff: 1000, 448, 192, 50, 18, 7, 0
+		Versus:
+			None: 100
+			Wood: 10
+			Concrete: 60
+			Light: 100
+			Heavy: 100
+			Brick: 75
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Crater
+		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
+	Warhead@3Eff: CreateEffect
+		Explosions: med_explosion
+		ImpactSounds: hydrahit1.aud, hydrahit2.aud
+		ValidTargets: Ground, Air, Ship, Trees
+	Warhead@4EffWater: CreateEffect
+		Explosions: med_splash
+		ImpactSounds: splash9.aud
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure, Bridge
+
+Hydra.L:
+	Inherits: Hydra.R
+	FirstBurstTargetOffset: -758,613,0
 
 BlackEagleMissiles:
 	Inherits: Maverick

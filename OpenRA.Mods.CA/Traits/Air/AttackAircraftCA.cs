@@ -46,13 +46,8 @@ namespace OpenRA.Mods.CA.Traits
 
 			var facingTolerance = Info.FacingTolerance;
 
-			if (target.Type == TargetType.Actor)
-			{
-				var targetAircraftInfo = target.Actor.Info.TraitInfoOrDefault<AircraftInfo>();
-				if (targetAircraftInfo != null)
-					if (self.World.Map.DistanceAboveTerrain(target.Actor.CenterPosition).Length >= targetAircraftInfo.MinAirborneAltitude)
-						facingTolerance = Info.AirFacingTolerance;
-			}
+			if (self.World.Map.DistanceAboveTerrain(target.CenterPosition).Length >= aircraftInfo.MinAirborneAltitude)
+				facingTolerance = Info.AirFacingTolerance;
 
 			return TargetInFiringArc(self, target, facingTolerance);
 		}
