@@ -21,7 +21,6 @@ Exterminators = {
 	{ SpawnLocation = ExterminatorSpawnWest.Location, Path = { Exterminator1Patrol1.Location, Exterminator1Patrol2.Location, Exterminator1Patrol3.Location, Exterminator1Patrol4.Location } },
 	{ SpawnLocation = ExterminatorSpawnWest.Location, Path = { Exterminator2Patrol1.Location, Exterminator2Patrol2.Location, Exterminator2Patrol3.Location, Exterminator2Patrol4.Location } },
 	{ SpawnLocation = ExterminatorSpawnWest.Location, Path = { Exterminator3Patrol1.Location, Exterminator3Patrol2.Location, Exterminator3Patrol3.Location, Exterminator3Patrol4.Location } },
-	{ SpawnLocation = ExterminatorSpawnEast.Location, Path = { Exterminator4Patrol1.Location, Exterminator4Patrol2.Location, Exterminator4Patrol3.Location, Exterminator4Patrol4.Location } },
 }
 
 RiftEnabledTime = {
@@ -38,15 +37,15 @@ table.insert(UnitCompositions.Scrin.Main.hard, {
 })
 
 Squads = {
-	ScrinMain = {
+	ScrinVsNod = {
+		ActiveCondition = function()
+			return not IsNodDead
+		end,
 		Delay = {
 			easy = DateTime.Minutes(6),
 			normal = DateTime.Minutes(4),
 			hard = DateTime.Minutes(2)
 		},
-		ActiveCondition = function()
-			return DateTime.GameTime < DateTime.Minutes(35) or DateTime.GameTime > DateTime.Minutes(40)
-		end,
 		AttackValuePerSecond = {
 			easy = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(16), Value = 50 } },
 			normal = { { MinTime = 0, Value = 50 }, { MinTime = DateTime.Minutes(14), Value = 100 } },
@@ -69,6 +68,35 @@ Squads = {
 			{ M1.Location, M2.Location, M5.Location, M4.Location },
 		},
 	},
+	ScrinVsGDI = {
+		ActiveCondition = function()
+			return not IsGDIDead
+		end,
+		Delay = {
+			easy = DateTime.Minutes(6),
+			normal = DateTime.Minutes(4),
+			hard = DateTime.Minutes(2)
+		},
+		AttackValuePerSecond = {
+			easy = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(16), Value = 50 } },
+			normal = { { MinTime = 0, Value = 50 }, { MinTime = DateTime.Minutes(14), Value = 100 } },
+			hard = { { MinTime = 0, Value = 80 }, { MinTime = DateTime.Minutes(12), Value = 160 } },
+		},
+		QueueProductionStatuses = {
+			Infantry = false,
+			Vehicles = false,
+			Aircraft = false,
+		},
+		FollowLeader = true,
+		IdleUnits = { },
+		ProducerActors = { Infantry = { Portal3 }, Vehicles = { WarpSphere4 }, Aircraft = { GravityStabilizer3 } },
+		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
+		Units = UnitCompositions.Scrin.Main,
+		AttackPaths = {
+			{ R7.Location, R6.Location, GDIBase.Location },
+			{ R10.Location, R6.Location, GDIBase.Location },
+		},
+	},
 	ScrinRebelKiller = {
 		AttackValuePerSecond = {
 			easy = { { MinTime = 0, Value = 20 } },
@@ -88,27 +116,6 @@ Squads = {
 		AttackPaths = {
 			{ M1.Location, M2.Location, R4.Location, M5.Location },
 			{ R1.Location, R2.Location, R3.Location, R4.Location, R5.Location }
-		},
-	},
-	ScrinGDIKiller = {
-		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 60 } },
-			normal = { { MinTime = 0, Value = 75 } },
-			hard = { { MinTime = 0, Value = 90 }, { MinTime = DateTime.Minutes(30), Value = 130 } },
-		},
-		QueueProductionStatuses = {
-			Infantry = false,
-			Vehicles = false,
-			Aircraft = false,
-		},
-		FollowLeader = true,
-		IdleUnits = { },
-		ProducerActors = { Infantry = { Portal3 }, Vehicles = { WarpSphere4 }, Aircraft = { GravityStabilizer3 } },
-		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
-		Units = UnitCompositions.Scrin.Main,
-		AttackPaths = {
-			{ R7.Location, R6.Location, GDIBase.Location },
-			{ R10.Location, R6.Location, GDIBase.Location },
 		},
 	},
 	ScrinRebelsMain = {
@@ -133,27 +140,10 @@ Squads = {
 			{ R5.Location, R3.Location, R2.Location, R1.Location }
 		},
 	},
-	GDIMain = {
-		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 80 } },
-			normal = { { MinTime = 0, Value = 80 } },
-			hard = { { MinTime = 0, Value = 80 }, { MinTime = DateTime.Minutes(20), Value = 120 } },
-		},
-		QueueProductionStatuses = {
-			Infantry = false,
-			Vehicles = false,
-			Aircraft = false,
-		},
-		FollowLeader = true,
-		IdleUnits = { },
-		ProducerTypes = { Infantry = { "pyle" }, Vehicles = { "weap.td" }, Aircraft = { "afld.gdi" } },
-		Units = UnitCompositions.GDI.Main,
-		AttackPaths = {
-			{ R6.Location, R7.Location, ScrinBase2.Location },
-			{ R6.Location, R10.Location, R9.Location, ScrinBase2.Location },
-		},
-	},
-	ScrinAir = {
+	ScrinAirVsNod = {
+		ActiveCondition = function()
+			return not IsNodDead
+		end,
 		Delay = {
 			easy = DateTime.Minutes(6),
 			normal = DateTime.Minutes(5),
@@ -184,7 +174,41 @@ Squads = {
 			}
 		},
 	},
-	ScrinAirToAir = {
+	ScrinAirVsGDI = {
+		ActiveCondition = function()
+			return not IsGDIDead
+		end,
+		Delay = {
+			easy = DateTime.Minutes(6),
+			normal = DateTime.Minutes(5),
+			hard = DateTime.Minutes(4)
+		},
+		Interval = {
+			easy = DateTime.Minutes(6),
+			normal = DateTime.Minutes(4),
+			hard = DateTime.Minutes(2)
+		},
+		QueueProductionStatuses = {
+			Aircraft = false
+		},
+		IdleUnits = { },
+		ProducerActors = nil,
+		ProducerTypes = { Aircraft = { "grav" } },
+		Units = {
+			easy = {
+				{ Aircraft = { "stmr" } }
+			},
+			normal = {
+				{ Aircraft = { "stmr", "stmr" } },
+				{ Aircraft = { "enrv" } },
+			},
+			hard = {
+				{ Aircraft = { "stmr", "stmr", "stmr" } },
+				{ Aircraft = { "enrv", "enrv" } },
+			}
+		},
+	},
+	ScrinAirToAirVsNod = {
 		Interval = {
 			hard = DateTime.Seconds(90)
 		},
@@ -192,7 +216,29 @@ Squads = {
 			Aircraft = false
 		},
 		ActiveCondition = function()
-			return PlayerHasMassAir()
+			return NodHasMassAir()
+		end,
+		OnProducedAction = function(a)
+			a.Patrol({ A2APatrol1.Location, A2APatrol2.Location, A2APatrol3.Location, A2APatrol4.Location, A2APatrol5.Location, A2APatrol6.Location, A2APatrol7.Location, A2APatrol8.Location })
+		end,
+		IdleUnits = { },
+		ProducerActors = nil,
+		ProducerTypes = { Aircraft = { "grav" } },
+		Units = {
+			hard = {
+				{ Aircraft = { { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" } } },
+			}
+		},
+	},
+	ScrinAirToAirVsGDI = {
+		Interval = {
+			hard = DateTime.Seconds(90)
+		},
+		QueueProductionStatuses = {
+			Aircraft = false
+		},
+		ActiveCondition = function()
+			return GDIHasMassAir()
 		end,
 		OnProducedAction = function(a)
 			a.Patrol({ A2APatrol1.Location, A2APatrol2.Location, A2APatrol3.Location, A2APatrol4.Location, A2APatrol5.Location, A2APatrol6.Location, A2APatrol7.Location, A2APatrol8.Location })
@@ -237,84 +283,52 @@ Squads = {
 				{ Aircraft = { "enrv" } },
 			}
 		}
-	},
-	GDIAir = {
-		Delay = {
-			easy = DateTime.Minutes(10),
-			normal = DateTime.Minutes(10),
-			hard = DateTime.Minutes(10)
-		},
-		Interval = {
-			easy = DateTime.Minutes(2),
-			normal = DateTime.Seconds(150),
-			hard = DateTime.Minutes(3)
-		},
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
-		ProducerTypes = { Aircraft = { "afld.gdi" } },
-		Units = {
-			easy = {
-				{ Aircraft = { "orca", "orca" } },
-				{ Aircraft = { "a10" } },
-				{ Aircraft = { "auro" } },
-				{ Aircraft = { "orcb" } }
-			},
-			normal = {
-				{ Aircraft = { "orca", "orca" } },
-				{ Aircraft = { "a10" } },
-				{ Aircraft = { "auro" } },
-				{ Aircraft = { "orcb" } }
-			},
-			hard = {
-				{ Aircraft = { "orca", "orca" } },
-				{ Aircraft = { "a10" } },
-				{ Aircraft = { "auro" } },
-				{ Aircraft = { "orcb" } }
-			}
-		},
 	}
+}
+
+Objectives = {
+	DestroyOverlordForces = {
+		Text = "Destroy Scrin forces loyal to the Overlord.",
+	},
+	DefendRebels = {
+		Text = "Protect Scrin rebel forces.",
+	},
 }
 
 WorldLoaded = function()
 	Nod = Player.GetPlayer("Nod")
 	Scrin = Player.GetPlayer("Scrin")
 	ScrinRebels = Player.GetPlayer("ScrinRebels")
-	GDIHostile = Player.GetPlayer("GDIHostile")
 	GDI = Player.GetPlayer("GDI")
-	MissionPlayers = { Nod }
+	MissionPlayers = { Nod, GDI }
 	NextExterminatorIndex = 1
 
-	Camera.Position = PlayerStart.CenterPosition
+	if Nod.IsLocalPlayer then
+		Camera.Position = PlayerStartNod.CenterPosition
+	else
+		Camera.Position = PlayerStartGDI.CenterPosition
+	end
 
 	InitObjectives(Nod)
+	InitObjectives(GDI)
 	AdjustStartingCash()
 	InitScrin()
 	InitScrinRebels()
 
-	ObjectiveDestroyOverlordForces = Nod.AddObjective("Destroy Scrin forces loyal to the Overlord.")
-	ObjectiveDefendRebels = Nod.AddObjective("Protect Scrin rebel forces.")
-
-	Trigger.AfterDelay(DateTime.Seconds(3), function()
-		Media.DisplayMessage("The Overlord's tyranny will die today commander, and a new era will begin. Elsewhere, battles are still raging, but the decisive blow must be dealt here where his most elite forces are gathered. Show no mercy commander. Peace through power.", "Kane", HSLColor.FromHex("FF0000"))
-		MediaCA.PlaySound("kane_nomercy.aud", 2)
-
-		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(14)), function()
-			Media.DisplayMessage("Foolish humans! Your armies will be crushed, the rebellion will fall, and you will die here!", "Scrin Overlord", HSLColor.FromHex("7700FF"))
-			MediaCA.PlaySound("overlordwarning.aud", 2)
-
-			Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(60)), function()
-				InitGDI()
-			end)
+	Utils.Do(Objectives, function(o)
+		Utils.Do(MissionPlayers, function(p)
+			o[p.InternalName] = p.AddObjective(o.Text)
 		end)
 	end)
 
-	Trigger.OnEnteredProximityTrigger(GDIBase.CenterPosition, WDist.New(18 * 1024), function(a, id)
-		if a.Owner == Nod then
-			Trigger.RemoveProximityTrigger(id)
-			InitGDI()
-		end
+	Trigger.AfterDelay(DateTime.Seconds(3), function()
+		Media.DisplayMessage("The Overlord's tyranny will die today commander, and a new era will begin. Elsewhere, battles are still raging, but the decisive blow must be dealt here where his most elite forces are gathered. Show no mercy commander. Peace through power.", "Kane", HSLColor.FromHex("FF0000"))
+		MediaCA.PlaySound("../ca30-reckoning/kane_nomercy.aud", 2)
+
+		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(14)), function()
+			Media.DisplayMessage("Foolish humans! Your armies will be crushed, the rebellion will fall, and you will die here!", "Scrin Overlord", HSLColor.FromHex("7700FF"))
+			MediaCA.PlaySound("../ca30-reckoning/overlordwarning.aud", 2)
+		end)
 	end)
 end
 
@@ -337,25 +351,43 @@ OncePerFiveSecondChecks = function()
 		if Scrin.HasNoRequiredUnits() and not Victory then
 			Victory = true
 			Media.DisplayMessage("The Overlord's fate is sealed, and the Scrin are liberated. Now we must return to Earth and forge a new beginning for mankind. With purified Tiberium the possibilites are truly limitless, and those who embrace its light will share in its blessings. Those who do not, will be left in the darkness.", "Kane", HSLColor.FromHex("FF0000"))
-			MediaCA.PlaySound("kane_newbeginning.aud", 2)
+			MediaCA.PlaySound("../ca30-reckoning/kane_newbeginning.aud", 2)
+
 			Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(19)), function()
-				Nod.MarkCompletedObjective(ObjectiveDestroyOverlordForces)
-				Nod.MarkCompletedObjective(ObjectiveDefendRebels)
+				Utils.Do(MissionPlayers, function(p)
+					p.MarkCompletedObjective(Objectives.DestroyOverlordForces[p.InternalName])
+					p.MarkCompletedObjective(Objectives.DefendRebels[p.InternalName])
+				end)
 			end)
 		end
 
 		if ScrinRebels.HasNoRequiredUnits() and not Victory then
-			Nod.MarkFailedObjective(ObjectiveDefendRebels)
+			Utils.Do(MissionPlayers, function(p)
+				p.MarkFailedObjective(Objectives.DefendRebels[p.InternalName])
+			end)
 		end
 
 		if Nod.HasNoRequiredUnits() and not Victory then
-			Nod.MarkFailedObjective(ObjectiveDestroyOverlordForces)
+			IsNodDead = true
+			Nod.MarkFailedObjective(Objectives.DestroyOverlordForces[Nod.InternalName])
 		end
 
-		if Difficulty == "hard" and not ScrinAirToAirInitialized then
-			if PlayerHasMassAir() then
-				ScrinAirToAirInitialized = true
-				InitAirAttackSquad(Squads.ScrinAirToAir, Scrin, Nod, { "scrn", "venm" })
+		if GDI.HasNoRequiredUnits() and not Victory then
+			IsGDIDead = true
+			GDI.MarkFailedObjective(Objectives.DestroyOverlordForces[GDI.InternalName])
+		end
+
+		if Difficulty == "hard" and not ScrinAirToAirVsNodInitialized then
+			if NodHasMassAir() then
+				ScrinAirToAirVsNodInitialized = true
+				InitAirAttackSquad(Squads.ScrinAirToAirVsNod, Scrin, Nod, { "scrn", "venm" })
+			end
+		end
+
+		if Difficulty == "hard" and not ScrinAirToAirVsGDIInitialized then
+			if NodHasMassAir() then
+				ScrinAirToAirVsGDIInitialized = true
+				InitAirAttackSquad(Squads.ScrinAirToAirVsGDI, Scrin, GDI, { "orca", "orcb", "a10", "a10.gau", "a10.sw", "auro" })
 			end
 		end
 	end
@@ -388,12 +420,20 @@ InitScrin = function()
 		InitAttackSquad(Squads.ScrinRebelKiller, Scrin, ScrinRebels)
 	end)
 
-	Trigger.AfterDelay(Squads.ScrinMain.Delay[Difficulty], function()
-		InitAttackSquad(Squads.ScrinMain, Scrin)
+	Trigger.AfterDelay(Squads.ScrinVsNod.Delay[Difficulty], function()
+		InitAttackSquad(Squads.ScrinVsNod, Scrin, Nod)
 	end)
 
-	Trigger.AfterDelay(Squads.ScrinAir.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.ScrinAir, Scrin, Nod, { "harv", "harv.td", "arty.nod", "mlrs", "obli", "wtnk", "gun.nod", "hq", "tmpl", "nuk2", "rmbc", "enli", "tplr" })
+	Trigger.AfterDelay(Squads.ScrinVsGDI.Delay[Difficulty], function()
+		InitAttackSquad(Squads.ScrinVsGDI, Scrin, GDI)
+	end)
+
+	Trigger.AfterDelay(Squads.ScrinAirVsNod.Delay[Difficulty], function()
+		InitAirAttackSquad(Squads.ScrinAirVsNod, Scrin, Nod, { "harv", "harv.td", "arty.nod", "mlrs", "obli", "wtnk", "gun.nod", "hq", "tmpl", "nuk2", "rmbc", "enli", "tplr" })
+	end)
+
+	Trigger.AfterDelay(Squads.ScrinAirVsGDI.Delay[Difficulty], function()
+		InitAirAttackSquad(Squads.ScrinAirVsGDI, Scrin, GDI, { "harv", "harv.td", "msam", "hsam", "atwr", "stwr", "gtwr", "hq", "gtek", "nuk2", "htnk", "htnk.ion", "htnk.hover", "htnk.drone", "titn", "titn.rail" })
 	end)
 
 	Trigger.AfterDelay(1, function()
@@ -429,7 +469,7 @@ InitScrin = function()
 		end
 		Trigger.OnDamaged(a, function(self, attacker, damage)
 			if IsMissionPlayer(attacker.Owner) and damage > 500 then
-				AggroExterminator(self)
+				AggroExterminator(self, attacker.Owner)
 			end
 		end)
 	end)
@@ -462,39 +502,28 @@ InitScrinRebels = function()
 	end)
 end
 
-InitGDI = function()
-	if not GDIActive then
-		GDIActive = true
-
-		Media.DisplayMessage("Our forces were successful in luring GDI here and they have established a base. The situation has been explained to them and they have agreed to a cease fire, but remain vigilant commander, our old enemy cannot be trusted.", "Kane", HSLColor.FromHex("FF0000"))
-		MediaCA.PlaySound("kane_gdibase.aud", 2)
-
-		local gdiUnits = GDIHostile.GetActors()
-		Utils.Do(gdiUnits, function(a)
-			if not a.IsDead and a.IsInWorld and a.Type ~= "player" then
-				a.Owner = GDI
-			end
-		end)
-
-		InitAttackSquad(Squads.ScrinGDIKiller, Scrin, GDI)
-		InitAttackSquad(Squads.GDIMain, GDI, Scrin)
-
-		Trigger.AfterDelay(Squads.GDIAir.Delay[Difficulty], function()
-			InitAirAttackSquad(Squads.GDIAir, GDI, Scrin, { "scol", "tpod", "reac", "rea2", "harv.scrin", "proc.scrin", "etpd" })
-		end)
-	end
-end
-
 SendNextExterminator = function()
 	if NextExterminatorIndex <= ExterminatorAttackCount[Difficulty] and not Victory then
+		local exterminators = {}
 
 		if Exterminators[NextExterminatorIndex] ~= nil then
-			exterminator = Exterminators[NextExterminatorIndex]
+			exterminators = { Exterminators[NextExterminatorIndex] }
 		else
-			exterminator = { SpawnLocation = Utils.Random({ ExterminatorSpawnWest.Location, ExterminatorSpawnEast.Location }) }
+			if not IsNodDead then
+				table.insert(exterminators, { SpawnLocation = ExterminatorSpawnWest.Location, TargetPlayer = Nod })
+			end
+			if not IsGDIDead then
+				table.insert(exterminators, { SpawnLocation = ExterminatorSpawnEast.Location, TargetPlayer = GDI })
+			end
 		end
 
-		local wormhole = Actor.Create("wormhole", true, { Owner = Scrin, Location = exterminator.SpawnLocation })
+		Utils.Do(exterminators, function(exterminator)
+			local wormhole = Actor.Create("wormhole", true, { Owner = Scrin, Location = exterminator.SpawnLocation })
+
+			Trigger.AfterDelay(DateTime.Seconds(12), function()
+				wormhole.Kill()
+			end)
+		end)
 
 		Trigger.AfterDelay(DateTime.Seconds(2), function()
 			MediaCA.PlaySound("etpd-aggro.aud", 2)
@@ -502,40 +531,43 @@ SendNextExterminator = function()
 			if NextExterminatorIndex == 1 then
 				Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(2)), function()
 					Media.DisplayMessage("Commander, the Overlord's most powerful weapons are being deployed. Use everything at your disposal to destroy them.", "Kane", HSLColor.FromHex("FF0000"))
-					MediaCA.PlaySound("kane_exterminators.aud", 2)
+					MediaCA.PlaySound("../ca30-reckoning/kane_exterminators.aud", 2)
 				end)
+			elseif #exterminators > 1 then
+				Notification("Exterminator Tripods detected.")
 			else
 				Notification("Exterminator Tripod detected.")
 			end
 
-			local reinforcements = Reinforcements.Reinforce(Scrin, { "etpd" }, { exterminator.SpawnLocation }, 10, function(a)
-				if exterminator.Path ~= nil then
-					local path = exterminator.Path
-					a.Patrol(path)
+			Utils.Do(exterminators, function(exterminator)
+				local reinforcements = Reinforcements.Reinforce(Scrin, { "etpd" }, { exterminator.SpawnLocation }, 10, function(a)
+					if exterminator.Path ~= nil then
+						local path = exterminator.Path
+						a.Patrol(path)
 
-					Trigger.OnIdle(a, function(self)
-						self.Patrol(path)
-					end)
-				else
-					AssaultPlayerBaseOrHunt(a, Nod)
-				end
-
-				if Difficulty ~= "hard" then
-					a.GrantCondition("difficulty-" .. Difficulty)
-				end
-
-				Trigger.AfterDelay(ExterminatorsInterval[Difficulty] * 5, function()
-					AggroExterminator(a)
-				end)
-
-				Trigger.OnDamaged(a, function(self, attacker, damage)
-					if IsMissionPlayer(attacker.Owner) and damage > 500 then
-						AggroExterminator(self)
+						Trigger.OnIdle(a, function(self)
+							self.Patrol(path)
+						end)
+					else
+						if exterminator.TargetPlayer == nil then
+							exterminator.TargetPlayer = MissionPlayers[1]
+						end
+						AssaultPlayerBaseOrHunt(a, exterminator.TargetPlayer)
 					end
-				end)
 
-				Trigger.AfterDelay(DateTime.Seconds(10), function()
-					wormhole.Kill()
+					if Difficulty ~= "hard" then
+						a.GrantCondition("difficulty-" .. Difficulty)
+					end
+
+					Trigger.AfterDelay(ExterminatorsInterval[Difficulty] * 5, function()
+						AggroExterminator(a, exterminator.TargetPlayer)
+					end)
+
+					Trigger.OnDamaged(a, function(self, attacker, damage)
+						if IsMissionPlayer(attacker.Owner) and damage > 500 then
+							AggroExterminator(self, attacker.Owner)
+						end
+					end)
 				end)
 			end)
 
@@ -548,13 +580,13 @@ SendNextExterminator = function()
 	end
 end
 
-AggroExterminator = function(a)
+AggroExterminator = function(a, targetPlayer)
 	if not a.IsDead then
 		Trigger.ClearAll(a)
 		a.Stop()
 		Trigger.AfterDelay(1, function()
 			if not a.IsDead then
-				AssaultPlayerBaseOrHunt(a, Nod)
+				AssaultPlayerBaseOrHunt(a, targetPlayer)
 			end
 		end)
 	end
@@ -568,7 +600,12 @@ IsScrinGroundHunterUnitExcludingExterminators = function(actor)
 	return IsScrinGroundHunterUnit(actor) and actor.Type ~= "etpd"
 end
 
-PlayerHasMassAir = function()
+NodHasMassAir = function()
 	local nodAir = Nod.GetActorsByTypes({ "scrn", "venm" })
 	return #nodAir > 8
+end
+
+GDIHasMassAir = function()
+	local gdiAir = GDI.GetActorsByTypes({ "orca", "orcb", "a10", "a10.gau", "a10.sw", "auro" })
+	return #gdiAir > 8
 end

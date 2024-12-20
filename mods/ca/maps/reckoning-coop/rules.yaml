@@ -1,0 +1,114 @@
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, reckoning-coop.lua
+	MissionData:
+		Briefing: ================\n\nSpoiler warning: This is a co-op version of the campaign mission with the same name.
+
+AFLD.GDI:
+	-InterceptorPower@AirDef:
+
+HPAD.TD:
+	-InterceptorPower@AirDef:
+
+STWR:
+	Buildable:
+		Prerequisites: vehicles.any, ~structures.gdi
+
+TITN:
+	Buildable:
+		Prerequisites: gtek, ~!railgun.upgrade
+
+TITN.RAIL:
+	Buildable:
+		Prerequisites: gtek, ~railgun.upgrade
+
+JUGG:
+	Buildable:
+		Prerequisites: upgc
+
+HSAM:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.gdi
+
+MDRN:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.gdi
+
+GDRN:
+	Buildable:
+		Prerequisites: ~vehicles.gdi, ~!tow.upgrade
+
+GDRN.TOW:
+	Buildable:
+		Prerequisites: ~vehicles.gdi, ~tow.upgrade
+
+WOLV:
+	Buildable:
+		Prerequisites: gtek, ~vehicles.gdi
+
+XO:
+	Buildable:
+		Prerequisites: gtek, ~vehicles.gdi
+
+PBUL:
+	Buildable:
+		Prerequisites: gtek, ~vehicles.gdi
+
+AURO:
+	Buildable:
+		Prerequisites: afld.gdi, gtek
+
+gyro.upgrade:
+	Buildable:
+		Prerequisites: gtek
+
+abur.upgrade:
+	Buildable:
+		Prerequisites: gtek
+
+bdrone.upgrade:
+	Buildable:
+		Prerequisites: gtek
+
+railgun.upgrade:
+	Buildable:
+		Prerequisites: upgc
+
+ionmam.upgrade:
+	Buildable:
+		Prerequisites: upgc, !mdrone.upgrade, !hovermam.upgrade
+	TooltipExtras:
+		Attributes: \n(!) Only ONE Mammoth Tank upgrade can be chosen
+
+hovermam.upgrade:
+	Buildable:
+		Prerequisites: upgc, !ionmam.upgrade, !mdrone.upgrade
+	TooltipExtras:
+		Attributes: \n(!) Only ONE Mammoth Tank upgrade can be chosen
+
+mdrone.upgrade:
+	Buildable:
+		Prerequisites: upgc, !ionmam.upgrade, !hovermam.upgrade
+	TooltipExtras:
+		Attributes: \n(!) Only ONE Mammoth Tank upgrade can be chosen
+
+GTEK:
+	GrantExternalConditionPowerCA@NREPAIR:
+		Prerequisites: ~gtek
+
+HQ:
+	SpawnActorPower@GDIEagleDropzone:
+		Prerequisites: ~radar.gdi
+	ParatroopersPowerCA@xodrop:
+		Prerequisites: ~radar.gdi
+	DropPodsPowerCA@Zocom:
+		Prerequisites: ~radar.gdi
+
+UAV:
+	-Targetable@AIRBORNE:
+	RevealsShroud:
+		Range: 10c0
+		MinRange: 8c0
+	RevealsShroud@GAPGEN:
+		Range: 8c0
