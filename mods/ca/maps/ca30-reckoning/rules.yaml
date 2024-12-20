@@ -123,7 +123,7 @@ TPLR:
 
 BH:
 	Buildable:
-		Prerequisites: anyradar, ~infantry.nod, ~techlevel.medium
+		Prerequisites: anyradar, ~infantry.nod
 
 LTNK:
 	Buildable:
@@ -135,7 +135,7 @@ LTNK.Laser:
 
 MTNK:
 	Buildable:
-		Prerequisites: ~!bdrone.upgrade, ~vehicles.gdi, ~techlevel.low
+		Prerequisites: ~!bdrone.upgrade, ~vehicles.gdi
 
 MTNK.Laser:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
@@ -165,7 +165,8 @@ VENM:
 		Prerequisites: ~aircraft.nod
 
 APC2:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
+	Buildable:
+		Prerequisites: ~vehicles.gdi, ~!vulcan.upgrade
 
 AIRS:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
@@ -176,19 +177,19 @@ WEAP.TD:
 
 blacknapalm.upgrade:
 	Buildable:
-		Prerequisites: tmpl
+		Prerequisites: ~player.nod, tmpl
 
 quantum.upgrade:
 	Buildable:
-		Prerequisites: tmpl
+		Prerequisites: ~player.nod, tmpl
 
 alphacomanche.upgrade:
 	Buildable:
-		Prerequisites: tmpl
+		Prerequisites: ~player.nod, tmpl
 
 microwave.upgrade:
 	Buildable:
-		Prerequisites: tmpl
+		Prerequisites: ~player.nod, tmpl
 
 ETPD:
 	Inherits: TPOD

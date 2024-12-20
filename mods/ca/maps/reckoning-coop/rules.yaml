@@ -3,7 +3,7 @@ World:
 	LuaScript:
 		Scripts: campaign.lua, reckoning-coop.lua
 	MissionData:
-		Briefing: ================\n\nSpoiler warning: This is a co-op version of the campaign mission with the same name.
+		Briefing: ================\n\nSpoiler warning: This is a co-op version of the campaign mission with the same name.\n\nNod and GDI put their differences aside in order to help the Scrin Rebels defeat the forces of the Overlord.
 
 AFLD.GDI:
 	-InterceptorPower@AirDef:
@@ -13,27 +13,27 @@ HPAD.TD:
 
 STWR:
 	Buildable:
-		Prerequisites: vehicles.any, ~structures.gdi
+		Prerequisites: ~structures.gdi, vehicles.any
 
 TITN:
 	Buildable:
-		Prerequisites: gtek, ~!railgun.upgrade
+		Prerequisites: ~vehicles.gdi, gtek, ~!railgun.upgrade
 
 TITN.RAIL:
 	Buildable:
-		Prerequisites: gtek, ~railgun.upgrade
+		Prerequisites: ~vehicles.gdi, gtek, ~railgun.upgrade
 
 JUGG:
 	Buildable:
-		Prerequisites: upgc
+		Prerequisites: ~vehicles.gdi, upgc
 
 HSAM:
 	Buildable:
-		Prerequisites: anyradar, ~vehicles.gdi
+		Prerequisites: ~vehicles.gdi, anyradar
 
 MDRN:
 	Buildable:
-		Prerequisites: anyradar, ~vehicles.gdi
+		Prerequisites: ~vehicles.gdi, anyradar
 
 GDRN:
 	Buildable:
@@ -45,51 +45,51 @@ GDRN.TOW:
 
 WOLV:
 	Buildable:
-		Prerequisites: gtek, ~vehicles.gdi
+		Prerequisites: ~vehicles.gdi, gtek
 
 XO:
 	Buildable:
-		Prerequisites: gtek, ~vehicles.gdi
+		Prerequisites: ~vehicles.gdi, gtek
 
 PBUL:
 	Buildable:
-		Prerequisites: gtek, ~vehicles.gdi
+		Prerequisites: ~vehicles.gdi, gtek
 
 AURO:
 	Buildable:
-		Prerequisites: afld.gdi, gtek
+		Prerequisites: ~aircraft.gdi, gtek
 
 gyro.upgrade:
 	Buildable:
-		Prerequisites: gtek
+		Prerequisites: ~player.gdi, gtek
 
 abur.upgrade:
 	Buildable:
-		Prerequisites: gtek
+		Prerequisites: ~player.gdi, gtek
 
 bdrone.upgrade:
 	Buildable:
-		Prerequisites: gtek
+		Prerequisites: ~player.gdi, gtek
 
 railgun.upgrade:
 	Buildable:
-		Prerequisites: upgc
+		Prerequisites: ~player.gdi, upgc
 
 ionmam.upgrade:
 	Buildable:
-		Prerequisites: upgc, !mdrone.upgrade, !hovermam.upgrade
+		Prerequisites: ~player.gdi, upgc, !mdrone.upgrade, !hovermam.upgrade
 	TooltipExtras:
 		Attributes: \n(!) Only ONE Mammoth Tank upgrade can be chosen
 
 hovermam.upgrade:
 	Buildable:
-		Prerequisites: upgc, !ionmam.upgrade, !mdrone.upgrade
+		Prerequisites: ~player.gdi, upgc, !ionmam.upgrade, !mdrone.upgrade
 	TooltipExtras:
 		Attributes: \n(!) Only ONE Mammoth Tank upgrade can be chosen
 
 mdrone.upgrade:
 	Buildable:
-		Prerequisites: upgc, !ionmam.upgrade, !hovermam.upgrade
+		Prerequisites: ~player.gdi, upgc, !ionmam.upgrade, !hovermam.upgrade
 	TooltipExtras:
 		Attributes: \n(!) Only ONE Mammoth Tank upgrade can be chosen
 
