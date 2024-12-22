@@ -8,13 +8,13 @@ ExterminatorsStartTime = {
 ExterminatorsInterval = {
 	easy = DateTime.Minutes(7),
 	normal = DateTime.Minutes(5) + DateTime.Seconds(30),
-	hard = DateTime.Minutes(4),
+	hard = DateTime.Minutes(3) + DateTime.Seconds(30),
 }
 
 ExterminatorAttackCount = {
 	easy = 4,
 	normal = 4,
-	hard = 10
+	hard = 50
 }
 
 Exterminators = {
@@ -30,8 +30,8 @@ RiftEnabledTime = {
 }
 
 table.insert(UnitCompositions.Scrin.Main.hard, {
-	Infantry = { "s4", "evis", "evis", "evis", "evis", "s4", "s4", "s4", "mast" },
-	Vehicles = { TripodVariant, TripodVariant, GunWalkerSeekerOrLacerator, CorrupterDevourerOrDarkener, "oblt" },
+	Infantry = { "s3", "s4", "evis", "evis", "evis", "evis", "s1", "s1", "s4", "s1", "s4", "s1", "s4", "s1", "mast" },
+	Vehicles = { "shrw", TripodVariant, TripodVariant, "shrw", CorrupterDevourerOrDarkener, "oblt", "shrw" },
 	Aircraft = { PacOrDevastator, "pac" },
 	MinTime = DateTime.Minutes(22)
 })
@@ -226,7 +226,7 @@ Squads = {
 		ProducerTypes = { Aircraft = { "grav" } },
 		Units = {
 			hard = {
-				{ Aircraft = { { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" } } },
+				{ Aircraft = { { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" } } },
 			}
 		},
 	},
@@ -241,14 +241,14 @@ Squads = {
 			return GDIHasMassAir()
 		end,
 		OnProducedAction = function(a)
-			a.Patrol({ A2APatrol1.Location, A2APatrol2.Location, A2APatrol3.Location, A2APatrol4.Location, A2APatrol5.Location, A2APatrol6.Location, A2APatrol7.Location, A2APatrol8.Location })
+			a.Patrol({ A2ABPatrol1.Location, A2ABPatrol2.Location, A2ABPatrol3.Location, A2ABPatrol4.Location, A2ABPatrol5.Location })
 		end,
 		IdleUnits = { },
 		ProducerActors = nil,
 		ProducerTypes = { Aircraft = { "grav" } },
 		Units = {
 			hard = {
-				{ Aircraft = { { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" } } },
+				{ Aircraft = { { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" } } },
 			}
 		},
 	},
@@ -376,20 +376,6 @@ OncePerFiveSecondChecks = function()
 			IsGDIDead = true
 			GDI.MarkFailedObjective(Objectives.DestroyOverlordForces[GDI.InternalName])
 		end
-
-		if Difficulty == "hard" and not ScrinAirToAirVsNodInitialized then
-			if NodHasMassAir() then
-				ScrinAirToAirVsNodInitialized = true
-				InitAirAttackSquad(Squads.ScrinAirToAirVsNod, Scrin, Nod, { "scrn", "venm" })
-			end
-		end
-
-		if Difficulty == "hard" and not ScrinAirToAirVsGDIInitialized then
-			if NodHasMassAir() then
-				ScrinAirToAirVsGDIInitialized = true
-				InitAirAttackSquad(Squads.ScrinAirToAirVsGDI, Scrin, GDI, { "orca", "orcb", "a10", "a10.gau", "a10.sw", "auro" })
-			end
-		end
 	end
 end
 
@@ -435,6 +421,9 @@ InitScrin = function()
 	Trigger.AfterDelay(Squads.ScrinAirVsGDI.Delay[Difficulty], function()
 		InitAirAttackSquad(Squads.ScrinAirVsGDI, Scrin, GDI, { "harv", "harv.td", "msam", "hsam", "atwr", "stwr", "gtwr", "hq", "gtek", "nuk2", "htnk", "htnk.ion", "htnk.hover", "htnk.drone", "titn", "titn.rail" })
 	end)
+
+	InitAirAttackSquad(Squads.ScrinAirToAirVsNod, Scrin, Nod, { "scrn", "apch", "venm" })
+	InitAirAttackSquad(Squads.ScrinAirToAirVsGDI, Scrin, GDI, { "orca", "orcb", "a10", "a10.gau", "a10.sw", "auro" })
 
 	Trigger.AfterDelay(1, function()
 		local initialAttackers = Map.ActorsInBox(InitialAttackersTopLeft.CenterPosition, InitialAttackersBottomRight.CenterPosition, function(a)
@@ -601,11 +590,11 @@ IsScrinGroundHunterUnitExcludingExterminators = function(actor)
 end
 
 NodHasMassAir = function()
-	local nodAir = Nod.GetActorsByTypes({ "scrn", "venm" })
-	return #nodAir > 8
+	local nodAir = Nod.GetActorsByTypes({ "scrn", "apch", "venm" })
+	return #nodAir > 7
 end
 
 GDIHasMassAir = function()
 	local gdiAir = GDI.GetActorsByTypes({ "orca", "orcb", "a10", "a10.gau", "a10.sw", "auro" })
-	return #gdiAir > 8
+	return #gdiAir > 7
 end

@@ -14,7 +14,7 @@ ExterminatorsInterval = {
 ExterminatorAttackCount = {
 	easy = 4,
 	normal = 4,
-	hard = 10
+	hard = 50
 }
 
 Exterminators = {
@@ -31,22 +31,22 @@ RiftEnabledTime = {
 }
 
 table.insert(UnitCompositions.Scrin.Main.hard, {
-	Infantry = { "s4", "evis", "evis", "evis", "evis", "s4", "s4", "s4", "mast" },
-	Vehicles = { TripodVariant, TripodVariant, GunWalkerSeekerOrLacerator, CorrupterDevourerOrDarkener, "oblt" },
+	Infantry = { "s3", "s4", "evis", "evis", "evis", "evis", "s1", "s1", "s4", "s1", "s4", "s1", "s4", "s1", "mast" },
+	Vehicles = { "shrw", TripodVariant, TripodVariant, "shrw", CorrupterDevourerOrDarkener, "oblt", "shrw" },
 	Aircraft = { PacOrDevastator, "pac" },
 	MinTime = DateTime.Minutes(22)
 })
 
 Squads = {
 	ScrinMain = {
+		ActiveCondition = function()
+			return DateTime.GameTime < DateTime.Minutes(35) or DateTime.GameTime > DateTime.Minutes(40)
+		end,
 		Delay = {
 			easy = DateTime.Minutes(6),
 			normal = DateTime.Minutes(4),
 			hard = DateTime.Minutes(2)
 		},
-		ActiveCondition = function()
-			return DateTime.GameTime < DateTime.Minutes(35) or DateTime.GameTime > DateTime.Minutes(40)
-		end,
 		AttackValuePerSecond = {
 			easy = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(16), Value = 50 } },
 			normal = { { MinTime = 0, Value = 50 }, { MinTime = DateTime.Minutes(14), Value = 100 } },
@@ -355,7 +355,7 @@ OncePerFiveSecondChecks = function()
 		if Difficulty == "hard" and not ScrinAirToAirInitialized then
 			if PlayerHasMassAir() then
 				ScrinAirToAirInitialized = true
-				InitAirAttackSquad(Squads.ScrinAirToAir, Scrin, Nod, { "scrn", "venm" })
+				InitAirAttackSquad(Squads.ScrinAirToAir, Scrin, Nod, { "scrn", "apch", "venm" })
 			end
 		end
 	end
@@ -569,6 +569,6 @@ IsScrinGroundHunterUnitExcludingExterminators = function(actor)
 end
 
 PlayerHasMassAir = function()
-	local nodAir = Nod.GetActorsByTypes({ "scrn", "venm" })
-	return #nodAir > 8
+	local nodAir = Nod.GetActorsByTypes({ "scrn", "apch", "venm" })
+	return #nodAir > 7
 end

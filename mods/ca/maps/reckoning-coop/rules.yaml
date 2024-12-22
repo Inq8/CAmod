@@ -4,6 +4,9 @@ World:
 		Scripts: campaign.lua, reckoning-coop.lua
 	MissionData:
 		Briefing: ================\n\nSpoiler warning: This is a co-op version of the campaign mission with the same name.\n\nNod and GDI put their differences aside in order to help the Scrin Rebels defeat the forces of the Overlord.
+	MapBuildRadius:
+		AllyBuildRadiusCheckboxLocked: False
+		AllyBuildRadiusCheckboxVisible: True
 
 AFLD.GDI:
 	-InterceptorPower@AirDef:
@@ -95,13 +98,13 @@ mdrone.upgrade:
 
 GTEK:
 	GrantExternalConditionPowerCA@NREPAIR:
-		Prerequisites: ~gtek
+		Prerequisites: ~disabled
 
 HQ:
 	SpawnActorPower@GDIEagleDropzone:
-		Prerequisites: ~radar.gdi
+		Prerequisites: ~disabled
 	ParatroopersPowerCA@xodrop:
-		Prerequisites: ~radar.gdi
+		Prerequisites: ~disabled
 	DropPodsPowerCA@Zocom:
 		Prerequisites: ~radar.gdi
 
