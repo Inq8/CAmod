@@ -3354,15 +3354,32 @@ ShadeEmp:
 		Inaccuracy: 341
 
 ManticoreBolts:
-	Inherits: DevastatorDiscs
+	Inherits: ^AirToAirMissile
+	Range: 14c0
+	MinRange: 3c0
 	Report: mcor-fire1.aud, mcor-fire2.aud
 	ReloadDelay: 150
 	Burst: 4
-	Range: 14c0
-	Projectile: Bullet
+	BurstDelays: 3
+	ValidTargets: Air, AirSmall
+	TargetActorCenter: true
+	Projectile: Missile
 		Image: redplasmatorp
 		Palette: caneon
-		Inaccuracy: 1c0
+		TrailImage: smokey
+		TrailPalette: scrinplasma
+		Speed: 360
+		Blockable: false
+		Jammable: false
+		RangeLimit: 15c0
+		ShadowColor: 00000033
+		HorizontalRateOfTurn: 4
+		CruiseAltitude: 0
+	Warhead@1Dam: SpreadDamage
+		Range: 0, 0c64, 0c256, 1c768
+		Damage: 4000
+	Warhead@smallDamage: SpreadDamage
+		Damage: 4000
 
 VertigoBomb:
 	Inherits: JDAM
@@ -3374,6 +3391,11 @@ VertigoBomb:
 			Wood: 80
 			Concrete: 100
 	-Warhead@Concussion:
+	Warhead@StealthBreaker: GrantExternalConditionCA
+		Range: 6c0
+		Duration: 1125
+		Condition: cloak-force-disabled
+		ValidRelationships: Enemy, Neutral
 
 VertigoBombTargeter:
 	Range: 7c0

@@ -4554,6 +4554,7 @@ VERT:
 	TooltipExtras:
 		Strengths: • Strong vs Defenses, Heavy Armor, Light Armor, Infantry
 		Weaknesses: • Cannot attack Aircraft
+		Attributes: • Bomb disrupts cloaking in a large area
 	Valued:
 		Cost: 2000
 	Tooltip:
@@ -4689,10 +4690,10 @@ VERT:
 
 MCOR:
 	Inherits: ^HelicopterTD
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@InfiltratorStolenTech: ^InfiltratorStolenTech
 	Valued:
-		Cost: 2000
+		Cost: 1800
 	Tooltip:
 		Name: Manticore
 	UpdatesPlayerStatistics:
@@ -4703,17 +4704,17 @@ MCOR:
 		BuildPaletteOrder: 204
 		Prerequisites: anyradar, ~stolentech.grav
 		IconPalette: chrometd
-		Description: Long ranged aircraft with dual plasma cannons.
+		Description: Long ranged air-to-air craft with dual plasma cannons.
 	TooltipExtras:
-		Strengths: • Strong vs Buildings, Defenses, Infantry
-		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets
+		Strengths: • Strong vs Aircraft
+		Weaknesses: • Cannot attack ground units
 	Aircraft:
 		CruiseAltitude: 2560
 		AltitudeVelocity: 0c100
-		TurnSpeed: 16
+		TurnSpeed: 14
 		TakeoffSounds: dropup1.aud
 		LandingSounds: dropdwn1.aud
-		Speed: 100
+		Speed: 80
 	Health:
 		HP: 26000
 	RevealsShroud:
