@@ -8,7 +8,7 @@ ExterminatorsStartTime = {
 ExterminatorsInterval = {
 	easy = DateTime.Minutes(7),
 	normal = DateTime.Minutes(5) + DateTime.Seconds(30),
-	hard = DateTime.Minutes(3) + DateTime.Seconds(30),
+	hard = DateTime.Minutes(3) + DateTime.Seconds(45),
 }
 
 ExterminatorAttackCount = {
