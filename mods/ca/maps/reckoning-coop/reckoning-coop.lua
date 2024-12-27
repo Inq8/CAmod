@@ -422,8 +422,10 @@ InitScrin = function()
 		InitAirAttackSquad(Squads.ScrinAirVsGDI, Scrin, GDI, { "harv", "harv.td", "msam", "hsam", "atwr", "stwr", "gtwr", "hq", "gtek", "nuk2", "htnk", "htnk.ion", "htnk.hover", "htnk.drone", "titn", "titn.rail" })
 	end)
 
-	InitAirAttackSquad(Squads.ScrinAirToAirVsNod, Scrin, Nod, { "scrn", "apch", "venm" })
-	InitAirAttackSquad(Squads.ScrinAirToAirVsGDI, Scrin, GDI, { "orca", "orcb", "a10", "a10.gau", "a10.sw", "auro" })
+	if Difficult == "hard" then
+		InitAirAttackSquad(Squads.ScrinAirToAirVsNod, Scrin, Nod, { "scrn", "apch", "venm" })
+		InitAirAttackSquad(Squads.ScrinAirToAirVsGDI, Scrin, GDI, { "orca", "orcb", "a10", "a10.gau", "a10.sw", "auro" })
+	end
 
 	Trigger.AfterDelay(1, function()
 		local initialAttackers = Map.ActorsInBox(InitialAttackersTopLeft.CenterPosition, InitialAttackersBottomRight.CenterPosition, function(a)
