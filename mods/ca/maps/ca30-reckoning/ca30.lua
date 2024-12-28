@@ -351,13 +351,6 @@ OncePerFiveSecondChecks = function()
 		if Nod.HasNoRequiredUnits() and not Victory then
 			Nod.MarkFailedObjective(ObjectiveDestroyOverlordForces)
 		end
-
-		if Difficulty == "hard" and not ScrinAirToAirInitialized then
-			if PlayerHasMassAir() then
-				ScrinAirToAirInitialized = true
-				InitAirAttackSquad(Squads.ScrinAirToAir, Scrin, Nod, { "scrn", "apch", "venm" })
-			end
-		end
 	end
 end
 
@@ -395,6 +388,10 @@ InitScrin = function()
 	Trigger.AfterDelay(Squads.ScrinAir.Delay[Difficulty], function()
 		InitAirAttackSquad(Squads.ScrinAir, Scrin, Nod, { "harv", "harv.td", "arty.nod", "mlrs", "obli", "wtnk", "gun.nod", "hq", "tmpl", "nuk2", "rmbc", "enli", "tplr" })
 	end)
+
+	if Difficulty == "hard" then
+		InitAirAttackSquad(Squads.ScrinAirToAir, Scrin, Nod, { "scrn", "apch", "venm" })
+	end
 
 	Trigger.AfterDelay(1, function()
 		local initialAttackers = Map.ActorsInBox(InitialAttackersTopLeft.CenterPosition, InitialAttackersBottomRight.CenterPosition, function(a)

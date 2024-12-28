@@ -8,7 +8,7 @@ ExterminatorsStartTime = {
 ExterminatorsInterval = {
 	easy = DateTime.Minutes(7),
 	normal = DateTime.Minutes(5) + DateTime.Seconds(30),
-	hard = DateTime.Minutes(3) + DateTime.Seconds(45),
+	hard = DateTime.Minutes(4),
 }
 
 ExterminatorAttackCount = {
@@ -158,7 +158,7 @@ Squads = {
 			Aircraft = false
 		},
 		IdleUnits = { },
-		ProducerActors = nil,
+		ProducerActors = { Aircraft = { GravityStabilizer1, GravityStabilizer2 } },
 		ProducerTypes = { Aircraft = { "grav" } },
 		Units = {
 			easy = {
@@ -192,7 +192,7 @@ Squads = {
 			Aircraft = false
 		},
 		IdleUnits = { },
-		ProducerActors = nil,
+		ProducerActors = { Aircraft = { GravityStabilizer3, GravityStabilizer4 } },
 		ProducerTypes = { Aircraft = { "grav" } },
 		Units = {
 			easy = {
@@ -222,7 +222,7 @@ Squads = {
 			a.Patrol({ A2APatrol1.Location, A2APatrol2.Location, A2APatrol3.Location, A2APatrol4.Location, A2APatrol5.Location, A2APatrol6.Location, A2APatrol7.Location, A2APatrol8.Location })
 		end,
 		IdleUnits = { },
-		ProducerActors = nil,
+		ProducerActors = { Aircraft = { GravityStabilizer1, GravityStabilizer2 } },
 		ProducerTypes = { Aircraft = { "grav" } },
 		Units = {
 			hard = {
@@ -244,7 +244,7 @@ Squads = {
 			a.Patrol({ A2ABPatrol1.Location, A2ABPatrol2.Location, A2ABPatrol3.Location, A2ABPatrol4.Location, A2ABPatrol5.Location })
 		end,
 		IdleUnits = { },
-		ProducerActors = nil,
+		ProducerActors = { Aircraft = { GravityStabilizer3, GravityStabilizer4 } },
 		ProducerTypes = { Aircraft = { "grav" } },
 		Units = {
 			hard = {
@@ -459,8 +459,8 @@ InitScrin = function()
 			a.GrantCondition("difficulty-" .. Difficulty)
 		end
 		Trigger.OnDamaged(a, function(self, attacker, damage)
-			if IsMissionPlayer(attacker.Owner) and damage > 500 then
-				AggroExterminator(self, attacker.Owner)
+			if damage > 500 then
+				AggroExterminator(self, Utils.Random(MissionPlayers))
 			end
 		end)
 	end)
@@ -555,8 +555,8 @@ SendNextExterminator = function()
 					end)
 
 					Trigger.OnDamaged(a, function(self, attacker, damage)
-						if IsMissionPlayer(attacker.Owner) and damage > 500 then
-							AggroExterminator(self, attacker.Owner)
+						if damage > 500 then
+							AggroExterminator(self, Utils.Random(MissionPlayers))
 						end
 					end)
 				end)
