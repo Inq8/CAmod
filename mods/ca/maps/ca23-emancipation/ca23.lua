@@ -402,7 +402,7 @@ InitScrin = function()
 	end)
 
 	Trigger.AfterDelay(Squads.ScrinAir.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.ScrinAir, Scrin, GDI, { "harv.td", "msam", "nuke", "nuk2", "orca", "a10", "a10.upg", "htnk", "htnk.drone", "mtnk.drone" })
+		InitAirAttackSquad(Squads.ScrinAir, Scrin, GDI, { "harv.td", "msam", "nuke", "nuk2", "orca", "a10", "a10.sw", "a10.gau", "htnk", "htnk.drone", "mtnk.drone" })
 	end)
 end
 

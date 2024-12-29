@@ -69,11 +69,13 @@ namespace OpenRA.Mods.CA.Activities
 			}
 
 			gm.Facing = d.Yaw;
-
 			var newPosition = self.CenterPosition + move;
-			newPosition += new WVec(0, 0, targetPos.Z - newPosition.Z);
+			var ticksToTarget = (targetPos - newPosition).HorizontalLength / gm.Info.Speed;
+			var altitudeDifference = targetPos.Z - newPosition.Z;
+			var newZ = ticksToTarget > 0 ? altitudeDifference / ticksToTarget : targetPos.Z;
+			newPosition += new WVec(0, 0, newZ);
 
-			if (newPosition.Z < gm.Info.MinAltitude.Length)
+			if (newPosition.Z < gm.Info.MinAltitude.Length && ticksToTarget > 0)
 				newPosition = new WPos(newPosition.X, newPosition.Y, gm.Info.MinAltitude.Length);
 
 			gm.SetPosition(self, newPosition);

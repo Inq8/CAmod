@@ -35,6 +35,11 @@ namespace OpenRA.Mods.CA.Traits
 		Left
 	}
 
+	public enum PriorityType {
+		Distance,
+		Value
+	}
+
 	public class MissileStrikePowerInfo : SupportPowerInfo
 	{
 		[Desc("Missile actor. Must have a trait that inherits `" + nameof(MissileBase) + "`.")]
@@ -59,6 +64,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		[Desc("If TargetsActors is false, defines impact offsets. Cycled through until all missiles are launched.")]
 		public readonly CVec[] TargetOffsets = new CVec[] { new CVec(0, 0) };
+
+		[Desc("If TargetsActors is true, defines how targets are prioritized.")]
+		public readonly PriorityType PrioritizeTargetsBy = PriorityType.Distance;
 
 		[Desc("Whether to shuffle the impact offsets. If false, the offsets will be used in the order they are defined.")]
 		public readonly bool ShuffleOffsets = false;
@@ -361,10 +369,11 @@ namespace OpenRA.Mods.CA.Traits
 				var spawnDirection = new WVec((targetCell - launchCell).X, (targetCell - launchCell).Y, 0);
 				var spawnFacing = spawnDirection.Yaw;
 				var targetAltitude = new WDist(target.CenterPosition.Z);
+				var spawnAltitude = info.LaunchAltitude.GetValueOrDefault(targetAltitude);
 
 				var actor = w.CreateActor(false, info.MissileActor, new TypeDictionary
 				{
-					new CenterPositionInit(launchPos + new WVec(0, 0, info.LaunchAltitude.GetValueOrDefault(targetAltitude).Length)),
+					new CenterPositionInit(launchPos + new WVec(0, 0, spawnAltitude.Length)),
 					new OwnerInit(self.Owner),
 					new FacingInit(spawnFacing)
 				});
@@ -387,7 +396,12 @@ namespace OpenRA.Mods.CA.Traits
 					&& (info.InvalidTargets.IsEmpty || !info.InvalidTargets.Overlaps(a.GetEnabledTargetTypes()))
 					&& (!info.TargetMustBeVisible || Self.Owner.Shroud.IsVisible(a.Location))
 					&& a.CanBeViewedByPlayer(Self.Owner))
-				.OrderBy(a => (a.CenterPosition - centerPos).LengthSquared);
+				.OrderByDescending(a => {
+					if (info.PrioritizeTargetsBy == PriorityType.Value)
+						return a.Info.TraitInfoOrDefault<ValuedInfo>()?.Cost ?? 0;
+					else
+						return 0;
+				}).ThenBy(a => (a.CenterPosition - centerPos).LengthSquared);
 
 			if (info.MaxTargets > 0)
 				return actorsInRange.Take(info.MaxTargets);

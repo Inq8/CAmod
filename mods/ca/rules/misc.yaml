@@ -1363,12 +1363,15 @@ shadow.beacon.camera:
 	RevealsShroud:
 		Range: 8c0
 		Type: GroundPosition
-
-watcher.parasite:
-	Inherits: shadow.beacon.camera
+	DetectCloaked:
+		Range: 0c512
+		DetectionTypes: Cloak
 	KillsSelf:
 		RemoveInstead: true
 		Delay: 2250
+
+watcher.parasite:
+	Inherits: shadow.beacon.camera
 	Attachable:
 		Type: WatcherParasite
 		TargetTypes: WatcherParasiteAttachable

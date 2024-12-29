@@ -64,7 +64,7 @@ bombard.strat:
 		BuildPaletteOrder: 7
 		Prerequisites: ~player.gdi, anyradar, ~!seek.strat, ~!hold.strat, ~techlevel.medium
 		IconPalette: chrometd
-		Description: Firepower focused strategy, required for:\n• Tomahawk Launcher Research\n• Zone Trooper\n• Hailstorm Missiles Upgrade\n\n
+		Description: Firepower focused strategy, required for:\n• Tomahawk Launcher Research\n• Zone Trooper\n• Hailstorm Missiles Upgrade\n• Avenger Upgrade\n\n
 	TooltipExtras:
 		Strengths: + Increases firepower and rate of fire of vehicles and aircraft by 3%
 		Attributes: \n(!) Only ONE Strategy may be chosen.
@@ -103,7 +103,7 @@ seek.strat:
 		BuildPaletteOrder: 9
 		Prerequisites: ~player.gdi, anyradar, ~!bombard.strat, ~!hold.strat, ~techlevel.medium
 		IconPalette: chrometd
-		Description: Speed and weapon range focused strategy, required for:\n• TOW Missile Upgrade\n• Zone Raider\n• Hypersonic Missiles Upgrade\n\n
+		Description: Speed and weapon range focused strategy, required for:\n• TOW Missile Upgrade\n• Zone Raider\n• Hypersonic Missiles Upgrade\n• Sidewinders Upgrade\n\n
 	TooltipExtras:
 		Strengths: + Increases speed and weapon range of vehicles and aircraft by 5%
 		Attributes: \n(!) Only ONE Strategy may be chosen.
@@ -142,7 +142,7 @@ hold.strat:
 		BuildPaletteOrder: 11
 		Prerequisites: ~player.gdi, anyradar, ~!bombard.strat, ~!seek.strat, ~techlevel.medium
 		IconPalette: chrometd
-		Description: Defensive strategy, required for:\n• Point Defense Systems Upgrade\n• Zone Defender\n• Hammerhead Missiles Upgrade\n\n
+		Description: Defensive strategy, required for:\n• Point Defense Systems Upgrade\n• Zone Defender\n• Hammerhead Missiles Upgrade\n• Ceramic Armor Upgrade\n\n
 	TooltipExtras:
 		Strengths: + Increases armor of vehicles and aircraft by 5%
 		Attributes: \n(!) Only ONE Strategy may be chosen.
@@ -180,7 +180,7 @@ vulcan.upgrade:
 	Buildable:
 		BuildPaletteOrder: 20
 		Prerequisites: ~player.gdi, anyradar, ~techlevel.medium
-		Description: Upgrades: APC
+		Description: Replaces: APC
 	TooltipExtras:
 		Strengths: + Adds anti-air capability\n+ Increased damage against ground targets\n+ Adds turret
 		Weaknesses: – Increased cost\n– Reduced speed
@@ -205,22 +205,6 @@ bjet.upgrade:
 	RenderSprites:
 		Image: bjet.upgrade
 
-sidewinders.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Sidewinders
-	Buildable:
-		BuildPaletteOrder: 30
-		Prerequisites: ~player.gdi, gtek, ~techlevel.high
-		IconPalette: chrometd
-		Description: Equips Warthogs with air-to-air missiles.\n\nUpgrades: Warthog
-	TooltipExtras:
-		Strengths: + Added air-to-air missiles
-	Valued:
-		Cost: 750
-	RenderSprites:
-		Image: sidewinders.upgrade
-
 empgren.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -236,6 +220,68 @@ empgren.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: empgren.upgrade
+
+strata10.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Strategy Dependent Upgrade
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.gdi, gtek, anystrategy, ~!bombard.strat, ~!seek.strat, ~!hold.strat, ~techlevel.high
+		IconPalette: chrometd
+		Description: Upgrade depends on chosen strategy.\n\n• Bombardment: Avenger upgrade\n• Seek & Destroy: Sidewinders upgrade\n• Hold the Line: Ceramic Armor upgrade
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: strategic.upgrade
+
+avenger.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Avenger
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.gdi, gtek, ~bombard.strat, ~techlevel.high
+		IconPalette: chrometd
+		Description: Replaces Warthog's incendiary bombs with\n  GAU-8 Avenger rotary cannon and Hydra rockets.\n\nUpgrades: Warthog
+	TooltipExtras:
+		Strengths: +Increased damage\n+ Increased range
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: avenger.upgrade
+
+sidewinders.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Sidewinders
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.gdi, gtek, ~seek.strat, ~techlevel.high
+		IconPalette: chrometd
+		Description: Equips Warthogs with air-to-air missiles.\n\nUpgrades: Warthog
+	TooltipExtras:
+		Strengths: + Added air-to-air missiles
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: sidewinders.upgrade
+
+ceramic.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Ceramic Armor
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.gdi, gtek, ~hold.strat, ~techlevel.high
+		IconPalette: chrometd
+		Description: Upgrades Warthogs with ceramic armor.\n\nUpgrades: Warthog
+	TooltipExtras:
+		Strengths: + Increased durability
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: ceramic.upgrade
 
 strategic.upgrade:
 	Inherits: ^Upgrade
@@ -596,6 +642,22 @@ decoy.upgrade:
 	RenderSprites:
 		Image: decoy.upgrade
 
+sharv.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Stealth Harvester
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: ~player.nod, ~deceit.covenant, anyradar, ~techlevel.medium
+		Description: Allows construction of Stealth Harvesters which\n  are cloaked while moving.\n\nUpgrades: Harvester
+	TooltipExtras:
+		Strengths: + Hidden while moving
+		Weaknesses: – Reduced health
+	Valued:
+		Cost: 1250
+	RenderSprites:
+		Image: sharv.upgrade
+
 tibcore.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -638,7 +700,7 @@ blacknapalm.upgrade:
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.blackh, tmpl, ~techlevel.high
-		Description: Superheated flame weapons that can melt armored targets.\n\nUpgrades: Heavy Flame Tank\nUpgrades: SSM Launcher
+		Description: Superheated flame weapons that can melt armored targets.\n\nUpgrades: Heavy Flame Tank\nUpgrades: SSM Launcher\nUpgrades: Avatar
 	TooltipExtras:
 		Strengths: + Increased damage against vehicles and defenses
 		Weaknesses: – Reduced rate of fire
@@ -673,7 +735,7 @@ quantum.upgrade:
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.marked, tmpl, ~techlevel.high
-		Description: Enhances heavy laser weapons.\n\nUpgrades: Obelisk of Light\nUpgrades: Laser Turret\nUpgrades: Venom\nUpgrades: Templar
+		Description: Enhances heavy laser weapons.\n\nUpgrades: Obelisk of Light\nUpgrades: Avatar\nUpgrades: Laser Turret\nUpgrades: Venom\nUpgrades: Templar
 	TooltipExtras:
 		Strengths: + Increased range\n+ Increased damage
 	Valued:
@@ -711,23 +773,6 @@ hstk.upgrade:
 		Cost: 500
 	RenderSprites:
 		Image: hstk.upgrade
-
-sharv.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Stealth Harvester
-	Buildable:
-		BuildPaletteOrder: 30
-		IconPalette: chrometd
-		Prerequisites: ~player.nod, ~deceit.covenant, tmpp, ~techlevel.high
-		Description: Allows construction of Stealth Harvesters which\nare cloaked while moving.\n\nUpgrades: Harvester
-	TooltipExtras:
-		Strengths: + Hidden while moving
-		Weaknesses: – Reduced health
-	Valued:
-		Cost: 1250
-	RenderSprites:
-		Image: sharv.upgrade
 
 advcyber.upgrade:
 	Inherits: ^Upgrade
@@ -1196,7 +1241,7 @@ korea.coalition:
 	Buildable:
 		BuildPaletteOrder: 2
 		Prerequisites: ~player.allies, alhq, !greece.coalition, !korea.coalition, !sweden.coalition, ~techlevel.medium
-		Description: Form a coalition with South Korea, required for:\n• Black Eagle\n• Patriot Strike\n• Improved Helipad (repairs without Service Depot, increased HP)\n\n
+		Description: Form a coalition with South Korea, required for:\n• Black Eagle\n• Black Sky Strike\n• Improved Helipad (repairs without Service Depot, increased HP)\n\n
 	TooltipExtras:
 		Attributes: (!) Only ONE Coalition may be chosen.
 	Valued:

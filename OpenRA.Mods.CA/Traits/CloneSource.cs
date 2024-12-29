@@ -88,7 +88,7 @@ namespace OpenRA.Mods.Common.Traits
 		private void UpdatePrimary(Actor self)
 		{
 			var cloneProducers = self.World.ActorsWithTrait<CloneProducer>().Where(a => a.Actor.Owner == self.Owner
-				&& ProductionTypes.Where(t => a.Trait.Info.Types.Contains(t)).Any());
+				&& ProductionTypes.Where(t => a.Trait.Types.Contains(t)).Any());
 
 			foreach (var p in cloneProducers)
 				p.Trait.PrimaryUpdated();

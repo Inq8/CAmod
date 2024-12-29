@@ -943,16 +943,14 @@ DoubleDepthCharge:
 
 203mm:
 	ReloadDelay: 120
-	Range: 9c0
+	Range: 10c0
 	MinRange: 2c512
-	Burst: 3
-	BurstDelays: 10
 	Report: hvygun10.aud
 	Projectile: Bullet
 		Speed: 286
 		Blockable: false
 		LaunchAngle: 50
-		Inaccuracy: 1c382
+		Inaccuracy: 128
 		Image: 120MM
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
@@ -962,7 +960,7 @@ DoubleDepthCharge:
 			None: 35
 			Wood: 30
 			Light: 60
-			Heavy: 60
+			Heavy: 70
 			Concrete: 0
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Dam: SpreadDamage
@@ -990,6 +988,11 @@ DoubleDepthCharge:
 		ImpactSounds: splashl1.aud, splashl2.aud
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
+
+203mm.Inacc:
+	Inherits: 203mm
+	Projectile: Bullet
+		Inaccuracy: 1c382
 
 GuardianDroneGun:
 	Inherits: 25mm

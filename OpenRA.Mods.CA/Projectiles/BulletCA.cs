@@ -141,8 +141,6 @@ namespace OpenRA.Mods.CA.Projectiles
 		[Desc("The alpha value [from 0 to 255] of color at the contrail end.")]
 		public readonly int ContrailEndColorAlpha = 0;
 
-
-
 		[Desc("If true, projectile will pass through targets to max range (subject to minimum distance).")]
 		public readonly bool PassthroughToMaxRange = false;
 
@@ -151,8 +149,6 @@ namespace OpenRA.Mods.CA.Projectiles
 
 		[Desc("If true, full passthroughs will travel parallel to the weapon muzzle offset.")]
 		public readonly bool PassthroughParallelToMuzzleOffset = false;
-
-
 
 		public IProjectile Create(ProjectileArgs args) { return new BulletCA(this, args); }
 	}

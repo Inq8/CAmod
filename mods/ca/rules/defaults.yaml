@@ -1907,40 +1907,47 @@
 		Limit: 1
 		LimitCondition: mdrn-attached
 
-^WatcherParasiteAttachable:
-	Targetable@WatcherParasite:
-		TargetTypes: WatcherParasiteAttachable
-		RequiresCondition: !wchrpsite-attached
-	AttachableTo@WatcherParasite:
-		Type: WatcherParasite
-		Limit: 1
-		LimitCondition: wchrpsite-attached
-	GrantTimedCondition@WatcherParasite:
-		Condition: wchrpsite-hidden
+^ObserverAttachable:
+	GrantTimedCondition@ObserverIcon:
+		Condition: observer-icon-hidden
 		Duration: 750
-		RequiresCondition: wchrpsite-attached
-	WithDecoration@WatcherParasiteWatched:
+		RequiresCondition: observer-attached
+	WithDecoration@ObserverIconWatched:
 		Image: watched
 		Sequence: idle
 		Palette: scrineffect
 		Position: Top
 		ValidRelationships: Ally
 		Margin: 0, 8
-		RequiresCondition: wchrpsite-attached && !wchrpsite-hidden
-	WithDecoration@WatcherParasiteWatcher:
+		RequiresCondition: observer-attached && !observer-icon-hidden
+	WithDecoration@ObserverIconWatcher:
 		Image: watched
 		Sequence: idle
 		Palette: scrineffect
 		Position: Top
 		ValidRelationships: Enemy, Neutral
 		Margin: 0, 8
-		RequiresCondition: wchrpsite-attached
+		RequiresCondition: observer-attached
+
+^WatcherParasiteAttachable:
+	Inherits@ObserverAttachable: ^ObserverAttachable
+	Targetable@WatcherParasite:
+		TargetTypes: WatcherParasiteAttachable
+		RequiresCondition: !observer-attached
+	AttachableTo@WatcherParasite:
+		Type: WatcherParasite
+		Limit: 1
+		AttachedCondition: observer-attached
 
 ^ShadowBeaconAttachable:
+	Inherits@ObserverAttachable: ^ObserverAttachable
 	Targetable@ShadowBeacon:
 		TargetTypes: ShadowBeaconAttachable
+		RequiresCondition: !observer-attached
 	AttachableTo@ShadowBeacon:
 		Type: ShadowBeacon
+		Limit: 1
+		AttachedCondition: observer-attached
 
 ^HoverTrail:
 	LeavesTrails:
@@ -2865,7 +2872,7 @@
 		ColorSource: Player
 	-AttachableTo@MINIDRONE:
 	Targetable@WatcherParasite:
-		RequiresCondition: !underwater && !wchrpsite-attached
+		RequiresCondition: !underwater && !observer-attached
 
 ^NeutralPlane:
 	Inherits@1: ^ExistsInWorld

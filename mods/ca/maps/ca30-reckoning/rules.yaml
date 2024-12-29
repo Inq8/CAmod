@@ -94,7 +94,7 @@ Player:
 				MinimumAttractiveness: 3000
 				Consideration@1:
 					Against: Enemy
-					Types: Defense
+					Types: Defense, Vehicle
 					Attractiveness: 1
 					TargetMetric: Value
 					CheckRadius: 3c0
@@ -123,7 +123,7 @@ TPLR:
 
 BH:
 	Buildable:
-		Prerequisites: anyradar, ~infantry.nod, ~techlevel.medium
+		Prerequisites: anyradar, ~infantry.nod
 
 LTNK:
 	Buildable:
@@ -135,7 +135,7 @@ LTNK.Laser:
 
 MTNK:
 	Buildable:
-		Prerequisites: ~!bdrone.upgrade, ~vehicles.gdi, ~techlevel.low
+		Prerequisites: ~!bdrone.upgrade, ~vehicles.gdi
 
 MTNK.Laser:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
@@ -165,7 +165,8 @@ VENM:
 		Prerequisites: ~aircraft.nod
 
 APC2:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
+	Buildable:
+		Prerequisites: ~vehicles.gdi, ~!vulcan.upgrade
 
 AIRS:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
@@ -176,24 +177,25 @@ WEAP.TD:
 
 blacknapalm.upgrade:
 	Buildable:
-		Prerequisites: tmpl
+		Prerequisites: ~player.nod, tmpl
 
 quantum.upgrade:
 	Buildable:
-		Prerequisites: tmpl
+		Prerequisites: ~player.nod, tmpl
 
 alphacomanche.upgrade:
 	Buildable:
-		Prerequisites: tmpl
+		Prerequisites: ~player.nod, tmpl
 
 microwave.upgrade:
 	Buildable:
-		Prerequisites: tmpl
+		Prerequisites: ~player.nod, tmpl
 
 ETPD:
 	Inherits: TPOD
 	Inherits@SHIELDS: ^ScrinShields
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
+	Inherits@SHRAPNEL: ^ThrowsShrapnelBig
 	Turreted@SHIELDS:
 		Offset: 0,0,0
 	GrantCondition@SHIELDS:
@@ -295,6 +297,9 @@ ETPD:
 	ChangesHealth@THEAL:
 		Step: 2000
 		PercentageStep: 0
+	Explodes:
+		Weapon: 380mm
+		EmptyWeapon: 380mm
 
 ETPD.Husk:
 	Inherits: TPOD.Husk

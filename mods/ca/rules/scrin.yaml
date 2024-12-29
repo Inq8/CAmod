@@ -1375,9 +1375,11 @@ HARV.Scrin:
 	WithDamageOverlay:
 		Palette: chrometd
 	-SpawnRandomActorOnDeath:
-	-Upgradeable@SHARV:
+	-GrantConditionOnPrerequisite@Stealth:
+	-TransformOnCondition:
+	-RejectsOrders@Transforming:
+	-TransferResourcesOnTransform:
 	-ReplacedInQueue:
-	-WithDecoration@UpgradeOverlay:
 
 GUNW:
 	Inherits: ^Tank
@@ -3100,7 +3102,7 @@ TORM:
 	AmmoPool:
 		Ammo: 12
 		AmmoCondition: ammo
-		ReloadDelay: 12
+		ReloadDelay: 10
 		ReloadCount: 1
 	WithAmmoPipsDecoration:
 		Position: BottomLeft

@@ -2479,7 +2479,7 @@ ACOL:
 		Weaknesses: • Cannot attack Aircraft
 		Attributes: • Heals on Tiberium
 	Valued:
-		Cost: 450
+		Cost: 475
 	Tooltip:
 		Name: Acolyte
 	UpdatesPlayerStatistics:
@@ -2532,7 +2532,7 @@ TPLR:
 	Tooltip:
 		Name: Templar
 	Valued:
-		Cost: 525
+		Cost: 550
 	Health:
 		HP: 21000
 	Buildable:
@@ -4735,17 +4735,55 @@ HOPL:
 	Inherits: ENFO
 	Buildable:
 		Prerequisites: ~tent, alhq, ~greece.coalition, ~techlevel.high
-		Description: Elite front-line infantry armed with a prism rifle.
+		Description: Elite front-line infantry armed with a prism rifle\n  which periodically fires charged shots to blind enemies.
 	Tooltip:
 		Name: Hoplite
 	Armament@PRIMARY:
-		Weapon: HopliteGun
+		Weapon: HopliteGunCharged
 		LocalOffset: 350,40,341
+		PauseOnCondition: !primary-ammo || secondary-reloading
+		ReloadingCondition: primary-reloading
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: HopliteGun
+		LocalOffset: 350,0,341
+		PauseOnCondition: !secondary-ammo || primary-reloading
+		ReloadingCondition: secondary-reloading
+	# to prevent moving forward while real weapons are paused
+	Armament@Targeter:
+		Name: tertiary
+		Weapon: HopliteTargeter
+		LocalOffset: 350,0,341
 	Armament@BATF:
 		Weapon: HopliteGun
 	Voiced:
 		VoiceSet: HopliteVoice
 	-ReplacedInQueue:
+	AmmoPool@Primary:
+		Ammo: 1
+		AmmoCondition: primary-ammo
+		Armaments: primary
+	AmmoPool@Secondary:
+		Name: secondary
+		Ammo: 3
+		InitialAmmo: 0
+		AmmoCondition: secondary-ammo
+		Armaments: secondary
+	ReloadAmmoPoolCA@Primary:
+		AmmoPool: primary
+		Delay: 5
+		Count: 1
+		ShowSelectionBar: true
+		RequiresCondition: secondary-ammo == 0 && !primary-reloading
+	ReloadAmmoPoolCA@Secondary:
+		AmmoPool: secondary
+		Delay: 5
+		Count: 3
+		ShowSelectionBar: true
+		RequiresCondition: primary-ammo == 0 && !secondary-reloading
+	AttackFrontalCharged:
+		Armaments: primary, secondary, tertiary
+		ChargeConsumingArmaments: primary, secondary
 
 CRYT:
 	Inherits: ^Soldier
@@ -4762,7 +4800,7 @@ CRYT:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Buildings, Defenses\n• Cannot attack Aircraft
 	Valued:
-		Cost: 600
+		Cost: 700
 	Tooltip:
 		Name: Cryo Trooper
 	UpdatesPlayerStatistics:

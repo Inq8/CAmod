@@ -9,6 +9,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Linq;
 using OpenRA.Activities;
 using OpenRA.Mods.CA.Activities;
 using OpenRA.Mods.Common.Activities;
@@ -40,6 +41,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		[Desc("Number of shots that can be fired after charging.")]
 		public readonly int ShotsPerCharge = 1;
+
+		[Desc("Armaments that count towards shots per charge. Leave empty for all.")]
+		public readonly string[] ChargeConsumingArmaments = default;
 
 		public readonly bool ShowSelectionBar = false;
 		public readonly Color SelectionBarColor = Color.FromArgb(128, 200, 255);
@@ -158,6 +162,9 @@ namespace OpenRA.Mods.CA.Traits
 		void INotifyAttack.Attacking(Actor self, in Target target, Armament a, Barrel barrel)
 		{
 			if (IsTraitDisabled || IsTraitPaused)
+				return;
+
+			if (Info.ChargeConsumingArmaments != null && !Info.ChargeConsumingArmaments.Contains(a.Info.Name))
 				return;
 
 			shotsFired++;

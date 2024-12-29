@@ -1079,7 +1079,7 @@ ALHQ:
 	Inherits@ForceShieldPower: ^ForceShieldPower
 	Inherits@CryostormPower: ^CryostormPower
 	Inherits@HeliosBombPower: ^HeliosBombPower
-	Inherits@PatriotStrikePower: ^PatriotStrikePower
+	Inherits@BlackSkyStrikePower: ^BlackSkyStrikePower
 	Inherits@ProductionOptimizer2: ^ProductionOptimizer2
 	Selectable:
 		Bounds: 2048, 3072, 0, -512
@@ -2879,7 +2879,7 @@ WEAP.TD:
 		Range: 4c0
 	TracksCapturedFaction:
 	ValidFactions:
-		Factions: gdi, talon, zocom, eagle, arc, legion
+		Factions: gdi, talon, zocom, eagle, arc, nod, legion
 	ProvidesPrerequisite@any:
 		Prerequisite: vehicles.any
 	ProvidesPrerequisite@human:
@@ -3704,7 +3704,7 @@ HQ:
 	Power:
 		Amount: -40
 	ValidFactions:
-		Factions: gdi, talon, zocom, eagle, arc, blackh, marked, legion, shadow
+		Factions: gdi, talon, zocom, eagle, arc, nod, blackh, marked, legion, shadow
 	ProvidesPrerequisite@buildingname:
 		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@anyradar:
@@ -4753,10 +4753,20 @@ HTUR:
 		RequiresCondition: !build-incomplete
 	AttackTurreted:
 		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
-	Armament:
+	Armament@1:
 		Weapon: 203mm
 		MuzzleSequence: muzzle
-		LocalOffset: 1000,200,60, 1000,0,60, 1000,-200,60
+		LocalOffset: 1000,0,60
+	Armament@2:
+		Weapon: 203mm.Inacc
+		MuzzleSequence: muzzle
+		LocalOffset: 1000,200,60
+		FireDelay: 10
+	Armament@3:
+		Weapon: 203mm.Inacc
+		MuzzleSequence: muzzle
+		LocalOffset: 1000,-200,60
+		FireDelay: 20
 	WithMuzzleOverlay:
 	Power:
 		Amount: -100

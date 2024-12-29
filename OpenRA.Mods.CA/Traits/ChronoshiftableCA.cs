@@ -9,6 +9,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Linq;
 using OpenRA.Mods.CA.Activities;
 using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Activities;
@@ -353,6 +354,22 @@ namespace OpenRA.Mods.CA.Traits
 				var a = w.CreateActor(self.Info.Name, td);
 				a.QueueActivity(false, new TeleportCA(chronosphere ?? a, Origin, null, killCargo, false, Info.ChronoshiftSound,
 					false, true, Info.DamageTypes));
+
+				// set ownership of passengers
+				var cargo = a.TraitOrDefault<Cargo>();
+				if (cargo != null)
+				{
+					var i = 0;
+					foreach (var p in cargo.Passengers)
+					{
+						var cachedPassenger = cachedPassengers.ElementAtOrDefault(i);
+
+						if (cachedPassenger != null && !p.IsDead && p.Owner != cachedPassenger.Owner)
+							p.ChangeOwner(cachedPassenger.Owner);
+
+						i++;
+					}
+				}
 
 				returnToAvoidDeath = false;
 			});

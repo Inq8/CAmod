@@ -1457,23 +1457,18 @@ SMIG:
 
 A10:
 	Inherits: ^PlaneTD
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 41
-		Prerequisites: afld.gdi, ~aircraft.gdi, ~!sidewinders.upgrade, ~techlevel.medium
+		Prerequisites: afld.gdi, ~aircraft.gdi, ~!sidewinders.upgrade, ~!avenger.upgrade, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Attack aircraft armed with incendiary bombs.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
-		RequiresCondition: !sidewinders-upgrade
-	TooltipExtras@UPG:
-		Description: Attack aircraft armed with incendiary bombs\n  and air-to-air missiles.
-		Strengths: • Strong vs Buildings, Infantry, Light Armor, Aircraft
-		Weaknesses: • Weak vs Heavy Armor, Defenses
-		RequiresCondition: sidewinders-upgrade
 	Valued:
 		Cost: 2000
 	Tooltip:
@@ -1499,19 +1494,15 @@ A10:
 		Weapon: NapalmTD
 		LocalOffset: 2,-256,-43, 2,256,-43
 		PauseOnCondition: !ammo || blinded
-	Armament@SECONDARY:
-		Name: secondary
-		Weapon: Sidewinder
-		LocalOffset: 0,500,-85, 0,-500,-85
-		PauseOnCondition: !ammo2 || bombing-run || blinded
-		RequiresCondition: sidewinders-upgrade && resupplied-with-sidewinders
 	AttackAircraftCA:
 		FacingTolerance: 512
 		PersistentTargeting: false
 		OpportunityFire: true
 		PauseOnCondition: empdisable || being-warped
 		AirFacingTolerance: 80
-		Armaments: primary, primarybld, secondary
+		Armaments: primary, primarybld
+		AttackType: Strafe
+		StrafeRunLength: 7c0
 	Aircraft:
 		CruiseAltitude: 2560
 		InitialFacing: 192
@@ -1529,25 +1520,11 @@ A10:
 		ReloadDelay: 25
 		AmmoCondition: ammo
 		Armaments: primary
-	AmmoPool@SECONDARY:
-		Name: secondary
-		Ammo: 4
-		ReloadDelay: 40
-		InitialAmmo: 0
-		AmmoCondition: ammo2
-		Armaments: secondary
 	WithAmmoPipsDecoration@PRIMARY:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
 		AmmoPools: primary
-	WithAmmoPipsDecoration@SECONDARY:
-		Position: BottomLeft
-		Margin: 4, 7
-		RequiresSelection: true
-		AmmoPools: secondary
-		FullSequence: pip-red
-		RequiresCondition: sidewinders-upgrade && resupplied-with-sidewinders
 	Selectable:
 		Bounds: 1536, 1194, 0, 85
 		DecorationBounds: 1706, 1237, 0, 42
@@ -1583,10 +1560,7 @@ A10:
 		Prerequisites: aircraft.upgraded
 	Rearmable:
 		RearmActors: afld, afld.gdi
-		AmmoPools: primary, secondary
-	GrantConditionOnPrerequisite@SIDEWINDERS:
-		Condition: sidewinders-upgrade
-		Prerequisites: sidewinders.upgrade
+		AmmoPools: primary, primarybld, upgrade
 	-RangeMultiplier@SEEK:
 	-RangeMultiplier@SEEK2:
 	-RangeMultiplier@SEEK3:
@@ -1601,65 +1575,165 @@ A10:
 		RevokeDelay: 7
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
-	AutoTargetPriority@DEFAULT:
-		RequiresCondition: ammo && ammo2
-	AutoTargetPriority@ATTACKANYTHING:
-		RequiresCondition: (stance-attackanything || assault-move) && ammo && ammo2
-	AutoTargetPriority@DEFAULTGROUND:
-		RequiresCondition: ammo && !ammo2
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
-		InvalidTargets: NoAutoTarget, AntiAirDefense
-	AutoTargetPriority@ATTACKANYTHINGGROUND:
-		RequiresCondition: (stance-attackanything || assault-move) && ammo && !ammo2
-		ValidTargets: Structure, AntiAirDefense
-		InvalidTargets: NoAutoTarget
-	AutoTargetPriority@DEFAULTAIR:
-		RequiresCondition: !ammo && ammo2
-		ValidTargets: Air, AirSmall
-		InvalidTargets: NoAutoTarget
-	ReplacedInQueue:
-		Actors: a10.upg
-	ReloadAmmoPoolCA@NOSIDEWINDERS:
-		Delay: 25
-		Count: -4
-		AmmoPool: secondary
-		RequiresCondition: !resupplied-with-sidewinders && ammo2 && airborne
-		ShowSelectionBar: false
-	GrantConditionOnResupply:
-		Condition: resupplied-with-sidewinders
-		GrantPermanently: true
-		RequiresCondition: sidewinders-upgrade
-	GrantConditionOnBotOwner@BOTSIDEWINDERS:
-		Condition: resupplied-with-sidewinders
-		Bots: brutal, vhard, hard, normal, easy, naval
 	EjectOnDeath:
 		ChuteSound: gejecta.aud
+	GrantConditionOnPrerequisite@Sidewinders:
+		Condition: sidewinders-upgrade
+		Prerequisites: sidewinders.upgrade
+	GrantConditionOnPrerequisite@Avenger:
+		Condition: avenger-upgrade
+		Prerequisites: avenger.upgrade
+	GrantConditionOnPrerequisite@Ceramic:
+		Condition: ceramic-upgrade
+		Prerequisites: ceramic.upgrade
+	TransformOnCondition@Sidewinders:
+		IntoActor: A10.SW
+		RequiresCondition: sidewinders-upgrade && upgrade-complete
+	TransformOnCondition@Avenger:
+		IntoActor: A10.GAU
+		RequiresCondition: avenger-upgrade && upgrade-complete
+	AmmoPool@Upgrade:
+		Name: upgrade
+		Ammo: 1
+		ReloadDelay: 200
+		AmmoCondition: resupplied-for-upgrade
+	ReloadAmmoPoolCA@Upgrade:
+		AmmoPool: upgrade
+		Delay: 5
+		Count: -1
+		RequiresCondition: airborne && (sidewinders-upgrade || avenger-upgrade)
+		ShowSelectionBar: false
+	GrantCondition@Upgrade:
+		Condition: upgrade-complete
+		RequiresCondition: !airborne && resupplied-for-upgrade && (sidewinders-upgrade || avenger-upgrade)
+	ReturnsToBaseOnAmmoDepleted:
+	ReplacedInQueue:
+		Actors: a10.sw, a10.gau
+	WithDecoration@UpgradeOverlay:
+		RequiresCondition: !airborne && !resupplied-for-upgrade && (sidewinders-upgrade || avenger-upgrade)
+	DamageMultiplier@Ceramic:
+		Modifier: 85
+		RequiresCondition: ceramic-upgrade
 
-A10.UPG:
+A10.SW:
 	Inherits: A10
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	-GrantConditionOnPrerequisite@Sidewinders:
+	-GrantConditionOnPrerequisite@Avenger:
+	-TransformOnCondition@Sidewinders:
+	-TransformOnCondition@Avenger:
+	-AmmoPool@Upgrade:
+	-ReloadAmmoPoolCA@Upgrade:
+	-GrantCondition@Upgrade:
+	-WithDecoration@UpgradeOverlay:
+	-ReplacedInQueue:
 	RenderSprites:
 		Image: a10
 	Buildable:
 		Prerequisites: afld.gdi, ~aircraft.gdi, ~sidewinders.upgrade, ~techlevel.medium
-		Description: Attack aircraft with incendiary bombs\n  and air-to-air missiles.
+		Description: Attack aircraft armed with incendiary bombs\n  and air-to-air missiles.
 		BuildPaletteOrder: 42
-	-TooltipExtras:
-	TooltipExtras@UPG:
-		IsStandard: true
-		-RequiresCondition:
-	-GrantConditionOnPrerequisite@SIDEWINDERS:
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Infantry, Light Armor, Aircraft
+		Weaknesses: • Weak vs Heavy Armor, Defenses
 	Armament@SECONDARY:
-		-RequiresCondition:
+		Name: secondary
+		Weapon: Sidewinder
+		LocalOffset: 0,500,-85, 0,-500,-85
+		PauseOnCondition: !ammo2 || bombing-run || blinded
+	AttackAircraftCA:
+		Armaments: primary, primarybld, secondary
+		AirFacingTolerance: 80
+	Rearmable:
+		AmmoPools: primary, secondary
 	AmmoPool@SECONDARY:
-		-InitialAmmo:
-	Selectable:
-		Class: a10
-	-ReplacedInQueue:
+		Name: secondary
+		Ammo: 4
+		ReloadDelay: 40
+		AmmoCondition: ammo2
+		Armaments: secondary
 	WithAmmoPipsDecoration@SECONDARY:
-		-RequiresCondition:
-	-ReloadAmmoPoolCA@NOSIDEWINDERS:
-	-GrantConditionOnResupply:
-	-GrantConditionOnBotOwner@BOTSIDEWINDERS:
+		Position: BottomLeft
+		Margin: 4, 7
+		RequiresSelection: true
+		AmmoPools: secondary
+		FullSequence: pip-red
+
+A10.GAU:
+	Inherits: A10
+	-Armament@PRIMARY:
+	-Armament@PRIMARYBLD:
+	-AmmoPool@PRIMARY:
+	-RangeMultiplier@BOMBING:
+	-GrantConditionOnAttack@BOMBING:
+	-GrantConditionOnPrerequisite@Sidewinders:
+	-GrantConditionOnPrerequisite@Avenger:
+	-TransformOnCondition@Sidewinders:
+	-TransformOnCondition@Avenger:
+	-AmmoPool@Upgrade:
+	-ReloadAmmoPoolCA@Upgrade:
+	-GrantCondition@Upgrade:
+	-WithDecoration@UpgradeOverlay:
+	-ReplacedInQueue:
+	Buildable:
+		Prerequisites: afld.gdi, ~aircraft.gdi, ~avenger.upgrade, ~techlevel.medium
+		Description: Attack aircraft armed with a rotary cannon and rockets.
+		BuildPaletteOrder: 42
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Infantry, Light Armor
+		Weaknesses: • Cannot attack Aircraft
+	Rearmable:
+		AmmoPools: primary, secondary
+	RenderSprites:
+		Image: a10
+	Armament@PRIMARY:
+		Weapon: GAU8
+		MuzzleSequence: muzzle
+		LocalOffset: 760,0,-120
+		PauseOnCondition: !ammo || blinded
+	Armament@PRIMARYBLD:
+		Name: primarybld
+		Weapon: GAU8.Building
+		MuzzleSequence: muzzle
+		LocalOffset: 760,0,-120
+		PauseOnCondition: !ammo || blinded
+	Armament@SECONDARYR:
+		Name: secondary
+		Weapon: Hydra.R
+		LocalOffset: 0,-613,0
+		PauseOnCondition: !ammo2 || blinded
+	Armament@SECONDARYL:
+		Name: secondary
+		FireDelay: 4
+		Weapon: Hydra.L
+		LocalOffset: 0,613,0
+		PauseOnCondition: !ammo2 || blinded
+	AttackAircraftCA:
+		FacingTolerance: 80
+		Armaments: primary, primarybld, secondary
+		AttackType: Strafe
+	AmmoPool@PRIMARY:
+		Name: primary
+		Ammo: 15
+		ReloadDelay: 10
+		AmmoCondition: ammo
+		Armaments: primary
+	AmmoPool@SECONDARY:
+		Name: secondary
+		Ammo: 12
+		ReloadDelay: 12
+		AmmoCondition: ammo2
+		Armaments: secondary
+	WithAmmoPipsDecoration@PRIMARY:
+		PipCount: 3
+	WithAmmoPipsDecoration@SECONDARY:
+		PipCount: 7
+		Position: BottomLeft
+		Margin: 4, 7
+		RequiresSelection: true
+		AmmoPools: secondary
+		FullSequence: pip-red
+	WithMuzzleOverlay:
 
 A10.bomber:
 	Inherits: ^NeutralPlane
@@ -2234,6 +2308,7 @@ ORCB:
 		PersistentTargeting: false
 		OpportunityFire: true
 		PauseOnCondition: empdisable || being-warped
+	ReturnsToBaseOnAmmoDepleted:
 	Aircraft:
 		CruiseAltitude: 2560
 		AltitudeVelocity: 0c120
@@ -4479,6 +4554,7 @@ VERT:
 	TooltipExtras:
 		Strengths: • Strong vs Defenses, Heavy Armor, Light Armor, Infantry
 		Weaknesses: • Cannot attack Aircraft
+		Attributes: • Bomb disrupts cloaking in a large area
 	Valued:
 		Cost: 2000
 	Tooltip:
@@ -4614,10 +4690,10 @@ VERT:
 
 MCOR:
 	Inherits: ^HelicopterTD
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@InfiltratorStolenTech: ^InfiltratorStolenTech
 	Valued:
-		Cost: 2000
+		Cost: 1800
 	Tooltip:
 		Name: Manticore
 	UpdatesPlayerStatistics:
@@ -4628,17 +4704,17 @@ MCOR:
 		BuildPaletteOrder: 204
 		Prerequisites: anyradar, ~stolentech.grav
 		IconPalette: chrometd
-		Description: Long ranged aircraft with dual plasma cannons.
+		Description: Long ranged air-to-air craft with dual plasma cannons.
 	TooltipExtras:
-		Strengths: • Strong vs Buildings, Defenses, Infantry
-		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets
+		Strengths: • Strong vs Aircraft
+		Weaknesses: • Cannot attack ground units
 	Aircraft:
 		CruiseAltitude: 2560
 		AltitudeVelocity: 0c100
-		TurnSpeed: 16
+		TurnSpeed: 14
 		TakeoffSounds: dropup1.aud
 		LandingSounds: dropdwn1.aud
-		Speed: 100
+		Speed: 80
 	Health:
 		HP: 26000
 	RevealsShroud:

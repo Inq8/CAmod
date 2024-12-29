@@ -39,7 +39,7 @@ EnforceAiBuildRadius = false
 
 ConyardTypes = { "fact", "afac", "sfac" }
 
-HarvesterTypes = { "harv", "harv.td", "harv.scrin", "harv.chrono" }
+HarvesterTypes = { "harv", "harv.td", "harv.td.upg", "harv.scrin", "harv.chrono" }
 
 FactoryTypes = { "weap", "weap.td", "wsph", "airs" }
 
@@ -51,7 +51,7 @@ CashRewardOnCaptureTypes = { "proc", "proc.td", "proc.scrin", "silo", "silo.td",
 
 WallTypes = { "sbag", "fenc", "brik", "cycl", "barb" }
 
-KeyStructures = { "fact", "afac", "sfac", "proc", "proc.td", "proc.scrin", "weap", "weap.td", "airs", "wsph", "dome", "hq", "nerv", "atek", "stek", "gtek", "tmpl", "scrt" }
+KeyStructures = { "fact", "afac", "sfac", "proc", "proc.td", "proc.scrin", "weap", "weap.td", "airs", "wsph", "dome", "hq", "nerv", "atek", "stek", "gtek", "tmpl", "scrt", "mcv", "amcv", "smcv" }
 
 -- used to define actors and/or types of actors that the AI should not rebuild
 RebuildExcludes = {
@@ -285,6 +285,8 @@ UpdatePlayerBaseLocations = function()
 		if #keyBaseBuildings > 0 then
 			local keyBaseBuilding = Utils.Random(keyBaseBuildings)
 			PlayerBaseLocations[p.InternalName] = keyBaseBuilding.Location
+		else
+			PlayerBaseLocations[p.InternalName] = nil
 		end
 	end
 end

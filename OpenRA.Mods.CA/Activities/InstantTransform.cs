@@ -94,11 +94,18 @@ namespace OpenRA.Mods.CA.Activities
 				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", Notification, self.Owner.Faction.InternalName);
 
 				var cell = self.Location + Offset;
+				WPos centerPos;
+
+				if (self.TraitOrDefault<Aircraft>() != null)
+					centerPos = self.CenterPosition;
+				else
+					centerPos = self.World.Map.CenterOfCell(cell) + new WVec(0, 0, self.CenterPosition.Z);
+
 				var init = new TypeDictionary
 				{
 					new LocationInit(cell),
 					new OwnerInit(self.Owner),
-					new CenterPositionInit(self.World.Map.CenterOfCell(cell) + new WVec(0, 0, self.CenterPosition.Z)),
+					new CenterPositionInit(centerPos),
 				};
 
 				var facing = self.TraitOrDefault<IFacing>();

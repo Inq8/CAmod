@@ -238,6 +238,53 @@ KamovChainGun:
 	Warhead@1Dam: SpreadDamage
 		Damage: 8600
 
+GAU8:
+	Inherits: ^HeavyMG
+	Range: 6c0
+	ReloadDelay: 80
+	BurstDelays: 1
+	Burst: 15
+	-Report:
+	StartBurstReport: brrrrt1.aud, brrrrt2.aud
+	FirstBurstTargetOffset: -512,0,0
+	FollowingBurstTargetOffset: 448,0,0
+	MinRange: 0c256
+	Projectile: Bullet
+		Blockable: false
+	Warhead@1Dam: SpreadDamage
+		Spread: 341
+		Damage: 3000
+		Versus:
+			None: 200
+			Wood: 0
+			Light: 100
+			Heavy: 85
+			Concrete: 30
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath, AirToGround
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Scorch
+		InvalidTargets: Vehicle, Building, Wall
+
+GAU8.Building:
+	Inherits: GAU8
+	-StartBurstReport:
+	-Projectile:
+	-FirstBurstTargetOffset:
+	-FollowingBurstTargetOffset:
+	-Warhead@2Smu:
+	-Warhead@2Eff:
+	-Warhead@3EffWater:
+	TargetActorCenter: true
+	Projectile: InstantHit
+		Blockable: false
+	Warhead@1Dam: SpreadDamage
+		Spread: 341
+		Damage: 2850
+		Versus:
+			Wood: 100
+		ValidTargets: Building
+		InvalidTargets: Defense
+
 Vulcan2:
 	Inherits: ^LightMG
 	ReloadDelay: 50
@@ -893,6 +940,7 @@ HeliGunAA:
 WolverineGun:
 	Inherits: M60mg
 	Range: 4c768
+	MinRange: 0c128
 	ReloadDelay: 25
 	BurstDelays: 3
 	-Report:

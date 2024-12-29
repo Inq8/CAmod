@@ -24,6 +24,10 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Limit how many specific actors can be attached.")]
 		public readonly int Limit = 0;
 
+		[Desc("Conditions to apply when attached to.")]
+		[GrantedConditionReference]
+		public readonly string AttachedCondition = null;
+
 		[Desc("Conditions to apply when reaching limits.")]
 		[GrantedConditionReference]
 		public readonly string LimitCondition = null;
@@ -41,6 +45,7 @@ namespace OpenRA.Mods.CA.Traits
 		readonly HashSet<Attachable> attached = new HashSet<Attachable>();
 		readonly HashSet<Attachable> attachedToTransfer = new HashSet<Attachable>();
 		int attachedCount = 0;
+		int attachedToken = Actor.InvalidConditionToken;
 		int limitToken = Actor.InvalidConditionToken;
 		bool reserved;
 
@@ -167,6 +172,9 @@ namespace OpenRA.Mods.CA.Traits
 			attachable.AttachTo(this, self.CenterPosition);
 			attachedCount++;
 
+			if (Info.AttachedCondition != null && attachedToken == Actor.InvalidConditionToken)
+				attachedToken = self.GrantCondition(Info.AttachedCondition);
+
 			if (Info.LimitCondition != null && limitToken == Actor.InvalidConditionToken && Info.Limit > 0 && attachedCount >= Info.Limit)
 				limitToken = self.GrantCondition(Info.LimitCondition);
 
@@ -178,6 +186,9 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			attached.Remove(attachable);
 			attachedCount--;
+
+			if (attachedToken != Actor.InvalidConditionToken && attached.Count == 0)
+				attachedToken = self.RevokeCondition(attachedToken);
 
 			if (limitToken != Actor.InvalidConditionToken && (Info.Limit == 0 || attachedCount < Info.Limit))
 				limitToken = self.RevokeCondition(limitToken);

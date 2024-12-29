@@ -19,7 +19,7 @@ using OpenRA.Traits;
 namespace OpenRA.Mods.Common.Traits
 {
 	[Desc("Used to waypoint units after production or repair is finished.")]
-	public class CloneProducerInfo : TraitInfo
+	public class CloneProducerInfo : ConditionalTraitInfo
 	{
 		[FieldLoader.Require]
 		[Desc("Production types (must share one or more values of the `Produces` property of the clone source's Production trait).")]
@@ -52,22 +52,25 @@ namespace OpenRA.Mods.Common.Traits
 		public override object Create(ActorInitializer init) { return new CloneProducer(init.Self, this); }
 	}
 
-	public class CloneProducer : IIssueOrder, IResolveOrder, INotifyOwnerChanged, INotifyCreated, INotifyKilled, INotifySold, INotifyAddedToWorld, INotifyRemovedFromWorld
+	public class CloneProducer : ConditionalTrait<ConditionalTraitInfo>, IIssueOrder, IResolveOrder, INotifyOwnerChanged, INotifyCreated, INotifyKilled, INotifySold, INotifyAddedToWorld, INotifyRemovedFromWorld
 	{
 		const string OrderID = "SetCloneSource";
 
 		private readonly Actor self;
 		private bool singleQueue;
 		private CloneSource cloneSource;
-		public CloneProducerInfo Info;
+		public CloneProducerInfo info;
 		CloneSourceIndicator effect;
 
 		public List<WPos> LinkNodes;
 		bool delayUntilNext;
 
+		public string[] Types => info.Types;
+
 		public CloneProducer(Actor self, CloneProducerInfo info)
+			: base(info)
 		{
-			Info = info;
+			this.info = info;
 			this.self = self;
 			LinkNodes = new List<WPos>();
 			delayUntilNext = false;
@@ -92,9 +95,12 @@ namespace OpenRA.Mods.Common.Traits
 
 		public void UnitProduced(Actor unit)
 		{
+			if (IsTraitDisabled || self.IsDead)
+				return;
+
 			var actorName = unit.Info.Name.ToLowerInvariant();
 
-			if (self.IsDead || Info.InvalidActors.Contains(actorName))
+			if (info.InvalidActors.Contains(actorName))
 				return;
 
 			if (delayUntilNext)
@@ -103,10 +109,10 @@ namespace OpenRA.Mods.Common.Traits
 				return;
 			}
 
-			var cloneActor = self.World.Map.Rules.Actors[Info.CloneActors.ContainsKey(actorName) ? Info.CloneActors[actorName] : actorName];
+			var cloneActor = self.World.Map.Rules.Actors[info.CloneActors.ContainsKey(actorName) ? info.CloneActors[actorName] : actorName];
 
 			var sp = self.TraitsImplementing<Production>()
-				.FirstOrDefault(p => !p.IsTraitDisabled && !p.IsTraitPaused && p.Info.Produces.Where(p => Info.CloneType.Contains(p)).Any());
+				.FirstOrDefault(p => !p.IsTraitDisabled && !p.IsTraitPaused && p.Info.Produces.Where(p => info.CloneType.Contains(p)).Any());
 
 			if (sp != null)
 			{
@@ -130,7 +136,7 @@ namespace OpenRA.Mods.Common.Traits
 		{
 			self.World.AddFrameEndTask(w => {
 				var producer = self.World.ActorsWithTrait<CloneSource>()
-					.Where(a => !a.Actor.IsDead && a.Actor.IsInWorld && a.Actor.Owner == self.Owner && a.Trait.ProductionTypes.Where(t => Info.Types.Contains(t)).Any())
+					.Where(a => !a.Actor.IsDead && a.Actor.IsInWorld && a.Actor.Owner == self.Owner && a.Trait.ProductionTypes.Where(t => info.Types.Contains(t)).Any())
 					.OrderByDescending(p => p.Actor.TraitOrDefault<PrimaryBuilding>()?.IsPrimary)
 					.ThenByDescending(p => p.Actor.ActorID)
 					.FirstOrDefault();
@@ -150,7 +156,7 @@ namespace OpenRA.Mods.Common.Traits
 				if (singleQueue)
 					yield break;
 
-				yield return new CloneProducerSetSourceOrderTargeter(Info.Cursor);
+				yield return new CloneProducerSetSourceOrderTargeter(info.Cursor);
 			}
 		}
 
@@ -161,8 +167,8 @@ namespace OpenRA.Mods.Common.Traits
 
 			if (order.OrderID == OrderID)
 			{
-				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", Info.SourceSetNotification, self.Owner.Faction.InternalName);
-				TextNotificationsManager.AddTransientLine(Info.SourceSetTextNotification, self.Owner);
+				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", info.SourceSetNotification, self.Owner.Faction.InternalName);
+				TextNotificationsManager.AddTransientLine(info.SourceSetTextNotification, self.Owner);
 
 				return new Order(order.OrderID, self, target, queued);
 			}

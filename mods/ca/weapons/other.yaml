@@ -1148,10 +1148,10 @@ LaserTur.Adv:
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
 
-TankLaser:
+LightTankLaser:
 	Range: 4c768
 	Inherits: LaserTur
-	ReloadDelay: 45
+	ReloadDelay: 50
 	Report: tnklaser.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 5800
@@ -1172,8 +1172,8 @@ TankLaser:
 		ValidTargets: Infantry
 
 BattleTankLaser:
-	Inherits: TankLaser
-	ReloadDelay: 35
+	Inherits: LightTankLaser
+	ReloadDelay: 40
 
 StealthAPCLaser:
 	Inherits: LaserTur
@@ -1609,7 +1609,7 @@ PrisCLaser:
 
 HopliteGun:
 	ReloadDelay: 55
-	Range: 5c0
+	Range: 4c0
 	Report: hopl-fire1.aud
 	Projectile: LaserZapCA
 		Width: 40
@@ -1635,6 +1635,31 @@ HopliteGun:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees, Creep
+
+HopliteGunCharged:
+	Inherits: HopliteGun
+	Report: hopl-cfire1.aud
+	Projectile: LaserZapCA
+		Color: fffdcdC8
+		SecondaryBeamColor: fff30060
+	Warhead@Blind: GrantExternalConditionCA
+		Range: 0c512
+		Duration: 50
+		Condition: blinded
+		ValidTargets: Infantry, Vehicle, Ship
+	Warhead@3Eff: CreateEffect
+		Explosions: idle
+		ExplosionPalette: caneon
+		Image: nullhit
+
+HopliteTargeter:
+	Inherits: HopliteGun
+	-Report:
+	-Projectile:
+	Projectile: InstantHit
+	-Warhead@1Dam:
+	-Warhead@2Smu:
+	Warhead@Dummy: Dummy
 
 KirovBomb:
 	ReloadDelay: 25
@@ -3329,15 +3354,32 @@ ShadeEmp:
 		Inaccuracy: 341
 
 ManticoreBolts:
-	Inherits: DevastatorDiscs
+	Inherits: ^AirToAirMissile
+	Range: 14c0
+	MinRange: 3c0
 	Report: mcor-fire1.aud, mcor-fire2.aud
 	ReloadDelay: 150
 	Burst: 4
-	Range: 14c0
-	Projectile: Bullet
+	BurstDelays: 3
+	ValidTargets: Air, AirSmall
+	TargetActorCenter: true
+	Projectile: Missile
 		Image: redplasmatorp
 		Palette: caneon
-		Inaccuracy: 1c0
+		TrailImage: smokey
+		TrailPalette: scrinplasma
+		Speed: 360
+		Blockable: false
+		Jammable: false
+		RangeLimit: 15c0
+		ShadowColor: 00000033
+		HorizontalRateOfTurn: 4
+		CruiseAltitude: 0
+	Warhead@1Dam: SpreadDamage
+		Range: 0, 0c64, 0c256, 1c768
+		Damage: 4000
+	Warhead@smallDamage: SpreadDamage
+		Damage: 4000
 
 VertigoBomb:
 	Inherits: JDAM
@@ -3349,6 +3391,11 @@ VertigoBomb:
 			Wood: 80
 			Concrete: 100
 	-Warhead@Concussion:
+	Warhead@StealthBreaker: GrantExternalConditionCA
+		Range: 6c0
+		Duration: 1125
+		Condition: cloak-force-disabled
+		ValidRelationships: Enemy, Neutral
 
 VertigoBombTargeter:
 	Range: 7c0
@@ -3599,6 +3646,7 @@ ZeusCloud:
 		Weapon: ZeusBolt
 		ValidTargets: Air, Ground, Water
 		Delay: 28
+		ImpactActors: false
 	Warhead@TargetValidation: SpreadDamage
 	Warhead@Cloud: CreateEffect
 		Explosions: weathercloud1, weathercloud2, weathercloud1f, weathercloud2f
@@ -3609,6 +3657,7 @@ ZeusCloud:
 		UseZOffsetAsAbsoluteHeight: true
 		Weapon: ZeusShadow
 		ValidTargets:  Ground, Air, Water
+		ImpactActors: false
 
 ZeusShadow:
 	Projectile: InstantHit
