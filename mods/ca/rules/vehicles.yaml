@@ -339,21 +339,33 @@ NUKC:
 	WithRangeCircle:
 		Type: NukeCannon
 		Range: 16c0
-		Color: ffdd0060
-		RequiresCondition: !deployed && !veiled && !gapveiled
+		Color: ffdd0050
+		RequiresCondition: (!deployed || deploying) && !veiled && !gapveiled
 	WithRangeCircle@Veiled:
 		Type: NukeCannon
 		Range: 12c820
-		Color: ffdd0060
-		RequiresCondition: !deployed && veiled && !gapveiled
+		Color: ffdd0050
+		RequiresCondition: (!deployed || deploying) && veiled && !gapveiled
 	WithRangeCircle@GapVeiled:
 		Type: NukeCannon
 		Range: 9c614
-		Color: ffdd0060
-		RequiresCondition: !deployed && gapveiled
-	RenderRangeCircle@Deployed:
-		RangeCircleType: NukeCannon
+		Color: ffdd0050
+		RequiresCondition: (!deployed || deploying) && gapveiled
+	WithRangeCircle@Deployed:
+		Type: NukeCannon
+		Range: 16c0
 		Color: ff880090
+		RequiresCondition: deployed && !deploying && !veiled && !gapveiled
+	WithRangeCircle@DeployedVeiled:
+		Type: NukeCannon
+		Range: 12c820
+		Color: ff880090
+		RequiresCondition: deployed && !deploying && veiled && !gapveiled
+	WithRangeCircle@DeployedGapVeiled:
+		Type: NukeCannon
+		Range: 9c614
+		Color: ff880090
+		RequiresCondition: deployed && !deploying && gapveiled
 	GrantConditionOnMovement@Moving:
 		Condition: moving
 		ValidMovementTypes: Horizontal, Vertical
@@ -5384,10 +5396,12 @@ HFTK:
 		LocalOffset: 750,200,150, 750,-200,150
 		RequiresCondition: blacknapalm-upgrade
 	Armament@FF:
+		Name: secondary
 		Weapon: HeavyFlameTankFlamerFF
 		LocalOffset: 750,200,150, 750,-200,150
 		RequiresCondition: !blacknapalm-upgrade
 	Armament@FFUPG:
+		Name: secondary
 		Weapon: HeavyFlameTankFlamerFF.UPG
 		LocalOffset: 750,200,150, 750,-200,150
 		RequiresCondition: blacknapalm-upgrade
@@ -5419,6 +5433,17 @@ HFTK:
 	GrantConditionOnPrerequisite@UPG:
 		Condition: blacknapalm-upgrade
 		Prerequisites: blacknapalm.upgrade
+	GrantConditionOnAttack@BurstCount:
+		Condition: burstcount
+		RevokeAll: true
+		RevokeDelay: 60
+		MaximumInstances: 25
+	FirepowerMultiplier@Frontload:
+		Modifier: 125
+		RequiresCondition: burstcount < 10
+	FirepowerMultiplier@Backload:
+		Modifier: 82
+		RequiresCondition: burstcount >= 10
 
 HARV.TD:
 	Inherits: ^VehicleTD-NOUPG
