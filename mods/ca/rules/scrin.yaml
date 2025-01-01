@@ -908,7 +908,7 @@ MUTI:
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor, Infantry
 		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
-		Attributes: • Special Ability: Teleport (with upgrade)
+		Attributes: • Special Ability: Teleport (with upgrade)\n\n• Takes reduced damage for a brief time after teleporting
 	Health:
 		HP: 13000
 	UpdatesPlayerStatistics:
@@ -944,6 +944,17 @@ MUTI:
 	WithColoredOverlay@BLINKFLASH:
 		Color: ffffff80
 		RequiresCondition: blink
+	GrantTimedCondition@BlinkShield:
+		Duration: 40
+		Condition: blinkshield
+		RequiresCondition: blink
+		ForceFullDuration: true
+	DamageMultiplier@BlinkShield:
+		Modifier: 50
+		RequiresCondition: blinkshield
+	WithColoredOverlay@BlinkShield:
+		Color: 32154c66
+		RequiresCondition: blinkshield
 
 SMEDI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry

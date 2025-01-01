@@ -968,18 +968,27 @@
 		RequiresCondition: hazmatsuits-soviet || hazmatsuits
 
 ^NodCyborgUpgrade:
-	GrantConditionOnPrerequisite@CYBORGSPEED:
-		Condition: cyborgspeed-upgrade
-		Prerequisites: cyborgspeed.upgrade
-	SpeedMultiplier@CYBORGSPEED:
-		RequiresCondition: cyborgspeed-upgrade
-		Modifier: 120
 	GrantConditionOnPrerequisite@CYBORGARMOR:
 		Condition: cyborgarmor-upgrade
 		Prerequisites: cyborgarmor.upgrade
+	GrantConditionOnPrerequisite@CYBORGDAMAGE:
+		Condition: cyborgdmg-upgrade
+		Prerequisites: cyborgdmg.upgrade
+	GrantConditionOnPrerequisite@CYBORGSPEED:
+		Condition: cyborgspeed-upgrade
+		Prerequisites: cyborgspeed.upgrade
 	DamageMultiplier@CYBORGARMOR:
 		RequiresCondition: cyborgarmor-upgrade
 		Modifier: 80
+	FirepowerMultiplier@CYBORGDAMAGE:
+		RequiresCondition: cyborgdmg-upgrade
+		Modifier: 110
+	ProductionTimeMultiplier@CYBORGPROD:
+		Multiplier: 90
+		Prerequisites: cyborgprod.upgrade
+	SpeedMultiplier@CYBORGSPEED:
+		RequiresCondition: cyborgspeed-upgrade
+		Modifier: 120
 	DamageTypeDamageMultiplier@CYBORGFLAKARMOR:
 		RequiresCondition: cyborgarmor-upgrade
 		DamageTypes: FlakVestMitigated

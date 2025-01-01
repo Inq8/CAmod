@@ -51,9 +51,9 @@ ANYSTRATEGY:
 	AlwaysVisible:
 	Interactable:
 	Tooltip:
-		Name: Strategy Upgrade
+		Name: Active Strategy
 	Buildable:
-		Description: Strategy Upgrade
+		Description: Active Strategy
 	ProvidesPrerequisite:
 
 bombard.strat:
@@ -557,6 +557,15 @@ gyro.upgrade:
 #########################NOD#########
 ########################################
 
+ANYCOVENANT:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		Name: Active Covenant
+	Buildable:
+		Description: Active Covenant
+	ProvidesPrerequisite:
+
 wrath.covenant:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -564,7 +573,7 @@ wrath.covenant:
 	Buildable:
 		BuildPaletteOrder: 13
 		Prerequisites: ~player.nod, nod.covenants.available, ~!unity.covenant, ~!deceit.covenant, ~techlevel.medium
-		Description: Required for:\n• Avatar (replaces Cyborg Elite)\n• Assassin Squad\n• Compressed Plasma (+3 Banshee ammo)\n\n
+		Description: Required for:\n• Avatar (replaces Cyborg Elite)\n• Assassin Squad\n• Compressed Plasma (+3 Banshee ammo)\n• Cyborg Firepower Upgrade\n\n
 		IconPalette: chrometd
 	TooltipExtras:
 		Attributes: (!) Only ONE Covenant may be chosen.
@@ -580,7 +589,7 @@ unity.covenant:
 	Buildable:
 		BuildPaletteOrder: 14
 		Prerequisites: ~player.nod, nod.covenants.available, ~!wrath.covenant, ~!deceit.covenant, ~techlevel.medium
-		Description: Required for:\n• Cyborg Reaper (replaces Enlightened)\n• Hacker Cell\n• Siphoned Funds ($ from Hackers in Comms Center)\n\n
+		Description: Required for:\n• Cyborg Reaper (replaces Enlightened)\n• Hacker Cell\n• Siphoned Funds ($ from Hackers in Comms Center)\n• CABAL Optimized Production Upgrade\n\n
 		IconPalette: chrometd
 	TooltipExtras:
 		Attributes: (!) Only ONE Covenant may be chosen.
@@ -596,7 +605,7 @@ deceit.covenant:
 	Buildable:
 		BuildPaletteOrder: 15
 		Prerequisites: ~player.nod, nod.covenants.available, ~!unity.covenant, ~!wrath.covenant, ~techlevel.medium
-		Description: Required for:\n• Heavy Stealth Tank Upgrade\n• Infiltrator Squad\n• Stealth Harvester Upgrade\n\n
+		Description: Required for:\n• Heavy Stealth Tank Upgrade\n• Infiltrator Squad\n• Stealth Harvester Upgrade\n• Cyborg Speed Upgrade\n\n
 		IconPalette: chrometd
 	TooltipExtras:
 		Attributes: (!) Only ONE Covenant may be chosen.
@@ -788,22 +797,6 @@ advcyber.upgrade:
 	RenderSprites:
 		Image: advcyber.upgrade
 
-cyborgspeed.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Improved Cyborg Speed
-	Buildable:
-		BuildPaletteOrder: 40
-		Prerequisites: ~player.nod, tmpp, ~techlevel.high
-		IconPalette: chrometd
-		Description: Improves cyborg movement speed.\n\nUpgrades: Cyborg\nUpgrades: Cyborg Rocket Soldier\nUpgrades: Chemical Warrior\nUpgrades: Acolyte/Templar\nUpgrades: Cyborg Mechanic\nUpgrades: Enlightened\nUpgrades: Cyborg Reaper\nUpgrades: Cyborg Elite
-	TooltipExtras:
-		Strengths: + 20% faster movement
-	Valued:
-		Cost: 1000
-	RenderSprites:
-		Image: cyborgspeed.upgrade
-
 cyborgarmor.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -819,6 +812,68 @@ cyborgarmor.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: cyborgarmor.upgrade
+
+covenant.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Covenant Dependent Upgrade
+	Buildable:
+		BuildPaletteOrder: 40
+		Prerequisites: ~player.nod, anycovenant, ~!wrath.covenant, ~!unity.covenant, ~!deceit.covenant, ~techlevel.high
+		IconPalette: chrometd
+		Description: Upgrade depends on chosen covenant.\n\n• Wrath: Cyborg Firepower\n• Unity: CABAL AI Optimized Production\n• Deceit: Cyborg Speed
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: covenant.upgrade
+
+cyborgdmg.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Improved Cyborg Firepower
+	Buildable:
+		BuildPaletteOrder: 40
+		Prerequisites: ~player.nod, tmpp, ~wrath.covenant, ~techlevel.high
+		IconPalette: chrometd
+		Description: Increases cyborg firepower.\n\nUpgrades: Cyborg\nUpgrades: Cyborg Rocket Soldier\nUpgrades: Chemical Warrior\nUpgrades: Acolyte/Templar\nUpgrades: Cyborg Mechanic\nUpgrades: Enlightened
+	TooltipExtras:
+		Strengths: + 10% increased firepower
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: cyborgdmg.upgrade
+
+cyborgprod.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: CABAL AI Optimized Production
+	Buildable:
+		BuildPaletteOrder: 40
+		Prerequisites: ~player.nod, tmpp, ~unity.covenant, ~techlevel.high
+		IconPalette: chrometd
+		Description: Increases cyborg production speed.\n\nUpgrades: Cyborg\nUpgrades: Cyborg Rocket Soldier\nUpgrades: Chemical Warrior\nUpgrades: Acolyte/Templar\nUpgrades: Cyborg Mechanic\nUpgrades: Cyborg Reaper\nUpgrades: Cyborg Elite
+	TooltipExtras:
+		Strengths: + 10% faster production
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: cyborgprod.upgrade
+
+cyborgspeed.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Improved Cyborg Speed
+	Buildable:
+		BuildPaletteOrder: 40
+		Prerequisites: ~player.nod, tmpp, ~deceit.covenant, ~techlevel.high
+		IconPalette: chrometd
+		Description: Increases cyborg movement speed.\n\nUpgrades: Cyborg\nUpgrades: Cyborg Rocket Soldier\nUpgrades: Chemical Warrior\nUpgrades: Acolyte/Templar\nUpgrades: Cyborg Mechanic\nUpgrades: Enlightened\nUpgrades: Cyborg Elite
+	TooltipExtras:
+		Strengths: + 20% faster movement
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: cyborgspeed.upgrade
 
 #########################SOVIET#########
 ########################################
@@ -1415,9 +1470,9 @@ ANYALLEGIANCE:
 	AlwaysVisible:
 	Interactable:
 	Tooltip:
-		Name: Allegiance
+		Name: Declared Allegiance
 	Buildable:
-		Description: Allegiance
+		Description: Declared Allegiance
 	ProvidesPrerequisite:
 
 loyalist.allegiance:
