@@ -57,7 +57,7 @@ namespace OpenRA.Mods.CA.Traits.Render
 	class WithColoredSelectionBox : ConditionalTrait<WithColoredSelectionBoxInfo>, IRenderAnnotations, INotifyCreated, INotifyOwnerChanged
 	{
 		public new readonly WithColoredSelectionBoxInfo Info;
-		Selectable selectable;
+		Interactable interactable;
 		Color color;
 		Color allyColor;
 		Color enemyColor;
@@ -77,12 +77,12 @@ namespace OpenRA.Mods.CA.Traits.Render
 
 		protected override void Created(Actor self)
 		{
-			selectable = self.TraitOrDefault<Selectable>();
+			interactable = self.TraitOrDefault<Interactable>();
 		}
 
 		IEnumerable<IRenderable> IRenderAnnotations.RenderAnnotations(Actor self, WorldRenderer wr)
 		{
-			if (IsTraitDisabled || selectable == null)
+			if (IsTraitDisabled || interactable == null)
 				yield break;
 
 			if (self.World.RenderPlayer != null)
@@ -94,7 +94,7 @@ namespace OpenRA.Mods.CA.Traits.Render
 			if (self.World.FogObscures(self))
 				yield break;
 
-			var bounds = selectable.DecorationBounds(self, wr);
+			var bounds = interactable.DecorationBounds(self, wr);
 			var boxBounds = new Rectangle(bounds.X, bounds.Y, bounds.Width, bounds.Height);
 			yield return new SelectionBoxAnnotationRenderable(self, boxBounds, color);
 		}

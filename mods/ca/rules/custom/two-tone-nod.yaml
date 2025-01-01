@@ -11,6 +11,12 @@
 		RemapIndex: 176, 178, 180, 182, 184, 186, 189, 191, 177, 179, 181, 183, 185, 187, 188, 190
 		PlayerColors:
 			Nod: E6E6FF
+	OverlayPlayerColorPalette@SCRINUNIT:
+		BasePalette: playerscrin
+		BaseName: playerscrin-twotonenod
+		RemapIndex: 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95
+		PlayerColors:
+			Nod: E6E6FF
 
 ^Vehicle-NOUPG:
 	RenderSprites:
@@ -24,7 +30,7 @@
 	RenderSprites:
 		PlayerPalette: player-twotonenod
 
-^Husk:
+^BasicHusk:
 	RenderSprites:
 		PlayerPalette: player-twotonenod
 
@@ -32,11 +38,23 @@
 	RenderSprites:
 		PlayerPalette: playertd-twotonenod
 
+^ScrinUnitPalette:
+	RenderSprites:
+		PlayerPalette: playerscrin-twotonenod
+
 ^Infantry:
 	RenderSprites:
 		PlayerPalette: playertd-twotonenod
 	WithDeathAnimation:
 		DeathSequencePalette: playertd-twotonenod
+		CrushedSequencePalette: playertd-twotonenod
+
+^ScrinInfantry:
+	RenderSprites:
+		PlayerPalette: playerscrin-twotonenod
+	WithDeathAnimation:
+		DeathSequencePalette: playerscrin-twotonenod
+		CrushedSequencePalette: playerscrin-twotonenod
 
 SHAD:
 	RenderSprites:
@@ -80,6 +98,14 @@ SAPC:
 	RenderSprites:
 		PlayerPalette: player-twotonenod
 
+HARV:
+	RenderSprites:
+		PlayerPalette: player
+
+HARV.Husk:
+	RenderSprites:
+		PlayerPalette: player
+
 HARV.TD:
 	RenderSprites:
 		PlayerPalette: playertd
@@ -87,6 +113,14 @@ HARV.TD:
 HARV.TD.Husk:
 	RenderSprites:
 		PlayerPalette: playertd
+
+MCV:
+	RenderSprites:
+		PlayerPalette: player
+
+MCV.Husk:
+	RenderSprites:
+		PlayerPalette: player
 
 AMCV:
 	RenderSprites:
@@ -147,3 +181,19 @@ MSG:
 MNLY:
 	RenderSprites:
 		PlayerPalette: player-twotonenod
+
+JJET:
+	RenderSprites:
+		PlayerPalette: playertd-twotonenod
+
+GSCR:
+	RenderSprites:
+		PlayerPalette: playerscrin-twotonenod
+	WithDeathAnimation:
+		DeathSequencePalette: playerscrin-twotonenod
+
+GSCR.Mutating:
+	RenderSprites:
+		PlayerPalette: playerscrin-twotonenod
+	WithDeathAnimation:
+		DeathSequencePalette: playerscrin-twotonenod

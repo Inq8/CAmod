@@ -1643,10 +1643,15 @@ HopliteGunCharged:
 		Color: fffdcdC8
 		SecondaryBeamColor: fff30060
 	Warhead@Blind: GrantExternalConditionCA
-		Range: 0c512
-		Duration: 50
+		Range: 0c896
+		Duration: 75
 		Condition: blinded
-		ValidTargets: Infantry, Vehicle, Ship
+		ValidTargets: Infantry
+	Warhead@BlindVehicle: GrantExternalConditionCA
+		Range: 0c512
+		Duration: 75
+		Condition: blinded
+		ValidTargets: Vehicle, Ship
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: caneon
@@ -3747,8 +3752,7 @@ JackknifeTargeter:
 
 TroopCrawlerDummyWeapon:
 	Range: 1c0
-	ValidTargets: Infantry, Vehicle
-	InvalidTargets: TroopCrawler
+	ValidTargets: Infantry
 	ReloadDelay: 25
 	Projectile: InstantHit
 	Warhead@1Dam: Dummy
