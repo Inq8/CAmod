@@ -1523,20 +1523,6 @@ malefic.allegiance:
 	RenderSprites:
 		Image: malefic.allegiance
 
-allegiance.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Allegiance Dependent Upgrade
-	Buildable:
-		BuildPaletteOrder: 20
-		Prerequisites: ~player.scrin, anyradar, anyallegiance, ~!loyalist.allegiance, ~!rebel.allegiance, !malefic.allegiance, ~techlevel.medium
-		IconPalette: chromes
-		Description: Upgrade depends on chosen allegiance.\n\n• Loyalist: Eviscerator research\n• Rebel: Impaler research\n• Malefic: Mutilator research
-	Valued:
-		Cost: 750
-	RenderSprites:
-		Image: allegiance.upgrade
-
 hyper.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -1552,6 +1538,20 @@ hyper.upgrade:
 		Cost: 1250
 	RenderSprites:
 		Image: hyper.upgrade
+
+allegiance.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Allegiance Dependent Upgrade
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: ~player.scrin, anyradar, anyallegiance, ~!loyalist.allegiance, ~!rebel.allegiance, ~!malefic.allegiance, ~techlevel.medium
+		IconPalette: chromes
+		Description: Upgrade depends on chosen allegiance.\n\n• Loyalist: Eviscerator research\n• Rebel: Impaler research\n• Malefic: Mutilator research
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: allegiance.upgrade
 
 evis.upgrade:
 	Inherits: ^Upgrade
