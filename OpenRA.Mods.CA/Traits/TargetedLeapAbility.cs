@@ -34,10 +34,10 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly int Speed = 150;
 
 		[Desc("Possible sounds to play when taking off.")]
-		public readonly string[] TakeOffSounds = {};
+		public readonly string[] TakeOffSounds = null;
 
 		[Desc("Possible sounds to play when landing.")]
-		public readonly string[] LandingSounds = {};
+		public readonly string[] LandingSounds = null;
 
 		[CursorReference]
 		[Desc("Cursor to display when able to deploy the actor.")]

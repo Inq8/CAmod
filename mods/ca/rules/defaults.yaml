@@ -1842,6 +1842,9 @@
 		Position: Center
 		Palette: effect
 		ValidRelationships: Ally, Neutral, Enemy
+	PowerMultiplier@HACKED:
+		RequiresCondition: hacked
+		Modifier: 0
 
 ^HackableOverloadable:
 	Inherits: ^Hackable
@@ -4493,6 +4496,7 @@
 		Multiplier: 200
 		Prerequisites: infantry.any, global.multiqueuescaled, optimized.production1, !optimized.production2
 	CloneSource:
+	UpdatesUnitsProduced:
 
 ^ProducesCyborgs:
 	Inherits: ^ProducesInfantry
@@ -4562,6 +4566,7 @@
 		Prerequisites: vehicles.any, global.multiqueuescaled, optimized.production1, !optimized.production2
 	GrantExternalConditionToProduced:
 		Condition: produced
+	UpdatesUnitsProduced:
 
 ^ProducesNaval:
 	Inherits@QUEUEUPDATER: ^QueueUpdater
@@ -4593,6 +4598,7 @@
 	ProductionBar@MQNAV:
 		ProductionType: ShipMQ
 		RequiresCondition: global-multiqueue
+	UpdatesUnitsProduced:
 
 ^ProducesUpgrades:
 	Inherits@QUEUEUPDATER: ^QueueUpdater
@@ -4658,6 +4664,7 @@
 		RequiresCondition: korea-coalition
 	GrantExternalConditionToProduced:
 		Condition: produced
+	UpdatesUnitsProduced:
 
 ^ProducesHelicopters:
 	Inherits@AIR: ^ProducesAircraft
