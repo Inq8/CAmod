@@ -128,7 +128,7 @@ OncePerSecondChecks = function()
 			end
 		end
 
-		if ExitDefendersDead and not Rescued then
+		if GDI.IsObjectiveCompleted(ObjectiveLocateForces) and ExitDefendersDead and not Rescued then
 			local exitActors = Map.ActorsInCircle(SignalFlare.CenterPosition, WDist.New(8 * 1024));
 			local gdiExitActors = Utils.Where(exitActors, function(a)
 				return a.Owner == GDI
