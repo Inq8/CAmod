@@ -266,7 +266,9 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 
 				if (campaignProgress.ContainsKey(missionTitle))
 				{
-					var difficulty = campaignProgress[missionTitle].Difficulty;
+					var missionProgress = campaignProgress[missionTitle];
+
+					var difficulty = missionProgress.Difficulty;
 					if (difficulty != null)
 					{
 						var stars = item.Get<ImageWidget>("COMPLETION_DIFFICULTY");
@@ -274,8 +276,24 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 						stars.GetImageName = () => difficulty;
 					}
 
+					var dateCompleted = DateOnly.FromDateTime(missionProgress.DateCompleted).ToString();
+					var completionTime = missionProgress.Time;
+					var difficultyCompleted = missionProgress.Difficulty != null ? char.ToUpper(missionProgress.Difficulty[0]) + missionProgress.Difficulty.Substring(1) : null;
+
+					var details = $"• Date: {dateCompleted}   \\n• Version: {missionProgress.Version}\\n• Duration: {completionTime}\\n• Speed: {missionProgress.Speed}";
+
+					if (difficultyCompleted != null)
+						details += $"\\n• Difficulty: {difficultyCompleted}";
+
+					item.GetTooltipText = () => "Completed";
+					item.GetTooltipDesc = () => details;
+
 					var tick = item.Get<ImageWidget>("COMPLETION_ICON");
 					tick.GetImageName = () => "complete";
+				}
+				else
+				{
+					item.GetTooltipText = () => "Not Completed";
 				}
 
 				WidgetUtils.TruncateLabelToTooltip(label, preview.Title);
@@ -308,17 +326,6 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 					infoVideoVisible = infoVideo != null;
 
 					var briefingText = missionData.Briefing?.Replace("\\n", "\n");
-					var missionTitle = CampaignProgressTracker.GetMapTileWithoutNumber(preview.Title);
-
-					if (campaignProgress.ContainsKey(missionTitle))
-					{
-						var missionProgress = campaignProgress[missionTitle];
-						var difficultyCompleted = missionProgress.Difficulty != null ? char.ToUpper(missionProgress.Difficulty[0]) + missionProgress.Difficulty.Substring(1) : null;
-						var dateCompleted = missionProgress.DateCompleted.ToString();
-						var completionTime = missionProgress.Time;
-						briefingText = $"[{dateCompleted} - Completed in {completionTime}{(difficultyCompleted != null ? $" on {difficultyCompleted}" : "")}]\n\n---------\n\n" + briefingText;
-					}
-
 					var briefing = WidgetUtils.WrapText(briefingText, description.Bounds.Width, descriptionFont);
 					var height = descriptionFont.Measure(briefing).Y;
 					Game.RunAfterTick(() =>
