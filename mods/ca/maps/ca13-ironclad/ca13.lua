@@ -113,6 +113,7 @@ WorldLoaded = function()
 	InitGreece()
 
 	ObjectiveDestroyBases = USSR.AddObjective("Break the siege and destroy the enemy bases.")
+	ObjectiveProtectIronCurtain = USSR.AddObjective("Do not lose the Iron Curtain.")
 	EngineerDrop()
 
 	Trigger.AfterDelay(5, function()
@@ -129,6 +130,10 @@ WorldLoaded = function()
 
 	Trigger.AfterDelay(AutoAttackStartTime[Difficulty], function()
 		StartAttacks()
+	end)
+
+	Trigger.OnRemovedFromWorld(IronCurtain, function(a)
+		USSR.MarkFailedObjective(ObjectiveProtectIronCurtain)
 	end)
 end
 
