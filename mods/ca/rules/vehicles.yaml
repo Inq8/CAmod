@@ -198,7 +198,7 @@ NUKC:
 		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets
 		Attributes: • Can crush concrete walls
 	Valued:
-		Cost: 2300
+		Cost: 2400
 	Tooltip:
 		Name: Nuke Cannon
 	UpdatesPlayerStatistics:
@@ -338,32 +338,32 @@ NUKC:
 		AttackMoveCondition: attack-move
 	WithRangeCircle:
 		Type: NukeCannon
-		Range: 16c0
+		Range: 18c0
 		Color: ffdd0050
 		RequiresCondition: (!deployed || deploying) && !veiled && !gapveiled
 	WithRangeCircle@Veiled:
 		Type: NukeCannon
-		Range: 12c820
+		Range: 14c410
 		Color: ffdd0050
 		RequiresCondition: (!deployed || deploying) && veiled && !gapveiled
 	WithRangeCircle@GapVeiled:
 		Type: NukeCannon
-		Range: 9c614
+		Range: 10c819
 		Color: ffdd0050
 		RequiresCondition: (!deployed || deploying) && gapveiled
 	WithRangeCircle@Deployed:
 		Type: NukeCannon
-		Range: 16c0
+		Range: 18c0
 		Color: ff880090
 		RequiresCondition: deployed && !deploying && !veiled && !gapveiled
 	WithRangeCircle@DeployedVeiled:
 		Type: NukeCannon
-		Range: 12c820
+		Range: 14c410
 		Color: ff880090
 		RequiresCondition: deployed && !deploying && veiled && !gapveiled
 	WithRangeCircle@DeployedGapVeiled:
 		Type: NukeCannon
-		Range: 9c614
+		Range: 10c819
 		Color: ff880090
 		RequiresCondition: deployed && !deploying && gapveiled
 	GrantConditionOnMovement@Moving:
@@ -9522,12 +9522,12 @@ OVLD:
 		Count: 6
 		RequiresCondition: atomic-ammo && has-atomic-ammo < 6
 	ProximityExternalCondition@InspirationVeh:
-		Range: 4c0
+		Range: 5c0
 		Condition: veh-inspiration
 		ValidRelationships: Ally
 		AffectsParent: true
 	WithRadiatingCircle:
-		EndRadius: 4c0
+		EndRadius: 5c0
 		Interval: 25
 		Duration: 50
 		ValidRelationships: Ally
