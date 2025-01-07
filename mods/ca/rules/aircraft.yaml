@@ -1499,7 +1499,6 @@ A10:
 		PersistentTargeting: false
 		OpportunityFire: true
 		PauseOnCondition: empdisable || being-warped
-		AirFacingTolerance: 80
 		Armaments: primary, primarybld
 		AttackType: Strafe
 		StrafeRunLength: 7c0
@@ -1658,6 +1657,22 @@ A10.SW:
 		RequiresSelection: true
 		AmmoPools: secondary
 		FullSequence: pip-red
+	AutoTargetPriority@DEFAULT:
+		RequiresCondition: ammo && ammo2
+	AutoTargetPriority@ATTACKANYTHING:
+		RequiresCondition: (stance-attackanything || assault-move) && ammo && ammo2
+	AutoTargetPriority@DEFAULTGROUND:
+		RequiresCondition: ammo && !ammo2
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
+		InvalidTargets: NoAutoTarget, AntiAirDefense
+	AutoTargetPriority@ATTACKANYTHINGGROUND:
+		RequiresCondition: (stance-attackanything || assault-move) && ammo && !ammo2
+		ValidTargets: Structure, AntiAirDefense
+		InvalidTargets: NoAutoTarget
+	AutoTargetPriority@DEFAULTAIR:
+		RequiresCondition: !ammo && ammo2
+		ValidTargets: Air, AirSmall
+		InvalidTargets: NoAutoTarget
 
 A10.GAU:
 	Inherits: A10
