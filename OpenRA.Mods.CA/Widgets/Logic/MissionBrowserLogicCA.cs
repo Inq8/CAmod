@@ -276,7 +276,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 						stars.GetImageName = () => difficulty;
 					}
 
-					var dateCompleted = DateOnly.FromDateTime(missionProgress.DateCompleted).ToString();
+					var dateCompleted = missionProgress.DateCompleted.ToString("d");
 					var completionTime = missionProgress.Time;
 					var difficultyCompleted = missionProgress.Difficulty != null ? char.ToUpper(missionProgress.Difficulty[0]) + missionProgress.Difficulty.Substring(1) : null;
 
