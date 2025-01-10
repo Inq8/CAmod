@@ -1903,7 +1903,7 @@ SonicZapVisual.UPG:
 
 GapBeam:
 	ReloadDelay: 15
-	Range: 8c0
+	Range: 10c0
 	Report: gaploop1.aud, gaploop2.aud, gaploop3.aud
 	ValidTargets: Ground, Water, Air, AirSmall
 	Projectile: ElectricBolt
@@ -1917,7 +1917,7 @@ GapBeam:
 		TrackTarget: true
 	Warhead@1Dum: Dummy
 	Warhead@Debuff: GrantExternalConditionCA
-		Range: 1c512
+		Range: 1c256
 		Duration: 15
 		Condition: gapveiled
 		ValidRelationships: Enemy, Neutral
@@ -1930,13 +1930,17 @@ GapBeam:
 	Warhead@3Eff: CreateEffect
 		Explosions: veilcloudsm, veilcloudsmf
 		ExplosionPalette: effect-ignore-lighting-alpha40
-		Inaccuracy: 1c512
+		Inaccuracy: 1c256
 		ValidTargets: Ground, Water, Trees, Air, AirSmall
 
 MobileGapBeam:
 	Inherits: GapBeam
 	-ValidTargets:
-	Range: 7c0
+	Range: 10c0
+	Warhead@Debuff: GrantExternalConditionCA
+		Range: 0c768
+	Warhead@3Eff: CreateEffect
+		Inaccuracy: 1c0
 
 RadarJammer:
 	ReloadDelay: 150
