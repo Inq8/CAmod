@@ -46,12 +46,6 @@ ScrinVehicleTypes = {
 	hard = { "seek", "corr", "devo", "intl", "tpod" }
 }
 
-ScrinInvasionInterval = {
-	easy = DateTime.Seconds(18),
-	normal = DateTime.Seconds(12),
-	hard = DateTime.Seconds(12)
-}
-
 ScrinVehiclesIntervalMultiplier = {
 	easy = 4,
 	normal = 4,
@@ -441,9 +435,9 @@ ScrinInvasion = function()
 		end)
 	end)
 
-	Trigger.AfterDelay(ScrinInvasionInterval[Difficulty], ScrinInvasion)
+	Trigger.AfterDelay(GetInvasionInterval(), ScrinInvasion)
 	if not IsInvasionStarted then
-		Trigger.AfterDelay(ScrinInvasionInterval[Difficulty] * 2, CreateScrinVehicles)
+		Trigger.AfterDelay(GetInvasionInterval() * 2, CreateScrinVehicles)
 		IsInvasionStarted = true
 	end
 end
@@ -461,7 +455,7 @@ CreateScrinVehicles = function()
 		end)
 	end)
 
-	Trigger.AfterDelay(ScrinInvasionInterval[Difficulty] * ScrinVehiclesIntervalMultiplier[Difficulty], CreateScrinVehicles)
+	Trigger.AfterDelay(GetInvasionInterval() * ScrinVehiclesIntervalMultiplier[Difficulty], CreateScrinVehicles)
 end
 
 GetScrinAssaultWaypoints = function()
@@ -638,4 +632,40 @@ SendDevastators = function()
 			AssaultPlayerBaseOrHunt(unit)
 		end)
 	end)
+end
+
+GetPlayerArmyValue = function()
+	local value = 0
+	Utils.Do(Greece.GetActors(), function(a)
+		if a.HasProperty("Attack") then
+			value = value + Actor.Cost(a.Type)
+		end
+	end)
+	return value
+end
+
+GetInvasionInterval = function()
+	local armyValue = GetPlayerArmyValue()
+
+	if Difficulty == "easy" then
+		if armyValue >= 10000 then
+			return DateTime.Seconds(18)
+		else
+			return DateTime.Seconds(24)
+		end
+	else
+		if armyValue >= 48000 then
+			return DateTime.Seconds(12)
+		elseif armyValue >= 38000 then
+			return DateTime.Seconds(14)
+		elseif armyValue >= 28000 then
+			return DateTime.Seconds(16)
+		elseif armyValue >= 18000 then
+			return DateTime.Seconds(18)
+		elseif armyValue >= 10000 then
+			return DateTime.Seconds(21)
+		else
+			return DateTime.Seconds(25)
+		end
+	end
 end
