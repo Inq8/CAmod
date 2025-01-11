@@ -177,7 +177,7 @@ Squads = {
 	Naval = {
 		Player = nil,
 		ActiveCondition = function()
-			return PlayerHasNavalProduction(Greece)
+			return PlayerHasNavalPresence(Greece)
 		end,
 		Interval = {
 			easy = DateTime.Seconds(75),
@@ -345,6 +345,7 @@ OncePerSecondChecks = function()
 			else
 				TimerTicks = 0
 			end
+			UpdateReinforcementCountdown()
 		end
 
 		if PlayerForcesDefeated() or not GDICommanderAlive then
@@ -396,11 +397,12 @@ GDIBaseFound = function()
 		end)
 
 		InitUSSRAttacks()
+		TimerTicks = HoldOutTime[Difficulty]
 
 		Trigger.AfterDelay(DateTime.Seconds(1), function()
 			Actor.Create("QueueUpdaterDummy", true, { Owner = Greece })
 			ObjectiveHoldOut = Greece.AddObjective("Hold out until reinforcements arrive.")
-			UserInterface.SetMissionText("Hold out until reinforcements arrive.", HSLColor.Yellow)
+			UpdateReinforcementCountdown()
 			Greece.MarkCompletedObjective(ObjectiveFindBase)
 		end)
 
@@ -429,6 +431,12 @@ GDIBaseFound = function()
 				Reinforcements.Reinforce(Greece, gdiReinforcements, { GDIReinforcementsEntry.Location, GDIReinforcementsRally.Location }, 75)
 			end)
 		end
+	end
+end
+
+UpdateReinforcementCountdown = function()
+	if not IsHoldOutComplete then
+		UserInterface.SetMissionText("Hold out until reinforcements arrive: " .. UtilsCA.FormatTimeForGameSpeed(TimerTicks), HSLColor.Yellow)
 	end
 end
 
@@ -678,4 +686,9 @@ NavalReinforcements = function()
 			Reinforcements.Reinforce(Greece, destroyers, { DestroyerSpawn.Location, DestroyerDestination.Location }, 75)
 		end)
 	end
+end
+
+PlayerHasNavalPresence = function(player)
+	local navalUnits = player.GetActorsByTypes({"ca", "dd", "pt", "ss", "seas"})
+	return #navalUnits > 6
 end

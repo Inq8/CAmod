@@ -283,7 +283,7 @@ UpdateMissionText = function()
 	end
 
 	local shipmentsText = "Shipments complete: " .. ShipmentsComplete .. "/5"
-	local cooldownText = " -- Next shipment ready in " .. Utils.FormatTime(TimerTicks)
+	local cooldownText = " -- Next shipment ready in " .. UtilsCA.FormatTimeForGameSpeed(TimerTicks)
 	UserInterface.SetMissionText(shipmentsText .. cooldownText, HSLColor.Yellow)
 end
 

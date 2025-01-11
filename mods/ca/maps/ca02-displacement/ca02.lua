@@ -319,7 +319,7 @@ UpdateConvoyCountdown = function()
 			end
 		end
 	else
-		UserInterface.SetMissionText("Next convoy arrives in " .. Utils.FormatTime(TimerTicks), HSLColor.Yellow)
+		UserInterface.SetMissionText("Next convoy arrives in " .. UtilsCA.FormatTimeForGameSpeed(TimerTicks), HSLColor.Yellow)
 	end
 end
 
@@ -448,12 +448,12 @@ InitScrin = function()
 	end)
 
 	Trigger.AfterDelay(Squads.Stormriders.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.Stormriders, Scrin, Greece, { "proc", "dome", "atek", "apwr", "ptnk", "heli", "harr" })
+		InitAirAttackSquad(Squads.Stormriders, Scrin, Greece, { "dome", "atek", "apwr", "apwr", "apwr", "ptnk", "cryo", "heli", "harr" })
 	end)
 
 	if Difficulty ~= "easy" then
 		Trigger.AfterDelay(Squads.Devastators.Delay[Difficulty], function()
-			InitAirAttackSquad(Squads.Devastators, Scrin, Greece, { "proc", "dome", "atek", "apwr", "pris", "fix" })
+			InitAirAttackSquad(Squads.Devastators, Scrin, Greece, { "dome", "atek", "apwr", "pris", "fix" })
 		end)
 	end
 
@@ -472,7 +472,7 @@ InitScrin = function()
 				self.Stop()
 				self.ReturnToBase()
 				Trigger.AfterDelay(DateTime.Seconds(1), function()
-					InitAttackAircraft(self, Greece, { "proc", "dome", "atek", "apwr", "ptnk", "heli", "harr" })
+					InitAttackAircraft(self, Greece, { "dome", "atek", "apwr", "apwr", "apwr", "ptnk", "cryo", "heli", "harr" })
 				end)
 			end
 		end)

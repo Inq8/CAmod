@@ -10,6 +10,7 @@
  */
 #endregion
 
+using OpenRA.Mods.Common.Widgets;
 using OpenRA.Scripting;
 
 namespace OpenRA.Mods.CA.Scripting
@@ -36,6 +37,12 @@ namespace OpenRA.Mods.CA.Scripting
 		public bool FogEnabled()
 		{
 			return world.LobbyInfo.GlobalSettings.OptionOrDefault("fog", true);
+		}
+
+		[Desc("Returns a number of ticks as formatted time for the current game speed.")]
+		public string FormatTimeForGameSpeed(int ticks)
+		{
+			return WidgetUtils.FormatTime(ticks, world.Timestep);
 		}
 	}
 }

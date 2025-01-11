@@ -316,7 +316,7 @@ OncePerSecondChecks = function()
 		if TimerTicks > 0 then
 			if TimerTicks > 25 then
 				TimerTicks = TimerTicks - 25
-				UserInterface.SetMissionText("Evacuation begins in " .. Utils.FormatTime(TimerTicks), HSLColor.Yellow)
+				UserInterface.SetMissionText("Evacuation begins in " .. UtilsCA.FormatTimeForGameSpeed(TimerTicks), HSLColor.Yellow)
 			else
 				TimerTicks = 0
 				UserInterface.SetMissionText("Evacuation underway.", HSLColor.Yellow)
@@ -573,7 +573,7 @@ SpawnWormhole = function()
 end
 
 DoHaloDrop = function(entryPaths)
-	if IsCrossRipped then
+	if SovietWarFactory.IsDead or IsCrossRipped then
 		return
 	end
 
@@ -604,7 +604,7 @@ DoHaloDrop = function(entryPaths)
 end
 
 DoSovietNavalDrop = function()
-	if IsCrossRipped then
+	if SovietWarFactory.IsDead or IsCrossRipped then
 		return
 	end
 

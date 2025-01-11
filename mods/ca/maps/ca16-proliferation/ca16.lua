@@ -346,7 +346,7 @@ end
 
 UpdateObjectiveMessage = function()
 	if FieldsClearedAndBeingHarvested == 6 then
-		UserInterface.SetMissionText("6 of 6 fields occupied.\n   Maintain for " .. Utils.FormatTime(TimerTicks), HSLColor.Lime)
+		UserInterface.SetMissionText("6 of 6 fields occupied.\n   Maintain for " .. UtilsCA.FormatTimeForGameSpeed(TimerTicks), HSLColor.Lime)
 	else
 		UserInterface.SetMissionText(FieldsClearedAndBeingHarvested .. " of 6 fields occupied.", HSLColor.Yellow)
 	end
