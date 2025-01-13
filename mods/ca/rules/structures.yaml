@@ -5042,10 +5042,13 @@ LASP:
 		Prerequisites: ~structures.nod, nuk2, ~techlevel.medium
 		IconPalette: chrometd
 		Description: • Stops infantry\n• Blocks enemy fire\n• Cannot be crushed by tanks
+	Building:
+		RequiresBaseProvider: False
 	Valued:
 		Cost: 200
 	CustomSellValue:
 		Value: 0
+	-GivesBuildableArea:
 	RequiresBuildableArea:
 		Adjacent: 7
 	Tooltip:
@@ -5086,6 +5089,9 @@ LASP:
 	Explodes@TEMPORAL:
 		Weapon: TemporalExplode
 		EmptyWeapon: TemporalExplode
+	-SpawnActorsOnSellCA:
+	-SpawnActorOnDeath:
+	-SpawnRandomActorOnDeath:
 
 LASF:
 	Inherits: ^Wall
