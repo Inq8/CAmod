@@ -631,15 +631,15 @@ DOME:
 		RequiresCondition: !disabled
 	WithBuildingBib:
 	ProvidesRadar:
-		RequiresCondition: !jammed && !disabled && !being-warped
+		RequiresCondition: !jammed && !disabled && !being-warped && !build-incomplete
 	RangedGpsRadarProvider:
 		Range: 12c0
 		TargetTypes: Vehicle, Air, Structure
-		RequiresCondition: !jammed && !disabled && !being-warped
+		RequiresCondition: !jammed && !disabled && !being-warped && !build-incomplete
 	WithRangeCircle:
 		Type: RadarDetection
 		Range: 12c0
-		RequiresCondition: !jammed && !disabled && !being-warped
+		RequiresCondition: !jammed && !disabled && !being-warped && !build-incomplete
 	InfiltrateForExploration:
 		Types: ResetShroudInfiltrate
 	Power:
@@ -3652,7 +3652,7 @@ HQ:
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 90
-		Prerequisites: anyrefinery, ~structures.td, ~techlevel.medium
+		Prerequisites: anyrefinery, ~structures.td, ~techlevel.medium, ~!unity.covenant
 		IconPalette: chrometd
 		Description: Provides an overview of the battlefield.
 	TooltipExtras:
@@ -3674,6 +3674,8 @@ HQ:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: ResetShroudInfiltrate
+	Targetable@HACKCAPTURABLE:
+		RequiresCondition: !being-warped
 	Health:
 		HP: 110000
 	Armor:
@@ -3690,15 +3692,15 @@ HQ:
 		Range: 5c0
 		RequiresCondition: !disabled
 	ProvidesRadar:
-		RequiresCondition: !jammed && !disabled && !being-warped
+		RequiresCondition: !jammed && !disabled && !being-warped && !build-incomplete
 	RangedGpsRadarProvider:
 		Range: 12c0
 		TargetTypes: Vehicle, Air, Structure
-		RequiresCondition: !jammed && !disabled && !being-warped
+		RequiresCondition: !jammed && !disabled && !being-warped && !build-incomplete
 	WithRangeCircle:
 		Type: RadarDetection
 		Range: 12c0
-		RequiresCondition: !jammed && !disabled && !being-warped
+		RequiresCondition: !jammed && !disabled && !being-warped && !build-incomplete
 	WithBuildingBib:
 	InfiltrateForExploration:
 		Types: ResetShroudInfiltrate
@@ -3767,6 +3769,41 @@ HQ:
 	GrantConditionOnFaction@ARC:
 		Factions: arc
 		Condition: arc-built
+	GrantConditionOnPrerequisite@UPG:
+		Prerequisites: unity.covenant
+		Condition: unity-upgrade
+	TransformOnCondition@UPG:
+		IntoActor: HQ.UPG
+		SkipMakeAnims: false
+		RequiresCondition: unity-upgrade && !build-incomplete
+
+HQ.UPG:
+	Inherits: HQ
+	RenderSprites:
+		Image: nodhq.upg
+		FactionImages:
+			nod: nodhq.upg
+			blackh: nodhq.upg
+			marked: nodhq.upg
+			legion: nodhq.upg
+			shadow: nodhq.upg
+			arc: nodhq.upg
+	Buildable:
+		Queue: BuildingSQ, BuildingMQ
+		BuildPaletteOrder: 90
+		Prerequisites: anyrefinery, ~structures.td, ~techlevel.medium, ~unity.covenant
+		IconPalette: chrometd
+		Description: Provides an overview of the battlefield.
+	Tooltip:
+		Name: Internet Center
+	TooltipExtras:
+		Strengths: + $25 delivered every 60 seconds (normal speed)
+		Attributes: • Requires power to operate\n• Detects nearby enemy vehicles, aircraft and structures in fog of war\n• Garrisonable by Hackers
+	RenderSprites:
+		PlayerPalette: playertd
+	-Targetable@HACKCAPTURABLE:
+	-TransformOnCondition@UPG:
+	-GrantConditionOnPrerequisite@UPG:
 	Cargo:
 		Types: Hacker
 		MaxWeight: 5
@@ -3775,21 +3812,25 @@ HQ:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
+	CashTrickler@Hacker0:
+		Interval: 375
+		Amount: 25
+		RequiresCondition: cargo == 0
 	CashTrickler@Hacker1:
 		Interval: 375
-		Amount: 80
+		Amount: 75
 		RequiresCondition: cargo == 1
 	CashTrickler@Hacker2:
 		Interval: 375
-		Amount: 160
+		Amount: 125
 		RequiresCondition: cargo == 2
 	CashTrickler@Hacker3:
 		Interval: 375
-		Amount: 240
+		Amount: 175
 		RequiresCondition: cargo == 3
 	CashTrickler@Hacker4:
 		Interval: 375
-		Amount: 320
+		Amount: 300
 		RequiresCondition: cargo == 4
 	CashTrickler@Hacker5:
 		Interval: 375
@@ -3847,15 +3888,15 @@ EYE:
 		RequiresCondition: !disabled
 	WithBuildingBib:
 	ProvidesRadar:
-		RequiresCondition: !jammed && !disabled && !being-warped
+		RequiresCondition: !jammed && !disabled && !being-warped && !build-incomplete
 	RangedGpsRadarProvider:
 		Range: 12c0
 		TargetTypes: Vehicle, Air, Structure
-		RequiresCondition: !jammed && !disabled && !being-warped
+		RequiresCondition: !jammed && !disabled && !being-warped && !build-incomplete
 	WithRangeCircle:
 		Type: RadarDetection
 		Range: 12c0
-		RequiresCondition: !jammed && !disabled && !being-warped
+		RequiresCondition: !jammed && !disabled && !being-warped && !build-incomplete
 	InfiltrateForExploration:
 		Types: ResetShroudInfiltrate
 	InfiltrateForSupportPowerReset:

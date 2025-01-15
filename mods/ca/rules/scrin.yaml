@@ -4777,15 +4777,15 @@ NERV:
 		Range: 5c0
 		RequiresCondition: !disabled
 	ProvidesRadar:
-		RequiresCondition: !jammed && !disabled && !being-warped
+		RequiresCondition: !jammed && !disabled && !being-warped && !build-incomplete
 	RangedGpsRadarProvider:
 		Range: 12c0
 		TargetTypes: Vehicle, Air, Structure
-		RequiresCondition: !jammed && !disabled && !being-warped
+		RequiresCondition: !jammed && !disabled && !being-warped && !build-incomplete
 	WithRangeCircle:
 		Type: RadarDetection
 		Range: 12c0
-		RequiresCondition: !jammed && !disabled && !being-warped
+		RequiresCondition: !jammed && !disabled && !being-warped && !build-incomplete
 	WithBuildingBib:
 	InfiltrateForExploration:
 		Types: ResetShroudInfiltrate
