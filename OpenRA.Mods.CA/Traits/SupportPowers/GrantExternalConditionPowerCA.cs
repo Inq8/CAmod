@@ -144,6 +144,8 @@ namespace OpenRA.Mods.CA.Traits
 		readonly char[] footprint;
 		TechTree techTree;
 
+		IEnumerable<Actor> targets;
+
 		[Sync]
 		public int Ticks { get; private set; }
 
@@ -166,6 +168,16 @@ namespace OpenRA.Mods.CA.Traits
 			self.World.OrderGenerator = new SelectConditionTarget(Self.World, order, manager, this);
 		}
 
+		public override bool Prepare(Actor self, Order order, SupportPowerManager manager)
+		{
+			targets = GetTargets(self.World.Map.CellContaining(order.Target.CenterPosition));
+
+			if (targets.Count() < info.MinTargets)
+				return false;
+
+			return true;
+		}
+
 		public override void Activate(Actor self, Order order, SupportPowerManager manager)
 		{
 			base.Activate(self, order, manager);
@@ -183,7 +195,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			Game.Sound.Play(SoundType.World, info.OnFireSound, order.Target.CenterPosition);
 
-			foreach (var a in GetTargets(self.World.Map.CellContaining(order.Target.CenterPosition)))
+			foreach (var a in targets)
 				a.TraitsImplementing<ExternalCondition>()
 					.FirstOrDefault(t => t.Info.Condition == Condition && t.CanGrantCondition(self))
 					?.GrantCondition(a, self, info.Duration);
