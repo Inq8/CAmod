@@ -378,14 +378,17 @@ VEHICLES.SCRIN:
 	Voiced:
 		VoiceSet: ScrinVehicleVoice
 
+^ScrinUnitPalette:
+	RenderSprites:
+		PlayerPalette: playerscrin
+
 #
 # ---- Infantry
 #
 
 ^ScrinInfantry:
 	Inherits: ^Soldier
-	RenderSprites:
-		PlayerPalette: playerscrin
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Voiced:
 		VoiceSet: ScrinInfantryVoice
 	WithInfantryBody:
@@ -905,7 +908,7 @@ MUTI:
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor, Infantry
 		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
-		Attributes: • Special Ability: Teleport (with upgrade)
+		Attributes: • Special Ability: Teleport (with upgrade)\n• Takes reduced damage for a brief time after teleporting
 	Health:
 		HP: 13000
 	UpdatesPlayerStatistics:
@@ -941,6 +944,17 @@ MUTI:
 	WithColoredOverlay@BLINKFLASH:
 		Color: ffffff80
 		RequiresCondition: blink
+	GrantTimedCondition@BlinkShield:
+		Duration: 40
+		Condition: blinkshield
+		RequiresCondition: blink
+		ForceFullDuration: true
+	DamageMultiplier@BlinkShield:
+		Modifier: 50
+		RequiresCondition: blinkshield
+	WithColoredOverlay@BlinkShield:
+		Color: 32154c66
+		RequiresCondition: blinkshield
 
 SMEDI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -1464,13 +1478,12 @@ GUNW:
 
 SHRW:
 	Inherits: GUNW
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Tooltip:
 		Name: Shard Walker
 	Buildable:
 		Prerequisites: ~vehicles.scrin, ~shrw.upgrade, ~techlevel.medium
 		IconPalette: chromes
-	RenderSprites:
-		PlayerPalette: playerscrin
 	Armor:
 		Type: Light
 	Health:
@@ -1492,14 +1505,13 @@ SHRW:
 
 SEEK:
 	Inherits: ^Vehicle
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Inherits@Hypercharge: ^Hypercharge
-	RenderSprites:
-		PlayerPalette: playerscrin
 	Valued:
 		Cost: 750
 	Tooltip:
@@ -1573,14 +1585,13 @@ SEEK:
 
 LACE:
 	Inherits: ^Vehicle
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Inherits@Hypercharge: ^Hypercharge
-	RenderSprites:
-		PlayerPalette: playerscrin
 	Valued:
 		Cost: 650
 	Tooltip:
@@ -1658,6 +1669,7 @@ LACE:
 
 INTL:
 	Inherits: ^Vehicle
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
@@ -1668,8 +1680,6 @@ INTL:
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Inherits@SHIELDS: ^ScrinShields
-	RenderSprites:
-		PlayerPalette: playerscrin
 	Valued:
 		Cost: 800
 	Tooltip:
@@ -1808,13 +1818,12 @@ INTL.AI2:
 
 CORR:
 	Inherits: ^Tank
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
-	RenderSprites:
-		PlayerPalette: playerscrin
 	Valued:
 		Cost: 1100
 	Tooltip:
@@ -1870,13 +1879,12 @@ CORR:
 
 LCHR:
 	Inherits: ^Tank
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
-	RenderSprites:
-		PlayerPalette: playerscrin
 	Valued:
 		Cost: 1000
 	Tooltip:
@@ -2038,13 +2046,12 @@ LCHR.Orb:
 
 STCR:
 	Inherits: ^Tank
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@IONCONDUITS: ^IonConduits
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
-	RenderSprites:
-		PlayerPalette: playerscrin
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -2200,14 +2207,13 @@ DEVO:
 
 DARK:
 	Inherits: ^Vehicle
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
-	RenderSprites:
-		PlayerPalette: playerscrin
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 213
@@ -2277,14 +2283,13 @@ DARK:
 
 RUIN:
 	Inherits: ^Vehicle
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@RESCONV: ^ResourceConversion
 	Inherits@HOVERTRAIL: ^HoverTrail
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
-	RenderSprites:
-		PlayerPalette: playerscrin
 	Valued:
 		Cost: 1250
 	Tooltip:
@@ -2379,13 +2384,12 @@ RUIN:
 
 ATMZ:
 	Inherits: ^Vehicle
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
-	RenderSprites:
-		PlayerPalette: playerscrin
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -2549,14 +2553,13 @@ TPOD:
 
 RTPD:
 	Inherits: TPOD
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Inherits@RESCONV: ^ResourceConversion
 	Buildable:
 		BuildPaletteOrder: 282
 		Prerequisites: scrt, ~vehicles.reaper, ~techlevel.high
 	TooltipExtras:
 		Attributes: • Can crush concrete walls.\n• Weapons empowered by Tiberium or other resources\n• Self repairs on Tiberium or other resources when not in combat.
-	RenderSprites:
-		PlayerPalette: playerscrin
 	Valued:
 		Cost: 2200
 	Tooltip:
@@ -2636,13 +2639,12 @@ RTPD:
 
 OBLT:
 	Inherits: ^Vehicle
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
-	RenderSprites:
-		PlayerPalette: playerscrin
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 290
@@ -2714,13 +2716,12 @@ OBLT:
 
 NULL:
 	Inherits: ^Vehicle
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
-	RenderSprites:
-		PlayerPalette: playerscrin
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 291
@@ -2787,6 +2788,7 @@ NULL:
 
 SMCV:
 	Inherits: ^Vehicle-NOUPG
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Inherits@SELECTION: ^SelectableSupportUnit
 	Inherits@HOVERTRAIL: ^HoverTrail
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
@@ -2801,8 +2803,6 @@ SMCV:
 	TooltipExtras:
 		Weaknesses: • Unarmed
 		Attributes: • Special Ability: Deploy into Colony Platform
-	RenderSprites:
-		PlayerPalette: playerscrin
 	Valued:
 		Cost: 3000
 	Tooltip:
@@ -2850,6 +2850,8 @@ SMCV:
 		RequiresCondition: !empdisable && !being-warped && !driver-dead
 	DamageTypeDamageMultiplier@A2GPROTECTION:
 		Modifier: 60
+	UpdatesKillCount:
+		Type: BuildingsOrHarvesters
 
 #
 # ---- Aircraft
@@ -3631,6 +3633,7 @@ INVA:
 
 MSHP:
 	Inherits: ^Helicopter
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@HULLREGEN: ^HullRegen
@@ -3648,8 +3651,6 @@ MSHP:
 		Strengths: • Strong vs Buildings, Defenses, Heavy Armor, Light Armor, Infantry
 		Weaknesses: • Cannot attack Aircraft\n• Long charge time before firing anti-structure weapon\n• Cannot move while firing
 		Attributes: • Maximum 1 can be built\n• Can create wormholes\n• Can recharge nearby Stormriders/Enervators
-	RenderSprites:
-		PlayerPalette: playerscrin
 	Voiced:
 		VoiceSet: MothershipVoice
 	Valued:
@@ -3833,10 +3834,10 @@ MSHP:
 
 SMCV.Husk:
 	Inherits: ^Husk
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Tooltip:
 		Name: Husk (Colony Ship)
 	RenderSprites:
-		PlayerPalette: playerscrin
 		Image: smcv.destroyed
 
 HARV.Scrin.Husk:
@@ -3851,40 +3852,40 @@ HARV.Scrin.Husk:
 
 GUNW.Husk:
 	Inherits: ^Husk
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Tooltip:
 		Name: Husk (Gun Walker)
 	RenderSprites:
 		Image: gunw.destroyed
-		PlayerPalette: playerscrin
 
 SEEK.Husk:
 	Inherits: ^Husk
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Tooltip:
 		Name: Husk (Seeker)
 	ThrowsParticle@turret:
 		Anim: turret
 	RenderSprites:
 		Image: seek.destroyed
-		PlayerPalette: playerscrin
 	WithShadow:
 		Offset: 43, 128, 0
 		ZOffset: -129
 
 INTL.Husk:
 	Inherits: ^Husk
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Tooltip:
 		Name: Husk (Interloper)
 	RenderSprites:
 		Image: intl.destroyed
-		PlayerPalette: playerscrin
 
 CORR.Husk:
 	Inherits: ^Husk
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Tooltip:
 		Name: Husk (Corrupter)
 	RenderSprites:
 		Image: corr.destroyed
-		PlayerPalette: playerscrin
 
 DEVO.Husk:
 	Inherits: ^Husk
@@ -3892,23 +3893,22 @@ DEVO.Husk:
 		Name: Husk (Devourer)
 	RenderSprites:
 		Image: devo.destroyed
-		PlayerPalette: playerscrin
 
 STCR.Husk:
 	Inherits: ^Husk
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Tooltip:
 		Name: Husk (Stormcrawler)
 	RenderSprites:
 		Image: stcr.destroyed
-		PlayerPalette: playerscrin
 
 RUIN.Husk:
 	Inherits: ^Husk
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Tooltip:
 		Name: Husk (Ruiner)
 	RenderSprites:
 		Image: ruin.destroyed
-		PlayerPalette: playerscrin
 
 TPOD.Husk:
 	Inherits: ^Husk
@@ -3918,36 +3918,36 @@ TPOD.Husk:
 		Anim: turret
 	RenderSprites:
 		Image: tpod.destroyed
-		PlayerPalette: playerscrin
 
 RTPD.Husk:
 	Inherits: ^Husk
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Tooltip:
 		Name: Husk (Reaper Tripod)
 	ThrowsParticle@turret:
 		Anim: turret
 	RenderSprites:
 		Image: rtpd.destroyed
-		PlayerPalette: playerscrin
 
 OBLT.Husk:
 	Inherits: ^Husk
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Tooltip:
 		Name: Husk (Obliterator)
 	RenderSprites:
 		Image: oblt.destroyed
-		PlayerPalette: playerscrin
 
 NULL.Husk:
 	Inherits: ^Husk
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Tooltip:
 		Name: Husk (Nullifier)
 	RenderSprites:
 		Image: null.destroyed
-		PlayerPalette: playerscrin
 
 STMR.Husk:
 	Inherits: ^PlaneHusk
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Tooltip:
 		Name: Stormrider
 	Aircraft:
@@ -3981,7 +3981,6 @@ STMR.Husk:
 		Type: GroundPosition
 	RenderSprites:
 		Image: stmr
-		PlayerPalette: playerscrin
 
 STMR.Husk.EMP:
 	Inherits: STMR.Husk
@@ -3989,6 +3988,7 @@ STMR.Husk.EMP:
 
 TORM.Husk:
 	Inherits: ^PlaneHusk
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Tooltip:
 		Name: Tormentor
 	Aircraft:
@@ -4020,7 +4020,6 @@ TORM.Husk:
 		Type: GroundPosition
 	RenderSprites:
 		Image: torm
-		PlayerPalette: playerscrin
 
 TORM.Husk.EMP:
 	Inherits: TORM.Husk
@@ -4028,6 +4027,7 @@ TORM.Husk.EMP:
 
 ENRV.Husk:
 	Inherits: ^HelicopterHusk
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Tooltip:
 		Name: Enervator
 		GenericName: Destroyed Aircraft
@@ -4063,7 +4063,6 @@ ENRV.Husk:
 		Type: GroundPosition
 	RenderSprites:
 		Image: enrv
-		PlayerPalette: playerscrin
 
 ENRV.Husk.EMP:
 	Inherits: ENRV.Husk
@@ -4179,6 +4178,7 @@ PAC.Husk.Ground:
 
 MSHP.Husk:
 	Inherits: ^HelicopterHusk
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Tooltip:
 		Name: Mothership
 		GenericName: Destroyed Aircraft
@@ -4199,7 +4199,6 @@ MSHP.Husk:
 		Type: GroundPosition
 	RenderSprites:
 		Image: mshp
-		PlayerPalette: playerscrin
 	SpawnActorOnDeath:
 		Actor: MSHP.Husk.Ground
 	WithIdleOverlay@RING:
@@ -4213,10 +4212,10 @@ MSHP.Husk.EMP:
 
 MSHP.Husk.Ground:
 	Inherits: ^Husk
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Inherits@SHRAPNEL: ^ThrowsShrapnelBig
 	RenderSprites:
 		Image: mshp
-		PlayerPalette: playerscrin
 	Tooltip:
 		Name: Husk (Mothership)
 	KillsSelf:
@@ -4510,7 +4509,7 @@ PROC.SCRIN:
 		DragOffset: -554,512,0
 		DragLength: 12
 		TickRate: 15
-	StoresResources:
+	StoresPlayerResourcesCA:
 		Capacity: 2000
 	WithResourceStoragePipsDecoration:
 		Position: BottomLeft
@@ -5065,6 +5064,7 @@ SIGN:
 	-MindControllableProgressBar@HACKABLE:
 	-WithDecoration@HACKED:
 	-WithDecoration@RESTORING:
+	-PowerMultiplier@HACKED:
 
 SREP:
 	Inherits: ^ScrinBuilding
@@ -5164,7 +5164,7 @@ SILO.SCRIN:
 	-WithSpriteBody:
 	WithResourceLevelSpriteBody:
 		Sequence: stages
-	StoresResources:
+	StoresPlayerResourcesCA:
 		Capacity: 3000
 	WithResourceStoragePipsDecoration:
 		Position: BottomLeft

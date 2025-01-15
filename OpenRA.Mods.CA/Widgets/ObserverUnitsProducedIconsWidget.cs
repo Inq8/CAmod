@@ -19,7 +19,7 @@ using OpenRA.Widgets;
 
 namespace OpenRA.Mods.Common.Widgets
 {
-	public class ObserverBuildOrderIconsWidget : Widget
+	public class ObserverUnitsProducedIconsWidget : Widget
 	{
 		public Func<Player> GetPlayer;
 		readonly World world;
@@ -34,8 +34,10 @@ namespace OpenRA.Mods.Common.Widgets
 
 		public ArmyUnit TooltipUnit { get; private set; }
 		public Func<ArmyUnit> GetTooltipUnit;
+		public string TooltipDesc { get; private set; }
+		public Func<string> GetTooltipDesc;
 
-		public readonly string TooltipTemplate = "ARMY_TOOLTIP";
+		public readonly string TooltipTemplate = "ARMY_TOOLTIP_CA";
 		public readonly string TooltipContainer;
 
 		readonly Lazy<TooltipContainerWidget> tooltipContainer;
@@ -43,23 +45,26 @@ namespace OpenRA.Mods.Common.Widgets
 
 		readonly CachedTransform<Player, ProductionTracker> tracker = new(player => player.PlayerActor.TraitOrDefault<ProductionTracker>());
 
-		IEnumerable<(ArmyUnit, ProductionTrackerBuildOrderItem)> buildOrder;
-		int lastCount;
+		IEnumerable<(ArmyUnit, ProductionTrackerUnitValueItem)> unitsProduced;
+		int lastTotalValue;
 
 		int lastIconIdx;
 		int currentTooltipToken;
 
 		[ObjectCreator.UseCtor]
-		public ObserverBuildOrderIconsWidget(World world, WorldRenderer worldRenderer)
+		public ObserverUnitsProducedIconsWidget(World world, WorldRenderer worldRenderer)
 		{
 			this.world = world;
 			this.worldRenderer = worldRenderer;
+
 			GetTooltipUnit = () => TooltipUnit;
+			GetTooltipDesc = () => TooltipDesc;
+
 			tooltipContainer = Exts.Lazy(() =>
 				Ui.Root.Get<TooltipContainerWidget>(TooltipContainer));
 		}
 
-		protected ObserverBuildOrderIconsWidget(ObserverBuildOrderIconsWidget other)
+		protected ObserverUnitsProducedIconsWidget(ObserverUnitsProducedIconsWidget other)
 			: base(other)
 		{
 			GetPlayer = other.GetPlayer;
@@ -75,6 +80,8 @@ namespace OpenRA.Mods.Common.Widgets
 
 			TooltipUnit = other.TooltipUnit;
 			GetTooltipUnit = () => TooltipUnit;
+			TooltipDesc = other.TooltipDesc;
+			GetTooltipDesc = () => TooltipDesc;
 
 			TooltipTemplate = other.TooltipTemplate;
 			TooltipContainer = other.TooltipContainer;
@@ -93,21 +100,20 @@ namespace OpenRA.Mods.Common.Widgets
 
 			var productionTracker = tracker.Update(player);
 
-			if (lastCount != productionTracker.BuildOrderCount)
+			if (lastTotalValue != productionTracker.TotalValue)
 			{
-				buildOrder = UpdateBuildOrder(productionTracker, player);
+				unitsProduced = UpdateUnitsProduced(productionTracker, player);
 			}
 
 			Game.Renderer.EnableAntialiasingFilter();
 
 			var queueCol = 0;
 
-			if (buildOrder != null)
+			if (unitsProduced != null)
 			{
-				foreach (var item in buildOrder)
+				foreach (var uv in unitsProduced)
 				{
-					var unit = item.Item1;
-					var time = item.Item2.Tick;
+					var unit = uv.Item1;
 
 					var icon = unit.Icon;
 					var topLeftOffset = new int2(queueCol * (IconWidth + IconSpacing), 0);
@@ -122,7 +128,8 @@ namespace OpenRA.Mods.Common.Widgets
 					{
 						Bounds = new Rectangle(iconTopLeft.X, iconTopLeft.Y, (int)iconSize.X, (int)iconSize.Y),
 						Unit = unit,
-						Tick = time
+						Value = uv.Item2.Value,
+						Count = uv.Item2.Count
 					});
 
 					queueCol++;
@@ -144,18 +151,6 @@ namespace OpenRA.Mods.Common.Widgets
 
 			Game.Renderer.DisableAntialiasingFilter();
 
-			var tiny = Game.Renderer.Fonts["Tiny"];
-			var bold = Game.Renderer.Fonts["Small"];
-			foreach (var icon in armyIcons)
-			{
-				var text = WidgetUtils.FormatTime(icon.Tick, world.Timestep);
-				tiny.DrawTextWithContrast(text,
-					new float2(icon.Bounds.X, icon.Bounds.Y) + new float2(16, 12) - new float2(tiny.Measure(text).X / 2, 0),
-					Color.White, Color.Black, 1);
-			}
-
-
-
 			var parentWidth = Bounds.X + Bounds.Width;
 			Parent.Bounds.Width = parentWidth;
 
@@ -170,16 +165,19 @@ namespace OpenRA.Mods.Common.Widgets
 			Parent.Parent.Bounds.Width = Math.Max(25 + widestChildWidth, Bounds.Left + MinWidth);
 		}
 
-		IEnumerable<(ArmyUnit, ProductionTrackerBuildOrderItem)> UpdateBuildOrder(ProductionTracker productionTracker, Player player)
+		IEnumerable<(ArmyUnit, ProductionTrackerUnitValueItem)> UpdateUnitsProduced(ProductionTracker productionTracker, Player player)
 		{
-			lastCount = productionTracker.BuildOrderCount;
-			return productionTracker.BuildOrder
-				.Select(u => (new ArmyUnit(world.Map.Rules.Actors[u.Name], player), u));
+			lastTotalValue = productionTracker.TotalValue;
+
+			return productionTracker.UnitValues
+				.OrderByDescending(u => u.Value.Value)
+				.Take(12)
+				.Select(u => (new ArmyUnit(world.Map.Rules.Actors[u.Key], player), u.Value));
 		}
 
 		public override Widget Clone()
 		{
-			return new ObserverBuildOrderIconsWidget(this);
+			return new ObserverUnitsProducedIconsWidget(this);
 		}
 
 		public override void Tick()
@@ -194,6 +192,7 @@ namespace OpenRA.Mods.Common.Widgets
 					tooltipContainer.Value.RemoveTooltip(currentTooltipToken);
 					lastIconIdx = 0;
 					TooltipUnit = null;
+					TooltipDesc = null;
 				}
 
 				return;
@@ -214,19 +213,29 @@ namespace OpenRA.Mods.Common.Widgets
 
 				lastIconIdx = i;
 				TooltipUnit = armyIcon.Unit;
-				currentTooltipToken = tooltipContainer.Value.SetTooltip(TooltipTemplate, new WidgetArgs { { "getTooltipUnit", GetTooltipUnit } });
+				TooltipDesc = $"x{armyIcon.Count} (${armyIcon.Value})";
+				currentTooltipToken = tooltipContainer.Value.SetTooltip(TooltipTemplate, new WidgetArgs { { "getTooltipUnit", GetTooltipUnit }, { "getDesc", GetTooltipDesc } });
 
 				return;
 			}
 
 			TooltipUnit = null;
+			TooltipDesc = null;
+		}
+
+		sealed class UnitProduced
+		{
+			public ArmyUnit Unit { get; set; }
+			public int Value { get; set; }
+			public int Count { get; set; }
 		}
 
 		sealed class ArmyIcon
 		{
 			public Rectangle Bounds { get; set; }
 			public ArmyUnit Unit { get; set; }
-			public int Tick	{ get; set; }
+			public int Value { get; set; }
+			public int Count { get; set; }
 		}
 	}
 }

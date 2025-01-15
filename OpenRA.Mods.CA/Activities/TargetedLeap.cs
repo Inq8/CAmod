@@ -98,7 +98,8 @@ namespace OpenRA.Mods.CA.Activities
 
 			if (!jumpStarted)
 			{
-				Game.Sound.Play(SoundType.World, takeOffSounds, self.World, self.CenterPosition);
+				if (takeOffSounds != null && takeOffSounds.Length > 0)
+					Game.Sound.Play(SoundType.World, takeOffSounds, self.World, self.CenterPosition);
 
 				if (token == Actor.InvalidConditionToken && condition != null)
 					token = self.GrantCondition(condition);
@@ -116,7 +117,10 @@ namespace OpenRA.Mods.CA.Activities
 				// Update movement which results in movementType set to MovementType.None.
 				// This is needed to prevent the move animation from playing.
 				mobile.UpdateMovement();
-				Game.Sound.Play(SoundType.World, landingSounds, self.World, self.CenterPosition);
+
+				if (landingSounds != null && landingSounds.Length > 0)
+					Game.Sound.Play(SoundType.World, landingSounds, self.World, self.CenterPosition);
+
 				jumpComplete = true;
 				QueueChild(mobile.LocalMove(self, position, self.World.Map.CenterOfSubCell(destinationCell, destinationSubCell)));
 			}

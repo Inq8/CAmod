@@ -21,17 +21,17 @@ namespace OpenRA.Mods.CA.Traits
 	public class UpdatesBuildOrder : INotifyCreated
 	{
 		public readonly UpdatesBuildOrderInfo Info;
-		readonly BuildOrderTracker buildOrderTracker;
+		readonly ProductionTracker productionTracker;
 
 		public UpdatesBuildOrder(ActorInitializer init, UpdatesBuildOrderInfo info)
 		{
 			Info = info;
-			buildOrderTracker = init.Self.Owner.PlayerActor.Trait<BuildOrderTracker>();
+			productionTracker = init.Self.Owner.PlayerActor.Trait<ProductionTracker>();
 		}
 
 		void INotifyCreated.Created(Actor self)
 		{
-			buildOrderTracker.BuildingCreated(self.Info.Name);
+			productionTracker.BuildingCreated(self.Info.Name);
 		}
 	}
 }

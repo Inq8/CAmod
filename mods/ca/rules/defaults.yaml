@@ -968,18 +968,27 @@
 		RequiresCondition: hazmatsuits-soviet || hazmatsuits
 
 ^NodCyborgUpgrade:
-	GrantConditionOnPrerequisite@CYBORGSPEED:
-		Condition: cyborgspeed-upgrade
-		Prerequisites: cyborgspeed.upgrade
-	SpeedMultiplier@CYBORGSPEED:
-		RequiresCondition: cyborgspeed-upgrade
-		Modifier: 120
 	GrantConditionOnPrerequisite@CYBORGARMOR:
 		Condition: cyborgarmor-upgrade
 		Prerequisites: cyborgarmor.upgrade
+	GrantConditionOnPrerequisite@CYBORGDAMAGE:
+		Condition: cyborgdmg-upgrade
+		Prerequisites: cyborgdmg.upgrade
+	GrantConditionOnPrerequisite@CYBORGSPEED:
+		Condition: cyborgspeed-upgrade
+		Prerequisites: cyborgspeed.upgrade
 	DamageMultiplier@CYBORGARMOR:
 		RequiresCondition: cyborgarmor-upgrade
 		Modifier: 80
+	FirepowerMultiplier@CYBORGDAMAGE:
+		RequiresCondition: cyborgdmg-upgrade
+		Modifier: 110
+	ProductionTimeMultiplier@CYBORGPROD:
+		Multiplier: 90
+		Prerequisites: cyborgprod.upgrade
+	SpeedMultiplier@CYBORGSPEED:
+		RequiresCondition: cyborgspeed-upgrade
+		Modifier: 120
 	DamageTypeDamageMultiplier@CYBORGFLAKARMOR:
 		RequiresCondition: cyborgarmor-upgrade
 		DamageTypes: FlakVestMitigated
@@ -1833,6 +1842,9 @@
 		Position: Center
 		Palette: effect
 		ValidRelationships: Ally, Neutral, Enemy
+	PowerMultiplier@HACKED:
+		RequiresCondition: hacked
+		Modifier: 0
 
 ^HackableOverloadable:
 	Inherits: ^Hackable
@@ -4221,7 +4233,7 @@
 		Count: 1
 		RequiresCondition: charging
 		ShowSelectionBar: true
-		SelectionBarColor: ffffff
+		SelectionBarColor: ffff00
 	GrantConditionOnAttack@CHARGING:
 		Condition: charging
 		ArmamentNames: tertiary
@@ -4484,6 +4496,7 @@
 		Multiplier: 200
 		Prerequisites: infantry.any, global.multiqueuescaled, optimized.production1, !optimized.production2
 	CloneSource:
+	UpdatesUnitsProduced:
 
 ^ProducesCyborgs:
 	Inherits: ^ProducesInfantry
@@ -4553,6 +4566,7 @@
 		Prerequisites: vehicles.any, global.multiqueuescaled, optimized.production1, !optimized.production2
 	GrantExternalConditionToProduced:
 		Condition: produced
+	UpdatesUnitsProduced:
 
 ^ProducesNaval:
 	Inherits@QUEUEUPDATER: ^QueueUpdater
@@ -4584,6 +4598,7 @@
 	ProductionBar@MQNAV:
 		ProductionType: ShipMQ
 		RequiresCondition: global-multiqueue
+	UpdatesUnitsProduced:
 
 ^ProducesUpgrades:
 	Inherits@QUEUEUPDATER: ^QueueUpdater
@@ -4649,6 +4664,7 @@
 		RequiresCondition: korea-coalition
 	GrantExternalConditionToProduced:
 		Condition: produced
+	UpdatesUnitsProduced:
 
 ^ProducesHelicopters:
 	Inherits@AIR: ^ProducesAircraft

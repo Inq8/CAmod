@@ -4747,7 +4747,7 @@ HOPL:
 		Name: secondary
 		Weapon: HopliteGun
 		LocalOffset: 350,0,341
-		PauseOnCondition: !secondary-ammo || primary-reloading
+		PauseOnCondition: !secondary-ammo || primary-ammo || primary-reloading
 		ReloadingCondition: secondary-reloading
 	# to prevent moving forward while real weapons are paused
 	Armament@Targeter:
@@ -4769,18 +4769,26 @@ HOPL:
 		InitialAmmo: 0
 		AmmoCondition: secondary-ammo
 		Armaments: secondary
-	ReloadAmmoPoolCA@Primary:
+	ReloadAmmoPool@Primary:
 		AmmoPool: primary
 		Delay: 5
 		Count: 1
-		ShowSelectionBar: true
-		RequiresCondition: secondary-ammo == 0 && !primary-reloading
-	ReloadAmmoPoolCA@Secondary:
+		RequiresCondition: (secondary-ammo == 0 && !primary-reloading) || !attacking
+	ReloadAmmoPool@Secondary:
 		AmmoPool: secondary
 		Delay: 5
 		Count: 3
-		ShowSelectionBar: true
-		RequiresCondition: primary-ammo == 0 && !secondary-reloading
+		RequiresCondition: (primary-ammo == 0 && !secondary-reloading)
+	GrantConditionOnAttack@Attacking:
+		Condition: attacking
+		ArmamentNames: primary, secondary
+		RevokeDelay: 100
+	ReloadAmmoPoolCA@SecondaryReset:
+		AmmoPool: secondary
+		Delay: 5
+		Count: -3
+		ShowSelectionBar: false
+		RequiresCondition: !attacking
 	AttackFrontalCharged:
 		Armaments: primary, secondary, tertiary
 		ChargeConsumingArmaments: primary, secondary
@@ -4857,7 +4865,7 @@ CRYT:
 
 REAP:
 	Inherits: ^Cyborg
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeGround
 	Inherits@EMP: ^EmpDisable
 	Inherits@chrono: ^Chronoshiftable
 	Inherits@C4Plantable: ^C4Plantable
