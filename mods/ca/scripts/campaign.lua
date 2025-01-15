@@ -610,9 +610,19 @@ InitAttackSquad = function(squad, player, targetPlayer)
 
 		if #validCompositions > 0 then
 			-- randomly select a unit composition for next wave
-			squad.QueuedUnits = Utils.Random(validCompositions)
+			local chosenComposition = Utils.Random(validCompositions)
 
-			local queuesForComposition = GetQueuesForComposition(squad.QueuedUnits)
+			-- if this is a special composition, push back the MinTime of all special compositions
+			if chosenComposition.IsSpecial then
+				Utils.Do(squad.Units[Difficulty], function(composition)
+					if composition.IsSpecial then
+						composition.MinTime = DateTime.GameTime + DateTime.Minutes(10)
+					end
+				end)
+			end
+
+			squad.QueuedUnits = chosenComposition
+			local queuesForComposition = GetQueuesForComposition(chosenComposition)
 
 			-- go through each queue for the current difficulty and start producing the first unit
 			Utils.Do(queuesForComposition, function(queue)
@@ -634,7 +644,7 @@ GetQueuesForComposition = function(composition)
 	local queues = { }
 
 	for k,v in pairs(composition) do
-		if k ~= "MinTime" and k ~= "MaxTime" then
+		if k ~= "MinTime" and k ~= "MaxTime" and k ~= "IsSpecial" then
 			table.insert(queues, k)
 		end
 	end
@@ -949,6 +959,17 @@ FollowSquadLeader = function(actor, squad)
 			actor.Stop()
 			Trigger.ClearAll(actor)
 			AssaultPlayerBaseOrHunt(actor, squad.TargetPlayer)
+
+			-- reapply unload trigger
+			if actor.HasProperty("HasPassengers") then
+				Trigger.AfterDelay(1, function()
+					if not actor.IsDead then
+						Trigger.OnPassengerExited(actor, function(transport, passenger)
+							AssaultPlayerBaseOrHunt(passenger, squad.TargetPlayer)
+						end)
+					end
+				end)
+			end
 		end
 	end
 end

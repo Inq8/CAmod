@@ -5042,10 +5042,13 @@ LASP:
 		Prerequisites: ~structures.nod, nuk2, ~techlevel.medium
 		IconPalette: chrometd
 		Description: • Stops infantry\n• Blocks enemy fire\n• Cannot be crushed by tanks
+	Building:
+		RequiresBaseProvider: False
 	Valued:
 		Cost: 200
 	CustomSellValue:
 		Value: 0
+	-GivesBuildableArea:
 	RequiresBuildableArea:
 		Adjacent: 7
 	Tooltip:
@@ -5062,7 +5065,7 @@ LASP:
 	Armor:
 		Type: Concrete
 	Sellable:
-		RequiresCondition: !disabled && !empdisable && !build-incomplete && !c4 && !being-warped && !hacked
+		RequiresCondition: !disabled && !empdisable && !c4 && !being-warped && !hacked
 	-Capturable:
 	-CaptureNotification:
 	-CaptureManager:
@@ -5081,11 +5084,14 @@ LASP:
 	LineBuildNode:
 		Types: laserfencenode
 	LineBuildSegmentExternalCondition:
-		RequiresCondition: !build-incomplete && !disabled && !empdisable && !being-warped && !hacked
+		RequiresCondition: !disabled && !empdisable && !being-warped && !hacked
 		Condition: active-posts
 	Explodes@TEMPORAL:
 		Weapon: TemporalExplode
 		EmptyWeapon: TemporalExplode
+	-SpawnActorsOnSellCA:
+	-SpawnActorOnDeath:
+	-SpawnRandomActorOnDeath:
 
 LASF:
 	Inherits: ^Wall

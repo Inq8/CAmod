@@ -34,14 +34,28 @@ Background@MISSIONBROWSER_PANEL:
 					Width: PARENT_RIGHT - 27
 					Height: 25
 					X: 2
-					EnableChildMouseOver: True
+					TooltipContainer: TOOLTIP_CONTAINER
+					TooltipTemplate: BUTTON_TOOLTIP
 					Children:
+						Image@COMPLETION_ICON:
+							X: 4
+							Y: 4
+							Width: 16
+							Height: 16
+							ImageCollection: mission-completion-tick
+							ImageName: incomplete
 						LabelWithTooltip@TITLE:
-							X: 10
+							X: 26
 							Width: PARENT_RIGHT - 20
 							Height: 25
-							TooltipContainer: TOOLTIP_CONTAINER
-							TooltipTemplate: SIMPLE_TOOLTIP
+						Image@COMPLETION_DIFFICULTY:
+							X: PARENT_RIGHT - WIDTH - 2
+							Y: 4
+							Width: 52
+							Height: 16
+							ImageCollection: mission-completion-stars
+							ImageName: easy
+							Visible: false
 		Container@MISSION_INFO:
 			X: 318
 			Y: 50

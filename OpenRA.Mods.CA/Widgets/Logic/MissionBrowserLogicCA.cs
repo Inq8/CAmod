@@ -15,6 +15,7 @@ using System.Linq;
 using System.Threading;
 using Newtonsoft.Json;
 using OpenRA.Graphics;
+using OpenRA.Mods.CA.Traits;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Network;
 using OpenRA.Traits;
@@ -83,6 +84,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 		readonly Dictionary<string, string> missionOptions = new();
 		PanelType panel = PanelType.MissionInfo;
 		readonly string savedOptionsFilePath;
+		Dictionary<string, MissionVictoryResult> campaignProgress = new();
 
 		[ObjectCreator.UseCtor]
 		public MissionBrowserLogicCA(Widget widget, ModData modData, World world, Action onStart, Action onExit, string initialMap)
@@ -93,6 +95,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 
 			var logDir = Platform.SupportDir + "Logs";
 			savedOptionsFilePath = Path.Combine(logDir, "ca-missionoptions.log");
+			campaignProgress = CampaignProgressTracker.GetCampaignProgress();
 
 			missionList = widget.Get<ScrollPanelWidget>("MISSION_LIST");
 
@@ -259,6 +262,40 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 					() => StartMissionClicked(onExit));
 
 				var label = item.Get<LabelWithTooltipWidget>("TITLE");
+				var missionTitle = CampaignProgressTracker.GetMapTileWithoutNumber(preview.Title);
+
+				if (campaignProgress.ContainsKey(missionTitle))
+				{
+					var missionProgress = campaignProgress[missionTitle];
+
+					var difficulty = missionProgress.Difficulty;
+					if (difficulty != null)
+					{
+						var stars = item.Get<ImageWidget>("COMPLETION_DIFFICULTY");
+						stars.IsVisible = () => true;
+						stars.GetImageName = () => difficulty;
+					}
+
+					var dateCompleted = missionProgress.DateCompleted.ToString("d");
+					var completionTime = missionProgress.Time;
+					var difficultyCompleted = missionProgress.Difficulty != null ? char.ToUpper(missionProgress.Difficulty[0]) + missionProgress.Difficulty.Substring(1) : null;
+
+					var details = $"• Date: {dateCompleted}   \\n• Version: {missionProgress.Version}\\n• Duration: {completionTime}\\n• Speed: {missionProgress.Speed}";
+
+					if (difficultyCompleted != null)
+						details += $"\\n• Difficulty: {difficultyCompleted}";
+
+					item.GetTooltipText = () => "Completed";
+					item.GetTooltipDesc = () => details;
+
+					var tick = item.Get<ImageWidget>("COMPLETION_ICON");
+					tick.GetImageName = () => "complete";
+				}
+				else
+				{
+					item.GetTooltipText = () => "Not Completed";
+				}
+
 				WidgetUtils.TruncateLabelToTooltip(label, preview.Title);
 
 				missionList.AddChild(item);
@@ -288,7 +325,8 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 					infoVideo = missionData.BackgroundVideo;
 					infoVideoVisible = infoVideo != null;
 
-					var briefing = WidgetUtils.WrapText(missionData.Briefing?.Replace("\\n", "\n"), description.Bounds.Width, descriptionFont);
+					var briefingText = missionData.Briefing?.Replace("\\n", "\n");
+					var briefing = WidgetUtils.WrapText(briefingText, description.Bounds.Width, descriptionFont);
 					var height = descriptionFont.Measure(briefing).Y;
 					Game.RunAfterTick(() =>
 					{
@@ -533,7 +571,8 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			if (!File.Exists(savedOptionsFilePath))
 				return;
 
-			try {
+			try
+			{
 				var savedOptionsFileContents = File.ReadAllText(savedOptionsFilePath);
 				var savedOptions = JsonConvert.DeserializeObject<Dictionary<string, string>>(savedOptionsFileContents);
 
@@ -548,7 +587,8 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 
 		void SaveOptions()
 		{
-			try {
+			try
+			{
 				var json = JsonConvert.SerializeObject(missionOptions);
 				File.WriteAllText(savedOptionsFilePath, json);
 			}

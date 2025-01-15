@@ -6,6 +6,9 @@ AlliedAttackPaths = {
 }
 
 TeslaTrigger = { TeslaTrigger1.Location, TeslaTrigger2.Location, TeslaTrigger3.Location, TeslaTrigger4.Location, TeslaTrigger5.Location, TeslaTrigger6.Location, TeslaTrigger7.Location }
+TeslaTriggerWest = { TeslaTriggerWest1.Location, TeslaTriggerWest2.Location, TeslaTriggerWest3.Location, TeslaTriggerWest4.Location, TeslaTriggerWest5.Location, TeslaTriggerWest6.Location, TeslaTriggerWest7.Location,
+	TeslaTriggerWest8.Location, TeslaTriggerWest9.Location, TeslaTriggerWest10.Location, TeslaTriggerWest11.Location, TeslaTriggerWest12.Location, TeslaTriggerWest13.Location, TeslaTriggerWest14.Location,
+	TeslaTriggerWest15.Location, TeslaTriggerWest16.Location }
 
 Squads = {
 	Main = {
@@ -83,7 +86,14 @@ WorldLoaded = function()
 	Trigger.OnEnteredFootprint(TeslaTrigger, function(a, id)
 		if a.Owner == USSR then
 			Trigger.RemoveFootprintTrigger(id)
-			WarpInTeslaTanks()
+			WarpInTeslaTanks(TeslaSpawn1.Location, TeslaSpawn2.Location, TeslaBeacon.Location)
+		end
+	end)
+
+	Trigger.OnEnteredFootprint(TeslaTriggerWest, function(a, id)
+		if a.Owner == USSR then
+			Trigger.RemoveFootprintTrigger(id)
+			WarpInTeslaTanks(TeslaSpawnWest1.Location, TeslaSpawnWest2.Location, TeslaBeaconWest.Location)
 		end
 	end)
 
@@ -138,16 +148,16 @@ InitGreece = function()
 	end)
 end
 
-WarpInTeslaTanks = function()
+WarpInTeslaTanks = function(TankLocation1, TankLocation2, EffectLocation)
 	if TelsaTanksWarped then
 		return
 	end
 	TelsaTanksWarped = true
 	Lighting.Flash("Chronoshift", 10)
 	Media.PlaySound("chrono2.aud")
-	Actor.Create("warpin", true, { Owner = USSR, Location = TeslaBeacon.Location })
-	Actor.Create("ttnk", true, { Owner = USSR, Location = TeslaSpawn1.Location, Facing = Angle.South })
-	Actor.Create("ttnk", true, { Owner = USSR, Location = TeslaSpawn2.Location, Facing = Angle.South })
+	Actor.Create("warpin", true, { Owner = USSR, Location = EffectLocation })
+	Actor.Create("ttnk", true, { Owner = USSR, Location = TankLocation1, Facing = Angle.South })
+	Actor.Create("ttnk", true, { Owner = USSR, Location = TankLocation2, Facing = Angle.South })
 	Trigger.AfterDelay(DateTime.Seconds(2), function()
 		Media.DisplayMessage("Greetings Comrades! The Soviet Empire truly knows no boundaries!", "Tesla Tank", HSLColor.FromHex("FF0000"))
 		MediaCA.PlaySound("greetings.aud", 2)

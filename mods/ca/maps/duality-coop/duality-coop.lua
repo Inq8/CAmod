@@ -211,9 +211,9 @@ end
 
 UpdateObjectiveText = function()
 	if IsExitActive then
-		UserInterface.SetMissionText("Exit the facility. Time remaining: " .. Utils.FormatTime(TimerTicks), HSLColor.Lime)
+		UserInterface.SetMissionText("Exit the facility. Time remaining: " .. UtilsCA.FormatTimeForGameSpeed(TimerTicks), HSLColor.Lime)
 	else
-		UserInterface.SetMissionText("Tiberium stores remaining: " .. NumSilosRemaining .. "\n      Time remaining: " .. Utils.FormatTime(TimerTicks), HSLColor.Yellow)
+		UserInterface.SetMissionText("Tiberium stores remaining: " .. NumSilosRemaining .. "\n      Time remaining: " .. UtilsCA.FormatTimeForGameSpeed(TimerTicks), HSLColor.Yellow)
 	end
 end
 

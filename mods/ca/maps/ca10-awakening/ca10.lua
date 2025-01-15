@@ -179,7 +179,7 @@ OncePerSecondChecks = function()
 				TimerTicks = 0
 			end
 
-			UserInterface.SetMissionText("Protect Temple Prime - Time Remaining: " .. Utils.FormatTime(TimerTicks), HSLColor.Yellow)
+			UserInterface.SetMissionText("Protect Temple Prime - Time Remaining: " .. UtilsCA.FormatTimeForGameSpeed(TimerTicks), HSLColor.Yellow)
 
 		elseif not Nod.IsObjectiveCompleted(ObjectiveProtectTemple) then
 			UserInterface.SetMissionText("Destroy all Soviet forces.", HSLColor.Yellow)

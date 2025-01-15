@@ -12,18 +12,11 @@ ParaBomb:
 		Spread: 1c0
 		Damage: 40000
 		Versus:
-			None: 30
+			None: 40
 			Wood: 55
 			Light: 65
 			Heavy: 80
 			Concrete: 90
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
-	Warhead@1Dam_cyborg: SpreadDamage
-		Spread: 1c0
-		Damage: 8000
-		ValidTargets: Cyborg
-		Versus:
-			Heavy: 0
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
@@ -64,8 +57,6 @@ CarpetBomb:
 			Wood: 32
 			Concrete: 60
 			Heavy: 70
-	Warhead@1Dam_cyborg: SpreadDamage
-		Damage: 7500
 
 AtomBomb:
 	Inherits: CarpetBomb
@@ -89,13 +80,6 @@ AtomBomb:
 			Concrete: 100
 			Wood: 45
 		AffectsParent: true
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
-	Warhead@1Dam_cyborg: SpreadDamage
-		Spread: 1c0
-		Damage: 60000
-		ValidTargets: Cyborg
-		Versus:
-			Heavy: 0
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@2Res_impact: DestroyResource
 	Warhead@3Eff_impact: CreateEffect
@@ -573,20 +557,13 @@ FirestormBarrage:
 		Spread: 1c0
 		Damage: 30000
 		Versus:
-			None: 70
+			None: 80
 			Wood: 40
 			Light: 100
 			Heavy: 90
 			Concrete: 80
 			Brick: 5
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
-	Warhead@1Dam_cyborg: SpreadDamage
-		Spread: 1c0
-		Damage: 10000
-		ValidTargets: Cyborg
-		Versus:
-			Heavy: 0
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: b2bexp, b2bexp2
 		ExplosionPalette: tseffect
