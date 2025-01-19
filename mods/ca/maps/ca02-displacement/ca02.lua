@@ -290,10 +290,6 @@ OncePerSecondChecks = function()
 			end
 			if not PathsClear and not HasOneOf(Scrin, { "scol", "ptur" }) then
 				PathsClear = true
-				if TimerTicks > DateTime.Seconds(20) then
-					TimerTicks = DateTime.Seconds(20)
-					UpdateConvoyCountdown()
-				end
 			end
 		end
 	end
