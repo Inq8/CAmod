@@ -33,14 +33,15 @@ namespace OpenRA.Mods.CA.Activities
 		readonly string sound;
 		readonly bool requireEmptyDestination;
 		int delayRemaining;
-		readonly Action<Actor> onPreChargeStart;
+		readonly Func<Actor, CPos, int> calculatePreChargeTicks;
+		readonly Action<Actor, int> onPreChargeStart;
 		readonly Action<Actor> onPreChargeComplete;
 
 		public TeleportCA(Actor teleporter, CPos destination, int? maximumDistance,
 			bool killCargo, bool screenFlash, string sound, bool interruptable = true,
 			bool killOnFailure = false, BitSet<DamageType> killDamageTypes = default,
-			bool requireEmptyDestination = false, int delay = 0,
-			Action<Actor> onPreChargeStart = null, Action<Actor> onPreChargeComplete = null)
+			bool requireEmptyDestination = false, Func<Actor, CPos, int> calculatePreChargeTicks = null,
+			Action<Actor, int> onPreChargeStart = null, Action<Actor> onPreChargeComplete = null)
 		{
 			var max = teleporter.World.Map.Grid.MaximumTileSearchRange;
 			if (maximumDistance > max)
@@ -55,7 +56,7 @@ namespace OpenRA.Mods.CA.Activities
 			this.killOnFailure = killOnFailure;
 			this.killDamageTypes = killDamageTypes;
 			this.requireEmptyDestination = requireEmptyDestination;
-			delayRemaining = delay;
+			this.calculatePreChargeTicks = calculatePreChargeTicks;
 			this.onPreChargeStart = onPreChargeStart;
 			this.onPreChargeComplete = onPreChargeComplete;
 
@@ -65,7 +66,8 @@ namespace OpenRA.Mods.CA.Activities
 
 		protected override void OnFirstRun(Actor self)
 		{
-			onPreChargeStart?.Invoke(self);
+			delayRemaining = calculatePreChargeTicks?.Invoke(self, destination) ?? 0;
+			onPreChargeStart?.Invoke(self, delayRemaining);
 		}
 
 		public override bool Tick(Actor self)

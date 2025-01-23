@@ -1608,6 +1608,13 @@
 		Condition: harv-balance
 		RequiresCondition: global-balancedharvesting
 
+^HarvesterDamageNotification:
+	NotificationOnDamage:
+		Type: Harvester
+		Notification: HarvesterAttack
+		TextNotification: Harvester under attack.
+		MinimumDamage: 500
+
 ^Veilable:
 	RangeMultiplier@VEILED:
 		Modifier: 80
@@ -2215,6 +2222,7 @@
 		CarriedCondition: notmobile
 		LockedCondition: notmobile
 		LocalOffset: 0,0,200
+	CancelActivityOnPickup:
 	Crushable:
 		CrushClasses: tank
 		WarnProbability: 0
@@ -4241,6 +4249,7 @@
 		ArmamentNames: tertiary
 		RevokeDelay: 7
 	AutoTarget:
+		ScanRadius: 2
 	AutoTargetPriority@defuse:
 		ValidTargets: C4Attached, TNTAttached
 		InvalidTargets: NoAutoTarget

@@ -3797,8 +3797,7 @@ HQ.UPG:
 	Tooltip:
 		Name: Internet Center
 	TooltipExtras:
-		Strengths: + $25 delivered every 60 seconds (normal speed)
-		Attributes: • Requires power to operate\n• Detects nearby enemy vehicles, aircraft and structures in fog of war\n• Garrisonable by Hackers
+		Attributes: • Requires power to operate\n• Detects nearby enemy vehicles, aircraft and structures in fog of war\n• $25 delivered every 60 seconds (normal speed)\n• Income increased by $75 per garrisoned Hacker
 	RenderSprites:
 		PlayerPalette: playertd
 	-Targetable@HACKCAPTURABLE:
@@ -3818,19 +3817,19 @@ HQ.UPG:
 		RequiresCondition: cargo == 0
 	CashTrickler@Hacker1:
 		Interval: 375
-		Amount: 75
+		Amount: 100
 		RequiresCondition: cargo == 1
 	CashTrickler@Hacker2:
 		Interval: 375
-		Amount: 125
+		Amount: 175
 		RequiresCondition: cargo == 2
 	CashTrickler@Hacker3:
 		Interval: 375
-		Amount: 175
+		Amount: 250
 		RequiresCondition: cargo == 3
 	CashTrickler@Hacker4:
 		Interval: 375
-		Amount: 300
+		Amount: 325
 		RequiresCondition: cargo == 4
 	CashTrickler@Hacker5:
 		Interval: 375
@@ -5091,6 +5090,7 @@ LASP:
 		Value: 0
 	-GivesBuildableArea:
 	RequiresBuildableArea:
+		AreaTypes: building, defense
 		Adjacent: 7
 	Tooltip:
 		Name: Laser Fence

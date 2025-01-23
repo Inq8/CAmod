@@ -637,7 +637,7 @@ end
 GetPlayerArmyValue = function()
 	local value = 0
 	Utils.Do(Greece.GetActors(), function(a)
-		if a.HasProperty("Attack") then
+		if a.HasProperty("Attack") and a.Type ~= "badr.bomber" then
 			value = value + Actor.Cost(a.Type)
 		end
 	end)

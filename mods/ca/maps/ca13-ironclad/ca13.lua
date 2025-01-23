@@ -157,6 +157,7 @@ OncePerSecondChecks = function()
 
 		if GDI.HasNoRequiredUnits() and Greece.HasNoRequiredUnits() then
 			USSR.MarkCompletedObjective(ObjectiveDestroyBases)
+			USSR.MarkCompletedObjective(ObjectiveProtectIronCurtain)
 		end
 
 		if USSR.HasNoRequiredUnits() then

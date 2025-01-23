@@ -923,6 +923,7 @@ GTNK.squad:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
 		Weaknesses: • Weak vs Defenses\n• Cannot attack Aircraft
+		Attributes: • Can crush concrete walls
 	Tooltip:
 		Name: Lasher Tank
 		GenericName: Tank
@@ -987,7 +988,7 @@ GTNK.squad:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
 		Weaknesses: • Weak vs Defenses\n• Cannot attack Aircraft
-		Attributes: • Explodes and leaves radiation on death
+		Attributes: • Can crush concrete walls\n• Explodes and leaves radiation on death
 	Tooltip:
 		Name: Atomic Lasher Tank
 		GenericName: Tank
@@ -1185,6 +1186,8 @@ GTNK.squad:
 		Description: Soviet main battle tank with infantry crushing improvements.
 	Tooltip:
 		Name: Thrasher Tank
+	TooltipExtras:
+		Attributes: • Can crush concrete walls
 	Health:
 		HP: 65000
 	Mobile:
@@ -1220,6 +1223,8 @@ GTNK.squad:
 		Description: Soviet main battle tank with infantry crushing improvements.
 	Tooltip:
 		Name: Atomic Thrasher Tank
+	TooltipExtras:
+		Attributes: • Can crush concrete walls
 	Health:
 		HP: 65000
 	Mobile:
@@ -1416,6 +1421,8 @@ GTNK.squad:
 		Image: 4tnkerad
 	Tooltip:
 		Name: Eradicator
+	TooltipExtras:
+		Weaknesses: • Cannot attack Aircraft
 	Buildable:
 		Prerequisites: stek, ~vehicles.soviet, ~!atomicengines.upgrade, ~erad.upgrade, ~!ovld.upgrade, ~!apoc.upgrade, ~techlevel.high
 		Description: Big and slow tank armed with a radiation cannon.
@@ -1460,6 +1467,8 @@ GTNK.squad:
 		Image: 4tnkeradi
 	Tooltip:
 		Name: Atomic Eradicator
+	TooltipExtras:
+		Weaknesses: • Cannot attack Aircraft
 	Buildable:
 		Prerequisites: stek, ~vehicles.soviet, ~atomicengines.upgrade, ~erad.upgrade, ~!ovld.upgrade, ~!apoc.upgrade, ~techlevel.high
 		Description: Big and slow tank armed with a radiation cannon.
@@ -1964,6 +1973,7 @@ SAPC.AI2:
 HARV:
 	Inherits: ^Vehicle-NOUPG
 	Inherits@HARVBALANCE: ^HarvesterBalancer
+	Inherits@HARVDMGNOTIFY: ^HarvesterDamageNotification
 	Inherits@SELECTION: ^SelectableEconomicUnit
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Buildable:
@@ -1990,6 +2000,7 @@ HARV:
 		SearchFromHarvesterRadius: 8
 		HarvestFacings: 8
 		EmptyCondition: no-ore
+		MaxUnloadQueue: 8
 	WithHarvesterPipsDecoration:
 		Position: BottomLeft
 		Margin: 4, 3
@@ -2896,6 +2907,7 @@ TTNK:
 DTRK:
 	Inherits: ^Vehicle
 	Inherits@BERSERK: ^Berserk
+	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 312
@@ -3047,6 +3059,7 @@ CTNK:
 
 QTNK:
 	Inherits: ^Tank
+	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 310
@@ -5458,6 +5471,7 @@ HFTK:
 HARV.TD:
 	Inherits: ^VehicleTD-NOUPG
 	Inherits@HARVBALANCE: ^HarvesterBalancer
+	Inherits@HARVDMGNOTIFY: ^HarvesterDamageNotification
 	Inherits@SELECTION: ^SelectableEconomicUnit
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	RenderSprites:
@@ -5487,6 +5501,7 @@ HARV.TD:
 		SearchFromHarvesterRadius: 8
 		HarvestFacings: 8
 		EmptyCondition: no-ore
+		MaxUnloadQueue: 8
 	WithHarvesterPipsDecoration:
 		Position: BottomLeft
 		Margin: 4, 3
@@ -8264,6 +8279,9 @@ BATF:
 		ArmamentNames: batf-cryt
 		Condition: attacking-cryt
 		RevokeDelay: 6
+	GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
+		RequiredHealing: 120000
+		StackDuration: 1050
 
 BATF.AI:
 	Inherits: BATF
@@ -8406,6 +8424,7 @@ CDRN:
 	Inherits: ^VehicleTD
 	Inherits@AUTOTARGET: ^AutoTargetGround
 	Inherits@HACKABLE: ^Hackable
+	Inherits@SELECTION: ^SelectableSupportUnit
 	RenderSprites:
 		Image: cdrone
 	AutoTargetPriority@DEFAULT:

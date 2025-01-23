@@ -435,7 +435,7 @@ GDIBaseFound = function()
 end
 
 UpdateReinforcementCountdown = function()
-	if not IsHoldOutComplete then
+	if not IsHoldOutComplete and not IsPrisonRevealed then
 		UserInterface.SetMissionText("Hold out until reinforcements arrive: " .. UtilsCA.FormatTimeForGameSpeed(TimerTicks), HSLColor.Yellow)
 	end
 end

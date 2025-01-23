@@ -72,7 +72,7 @@ StoreDeadDummy = function(a)
         CenterPosition = a.CenterPosition,
     }
 
-    if not a.HasProperty("StartBuildingRepairs") and a.Type ~= "fenc" and a.Type ~= "barb" and a.Type ~= "chain" and a.Type ~= "brik" and a.Type ~= "sbag" then
+    if not a.HasProperty("StartBuildingRepairs") and a.Type ~= "fenc" and a.Type ~= "barb" and a.Type ~= "chain" and a.Type ~= "brik" and a.Type ~= "sbag" and a.Type ~= "minv" and a.Type ~= "barl" and a.Type ~= "brl3" then
         actorDetails.Facing = a.Facing
     end
 

@@ -270,24 +270,27 @@ namespace OpenRA.Mods.CA.Traits
 				if (maxDistance != null)
 					self.QueueActivity(move.MoveWithinRange(order.Target, WDist.FromCells(maxDistance.Value), targetLineColor: Info.TargetLineColor));
 
-				var distance = (cell - self.Location).Length;
-				var cellsBeyondInstant = Info.MaxInstantDistance > 0 ? distance - Info.MaxInstantDistance : 0;
-				var delay = cellsBeyondInstant * Info.PreChargeTicksPerCell;
-				if (Info.MaxPreChargeTicks > 0 && delay > Info.MaxPreChargeTicks)
-					delay = Info.MaxPreChargeTicks;
-
-				maxPreChargeTicks = delay;
-
 				self.QueueActivity(new TeleportCA(self, cell, maxDistance, Info.KillCargo, Info.FlashScreen, Info.ChronoshiftSound,
-					true, false, default, Info.RequireEmptyDestination, delay, PreChargeStarted, RevokePreChargeCondition));
+					true, false, default, Info.RequireEmptyDestination, CalculatePreChargeTicks, PreChargeStarted, RevokePreChargeCondition));
 				self.QueueActivity(move.MoveTo(cell, 5, targetLineColor: Info.TargetLineColor));
 				self.ShowTargetLines();
 			}
 		}
 
-		void PreChargeStarted(Actor self)
+		int CalculatePreChargeTicks(Actor self, CPos destination)
 		{
-			preChargeTicks = maxPreChargeTicks;
+			var distance = (destination - self.Location).Length;
+			var cellsBeyondInstant = Info.MaxInstantDistance > 0 ? distance - Info.MaxInstantDistance : 0;
+			var delay = cellsBeyondInstant * Info.PreChargeTicksPerCell;
+			if (Info.MaxPreChargeTicks > 0 && delay > Info.MaxPreChargeTicks)
+				delay = Info.MaxPreChargeTicks;
+
+			return delay;
+		}
+
+		void PreChargeStarted(Actor self, int delay)
+		{
+			maxPreChargeTicks = preChargeTicks = delay;
 			GrantPreChargeCondition(self);
 		}
 
