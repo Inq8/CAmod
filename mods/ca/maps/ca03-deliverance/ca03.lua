@@ -47,20 +47,20 @@ NavalDropPaths = {
 -- Other Variables
 
 HaloDropStart = {
-	easy = DateTime.Minutes(14),
-	normal = DateTime.Minutes(12),
+	easy = DateTime.Minutes(18),
+	normal = DateTime.Minutes(14),
 	hard = DateTime.Minutes(10)
 }
 
 HaloDropInterval = {
-	easy = DateTime.Minutes(4),
-	normal = DateTime.Minutes(3),
+	easy = DateTime.Minutes(6),
+	normal = DateTime.Minutes(4),
 	hard = DateTime.Minutes(2)
 }
 
 NavalDropStart = {
-	easy = DateTime.Minutes(17),
-	normal = DateTime.Minutes(15),
+	easy = DateTime.Minutes(19),
+	normal = DateTime.Minutes(16),
 	hard = DateTime.Minutes(13)
 }
 

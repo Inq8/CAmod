@@ -59,24 +59,24 @@ EvacuationTime = {
 }
 
 HaloDropStart = {
-	easy = DateTime.Minutes(10),
-	normal = DateTime.Minutes(9),
+	easy = DateTime.Minutes(12),
+	normal = DateTime.Minutes(10),
 	hard = DateTime.Minutes(8)
 }
 
 HaloDropInterval = {
-	easy = DateTime.Minutes(3),
-	normal = DateTime.Minutes(2),
+	easy = DateTime.Minutes(5),
+	normal = DateTime.Minutes(3),
 	hard = DateTime.Minutes(1)
 }
 
 NavalDropStart = {
-	normal = DateTime.Minutes(15),
+	normal = DateTime.Minutes(16),
 	hard = DateTime.Minutes(12)
 }
 
 NavalDropInterval = {
-	normal = DateTime.Minutes(5),
+	normal = DateTime.Minutes(6),
 	hard = DateTime.Minutes(3)
 }
 
