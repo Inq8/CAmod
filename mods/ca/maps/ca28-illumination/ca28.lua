@@ -106,13 +106,18 @@ WorldLoaded = function()
 
 		Trigger.OnEnteredProximityTrigger(pos, WDist.New((5 * 1024) + 512), function(a, id)
 			if a.Owner == Nod and a.Type == "kane" then
-				FragmentsDetected[fragmentId] = true
 				if not FirstFragmentFound then
 					FirstFragmentFound = true
 					Beacon.New(Nod, pos)
 					Media.DisplayMessage("There! We have already found the first fragment.", "Kane", HSLColor.FromHex("FF0000"))
 					MediaCA.PlaySound("kane_firstfragment.aud", 2)
+				elseif FragmentsDetected[fragmentId] == nil then
+					Beacon.New(Nod, pos)
+					Notification("Artifact fragment detected.")
+					Media.PlaySound("beacon.aud")
 				end
+
+				FragmentsDetected[fragmentId] = true
 			end
 		end)
 
@@ -123,7 +128,7 @@ WorldLoaded = function()
 				FragmentsAcquired[tostring(fragment)] = true
 				FragmentsAcquiredCount = FragmentsAcquiredCount + 1
 				Media.PlaySound("fragment.aud")
-				Notification("Aritfact fragment acquired.")
+				Notification("Artifact fragment acquired.")
 				UpdateMissionText()
 
 				if FragmentsAcquiredCount == 6 then
