@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Graphics;
+using OpenRA.Mods.CA.Traits;
 using OpenRA.Mods.Common.Lint;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Mods.Common.Widgets;
@@ -563,6 +564,9 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			var harvesters = template.Get<LabelWidget>("HARVESTERS");
 			harvesters.GetText = () => world.ActorsWithTrait<Harvester>().Count(a => a.Actor.Owner == player && !a.Actor.IsDead && !a.Trait.IsTraitDisabled).ToString();
+
+			var bountyText = new CachedTransform<int, string>(i => "$" + i);
+			template.Get<LabelWidget>("BOUNTY").GetText = () => bountyText.Update(player.PlayerActor.Trait<PlayerBountyPool>().CollectedBounty);
 
 			var carryalls = template.GetOrNull<LabelWidget>("CARRYALLS");
 			if (carryalls != null)

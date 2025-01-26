@@ -334,10 +334,6 @@ CheckFields = function()
 		end
 	end)
 
-	if FieldsClearedAndBeingHarvested < 6 then
-		TimerTicks = MaintenanceDuration[Difficulty]
-	end
-
 	if FieldsClearedAndBeingHarvested < PreviousFieldsClearedAndBeingHarvested then
 		Notification("You have lost control of an ichor field.")
 		MediaCA.PlaySound("s_ichorfieldlost.aud", 2)
@@ -348,7 +344,8 @@ UpdateObjectiveMessage = function()
 	if FieldsClearedAndBeingHarvested == 6 then
 		UserInterface.SetMissionText("6 of 6 fields occupied.\n   Maintain for " .. UtilsCA.FormatTimeForGameSpeed(TimerTicks), HSLColor.Lime)
 	else
-		UserInterface.SetMissionText(FieldsClearedAndBeingHarvested .. " of 6 fields occupied.", HSLColor.Yellow)
+		local missionText = FieldsClearedAndBeingHarvested .. " of 6 fields occupied  -  Next reinforcement threshold: $" .. NextReinforcementThreshold
+		UserInterface.SetMissionText(missionText, HSLColor.Yellow)
 	end
 end
 
@@ -402,6 +399,8 @@ DoReinforcements = function()
 	Trigger.AfterDelay(DateTime.Seconds(10), function()
 		wormhole.Kill()
 	end)
+
+	UpdateObjectiveMessage()
 end
 
 CheckColonyPlatform = function()

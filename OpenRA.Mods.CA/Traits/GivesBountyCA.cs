@@ -74,10 +74,10 @@ namespace OpenRA.Mods.Common.Traits
 				return;
 
 			int displayedBounty, collectedBounty;
+			var attackerPool = e.Attacker.Owner.PlayerActor.Trait<PlayerBountyPool>();
 
 			if (Info.UsePlayerBountyPool) {
 				var bountyValue = GetBountyValue(self);
-				var attackerPool = e.Attacker.Owner.PlayerActor.Trait<PlayerBountyPool>();
 				attackerPool.AddBounty(bountyValue);
 
 				var pool = self.Owner.PlayerActor.Trait<PlayerBountyPool>();
@@ -90,6 +90,8 @@ namespace OpenRA.Mods.Common.Traits
 				collectedBounty = GetBountyValue(self);
 				displayedBounty = GetDisplayedBountyValue(self);
 			}
+
+			attackerPool.AddCollectedBounty(collectedBounty);
 
 			if (Info.ShowBounty && self.IsInWorld && displayedBounty != 0 && e.Attacker.Owner.IsAlliedWith(self.World.RenderPlayer))
 				e.Attacker.World.AddFrameEndTask(w => w.Add(new FloatingText(self.CenterPosition, e.Attacker.Owner.Color, FloatingText.FormatCashTick(displayedBounty), 30)));

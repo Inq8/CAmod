@@ -20,7 +20,13 @@ namespace OpenRA.Mods.CA.Traits
 
 	public class PlayerBountyPool
 	{
+		// The amount of bounty available to be collected by other players
 		int availableBounty;
+
+		// The amount of bounty this player has collected from other players
+		int collectedBounty;
+
+		public int CollectedBounty => collectedBounty;
 
 		public int AvailableBounty
 		{
@@ -30,6 +36,7 @@ namespace OpenRA.Mods.CA.Traits
 		public PlayerBountyPool()
 		{
 			availableBounty = 0;
+			collectedBounty = 0;
 		}
 
 		public void AddBounty(int amount)
@@ -37,6 +44,7 @@ namespace OpenRA.Mods.CA.Traits
 			availableBounty += amount;
 		}
 
+		// Collect bounty from this players
 		public int CollectBounty(int amount)
 		{
 			if (availableBounty < amount)
@@ -46,6 +54,12 @@ namespace OpenRA.Mods.CA.Traits
 
 			availableBounty -= amount;
 			return amount;
+		}
+
+		// Add to the amount of bounty this player has collected from other players
+		public void AddCollectedBounty(int amount)
+		{
+			collectedBounty += amount;
 		}
 	}
 }
