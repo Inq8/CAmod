@@ -1501,24 +1501,6 @@
 		PauseOnCondition: disabled || empdisable || being-warped
 		SupportPowerPaletteOrder: 50
 
-^TechnologyHackPower:
-	InfiltratePower@TechnologyHack:
-		Prerequisites: ~radar.legion
-		OrderName: techhack
-		Icon: techhack
-		ChargeInterval: 18000
-		Name: Technology Hack
-		Description: \nHack the targeted enemy production structure, providing access to a unit developed using enemy technology.\n\nFor infantry, vehicle and air production respectively: \n\n• Allies: Cryo Mortar, Reckoner, Phantom\n• Soviets: Cyberdog, Cyclops, Kamov\n• GDI: Sonic Mortar, Basilisk, Shade\n• Nod: Chem Mortar, Mantis, Vertigo\n• Scrin: Cyberscrin, Viper, Manticore
-		SelectTargetSpeechNotification: SelectTarget
-		SelectTargetTextNotification: Select target.
-		InsufficientPowerSpeechNotification: InsufficientPower
-		EndChargeSpeechNotification: TechHackReady
-		EndChargeTextNotification: Technology Hack ready.
-		LaunchSound: techhack.aud
-		SupportPowerPaletteOrder: 50
-		Types: StealTechInfiltrate
-		StartFullyCharged: true
-
 ^CashHackPower:
 	CashHackPower@Legion:
 		OrderName: cashhack
@@ -1640,6 +1622,24 @@
 		TargetCircleColor: ff7700
 		TargetTintColor: ff770033
 
+^TechnologyHackPower:
+	InfiltratePower@TechnologyHack:
+		Prerequisites: ~tmpl.legion
+		OrderName: techhack
+		Icon: techhack
+		ChargeInterval: 18000
+		Name: Technology Hack
+		Description: \nHack the targeted enemy production structure, providing access to a unit developed using enemy technology.\n\nFor infantry, vehicle and air production respectively: \n\n• Allies: Cryo Mortar, Reckoner, Phantom\n• Soviets: Cyberdog, Cyclops, Kamov\n• GDI: Sonic Mortar, Basilisk, Shade\n• Nod: Chem Mortar, Mantis, Vertigo\n• Scrin: Cyberscrin, Viper, Manticore
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeSpeechNotification: TechHackReady
+		EndChargeTextNotification: Technology Hack ready.
+		LaunchSound: techhack.aud
+		SupportPowerPaletteOrder: 50
+		Types: StealTechInfiltrate
+		StartFullyCharged: true
+
 ^AssassinSquadPower:
 	ProduceActorPowerCA@AssassinSquad:
 		OrderName: assassinsquad
@@ -1649,7 +1649,7 @@
 		Type: ParadropInfantry
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
-		ChargeInterval: 6750
+		ChargeInterval: 6000
 		Name: Assassin Squad
 		Description: \nDeploy a squad of Assassins that can\n    destroy buildings and salvage technology.\n\nTarget infantry production structure to deploy.
 		Actors: assa, assa, assa
@@ -1663,7 +1663,7 @@
 		Icon: assassinsquad
 		IconPalette: chrometd
 		Type: ParadropInfantry
-		ChargeInterval: 6750
+		ChargeInterval: 6000
 		Name: Assassin Squad (AI)
 		Description: \nDeploy a squad of Assassins that can\n    destroy buildings and salvage technology.
 		Actors: assa, assa, assa
@@ -1677,7 +1677,7 @@
 		Type: ParadropInfantry
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
-		ChargeInterval: 6750
+		ChargeInterval: 6000
 		Name: Hacker Cell
 		Description: \nDeploy a squad of Hackers that can remotely\n    capture buildings and take control of defenses.\n\nTarget infantry production structure to deploy.
 		Actors: hack, hack, hack
@@ -1690,7 +1690,7 @@
 		Prerequisites: unity.covenant, ~botplayer
 		Icon: hackercell
 		Type: ParadropInfantry
-		ChargeInterval: 6750
+		ChargeInterval: 6000
 		Name: Hacker Cell (AI)
 		Description: \nDeploy a squad of Hackers that can remotely\n    capture buildings and take control of defenses.
 		Actors: hack, hack, hack
@@ -1706,7 +1706,7 @@
 		Type: ParadropInfantry
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
-		ChargeInterval: 6750
+		ChargeInterval: 6000
 		Name: Infiltrators
 		Description: \nDeploy a squad of Infiltrators that can\n    infiltrate buildings to steal or lock technology.\n\nTarget infantry production structure to deploy.
 		Actors: sab, sab, sab
@@ -1720,7 +1720,7 @@
 		Icon: infiltrators
 		IconPalette: chrometd
 		Type: ParadropInfantry
-		ChargeInterval: 6750
+		ChargeInterval: 6000
 		Name: Infiltrators (AI)
 		Description: \nDeploy a squad of Infiltrators that can\n    infiltrate buildings to steal or lock technology.
 		Actors: sab, sab, sab
