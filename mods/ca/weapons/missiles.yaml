@@ -412,11 +412,6 @@ HindRockets.UPG:
 	Inherits: HindRockets
 	BurstDelays: 8
 
-KamovRockets:
-	Inherits: HindRockets
-	Warhead@1Dam: SpreadDamage
-		Damage: 3550
-
 HellfireAG.Harrier:
 	Inherits: ^AirToGroundMissile
 	Range: 7c0
@@ -2411,3 +2406,43 @@ CyborgReaperSnare:
 		Explosions: reap-snarehit
 		ImpactSounds: reap-snarehit.aud
 		ValidTargets: Ground, Ship, Trees
+
+KamovRockets:
+	Inherits: ^AntiGroundMissile
+	ReloadDelay: 100
+	Range: 9c0
+	MinRange: 3c0
+	Report: hind-rocket1.aud, hind-rocket2.aud
+	Burst: 3
+	BurstDelays: 12
+	-Projectile:
+	Projectile: Bullet
+		Inaccuracy: 1c512
+		InaccuracyType: Absolute
+		Image: dragon
+		Speed: 200
+		LaunchAngle: 0
+		TrailImage: smokey
+		Shadow: true
+		Blockable: false
+	ValidTargets: Ground, Trees, Water
+	Warhead@1Dam: SpreadDamage
+		Damage: 6500
+		Spread: 448
+		Versus:
+			None: 10
+			Wood: 20
+			Concrete: 40
+			Light: 65
+			Heavy: 100
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster, FlakVestMitigated
+	Warhead@3Eff: CreateEffect
+		Explosions: frag_3
+		ExplosionPalette: temptd
+		ImpactSounds: kaboom15.aud
+		ValidTargets: Ground, Ship, Trees
+
+KamovRocketsWide:
+	Inherits: KamovRockets
+	Projectile: Bullet
+		Inaccuracy: 2c512

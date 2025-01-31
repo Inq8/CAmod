@@ -4297,10 +4297,10 @@ KAMV:
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 201
 		Prerequisites: ~aircraft.kamv
-		Description: Durable helicopter gunship armed with\n  a chaingun and anti-tank rockets.
+		Description: Durable helicopter gunship armed with\n  long range anti-tank rockets.
 	TooltipExtras:
-		Strengths: • Strong vs Infantry, Heavy Armor, Light Armor
-		Weaknesses: • Weak vs Defenses\n• Cannot attack Aircraft
+		Strengths: • Strong vs Heavy Armor, Light Armor
+		Weaknesses: • Weak vs Infantry, Buildings\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets
 	Valued:
 		Cost: 1800
 	Tooltip:
@@ -4308,7 +4308,7 @@ KAMV:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 38500
+		HP: 34000
 	RevealsShroud:
 		Range: 11c0
 		MinRange: 9c0
@@ -4318,18 +4318,14 @@ KAMV:
 		Range: 9c0
 		Type: GroundPosition
 	Armament@PRIMARY:
-		Weapon: KamovChainGun
-		LocalOffset: 500,0,-250
-		MuzzleSequence: muzzle
-		PauseOnCondition: !ammo
-		CasingWeapon: BrassDebrisAir
-		CasingSpawnLocalOffset: 400,-225,0
-		CasingTargetOffset: 400, -300, 0
-	Armament@SECONDARY:
-		Name: secondary
 		Weapon: KamovRockets
-		LocalOffset: 85,-213,-185, 85,213,-185
-		PauseOnCondition: !ammo2
+		LocalOffset: 85,-213,-185
+		PauseOnCondition: !ammo
+	Armament@SECONDARY:
+		Weapon: KamovRocketsWide
+		LocalOffset: 85,213,-185
+		PauseOnCondition: !ammo
+		FireDelay: 6
 	AttackAircraft:
 		FacingTolerance: 80
 		AttackType: Hover
@@ -4366,28 +4362,14 @@ KAMV:
 		Offset: 50,-550,192
 	AmmoPool@PRIMARY:
 		Name: primary
-		Ammo: 10
+		Ammo: 12
 		ReloadDelay: 14
 		AmmoCondition: ammo
-		Armaments: primary
-	AmmoPool@SECONDARY:
-		Name: secondary
-		Ammo: 12
-		ReloadDelay: 12
-		AmmoCondition: ammo2
-		Armaments: secondary
 	WithAmmoPipsDecoration@PRIMARY:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
 		AmmoPools: primary
-		PipCount: 5
-	WithAmmoPipsDecoration@SECONDARY:
-		Position: BottomLeft
-		Margin: 4, 7
-		RequiresSelection: true
-		AmmoPools: secondary
-		FullSequence: pip-red
 		PipCount: 6
 	WithMuzzleOverlay:
 	SpawnActorOnDeath:
@@ -4419,7 +4401,6 @@ KAMV:
 	Selectable:
 		DecorationBounds: 1621, 1365
 	Rearmable:
-		AmmoPools: primary, secondary
 		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
