@@ -131,6 +131,10 @@ WorldLoaded = function()
 		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(2)), function()
 			MediaCA.PlaySound("r2_codesacquired.aud", 2)
 			Notification("Cyborg encryption codes acquired.")
+
+			if EvacStarted then
+				SendEvac()
+			end
 		end)
 	end)
 
@@ -144,6 +148,8 @@ WorldLoaded = function()
 
 	Trigger.OnEnteredProximityTrigger(EvacLanding.CenterPosition, WDist.New(2560), function(a, id)
 		if ObjectiveEscape ~= nil and not EvacStarted and a.Owner == USSR and a == Yuri then
+			EvacStarted = true
+			Trigger.RemoveProximityTrigger(id)
 
 			if ObjectiveStealCodes == nil or not USSR.IsObjectiveCompleted(ObjectiveStealCodes) then
 				Notification("Encryption codes are required for mission completion.")
@@ -151,29 +157,7 @@ WorldLoaded = function()
 				return
 			end
 
-			EvacStarted = true
-			Trigger.RemoveProximityTrigger(id)
-
-			if EvacFlare ~= nil then
-				EvacFlare.Destroy()
-			end
-
-			Notification("Extraction transport inbound.")
-			MediaCA.PlaySound("r2_extraction.aud", 2)
-
-			Reinforcements.ReinforceWithTransport(USSR, "halo.paradrop", nil, { EvacSpawn.Location, EvacLanding.Location }, nil, function(transport, cargo)
-				transport.Land(EvacLanding)
-				Trigger.OnPassengerEntered(transport, function(t, passenger)
-					if passenger == Yuri then
-						EvacExiting = true
-						t.Move(EvacSpawn.Location)
-						Trigger.AfterDelay(DateTime.Seconds(2), function()
-							USSR.MarkCompletedObjective(ObjectiveEscape)
-							USSR.MarkCompletedObjective(ObjectiveKeepYuriAlive)
-						end)
-					end
-				end)
-			end)
+			SendEvac()
 		end
 	end)
 
@@ -287,4 +271,29 @@ InitEvacSite = function()
 		Beacon.New(USSR, EvacLanding.CenterPosition)
 		EvacFlare = Actor.Create("flare", true, { Owner = USSR, Location = EvacLanding.Location })
 	end
+end
+
+SendEvac = function()
+	if EvacFlare ~= nil then
+		EvacFlare.Destroy()
+	end
+
+	Notification("Extraction transport inbound.")
+	MediaCA.PlaySound("r2_extraction.aud", 2)
+
+	Reinforcements.ReinforceWithTransport(USSR, "halo.paradrop", nil, { EvacSpawn.Location, EvacLanding.Location }, nil, function(transport, cargo)
+		Trigger.OnPassengerEntered(transport, function(t, passenger)
+			t.Stop()
+			if passenger == Yuri then
+				EvacExiting = true
+				t.Move(EvacSpawn.Location)
+				Trigger.AfterDelay(DateTime.Seconds(2), function()
+					USSR.MarkCompletedObjective(ObjectiveEscape)
+					USSR.MarkCompletedObjective(ObjectiveKeepYuriAlive)
+				end)
+			end
+		end)
+
+		transport.Land(EvacLanding)
+	end)
 end

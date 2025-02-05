@@ -209,7 +209,10 @@ namespace OpenRA.Mods.CA.Traits
 			foreach (var slaveEntry in SlaveEntries)
 			{
 				if (slaveEntry.IsValid)
-					slaveEntry.SpawnerSlave.OnMasterKilled(slaveEntry.Actor, self.Owner.PlayerActor, Info.SlaveDisposalOnKill);
+				{
+					var killer = self.Owner.PlayerActor.IsDead ? slaveEntry.Actor.Owner.PlayerActor : self.Owner.PlayerActor;
+					slaveEntry.SpawnerSlave.OnMasterKilled(slaveEntry.Actor, killer, Info.SlaveDisposalOnKill);
+				}
 			}
 		}
 
