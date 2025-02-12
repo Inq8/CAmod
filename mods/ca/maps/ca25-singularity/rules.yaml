@@ -278,12 +278,11 @@ mothership.shields:
 		Condition: kane-revealed
 	ExternalCondition@PROVOKED:
 		Condition: provoked
-	AttackFrontal:
-		PauseOnCondition: !kane-revealed && bluebuff && !provoked
 	RangeMultiplier@PROVOKED:
 		Modifier: 125
 		RequiresCondition: provoked
 	AttackFrontal:
+		PauseOnCondition: !kane-revealed && bluebuff && !provoked
 		FacingTolerance: 128
 
 RMBC:
@@ -296,6 +295,10 @@ TPLR:
 	Inherits@BLUEBUFF: ^BlueBuff
 	Health:
 		HP: 30000
+	-AttackFrontal:
+	AttackFrontalCharged:
+		PauseOnCondition: !kane-revealed && bluebuff && !provoked
+		FacingTolerance: 128
 
 N3C:
 	Inherits@BLUEBUFF: ^BlueBuff
