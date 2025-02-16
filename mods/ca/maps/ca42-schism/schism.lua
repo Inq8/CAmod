@@ -20,9 +20,9 @@ Squads = {
 			hard = DateTime.Minutes(2)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 10 } },
-			normal = { { MinTime = 0, Value = 30 } },
-			hard = { { MinTime = 0, Value = 50 } },
+			easy = { Min = 10, Max = 10 },
+			normal = { Min = 30, Max = 30 },
+			hard = { Min = 50, Max = 50 },
 		},
 		ActiveCondition = function()
 			return not MaleficArrived
@@ -40,9 +40,9 @@ Squads = {
 			hard = DateTime.Minutes(2)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 10 } },
-			normal = { { MinTime = 0, Value = 30 } },
-			hard = { { MinTime = 0, Value = 50 } },
+			easy = { Min = 10, Max = 10 },
+			normal = { Min = 30, Max = 30 },
+			hard = { Min = 50, Max = 50 },
 		},
 		ActiveCondition = function()
 			return not MaleficArrived

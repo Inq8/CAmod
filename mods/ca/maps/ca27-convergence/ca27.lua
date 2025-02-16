@@ -52,20 +52,13 @@ Squads = {
 			hard = DateTime.Minutes(2)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(14), Value = 35 }, { MinTime = DateTime.Minutes(16), Value = 45 } },
-			normal = { { MinTime = 0, Value = 34 }, { MinTime = DateTime.Minutes(12), Value = 68 }, { MinTime = DateTime.Minutes(15), Value = 80 } },
-			hard = { { MinTime = 0, Value = 52 }, { MinTime = DateTime.Minutes(10), Value = 105 }, { MinTime = DateTime.Minutes(14), Value = 120 } }
-		},
-		QueueProductionStatuses = {
-			Infantry = false,
-			Vehicles = false,
-			Aircraft = false
+			easy = { Min = 15, Max = 45 },
+			normal = { Min = 34, Max = 80 },
+			hard = { Min = 52, Max = 120 },
 		},
 		FollowLeader = true,
-		IdleUnits = { },
 		RandomProducerActor = true,
 		ProducerActors = { Infantry = LeftScrinSpawners, Vehicles = LeftScrinSpawners, Aircraft = LeftScrinSpawners },
-		ProducerTypes = nil,
 		Units = UnitCompositions.Scrin.Main,
 		AttackPaths = {
 			{ LAttackRally1a.Location, LAttackRally1b.Location },
@@ -80,20 +73,13 @@ Squads = {
 			hard = DateTime.Minutes(3)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 5 }, { MinTime = DateTime.Minutes(14), Value = 15 }, { MinTime = DateTime.Minutes(16), Value = 20 } },
-			normal = { { MinTime = 0, Value = 16 }, { MinTime = DateTime.Minutes(12), Value = 32 }, { MinTime = DateTime.Minutes(15), Value = 45 } },
-			hard = { { MinTime = 0, Value = 28 }, { MinTime = DateTime.Minutes(10), Value = 55 }, { MinTime = DateTime.Minutes(14), Value = 75 } }
-		},
-		QueueProductionStatuses = {
-			Infantry = false,
-			Vehicles = false,
-			Aircraft = false
+			easy = { Min = 5, Max = 20 },
+			normal = { Min = 16, Max = 45 },
+			hard = { Min = 28, Max = 75 },
 		},
 		FollowLeader = true,
-		IdleUnits = { },
 		RandomProducerActor = true,
 		ProducerActors = { Infantry = MiddleScrinSpawners, Vehicles = MiddleScrinSpawners, Aircraft = MiddleScrinSpawners },
-		ProducerTypes = nil,
 		Units = {
 			easy = {
 				{ Vehicles = { "intl", "seek" }, },

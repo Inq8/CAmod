@@ -19,18 +19,11 @@ Squads = {
 			hard = DateTime.Seconds(90)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(14), Value = 35 } },
-			normal = { { MinTime = 0, Value = 34 }, { MinTime = DateTime.Minutes(12), Value = 68 } },
-			hard = { { MinTime = 0, Value = 52 }, { MinTime = DateTime.Minutes(10), Value = 105 } },
-		},
-		QueueProductionStatuses = {
-			Infantry = false,
-			Vehicles = false,
-			Aircraft = false,
+			easy = { Min = 15, Max = 35 },
+			normal = { Min = 34, Max = 68 },
+			hard = { Min = 52, Max = 105 },
 		},
 		FollowLeader = true,
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
 		Units = UnitCompositions.Scrin.Main,
 		AttackPaths = ScrinGroundAttackPaths,
@@ -42,15 +35,10 @@ Squads = {
 			hard = DateTime.Seconds(120)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 5 }, { MinTime = DateTime.Minutes(14), Value = 15 } },
-			normal = { { MinTime = 0, Value = 16 }, { MinTime = DateTime.Minutes(12), Value = 32 } },
-			hard = { { MinTime = 0, Value = 28 }, { MinTime = DateTime.Minutes(10), Value = 55 } },
+			easy = { Min = 5, Max = 15 },
+			normal = { Min = 16, Max = 32 },
+			hard = { Min = 28, Max = 55 },
 		},
-		QueueProductionStatuses = {
-			Vehicles = false
-		},
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Vehicles = { "wsph" } },
 		Units = {
 			easy = {
@@ -78,16 +66,11 @@ Squads = {
 			normal = DateTime.Minutes(5),
 			hard = DateTime.Minutes(4)
 		},
-		Interval = {
-			easy = DateTime.Minutes(6),
-			normal = DateTime.Minutes(4),
-			hard = DateTime.Minutes(2)
+		AttackValuePerSecond = {
+			easy = { Min = 7, Max = 7 },
+			normal = { Min = 14, Max = 14 },
+			hard = { Min = 21, Max = 21 },
 		},
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Aircraft = { "grav" } },
 		Units = {
 			easy = {
@@ -104,20 +87,17 @@ Squads = {
 		}
 	},
 	NodNorth = {
-		Player = nil,
-		Interval = {
-			easy = DateTime.Seconds(40),
-			normal = DateTime.Seconds(80),
-			hard = DateTime.Seconds(120)
+		AttackValuePerSecond = {
+			easy = { Min = 15, Max = 15 },
+			normal = { Min = 10, Max = 10 },
+			hard = { Min = 5, Max = 5 },
 		},
 		ActiveCondition = function()
 			local portals = Scrin.GetActorsByType("port")
 			local warpSpheres = Scrin.GetActorsByType("wsph")
 			return #portals > 0 and #warpSpheres > 0
 		end,
-		QueueProductionStatuses = { Infantry = false },
 		FollowLeader = false,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { NorthHand } },
 		Units = {
 			easy = { { Infantry = { "n3", "n1", "n1", "n4", "n3", "n1", "n1" } } },
@@ -127,11 +107,10 @@ Squads = {
 		AttackPaths = { { NodRally.Location, ScrinBaseCenter.Location } }
 	},
 	NodSouth = {
-		Player = nil,
-		Interval = {
-			easy = DateTime.Seconds(40),
-			normal = DateTime.Seconds(80),
-			hard = DateTime.Seconds(120)
+		AttackValuePerSecond = {
+			easy = { Min = 25, Max = 25 },
+			normal = { Min = 20, Max = 20 },
+			hard = { Min = 15, Max = 15 },
 		},
 		ActiveCondition = function()
 			local portals = Scrin.GetActorsByType("port")
@@ -139,9 +118,7 @@ Squads = {
 			return #portals > 0 and #warpSpheres > 0
 		end,
 		DispatchDelay = DateTime.Seconds(15),
-		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = false,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { SouthHand }, Vehicles = { SouthAirstrip } },
 		Units = {
 			easy = {

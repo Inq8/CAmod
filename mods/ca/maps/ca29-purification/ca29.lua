@@ -19,17 +19,11 @@ Squads = {
 			hard = DateTime.Seconds(60)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(11), Value = 50 } },
-			normal = { { MinTime = 0, Value = 50 }, { MinTime = DateTime.Minutes(9), Value = 100 } },
-			hard = { { MinTime = 0, Value = 80 }, { MinTime = DateTime.Minutes(7), Value = 160 } },
-		},
-		QueueProductionStatuses = {
-			Infantry = false,
-			Vehicles = false,
-			Aircraft = false,
+			easy = { Min = 20, Max = 50, RampDuration = DateTime.Minutes(12) },
+			normal = { Min = 50, Max = 100, RampDuration = DateTime.Minutes(10) },
+			hard = { Min = 80, Max = 160, RampDuration = DateTime.Minutes(8) },
 		},
 		FollowLeader = true,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { Portal1, Portal2 }, Vehicles = { WarpSphere1, WarpSphere2 }, Aircraft = { GravityStabilizer1, GravityStabilizer2 } },
 		ProducerTypes = { Infantry = { "port", "wormhole" }, Vehicles = { "wsph", "wormhole" }, Aircraft = { "grav", "hiddenspawner" } },
 		Units = UnitCompositions.Scrin.Main,
@@ -46,16 +40,11 @@ Squads = {
 			normal = DateTime.Minutes(5),
 			hard = DateTime.Minutes(4)
 		},
-		Interval = {
-			easy = DateTime.Minutes(6),
-			normal = DateTime.Minutes(4),
-			hard = DateTime.Minutes(2)
+		AttackValuePerSecond = {
+			easy = { Min = 7, Max = 7 },
+			normal = { Min = 14, Max = 14 },
+			hard = { Min = 21, Max = 21 },
 		},
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Aircraft = { "grav" } },
 		Units = {
 			easy = {
@@ -73,18 +62,11 @@ Squads = {
 	},
 	ScrinRebelsMain = {
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 70 } },
-			normal = { { MinTime = 0, Value = 70 } },
-			hard = { { MinTime = 0, Value = 70 } },
-		},
-		QueueProductionStatuses = {
-			Infantry = false,
-			Vehicles = false,
-			Aircraft = false
+			easy = { Min = 70, Max = 70 },
+			normal = { Min = 70, Max = 70 },
+			hard = { Min = 70, Max = 70 },
 		},
 		FollowLeader = true,
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Infantry = { "wormhole" }, Vehicles = { "wormhole" }, Aircraft = { "grav" } },
 		Units = UnitCompositions.Scrin.Main,
 		AttackPaths = {

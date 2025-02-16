@@ -30,60 +30,48 @@ ReinforcementsDelay = {
 
 Squads = {
 	Main = {
-		Player = nil,
 		Delay = {
 			easy = DateTime.Seconds(270),
 			normal = DateTime.Seconds(210),
 			hard = DateTime.Seconds(150)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(15), Value = 35 } },
-			normal = { { MinTime = 0, Value = 34 }, { MinTime = DateTime.Minutes(13), Value = 68 } },
-			hard = { { MinTime = 0, Value = 52 }, { MinTime = DateTime.Minutes(11), Value = 105 } },
+			easy = { Min = 15, Max = 35, RampDuration = DateTime.Minutes(16) },
+			normal = { Min = 34, Max = 68, RampDuration = DateTime.Minutes(14) },
+			hard = { Min = 52, Max = 105, RampDuration = DateTime.Minutes(12) },
 		},
-		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = true,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { AlliedSouthBarracks }, Vehicles = { AlliedSouthFactory } },
 		Units = UnitCompositions.Allied.Main,
 		AttackPaths = GreeceMainAttackPaths,
 	},
 	Traitor = {
-		Player = nil,
 		Delay = {
 			easy = DateTime.Minutes(5),
 			normal = DateTime.Minutes(4),
 			hard = DateTime.Minutes(3)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 5 }, { MinTime = DateTime.Minutes(15), Value = 15 } },
-			normal = { { MinTime = 0, Value = 16 }, { MinTime = DateTime.Minutes(13), Value = 32 } },
-			hard = { { MinTime = 0, Value = 28 }, { MinTime = DateTime.Minutes(11), Value = 55 } },
+			easy = { Min = 5, Max = 15, RampDuration = DateTime.Minutes(16) },
+			normal = { Min = 16, Max = 32, RampDuration = DateTime.Minutes(14) },
+			hard = { Min = 28, Max = 55, RampDuration = DateTime.Minutes(12) },
 		},
-		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = true,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { TraitorBarracks }, Vehicles = { TraitorFactory } },
 		Units = TraitorUnits,
 		AttackPaths = GreeceMainAttackPaths,
 	},
 	Air = {
-		Player = nil,
 		Delay = {
 			easy = DateTime.Minutes(13),
 			normal = DateTime.Minutes(12),
 			hard = DateTime.Minutes(11)
 		},
-		Interval = {
-			easy = DateTime.Minutes(3),
-			normal = DateTime.Seconds(150),
-			hard = DateTime.Minutes(2)
+		AttackValuePerSecond = {
+			easy = { Min = 7, Max = 7 },
+			normal = { Min = 14, Max = 14 },
+			hard = { Min = 21, Max = 21 },
 		},
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Aircraft = { "hpad" } },
 		Units = {
 			easy = {

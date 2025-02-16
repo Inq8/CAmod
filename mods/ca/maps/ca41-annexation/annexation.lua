@@ -5,9 +5,9 @@ ScrinDelays = {
 }
 
 ScrinAttackValues = {
-	easy = { { MinTime = 0, Value = 6 }, { MinTime = DateTime.Minutes(14), Value = 16 } },
-	normal = { { MinTime = 0, Value = 16 }, { MinTime = DateTime.Minutes(12), Value = 23 }, { MinTime = DateTime.Minutes(16), Value = 33 } },
-	hard = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(10), Value = 40 }, { MinTime = DateTime.Minutes(14), Value = 55 } },
+	easy = { Min = 6, Max = 16 },
+	normal = { Min = 16, Max = 33 },
+	hard = { Min = 25, Max = 55 },
 }
 
 NodBuildingsToSell = { NodConyard, NodHand, NodFactory, NodComms }
@@ -55,10 +55,10 @@ Squads = {
 			normal = DateTime.Minutes(5),
 			hard = DateTime.Minutes(4)
 		},
-		Interval = {
-			easy = DateTime.Minutes(6),
-			normal = DateTime.Minutes(4),
-			hard = DateTime.Minutes(2)
+		AttackValuePerSecond = {
+			easy = { Min = 7, Max = 7 },
+			normal = { Min = 14, Max = 14 },
+			hard = { Min = 21, Max = 21 },
 		},
 		ProducerTypes = { Aircraft = { "grav" } },
 		Units = {

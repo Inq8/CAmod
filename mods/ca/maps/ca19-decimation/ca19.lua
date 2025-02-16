@@ -39,69 +39,51 @@ ParatroopersEnabledDelay = {
 
 Squads = {
 	East = {
-		Player = nil,
 		Delay = {
 			easy = DateTime.Minutes(8),
 			normal = DateTime.Minutes(6),
 			hard = DateTime.Minutes(4)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(14), Value = 25 } },
-			normal = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(12), Value = 35 }, { MinTime = DateTime.Minutes(16), Value = 50 } },
-			hard = { { MinTime = 0, Value = 40 }, { MinTime = DateTime.Minutes(10), Value = 60 }, { MinTime = DateTime.Minutes(14), Value = 80 }, { MinTime = DateTime.Minutes(28), Value = 100 } },
-		},
-		QueueProductionStatuses = {
-			Infantry = false,
-			Vehicles = false
+			easy = { Min = 10, Max = 25 },
+			normal = { Min = 25, Max = 50 },
+			hard = { Min = 40, Max = 80 },
 		},
 		FollowLeader = true,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { MainBarracks }, Vehicles = { MainFactory } },
 		Units = UnitCompositions.Soviet.Main,
 		AttackPaths = EastAttackPaths,
 	},
 	West = {
-		Player = nil,
 		Delay = {
 			easy = DateTime.Minutes(5),
 			normal = DateTime.Minutes(4),
 			hard = DateTime.Minutes(3)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(14), Value = 25 } },
-			normal = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(12), Value = 35 }, { MinTime = DateTime.Minutes(16), Value = 50 } },
-			hard = { { MinTime = 0, Value = 40 }, { MinTime = DateTime.Minutes(10), Value = 60 }, { MinTime = DateTime.Minutes(14), Value = 80 }, { MinTime = DateTime.Minutes(28), Value = 100 } },
-		},
-		QueueProductionStatuses = {
-			Infantry = false,
-			Vehicles = false
+			easy = { Min = 10, Max = 25 },
+			normal = { Min = 25, Max = 50 },
+			hard = { Min = 40, Max = 80 },
 		},
 		FollowLeader = true,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { Barracks1, Barracks2 }, Vehicles = { Factory1, Factory2, Factory3, Factory4, Factory5 } },
 		Units = UnitCompositions.Soviet.Main,
 		AttackPaths = WestAttackPaths,
 	},
 	AirMain = {
-		Player = nil,
 		Delay = {
 			easy = DateTime.Minutes(13),
 			normal = DateTime.Minutes(12),
 			hard = DateTime.Minutes(11)
 		},
-		Interval = {
-			easy = DateTime.Minutes(3),
-			normal = DateTime.Seconds(165),
-			hard = DateTime.Seconds(150)
+		AttackValuePerSecond = {
+			easy = { Min = 7, Max = 7 },
+			normal = { Min = 14, Max = 14 },
+			hard = { Min = 21, Max = 21 },
 		},
 		ActiveCondition = function()
 			return not IslandAirfieldsEliminated
 		end,
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Aircraft = { "afld" } },
 		Units = {
 			easy = {
@@ -119,7 +101,6 @@ Squads = {
 		},
 	},
 	AirFleetKillers = {
-		Player = nil,
 		Interval = {
 			normal = DateTime.Seconds(10),
 			hard = DateTime.Seconds(10)
@@ -128,11 +109,6 @@ Squads = {
 			local scrinFleet = Scrin.GetActorsByTypes({ "pac", "deva" })
 			return #scrinFleet > AirFleetKillersThreshold[Difficulty]
 		end,
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Aircraft = { "afld" } },
 		Units = {
 			normal = {

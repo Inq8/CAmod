@@ -6,9 +6,9 @@ Squads = {
             hard = DateTime.Minutes(4),
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(14), Value = 50 } },
-			normal = { { MinTime = 0, Value = 50 }, { MinTime = DateTime.Minutes(12), Value = 70 }, { MinTime = DateTime.Minutes(16), Value = 100 } },
-			hard = { { MinTime = 0, Value = 80 }, { MinTime = DateTime.Minutes(10), Value = 120 }, { MinTime = DateTime.Minutes(14), Value = 160 } },
+			easy = { Min = 25, Max = 50 },
+			normal = { Min = 50, Max = 100 },
+			hard = { Min = 80, Max = 160 },
 		},
 		FollowLeader = true,
         ProducerActors = nil,

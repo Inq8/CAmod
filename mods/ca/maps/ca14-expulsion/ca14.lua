@@ -23,13 +23,11 @@ Squads = {
 			hard = DateTime.Seconds(90)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 8 }, { MinTime = DateTime.Minutes(14), Value = 20 }, { MinTime = DateTime.Minutes(18), Value = 35 } },
-			normal = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(12), Value = 35 }, { MinTime = DateTime.Minutes(18), Value = 45 } },
-			hard = { { MinTime = 0, Value = 30 }, { MinTime = DateTime.Minutes(10), Value = 50 }, { MinTime = DateTime.Minutes(18), Value = 65 }, { MinTime = DateTime.Minutes(25), Value = 100 } },
+			easy = { Min = 8, Max = 35, RampDuration = DateTime.Minutes(20) },
+			normal = { Min = 20, Max = 60, RampDuration = DateTime.Minutes(20) },
+			hard = { Min = 30, Max = 100, RampDuration = DateTime.Minutes(20) },
 		},
-		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = true,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { GDIMainBarracks }, Vehicles = { GDIFactory } },
 		Units = UnitCompositions.GDI.Main,
 		AttackPaths = GDIMainAttackPaths,
@@ -41,13 +39,11 @@ Squads = {
 			hard = DateTime.Minutes(6)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 6 }, { MinTime = DateTime.Minutes(14), Value = 12 }, { MinTime = DateTime.Minutes(18), Value = 20 } },
-			normal = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(12), Value = 20 }, { MinTime = DateTime.Minutes(18), Value = 30 } },
-			hard = { { MinTime = 0, Value = 16 }, { MinTime = DateTime.Minutes(10), Value = 32 }, { MinTime = DateTime.Minutes(18), Value = 45 } },
+			easy = { Min = 6, Max = 12, RampDuration = DateTime.Minutes(20) },
+			normal = { Min = 10, Max = 20, RampDuration = DateTime.Minutes(20) },
+			hard = { Min = 16, Max = 32, RampDuration = DateTime.Minutes(20) },
 		},
-		QueueProductionStatuses = { Infantry = false },
 		FollowLeader = true,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { GDISouthBarracks } },
 		Units = {
 			easy = { { Infantry = { "n3", "n1", "n1", "n1", "n2" } } } ,
@@ -63,13 +59,11 @@ Squads = {
 			hard = DateTime.Minutes(6)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 6 }, { MinTime = DateTime.Minutes(14), Value = 12 } },
-			normal = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(12), Value = 20 } },
-			hard = { { MinTime = 0, Value = 16 }, { MinTime = DateTime.Minutes(10), Value = 32 } },
+			easy = { Min = 6, Max = 12, RampDuration = DateTime.Minutes(15) },
+			normal = { Min = 10, Max = 20, RampDuration = DateTime.Minutes(13) },
+			hard = { Min = 16, Max = 32, RampDuration = DateTime.Minutes(11) },
 		},
-		QueueProductionStatuses = { Infantry = false },
 		FollowLeader = true,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { GDINorthEastBarracks } },
 		Units = {
 			easy = { { Infantry = { "n3", "n1", "n1", "n1", "n2" } } },
@@ -84,16 +78,11 @@ Squads = {
 			normal = DateTime.Minutes(13),
 			hard = DateTime.Minutes(11)
 		},
-		Interval = {
-			easy = DateTime.Minutes(5),
-			normal = DateTime.Minutes(4),
-			hard = DateTime.Minutes(3)
+		AttackValuePerSecond = {
+			easy = { Min = 6, Max = 6 },
+			normal = { Min = 11, Max = 11 },
+			hard = { Min = 18, Max = 18 },
 		},
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Aircraft = { "afld.gdi" } },
 		Units = {
 			easy = {

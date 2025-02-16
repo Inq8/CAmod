@@ -80,46 +80,34 @@ HoldOutTime = {
 
 Squads = {
 	Main = {
-		Player = nil,
 		Delay = {
 			easy = DateTime.Seconds(150),
 			normal = DateTime.Seconds(90),
 			hard = DateTime.Seconds(30)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(14), Value = 25 } },
-			normal = { { MinTime = 0, Value = 40 }, { MinTime = DateTime.Minutes(12), Value = 40 } },
-			hard = { { MinTime = 0, Value = 60 }, { MinTime = DateTime.Minutes(10), Value = 60 } },
-		},
-		QueueProductionStatuses = {
-			Infantry = false,
-			Vehicles = false
+			easy = { Min = 15, Max = 25, RampDuration = DateTime.Minutes(15) },
+			normal = { Min = 40, Max = 40, RampDuration = DateTime.Minutes(13) },
+			hard = { Min = 60, Max = 60, RampDuration = DateTime.Minutes(11) },
 		},
 		FollowLeader = true,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { SovietMainBarracks1, SovietMainBarracks2 }, Vehicles = { SovietMainFactory1, SovietMainFactory2 } },
 		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
 		Units = UnitCompositions.Soviet.Main,
 		AttackPaths = SovietMainAttackPaths,
 	},
 	Northern = {
-		Player = nil,
 		Delay = {
 			easy = DateTime.Seconds(90),
 			normal = DateTime.Seconds(60),
 			hard = DateTime.Seconds(30)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(14), Value = 15 } },
-			normal = { { MinTime = 0, Value = 30 }, { MinTime = DateTime.Minutes(12), Value = 30 } },
-			hard = { { MinTime = 0, Value = 40 }, { MinTime = DateTime.Minutes(10), Value = 40 } },
-		},
-		QueueProductionStatuses = {
-			Infantry = false,
-			Vehicles = false
+			easy = { Min = 10, Max = 15, RampDuration = DateTime.Minutes(15) },
+			normal = { Min = 30, Max = 30, RampDuration = DateTime.Minutes(13) },
+			hard = { Min = 40, Max = 40, RampDuration = DateTime.Minutes(11) },
 		},
 		FollowLeader = true,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { SovietNorthBarracks1, SovietNorthBarracks2 }, Vehicles = { SovietNorthFactory } },
 		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
 		Units = {
@@ -145,22 +133,16 @@ Squads = {
 		AttackPaths = SovietNorthernAttackPaths
 	},
 	Migs = {
-		Player = nil,
 		Delay = {
 			easy = DateTime.Minutes(14),
 			normal = DateTime.Minutes(12),
 			hard = DateTime.Minutes(10)
 		},
-		Interval = {
-			easy = DateTime.Minutes(3),
-			normal = DateTime.Seconds(165),
-			hard = DateTime.Seconds(150)
+		AttackValuePerSecond = {
+			easy = { Min = 7, Max = 7 },
+			normal = { Min = 14, Max = 14 },
+			hard = { Min = 21, Max = 21 },
 		},
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Aircraft = { "afld" } },
 		Units = {
 			easy = {
@@ -175,19 +157,14 @@ Squads = {
 		},
 	},
 	Naval = {
-		Player = nil,
 		ActiveCondition = function()
 			return PlayerHasNavalPresence(Greece)
 		end,
-		Interval = {
-			easy = DateTime.Seconds(75),
-			normal = DateTime.Seconds(60),
-			hard = DateTime.Seconds(45)
+		AttackValuePerSecond = {
+			easy = { Min = 10, Max = 10 },
+			normal = { Min = 18, Max = 18 },
+			hard = { Min = 32, Max = 32 },
 		},
-		QueueProductionStatuses = {
-			Ships = false
-		},
-		IdleUnits = { },
 		ProducerActors = { Ships = { SovietSouthSubPen1, SovietSouthSubPen2 } },
 		ProducerTypes = { Ships = { "spen" } },
 		Units = {

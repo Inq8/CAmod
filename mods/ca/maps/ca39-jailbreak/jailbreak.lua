@@ -23,9 +23,9 @@ Squads = {
             hard = DateTime.Minutes(2),
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(14), Value = 50 } },
-			normal = { { MinTime = 0, Value = 50 }, { MinTime = DateTime.Minutes(12), Value = 70 }, { MinTime = DateTime.Minutes(16), Value = 100 } },
-			hard = { { MinTime = 0, Value = 80 }, { MinTime = DateTime.Minutes(10), Value = 120 }, { MinTime = DateTime.Minutes(14), Value = 160 } },
+			easy = { Min = 20, Max = 50 },
+			normal = { Min = 50, Max = 100 },
+			hard = { Min = 80, Max = 160 },
 		},
 		ActiveCondition = function()
 			return HasConyardAcrossRiver()
@@ -44,10 +44,10 @@ Squads = {
 			normal = DateTime.Minutes(12),
 			hard = DateTime.Minutes(11)
 		},
-		Interval = {
-			easy = DateTime.Minutes(3),
-			normal = DateTime.Seconds(150),
-			hard = DateTime.Minutes(2)
+		AttackValuePerSecond = {
+			easy = { Min = 7, Max = 7 },
+			normal = { Min = 14, Max = 14 },
+			hard = { Min = 21, Max = 21 },
 		},
 		ProducerTypes = { Aircraft = { "hpad" } },
 		Units = {

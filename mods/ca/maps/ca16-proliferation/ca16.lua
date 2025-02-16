@@ -112,22 +112,16 @@ RaidEntryPaths = {
 
 Squads = {
 	Air = {
-		Player = nil,
 		Delay = {
 			easy = DateTime.Minutes(13),
 			normal = DateTime.Minutes(12),
 			hard = DateTime.Minutes(11)
 		},
-		Interval = {
-			easy = DateTime.Minutes(3),
-			normal = DateTime.Seconds(165),
-			hard = DateTime.Seconds(150)
+		AttackValuePerSecond = {
+			easy = { Min = 5, Max = 5 },
+			normal = { Min = 10, Max = 10 },
+			hard = { Min = 15, Max = 15 },
 		},
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Aircraft = { "hpad.td" } },
 		Units = {
 			easy = {

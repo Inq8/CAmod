@@ -84,23 +84,17 @@ NavalDropInterval = {
 
 Squads = {
 	Main = {
-		Player = nil,
 		Delay = {
 			easy = DateTime.Minutes(4),
 			normal = DateTime.Minutes(3),
 			hard = DateTime.Minutes(2)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(12), Value = 30 } },
-			normal = { { MinTime = 0, Value = 50 } },
-			hard = { { MinTime = 0, Value = 80 } },
-		},
-		QueueProductionStatuses = {
-			Infantry = false,
-			Vehicles = false
+			easy = { Min = 15, Max = 30 },
+			normal = { Min = 50, Max = 50 },
+			hard = { Min = 80, Max = 80 },
 		},
 		FollowLeader = true,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { SovietBarracks }, Vehicles = { SovietWarFactory } },
 		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
 		Units = {
@@ -144,17 +138,12 @@ Squads = {
 		AttackPaths = SovietAttackPaths,
 	},
 	Western = {
-		Player = nil,
-		Interval = {
-			easy = DateTime.Seconds(60),
-			normal = DateTime.Seconds(30),
-			hard = DateTime.Seconds(15)
-		},
-		QueueProductionStatuses = {
-			Infantry = false
+		AttackValuePerSecond = {
+			easy = { Min = 8, Max = 8 },
+			normal = { Min = 20, Max = 20 },
+			hard = { Min = 40, Max = 40 },
 		},
 		FollowLeader = true,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { SovietWestBarracks } },
 		Units = {
 			easy = { { Infantry = { "e3", "e1", "e2", "e4" } } },
@@ -166,22 +155,16 @@ Squads = {
 		}
 	},
 	Migs = {
-		Player = nil,
 		Delay = {
 			easy = DateTime.Minutes(14),
 			normal = DateTime.Minutes(10),
 			hard = DateTime.Minutes(6)
 		},
-		Interval = {
-			easy = DateTime.Minutes(6),
-			normal = DateTime.Minutes(4),
-			hard = DateTime.Minutes(2)
+		AttackValuePerSecond = {
+			easy = { Min = 4, Max = 4 },
+			normal = { Min = 10, Max = 10 },
+			hard = { Min = 25, Max = 25 },
 		},
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Aircraft = { "afld" } },
 		Units = {
 			easy = {

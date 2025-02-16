@@ -25,21 +25,14 @@ MaxEnslavedUnitsKilled = {
 Squads = {
 	ScrinMain = {
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 35 } },
-			normal = { { MinTime = 0, Value = 68 } },
-			hard = { { MinTime = 0, Value = 105 } },
+			easy = { Min = 35, Max = 35 },
+			normal = { Min = 68, Max = 68 },
+			hard = { Min = 105, Max = 105 },
 		},
 		ActiveCondition = function()
 			return Mastermind3.IsDead or Mastermind4.IsDead or DateTime.GameTime > DateTime.Minutes(6)
 		end,
-		QueueProductionStatuses = {
-			Infantry = false,
-			Vehicles = false,
-			Aircraft = false,
-		},
 		FollowLeader = true,
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
 		Units = UnitCompositions.Scrin.Main,
 		AttackPaths = ScrinGroundAttackPaths,
@@ -51,15 +44,10 @@ Squads = {
 			hard = DateTime.Seconds(100)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(12), Value = 20 } },
-			normal = { { MinTime = 0, Value = 16 }, { MinTime = DateTime.Minutes(10), Value = 32 } },
-			hard = { { MinTime = 0, Value = 28 }, { MinTime = DateTime.Minutes(8), Value = 55 } },
+			easy = { Min = 10, Max = 20, RampDuration = DateTime.Minutes(13) },
+			normal = { Min = 16, Max = 32, RampDuration = DateTime.Minutes(11) },
+			hard = { Min = 28, Max = 55, RampDuration = DateTime.Minutes(9) },
 		},
-		QueueProductionStatuses = {
-			Vehicles = false
-		},
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Vehicles = { "wsph" } },
 		Units = {
 			easy = {
@@ -87,16 +75,11 @@ Squads = {
 			normal = DateTime.Minutes(8),
 			hard = DateTime.Minutes(6)
 		},
-		Interval = {
-			easy = DateTime.Minutes(6),
-			normal = DateTime.Minutes(4),
-			hard = DateTime.Minutes(2)
+		AttackValuePerSecond = {
+			easy = { Min = 7, Max = 7 },
+			normal = { Min = 14, Max = 14 },
+			hard = { Min = 21, Max = 21 },
 		},
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Aircraft = { "grav" } },
 		Units = {
 			easy = {
@@ -113,18 +96,13 @@ Squads = {
 		}
 	},
 	ScrinBigAir = {
-		Interval = {
-			normal = DateTime.Minutes(4),
-			hard = DateTime.Minutes(2)
+		AttackValuePerSecond = {
+			normal = { Min = 15, Max = 15 },
+			hard = { Min = 35, Max = 35 },
 		},
 		ActiveCondition = function()
 			return Mastermind4.IsDead
 		end,
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Aircraft = { "grav" } },
 		Units = {
 			normal = {

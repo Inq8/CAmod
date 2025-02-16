@@ -1,22 +1,16 @@
 
 Squads = {
 	Planes = {
-		Player = nil,
 		Delay = {
 			easy = DateTime.Minutes(10),
 			normal = DateTime.Minutes(8),
 			hard = DateTime.Minutes(6)
 		},
-		Interval = {
-			easy = DateTime.Seconds(210),
-			normal = DateTime.Seconds(180),
-			hard = DateTime.Seconds(150)
+		AttackValuePerSecond = {
+			easy = { Min = 7, Max = 7 },
+			normal = { Min = 14, Max = 14 },
+			hard = { Min = 21, Max = 21 },
 		},
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Aircraft = { "afld" } },
 		Units = {
 			easy = {
@@ -34,22 +28,16 @@ Squads = {
 		},
 	},
 	Helicopters = {
-		Player = nil,
 		Delay = {
 			easy = DateTime.Minutes(8),
 			normal = DateTime.Minutes(6),
 			hard = DateTime.Minutes(4)
 		},
-		Interval = {
-			easy = DateTime.Seconds(210),
-			normal = DateTime.Seconds(180),
-			hard = DateTime.Seconds(150)
+		AttackValuePerSecond = {
+			easy = { Min = 7, Max = 7 },
+			normal = { Min = 14, Max = 14 },
+			hard = { Min = 21, Max = 21 },
 		},
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Aircraft = { "hpad" } },
 		Units = {
 			easy = {
@@ -64,7 +52,6 @@ Squads = {
 		},
 	},
 	Naval = {
-		Player = nil,
 		ActiveCondition = function()
 			return PlayerHasICBMSubs()
 		end,
@@ -72,10 +59,6 @@ Squads = {
 			normal = DateTime.Seconds(60),
 			hard = DateTime.Seconds(30)
 		},
-		QueueProductionStatuses = {
-			Ships = false
-		},
-		IdleUnits = { },
 		ProducerTypes = { Ships = { "spen" } },
 		Units = {
 			normal = {

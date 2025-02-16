@@ -13,53 +13,41 @@ GDIAttackPaths = {
 
 Squads = {
 	GreeceMain = {
-		Player = nil,
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(14), Value = 25 } },
-			normal = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(12), Value = 45 } },
-			hard = { { MinTime = 0, Value = 35 }, { MinTime = DateTime.Minutes(10), Value = 75 } },
+			easy = { Min = 10, Max = 25 },
+			normal = { Min = 25, Max = 45 },
+			hard = { Min = 35, Max = 75 },
 		},
-		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = true,
-		IdleUnits = { },
 		ProducerTypes = { Infantry = { "tent" }, Vehicles = { "weap" } },
 		Units = UnitCompositions.Allied.Main,
 		AttackPaths = GreeceAttackPaths,
 	},
 	GDIMain = {
-		Player = nil,
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(14), Value = 25 } },
-			normal = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(12), Value = 45 } },
-			hard = { { MinTime = 0, Value = 35 }, { MinTime = DateTime.Minutes(10), Value = 75 } },
+			easy = { Min = 10, Max = 25 },
+			normal = { Min = 25, Max = 45 },
+			hard = { Min = 35, Max = 75 },
 		},
-		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = true,
-		IdleUnits = { },
 		ProducerTypes = { Infantry = { "pyle" }, Vehicles = { "weap.td" } },
 		Units = UnitCompositions.GDI.Main,
 		AttackPaths = GDIAttackPaths,
 	},
 	GDIAir = {
-		Player = nil,
 		Delay = {
 			easy = DateTime.Minutes(13),
 			normal = DateTime.Minutes(12),
 			hard = DateTime.Minutes(11)
 		},
-		Interval = {
-			easy = DateTime.Minutes(3),
-			normal = DateTime.Seconds(150),
-			hard = DateTime.Minutes(2)
+		AttackValuePerSecond = {
+			easy = { Min = 7, Max = 7 },
+			normal = { Min = 14, Max = 14 },
+			hard = { Min = 21, Max = 21 },
 		},
 		ActiveCondition = function()
 			return not GDIHelipad1.IsDead or not GDIHelipad2.IsDead or not GDIHelipad3.IsDead or not GDIHelipad4.IsDead
 		end,
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Aircraft = { "afld.gdi" } },
 		Units = {
 			easy = {

@@ -43,45 +43,33 @@ MaxReactorFuelTime = DateTime.Minutes(10)
 
 Squads = {
 	Main = {
-		Player = nil,
 		Delay = {
 			easy = DateTime.Minutes(5),
 			normal = DateTime.Minutes(4),
 			hard = DateTime.Minutes(3)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(14), Value = 25 } },
-			normal = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(12), Value = 35 }, { MinTime = DateTime.Minutes(16), Value = 50 } },
-			hard = { { MinTime = 0, Value = 40 }, { MinTime = DateTime.Minutes(10), Value = 60 }, { MinTime = DateTime.Minutes(14), Value = 80 } },
-		},
-		QueueProductionStatuses = {
-			Infantry = false,
-			Vehicles = false
+			easy = { Min = 10, Max = 25 },
+			normal = { Min = 25, Max = 50 },
+			hard = { Min = 40, Max = 80 },
 		},
 		FollowLeader = true,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { MainBarracks1, MainBarracks2 }, Vehicles = { MainFactory } },
 		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
 		Units = UnitCompositions.Soviet.Main,
 		AttackPaths = AttackPaths,
 	},
 	AirAntiLight = {
-		Player = nil,
 		Delay = {
 			easy = DateTime.Minutes(7),
 			normal = DateTime.Minutes(6),
 			hard = DateTime.Minutes(5)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 5 }, { MinTime = DateTime.Minutes(14), Value = 10 } },
-			normal = { { MinTime = 0, Value = 9 }, { MinTime = DateTime.Minutes(12), Value = 12 }, { MinTime = DateTime.Minutes(16), Value = 15 } },
-			hard = { { MinTime = 0, Value = 13 }, { MinTime = DateTime.Minutes(10), Value = 20 }, { MinTime = DateTime.Minutes(14), Value = 30 }, { MinTime = DateTime.Minutes(25), Value = 40 } },
+			easy = { Min = 5, Max = 10 },
+			normal = { Min = 9, Max = 15 },
+			hard = { Min = 13, Max = 40 },
 		},
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Aircraft = { "afld" } },
 		Units = {
 			easy = {
@@ -96,22 +84,16 @@ Squads = {
 		},
 	},
 	AirAntiHeavy = {
-		Player = nil,
 		Delay = {
 			easy = DateTime.Minutes(13),
 			normal = DateTime.Minutes(10),
 			hard = DateTime.Minutes(7)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 5 }, { MinTime = DateTime.Minutes(14), Value = 10 } },
-			normal = { { MinTime = 0, Value = 9 }, { MinTime = DateTime.Minutes(12), Value = 12 }, { MinTime = DateTime.Minutes(16), Value = 15 } },
-			hard = { { MinTime = 0, Value = 13 }, { MinTime = DateTime.Minutes(10), Value = 20 }, { MinTime = DateTime.Minutes(14), Value = 30 }, { MinTime = DateTime.Minutes(25), Value = 40 } },
+			easy = { Min = 5, Max = 10 },
+			normal = { Min = 9, Max = 15 },
+			hard = { Min = 13, Max = 40 },
 		},
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Aircraft = { "afld" } },
 		Units = {
 			easy = {
@@ -126,7 +108,6 @@ Squads = {
 		},
 	},
 	AirAntiAir = {
-		Player = nil,
 		AttackValuePerSecond = {
 			easy = { { MinTime = 0, Value = 10 } },
 			normal = { { MinTime = 0, Value = 15 } },
@@ -136,11 +117,6 @@ Squads = {
 			local gdiAircraft = GDI.GetActorsByTypes({ "orca", "a10", "orcb", "auro" })
 			return #gdiAircraft > 3
 		end,
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Aircraft = { "afld" } },
 		Units = {
 			easy = {
@@ -155,22 +131,16 @@ Squads = {
 		},
 	},
 	Kirovs = {
-		Player = nil,
 		Delay = {
 			easy = DateTime.Minutes(15),
 			normal = DateTime.Minutes(13),
 			hard = DateTime.Minutes(11)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 5 }, { MinTime = DateTime.Minutes(14), Value = 10 } },
-			normal = { { MinTime = 0, Value = 9 }, { MinTime = DateTime.Minutes(12), Value = 12 }, { MinTime = DateTime.Minutes(16), Value = 15 } },
-			hard = { { MinTime = 0, Value = 13 }, { MinTime = DateTime.Minutes(10), Value = 20 }, { MinTime = DateTime.Minutes(14), Value = 30 }, { MinTime = DateTime.Minutes(25), Value = 40 } },
+			easy = { Min = 5, Max = 10 },
+			normal = { Min = 9, Max = 15 },
+			hard = { Min = 13, Max = 40 },
 		},
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Aircraft = { "afld" } },
 		Units = {
 			easy = {

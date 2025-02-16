@@ -9,12 +9,14 @@ CyborgSquadInterval = {
 	hard = DateTime.Minutes(1),
 }
 
+
+
 Squads = {
 	Main1 = {
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(14), Value = 25 } },
-			normal = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(12), Value = 35 }, { MinTime = DateTime.Minutes(16), Value = 50 } },
-			hard = { { MinTime = 0, Value = 40 }, { MinTime = DateTime.Minutes(10), Value = 60 }, { MinTime = DateTime.Minutes(14), Value = 80 } },
+			easy = { Min = 10, Max = 25 },
+			normal = { Min = 25, Max = 50 },
+			hard = { Min = 40, Max = 80 },
 		},
 		ActiveCondition = function()
 			return NodEastOrWestNeutralized()
@@ -38,12 +40,11 @@ Squads = {
 			hard = DateTime.Minutes(4),
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(14), Value = 25 } },
-			normal = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(12), Value = 35 }, { MinTime = DateTime.Minutes(16), Value = 50 } },
-			hard = { { MinTime = 0, Value = 40 }, { MinTime = DateTime.Minutes(10), Value = 60 }, { MinTime = DateTime.Minutes(14), Value = 80 } },
+			easy = { Min = 10, Max = 25 },
+			normal = { Min = 25, Max = 50 },
+			hard = { Min = 40, Max = 80 },
 		},
 		FollowLeader = true,
-		ProducerActors = nil,
 		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
 		Units = UnitCompositions.Nod.Main,
 		AttackPaths = {
@@ -59,12 +60,11 @@ Squads = {
 			hard = DateTime.Minutes(4),
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(14), Value = 25 } },
-			normal = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(12), Value = 35 }, { MinTime = DateTime.Minutes(16), Value = 50 } },
-			hard = { { MinTime = 0, Value = 40 }, { MinTime = DateTime.Minutes(10), Value = 60 }, { MinTime = DateTime.Minutes(14), Value = 80 } },
+			easy = { Min = 10, Max = 25 },
+			normal = { Min = 25, Max = 50 },
+			hard = { Min = 40, Max = 80 },
 		},
 		FollowLeader = true,
-		ProducerActors = nil,
 		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
 		Units = UnitCompositions.Nod.Main,
 		AttackPaths = {
@@ -75,22 +75,16 @@ Squads = {
 		},
 	},
 	Air = {
-		Player = nil,
 		Delay = {
 			easy = DateTime.Minutes(13),
 			normal = DateTime.Minutes(12),
 			hard = DateTime.Minutes(11)
 		},
-		Interval = {
-			easy = DateTime.Minutes(3),
-			normal = DateTime.Seconds(165),
-			hard = DateTime.Seconds(150)
+		AttackValuePerSecond = {
+			easy = { Min = 7, Max = 7 },
+			normal = { Min = 14, Max = 14 },
+			hard = { Min = 21, Max = 21 },
 		},
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Aircraft = { "hpad.td" } },
 		Units = {
 			easy = {

@@ -36,59 +36,48 @@ Patrols = {
 
 Squads = {
 	South = {
-		Player = nil,
 		Delay = {
 			easy = DateTime.Seconds(390),
 			normal = DateTime.Seconds(270),
 			hard = DateTime.Seconds(150)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(14), Value = 20 } },
-			normal = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(12), Value = 46 } },
-			hard = { { MinTime = 0, Value = 45 }, { MinTime = DateTime.Minutes(10), Value = 50 }, { MinTime = DateTime.Minutes(14), Value = 55 } },
+			easy = { Min = 10, Max = 20, RampDuration = DateTime.Minutes(15) },
+			normal = { Min = 25, Max = 46, RampDuration = DateTime.Minutes(13)  },
+			hard = { Min = 45, Max = 55, RampDuration = DateTime.Minutes(11)  },
 		},
-		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = true,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { AlliedSouthBarracks }, Vehicles = { AlliedSouthFactory } },
 		Units = UnitCompositions.Allied.Main,
 		AttackPaths = GreeceSouthAttackPaths,
 	},
 	North = {
-		Player = nil,
 		Delay = {
 			easy = DateTime.Seconds(210),
 			normal = DateTime.Seconds(150),
 			hard = DateTime.Seconds(90)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(14), Value = 20 } },
-			normal = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(12), Value = 46 } },
-			hard = { { MinTime = 0, Value = 45 }, { MinTime = DateTime.Minutes(10), Value = 50 }, { MinTime = DateTime.Minutes(14), Value = 55 } },
+			easy = { Min = 10, Max = 20, RampDuration = DateTime.Minutes(15) },
+			normal = { Min = 25, Max = 46, RampDuration = DateTime.Minutes(13) },
+			hard = { Min = 45, Max = 55, RampDuration = DateTime.Minutes(11) },
 		},
-		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = true,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { AlliedNorthBarracks }, Vehicles = { AlliedNorthFactory } },
 		Units = UnitCompositions.Allied.Main,
 		AttackPaths = GreeceNorthAttackPaths,
 	},
 	Air = {
-		Player = nil,
 		Delay = {
 			easy = DateTime.Minutes(13),
 			normal = DateTime.Minutes(12),
 			hard = DateTime.Minutes(11)
 		},
-		Interval = {
-			easy = DateTime.Minutes(3),
-			normal = DateTime.Seconds(150),
-			hard = DateTime.Minutes(2)
+		AttackValuePerSecond = {
+			easy = { Min = 7, Max = 7 },
+			normal = { Min = 14, Max = 14 },
+			hard = { Min = 21, Max = 21 },
 		},
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
 		ProducerActors = nil,
 		ProducerTypes = { Aircraft = { "hpad" } },
 		Units = {

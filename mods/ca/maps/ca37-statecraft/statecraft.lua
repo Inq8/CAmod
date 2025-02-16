@@ -89,15 +89,15 @@ KrukovUnits = {
 }
 
 MainAttackValues = {
-	easy = { { MinTime = 0, Value = 5 }, { MinTime = DateTime.Minutes(14), Value = 15 } },
-	normal = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(12), Value = 25 }, { MinTime = DateTime.Minutes(16), Value = 33 } },
-	hard = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(10), Value = 40 }, { MinTime = DateTime.Minutes(14), Value = 50 }, { MinTime = DateTime.Minutes(28), Value = 55 } },
+	easy = { Min = 5, Max = 15 },
+	normal = { Min = 15, Max = 33 },
+	hard = { Min = 25, Max = 55 },
 }
 
 SecondaryAttackValues = {
-	easy = { { MinTime = 0, Value = 2 }, { MinTime = DateTime.Minutes(14), Value = 7 } },
-	normal = { { MinTime = 0, Value = 8 }, { MinTime = DateTime.Minutes(12), Value = 12 }, { MinTime = DateTime.Minutes(16), Value = 16 } },
-	hard = { { MinTime = 0, Value = 12 }, { MinTime = DateTime.Minutes(10), Value = 20 }, { MinTime = DateTime.Minutes(14), Value = 25 }, { MinTime = DateTime.Minutes(28), Value = 28 } },
+	easy = { Min = 2, Max = 7 },
+	normal = { Min = 8, Max = 16 },
+	hard = { Min = 12, Max = 28 },
 }
 
 Squads = {
@@ -262,10 +262,10 @@ Squads = {
 			normal = DateTime.Minutes(12),
 			hard = DateTime.Minutes(10)
 		},
-		Interval = {
-			easy = DateTime.Minutes(3),
-			normal = DateTime.Seconds(165),
-			hard = DateTime.Seconds(150)
+		AttackValuePerSecond = {
+			easy = { Min = 7, Max = 7 },
+			normal = { Min = 14, Max = 14 },
+			hard = { Min = 21, Max = 21 },
 		},
 		ProducerTypes = { Aircraft = { "afld" } },
 		Units = {

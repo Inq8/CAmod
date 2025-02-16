@@ -824,18 +824,42 @@ CalculateInterval = function(squad)
 
 	if squad.AttackValuePerSecond ~= nil and squad.AttackValuePerSecond[Difficulty] ~= nil then
 		local desiredValue = 0
-
-		Utils.Do(squad.AttackValuePerSecond[Difficulty], function(item)
-			if DateTime.GameTime >= item.MinTime and item.Value > desiredValue then
-				desiredValue = item.Value
-			end
-		end)
-
+		local attackValues = squad.AttackValuePerSecond[Difficulty]
+		local ticksSinceInit = DateTime.GameTime - squad.InitTime
+		desiredValue = CalculateValuePerSecond(ticksSinceInit, attackValues)
 		local ticks = ((25 * squad.WaveTotalCost) - (desiredValue * ticksSpentProducing)) / desiredValue
 		return math.max(math.floor(ticks), 0)
 	else
 		return ticksSpentProducing
 	end
+end
+
+-- calculate the value per second based on the current tick and the min/max value of the squad
+function CalculateValuePerSecond(currentTick, attackValues)
+	local minValue = attackValues.Min
+	local maxValue = attackValues.Max
+	local rampDuration
+	local growthFactor
+	if attackValues.RampDuration ~= nil then
+		rampDuration = attackValues.RampDuration
+	else
+		if Difficulty == "hard" then
+			rampDuration = DateTime.Minutes(15)
+		elseif Difficulty == "normal" then
+			rampDuration = DateTime.Minutes(17)
+		else
+			rampDuration = DateTime.Minutes(19)
+		end
+	end
+	if attackValues.GrowthFactor ~= nil then
+		growthFactor = attackValues.GrowthFactor
+	else
+		growthFactor = 2.06
+	end
+    local progress = currentTick / rampDuration
+    local scaledProgress = progress ^ growthFactor
+    local value = minValue + (maxValue - minValue) * scaledProgress
+    return math.min(math.floor(value), maxValue)
 end
 
 -- used to make sure multiple squads being produced from the same structure don't get mixed up
