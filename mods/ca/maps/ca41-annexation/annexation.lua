@@ -169,7 +169,7 @@ InitScrinRebels = function()
 	local scrinRebelPlayers = { ScrinRebels1, ScrinRebels2, ScrinRebels3 }
 
 	Utils.Do(scrinRebelPlayers, function(p)
-		AutoRepairBuildings(p)
+		AutoRepairAndRebuildBuildings(p)
 		SetupRefAndSilosCaptureCredits(p)
 		AutoReplaceHarvesters(p)
 

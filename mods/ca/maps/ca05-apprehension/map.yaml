@@ -28,7 +28,7 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
-		Enemies: Greece, Nod
+		Enemies: Greece, England, Nod, NodTransports
 	PlayerReference@Greece:
 		Name: Greece
 		AllowBots: False
@@ -40,13 +40,26 @@ Players:
 		Color: 99ACF2
 		LockSpawn: True
 		LockTeam: True
+		Allies: England
 		Enemies: Nod, Creeps
 	PlayerReference@Nod:
 		Name: Nod
 		Bot: campaign
 		Faction: nod
 		Color: FE1100
-		Enemies: Greece, Creeps
+		Enemies: Greece, England, Creeps
+	PlayerReference@England:
+		Name: England
+		Faction: allies
+		Color: A1EF8C
+		Allies: Greece
+		Enemies: Nod
+	PlayerReference@NodTransports:
+		Name: NodTransports
+		Bot: campaign
+		Faction: nod
+		Color: E6E6FF
+		Enemies: Creeps
 
 Actors:
 	Actor0: tc05
@@ -1300,9 +1313,6 @@ Actors:
 	Actor556: t07
 		Owner: Neutral
 		Location: 16,57
-	Actor557: t02
-		Owner: Neutral
-		Location: 38,78
 	Actor558: t13
 		Owner: Neutral
 		Location: 80,0
@@ -1573,9 +1583,6 @@ Actors:
 	Actor664: t17
 		Owner: Neutral
 		Location: 2,9
-	Actor665: t06.husk
-		Owner: Neutral
-		Location: 37,80
 	Actor666: t01
 		Owner: Neutral
 		Location: 90,67
@@ -1825,9 +1832,6 @@ Actors:
 	Actor761: t05
 		Owner: Neutral
 		Location: 67,67
-	Actor762: t02
-		Owner: Neutral
-		Location: 85,77
 	Actor763: t01
 		Owner: Neutral
 		Location: 28,5
@@ -1927,9 +1931,6 @@ Actors:
 	Actor804: t03
 		Owner: Neutral
 		Location: 17,66
-	Actor805: t01
-		Owner: Neutral
-		Location: 84,76
 	Actor808: t17
 		Owner: Neutral
 		Location: 21,63
@@ -2092,9 +2093,6 @@ Actors:
 	Actor876: t03
 		Owner: Neutral
 		Location: 15,38
-	Actor877: t16
-		Owner: Neutral
-		Location: 48,74
 	Actor878: t16.husk
 		Owner: Neutral
 		Location: 60,68
@@ -2452,9 +2450,6 @@ Actors:
 	Actor1020: t13
 		Owner: Neutral
 		Location: 21,42
-	Actor1024: t06
-		Owner: Neutral
-		Location: 37,78
 	Actor1025: t12
 		Owner: Neutral
 		Location: 19,29
@@ -2917,9 +2912,6 @@ Actors:
 	Actor1221: t12
 		Owner: Neutral
 		Location: 55,58
-	Actor1223: t03
-		Owner: Neutral
-		Location: 37,81
 	Actor1224: t13
 		Owner: Neutral
 		Location: 18,20
@@ -3004,9 +2996,6 @@ Actors:
 	Actor1262: t02
 		Owner: Neutral
 		Location: 84,39
-	Actor1263: t03.husk
-		Owner: Neutral
-		Location: 37,79
 	Actor1264: t03
 		Owner: Neutral
 		Location: 92,64
@@ -3664,9 +3653,6 @@ Actors:
 	Actor1531: t06
 		Owner: Neutral
 		Location: 1,38
-	Actor1532: t06
-		Owner: Neutral
-		Location: 88,76
 	Actor1533: t06.husk
 		Owner: Neutral
 		Location: 11,55
@@ -3679,9 +3665,6 @@ Actors:
 	Actor1536: t03.husk
 		Owner: Neutral
 		Location: 14,31
-	Actor1537: t07
-		Owner: Neutral
-		Location: 91,76
 	Actor1539: t06
 		Owner: Neutral
 		Location: 95,41
@@ -4051,9 +4034,6 @@ Actors:
 	Actor1701: t12
 		Owner: Neutral
 		Location: 12,82
-	Actor1702: t03.husk
-		Owner: Neutral
-		Location: 87,76
 	Actor1704: t05
 		Owner: Neutral
 		Location: 22,21
@@ -4072,9 +4052,6 @@ Actors:
 	Actor1709: t03
 		Owner: Neutral
 		Location: 21,17
-	Actor1710: t03.husk
-		Owner: Neutral
-		Location: 89,73
 	Actor1711: t08
 		Owner: Neutral
 		Location: 43,36
@@ -4150,9 +4127,6 @@ Actors:
 	Actor1740: t05
 		Owner: Neutral
 		Location: 15,67
-	Actor1741: t08
-		Owner: Neutral
-		Location: 92,76
 	Actor1742: t13
 		Owner: Neutral
 		Location: 92,59
@@ -4444,9 +4418,6 @@ Actors:
 	Actor1868: t02.husk
 		Owner: Neutral
 		Location: 94,29
-	Actor1869: t13
-		Owner: Neutral
-		Location: 84,75
 	Actor1870: t17
 		Owner: Neutral
 		Location: 17,9
@@ -4471,9 +4442,6 @@ Actors:
 	Actor1878: t13
 		Owner: Neutral
 		Location: 54,32
-	Actor1879: t03
-		Owner: Neutral
-		Location: 49,74
 	Actor1880: t17.husk
 		Owner: Neutral
 		Location: 57,43
@@ -4690,9 +4658,6 @@ Actors:
 	Actor1970: t01
 		Owner: Neutral
 		Location: 81,50
-	Actor1971: t02
-		Owner: Neutral
-		Location: 37,77
 	Actor1972: t17
 		Owner: Neutral
 		Location: 54,54
@@ -4741,9 +4706,6 @@ Actors:
 	Actor1992: t06
 		Owner: Neutral
 		Location: 77,16
-	Actor1995: t03.husk
-		Owner: Neutral
-		Location: 89,76
 	Actor1996: t01
 		Owner: Neutral
 		Location: 0,15
@@ -5836,21 +5798,23 @@ Actors:
 	Actor2385: brik
 		Owner: Nod
 		Location: 80,80
-	Actor2386: spen.nod
+	SubPen: spen.nod
 		Owner: Nod
 		Location: 77,84
-	Actor2387: obli
+	Obelisk2: obli
 		Owner: Nod
 		Location: 78,65
-	Actor2388: obli
+	Obelisk1: obli
 		Owner: Nod
 		Location: 68,65
-	Actor2389: gun.nod
+	Turret2: gun.nod
 		Owner: Nod
 		Location: 76,63
-	Actor2390: gun.nod
+		TurretFacing: 192
+	Turret1: gun.nod
 		Owner: Nod
 		Location: 70,63
+		TurretFacing: 192
 	Actor2395: silo.td
 		Owner: Nod
 		Location: 64,69
@@ -5866,22 +5830,22 @@ Actors:
 	Actor2403: afac
 		Owner: Nod
 		Location: 77,78
-	Actor2404: nsam
+	SAM6: nsam
 		Owner: Nod
 		Location: 85,23
-	Actor2405: nsam
+	SAM1: nsam
 		Owner: Nod
 		Location: 11,16
-	Actor2406: nsam
+	SAM3: nsam
 		Owner: Nod
 		Location: 36,44
-	Actor2407: nsam
+	SAM2: nsam
 		Owner: Nod
 		Location: 16,60
-	Actor2408: nsam
+	SAM7: nsam
 		Owner: Nod
 		Location: 75,46
-	Actor2409: nsam
+	SAM4: nsam
 		Owner: Nod
 		Location: 29,89
 	Actor2410: tc05
@@ -5907,12 +5871,6 @@ Actors:
 		Owner: Nod
 		Location: 93,86
 		TurretFacing: 444
-	Actor2419: split2
-		Owner: Neutral
-		Location: 92,81
-	Actor2420: split2
-		Owner: Neutral
-		Location: 95,76
 	Actor2344: t13
 		Owner: Neutral
 		Location: 0,20
@@ -5958,46 +5916,11 @@ Actors:
 	Actor2450: t02
 		Owner: Neutral
 		Location: 0,26
-	Actor2439: snip
-		Owner: Greece
-		Location: 3,26
-		SubCell: 2
-		Facing: 896
 	Actor2442: snip
 		Owner: Greece
 		Location: 3,26
 		SubCell: 4
 		Facing: 896
-	Actor2444: snip
-		Owner: Greece
-		Location: 3,26
-		SubCell: 5
-		Facing: 896
-	Actor2301: snip
-		Owner: Greece
-		Location: 3,26
-		SubCell: 1
-		Facing: 896
-	Actor2246: snip
-		Owner: Greece
-		SubCell: 2
-		Location: 5,33
-		Facing: 768
-	Actor2270: snip
-		Owner: Greece
-		SubCell: 4
-		Location: 5,33
-		Facing: 768
-	Actor2445: snip
-		Owner: Greece
-		SubCell: 5
-		Location: 5,33
-		Facing: 768
-	Actor2447: snip
-		Owner: Greece
-		SubCell: 1
-		Location: 5,33
-		Facing: 768
 	Actor2458: rtnk
 		Owner: Greece
 		Facing: 768
@@ -6006,11 +5929,7 @@ Actors:
 		Owner: Greece
 		Facing: 768
 		Location: 7,33
-	Actor2460: rtnk
-		Owner: Greece
-		Facing: 768
-		Location: 3,34
-	Actor2462: rtnk
+	NonHardMirage1: rtnk
 		Owner: Greece
 		Location: 7,37
 		Facing: 642
@@ -6049,11 +5968,6 @@ Actors:
 		Facing: 384
 		SubCell: 3
 		Location: 57,82
-	Actor2470: n1
-		Owner: Nod
-		Facing: 384
-		SubCell: 3
-		Location: 53,75
 	Actor2471: n1
 		Owner: Nod
 		SubCell: 3
@@ -6084,54 +5998,15 @@ Actors:
 		SubCell: 3
 		Location: 79,63
 		Facing: 158
-	Actor2454: snip
-		Owner: Greece
-		SubCell: 2
-		Facing: 768
-		Location: 7,35
 	Actor2455: snip
 		Owner: Greece
 		SubCell: 4
-		Facing: 768
 		Location: 7,35
-	Actor2456: snip
-		Owner: Greece
-		SubCell: 5
 		Facing: 768
-		Location: 7,35
-	Actor2457: snip
-		Owner: Greece
-		SubCell: 1
-		Facing: 768
-		Location: 7,35
 	Actor2461: rtnk
 		Owner: Greece
 		Location: 5,26
 		Facing: 896
-	Actor2448: snip
-		Owner: Greece
-		SubCell: 2
-		Facing: 896
-		Location: 7,28
-	Actor2449: snip
-		Owner: Greece
-		SubCell: 4
-		Facing: 896
-		Location: 7,28
-	Actor2451: snip
-		Owner: Greece
-		SubCell: 5
-		Facing: 896
-		Location: 7,28
-	Actor2452: snip
-		Owner: Greece
-		SubCell: 1
-		Facing: 896
-		Location: 7,28
-	Actor2453: rtnk
-		Owner: Greece
-		Facing: 896
-		Location: 3,28
 	Actor2477: t03
 		Owner: Neutral
 		Location: 28,30
@@ -6141,14 +6016,14 @@ Actors:
 	PlayerStart: waypoint
 		Owner: Neutral
 		Location: 7,31
-	Actor2258: nsam
+	SAM5: nsam
 		Owner: Nod
 		Location: 43,20
-	Actor2479: jeep
+	Ranger1: jeep
 		Owner: Greece
 		Location: 9,29
 		Facing: 896
-	Actor2480: jeep
+	Ranger2: jeep
 		Owner: Greece
 		Location: 9,34
 		Facing: 769
@@ -6160,7 +6035,7 @@ Actors:
 		Owner: Nod
 		Location: 74,61
 		Facing: 150
-	Actor2483: obli
+	Obelisk3: obli
 		Owner: Nod
 		Location: 69,81
 	Actor2215: t07
@@ -6241,11 +6116,6 @@ Actors:
 		SubCell: 3
 		Location: 19,61
 		Facing: 713
-	Actor2499: n3
-		Owner: Nod
-		SubCell: 3
-		Location: 37,63
-		Facing: 118
 	Actor2500: n3
 		Owner: Nod
 		Facing: 384
@@ -6288,9 +6158,9 @@ Actors:
 		Location: 45,20
 	Actor2509: n3
 		Owner: Nod
-		Facing: 384
 		SubCell: 3
 		Location: 31,90
+		Facing: 384
 	Actor2510: n3
 		Owner: Nod
 		Facing: 384
@@ -6301,11 +6171,6 @@ Actors:
 		SubCell: 3
 		Location: 18,88
 		Facing: 222
-	Actor2512: n3
-		Owner: Nod
-		SubCell: 3
-		Location: 8,83
-		Facing: 753
 	Actor2513: t05
 		Owner: Neutral
 		Location: 1,85
@@ -6877,51 +6742,19 @@ Actors:
 		Owner: Nod
 		Facing: 384
 		Location: 75,83
-	Actor2696: bggy
-		Owner: Nod
-		Location: 76,82
-		Facing: 531
 	Actor2697: bggy
 		Owner: Nod
 		Location: 71,68
 		Facing: 0
-	Actor2698: bggy
-		Owner: Nod
-		Location: 70,78
-		Facing: 261
-	Actor2699: bggy
-		Owner: Nod
-		Location: 57,79
-		Facing: 134
-	Actor2700: bggy
-		Owner: Nod
-		Facing: 384
-		Location: 72,47
 	Actor2701: bggy
 		Owner: Nod
 		Location: 89,22
 		Facing: 634
-	Actor2702: bike
-		Owner: Nod
-		Location: 30,62
-		Facing: 63
-	Actor2703: bike
-		Owner: Nod
-		Location: 36,58
-		Facing: 95
-	Actor2704: bike
-		Owner: Nod
-		Location: 56,78
-		Facing: 134
-	Actor2705: bike
-		Owner: Nod
-		Location: 72,59
-		Facing: 134
-	Actor2706: arty
+	Actor2706: arty.nod
 		Owner: Nod
 		Location: 66,68
 		Facing: 253
-	Actor2707: arty
+	Actor2707: arty.nod
 		Owner: Nod
 		Location: 65,74
 		Facing: 253
@@ -6933,14 +6766,6 @@ Actors:
 		Owner: Nod
 		Location: 54,64
 		Facing: 134
-	Actor2710: bggy
-		Owner: Nod
-		Facing: 384
-		Location: 41,14
-	Actor2711: bggy
-		Owner: Nod
-		Location: 45,34
-		Facing: 515
 	Actor2712: bggy
 		Owner: Nod
 		Location: 18,51
@@ -6949,10 +6774,6 @@ Actors:
 		Owner: Nod
 		Location: 5,79
 		Facing: 0
-	Actor2714: ftnk
-		Owner: Nod
-		Location: 44,56
-		Facing: 253
 	Actor2715: n1
 		Owner: Nod
 		SubCell: 3
@@ -7018,36 +6839,11 @@ Actors:
 		SubCell: 3
 		Location: 17,52
 		Facing: 0
-	Actor2728: n1
-		Owner: Nod
-		Facing: 384
-		SubCell: 3
-		Location: 47,34
-	Actor2729: n1
-		Owner: Nod
-		Facing: 384
-		SubCell: 3
-		Location: 46,33
-	Actor2730: n1
-		Owner: Nod
-		SubCell: 3
-		Location: 36,64
-		Facing: 222
-	Actor2731: n1
-		Owner: Nod
-		SubCell: 3
-		Location: 36,60
-		Facing: 158
 	Actor2732: n1
 		Owner: Nod
 		SubCell: 3
 		Location: 18,89
 		Facing: 713
-	Actor2733: n1
-		Owner: Nod
-		SubCell: 3
-		Location: 15,88
-		Facing: 808
 	Actor2734: n1
 		Owner: Nod
 		SubCell: 3
@@ -7058,51 +6854,16 @@ Actors:
 		SubCell: 3
 		Location: 32,89
 		Facing: 674
-	Actor2739: n1
-		Owner: Nod
-		Facing: 384
-		Location: 40,74
-		SubCell: 3
-	Actor2740: n1
-		Owner: Nod
-		Facing: 384
-		SubCell: 3
-		Location: 46,76
 	Actor2741: n1
 		Owner: Nod
 		SubCell: 3
 		Location: 23,70
 		Facing: 848
-	Actor2742: n1
-		Owner: Nod
-		Facing: 384
-		SubCell: 3
-		Location: 47,49
 	Actor2743: n1
 		Owner: Nod
 		SubCell: 3
 		Location: 49,43
 		TurretFacing: 0
-		Facing: 0
-	Actor2744: n1
-		Owner: Nod
-		SubCell: 3
-		Location: 65,39
-		Facing: 166
-	Actor2745: n1
-		Owner: Nod
-		SubCell: 3
-		Location: 69,37
-		Facing: 1023
-	Actor2746: n1
-		Owner: Nod
-		SubCell: 3
-		Location: 69,39
-		Facing: 0
-	Actor2747: n1
-		Owner: Nod
-		SubCell: 3
-		Location: 61,42
 		Facing: 0
 	Actor2748: n1
 		Owner: Nod
@@ -7129,41 +6890,6 @@ Actors:
 		SubCell: 3
 		Facing: 848
 		Location: 6,78
-	Actor2753: n1
-		Owner: Nod
-		SubCell: 3
-		Facing: 848
-		Location: 5,75
-	Actor2754: n1
-		Owner: Nod
-		SubCell: 3
-		Facing: 848
-		Location: 4,73
-	Actor2755: n1
-		Owner: Nod
-		SubCell: 3
-		Facing: 848
-		Location: 7,75
-	Actor2756: n1
-		Owner: Nod
-		SubCell: 3
-		Facing: 848
-		Location: 6,76
-	Actor2757: n4
-		Owner: Nod
-		Location: 44,55
-		SubCell: 3
-		Facing: 269
-	Actor2758: n4
-		Owner: Nod
-		Location: 44,57
-		SubCell: 3
-		Facing: 222
-	Actor2759: n4
-		Owner: Nod
-		Facing: 384
-		SubCell: 3
-		Location: 71,81
 	Actor2760: n4
 		Owner: Nod
 		SubCell: 3
@@ -7179,20 +6905,11 @@ Actors:
 		Facing: 384
 		SubCell: 3
 		Location: 92,32
-	Actor2763: waypoint
-		Owner: Neutral
-		Location: 39,1
-	Actor2764: waypoint
-		Owner: Neutral
-		Location: 74,1
-	Actor2765: waypoint
-		Owner: Neutral
-		Location: 1,72
 	Actor2766: n1
 		Owner: Nod
-		Facing: 384
 		SubCell: 3
 		Location: 12,17
+		Facing: 384
 	Actor2767: n1
 		Owner: Nod
 		Facing: 384
@@ -7203,15 +6920,6 @@ Actors:
 		Facing: 384
 		SubCell: 3
 		Location: 41,16
-	Actor2769: n1
-		Owner: Nod
-		Facing: 384
-		SubCell: 3
-		Location: 40,13
-	Actor2770: bggy
-		Owner: Nod
-		Location: 46,9
-		Facing: 650
 	Actor2771: n4
 		Owner: Nod
 		SubCell: 3
@@ -7370,24 +7078,15 @@ Actors:
 		Owner: Nod
 		Location: 36,90
 		Facing: 531
-	Actor2782: arty
+	Actor2782: arty.nod
 		Owner: Nod
 		Location: 60,45
 		Facing: 384
-	Actor2803: ltnk
-		Owner: Nod
-		Facing: 384
-		Location: 44,13
 	Actor2737: n3
 		Owner: Nod
 		Facing: 384
 		SubCell: 3
 		Location: 46,13
-	Actor2804: e6
-		Owner: Greece
-		SubCell: 3
-		Location: 3,32
-		Facing: 761
 	Actor2805: e1
 		Owner: Nod
 		Facing: 384
@@ -7395,19 +7094,14 @@ Actors:
 		Location: 9,14
 	Actor2806: e1
 		Owner: Nod
-		Facing: 384
 		Location: 12,17
 		SubCell: 1
-	Actor2807: e1
-		Owner: Nod
 		Facing: 384
-		Location: 46,33
-		SubCell: 1
 	Actor2808: e1
 		Owner: Nod
-		Facing: 384
 		SubCell: 3
 		Location: 37,45
+		Facing: 384
 	Actor2809: e1
 		Owner: Nod
 		SubCell: 3
@@ -7422,6 +7116,740 @@ Actors:
 		Owner: Nod
 		TurretFacing: 563
 		Location: 50,86
+	Actor2419: t12
+		Owner: Neutral
+		Location: 89,77
+	Actor2420: t17
+		Owner: Neutral
+		Location: 90,77
+	Actor2814: t01
+		Owner: Neutral
+		Location: 90,78
+	Actor2815: t13
+		Owner: Neutral
+		Location: 91,78
+	Actor2698: n1
+		Owner: Nod
+		SubCell: 3
+		Facing: 848
+		Location: 14,85
+	Actor2733: n1
+		Owner: Nod
+		SubCell: 3
+		Facing: 848
+		Location: 15,87
+	Actor2813: n1
+		Owner: Nod
+		SubCell: 3
+		Facing: 848
+		Location: 17,87
+	Actor2816: n1
+		Owner: Nod
+		SubCell: 3
+		Facing: 848
+		Location: 16,88
+	Actor2817: n1
+		Owner: Nod
+		SubCell: 3
+		Facing: 848
+		Location: 16,90
+	Actor2818: bggy
+		Owner: Nod
+		Facing: 0
+		Location: 15,91
+	Actor2819: n1
+		Owner: Nod
+		SubCell: 3
+		Facing: 848
+		Location: 19,88
+	Actor2820: n1
+		Owner: Nod
+		SubCell: 3
+		Facing: 848
+		Location: 20,89
+	Actor2512: n3
+		Owner: Nod
+		Facing: 384
+		SubCell: 3
+		Location: 53,64
+	Actor2753: n1
+		Owner: Nod
+		Facing: 384
+		SubCell: 3
+		Location: 52,67
+	Actor2405: t13
+		Owner: Neutral
+		Location: 40,74
+	Actor2407: t14.husk
+		Owner: Neutral
+		Location: 41,74
+	Actor2739: tc03
+		Owner: Neutral
+		Location: 43,75
+	Actor2740: t13
+		Owner: Neutral
+		Location: 40,75
+	Actor2754: t16
+		Owner: Neutral
+		Location: 41,75
+	Actor2755: t05
+		Owner: Neutral
+		Location: 42,75
+	Actor2756: t12
+		Owner: Neutral
+		Location: 40,76
+	Actor2821: t17
+		Owner: Neutral
+		Location: 41,76
+	Actor2822: t02
+		Owner: Neutral
+		Location: 42,76
+	Actor2823: t17.husk
+		Owner: Neutral
+		Location: 43,76
+	Actor2824: t03
+		Owner: Neutral
+		Location: 44,76
+	Actor2825: t16.husk
+		Owner: Neutral
+		Location: 40,77
+	Actor2826: t01
+		Owner: Neutral
+		Location: 41,77
+	Actor2827: t13
+		Owner: Neutral
+		Location: 42,77
+	Actor2828: t06
+		Owner: Neutral
+		Location: 43,77
+	Actor2829: t12
+		Owner: Neutral
+		Location: 44,77
+	Actor2830: t05
+		Owner: Neutral
+		Location: 45,74
+	Actor2831: t16
+		Owner: Neutral
+		Location: 46,74
+	Actor2832: t17
+		Owner: Neutral
+		Location: 47,74
+	Actor2833: t08
+		Owner: Neutral
+		Location: 48,75
+	Actor2834: tc02
+		Owner: Neutral
+		Location: 44,76
+	Actor2835: t13
+		Owner: Neutral
+		Location: 46,75
+	Actor2836: t10
+		Owner: Neutral
+		Location: 47,75
+	Actor2837: t03
+		Owner: Neutral
+		Location: 46,76
+	Actor2838: t16
+		Owner: Neutral
+		Location: 47,76
+	Actor2839: t11
+		Owner: Neutral
+		Location: 45,77
+	Actor2470: t11
+		Owner: Neutral
+		Location: 46,78
+	Actor2840: tc01
+		Owner: Neutral
+		Location: 47,77
+	Actor2841: t16
+		Owner: Neutral
+		Location: 49,75
+	Actor2842: t17
+		Owner: Neutral
+		Location: 52,78
+	Actor2847: n1
+		Owner: Nod
+		Facing: 384
+		SubCell: 3
+		Location: 38,4
+	Actor2848: e1
+		Owner: Nod
+		Facing: 384
+		SubCell: 1
+		Location: 38,4
+	Actor2850: n1
+		Owner: Nod
+		Facing: 384
+		SubCell: 3
+		Location: 39,5
+	Actor2843: n3
+		Owner: Nod
+		Facing: 384
+		SubCell: 3
+		Location: 38,5
+	Actor2845: bike
+		Owner: Nod
+		Facing: 134
+		Location: 19,90
+	SAM2Squad: waypoint
+		Owner: Neutral
+		Location: 17,88
+	SAM1Squad: waypoint
+		Owner: Neutral
+		Location: 39,6
+	SAM4Squad: waypoint
+		Owner: Neutral
+		Location: 54,66
+	Actor2406: n1
+		Owner: Nod
+		Facing: 384
+		SubCell: 3
+		Location: 38,6
+	Actor2409: n1
+		Owner: Nod
+		SubCell: 3
+		Location: 40,6
+		Facing: 384
+	Actor2700: n1
+		Owner: Nod
+		SubCell: 3
+		Facing: 166
+		Location: 65,38
+	Actor2746: n1
+		Owner: Nod
+		SubCell: 3
+		Facing: 1023
+		Location: 67,36
+	Actor2745: n1
+		Owner: Nod
+		SubCell: 3
+		Location: 59,44
+		Facing: 618
+	Actor2499: bggy
+		Owner: Nod
+		Facing: 134
+		Location: 56,76
+	Actor2702: bggy
+		Owner: Nod
+		Facing: 134
+		Location: 55,77
+	Actor2703: bike
+		Owner: Nod
+		Facing: 134
+		Location: 57,77
+	Actor2404: bike
+		Owner: Nod
+		Facing: 134
+		Location: 58,78
+	SAM3Squad: waypoint
+		Owner: Neutral
+		Location: 56,77
+	Actor2408: bike
+		Owner: Nod
+		Facing: 134
+		Location: 55,78
+	Actor2704: bggy
+		Owner: Nod
+		Facing: 134
+		Location: 57,78
+	Actor2699: n1
+		Owner: Nod
+		Facing: 384
+		SubCell: 3
+		Location: 41,7
+	Actor2710: e1
+		Owner: Nod
+		Facing: 384
+		SubCell: 1
+		Location: 41,7
+	Actor2731: n1
+		Owner: Nod
+		SubCell: 3
+		Facing: 848
+		Location: 66,43
+	Actor2744: n1
+		Owner: Nod
+		SubCell: 3
+		Facing: 848
+		Location: 68,43
+	Actor2747: n1
+		Owner: Nod
+		SubCell: 3
+		Facing: 848
+		Location: 67,44
+	SAM5Squad: waypoint
+		Owner: Neutral
+		Location: 68,44
+	Actor2770: n3
+		Owner: Nod
+		SubCell: 3
+		Facing: 222
+		Location: 69,44
+	Actor2803: n1
+		Owner: Nod
+		SubCell: 3
+		Facing: 848
+		Location: 70,44
+	Actor2844: n1
+		Owner: Nod
+		SubCell: 3
+		Facing: 713
+		Location: 69,45
+	Actor2846: n1
+		Owner: Nod
+		SubCell: 3
+		Facing: 848
+		Location: 71,45
+	Actor2851: n1
+		Owner: Nod
+		SubCell: 3
+		Facing: 848
+		Location: 67,46
+	Actor2852: bike
+		Owner: Nod
+		Facing: 134
+		Location: 70,46
+	Actor2853: bggy
+		Owner: Nod
+		Facing: 0
+		Location: 66,47
+	Actor2854: n1
+		Owner: Nod
+		SubCell: 3
+		Facing: 848
+		Location: 68,46
+	SAM6Squad: waypoint
+		Owner: Neutral
+		Location: 73,62
+	Actor2730: bike
+		Owner: Nod
+		Facing: 134
+		Location: 72,61
+	Actor2705: n1
+		Owner: Nod
+		SubCell: 3
+		Facing: 174
+		Location: 75,60
+	Actor2769: n1
+		Owner: Nod
+		SubCell: 1
+		Facing: 190
+		Location: 75,60
+	SAM7Squad: waypoint
+		Owner: Neutral
+		Location: 73,82
+	Transport1: sapc
+		Owner: NodTransports
+		Location: 68,76
+		Facing: 384
+	Transport2: sapc
+		Owner: NodTransports
+		Location: 70,77
+		Facing: 384
+	Actor2418: bggy
+		Owner: Nod
+		Facing: 412
+		Location: 72,83
+	Actor2855: n1
+		Owner: Nod
+		Facing: 384
+		SubCell: 3
+		Location: 74,83
+	Actor2858: n1
+		Owner: Nod
+		Facing: 384
+		SubCell: 1
+		Location: 74,83
+	Actor2859: n1
+		Owner: Nod
+		Facing: 384
+		SubCell: 3
+		Location: 73,83
+	Actor2860: n1
+		Owner: Nod
+		Facing: 384
+		SubCell: 1
+		Location: 73,83
+	Actor2861: n4
+		Owner: Nod
+		Facing: 384
+		SubCell: 3
+		Location: 72,81
+	Actor2759: n1
+		Owner: Nod
+		SubCell: 3
+		Facing: 174
+		Location: 71,61
+	Actor2862: n1
+		Owner: Nod
+		SubCell: 1
+		Facing: 190
+		Location: 71,61
+	Actor2863: n3
+		Owner: Nod
+		SubCell: 3
+		Location: 74,62
+		Facing: 222
+	Actor2864: n4
+		Owner: Nod
+		SubCell: 3
+		Facing: 269
+		Location: 42,55
+	Actor2865: ftnk
+		Owner: Nod
+		Facing: 253
+		Location: 42,56
+	Actor2866: n4
+		Owner: Nod
+		SubCell: 3
+		Facing: 222
+		Location: 42,57
+	Actor2714: n1
+		Owner: Nod
+		Facing: 384
+		SubCell: 3
+		Location: 53,28
+	Actor2757: e1
+		Owner: Nod
+		Facing: 384
+		SubCell: 1
+		Location: 53,28
+	Actor2758: bggy
+		Owner: Nod
+		Facing: 515
+		Location: 52,29
+	Actor2867: n1
+		Owner: Nod
+		Facing: 384
+		SubCell: 3
+		Location: 54,29
+	Actor2711: n1
+		Owner: Nod
+		Facing: 384
+		SubCell: 3
+		Location: 48,44
+	Actor2728: n3
+		Owner: Nod
+		Facing: 384
+		SubCell: 3
+		Location: 31,28
+	Actor2729: n1
+		Owner: Nod
+		Facing: 384
+		SubCell: 3
+		Location: 35,28
+	Actor2742: n1
+		Owner: Nod
+		Facing: 384
+		SubCell: 3
+		Location: 32,29
+	Actor2807: bggy
+		Owner: Nod
+		Facing: 634
+		Location: 34,29
+	Actor2868: n1
+		Owner: Nod
+		SubCell: 3
+		Facing: 0
+		Location: 12,48
+	Actor2869: n1
+		Owner: Nod
+		SubCell: 3
+		Facing: 0
+		Location: 11,49
+	LongbowRally2: waypoint
+		Owner: Neutral
+		Location: 81,53
+	LongbowRally1: waypoint
+		Owner: Neutral
+		Location: 55,55
+	Actor2483: bggy
+		Owner: Nod
+		Facing: 412
+		Location: 73,75
+	Actor2764: n1
+		Owner: Nod
+		SubCell: 1
+		Facing: 190
+		Location: 79,73
+	Actor2453: rapc
+		Owner: Greece
+		Location: 3,28
+		Facing: 768
+	Actor2460: rapc
+		Owner: Greece
+		Location: 3,32
+		Facing: 768
+	Actor2804: snip
+		Owner: Greece
+		SubCell: 4
+		Facing: 768
+		Location: 5,32
+	Actor2856: snip
+		Owner: Greece
+		SubCell: 1
+		Facing: 768
+		Location: 5,32
+	Actor2870: snip
+		Owner: Greece
+		SubCell: 4
+		Facing: 896
+		Location: 5,28
+	Actor2872: snip
+		Owner: Greece
+		SubCell: 1
+		Facing: 896
+		Location: 5,28
+	Actor2439: rtnk
+		Owner: Greece
+		Facing: 896
+		Location: 8,28
+	NodBaseTopLeft: waypoint
+		Owner: Neutral
+		Location: 63,63
+	NodBaseBottomRight: waypoint
+		Owner: Neutral
+		Location: 85,84
+	NonHardSniper2: snip
+		Owner: Greece
+		SubCell: 5
+		Location: 5,32
+		Facing: 768
+	Actor2763: snip
+		Owner: Greece
+		SubCell: 2
+		Facing: 768
+		Location: 5,32
+	Actor2871: snip
+		Owner: Greece
+		SubCell: 5
+		Facing: 896
+		Location: 5,28
+	NonHardSniper1: snip
+		Owner: Greece
+		SubCell: 2
+		Location: 5,28
+		Facing: 896
+	SAM2SquadRally: waypoint
+		Owner: Neutral
+		Location: 29,58
+	SAM1SquadRally: waypoint
+		Owner: Neutral
+		Location: 31,20
+	SAM3SquadRally: waypoint
+		Owner: Neutral
+		Location: 29,48
+	SAM4SquadRally: waypoint
+		Owner: Neutral
+		Location: 31,56
+	SAM5SquadRally: waypoint
+		Owner: Neutral
+		Location: 56,23
+	SAM6SquadRally: waypoint
+		Owner: Neutral
+		Location: 67,31
+	SAM7SquadRally: waypoint
+		Owner: Neutral
+		Location: 67,41
+	Actor2444: n1
+		Owner: Nod
+		Facing: 384
+		SubCell: 3
+		Location: 90,40
+	Actor2445: n1
+		Owner: Nod
+		Facing: 384
+		SubCell: 3
+		Location: 91,42
+	Actor2447: n1
+		Owner: Nod
+		Facing: 384
+		SubCell: 3
+		Location: 90,43
+	Actor2448: n1
+		Owner: Nod
+		Facing: 384
+		Location: 91,42
+		SubCell: 1
+	Actor2449: n1
+		Owner: Nod
+		Facing: 384
+		Location: 90,40
+		SubCell: 1
+	Actor2451: n1
+		Owner: Nod
+		Facing: 384
+		SubCell: 3
+		Location: 89,38
+	Actor2452: n3
+		Owner: Nod
+		Facing: 384
+		Location: 90,41
+		SubCell: 3
+	Actor2454: n3
+		Owner: Nod
+		Facing: 384
+		Location: 90,39
+		SubCell: 3
+	Actor2456: n1
+		Owner: Nod
+		Facing: 384
+		SubCell: 3
+		Location: 90,42
+	NodPatrol1_1: waypoint
+		Owner: Neutral
+		Location: 90,40
+	Actor2457: n1
+		Owner: Nod
+		Facing: 384
+		SubCell: 3
+		Location: 34,73
+	Actor2765: n1
+		Owner: Nod
+		SubCell: 3
+		Facing: 0
+		Location: 34,74
+	Actor2873: n3
+		Owner: Nod
+		Facing: 384
+		SubCell: 3
+		Location: 35,74
+	Actor2874: n1
+		Owner: Nod
+		Facing: 384
+		SubCell: 3
+		Location: 35,75
+	Actor2875: n1
+		Owner: Nod
+		Facing: 384
+		SubCell: 1
+		Location: 35,75
+	NodPatrol2_1: waypoint
+		Owner: Neutral
+		Location: 35,75
+	Actor2877: n1
+		Owner: Nod
+		SubCell: 3
+		Facing: 0
+		Location: 36,75
+	Actor2878: n1
+		Owner: Nod
+		SubCell: 3
+		Facing: 0
+		Location: 34,76
+	Actor2879: n3
+		Owner: Nod
+		SubCell: 3
+		Location: 35,76
+		Facing: 384
+	Actor2880: n1
+		Owner: Nod
+		Facing: 384
+		SubCell: 3
+		Location: 35,77
+	Actor2881: n1
+		Owner: Nod
+		Facing: 384
+		SubCell: 3
+		Location: 36,77
+	Actor2882: n1
+		Owner: Nod
+		Facing: 384
+		SubCell: 1
+		Location: 36,77
+	Actor2883: n1
+		Owner: Nod
+		Facing: 384
+		SubCell: 3
+		Location: 35,78
+	NodPatrol2_2: waypoint
+		Owner: Neutral
+		Location: 47,47
+	NodPatrol2_3: waypoint
+		Owner: Neutral
+		Location: 57,18
+	NodPatrol1_2: waypoint
+		Owner: Neutral
+		Location: 87,9
+	NodPatrol1_3: waypoint
+		Owner: Neutral
+		Location: 67,21
+	NodPatrol1_4: waypoint
+		Owner: Neutral
+		Location: 66,60
+	NodPatrol1_5: waypoint
+		Owner: Neutral
+		Location: 85,61
+	Actor2696: ftnk
+		Owner: Nod
+		Location: 71,82
+		Facing: 384
+	Medic1: medi
+		Owner: Greece
+		SubCell: 3
+		Location: 3,30
+		Facing: 384
+	Mechanic: mech
+		Owner: Greece
+		SubCell: 3
+		Location: 3,31
+		Facing: 384
+	Medic2: medi
+		Owner: Greece
+		SubCell: 3
+		Location: 3,29
+		Facing: 384
+	HardOnlySSM: mlrs
+		Owner: Nod
+		Location: 80,66
+		Facing: 111
+	Actor2462: bggy
+		Owner: Nod
+		Facing: 515
+		Location: 39,8
+	Actor2479: n4
+		Owner: Nod
+		SubCell: 3
+		Facing: 269
+		Location: 78,33
+	HardOnlyFlameTank1: ftnk
+		Owner: Nod
+		Location: 79,34
+		Facing: 253
+	Actor2812: n4
+		Owner: Nod
+		SubCell: 3
+		Facing: 222
+		Location: 78,35
+	HardOnlyFlameTank2: ftnk
+		Owner: Nod
+		Location: 71,72
+		Facing: 0
+	Actor2480: n4
+		Owner: Nod
+		SubCell: 3
+		Facing: 222
+		Location: 55,28
+	Actor2849: n4
+		Owner: Nod
+		SubCell: 3
+		Facing: 222
+		Location: 49,46
+	Actor2857: n4
+		Owner: Nod
+		SubCell: 3
+		Facing: 222
+		Location: 16,45
+	Actor2876: n4
+		Owner: Nod
+		SubCell: 3
+		Location: 6,16
+		Facing: 523
+	Actor2884: n4
+		Owner: Nod
+		SubCell: 3
+		Facing: 523
+		Location: 7,15
 
 Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-coalitions.yaml, apprehension-rules.yaml
 

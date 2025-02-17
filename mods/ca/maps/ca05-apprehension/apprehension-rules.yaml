@@ -6,7 +6,7 @@ World:
 	LuaScript:
 		Scripts: campaign.lua, apprehension.lua
 	MissionData:
-		Briefing: TBA
+		Briefing: Just as the Chronosphere was neutralized, we detected transports moving away that quickly vanished. Information provided by GDI suggests these forces likely belong to a group known as the Brotherhood of Nod who make extensive use of this apparent stealth technology.\n\nWe do not know what they were doing there, but from what we can gather it would be extremely bad for Chronosphere technology to fall into their hands.\n\nWe have been tracking Nod troop movements heading south, and have identified a small base on the coast as being their most likely destination. We now have a window of opportunity to capture these transports and gain some insight into Nod operations.\n\nTake a strike force into the forests surrounding the Nod base and take out their SAM sites. We're banking on Nod sending their troops out to investigate in small numbers, allowing you to ambush them piecemeal rather than taking on all of their forces at once.\n\nOnce all the SAM sites are taken out, we'll send in air support to eliminate the base's defenses. Then you should be able to clear out whatever troops are left in the base and apprehend those transports.
 	MapOptions:
 		ShortGameCheckboxEnabled: False
 	ScriptLobbyDropdown@DIFFICULTY:
@@ -66,3 +66,39 @@ T16m:
 T17m:
 	Inherits: T17
 	-MapEditorData:
+
+N1:
+	Mobile:
+		Speed: 46
+
+N3:
+	Mobile:
+		Speed: 46
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
+	AutoTargetPriority@DEFAULTAA:
+		ValidTargets: Vehicle
+
+N4:
+	Mobile:
+		Speed: 46
+
+SAPC:
+	ExternalCondition@DisableCloaking:
+		Condition: cloak-force-disabled
+	Health:
+		HP: 50000
+
+NSAM:
+	Health:
+		HP: 25000
+
+JEEP:
+	GrantTimedConditionOnDeploy@Optics:
+		DeployedTicks: 375
+		CooldownTicks: 750
+
+BIKE:
+	Mobile:
+		Speed: 144
+		TurnSpeed: 40

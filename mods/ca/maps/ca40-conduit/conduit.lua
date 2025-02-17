@@ -187,7 +187,7 @@ InitNod = function()
 	NodPlayers = { Nod1, Nod2, Nod3 }
 
 	Utils.Do(NodPlayers, function(p)
-		AutoRepairBuildings(p)
+		AutoRepairAndRebuildBuildings(p)
 		SetupRefAndSilosCaptureCredits(p)
 		AutoReplaceHarvesters(p)
 
