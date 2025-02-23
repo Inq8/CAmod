@@ -28,9 +28,9 @@ HarvesterDeathDelayTime = {
 }
 
 CashAdjustments = {
-	easy = 3500,
+	easy = 4000,
 	normal = 0,
-	hard = -1500
+	hard = -1000
 }
 
 CapturedCreditsAmount = 1250
@@ -65,6 +65,13 @@ RebuildExcludes = {
 	-- }
 }
 
+-- used to define functions to be called when a building is rebuilt
+RebuildFunctions = {
+	-- USSR = function(building)
+	-- 	-- do something
+	-- end
+}
+
 -- should be populated with the human players in the mission
 MissionPlayers = { }
 
@@ -92,6 +99,9 @@ OnProductionTriggers = { }
 
 -- when player kills an AI harvester it delays the production of the next attack wave
 HarvesterDeathStacks = { }
+
+-- minimum time until next special composition for each AI player
+SpecialCompositionMinTimes = { }
 
 --
 -- end automatically populated vars
@@ -279,6 +289,13 @@ IsMissionPlayer = function(player)
 	return false
 end
 
+PlayerHasBuildings = function(player)
+	local buildings = Utils.Where(player.GetActors(), function(a)
+		return a.HasProperty("StartBuildingRepairs")
+	end)
+	return #buildings > 0
+end
+
 UpdatePlayerBaseLocations = function()
 	if #MissionPlayers == 0 then
 		return false
@@ -406,6 +423,10 @@ RebuildBuilding = function(queueItem)
 			AutoRepairBuilding(b, queueItem.Player)
 			AutoRebuildBuilding(b, queueItem.Player, queueItem.MaxAttempts)
 			RestoreSquadProduction(queueItem.Actor, b)
+
+			if RebuildFunctions ~= nil and RebuildFunctions[queueItem.Player.InternalName] ~= nil then
+				RebuildFunctions[queueItem.Player.InternalName](b)
+			end
 
 		-- otherwise add to back of queue (if attempts remaining)
 		elseif queueItem.AttemptsRemaining > 1 then
@@ -609,20 +630,16 @@ InitAttackSquad = function(squad, player, targetPlayer)
 
 		-- filter possible compositions based on game time
 		local validCompositions = Utils.Where(squad.Units[Difficulty], function(composition)
-			return (composition.MinTime == nil or DateTime.GameTime >= composition.MinTime + squad.InitTime) and (composition.MaxTime == nil or DateTime.GameTime < composition.MaxTime + squad.InitTime)
+			return (composition.MinTime == nil or DateTime.GameTime >= composition.MinTime + squad.InitTime) and (composition.MaxTime == nil or DateTime.GameTime < composition.MaxTime + squad.InitTime) and (not composition.IsSpecial or SpecialCompositionMinTimes[squad.Player.InternalName] == nil or DateTime.GameTime >= SpecialCompositionMinTimes[squad.Player.InternalName])
 		end)
 
 		if #validCompositions > 0 then
 			-- randomly select a unit composition for next wave
 			local chosenComposition = Utils.Random(validCompositions)
 
-			-- if this is a special composition, push back the MinTime of all special compositions
+			-- if this is a special composition, another special composition can't be chosen for 12 minutes
 			if chosenComposition.IsSpecial then
-				Utils.Do(squad.Units[Difficulty], function(composition)
-					if composition.IsSpecial then
-						composition.MinTime = DateTime.GameTime + DateTime.Minutes(10)
-					end
-				end)
+				SpecialCompositionMinTimes[squad.Player.InternalName] = DateTime.GameTime + DateTime.Minutes(12)
 			end
 
 			squad.QueuedUnits = chosenComposition
@@ -1223,6 +1240,93 @@ IsScrinGroundHunterUnit = function(actor)
 	return actor.Owner == Scrin and IsGroundHunterUnit(actor) and actor.Type ~= "mast" and actor.Type ~= "pdgy"
 end
 
+-- Upgrades
+
+InitAiUpgrades = function(player, advancedDelay)
+	if advancedDelay == nil then
+		advancedDelay = DateTime.Minutes(15)
+	end
+
+	if player.Faction == "soviet" then
+		Actor.Create("hazmatsoviet.upgrade", true, { Owner = player })
+	elseif player.Faction ~= "scrin" then
+		Actor.Create("hazmat.upgrade", true, { Owner = player })
+	end
+
+	if Difficulty == "hard" then
+		Trigger.AfterDelay(advancedDelay, function()
+			if player.Faction == "scrin" then
+				Actor.Create("carapace.upgrade", true, { Owner = player })
+			else
+				Actor.Create("flakarmor.upgrade", true, { Owner = player })
+			end
+		end)
+	end
+
+	if (player.Faction == "allies") then
+
+		if Difficulty == "hard" then
+			Actor.Create("cryw.upgrade", true, { Owner = Greece })
+		end
+
+	elseif (player.Faction == "soviet") then
+
+		if Difficulty == "hard" then
+			Trigger.AfterDelay(advancedDelay, function()
+				Actor.Create("tarc.upgrade", true, { Owner = player })
+
+				local doctrineUpgrades = { "rocketpods.upgrade", "reactive.upgrade", "imppara.upgrade" }
+				local selectedDoctrineUpgrade = Utils.Random(doctrineUpgrades)
+				Actor.Create(selectedDoctrineUpgrade, true, { Owner = player })
+			end)
+		end
+
+	elseif (player.Faction == "nod") then
+
+		if Difficulty == "hard" then
+			Trigger.AfterDelay(advancedDelay, function()
+				Actor.Create("blacknapalm.upgrade", true, { Owner = player })
+				Actor.Create("tibcore.upgrade", true, { Owner = player })
+				Actor.Create("quantum.upgrade", true, { Owner = player })
+				Actor.Create("cyborgspeed.upgrade", true, { Owner = player })
+				Actor.Create("cyborgarmor.upgrade", true, { Owner = player })
+			end)
+		end
+
+	elseif (player.Faction == "gdi") then
+
+		if Difficulty == "hard" then
+			Actor.Create("sonic.upgrade", true, { Owner = player, })
+			Actor.Create("empgren.upgrade", true, { Owner = player, })
+
+			Trigger.AfterDelay(advancedDelay, function()
+				local strategyUpgrades = {
+					{ "bombard.strat", "bombard2.strat", "hailstorm.upgrade" },
+					{ "seek.strat", "seek2.strat", "hypersonic.upgrade" },
+					{ "hold.strat", "hold2.strat", "hammerhead.upgrade" },
+				}
+
+				local selectedStrategyUpgrades = Utils.Random(strategyUpgrades)
+				Utils.Do(selectedStrategyUpgrades, function(u)
+					Actor.Create(u, true, { Owner = player })
+				end)
+			end)
+		end
+
+	elseif (player.Faction == "scrin") then
+
+		if Difficulty == "hard" then
+			Actor.Create("ioncon.upgrade", true, { Owner = player })
+
+			Trigger.AfterDelay(advancedDelay, function()
+				Actor.Create("resconv.upgrade", true, { Owner = player })
+				Actor.Create("shields.upgrade", true, { Owner = player })
+			end)
+		end
+
+	end
+end
+
 -- Units
 
 AlliedT3SupportVehicle = { "mgg", "mrj", "cryo" }
@@ -1410,7 +1514,7 @@ UnitCompositions = {
 				{ Infantry = { "n3", "n1", "n1", "n1", "n3", "n1", "n1", ZoneTrooperVariant, ZoneTrooperVariant, ZoneTrooperVariant }, Vehicles = { "mtnk", "mtnk", GDIMammothVariant, "msam", "vulc" }, MinTime = DateTime.Minutes(16) },
 				{ Infantry = { "n3", "n1", "n1", "n1", "n3", "n1", "n1", "n1", "n1", "n1", "n3" }, Vehicles = { "vulc.ai", "disr", "disr", "disr" }, MinTime = DateTime.Minutes(16) },
 				{ Infantry = { "n3", "rmbo", "n3", "n1", "n1", "n1", "n1", "n1", "n3", "n1", "n1", "n3" }, Vehicles = { GDIMammothVariant, GDIMammothVariant, "msam", "msam", "vulc" }, MinTime = DateTime.Minutes(16) },
-				{ Infantry = {}, Vehicles = { "memp", "memp" }, MinTime = DateTime.Minutes(16) },
+				{ Infantry = {}, Vehicles = { "memp", "memp" }, MinTime = DateTime.Minutes(16), IsSpecial = true },
 				{ Infantry = { ZoneTrooperVariant, ZoneTrooperVariant, ZoneTrooperVariant, ZoneTrooperVariant }, Vehicles = { GDIMammothVariant, GDIMammothVariant, GDIMammothVariant, WolverineOrXO, WolverineOrXO }, MinTime = DateTime.Minutes(16) },
 			}
 		}

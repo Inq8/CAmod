@@ -202,9 +202,9 @@ InitNod = function()
 	AutoRepairAndRebuildBuildings(Nod, 15)
 	SetupRefAndSilosCaptureCredits(Nod)
 	AutoReplaceHarvesters(Nod)
+	InitAiUpgrades(Nod)
 
 	Actor.Create("ai.unlimited.power", true, { Owner = Nod })
-	Actor.Create("hazmat.upgrade", true, { Owner = Nod })
 
 	local nodGroundAttackers = Nod.GetGroundAttackers()
 

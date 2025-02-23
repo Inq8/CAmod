@@ -2,6 +2,10 @@
 	GivesExperienceCA:
 		ActorExperienceOnDamage: false
 
+^Palettes:
+	GlobalLightingPaletteEffect:
+		ExcludePalettes: fog, shroud, cursor, chrome, chrometd, chromes, colorpicker, colorpickertd, colorpickerscrin, fog, shroud, tseffect, ra2effect, ra2unit, tdeffect, effect-ignore-lighting, tdeffect-ignore-lighting-alpha85, d2keffect-ignore-lighting-alpha75, d2keffect-ignore-lighting-alpha50, ra2effect-ignore-lighting-alpha90, ra2effect-ignore-lighting-alpha75, ra2effect-ignore-lighting-alpha50, tseffect-ignore-lighting-alpha75, tsunit-ignore-lighting-alpha75, ra2unit-ignore-lighting-alpha75, ra2unit-ignore-lighting-alpha90, tseffect-ignore-lighting-alpha90
+
 Player:
 	-ConquestVictoryConditions:
 	MissionObjectives:
@@ -93,13 +97,17 @@ World:
 	GrantConditionOnPrerequisite@BIO:
 		Prerequisites: disabled
 
+^Disabled:
+	Buildable:
+		Prerequisites: ~disabled
+
+# Prevent neutralised units decaying
+
 ^AffectedByDriverKill:
 	ChangesHealth@DRIVER_DEAD:
 		PercentageStep: 0
 
-^Disabled:
-	Buildable:
-		Prerequisites: ~disabled
+# Extra power for AI to reduce the number of power plants needed
 
 ^AiExtraPower:
 	GrantConditionOnPrerequisite@OwnedByAi:
@@ -129,6 +137,8 @@ REAC:
 
 REA2:
 	Inherits@EXTRAPOWER: ^AiExtraPower
+
+# Defense structure external disable condition to allow disabling of specific defenses for AI
 
 PRIS:
 	ExternalCondition@DISABLED:
@@ -193,8 +203,12 @@ SGEN:
 	ExternalCondition@DISABLED:
 		Condition: disabled
 
+# Prevent Boris MiG being targeted
+
 SMIG:
 	-Targetable@AIRBORNE:
+
+# Supply Truck not buildable, slower and doesn't drop money crate
 
 TRUK:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
@@ -202,40 +216,14 @@ TRUK:
 		Speed: 54
 	-SpawnActorOnDeath:
 
-TRAN.evac:
-	Inherits: TRAN
-	-Buildable:
-	RenderSprites:
-		Image: tran
-	DamageMultiplier@INVULN:
-		Modifier: 0
-	-KillsSelf@Emp:
-	Aircraft:
-		TurnToLand: True
-		InitialFacing: 0
+# Civilian buildings don't spawn civilians on death
 
 ^CivBuilding:
 	-SpawnRandomActorOnDeath@1:
 	-SpawnRandomActorOnDeath@2:
 	-SpawnRandomActorOnDeath@3:
 
-HOSP:
-	GrantConditionOnPrerequisite@OwnedByAi:
-		Condition: owned-by-ai
-		Prerequisites: botplayer
-	PeriodicProducerCA@MEDIC:
-		RequiresCondition: !is-neutral && !scrinplayer && !owned-by-ai
-	PeriodicProducerCA@REJUVENATOR:
-		RequiresCondition: !is-neutral && scrinplayer && !owned-by-ai
-
-MACS:
-	GrantConditionOnPrerequisite@OwnedByAi:
-		Condition: owned-by-ai
-		Prerequisites: botplayer
-	PeriodicProducerCA@MECHANIC:
-		RequiresCondition: !is-neutral && !scrinplayer && !owned-by-ai
-	PeriodicProducerCA@ARTIFICER:
-		RequiresCondition: !is-neutral && scrinplayer && !owned-by-ai
+# Crate adjustments
 
 MONEYCRATE:
 	Tooltip:
@@ -252,24 +240,7 @@ HEALCRATE:
 	Crate:
 		Duration: 0
 
-SMALLCAMERA:
-	Inherits: CAMERA
-	RevealsShroud:
-		Range: 5c0
-
-WARPIN:
-	Inherits: SMALLCAMERA
-	-RenderSpritesEditorOnly:
-	RenderSprites:
-		Image: empty
-	WithSpriteBody:
-	BodyOrientation:
-		QuantizedFacings: 1
-	WithRestartableIdleOverlay@WARPIN:
-		PlayOnce: true
-		Image: chronobubble
-		Sequence: warpin
-		Palette: ra2effect-ignore-lighting-alpha75
+# Special/utility actors
 
 ai.unlimited.power:
 	Inherits@DUMMY: ^InvisibleDummy
@@ -277,6 +248,10 @@ ai.unlimited.power:
 		Amount: 10000
 
 ai.superweapons.enabled:
+	Inherits@DUMMY: ^InvisibleDummy
+	ProvidesPrerequisite:
+
+ai.minor.superweapons.enabled:
 	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
 
@@ -292,6 +267,30 @@ hold3.strat:
 radar.dummy:
 	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesRadar:
+
+SMALLCAMERA:
+	Inherits: CAMERA
+	RevealsShroud:
+		Range: 5c0
+
+LARGECAMERA:
+	Inherits: CAMERA
+	RevealsShroud:
+		Range: 17c0
+
+WARPIN:
+	Inherits: SMALLCAMERA
+	-RenderSpritesEditorOnly:
+	RenderSprites:
+		Image: empty
+	WithSpriteBody:
+	BodyOrientation:
+		QuantizedFacings: 1
+	WithRestartableIdleOverlay@WARPIN:
+		PlayOnce: true
+		Image: chronobubble
+		Sequence: warpin
+		Palette: ra2effect-ignore-lighting-alpha75
 
 HIDDENSPAWNER:
 	Inherits@0: ^InvisibleDummy
@@ -323,6 +322,28 @@ HIDDENSPAWNER:
 	-GrantCondition@KoreanBonus:
 	-DamageMultiplier@KoreanBonus:
 
+# Prevent AI Hospitals/Machine Shops spawning units
+
+HOSP:
+	GrantConditionOnPrerequisite@OwnedByAi:
+		Condition: owned-by-ai
+		Prerequisites: botplayer
+	PeriodicProducerCA@MEDIC:
+		RequiresCondition: !is-neutral && !scrinplayer && !owned-by-ai
+	PeriodicProducerCA@REJUVENATOR:
+		RequiresCondition: !is-neutral && scrinplayer && !owned-by-ai
+
+MACS:
+	GrantConditionOnPrerequisite@OwnedByAi:
+		Condition: owned-by-ai
+		Prerequisites: botplayer
+	PeriodicProducerCA@MECHANIC:
+		RequiresCondition: !is-neutral && !scrinplayer && !owned-by-ai
+	PeriodicProducerCA@ARTIFICER:
+		RequiresCondition: !is-neutral && scrinplayer && !owned-by-ai
+
+# Prevent duplicate basic infantry when dual-tech is available
+
 E2:
 	Buildable:
 		Prerequisites: ~infantry.e2, ~!pyle
@@ -339,6 +360,8 @@ N6:
 	Buildable:
 		Prerequisites: ~infantry.td, ~!infantry.ra
 
+# So AI can produce Shadow Operatives
+
 SHAD:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
@@ -346,6 +369,8 @@ SHAD:
 		Prerequisites: ~disabled
 		BuildAtProductionType: Soldier
 		Description: Elite stealth infantry.
+
+# Disable the ability to transfer resources from AI players on capturing (lua script handles cash reward)
 
 PROC:
 	InfiltrateForCash:
@@ -377,6 +402,76 @@ SILO.SCRIN:
 	StoresPlayerResourcesCA:
 		DisableTransferFromBotOwner: true
 
+# Require ai.superweapons.enabled for superweapons to be enabled for AI players
+
+^AiSuperweaponsEnabled:
+	GrantConditionOnPrerequisite@OwnedByAi:
+		Condition: owned-by-ai
+		Prerequisites: botplayer
+	GrantConditionOnPrerequisite@AiSuperweaponsEnabled:
+		Condition: ai-superweapons-enabled
+		Prerequisites: ai.superweapons.enabled
+
+^AiMinorSuperweaponsEnabled:
+	GrantConditionOnPrerequisite@OwnedByAi:
+		Condition: owned-by-ai
+		Prerequisites: botplayer
+	GrantConditionOnPrerequisite@AiSuperweaponsEnabled:
+		Condition: ai-minor-superweapons-enabled
+		Prerequisites: ai.minor.superweapons.enabled
+
+WEAT:
+	Inherits@AiSuperweaponsEnabled: ^AiSuperweaponsEnabled
+	DetonateWeaponPower@LightningStorm:
+		RequiresCondition: ai-superweapons-enabled || !owned-by-ai
+
+PDOX:
+	Inherits@AiMinorSuperweaponsEnabled: ^AiMinorSuperweaponsEnabled
+	DetonateWeaponPower@ChronoAI:
+		RequiresCondition: ai-minor-superweapons-enabled || !owned-by-ai
+
+MSLO:
+	Inherits@AiSuperweaponsEnabled: ^AiSuperweaponsEnabled
+	NukePower@ABomb:
+		RequiresCondition: ai-superweapons-enabled || !owned-by-ai
+
+IRON:
+	Inherits@AiMinorSuperweaponsEnabled: ^AiMinorSuperweaponsEnabled
+	GrantExternalConditionPowerCA@IRONCURTAIN:
+		RequiresCondition: ai-minor-superweapons-enabled || !owned-by-ai
+
+EYE:
+	Inherits@AiSuperweaponsEnabled: ^AiSuperweaponsEnabled
+	DetonateWeaponPower@IonStorm:
+		RequiresCondition: ai-superweapons-enabled || !owned-by-ai
+
+PATR:
+	Inherits@AiMinorSuperweaponsEnabled: ^AiMinorSuperweaponsEnabled
+	AttackOrderPowerCA@EMPMISSILE:
+		RequiresCondition: ai-minor-superweapons-enabled || !owned-by-ai
+
+MSLO.Nod:
+	Inherits@AiSuperweaponsEnabled: ^AiSuperweaponsEnabled
+	NukePower@Chemmiss:
+		RequiresCondition: ai-superweapons-enabled || !owned-by-ai
+
+SGEN:
+	Inherits@AiMinorSuperweaponsEnabled: ^AiMinorSuperweaponsEnabled
+	GrantExternalConditionPowerCA@SGEN:
+		RequiresCondition: ai-minor-superweapons-enabled || !owned-by-ai
+
+RFGN:
+	Inherits@AiSuperweaponsEnabled: ^AiSuperweaponsEnabled
+	DetonateWeaponPower@RiftGenerator:
+		RequiresCondition: ai-superweapons-enabled || !owned-by-ai
+
+MANI:
+	Inherits@AiMinorSuperweaponsEnabled: ^AiMinorSuperweaponsEnabled
+	GrantExternalConditionPowerCA@SUPPRESSION:
+		RequiresCondition: ai-minor-superweapons-enabled || !owned-by-ai
+
+# Disable GPS for AI
+
 ^GpsPower:
 	ProduceActorPowerCA@InitialSatelliteScan:
 		Prerequisites: anyradar, ~!gps.satellite.firstscan, ~fogenabled, ~!botplayer
@@ -385,8 +480,24 @@ SILO.SCRIN:
 	ProduceActorPowerCA@SatelliteScanNoFog:
 		Prerequisites: anyradar, ~!fogenabled, ~!botplayer
 
+# Manual targeting for Tesla Coil boost (otherwise they get stuck when AI attack moves)
+
 SHOK:
 	-AutoTargetPriority@TESLANORMAL:
+
+# Special units/buildings
+
+TRAN.evac:
+	Inherits: TRAN
+	-Buildable:
+	RenderSprites:
+		Image: tran
+	DamageMultiplier@INVULN:
+		Modifier: 0
+	-KillsSelf@Emp:
+	Aircraft:
+		TurnToLand: True
+		InitialFacing: 0
 
 PDGY:
 	Inherits: MAST
@@ -543,6 +654,54 @@ SCRINPURIFIER:
 	Health:
 		HP: 150000
 	-CaptureNotification:
+
+# Smudge makers
+
+^SmudgeMaker:
+	Inherits@DUMMY: ^InvisibleDummy
+	Immobile:
+		OccupiesSpace: false
+	BodyOrientation:
+		QuantizedFacings: 1
+	WithSpriteBody:
+	Interactable:
+		Bounds: 64, 64
+	KillsSelf:
+		Delay: 25
+		RemoveInstead: true
+	WithSpriteBody:
+	RenderSpritesEditorOnly:
+		Image: waypoint
+	MapEditorData:
+		Categories: System
+
+CraterMaker1:
+	Inherits: ^SmudgeMaker
+	PeriodicExplosion:
+		Weapon: CraterMaker1
+	EditorOnlyTooltip:
+		Name: Crater Maker x1
+
+CraterMaker2:
+	Inherits: ^SmudgeMaker
+	PeriodicExplosion:
+		Weapon: CraterMaker2
+	EditorOnlyTooltip:
+		Name: Crater Maker x2
+
+ScorchMaker1:
+	Inherits: ^SmudgeMaker
+	PeriodicExplosion:
+		Weapon: ScorchMaker1
+	EditorOnlyTooltip:
+		Name: Scorch Maker x1
+
+ScorchMaker2:
+	Inherits: ^SmudgeMaker
+	PeriodicExplosion:
+		Weapon: ScorchMaker2
+	EditorOnlyTooltip:
+		Name: Scorch Maker x2
 
 # Enable subfaction specific units/upgrades for all campaign missions
 

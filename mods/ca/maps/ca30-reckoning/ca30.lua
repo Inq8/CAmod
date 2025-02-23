@@ -312,6 +312,7 @@ InitScrin = function()
 	AutoRepairAndRebuildBuildings(Scrin, 15)
 	SetupRefAndSilosCaptureCredits(Scrin)
 	AutoReplaceHarvesters(Scrin)
+	InitAiUpgrades(Scrin)
 
 	local scrinGroundAttackers = Scrin.GetGroundAttackers()
 
@@ -319,15 +320,6 @@ InitScrin = function()
 		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnitExcludingExterminators, function(p) return p == Nod or p == ScrinRebels or p == GDI end)
 	end)
-
-	if Difficulty == "hard" then
-		Actor.Create("ioncon.upgrade", true, { Owner = Scrin })
-		Actor.Create("shields.upgrade", true, { Owner = Scrin })
-
-		Trigger.AfterDelay(DateTime.Minutes(15), function()
-			Actor.Create("carapace.upgrade", true, { Owner = Scrin })
-		end)
-	end
 
 	Trigger.AfterDelay(DateTime.Minutes(1), function()
 		InitAttackSquad(Squads.ScrinRebelKiller, Scrin, ScrinRebels)

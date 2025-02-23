@@ -84,6 +84,7 @@ WorldLoaded = function()
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(USSR)
+	AdjustStartingCash()
 	InitGreece()
 
 	ObjectiveClearPath = USSR.AddObjective("Clear a path for reinforcements.")
@@ -170,7 +171,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
-		Actor.Create("ai.superweapons.enabled", true, { Owner = GDI })
+		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = GDI })
 	end)
 end
 

@@ -9,8 +9,6 @@ CyborgSquadInterval = {
 	hard = DateTime.Minutes(1),
 }
 
-
-
 Squads = {
 	Main1 = {
 		AttackValuePerSecond = {
@@ -120,6 +118,7 @@ WorldLoaded = function()
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(USSR)
+	AdjustStartingCash()
 	InitNod()
 
 	ObjectiveSecureGateway = USSR.AddObjective("Eliminate Nod forces near gateway.")

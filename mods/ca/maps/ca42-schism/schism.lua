@@ -71,6 +71,7 @@ WorldLoaded = function()
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(USSR)
+	AdjustStartingCash()
 	InitScrinRebels()
 	InitNod()
 
@@ -79,7 +80,7 @@ WorldLoaded = function()
 	ObjectiveSecurePurifier = USSR.AddObjective("Secure the purification device.")
 	UpdateMissionText()
 
-	Trigger.OnKilled(Purifier, function()
+	Trigger.OnKilled(Purifier, function(self, killer)
 		if not USSR.IsObjectiveCompleted(ObjectiveSecurePurifier) then
 			USSR.MarkFailedObjective(ObjectiveSecurePurifier)
 		end
@@ -88,7 +89,7 @@ WorldLoaded = function()
 		end
 	end)
 
-	Trigger.OnKilled(Exterminator, function()
+	Trigger.OnKilled(Exterminator, function(self, killer)
 		if not USSR.IsObjectiveCompleted(ObjectiveSecurePurifier) then
 			USSR.MarkFailedObjective(ObjectiveSecurePurifier)
 		end
@@ -188,6 +189,7 @@ InitScrinRebels = function()
 	AutoRepairAndRebuildBuildings(ScrinRebels)
 	SetupRefAndSilosCaptureCredits(ScrinRebels)
 	AutoReplaceHarvesters(ScrinRebels)
+	InitAiUpgrades(ScrinRebels)
 
 	AutoRepairBuildings(ScrinRebelsOuter)
 
@@ -208,6 +210,7 @@ InitNod = function()
 	AutoRepairAndRebuildBuildings(Nod)
 	SetupRefAndSilosCaptureCredits(Nod)
 	AutoReplaceHarvesters(Nod)
+	InitAiUpgrades(Nod)
 
 	local nodGroundAttackers = Nod.GetGroundAttackers()
 

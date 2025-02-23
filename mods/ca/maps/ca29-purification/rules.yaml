@@ -34,7 +34,7 @@ World:
 
 Player:
 	PlayerResources:
-		DefaultCash: 6500
+		DefaultCash: 6000
 
 ACOL:
 	Buildable:
@@ -205,16 +205,6 @@ NERV:
 	DetonateWeaponPower@STORMSPIKE:
 		Prerequisites: nerv
 		ChargeInterval: 8250
-
-RFGN:
-	GrantConditionOnPrerequisite@OwnedByAi:
-		Condition: owned-by-ai
-		Prerequisites: botplayer
-	DetonateWeaponPower@RiftGenerator:
-		RequiresCondition: ai-superweapons-enabled || !owned-by-ai
-	GrantConditionOnPrerequisite@SWENABLED:
-		Condition: ai-superweapons-enabled
-		Prerequisites: ai.superweapons.enabled
 
 MANI:
 	GrantExternalConditionPowerCA@SUPPRESSION:

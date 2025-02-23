@@ -1,0 +1,55 @@
+
+^Palettes:
+	TerrainLighting:
+	GlobalLightingPaletteEffect:
+		Red: 0.9
+		Green: 1.0
+		Blue: 1.2
+		Ambient: 0.75
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, succession.lua
+	MissionData:
+		Briefing: Revenge is ours Comrade General! Kane's overconfidence made him careless and Yuri now commands many of Kane's cyborgs.\n\nWhile this is excellent news, Kane is still able to produce cyborgs too fast for Yuri to manage. Research into using Tiberium to enhance Yuri's powers has begun, but it will be some time before significant progress is made.\n\nYou must return to where the cyborgs were first unleashed, where your predecessor failed miserably to contain them. The primary cyborg production facilities are still there, and we must take control of them to prevent Kane from overwhelming us again. With the cyborg factories under our control, nothing will be able to stop us.
+	MapOptions:
+		ShortGameCheckboxEnabled: True
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: dropdown-difficulty.label
+		Description: dropdown-difficulty.description
+		Values:
+			easy: options-difficulty.easy
+			normal: options-difficulty.normal
+			hard: options-difficulty.hard
+		Default: normal
+	MusicPlaylist:
+		StartingMusic: hm2
+
+Player:
+	PlayerResources:
+		DefaultCash: 6000
+
+TMPP:
+	CaptureManager:
+	Capturable:
+		RequiresCondition: !build-incomplete && !being-warped
+		Types: building
+	CapturableProgressBar:
+	CapturableProgressBlink:
+
+BRUT:
+	Buildable:
+		Prerequisites: infantry.soviet, anyradar
+
+DISC:
+	Buildable:
+		Prerequisites: afld, stek
+
+lasher.upgrade:
+	Buildable:
+		Prerequisites: anyradar
+
+gattling.upgrade:
+	Buildable:
+		Prerequisites: anyradar

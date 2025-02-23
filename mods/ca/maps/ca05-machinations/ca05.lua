@@ -279,6 +279,7 @@ InitNod = function()
 	AutoRepairAndRebuildBuildings(Nod, 15)
 	SetupRefAndSilosCaptureCredits(Nod)
 	AutoReplaceHarvesters(Nod)
+	InitAiUpgrades(Nod)
 
 	local nodGroundAttackers = Nod.GetGroundAttackers()
 
@@ -289,17 +290,6 @@ InitNod = function()
 
 	InitNavalAttackSquad(Squads.Naval, Nod)
 	InitAttackSquad(Squads.LabDefense, Nod)
-
-	Actor.Create("hazmat.upgrade", true, { Owner = Nod })
-
-	if Difficulty == "hard" then
-		Actor.Create("cyborgspeed.upgrade", true, { Owner = Nod })
-		Actor.Create("cyborgarmor.upgrade", true, { Owner = Nod })
-
-		Trigger.AfterDelay(DateTime.Minutes(15), function()
-			Actor.Create("tibcore.upgrade", true, { Owner = Nod })
-		end)
-	end
 end
 
 InitNodAttacks = function()

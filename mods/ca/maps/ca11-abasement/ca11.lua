@@ -223,6 +223,7 @@ InitScrin = function()
 	AutoRepairAndRebuildBuildings(Scrin, 15)
 	SetupRefAndSilosCaptureCredits(Scrin)
 	AutoReplaceHarvesters(Scrin)
+	InitAiUpgrades(Scrin)
 
 	Trigger.AfterDelay(Squads.ScrinMain.Delay[Difficulty], function()
 		InitAttackSquad(Squads.ScrinMain, Scrin)
@@ -242,14 +243,6 @@ InitScrin = function()
 		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
 	end)
-
-	if Difficulty == "hard" then
-		Actor.Create("ioncon.upgrade", true, { Owner = Scrin })
-
-		Trigger.AfterDelay(DateTime.Minutes(20), function()
-			Actor.Create("carapace.upgrade", true, { Owner = Scrin })
-		end)
-	end
 end
 
 InitNod = function()

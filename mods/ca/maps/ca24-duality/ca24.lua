@@ -38,13 +38,13 @@ WorldLoaded = function()
 		end
 	end)
 
-	Trigger.OnKilled(Commando, function()
+	Trigger.OnKilled(Commando, function(self, killer)
 		if not CommandoEscaped then
 			GDI.MarkFailedObjective(ObjectiveCommandoSurvive)
 		end
 	end)
 
-	Trigger.OnKilled(Tanya, function()
+	Trigger.OnKilled(Tanya, function(self, killer)
 		if not TanyaEscaped then
 			GDI.MarkFailedObjective(ObjectiveTanyaSurvive)
 		end
@@ -53,7 +53,7 @@ WorldLoaded = function()
 	local silos = Scrin.GetActorsByTypes({ "silo.scrin", "silo.scrinblue"})
 	Utils.Do(silos, function(a)
 		NumSilosRemaining = #silos
-		Trigger.OnKilled(a, function()
+		Trigger.OnKilled(a, function(self, killer)
 			NumSilosRemaining = NumSilosRemaining - 1
 			UpdateObjectiveText()
 		end)

@@ -174,6 +174,7 @@ InitGDI = function()
 	AutoRepairAndRebuildBuildings(GDI, 15)
 	SetupRefAndSilosCaptureCredits(GDI)
 	AutoReplaceHarvesters(GDI)
+	InitAiUpgrades(GDI)
 	InitGDIPatrols()
 	local gdiGroundAttackers = GDI.GetGroundAttackers()
 
@@ -183,14 +184,13 @@ InitGDI = function()
 			CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGDIGroundHunterUnit)
 		end
 	end)
-
-	Actor.Create("hazmat.upgrade", true, { Owner = GDI })
 end
 
 InitGreece = function()
 	AutoRepairAndRebuildBuildings(Greece, 15)
 	SetupRefAndSilosCaptureCredits(Greece)
 	AutoReplaceHarvesters(Greece)
+	InitAiUpgrades(Greece)
 
 	local greeceGroundAttackers = Greece.GetGroundAttackers()
 
@@ -211,8 +211,6 @@ InitGreece = function()
 			a.Move(randomDest)
 		end
 	end)
-
-	Actor.Create("hazmat.upgrade", true, { Owner = Greece })
 end
 
 InitGDIPatrols = function()

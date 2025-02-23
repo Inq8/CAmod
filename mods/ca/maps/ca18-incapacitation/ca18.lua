@@ -217,15 +217,14 @@ OncePerFiveSecondChecks = function()
 end
 
 InitGreece = function()
-	Actor.Create("ai.unlimited.power", true, { Owner = Greece })
-	Actor.Create("hazmat.upgrade", true, { Owner = Greece })
-	Actor.Create("cryw.upgrade", true, { Owner = Greece })
-
 	RebuildExcludes.Greece = { Types = { "powr", "apwr", "hpad", "agun", "pbox", "pris" } }
 
 	AutoRepairAndRebuildBuildings(Greece, 15)
 	SetupRefAndSilosCaptureCredits(Greece)
 	AutoReplaceHarvesters(Greece)
+	InitAiUpgrades(Greece)
+
+	Actor.Create("ai.unlimited.power", true, { Owner = Greece })
 
 	local alliedGroundAttackers = Greece.GetGroundAttackers()
 
@@ -236,16 +235,21 @@ InitGreece = function()
 end
 
 InitGDI = function()
-	Actor.Create("ai.unlimited.power", true, { Owner = GDI })
-	Actor.Create("hazmat.upgrade", true, { Owner = GDI })
-	Actor.Create("hold.strat", true, { Owner = GDI })
-	Actor.Create("hold2.strat", true, { Owner = GDI })
-
-	if Difficulty == "hard" then
-		Actor.Create("hold3.strat", true, { Owner = GDI })
-	end
-
 	RebuildExcludes.GDI = { Types = { "nuke", "nuk2", "hpad.td", "afld.gdi", "cram", "gtwr", "atwr" } }
+
+	AutoRepairAndRebuildBuildings(GDI, 15)
+	SetupRefAndSilosCaptureCredits(GDI)
+	AutoReplaceHarvesters(GDI)
+	InitAiUpgrades(GDI)
+
+	Actor.Create("ai.unlimited.power", true, { Owner = GDI })
+
+	local gdiGroundAttackers = GDI.GetGroundAttackers()
+
+	Utils.Do(gdiGroundAttackers, function(a)
+		TargetSwapChance(a, 10)
+		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGDIGroundHunterUnit)
+	end)
 
 	local titanTriggerFootprint = { TitanTrigger1.Location, TitanTrigger2.Location, TitanTrigger3.Location, TitanTrigger4.Location, TitanTrigger5.Location }
 	Trigger.OnEnteredFootprint(titanTriggerFootprint, function(a, id)
@@ -264,17 +268,6 @@ InitGDI = function()
 	local miniDronePatrolPath = { MiniDronePatrol1.Location, MiniDronePatrol2.Location, MiniDronePatrol3.Location, MiniDronePatrol4.Location, MiniDronePatrol5.Location, MiniDronePatrol6.Location, MiniDronePatrol5.Location, MiniDronePatrol4.Location, MiniDronePatrol3.Location, MiniDronePatrol2.Location }
 	MiniDronePatroller1.Patrol(miniDronePatrolPath, true)
 	MiniDronePatroller2.Patrol(miniDronePatrolPath, true)
-
-	AutoRepairAndRebuildBuildings(GDI, 15)
-	SetupRefAndSilosCaptureCredits(GDI)
-	AutoReplaceHarvesters(GDI)
-
-	local gdiGroundAttackers = GDI.GetGroundAttackers()
-
-	Utils.Do(gdiGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGDIGroundHunterUnit)
-	end)
 end
 
 SetupLightning = function()

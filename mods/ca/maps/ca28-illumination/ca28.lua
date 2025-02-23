@@ -245,7 +245,7 @@ SpawnWormhole = function(cave)
 	cave.NumSpawns = 0
 
 	-- if wormhole is destroyed, respawn after a delay (unless on easy)
-	Trigger.OnKilled(cave.Wormhole, function(a)
+	Trigger.OnKilled(cave.Wormhole, function(self, killer)
 		if Difficulty ~= "easy" then
 			Trigger.AfterDelay(WormholeRespawnTime[Difficulty], function()
 				SpawnWormhole(cave)

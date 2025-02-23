@@ -269,13 +269,13 @@ WorldLoaded = function()
 		end
 	end)
 
-	Trigger.OnKilled(AlliedMastermind, function()
+	Trigger.OnKilled(AlliedMastermind, function(self, killer)
 		FlipSlaveFaction(AlliedSlaves)
 	end)
-	Trigger.OnKilled(SovietMastermind, function()
+	Trigger.OnKilled(SovietMastermind, function(self, killer)
 		FlipSlaveFaction(SovietSlaves)
 	end)
-	Trigger.OnKilled(NodMastermind, function()
+	Trigger.OnKilled(NodMastermind, function(self, killer)
 		FlipSlaveFaction(NodSlaves)
 	end)
 
@@ -473,6 +473,7 @@ InitScrin = function()
 	AutoRepairAndRebuildBuildings(Scrin, 15)
 	SetupRefAndSilosCaptureCredits(Scrin)
 	AutoReplaceHarvesters(Scrin)
+	InitAiUpgrades(Scrin)
 
 	local scrinGroundAttackers = Scrin.GetGroundAttackers()
 
@@ -483,17 +484,9 @@ InitScrin = function()
 
 	Mothership.Attack(Wormhole, true, true)
 	Actor.Create("ai.unlimited.power", true, { Owner = Scrin })
-	Actor.Create("shields.upgrade", true, { Owner = Scrin })
 	ScrinDefenseBuff1 = Actor.Create("scrindefensebuff1", true, { Owner = Scrin })
 	ScrinDefenseBuff2 = Actor.Create("scrindefensebuff2", true, { Owner = Scrin })
-	IonConduits = Actor.Create("ioncon.upgrade", true, { Owner = Scrin })
 	MothershipShields = Actor.Create("mothership.shields", true, { Owner = Scrin })
-
-	if Difficulty == "hard" then
-		Trigger.AfterDelay(DateTime.Minutes(12), function()
-			Actor.Create("carapace.upgrade", true, { Owner = Scrin })
-		end)
-	end
 
 	Trigger.AfterDelay(RiftEnabledTime[Difficulty], function()
 		Actor.Create("ai.superweapons.enabled", true, { Owner = Scrin })

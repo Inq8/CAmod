@@ -272,6 +272,9 @@ InitUSSR = function()
 	AutoRepairAndRebuildBuildings(USSR, 15)
 	SetupRefAndSilosCaptureCredits(USSR)
 	AutoReplaceHarvesters(USSR)
+	InitAiUpgrades(USSR)
+
+	Actor.Create("ai.unlimited.power", true, { Owner = USSR })
 
 	local ussrGroundAttackers = USSR.GetGroundAttackers()
 
@@ -285,9 +288,6 @@ InitUSSR = function()
 			a.GrantCondition("invulnerability")
 		end
 	end)
-
-	Actor.Create("ai.unlimited.power", true, { Owner = USSR })
-	Actor.Create("hazmatsoviet.upgrade", true, { Owner = USSR })
 
 	Trigger.AfterDelay(Squads.Main.Delay[Difficulty], function()
 		InitAttackSquad(Squads.Main, USSR)

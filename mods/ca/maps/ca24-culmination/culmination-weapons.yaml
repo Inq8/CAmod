@@ -1,0 +1,20 @@
+SubjugationSpawner:
+	Projectile: InstantHit
+	ReloadDelay: 5000
+	Warhead@Spawn: SpawnActor
+		Actors: subjugation.dummy
+		Range: 1
+		ForceGround: false
+		ValidTargets: Ground, Water
+		ImpactActors: false
+
+SubjugationEffect:
+	Projectile: InstantHit
+	ReloadDelay: 5000
+	Warhead@FlashEffect: FlashPaletteEffect
+		Duration: 20
+		FlashType: Subjugation
+	Warhead@1Change: ChangeOwner
+		Range: 18c0
+		ValidRelationships: Enemy
+		ValidTargets: Infantry, Vehicle, Ship, Structure

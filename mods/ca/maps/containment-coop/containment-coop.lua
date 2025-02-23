@@ -389,6 +389,7 @@ InitUSSR = function()
 	AutoRepairBuildings(USSR)
 
 	Actor.Create("ai.unlimited.power", true, { Owner = USSR })
+	Actor.Create("ai.superweapons.enabled", true, { Owner = USSR })
 
 	local ussrGroundAttackers = USSR.GetGroundAttackers()
 
@@ -465,7 +466,7 @@ end
 
 RespawnTrigger = function(a)
 	if RespawnEnabled then
-		Trigger.OnKilled(a, function()
+		Trigger.OnKilled(a, function(self, killer)
 			local name
 			if a.Type == "spy" then
 				name = "Spy"

@@ -231,13 +231,6 @@ OncePerFiveSecondChecks = function()
 end
 
 InitGreece = function()
-	Actor.Create("ai.unlimited.power", true, { Owner = Greece })
-	Actor.Create("hazmat.upgrade", true, { Owner = Greece })
-
-	if Difficulty == "hard" then
-		Actor.Create("cryw.upgrade", true, { Owner = Greece })
-	end
-
 	if Difficulty == "easy" then
 		RebuildExcludes.Greece = { Types = { "gun", "pbox", "pris", "awpr", "weat" } }
 	else
@@ -247,18 +240,19 @@ InitGreece = function()
 	AutoRepairAndRebuildBuildings(Greece, 15)
 	SetupRefAndSilosCaptureCredits(Greece)
 	AutoReplaceHarvesters(Greece)
+	InitAiUpgrades(Greece)
+
+	Actor.Create("ai.unlimited.power", true, { Owner = Greece })
+
+	Trigger.AfterDelay(WeatherStormEnabledTime[Difficulty], function()
+		Actor.Create("ai.superweapons.enabled", true, { Owner = Greece })
+	end)
 
 	local alliedGroundAttackers = Greece.GetGroundAttackers()
 
 	Utils.Do(alliedGroundAttackers, function(a)
 		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGreeceGroundHunterUnit)
-	end)
-
-	Trigger.AfterDelay(WeatherStormEnabledTime[Difficulty], function()
-		if not WeatherControl.IsDead then
-			WeatherControl.GrantCondition("weather-storm-enabled")
-		end
 	end)
 
 	Trigger.AfterDelay(Squads.AlliedMain.Delay[Difficulty], function()
@@ -272,15 +266,6 @@ end
 
 InitGDI = function()
 	Actor.Create("ai.unlimited.power", true, { Owner = GDI })
-	Actor.Create("hazmat.upgrade", true, { Owner = GDI })
-	Actor.Create("hold.strat", true, { Owner = GDI })
-
-	if Difficulty == "hard" then
-		Actor.Create("sonic.upgrade", true, { Owner = GDI, })
-		Actor.Create("hammerhead.upgrade", true, { Owner = GDI, })
-		Actor.Create("hold2.strat", true, { Owner = GDI, })
-		Actor.Create("hold3.strat", true, { Owner = GDI })
-	end
 
 	if Difficulty == "easy" then
 		RebuildExcludes.GDI = { Types = { "gtwr", "atwr", "stwr", "nuk2", "eye" } }
@@ -291,6 +276,7 @@ InitGDI = function()
 	AutoRepairAndRebuildBuildings(GDI, 15)
 	SetupRefAndSilosCaptureCredits(GDI)
 	AutoReplaceHarvesters(GDI)
+	InitGDIUpgrades(GDI)
 
 	local gdiGroundAttackers = GDI.GetGroundAttackers()
 
@@ -300,9 +286,7 @@ InitGDI = function()
 	end)
 
 	Trigger.AfterDelay(IonCannonEnabledTime[Difficulty], function()
-		if not AdvancedComms.IsDead then
-			AdvancedComms.GrantCondition("ion-cannon-enabled")
-		end
+		Actor.Create("ai.superweapons.enabled", true, { Owner = GDI })
 	end)
 
 	Trigger.AfterDelay(Squads.GDIMain.Delay[Difficulty], function()

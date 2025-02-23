@@ -294,13 +294,14 @@ WorldLoaded = function()
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(USSR)
+	AdjustStartingCash()
 	InitGenerals()
 
 	ObjectiveSubdueMarinesko = USSR.AddObjective("Defeat General Marinesko's forces.")
 	ObjectiveSubdueRomanov = USSR.AddObjective("Defeat Deputy Chairman Romanov's forces.")
 	ObjectiveSubdueKrukov = USSR.AddObjective("Defeat General Krukov's forces.")
 
-	Trigger.OnCapture(RomanovIndustrialPlant, function()
+	Trigger.OnCapture(RomanovIndustrialPlant, function(self, captor, oldOwner, newOwner)
 		Actor.Create("captured.indp", true, { Owner = USSR })
 	end)
 end
@@ -368,8 +369,7 @@ InitGenerals = function()
 		AutoRepairAndRebuildBuildings(g)
 		SetupRefAndSilosCaptureCredits(g)
 		AutoReplaceHarvesters(g)
-
-		Actor.Create("hazmatsoviet.upgrade", true, { Owner = g })
+		InitAiUpgrades(g)
 
 		local groundAttackers = g.GetGroundAttackers()
 
@@ -404,7 +404,7 @@ InitGenerals = function()
 
 	if Difficulty == "hard" then
 		Trigger.AfterDelay(DateTime.Minutes(15), function()
-			Actor.Create("flakarmor.upgrade", true, { Owner = Marinesko })
+			Actor.Create("imppara.upgrade", true, { Owner = Marinesko })
 			Actor.Create("rocketpods.upgrade", true, { Owner = Krukov })
 			Actor.Create("reactive.upgrade", true, { Owner = Romanov })
 		end)

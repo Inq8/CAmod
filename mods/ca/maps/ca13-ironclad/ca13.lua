@@ -178,6 +178,7 @@ InitGreece = function()
 	AutoRepairAndRebuildBuildings(Greece, 15)
 	SetupRefAndSilosCaptureCredits(Greece)
 	AutoReplaceHarvesters(Greece)
+	InitAiUpgrades(Greece)
 
 	local alliedGroundAttackers = Greece.GetGroundAttackers()
 
@@ -185,17 +186,6 @@ InitGreece = function()
 		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(6656), IsGreeceGroundHunterUnit)
 	end)
-
-	Actor.Create("hazmat.upgrade", true, { Owner = Greece })
-	Actor.Create("apb.upgrade", true, { Owner = Greece })
-
-	if Difficulty == "hard" then
-		Actor.Create("cryw.upgrade", true, { Owner = Greece })
-
-		Trigger.AfterDelay(DateTime.Minutes(20), function()
-			Actor.Create("flakarmor.upgrade", true, { Owner = Greece })
-		end)
-	end
 end
 
 InitGDI = function()
@@ -206,6 +196,7 @@ InitGDI = function()
 	AutoRepairAndRebuildBuildings(GDI, 15)
 	SetupRefAndSilosCaptureCredits(GDI)
 	AutoReplaceHarvesters(GDI)
+	InitAiUpgrades(GDI)
 
 	local gdiGroundAttackers = GDI.GetGroundAttackers()
 
@@ -213,27 +204,6 @@ InitGDI = function()
 		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(6656), IsGDIGroundHunterUnit)
 	end)
-
-	Actor.Create("hazmat.upgrade", true, { Owner = GDI })
-
-	if Difficulty == "hard" then
-		Trigger.AfterDelay(DateTime.Minutes(10), function()
-			local strategyUpgrades = {
-				{ "bombard.strat", "bombard2.strat", "hailstorm.upgrade" },
-				{ "seek.strat", "seek2.strat", "hypersonic.upgrade" },
-				{ "hold.strat", "hold2.strat", "hammerhead.upgrade" },
-			}
-
-			local selectedStrategyUpgrades = Utils.Random(strategyUpgrades)
-			Utils.Do(selectedStrategyUpgrades, function(u)
-				Actor.Create(u, true, { Owner = GDI })
-			end)
-		end)
-
-		Trigger.AfterDelay(DateTime.Minutes(20), function()
-			Actor.Create("flakarmor.upgrade", true, { Owner = GDI })
-		end)
-	end
 end
 
 EngineerDrop = function()

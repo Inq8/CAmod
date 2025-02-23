@@ -248,18 +248,10 @@ end
 
 InitNod = function()
 	Actor.Create("ai.unlimited.power", true, { Owner = Nod })
-	Actor.Create("hazmat.upgrade", true, { Owner = Nod })
-
-	if Difficulty == "hard" then
-		Actor.Create("tibcore.upgrade", true, { Owner = Nod })
-		Actor.Create("quantum.upgrade", true, { Owner = Nod })
-		Actor.Create("blacknapalm.upgrade", true, { Owner = Nod })
-		Actor.Create("cyborgarmor.upgrade", true, { Owner = Nod })
-		Actor.Create("cyborgspeed.upgrade", true, { Owner = Nod })
-	end
 
 	AutoRepairBuildings(Nod)
 	SetupRefAndSilosCaptureCredits(Nod)
+	InitAiUpgrades(Nod)
 
 	local nodGroundAttackers = Nod.GetGroundAttackers()
 

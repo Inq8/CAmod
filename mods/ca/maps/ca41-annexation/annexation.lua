@@ -93,6 +93,7 @@ WorldLoaded = function()
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(USSR)
+	AdjustStartingCash()
 	InitScrinRebels()
 
 	Actor.Create("hazmatsoviet.upgrade", true, { Owner = USSR })
@@ -172,6 +173,7 @@ InitScrinRebels = function()
 		AutoRepairAndRebuildBuildings(p)
 		SetupRefAndSilosCaptureCredits(p)
 		AutoReplaceHarvesters(p)
+		InitAiUpgrades(p)
 
 		local scrinRebelsGroundAttackers = p.GetGroundAttackers()
 

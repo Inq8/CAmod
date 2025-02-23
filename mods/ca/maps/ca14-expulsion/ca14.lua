@@ -173,6 +173,7 @@ InitGDI = function()
 	AutoRepairAndRebuildBuildings(GDI, 15)
 	SetupRefAndSilosCaptureCredits(GDI)
 	AutoReplaceHarvesters(GDI)
+	InitAiUpgrades(GDI)
 
 	local gdiGroundAttackers = GDI.GetGroundAttackers()
 
@@ -196,25 +197,4 @@ InitGDI = function()
 	Trigger.AfterDelay(Squads.GDIAir.Delay[Difficulty], function()
 		InitAirAttackSquad(Squads.GDIAir, GDI, USSR, { "harv", "v2rl", "apwr", "tsla", "ttra", "v3rl", "mig", "hind", "suk", "suk.upg", "kiro", "apoc" })
 	end)
-
-	Actor.Create("hazmat.upgrade", true, { Owner = GDI })
-
-	if Difficulty == "hard" then
-		Trigger.AfterDelay(DateTime.Minutes(5), function()
-			local strategyUpgrades = {
-				{ "bombard.strat", "bombard2.strat", "hailstorm.upgrade" },
-				{ "seek.strat", "seek2.strat", "hypersonic.upgrade" },
-				{ "hold.strat", "hold2.strat", "hammerhead.upgrade" },
-			}
-
-			local selectedStrategyUpgrades = Utils.Random(strategyUpgrades)
-			Utils.Do(selectedStrategyUpgrades, function(u)
-				Actor.Create(u, true, { Owner = GDI })
-			end)
-		end)
-
-		Trigger.AfterDelay(DateTime.Minutes(20), function()
-			Actor.Create("flakarmor.upgrade", true, { Owner = GDI })
-		end)
-	end
 end

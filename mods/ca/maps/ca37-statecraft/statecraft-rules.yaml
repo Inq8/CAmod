@@ -35,7 +35,7 @@ World:
 
 Player:
 	PlayerResources:
-		DefaultCash: 6500
+		DefaultCash: 6000
 	-GrantExternalConditionPowerCA@HEROESOFUNION:
 	-ParatroopersPowerCA@TankDrop:
 	-AirstrikePowerCA@KillZone:
@@ -50,10 +50,6 @@ INDP:
 		Types: building
 	CapturableProgressBar:
 	CapturableProgressBlink:
-	CaptureNotification:
-		TextNotification: Structure captured.
-		LoseNotification: OurBuildingCaptured
-		LoseTextNotification: Structure lost (captured).
 
 MUNP:
 	Inherits@KillZone: ^KillZonePower
@@ -65,10 +61,6 @@ MUNP:
 		Types: building
 	CapturableProgressBar:
 	CapturableProgressBlink:
-	CaptureNotification:
-		TextNotification: Structure captured.
-		LoseNotification: OurBuildingCaptured
-		LoseTextNotification: Structure lost (captured).
 
 CVAT:
 	Inherits@HeroesOfTheUnion: ^HeroesOfTheUnionPower
@@ -80,10 +72,6 @@ CVAT:
 		Types: building
 	CapturableProgressBar:
 	CapturableProgressBlink:
-	CaptureNotification:
-		TextNotification: Structure captured.
-		LoseNotification: OurBuildingCaptured
-		LoseTextNotification: Structure lost (captured).
 	GrantConditionOnPrerequisite@OwnedByAi:
 		Condition: owned-by-ai
 		Prerequisites: botplayer

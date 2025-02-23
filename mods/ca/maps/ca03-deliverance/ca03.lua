@@ -485,6 +485,7 @@ InitUSSR = function()
 	AutoRepairAndRebuildBuildings(USSR, 15)
 	SetupRefAndSilosCaptureCredits(USSR)
 	AutoReplaceHarvesters(USSR)
+	InitAiUpgrades(USSR)
 	InitUSSRPatrols()
 
 	local ussrGroundAttackers = USSR.GetGroundAttackers()
@@ -493,15 +494,6 @@ InitUSSR = function()
 		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsUSSRGroundHunterUnit)
 	end)
-
-	Actor.Create("hazmatsoviet.upgrade", true, { Owner = USSR })
-
-	if Difficulty == "hard" then
-		Trigger.AfterDelay(DateTime.Minutes(15), function()
-			Actor.Create("flakarmor.upgrade", true, { Owner = USSR })
-			Actor.Create("tarc.upgrade", true, { Owner = USSR })
-		end)
-	end
 
 	-- If main sub pens are destroyed, update naval attack path
 	Utils.Do({ SovietSouthSubPen1, SovietSouthSubPen2 }, function(a)

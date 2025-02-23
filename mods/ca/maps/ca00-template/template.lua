@@ -1,9 +1,9 @@
 Squads = {
 	Main = {
 		Delay = {
-            easy = DateTime.Minutes(8),
+			easy = DateTime.Minutes(8),
 			normal = DateTime.Minutes(6),
-            hard = DateTime.Minutes(4),
+			hard = DateTime.Minutes(4),
 		},
 		AttackValuePerSecond = {
 			easy = { Min = 25, Max = 50 },
@@ -11,12 +11,12 @@ Squads = {
 			hard = { Min = 80, Max = 160 },
 		},
 		FollowLeader = true,
-        ProducerActors = nil,
-		ProducerTypes = { Infantry = { "tent" }, Vehicles = { "weap" } },
+		ProducerActors = nil,
+		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
 		Units = UnitCompositions.Soviet.Main,
 		AttackPaths = {
 
-        },
+		},
 	},
 }
 
@@ -64,19 +64,19 @@ end
 -- Functions
 
 InitUSSR = function()
-	AutoRepairBuildings(USSR)
+	AutoRepairAndRebuildBuildings(USSR)
 	SetupRefAndSilosCaptureCredits(USSR)
 	AutoReplaceHarvesters(USSR)
-
-	-- Begin main attacks after difficulty based delay
-	Trigger.AfterDelay(Squads.Main.Delay[Difficulty], function()
-		InitAttackSquad(Squads.Main, USSR)
-	end)
 
 	local ussrGroundAttackers = USSR.GetGroundAttackers()
 
 	Utils.Do(ussrGroundAttackers, function(a)
 		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsUSSRGroundHunterUnit)
+	end)
+
+	-- Begin main attacks after difficulty based delay
+	Trigger.AfterDelay(Squads.Main.Delay[Difficulty], function()
+		InitAttackSquad(Squads.Main, USSR)
 	end)
 end

@@ -36,7 +36,7 @@ World:
 
 Player:
 	PlayerResources:
-		DefaultCash: 6500
+		DefaultCash: 6000
 
 ^AiExtraPower:
 	PowerMultiplier@EXTRAPOWER:
@@ -387,16 +387,6 @@ NERV:
 		ChargeInterval: 6750
 	DetonateWeaponPower@STORMSPIKE:
 		Prerequisites: nerv
-
-RFGN:
-	GrantConditionOnPrerequisite@OwnedByAi:
-		Condition: owned-by-ai
-		Prerequisites: botplayer
-	DetonateWeaponPower@RiftGenerator:
-		RequiresCondition: ai-superweapons-enabled || !owned-by-ai
-	GrantConditionOnPrerequisite@SWENABLED:
-		Condition: ai-superweapons-enabled
-		Prerequisites: ai.superweapons.enabled
 
 MANI:
 	GrantExternalConditionPowerCA@SUPPRESSION:

@@ -199,16 +199,10 @@ InitUSSR = function()
 	end
 
 	SetupRefAndSilosCaptureCredits(USSR)
+	InitAiUpgrades(USSR)
 
 	Actor.Create("ai.unlimited.power", true, { Owner = USSR })
-	Actor.Create("hazmatsoviet.upgrade", true, { Owner = USSR })
-
-	if Difficulty == "hard" then
-		Trigger.AfterDelay(DateTime.Minutes(20), function()
-			Actor.Create("flakarmor.upgrade", true, { Owner = USSR })
-			Actor.Create("tarc.upgrade", true, { Owner = USSR })
-		end)
-	end
+	Actor.Create("ai.superweapons.enabled", true, { Owner = USSR })
 
 	Trigger.OnAllKilledOrCaptured(NukeSilos, function()
 		Nod.MarkCompletedObjective(ObjectiveKillSilos)

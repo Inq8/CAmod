@@ -262,6 +262,9 @@ InitUSSR = function()
 	AutoRepairAndRebuildBuildings(USSR, 15)
 	SetupRefAndSilosCaptureCredits(USSR)
 	AutoReplaceHarvesters(USSR)
+	InitAiUpgrades(USSR)
+
+	Actor.Create("ai.unlimited.power", true, { Owner = USSR })
 
 	local ussrGroundAttackers = USSR.GetGroundAttackers()
 
@@ -269,9 +272,6 @@ InitUSSR = function()
 		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsUSSRGroundHunterUnit)
 	end)
-
-	Actor.Create("ai.unlimited.power", true, { Owner = USSR })
-	Actor.Create("hazmatsoviet.upgrade", true, { Owner = USSR })
 
 	Trigger.AfterDelay(DateTime.Seconds(5), function()
 		Utils.Do({ ShoreInf1, ShoreInf2, ShoreInf3, ShoreInf4, ShoreHeavyTank1, ShoreHeavyTank2 }, function(self)

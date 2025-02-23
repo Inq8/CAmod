@@ -199,7 +199,7 @@ WorldLoaded = function()
 		Notification("Reinforcements have arrived.")
 		Reinforcements.Reinforce(GDI, { "hmmv", "mtnk", "amcv", "mtnk" }, { McvSpawn.Location, McvRally.Location }, 75)
 		Beacon.New(GDI, McvRally.CenterPosition)
-		GDI.Cash = 5000 + CashAdjustments[Difficulty]
+		GDI.Cash = 6000 + CashAdjustments[Difficulty]
 	end)
 
 	Trigger.OnKilled(Church1, function(self, killer)
@@ -218,12 +218,6 @@ WorldLoaded = function()
 				end
 			end)
 		end)
-	end)
-
-	Trigger.AfterDelay(ChemMissileEnabledTime[Difficulty], function()
-		if not ChemSilo.IsDead then
-			ChemSilo.GrantCondition("chem-missile-enabled")
-		end
 	end)
 
 	Trigger.AfterDelay(DateTime.Minutes(22), function()
@@ -268,6 +262,7 @@ InitNod = function()
 	AutoRepairAndRebuildBuildings(Nod, 15)
 	SetupRefAndSilosCaptureCredits(Nod)
 	AutoReplaceHarvesters(Nod)
+	InitAiUpgrades(Nod)
 
 	local nodGroundAttackers = Nod.GetGroundAttackers()
 
@@ -277,13 +272,10 @@ InitNod = function()
 	end)
 
 	Actor.Create("ai.unlimited.power", true, { Owner = Nod })
-	Actor.Create("hazmat.upgrade", true, { Owner = Nod })
 
-	if Difficulty == "hard" then
-		Trigger.AfterDelay(DateTime.Minutes(5), function()
-			Actor.Create("tibcore.upgrade", true, { Owner = Nod })
-		end)
-	end
+	Trigger.AfterDelay(ChemMissileEnabledTime[Difficulty], function()
+		Actor.Create("ai.superweapons.enabled", true, { Owner = Nod })
+	end)
 
 	Trigger.AfterDelay(Squads.North.Delay[Difficulty], function()
 		InitAttackSquad(Squads.North, Nod)

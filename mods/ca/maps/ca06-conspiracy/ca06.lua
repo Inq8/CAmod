@@ -421,6 +421,7 @@ InitGreece = function()
 	AutoRepairAndRebuildBuildings(Greece, 15)
 	SetupRefAndSilosCaptureCredits(Greece)
 	AutoReplaceHarvesters(Greece)
+	InitAiUpgrades(Greece)
 
 	local greeceGroundAttackers = Greece.GetGroundAttackers()
 
@@ -428,17 +429,6 @@ InitGreece = function()
 		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGreeceGroundHunterUnit)
 	end)
-
-	Actor.Create("hazmat.upgrade", true, { Owner = Greece })
-	Actor.Create("apb.upgrade", true, { Owner = Greece })
-
-	if Difficulty == "hard" then
-		Actor.Create("cryw.upgrade", true, { Owner = Greece })
-
-		Trigger.AfterDelay(DateTime.Minutes(20), function()
-			Actor.Create("flakarmor.upgrade", true, { Owner = Greece })
-		end)
-	end
 end
 
 InitAlliedAttacks = function()

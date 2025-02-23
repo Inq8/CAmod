@@ -276,9 +276,10 @@ InitGreece = function()
 	AutoRepairAndRebuildBuildings(Greece, 15)
 	SetupRefAndSilosCaptureCredits(Greece)
 	AutoReplaceHarvesters(Greece)
+	InitAiUpgrades(Greece)
+	InitAiUpgrades(Traitor)
 
 	Actor.Create("ai.unlimited.power", true, { Owner = Traitor })
-	Actor.Create("hazmatsoviet.upgrade", true, { Owner = Traitor })
 
 	local alliedGroundAttackers = Greece.GetGroundAttackers()
 
@@ -293,17 +294,6 @@ InitGreece = function()
 		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGroundHunterUnit)
 	end)
-
-	Actor.Create("hazmat.upgrade", true, { Owner = Greece })
-	Actor.Create("apb.upgrade", true, { Owner = Greece })
-
-	if Difficulty == "hard" then
-		Actor.Create("cryw.upgrade", true, { Owner = Greece })
-
-		Trigger.AfterDelay(DateTime.Minutes(20), function()
-			Actor.Create("flakarmor.upgrade", true, { Owner = Greece })
-		end)
-	end
 end
 
 TraitorTechCenterDiscovered = function()

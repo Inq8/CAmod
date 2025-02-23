@@ -123,8 +123,9 @@ WorldLoaded = function()
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(GDI)
-	InitScrin()
 	AdjustStartingCash()
+	InitScrin()
+	InitAiUpgrades(Scrin, 0)
 	SetupLightning()
 	SetupIonStorm()
 	UpdateMissionText()
@@ -159,10 +160,6 @@ WorldLoaded = function()
 			end)
 		end)
 	end)
-
-	if Difficulty == "hard" then
-		Actor.Create("shields.upgrade", true, { Owner = Scrin })
-	end
 
 	if Difficulty == "hard" then
 		ObjectiveStopFleet = GDI.AddObjective("Prevent any Scrin fleet vessels breaking through.")

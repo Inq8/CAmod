@@ -208,6 +208,7 @@ InitGDI = function()
 	AutoRepairAndRebuildBuildings(GDI, 15)
 	SetupRefAndSilosCaptureCredits(GDI)
 	AutoReplaceHarvesters(GDI)
+	InitAiUpgrades(GDI)
 
 	local gdiGroundAttackers = GDI.GetGroundAttackers()
 
@@ -216,30 +217,10 @@ InitGDI = function()
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGDIGroundHunterUnit)
 	end)
 
-	Actor.Create("hazmat.upgrade", true, { Owner = GDI })
-
 	Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
 		Actor.Create("ai.superweapons.enabled", true, { Owner = GDI })
+		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = GDI })
 	end)
-
-	if Difficulty == "hard" then
-		Trigger.AfterDelay(DateTime.Minutes(5), function()
-			local strategyUpgrades = {
-				{ "bombard.strat", "bombard2.strat", "hailstorm.upgrade" },
-				{ "seek.strat", "seek2.strat", "hypersonic.upgrade" },
-				{ "hold.strat", "hold2.strat", "hammerhead.upgrade" },
-			}
-
-			local selectedStrategyUpgrades = Utils.Random(strategyUpgrades)
-			Utils.Do(selectedStrategyUpgrades, function(u)
-				Actor.Create(u, true, { Owner = GDI })
-			end)
-		end)
-
-		Trigger.AfterDelay(DateTime.Minutes(20), function()
-			Actor.Create("flakarmor.upgrade", true, { Owner = GDI })
-		end)
-	end
 end
 
 InitCommsCenterObjective = function()
@@ -259,11 +240,11 @@ InitCommsCenterObjective = function()
 		camera.Destroy()
 	end)
 
-	Trigger.OnCapture(GDICommsCenter, function()
+	Trigger.OnCapture(GDICommsCenter, function(self, captor, oldOwner, newOwner)
 		USSR.MarkCompletedObjective(ObjectiveCaptureComms)
 	end)
 
-	Trigger.OnKilled(GDICommsCenter, function()
+	Trigger.OnKilled(GDICommsCenter, function(self, killer)
 		USSR.MarkFailedObjective(ObjectiveCaptureComms)
 	end)
 end
