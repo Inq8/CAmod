@@ -1,0 +1,37 @@
+^Palettes:
+	GlobalLightingPaletteEffect:
+		Red: 0.85
+		Green: 0.85
+		Blue: 1
+		Ambient: 0.85
+	WeatherOverlay:
+		ParticleDensityFactor: 4
+		Gravity: 16, 24
+		WindTick: 150, 425
+		ScatterDirection: -12, 12
+		ParticleSize: 2, 3
+		ParticleColors: ECECEC44, E4E4E444, D0D0D044, BCBCBC44
+		LineTailAlphaValue: 0
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, expulsion.lua
+	MissionData:
+		Briefing: Allied and GDI forces are on the retreat. We must seize the initiative and take back our territory before they have a chance to stablize and regroup.\n\nGDI have been holding an area of great strategic importance that provides access to a region rich in both oil and Tiberium from which we are currently cut off.\n\nWe need these resources to rebuild our severely weakened forces. Remove the GDI presence and take back what is rightfully ours.
+	MapOptions:
+		ShortGameCheckboxEnabled: True
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: dropdown-difficulty.label
+		Description: dropdown-difficulty.description
+		Values:
+			easy: options-difficulty.easy
+			normal: options-difficulty.normal
+			hard: options-difficulty.hard
+		Default: normal
+	MusicPlaylist:
+		StartingMusic: hell226m
+
+Player:
+	PlayerResources:
+		DefaultCash: 6000

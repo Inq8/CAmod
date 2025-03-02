@@ -1,0 +1,90 @@
+^Palettes:
+	FlashPaletteEffect@LIGHTNINGSTRIKE:
+		Type: LightningStrike
+		ExcludePalettes: cursor, chrome, colorpicker, colorpickertd, colorpickerscrin, fog, shroud
+	WeatherOverlay@RAIN:
+		WindTick: 150, 550
+		UseSquares: false
+		ScatterDirection: 0, 0
+		Gravity: 20, 25
+		SwingOffset: 0, 0
+		SwingSpeed: 0, 0
+		SwingAmplitude: 0, 0
+		ParticleColors: 72aaae, 72aea6, 5caea3, 6da69f
+		LineTailAlphaValue: 30
+		ParticleSize: 1, 1
+		ParticleDensityFactor: 10
+	TerrainLighting:
+	GlobalLightingPaletteEffect:
+		Red: 1.22
+		Green: 1.27
+		Blue: 1.15
+		Ambient: 0.55
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, abasement.lua
+	MissionData:
+		Briefing: Comrade General, our forces were too late to stop the madman Kane from unleashing his new army of cyborgs. Our forces suffered a catastrophic defeat as a result.\n\nThe situation is grim on all fronts. The Allies and their GDI friends have resumed their assaults on our western territories, and the alien invaders continue to pour through their wormholes wherever Tiberium is found.\n\nKane's army unexpectedly halted their advance and we have been presented with an offer. If we assist the Brotherhood in retaking territory they have lost to the Scrin and capture one of their Signal Transmitters, Kane promises to cease hostilities against us.\n\nFor now, we have little choice.\n\nEstablish a base in former Nod territory now occupied by the Scrin. Nod will provide reinforcements if we can secure their abandoned bases. Build up your forces and capture the Signal Transmitter that we know has been built in the area.
+	MapOptions:
+		ShortGameCheckboxEnabled: True
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: dropdown-difficulty.label
+		Description: dropdown-difficulty.description
+		Values:
+			easy: options-difficulty.easy
+			normal: options-difficulty.normal
+			hard: options-difficulty.hard
+		Default: normal
+	MusicPlaylist:
+		StartingMusic: tren226m
+
+Player:
+	PlayerResources:
+		DefaultCash: 6000
+
+SIGN:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+	CaptureNotification:
+		TextNotification: Structure captured.
+		LoseNotification: OurBuildingCaptured
+		LoseTextNotification: Structure lost (captured).
+	CaptureManager:
+	Capturable:
+		RequiresCondition: !build-incomplete && !being-warped
+		Types: building
+	CapturableProgressBar:
+	CapturableProgressBlink:
+	Tooltip:
+		GenericVisibility: None
+	TooltipExtras:
+		Attributes: • Maximum 1 can be built
+
+MSLO:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+MSHP:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+TMPL:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+TMPP:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+SGEN:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+SCOL:
+	Power:
+		Amount: -20
+
+# Hunt() requires only 1 AttackBase
+DEVA:
+	-AttackFrontalCharged:
+	-Armament@PRIMARYUPG:
+	-AmbientSound@CHARGE:
+	-WithIdleOverlay@CHARGE1:
+	-WithIdleOverlay@CHARGE2:
+	-WithIdleOverlay@CHARGE3:

@@ -1,0 +1,198 @@
+^Palettes:
+	GlobalLightingPaletteEffect:
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, domination.lua
+	MissionData:
+		Briefing: Now that the Allies and GDI are no longer on our doorstep and we have begun to replenish our forces, we can turn our attention to the Brotherhood of Nod.\n\nKane cannot be trusted. He thinks that his cyborg army gives him such an advantage, and that we have been so weakened, that we will do his bidding without question. His arrogant overconfidence will be his downfall.\n\nIt is time to make use of our own secret weapon, Yuri. With his psionic powers he can turn our enemies into loyal servants.\n\nThere is but one obstacle. Kane's cyborgs are impervious to Yuri's powers, as their minds are protected by their cybernetic implants.\n\nIn order for Yuri to be able to control the minds of these cyborgs, we must break through the encryption that protects them.\n\nMake use of one of our best thieves to infiltrate a Nod cybernetics lab to steal the encryption algorithms. Without this protection the cyborgs will be vulnerable to Yuri, and we will be able to use Kane's own cyborgs against him.
+	MapOptions:
+		ShortGameCheckboxEnabled: False
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: dropdown-difficulty.label
+		Description: dropdown-difficulty.description
+		Values:
+			easy: options-difficulty.easy
+			normal: options-difficulty.normal
+			hard: options-difficulty.hard
+		Default: normal
+	MusicPlaylist:
+		StartingMusic: shut_it
+
+Player:
+	PlayerResources:
+		DefaultCash: 2000
+	PowerManager:
+		AdviceInterval: 240000
+
+TMPL:
+	-NukePower@Cluster:
+
+YURI:
+	RevealsShroud:
+		Range: 10c0
+	AutoTarget:
+		InitialStance: HoldFire
+	Buildable:
+		Description: Elite specialist infantry able to mind-control\n  enemy units (up to 3).
+	-Captures@DRIVER_KILL:
+	-GainsExperience:
+	-ProducibleWithLevel:
+	Health:
+		HP: 15000
+	ExternalCondition@VET:
+		Condition: rank-veteran
+	DamageMultiplier@YAMLFIX:
+		Modifier: 100
+		RequiresCondition: maxcontrolled
+	-ChangesHealth@CommandoRegen:
+	-RangedGpsRadarProvider:
+	-WithRangeCircle:
+	Passenger:
+		CargoType: Yuri
+
+powerproxy.mutabomb:
+	Inherits@MUTABOMBPOWER: ^MutaBombPower
+	AirstrikePowerCA@MutaBomb:
+		-Prerequisites:
+		-PauseOnCondition:
+		ChargeInterval: 7500
+		StartFullyCharged: true
+	AlwaysVisible:
+
+BRUT:
+	AutoTarget:
+		InitialStance: Defend
+
+THF:
+	Buildable:
+		Description: Normally steals enemy credits and hijacks enemy vehicles.\n\nCurrent mission to steal encryption codes.
+	-Captures:
+	-Captures@DRIVER_KILL:
+	Infiltrates:
+		Types: ThiefInfiltrate
+
+LASW:
+	Inherits: BRIK
+	-Buildable:
+	Tooltip:
+		Name: Laser Fence
+	-SoundOnDamageTransition:
+	DamageMultiplier:
+		Modifier: 0
+	-Crushable:
+	LineBuild:
+		NodeTypes: lasw
+	LineBuildNode:
+		Types: lasw
+	WithWallSpriteBody:
+		Type: lasw
+	RenderSprites:
+		Image: lasw
+	-Targetable:
+
+N4:
+	Mobile:
+		Speed: 46
+
+^Cyborg:
+	Tooltip:
+		GenericName: Cyborg
+
+^DecryptableCyborg:
+	Targetable@MINDCONTROL:
+		RequiresCondition: !mindcontrolled && !hacked && !restoring && decrypted
+	GrantConditionOnPrerequisite@DECRYPTED:
+		Condition: decrypted
+		Prerequisites: cyborgsdecrypted
+
+N1C:
+	Inherits@DECRYPT: ^DecryptableCyborg
+
+N3C:
+	Inherits@DECRYPT: ^DecryptableCyborg
+
+N5:
+	Inherits@DECRYPT: ^DecryptableCyborg
+
+RMBC:
+	Inherits@DECRYPT: ^DecryptableCyborg
+	DamageMultiplier@MCBUFF:
+		Modifier: 75
+		RequiresCondition: mindcontrolled
+
+ENLI:
+	Inherits@DECRYPT: ^DecryptableCyborg
+	DamageMultiplier@MCBUFF:
+		Modifier: 70
+		RequiresCondition: mindcontrolled
+
+ACOL:
+	Inherits@DECRYPT: ^DecryptableCyborg
+	DamageMultiplier@MCBUFF:
+		Modifier: 60
+		RequiresCondition: mindcontrolled
+
+TPLR:
+	Inherits@DECRYPT: ^DecryptableCyborg
+	DamageMultiplier@MCBUFF:
+		Modifier: 60
+		RequiresCondition: mindcontrolled
+
+MISS:
+	Tooltip:
+		Name: Cybernetics Lab
+	TooltipDescription:
+		Description: Nod cyborg research facility and data warehouse.
+		ValidRelationships: Ally, Enemy
+	InfiltrateToCreateProxyActor@DECRYPT:
+		Types: ThiefInfiltrate
+		Proxy: cyborgsdecrypted
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
+	Targetable@DECRYPT:
+		TargetTypes: ThiefInfiltrate
+
+cyborgsdecrypted:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	ProvidesPrerequisite:
+
+BADR.MBomber:
+	Health:
+		HP: 10000
+
+NUKE:
+	Health:
+		HP: 35000
+	-SpawnActorOnDeath:
+	-SpawnRandomActorOnDeath:
+
+NUK2:
+	Health:
+		HP: 35000
+	-SpawnActorOnDeath:
+	-SpawnRandomActorOnDeath:
+
+NSAM:
+	Targetable:
+		TargetTypes: Ground, Structure
+
+OBLI:
+	Targetable@NoAutoAttackWhenDisabled:
+		TargetTypes: NoAutoAttack
+		RequiresCondition: disabled
+
+LASP:
+	DamageMultiplier@REDUC:
+		Modifier: 20
+	RepairableBuilding:
+		RepairStep: 3600
+
+HALO.paradrop:
+	DamageMultiplier@INVULN:
+		Modifier: 0
+	Cargo:
+		Types: Yuri
