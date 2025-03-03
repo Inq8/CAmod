@@ -25,6 +25,8 @@ Player:
 	PlayerResources:
 		DefaultCash: 2500
 
+# Disable tech
+
 SPY:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
@@ -58,9 +60,7 @@ pcan.upgrade:
 charv.upgrade:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-DD:
-	Health:
-		HP: 80000
+# Disable GPS for player
 
 ATEK:
 	-DummyGpsPower@NOFOG:
@@ -70,6 +70,12 @@ ATEK:
 	-ProduceActorPowerCA@SatelliteScan:
 	-ProduceActorPowerCA@SatelliteScanNoFog:
 	-GrantExternalConditionPowerCA@FSHIELD:
+
+# Misc
+
+DD:
+	Health:
+		HP: 80000
 
 SCOL:
 	Power:

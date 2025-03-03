@@ -20,9 +20,9 @@ Squads = {
 			hard = DateTime.Minutes(2)
 		},
 		AttackValuePerSecond = {
-			easy = { Min = 10, Max = 10 },
-			normal = { Min = 30, Max = 30 },
-			hard = { Min = 50, Max = 50 },
+			easy = { Min = 10, Max = 25 },
+			normal = { Min = 30, Max = 50 },
+			hard = { Min = 50, Max = 80 },
 		},
 		ActiveCondition = function()
 			return not MaleficArrived
@@ -40,9 +40,9 @@ Squads = {
 			hard = DateTime.Minutes(2)
 		},
 		AttackValuePerSecond = {
-			easy = { Min = 10, Max = 10 },
-			normal = { Min = 30, Max = 30 },
-			hard = { Min = 50, Max = 50 },
+			easy = { Min = 10, Max = 25 },
+			normal = { Min = 30, Max = 50 },
+			hard = { Min = 50, Max = 80 },
 		},
 		ActiveCondition = function()
 			return not MaleficArrived
@@ -52,7 +52,63 @@ Squads = {
 		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
 		Units = UnitCompositions.Scrin.Main,
 		AttackPaths = { { RebelRally1.Location, RebelRally2.Location } },
-	}
+	},
+	ScrinRebelsAir = {
+		Delay = {
+			easy = DateTime.Minutes(14),
+			normal = DateTime.Minutes(10),
+			hard = DateTime.Minutes(6)
+		},
+		AttackValuePerSecond = {
+			easy = { Min = 3, Max = 3 },
+			normal = { Min = 7, Max = 7 },
+			hard = { Min = 12, Max = 12 },
+		},
+		ProducerTypes = { Aircraft = { "grav" } },
+		Units = {
+			easy = {
+				{ Aircraft = { "stmr" } }
+			},
+			normal = {
+				{ Aircraft = { "stmr", "stmr" } },
+				{ Aircraft = { "enrv" } },
+			},
+			hard = {
+				{ Aircraft = { "stmr", "stmr", "stmr" } },
+				{ Aircraft = { "enrv", "enrv" } },
+			}
+		}
+	},
+	NodAir = {
+		Delay = {
+			easy = DateTime.Minutes(15),
+			normal = DateTime.Minutes(11),
+			hard = DateTime.Minutes(7)
+		},
+		AttackValuePerSecond = {
+			easy = { Min = 3, Max = 3 },
+			normal = { Min = 7, Max = 7 },
+			hard = { Min = 12, Max = 12 },
+		},
+		ProducerTypes = { Aircraft = { "hpad.td" } },
+		Units = {
+			easy = {
+				{ Aircraft = { "apch" } }
+			},
+			normal = {
+				{ Aircraft = { "apch", "apch" } },
+				{ Aircraft = { "venm", "venm" } },
+				{ Aircraft = { "scrn" } },
+				{ Aircraft = { "rah" } }
+			},
+			hard = {
+				{ Aircraft = { "apch", "apch", "apch" } },
+				{ Aircraft = { "venm", "venm", "venm" } },
+				{ Aircraft = { "scrn", "scrn" } },
+				{ Aircraft = { "rah", "rah" } }
+			}
+		},
+	},
 }
 
 -- Setup and Tick
@@ -203,6 +259,11 @@ InitScrinRebels = function()
 	Trigger.AfterDelay(Squads.ScrinRebels.Delay[Difficulty], function()
 		InitAttackSquad(Squads.ScrinRebels, ScrinRebels)
 	end)
+
+	Trigger.AfterDelay(Squads.ScrinRebelsAir.Delay[Difficulty], function()
+		InitAirAttackSquad(Squads.ScrinRebelsAir, ScrinRebels, USSR, { "etpd", "harv", "4tnk", "4tnk.atomic", "3tnk", "3tnk.atomic", "3tnk.rhino", "3tnk.rhino.atomic",
+			"katy", "v3rl", "ttra", "v3rl", "apwr", "tpwr", "npwr", "tsla", "proc", "nukc", "ovld", "apoc", "apoc.atomic", "ovld.atomic" })
+	end)
 end
 
 InitNod = function()
@@ -221,6 +282,11 @@ InitNod = function()
 
 	Trigger.AfterDelay(Squads.Nod.Delay[Difficulty], function()
 		InitAttackSquad(Squads.Nod, Nod)
+	end)
+
+	Trigger.AfterDelay(Squads.NodAir.Delay[Difficulty], function()
+		InitAirAttackSquad(Squads.NodAir, Nod, USSR, { "etpd", "harv", "4tnk", "4tnk.atomic", "3tnk", "3tnk.atomic", "3tnk.rhino", "3tnk.rhino.atomic",
+			"katy", "v3rl", "ttra", "v3rl", "apwr", "tpwr", "npwr", "tsla", "proc", "nukc", "ovld", "apoc", "apoc.atomic", "ovld.atomic" })
 	end)
 end
 

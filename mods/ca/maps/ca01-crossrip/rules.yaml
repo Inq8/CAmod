@@ -28,6 +28,22 @@ Player:
 	PlayerResources:
 		DefaultCash: 6000
 
+# Disable powers for AI
+
+^ParabombsPower:
+	AirstrikePowerCA@Russianparabombs:
+		Prerequisites: ~support.parabombs, ~!botplayer
+
+^ParatroopersPower:
+	ParatroopersPowerCA@paratroopers:
+		Prerequisites: ~support.paratroopers, ~!botplayer
+
+# To silence unit lost notifications when announcer is speaking
+
+UNITLOSTSILENCER:
+	Inherits@DUMMY: ^InvisibleDummy
+	ProvidesPrerequisite:
+
 ^Infantry:
 	ActorLostNotification:
 		RequiresCondition: !unit-lost-notification-silenced
@@ -50,16 +66,7 @@ GSCR.Mutating:
 	ActorLostNotification:
 		RequiresCondition: !unit-lost-notification-silenced
 
-UNITLOSTSILENCER:
-	Inherits@DUMMY: ^InvisibleDummy
-	ProvidesPrerequisite:
-
-MIG:
-	AutoTarget:
-		InitialStanceAI: HoldFire
-
-HPAD:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
+# Chronosphere modifications
 
 PDOX:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
@@ -100,6 +107,11 @@ PDOX.CROSSRIP:
 	PeriodicExplosion:
 		Weapon: Crossrip
 
+# Disable tech
+
+HPAD:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
 SYRD:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
@@ -108,6 +120,12 @@ SPEN:
 
 hazmat.upgrade:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+# Misc
+
+MIG:
+	AutoTarget:
+		InitialStanceAI: HoldFire
 
 TSLA:
 	-Targetable@TeslaBoost:

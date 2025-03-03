@@ -473,6 +473,12 @@ MANI:
 # Disable GPS for AI
 
 ^GpsPower:
+	DummyGpsPower@NOFOG:
+		Prerequisites: ~!botplayer
+	DummyGpsPower@FOG:
+		Prerequisites: ~!botplayer
+	ProduceActorPowerCA@SatelliteLaunched:
+		Prerequisites: ~!botplayer
 	ProduceActorPowerCA@InitialSatelliteScan:
 		Prerequisites: anyradar, ~!gps.satellite.firstscan, ~fogenabled, ~!botplayer
 	ProduceActorPowerCA@SatelliteScan:
