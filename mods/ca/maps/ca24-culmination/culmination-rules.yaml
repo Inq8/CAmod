@@ -70,7 +70,7 @@ PDGY:
 		TargetCircleColor: a400f2cc
 		SelectionBoxColor: a400f2
 		OneShot: true
-		StartsFullyCharged: true
+		StartFullyCharged: true
 
 subjugation.dummy:
 	Interactable:
@@ -94,11 +94,20 @@ subjugation.dummy:
 ^Infantry:
 	ExternalCondition@Subjugatable:
 		Condition: subjugated
+	WithColoredOverlay@Subjugated:
+		RequiresCondition: subjugated
+		Color: a400f233
 
 ^Building:
 	ExternalCondition@Subjugatable:
 		Condition: subjugated
+	WithColoredOverlay@Subjugated:
+		RequiresCondition: subjugated
+		Color: a400f233
 
 ^Vehicle-NOUPG:
 	ExternalCondition@Subjugatable:
 		Condition: subjugated
+	WithColoredOverlay@Subjugated:
+		RequiresCondition: subjugated
+		Color: a400f233

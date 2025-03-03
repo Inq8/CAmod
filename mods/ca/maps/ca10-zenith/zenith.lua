@@ -202,7 +202,6 @@ InitUSSR = function()
 	InitAiUpgrades(USSR)
 
 	Actor.Create("ai.unlimited.power", true, { Owner = USSR })
-	Actor.Create("ai.superweapons.enabled", true, { Owner = USSR })
 
 	Trigger.OnAllKilledOrCaptured(NukeSilos, function()
 		Nod.MarkCompletedObjective(ObjectiveKillSilos)

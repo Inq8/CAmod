@@ -35,6 +35,12 @@ Patrols = {
 	}
 }
 
+SuperweaponsEnabledTime = {
+	easy = DateTime.Minutes(30),
+	normal = DateTime.Minutes(20),
+	hard = DateTime.Minutes(10)
+}
+
 -- Squads
 
 LabDefenseUnits = {
@@ -280,6 +286,10 @@ InitNod = function()
 	SetupRefAndSilosCaptureCredits(Nod)
 	AutoReplaceHarvesters(Nod)
 	InitAiUpgrades(Nod)
+
+	Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
+		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = Nod })
+	end)
 
 	local nodGroundAttackers = Nod.GetGroundAttackers()
 

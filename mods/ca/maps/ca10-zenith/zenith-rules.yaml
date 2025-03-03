@@ -36,6 +36,18 @@ Player:
 	PlayerResources:
 		DefaultCash: 6000
 
+# Enable subfaction specific tech
+
+BH:
+	Buildable:
+		Prerequisites: anyradar
+
+WTNK:
+	Buildable:
+		Prerequisites: ~vehicles.nod, anyradar
+
+# Disable tech
+
 advcyber.upgrade:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
@@ -44,10 +56,6 @@ cyborgarmor.upgrade:
 
 cyborgspeed.upgrade:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-C17:
-	Health:
-		HP: 15000
 
 MSLO.Nod:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
@@ -60,9 +68,13 @@ RMBC:
 
 TMPL:
 	-NukePower@Cluster:
+	-GrantConditionOnPrerequisite@OwnedByAi:
+	-GrantConditionOnPrerequisite@AiSuperweaponsEnabled:
 
 TMPP:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+# Misc
 
 TSLA:
 	-Targetable@TeslaBoost:
@@ -122,6 +134,10 @@ E3:
 E4:
 	Mobile:
 		Speed: 46
+
+C17:
+	Health:
+		HP: 15000
 
 camera.sathack:
 	DetectCloaked:

@@ -470,13 +470,21 @@ MANI:
 	GrantExternalConditionPowerCA@SUPPRESSION:
 		RequiresCondition: ai-minor-superweapons-enabled || !owned-by-ai
 
+TMPL:
+	Inherits@AiMinorSuperweaponsEnabled: ^AiMinorSuperweaponsEnabled
+	NukePower@Cluster:
+		RequiresCondition: ai-minor-superweapons-enabled || !owned-by-ai
+
 # Disable GPS for AI
 
 ^GpsPower:
+	GrantConditionOnPrerequisite@OwnedByAi:
+		Condition: owned-by-ai
+		Prerequisites: botplayer
 	DummyGpsPower@NOFOG:
-		Prerequisites: ~!botplayer
+		RequiresCondition: !gps-launched && !fogenabled && !owned-by-ai
 	DummyGpsPower@FOG:
-		Prerequisites: ~!botplayer
+		RequiresCondition: !gps-launched && fogenabled && !owned-by-ai
 	ProduceActorPowerCA@SatelliteLaunched:
 		Prerequisites: ~!botplayer
 	ProduceActorPowerCA@InitialSatelliteScan:

@@ -24,6 +24,8 @@ Player:
 	PlayerResources:
 		DefaultCash: 0
 
+# Disable tech
+
 advcyber.upgrade:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
@@ -32,6 +34,20 @@ cyborgarmor.upgrade:
 
 cyborgspeed.upgrade:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+# Disable powers
+
+HQ:
+	-DropPodsPowerCA@Zocom:
+	-AirstrikePowerCA@uav:
+
+AFLD.GDI:
+	-InterceptorPower@AirDef:
+
+HPAD.TD:
+	-InterceptorPower@AirDef:
+
+# Remove radar/power requirements from drones
 
 MEMP:
 	-ExternalCondition@DRONECONTROL:
@@ -91,6 +107,8 @@ GDRN:
 	Tooltip:
 		GenericVisibility: None
 
+# Difficulty adjustments for Stealth Tank / Commando / Hackers
+
 ^DifficultyModifiers:
 	ExternalCondition@NORMAL:
 		Condition: difficulty-normal
@@ -139,6 +157,8 @@ HACK:
 	Selectable:
 		Priority: 10
 
+# Disable stolen tech from hacking
+
 PYLE:
 	-SpawnActorOnMindControlled@STOLENTECH:
 
@@ -150,6 +170,8 @@ HPAD.TD:
 
 AFLD.GDI:
 	-SpawnActorOnMindControlled@STOLENTECH:
+
+# Satellite Hack
 
 sathack.dummy:
 	AlwaysVisible:
@@ -171,6 +193,8 @@ sathack.dummy:
 		TargetCircleRange: 9c512
 		TargetCircleColor: 999999AA
 		SupportPowerPaletteOrder: 50
+
+# Misc
 
 BRIDGEHUT:
 	-Targetable:
@@ -206,16 +230,6 @@ NUK2:
 	WithDecoration@HACKED:
 		Sequence: hacked
 	-ChangesHealth@HACKED:
-
-HQ:
-	-DropPodsPowerCA@Zocom:
-	-AirstrikePowerCA@uav:
-
-AFLD.GDI:
-	-InterceptorPower@AirDef:
-
-HPAD.TD:
-	-InterceptorPower@AirDef:
 
 EYE:
 	DetonateWeaponPower@IonStorm:

@@ -3,7 +3,7 @@
 
 World:
 	LuaScript:
-		Scripts: campaign.lua, ca03.lua
+		Scripts: campaign.lua, deliverance.lua
 	MissionData:
 		Briefing: We have been contacted by forces belonging to a group calling themselves the Global Defense Initiative. Though we have no knowledge of such an organization, we have reason to believe they can shed some light on everything that has been happening.\n\nA GDI base apparently materialized inside Soviet territory. Their commander was taken prisoner and they are soon to be overrun by Soviet forces.\n\nTake a detachment to find the base and—assuming this is not a Soviet ruse—defend it until reinforcements arrive.\n\nWith their commander captured and their chain of command in disarray due to the temporal and dimensional upheaval, the GDI forces have agreed to follow your orders. Once our position is secure, locate and rescue the GDI commander.\n\nWe don't know yet if we can trust these people, so remain vigilant. Hopefully we have found ourselves a new ally, and rescuing their commander is surely a good first step towards securing such an alliance.
 		LossVideo: battle.vqa
@@ -24,6 +24,18 @@ World:
 Player:
 	PlayerResources:
 		DefaultCash: 3500
+
+# Disable powers for AI
+
+^ParabombsPower:
+	AirstrikePowerCA@Russianparabombs:
+		Prerequisites: ~support.parabombs, ~!botplayer
+
+^ParatroopersPower:
+	ParatroopersPowerCA@paratroopers:
+		Prerequisites: ~support.paratroopers, ~!botplayer
+
+# Palette & voice overrides so GDI forces are gold regardless of player color and always use TD voices
 
 ^TDPalette:
 	RenderSprites:
@@ -57,10 +69,6 @@ Player:
 		DeathSequencePalette: temptd
 		DeathPaletteIsPlayerPalette: false
 
-CRYO:
-	RenderSprites:
-		-Palette:
-
 N1:
 	Inherits@GDIPAL: ^GDIInfantry
 
@@ -72,6 +80,14 @@ N3:
 
 N6:
 	Inherits@GDIPAL: ^GDIInfantry
+
+CRYO:
+	RenderSprites:
+		-Palette:
+
+# Prerequisite adjustments
+
+N6:
 	Buildable:
 		Prerequisites: ~infantry.any
 
@@ -94,6 +110,8 @@ vulcan.upgrade:
 rapc.upgrade:
 	Buildable:
 		Prerequisites: anyradar, ~radar.allies
+
+# Disable tech
 
 E6:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
@@ -170,11 +188,15 @@ MSLO:
 charv.upgrade:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
+# Disable powers
+
 HQ:
 	-AirstrikePowerCA@uav:
 
 HPAD.TD:
 	-InterceptorPower@AirDef:
+
+# Misc
 
 REP:
 	ProximityExternalCondition@AIRCRAFTREPAIR:

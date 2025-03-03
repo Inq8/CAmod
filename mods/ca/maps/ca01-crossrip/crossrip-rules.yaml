@@ -4,7 +4,7 @@
 
 World:
 	LuaScript:
-		Scripts: campaign.lua, ca01.lua
+		Scripts: campaign.lua, crossrip.lua
 	MissionData:
 		Briefing: Strange and inexplicable occurrences continue to leave our best scientists dumbfounded.\n\nWe have detected unusual energy readings emanating from a Soviet facility in the area, and there may be a connection.\n\nEstablish a base and investigate.\n\nIf the Soviets put up strong resistance then they must be hiding something of importance, in which case you are authorized to launch a full scale attack.\n\nUnfortunately we can't commit our most advanced equipment or aircraft until we've assessed if there is a significant threat.
 		WinVideo: crontest.vqa
@@ -84,6 +84,8 @@ PDOX:
 	-SpawnRandomActorOnDeath:
 	AnnounceOnSeen:
 		PingRadar: true
+	-GrantConditionOnPrerequisite@OwnedByAi:
+	-GrantConditionOnPrerequisite@AiSuperweaponsEnabled:
 
 PDOX.CROSSRIP:
 	Inherits@1: ^ExistsInWorld

@@ -337,7 +337,6 @@ InitUSSR = function()
 	AutoRepairBuildings(USSR)
 
 	Actor.Create("ai.unlimited.power", true, { Owner = USSR })
-	Actor.Create("ai.superweapons.enabled", true, { Owner = USSR })
 
 	local ussrGroundAttackers = USSR.GetGroundAttackers()
 

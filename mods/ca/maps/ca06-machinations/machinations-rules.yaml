@@ -24,29 +24,16 @@ Player:
 	PlayerResources:
 		DefaultCash: 6000
 
-LST.INIT:
-	Inherits: LST
-	RenderSprites:
-		Image: lst
-	RejectsOrders:
-	-Selectable:
-	Interactable:
-	-Buildable:
+# Disable powers for AI
 
-BIO:
-	-ProvidesPrerequisite@mortar:
-	-ProvidesPrerequisite@toxintruck:
-	Tooltip:
-		Name: Research Lab
-	Health:
-		HP: 200000
+^SatHackPower:
+	SpawnActorPowerCA@sathack:
+		Prerequisites: ~radar.nod, ~!player.legion, ~!botplayer
 
-TTRK:
-	-Buildable:
+# Disable tech
 
 TMPL:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
-	-NukePower@Cluster:
 
 TMPP:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
@@ -57,11 +44,15 @@ ENLI:
 RMBC:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-# Enable subfaction specific units/upgrades
+# Enable subfaction specific tech
 
 SNIP:
 	Buildable:
 		Prerequisites: tent, anyradar
+
+RTNK:
+	Buildable:
+		Prerequisites: ~vehicles.allies
 
 TNKD:
 	Buildable:
@@ -82,3 +73,31 @@ NHAW:
 apb.upgrade:
 	Buildable:
 		Prerequisites: atek
+
+# Misc
+
+ATEK:
+	ProduceActorPowerCA@InitialSatelliteScan:
+		ChargeInterval: 15000
+	ProduceActorPowerCA@SatelliteScanNoFog:
+		ChargeInterval: 15000
+
+LST.INIT:
+	Inherits: LST
+	RenderSprites:
+		Image: lst
+	RejectsOrders:
+	-Selectable:
+	Interactable:
+	-Buildable:
+
+BIO:
+	-ProvidesPrerequisite@mortar:
+	-ProvidesPrerequisite@toxintruck:
+	Tooltip:
+		Name: Research Lab
+	Health:
+		HP: 200000
+
+TTRK:
+	-Buildable:

@@ -24,13 +24,37 @@ Player:
 	PlayerResources:
 		DefaultCash: 6000
 
+# Enable subfaction specific tech
+
+BH:
+	Buildable:
+		Prerequisites: anyradar, ~hand
+
 WTNK:
 	Buildable:
-		Prerequisites: anyradar, airs
+		Prerequisites: anyradar, ~vehicles.nod
 
 HFTK:
 	Buildable:
-		Prerequisites: anyradar, airs
+		Prerequisites: anyradar, ~vehicles.nod
+
+microwave.upgrade:
+	Buildable:
+		Prerequisites: tmpl
+
+quantum.upgrade:
+	Buildable:
+		Prerequisites: tmpl
+
+alphacomanche.upgrade:
+	Buildable:
+		Prerequisites: tmpl
+
+blacknapalm.upgrade:
+	Buildable:
+		Prerequisites: tmpl
+
+# Make non-cyborg infantry available with Temple Prime
 
 N1:
 	Buildable:
@@ -47,6 +71,8 @@ N4:
 MECH:
 	Buildable:
 		Prerequisites: repair, ~infantry.mech
+
+# Disable cyborgs
 
 N1C:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
@@ -70,18 +96,6 @@ RMBC:
 
 ENLI:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-microwave.upgrade:
-	Buildable:
-		Prerequisites: tmpl
-
-quantum.upgrade:
-	Buildable:
-		Prerequisites: tmpl
-
-alphacomanche.upgrade:
-	Buildable:
-		Prerequisites: tmpl
 
 advcyber.upgrade:
 	Inherits@CAMPAIGNDISABLED: ^Disabled

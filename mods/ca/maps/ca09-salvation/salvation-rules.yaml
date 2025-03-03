@@ -25,19 +25,19 @@ Player:
 	PlayerResources:
 		DefaultCash: 0
 
+# Enable subfaction specific tech
+
 BH:
 	Buildable:
 		Prerequisites: anyradar
+
+# Disable tech
 
 SAPC:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
 AMCV:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-HQ:
-	-SpawnActorPowerCA@sathack:
-	-SpawnActorPowerCA@sathacklegion:
 
 MLRS:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
@@ -53,6 +53,14 @@ RMBC:
 
 hazmat.upgrade:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+# Disable powers
+
+HQ:
+	-SpawnActorPowerCA@sathack:
+	-SpawnActorPowerCA@sathacklegion:
+
+# Misc
 
 tibcore.upgrade:
 	-AnnounceOnCreation:
