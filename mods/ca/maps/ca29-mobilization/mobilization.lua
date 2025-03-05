@@ -25,9 +25,7 @@ ActiveReinforcementLocations = {
 	ReinforcementLocations[2]
 }
 
-InitialReinforcementGroup = {
-	{ "n1", "n1", "n1", "n3", "n1", "n1", "n3", "mtnk", "mtnk", "msam" },
-}
+InitialReinforcementGroup = { "n1", "n1", "n1", "n3", "n1", "n1", "n3", "mtnk", "mtnk", "msam" }
 
 FinalReinforcementGroups = {
 	{ "htnk", "n1", "n1", "n1", "n3", "n1", "n1", "n3", "xo", "xo"  },
@@ -46,9 +44,9 @@ end)
 Squads = {
 	ScrinMain = {
 		Delay = {
-			easy = DateTime.Minutes(14),
-			normal = DateTime.Minutes(12),
-			hard = DateTime.Minutes(10)
+			easy = DateTime.Minutes(3),
+			normal = DateTime.Minutes(2),
+			hard = DateTime.Minutes(1)
 		},
 		AttackValuePerSecond = {
 			easy = { Min = 20, Max = 50 },
@@ -143,6 +141,7 @@ WorldLoaded = function()
 			UpdateMissionText()
 			if WormholeCount == 0 and not GDI.IsObjectiveCompleted(ObjectiveDestroyWormholes) then
 				GDI.MarkCompletedObjective(ObjectiveDestroyWormholes)
+				GDI.MarkCompletedObjective(ObjectiveDefendHQ)
 			end
 		end)
 	end)
@@ -290,8 +289,4 @@ SendReinforcements = function()
 	Notification("Reinforcements have arrived.")
 	Beacon.New(GDI, Map.CenterOfCell(flareLoc))
 	NextReinforcementsFlare()
-end
-
-InitChronoTankAttack = function()
-
 end

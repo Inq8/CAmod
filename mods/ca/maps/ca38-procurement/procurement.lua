@@ -1,5 +1,7 @@
 OutpostStructures = { OutpostConyard, OutpostFactory, OutpostBarracks, OutpostRefinery, OutpostPower1, OutpostPower2, OutpostPower3, OutpostSilo1, OutpostSilo2, OutpostGuardTower1, OutpostGuardTower2, OutpostGuardTower3, OutpostGuardTower4 }
 
+CommsCenters = { CommsCenter1, CommsCenter2, AdvancedComms }
+
 SuperweaponsEnabledTime = {
 	easy = DateTime.Seconds((60 * 45) + 17),
 	normal = DateTime.Seconds((60 * 30) + 17),
@@ -203,7 +205,7 @@ OncePerFiveSecondChecks = function()
 end
 
 InitGDI = function()
-	RebuildExcludes.GDI = { Actors = OutpostStructures }
+	RebuildExcludes.GDI = { Actors = OutpostStructures, Types = { "hq", "eye" } }
 
 	AutoRepairAndRebuildBuildings(GDI, 15)
 	SetupRefAndSilosCaptureCredits(GDI)
@@ -240,11 +242,17 @@ InitCommsCenterObjective = function()
 		camera.Destroy()
 	end)
 
-	Trigger.OnCapture(GDICommsCenter, function(self, captor, oldOwner, newOwner)
-		USSR.MarkCompletedObjective(ObjectiveCaptureComms)
+	Utils.Do(CommsCenters, function(c)
+		Trigger.OnCapture(c, function(self, captor, oldOwner, newOwner)
+			if ObjectiveCaptureComms ~= nil and not USSR.IsObjectiveCompleted(ObjectiveCaptureComms) then
+				USSR.MarkCompletedObjective(ObjectiveCaptureComms)
+			end
+		end)
 	end)
 
-	Trigger.OnKilled(GDICommsCenter, function(self, killer)
-		USSR.MarkFailedObjective(ObjectiveCaptureComms)
+	Trigger.OnAllKilled(CommsCenters, function()
+		if not USSR.IsObjectiveCompleted(ObjectiveCaptureComms) then
+			USSR.MarkFailedObjective(ObjectiveCaptureComms)
+		end
 	end)
 end

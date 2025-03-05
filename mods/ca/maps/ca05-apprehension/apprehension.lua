@@ -29,6 +29,7 @@ WorldLoaded = function()
 	InitNod()
 
     Actor.Create("optics.upgrade", true, { Owner = Greece })
+	Actor.Create("radar.dummy", true, { Owner = Greece })
 
     ObjectiveDestroySAMSites = Greece.AddObjective("Destroy Nod SAM Sites.")
 	ObjectiveClearBase = Greece.AddObjective("Clear the Nod naval base.")
@@ -51,6 +52,13 @@ WorldLoaded = function()
 		HardOnlySSM.Destroy()
 		HardOnlyFlameTank1.Destroy()
 		HardOnlyFlameTank2.Destroy()
+		HardOnlyFlameTank3.Destroy()
+		HardOnlyFlameTank4.Destroy()
+		HardOnlyFlameTank5.Destroy()
+		HardOnlyBlackHand1.Destroy()
+		HardOnlyBlackHand2.Destroy()
+		HardOnlyBlackHand3.Destroy()
+		HardOnlyBlackHand4.Destroy()
 	end
 
 	Utils.Do(SAMs, function(s)

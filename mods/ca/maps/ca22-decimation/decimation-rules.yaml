@@ -51,14 +51,7 @@ NERV:
 	DetonateWeaponPower@IONSURGE:
 		-Prerequisites:
 
-MAST:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-THF:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-BORI:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
+# Enable subfaction specific tech
 
 DARK:
 	Buildable:
@@ -80,6 +73,16 @@ ATMZ:
 	Buildable:
 		Prerequisites: scrt, ~vehicles.scrin
 
+stellar.upgrade:
+	Buildable:
+		Prerequisites: scrt
+
+coalescence.upgrade:
+	Buildable:
+		Prerequisites: scrt
+
+# Triggered access to Reaper Tripods, Enervators, Devastators, Carriers
+
 RTPD:
 	Buildable:
 		Prerequisites: scrt, ~vehicles.scrin, ~reaperaccess
@@ -96,9 +99,6 @@ PAC:
 	Buildable:
 		Prerequisites: sign, scrt, ~aircraft.scrin, ~fleetaccess
 
-MSHP:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
 SIGN:
 	Buildable:
 		Prerequisites: ~structures.scrin, scrt, ~fleetaccess
@@ -107,17 +107,19 @@ shields.upgrade:
 	Buildable:
 		Prerequisites: ~player.scrin, sign, ~fleetaccess
 
-stellar.upgrade:
-	Buildable:
-		Prerequisites: scrt
+# Disable tech
 
-coalescence.upgrade:
-	Buildable:
-		Prerequisites: scrt
+MAST:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-IRON:
-	GrantExternalConditionPowerCA@IRONCURTAIN:
-		DisplayTimerRelationships: Ally
+THF:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+BORI:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+MSHP:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
 
 DOME:
 	ParatroopersPowerCA@paratroopers:

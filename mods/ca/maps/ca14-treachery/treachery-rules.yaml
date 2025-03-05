@@ -24,6 +24,22 @@ Player:
 	PlayerResources:
 		DefaultCash: 6000
 
+# Disable powers for AI
+
+^SpyPlanePower:
+	AirstrikePowerCA@spyplane:
+		Prerequisites: ~!botplayer
+
+^ParabombsPower:
+	AirstrikePowerCA@Russianparabombs:
+		Prerequisites: ~support.parabombs, ~!botplayer
+
+^ParatroopersPower:
+	ParatroopersPowerCA@paratroopers:
+		Prerequisites: ~support.paratroopers, ~!botplayer
+
+# Disable tech
+
 MCV:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 

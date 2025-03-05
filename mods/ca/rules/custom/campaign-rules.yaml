@@ -402,7 +402,7 @@ SILO.SCRIN:
 	StoresPlayerResourcesCA:
 		DisableTransferFromBotOwner: true
 
-# Require ai.superweapons.enabled for superweapons to be enabled for AI players
+# Require ai.superweapons.enabled for superweapons to be enabled for AI players & don't show enemy timers for minor superweapons
 
 ^AiSuperweaponsEnabled:
 	GrantConditionOnPrerequisite@OwnedByAi:
@@ -429,6 +429,7 @@ PDOX:
 	Inherits@AiMinorSuperweaponsEnabled: ^AiMinorSuperweaponsEnabled
 	DetonateWeaponPower@ChronoAI:
 		RequiresCondition: ai-minor-superweapons-enabled || !owned-by-ai
+		DisplayTimerRelationships: Ally
 
 MSLO:
 	Inherits@AiSuperweaponsEnabled: ^AiSuperweaponsEnabled
@@ -439,6 +440,7 @@ IRON:
 	Inherits@AiMinorSuperweaponsEnabled: ^AiMinorSuperweaponsEnabled
 	GrantExternalConditionPowerCA@IRONCURTAIN:
 		RequiresCondition: ai-minor-superweapons-enabled || !owned-by-ai
+		DisplayTimerRelationships: Ally
 
 EYE:
 	Inherits@AiSuperweaponsEnabled: ^AiSuperweaponsEnabled
@@ -449,6 +451,7 @@ PATR:
 	Inherits@AiMinorSuperweaponsEnabled: ^AiMinorSuperweaponsEnabled
 	AttackOrderPowerCA@EMPMISSILE:
 		RequiresCondition: ai-minor-superweapons-enabled || !owned-by-ai
+		DisplayTimerRelationships: Ally
 
 MSLO.Nod:
 	Inherits@AiSuperweaponsEnabled: ^AiSuperweaponsEnabled
@@ -459,6 +462,7 @@ SGEN:
 	Inherits@AiMinorSuperweaponsEnabled: ^AiMinorSuperweaponsEnabled
 	GrantExternalConditionPowerCA@SGEN:
 		RequiresCondition: ai-minor-superweapons-enabled || !owned-by-ai
+		DisplayTimerRelationships: Ally
 
 RFGN:
 	Inherits@AiSuperweaponsEnabled: ^AiSuperweaponsEnabled
@@ -469,11 +473,13 @@ MANI:
 	Inherits@AiMinorSuperweaponsEnabled: ^AiMinorSuperweaponsEnabled
 	GrantExternalConditionPowerCA@SUPPRESSION:
 		RequiresCondition: ai-minor-superweapons-enabled || !owned-by-ai
+		DisplayTimerRelationships: Ally
 
 TMPL:
 	Inherits@AiMinorSuperweaponsEnabled: ^AiMinorSuperweaponsEnabled
 	NukePower@Cluster:
 		RequiresCondition: ai-minor-superweapons-enabled || !owned-by-ai
+		DisplayTimerRelationships: Ally
 
 # Disable GPS for AI
 

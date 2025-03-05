@@ -53,6 +53,26 @@ Player:
 	PlayerResources:
 		DefaultCash: 6000
 
+# Disable powers
+
+^SpyPlanePower:
+	AirstrikePowerCA@spyplane:
+		Prerequisites: ~disabled
+
+^ParabombsPower:
+	AirstrikePowerCA@Russianparabombs:
+		Prerequisites: ~disabled
+
+^ParatroopersPower:
+	ParatroopersPowerCA@paratroopers:
+		Prerequisites: ~disabled
+
+^TankDropPower:
+	ParatroopersPowerCA@TankDrop:
+		Prerequisites: ~disabled
+
+# Misc
+
 NodGateway:
 	Inherits: ^WormholeBase
 	Tooltip:

@@ -369,32 +369,12 @@ HACK:
 	Health:
 		HP: 10000
 
-GTEK:
-	GrantExternalConditionPowerCA@NREPAIR:
-		Prerequisites: ~gtek
-
-HQ:
-	SpawnActorPower@GDIEagleDropzone:
-		Prerequisites: ~radar.gdi
-	ParatroopersPowerCA@xodrop:
-		Prerequisites: ~radar.gdi
-	DropPodsPowerCA@Zocom:
-		Prerequisites: ~radar.gdi
-
 NERV:
 	DetonateWeaponPower@BUZZERSWARMAI:
 		Prerequisites: nerv
 		ChargeInterval: 6750
 	DetonateWeaponPower@STORMSPIKE:
 		Prerequisites: nerv
-
-MANI:
-	GrantExternalConditionPowerCA@SUPPRESSION:
-		DisplayTimerRelationships: Ally
-
-TMPL:
-	NukePower@Cluster:
-		DisplayTimerRelationships: None
 
 UAV:
 	-Targetable@AIRBORNE:
@@ -420,7 +400,7 @@ TITN.RAIL:
 
 JUGG:
 	Buildable:
-		Prerequisites: upgc
+		Prerequisites: upgc, ~vehicles.gdi
 
 HSAM:
 	Buildable:
@@ -487,6 +467,18 @@ mdrone.upgrade:
 		Prerequisites: upgc, !ionmam.upgrade, !hovermam.upgrade
 	TooltipExtras:
 		Attributes: \n(!) Only ONE Mammoth Tank upgrade can be chosen
+
+GTEK:
+	GrantExternalConditionPowerCA@NREPAIR:
+		Prerequisites: ~gtek
+
+HQ:
+	SpawnActorPower@GDIEagleDropzone:
+		Prerequisites: ~radar.gdi
+	ParatroopersPowerCA@xodrop:
+		Prerequisites: ~radar.gdi
+	DropPodsPowerCA@Zocom:
+		Prerequisites: ~radar.gdi
 
 # Hunt() requires only 1 AttackBase
 DEVA:

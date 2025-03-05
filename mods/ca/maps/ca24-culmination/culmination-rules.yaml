@@ -35,8 +35,58 @@ Player:
 	PlayerResources:
 		DefaultCash: 6000
 
+# Enable subfaction specific tech
+
+DARK:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.scrin
+
+STCR:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.scrin
+
+LCHR:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.scrin
+
+RUIN:
+	Buildable:
+		Prerequisites: scrt, ~vehicles.scrin
+
+ATMZ:
+	Buildable:
+		Prerequisites: scrt, ~vehicles.scrin
+
+ENRV:
+	Buildable:
+		Prerequisites: scrt, ~aircraft.scrin
+
+stellar.upgrade:
+	Buildable:
+		Prerequisites: scrt
+
+coalescence.upgrade:
+	Buildable:
+		Prerequisites: scrt
+
+# Disable tech
+
+RMBO:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+BORI:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+E7:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
 MAST:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+MSHP:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+# Misc
 
 PDGY:
 	ProvidesRadar:
@@ -44,7 +94,7 @@ PDGY:
 		OrderName: subjugation
 		Icon: subjugation
 		IconPalette: chromes
-		ChargeInterval: 37500
+		ChargeInterval: 125
 		ExplosionWeapon: SubjugationSpawner
 		Name: Subjugation
 		Condition: subjugated
@@ -70,7 +120,6 @@ PDGY:
 		TargetCircleColor: a400f2cc
 		SelectionBoxColor: a400f2
 		OneShot: true
-		StartFullyCharged: true
 
 subjugation.dummy:
 	Interactable:

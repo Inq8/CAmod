@@ -31,12 +31,41 @@ Player:
 		DefaultCash: 6000
 
 TMPP:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
 	CaptureManager:
 	Capturable:
 		RequiresCondition: !build-incomplete && !being-warped
 		Types: building
 	CapturableProgressBar:
 	CapturableProgressBlink:
+	Health:
+		HP: 300000
+	-Sellable:
+	Targetable@NoAutoTarget:
+		TargetTypes: NoAutoTarget
+
+BIO:
+	-OwnerLostAction:
+	-SpawnActorOnDeath:
+	-ProvidesPrerequisite@mortar:
+	-ProvidesPrerequisite@toxintruck:
+	Tooltip:
+		Name: Cyborg Factory
+	Explodes:
+		Type: Footprint
+		Weapon: BuildingExplode
+		EmptyWeapon: BuildingExplode
+	Health:
+		HP: 300000
+	RepairableBuilding:
+		RepairStep: 500
+		RepairPercent: 30
+		RepairingNotification: Repairing
+	Targetable@NoAutoTarget:
+		TargetTypes: NoAutoTarget
+
+TTRK:
+	-Buildable:
 
 BRUT:
 	Buildable:

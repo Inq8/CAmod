@@ -9,6 +9,12 @@ SovietsVsAlliesPaths = { { SovietsVsAlliesRally1.Location }, { SovietsVsAlliesRa
 NodVsAlliesPaths = { { NodVsAlliesRally1.Location }, { NodVsAlliesRally2.Location }, { NodVsAlliesRally3.Location } }
 NodVsSovietPaths = { { NodVsSovietsRally1.Location }, { NodVsSovietsRally2.Location }, { NodVsSovietsRally3.Location } }
 
+SuperweaponsEnabledTime = {
+	easy = DateTime.Seconds((60 * 30) + 17),
+	normal = DateTime.Seconds((60 * 20) + 17),
+	hard = DateTime.Seconds((60 * 10) + 17),
+}
+
 Squads = {
 	Allies = {
 		Delay = {
@@ -65,7 +71,7 @@ Squads = {
 			-- set on init
 		},
 	},
-	AlliesAir = {
+	AlliedAir = {
 		Delay = {
 			easy = DateTime.Minutes(8),
 			normal = DateTime.Minutes(6),
@@ -275,8 +281,8 @@ OncePerSecondChecks = function()
 			else
 				TimerTicks = 0
 				UserInterface.SetMissionText("")
-				Wormhole1.Destroy()
-				Wormhole2.Destroy()
+				Wormhole1.Kill()
+				Wormhole2.Kill()
 			end
 		end
 
@@ -303,6 +309,10 @@ OncePerFiveSecondChecks = function()
 		if ObjectiveDefeatRemaining ~= nil and not Scrin.IsObjectiveCompleted(ObjectiveDefeatRemaining) then
 			if not PlayerHasBuildings(Greece) and not PlayerHasBuildings(USSR) and not PlayerHasBuildings(Nod) then
 				Scrin.MarkCompletedObjective(ObjectiveDefeatRemaining)
+
+				if not Scrin.IsObjectiveCompleted(ObjectiveProdigyMustSurvive) then
+					Scrin.MarkCompletedObjective(ObjectiveProdigyMustSurvive)
+				end
 			end
 		end
 	end
@@ -319,8 +329,17 @@ InitUSSR = function(paths)
 		end)
 	end)
 
+	Trigger.AfterDelay(Squads.Soviets.Delay[Difficulty], function()
+		InitAttackSquad(Squads.Soviets, USSR)
+	end)
+
 	Trigger.AfterDelay(Squads.SovietAir.Delay[Difficulty], function()
 		InitAirAttackSquad(Squads.SovietAir, USSR, Scrin)
+	end)
+
+	Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
+		Actor.Create("ai.superweapons.enabled", true, { Owner = USSR })
+		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = USSR })
 	end)
 end
 
@@ -333,9 +352,18 @@ InitGreece = function(paths)
 		end)
 	end)
 
+	Trigger.AfterDelay(Squads.Allied.Delay[Difficulty], function()
+		InitAttackSquad(Squads.Allied, Greece)
+	end)
+
     Trigger.AfterDelay(Squads.AlliedAir.Delay[Difficulty], function()
         InitAirAttackSquad(Squads.AlliedAir, Nod, Scrin)
     end)
+
+	Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
+		Actor.Create("ai.superweapons.enabled", true, { Owner = Greece })
+		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = Greece })
+	end)
 end
 
 InitNod = function(paths)
@@ -347,9 +375,18 @@ InitNod = function(paths)
 		end)
 	end)
 
+	Trigger.AfterDelay(Squads.Nod.Delay[Difficulty], function()
+		InitAttackSquad(Squads.Nod, Nod)
+	end)
+
     Trigger.AfterDelay(Squads.NodAir.Delay[Difficulty], function()
         InitAirAttackSquad(Squads.NodAir, Nod, Scrin)
     end)
+
+	Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
+		Actor.Create("ai.superweapons.enabled", true, { Owner = Nod })
+		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = Nod })
+	end)
 end
 
 DestroyCameras = function()

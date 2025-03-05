@@ -1,9 +1,3 @@
-ScrinDelays = {
-	easy = DateTime.Minutes(8),
-	normal = DateTime.Minutes(6),
-	hard = DateTime.Minutes(4),
-}
-
 ScrinAttackValues = {
 	easy = { Min = 6, Max = 16 },
 	normal = { Min = 16, Max = 33 },
@@ -16,7 +10,11 @@ ScrinReinforcementSquad = { "s3", "s1", "s1", "s1", "s1", "s1", "s2", "s2", "s3"
 
 Squads = {
 	ScrinRebels1 = {
-		Delay = ScrinDelays,
+		Delay = {
+			easy = DateTime.Minutes(4),
+			normal = DateTime.Minutes(3),
+			hard = DateTime.Minutes(2),
+		},
 		AttackValuePerSecond = ScrinAttackValues,
 		FollowLeader = true,
 		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
@@ -27,7 +25,11 @@ Squads = {
 		},
 	},
 	ScrinRebels2 = {
-		Delay = ScrinDelays,
+		Delay = {
+			easy = DateTime.Minutes(9),
+			normal = DateTime.Minutes(6),
+			hard = DateTime.Minutes(3),
+		},
 		AttackValuePerSecond = ScrinAttackValues,
 		FollowLeader = true,
 		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
@@ -38,7 +40,11 @@ Squads = {
 		},
 	},
 	ScrinRebels3 = {
-		Delay = ScrinDelays,
+		Delay = {
+			easy = DateTime.Minutes(10),
+			normal = DateTime.Minutes(7),
+			hard = DateTime.Minutes(4),
+		},
 		AttackValuePerSecond = ScrinAttackValues,
 		FollowLeader = true,
 		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
@@ -87,7 +93,7 @@ WorldLoaded = function()
 	ScrinRebels3 = Player.GetPlayer("ScrinRebels3")
 	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { USSR }
-	TimerTicks = 0
+	TimerTicks = DateTime.Minutes(3)
 	NumTransmittersCaptured = 0
 
 	Camera.Position = PlayerStart.CenterPosition
@@ -95,11 +101,17 @@ WorldLoaded = function()
 	InitObjectives(USSR)
 	AdjustStartingCash()
 	InitScrinRebels()
+	InitNod()
 
 	Actor.Create("hazmatsoviet.upgrade", true, { Owner = USSR })
 
 	ObjectiveCaptureNerveCenter = USSR.AddObjective("Capture rebel Nerve Center.")
 	ObjectiveEliminateRebels = USSR.AddObjective("Eliminate all rebel forces.")
+
+	if Difficulty ~= "hard" then
+		HardOnlyElite.Destroy()
+		HardOnlyReaper.Destroy()
+	end
 
 	Trigger.AfterDelay(DateTime.Seconds(3), function()
 		Media.DisplayMessage("Assist us to annihilate Kane and the rebels, and you will be rewarded.", "Scrin Overlord", HSLColor.FromHex("7700FF"))
@@ -120,14 +132,21 @@ WorldLoaded = function()
 		if newOwner == USSR and not USSR.IsObjectiveCompleted(ObjectiveCaptureNerveCenter) then
 			USSR.MarkCompletedObjective(ObjectiveCaptureNerveCenter)
 			ObjectiveHoldNerveCenter = USSR.AddObjective("Protect the captured Nerve Center.")
+			TimerTicks = 0
+
+			Trigger.OnRemovedFromWorld(GatewayNerveCenter, function(a)
+				if not USSR.IsObjectiveCompleted(ObjectiveHoldNerveCenter) then
+					USSR.MarkFailedObjective(ObjectiveHoldNerveCenter)
+					Gateway.Destroy()
+				end
+			end)
 		end
 	end)
 
-	Trigger.OnRemovedFromWorld(GatewayNerveCenter, function()
+	Trigger.OnKilled(GatewayNerveCenter, function(self, killer)
 		if not USSR.IsObjectiveCompleted(ObjectiveCaptureNerveCenter) then
 			USSR.MarkFailedObjective(ObjectiveCaptureNerveCenter)
-		elseif ObjectiveHoldNerveCenter ~= nil then
-			USSR.MarkFailedObjective(ObjectiveHoldNerveCenter)
+			Gateway.Destroy()
 		end
 	end)
 
@@ -155,12 +174,36 @@ OncePerSecondChecks = function()
 				USSR.MarkFailedObjective(ObjectiveEliminateRebels)
 			end
 		end
+
+		if TimerTicks > 0 then
+			if TimerTicks > 25 then
+				TimerTicks = TimerTicks - 25
+
+				if TimerTicks <= 0 then
+					if not Gateway.IsDead then
+						Gateway.Destroy()
+						if not USSR.IsObjectiveCompleted(ObjectiveCaptureNerveCenter) then
+							USSR.MarkFailedObjective(ObjectiveCaptureNerveCenter)
+						end
+					end
+				end
+			end
+			UpdateMissionText()
+		end
 	end
 end
 
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
 		UpdatePlayerBaseLocations()
+	end
+end
+
+UpdateMissionText = function()
+	if TimerTicks > 0 then
+		UserInterface.SetMissionText("Gateway collapses in " .. UtilsCA.FormatTimeForGameSpeed(TimerTicks), HSLColor.Yellow)
+	else
+		UserInterface.SetMissionText("")
 	end
 end
 
@@ -195,6 +238,24 @@ InitScrinRebels = function()
 	Trigger.AfterDelay(Squads.ScrinRebelsAir.Delay[Difficulty], function()
 		InitAirAttackSquad(Squads.ScrinRebelsAir, ScrinRebels1, USSR, { "harv", "4tnk", "4tnk.atomic", "3tnk", "3tnk.atomic", "3tnk.rhino", "3tnk.rhino.atomic",
 			"katy", "v3rl", "ttra", "v3rl", "apwr", "tpwr", "npwr", "tsla", "proc", "nukc", "ovld", "apoc", "apoc.atomic", "ovld.atomic" })
+	end)
+end
+
+InitNod = function()
+	AutoRepairBuildings(Nod)
+	SetupRefAndSilosCaptureCredits(Nod)
+
+	local nodGroundAttackers = Nod.GetGroundAttackers()
+
+	Utils.Do(nodGroundAttackers, function(a)
+		TargetSwapChance(a, 10)
+		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsNodGroundHunterUnit)
+	end)
+
+	Trigger.AfterDelay(DateTime.Minutes(2), function()
+		Utils.Do(nodGroundAttackers, function(a)
+			AssaultPlayerBaseOrHunt(a, USSR)
+		end)
 	end)
 end
 

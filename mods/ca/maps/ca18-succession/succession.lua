@@ -87,6 +87,7 @@ WorldLoaded = function()
 	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { USSR }
 	TimerTicks = 0
+	NumFactoriesCaptured = 0
 
 	Camera.Position = PlayerStart.CenterPosition
 

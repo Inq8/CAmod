@@ -35,9 +35,9 @@ Squads = {
 	},
 	ScrinRebels = {
 		Delay = {
-			easy = DateTime.Minutes(6),
-			normal = DateTime.Minutes(4),
-			hard = DateTime.Minutes(2)
+			easy = DateTime.Minutes(5),
+			normal = DateTime.Minutes(3),
+			hard = DateTime.Minutes(1)
 		},
 		AttackValuePerSecond = {
 			easy = { Min = 10, Max = 25 },
@@ -47,7 +47,6 @@ Squads = {
 		ActiveCondition = function()
 			return not MaleficArrived
 		end,
-		DispatchDelay = DateTime.Seconds(15),
 		FollowLeader = true,
 		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
 		Units = UnitCompositions.Scrin.Main,

@@ -64,6 +64,10 @@ SPLIT3:
 AMCV:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
+PBOX:
+	Power:
+		Amount: 0
+
 AGUN:
 	Power:
 		Amount: 0
@@ -78,6 +82,17 @@ MISS:
 		RepairPercent: 30
 		RepairingNotification: Repairing
 	-SpawnActorOnDeath:
+	-OwnerLostAction:
+	Explodes:
+		Type: Footprint
+		Weapon: BuildingExplode
+		EmptyWeapon: BuildingExplode
+	WithBuildingRepairDecoration:
+		Image: allyrepair
+		Sequence: repair
+		Position: Center
+		Palette: player
+		IsPlayerPalette: True
 
 WORMHOLE:
 	Inherits@INF: ^ProducesInfantry
@@ -85,7 +100,7 @@ WORMHOLE:
 	-PopControlled:
 	-TeleportNetwork:
 	Health:
-		HP: 500000
+		HP: 300000
 	ChangesHealth:
 		PercentageStep: 1
 		Delay: 25

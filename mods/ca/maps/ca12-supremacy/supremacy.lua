@@ -26,8 +26,8 @@ Squads = {
 	},
 	Forward = {
 		Delay = {
-			easy = DateTime.Minutes(6),
-			normal = DateTime.Minutes(4),
+			easy = DateTime.Minutes(4),
+			normal = DateTime.Minutes(3),
 			hard = DateTime.Minutes(2),
 		},
 		AttackValuePerSecond = {
@@ -54,7 +54,7 @@ Squads = {
 			normal = { Min = 14, Max = 14 },
 			hard = { Min = 21, Max = 21 },
 		},
-		ProducerTypes = { Aircraft = { "afld.gdi" } },
+		ProducerTypes = { Aircraft = { "afld.gdi", "hpad.td" } },
 		Units = {
 			easy = {
 				{ Aircraft = { "orca" } },
@@ -299,7 +299,6 @@ InitEastAttackers = function()
 		if a.Owner == GDI and not a.IsDead then
 			local dest = CPos.New(EastBaseCenter.Location.X + Utils.RandomInteger(-5,5), EastBaseCenter.Location.Y + Utils.RandomInteger(-5,5))
 			a.AttackMove(dest)
-			a.Hunt()
 			Trigger.AfterDelay(DateTime.Seconds(80), function()
 				if not a.IsDead then
 					a.Stop()
@@ -321,7 +320,7 @@ end
 
 FlipEastBase = function()
     if not Nod.IsObjectiveCompleted(ObjectiveReinforce) then
-		Nod.Cash = 5000 + CashAdjustments[Difficulty]
+		Nod.Cash = 6000 + CashAdjustments[Difficulty]
 		NodRadarProvider.Destroy()
 		ObjectiveDestroyGDI = Nod.AddObjective("Destroy GDI forces.")
         Nod.MarkCompletedObjective(ObjectiveReinforce)
@@ -341,7 +340,7 @@ end
 
 FlipWestBase = function()
     if not Nod.IsObjectiveCompleted(ObjectiveReinforce) then
-		Nod.Cash = 5000 + CashAdjustments[Difficulty]
+		Nod.Cash = 6000 + CashAdjustments[Difficulty]
 		NodRadarProvider.Destroy()
 		ObjectiveDestroyGDI = Nod.AddObjective("Destroy GDI forces.")
         Nod.MarkCompletedObjective(ObjectiveReinforce)

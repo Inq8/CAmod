@@ -20,6 +20,7 @@ Squads = {
 			return NodEastOrWestNeutralized()
 		end,
 		FollowLeader = true,
+		DispatchDelay = DateTime.Seconds(15),
 		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
 		Units = UnitCompositions.Nod.Main,
 		AttackPaths = {
@@ -43,6 +44,7 @@ Squads = {
 			hard = { Min = 40, Max = 80 },
 		},
 		FollowLeader = true,
+		DispatchDelay = DateTime.Seconds(15),
 		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
 		Units = UnitCompositions.Nod.Main,
 		AttackPaths = {
@@ -63,6 +65,7 @@ Squads = {
 			hard = { Min = 40, Max = 80 },
 		},
 		FollowLeader = true,
+		DispatchDelay = DateTime.Seconds(15),
 		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
 		Units = UnitCompositions.Nod.Main,
 		AttackPaths = {
