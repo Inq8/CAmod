@@ -1,0 +1,493 @@
+^Palettes:
+	PaletteFromFile@terrain-temperat:
+		Filename: ca|maps/ca19-proliferation/charred.pal
+	GlobalLightingPaletteEffect:
+		Red: 1
+		Green: 1
+		Blue: 1.1
+		Ambient: 0.8
+	FlashPaletteEffect@CHRONO:
+		Type: Chronoshift
+		ExcludePalettes: cursor, chrome, chromes, colorpicker, colorpickertd, colorpickerscrin, fog, shroud
+
+^BaseWorld:
+	TerrainLighting:
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, singularity.lua
+	MissionData:
+		Briefing: We have reached the main Scrin stronghold. A huge craft hovers in the sky above it and is channeling some kind of energy into the ground below. This must be how the gateway is being opened. We don't know how much time we have, but this mothership must be destroyed before its task is complete.\n\nYour first obstacle will be the human armies that have been enslaved. The Scrin are using Allied, Soviet and Nod forces as a first line of defense. Destroy them if necessary, but we may be able to release them from Scrin control the same way we did for our own forces.\n\nThe defenses surrounding the main stronghold are being empowered and are consuming enormous amounts of energy. It is unlikely we'll be able to break these defenses unless we can inflict significant damage to the Scrin power infrastructure.\n\nThe mothership itself is protected by an energy shield; we don't yet know how effective our weapons will be against it. Satellite images also show a large number of cyborgs guarding it, which will make a ground assault extremely difficult.\n\nTo that end, a squadron of our advanced interceptors is prepared to strike the mothership. We believe they will be able to evade the Scrin air defenses for long enough to launch a single volley of missiles. We can only hope this will be enough to break through the shields.\n\nIf all else fails, use whatever means necessary to bring the shields down and destroy the mothership. The entire GDI arsenal is at your disposal.\n\nGood luck commander.
+	MapOptions:
+		ShortGameCheckboxEnabled: True
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: dropdown-difficulty.label
+		Description: dropdown-difficulty.description
+		Values:
+			easy: options-difficulty.easy
+			normal: options-difficulty.normal
+			hard: options-difficulty.hard
+		Default: normal
+	MusicPlaylist:
+		StartingMusic: target
+	MapBuildRadius:
+		AllyBuildRadiusCheckboxEnabled: True
+
+Player:
+	PlayerResources:
+		DefaultCash: 6000
+
+^AiExtraPower:
+	PowerMultiplier@EXTRAPOWER:
+		Modifier: 200
+
+SILO.SCRIN:
+	Power:
+		Amount: 0
+
+SILO.SCRINBLUE:
+	Inherits: SILO.SCRIN
+
+WORMHOLE:
+	-PopControlled:
+	-Selectable:
+	Interactable:
+	DamageMultiplier@INVULN:
+		Modifier: 0
+	TerrainLightSource:
+		Range: 6c0
+		Intensity: 0.5
+		BlueTint: 1
+		RedTint: 0.2
+
+WORMHOLEXXL:
+	Inherits: WORMHOLE
+	-Targetable:
+
+MSHP:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+	Armament@PRIMARYNEW:
+		Weapon: GatewayOpener
+		Turret: none
+		LocalOffset: 0,0,-940
+	-Armament@PRIMARY:
+	-Armament@SECONDARY:
+	-Armament@TERTIARY:
+	Aircraft:
+		-CruisingCondition:
+	AttackTurreted:
+		Armaments: primary
+	-GrantConditionOnAttack@CHARGING:
+	-AmbientSoundCA@CHARGING:
+	-AmmoPool:
+	-ReloadAmmoPoolCA@CHARGE:
+	-ReloadAmmoPoolCA@DRAIN:
+	-KillsSelf@Emp:
+	AmbientSoundCA:
+		-RequiresCondition:
+		AudibleThroughFog: false
+	Health:
+		HP: 525000
+	Shielded:
+		MaxStrength: 1500000
+		RegenAmount: 1000
+		RegenDelay: 750
+		RequiresCondition: mothership-shields
+	GrantConditionOnPrerequisite@MSHPSHIELDS:
+		Condition: mothership-shields
+		Prerequisites: mothership.shields
+
+MSHP.Husk:
+	FallsToEarth:
+		Explosion: MothershipExplosion
+
+MSHP.Husk.Ground:
+	Explodes:
+		Weapon: MothershipExplosion
+
+MAST:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+	MindController:
+		Capacity: 5
+	Health:
+		HP: 32000
+	DamageTypeDamageMultiplier@FLAKARMOR:
+		-RequiresCondition:
+	DamageTypeDamageMultiplier@FLAKARMORMINOR:
+		-RequiresCondition:
+	-GrantConditionOnPrerequisite@CARAPACE:
+	-ChangesHealth@CommandoRegen:
+
+QTNK:
+	-FirepowerMultiplier@MADIC:
+	ExternalCondition@IC:
+		Condition: invulnerability
+	WithRestartableIdleOverlay@WARPIN:
+		PlayOnce: true
+		Image: explosion
+		Sequence: ironcurtain_effect
+		Palette: effect-ignore-lighting-alpha85
+		RequiresCondition: invulnerability
+
+^ScrinDefenseBuffs:
+	GrantConditionOnPrerequisite@BUFF1:
+		Condition: scol-buff
+		Prerequisites: scrindefensebuff1
+	GrantConditionOnPrerequisite@BUFF2:
+		Condition: scol-buff
+		Prerequisites: scrindefensebuff2
+	DamageMultiplier@BUFF1:
+		RequiresCondition: scol-buff == 1
+		Modifier: 40
+	DamageMultiplier@BUFF2:
+		RequiresCondition: scol-buff == 2
+		Modifier: 25
+	FirepowerMultiplier@BUFF1:
+		RequiresCondition: scol-buff == 1
+		Modifier: 125
+	FirepowerMultiplier@BUFF2:
+		RequiresCondition: scol-buff == 2
+		Modifier: 150
+	RangeMultiplier@BUFF1:
+		RequiresCondition: scol-buff == 1
+		Modifier: 120
+	RangeMultiplier@BUFF2:
+		RequiresCondition: scol-buff == 2
+		Modifier: 130
+	WithIdleOverlay@BUFF1:
+		Image: resconv
+		Sequence: green
+		Palette: scrin
+		RequiresCondition: scol-buff == 1
+		Offset: 0,0,300
+	WithIdleOverlay@BUFF2:
+		Image: resconv
+		Sequence: blue
+		Palette: scrin
+		RequiresCondition: scol-buff == 2
+		Offset: 0,0,300
+
+PTUR:
+	Inherits@SCRINDEFENSEBUFFS: ^ScrinDefenseBuffs
+
+SCOL:
+	Inherits@SCRINDEFENSEBUFFS: ^ScrinDefenseBuffs
+
+SCOL.Temp:
+	-GrantConditionOnPrerequisite@BUFF1:
+	-GrantConditionOnPrerequisite@BUFF2:
+	-DamageMultiplier@BUFF1:
+	-DamageMultiplier@BUFF2:
+	-FirepowerMultiplier@BUFF1:
+	-FirepowerMultiplier@BUFF2:
+	-RangeMultiplier@BUFF1:
+	-RangeMultiplier@BUFF2:
+	-WithIdleOverlay@BUFF1:
+	-WithIdleOverlay@BUFF2:
+
+SHAR:
+	Inherits@SCRINDEFENSEBUFFS: ^ScrinDefenseBuffs
+
+TSLA:
+	-Targetable@TeslaBoost:
+
+scrindefensebuff1:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	ProvidesPrerequisite:
+
+scrindefensebuff2:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	ProvidesPrerequisite:
+
+mothership.shields:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	ProvidesPrerequisite:
+
+^BlueBuff:
+	WithIdleOverlay@BLUEBUFF:
+		Image: bluebuff
+		Sequence: idle
+		Offset: 0,0,300
+		Palette: scrin
+		RequiresCondition: bluebuff
+	DamageMultiplier@BLUEBUFF:
+		Modifier: 15
+		RequiresCondition: bluebuff
+	ChangesHealth@BLUEBUFF:
+		PercentageStep: 2
+		Delay: 15
+		StartIfBelow: 100
+	Mobile:
+		PauseOnCondition: !kane-revealed && bluebuff
+	ExternalCondition@BLUEBUFF:
+		Condition: bluebuff
+	ExternalCondition@KANE:
+		Condition: kane-revealed
+	ExternalCondition@PROVOKED:
+		Condition: provoked
+	RangeMultiplier@PROVOKED:
+		Modifier: 125
+		RequiresCondition: provoked
+	AttackFrontal:
+		PauseOnCondition: !kane-revealed && bluebuff && !provoked
+		FacingTolerance: 128
+
+RMBC:
+	Inherits@BLUEBUFF: ^BlueBuff
+
+ENLI:
+	Inherits@BLUEBUFF: ^BlueBuff
+
+TPLR:
+	Inherits@BLUEBUFF: ^BlueBuff
+	Health:
+		HP: 30000
+	-AttackFrontal:
+	AttackFrontalCharged:
+		PauseOnCondition: !kane-revealed && bluebuff && !provoked
+		FacingTolerance: 128
+
+N3C:
+	Inherits@BLUEBUFF: ^BlueBuff
+	Health:
+		HP: 30000
+
+SIGN:
+	Inherits@HACKABLE: ^Hackable
+	Health:
+		HP: 300000
+	Tooltip:
+		GenericVisibility: None
+	TooltipExtras:
+		Attributes: • Maximum 1 can be built\n• Cannot be captured
+	RepairableBuilding:
+		RepairStep: 1500
+		RepairPercent: 0
+	Power:
+		Amount: 0
+	-RecallPower@Recall:
+
+YF23.Interceptor:
+	Inherits: MIG
+	Inherits: ^TDPalette
+	-Buildable:
+	Rearmable:
+		RearmActors: wormhole
+	Repairable:
+		RepairActors: wormhole
+	RenderSprites:
+		Image: yf23
+	Aircraft:
+		Speed: 400
+	Health:
+		HP: 500000
+	Armament@AA:
+		Weapon: WidowAA2
+		LocalOffset: 0,-640,0, 0,640,0
+		LocalYaw: -40, 40
+		PauseOnCondition: !ammo
+		Name: secondary
+	AmmoPool:
+		Ammo: 12
+	-Selectable:
+	RejectsOrders:
+	Interactable:
+	Contrail@1:
+		Offset: -325,483,0
+	Contrail@2:
+		Offset: -325,-483,0
+	Contrail@AB1:
+		Offset: -400,-80,-10
+	Contrail@AB2:
+		Offset: -400,80,-10
+	-Targetable@AIRBORNE:
+	Targetable@YF23:
+		TargetTypes: YF23
+	RevealsShroud:
+		Range: 7c0
+		MinRange: 5c0
+	RevealsShroud@GAPGEN:
+		Range: 5c0
+		Type: GroundPosition
+	SpawnActorOnDeath:
+		Actor: YF23.Husk
+	SpawnActorOnDeath@EMP:
+		Actor: YF23.Husk.EMP
+	SpawnActorOnDeath@Empty:
+		Actor: YF23.Husk
+	SpawnActorOnDeath@EmptyEMP:
+		Actor: YF23.Husk.EMP
+
+^AutoTargetAirICBM:
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Air, AirSmall, ICBM, YF23
+
+CTNK.Reinforce:
+	Inherits: CTNK
+	RenderSprites:
+		Image: ctnk
+	WithRestartableIdleOverlay@WARPIN:
+		PlayOnce: true
+		Image: chronobubble
+		Sequence: warpin
+		Palette: ra2effect-ignore-lighting-alpha75
+
+AFLD.GDI:
+	-InterceptorPower@AirDef:
+
+HPAD.TD:
+	-InterceptorPower@AirDef:
+
+KANE:
+	Inherits: ^Soldier
+	Tooltip:
+		Name: Kane
+	Health:
+		HP: 500000
+	Mobile:
+		Speed: 60
+	RevealsShroud:
+		Range: 10c0
+	-Crushable:
+	-TakeCover:
+	WithInfantryBody:
+		IdleSequences: stand
+		StandSequences: stand
+	-Targetable:
+	DamageMultiplier@invulv:
+		Modifier: 0
+
+HACK:
+	-Valued:
+	Health:
+		HP: 10000
+
+NERV:
+	DetonateWeaponPower@BUZZERSWARMAI:
+		Prerequisites: nerv
+		ChargeInterval: 6750
+	DetonateWeaponPower@STORMSPIKE:
+		Prerequisites: nerv
+
+UAV:
+	-Targetable@AIRBORNE:
+	RevealsShroud:
+		Range: 10c0
+		MinRange: 8c0
+	RevealsShroud@GAPGEN:
+		Range: 8c0
+
+# Enable subfaction specific tech
+
+STWR:
+	Buildable:
+		Prerequisites: vehicles.any, ~structures.gdi
+
+TITN:
+	Buildable:
+		Prerequisites: gtek, ~!railgun.upgrade
+
+TITN.RAIL:
+	Buildable:
+		Prerequisites: gtek, ~railgun.upgrade
+
+JUGG:
+	Buildable:
+		Prerequisites: upgc, ~vehicles.gdi
+
+HSAM:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.gdi
+
+MDRN:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.gdi
+
+GDRN:
+	Buildable:
+		Prerequisites: ~vehicles.gdi, ~!tow.upgrade
+
+GDRN.TOW:
+	Buildable:
+		Prerequisites: ~vehicles.gdi, ~tow.upgrade
+
+WOLV:
+	Buildable:
+		Prerequisites: gtek, ~vehicles.gdi
+
+XO:
+	Buildable:
+		Prerequisites: gtek, ~vehicles.gdi
+
+PBUL:
+	Buildable:
+		Prerequisites: gtek, ~vehicles.gdi
+
+AURO:
+	Buildable:
+		Prerequisites: afld.gdi, gtek
+
+gyro.upgrade:
+	Buildable:
+		Prerequisites: gtek
+
+abur.upgrade:
+	Buildable:
+		Prerequisites: gtek
+
+bdrone.upgrade:
+	Buildable:
+		Prerequisites: gtek
+
+railgun.upgrade:
+	Buildable:
+		Prerequisites: upgc
+
+ionmam.upgrade:
+	Buildable:
+		Prerequisites: upgc, !mdrone.upgrade, !hovermam.upgrade
+	TooltipExtras:
+		Attributes: \n(!) Only ONE Mammoth Tank upgrade can be chosen
+
+hovermam.upgrade:
+	Buildable:
+		Prerequisites: upgc, !ionmam.upgrade, !mdrone.upgrade
+	TooltipExtras:
+		Attributes: \n(!) Only ONE Mammoth Tank upgrade can be chosen
+
+mdrone.upgrade:
+	Buildable:
+		Prerequisites: upgc, !ionmam.upgrade, !hovermam.upgrade
+	TooltipExtras:
+		Attributes: \n(!) Only ONE Mammoth Tank upgrade can be chosen
+
+GTEK:
+	GrantExternalConditionPowerCA@NREPAIR:
+		Prerequisites: ~gtek
+
+HQ:
+	SpawnActorPower@GDIEagleDropzone:
+		Prerequisites: ~radar.gdi
+	ParatroopersPowerCA@xodrop:
+		Prerequisites: ~radar.gdi
+	DropPodsPowerCA@Zocom:
+		Prerequisites: ~radar.gdi
+
+# Hunt() requires only 1 AttackBase
+DEVA:
+	-AttackFrontalCharged:
+	-Armament@PRIMARYUPG:
+	-AmbientSound@CHARGE:
+	-WithIdleOverlay@CHARGE1:
+	-WithIdleOverlay@CHARGE2:
+	-WithIdleOverlay@CHARGE3:
+
+BATF.AI:
+	-AttackFrontal:

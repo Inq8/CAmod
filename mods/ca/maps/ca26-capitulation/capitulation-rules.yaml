@@ -1,0 +1,190 @@
+^Palettes:
+	GlobalLightingPaletteEffect:
+		Red: 0.85
+		Green: 0.85
+		Blue: 1
+		Ambient: 0.85
+	WeatherOverlay:
+		ParticleDensityFactor: 4
+		Gravity: 16, 24
+		WindTick: 150, 425
+		ScatterDirection: -12, 12
+		ParticleSize: 2, 3
+		ParticleColors: ECECEC44, E4E4E444, D0D0D044, BCBCBC44
+		LineTailAlphaValue: 0
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, capitulation.lua
+	MissionData:
+		Briefing: The path to the Scrin stronghold is now clear and preparations for our assault are underway. Stalin is a wildcard that we cannot ignore, and we have decided it would be best to remove him from the equation.\n\nHe has retreated to a heavily fortified compound in Siberia and surrounded himself with his most loyal and experienced troops. Soviet ground forces suffered huge losses as a result of recent Scrin incursions, however their air force is still largely intact, so expect Stalin to make heavy use of it.\n\nHis stronghold is very heavily defended and key structures are protected by an Iron Curtain device that must be hidden underground.\n\nAn Atomic Reactor is the primary source of power for the base. Allied spies have reported to us that the reactor requires a constant supply of fuel to keep up with the base's enormous power consumption, so if we can cut their supply lines and prevent additional fuel from reaching the reactor, it would only be a matter of time before it is forced to shut down.\n\nThe base also has a secondary source of power in the form of a bank of Tesla Reactors on a nearby island. These reactors enable the base's Tesla Coils to be supercharged and should be destroyed before an attack on the main stronghold is attempted.\n\nOur last attempt to besiege a Soviet base with an Iron Curtain device did not end well; let's hope that Allied intel is accurate.
+	MapOptions:
+		ShortGameCheckboxEnabled: True
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: dropdown-difficulty.label
+		Description: dropdown-difficulty.description
+		Values:
+			easy: options-difficulty.easy
+			normal: options-difficulty.normal
+			hard: options-difficulty.hard
+		Default: normal
+	MusicPlaylist:
+		StartingMusic: fac2226m
+
+Player:
+	PlayerResources:
+		DefaultCash: 6000
+
+EYE:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+TSLA:
+	-Targetable@TeslaBoost:
+	ExternalCondition@BUFFREMOVED:
+		Condition: buff-removed
+	GrantCondition@CHARGED1:
+		Condition: charged
+		RequiresCondition: !buff-removed
+	GrantCondition@CHARGED2:
+		Condition: charged
+		RequiresCondition: !buff-removed
+	GrantCondition@CHARGED3:
+		Condition: charged
+		RequiresCondition: !buff-removed
+	DamageMultiplier@BUFFED:
+		Modifier: 50
+		RequiresCondition: !buff-removed
+	RangeMultiplier@PERMABUFF:
+		Modifier: 110
+	ExternalCondition@ICOFFLINE:
+		Condition: ic-offline
+	WithPalettedOverlay@IRONCURTAIN:
+		RequiresCondition: invulnerability && !ic-offline
+	DamageMultiplier@IRONCURTAIN:
+		RequiresCondition: invulnerability && !ic-offline
+	TimedConditionBar@IRONCURTAIN:
+		Condition: invulnerability && !ic-offline
+	WithColoredOverlay@IDISABLE:
+		RequiresCondition: disabled && !(empdisable || being-warped)
+
+SAM:
+	ExternalCondition@BUFFREMOVED:
+		Condition: buff-removed
+	DamageMultiplier@BUFFED:
+		Modifier: 50
+		RequiresCondition: !buff-removed
+
+DOME:
+	ParatroopersPowerCA@paratroopers:
+		RequiresCondition: paratroopers-enabled
+	ExternalCondition@paratroopers:
+		Condition: paratroopers-enabled
+
+AFLD:
+	AirstrikePowerCA@Russianparabombs:
+		RequiresCondition: parabombs-enabled
+	ExternalCondition@parabombs:
+		Condition: parabombs-enabled
+
+NPWR:
+	ExternalCondition@DISABLED:
+		Condition: disabled
+	ExternalCondition@ICOFFLINE:
+		Condition: ic-offline
+	GrantCondition@HASPOWER:
+		Condition: invulnerability
+		RequiresCondition: !ic-offline
+	WithIdleOverlay@SMOKE1:
+		RequiresCondition: !(disabled || being-warped || build-incomplete)
+	WithIdleOverlay@SMOKE2:
+		RequiresCondition: !(disabled || being-warped || build-incomplete)
+	WithIdleOverlay@SMOKE3:
+		RequiresCondition: !(disabled || being-warped || build-incomplete)
+	Capturable:
+		RequiresCondition: !build-incomplete && !being-warped && !invulnerability
+	Health:
+		HP: 400000
+
+FCOM:
+	Health:
+		HP: 250000
+	Tooltip:
+		Name: Stalin's Bunker
+		-GenericVisibility:
+	-BaseProvider:
+	-SpawnActorOnDeath:
+	RepairableBuilding:
+		RepairStep: 500
+		RepairPercent: 30
+		PlayerExperience: 5
+		RepairingNotification: Repairing
+	GrantCondition@HASPOWER:
+		Condition: invulnerability
+		RequiresCondition: !ic-offline
+	ExternalCondition@ICOFFLINE:
+		Condition: ic-offline
+	Capturable:
+		RequiresCondition: !invulnerability
+	Explodes:
+		Type: Footprint
+		Weapon: BuildingExplode
+		EmptyWeapon: BuildingExplode
+
+UTRK:
+	Inherits: DTRK
+	RenderSprites:
+		Image: dtrk
+	Health:
+		HP: 20000
+	Mobile:
+		Speed: 54
+	Explodes:
+		Weapon: CrateNuke
+		EmptyWeapon: CrateNuke
+	Buildable:
+		Prerequisites: ~disabled
+		Description: Truck carrying reactor fuel.
+	Tooltip:
+		Name: Reactor Fuel Truck
+
+UAV:
+	-Targetable@AIRBORNE:
+
+YAK:
+	-EjectOnDeath:
+
+HIND:
+	-EjectOnDeath:
+
+MIG:
+	-EjectOnDeath:
+
+SUK:
+	-EjectOnDeath:
+
+KIRO:
+	-EjectOnDeath:
+
+SPY:
+	RevealsShroud:
+		Range: 8c512
+
+MSAM:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+HSAM:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.gdi
+
+AURO:
+	Buildable:
+		Prerequisites: afld.gdi, gtek
+
+hovermam.upgrade:
+	Buildable:
+		Prerequisites: upgc
+
+V3RL:
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Structure, Defense

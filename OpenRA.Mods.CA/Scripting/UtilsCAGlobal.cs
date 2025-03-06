@@ -44,5 +44,13 @@ namespace OpenRA.Mods.CA.Scripting
 		{
 			return WidgetUtils.FormatTime(ticks, world.Timestep);
 		}
+
+		[Desc("Returns hotkey for a specified hotkey name.")]
+		public string Hotkey(string hotkeyName)
+		{
+			var reference = Game.ModData.Hotkeys[hotkeyName];
+			var hotkey = reference.GetValue();
+			return hotkey.DisplayString();
+		}
 	}
 }

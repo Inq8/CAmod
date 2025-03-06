@@ -304,7 +304,7 @@ SCRATE:
 	Tooltip:
 		Name: Steel Crate
 
-CAMERA:
+^CameraBase:
 	Inherits@DUMMY: ^InvisibleDummy
 	EditorOnlyTooltip:
 		Name: (reveals area to owner)
@@ -318,48 +318,45 @@ CAMERA:
 	WithSpriteBody:
 	RenderSpritesEditorOnly:
 		Image: camera
+
+CAMERA:
+	Inherits: ^CameraBase
 	MapEditorData:
 		Categories: System
 
 camera.dummy:
-	Inherits: CAMERA
+	Inherits: ^CameraBase
 	-RevealsShroud:
 	KillsSelf:
 		Delay: 25
 
 camera.infiltrator:
-	Inherits: CAMERA
+	Inherits: ^CameraBase
 	KillsSelf:
 		RemoveInstead: true
 		Delay: 6000
 
 camera.paradrop:
-	Inherits: CAMERA
-	EditorOnlyTooltip:
-		Name: (support power proxy camera)
+	Inherits: ^CameraBase
 	RevealsShroud:
 		Range: 6c0
 
 camera.spyplane:
-	Inherits: CAMERA
-	EditorOnlyTooltip:
-		Name: (support power proxy camera)
+	Inherits: ^CameraBase
 
 camera.sathack:
-	Inherits: CAMERA
+	Inherits: ^CameraBase
 	Interactable:
 		Bounds: 64, 64
 	-RenderSpritesEditorOnly:
 	RenderSprites:
 		Image: satscan
-	EditorOnlyTooltip:
-		Name: (support power proxy camera)
 	DetectCloaked:
 		Range: 10c0
 		DetectionTypes: Cloak
 
 camera.satscan:
-	Inherits: CAMERA
+	Inherits: ^CameraBase
 	-RevealsShroud:
 	Buildable:
 		Queue: SpySatellite
@@ -399,7 +396,7 @@ camera.satscan.oneshot:
 	-GrantConditionOnPrerequisite@UPLINK:
 
 camera.hacker:
-	Inherits: CAMERA
+	Inherits: ^CameraBase
 	RevealsShroud:
 		Range: 1c512
 	KillsSelf:
@@ -407,7 +404,7 @@ camera.hacker:
 		Delay: 50
 
 camera.decoy:
-	Inherits: CAMERA
+	Inherits: ^CameraBase
 	RevealsShroud:
 		Range: 5c0
 	KillsSelf:
@@ -550,6 +547,7 @@ FLARE.dropzone:
 		DeliveryOffset: 0,0
 		DeliveringActor: ocar.reinforce
 		Facing: 0
+	-MapEditorData:
 
 FLARE.KillZone:
 	Inherits: FLARE
@@ -557,6 +555,7 @@ FLARE.KillZone:
 	KillsSelf:
 		Delay: 400 # same as for killzone actor
 		RemoveInstead: true
+	-MapEditorData:
 
 MINE:
 	Inherits@1: ^SpriteActor
@@ -1304,10 +1303,16 @@ cryostorm.fade:
 		Sequence: dead
 
 nshield:
-	Inherits@1: CAMERA
+	Inherits@DUMMY: ^InvisibleDummy
+	Immobile:
+		OccupiesSpace: false
+	BodyOrientation:
+		QuantizedFacings: 1
+	RenderSprites:
+		Image: empty
+	WithSpriteBody:
 	Interactable:
 		Bounds: 64, 64
-	-RevealsShroud:
 	WithRangeCircleCA:
 		Type: NaniteShield
 		Visible: Always
@@ -1354,7 +1359,7 @@ killzone:
 		ValidRelationships: Enemy, Neutral, Ally
 
 shadow.beacon.camera:
-	Inherits@1: CAMERA
+	Inherits@1: ^CameraBase
 	-Immobile:
 	AttachedAircraft:
 		Speed: 0

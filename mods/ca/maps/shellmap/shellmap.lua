@@ -61,35 +61,29 @@ UnitCompositionsShellmap = {
 Squads = {
 	NodVsGDI = {
 		AttackValuePerSecond = {
-			normal = { { MinTime = 0, Value = 80 } },
+			normal = { Min = 80, Max = 80 },
 		},
 		DispatchDelay = DateTime.Seconds(30),
-		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = false,
-		IdleUnits = { },
 		ProducerTypes = { Infantry = { "hand" }, Vehicles = { "airs" } },
 		Units = UnitCompositionsShellmap.Nod,
 		AttackPaths = { { NodAttack1.Location, GDIBase.Location }, { NodGroup1.Location, GDIBase.Location }, { GDIAttack1.Location, GDIBase.Location } },
 	},
 	NodVsScrin = {
 		AttackValuePerSecond = {
-			normal = { { MinTime = 0, Value = 90 } },
+			normal = { Min = 90, Max = 90 },
 		},
 		DispatchDelay = DateTime.Seconds(30),
-		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = false,
-		IdleUnits = { },
 		ProducerTypes = { Infantry = { "hand" }, Vehicles = { "airs" } },
 		Units = UnitCompositionsShellmap.Nod,
 		AttackPaths = { { GDICamp.Location, ScrinBase.Location } },
 	},
 	GDIVsNod = {
 		AttackValuePerSecond = {
-			normal = { { MinTime = 0, Value = 80 } },
+			normal = { Min = 80, Max = 80 },
 		},
-		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = false,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { GDISouthBarracks }, Vehicles = { GDISouthFactory } },
 		ProducerTypes = { Infantry = { "pyle" }, Vehicles = { "weap.td" } },
 		Units = UnitCompositionsShellmap.GDI,
@@ -97,11 +91,9 @@ Squads = {
 	},
 	GDIVsScrin = {
 		AttackValuePerSecond = {
-			normal = { { MinTime = 0, Value = 80 } },
+			normal = { Min = 80, Max = 80 },
 		},
-		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = false,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { GDINorthEastBarracks }, Vehicles = { GDINorthEastFactory } },
 		ProducerTypes = { Infantry = { "pyle" }, Vehicles = { "weap.td" } },
 		Units = UnitCompositionsShellmap.GDI,
@@ -109,11 +101,9 @@ Squads = {
 	},
 	GDIVsSoviets = {
 		AttackValuePerSecond = {
-			normal = { { MinTime = 0, Value = 80 } },
+			normal = { Min = 80, Max = 80 },
 		},
-		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = false,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { GDINorthWestBarracks }, Vehicles = { GDINorthWestFactory } },
 		ProducerTypes = { Infantry = { "pyle" }, Vehicles = { "weap.td" } },
 		Units = UnitCompositionsShellmap.GDI,
@@ -121,11 +111,9 @@ Squads = {
 	},
 	AlliesVsSoviets = {
 		AttackValuePerSecond = {
-			normal = { { MinTime = 0, Value = 80 } },
+			normal = { Min = 80, Max = 80 },
 		},
-		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = false,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { AlliesNorthWestBarracks }, Vehicles = { AlliesNorthWestFactory } },
 		ProducerTypes = { Infantry = { "tent" }, Vehicles = { "weap" } },
 		Units = UnitCompositionsShellmap.Allies,
@@ -133,11 +121,9 @@ Squads = {
 	},
 	SovietVsAllies = {
 		AttackValuePerSecond = {
-			normal = { { MinTime = 0, Value = 110 } },
+			normal = { Min = 110, Max = 110 },
 		},
-		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = false,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { SovietNorthBarracks }, Vehicles = { SovietNorthFactory } },
 		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
 		Units = UnitCompositionsShellmap.Soviet,
@@ -145,11 +131,9 @@ Squads = {
 	},
 	SovietVsGDI = {
 		AttackValuePerSecond = {
-			normal = { { MinTime = 0, Value = 110 } },
+			normal = { Min = 110, Max = 110 },
 		},
-		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = false,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { SovietSouthBarracks }, Vehicles = { SovietSouthFactory } },
 		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
 		Units = UnitCompositionsShellmap.Soviet,
@@ -157,22 +141,18 @@ Squads = {
 	},
 	ScrinVsSoviets = {
 		AttackValuePerSecond = {
-			normal = { { MinTime = 0, Value = 125 } },
+			normal = { Min = 125, Max = 125 },
 		},
-		QueueProductionStatuses = { Infantry = false, Vehicles = false, Aircraft = false },
 		FollowLeader = false,
-		IdleUnits = { },
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
 		Units = UnitCompositionsShellmap.Scrin,
 		AttackPaths = { { ScrinAttack1.Location, AlliedCamp.Location, ScrinAttack2a.Location, SovietBase.Location }, { ScrinAttack1.Location, AlliedCamp.Location, ScrinAttack2b.Location, SovietBase.Location } },
 	},
 	ScrinVsGDI = {
 		AttackValuePerSecond = {
-			normal = { { MinTime = 0, Value = 90 } },
+			normal = { Min = 90, Max = 90 },
 		},
-		QueueProductionStatuses = { Infantry = false, Vehicles = false, Aircraft = false },
 		FollowLeader = false,
-		IdleUnits = { },
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
 		Units = UnitCompositionsShellmap.Scrin,
 		AttackPaths = { { GDICamp.Location, GDIBase.Location } },
@@ -181,11 +161,6 @@ Squads = {
 		Interval = {
 			normal = DateTime.Minutes(1),
 		},
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Aircraft = { "afld.gdi" } },
 		Units = {
 			normal = {
@@ -198,11 +173,6 @@ Squads = {
 		Interval = {
 			normal = DateTime.Minutes(1),
 		},
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Aircraft = { "hpad.td" } },
 		Units = {
 			normal = {
@@ -217,11 +187,6 @@ Squads = {
 		Interval = {
 			normal = DateTime.Minutes(1),
 		},
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Aircraft = { "grav" } },
 		Units = {
 			normal = {
@@ -234,11 +199,6 @@ Squads = {
 		Interval = {
 			normal = DateTime.Minutes(1),
 		},
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Aircraft = { "afld" } },
 		Units = {
 			normal = {
@@ -283,11 +243,11 @@ WorldLoaded = function()
 	Camera.Position = CameraStart.CenterPosition
 	ViewportOrigin = Camera.Position
 
-	Actor.Create("POWERCHEAT", true, { Owner = Greece })
-	Actor.Create("POWERCHEAT", true, { Owner = USSR })
-	Actor.Create("POWERCHEAT", true, { Owner = GDI })
-	Actor.Create("POWERCHEAT", true, { Owner = Nod })
-	Actor.Create("POWERCHEAT", true, { Owner = Scrin })
+	Actor.Create("ai.unlimited.power", true, { Owner = Greece })
+	Actor.Create("ai.unlimited.power", true, { Owner = USSR })
+	Actor.Create("ai.unlimited.power", true, { Owner = GDI })
+	Actor.Create("ai.unlimited.power", true, { Owner = Nod })
+	Actor.Create("ai.unlimited.power", true, { Owner = Scrin })
 
 	Actor.Create("sonic.upgrade", true, { Owner = GDI })
 	Actor.Create("empgren.upgrade", true, { Owner = GDI })

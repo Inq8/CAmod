@@ -2,6 +2,10 @@
 	GivesExperienceCA:
 		ActorExperienceOnDamage: false
 
+^Palettes:
+	GlobalLightingPaletteEffect:
+		ExcludePalettes: fog, shroud, cursor, chrome, chrometd, chromes, colorpicker, colorpickertd, colorpickerscrin, fog, shroud, tseffect, ra2effect, ra2unit, tdeffect, effect-ignore-lighting, tdeffect-ignore-lighting-alpha85, d2keffect-ignore-lighting-alpha75, d2keffect-ignore-lighting-alpha50, ra2effect-ignore-lighting-alpha90, ra2effect-ignore-lighting-alpha75, ra2effect-ignore-lighting-alpha50, tseffect-ignore-lighting-alpha75, tsunit-ignore-lighting-alpha75, ra2unit-ignore-lighting-alpha75, ra2unit-ignore-lighting-alpha90, tseffect-ignore-lighting-alpha90
+
 Player:
 	-ConquestVictoryConditions:
 	MissionObjectives:
@@ -24,8 +28,8 @@ Player:
 	GrantConditionOnBotOwner@CampaignAI:
 		Condition: enable-campaign-ai
 		Bots: campaign
-	SupportPowerBotModule@CAMPAIGN:
-		RequiresCondition: enable-campaign-ai
+	SupportPowerBotModule:
+		RequiresCondition: enable-brutal-ai || enable-vhard-ai || enable-hard-ai || enable-normal-ai || enable-easy-ai || enable-naval-ai || enable-campaign-ai
 	LobbyPrerequisiteCheckbox@GLOBALBOUNTY:
 		Enabled: False
 		Locked: True
@@ -93,20 +97,25 @@ World:
 	GrantConditionOnPrerequisite@BIO:
 		Prerequisites: disabled
 
-^AffectedByDriverKill:
-	ChangesHealth@DRIVER_DEAD:
-		PercentageStep: 0
-
 ^Disabled:
 	Buildable:
 		Prerequisites: ~disabled
 
+# Prevent neutralised units decaying
+
+^AffectedByDriverKill:
+	ChangesHealth@DRIVER_DEAD:
+		PercentageStep: 0
+
+# Extra power for AI to reduce the number of power plants needed
+
 ^AiExtraPower:
-	GrantConditionOnBotOwnerCA@EXTRAPOWER:
-		Condition: ai-extra-power
+	GrantConditionOnPrerequisite@OwnedByAi:
+		Condition: owned-by-ai
+		Prerequisites: botplayer
 	PowerMultiplier@EXTRAPOWER:
 		Modifier: 130
-		RequiresCondition: ai-extra-power
+		RequiresCondition: owned-by-ai
 
 POWR:
 	Inherits@EXTRAPOWER: ^AiExtraPower
@@ -128,6 +137,8 @@ REAC:
 
 REA2:
 	Inherits@EXTRAPOWER: ^AiExtraPower
+
+# Defense structure external disable condition to allow disabling of specific defenses for AI
 
 PRIS:
 	ExternalCondition@DISABLED:
@@ -192,8 +203,12 @@ SGEN:
 	ExternalCondition@DISABLED:
 		Condition: disabled
 
+# Prevent Boris MiG being targeted
+
 SMIG:
 	-Targetable@AIRBORNE:
+
+# Supply Truck not buildable, slower and doesn't drop money crate
 
 TRUK:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
@@ -201,22 +216,14 @@ TRUK:
 		Speed: 54
 	-SpawnActorOnDeath:
 
-TRAN.evac:
-	Inherits: TRAN
-	-Buildable:
-	RenderSprites:
-		Image: tran
-	DamageMultiplier@INVULN:
-		Modifier: 0
-	-KillsSelf@Emp:
-	Aircraft:
-		TurnToLand: True
-		InitialFacing: 0
+# Civilian buildings don't spawn civilians on death
 
 ^CivBuilding:
 	-SpawnRandomActorOnDeath@1:
 	-SpawnRandomActorOnDeath@2:
 	-SpawnRandomActorOnDeath@3:
+
+# Crate adjustments
 
 MONEYCRATE:
 	Tooltip:
@@ -233,10 +240,43 @@ HEALCRATE:
 	Crate:
 		Duration: 0
 
+# Special/utility actors
+
+ai.unlimited.power:
+	Inherits@DUMMY: ^InvisibleDummy
+	Power:
+		Amount: 10000
+
+ai.superweapons.enabled:
+	Inherits@DUMMY: ^InvisibleDummy
+	ProvidesPrerequisite:
+
+ai.minor.superweapons.enabled:
+	Inherits@DUMMY: ^InvisibleDummy
+	ProvidesPrerequisite:
+
+ai.reveal.map:
+	Inherits@DUMMY: ^InvisibleDummy
+	RevealsMap:
+		RevealGeneratedShroud: false
+
+hold3.strat:
+	Inherits@DUMMY: ^InvisibleDummy
+	ProvidesPrerequisite@upgradename:
+
+radar.dummy:
+	Inherits@DUMMY: ^InvisibleDummy
+	ProvidesRadar:
+
 SMALLCAMERA:
 	Inherits: CAMERA
 	RevealsShroud:
 		Range: 5c0
+
+LARGECAMERA:
+	Inherits: CAMERA
+	RevealsShroud:
+		Range: 17c0
 
 WARPIN:
 	Inherits: SMALLCAMERA
@@ -251,29 +291,6 @@ WARPIN:
 		Image: chronobubble
 		Sequence: warpin
 		Palette: ra2effect-ignore-lighting-alpha75
-
-POWERCHEAT:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
-	Power:
-		Amount: 10000
-
-hold3.strat:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
-	ProvidesPrerequisite@upgradename:
-
-hazmat.upgrade:
-	Buildable:
-		Prerequisites: anyradar, infantry.any, ~!player.soviet, ~!player.scrin, ~techlevel.medium
-
-radar.dummy:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
-	ProvidesRadar:
 
 HIDDENSPAWNER:
 	Inherits@0: ^InvisibleDummy
@@ -305,6 +322,28 @@ HIDDENSPAWNER:
 	-GrantCondition@KoreanBonus:
 	-DamageMultiplier@KoreanBonus:
 
+# Prevent AI Hospitals/Machine Shops spawning units
+
+HOSP:
+	GrantConditionOnPrerequisite@OwnedByAi:
+		Condition: owned-by-ai
+		Prerequisites: botplayer
+	PeriodicProducerCA@MEDIC:
+		RequiresCondition: !is-neutral && !scrinplayer && !owned-by-ai
+	PeriodicProducerCA@REJUVENATOR:
+		RequiresCondition: !is-neutral && scrinplayer && !owned-by-ai
+
+MACS:
+	GrantConditionOnPrerequisite@OwnedByAi:
+		Condition: owned-by-ai
+		Prerequisites: botplayer
+	PeriodicProducerCA@MECHANIC:
+		RequiresCondition: !is-neutral && !scrinplayer && !owned-by-ai
+	PeriodicProducerCA@ARTIFICER:
+		RequiresCondition: !is-neutral && scrinplayer && !owned-by-ai
+
+# Prevent duplicate basic infantry when dual-tech is available
+
 E2:
 	Buildable:
 		Prerequisites: ~infantry.e2, ~!pyle
@@ -321,6 +360,8 @@ N6:
 	Buildable:
 		Prerequisites: ~infantry.td, ~!infantry.ra
 
+# So AI can produce Shadow Operatives
+
 SHAD:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
@@ -328,6 +369,8 @@ SHAD:
 		Prerequisites: ~disabled
 		BuildAtProductionType: Soldier
 		Description: Elite stealth infantry.
+
+# Disable the ability to transfer resources from AI players on capturing (lua script handles cash reward)
 
 PROC:
 	InfiltrateForCash:
@@ -359,21 +402,368 @@ SILO.SCRIN:
 	StoresPlayerResourcesCA:
 		DisableTransferFromBotOwner: true
 
-DISR:
-	Buildable:
-		Prerequisites: gtek, ~vehicles.gdi
+# Require ai.superweapons.enabled for superweapons to be enabled for AI players & don't show enemy timers for minor superweapons
 
-sonic.upgrade:
-	Buildable:
-		Prerequisites: gtek, ~player.gdi
+^AiSuperweaponsEnabled:
+	GrantConditionOnPrerequisite@OwnedByAi:
+		Condition: owned-by-ai
+		Prerequisites: botplayer
+	GrantConditionOnPrerequisite@AiSuperweaponsEnabled:
+		Condition: ai-superweapons-enabled
+		Prerequisites: ai.superweapons.enabled
+
+^AiMinorSuperweaponsEnabled:
+	GrantConditionOnPrerequisite@OwnedByAi:
+		Condition: owned-by-ai
+		Prerequisites: botplayer
+	GrantConditionOnPrerequisite@AiSuperweaponsEnabled:
+		Condition: ai-minor-superweapons-enabled
+		Prerequisites: ai.minor.superweapons.enabled
+
+WEAT:
+	Inherits@AiSuperweaponsEnabled: ^AiSuperweaponsEnabled
+	DetonateWeaponPower@LightningStorm:
+		RequiresCondition: ai-superweapons-enabled || !owned-by-ai
+
+PDOX:
+	Inherits@AiMinorSuperweaponsEnabled: ^AiMinorSuperweaponsEnabled
+	DetonateWeaponPower@ChronoAI:
+		RequiresCondition: ai-minor-superweapons-enabled || !owned-by-ai
+		DisplayTimerRelationships: Ally
+
+MSLO:
+	Inherits@AiSuperweaponsEnabled: ^AiSuperweaponsEnabled
+	NukePower@ABomb:
+		RequiresCondition: ai-superweapons-enabled || !owned-by-ai
+
+IRON:
+	Inherits@AiMinorSuperweaponsEnabled: ^AiMinorSuperweaponsEnabled
+	GrantExternalConditionPowerCA@IRONCURTAIN:
+		RequiresCondition: ai-minor-superweapons-enabled || !owned-by-ai
+		DisplayTimerRelationships: Ally
+
+EYE:
+	Inherits@AiSuperweaponsEnabled: ^AiSuperweaponsEnabled
+	DetonateWeaponPower@IonStorm:
+		RequiresCondition: ai-superweapons-enabled || !owned-by-ai
+
+PATR:
+	Inherits@AiMinorSuperweaponsEnabled: ^AiMinorSuperweaponsEnabled
+	AttackOrderPowerCA@EMPMISSILE:
+		RequiresCondition: ai-minor-superweapons-enabled || !owned-by-ai
+		DisplayTimerRelationships: Ally
+
+MSLO.Nod:
+	Inherits@AiSuperweaponsEnabled: ^AiSuperweaponsEnabled
+	NukePower@Chemmiss:
+		RequiresCondition: ai-superweapons-enabled || !owned-by-ai
+
+SGEN:
+	Inherits@AiMinorSuperweaponsEnabled: ^AiMinorSuperweaponsEnabled
+	GrantExternalConditionPowerCA@SGEN:
+		RequiresCondition: ai-minor-superweapons-enabled || !owned-by-ai
+		DisplayTimerRelationships: Ally
+
+RFGN:
+	Inherits@AiSuperweaponsEnabled: ^AiSuperweaponsEnabled
+	DetonateWeaponPower@RiftGenerator:
+		RequiresCondition: ai-superweapons-enabled || !owned-by-ai
+
+MANI:
+	Inherits@AiMinorSuperweaponsEnabled: ^AiMinorSuperweaponsEnabled
+	GrantExternalConditionPowerCA@SUPPRESSION:
+		RequiresCondition: ai-minor-superweapons-enabled || !owned-by-ai
+		DisplayTimerRelationships: Ally
+
+TMPL:
+	Inherits@AiMinorSuperweaponsEnabled: ^AiMinorSuperweaponsEnabled
+	NukePower@Cluster:
+		RequiresCondition: ai-minor-superweapons-enabled || !owned-by-ai
+		DisplayTimerRelationships: Ally
+
+# Disable GPS for AI
 
 ^GpsPower:
+	GrantConditionOnPrerequisite@OwnedByAi:
+		Condition: owned-by-ai
+		Prerequisites: botplayer
+	DummyGpsPower@NOFOG:
+		RequiresCondition: !gps-launched && !fogenabled && !owned-by-ai
+	DummyGpsPower@FOG:
+		RequiresCondition: !gps-launched && fogenabled && !owned-by-ai
+	ProduceActorPowerCA@SatelliteLaunched:
+		Prerequisites: ~!botplayer
 	ProduceActorPowerCA@InitialSatelliteScan:
 		Prerequisites: anyradar, ~!gps.satellite.firstscan, ~fogenabled, ~!botplayer
 	ProduceActorPowerCA@SatelliteScan:
 		Prerequisites: anyradar, ~gps.satellite, ~gps.satellite.firstscan, ~fogenabled, ~!botplayer
 	ProduceActorPowerCA@SatelliteScanNoFog:
 		Prerequisites: anyradar, ~!fogenabled, ~!botplayer
+
+# Manual targeting for Tesla Coil boost (otherwise they get stuck when AI attack moves)
+
+SHOK:
+	-AutoTargetPriority@TESLANORMAL:
+
+# Special units/buildings
+
+TRAN.evac:
+	Inherits: TRAN
+	-Buildable:
+	RenderSprites:
+		Image: tran
+	DamageMultiplier@INVULN:
+		Modifier: 0
+	-KillsSelf@Emp:
+	Aircraft:
+		TurnToLand: True
+		InitialFacing: 0
+
+PDGY:
+	Inherits: MAST
+	-Buildable:
+	RenderSprites:
+		Image: mast
+	GrantCondition@Elite:
+		Condition: rank-elite
+
+ETPD:
+	Inherits: TPOD
+	Inherits@SHIELDS: ^ScrinShields
+	Inherits@A2GPROTECTION: ^AirToGroundProtection
+	Inherits@SHRAPNEL: ^ThrowsShrapnelBig
+	Turreted@SHIELDS:
+		Offset: 0,0,0
+	GrantCondition@SHIELDS:
+		Condition: shields-upgrade
+	Tooltip:
+		Name: Exterminator Tripod
+	-Buildable:
+	-CaptureManager:
+	-Capturable:
+	-CaptureNotification:
+	-Capturable@DRIVER_DEAD:
+	-GrantConditionIfOwnerIsNeutral:
+	-ChangesHealth@DRIVER_DEAD:
+	-TooltipDescription@DRIVER_DEAD:
+	-Targetable@DRIVERKILL:
+	-Targetable@DRIVERKILLLOWHP:
+	-GrantConditionOnDamageState@DriverKillLessThan50:
+	-GrantConditionOnDamageState@DriverKillLessThan75:
+	-Targetable@AICAPTURE:
+	TooltipExtras:
+		Description: Super heavy assault walker with beam weapons.
+		Strengths: Strong vs all ground units and structures.
+	Mobile:
+		Speed: 36
+		PauseOnCondition: empdisable || being-warped || notmobile
+		ImmovableCondition: alive
+	GrantCondition@ALIVE:
+		Condition: alive
+	Armament@PRIMARY:
+		Weapon: ExterminatorLaser
+		LocalOffset: 800,650,1000
+	Armament@PRIMARY2:
+		Weapon: ExterminatorLaser
+		LocalOffset: 800,450,1500
+		FireDelay: 2
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: ExterminatorLaserReversed
+		LocalOffset: 800,-650,1000
+	Armament@SECONDARY2:
+		Name: secondary
+		Weapon: ExterminatorLaserReversed
+		LocalOffset: 800,-450,1500
+		FireDelay: 22
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+	Health:
+		HP: 900000
+	Shielded:
+		MaxStrength: 650000
+		RegenAmount: 1000
+	Valued:
+		Cost: 10000
+	RevealsShroud:
+		Range: 7c0
+	TurretedFloating:
+		TurnSpeed: 8
+	Selectable:
+		Bounds: 1800, 3200, 0, -600
+	AutoTarget:
+		InitialStanceAI: AttackAnything
+	SpawnActorOnDeath:
+		Actor: ETPD.Husk
+	ExternalCondition@NORMAL:
+		Condition: difficulty-normal
+	ExternalCondition@EASY:
+		Condition: difficulty-easy
+	FirepowerMultiplier@NORMAL:
+		Modifier: 75
+		RequiresCondition: difficulty-normal
+	FirepowerMultiplier@EASY:
+		Modifier: 50
+		RequiresCondition: difficulty-easy
+	DamageMultiplier@NORMAL:
+		Modifier: 125
+		RequiresCondition: difficulty-normal
+	DamageMultiplier@EASY:
+		Modifier: 150
+		RequiresCondition: difficulty-easy
+	MustBeDestroyed:
+		RequiredForShortGame: true
+	Targetable@ETPD:
+		TargetTypes: ExterminatorTripod
+	Targetable@SHIELDED:
+		TargetTypes: Shielded
+		RequiresCondition: shields-up
+	Targetable@MindControlResistant:
+		TargetTypes: MindControlResistant
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+		RequiresCondition: shields-up
+	DamageTypeDamageMultiplier@A2GPROTECTION:
+		Modifier: 75
+		RequiresCondition: !difficulty-easy
+	-ExternalCondition@UNITSELL:
+	-Sellable:
+	ChangesHealth@THEAL:
+		Step: 2000
+		PercentageStep: 0
+	Explodes:
+		Weapon: 380mm
+		EmptyWeapon: 380mm
+
+ETPD.Husk:
+	Inherits: TPOD.Husk
+	Tooltip:
+		Name: Husk (Exterminator Tripod)
+	RenderSprites:
+		Image: etpd.destroyed
+
+SCRINPURIFIER:
+	Inherits: ^TechBuilding
+	Inherits@shape: ^2x2Shape
+	Selectable:
+		Bounds: 2048, 2048
+	Building:
+		Footprint: xx xx
+		Dimensions: 2,2
+	RevealsShroud:
+		Range: 10c0
+	CaptureManager:
+	CapturableProgressBlink:
+	Capturable:
+		Types: building
+	CapturableProgressBar:
+	Tooltip:
+		Name: Scrin Tiberium Purifier
+	WithIdleOverlay@ACTIVE:
+		Sequence: purification
+		RequiresCondition: !is-neutral
+		Offset: 800,50,-150
+	GrantConditionIfOwnerIsNeutral@NEUTRAL:
+		Condition: is-neutral
+	SeedsResource:
+		ResourceType: BlueTiberium
+		Interval: 2
+		RequiresCondition: !is-neutral
+	Health:
+		HP: 150000
+	-CaptureNotification:
+
+# Smudge makers
+
+^SmudgeMaker:
+	Inherits@DUMMY: ^InvisibleDummy
+	Immobile:
+		OccupiesSpace: false
+	BodyOrientation:
+		QuantizedFacings: 1
+	WithSpriteBody:
+	Interactable:
+		Bounds: 64, 64
+	KillsSelf:
+		Delay: 25
+		RemoveInstead: true
+	WithSpriteBody:
+	RenderSpritesEditorOnly:
+		Image: waypoint
+	MapEditorData:
+		Categories: System
+
+CraterMaker1:
+	Inherits: ^SmudgeMaker
+	PeriodicExplosion:
+		Weapon: CraterMaker1
+	EditorOnlyTooltip:
+		Name: Crater Maker x1
+
+CraterMaker2:
+	Inherits: ^SmudgeMaker
+	PeriodicExplosion:
+		Weapon: CraterMaker2
+	EditorOnlyTooltip:
+		Name: Crater Maker x2
+
+ScorchMaker1:
+	Inherits: ^SmudgeMaker
+	PeriodicExplosion:
+		Weapon: ScorchMaker1
+	EditorOnlyTooltip:
+		Name: Scorch Maker x1
+
+ScorchMaker2:
+	Inherits: ^SmudgeMaker
+	PeriodicExplosion:
+		Weapon: ScorchMaker2
+	EditorOnlyTooltip:
+		Name: Scorch Maker x2
+
+# Enable subfaction specific units/upgrades for all campaign missions
+
+## Soviets
+
+E8:
+	Buildable:
+		Prerequisites: ~barr, anyradar, ~!deso.upgrade, ~techlevel.medium
+
+DESO:
+	Buildable:
+		Prerequisites: ~barr, anyradar, ~deso.upgrade, ~techlevel.medium
+
+TTNK:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.soviet, ~techlevel.medium
+
+ISU:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.soviet, ~techlevel.medium
+
+deso.upgrade:
+	Buildable:
+		Prerequisites: ~player.soviet, stek, ~techlevel.high
+
+tarc.upgrade:
+	Buildable:
+		Prerequisites: ~player.soviet, stek, ~techlevel.high
+
+seismic.upgrade:
+	Buildable:
+		Prerequisites: ~player.soviet, stek, ~techlevel.high
+
+## GDI
+
+DISR:
+	Buildable:
+		Prerequisites: gtek, ~vehicles.gdi, ~techlevel.high
+
+sonic.upgrade:
+	Buildable:
+		Prerequisites: gtek, ~player.gdi, ~techlevel.high
 
 # For attack interval calculations, factoring in extra value from cargo
 

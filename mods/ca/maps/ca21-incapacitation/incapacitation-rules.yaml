@@ -1,0 +1,142 @@
+^Palettes:
+	PaletteFromFile@terrain-temperat:
+		Filename: incapacitation.pal
+	FlashPaletteEffect@LIGHTNINGSTRIKE:
+		Type: LightningStrike
+		ExcludePalettes: cursor, chrome, chromes, colorpicker, colorpickertd, colorpickerscrin, fog, shroud
+	FlashPaletteEffect@IONSTRIKE:
+		Type: IonStrike
+		ExcludePalettes: cursor, chrome, chromes, colorpicker, colorpickertd, colorpickerscrin, fog, shroud
+		Color: D48FFF
+	GlobalLightingPaletteEffect:
+		Red: 1.2
+		Green: 1
+		Blue: 1.2
+		Ambient: 0.7
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, incapacitation.lua
+	MissionData:
+		Briefing: A concentration of aircraft belonging to the same two human factions has been identified in this area and has been evaluated as the next significant threat to be dealt with.\n\nYou have been allocated a small task force with which you must eliminate these aircraft and their landing areas.\n\nYou must also neutralise all anti-aircraft defensive structures. This will ensure our fleet can be redeployed to the central repository with minimal airborne resistance.\n\nAn ion storm has been created to ensure that all hostile aircraft will be confined to the ground for the duration of this mission. The energy required to maintain the storm is substantial; waste no time.
+	MapOptions:
+		ShortGameCheckboxEnabled: False
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: dropdown-difficulty.label
+		Description: dropdown-difficulty.description
+		Values:
+			easy: options-difficulty.easy
+			normal: options-difficulty.normal
+			hard: options-difficulty.hard
+		Default: normal
+	MusicPlaylist:
+		StartingMusic: rainnite
+
+Player:
+	PlayerResources:
+		DefaultCash: 0
+
+^GroundedAircraft:
+	ExternalCondition@GROUNDED:
+		Condition: grounded
+	AutoTarget:
+		InitialStanceAI: HoldFire
+	DamageMultiplier@GROUNDED:
+		Modifier: 200
+		RequiresCondition: grounded
+
+ORCA:
+	Inherits@GROUNDED: ^GroundedAircraft
+	-SpawnActorOnDeath:
+
+A10:
+	Inherits@GROUNDED: ^GroundedAircraft
+	-SpawnActorOnDeath:
+
+HELI:
+	Inherits@GROUNDED: ^GroundedAircraft
+	WithIdleOverlay@ROTORGROUND:
+		PauseOnCondition: grounded
+	-SpawnActorOnDeath:
+
+HARR:
+	Inherits@GROUNDED: ^GroundedAircraft
+	-SpawnActorOnDeath:
+
+AURO:
+	Inherits@GROUNDED: ^GroundedAircraft
+	-SpawnActorOnDeath:
+
+WORMHOLE:
+	-PopControlled:
+	-Targetable:
+
+GRAV:
+	Power:
+		Amount: 0
+
+^DifficultyModifiers:
+	ExternalCondition@NORMAL:
+		Condition: difficulty-normal
+	ExternalCondition@EASY:
+		Condition: difficulty-easy
+	RevealsShroudMultiplier@NORMALEASY:
+		Modifier: 115
+		RequiresCondition: difficulty-normal || difficulty-easy
+
+STMR:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+DEVA:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+PAC:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+MSHP:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+LCHR:
+	Inherits@DIFFICULTY: ^DifficultyModifiers
+	RevealsShroud:
+		MinRange: 0
+		Range: 8c0
+		-RevealGeneratedShroud:
+	-RevealsShroud@GAPGEN:
+	RangeMultiplier@REDUCEDRANGE:
+		Modifier: 94
+	AutoTarget:
+		InitialStance: HoldFire
+	-GainsExperience:
+	GainsExperience:
+		LevelUpNotification: LevelUp
+		Conditions:
+			2000: rank-veteran
+			4000: rank-veteran
+			8000: rank-veteran
+	TooltipExtras:
+		Attributes: • Disables power plants and radars\n• Slows vehicles & cyborgs\n• Regenerates and heals allies when in coalescence form\n• Special Ability: Coalescence
+
+LCHR.Orb:
+	Health:
+		HP: 15000
+	ReloadAmmoPoolCA:
+		Delay: 250
+
+S4:
+	Inherits@DIFFICULTY: ^DifficultyModifiers
+	RevealsShroud:
+		Range: 8c0
+	PortableChronoCA:
+		MaxDistance: 8
+		ChargeDelay: 200
+	AutoTarget:
+		InitialStance: HoldFire
+	-GainsExperience:
+	GainsExperience:
+		LevelUpNotification: LevelUp
+		Conditions:
+			2000: rank-veteran
+			4000: rank-veteran
+			8000: rank-veteran

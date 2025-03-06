@@ -1,0 +1,65 @@
+^Palettes:
+	PaletteFromFile@terrain-temperat:
+		Filename: alien.pal
+	GlobalLightingPaletteEffect:
+		Red: 1.3
+		Green: 1
+		Blue: 1.5
+		Ambient: 0.5
+
+^BaseWorld:
+	TerrainLighting:
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, spearhead.lua
+	MissionData:
+		Briefing: It seems we were not the Scrin fleet's target. Scouts sent in the direction they were heading have located a Nod outpost in a mountainous and relatively sparsely inhabited region. We have thus far been unable to locate the bulk of the Nod forces, but Kane can't be too far away, and the Scrin were clearly trying to get to him. The terrain means it will be some time before we are able to move heavy forces to intercept.\n\nWe need more intel on Kane's whereabouts and intentions to properly plan our movements, and we believe this Nod outpost will be vulnerable to a small rapidly deployed strike team. Resources in the area are limited and there are few suitable locations for a staging area, but the lack of significant Scrin presence and the difficult terrain should mean you'll only face limited resistance.\n\nYour mission is to capture the Nod Communications Center. Anything else is at your discretion.
+	MapOptions:
+		ShortGameCheckboxEnabled: True
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: dropdown-difficulty.label
+		Description: dropdown-difficulty.description
+		Values:
+			easy: options-difficulty.easy
+			normal: options-difficulty.normal
+			hard: options-difficulty.hard
+		Default: normal
+	MusicPlaylist:
+		StartingMusic: heroism
+
+Player:
+	PlayerResources:
+		DefaultCash: 6000
+
+OCAR.AMCV:
+	Inherits: OCAR
+	RejectsOrders:
+	-Selectable:
+	Interactable:
+	Aircraft:
+		InitialFacing: 512
+	Carryall:
+		InitialActor: amcv
+	Health:
+		HP: 100000
+
+XO:
+	TargetedLeapAbility:
+		ChargeDelay: 175
+
+ZRAI:
+	RevealsShroud:
+		Range: 7c0
+	TargetedLeapAbility:
+		ChargeDelay: 175
+
+# Hunt() requires only 1 AttackBase
+DEVA:
+	-AttackFrontalCharged:
+	-Armament@PRIMARYUPG:
+	-AmbientSound@CHARGE:
+	-WithIdleOverlay@CHARGE1:
+	-WithIdleOverlay@CHARGE2:
+	-WithIdleOverlay@CHARGE3:

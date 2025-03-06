@@ -1,0 +1,161 @@
+^Palettes:
+	GlobalLightingPaletteEffect:
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, awakening.lua
+	MissionData:
+		Briefing: The first warriors of our new army are almost ready. Our efforts to drive a wedge between GDI and the Allies were successful enough to keep them from interfering, however Soviet forces now march towards the Temple Prime complex.\n\nOnce our new army is unleashed the Soviets will not stand a chance, however their preparation cannot be hastened. Protect the temple at all costs.
+	MapOptions:
+		ShortGameCheckboxEnabled: False
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: dropdown-difficulty.label
+		Description: dropdown-difficulty.description
+		Values:
+			easy: options-difficulty.easy
+			normal: options-difficulty.normal
+			hard: options-difficulty.hard
+		Default: normal
+	MusicPlaylist:
+		StartingMusic: prp
+
+Player:
+	PlayerResources:
+		DefaultCash: 6000
+
+# Enable subfaction specific tech
+
+BH:
+	Buildable:
+		Prerequisites: anyradar, ~hand
+
+WTNK:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.nod
+
+HFTK:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.nod
+
+microwave.upgrade:
+	Buildable:
+		Prerequisites: tmpl
+
+quantum.upgrade:
+	Buildable:
+		Prerequisites: tmpl
+
+alphacomanche.upgrade:
+	Buildable:
+		Prerequisites: tmpl
+
+blacknapalm.upgrade:
+	Buildable:
+		Prerequisites: tmpl
+
+# Make non-cyborg infantry available with Temple Prime
+
+N1:
+	Buildable:
+		Prerequisites: ~infantry.td
+
+N3:
+	Buildable:
+		Prerequisites: ~infantry.td
+
+N4:
+	Buildable:
+		Prerequisites: ~hand
+
+MECH:
+	Buildable:
+		Prerequisites: repair, ~infantry.mech
+
+# Disable cyborgs
+
+N1C:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+N3C:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+N5:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+CMEC:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+ENLI:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+RMBC:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+	Health:
+		HP: 80000
+
+ENLI:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+advcyber.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+cyborgarmor.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+cyborgspeed.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+BIO:
+	-OwnerLostAction:
+	-SpawnActorOnDeath:
+	-ProvidesPrerequisite@mortar:
+	-ProvidesPrerequisite@toxintruck:
+	Tooltip:
+		Name: Weapons Lab
+	Explodes:
+		Type: Footprint
+		Weapon: BuildingExplode
+		EmptyWeapon: BuildingExplode
+	Exit@1:
+		SpawnOffset: -190,880,0
+		ExitCell: 1,2
+		ProductionTypes: Cyborg
+	Exit@2:
+		SpawnOffset: 190,-400,0
+		ExitCell: 1,-1
+		ProductionTypes: Cyborg
+	Production:
+		Produces: Cyborg
+	RallyPoint:
+	Targetable@V3Ignore:
+		TargetTypes: V3Ignore
+
+TTRK:
+	-Buildable:
+
+TMPP:
+	UnitConverter:
+		RequiresCondition: awakening-complete
+	ExternalCondition@AWAKENING:
+		Condition: awakening-complete
+	-Sellable:
+	Targetable@V3Ignore:
+		TargetTypes: V3Ignore
+
+MIG:
+	-MustBeDestroyed:
+
+YAK:
+	-MustBeDestroyed:
+
+SUK:
+	-MustBeDestroyed:
+
+HIND:
+	-MustBeDestroyed:
+
+V3RL:
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Structure, Defense
+		InvalidTargets: NoAutoTarget, WaterStructure, AntiAirDefense, V3Ignore

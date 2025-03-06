@@ -83,7 +83,6 @@
 		EndChargeSpeechNotification: ClusterMinesReady
 		EndChargeTextNotification: Cluster Mines ready.
 		PauseOnCondition: disabled || empdisable || being-warped
-		RequiresCondition: !build-incomplete
 		SupportPowerPaletteOrder: 50
 
 ^TemporalIncursionPower:
@@ -1184,7 +1183,7 @@
 		IconPalette: chrometd
 		Name: Advanced Radar Scan
 		Description: \nReveals the location of enemy structures & units\n    through the fog of war.
-		RequiresCondition: !build-incomplete && tower.radar
+		RequiresCondition: tower.radar
 		PauseOnCondition: !radar-active || disabled || being-warped
 		LaunchSound: gradarup.aud
 		BeginChargeSound: gradardn.aud
@@ -2203,7 +2202,6 @@
 		Range: 10c0
 		ValidTargetTypes: FleetRecallable
 		InvalidTargetTypes: Husk
-		DisplayTimerRelationships: Ally, Neutral
 		SupportPowerPaletteOrder: 30
 		ShowSelectionBoxes: true
 		SelectionBoxColor: 9500ff

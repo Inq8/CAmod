@@ -1,0 +1,102 @@
+
+^Palettes:
+	GlobalLightingPaletteEffect:
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, displacement.lua
+	MissionData:
+		Briefing: The effects of the ruptured Soviet Chronosphere continue to ripple outward.\n\nAlien invaders continue to pour through their portals, but there are reports of even more unbelievable occurrences. Towns disappearing. The landscape itself being transformed. Sightings of military units of unknown origins and allegiances.\n\nWe must regroup. Your mission is to assist in the evacuation of our forces north of the Neris river. Alien forces have occupied the northern bank, cutting off our retreat.\n\nUse the limited resources we have to push back across the river and clear a path for our retreating convoys, then destroy the Alien base to stem the tide of their advance.
+	MapOptions:
+		ShortGameCheckboxEnabled: False
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: dropdown-difficulty.label
+		Description: dropdown-difficulty.description
+		Values:
+			easy: options-difficulty.easy
+			normal: options-difficulty.normal
+			hard: options-difficulty.hard
+		Default: normal
+	MusicPlaylist:
+		StartingMusic: rollout
+
+Player:
+	PlayerResources:
+		DefaultCash: 2500
+
+# Disable tech
+
+SPY:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+ENFO:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+E7:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+PMAK:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+MCV:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+MSHP:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+hazmat.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+flakarmor.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+cryw.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+pcan.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+charv.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+# Disable GPS for player
+
+ATEK:
+	-GrantConditionOnPrerequisite@OwnedByAi:
+	-DummyGpsPower@NOFOG:
+	-DummyGpsPower@FOG:
+	-ProduceActorPowerCA@SatelliteLaunched:
+	-ProduceActorPowerCA@InitialSatelliteScan:
+	-ProduceActorPowerCA@SatelliteScan:
+	-ProduceActorPowerCA@SatelliteScanNoFog:
+	-GrantExternalConditionPowerCA@FSHIELD:
+
+# Misc
+
+DD:
+	Health:
+		HP: 80000
+
+SCOL:
+	Power:
+		Amount: -80
+
+STMR:
+	AutoTarget:
+		InitialStanceAI: HoldFire
+
+FIX:
+	ProximityExternalCondition@AIRCRAFTREPAIR:
+		Range: 12c0
+	WithRangeCircle@AIRCRAFTREPAIR:
+		Range: 12c0
+
+# Hunt() requires only 1 AttackBase
+DEVA:
+	-AttackFrontalCharged:
+	-Armament@PRIMARYUPG:
+	-AmbientSound@CHARGE:
+	-WithIdleOverlay@CHARGE1:
+	-WithIdleOverlay@CHARGE2:
+	-WithIdleOverlay@CHARGE3:

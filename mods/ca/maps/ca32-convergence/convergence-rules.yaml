@@ -1,0 +1,129 @@
+^Palettes:
+	PaletteFromFile@terrain-temperat:
+		Filename: alien.pal
+	FlashPaletteEffect@LIGHTNINGSTRIKE:
+		Type: LightningStrike
+		ExcludePalettes: cursor, chrome, chromes, colorpicker, colorpickertd, colorpickerscrin, fog, shroud
+	FlashPaletteEffect@IONSTRIKE:
+		Type: IonStrike
+		ExcludePalettes: cursor, chrome, chromes, colorpicker, colorpickertd, colorpickerscrin, fog, shroud
+		Color: D48FFF
+	GlobalLightingPaletteEffect:
+		Red: 1
+		Green: 1
+		Blue: 1.2
+		Ambient: 0.4
+
+^BaseWorld:
+	TerrainLighting:
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, convergence.lua
+	MissionData:
+		Briefing: We have built up a sizeable force on the other side of the gateway and continue to reinforce our positions. It was beginning to seem like the Scrin were uninterested in our presence, however our sensor network has detected a large Scrin fleet accompanied by ground forces heading towards us at great speed.\n\nThe odds are stacked against us, but we have little choice but to fight. If we lose our foothold, it's only a matter of time before the Scrin mount a full-scale invasion of Earth, in addition to losing our ability to put a stop to whatever Kane is up to (assuming the Scrin have not done so already).\n\nOne of our remote outposts was seemingly ignored by the advancing Scrin forces, which seem to be making a bee-line for our main base.\n\nOur main defensive line to the north is still being prepared. Your mission is to bolster the defenses as much as possible, and prevent the Scrin fleet ships from breaking through.
+	MapOptions:
+		ShortGameCheckboxEnabled: True
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: dropdown-difficulty.label
+		Description: dropdown-difficulty.description
+		Values:
+			easy: options-difficulty.easy
+			normal: options-difficulty.normal
+			hard: options-difficulty.hard
+		Default: normal
+	MusicPlaylist:
+		StartingMusic: heroism
+
+Player:
+	PlayerResources:
+		DefaultCash: 6000
+
+AFLD.GDI:
+	-InterceptorPower@AirDef:
+
+HQ:
+	-DropPodsPowerCA@Zocom:
+	-AirstrikePowerCA@uav:
+	-AirstrikePowerCA@uavST:
+
+ATWR:
+	Buildable:
+		Prerequisites: vehicles.any, ~structures.gdi
+
+XO:
+	Buildable:
+		Prerequisites: gtek, ~vehicles.gdi
+
+EYE:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+UPGC.DROP:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+DEVA:
+	Aircraft:
+		Speed: 49
+
+PAC:
+	Aircraft:
+		Speed: 49
+
+TBCL:
+	Inherits@A2GPROTECTION: ^AirToGroundProtection
+	Wanders:
+		MinMoveDelay: 0
+		MaxMoveDelay: 50
+		AvoidTerrainTypes: Beach, Water, Rock
+	Health:
+		HP: 350000
+	ChangesHealth:
+		PercentageStep: 1
+		Delay: 50
+		StartIfBelow: 101
+		DamageCooldown: 0
+
+SCOL:
+	Power:
+		Amount: 0
+	DamageMultiplier@BUFF:
+		Modifier: 50
+	FirepowerMultiplier@BUFF:
+		Modifier: 120
+
+SHAR:
+	Power:
+		Amount: 0
+	DamageMultiplier@BUFF:
+		Modifier: 50
+	FirepowerMultiplier@BUFF:
+		Modifier: 120
+
+pathrenderer:
+	Inherits: ^InvisibleDummy
+	HitShape:
+	BodyOrientation:
+		QuantizedFacings: 1
+	Immobile:
+		OccupiesSpace: false
+	RenderLine:
+		Angle: 512
+		Length: 95c0
+		Color: ff000033
+		Width: 2
+		DashLength: 0c256
+		FadeTicks: 50
+		RequiresCondition: radarenabled
+	GrantConditionOnPrerequisite@RADAR:
+		Condition: radarenabled
+		Prerequisites: radar-active
+
+# Hunt() requires only 1 AttackBase
+DEVA:
+	-AttackFrontalCharged:
+	-Armament@PRIMARYUPG:
+	-AmbientSound@CHARGE:
+	-WithIdleOverlay@CHARGE1:
+	-WithIdleOverlay@CHARGE2:
+	-WithIdleOverlay@CHARGE3:

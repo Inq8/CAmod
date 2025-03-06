@@ -67,7 +67,7 @@ WorldLoaded = function()
 	local silos = Scrin.GetActorsByTypes({ "silo.scrin", "silo.scrinblue"})
 	Utils.Do(silos, function(a)
 		NumSilosRemaining = #silos
-		Trigger.OnKilled(a, function()
+		Trigger.OnKilled(a, function(self, killer)
 			NumSilosRemaining = NumSilosRemaining - 1
 			UpdateObjectiveText()
 		end)
@@ -264,7 +264,7 @@ UpdateProdigyTarget = function()
 end
 
 CommandoDeathTrigger = function(commando)
-	Trigger.OnKilled(commando, function()
+	Trigger.OnKilled(commando, function(self, killer)
 		if not RespawnEnabled and not CommandoEscaped then
 			Utils.Do(MissionPlayers, function(p)
 				p.MarkFailedObjective(Objectives.CommandoSurvives[p.InternalName])
@@ -287,7 +287,7 @@ CommandoDeathTrigger = function(commando)
 end
 
 TanyaDeathTrigger = function(tanya)
-	Trigger.OnKilled(tanya, function()
+	Trigger.OnKilled(tanya, function(self, killer)
 		if not RespawnEnabled and not TanyaEscaped then
 			Utils.Do(MissionPlayers, function(p)
 				p.MarkFailedObjective(Objectives.TanyaSurvives[p.InternalName])
