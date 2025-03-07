@@ -33,17 +33,59 @@ Player:
 	PlayerResources:
 		DefaultCash: 6000
 
-OCAR.AMCV:
-	Inherits: OCAR
-	RejectsOrders:
-	-Selectable:
-	Interactable:
-	Aircraft:
-		InitialFacing: 512
-	Carryall:
-		InitialActor: amcv
-	Health:
-		HP: 100000
+# Disable tech
+
+AFLD.GDI:
+	-InterceptorPower@AirDef:
+
+HQ:
+	-DropPodsPowerCA@Zocom:
+	-AirstrikePowerCA@uav:
+	-AirstrikePowerCA@uavST:
+
+EYE:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+UPGC.DROP:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+# Enable subfaction specific tech
+
+XO:
+	Buildable:
+		Prerequisites: gtek, ~vehicles.gdi
+
+WOLV:
+	Buildable:
+		Prerequisites: gtek, ~vehicles.gdi
+
+PBUL:
+	Buildable:
+		Prerequisites: gtek, ~vehicles.gdi
+
+STWR:
+	Buildable:
+		Prerequisites: vehicles.any, ~structures.gdi
+
+ionmam.upgrade:
+	Buildable:
+		Prerequisites: upgc, !mdrone.upgrade, !hovermam.upgrade
+	TooltipExtras:
+		Attributes: \n(!) Only ONE Mammoth Tank upgrade can be chosen
+
+hovermam.upgrade:
+	Buildable:
+		Prerequisites: upgc, !ionmam.upgrade, !mdrone.upgrade
+	TooltipExtras:
+		Attributes: \n(!) Only ONE Mammoth Tank upgrade can be chosen
+
+mdrone.upgrade:
+	Buildable:
+		Prerequisites: upgc, !ionmam.upgrade, !hovermam.upgrade
+	TooltipExtras:
+		Attributes: \n(!) Only ONE Mammoth Tank upgrade can be chosen
+
+# Misc
 
 XO:
 	TargetedLeapAbility:
@@ -54,6 +96,19 @@ ZRAI:
 		Range: 7c0
 	TargetedLeapAbility:
 		ChargeDelay: 175
+
+OCAR.AMCV:
+	Inherits: OCAR
+	RejectsOrders:
+	-Buildable:
+	-Selectable:
+	Interactable:
+	Aircraft:
+		InitialFacing: 512
+	Carryall:
+		InitialActor: amcv
+	Health:
+		HP: 100000
 
 # Hunt() requires only 1 AttackBase
 DEVA:

@@ -40,14 +40,14 @@ Players:
 		Color: FE1100
 		LockSpawn: True
 		LockTeam: True
-		Allies: Scrin
+		Allies: Scrin, SpyPlaneProvider
 		Enemies: Nod, ScrinRebels, ScrinRebelsOuter, MaleficScrin, Creeps
 	PlayerReference@Scrin:
 		Name: Scrin
 		Bot: campaign
 		Faction: scrin
 		Color: 7700FF
-		Allies: USSR
+		Allies: USSR, SpyPlaneProvider
 		Enemies: Nod, ScrinRebels, ScrinRebelsOuter, MaleficScrin, Creeps
 	PlayerReference@Nod:
 		Name: Nod
@@ -76,6 +76,12 @@ Players:
 		Faction: scrin
 		Color: 3E4549
 		Enemies: USSR, Nod, Scrin, ScrinRebels, ScrinRebelsOuter, Creeps
+	PlayerReference@SpyPlaneProvider:
+		Name: SpyPlaneProvider
+		NonCombatant: True
+		Faction: soviet
+		Color: FE1100
+		Allies: USSR, Scrin
 
 Actors:
 	Actor0: swal
@@ -5487,14 +5493,6 @@ Actors:
 		Owner: USSR
 		Facing: 896
 		Location: 18,102
-	Actor1162: kiro
-		Owner: USSR
-		Facing: 896
-		Location: 11,102
-	Actor1722: kiro
-		Owner: USSR
-		Facing: 896
-		Location: 28,106
 	Actor1782: swal
 		Owner: Scrin
 		Location: 12,82
@@ -5721,38 +5719,10 @@ Actors:
 	Actor1611: stek
 		Owner: USSR
 		Location: 17,109
-	Actor1704: deva
-		Owner: ScrinRebels
-		Location: 48,91
-		Facing: 325
-	Actor1728: deva
-		Owner: ScrinRebels
-		Location: 45,88
-		Facing: 341
-	Actor1729: deva
-		Owner: ScrinRebels
-		Location: 44,85
-		Facing: 325
 	Actor1746: mlrs
 		Owner: Nod
 		Facing: 384
 		Location: 22,72
-	Actor1747: mlrs
-		Owner: Nod
-		Facing: 384
-		Location: 28,72
-	Actor1748: mlrs
-		Owner: Nod
-		Facing: 384
-		Location: 34,74
-	Actor1749: mlrs
-		Owner: Nod
-		Facing: 384
-		Location: 38,77
-	Actor1750: mlrs
-		Owner: Nod
-		Facing: 384
-		Location: 40,81
 	Actor1751: deva
 		Owner: ScrinRebels
 		Facing: 384
@@ -5801,6 +5771,26 @@ Actors:
 		Owner: ScrinRebels
 		Facing: 384
 		Location: 29,39
+	Actor1704: mlrs
+		Owner: Nod
+		Facing: 384
+		Location: 45,89
+	Actor1728: mlrs
+		Owner: Nod
+		Facing: 384
+		Location: 47,93
+	KirovSpawn1: waypoint
+		Owner: Neutral
+		Location: 1,98
+	KirovRally1: waypoint
+		Owner: Neutral
+		Location: 9,91
+	KirovRally2: waypoint
+		Owner: Neutral
+		Location: 27,102
+	KirovSpawn2: waypoint
+		Owner: Neutral
+		Location: 17,112
 
 Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, schism-rules.yaml
 

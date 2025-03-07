@@ -53,6 +53,11 @@ Player:
 	PlayerResources:
 		DefaultCash: 6000
 
+# Disable tech
+
+MSHP:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
 # Disable powers
 
 ^SpyPlanePower:
@@ -72,6 +77,11 @@ Player:
 		Prerequisites: ~disabled
 
 # Misc
+
+recall.effect:
+	Inherits: CAMERA
+	PeriodicExplosion:
+		Weapon: FleetRecallEffect
 
 NodGateway:
 	Inherits: ^WormholeBase
@@ -101,14 +111,6 @@ dummyteleport:
 	Inherits: ^InvisibleDummy
 	TeleportNetwork:
 		Type: Wormhole
-
-MSHP:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-recall.effect:
-	Inherits: CAMERA
-	PeriodicExplosion:
-		Weapon: FleetRecallEffect
 
 # Hunt() requires only 1 AttackBase
 DEVA:

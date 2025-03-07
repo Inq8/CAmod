@@ -81,6 +81,23 @@ Squads = {
 				{ Aircraft = { "auro", "auro" } },
 			}
 		},
+	},
+	AntiTankAir = {
+		Delay = {
+			hard = DateTime.Minutes(15)
+		},
+		ActiveCondition = function()
+			return #USSR.GetActorsByTypes({ "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" }) > 10
+		end,
+		AttackValuePerSecond = {
+			hard = { Min = 21, Max = 21 },
+		},
+		ProducerTypes = { Aircraft = { "afld.gdi" } },
+		Units = {
+			hard = {
+				{ Aircraft = { "orcb", "orcb", "orcb", "orcb", "orcb" } },
+			}
+		},
 	}
 }
 
@@ -150,6 +167,10 @@ WorldLoaded = function()
 
 			Trigger.AfterDelay(Squads.GDIMain2.Delay[Difficulty], function()
 				InitAttackSquad(Squads.GDIMain2, GDI)
+			end)
+
+			Trigger.AfterDelay(Squads.AntiTankAir.Delay[Difficulty], function()
+				InitAirAttackSquad(Squads.AntiTankAir, GDI, USSR, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" })
 			end)
 
 			Trigger.AfterDelay(Squads.GDIAir.Delay[Difficulty], function()

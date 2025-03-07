@@ -59,6 +59,9 @@ namespace OpenRA.Mods.CA.Activities
 
 		protected override void OnFirstRun(Actor self)
 		{
+			if (!ability.CanLeap)
+				canceling = true;
+
 			originPos = self.CenterPosition;
 
 			var cell = ChooseBestDestinationCell(self, targetCell);

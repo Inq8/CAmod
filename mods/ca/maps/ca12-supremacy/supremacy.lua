@@ -76,6 +76,23 @@ Squads = {
 			}
 		},
 	},
+	AntiCyborgAir = {
+		Delay = {
+			hard = DateTime.Minutes(7)
+		},
+		ActiveCondition = function()
+			return #Nod.GetActorsByTypes({ "rmbc", "enli", "reap", "avtr" }) > 18
+		end,
+		AttackValuePerSecond = {
+			hard = { Min = 21, Max = 21 },
+		},
+		ProducerTypes = { Aircraft = { "afld.gdi", "hpad.td" } },
+		Units = {
+			hard = {
+				{ Aircraft = { "orcb", "orcb", "orcb", "orcb", "orcb" } },
+			}
+		},
+	}
 }
 
 -- Setup and Tick
@@ -369,5 +386,9 @@ InitGDIAttacks = function()
 
 	Trigger.AfterDelay(Squads.GDIAir.Delay[Difficulty], function()
 		InitAirAttackSquad(Squads.GDIAir, GDI, Nod, { "harv", "harv.td", "arty.nod", "mlrs", "wtnk", "avtr", "reap", "rmbc", "enli", "tplr", "obli", "atwr", "gtwr", "stwr", "tmpl", "tmpp", "mslo.nod", "gun.nod", "hq", "nuk2" })
+	end)
+
+	Trigger.AfterDelay(Squads.AntiCyborgAir.Delay[Difficulty], function()
+		InitAirAttackSquad(Squads.AntiCyborgAir, GDI, Nod, { "rmbc", "enli", "reap", "avtr" })
 	end)
 end

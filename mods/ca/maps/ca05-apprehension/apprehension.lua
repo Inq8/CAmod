@@ -23,6 +23,9 @@ WorldLoaded = function()
 	MissionPlayers = { Greece }
 	TimerTicks = 0
 
+	local samsRemaining = Nod.GetActorsByType("nsam")
+	SAMCount = #samsRemaining
+
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(Greece)
@@ -34,6 +37,8 @@ WorldLoaded = function()
     ObjectiveDestroySAMSites = Greece.AddObjective("Destroy Nod SAM Sites.")
 	ObjectiveClearBase = Greece.AddObjective("Clear the Nod naval base.")
 	ObjectiveApprehendTransports = Greece.AddObjective("Secure Nod transports.")
+
+	NodBaseCamera.Destroy()
 
 	if Difficulty ~= "easy" then
 		Medic2.Destroy()
@@ -74,6 +79,9 @@ WorldLoaded = function()
 					end
 				end
 			end)
+
+			SAMCount = #Nod.GetActorsByType("nsam")
+			UpdateMissionText()
 		end)
 	end)
 
@@ -98,6 +106,16 @@ WorldLoaded = function()
 				end
 			end)
 		end)
+	end)
+
+	Trigger.AfterDelay(DateTime.Seconds(5), function()
+		local rangersDesc
+		if Difficulty == "hard" then
+			rangersDesc = "Rangers are"
+		else
+			rangersDesc = "Ranger is"
+		end
+		Tip("Your " .. rangersDesc .. " equipped with the Advanced Optics upgrade. Press [" .. UtilsCA.Hotkey("Deploy") .. "] (deploy) to activate for increased vision for a limited time.")
 	end)
 end
 
@@ -145,6 +163,14 @@ OncePerFiveSecondChecks = function()
 				end)
 			end
 		end
+	end
+end
+
+UpdateMissionText = function()
+	if SAMCount > 0 then
+		UserInterface.SetMissionText(SAMCount .. " SAM sites remaining.", HSLColor.Yellow)
+	else
+		UserInterface.SetMissionText("")
 	end
 end
 

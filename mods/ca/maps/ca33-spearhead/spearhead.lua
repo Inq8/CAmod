@@ -9,9 +9,9 @@ Squads = {
 			hard = DateTime.Minutes(5)
 		},
 		AttackValuePerSecond = {
-			easy = { Min = 3, Max = 3 },
-			normal = { Min = 7, Max = 7 },
-			hard = { Min = 12, Max = 12 },
+			easy = { Min = 7, Max = 7 },
+			normal = { Min = 14, Max = 14 },
+			hard = { Min = 21, Max = 21 },
 		},
 		ProducerTypes = { Aircraft = { "hpad.td" } },
 		Units = {

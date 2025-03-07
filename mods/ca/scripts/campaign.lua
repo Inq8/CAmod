@@ -169,6 +169,9 @@ InitAttackAircraft = function(aircraft, targetPlayer, targetTypes)
 				if not target or not target.IsInWorld then
 					if targetTypes ~= nil then
 						target = ChooseRandomTargetOfTypes(self, targetPlayer, targetTypes)
+						if target == nil then
+							target = ChooseRandomTarget(self, targetPlayer)
+						end
 					else
 						target = ChooseRandomTarget(self, targetPlayer)
 					end
@@ -1373,7 +1376,7 @@ UnitCompositions = {
 				{ Infantry = { "e3", "e1", "e1", "e1", "e3", "e1" }, Vehicles = { "batf.ai" }, MinTime = DateTime.Minutes(14) },
 
 				{ Infantry = {}, Vehicles = { "rtnk", "rtnk", "rtnk" }, MinTime = DateTime.Minutes(14) },
-				{ Infantry = {}, Vehicles = { "ctnk", "ctnk", "ctnk" }, MinTime = DateTime.Minutes(14) },
+				{ Infantry = {}, Vehicles = { "ctnk", "ctnk", "ctnk" }, MinTime = DateTime.Minutes(14), IsSpecial = true },
 				{ Infantry = { "e3", "e1", "e1" }, Vehicles = { "2tnk", "ifv.ai", "arty" }, MinTime = DateTime.Minutes(14) },
 				{ Infantry = { "e7", "seal", "seal", "seal" }, Vehicles = { }, MinTime = DateTime.Minutes(14), IsSpecial = true },
 			},
@@ -1392,7 +1395,7 @@ UnitCompositions = {
 
 				{ Infantry = {}, Vehicles = { "rtnk", "rtnk", "rtnk", "rtnk" }, MinTime = DateTime.Minutes(12) },
 				{ Infantry = {}, Vehicles = { "rapc.ai", "rapc.ai", "jeep", "ifv.ai"  }, MinTime = DateTime.Minutes(12) },
-				{ Infantry = {}, Vehicles = { "ctnk", "ctnk", "ctnk", "ctnk" }, MinTime = DateTime.Minutes(12) },
+				{ Infantry = {}, Vehicles = { "ctnk", "ctnk", "ctnk", "ctnk" }, MinTime = DateTime.Minutes(12), IsSpecial = true },
 				{ Infantry = { "e7", "seal", "seal", "seal", "seal" }, Vehicles = { }, MinTime = DateTime.Minutes(12), IsSpecial = true },
 			},
 			hard = {
@@ -1410,7 +1413,7 @@ UnitCompositions = {
 
 				{ Infantry = {}, Vehicles = { "rtnk", "rtnk", "rtnk", "rtnk", "rtnk" }, MinTime = DateTime.Minutes(10) },
 				{ Infantry = {}, Vehicles = { "rapc.ai", "rapc.ai", "rapc.ai", "jeep", "ifv.ai", "ifv.ai" }, MinTime = DateTime.Minutes(10) },
-				{ Infantry = {}, Vehicles = { "ctnk", "ctnk", "ctnk", "ctnk", "ctnk"  }, MinTime = DateTime.Minutes(10) },
+				{ Infantry = {}, Vehicles = { "ctnk", "ctnk", "ctnk", "ctnk", "ctnk"  }, MinTime = DateTime.Minutes(10), IsSpecial = true },
 				{ Infantry = { "e7", "seal", "seal", "seal", "seal", "seal" }, Vehicles = { }, MinTime = DateTime.Minutes(10), IsSpecial = true },
 
 				-- 16 minutes onwards
@@ -1515,7 +1518,8 @@ UnitCompositions = {
 				{ Infantry = { "n3", "n1", "n1", "n1", "n3", "n1", "n1", "n1", "n1", "n1", "n3" }, Vehicles = { "vulc.ai", "disr", "disr", "disr" }, MinTime = DateTime.Minutes(16) },
 				{ Infantry = { "n3", "rmbo", "n3", "n1", "n1", "n1", "n1", "n1", "n3", "n1", "n1", "n3" }, Vehicles = { GDIMammothVariant, GDIMammothVariant, "msam", "msam", "vulc" }, MinTime = DateTime.Minutes(16) },
 				{ Infantry = {}, Vehicles = { "memp", "memp", "memp" }, MinTime = DateTime.Minutes(16), IsSpecial = true },
-				{ Infantry = { ZoneTrooperVariant, ZoneTrooperVariant, ZoneTrooperVariant, ZoneTrooperVariant }, Vehicles = { GDIMammothVariant, GDIMammothVariant, GDIMammothVariant, WolverineOrXO, WolverineOrXO }, MinTime = DateTime.Minutes(16) },
+				{ Infantry = {}, Vehicles = { "mtnk", "mtnk", "vulc", "vulc", "thwk", "thwk", "thwk" }, MinTime = DateTime.Minutes(16), IsSpecial = true },
+				{ Infantry = { ZoneTrooperVariant, ZoneTrooperVariant, ZoneTrooperVariant, ZoneTrooperVariant, "n1", "n1", "n3", "n1", "n1" }, Vehicles = { GDIMammothVariant, GDIMammothVariant, GDIMammothVariant, WolverineOrXO, WolverineOrXO, "mtnk" }, MinTime = DateTime.Minutes(16) },
 			}
 		}
 	},

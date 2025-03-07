@@ -49,9 +49,9 @@ Squads = {
 			hard = DateTime.Minutes(1)
 		},
 		AttackValuePerSecond = {
-			easy = { Min = 20, Max = 50 },
-			normal = { Min = 50, Max = 100 },
-			hard = { Min = 80, Max = 160 },
+			easy = { Min = 20, Max = 50, RampDuration = DateTime.Minutes(14) },
+			normal = { Min = 50, Max = 100, RampDuration = DateTime.Minutes(12) },
+			hard = { Min = 80, Max = 160, RampDuration = DateTime.Minutes(10) },
 		},
 		FollowLeader = true,
 		ProducerActors = nil,
@@ -110,6 +110,7 @@ WorldLoaded = function()
 	InitObjectives(GDI)
 	AdjustStartingCash()
 	InitScrin()
+	InitFriendlies()
 	SetupLightning()
 
 	ObjectiveDestroyWormholes = GDI.AddObjective("Destroy all Scrin wormholes.")
@@ -136,8 +137,7 @@ WorldLoaded = function()
 		end)
 
 		Trigger.OnKilled(w, function(self, killer)
-			local wormholesRemaining = Scrin.GetActorsByType("wormhole")
-			WormholeCount = #wormholesRemaining
+			WormholeCount = #Scrin.GetActorsByType("wormhole")
 			UpdateMissionText()
 			if WormholeCount == 0 and not GDI.IsObjectiveCompleted(ObjectiveDestroyWormholes) then
 				GDI.MarkCompletedObjective(ObjectiveDestroyWormholes)
@@ -191,7 +191,7 @@ InitScrin = function()
 
 	Utils.Do(scrinGroundAttackers, function(a)
 		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
+		CallForHelpOnDamagedOrKilled(a, WDist.New(8192), IsScrinGroundHunterUnit)
 	end)
 
 	Trigger.AfterDelay(Squads.ScrinMain.Delay[Difficulty], function()
@@ -200,6 +200,29 @@ InitScrin = function()
 
 	Trigger.AfterDelay(Squads.ScrinAir.Delay[Difficulty], function()
 		InitAttackSquad(Squads.ScrinAir, Scrin)
+	end)
+end
+
+InitFriendlies = function()
+	local nodGroundAttackers = Nod.GetGroundAttackers()
+
+	Utils.Do(nodGroundAttackers, function(a)
+		TargetSwapChance(a, 10)
+		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsNodGroundHunterUnit)
+	end)
+
+	local ussrGroundAttackers = USSR.GetGroundAttackers()
+
+	Utils.Do(ussrGroundAttackers, function(a)
+		TargetSwapChance(a, 10)
+		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsUSSRGroundHunterUnit)
+	end)
+
+	local greeceGroundAttackers = Greece.GetGroundAttackers()
+
+	Utils.Do(greeceGroundAttackers, function(a)
+		TargetSwapChance(a, 10)
+		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGreeceGroundHunterUnit)
 	end)
 end
 

@@ -12,13 +12,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenRA.Mods.CA.Traits;
+using OpenRA.Mods.Common;
+using OpenRA.Mods.Common.Traits;
 using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Effects;
 using OpenRA.Primitives;
 using OpenRA.Traits;
 
-namespace OpenRA.Mods.Common.Traits
+namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("Copy of AirstrikePowerCA but has MinDistance instead of Cordon.")]
 	public class AirstrikePowerCAInfo : SupportPowerInfo

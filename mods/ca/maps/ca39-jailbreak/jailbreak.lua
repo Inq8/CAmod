@@ -3,10 +3,16 @@ CruisersEnabledTime = {
 	hard = DateTime.Minutes(15),
 }
 
-ChronoTankInterval = {
+CruiserInterval = {
 	easy = DateTime.Minutes(11),
 	normal = DateTime.Minutes(8),
 	hard = DateTime.Minutes(5),
+}
+
+ChronoTankInterval = {
+	easy = DateTime.Minutes(7),
+	normal = DateTime.Minutes(6),
+	hard = DateTime.Minutes(3),
 }
 
 SuperweaponsEnabledTime = {
@@ -14,6 +20,8 @@ SuperweaponsEnabledTime = {
 	normal = DateTime.Seconds((60 * 30) + 17),
 	hard = DateTime.Seconds((60 * 15) + 17),
 }
+
+table.insert(UnitCompositions.Allied.Main.hard, { Infantry = {}, Vehicles = {} })
 
 Squads = {
 	Main = {
@@ -23,9 +31,9 @@ Squads = {
             hard = DateTime.Minutes(2),
 		},
 		AttackValuePerSecond = {
-			easy = { Min = 20, Max = 50 },
-			normal = { Min = 50, Max = 100 },
-			hard = { Min = 80, Max = 160 },
+			easy = { Min = 20, Max = 50, RampDuration = DateTime.Minutes(12) },
+			normal = { Min = 50, Max = 100, RampDuration = DateTime.Minutes(10) },
+			hard = { Min = 80, Max = 160, RampDuration = DateTime.Minutes(8) },
 		},
 		ActiveCondition = function()
 			return HasConyardAcrossRiver()
@@ -40,9 +48,9 @@ Squads = {
 	},
 	Air = {
 		Delay = {
-			easy = DateTime.Minutes(13),
-			normal = DateTime.Minutes(12),
-			hard = DateTime.Minutes(11)
+			easy = DateTime.Minutes(11),
+			normal = DateTime.Minutes(8),
+			hard = DateTime.Minutes(5)
 		},
 		AttackValuePerSecond = {
 			easy = { Min = 7, Max = 7 },
@@ -64,6 +72,38 @@ Squads = {
 				{ Aircraft = { "heli", "heli", "heli", "heli" } },
 				{ Aircraft = { "harr", "harr", "harr" } },
 				{ Aircraft = { "pmak", "pmak", "pmak" } }
+			}
+		},
+	},
+	Air2 = {
+		Delay = {
+			easy = DateTime.Minutes(13),
+			normal = DateTime.Minutes(10),
+			hard = DateTime.Minutes(7)
+		},
+		AttackValuePerSecond = {
+			easy = { Min = 7, Max = 7 },
+			normal = { Min = 14, Max = 14 },
+			hard = { Min = 21, Max = 21 },
+		},
+		ActiveCondition = function()
+			return HasConyardAcrossRiver()
+		end,
+		ProducerTypes = { Aircraft = { "hpad" } },
+		Units = {
+			easy = {
+				{ Aircraft = { "heli", "heli" } },
+				{ Aircraft = { "pmak" } },
+			},
+			normal = {
+				{ Aircraft = { "heli", "heli", "heli", "heli" } },
+				{ Aircraft = { "harr", "harr", "harr" } },
+				{ Aircraft = { "pmak", "pmak" } }
+			},
+			hard = {
+				{ Aircraft = { "heli", "heli", "heli", "heli" "heli", "heli" } },
+				{ Aircraft = { "harr", "harr", "harr", "harr", "harr", "harr" } },
+				{ Aircraft = { "pmak", "pmak", "pmak", "pmak" } }
 			}
 		},
 	}
@@ -252,6 +292,10 @@ InitGreece = function()
 		InitAirAttackSquad(Squads.Air, Greece, USSR, { "harv", "4tnk", "4tnk.atomic", "3tnk", "3tnk.atomic", "3tnk.rhino", "3tnk.rhino.atomic",
 			"katy", "v3rl", "ttra", "v3rl", "apwr", "tsla", "proc", "nukc", "ovld", "apoc", "apoc.atomic", "ovld.atomic" })
 	end)
+
+	Trigger.AfterDelay(Squads.Air2.Delay[Difficulty], function()
+		InitAirAttackSquad(Squads.Air2, Greece, USSR)
+	end)
 end
 
 HasConyardAcrossRiver = function()
@@ -301,23 +345,40 @@ SendLandingCraft = function()
 end
 
 InitCruisers = function()
-	local cruiser1 = Reinforcements.Reinforce(Greece, { "ca" }, { CruiserSpawn.Location, CruiserPatrol1.Location })[1]
-	cruiser1.Patrol({ CruiserPatrol1.Location, CruiserPatrol2.Location })
+	local currentCruisers = Greece.GetActorsByType("ca")
 
-	Trigger.AfterDelay(DateTime.Seconds(10), function()
-		local cruiser2 = Reinforcements.Reinforce(Greece, { "ca" }, { CruiserSpawn.Location, CruiserPatrol1.Location })[1]
-		cruiser2.Patrol({ CruiserPatrol1.Location, CruiserPatrol2.Location })
+	if #currentCruisers == 0 then
+		local cruiserCount
+		if Difficulty == "easy" then
+			cruiserCount = 1
+		elseif Difficulty == "normal" then
+			cruiserCount = 2
+		elseif Difficulty == "hard" then
+			cruiserCount = 3
+		end
+
+		for i = 1, cruiserCount do
+			Trigger.AfterDelay(DateTime.Seconds(10 * (i - 1)) + 1, function()
+				local cruiser = Reinforcements.Reinforce(Greece, { "ca" }, { CruiserSpawn.Location, CruiserPatrol1.Location })[1]
+				cruiser.Patrol({ CruiserPatrol1.Location, CruiserPatrol2.Location })
+			end)
+		end
+	end
+
+	Trigger.AfterDelay(CruiserInterval[Difficulty], function()
+		InitCruisers()
 	end)
 end
 
 InitChronoTankAttack = function()
-	local chronoTanksSquad = { "ctnk", "ctnk" }
+	local chronoTanksSquad = { "ctnk", "ctnk", "ctnk" }
 
 	if Difficulty == "normal" then
 		table.insert(chronoTanksSquad, "ctnk")
 	end
 
 	if Difficulty == "hard" then
+		table.insert(chronoTanksSquad, "ctnk")
 		table.insert(chronoTanksSquad, "ctnk")
 	end
 

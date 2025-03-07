@@ -105,6 +105,23 @@ Squads = {
 			}
 		},
 	},
+	AntiTankAir = {
+		Delay = {
+			hard = DateTime.Minutes(15)
+		},
+		ActiveCondition = function()
+			return #USSR.GetActorsByTypes({ "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" }) > 10
+		end,
+		AttackValuePerSecond = {
+			hard = { Min = 21, Max = 21 },
+		},
+		ProducerTypes = { Aircraft = { "hpad.td" } },
+		Units = {
+			hard = {
+				{ Aircraft = { "scrn", "scrn", "scrn", "scrn", "scrn", "scrn" } },
+			}
+		},
+	}
 }
 
 -- Setup and Tick
@@ -212,6 +229,10 @@ InitNod = function()
 	Trigger.AfterDelay(Squads.Air.Delay[Difficulty], function()
 		InitAirAttackSquad(Squads.Air, Nod1, USSR, { "harv", "4tnk", "4tnk.atomic", "3tnk", "3tnk.atomic", "3tnk.rhino", "3tnk.rhino.atomic",
 			"katy", "v3rl", "ttra", "v3rl", "apwr", "tpwr", "npwr", "tsla", "proc", "nukc", "ovld", "apoc", "apoc.atomic", "ovld.atomic" })
+	end)
+
+	Trigger.AfterDelay(Squads.AntiTankAir.Delay[Difficulty], function()
+		InitAirAttackSquad(Squads.AntiTankAir, Nod1, USSR, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" })
 	end)
 end
 

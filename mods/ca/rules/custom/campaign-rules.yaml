@@ -25,6 +25,9 @@ Player:
 	ModularBot@CampaignAI:
 		Name: Campaign AI
 		Type: campaign
+	ModularBot@DormantAI:
+		Name: Dormant AI
+		Type: dormant
 	GrantConditionOnBotOwner@CampaignAI:
 		Condition: enable-campaign-ai
 		Bots: campaign
@@ -267,6 +270,12 @@ hold3.strat:
 radar.dummy:
 	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesRadar:
+
+spy.plane.dummy:
+	Inherits@DUMMY: ^InvisibleDummy
+	Inherits@SpyPlanePower: ^SpyPlanePower
+	AirstrikePowerCA@spyplane:
+		-PauseOnCondition:
 
 SMALLCAMERA:
 	Inherits: CAMERA

@@ -23,9 +23,9 @@ Squads = {
 			hard = DateTime.Seconds(10),
 		},
 		AttackValuePerSecond = {
-			easy = { Min = 12, Max = 25 },
-			normal = { Min = 25, Max = 50 },
-			hard = { Min = 40, Max = 80 },
+			easy = { Min = 12, Max = 25, RampDuration = DateTime.Minutes(7) },
+			normal = { Min = 25, Max = 50, RampDuration = DateTime.Minutes(5) },
+			hard = { Min = 40, Max = 80, RampDuration = DateTime.Minutes(3) },
 		},
 		FollowLeader = true,
 		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
@@ -41,9 +41,9 @@ Squads = {
 			hard = DateTime.Seconds(10),
 		},
 		AttackValuePerSecond = {
-			easy = { Min = 12, Max = 25 },
-			normal = { Min = 25, Max = 50 },
-			hard = { Min = 40, Max = 80 },
+			easy = { Min = 12, Max = 25, RampDuration = DateTime.Minutes(7) },
+			normal = { Min = 25, Max = 50, RampDuration = DateTime.Minutes(5) },
+			hard = { Min = 40, Max = 80, RampDuration = DateTime.Minutes(3) },
 		},
 		DispatchDelay = DateTime.Seconds(15),
 		FollowLeader = true,
@@ -60,9 +60,9 @@ Squads = {
 			hard = DateTime.Seconds(10),
 		},
 		AttackValuePerSecond = {
-			easy = { Min = 12, Max = 25 },
-			normal = { Min = 25, Max = 50 },
-			hard = { Min = 40, Max = 80 },
+			easy = { Min = 12, Max = 25, RampDuration = DateTime.Minutes(7) },
+			normal = { Min = 25, Max = 50, RampDuration = DateTime.Minutes(5) },
+			hard = { Min = 40, Max = 80, RampDuration = DateTime.Minutes(3) },
 		},
 		FollowLeader = true,
 		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
@@ -74,8 +74,8 @@ Squads = {
 	AlliedAir = {
 		Delay = {
 			easy = DateTime.Minutes(8),
-			normal = DateTime.Minutes(6),
-			hard = DateTime.Minutes(4)
+			normal = DateTime.Minutes(5),
+			hard = DateTime.Minutes(2)
 		},
 		AttackValuePerSecond = {
 			easy = { Min = 7, Max = 7 },
@@ -103,8 +103,8 @@ Squads = {
 	NodAir = {
 		Delay = {
 			easy = DateTime.Minutes(8),
-			normal = DateTime.Minutes(6),
-			hard = DateTime.Minutes(4)
+			normal = DateTime.Minutes(5),
+			hard = DateTime.Minutes(2)
 		},
 		AttackValuePerSecond = {
 			easy = { Min = 7, Max = 7 },
@@ -131,8 +131,8 @@ Squads = {
 	SovietAir = {
 		Delay = {
 			easy = DateTime.Minutes(8),
-			normal = DateTime.Minutes(6),
-			hard = DateTime.Minutes(4)
+			normal = DateTime.Minutes(5),
+			hard = DateTime.Minutes(2)
 		},
 		AttackValuePerSecond = {
 			easy = { Min = 7, Max = 7 },
@@ -170,7 +170,7 @@ WorldLoaded = function()
 	AdjustStartingCash()
 
 	ObjectiveInitialSubjugation = Scrin.AddObjective("Subjugate one of the three human bases.")
-	ObjectiveProdigyMustSurvive = Scrin.AddObjective("The Prodigy must survive.")
+	ObjectiveProdigyMustSurvive = Scrin.AddSecondaryObjective("Protect the Prodigy.")
 
 	local greeceAdvancedBuildings = Greece.GetActorsByTypes({ "atek", "alhq", "weat", "pdox", "dome", "hpad" })
 	local ussrAdvancedBuildings = USSR.GetActorsByTypes({ "stek", "npwr", "mslo", "iron", "dome", "afld" })
@@ -260,6 +260,7 @@ WorldLoaded = function()
 
 	Trigger.OnKilled(Prodigy, function(self, killer)
 		Scrin.MarkFailedObjective(ObjectiveProdigyMustSurvive)
+		Notification("The Prodigy used its psionic powers to cheat death and has fled the battlefield to recuperate.")
 	end)
 end
 

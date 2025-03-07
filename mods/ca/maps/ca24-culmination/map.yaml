@@ -28,7 +28,7 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
-		Enemies: USSR, Greece, GDI, Nod, Scrin
+		Enemies: USSR, Greece, Nod, Scrin
 	PlayerReference@Scrin:
 		Name: Scrin
 		AllowBots: False
@@ -40,33 +40,28 @@ Players:
 		Color: 7700FF
 		LockSpawn: True
 		LockTeam: True
-		Enemies: USSR, Greece, GDI, Nod, Creeps
+		Enemies: USSR, Greece, Nod, Creeps
 	PlayerReference@Greece:
 		Name: Greece
 		Bot: campaign
 		Faction: allies
 		Color: 99ACF2
-		Allies: GDI
-		Enemies: USSR, Scrin, Nod, Creeps
+		Allies: USSR, Nod
+		Enemies: Scrin, Creeps
 	PlayerReference@USSR:
 		Name: USSR
 		Bot: campaign
 		Faction: soviet
 		Color: FE1100
-		Enemies: Greece, GDI, Nod, Scrin, Creeps
-	PlayerReference@GDI:
-		Name: GDI
-		Bot: campaign
-		Faction: gdi
-		Color: F2CF74
-		Allies: Greece
-		Enemies: USSR, Nod, Scrin, Creeps
+		Allies: Nod, Greece
+		Enemies: Scrin, Creeps
 	PlayerReference@Nod:
 		Name: Nod
 		Bot: campaign
 		Faction: nod
 		Color: 6D738C
-		Enemies: USSR, Greece, GDI, Scrin, Creeps
+		Allies: Greece, USSR
+		Enemies: Scrin, Creeps
 
 Actors:
 	Actor0: tc05

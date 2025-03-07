@@ -40,6 +40,44 @@ Player:
 	PlayerResources:
 		DefaultCash: 6000
 
+# Enable subfaction specific tech
+
+XO:
+	Buildable:
+		Prerequisites: gtek, ~vehicles.gdi
+
+WOLV:
+	Buildable:
+		Prerequisites: gtek, ~vehicles.gdi
+
+PBUL:
+	Buildable:
+		Prerequisites: gtek, ~vehicles.gdi
+
+STWR:
+	Buildable:
+		Prerequisites: vehicles.any, ~structures.gdi
+
+ionmam.upgrade:
+	Buildable:
+		Prerequisites: upgc, !mdrone.upgrade, !hovermam.upgrade
+	TooltipExtras:
+		Attributes: \n(!) Only ONE Mammoth Tank upgrade can be chosen
+
+hovermam.upgrade:
+	Buildable:
+		Prerequisites: upgc, !ionmam.upgrade, !mdrone.upgrade
+	TooltipExtras:
+		Attributes: \n(!) Only ONE Mammoth Tank upgrade can be chosen
+
+mdrone.upgrade:
+	Buildable:
+		Prerequisites: upgc, !ionmam.upgrade, !hovermam.upgrade
+	TooltipExtras:
+		Attributes: \n(!) Only ONE Mammoth Tank upgrade can be chosen
+
+# Disable tech
+
 AFLD.GDI:
 	-InterceptorPower@AirDef:
 
@@ -48,19 +86,13 @@ HQ:
 	-AirstrikePowerCA@uav:
 	-AirstrikePowerCA@uavST:
 
-ATWR:
-	Buildable:
-		Prerequisites: vehicles.any, ~structures.gdi
-
-XO:
-	Buildable:
-		Prerequisites: gtek, ~vehicles.gdi
-
 EYE:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
 UPGC.DROP:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+# Misc
 
 DEVA:
 	Aircraft:

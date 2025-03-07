@@ -1,7 +1,7 @@
 PurificationInterval = {
 	easy = DateTime.Minutes(3) + DateTime.Seconds(5),
 	normal = DateTime.Minutes(3) + DateTime.Seconds(5),
-	hard = DateTime.Seconds(90) + DateTime.Seconds(5),
+	hard = DateTime.Minutes(3) + DateTime.Seconds(5),
 }
 
 DefendDuration = {
@@ -120,6 +120,7 @@ WorldLoaded = function()
     ScrinRebelsOuter = Player.GetPlayer("ScrinRebelsOuter")
 	MaleficScrin = Player.GetPlayer("MaleficScrin")
 	Neutral = Player.GetPlayer("Neutral")
+	SpyPlaneProvider = Player.GetPlayer("SpyPlaneProvider")
 	MissionPlayers = { USSR }
 	TimerTicks = PurificationInterval[Difficulty]
 
@@ -134,6 +135,13 @@ WorldLoaded = function()
 
 	ObjectiveSecurePurifier = USSR.AddObjective("Secure the purification device.")
 	UpdateMissionText()
+
+	local spyPlaneDummy1 = Actor.Create("spy.plane.dummy", true, { Owner = SpyPlaneProvider })
+
+	Trigger.AfterDelay(DateTime.Seconds(20), function()
+		spyPlaneDummy1.TargetAirstrike(Purifier.CenterPosition, Angle.NorthEast)
+		spyPlaneDummy1.Destroy()
+	end)
 
 	Trigger.OnKilled(Purifier, function(self, killer)
 		if not USSR.IsObjectiveCompleted(ObjectiveSecurePurifier) then
@@ -150,13 +158,20 @@ WorldLoaded = function()
 		end
 	end)
 
-	Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(10)), function()
+	Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(6)), function()
 		Exterminator.Owner = USSR
 	end)
 
-	Trigger.AfterDelay(DateTime.Seconds(5), function()
+	Trigger.AfterDelay(DateTime.Seconds(4), function()
 		Media.DisplayMessage("Stop this madness. You have no idea what you are dealing with. You will be the end of us all!", "Kane", HSLColor.FromHex("FF0000"))
 		MediaCA.PlaySound("kane_stopmadness.aud", 2)
+	end)
+
+	Trigger.AfterDelay(DateTime.Seconds(20), function()
+		Media.PlaySpeechNotification(USSR, "ReinforcementsArrived")
+		Notification("Reinforcements have arrived.")
+		Reinforcements.Reinforce(USSR, { "kiro" }, { KirovSpawn1.Location, KirovRally1.Location })
+		Reinforcements.Reinforce(USSR, { "kiro" }, { KirovSpawn2.Location, KirovRally2.Location })
 	end)
 end
 

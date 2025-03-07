@@ -84,6 +84,7 @@ Squads = {
 WorldLoaded = function()
 	USSR = Player.GetPlayer("USSR")
 	Nod = Player.GetPlayer("Nod")
+	SpyPlaneProvider = Player.GetPlayer("SpyPlaneProvider")
 	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { USSR }
 	TimerTicks = 0
@@ -107,9 +108,16 @@ WorldLoaded = function()
         end
     end
 
+	local spyPlaneDummy1 = Actor.Create("spy.plane.dummy", true, { Owner = SpyPlaneProvider })
+
+	Trigger.AfterDelay(DateTime.Seconds(5), function()
+		spyPlaneDummy1.TargetAirstrike(TemplePrime.CenterPosition, Angle.South)
+		spyPlaneDummy1.Destroy()
+	end)
+
     ObjectiveCaptureTemplePrime = USSR.AddObjective("Capture Temple Prime.")
     ObjectiveCaptureFactories = USSR.AddObjective("Capture all four cyborg manufacturing facilities.")
-	ObjectiveYuriMustSurvive = USSR.AddObjective("Yuri must survive.")
+	ObjectiveYuriMustSurvive = USSR.AddSecondaryObjective("Protect Yuri.")
 
     local factories = { CyborgFactory1, CyborgFactory2, CyborgFactory3, CyborgFactory4 }
     Utils.Do(factories, function(f)
@@ -149,6 +157,7 @@ WorldLoaded = function()
 		if not USSR.IsObjectiveCompleted(ObjectiveYuriMustSurvive) then
 			USSR.MarkFailedObjective(ObjectiveYuriMustSurvive)
 		end
+		Notification("Yuri used his psionic powers to cheat death and has fled the battlefield to recuperate.")
 	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(5), function()
