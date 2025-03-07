@@ -163,11 +163,13 @@ WorldLoaded = function()
 		InitCommsCenterObjective()
 	end)
 
-	Trigger.OnEnteredProximityTrigger(GDICommsCenter.CenterPosition, WDist.New(20 * 1024), function(a, id)
-		if a.Owner == USSR then
-			Trigger.RemoveProximityTrigger(id)
-			InitCommsCenterObjective()
-		end
+	Utils.Do(CommsCenters, function(c)
+		Trigger.OnEnteredProximityTrigger(c.CenterPosition, WDist.New(20 * 1024), function(a, id)
+			if a.Owner == USSR then
+				Trigger.RemoveProximityTrigger(id)
+				InitCommsCenterObjective()
+			end
+		end)
 	end)
 end
 
@@ -232,17 +234,16 @@ InitCommsCenterObjective = function()
 
 	Media.DisplayMessage("Comrade General, we have reason to believe the GDI Communications Center contains vital information. Capture it at all costs!", "Premier Cherdenko", HSLColor.FromHex("FF0000"))
 
-	ObjectiveCaptureComms = USSR.AddObjective("Capture GDI Communications Center.")
-
-	local camera = Actor.Create("smallcamera", true, { Owner = USSR, Location = GDICommsCenter.Location })
-	Beacon.New(USSR, GDICommsCenter.CenterPosition)
+	ObjectiveCaptureComms = USSR.AddObjective("Capture a GDI Communications Center.")
 	Media.PlaySound("beacon.aud")
 
-	Trigger.AfterDelay(DateTime.Seconds(10), function()
-		camera.Destroy()
-	end)
-
 	Utils.Do(CommsCenters, function(c)
+		local camera = Actor.Create("smallcamera", true, { Owner = USSR, Location = c.Location })
+		Beacon.New(USSR, c.CenterPosition)
+		Trigger.AfterDelay(DateTime.Seconds(10), function()
+			camera.Destroy()
+		end)
+
 		Trigger.OnCapture(c, function(self, captor, oldOwner, newOwner)
 			if ObjectiveCaptureComms ~= nil and not USSR.IsObjectiveCompleted(ObjectiveCaptureComms) then
 				USSR.MarkCompletedObjective(ObjectiveCaptureComms)

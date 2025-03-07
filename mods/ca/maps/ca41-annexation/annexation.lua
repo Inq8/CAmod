@@ -87,6 +87,7 @@ Squads = {
 
 WorldLoaded = function()
 	USSR = Player.GetPlayer("USSR")
+	Nod = Player.GetPlayer("Nod")
 	Scrin = Player.GetPlayer("Scrin")
 	ScrinRebels1 = Player.GetPlayer("ScrinRebels1")
 	ScrinRebels2 = Player.GetPlayer("ScrinRebels2")

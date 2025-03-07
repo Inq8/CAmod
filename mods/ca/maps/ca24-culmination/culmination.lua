@@ -352,8 +352,8 @@ InitGreece = function(paths)
 		end)
 	end)
 
-	Trigger.AfterDelay(Squads.Allied.Delay[Difficulty], function()
-		InitAttackSquad(Squads.Allied, Greece)
+	Trigger.AfterDelay(Squads.Allies.Delay[Difficulty], function()
+		InitAttackSquad(Squads.Allies, Greece)
 	end)
 
     Trigger.AfterDelay(Squads.AlliedAir.Delay[Difficulty], function()
