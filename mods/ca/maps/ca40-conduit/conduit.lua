@@ -34,9 +34,9 @@ Squads = {
 	},
 	Main2 = {
 		Delay = {
-			easy = DateTime.Minutes(8),
-			normal = DateTime.Minutes(6),
-			hard = DateTime.Minutes(4),
+			easy = DateTime.Minutes(5),
+			normal = DateTime.Minutes(4),
+			hard = DateTime.Minutes(3),
 		},
 		AttackValuePerSecond = {
 			easy = { Min = 10, Max = 25 },
@@ -110,10 +110,10 @@ Squads = {
 			hard = DateTime.Minutes(15)
 		},
 		ActiveCondition = function()
-			return #USSR.GetActorsByTypes({ "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" }) > 10
+			return #USSR.GetActorsByTypes({ "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" }) > 8
 		end,
 		AttackValuePerSecond = {
-			hard = { Min = 21, Max = 21 },
+			hard = { Min = 35, Max = 35 },
 		},
 		ProducerTypes = { Aircraft = { "hpad.td" } },
 		Units = {

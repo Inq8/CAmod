@@ -106,6 +106,19 @@ WORMHOLE:
 	Health:
 		HP: 300000
 
+SIGN:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+	CaptureManager:
+	Capturable:
+		RequiresCondition: !build-incomplete && !being-warped
+		Types: building
+	CapturableProgressBar:
+	CapturableProgressBlink:
+	Tooltip:
+		GenericVisibility: None
+	TooltipExtras:
+		-Attributes:
+
 # Removing TeleportNetwork from Wormhole above causes exception as no actors with TeleportNetwork are defined
 dummyteleport:
 	Inherits: ^InvisibleDummy

@@ -101,7 +101,7 @@ Squads = {
 				{ Aircraft = { "pmak", "pmak" } }
 			},
 			hard = {
-				{ Aircraft = { "heli", "heli", "heli", "heli" "heli", "heli" } },
+				{ Aircraft = { "heli", "heli", "heli", "heli", "heli", "heli" } },
 				{ Aircraft = { "harr", "harr", "harr", "harr", "harr", "harr" } },
 				{ Aircraft = { "pmak", "pmak", "pmak", "pmak" } }
 			}

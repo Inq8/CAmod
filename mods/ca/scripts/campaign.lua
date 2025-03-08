@@ -1418,6 +1418,7 @@ UnitCompositions = {
 
 				-- 16 minutes onwards
 				{ Infantry = { "e3", "e1", "e1", "e1", "e3", "e1", "e1", "e1", AlliedAdvancedInfantry, "e1", "e3", "e1", "e1", "e3" }, Vehicles = { "2tnk", "2tnk", "2tnk", "ifv.ai", AlliedT3SupportVehicle, PrismCannonOrZeus }, MinTime = DateTime.Minutes(16) },
+				{ Infantry = { "e3", "enfo", "enfo", "enfo", "enfo", "enfo", "enfo", "e1", "e1", "e1", "e3", "e1", "e1", "e1", "e3", "e1", "e1", "e1", "e3", "e1", "e1", "e1", "e3" }, Vehicles = { "2tnk", "2tnk", "2tnk", "2tnk", "ptnk", "ptnk" }, MinTime = DateTime.Minutes(10), IsSpecial = true },
 			}
 		}
 	},
@@ -1493,16 +1494,20 @@ UnitCompositions = {
 				{ Infantry = { "n1", "n1", "n3", "n1", "n1", "n1" }, Vehicles = { GDIMammothVariant, "vulc", "hsam", WolverineOrXO, WolverineOrXO }, MinTime = DateTime.Minutes(12) },
 
 				-- 18 minutes onwards
+				{ Infantry = { ZoneTrooperVariant, ZoneTrooperVariant, ZoneTrooperVariant }, Vehicles = { GDIMammothVariant, GDIMammothVariant, WolverineOrXO }, MinTime = DateTime.Minutes(16) },
 				{ Infantry = { "n3", "n1", "n1", "n1", "n3", "n1", ZoneTrooperVariant, ZoneTrooperVariant }, Vehicles = { "mtnk", GDIMammothVariant, "msam", "vulc" }, MinTime = DateTime.Minutes(16) },
 				{ Infantry = { "n3", "n1", "n1", "n1", "n3", "n1", "n1", "n1" }, Vehicles = { "vulc.ai", "disr", "disr" }, MinTime = DateTime.Minutes(18) },
+
+				-- Specials
+				{ Infantry = { "n2", "n2", "n2", "n2", "n2", "n2", "n2", "n2", "n2", "n2", "n2" }, Vehicles = { }, MinTime = DateTime.Minutes(16), IsSpecial = true },
 				{ Infantry = {}, Vehicles = { "memp", "memp" }, MinTime = DateTime.Minutes(18), IsSpecial = true },
-				{ Infantry = { ZoneTrooperVariant, ZoneTrooperVariant, ZoneTrooperVariant }, Vehicles = { GDIMammothVariant, GDIMammothVariant, WolverineOrXO }, MinTime = DateTime.Minutes(16) },
+				{ Infantry = { "ztrp", "ztrp", "ztrp", "ztrp", "ztrp", "ztrp" }, Vehicles = { "titn.rail", "titn.rail", "titn.rail" }, MinTime = DateTime.Minutes(18), IsSpecial = true },
 			},
 			hard = {
 				-- 0 to 10 minutes
 				{ Infantry = {}, Vehicles = { HumveeOrGuardianDrone, HumveeOrGuardianDrone, HumveeOrGuardianDrone, HumveeOrGuardianDrone, HumveeOrGuardianDrone }, MaxTime = DateTime.Minutes(10) },
 				{ Infantry = { "n3", "n1", "n1", "n1", "n3", "n1", "n2", "n2" }, Vehicles = { "mtnk", "mtnk", "msam", "vulc", "vulc.ai"  }, MaxTime = DateTime.Minutes(10) },
-				{ Infantry = { "n3", "n1", "n1", "n1", "n3", "n1", "n2", "n2" }, Vehicles = { "mtnk", "mtnk", HumveeOrGuardianDrone, HumveeOrGuardianDrone }, MaxTime = DateTime.Minutes(10) },
+				{ Infantry = { "n3", "n1", "n1", "n1", "n3", "n1", "n2", "n2", "n1", "n1", "n1", "n3" }, Vehicles = { "mtnk", "mtnk", HumveeOrGuardianDrone, HumveeOrGuardianDrone }, MaxTime = DateTime.Minutes(10) },
 
 				-- 10 minutes onwards
 				{ Infantry = { "n3", "n1", "n1", "n1", "n3", "n1", "n1", "n1", "n3", "n1", "n1", "n1" }, Vehicles = { "mtnk", "mtnk", "vulc", "vulc.ai", "jugg"  }, MinTime = DateTime.Minutes(10) },
@@ -1517,9 +1522,13 @@ UnitCompositions = {
 				{ Infantry = { "n3", "n1", "n1", "n1", "n3", "n1", "n1", ZoneTrooperVariant, ZoneTrooperVariant, ZoneTrooperVariant }, Vehicles = { "mtnk", "mtnk", GDIMammothVariant, "msam", "vulc" }, MinTime = DateTime.Minutes(16) },
 				{ Infantry = { "n3", "n1", "n1", "n1", "n3", "n1", "n1", "n1", "n1", "n1", "n3" }, Vehicles = { "vulc.ai", "disr", "disr", "disr" }, MinTime = DateTime.Minutes(16) },
 				{ Infantry = { "n3", "rmbo", "n3", "n1", "n1", "n1", "n1", "n1", "n3", "n1", "n1", "n3" }, Vehicles = { GDIMammothVariant, GDIMammothVariant, "msam", "msam", "vulc" }, MinTime = DateTime.Minutes(16) },
+				{ Infantry = { ZoneTrooperVariant, ZoneTrooperVariant, ZoneTrooperVariant, ZoneTrooperVariant, "n1", "n1", "n3", "n1", "n1" }, Vehicles = { GDIMammothVariant, GDIMammothVariant, GDIMammothVariant, WolverineOrXO, WolverineOrXO, "mtnk" }, MinTime = DateTime.Minutes(16) },
+
+				-- Specials
+				{ Infantry = { "n2", "n2", "n2", "n2", "n2", "n2", "n2", "n2", "n2", "n2", "n2", "n2", "n2", "n2", "n2", "n2" }, Vehicles = { "htnk.ion", "htnk.ion", "htnk.ion" }, MinTime = DateTime.Minutes(16), IsSpecial = true },
 				{ Infantry = {}, Vehicles = { "memp", "memp", "memp" }, MinTime = DateTime.Minutes(16), IsSpecial = true },
 				{ Infantry = {}, Vehicles = { "mtnk", "mtnk", "vulc", "vulc", "thwk", "thwk", "thwk" }, MinTime = DateTime.Minutes(16), IsSpecial = true },
-				{ Infantry = { ZoneTrooperVariant, ZoneTrooperVariant, ZoneTrooperVariant, ZoneTrooperVariant, "n1", "n1", "n3", "n1", "n1" }, Vehicles = { GDIMammothVariant, GDIMammothVariant, GDIMammothVariant, WolverineOrXO, WolverineOrXO, "mtnk" }, MinTime = DateTime.Minutes(16) },
+				{ Infantry = { "ztrp", "ztrp", "ztrp", "ztrp", "ztrp", "ztrp", "ztrp", "ztrp" }, Vehicles = { "titn.rail", "titn.rail", "titn.rail", "titn.rail", "titn.rail" }, MinTime = DateTime.Minutes(16), IsSpecial = true },
 			}
 		}
 	},
@@ -1535,7 +1544,7 @@ UnitCompositions = {
 				{ Infantry = {}, Vehicles = { "bike", "bike", "bike" }, MinTime = DateTime.Minutes(14) },
 				{ Infantry = { "n3", "n1", "n1", "n1", "n1", "n1" }, Vehicles = { "ltnk", "ltnk" }, MinTime = DateTime.Minutes(14) },
 				{ Infantry = { "n3", "n1", "n4", "n1", "n1", "n1" }, Vehicles = { FlameTankHeavyFlameTankOrHowitzer, FlameTankHeavyFlameTankOrHowitzer }, MinTime = DateTime.Minutes(14) },
-				{ Infantry = { BasicCyborg, BasicCyborg, BasicCyborg }, Vehicles = { "ltnk" }, MinTime = DateTime.Minutes(14) },
+				{ Infantry = { AdvancedCyborg, BasicCyborg, BasicCyborg, BasicCyborg }, Vehicles = { "ltnk" }, MinTime = DateTime.Minutes(14) },
 			},
 			normal = {
 				-- 0 to 12 minutes
@@ -1548,6 +1557,11 @@ UnitCompositions = {
 				{ Infantry = { "n3", "n1", "n1", "n4", "n1", "bh", "n1", "n1", "n1", "n1", "n1" }, Vehicles = { "ltnk", "ltnk" }, MinTime = DateTime.Minutes(12) },
 				{ Infantry = { "n3", "n1", "n1", "n4", "n1", "n1", "n1", "n1", "n1", "n1" }, Vehicles = { "ltnk", "arty.nod" }, MinTime = DateTime.Minutes(12) },
 				{ Infantry = { AdvancedCyborg, BasicCyborg, BasicCyborg, BasicCyborg, BasicCyborg }, Vehicles = { FlameTankHeavyFlameTankOrHowitzer, "ltnk" }, MinTime = DateTime.Minutes(12) },
+
+				-- Specials
+				{ Infantry = { "bh", "bh", "bh", "bh", "bh", "bh", "bh" }, Vehicles = { "hftk", "hftk", "hftk", "hftk", "hftk" }, MinTime = DateTime.Minutes(18), IsSpecial = true },
+				{ Infantry = { "n3", "n1", "n1", "n1", "n4", "n1", "n3", "n1", "n1", "n1", "n1", "n1", "n1" }, Vehicles = { "wtnk", "wtnk", "wtnk", "wtnk" }, MinTime = DateTime.Minutes(18), IsSpecial = true },
+				{ Infantry = { }, Vehicles = { "bike", "bike", "bike", "bike", "bike", "bike", "bike", "bike", "bike", "bike" }, MinTime = DateTime.Minutes(16), IsSpecial = true },
 			},
 			hard = {
 				-- 0 to 10 minutes
@@ -1563,6 +1577,11 @@ UnitCompositions = {
 
 				-- 16 minutes onwards
 				{ Infantry = { AdvancedCyborg, AdvancedCyborg, AdvancedCyborg, "n1c", "n1c", BasicCyborg, BasicCyborg, BasicCyborg, BasicCyborg, BasicCyborg, BasicCyborg, BasicCyborg, "rmbc" }, Vehicles = { "ltnk", "ltnk", FlameTankHeavyFlameTankOrHowitzer, "mlrs" }, MinTime = DateTime.Minutes(16) },
+
+				-- Specials
+				{ Infantry = { "bh", "bh", "bh", "bh", "bh", "bh", "bh", "bh", "bh" }, Vehicles = { "hftk", "hftk", "hftk", "hftk", "hftk", "hftk" }, MinTime = DateTime.Minutes(16), IsSpecial = true },
+				{ Infantry = { "n3", "n1", "n1", "n1", "n4", "n1", "n3", "n1", "n1", "n1", "n1", "n1", "n1", "n3", "n1", "n1" }, Vehicles = { "wtnk", "wtnk", "wtnk", "wtnk", "wtnk" }, MinTime = DateTime.Minutes(16), IsSpecial = true },
+				{ Infantry = { }, Vehicles = { "bike", "bike", "bike", "bike", "bike", "bike", "bike", "bike", "bike", "bike", "bike", "bike", "bike", "bike" }, MinTime = DateTime.Minutes(16), IsSpecial = true },
 			}
 		}
 	},

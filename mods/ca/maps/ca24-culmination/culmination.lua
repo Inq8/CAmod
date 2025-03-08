@@ -9,6 +9,10 @@ SovietsVsAlliesPaths = { { SovietsVsAlliesRally1.Location }, { SovietsVsAlliesRa
 NodVsAlliesPaths = { { NodVsAlliesRally1.Location }, { NodVsAlliesRally2.Location }, { NodVsAlliesRally3.Location } }
 NodVsSovietPaths = { { NodVsSovietsRally1.Location }, { NodVsSovietsRally2.Location }, { NodVsSovietsRally3.Location } }
 
+NodBaseCameras = { NodBaseCam1, NodBaseCam2, NodBaseCam3 }
+AlliedBaseCameras = { AlliedBaseCam1, AlliedBaseCam2 }
+SovietBaseCameras = { SovietBaseCam1, SovietBaseCam2, SovietBaseCam3 }
+
 SuperweaponsEnabledTime = {
 	easy = DateTime.Seconds((60 * 30) + 17),
 	normal = DateTime.Seconds((60 * 20) + 17),
@@ -211,8 +215,8 @@ WorldLoaded = function()
 				ObjectiveSubjugateRemaining = Scrin.AddObjective("Capture Nod and Soviet Construction Yards.")
 				Scrin.MarkCompletedObjective(ObjectiveInitialSubjugation)
 				DestroyCameras()
-				InitUSSR(SovietsVsAlliesPaths)
-				InitNod(NodVsAlliesPaths)
+				InitUSSR(SovietsVsAlliesPaths, AlliedBaseCameras)
+				InitNod(NodVsAlliesPaths, AlliedBaseCameras)
 				CreateWormholes(AlliedBase.Location)
 				Trigger.AfterDelay(1, function()
 					Actor.Create("QueueUpdaterDummy", true, { Owner = Scrin })
@@ -229,8 +233,8 @@ WorldLoaded = function()
 				ObjectiveSubjugateRemaining = Scrin.AddObjective("Capture Allied and Nod Construction Yards.")
 				Scrin.MarkCompletedObjective(ObjectiveInitialSubjugation)
 				DestroyCameras()
-				InitGreece(AlliesVsSovietPaths)
-				InitNod(NodVsSovietPaths)
+				InitGreece(AlliesVsSovietPaths, SovietBaseCameras)
+				InitNod(NodVsSovietPaths, SovietBaseCameras)
 				CreateWormholes(SovietBase.Location)
 				Trigger.AfterDelay(1, function()
 					Actor.Create("QueueUpdaterDummy", true, { Owner = Scrin })
@@ -247,8 +251,8 @@ WorldLoaded = function()
 				ObjectiveSubjugateRemaining = Scrin.AddObjective("Capture Allied and Soviet Construction Yards.")
 				Scrin.MarkCompletedObjective(ObjectiveInitialSubjugation)
 				DestroyCameras()
-				InitUSSR(SovietsVsNodPaths)
-				InitGreece(AlliesVsNodPaths)
+				InitUSSR(SovietsVsNodPaths, NodBaseCameras)
+				InitGreece(AlliesVsNodPaths, NodBaseCameras)
 				CreateWormholes(NodBase.Location)
 				Trigger.AfterDelay(1, function()
 					Actor.Create("QueueUpdaterDummy", true, { Owner = Scrin })
@@ -321,7 +325,7 @@ end
 
 -- Functions
 
-InitUSSR = function(paths)
+InitUSSR = function(paths, cameras)
 	Squads.Soviets.AttackPaths = paths
 
 	Trigger.AfterDelay(DateTime.Seconds(1), function()
@@ -342,9 +346,13 @@ InitUSSR = function(paths)
 		Actor.Create("ai.superweapons.enabled", true, { Owner = USSR })
 		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = USSR })
 	end)
+
+	Utils.Do(cameras, function(c)
+		Actor.Create("largecamera", true, { Owner = USSR, Location = c.Location })
+	end)
 end
 
-InitGreece = function(paths)
+InitGreece = function(paths, cameras)
 	Squads.Allies.AttackPaths = paths
 
 	Trigger.AfterDelay(DateTime.Seconds(1), function()
@@ -365,9 +373,13 @@ InitGreece = function(paths)
 		Actor.Create("ai.superweapons.enabled", true, { Owner = Greece })
 		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = Greece })
 	end)
+
+	Utils.Do(cameras, function(c)
+		Actor.Create("largecamera", true, { Owner = Greece, Location = c.Location })
+	end)
 end
 
-InitNod = function(paths)
+InitNod = function(paths, cameras)
 	Squads.Nod.AttackPaths = paths
 
 	Trigger.AfterDelay(DateTime.Seconds(1), function()
@@ -387,6 +399,10 @@ InitNod = function(paths)
 	Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
 		Actor.Create("ai.superweapons.enabled", true, { Owner = Nod })
 		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = Nod })
+	end)
+
+	Utils.Do(cameras, function(c)
+		Actor.Create("largecamera", true, { Owner = Nod, Location = c.Location })
 	end)
 end
 

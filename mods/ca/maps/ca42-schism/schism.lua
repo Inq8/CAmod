@@ -15,9 +15,9 @@ MaleficSpawns = { MaleficSpawn1.Location, MaleficSpawn2.Location, MaleficSpawn3.
 Squads = {
 	Nod = {
 		Delay = {
-			easy = DateTime.Minutes(6),
-			normal = DateTime.Minutes(4),
-			hard = DateTime.Minutes(2)
+			easy = DateTime.Minutes(5),
+			normal = DateTime.Minutes(3),
+			hard = DateTime.Minutes(1)
 		},
 		AttackValuePerSecond = {
 			easy = { Min = 10, Max = 25 },
@@ -133,7 +133,7 @@ WorldLoaded = function()
 
 	Actor.Create("hazmatsoviet.upgrade", true, { Owner = USSR })
 
-	ObjectiveSecurePurifier = USSR.AddObjective("Secure the purification device.")
+	ObjectiveSecurePurifier = USSR.AddObjective("Use the Exterminator Tripod to secure\nthe purification device.")
 	UpdateMissionText()
 
 	local spyPlaneDummy1 = Actor.Create("spy.plane.dummy", true, { Owner = SpyPlaneProvider })

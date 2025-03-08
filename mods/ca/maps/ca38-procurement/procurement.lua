@@ -11,9 +11,9 @@ SuperweaponsEnabledTime = {
 Squads = {
 	GDIMain1 = {
 		Delay = {
-			easy = DateTime.Seconds(330),
-			normal = DateTime.Seconds(210),
-			hard = DateTime.Seconds(90)
+			easy = DateTime.Minutes(5),
+			normal = DateTime.Minutes(3),
+			hard = DateTime.Minutes(1)
 		},
 		AttackValuePerSecond = {
 			easy = { Min = 10, Max = 25 },
@@ -87,15 +87,15 @@ Squads = {
 			hard = DateTime.Minutes(15)
 		},
 		ActiveCondition = function()
-			return #USSR.GetActorsByTypes({ "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" }) > 10
+			return #USSR.GetActorsByTypes({ "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" }) > 8
 		end,
 		AttackValuePerSecond = {
-			hard = { Min = 21, Max = 21 },
+			hard = { Min = 35, Max = 35 },
 		},
 		ProducerTypes = { Aircraft = { "afld.gdi" } },
 		Units = {
 			hard = {
-				{ Aircraft = { "orcb", "orcb", "orcb", "orcb", "orcb" } },
+				{ Aircraft = { "orcb", "orcb", "orcb", "orcb", "orcb", "orcb" } },
 			}
 		},
 	}
@@ -105,6 +105,7 @@ WorldLoaded = function()
 	USSR = Player.GetPlayer("USSR")
 	GDI = Player.GetPlayer("GDI")
 	China = Player.GetPlayer("China")
+	ChinaHostile = Player.GetPlayer("ChinaHostile")
 	MissionPlayers = { USSR }
 	TimerTicks = 0
 
@@ -113,6 +114,7 @@ WorldLoaded = function()
 	InitObjectives(USSR)
 	AdjustStartingCash()
 	InitGDI()
+	InitChina()
 
 	ObjectiveAcquireWeapons = USSR.AddObjective("Acquire Chinese weapons.")
 	ObjectiveExpelGDI = USSR.AddObjective("Remove the GDI presence.")
@@ -125,29 +127,12 @@ WorldLoaded = function()
 
 	Trigger.OnEnteredProximityTrigger(WeaponsCache.CenterPosition, WDist.New(4 * 1024), function(a, id)
 		if a.Owner == USSR then
-			if not CacheFound then
-				Trigger.RemoveProximityTrigger(id)
-				CacheFound = true
-				local cacheUnits = China.GetActorsByTypes({"ovld", "trpc.empty", "nukc"})
-				Utils.Do(cacheUnits, function(u)
-					u.Owner = USSR
-					USSR.MarkCompletedObjective(ObjectiveAcquireWeapons)
-				end)
-				Trigger.AfterDelay(DateTime.Seconds(5), function()
-					local outpostFlare = Actor.Create("flare", true, { Owner = USSR, Location = GDIOutpostFlare.Location })
-					Media.PlaySpeechNotification(USSR, "SignalFlare")
-					Notification("Signal flare detected.")
-					Beacon.New(USSR, GDIOutpostFlare.CenterPosition)
-
-					Trigger.OnEnteredProximityTrigger(GDIOutpostFlare.CenterPosition, WDist.New(6 * 1024), function(a, id)
-						if a.Owner == USSR and a.Type ~= "flare" then
-							Trigger.RemoveProximityTrigger(id)
-							outpostFlare.Destroy()
-						end
-					end)
-				end)
-			end
+			InitWeaponsCache(true)
 		end
+	end)
+
+	Trigger.AfterDelay(DateTime.Minutes(10), function()
+		InitWeaponsCache(false)
 	end)
 
 	Trigger.OnAllKilledOrCaptured(OutpostStructures, function()
@@ -161,22 +146,7 @@ WorldLoaded = function()
 				McvArrived = true
 			end)
 
-			Trigger.AfterDelay(Squads.GDIMain1.Delay[Difficulty], function()
-				InitAttackSquad(Squads.GDIMain1, GDI)
-			end)
-
-			Trigger.AfterDelay(Squads.GDIMain2.Delay[Difficulty], function()
-				InitAttackSquad(Squads.GDIMain2, GDI)
-			end)
-
-			Trigger.AfterDelay(Squads.AntiTankAir.Delay[Difficulty], function()
-				InitAirAttackSquad(Squads.AntiTankAir, GDI, USSR, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" })
-			end)
-
-			Trigger.AfterDelay(Squads.GDIAir.Delay[Difficulty], function()
-				InitAirAttackSquad(Squads.GDIAir, GDI, USSR, { "harv", "4tnk", "4tnk.atomic", "3tnk", "3tnk.atomic", "3tnk.rhino", "3tnk.rhino.atomic",
-					"katy", "v3rl", "ttra", "v3rl", "apwr", "tpwr", "npwr", "tsla", "proc", "nukc", "ovld", "apoc", "apoc.atomic", "ovld.atomic" })
-			end)
+			InitGDIAttacks()
 		end
 	end)
 
@@ -211,12 +181,16 @@ OncePerSecondChecks = function()
 			end
 		end
 
-		if GDI.HasNoRequiredUnits() then
+		if not PlayerHasBuildings(GDI) then
 			USSR.MarkCompletedObjective(ObjectiveExpelGDI)
 		end
 
-		if McvArrived and USSR.HasNoRequiredUnits() then
+		if USSR.HasNoRequiredUnits() then
 			USSR.MarkFailedObjective(ObjectiveExpelGDI)
+
+			if not USSR.IsObjectiveCompleted(ObjectiveAcquireWeapons) then
+				USSR.MarkFailedObjective(ObjectiveAcquireWeapons)
+			end
 		end
 	end
 end
@@ -248,12 +222,62 @@ InitGDI = function()
 	end)
 end
 
+InitGDIAttacks = function()
+	if not GDIAttacksStarted then
+		GDIAttacksStarted = true
+		Trigger.AfterDelay(Squads.GDIMain1.Delay[Difficulty], function()
+			InitAttackSquad(Squads.GDIMain1, GDI)
+		end)
+
+		Trigger.AfterDelay(Squads.GDIMain2.Delay[Difficulty], function()
+			InitAttackSquad(Squads.GDIMain2, GDI)
+		end)
+
+		Trigger.AfterDelay(Squads.AntiTankAir.Delay[Difficulty], function()
+			InitAirAttackSquad(Squads.AntiTankAir, GDI, USSR, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" })
+		end)
+
+		Trigger.AfterDelay(Squads.GDIAir.Delay[Difficulty], function()
+			InitAirAttackSquad(Squads.GDIAir, GDI, USSR, { "harv", "4tnk", "4tnk.atomic", "3tnk", "3tnk.atomic", "3tnk.rhino", "3tnk.rhino.atomic",
+				"katy", "v3rl", "ttra", "v3rl", "apwr", "tpwr", "npwr", "tsla", "proc", "nukc", "ovld", "apoc", "apoc.atomic", "ovld.atomic" })
+		end)
+	end
+end
+
+InitWeaponsCache = function(withOutpostFlare)
+	if not CacheFound then
+		Trigger.RemoveProximityTrigger(id)
+		CacheFound = true
+		local cacheUnits = China.GetActorsByTypes({"ovld", "trpc.empty", "nukc"})
+		Utils.Do(cacheUnits, function(u)
+			u.Owner = USSR
+			USSR.MarkCompletedObjective(ObjectiveAcquireWeapons)
+		end)
+
+		if withOutpostFlare then
+			Trigger.AfterDelay(DateTime.Seconds(5), function()
+				local outpostFlare = Actor.Create("flare", true, { Owner = USSR, Location = GDIOutpostFlare.Location })
+				Media.PlaySpeechNotification(USSR, "SignalFlare")
+				Notification("Signal flare detected.")
+				Beacon.New(USSR, GDIOutpostFlare.CenterPosition)
+
+				Trigger.OnEnteredProximityTrigger(GDIOutpostFlare.CenterPosition, WDist.New(6 * 1024), function(a, id)
+					if a.Owner == USSR and a.Type ~= "flare" then
+						Trigger.RemoveProximityTrigger(id)
+						outpostFlare.Destroy()
+					end
+				end)
+			end)
+		end
+	end
+end
+
 InitCommsCenterObjective = function()
 	if ObjectiveCaptureComms ~= nil then
 		return
 	end
 
-	Media.DisplayMessage("Comrade General, we have reason to believe the GDI Communications Center contains vital information. Capture it at all costs!", "Premier Cherdenko", HSLColor.FromHex("FF0000"))
+	Media.DisplayMessage("Comrade General, we have reason to believe vital information can be found within the GDI comms network. Capture one of their Communications Centers at all costs!", "Premier Cherdenko", HSLColor.FromHex("FF0000"))
 
 	ObjectiveCaptureComms = USSR.AddObjective("Capture a GDI Communications Center.")
 	Media.PlaySound("beacon.aud")
@@ -277,4 +301,59 @@ InitCommsCenterObjective = function()
 			USSR.MarkFailedObjective(ObjectiveCaptureComms)
 		end
 	end)
+end
+
+InitChina = function()
+	local chinaUnits = Utils.Where(China.GetActors(), function(a)
+		return a.HasProperty("Attack") or a.HasProperty("StartBuildingRepairs")
+	end)
+
+	ChineseUnitsKilled = 0
+
+	Utils.Do(chinaUnits, function(a)
+
+		Trigger.OnKilled(a, function(self, killer)
+			if self.Owner == China and killer.Owner == USSR then
+				ChineseUnitsKilled = ChineseUnitsKilled + 1
+			end
+
+			if ChineseUnitsKilled >= 3 then
+				InitChinaRevenge()
+			end
+		end)
+	end)
+end
+
+InitChinaRevenge = function()
+	if ChinaRevengeStarted then
+		return
+	end
+
+	ChinaRevengeStarted = true
+
+	Notification("The Chinese are retaliating!")
+
+	local chinaUnits = Utils.Where(China.GetActors(), function(a)
+		return a.HasProperty("Attack") or a.HasProperty("StartBuildingRepairs")
+	end)
+
+	Utils.Do(chinaUnits, function(a)
+		a.Owner = ChinaHostile
+
+		if a.HasProperty("Hunt") then
+			a.Hunt()
+		end
+	end)
+
+	DeployChinese()
+end
+
+DeployChinese = function()
+	local units = Reinforcements.Reinforce(ChinaHostile, { "ovld", "ovld", "ovld", "ovld", "e1", "e1", "e1", "e1", "e1", "e1", "e1", "e1", "e3", "e3" }, { ChinaHostileSpawn.Location, ChinaHostileRally1.Location, ChinaHostileRally2.Location, ChinaHostileRally3.Location }, 25)
+	Utils.Do(units, function(unit)
+		Trigger.AfterDelay(5, function()
+			AssaultPlayerBaseOrHunt(unit, USSR)
+		end)
+	end)
+	Trigger.AfterDelay(DateTime.Seconds(20), DeployChinese)
 end

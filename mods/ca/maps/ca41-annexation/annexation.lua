@@ -179,16 +179,17 @@ OncePerSecondChecks = function()
 		if TimerTicks > 0 then
 			if TimerTicks > 25 then
 				TimerTicks = TimerTicks - 25
+			else
+				TimerTicks = 0
 
-				if TimerTicks <= 0 then
-					if not Gateway.IsDead then
-						Gateway.Destroy()
-						if not USSR.IsObjectiveCompleted(ObjectiveCaptureNerveCenter) then
-							USSR.MarkFailedObjective(ObjectiveCaptureNerveCenter)
-						end
+				if not Gateway.IsDead then
+					Gateway.Destroy()
+					if not USSR.IsObjectiveCompleted(ObjectiveCaptureNerveCenter) then
+						USSR.MarkFailedObjective(ObjectiveCaptureNerveCenter)
 					end
 				end
 			end
+
 			UpdateMissionText()
 		end
 	end

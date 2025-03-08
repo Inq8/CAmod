@@ -28,7 +28,7 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
-		Enemies: USSR, GDI, China
+		Enemies: USSR, GDI, China, ChinaWalls, ChinaHostile
 	PlayerReference@USSR:
 		Name: USSR
 		AllowBots: False
@@ -41,7 +41,7 @@ Players:
 		LockSpawn: True
 		LockTeam: True
 		Allies: ChinaWalls
-		Enemies: GDI, Creeps
+		Enemies: GDI, Creeps, ChinaHostile
 	PlayerReference@GDI:
 		Name: GDI
 		Bot: campaign
@@ -53,15 +53,22 @@ Players:
 		Bot: dormant
 		Faction: soviet
 		Color: FFEE00
-		Allies: ChinaWalls
+		Allies: ChinaWalls, ChinaHostile
 		Enemies: Creeps
 	PlayerReference@ChinaWalls:
 		Name: ChinaWalls
 		Bot: dormant
 		Faction: soviet
 		Color: FFEE00
-		Allies: USSR, China
+		Allies: USSR, China, ChinaHostile
 		Enemies: Creeps
+	PlayerReference@ChinaHostile:
+		Name: ChinaHostile
+		Bot: campaign
+		Faction: soviet
+		Color: FFEE00
+		Allies: China, ChinaWalls
+		Enemies: USSR, Creeps
 
 Actors:
 	Actor87: chain
@@ -118,11 +125,11 @@ Actors:
 		Owner: USSR
 		Location: 7,9
 		Facing: 768
-	Actor51: btr.ai
+	Actor51: btr
 		Owner: USSR
 		Location: 10,10
 		Facing: 642
-	Actor52: btr.ai
+	Actor52: btr
 		Owner: USSR
 		Location: 12,11
 		Facing: 769
@@ -3376,8 +3383,8 @@ Actors:
 		Location: 46,24
 	Actor1178: 3tnk
 		Owner: China
-		Facing: 512
 		Location: 52,24
+		Facing: 512
 	Actor1175: thwk
 		Owner: GDI
 		Location: 114,66
@@ -3642,6 +3649,18 @@ Actors:
 		Owner: GDI
 		Facing: 384
 		Location: 66,33
+	ChinaHostileSpawn: waypoint
+		Owner: Neutral
+		Location: 52,1
+	ChinaHostileRally1: waypoint
+		Owner: Neutral
+		Location: 52,12
+	ChinaHostileRally2: waypoint
+		Owner: Neutral
+		Location: 49,12
+	ChinaHostileRally3: waypoint
+		Owner: Neutral
+		Location: 49,23
 
 Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, procurement-rules.yaml
 
