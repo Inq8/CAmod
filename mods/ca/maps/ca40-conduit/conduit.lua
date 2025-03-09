@@ -1,5 +1,5 @@
 TimeLimit = {
-	normal = DateTime.Minutes(120),
+	normal = DateTime.Minutes(90),
 	hard = DateTime.Minutes(60),
 }
 
@@ -231,9 +231,11 @@ InitNod = function()
 			"katy", "v3rl", "ttra", "v3rl", "apwr", "tpwr", "npwr", "tsla", "proc", "nukc", "ovld", "apoc", "apoc.atomic", "ovld.atomic" })
 	end)
 
-	Trigger.AfterDelay(Squads.AntiTankAir.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.AntiTankAir, Nod1, USSR, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" })
-	end)
+	if Difficulty == "hard" then
+		Trigger.AfterDelay(Squads.AntiTankAir.Delay[Difficulty], function()
+			InitAirAttackSquad(Squads.AntiTankAir, Nod1, USSR, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" })
+		end)
+	end
 end
 
 InitNodSouth = function()

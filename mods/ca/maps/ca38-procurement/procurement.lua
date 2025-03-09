@@ -118,6 +118,7 @@ WorldLoaded = function()
 
 	ObjectiveAcquireWeapons = USSR.AddObjective("Acquire Chinese weapons.")
 	ObjectiveExpelGDI = USSR.AddObjective("Remove the GDI presence.")
+	ObjectiveDestroyOutpost = USSR.AddSecondaryObjective("Destroy GDI outpost to receive reinforcements.")
 
 	if Difficulty == "hard" then
 		NonHardTroopCrawler.Destroy()
@@ -127,6 +128,7 @@ WorldLoaded = function()
 
 	Trigger.OnEnteredProximityTrigger(WeaponsCache.CenterPosition, WDist.New(4 * 1024), function(a, id)
 		if a.Owner == USSR then
+			Trigger.RemoveProximityTrigger(id)
 			InitWeaponsCache(true)
 		end
 	end)
@@ -144,6 +146,7 @@ WorldLoaded = function()
 				Reinforcements.Reinforce(USSR, { "mcv" }, { McvSpawn.Location, McvRally.Location })
 				Beacon.New(USSR, McvRally.CenterPosition)
 				McvArrived = true
+				USSR.MarkCompletedObjective(ObjectiveDestroyOutpost)
 			end)
 
 			InitGDIAttacks()
@@ -233,9 +236,11 @@ InitGDIAttacks = function()
 			InitAttackSquad(Squads.GDIMain2, GDI)
 		end)
 
-		Trigger.AfterDelay(Squads.AntiTankAir.Delay[Difficulty], function()
-			InitAirAttackSquad(Squads.AntiTankAir, GDI, USSR, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" })
-		end)
+		if Difficulty == "hard" then
+			Trigger.AfterDelay(Squads.AntiTankAir.Delay[Difficulty], function()
+				InitAirAttackSquad(Squads.AntiTankAir, GDI, USSR, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" })
+			end)
+		end
 
 		Trigger.AfterDelay(Squads.GDIAir.Delay[Difficulty], function()
 			InitAirAttackSquad(Squads.GDIAir, GDI, USSR, { "harv", "4tnk", "4tnk.atomic", "3tnk", "3tnk.atomic", "3tnk.rhino", "3tnk.rhino.atomic",
@@ -246,13 +251,13 @@ end
 
 InitWeaponsCache = function(withOutpostFlare)
 	if not CacheFound then
-		Trigger.RemoveProximityTrigger(id)
 		CacheFound = true
 		local cacheUnits = China.GetActorsByTypes({"ovld", "trpc.empty", "nukc"})
 		Utils.Do(cacheUnits, function(u)
 			u.Owner = USSR
-			USSR.MarkCompletedObjective(ObjectiveAcquireWeapons)
 		end)
+
+		USSR.MarkCompletedObjective(ObjectiveAcquireWeapons)
 
 		if withOutpostFlare then
 			Trigger.AfterDelay(DateTime.Seconds(5), function()
