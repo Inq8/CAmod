@@ -1,6 +1,6 @@
 TimeLimit = {
-	normal = DateTime.Minutes(90),
-	hard = DateTime.Minutes(60),
+	normal = DateTime.Minutes(75),
+	hard = DateTime.Minutes(45),
 }
 
 CyborgSquad = { "rmbc", "rmbc", "enli", "tplr", "tplr", "tplr", "reap", "n1c", "n1c", "n1c", "n1c", "n1c", "n3c", "n3c" }
@@ -154,6 +154,8 @@ WorldLoaded = function()
 	Trigger.OnKilledOrCaptured(MainTemple, function()
 		MainTempleKilledOrCaptured = true
 	end)
+
+	SetupSubterraneanStrikes()
 end
 
 Tick = function()
@@ -168,7 +170,7 @@ OncePerSecondChecks = function()
 		if TimerTicks > 0 and Difficulty ~= "easy" then
 			if TimerTicks > 25 then
 				TimerTicks = TimerTicks - 25
-				UserInterface.SetMissionText("Kane's forces return in " .. UtilsCA.FormatTimeForGameSpeed(TimerTicks), HSLColor.Yellow)
+				UserInterface.SetMissionText("Kane's forces will begin returning in " .. UtilsCA.FormatTimeForGameSpeed(TimerTicks), HSLColor.Yellow)
 			else
 				TimerTicks = 0
 				UserInterface.SetMissionText("")
@@ -266,4 +268,123 @@ DeployCyborgs = function()
 		end)
 	end)
 	Trigger.AfterDelay(CyborgSquadInterval[Difficulty], DeployCyborgs)
+end
+
+SetupSubterraneanStrikes = function()
+
+	-- Subterranean Strikes
+	local subStrike1Spawns = { SubStrike1_1.Location }
+
+	if Difficulty ~= "easy" then
+		table.insert(subStrike1Spawns, SubStrike1_3.Location)
+
+		if Difficulty == "hard" then
+			subStrike1Spawns = Utils.Concat(subStrike1Spawns, { SubStrike1_2.Location, SubStrike1_4.Location })
+		end
+	end
+
+	local subStrike2Spawns = { SubStrike2_1.Location }
+
+	if Difficulty ~= "easy" then
+		table.insert(subStrike2Spawns, SubStrike2_3.Location)
+
+		if Difficulty == "hard" then
+			subStrike2Spawns = Utils.Concat(subStrike2Spawns, { SubStrike2_2.Location, SubStrike2_4.Location })
+		end
+	end
+
+	local subStrike3Spawns = { SubStrike3_2.Location }
+
+	if Difficulty ~= "easy" then
+		subStrike3Spawns = Utils.Concat(subStrike3Spawns, { SubStrike3_5.Location, SubStrike3_8.Location })
+
+		if Difficulty == "hard" then
+			subStrike3Spawns = Utils.Concat(subStrike3Spawns, { SubStrike3_1.Location, SubStrike3_3.Location, SubStrike3_4.Location, SubStrike3_6.Location, SubStrike3_7.Location, SubStrike3_9.Location })
+		end
+	end
+
+	local subStrike4Spawns = { SubStrike4_1.Location, SubStrike4_2.Location }
+
+	local allSubStrikeSpawns = Utils.Concat(subStrike1Spawns, subStrike2Spawns)
+	allSubStrikeSpawns = Utils.Concat(allSubStrikeSpawns, subStrike3Spawns)
+	allSubStrikeSpawns = Utils.Concat(allSubStrikeSpawns, subStrike4Spawns)
+
+	local leftBaseEntrance = {}
+	for x = 13, 19 do
+		table.insert(leftBaseEntrance, CPos.New(x, 54))
+	end
+
+	local rightBaseEntrance = {}
+	for x = 85, 91 do
+		table.insert(rightBaseEntrance, CPos.New(x, 11))
+	end
+	for x = 84, 91 do
+		table.insert(rightBaseEntrance, CPos.New(x, 34))
+	end
+
+	Trigger.OnEnteredFootprint(leftBaseEntrance, function(a, id)
+		if a.Owner == USSR then
+			Trigger.RemoveFootprintTrigger(id)
+			if not LeftBaseSubStrikeTriggered then
+				LeftBaseSubStrikeTriggered = true
+				Media.PlaySound("subrumble.aud")
+				Trigger.AfterDelay(DateTime.Seconds(3), function()
+					Utils.Do(subStrike1Spawns, function(s)
+						local spawner = Actor.Create("substrike.spawner", true, { Owner = Nod1, Location = s })
+					end)
+				end)
+			end
+		end
+	end)
+
+	Trigger.OnEnteredFootprint(rightBaseEntrance, function(a, id)
+		if a.Owner == USSR then
+			Trigger.RemoveFootprintTrigger(id)
+			if not RightBaseSubStrikeTriggered then
+				RightBaseSubStrikeTriggered = true
+				Media.PlaySound("subrumble.aud")
+				Trigger.AfterDelay(DateTime.Seconds(3), function()
+					Utils.Do(subStrike2Spawns, function(s)
+						local spawner = Actor.Create("substrike.spawner", true, { Owner = Nod1, Location = s })
+					end)
+				end)
+			end
+		end
+	end)
+
+	Trigger.OnEnteredProximityTrigger(NodMainBaseCenter.CenterPosition, WDist.FromCells(15), function(a, id)
+		if a.Owner == USSR and not a.HasProperty("Land") then
+			Trigger.RemoveProximityTrigger(id)
+			if not MainBaseSubStrikeTriggered then
+				MainBaseSubStrikeTriggered = true
+				Media.PlaySound("subrumble.aud")
+				Trigger.AfterDelay(DateTime.Seconds(3), function()
+					Utils.Do(subStrike3Spawns, function(s)
+						local spawner = Actor.Create("substrike.spawner", true, { Owner = Nod1, Location = s })
+					end)
+				end)
+			end
+		end
+	end)
+
+	if Difficulty ~= "easy" then
+		Trigger.AfterDelay(DateTime.Minutes(15), function()
+			Utils.Do(subStrike4Spawns, function(s)
+				local spawner = Actor.Create("substrike.spawner", true, { Owner = Nod1, Location = s })
+			end)
+		end)
+	end
+
+	Utils.Do(allSubStrikeSpawns, function(s)
+		Trigger.OnEnteredProximityTrigger(Map.CenterOfCell(s), WDist.FromCells(2), function(a, id)
+			if a.Owner == Nod1 and a.Type == "mole.upg" then
+				Trigger.RemoveProximityTrigger(id)
+				if not a.IsDead then
+					Trigger.OnPassengerExited(a, function(transport, passenger)
+						IdleHunt(passenger)
+					end)
+				end
+			end
+		end)
+	end)
 end

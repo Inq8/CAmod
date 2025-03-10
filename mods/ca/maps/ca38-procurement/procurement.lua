@@ -223,6 +223,34 @@ InitGDI = function()
 		Actor.Create("ai.superweapons.enabled", true, { Owner = GDI })
 		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = GDI })
 	end)
+
+	if Difficulty ~= "easy" then
+
+		Trigger.AfterDelay(DateTime.Minutes(13), function()
+			Carrier1.Patrol({ CarrierPatrol1.Location, CarrierPatrol2.Location, CarrierPatrol3.Location, CarrierPatrol2.Location })
+			Carrier2.Patrol({ CarrierPatrol1.Location, CarrierPatrol2.Location, CarrierPatrol3.Location, CarrierPatrol2.Location })
+		end)
+
+		Utils.Do({ Carrier1, Carrier2 }, function(c)
+			Trigger.OnKilled(c, function(self, killer)
+				Trigger.AfterDelay(DateTime.Minutes(3), function()
+					if not NavalYard.IsDead and NavalYard.Owner == GDI then
+						NavalYard.Produce("cv")
+					end
+				end)
+			end)
+		end)
+
+		Trigger.OnProduction(NavalYard, function(producer, produced)
+			if produced.Type == "cv" then
+				produced.Patrol({ CarrierPatrol1.Location, CarrierPatrol2.Location, CarrierPatrol3.Location, CarrierPatrol2.Location })
+			end
+		end)
+
+		Trigger.AfterDelay(DateTime.Minutes(16), function()
+			DoDisruptorDrop()
+		end)
+	end
 end
 
 InitGDIAttacks = function()
@@ -236,16 +264,16 @@ InitGDIAttacks = function()
 			InitAttackSquad(Squads.GDIMain2, GDI)
 		end)
 
+		Trigger.AfterDelay(Squads.GDIAir.Delay[Difficulty], function()
+			InitAirAttackSquad(Squads.GDIAir, GDI, USSR, { "harv", "4tnk", "4tnk.atomic", "3tnk", "3tnk.atomic", "3tnk.rhino", "3tnk.rhino.atomic",
+				"katy", "v3rl", "ttra", "v3rl", "apwr", "tpwr", "npwr", "tsla", "proc", "nukc", "ovld", "apoc", "apoc.atomic", "ovld.atomic" })
+		end)
+
 		if Difficulty == "hard" then
 			Trigger.AfterDelay(Squads.AntiTankAir.Delay[Difficulty], function()
 				InitAirAttackSquad(Squads.AntiTankAir, GDI, USSR, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" })
 			end)
 		end
-
-		Trigger.AfterDelay(Squads.GDIAir.Delay[Difficulty], function()
-			InitAirAttackSquad(Squads.GDIAir, GDI, USSR, { "harv", "4tnk", "4tnk.atomic", "3tnk", "3tnk.atomic", "3tnk.rhino", "3tnk.rhino.atomic",
-				"katy", "v3rl", "ttra", "v3rl", "apwr", "tpwr", "npwr", "tsla", "proc", "nukc", "ovld", "apoc", "apoc.atomic", "ovld.atomic" })
-		end)
 	end
 end
 
@@ -361,4 +389,30 @@ DeployChinese = function()
 		end)
 	end)
 	Trigger.AfterDelay(DateTime.Seconds(20), DeployChinese)
+end
+
+DoDisruptorDrop = function()
+	local dropPoints = { DisruptorDropDest1.Location, DisruptorDropDest2.Location }
+
+	if Difficulty == "hard" then
+		table.insert(dropPoints, DisruptorDropDest3.Location)
+		table.insert(dropPoints, DisruptorDropDest4.Location)
+	end
+
+	local delay = 1
+
+	Utils.Do(dropPoints, function(p)
+		Trigger.AfterDelay(delay, function()
+			local entryPath = { DisruptorDropSpawn.Location, DisruptorDropRally.Location, p }
+			local exitPath =  { DisruptorDropExit.Location }
+			ReinforcementsCA.ReinforceWithTransport(GDI, "ocar.disr", nil, entryPath, exitPath)
+		end)
+		delay = delay + DateTime.Seconds(1)
+		Trigger.OnEnteredFootprint({p}, function(a, id)
+			if a.Owner == GDI and a.Type == "disr" and not a.IsDead then
+				Trigger.RemoveFootprintTrigger(id)
+				IdleHunt(a)
+			end
+		end)
+	end)
 end

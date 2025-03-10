@@ -222,6 +222,12 @@ WorldLoaded = function()
 					Actor.Create("QueueUpdaterDummy", true, { Owner = Scrin })
 				end)
 				SetupMainObjectives({ NodConyard, SovietConyard })
+				if Difficulty == "hard" then
+					Trigger.AfterDelay(DateTime.Minutes(1), function()
+						local alliedGroundAttackers = Utils.Where(Greece.GetGroundAttackers(), IsGreeceGroundHunterUnit)
+						Utils.Do(alliedGroundAttackers, IdleHunt)
+					end)
+				end
 			end
 		end
 	end)
@@ -240,6 +246,12 @@ WorldLoaded = function()
 					Actor.Create("QueueUpdaterDummy", true, { Owner = Scrin })
 				end)
 				SetupMainObjectives({ NodConyard, AlliedConyard })
+				if Difficulty == "hard" then
+					Trigger.AfterDelay(DateTime.Minutes(1), function()
+						local ussrGroundAttackers = Utils.Where(USSR.GetGroundAttackers(), IsUSSRGroundHunterUnit)
+						Utils.Do(ussrGroundAttackers, IdleHunt)
+					end)
+				end
 			end
 		end
 	end)
@@ -258,6 +270,12 @@ WorldLoaded = function()
 					Actor.Create("QueueUpdaterDummy", true, { Owner = Scrin })
 				end)
 				SetupMainObjectives({ SovietConyard, AlliedConyard })
+				if Difficulty == "hard" then
+					Trigger.AfterDelay(DateTime.Minutes(1), function()
+						local nodGroundAttackers = Utils.Where(Nod.GetGroundAttackers(), IsNodGroundHunterUnit)
+						Utils.Do(nodGroundAttackers, IdleHunt)
+					end)
+				end
 			end
 		end
 	end)
@@ -328,6 +346,17 @@ end
 InitUSSR = function(paths, cameras)
 	Squads.Soviets.AttackPaths = paths
 
+	AutoRepairAndRebuildBuildings(USSR)
+	SetupRefAndSilosCaptureCredits(USSR)
+	AutoReplaceHarvesters(USSR)
+
+	local ussrGroundAttackers = USSR.GetGroundAttackers()
+
+	Utils.Do(ussrGroundAttackers, function(a)
+		TargetSwapChance(a, 10)
+		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsUSSRGroundHunterUnit)
+	end)
+
 	Trigger.AfterDelay(DateTime.Seconds(1), function()
 		Utils.Do(USSRSavedAdvancedBuildings, function(b)
 			Actor.Create(b.Type, true, { Location = b.Location, Owner = USSR })
@@ -355,6 +384,17 @@ end
 InitGreece = function(paths, cameras)
 	Squads.Allies.AttackPaths = paths
 
+	AutoRepairAndRebuildBuildings(Greece)
+	SetupRefAndSilosCaptureCredits(Greece)
+	AutoReplaceHarvesters(Greece)
+
+	local greeceGroundAttackers = Greece.GetGroundAttackers()
+
+	Utils.Do(greeceGroundAttackers, function(a)
+		TargetSwapChance(a, 10)
+		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGreeceGroundHunterUnit)
+	end)
+
 	Trigger.AfterDelay(DateTime.Seconds(1), function()
 		Utils.Do(AlliedSavedAdvancedBuildings, function(b)
 			Actor.Create(b.Type, true, { Location = b.Location, Owner = Greece })
@@ -381,6 +421,17 @@ end
 
 InitNod = function(paths, cameras)
 	Squads.Nod.AttackPaths = paths
+
+	AutoRepairAndRebuildBuildings(Nod)
+	SetupRefAndSilosCaptureCredits(Nod)
+	AutoReplaceHarvesters(Nod)
+
+	local nodGroundAttackers = Nod.GetGroundAttackers()
+
+	Utils.Do(nodGroundAttackers, function(a)
+		TargetSwapChance(a, 10)
+		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsNodGroundHunterUnit)
+	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(1), function()
 		Utils.Do(NodSavedAdvancedBuildings, function(b)
