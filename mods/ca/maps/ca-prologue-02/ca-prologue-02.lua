@@ -21,11 +21,9 @@ Squads = {
 		FollowLeader = true,
 		ProducerTypes = { Infantry = { "tent" }, Vehicles = { "weap" } },
 		Units = {
-			normal = {
-				{
-					Infantry = { "e3", "e1", "e1", "e1" },
-					Vehicles = { "jeep" },
-				},
+			{
+				Infantry = { "e3", "e1", "e1", "e1" },
+				Vehicles = { "jeep" },
 			},
 		},
 		AttackPaths = AlliedAttackPaths,

@@ -70,7 +70,7 @@ Squads = {
 		},
 		FollowLeader = true,
 		ProducerActors = { Infantry = { AlliedSouthBarracks }, Vehicles = { AlliedSouthFactory } },
-		Units = UnitCompositions.Allied.Main,
+		Units = AdjustCompositionsForDifficulty(UnitCompositions.Allied),
 		AttackPaths = AlliedAttackPaths,
 	},
 	GDIMain = {
@@ -86,7 +86,7 @@ Squads = {
 		},
 		FollowLeader = true,
 		ProducerActors = { Infantry = { GDISouthBarracks }, Vehicles = { GDISouthFactory } },
-		Units = UnitCompositions.GDI.Main,
+		Units = AdjustCompositionsForDifficulty(UnitCompositions.GDI),
 		AttackPaths = GDIAttackPaths,
 	},
 	AlliedAir = {

@@ -4,6 +4,8 @@ ChemMissileEnabledTime = {
 	hard = DateTime.Seconds((60 * 15) + 41),
 }
 
+AdjustedNodCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Nod)
+
 Squads = {
 	Main1 = {
 		Delay = {
@@ -19,7 +21,7 @@ Squads = {
 		FollowLeader = true,
 		DispatchDelay = DateTime.Seconds(15),
 		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
-		Units = UnitCompositions.Nod.Main,
+		Units = AdjustedNodCompositions,
 		AttackPaths = {
 			{ NodRally1.Location },
 			{ NodRally2.Location },
@@ -42,7 +44,7 @@ Squads = {
 		FollowLeader = true,
 		DispatchDelay = DateTime.Seconds(15),
 		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
-		Units = UnitCompositions.Nod.Main,
+		Units = AdjustedNodCompositions,
 		AttackPaths = {
 			{ NodRally1.Location },
 			{ NodRally2.Location },

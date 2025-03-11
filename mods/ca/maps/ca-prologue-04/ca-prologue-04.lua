@@ -15,11 +15,9 @@ Squads = {
 		FollowLeader = true,
 		ProducerTypes = { Infantry = { "pyle" }, Vehicles = { "weap.td" } },
 		Units = {
-			normal = {
-				{
-					Infantry = { "e1", "e1", "e1", "e2" },
-					Vehicles = { { "hmmv", "mtnk", "apc2" } },
-				},
+			{
+				Infantry = { "e1", "e1", "e1", "e2" },
+				Vehicles = { { "hmmv", "mtnk", "apc2" } },
 			},
 		},
 		AttackPaths = GDIAttackPaths,

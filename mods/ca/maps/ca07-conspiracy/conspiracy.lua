@@ -34,6 +34,8 @@ Patrols = {
 
 -- Squads
 
+AdjustedAlliedCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Allied)
+
 Squads = {
 	South = {
 		Delay = {
@@ -48,7 +50,7 @@ Squads = {
 		},
 		FollowLeader = true,
 		ProducerActors = { Infantry = { AlliedSouthBarracks }, Vehicles = { AlliedSouthFactory } },
-		Units = UnitCompositions.Allied.Main,
+		Units = AdjustedAlliedCompositions,
 		AttackPaths = GreeceSouthAttackPaths,
 	},
 	North = {
@@ -64,7 +66,7 @@ Squads = {
 		},
 		FollowLeader = true,
 		ProducerActors = { Infantry = { AlliedNorthBarracks }, Vehicles = { AlliedNorthFactory } },
-		Units = UnitCompositions.Allied.Main,
+		Units = AdjustedAlliedCompositions,
 		AttackPaths = GreeceNorthAttackPaths,
 	},
 	Air = {

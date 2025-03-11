@@ -12,6 +12,15 @@ DefendDuration = {
 
 MaleficSpawns = { MaleficSpawn1.Location, MaleficSpawn2.Location, MaleficSpawn3.Location, MaleficSpawn4.Location, MaleficSpawn5.Location, MaleficSpawn6.Location, MaleficSpawn7.Location }
 
+if Difficulty == "hard" then
+	table.insert(UnitCompositions.Nod, {
+		Infantry = {},
+		Vehicles = { "avtr", "avtr", "avtr", "avtr", "avtr", "avtr" },
+		MinTime = DateTime.Minutes(5)
+		IsSpecial = true
+	})
+end
+
 Squads = {
 	Nod = {
 		Delay = {
@@ -30,7 +39,7 @@ Squads = {
 		DispatchDelay = DateTime.Seconds(15),
 		FollowLeader = true,
 		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
-		Units = UnitCompositions.Nod.Main,
+		Units = AdjustCompositionsForDifficulty(UnitCompositions.Nod),
 		AttackPaths = { { NodRally1.Location, NodRally2.Location } },
 	},
 	ScrinRebels = {
@@ -49,7 +58,7 @@ Squads = {
 		end,
 		FollowLeader = true,
 		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
-		Units = UnitCompositions.Scrin.Main,
+		Units = AdjustCompositionsForDifficulty(UnitCompositions.Scrin),
 		AttackPaths = { { RebelRally1.Location, RebelRally2.Location } },
 	},
 	ScrinRebelsAir = {

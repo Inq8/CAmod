@@ -56,7 +56,7 @@ Squads = {
 		FollowLeader = true,
 		ProducerActors = { Infantry = { MainBarracks1, MainBarracks2 }, Vehicles = { MainFactory } },
 		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
-		Units = UnitCompositions.Soviet.Main,
+		Units = AdjustCompositionsForDifficulty(UnitCompositions.Soviet),
 		AttackPaths = AttackPaths,
 	},
 	AirAntiLight = {

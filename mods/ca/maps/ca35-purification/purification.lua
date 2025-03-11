@@ -11,6 +11,8 @@ ScrinReinforcementSpawns = {
 	ScrinReinforcementsSpawn1, ScrinReinforcementsSpawn2, ScrinReinforcementsSpawn3, ScrinReinforcementsSpawn4, ScrinReinforcementsSpawn5, ScrinReinforcementsSpawn6, ScrinReinforcementsSpawn7, ScrinReinforcementsSpawn8
 }
 
+AdjustedScrinCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Scrin)
+
 Squads = {
 	ScrinMain = {
 		Delay = {
@@ -26,7 +28,7 @@ Squads = {
 		FollowLeader = true,
 		ProducerActors = { Infantry = { Portal1, Portal2 }, Vehicles = { WarpSphere1, WarpSphere2 }, Aircraft = { GravityStabilizer1, GravityStabilizer2 } },
 		ProducerTypes = { Infantry = { "port", "wormhole" }, Vehicles = { "wsph", "wormhole" }, Aircraft = { "grav", "hiddenspawner" } },
-		Units = UnitCompositions.Scrin.Main,
+		Units = AdjustedScrinCompositions,
 		AttackPaths = {
 			{ ScrinAttack1a.Location, ScrinAttack1b.Location, ScrinAttack1c.Location, ScrinAttack1d.Location },
 			{ ScrinAttack1a.Location, ScrinAttack2.Location },
@@ -68,7 +70,7 @@ Squads = {
 		},
 		FollowLeader = true,
 		ProducerTypes = { Infantry = { "wormhole" }, Vehicles = { "wormhole" }, Aircraft = { "grav" } },
-		Units = UnitCompositions.Scrin.Main,
+		Units = AdjustedScrinCompositions,
 		AttackPaths = {
 			{ ScrinBaseCenter.Location },
 		},

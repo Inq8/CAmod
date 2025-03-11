@@ -42,7 +42,7 @@ Squads = {
 		},
 		FollowLeader = true,
 		ProducerActors = { Infantry = { AlliedSouthBarracks }, Vehicles = { AlliedSouthFactory } },
-		Units = UnitCompositions.Allied.Main,
+		Units = AdjustCompositionsForDifficulty(UnitCompositions.Allied),
 		AttackPaths = GreeceMainAttackPaths,
 	},
 	Traitor = {

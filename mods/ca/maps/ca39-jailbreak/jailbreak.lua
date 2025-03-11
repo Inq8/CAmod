@@ -21,8 +21,6 @@ SuperweaponsEnabledTime = {
 	hard = DateTime.Seconds((60 * 15) + 17),
 }
 
-table.insert(UnitCompositions.Allied.Main.hard, { Infantry = {}, Vehicles = {} })
-
 Squads = {
 	Main = {
 		Delay = {
@@ -40,7 +38,7 @@ Squads = {
 		end,
 		FollowLeader = true,
 		ProducerTypes = { Infantry = { "tent" }, Vehicles = { "weap" } },
-		Units = UnitCompositions.Allied.Main,
+		Units = AdjustCompositionsForDifficulty(UnitCompositions.Allied),
 		AttackPaths = {
 			{ Path1_1.Location, Path1_2.Location },
 			{ Path2_1.Location, Path2_2.Location },

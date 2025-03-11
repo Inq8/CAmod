@@ -29,7 +29,7 @@ Squads = {
 		},
 		FollowLeader = true,
 		ProducerActors = { Infantry = { GDIMainBarracks }, Vehicles = { GDIFactory } },
-		Units = UnitCompositions.GDI.Main,
+		Units = AdjustCompositionsForDifficulty(UnitCompositions.GDI),
 		AttackPaths = GDIMainAttackPaths,
 	},
 	GDISouth = {

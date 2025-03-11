@@ -33,7 +33,7 @@ Squads = {
 		},
 		FollowLeader = true,
 		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
-		Units = UnitCompositions.Allied.Main,
+		Units = AdjustCompositionsForDifficulty(UnitCompositions.Allied),
 		AttackPaths = {
 			-- set on init
 		},
@@ -52,7 +52,7 @@ Squads = {
 		DispatchDelay = DateTime.Seconds(15),
 		FollowLeader = true,
 		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
-		Units = UnitCompositions.Nod.Main,
+		Units = AdjustCompositionsForDifficulty(UnitCompositions.Nod),
 		AttackPaths = {
 			-- set on init
 		},
@@ -70,7 +70,7 @@ Squads = {
 		},
 		FollowLeader = true,
 		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
-		Units = UnitCompositions.Soviet.Main,
+		Units = AdjustCompositionsForDifficulty(UnitCompositions.Soviet),
 		AttackPaths = {
 			-- set on init
 		},

@@ -25,7 +25,7 @@ Squads = {
 		},
 		FollowLeader = true,
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
-		Units = UnitCompositions.Scrin.Main,
+		Units = AdjustCompositionsForDifficulty(UnitCompositions.Scrin),
 		AttackPaths = ScrinGroundAttackPaths,
 	},
 	ScrinWater = {

@@ -8,6 +8,17 @@ NodBuildingsToSell = { NodConyard, NodHand, NodFactory, NodComms }
 
 ScrinReinforcementSquad = { "s3", "s1", "s1", "s1", "s1", "s1", "s2", "s2", "s3", "intl", "rtpd", GunWalkerSeekerOrLacerator, CorrupterDevourerOrDarkener, CorrupterDevourerOrDarkener, GunWalkerSeekerOrLacerator, GunWalkerSeekerOrLacerator }
 
+if Difficulty == "hard" then
+	table.insert(UnitCompositions.Scrin, {
+		Infantry = { "impl", "impl", "impl", "impl", "impl", "impl", "impl", "impl", "impl" },
+		Vehicles = { "null", "null", "null", "null", "null", "null" },
+		MinTime = DateTime.Minutes(5)
+		IsSpecial = true
+	})
+end
+
+AdjustedScrinCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Scrin)
+
 Squads = {
 	ScrinRebels1 = {
 		Delay = {
@@ -18,7 +29,7 @@ Squads = {
 		AttackValuePerSecond = ScrinAttackValues,
 		FollowLeader = true,
 		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
-		Units = UnitCompositions.Scrin.Main,
+		Units = AdjustedScrinCompositions,
 		AttackPaths = {
 			{ RebelRally5.Location },
 			{ RebelRally6.Location },
@@ -33,7 +44,7 @@ Squads = {
 		AttackValuePerSecond = ScrinAttackValues,
 		FollowLeader = true,
 		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
-		Units = UnitCompositions.Scrin.Main,
+		Units = AdjustedScrinCompositions,
 		AttackPaths = {
 			{ RebelRally1.Location },
 			{ RebelRally2.Location },
@@ -48,7 +59,7 @@ Squads = {
 		AttackValuePerSecond = ScrinAttackValues,
 		FollowLeader = true,
 		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
-		Units = UnitCompositions.Scrin.Main,
+		Units = AdjustedScrinCompositions,
 		AttackPaths = {
 			{ RebelRally2.Location },
 			{ RebelRally3.Location },

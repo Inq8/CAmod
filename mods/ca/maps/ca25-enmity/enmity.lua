@@ -45,40 +45,18 @@ ChemMissileEnabledTime = {
 
 StructuresToSellToAvoidCapture = { SouthHand1, SouthHand2, SouthAirstrip, SouthConyard, WestHand, CenterHand, Helipad1, Helipad2 }
 
-ShadowUnitCompositions = {
-	easy = {
-		{ Infantry = {}, Vehicles = { "bike", "bike" }, MaxTime = DateTime.Minutes(14) },
-		{ Infantry = {}, Vehicles = { "bggy", "bike" }, MaxTime = DateTime.Minutes(14) },
-		{ Infantry = { "n3", "n1", "n1" }, Vehicles = { "bggy", "bggy" }, MaxTime = DateTime.Minutes(14) },
+ShadowUnitCompositions = AdjustCompositionsForDifficulty({
+	{ Infantry = {}, Vehicles = { "bike", "bike", "bike", "bike" }, MaxTime = DateTime.Minutes(10) },
+	{ Infantry = { "n3", "n1", "n1", "n1", "n4" }, Vehicles = { "bggy", "bggy", "bike", "bike" }, MaxTime = DateTime.Minutes(10) },
+	{ Infantry = { "n3", "n1", "n1", "n4" }, Vehicles = { "ltnk", "bggy", "bike" }, MaxTime = DateTime.Minutes(10) },
 
-		{ Infantry = {}, Vehicles = { "bike", "bike", "bike" }, MinTime = DateTime.Minutes(14) },
-		{ Infantry = { "n3", "n1", "n1", "shad" }, Vehicles = { "ltnk", "ltnk" }, MinTime = DateTime.Minutes(14) },
-		{ Infantry = { "n3", "n1", "n4", "n1" }, Vehicles = { "ftnk", "ftnk" }, MinTime = DateTime.Minutes(14) },
-		{ Infantry = { "n3", "shad", "n1", "shad" }, Vehicles = { "stnk.nod", "bggy" }, MinTime = DateTime.Minutes(14) },
-	},
-	normal = {
-		{ Infantry = {}, Vehicles = { "bggy", "bike", "bike" }, MaxTime = DateTime.Minutes(12) },
-		{ Infantry = { "n3", "n1", "n1", "n4" }, Vehicles = { "bggy", "bggy", "bike" }, MaxTime = DateTime.Minutes(12) },
-		{ Infantry = { "n3", "n1", "n1", "n4" }, Vehicles = { "ltnk" }, MaxTime = DateTime.Minutes(12) },
+	{ Infantry = {}, Vehicles = { "stnk.nod", "stnk.nod", "stnk.nod", "sapc.ai" }, MinTime = DateTime.Minutes(10) },
+	{ Infantry = { "n3", "n1", "n1", "n1", "n1", "n4", "n3", "shad" }, Vehicles = { "ltnk", "ltnk", "ftnk", "arty.nod" }, MinTime = DateTime.Minutes(10) },
+	{ Infantry = { "n3", "n1", "shad", "n1", "shad", "shad", "n4", "n1" }, Vehicles = { "stnk.nod", "ltnk", "bggy", "bike" }, MinTime = DateTime.Minutes(10) },
 
-		{ Infantry = {}, Vehicles = { "bggy", "bike", "bike", "stnk.nod" }, MinTime = DateTime.Minutes(12) },
-		{ Infantry = { "n3", "n1", "n1", "n4", "n1", "shad" }, Vehicles = { "ltnk", "ltnk" }, MinTime = DateTime.Minutes(12) },
-		{ Infantry = { "n3", "n1", "n1", "n4", "n1" }, Vehicles = { "ltnk", "arty.nod", "bggy" }, MinTime = DateTime.Minutes(12) },
-		{ Infantry = { "n3", "n1", "shad", "n1", "shad", "n1", "n4", "n1" }, Vehicles = { "stnk.nod", "ltnk", "bike" }, MinTime = DateTime.Minutes(12) },
-	},
-	hard = {
-		{ Infantry = {}, Vehicles = { "bike", "bike", "bike", "bike" }, MaxTime = DateTime.Minutes(10) },
-		{ Infantry = { "n3", "n1", "n1", "n1", "n4" }, Vehicles = { "bggy", "bggy", "bike", "bike" }, MaxTime = DateTime.Minutes(10) },
-		{ Infantry = { "n3", "n1", "n1", "n4" }, Vehicles = { "ltnk", "bggy", "bike" }, MaxTime = DateTime.Minutes(10) },
-
-		{ Infantry = {}, Vehicles = { "stnk.nod", "stnk.nod", "stnk.nod", "sapc.ai" }, MinTime = DateTime.Minutes(10) },
-		{ Infantry = { "n3", "n1", "n1", "n1", "n1", "n4", "n3", "shad" }, Vehicles = { "ltnk", "ltnk", "ftnk", "arty.nod" }, MinTime = DateTime.Minutes(10) },
-		{ Infantry = { "n3", "n1", "shad", "n1", "shad", "shad", "n4", "n1" }, Vehicles = { "stnk.nod", "ltnk", "bggy", "bike" }, MinTime = DateTime.Minutes(10) },
-
-		{ Infantry = { "n3", "n1", "n1", "n1", "n4", "n1", "shad" }, Vehicles = { "ltnk", "spec", "arty.nod", "stnk.nod" }, MinTime = DateTime.Minutes(13) },
-		{ Infantry = { "n3", "n1", "shad", "n1", "shad", "shad", "n4", "n1" }, Vehicles = { "stnk.nod", "spec", "bike", "bggy" }, MinTime = DateTime.Minutes(13) },
-	}
-}
+	{ Infantry = { "n3", "n1", "n1", "n1", "n4", "n1", "shad" }, Vehicles = { "ltnk", "spec", "arty.nod", "stnk.nod" }, MinTime = DateTime.Minutes(13) },
+	{ Infantry = { "n3", "n1", "shad", "n1", "shad", "shad", "n4", "n1" }, Vehicles = { "stnk.nod", "spec", "bike", "bggy" }, MinTime = DateTime.Minutes(13) },
+})
 
 Squads = {
 	North = {

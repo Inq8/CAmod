@@ -9,6 +9,8 @@ CyborgSquadInterval = {
 	hard = DateTime.Minutes(1),
 }
 
+AdjustedNodCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Nod)
+
 Squads = {
 	Main1 = {
 		AttackValuePerSecond = {
@@ -22,7 +24,7 @@ Squads = {
 		FollowLeader = true,
 		DispatchDelay = DateTime.Seconds(15),
 		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
-		Units = UnitCompositions.Nod.Main,
+		Units = AdjustedNodCompositions,
 		AttackPaths = {
 			{ NodRally1.Location },
 			{ NodRally2.Location },
@@ -46,7 +48,7 @@ Squads = {
 		FollowLeader = true,
 		DispatchDelay = DateTime.Seconds(15),
 		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
-		Units = UnitCompositions.Nod.Main,
+		Units = AdjustedNodCompositions,
 		AttackPaths = {
 			{ NodRally4.Location },
 			{ NodRally5.Location },
@@ -67,7 +69,7 @@ Squads = {
 		FollowLeader = true,
 		DispatchDelay = DateTime.Seconds(15),
 		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
-		Units = UnitCompositions.Nod.Main,
+		Units = AdjustedNodCompositions,
 		AttackPaths = {
 			{ NodRally1.Location },
 			{ NodRally2.Location },

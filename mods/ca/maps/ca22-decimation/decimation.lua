@@ -37,6 +37,8 @@ ParatroopersEnabledDelay = {
 	hard = DateTime.Minutes(2)
 }
 
+AdjustedSovietCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Soviet)
+
 Squads = {
 	East = {
 		Delay = {
@@ -51,7 +53,7 @@ Squads = {
 		},
 		FollowLeader = true,
 		ProducerActors = { Infantry = { MainBarracks }, Vehicles = { MainFactory } },
-		Units = UnitCompositions.Soviet.Main,
+		Units = AdjustedSovietCompositions,
 		AttackPaths = EastAttackPaths,
 	},
 	West = {
@@ -67,7 +69,7 @@ Squads = {
 		},
 		FollowLeader = true,
 		ProducerActors = { Infantry = { Barracks1, Barracks2 }, Vehicles = { Factory1, Factory2, Factory3, Factory4, Factory5 } },
-		Units = UnitCompositions.Soviet.Main,
+		Units = AdjustedSovietCompositions,
 		AttackPaths = WestAttackPaths,
 	},
 	AirMain = {

@@ -7,54 +7,44 @@ SealPatrolPath = { AlliedCamp.Location, ScrinAttack1.Location, SovietAttack3a.Lo
 
 UnitCompositionsShellmap = {
 	Soviet = {
-		normal = {
-			{ Infantry = { "e3", "e1", "e1", "e3", "e4" }, Vehicles = { "btr.ai" } },
-			{ Infantry = { "e3", "e1", "e1", "ttrp", "shok", "e1", "shok", "e3", "e4" }, Vehicles = { TeslaVariant, "btr.ai", SovietMammothVariant, "grad" } },
-			{ Infantry = { "e3", "e1", "e1", "ttrp", "shok", "e1", "e2", "e3", "e4" }, Vehicles = { "3tnk.rhino.atomic", "btr.ai", SovietMammothVariant, "grad" } },
-			{ Infantry = { "e3", "e1", "e1", "ttrp", "e8", "e1", "e2", "e3", "e4" }, Vehicles = { "3tnk.rhino.yuri", "btr.ai", SovietMammothVariant, "grad" } },
-			{ Infantry = { "e3", "e1", "e1", "ttrp", "deso", "e1", "e2", "e3", "e4" }, Vehicles = { "3tnk.rhino", "btr.yuri.ai", SovietMammothVariant, SovietBasicArty } },
-			{ Infantry = { "e3", "e1", "e1", "ttrp", "deso", "e1", "e2", "e3", "e4" }, Vehicles = { "3tnk", "btr.yuri.ai", "isu", SovietBasicArty } }
-		}
+		{ Infantry = { "e3", "e1", "e1", "e3", "e4" }, Vehicles = { "btr.ai" } },
+		{ Infantry = { "e3", "e1", "e1", "ttrp", "shok", "e1", "shok", "e3", "e4" }, Vehicles = { TeslaVariant, "btr.ai", SovietMammothVariant, "grad" } },
+		{ Infantry = { "e3", "e1", "e1", "ttrp", "shok", "e1", "e2", "e3", "e4" }, Vehicles = { "3tnk.rhino.atomic", "btr.ai", SovietMammothVariant, "grad" } },
+		{ Infantry = { "e3", "e1", "e1", "ttrp", "e8", "e1", "e2", "e3", "e4" }, Vehicles = { "3tnk.rhino.yuri", "btr.ai", SovietMammothVariant, "grad" } },
+		{ Infantry = { "e3", "e1", "e1", "ttrp", "deso", "e1", "e2", "e3", "e4" }, Vehicles = { "3tnk.rhino", "btr.yuri.ai", SovietMammothVariant, SovietBasicArty } },
+		{ Infantry = { "e3", "e1", "e1", "ttrp", "deso", "e1", "e2", "e3", "e4" }, Vehicles = { "3tnk", "btr.yuri.ai", "isu", SovietBasicArty } }
 	},
 	Allies = {
-		normal = {
-			{ Infantry = { "e3", "e1", "e1", "e3", "e1" }, Vehicles = { "apc.ai" } },
-			{ Infantry = { "e3", "e1", "e1", "cryt", "cryt", "e1", "cryt", "e3", "snip" }, Vehicles = { "arty", "apc.ai", "pcan", "ptnk" } },
-			{ Infantry = { "e3", "e1", "e1", "cryt", "cryt", "e1", "e1", "e3", "snip" }, Vehicles = { "2tnk", "apc.ai", "batf.ai", "ptnk" } },
-			{ Infantry = { "e3", "e1", "e1", "cryt", "enfo", "e1", "e1", "e3", "snip" }, Vehicles = { "2tnk", "apc.ai", "chpr", "ptnk" } },
-			{ Infantry = { "e3", "e1", "e1", "cryt", "cryt", "e1", "e1", "e3", "snip" }, Vehicles = { "tnkd", "rapc.ai", "batf.ai", "ptnk" } },
-			{ Infantry = { "e3", "e1", "e1", "cryt", "cryt", "e1", "e1", "e3", "snip" }, Vehicles = { "2tnk", "rapc.ai", "cryo", "ptnk" } }
-		}
+		{ Infantry = { "e3", "e1", "e1", "e3", "e1" }, Vehicles = { "apc.ai" } },
+		{ Infantry = { "e3", "e1", "e1", "cryt", "cryt", "e1", "cryt", "e3", "snip" }, Vehicles = { "arty", "apc.ai", "pcan", "ptnk" } },
+		{ Infantry = { "e3", "e1", "e1", "cryt", "cryt", "e1", "e1", "e3", "snip" }, Vehicles = { "2tnk", "apc.ai", "batf.ai", "ptnk" } },
+		{ Infantry = { "e3", "e1", "e1", "cryt", "enfo", "e1", "e1", "e3", "snip" }, Vehicles = { "2tnk", "apc.ai", "chpr", "ptnk" } },
+		{ Infantry = { "e3", "e1", "e1", "cryt", "cryt", "e1", "e1", "e3", "snip" }, Vehicles = { "tnkd", "rapc.ai", "batf.ai", "ptnk" } },
+		{ Infantry = { "e3", "e1", "e1", "cryt", "cryt", "e1", "e1", "e3", "snip" }, Vehicles = { "2tnk", "rapc.ai", "cryo", "ptnk" } }
 	},
 	GDI = {
-		normal = {
-			{ Infantry = { "n1", "n1", "n1", "n3", "n2", "n1", "n1" }, Vehicles = { "vulc.ai", "gdrn", "gdrn", "hmmv"  } },
-			{ Infantry = { "n1", "n1", "n1", "n3", "n2", "n1", "n1" }, Vehicles = { "mtnk", "vulc", "gdrn", "mtnk" } },
-			{ Infantry = { "n1", "n1", "n1", "n3", "n2", "n1", "n1" }, Vehicles = { "hsam", "hsam", "hsam", "mtnk" } },
-			{ Infantry = { "n3", "n1", "n1", "n1", "n3", "n2", "n1", "n1", "n3" }, Vehicles = { "mtnk", "vulc", "apc2.gdiai", "vulc.ai" } },
-			{ Infantry = { "n3", "n1", "n1", "n1", "n3", "n1", "n1", "n1", "n3" }, Vehicles = { "mtnk", "vulc", "apc2.gdiai", "msam" } },
-			{ Infantry = { "jjet", "jjet", "jjet", "bjet" }, Vehicles = { "vulc", "vulc", "hmmv.tow", "hmmv.tow" } },
-			{ Infantry = { "n1", "n1", "n3" }, Vehicles = { GDIMammothVariant, "vulc", "hsam", "disr", "xo", "xo" } },
-			{ Infantry = { "n1", "n3", "n1", "n1", "n2", "n3", "n1", "n1" }, Vehicles = { GDIMammothVariant, "vulc", GDIMammothVariant, "xo" } },
-		}
+		{ Infantry = { "n1", "n1", "n1", "n3", "n2", "n1", "n1" }, Vehicles = { "vulc.ai", "gdrn", "gdrn", "hmmv"  } },
+		{ Infantry = { "n1", "n1", "n1", "n3", "n2", "n1", "n1" }, Vehicles = { "mtnk", "vulc", "gdrn", "mtnk" } },
+		{ Infantry = { "n1", "n1", "n1", "n3", "n2", "n1", "n1" }, Vehicles = { "hsam", "hsam", "hsam", "mtnk" } },
+		{ Infantry = { "n3", "n1", "n1", "n1", "n3", "n2", "n1", "n1", "n3" }, Vehicles = { "mtnk", "vulc", "apc2.gdiai", "vulc.ai" } },
+		{ Infantry = { "n3", "n1", "n1", "n1", "n3", "n1", "n1", "n1", "n3" }, Vehicles = { "mtnk", "vulc", "apc2.gdiai", "msam" } },
+		{ Infantry = { "jjet", "jjet", "jjet", "bjet" }, Vehicles = { "vulc", "vulc", "hmmv.tow", "hmmv.tow" } },
+		{ Infantry = { "n1", "n1", "n3" }, Vehicles = { GDIMammothVariant, "vulc", "hsam", "disr", "xo", "xo" } },
+		{ Infantry = { "n1", "n3", "n1", "n1", "n2", "n3", "n1", "n1" }, Vehicles = { GDIMammothVariant, "vulc", GDIMammothVariant, "xo" } },
 	},
 	Nod = {
-		normal = {
-			{ Infantry = {}, Vehicles = { "bggy", "bike", "bike", "bike", "bggy" } },
-			{ Infantry = { "n1", "n3", "n4", "n1" }, Vehicles = { "bggy", "bike", "bike", "stnk.nod", "bike", "bggy" } },
-			{ Infantry = { "n3", "n1", "n1", "n4", "n1", "bh", "bh" }, Vehicles = { "ltnk", "ltnk", "hftk", "hftk", "bike" } },
-			{ Infantry = { "n3", "n1", "n1", "n4", "n1", "n1c", "acol", "n1" }, Vehicles = { "ltnk", "arty.nod", "ltnk", "stnk.nod" } },
-			{ Infantry = { AdvancedCyborg, AdvancedCyborg, BasicCyborg, BasicCyborg, BasicCyborg, BasicCyborg, BasicCyborg }, Vehicles = { "ftnk", "ltnk", "bike" } },
-			{ Infantry = { "n3", "n1", "n3", "n1", "n4", "n1", BasicCyborg, AdvancedCyborg }, Vehicles = { "ltnk", "arty.nod", "wtnk" } },
-		}
+		{ Infantry = {}, Vehicles = { "bggy", "bike", "bike", "bike", "bggy" } },
+		{ Infantry = { "n1", "n3", "n4", "n1" }, Vehicles = { "bggy", "bike", "bike", "stnk.nod", "bike", "bggy" } },
+		{ Infantry = { "n3", "n1", "n1", "n4", "n1", "bh", "bh" }, Vehicles = { "ltnk", "ltnk", "hftk", "hftk", "bike" } },
+		{ Infantry = { "n3", "n1", "n1", "n4", "n1", "n1c", "acol", "n1" }, Vehicles = { "ltnk", "arty.nod", "ltnk", "stnk.nod" } },
+		{ Infantry = { AdvancedCyborg, AdvancedCyborg, BasicCyborg, BasicCyborg, BasicCyborg, BasicCyborg, BasicCyborg }, Vehicles = { "ftnk", "ltnk", "bike" } },
+		{ Infantry = { "n3", "n1", "n3", "n1", "n4", "n1", BasicCyborg, AdvancedCyborg }, Vehicles = { "ltnk", "arty.nod", "wtnk" } },
 	},
 	Scrin = {
-		normal = {
-			{ Infantry = { "s3", "s1", "s1", "s1", "s3", "s1", "s4", "s4" }, Vehicles = { "intl.ai2", "intl.ai2", GunWalkerSeekerOrLacerator, CorrupterDevourerOrDarkener, CorrupterDevourerOrDarkener, GunWalkerSeekerOrLacerator } },
-			{ Infantry = { "s3", "s1", "s1", "s1", "s3", "s1", "s4", "s4" }, Vehicles = { "intl.ai2", "tpod", GunWalkerSeekerOrLacerator, CorrupterDevourerOrDarkener, CorrupterDevourerOrDarkener, GunWalkerSeekerOrLacerator } },
-			{ Infantry = {}, Vehicles = { "lace", "lace", "lace", "seek", "seek" }, Aircraft = {} },
-			{ Infantry = {}, Vehicles = {}, Aircraft = { PacOrDevastator, "deva", "pac" } }
-		}
+		{ Infantry = { "s3", "s1", "s1", "s1", "s3", "s1", "s4", "s4" }, Vehicles = { "intl.ai2", "intl.ai2", GunWalkerSeekerOrLacerator, CorrupterDevourerOrDarkener, CorrupterDevourerOrDarkener, GunWalkerSeekerOrLacerator } },
+		{ Infantry = { "s3", "s1", "s1", "s1", "s3", "s1", "s4", "s4" }, Vehicles = { "intl.ai2", "tpod", GunWalkerSeekerOrLacerator, CorrupterDevourerOrDarkener, CorrupterDevourerOrDarkener, GunWalkerSeekerOrLacerator } },
+		{ Infantry = {}, Vehicles = { "lace", "lace", "lace", "seek", "seek" }, Aircraft = {} },
+		{ Infantry = {}, Vehicles = {}, Aircraft = { PacOrDevastator, "deva", "pac" } }
 	}
 }
 

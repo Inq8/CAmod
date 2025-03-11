@@ -4,6 +4,8 @@ IonCannonEnabledTime = {
 	hard = DateTime.Seconds((60 * 10) + 48),
 }
 
+AdjustedGDICompositions = AdjustCompositionsForDifficulty(UnitCompositions.GDI)
+
 Squads = {
 	Main = {
 		Delay = {
@@ -19,7 +21,7 @@ Squads = {
 		FollowLeader = true,
 		ProducerActors = { Infantry = { GDIBarracks1 }, Vehicles = { GDIFactory1 } },
 		ProducerTypes = { Infantry = { "tent" }, Vehicles = { "weap" } },
-		Units = UnitCompositions.GDI.Main,
+		Units = AdjustedGDICompositions,
 		AttackPaths = {
 			-- set on init
 		},
@@ -38,7 +40,7 @@ Squads = {
 		FollowLeader = true,
 		ProducerActors = { Infantry = { GDIBarracks2 }, Vehicles = { GDIFactory2 } },
 		ProducerTypes = { Infantry = { "tent" }, Vehicles = { "weap" } },
-		Units = UnitCompositions.GDI.Main,
+		Units = AdjustedGDICompositions,
 		AttackPaths = {
 			-- set on init
 		},

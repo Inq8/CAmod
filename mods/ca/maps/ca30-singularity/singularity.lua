@@ -3,6 +3,8 @@ NWReactors = { NWPower1, NWPower2, NWPower3, NWPower4, NWPower5, NWPower6, NWPow
 
 NEReactors = { NEPower1, NEPower2, NEPower3, NEPower4, NEPower5, NEPower6, NEPower7, NEPower8 }
 
+AdjustedScrinCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Scrin)
+
 Squads = {
 	ScrinWest = {
 		AttackValuePerSecond = {
@@ -14,7 +16,7 @@ Squads = {
 		FollowLeader = true,
 		ProducerActors = { Infantry = { WestPortal }, Vehicles = { WestWarpSphere } },
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
-		Units = UnitCompositions.Scrin.Main,
+		Units = AdjustedScrinCompositions,
 		AttackPaths = {
 			{ WestAttackNode1.Location, WestAttackNode2.Location, WestAttackNode5.Location },
 			{ WestAttackNode1.Location, WestAttackNode2.Location, WestAttackNode3.Location, WestAttackNode4.Location, WestAttackNode5.Location },
@@ -30,7 +32,7 @@ Squads = {
 		FollowLeader = true,
 		ProducerActors = { Infantry = { EastPortal }, Vehicles = { EastWarpSphere } },
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
-		Units = UnitCompositions.Scrin.Main,
+		Units = AdjustedScrinCompositions,
 		AttackPaths = {
 			{ EastAttackNode1.Location, EastAttackNode2.Location, EastAttackNode3.Location, EastAttackNode4.Location, EastAttackNode5.Location },
 			{ EastAttackNode1.Location, EastAttackNode5.Location },
@@ -46,7 +48,7 @@ Squads = {
 		FollowLeader = true,
 		ProducerActors = { Infantry = { CenterPortal }, Vehicles = { CenterWarpSphere } },
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
-		Units = UnitCompositions.Scrin.Main,
+		Units = AdjustedScrinCompositions,
 		AttackPaths = { { CenterAttackNode1.Location, CenterAttackNode2.Location, CenterAttackNode3.Location } },
 	},
 	SovietSlaves = {
@@ -65,7 +67,7 @@ Squads = {
 		end,
 		FollowLeader = true,
 		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
-		Units = UnitCompositions.Soviet.Main,
+		Units = AdjustCompositionsForDifficulty(UnitCompositions.Soviet),
 		AttackPaths = { { WestAttackNode4.Location, WestAttackNode5.Location } },
 	},
 	NodSlaves = {
@@ -85,7 +87,7 @@ Squads = {
 		DispatchDelay = DateTime.Seconds(15),
 		FollowLeader = true,
 		ProducerTypes = { Infantry = { "hand" }, Vehicles = { "airs" } },
-		Units = UnitCompositions.Nod.Main,
+		Units = AdjustCompositionsForDifficulty(UnitCompositions.Nod),
 		AttackPaths = { { EastAttackNode4.Location, EastAttackNode5.Location } },
 	},
 	AlliedSlaves = {
@@ -104,7 +106,7 @@ Squads = {
 		end,
 		FollowLeader = true,
 		ProducerTypes = { Infantry = { "tent" }, Vehicles = { "weap" } },
-		Units = UnitCompositions.Allied.Main,
+		Units = AdjustCompositionsForDifficulty(UnitCompositions.Allied),
 		AttackPaths = { { CenterAttackNode3.Location } },
 	},
 	USSR = {
@@ -115,11 +117,7 @@ Squads = {
 		},
 		FollowLeader = true,
 		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
-		Units = {
-			easy = UnitCompositions.Soviet.Main.normal,
-			normal = UnitCompositions.Soviet.Main.normal,
-			hard = UnitCompositions.Soviet.Main.normal,
-		},
+		Units = AdjustCompositionsForDifficulty(UnitCompositions.Soviet, "normal"),
 		AttackPaths = { { WestAttackNode2.Location, WestAttackNode1.Location, WormholeWP.Location } },
 	},
 	Nod = {
@@ -131,11 +129,7 @@ Squads = {
 		DispatchDelay = DateTime.Seconds(15),
 		FollowLeader = true,
 		ProducerTypes = { Infantry = { "hand" }, Vehicles = { "airs" } },
-		Units = {
-			easy = UnitCompositions.Nod.Main.normal,
-			normal = UnitCompositions.Nod.Main.normal,
-			hard = UnitCompositions.Nod.Main.normal,
-		},
+		Units = AdjustCompositionsForDifficulty(UnitCompositions.Nod, "normal"),
 		AttackPaths = { { EastAttackNode2.Location, EastAttackNode1.Location, WormholeWP.Location } },
 	},
 	Greece = {
@@ -146,11 +140,7 @@ Squads = {
 		},
 		FollowLeader = true,
 		ProducerTypes = { Infantry = { "tent" }, Vehicles = { "weap" } },
-		Units = {
-			easy = UnitCompositions.Allied.Main.normal,
-			normal = UnitCompositions.Allied.Main.normal,
-			hard = UnitCompositions.Allied.Main.normal,
-		},
+		Units = AdjustCompositionsForDifficulty(UnitCompositions.Allied, "normal"),
 		AttackPaths = { { CenterAttackNode2.Location, CenterAttackNode1.Location, WormholeWP.Location } },
 	},
 	ScrinAir = {

@@ -8,6 +8,8 @@ SuperweaponsEnabledTime = {
 	hard = DateTime.Seconds((60 * 15) + 17),
 }
 
+AdjustedGDICompositions = AdjustCompositionsForDifficulty(UnitCompositions.GDI)
+
 Squads = {
 	GDIMain1 = {
 		Delay = {
@@ -22,7 +24,7 @@ Squads = {
 		},
 		FollowLeader = true,
 		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
-		Units = UnitCompositions.GDI.Main,
+		Units = AdjustedGDICompositions,
 		AttackPaths = {
 			{ Path1_1.Location, Path1_2.Location },
 			{ Path2_1.Location, Path2_2.Location },
@@ -42,7 +44,7 @@ Squads = {
 		},
 		FollowLeader = true,
 		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
-		Units = UnitCompositions.GDI.Main,
+		Units = AdjustedGDICompositions,
 		AttackPaths = {
 			{ Path1_1.Location, Path1_2.Location },
 			{ Path2_1.Location, Path2_2.Location },

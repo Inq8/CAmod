@@ -55,6 +55,8 @@ LabDefenseUnits = {
 	}
 }
 
+AdjustedNodCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Nod)
+
 Squads = {
 	South = {
 		Delay = {
@@ -70,7 +72,7 @@ Squads = {
 		DispatchDelay = DateTime.Seconds(15),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { NodSouthHand }, Vehicles = { NodSouthAirstrip } },
-		Units = UnitCompositions.Nod.Main,
+		Units = AdjustedNodCompositions,
 		AttackPaths = NodSouthAttackPaths,
 	},
 	East = {
@@ -87,7 +89,7 @@ Squads = {
 		DispatchDelay = DateTime.Seconds(15),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { NodEastHand1, NodEastHand2 }, Vehicles = { NodEastAirstrip } },
-		Units = UnitCompositions.Nod.Main,
+		Units = AdjustedNodCompositions,
 		AttackPaths = NodEastAttackPaths,
 	},
 	Air = {

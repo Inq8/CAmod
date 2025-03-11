@@ -30,12 +30,16 @@ RiftEnabledTime = {
 	hard = DateTime.Seconds((60 * 20) + 17),
 }
 
-table.insert(UnitCompositions.Scrin.Main.hard, {
-	Infantry = { "s3", "s4", "evis", "evis", "evis", "evis", "s1", "s1", "s4", "s1", "s4", "s1", "s4", "s1", "mast" },
-	Vehicles = { "shrw", TripodVariant, TripodVariant, "shrw", CorrupterDevourerOrDarkener, "oblt", "shrw" },
-	Aircraft = { PacOrDevastator, "pac" },
-	MinTime = DateTime.Minutes(22)
-})
+if Difficulty == "hard" then
+	table.insert(UnitCompositions.Scrin, {
+		Infantry = { "s3", "s4", "evis", "evis", "evis", "evis", "s1", "s1", "s4", "s1", "s4", "s1", "s4", "s1", "mast" },
+		Vehicles = { "shrw", TripodVariant, TripodVariant, "shrw", CorrupterDevourerOrDarkener, "oblt", "shrw" },
+		Aircraft = { PacOrDevastator, "pac" },
+		MinTime = DateTime.Minutes(22)
+	})
+end
+
+AdjustedScrinCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Scrin)
 
 Squads = {
 	ScrinMain = {
@@ -55,7 +59,7 @@ Squads = {
 		FollowLeader = true,
 		ProducerActors = { Infantry = { Portal1 }, Vehicles = { WarpSphere1 }, Aircraft = { GravityStabilizer1, GravityStabilizer2 } },
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
-		Units = UnitCompositions.Scrin.Main,
+		Units = AdjustedScrinCompositions,
 		AttackPaths = {
 			{ L1.Location, L2.Location, L3.Location, L4.Location },
 			{ L1.Location, L2.Location, M3.Location, M4.Location },
@@ -72,7 +76,7 @@ Squads = {
 		FollowLeader = true,
 		ProducerActors = { Infantry = { Portal2 }, Vehicles = { WarpSphere2 }, Aircraft = { GravityStabilizer1, GravityStabilizer2, GravityStabilizer3 } },
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
-		Units = UnitCompositions.Scrin.Main,
+		Units = AdjustedScrinCompositions,
 		AttackPaths = {
 			{ M1.Location, M2.Location, R4.Location, M5.Location },
 			{ R1.Location, R2.Location, R3.Location, R4.Location, R5.Location }
@@ -87,7 +91,7 @@ Squads = {
 		FollowLeader = true,
 		ProducerActors = { Infantry = { Portal3 }, Vehicles = { WarpSphere4 }, Aircraft = { GravityStabilizer3 } },
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
-		Units = UnitCompositions.Scrin.Main,
+		Units = AdjustedScrinCompositions,
 		AttackPaths = {
 			{ R7.Location, R6.Location, GDIBase.Location },
 			{ R10.Location, R6.Location, GDIBase.Location },
@@ -102,7 +106,7 @@ Squads = {
 		FollowLeader = true,
 		ProducerActors = { Infantry = { RebelPortal1 }, Vehicles = { RebelWarpSphere1 }, Aircraft = { RebelGravityStabilizer1 } },
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
-		Units = UnitCompositions.Scrin.Main,
+		Units = AdjustedScrinCompositions,
 		AttackPaths = {
 			{ M5.Location, M2.Location, M1.Location },
 			{ M5.Location, R4.Location, M2.Location },
@@ -117,7 +121,7 @@ Squads = {
 		},
 		FollowLeader = true,
 		ProducerTypes = { Infantry = { "pyle" }, Vehicles = { "weap.td" }, Aircraft = { "afld.gdi" } },
-		Units = UnitCompositions.GDI.Main,
+		Units = AdjustCompositionsForDifficulty(UnitCompositions.GDI),
 		AttackPaths = {
 			{ R6.Location, R7.Location, ScrinBase2.Location },
 			{ R6.Location, R10.Location, R9.Location, ScrinBase2.Location },

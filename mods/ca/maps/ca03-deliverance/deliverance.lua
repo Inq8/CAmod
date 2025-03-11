@@ -93,7 +93,7 @@ Squads = {
 		FollowLeader = true,
 		ProducerActors = { Infantry = { SovietMainBarracks1, SovietMainBarracks2 }, Vehicles = { SovietMainFactory1, SovietMainFactory2 } },
 		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
-		Units = UnitCompositions.Soviet.Main,
+		Units = AdjustCompositionsForDifficulty(UnitCompositions.Soviet),
 		AttackPaths = SovietMainAttackPaths,
 	},
 	Northern = {

@@ -59,7 +59,7 @@ Squads = {
 		FollowLeader = true,
 		RandomProducerActor = true,
 		ProducerActors = { Infantry = LeftScrinSpawners, Vehicles = LeftScrinSpawners, Aircraft = LeftScrinSpawners },
-		Units = UnitCompositions.Scrin.Main,
+		Units = AdjustCompositionsForDifficulty(UnitCompositions.Scrin),
 		AttackPaths = {
 			{ LAttackRally1a.Location, LAttackRally1b.Location },
 			{ LAttackRally2a.Location, LAttackRally2b.Location },

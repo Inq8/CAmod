@@ -20,7 +20,7 @@ Squads = {
 		},
 		FollowLeader = true,
 		ProducerTypes = { Infantry = { "tent" }, Vehicles = { "weap" } },
-		Units = UnitCompositions.Allied.Main,
+		Units = AdjustCompositionsForDifficulty(UnitCompositions.Allied),
 		AttackPaths = GreeceAttackPaths,
 	},
 	GDIMain = {
@@ -31,7 +31,7 @@ Squads = {
 		},
 		FollowLeader = true,
 		ProducerTypes = { Infantry = { "pyle" }, Vehicles = { "weap.td" } },
-		Units = UnitCompositions.GDI.Main,
+		Units = AdjustCompositionsForDifficulty(UnitCompositions.GDI),
 		AttackPaths = GDIAttackPaths,
 	},
 	GDIAir = {

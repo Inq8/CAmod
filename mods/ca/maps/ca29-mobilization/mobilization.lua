@@ -35,7 +35,7 @@ FinalReinforcementGroups = {
 	{ "htnk", "zdef", "zdef", "n1", "n1", "n1", "n3", "n1", "medi", "n1", "n1", "n1", "n3", "pbul" }
 }
 
-Utils.Do(UnitCompositions.Scrin.Main[Difficulty], function(c)
+Utils.Do(UnitCompositions.Scrin, function(c)
 	if c.Aircraft ~= nil then
 		c.Aircraft = {}
 	end
@@ -56,7 +56,7 @@ Squads = {
 		FollowLeader = true,
 		ProducerActors = nil,
 		ProducerTypes = { Infantry = { "wormhole" }, Vehicles = { "wormhole" }, Aircraft = { "wormhole" } },
-		Units = UnitCompositions.Scrin.Main,
+		Units = AdjustCompositionsForDifficulty(UnitCompositions.Scrin),
 		AttackPaths = {
 			{ HQ.Location },
 		},
