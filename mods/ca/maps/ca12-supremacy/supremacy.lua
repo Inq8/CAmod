@@ -111,7 +111,7 @@ WorldLoaded = function()
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(Nod)
-	AdjustStartingCash()
+	AdjustPlayerStartingCashForDifficulty()
 	InitGDI()
 	InitNod()
 

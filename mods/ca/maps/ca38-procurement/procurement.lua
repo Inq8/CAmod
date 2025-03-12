@@ -114,7 +114,7 @@ WorldLoaded = function()
 	Camera.Position = McvRally.CenterPosition
 
 	InitObjectives(USSR)
-	AdjustStartingCash()
+	AdjustPlayerStartingCashForDifficulty()
 	InitGDI()
 	InitChina()
 

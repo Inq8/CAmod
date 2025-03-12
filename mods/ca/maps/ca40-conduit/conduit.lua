@@ -140,7 +140,7 @@ WorldLoaded = function()
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(USSR)
-	AdjustStartingCash()
+	AdjustPlayerStartingCashForDifficulty()
 	InitNod()
 
 	ObjectiveSecureGateway = USSR.AddObjective("Eliminate Nod forces near gateway.")

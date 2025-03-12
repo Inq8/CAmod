@@ -172,7 +172,7 @@ WorldLoaded = function()
 	Camera.Position = McvLanding.CenterPosition
 
 	InitObjectives(Greece)
-	AdjustStartingCash()
+	AdjustPlayerStartingCashForDifficulty()
 	InitNod()
 	DoMcvArrival()
 

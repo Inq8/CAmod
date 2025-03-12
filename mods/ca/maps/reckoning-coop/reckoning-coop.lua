@@ -270,7 +270,7 @@ WorldLoaded = function()
 
 	InitObjectives(Nod)
 	InitObjectives(GDI)
-	AdjustStartingCash()
+	AdjustPlayerStartingCashForDifficulty()
 	InitScrin()
 	InitScrinRebels()
 

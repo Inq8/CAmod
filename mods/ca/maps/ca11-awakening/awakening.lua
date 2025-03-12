@@ -141,7 +141,7 @@ WorldLoaded = function()
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(Nod)
-	AdjustStartingCash()
+	AdjustPlayerStartingCashForDifficulty()
 	InitUSSR()
 
 	ObjectiveProtectTemple = Nod.AddObjective("Protect Temple Prime.")

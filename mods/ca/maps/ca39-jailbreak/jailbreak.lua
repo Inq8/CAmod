@@ -122,7 +122,7 @@ WorldLoaded = function()
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(USSR)
-	AdjustStartingCash()
+	AdjustPlayerStartingCashForDifficulty()
 	InitGreece()
 
 	ObjectiveClearPath = USSR.AddObjective("Clear a path for reinforcements.")

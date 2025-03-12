@@ -171,7 +171,7 @@ WorldLoaded = function()
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(Scrin)
-	AdjustStartingCash()
+	AdjustPlayerStartingCashForDifficulty()
 
 	ObjectiveInitialSubjugation = Scrin.AddObjective("Subjugate one of the three human bases.")
 	ObjectiveProdigyMustSurvive = Scrin.AddSecondaryObjective("Protect the Prodigy.")

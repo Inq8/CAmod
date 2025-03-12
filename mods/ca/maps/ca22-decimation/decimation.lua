@@ -135,7 +135,7 @@ WorldLoaded = function()
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(Scrin)
-	AdjustStartingCash()
+	AdjustPlayerStartingCashForDifficulty()
 	InitUSSR()
 
 	ObjectiveDestroyFactories = Scrin.AddObjective("Destroy Soviet Industrial Plant and all factories.")

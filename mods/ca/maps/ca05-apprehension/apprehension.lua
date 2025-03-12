@@ -38,6 +38,8 @@ WorldLoaded = function()
 	ObjectiveClearBase = Greece.AddObjective("Clear the Nod naval base.")
 	ObjectiveApprehendTransports = Greece.AddObjective("Secure Nod transports.")
 
+	UpdateMissionText()
+
 	NodBaseCamera.Destroy()
 
 	if Difficulty ~= "easy" then

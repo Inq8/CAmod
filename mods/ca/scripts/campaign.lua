@@ -521,19 +521,6 @@ RestoreSquadProduction = function(oldBuilding, newBuilding)
 	end
 end
 
--- returns true if player has one of any of the specified actor types
-HasOneOf = function(player, types)
-	local count = 0
-
-	Utils.Do(types, function(name)
-		if #player.GetActorsByType(name) > 0 then
-			count = count + 1
-		end
-	end)
-
-	return count > 0
-end
-
 -- make specified units have a chance to swap targets when attacked instead of chasing one target endlessly
 TargetSwapChance = function(unit, chance, isMissionPlayerFunc)
 	if isMissionPlayerFunc == nil then
@@ -1160,10 +1147,10 @@ SetupReveals = function(revealPoints, cameraType)
 	end)
 end
 
-AdjustStartingCash = function(player)
+AdjustPlayerStartingCashForDifficulty = function(player)
 	if player == nil then
 		for _, p in pairs(MissionPlayers) do
-			AdjustStartingCash(p)
+			AdjustPlayerStartingCashForDifficulty(p)
 		end
 	else
 		player.Cash = player.Cash + CashAdjustments[Difficulty]
@@ -1391,9 +1378,11 @@ AdjustCompositionForDifficulty = function(composition, unitCosts, difficulty)
 	-- units added to the adjusted composition
 	local updatedComposition = { }
 
-	for queueName,queueUnits in pairs(comp) do
+	for k,v in pairs(comp) do
 
-		if not IsCompositionSetting(queueName) then
+		if not IsCompositionSetting(k) then
+			local queueName = k
+			local queueUnits = v
 			queueTotalUnitCost[queueName] = 0
 			queueAllocatedTotalUnitCost[queueName] = 0
 
@@ -1446,16 +1435,16 @@ AdjustCompositionForDifficulty = function(composition, unitCosts, difficulty)
 				queueAllocatedTotalUnitCost[queueName] = queueAllocatedTotalUnitCost[queueName] + unitCosts[chosenUnit]
 			end
 		else
-			if queueName == "MinTime" or queueName == "MaxTime" then
+			if k == "MinTime" or k == "MaxTime" then
 
 				if difficulty == "easy" then
-					updatedComposition[queueName] = queueUnits * 1.4
+					updatedComposition[k] = v * 1.4
 				elseif difficulty == "normal" then
-					updatedComposition[queueName] = queueUnits * 1.2
+					updatedComposition[k] = v * 1.2
 				end
 
-			elseif queueName == "IsSpecial" then
-				updatedComposition[queueName] = queueUnits
+			else
+				updatedComposition[k] = v
 			end
 		end
 	end

@@ -110,7 +110,7 @@ WorldLoaded = function()
 	Camera.Position = McvRally.CenterPosition
 
 	InitObjectives(USSR)
-	AdjustStartingCash()
+	AdjustPlayerStartingCashForDifficulty()
 	InitGDI()
 
 	ObjectiveExpelGDI = USSR.AddObjective("Remove the GDI presence.")

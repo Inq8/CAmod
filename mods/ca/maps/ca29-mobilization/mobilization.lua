@@ -108,7 +108,7 @@ WorldLoaded = function()
 	Camera.Position = HQ.CenterPosition
 
 	InitObjectives(GDI)
-	AdjustStartingCash()
+	AdjustPlayerStartingCashForDifficulty()
 	InitScrin()
 	InitFriendlies()
 	SetupLightning()

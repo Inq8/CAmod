@@ -174,7 +174,7 @@ WorldLoaded = function()
 	Camera.Position = PlayerBarracks.CenterPosition
 
 	InitObjectives(Greece)
-	AdjustStartingCash()
+	AdjustPlayerStartingCashForDifficulty()
 	InitScrin()
 
 	ObjectiveClearPath = Greece.AddObjective("Clear a path for inbound convoys.")
@@ -268,11 +268,11 @@ OncePerSecondChecks = function()
 			end
 		end
 
-		if DateTime.GameTime > DateTime.Minutes(15) and not HasOneOf(Scrin, { "reac", "rea2", "sfac", "proc.scrin", "port", "wsph", "nerv", "grav", "scrt", "srep" }) then
+		if DateTime.GameTime > DateTime.Minutes(15) and #Scrin.GetActorsByTypes({ "reac", "rea2", "sfac", "proc.scrin", "port", "wsph", "nerv", "grav", "scrt", "srep" }) == 0 then
 			if ObjectiveDestroyScrinBase ~= nil and not Greece.IsObjectiveCompleted(ObjectiveDestroyScrinBase) then
 				Greece.MarkCompletedObjective(ObjectiveDestroyScrinBase)
 			end
-			if not PathsClear and not HasOneOf(Scrin, { "scol", "ptur" }) then
+			if not PathsClear and #Scrin.GetActorsByTypes({ "scol", "ptur" }) == 0 then
 				PathsClear = true
 			end
 		end

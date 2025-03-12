@@ -88,7 +88,7 @@ WorldLoaded = function()
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(Nod)
-	AdjustStartingCash()
+	AdjustPlayerStartingCashForDifficulty()
 	InitScrin()
 
 	ObjectiveChargeDevice = Nod.AddObjective("Bring the device to full power.")

@@ -10,21 +10,21 @@ MarineskoUnits = {
 		-- 0 to 12 minutes
 		{ Infantry = { "e3", "e1", "e1", "e1", "e1", "e1", "e2", "e3", "e4", "e1", "e1", "e1" }, Vehicles = { "btr.ai", "btr" }, MaxTime = DateTime.Minutes(12), },
 
-		-- 12 minutes onwards
-		{ Infantry = { "e3", "e1", "e1", "e1", "e1", "e1", "e2", "e3", "e4", "e1", "e1", "e1", "e3", "cmsr", "shok", "shok", "e1", "e1" }, Vehicles = { "btr.ai", "btr.ai" }, MinTime = DateTime.Minutes(12), },
+		-- 12 to 16 minutes
+		{ Infantry = { "e3", "e1", "e1", "e1", "e1", "e1", "e2", "e3", "e4", "e1", "e1", "e1", "e3", "cmsr", "shok", "shok", "e1", "e1" }, Vehicles = { "btr.ai", "btr.ai" }, MinTime = DateTime.Minutes(12), MaxTime = DateTime.Minutes(16), },
 
-		-- 15 minutes onwards
-		{ Infantry = { "e3", "e1", "e1", "e1", "e1", "e1", "e2", "e3", "e4", "e1", "e1", "e1", "e3", "e1", "e1", "e1", "e1", "cmsr", "shok", "ttrp", "e1", "e1", "e1" }, Vehicles = { "3tnk", "btr.ai", "btr.ai", "trpc"  }, MinTime = DateTime.Minutes(15), },
+		-- 16 minutes onwards
+		{ Infantry = { "e3", "e1", "e1", "e1", "e1", "e1", "e2", "e3", "e4", "e1", "e1", "e1", "e3", "e1", "e1", "e1", "e1", "cmsr", "shok", "ttrp", "e1", "e1", "e1" }, Vehicles = { "3tnk", "btr.ai", "btr.ai", "btr.ai"  }, MinTime = DateTime.Minutes(16), },
 	},
 	hard = {
 		-- 0 to 10 minutes
 		{ Infantry = { "e3", "e1", "e1", "e1", "e1", "e1", "e2", "e3", "e4", "e1", "e1", "e1", "e3", "e1", "e1", "e1", "e1" }, Vehicles = { "btr.ai", "btr.ai" }, MaxTime = DateTime.Minutes(10), },
 
 		-- 10 to 16 minutes
-		{ Infantry = { "e3", "e1", "e1", "e1", "e1", "e1", "e2", "e3", "e4", "e1", "e1", "e1", "e3", "e1", "e1", "e1", "e1", "cmsr", "shok", "shok", "e1", "e1", "e1" }, Vehicles = { "3tnk", "btr.ai", "btr.ai", "trpc" }, MinTime = DateTime.Minutes(10), MaxTime = DateTime.Minutes(16), },
+		{ Infantry = { "e3", "e1", "e1", "e1", "e1", "e1", "e2", "e3", "e4", "e1", "e1", "e1", "e3", "e1", "e1", "e1", "e1", "cmsr", "shok", "shok", "e1", "e1", "e1" }, Vehicles = { "3tnk", "btr.ai", "btr.ai", "btr.ai" }, MinTime = DateTime.Minutes(10), MaxTime = DateTime.Minutes(16), },
 
 		-- 16 minutes onwards
-		{ Infantry = { "e3", "e1", "e1", "e1", "e1", "e1", "e2", "e3", "e4", "e1", "e1", "e1", "e3", "e1", "e1", "e1", "e1", "cmsr", "shok", "shok", "ttrp", "ttrp", "e1", "e1", "e1", "e1", "e1" }, Vehicles = { SovietMammothVariant, "btr.ai", "btr.ai", "trpc", "trpc" }, MinTime = DateTime.Minutes(16), },
+		{ Infantry = { "e3", "e1", "e1", "e1", "e1", "e1", "e2", "e3", "e4", "e1", "e1", "e1", "e3", "e1", "e1", "e1", "e1", "cmsr", "shok", "shok", "ttrp", "ttrp", "e1", "e1", "e1", "e1", "e1" }, Vehicles = { SovietMammothVariant, "btr.ai", "btr.ai", "btr.ai", "btr.ai" }, MinTime = DateTime.Minutes(16), },
 	}
 }
 
@@ -40,21 +40,21 @@ RomanovUnits = {
 		-- 0 to 12 minutes
 		{ Infantry = { }, Vehicles = { "3tnk.rhino", "3tnk.rhino" }, MaxTime = DateTime.Minutes(12), },
 
-		-- 12 minutes onwards
-		{ Infantry = { }, Vehicles = { SovietMammothVariant, "3tnk.rhino", "3tnk.rhino" }, MinTime = DateTime.Minutes(12), },
+		-- 12 to 16 minutes
+		{ Infantry = { }, Vehicles = { SovietMammothVariant, "3tnk.rhino", "3tnk.rhino" }, MinTime = DateTime.Minutes(12), MaxTime = DateTime.Minutes(16) },
 
 		-- 15 minutes onwards
-		{ Infantry = { }, Vehicles = { SovietMammothVariant, SovietMammothVariant, "3tnk.rhino", "3tnk.rhino"  }, MinTime = DateTime.Minutes(15), },
+		{ Infantry = { }, Vehicles = { SovietMammothVariant, SovietMammothVariant, "3tnk.rhino", "3tnk.rhino"  }, MinTime = DateTime.Minutes(16) },
 	},
 	hard = {
 		-- 0 to 10 minutes
-		{ Infantry = { }, Vehicles = { "3tnk.rhino", "3tnk.rhino", "3tnk.rhino" }, MaxTime = DateTime.Minutes(10), },
+		{ Infantry = { }, Vehicles = { "3tnk.rhino", "btr.ai", "3tnk.rhino", "btr.ai" }, MaxTime = DateTime.Minutes(10), },
 
 		-- 10 to 16 minutes
-		{ Infantry = { }, Vehicles = { SovietMammothVariant, SovietMammothVariant, "3tnk.rhino", "3tnk.rhino" }, MinTime = DateTime.Minutes(10), MaxTime = DateTime.Minutes(16), },
+		{ Infantry = { }, Vehicles = { SovietMammothVariant, "btr.ai", SovietMammothVariant, "3tnk.rhino", "btr.ai", "3tnk.rhino" }, MinTime = DateTime.Minutes(10), MaxTime = DateTime.Minutes(16) },
 
 		-- 16 minutes onwards
-		{ Infantry = { }, Vehicles = { "apoc", SovietMammothVariant, SovietMammothVariant, SovietMammothVariant, "3tnk.rhino", "3tnk.rhino" }, MinTime = DateTime.Minutes(16), },
+		{ Infantry = { }, Vehicles = { "apoc", SovietMammothVariant, SovietMammothVariant, SovietMammothVariant, "3tnk.rhino", "btr.ai", "btr.ai" }, MinTime = DateTime.Minutes(16) },
 	}
 }
 
@@ -70,11 +70,11 @@ KrukovUnits = {
 		-- 0 to 12 minutes
 		{ Infantry = { "e3", "e1", "e1", "e1", "e1", "e2", "e4" }, Vehicles = { "katy", "katy" }, MaxTime = DateTime.Minutes(12), },
 
-		-- 12 minutes onwards
-		{ Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e4" }, Vehicles = { "grad", "grad", "v2rl" }, MinTime = DateTime.Minutes(12), },
+		-- 12 to 16 minutes
+		{ Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e4" }, Vehicles = { "grad", "grad", "v2rl" }, MinTime = DateTime.Minutes(12), MaxTime = DateTime.Minutes(16), },
 
 		-- 15 minutes onwards
-		{ Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e4", "e1", "e1" }, Vehicles = { "grad", "grad", "v2rl", SovietAdvancedArty }, MinTime = DateTime.Minutes(15), },
+		{ Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e4", "e1", "e1" }, Vehicles = { "grad", "grad", "v2rl", SovietAdvancedArty }, MinTime = DateTime.Minutes(16), },
 	},
 	hard = {
 		-- 0 to 10 minutes
@@ -280,6 +280,23 @@ Squads = {
 			}
 		},
 	},
+	KrukovAntiTankAir = {
+		Delay = {
+			hard = DateTime.Minutes(10)
+		},
+		ActiveCondition = function()
+			return #Nod.GetActorsByTypes({ "4tnk", "4tnk.atomic", "apoc", "apoc.atomic" }) > 10
+		end,
+		AttackValuePerSecond = {
+			hard = { Min = 35, Max = 35 },
+		},
+		ProducerTypes = { Aircraft = { "afld" } },
+		Units = {
+			hard = {
+				{ Aircraft = { "suk", "suk", "suk", "suk", "suk" } },
+			}
+		},
+	},
 }
 
 WorldLoaded = function()
@@ -294,7 +311,7 @@ WorldLoaded = function()
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(USSR)
-	AdjustStartingCash()
+	AdjustPlayerStartingCashForDifficulty()
 	InitGenerals()
 
 	ObjectiveSubdueMarinesko = USSR.AddObjective("Defeat General Marinesko's forces.")
@@ -303,6 +320,11 @@ WorldLoaded = function()
 
 	Trigger.OnCapture(RomanovIndustrialPlant, function(self, captor, oldOwner, newOwner)
 		Actor.Create("captured.indp", true, { Owner = USSR })
+	end)
+
+	Trigger.AfterDelay(DateTime.Seconds(3), function()
+		Media.DisplayMessage("Romanov. Marinesko. Krukov. We must crush these traitors. Comrade General, the Union must prevail!", "Premier Cherdenko", HSLColor.FromHex("FF0000"))
+		MediaCA.PlaySound("cdko_crushtraitors.aud", 2)
 	end)
 end
 
@@ -407,6 +429,10 @@ InitGenerals = function()
 			Actor.Create("imppara.upgrade", true, { Owner = Marinesko })
 			Actor.Create("rocketpods.upgrade", true, { Owner = Krukov })
 			Actor.Create("reactive.upgrade", true, { Owner = Romanov })
+		end)
+
+		Trigger.AfterDelay(Squads.KrukovAntiTankAir.Delay[Difficulty], function()
+			InitAirAttackSquad(Squads.KrukovAntiTankAir, USSR, Krukov, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic" })
 		end)
 	end
 end

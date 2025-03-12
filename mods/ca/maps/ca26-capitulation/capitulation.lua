@@ -174,7 +174,7 @@ WorldLoaded = function()
 	Camera.Position = Spy.CenterPosition
 
 	InitObjectives(GDI)
-	AdjustStartingCash()
+	AdjustPlayerStartingCashForDifficulty()
 	InitUSSR()
 
 	ObjectiveCaptureOrDestroyBunker = GDI.AddObjective("Capture or destroy Stalin's bunker.")
