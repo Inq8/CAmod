@@ -433,6 +433,116 @@ s6:
 	icon:
 		Filename: s6icon.shp
 
+mrdr:
+	Inherits: ^ScrinCommonDeaths
+	stand:
+		Filename: mrdr.shp
+		Facings: 8
+	stand2:
+		Filename: mrdr.shp
+		Facings: 8
+	run:
+		Filename: mrdr.shp
+		Start: 8
+		Length: 4
+		Facings: 8
+		Tick: 120
+	shoot:
+		Filename: mrdr.shp
+		Frames: 43,44,48,49,53,54,58,59,63,64,68,69,73,74,78,79
+		Length: 2
+		Facings: 8
+		Tick: 80
+	idle1:
+		Filename: mrdr.shp
+		Length: 2
+		Tick: 120
+	idle2:
+		Filename: mrdr.shp
+		Start: 2
+		Length: 2
+		Tick: 120
+	idle3:
+		Filename: mrdr.shp
+		Start: 4
+		Length: 2
+		Tick: 120
+	idle4:
+		Filename: mrdr.shp
+		Start: 6
+		Length: 2
+		Tick: 120
+	parachute:
+		Filename: mrdr.shp
+		Start: 3
+	die1:
+		Filename: mrdr.shp
+		Start: 80
+		Length: 8
+		Tick: 80
+	die2:
+		Filename: mrdr.shp
+		Start: 88
+		Length: 9
+		Tick: 80
+	die3:
+		Filename: mrdr.shp
+		Start: 88
+		Length: 9
+		Tick: 80
+	die4:
+		Filename: mrdr.shp
+		Start: 88
+		Length: 9
+		Tick: 80
+	die5:
+		Filename: gscr.shp
+		Start: 97
+		Length: 11
+		Tick: 80
+	die6:
+		Filename: gscr.shp
+		Length: 13
+		Start: 116
+	die7:
+		Filename: mrdr.shp
+		Start: 80
+		Length: 8
+		Tick: 80
+	die8:
+		Filename: chronozap.shp
+		Length: *
+		BlendMode: Alpha
+	die9:
+		Filename: gscr.shp
+		Start: 108
+		Length: 8
+		Tick: 80
+	die10:
+		Filename: gscr.shp
+		Start: 108
+		Length: 8
+		Tick: 80
+	die11:
+		Filename: mrdr.shp
+		Start: 80
+		Length: 8
+		Tick: 80
+	die12:
+		Filename: mrdr.shp
+		Start: 80
+		Length: 8
+		Tick: 80
+	chrono-overlay:
+		Filename: chronofade_small.shp
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		ZOffset: 512
+		Tick: 80
+	icon:
+		Filename: mrdricon.shp
+
 evis:
 	Inherits: ^ScrinCommonDeaths
 	stand:
@@ -2790,6 +2900,18 @@ plasdisclg:
 		Length: *
 		ZOffset: 2047
 		Tick: 50
+
+mrdrdisc:
+	idle:
+		Filename: mrdrdisc.shp
+		BlendMode: Additive
+		IgnoreWorldTint: true
+		Length: 2
+		Facings: 8
+		ZOffset: 2047
+		Tick: 50
+		InterpolatedFacings: 32
+		Alpha: 0.8
 
 tibglob:
 	idle:

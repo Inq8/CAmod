@@ -246,6 +246,26 @@ IntruderDiscs:
 			Heavy: 90
 			Concrete: 100
 
+MarauderDiscs:
+	Inherits: IntruderDiscs
+	Range: 7c0
+	Burst: 2
+	BurstDelays: 5
+	Report: mrdr-fire1.aud, mrdr-fire2.aud
+	Projectile: Missile
+		Image: mrdrdisc
+		Speed: 550
+		LockOnProbability: 100
+		RangeLimit: 7c0
+		Palette: scrin
+	Warhead@1Dam: SpreadDamage
+		Damage: 4100
+		Spread: 448
+		Versus:
+			None: 10
+	Warhead@3Eff: CreateEffect
+		Explosions: large_explosion
+
 IntruderDiscsBATF:
 	Inherits: IntruderDiscs
 	Range: 5c768

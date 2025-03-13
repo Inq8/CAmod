@@ -648,6 +648,64 @@ S4:
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 
+MRDR:
+	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Buildable:
+		Queue: InfantrySQ, InfantryMQ
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 124
+		Prerequisites: ~disabled
+		IconPalette: chromes
+		Description: Heavy assault infantry with high burst damage.
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Defenses, Heavy Armor, Light Armor
+		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
+		Attributes: • Special Ability: Teleport (with upgrade)
+	Mobile:
+		Speed: 46
+	Valued:
+		Cost: 600
+	Tooltip:
+		Name: Marauder
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 16000
+	RevealsShroud:
+		Range: 5c0
+	Armament@PRIMARY:
+		Weapon: MarauderDiscs
+		LocalOffset: 150,0,400
+	Armament@BATF:
+		Name: batf
+		Weapon: IntruderDiscsBATF
+	AttackFrontal:
+		PauseOnCondition: being-warped || blinded || reapersnare
+		FacingTolerance: 0
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
+	PortableChronoCA:
+		ChargeDelay: 500
+		MaxDistance: 16
+		ChronoshiftSound: scrinport.aud
+		RequiresCondition: blink-upgrade
+		TeleportCondition: blink
+		ConditionDuration: 3
+		ShowSelectionBarWhenFull: false
+	GrantConditionOnPrerequisite@BLINKPACKS:
+		Condition: blink-upgrade
+		Prerequisites: blink.upgrade
+	WithColoredOverlay@BLINKFLASH:
+		Color: ffffff80
+		RequiresCondition: blink
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
+
 S6:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Inherits@ENGINEER: ^EngineerBase
