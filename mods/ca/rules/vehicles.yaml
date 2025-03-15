@@ -3120,9 +3120,6 @@ QTNK:
 	Targetable@MADTank:
 		RequiresCondition: !being-warped
 		TargetTypes: MADTank
-	ProductionCostMultiplier@UkraineBonus:
-		Multiplier: 75
-		Prerequisites: player.ukraine
 	FirepowerMultiplier@MADIC:
 		Modifier: 40
 		RequiresCondition: invulnerability
@@ -6041,7 +6038,7 @@ IFV:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 170
-		Prerequisites: infantry.any, radarorrepair, ~vehicles.allies, ~techlevel.medium
+		Prerequisites: radarorrepair, ~vehicles.allies, ~techlevel.medium
 		Description: Adaptable infantry transport.
 	Tooltip:
 		Name: Infantry Fighting Vehicle
@@ -6904,7 +6901,7 @@ RECK:
 		TurnSpeed: 24
 	Buildable:
 		BuildPaletteOrder: 500
-		Prerequisites: infantry.any, radarorrepair, ~vehicles.reck
+		Prerequisites: radarorrepair, ~vehicles.reck
 	Tooltip:
 		Name: Reckoner
 		RequiresCondition: !full || nochange
@@ -7514,7 +7511,7 @@ RTNK:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 34000
+		HP: 32000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -9046,7 +9043,7 @@ WOLV:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 250
 		Prerequisites: gtek, ~vehicles.talon, ~techlevel.medium
-		Description: Light battle-mech with dual chainguns.
+		Description: Compact & durable battle-mech with dual chainguns.
 		IconPalette: chrometd
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Buildings, Light Armor
@@ -9061,7 +9058,7 @@ WOLV:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 36000
+		HP: 44000
 	Armor:
 		Type: Light
 	Mobile:

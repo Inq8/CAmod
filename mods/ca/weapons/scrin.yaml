@@ -451,14 +451,14 @@ RiftCannon:
 		DamageTypes: BulletDeath
 	Warhead@2Dam: HealthPercentageDamage
 		Spread: 341
-		Damage: 10
+		Damage: 100
 		Versus:
-			Wood: 35
-			None: 60
-			Concrete: 60
-			Brick: 75
-			Light: 120
-			Heavy: 120
+			Wood: 4
+			None: 6
+			Concrete: 6
+			Brick: 6
+			Light: 12
+			Heavy: 12
 		DamageTypes: BulletDeath
 	Warhead@antiShip: SpreadDamage
 		ValidTargets: Water
@@ -1724,7 +1724,7 @@ LeecherBeam:
 	StartBurstReport: leecher-fire1.aud
 	Range: 5c512
 	ReloadDelay: 60
-	Burst: 7
+	Burst: 9
 	BurstDelays: 5
 	Projectile: PlasmaBeam
 		Duration: 7
@@ -1753,11 +1753,6 @@ LeecherBeam:
 		Duration: 100
 		Condition: powerdrain
 		ValidTargets: PowerDrainable
-	Warhead@SLOW: GrantExternalConditionCA
-		Range: 0c768
-		Duration: 30
-		Condition: slowed
-		ValidTargets: Vehicle, Cyborg
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: scrin
@@ -1821,6 +1816,7 @@ GreaterCoalescenceZap:
 	Inherits: LeecherBeam
 	Range: 4c512
 	ValidTargets: Infantry, Vehicle, Structure, Ship
+	Burst: 7
 	Projectile: PlasmaBeam
 		Duration: 6
 		Inaccuracy: 0
@@ -1838,6 +1834,11 @@ GreaterCoalescenceZap:
 	Warhead@3Eff: CreateEffect
 		Image: leechhit
 		Inaccuracy: 128
+	Warhead@SLOW: GrantExternalConditionCA
+		Range: 0c768
+		Duration: 30
+		Condition: slowed
+		ValidTargets: Vehicle, Cyborg
 
 TiberiumCoalescence:
 	Inherits: GreaterCoalescence
@@ -1898,16 +1899,14 @@ AtomizerBolts:
 		ThrowWithoutTarget: false
 		AimTargetStances: Enemy, Neutral
 		AllowDirectHit: true
-	Warhead@red: GrantExternalConditionCA
-		Range: 0c341
-		Duration: 2
-		Condition: redhighlight
-		ValidTargets: Vehicle, Ship, Defense
-	Warhead@atomize: GrantExternalConditionCA
-		Range: 0c341
-		Duration: 150
-		Condition: atomized
-		ValidTargets: Vehicle, Ship, Defense
+	Warhead@ArcInfantry: FireShrapnel
+		Weapon: AtomizerArcInfantry
+		TargetClosest: true
+		Amount: 0
+		AimChance: 100
+		ThrowWithoutTarget: false
+		AimTargetStances: Enemy, Neutral
+		AllowDirectHit: true
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: scrin
@@ -1924,6 +1923,7 @@ AtomizerArc:
 	-Projectile:
 	-Warhead@1Dam:
 	-Warhead@Arc:
+	-Warhead@ArcInfantry:
 	Projectile: PlasmaBeam
 		Duration: 7
 		Colors: ee000008
@@ -1934,37 +1934,59 @@ AtomizerArc:
 		DistortionAnimation: 150
 		SegmentLength: 350
 		TrackTarget: true
+	Warhead@red: GrantExternalConditionCA
+		Range: 0c42
+		Duration: 2
+		Condition: redhighlight
+		ValidTargets: Vehicle, Ship, Defense, Infantry
+	Warhead@atomize: GrantExternalConditionCA
+		Range: 0c42
+		Duration: 150
+		Condition: atomized
+		ValidTargets: Vehicle, Ship, Defense, Infantry
 	Warhead@2Dam: TargetDamage
-		ValidTargets: Vehicle, Ship, Defense
 		DamageTypes: Prone50Percent, AtomizedDeath
-		Damage: 2600
+		Damage: 2000
 		Delay: 35
 		Versus:
+			None: 15
 			Light: 65
+			Concrete: 90
 	Warhead@3Dam: TargetDamage
-		ValidTargets: Vehicle, Ship, Defense
 		DamageTypes: Prone50Percent, AtomizedDeath
-		Damage: 2600
+		Damage: 2000
 		Delay: 70
 		Versus:
+			None: 15
 			Light: 65
+			Concrete: 90
 	Warhead@4Dam: TargetDamage
-		ValidTargets: Vehicle, Ship, Defense
 		DamageTypes: Prone50Percent, AtomizedDeath
-		Damage: 2600
+		Damage: 2000
 		Delay: 105
 		Versus:
+			None: 15
 			Light: 65
+			Concrete: 90
 	Warhead@5Dam: TargetDamage
-		ValidTargets: Vehicle, Ship, Defense
 		DamageTypes: Prone50Percent, AtomizedDeath
-		Damage: 2600
+		Damage: 2000
 		Delay: 140
 		Versus:
+			None: 15
 			Light: 65
+			Concrete: 90
 	Warhead@3Eff: CreateEffect
 		Image: leechhitlg
 		-ImpactSounds:
+
+AtomizerArcInfantry:
+	Inherits: AtomizerArc
+	Range: 0c768
+	ValidTargets: Infantry
+	-Projectile:
+	-Warhead@3Eff:
+	Projectile: InstantHit
 
 BursterTargeting:
 	ValidTargets: Vehicle, Infantry, Structure

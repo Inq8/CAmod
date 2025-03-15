@@ -352,9 +352,12 @@ VEHICLES.SCRIN:
 	FirepowerMultiplier@Anathema4:
 		Modifier: 220
 		RequiresCondition: anathema >= 4
-	DamageMultiplier@Anathema:
+	DamageMultiplier@Anathema1:
+		Modifier: 75
+		RequiresCondition: anathema && anathema <= 5
+	DamageMultiplier@Anathema2:
 		Modifier: 50
-		RequiresCondition: anathema
+		RequiresCondition: anathema >= 5
 	GrantTimedCondition@Anathema:
 		Condition: anathema-alive
 		Duration: 750
@@ -1960,7 +1963,7 @@ LCHR:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Buildings, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
-		Attributes: • Regenerates health while dealing damage (without upgrade)\n• Disables power plants\n• Slows vehicles & cyborgs\n• Regenerates and heals allies when in coalescence form (with upgrade)\n• Special Ability: Coalescence (with upgrade)
+		Attributes: • Regenerates health while dealing damage (without upgrade)\n• Disables power plants\n• Regenerates and heals allies when in coalescence form (with upgrade)\n• Special Ability: Coalescence (with upgrade)
 	Mobile:
 		Speed: 82
 		TurnSpeed: 20

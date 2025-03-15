@@ -627,14 +627,22 @@
 		Condition: atomized
 		Color: ff0000
 	WithIdleOverlay@ATOMIZED:
-		Sequence: idle
+		Sequence: vehicle
 		Image: atomize-overlay
 		Palette: scrin
 		RequiresCondition: atomized
 		IsDecoration: True
 	SpeedMultiplier@ATOMIZED:
 		RequiresCondition: atomized
-		Modifier: 75
+		Modifier: 66
+	FirepowerMultiplier@ATOMIZED:
+		RequiresCondition: atomized
+		Modifier: 66
+
+^AtomizableInfantry:
+	Inherits: ^Atomizable
+	WithIdleOverlay@ATOMIZED:
+		Sequence: infantry
 
 ^IonSurgable:
 	TimedConditionBar@IONSURGE:
@@ -2337,9 +2345,11 @@
 	Inherits@oilcost: ^OilRefCostReduction
 	Inherits@ionsurge: ^IonSurgableInfantry
 	Inherits@lchrheal: ^LeecherHealable
+	Inherits@atomize: ^AtomizableInfantry
 	Inherits@Blindable: ^Blindable
 	Inherits@KillZoneTargetable: ^KillZoneTargetable
 	Inherits@ReaperSnareable: ^ReaperSnareable
+	Inherits@rflash: ^RedFlash
 	RenderSprites:
 		PlayerPalette: playertd
 	Huntable:
