@@ -165,7 +165,9 @@ namespace OpenRA.Mods.CA.Traits
 				if (closestTransport == null)
 					continue;
 
-				pair.Actor.QueueActivity(order.Queued, new MassRideTransport(pair.Actor, Target.FromActor(closestTransport.Actor), passenger.Info.TargetLineColor));
+				// can't queue an activity here because the selected units aren't known by all clients so causes a de-sync
+				// pair.Actor.QueueActivity(order.Queued, new MassRideTransport(pair.Actor, Target.FromActor(closestTransport.Actor), passenger.Info.TargetLineColor));
+				self.World.IssueOrder(new Order("EnterTransport", pair.Actor, Target.FromActor(closestTransport.Actor), order.Queued));
 				pair.Actor.ShowTargetLines();
 
 				if (!closestTransport.Cargo.HasSpace(1))

@@ -390,10 +390,11 @@ namespace OpenRA.Mods.CA.Traits
 					.OrderBy(t => (t.Actor.CenterPosition - pair.Actor.CenterPosition).LengthSquared)
 					.FirstOrDefault();
 
-				pair.Actor.QueueActivity(false, new Attach(pair.Actor, Target.FromActor(closestTarget.Actor), pair.Trait, Info.TargetLineColor));
+				// can't queue an activity here because the selected units aren't known by all clients so causes a de-sync
+				// pair.Actor.QueueActivity(false, new Attach(pair.Actor, Target.FromActor(closestTarget.Actor), pair.Trait, Info.TargetLineColor));
+				self.World.IssueOrder(new Order("Attach", pair.Actor, Target.FromActor(closestTarget.Actor), order.Queued));
 				pair.Actor.ShowTargetLines();
-
-				// AttachableTo.Info.Limit
+				// todo: take into account AttachableTo.Info.Limit in the same way MassEntersCargo takes MaxWeight into account
 
 				availableTargets.Remove(closestTarget);
 			}
