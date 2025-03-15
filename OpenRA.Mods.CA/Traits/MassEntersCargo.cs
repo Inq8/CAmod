@@ -140,7 +140,7 @@ namespace OpenRA.Mods.CA.Traits
 				.Where(a => a.Info.HasTraitInfo<MassEnterableCargoInfo>()
 					&& a.Info.HasTraitInfo<CargoInfo>()
 					&& a.Info.Name == targetActor.Info.Name
-					&& a.Owner == self.Owner
+					&& a.Owner == targetActor.Owner
 					&& !a.IsDead
 					&& (a.CenterPosition - targetActor.CenterPosition).HorizontalLengthSquared <= WDist.FromCells(10).LengthSquared)
 				.Select(a => new TransportInfo {
@@ -154,6 +154,9 @@ namespace OpenRA.Mods.CA.Traits
 			// Allocate passengers to the closest available transport
 			foreach (var pair in selectedWithTrait)
 			{
+				if (availableTransports.Count == 0)
+					break;
+
 				var closestTransport = availableTransports
 					.Where(t => t.UnallocatedSpace >= pair.Trait.Weight)
 					.OrderBy(t => (t.Actor.CenterPosition - pair.Actor.CenterPosition).LengthSquared)
