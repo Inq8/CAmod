@@ -598,7 +598,7 @@ S4:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 124
-		Prerequisites: anyradar, ~infantry.scrin, ~techlevel.medium
+		Prerequisites: anyradar, ~infantry.intruder, ~techlevel.medium
 		IconPalette: chrome
 		Description: Heavy assault infantry with high burst damage.
 	TooltipExtras:
@@ -656,7 +656,7 @@ MRDR:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 124
-		Prerequisites: ~disabled
+		Prerequisites: anyradar, ~infantry.harbinger, ~techlevel.medium
 		IconPalette: chromes
 		Description: Heavy assault infantry with high burst damage.
 	TooltipExtras:
@@ -2184,7 +2184,7 @@ DEVO:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 212
-		Prerequisites: anyradar, ~vehicles.devo, ~techlevel.medium
+		Prerequisites: anyradar, ~vehicles.scrin, ~techlevel.medium
 		Description: Maneuverable medium-range hover tank.
 		IconPalette: chrome
 	TooltipExtras:
@@ -2275,7 +2275,7 @@ DARK:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 213
-		Prerequisites: anyradar, ~vehicles.harbinger, ~techlevel.medium
+		Prerequisites: scrt, ~vehicles.scrin, ~malefic.allegiance, ~techlevel.high
 		Description: Heavy hover tank armed with a rift cannon.
 		IconPalette: chromes
 	TooltipExtras:
@@ -2358,7 +2358,7 @@ RUIN:
 		AddToArmyValue: true
 	Buildable:
 		BuildPaletteOrder: 280
-		Prerequisites: scrt, ~vehicles.harbinger, ~techlevel.high
+		Prerequisites: scrt, ~vehicles.scrin, ~loyalist.allegiance, ~techlevel.high
 		Queue: VehicleSQ, VehicleMQ
 		Description: Long-range hover artillery.
 		IconPalette: chrome
@@ -2706,7 +2706,7 @@ OBLT:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 290
-		Prerequisites: scrt, ~vehicles.scrin, ~loyalist.allegiance, ~techlevel.high
+		Prerequisites: scrt, ~vehicles.harbinger, ~techlevel.high
 		Description: Heavy artillery that fires a plasma ball, damaging everything it passes through.
 		IconPalette: chromes
 	TooltipExtras:
@@ -3063,7 +3063,7 @@ TORM:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 61
-		Prerequisites: nerv, ~aircraft.scrin, ~malefic.allegiance, ~techlevel.medium
+		Prerequisites: ~aircraft.scrin, ~techlevel.medium
 		Description: Small anti-vehicle harrasser aircraft.
 		IconPalette: chromes
 	TooltipExtras:
@@ -4666,6 +4666,9 @@ PORT:
 	ProvidesPrerequisiteValidatedFaction@collector:
 		Factions: collector
 		Prerequisite: infantry.collector
+	ProvidesPrerequisiteValidatedFaction@intruder:
+		Factions: scrin, reaper, traveler, collector
+		Prerequisite: infantry.intruder
 	Power:
 		Amount: -20
 	ProvidesPrerequisite@buildingname:
@@ -4749,9 +4752,6 @@ WSPH:
 	ProvidesPrerequisiteValidatedFaction@corr:
 		Factions: scrin, reaper, traveler, harbinger
 		Prerequisite: vehicles.corr
-	ProvidesPrerequisiteValidatedFaction@devo:
-		Factions: scrin, reaper, traveler, collector
-		Prerequisite: vehicles.devo
 	ProvidesPrerequisiteValidatedFaction@tpod:
 		Factions: scrin, traveler, harbinger, collector
 		Prerequisite: vehicles.tpod
