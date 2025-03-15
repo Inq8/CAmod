@@ -33,7 +33,7 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new MassEntersCargo(init, this); }
 	}
 
-	public class MassEntersCargo : ConditionalTrait<MassEntersCargoInfo>, INotifyCreated, IIssueOrder, IResolveOrder
+	public class MassEntersCargo : ConditionalTrait<MassEntersCargoInfo>, INotifyCreated, IIssueOrder, IResolveOrder, IOrderVoice
 	{
 		private readonly MassEntersCargoInfo info;
 		private Passenger passenger;
@@ -75,6 +75,16 @@ namespace OpenRA.Mods.CA.Traits
 			return null;
 		}
 
+		string IOrderVoice.VoicePhraseForOrder(Actor self, Order order)
+		{
+			if (order.OrderString != "MassEnterTransport")
+				return null;
+
+			if (order.Target.Type != TargetType.Actor || !CanEnter(order.Target.Actor))
+				return null;
+
+			return passenger.Info.Voice;
+		}
 
 		bool IsCorrectCargoType(Actor target, TargetModifiers modifiers)
 		{

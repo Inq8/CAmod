@@ -293,7 +293,7 @@ namespace OpenRA.Mods.CA.Traits
 			return new Order(order.OrderID, self, target, queued);
 		}
 
-		public string VoicePhraseForOrder(Actor self, Order order)
+		string IOrderVoice.VoicePhraseForOrder(Actor self, Order order)
 		{
 			return (order.OrderString == "Attach" || order.OrderString != "MassAttach") && CanAttachToTarget(self, order.Target)
 				? Info.Voice : null;
