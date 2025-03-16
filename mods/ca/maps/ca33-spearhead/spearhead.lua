@@ -1,7 +1,22 @@
 
 ShardLaunchers = { Shard1, Shard2, Shard3, Shard4, Shard5, Shard6 }
 
+AdjustedNodCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Nod)
+
 Squads = {
+	Main = {
+		AttackValuePerSecond = {
+			normal = { Min = 15, Max = 15 },
+			hard = { Min = 25, Max = 25 },
+		},
+		ActiveCondition = function()
+			return HasConyardAcrossRiver()
+		end,
+		DispatchDelay = DateTime.Seconds(15),
+		FollowLeader = true,
+		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
+		Units = AdjustedNodCompositions,
+	},
 	NodAir = {
 		Delay = {
 			easy = DateTime.Minutes(11),
@@ -88,6 +103,11 @@ end
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
 		UpdatePlayerBaseLocations()
+
+		if Difficulty ~= "easy" and not NodGroundAttacksStarted and HasConyardAcrossRiver() then
+			NodGroundAttacksStarted = true
+			InitAttackSquad(Squads.Main, Nod)
+		end
 	end
 end
 
@@ -126,4 +146,14 @@ InitMcv = function()
     local entryPath = { CarryallSpawn.Location, CarryallDest.Location }
     local exitPath =  { CarryallSpawn.Location }
     ReinforcementsCA.ReinforceWithTransport(GDI, "ocar.amcv", nil, entryPath, exitPath)
+end
+
+HasConyardAcrossRiver = function()
+	local conyards = GDI.GetActorsByType("afac")
+
+	local conyardsAcrossRiver = Utils.Where(conyards, function(c)
+		return c.Owner == GDI and c.Location.X > 34 and c.Location.Y > 72
+	end)
+
+	return #conyardsAcrossRiver > 0
 end

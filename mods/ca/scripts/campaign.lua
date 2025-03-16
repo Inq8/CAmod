@@ -929,7 +929,7 @@ SendAttackSquad = function(squad)
 		local squadLeader = nil
 		local attackPath = nil
 
-		if squad.AttackPaths ~= nil then
+		if squad.AttackPaths ~= nil and #squad.AttackPaths > 0 then
 			attackPath = Utils.Random(squad.AttackPaths)
 		end
 

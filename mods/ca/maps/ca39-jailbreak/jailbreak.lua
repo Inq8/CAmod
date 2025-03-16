@@ -247,7 +247,7 @@ OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
 		UpdatePlayerBaseLocations()
 
-		if HasConyardAcrossRiver() and not AlliedGroundAttacksStarted then
+		if not AlliedGroundAttacksStarted and HasConyardAcrossRiver() then
 			AlliedGroundAttacksStarted = true
 			Trigger.AfterDelay(Squads.Main.Delay[Difficulty], function()
 
