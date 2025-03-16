@@ -934,7 +934,7 @@ IMPL:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Mobile:
-		Speed: 72
+		Speed: 60
 	RevealsShroud:
 		Range: 6c0
 	AttackFrontal:
@@ -1011,7 +1011,7 @@ MUTI:
 		RequiresCondition: blink
 		ForceFullDuration: true
 	DamageMultiplier@BlinkShield:
-		Modifier: 50
+		Modifier: 33
 		RequiresCondition: blinkshield
 	WithColoredOverlay@BlinkShield:
 		Color: 32154c66
@@ -2710,7 +2710,7 @@ OBLT:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 290
 		Prerequisites: scrt, ~vehicles.harbinger, ~techlevel.high
-		Description: Heavy artillery that fires a plasma ball, damaging everything it passes through.
+		Description: Heavy artillery that creates a charged particle stream through which\n  it projects a powerful energy pulse, damaging everything it passes through.
 		IconPalette: chromes
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Light Armor, Infantry
@@ -2747,9 +2747,43 @@ OBLT:
 		Range: 4c0
 	Armament@PRIMARY:
 		Weapon: ObliteratorBolt
-		LocalOffset: 850,0,400
+		LocalOffset: 750,0,400
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
+		PauseOnCondition: !ammo
+		ReloadingCondition: reloading
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: ObliteratorCharge
+		LocalOffset: 750,0,400
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+		PauseOnCondition: reloading
+	AmbientSoundCA@CHARGING:
+		SoundFiles: oblt-charge2.aud
+		InitialSound: oblt-charge1.aud
+		RequiresCondition: charging
+		AudibleThroughFog: true
+	GrantConditionOnAttack@CHARGING:
+		Condition: charging
+		ArmamentNames: secondary
+		RevokeDelay: 6
+	AmmoPool:
+		Ammo: 1
+		InitialAmmo: 0
+		AmmoCondition: ammo
+		Armaments: primary
+	ReloadAmmoPoolCA@CHARGE:
+		Delay: 100
+		Count: 1
+		RequiresCondition: charging && !reloading
+		ShowSelectionBar: true
+		SelectionBarColor: ff00ff
+	ReloadAmmoPoolCA@DRAIN:
+		Count: -1
+		Delay: 1
+		RequiresCondition: !charging
+		ShowSelectionBar: false
 	WithMuzzleOverlay:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -3889,6 +3923,9 @@ MSHP:
 	Targetable@FleetRecallable:
 		RequiresCondition: !attacking
 	-SoundOnDamageTransitionCA:
+	ProductionCostMultiplier@HarbingerBonus:
+		Multiplier: 90
+		Prerequisites: player.harbinger
 
 #
 # ---- Husks
@@ -5360,9 +5397,6 @@ RFGN:
 		TargetTypes: ResetSupportPowerInfiltrate
 	WithBuildingBib:
 		HasMinibib: true
-	ProductionCostMultiplier@HarbingerBonus:
-		Multiplier: 80
-		Prerequisites: player.harbinger
 
 PTUR:
 	Inherits: ^Defense

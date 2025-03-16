@@ -10,6 +10,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using OpenRA.GameRules;
 using OpenRA.Graphics;
 using OpenRA.Mods.Common;
@@ -20,7 +21,7 @@ namespace OpenRA.Mods.CA.Projectiles
 	public class LinearPulseInfo : IProjectileInfo
 	{
 		[Desc("Ticks between pulse impacts.")]
-		public readonly int ImpactInterval = 2;
+		public readonly WDist ImpactInterval = WDist.Zero;
 
 		[Desc("Speed the pulse travels.")]
 		public readonly WDist Speed = new WDist(384);
@@ -69,6 +70,16 @@ namespace OpenRA.Mods.CA.Projectiles
 		[Desc("Palette to use for this projectile's shadow if Shadow is true.")]
 		public readonly string ShadowPalette = "shadow";
 
+		[Desc("Final impact animation.")]
+		public readonly string FinalHitAnim = null;
+
+		[SequenceReference(nameof(FinalHitAnim), allowNullImage: true)]
+		[Desc("Sequence of impact animation to use.")]
+		public readonly string FinalHitAnimSequence = "idle";
+
+		[PaletteReference]
+		public readonly string FinalHitAnimPalette = "effect";
+
 		public IProjectile Create(ProjectileArgs args) { return new LinearPulse(this, args); }
 	}
 
@@ -78,6 +89,10 @@ namespace OpenRA.Mods.CA.Projectiles
 		readonly ProjectileArgs args;
 		readonly WVec speed;
 		readonly WVec visualSpeed;
+		readonly WVec directionalSpeed;
+		readonly WVec visualDirectionalSpeed;
+		readonly Animation finalHitAnim;
+		readonly WDist impactInterval;
 
 		readonly WAngle facing;
 		readonly Animation anim;
@@ -85,11 +100,15 @@ namespace OpenRA.Mods.CA.Projectiles
 		[Sync]
 		WPos pos, visualPos, target, source;
 		int ticks;
-		int intervalTicks;
 		int totalDistanceTravelled;
 		int totalVisualDistanceTravelled;
+		bool travelComplete;
+		bool visualTravelComplete;
 		int range;
 		int visualRange;
+		WPos[] impactPositions;
+		bool showFinalHitAnim;
+		bool finalHitStarted;
 
 		public Actor SourceActor { get { return args.SourceActor; } }
 
@@ -100,6 +119,8 @@ namespace OpenRA.Mods.CA.Projectiles
 
 			speed = new WVec(0, -info.Speed.Length, 0);
 			visualSpeed = info.VisualSpeed != WDist.Zero && info.VisualSpeed != info.Speed ? new WVec(0, -info.VisualSpeed.Length, 0) : speed;
+
+			impactInterval = info.ImpactInterval > WDist.Zero ? info.ImpactInterval : info.Speed;
 
 			source = args.Source;
 
@@ -120,7 +141,10 @@ namespace OpenRA.Mods.CA.Projectiles
 			visualRange = info.VisualRange == WDist.Zero ? range : info.VisualRange.Length;
 
 			if (!info.IgnoreRangeModifiers)
-				range = OpenRA.Mods.Common.Util.ApplyPercentageModifiers(range, args.RangeModifiers);
+			{
+				range = Common.Util.ApplyPercentageModifiers(range, args.RangeModifiers);
+				visualRange = Common.Util.ApplyPercentageModifiers(visualRange, args.RangeModifiers);
+			}
 
 			target = args.PassiveTarget;
 
@@ -130,11 +154,23 @@ namespace OpenRA.Mods.CA.Projectiles
 
 			if (info.Inaccuracy.Length > 0)
 			{
-				var maxInaccuracyOffset = OpenRA.Mods.Common.Util.GetProjectileInaccuracy(info.Inaccuracy.Length, info.InaccuracyType, args);
+				var maxInaccuracyOffset = Common.Util.GetProjectileInaccuracy(info.Inaccuracy.Length, info.InaccuracyType, args);
 				target += WVec.FromPDF(world.SharedRandom, 2) * maxInaccuracyOffset / 1024;
 			}
 
 			facing = (target - pos).Yaw;
+
+			// calculate the vectors for travel
+			directionalSpeed = speed.Rotate(WRot.FromYaw(facing));
+			visualDirectionalSpeed = info.VisualSpeed != info.Speed ? visualSpeed.Rotate(WRot.FromYaw(facing)) : directionalSpeed;
+
+			// calculate impact positions
+			var impactCount = range / impactInterval.Length;
+			var impactVector = new WVec(0, -impactInterval.Length, 0).Rotate(WRot.FromYaw(facing));
+
+			impactPositions = Enumerable.Range(0, impactCount)
+				.Select(i => pos + impactVector * (i + 1))
+				.ToArray();
 
 			if (!string.IsNullOrEmpty(info.Image))
 			{
@@ -145,35 +181,59 @@ namespace OpenRA.Mods.CA.Projectiles
 				else
 					anim.Play(info.Sequences.Random(world.SharedRandom));
 			}
+
+			if (!string.IsNullOrEmpty(info.FinalHitAnim))
+			{
+				finalHitAnim = new Animation(world, info.FinalHitAnim);
+				showFinalHitAnim = true;
+			}
 		}
 
 		public void Tick(World world)
 		{
 			anim?.Tick();
 
-			var directionalSpeed = speed.Rotate(WRot.FromYaw(facing));
-			pos = pos + directionalSpeed;
+			if (!travelComplete)
+				pos += directionalSpeed;
 
-			var visualDirectionalSpeed = directionalSpeed;
-			if (info.VisualSpeed != info.Speed)
-			{
-				visualDirectionalSpeed = visualSpeed.Rotate(WRot.FromYaw(facing));
-			}
-
-			visualPos = visualPos + visualDirectionalSpeed;
+			if (!visualTravelComplete)
+				visualPos += visualDirectionalSpeed;
 
 			totalDistanceTravelled += info.Speed.Length;
 			totalVisualDistanceTravelled += info.VisualSpeed != WDist.Zero && info.VisualSpeed != info.Speed ? info.VisualSpeed.Length : info.Speed.Length;
-			intervalTicks++;
 
-			if (intervalTicks >= info.ImpactInterval)
+			if (!travelComplete)
 			{
-				intervalTicks = 0;
-				if (totalDistanceTravelled >= info.MinimumImpactDistance.Length && (info.MaximumImpactDistance == WDist.Zero || totalDistanceTravelled <= info.MaximumImpactDistance.Length))
-					Explode(world);
+				for (int idx = 0; idx < impactPositions.Length; idx++)
+				{
+					var impactDistance = (idx + 1) * impactInterval.Length;
+
+					if (impactDistance < info.MinimumImpactDistance.Length)
+						continue;
+
+					if (impactDistance > totalDistanceTravelled || (info.MaximumImpactDistance.Length > 0 && impactDistance > info.MaximumImpactDistance.Length))
+						break;
+
+					if (impactDistance > totalDistanceTravelled - speed.Length)
+						Explode(impactPositions[idx]);
+				}
 			}
 
-			if (totalDistanceTravelled >= range && totalVisualDistanceTravelled >= visualRange)
+			travelComplete = totalDistanceTravelled >= range;
+			visualTravelComplete = totalVisualDistanceTravelled >= visualRange;
+
+			if (visualTravelComplete && showFinalHitAnim) {
+
+				if (!finalHitStarted)
+				{
+					finalHitStarted = true;
+					finalHitAnim.PlayThen(info.FinalHitAnimSequence, () => showFinalHitAnim = false);
+				}
+
+				finalHitAnim.Tick();
+			}
+
+			if (travelComplete && visualTravelComplete && !showFinalHitAnim)
 				world.AddFrameEndTask(w => w.Remove(this));
 
 			ticks++;
@@ -197,6 +257,10 @@ namespace OpenRA.Mods.CA.Projectiles
 
 		public IEnumerable<IRenderable> Render(WorldRenderer wr)
 		{
+			if (finalHitStarted && showFinalHitAnim)
+				foreach (var r in finalHitAnim.Render(pos, wr.Palette(info.FinalHitAnimPalette)))
+					yield return r;
+
 			if (anim == null || totalVisualDistanceTravelled >= visualRange)
 				yield break;
 
@@ -217,9 +281,9 @@ namespace OpenRA.Mods.CA.Projectiles
 			}
 		}
 
-		void Explode(World world)
+		void Explode(WPos impactPos)
 		{
-			args.Weapon.Impact(Target.FromPos(pos), new WarheadArgs(args));
+			args.Weapon.Impact(Target.FromPos(impactPos), new WarheadArgs(args));
 		}
 	}
 }

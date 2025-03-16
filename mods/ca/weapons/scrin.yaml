@@ -2082,16 +2082,32 @@ MindSparkZap:
 			Wood: 5
 		DamageTypes: ElectricityDeath
 
+ObliteratorCharge:
+	Range: 15c0
+	ReloadDelay: 5
+	Projectile: LinearPulse
+		Speed: 2c0
+		ImpactInterval: 448
+	Warhead@2Eff: CreateEffect
+		Explosions: idle, idle2, idle3, idle4, idle5, idle6, idle7, idle8
+		ExplosionPalette: scrin
+		Image: obltboltcharge
+		ValidTargets: Ground, Air, Ship, Trees
+		Inaccuracy: 341
+
 ObliteratorBolt:
 	Range: 15c0
-	ReloadDelay: 150
+	ReloadDelay: 75
 	Report: oblt-fire1.aud
 	Projectile: LinearPulse
-		Speed: 130
+		Speed: 1c0
 		Image: obltbolt
 		Sequences: idle, idle2
 		Palette: scrin
-		ImpactInterval: 3
+		ImpactInterval: 390
+		FinalHitAnimSequence: idle
+		FinalHitAnimPalette: scrin
+		FinalHitAnim: enrvbolthit
 	Warhead@1Dam: SpreadDamage
 		Spread: 390
 		Falloff: 100, 50, 0
@@ -2116,11 +2132,13 @@ ObliteratorBolt:
 		ValidRelationships: Ally
 		InvalidTargets: Obliterator
 	Warhead@2Eff: CreateFacingEffect
-		Explosions: trail, trail2
+		Explosions: trail, trail2, trail3
 		ExplosionPalette: scrin
 		Image: obltbolt
 		ValidTargets: Ground, Air, Ship, Trees
 		Inaccuracy: 110
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Scorch
 
 NullifierBolt:
 	Range: 8c0
@@ -2184,3 +2202,4 @@ ScrinRepair:
 		Duration: 2
 		Condition: highlight
 		ValidTargets: Repair
+
