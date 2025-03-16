@@ -285,7 +285,7 @@ Squads = {
 			hard = DateTime.Minutes(10)
 		},
 		ActiveCondition = function()
-			return #Nod.GetActorsByTypes({ "4tnk", "4tnk.atomic", "apoc", "apoc.atomic" }) > 10
+			return #USSR.GetActorsByTypes({ "4tnk", "4tnk.atomic", "apoc", "apoc.atomic" }) > 10
 		end,
 		AttackValuePerSecond = {
 			hard = { Min = 35, Max = 35 },

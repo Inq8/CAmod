@@ -29,9 +29,9 @@ Squads = {
             hard = DateTime.Minutes(2),
 		},
 		AttackValuePerSecond = {
-			easy = { Min = 20, Max = 50, RampDuration = DateTime.Minutes(12) },
-			normal = { Min = 50, Max = 100, RampDuration = DateTime.Minutes(10) },
-			hard = { Min = 80, Max = 160, RampDuration = DateTime.Minutes(8) },
+			easy = { Min = 20, Max = 50, RampDuration = DateTime.Minutes(11) },
+			normal = { Min = 50, Max = 100, RampDuration = DateTime.Minutes(8) },
+			hard = { Min = 80, Max = 160, RampDuration = DateTime.Minutes(5) },
 		},
 		ActiveCondition = function()
 			return HasConyardAcrossRiver()
@@ -85,12 +85,13 @@ Squads = {
 			hard = { Min = 21, Max = 21 },
 		},
 		ActiveCondition = function()
-			return HasConyardAcrossRiver()
+			return not HasConyardAcrossRiver()
 		end,
 		ProducerTypes = { Aircraft = { "hpad" } },
 		Units = {
 			easy = {
 				{ Aircraft = { "heli", "heli" } },
+				{ Aircraft = { "harr" } },
 				{ Aircraft = { "pmak" } },
 			},
 			normal = {
@@ -249,6 +250,15 @@ OncePerFiveSecondChecks = function()
 		if HasConyardAcrossRiver() and not AlliedGroundAttacksStarted then
 			AlliedGroundAttacksStarted = true
 			Trigger.AfterDelay(Squads.Main.Delay[Difficulty], function()
+
+				if Difficulty == "hard" then
+					Squads.Main.InitTime = math.max(DateTime.GameTime - DateTime.Minutes(7), 0)
+				elseif Difficulty == "normal" then
+					Squads.Main.InitTime = math.max(DateTime.GameTime - DateTime.Minutes(4), 0)
+				else
+					Squads.Main.InitTime = math.max(DateTime.GameTime - DateTime.Minutes(1), 0)
+				end
+
 				InitAttackSquad(Squads.Main, Greece)
 			end)
 		end
