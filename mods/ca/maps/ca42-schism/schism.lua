@@ -438,7 +438,7 @@ MaleficSpawn = function()
 		{ "intl", "s1", "s1", "s1", "s1", "s3", "s3", "s4", "s4", "muti", "muti", "muti" },
 		{ "dark", "s1", "s1", "s1", "s1", "s3", "s4", "muti", "muti", "muti" },
 		{ "tpod", "s1", "s1", "s1", "s3", "s3", "s4", "muti", "muti" },
-		{ "devo", "s1", "s1", "s1", "s3", "s3", "s4", "muti", "muti", "muti" },
+		{ "dark", "s1", "s1", "s1", "s3", "s3", "s4", "muti", "muti", "muti" },
 	}
 
 	Utils.Do(MaleficSpawns, function(s)

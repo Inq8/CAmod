@@ -20,10 +20,10 @@ ScrinCompositions = {
 		{ "s1", "s1", "s1", "s3", "s2", "s1", "gscr", "s1", "s1", "intl" , "s1", { "gunw", "shrw" }, "s1", "s1" }
 	},
 	normal = {
-		{ "s1", "s1", "s1", "s3", "s2", "s1", "s1", "s3", "gscr", { "gunw", "intl", "shrw" }, "s1", { "devo", "dark", "lchr", "corr" }, "s1", { "tpod", "stcr", "intl" } }
+		{ "s1", "s1", "s1", "s3", "s2", "s1", "s1", "s3", "gscr", { "gunw", "intl", "shrw" }, "s1", { "devo", "devo", "lchr", "corr" }, "s1", { "tpod", "stcr", "intl" } }
 	},
 	hard = {
-		{ "s1", "s1", "s1", "s3", "s2", "s1", "s1", "s3", "s2", "gscr", "s4", { "gunw", "shrw" }, "s1", { "devo", "dark", "lchr", "corr" }, "gscr", { "tpod", "rtpd" }, "s1", "gscr", { "intl", "stcr" }, "gscr" }
+		{ "s1", "s1", "s1", "s3", "s2", "s1", "s1", "s3", "s2", "gscr", "s4", { "gunw", "shrw" }, "s1", { "devo", "devo", "lchr", "corr" }, "gscr", { "tpod", "rtpd" }, "s1", "gscr", { "intl", "stcr" }, "gscr" }
 	}
 }
 
@@ -35,8 +35,8 @@ FinalBattleInfantryList = {
 
 FinalBattleVehiclesList = {
 	easy = { "gunw", "intl", "corr" },
-	normal = { "intl", "devo", "corr", "dark", "tpod" },
-	hard = { "intl", "tpod", "devo", "dark", "rtpd" }
+	normal = { "intl", "devo", "corr", "devo", "tpod" },
+	hard = { "intl", "tpod", "corr", "devo", "rtpd" }
 }
 
 FinalBattleInfantryInterval = {

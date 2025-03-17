@@ -46,7 +46,7 @@ WormholeUnitGroups = {
 	{ "corr", "corr", "gscr", "gscr", "s2", "s2", "s1", "s1" },
 	{ "lchr", "lchr", "gscr", "gscr", "s2", "s2", "s1", "s1" },
 	{ "tpod", "devo", "gscr", "gscr", "s3", "s3", "s3", "s1" },
-	{ "dark", "dark", "gscr", "gscr", "s3", "s3", "s3", "s4" },
+	{ "gunw", "atmz", "gscr", "gscr", "s3", "s3", "s3", "s4" },
 	{ "ruin", "shrw", "gscr", "gscr", "s1", "s1", "s2", "s2" },
 	{ "gunw", "gunw", "gscr", "gscr", "s1", "s1", "s2", "s2" },
 }

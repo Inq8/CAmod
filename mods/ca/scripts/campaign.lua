@@ -1495,8 +1495,8 @@ AdvancedCyborg = { "rmbc", "enli", "tplr" }
 FlameTankHeavyFlameTankOrHowitzer = { "ftnk", "hftk", "howi" }
 
 GunWalkerSeekerOrLacerator = { "gunw", "seek", "lace", "shrw" }
-CorrupterDevourerOrDarkener = { "corr", "devo", "dark" }
-AtomizerDarkenerOrRuiner = { "atmz", "dark", "ruin" }
+CorrupterOrDevourer = { "corr", "devo" }
+AtomizerObliteratorOrRuiner = { "atmz", "oblt", "ruin" }
 TripodVariant = { "tpod", "tpod", "rtpd" }
 PacOrDevastator = { "pac", "deva" }
 
@@ -1595,13 +1595,13 @@ UnitCompositions = {
 		{ Infantry = { "s3", "s1", "s1", "s1", "s3", "s3", "s4" }, Vehicles = { "intl.ai2", GunWalkerSeekerOrLacerator, "intl.ai2", GunWalkerSeekerOrLacerator }, MaxTime = DateTime.Minutes(10), },
 
 		-- 10 to 13 minutes
-		{ Infantry = { "s3", "s1", "s1", "s1", "s1", "s1", "s2", "s2", "s3", "s3" }, Vehicles = { "intl.ai2", GunWalkerSeekerOrLacerator, "intl.ai2", CorrupterDevourerOrDarkener, GunWalkerSeekerOrLacerator, "tpod", GunWalkerSeekerOrLacerator, CorrupterDevourerOrDarkener }, MinTime = DateTime.Minutes(10), MaxTime = DateTime.Minutes(13), },
+		{ Infantry = { "s3", "s1", "s1", "s1", "s1", "s1", "s2", "s2", "s3", "s3" }, Vehicles = { "intl.ai2", GunWalkerSeekerOrLacerator, "intl.ai2", CorrupterOrDevourer, GunWalkerSeekerOrLacerator, "tpod", GunWalkerSeekerOrLacerator, CorrupterOrDevourer }, MinTime = DateTime.Minutes(10), MaxTime = DateTime.Minutes(13), },
 
 		-- 13 to 19 minutes
-		{ Infantry = { "s3", "s1", "s1", "s1", "s1", "s1", "s2", "s2", "s3", "s3", "s3", "s4", "s4" }, Vehicles = { "intl.ai2", GunWalkerSeekerOrLacerator, "intl.ai2", CorrupterDevourerOrDarkener, GunWalkerSeekerOrLacerator, TripodVariant, CorrupterDevourerOrDarkener }, Aircraft = { PacOrDevastator }, MinTime = DateTime.Minutes(13), MaxTime = DateTime.Minutes(19), },
+		{ Infantry = { "s3", "s1", "s1", "s1", "s1", "s1", "s2", "s2", "s3", "s3", "s3", "s4", "s4" }, Vehicles = { "intl.ai2", GunWalkerSeekerOrLacerator, "intl.ai2", CorrupterOrDevourer, GunWalkerSeekerOrLacerator, TripodVariant, CorrupterOrDevourer }, Aircraft = { PacOrDevastator }, MinTime = DateTime.Minutes(13), MaxTime = DateTime.Minutes(19), },
 
 		-- 19 minutes onwards
-		{ Infantry = { "s3", "s1", "s1", "s1", "s1", "s1", "s2", "s2", "s3", "s3", "s3", "s4", "s4" }, Vehicles = { "intl.ai2", GunWalkerSeekerOrLacerator, "intl.ai2", CorrupterDevourerOrDarkener, GunWalkerSeekerOrLacerator, TripodVariant, AtomizerDarkenerOrRuiner }, Aircraft = { PacOrDevastator, "pac" }, MinTime = DateTime.Minutes(19), },
+		{ Infantry = { "s3", "s1", "s1", "s1", "s1", "s1", "s2", "s2", "s3", "s3", "s3", "s4", "s4" }, Vehicles = { "intl.ai2", GunWalkerSeekerOrLacerator, "intl.ai2", CorrupterOrDevourer, GunWalkerSeekerOrLacerator, TripodVariant, AtomizerObliteratorOrRuiner }, Aircraft = { PacOrDevastator, "pac" }, MinTime = DateTime.Minutes(19), },
 
 		-- Specials
 		{ Infantry = { "brst", "brst", "brst", "brst", "brst", "brst", "brst" }, MinTime = DateTime.Minutes(18), IsSpecial = true },
