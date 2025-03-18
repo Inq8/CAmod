@@ -141,10 +141,10 @@ InitGreece = function()
 end
 
 WarpInTeslaTanks = function(TankLocation1, TankLocation2, EffectLocation)
-	if TelsaTanksWarped then
+	if TeslaTanksWarped then
 		return
 	end
-	TelsaTanksWarped = true
+	TeslaTanksWarped = true
 	Lighting.Flash("Chronoshift", 10)
 	Media.PlaySound("chrono2.aud")
 	Actor.Create("warpin", true, { Owner = USSR, Location = EffectLocation })

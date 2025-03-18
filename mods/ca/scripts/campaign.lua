@@ -109,6 +109,9 @@ HarvesterDeathStacks = { }
 -- minimum time until next special composition for each AI player
 SpecialCompositionMinTimes = { }
 
+-- caches unit costs for adjusting composition difficulty
+UnitCosts = { }
+
 --
 -- end automatically populated vars
 --
@@ -452,12 +455,11 @@ CanRebuild = function(queueItem)
 		return false
 	end
 
-	local loc = queueItem.Location
 	local pos = queueItem.CenterPosition
 
 	-- require being in conyard build radius
 	if EnforceAiBuildRadius then
-		local nearbyConyards = Map.ActorsInCircle(queueItem.CenterPosition, WDist.New(20480), function(a)
+		local nearbyConyards = Map.ActorsInCircle(pos, WDist.New(20480), function(a)
 			return a.Owner == queueItem.Player
 		end)
 
@@ -1366,17 +1368,16 @@ AdjustCompositionsForDifficulty = function(compositions, difficulty)
 	end
 
 	local updatedCompositions = { }
-	local unitCosts = { }
 
 	Utils.Do(compositions, function(comp)
-		local updatedComposition = AdjustCompositionForDifficulty(comp, unitCosts, difficulty)
+		local updatedComposition = AdjustCompositionForDifficulty(comp, difficulty)
 		table.insert(updatedCompositions, updatedComposition)
 	end)
 
 	return updatedCompositions
 end
 
-AdjustCompositionForDifficulty = function(composition, unitCosts, difficulty)
+AdjustCompositionForDifficulty = function(composition, difficulty)
 
 	if difficulty == nil then
 		difficulty = Difficulty
@@ -1384,10 +1385,6 @@ AdjustCompositionForDifficulty = function(composition, unitCosts, difficulty)
 
 	if difficulty == "hard" then
 		return composition
-	end
-
-	if unitCosts == nil then
-		unitCosts = { }
 	end
 
 	-- total unadjusted cost for all units in each queue
@@ -1418,12 +1415,12 @@ AdjustCompositionForDifficulty = function(composition, unitCosts, difficulty)
 					chosenUnit = unit
 				end
 
-				if unitCosts[chosenUnit] == nil then
-					unitCosts[chosenUnit] = ActorCA.CostOrDefault(chosenUnit)
+				if UnitCosts[chosenUnit] == nil then
+					UnitCosts[chosenUnit] = ActorCA.CostOrDefault(chosenUnit)
 				end
 
 				-- add the cost to the total cost for the queue
-				queueTotalUnitCost[queueName] = queueTotalUnitCost[queueName] + unitCosts[chosenUnit]
+				queueTotalUnitCost[queueName] = queueTotalUnitCost[queueName] + UnitCosts[chosenUnit]
 			end
 
 			local adjustedDesiredTotalUnitCostForQueue = queueTotalUnitCost[queueName] * CompositionValueMultiplier[difficulty]
@@ -1449,11 +1446,11 @@ AdjustCompositionForDifficulty = function(composition, unitCosts, difficulty)
 
 				table.insert(updatedComposition[queueName], unit)
 
-				if unitCosts[chosenUnit] == nil then
-					unitCosts[chosenUnit] = ActorCA.CostOrDefault(chosenUnit)
+				if UnitCosts[chosenUnit] == nil then
+					UnitCosts[chosenUnit] = ActorCA.CostOrDefault(chosenUnit)
 				end
 
-				queueAllocatedTotalUnitCost[queueName] = queueAllocatedTotalUnitCost[queueName] + unitCosts[chosenUnit]
+				queueAllocatedTotalUnitCost[queueName] = queueAllocatedTotalUnitCost[queueName] + UnitCosts[chosenUnit]
 			end
 		else
 			if k == "MinTime" or k == "MaxTime" then
