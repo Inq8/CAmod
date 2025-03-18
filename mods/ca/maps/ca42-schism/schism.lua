@@ -16,7 +16,7 @@ if Difficulty == "hard" then
 	table.insert(UnitCompositions.Nod, {
 		Infantry = {},
 		Vehicles = { "avtr", "avtr", "avtr", "avtr", "avtr", "avtr" },
-		MinTime = DateTime.Minutes(5)
+		MinTime = DateTime.Minutes(5),
 		IsSpecial = true
 	})
 end

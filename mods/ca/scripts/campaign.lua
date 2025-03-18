@@ -1353,6 +1353,8 @@ AdjustCompositionsForDifficulty = function(compositions, difficulty)
 		local updatedCompostion = AdjustCompositionForDifficulty(comp, unitCosts, difficulty)
 		table.insert(updatedCompositions, updatedComposition)
 	end)
+
+	return updatedCompositions
 end
 
 AdjustCompositionForDifficulty = function(composition, unitCosts, difficulty)
@@ -1378,7 +1380,7 @@ AdjustCompositionForDifficulty = function(composition, unitCosts, difficulty)
 	-- units added to the adjusted composition
 	local updatedComposition = { }
 
-	for k,v in pairs(comp) do
+	for k,v in pairs(composition) do
 
 		if not IsCompositionSetting(k) then
 			local queueName = k

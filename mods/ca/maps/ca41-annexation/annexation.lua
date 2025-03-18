@@ -12,7 +12,7 @@ if Difficulty == "hard" then
 	table.insert(UnitCompositions.Scrin, {
 		Infantry = { "impl", "impl", "impl", "impl", "impl", "impl", "impl", "impl", "impl" },
 		Vehicles = { "null", "null", "null", "null", "null", "null" },
-		MinTime = DateTime.Minutes(5)
+		MinTime = DateTime.Minutes(5),
 		IsSpecial = true
 	})
 end
