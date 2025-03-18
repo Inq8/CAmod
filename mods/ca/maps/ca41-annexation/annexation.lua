@@ -145,6 +145,7 @@ WorldLoaded = function()
 			USSR.MarkCompletedObjective(ObjectiveCaptureNerveCenter)
 			ObjectiveHoldNerveCenter = USSR.AddObjective("Protect the captured Nerve Center.")
 			TimerTicks = 0
+			UpdateMissionText()
 
 			Trigger.OnRemovedFromWorld(GatewayNerveCenter, function(a)
 				if not USSR.IsObjectiveCompleted(ObjectiveHoldNerveCenter) then
@@ -297,17 +298,23 @@ InitSignalTransmittersObjective = function()
 				end
 
 				local wormholeLoc
-				if self == ScrinGatewayWp1 then
+				if self == SignalTransmitter1 then
 					wormholeLoc = ScrinWormholeWp1.Location
-				elseif self == ScrinGatewayWp2 then
+				elseif self == SignalTransmitter2 then
 					wormholeLoc = ScrinWormholeWp2.Location
-				elseif self == ScrinGatewayWp3 then
+				elseif self == SignalTransmitter3 then
 					wormholeLoc = ScrinWormholeWp3.Location
 				end
 
-				local wormhole = SpawnWormhole(wormholeLoc)
-				InitScrinReinforcements(wormhole)
-				FleetRecall(self)
+				Trigger.AfterDelay(DateTime.Seconds(3), function()
+					local wormhole = SpawnWormhole(wormholeLoc)
+					Trigger.AfterDelay(DateTime.Seconds(3), function()
+						Media.PlaySpeechNotification(USSR, "ReinforcementsArrived")
+						Notification("Reinforcements have arrived.")
+						InitScrinReinforcements(wormhole)
+						FleetRecall(self)
+					end)
+				end)
 			end)
 
 			Trigger.OnKilled(t, function(self, killer)
@@ -358,7 +365,7 @@ DeployScrinReinforcements = function(wormhole)
 			end)
 		end)
 
-		Trigger.AfterDelay(DateTime.Minutes(2), function()
+		Trigger.AfterDelay(DateTime.Minutes(3), function()
 			DeployScrinReinforcements(wormhole)
 		end)
 	end
