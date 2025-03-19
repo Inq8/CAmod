@@ -35,15 +35,19 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Color to use for the target line.")]
 		public readonly Color TargetLineColor = Color.Yellow;
 
-		[Desc("Player relationships the owner of the infiltration target needs.")]
+		[Desc("Player relationships the owner of the attachment target needs.")]
 		public readonly PlayerRelationship ValidRelationships = PlayerRelationship.Neutral | PlayerRelationship.Enemy;
 
 		[CursorReference]
-		[Desc("Cursor to display when able to infiltrate the target actor.")]
+		[Desc("Cursor to display when able to attach to target actor.")]
 		public readonly string EnterCursor = "enter";
 
 		[CursorReference]
-		[Desc("Cursor to display when unable to infiltrate the target actor.")]
+		[Desc("Cursor to display when able to attach to multiple actors.")]
+		public readonly string EnterMultiCursor = "enter-multi";
+
+		[CursorReference]
+		[Desc("Cursor to display when unable to attach the target actor.")]
 		public readonly string BlockedCursor = "enter-blocked";
 
 		[Desc("Sounds played on being attached.")]
@@ -276,21 +280,22 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			get
 			{
+				yield return new AttachOrderTargeter(this, true);
 				yield return new AttachOrderTargeter(this);
 			}
 		}
 
 		public Order IssueOrder(Actor self, IOrderTargeter order, in Target target, bool queued)
 		{
-			if (order.OrderID != "Attach")
+			if (order.OrderID != "Attach" && order.OrderID != "MassAttach")
 				return null;
 
 			return new Order(order.OrderID, self, target, queued);
 		}
 
-		public string VoicePhraseForOrder(Actor self, Order order)
+		string IOrderVoice.VoicePhraseForOrder(Actor self, Order order)
 		{
-			return order.OrderString == "Attach" && CanAttachToTarget(self, order.Target)
+			return (order.OrderString == "Attach" || order.OrderString != "MassAttach") && CanAttachToTarget(self, order.Target)
 				? Info.Voice : null;
 		}
 
@@ -324,29 +329,98 @@ namespace OpenRA.Mods.CA.Traits
 
 		public void ResolveOrder(Actor self, Order order)
 		{
-			if (order.OrderString != "Attach")
-				return;
+			switch (order.OrderString)
+			{
+				case "Attach":
+					if (!CanAttachToTarget(self, order.Target))
+						return;
 
-			if (!CanAttachToTarget(self, order.Target))
-				return;
+					self.QueueActivity(order.Queued, new Attach(self, order.Target, this, Info.TargetLineColor));
+					break;
 
-			self.QueueActivity(order.Queued, new Attach(self, order.Target, this, Info.TargetLineColor));
+				case "MassAttach":
+					ResolveMassAttachOrder(self, order);
+					break;
+			}
+
 			self.ShowTargetLines();
+		}
+
+		void ResolveMassAttachOrder(Actor self, Order order)
+		{
+			// Enter orders are only valid for own/allied actors,
+			// which are guaranteed to never be frozen.
+			if (order.Target.Type != TargetType.Actor)
+				return;
+
+			var targetActor = order.Target.Actor;
+
+			var selectedWithTrait = self.World.Selection.Actors
+				.Where(a => a.Info.TraitInfos<AttachableInfo>().Any(ai => ai.Type == Info.Type)
+					&& a.Owner == self.Owner
+					&& !a.IsDead)
+				.OrderBy(a => (a.CenterPosition - targetActor.CenterPosition).LengthSquared)
+				.Select(a => new TraitPair<Attachable>(a, a.TraitsImplementing<Attachable>().FirstOrDefault(a => a.Info.Type == Info.Type)));
+
+			// Find the closest actor to the target transport
+			var closestActor = selectedWithTrait.FirstOrDefault();
+
+			// Only perform allocation if the current actor is the closest actor
+			if (closestActor.Actor != self)
+				return;
+
+			// Create a list of available transports
+			var availableTargets = self.World.Actors
+				.Where(a => a.Info.TraitInfos<AttachableToInfo>().Any(ai => ai.Type == Info.Type)
+					&& a.Info.Name == targetActor.Info.Name
+					&& a.Owner == targetActor.Owner
+					&& !a.IsDead
+					&& (a.CenterPosition - targetActor.CenterPosition).HorizontalLengthSquared <= WDist.FromCells(10).LengthSquared)
+				.Select(a => new TraitPair<AttachableTo>(a, a.TraitsImplementing<AttachableTo>().FirstOrDefault(a => a.Info.Type == Info.Type)))
+				.Where(t => closestActor.Trait.CanAttachToActor(closestActor.Actor, Target.FromActor(t.Actor)))
+				.ToList();
+
+			// Allocate passengers to the closest available transport
+			foreach (var pair in selectedWithTrait)
+			{
+				if (availableTargets.Count == 0)
+					break;
+
+				var closestTarget = availableTargets
+					.OrderBy(t => (t.Actor.CenterPosition - pair.Actor.CenterPosition).LengthSquared)
+					.FirstOrDefault();
+
+				// can't queue an activity here because the selected units aren't known by all clients so causes a de-sync
+				// pair.Actor.QueueActivity(false, new Attach(pair.Actor, Target.FromActor(closestTarget.Actor), pair.Trait, Info.TargetLineColor));
+				self.World.IssueOrder(new Order("Attach", pair.Actor, Target.FromActor(closestTarget.Actor), order.Queued));
+				pair.Actor.ShowTargetLines();
+				// todo: take into account AttachableTo.Info.Limit in the same way MassEntersCargo takes MaxWeight into account
+
+				availableTargets.Remove(closestTarget);
+			}
 		}
 	}
 
 	sealed class AttachOrderTargeter : UnitOrderTargeter
 	{
 		readonly Attachable attachable;
+		readonly bool forceMove;
 
-		public AttachOrderTargeter(Attachable attachable)
-			: base("Attach", 7, attachable.Info.EnterCursor, true, true)
+		public AttachOrderTargeter(Attachable attachable, bool forceMove = false)
+			: base(forceMove ? "MassAttach" : "Attach", 7, attachable.Info.EnterCursor, true, true)
 		{
 			this.attachable = attachable;
+			this.forceMove = forceMove;
 		}
 
 		public override bool CanTargetActor(Actor self, Actor target, TargetModifiers modifiers, ref string cursor)
 		{
+			if (forceMove && !modifiers.HasModifier(TargetModifiers.ForceMove))
+				return false;
+
+			if (!forceMove && modifiers.HasModifier(TargetModifiers.ForceMove))
+				return false;
+
 			var stance = self.Owner.RelationshipWith(target.Owner);
 			if (!attachable.Info.ValidRelationships.HasRelationship(stance))
 				return false;
@@ -354,12 +428,20 @@ namespace OpenRA.Mods.CA.Traits
 			if (attachable.Info.TargetTypes.Any() && !attachable.Info.TargetTypes.Overlaps(target.GetEnabledTargetTypes()))
 				return false;
 
-			cursor = target.TraitsImplementing<AttachableTo>().Any(x => x.CanAttach(attachable)) ? attachable.Info.EnterCursor : attachable.Info.BlockedCursor;
+			var attachCursor = modifiers.HasModifier(TargetModifiers.ForceMove) ? attachable.Info.EnterMultiCursor : attachable.Info.EnterCursor;
+
+			cursor = target.TraitsImplementing<AttachableTo>().Any(x => x.CanAttach(attachable)) ? attachCursor : attachable.Info.BlockedCursor;
 			return true;
 		}
 
 		public override bool CanTargetFrozenActor(Actor self, FrozenActor target, TargetModifiers modifiers, ref string cursor)
 		{
+			if (forceMove && !modifiers.HasModifier(TargetModifiers.ForceMove))
+				return false;
+
+			if (!forceMove && modifiers.HasModifier(TargetModifiers.ForceMove))
+				return false;
+
 			var stance = self.Owner.RelationshipWith(target.Owner);
 			if (!attachable.Info.ValidRelationships.HasRelationship(stance))
 				return false;
@@ -367,7 +449,9 @@ namespace OpenRA.Mods.CA.Traits
 			if (attachable.Info.TargetTypes.Any() && !attachable.Info.TargetTypes.Overlaps(target.Info.GetAllTargetTypes()))
 				return false;
 
-			cursor = target.Actor.TraitsImplementing<AttachableTo>().Any(x => x.CanAttach(attachable)) ? attachable.Info.EnterCursor : attachable.Info.BlockedCursor;
+			var attachCursor = modifiers.HasModifier(TargetModifiers.ForceMove) ? attachable.Info.EnterMultiCursor : attachable.Info.EnterCursor;
+
+			cursor = target.Actor.TraitsImplementing<AttachableTo>().Any(x => x.CanAttach(attachable)) ? attachCursor : attachable.Info.BlockedCursor;
 			return true;
 		}
 	}

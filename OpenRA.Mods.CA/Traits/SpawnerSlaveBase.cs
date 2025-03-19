@@ -134,7 +134,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		public virtual void OnMasterKilled(Actor self, Actor attacker, SpawnerSlaveDisposal disposal)
 		{
-			if (self.IsDead || self.WillDispose)
+			if (self.IsDead)
 				return;
 
 			// Grant MasterDead condition.

@@ -83,7 +83,6 @@
 		EndChargeSpeechNotification: ClusterMinesReady
 		EndChargeTextNotification: Cluster Mines ready.
 		PauseOnCondition: disabled || empdisable || being-warped
-		RequiresCondition: !build-incomplete
 		SupportPowerPaletteOrder: 50
 
 ^TemporalIncursionPower:
@@ -1184,7 +1183,7 @@
 		IconPalette: chrometd
 		Name: Advanced Radar Scan
 		Description: \nReveals the location of enemy structures & units\n    through the fog of war.
-		RequiresCondition: !build-incomplete && tower.radar
+		RequiresCondition: tower.radar
 		PauseOnCondition: !radar-active || disabled || being-warped
 		LaunchSound: gradarup.aud
 		BeginChargeSound: gradardn.aud
@@ -1300,12 +1299,13 @@
 		LaunchSound: nukelaunch.aud
 		DisplayTimerRelationships: Ally, Neutral, Enemy
 		PauseOnCondition: disabled || empdisable || being-warped
-		DisplayBeacon: False
+		DisplayBeacon: True
+		BeaconPoster: ioncannon
+		BeaconPosterPalette: temptd
 		DisplayRadarPing: True
 		ArrowSequence: arrow
-		ClockSequence: clock
+		ClockSequence: clockTD
 		CircleSequence: circles
-		BeaconPoster: atomicon
 		TargetCircleRange: 6c512
 		TargetCircleColor: 4fff3390
 		SupportPowerPaletteOrder: 10
@@ -2152,7 +2152,7 @@
 		Cursor: ability
 		ChargeInterval: 13500
 		Name: Rift
-		ActivationDelay: 50
+		ActivationDelay: 75
 		Description: \nInitiate a Rift which deals heavy damage\n    over time to a large area.
 		Weapon: RiftInit
 		AllowMultiple: false
@@ -2203,7 +2203,6 @@
 		Range: 10c0
 		ValidTargetTypes: FleetRecallable
 		InvalidTargetTypes: Husk
-		DisplayTimerRelationships: Ally, Neutral
 		SupportPowerPaletteOrder: 30
 		ShowSelectionBoxes: true
 		SelectionBoxColor: 9500ff

@@ -648,6 +648,64 @@ S4:
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 
+MRDR:
+	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Buildable:
+		Queue: InfantrySQ, InfantryMQ
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 124
+		Prerequisites: ~disabled
+		IconPalette: chromes
+		Description: Heavy assault infantry with high burst damage.
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Defenses, Heavy Armor, Light Armor
+		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
+		Attributes: • Special Ability: Teleport (with upgrade)
+	Mobile:
+		Speed: 46
+	Valued:
+		Cost: 600
+	Tooltip:
+		Name: Marauder
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 16000
+	RevealsShroud:
+		Range: 5c0
+	Armament@PRIMARY:
+		Weapon: MarauderDiscs
+		LocalOffset: 150,0,400
+	Armament@BATF:
+		Name: batf
+		Weapon: IntruderDiscsBATF
+	AttackFrontal:
+		PauseOnCondition: being-warped || blinded || reapersnare
+		FacingTolerance: 0
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
+	PortableChronoCA:
+		ChargeDelay: 500
+		MaxDistance: 16
+		ChronoshiftSound: scrinport.aud
+		RequiresCondition: blink-upgrade
+		TeleportCondition: blink
+		ConditionDuration: 3
+		ShowSelectionBarWhenFull: false
+	GrantConditionOnPrerequisite@BLINKPACKS:
+		Condition: blink-upgrade
+		Prerequisites: blink.upgrade
+	WithColoredOverlay@BLINKFLASH:
+		Color: ffffff80
+		RequiresCondition: blink
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
+
 S6:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Inherits@ENGINEER: ^EngineerBase
@@ -5640,6 +5698,7 @@ SCOL.Temp:
 		RequiresCondition: ioncon-upgrade && !(empdisable || being-warped)
 	GrantConditionOnDamage@IONSTORM:
 		RequiresCondition: ioncon-upgrade && !(empdisable || being-warped)
+	-MapEditorData:
 
 #
 # ---- misc
@@ -5934,9 +5993,7 @@ RiftMinor:
 		Delay: 120
 
 camera.resourcescan:
-	Inherits: CAMERA
-	EditorOnlyTooltip:
-		Name: (Resource Scan Camera)
+	Inherits: ^CameraBase
 	RevealsShroud:
 		Range: 5c0
 
@@ -6018,10 +6075,9 @@ IonSurgeFade:
 	-AmbientSound:
 	-WithRangeCircleCA@IonSurge:
 
-WORMHOLE:
+^WormholeBase:
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^SpriteActor
-	Inherits@3: ^SelectableBuilding
 	Inherits@shape: ^1x1Shape
 	Tooltip:
 		Name: Wormhole
@@ -6030,22 +6086,28 @@ WORMHOLE:
 	WithSpriteBody:
 	ClassicFacingBodyOrientation:
 		QuantizedFacings: 1
-	Selectable:
-		Bounds: 1365, 1365
 	HiddenUnderFog:
-		Type: CenterPosition
-	HitShape:
-	RevealsShroud:
-		Range: 4c0
 		Type: CenterPosition
 	Immobile:
 		OccupiesSpace: true
+	Interactable:
+
+WORMHOLE:
+	Inherits: ^WormholeBase
+	Inherits@3: ^SelectableBuilding
+	-Interactable:
+	Selectable:
+		Bounds: 1365, 1365
+	HitShape:
 	Targetable:
 		TargetTypes: Ground, Structure, Wormhole
 	Health:
 		HP: 100000
 	Armor:
 		Type: Concrete
+	RevealsShroud:
+		Range: 4c0
+		Type: CenterPosition
 	TeleportNetwork:
 		Type: Wormhole
 		Delay: 0
@@ -6054,48 +6116,34 @@ WORMHOLE:
 	Exit:
 	PopControlled:
 		Limit: 2
+	MapEditorData:
+		Categories: System
 	WithDeathAnimation:
 		UseDeathTypeSuffix: false
 		CrushedSequence: die
 		FallbackSequence: die
 	WithMakeAnimation:
-	MapEditorData:
-		Categories: System
 
 REBELGATEWAY:
-	Inherits@1: ^ExistsInWorld
-	Inherits@2: ^SpriteActor
+	Inherits: ^WormholeBase
 	Inherits@3: ^SelectableBuilding
-	Inherits@shape: ^1x1Shape
+	-Interactable:
 	Tooltip:
 		Name: Gateway
 	RenderSprites:
-		PlayerPalette: playerscrin
 		Image: wormholelg
-	WithSpriteBody:
-	ClassicFacingBodyOrientation:
-		QuantizedFacings: 1
 	Selectable:
 		Bounds: 2048, 2048
-	HiddenUnderFog:
-		Type: CenterPosition
-	HitShape:
 	RevealsShroud:
 		Range: 4c0
 		Type: CenterPosition
-	Immobile:
-		OccupiesSpace: true
+	HitShape:
 	Targetable:
 		TargetTypes: Ground, Structure, Wormhole
-	Health:
-		HP: 50000
 	Armor:
 		Type: Concrete
-	WithDeathAnimation:
-		UseDeathTypeSuffix: false
-		CrushedSequence: die
-		FallbackSequence: die
-	WithMakeAnimation:
+	Health:
+		HP: 50000
 	KillsSelf:
 		Delay: 625
 	RallyPoint:
@@ -6175,6 +6223,11 @@ REBELGATEWAY:
 	GrantConditionOnPrerequisite@Shard:
 		Prerequisites: shrw.upgrade
 		Condition: shard
+	WithDeathAnimation:
+		UseDeathTypeSuffix: false
+		CrushedSequence: die
+		FallbackSequence: die
+	WithMakeAnimation:
 
 # infiltrator stolen tech
 

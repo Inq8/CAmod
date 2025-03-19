@@ -12,26 +12,18 @@ TeslaTriggerWest = { TeslaTriggerWest1.Location, TeslaTriggerWest2.Location, Tes
 
 Squads = {
 	Main = {
-		Player = nil,
 		Delay = {
 			normal = DateTime.Minutes(6),
 		},
 		AttackValuePerSecond = {
-			normal = { { MinTime = 0, Value = 10 } },
-		},
-		QueueProductionStatuses = {
-			Infantry = false,
-			Vehicles = false
+			normal = { Min = 10, Max = 10 },
 		},
 		FollowLeader = true,
-		IdleUnits = { },
 		ProducerTypes = { Infantry = { "tent" }, Vehicles = { "weap" } },
 		Units = {
-			normal = {
-				{
-					Infantry = { "e3", "e1", "e1", "e1" },
-					Vehicles = { "jeep" },
-				},
+			{
+				Infantry = { "e3", "e1", "e1", "e1" },
+				Vehicles = { "jeep" },
 			},
 		},
 		AttackPaths = AlliedAttackPaths,

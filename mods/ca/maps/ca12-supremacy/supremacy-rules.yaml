@@ -1,0 +1,60 @@
+
+^Palettes:
+	GlobalLightingPaletteEffect:
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, supremacy.lua
+	MissionData:
+		Briefing: The Soviets have been dealt a devastating blow by our new cyborg army, but it is not yet enough. For my plan to succeed their power and obedience must be shown to be unequaled.\n\nWord of our great victory has already reached GDI and the Allies and they have set their mistrust aside. While the Allies attempt to take advantage of the Soviet defeat to make advances on that front, GDI have begun an assault against us.\n\nTwo bases in particular are soon to fall. Sacrifice one base to lull GDI into a false sense of security, and reinforce the other. Once you establish cyborg manufacturing, GDI will not stand a chance. Show no mercy, let all bear witness to the glorious evolution that shall bring the brotherhood to ultimate victory.
+	MapOptions:
+		ShortGameCheckboxEnabled: False
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: dropdown-difficulty.label
+		Description: dropdown-difficulty.description
+		Values:
+			easy: options-difficulty.easy
+			normal: options-difficulty.normal
+			hard: options-difficulty.hard
+		Default: normal
+	MusicPlaylist:
+		StartingMusic: stopthem
+
+Player:
+	PlayerResources:
+		DefaultCash: 0
+
+# Enable subfaction specific tech
+
+BH:
+	Buildable:
+		Prerequisites: ~hand, anyradar
+
+WTNK:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.nod
+
+HFTK:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.nod
+
+SPEC:
+	Buildable:
+		Prerequisites: tmpl, ~vehicles.nod
+
+microwave.upgrade:
+	Buildable:
+		Prerequisites: tmpl
+
+quantum.upgrade:
+	Buildable:
+		Prerequisites: tmpl
+
+alphacomanche.upgrade:
+	Buildable:
+		Prerequisites: tmpl
+
+blacknapalm.upgrade:
+	Buildable:
+		Prerequisites: tmpl

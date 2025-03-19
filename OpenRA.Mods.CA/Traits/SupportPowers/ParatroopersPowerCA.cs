@@ -12,12 +12,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OpenRA.Mods.Common;
+using OpenRA.Mods.Common.Traits;
 using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Effects;
 using OpenRA.Primitives;
 using OpenRA.Traits;
 
-namespace OpenRA.Mods.Common.Traits
+namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("Support power that delivers paratroopers. CA version adds overrides based on prerequisites.")]
 	public class ParatroopersPowerCAInfo : SupportPowerInfo

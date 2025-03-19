@@ -125,6 +125,21 @@ Player:
 					Attractiveness: -5
 					TargetMetric: None
 					CheckRadius: 8c0
+			nodairdrop:
+				OrderName: nodairdrop
+				MinimumAttractiveness: 5
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 8c0
+				Consideration@2:
+					Against: Enemy
+					Types: Water
+					Attractiveness: -5
+					TargetMetric: None
+					CheckRadius: 8c0
 			blackhairdrop:
 				OrderName: blackhairdrop
 				MinimumAttractiveness: 5
@@ -451,12 +466,6 @@ Player:
 					Attractiveness: 5
 					TargetMetric: Value
 					CheckRadius: 7c0
-				Consideration@2:
-					Against: Enemy
-					Types: Structure
-					Attractiveness: 2
-					TargetMetric: Value
-					CheckRadius: 3c0
 			stormpower:
 				OrderName: storm
 				MinimumAttractiveness: 3000

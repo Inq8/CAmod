@@ -849,7 +849,7 @@ IonStormInit:
 		ValidTargets: Ground, Air, Water
 		Weapon: IonCloud
 		ImpactActors: false
-		ImpactOffsets: 0,0, -4,0, 4,0, 0,-4, 0,4, -2,-2, 2,2, -2,2, 2,-2
+		ImpactOffsets: 0,0, 0,0, -4,0, 4,0, 0,-4, 0,4, -2,-2, 2,2, -2,2, 2,-2
 		RandomImpactSequence: true
 
 IonCloud:
@@ -1007,7 +1007,7 @@ WeatherStormInit:
 		RandomOffset: 512
 		Interval: 5
 	Warhead@DirectDamage: SpreadDamage
-		Damage: 35000
+		Damage: 45000
 		Delay: 78
 	Warhead@4: CreateEffect
 		Delay: 50
@@ -1327,7 +1327,7 @@ OverlordsWrath:
 		FlashType: OverlordsWrath
 
 SubterraneanStrikeSpawner:
-	ReloadDelay: 1
+	ReloadDelay: 500
 	Projectile: InstantExplode
 	Warhead@Spawn: SpawnActor
 		Actors: mole

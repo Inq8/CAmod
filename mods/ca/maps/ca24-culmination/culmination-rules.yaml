@@ -1,0 +1,162 @@
+
+^Palettes:
+	GlobalLightingPaletteEffect:
+		Red: 1
+		Green: 1
+		Blue: 1.2
+		Ambient: 0.8
+	PaletteFromFile@terrain-temperat:
+		Filename: brown.pal
+	FlashPaletteEffect@Subjugation:
+		Type: Subjugation
+		Color: a400f2
+		ExcludePalettes: cursor, chrome, chrometd, chromes, colorpicker, colorpickertd, colorpickerscrin, fog, shroud, effect-ignore-lighting
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, culmination.lua
+	MissionData:
+		Briefing: The cyborg army is now under our control. Our Mastermind has grown substantially in power - becoming a Prodigy - and has supplanted Yuri as the master of this cybernetic force. Yuri has been imprisoned, he may prove useful.\n\nThe cyborgs will all but ensure our primary goal is achieved here, but we must leave nothing to chance. Our Prodigy has accumulated a vast amount of psionic energy, and the Supervisor believes we should remove all possibility of defeat by subjugating additional human forces.\n\nWe have drawn three of the most weakened human factions into a trap. They believe our Prodigy is vulnerable and that they have an opportunity to eliminate it, but in reality the Prodigy will be able to take control of an entire base from a great distance. Use your best judgement to decide which faction to bring under your control first. The Prodigy will only be able to perform this feat once, so the other two factions will need to be subjugated more gradually.
+	MapOptions:
+		ShortGameCheckboxEnabled: False
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: dropdown-difficulty.label
+		Description: dropdown-difficulty.description
+		Values:
+			easy: options-difficulty.easy
+			normal: options-difficulty.normal
+			hard: options-difficulty.hard
+		Default: normal
+	MusicPlaylist:
+		StartingMusic: timebomb
+
+Player:
+	PlayerResources:
+		DefaultCash: 6000
+
+# Enable subfaction specific tech
+
+DARK:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.scrin
+
+STCR:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.scrin
+
+LCHR:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.scrin
+
+RUIN:
+	Buildable:
+		Prerequisites: scrt, ~vehicles.scrin
+
+ATMZ:
+	Buildable:
+		Prerequisites: scrt, ~vehicles.scrin
+
+ENRV:
+	Buildable:
+		Prerequisites: scrt, ~aircraft.scrin
+
+stellar.upgrade:
+	Buildable:
+		Prerequisites: scrt
+
+coalescence.upgrade:
+	Buildable:
+		Prerequisites: scrt
+
+# Disable tech
+
+RMBO:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+BORI:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+E7:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+MAST:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+MSHP:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+# Misc
+
+PDGY:
+	ProvidesRadar:
+	GrantExternalConditionPowerCA@Subjugation:
+		OrderName: subjugation
+		Icon: subjugation
+		IconPalette: chromes
+		ChargeInterval: 125
+		ExplosionWeapon: SubjugationSpawner
+		Name: Subjugation
+		Condition: subjugated
+		Range: 18c0
+		MinTargets: 1
+		ValidTargets: Infantry, Vehicle, Ship, Structure
+		ValidRelationships: Enemy
+		Duration: 25
+		AllowMultiple: false
+		Description: \nPermanently mind controls units and structures in target area.
+		OnFireSound: mastermind-fire.aud
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeSpeechNotification: SubjugationReady
+		EndChargeTextNotification: Subjugation ready.
+		DisplayRadarPing: True
+		Cursor: mc-capture
+		SupportPowerPaletteOrder: 0
+		ShowTargetCircle: true
+		ShowSelectionBoxes: true
+		TargetTintColor: a400f233
+		TargetCircleColor: a400f2cc
+		SelectionBoxColor: a400f2
+		OneShot: true
+
+subjugation.dummy:
+	Interactable:
+		Bounds: 64, 64
+	ScriptTriggers:
+	RenderSprites:
+		Image: empty
+	WithSpriteBody:
+	ClassicFacingBodyOrientation:
+		QuantizedFacings: 1
+	HiddenUnderFog:
+		Type: GroundPosition
+	HitShape:
+	Immobile:
+		OccupiesSpace: false
+	PeriodicExplosion:
+		Weapon: SubjugationEffect
+	KillsSelf:
+		Delay: 25
+
+^Infantry:
+	ExternalCondition@Subjugatable:
+		Condition: subjugated
+	WithColoredOverlay@Subjugated:
+		RequiresCondition: subjugated
+		Color: a400f233
+
+^Building:
+	ExternalCondition@Subjugatable:
+		Condition: subjugated
+	WithColoredOverlay@Subjugated:
+		RequiresCondition: subjugated
+		Color: a400f233
+
+^Vehicle-NOUPG:
+	ExternalCondition@Subjugatable:
+		Condition: subjugated
+	WithColoredOverlay@Subjugated:
+		RequiresCondition: subjugated
+		Color: a400f233

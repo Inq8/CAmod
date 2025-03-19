@@ -100,6 +100,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly Armament Armament;
 		readonly AttackBase attack;
 		int conditionToken = Actor.InvalidConditionToken;
+		bool enabled;
 		AmmoPool ammoPool;
 
 		public TargetedAttackAbility(ActorInitializer init, TargetedAttackAbilityInfo info)
@@ -113,6 +114,7 @@ namespace OpenRA.Mods.CA.Traits
 				ammoPool = init.Self.TraitsImplementing<AmmoPool>().Single(a => a.Info.Name == Info.AmmoPool);
 
 			attack = init.Self.Trait<AttackBase>();
+			enabled = false;
 		}
 
 		protected override void Created(Actor self)
@@ -172,7 +174,7 @@ namespace OpenRA.Mods.CA.Traits
 				Enable(self);
 				attack.AttackTarget(order.Target, AttackSource.Default, order.Queued, true, true, Info.TargetLineColor);
 			}
-			else
+			else if (order.OrderString != "TargetedAttackAbilityDeploy")
 			{
 				Disable(self);
 			}
@@ -185,17 +187,24 @@ namespace OpenRA.Mods.CA.Traits
 
 		public bool IsAvailable
 		{
-			get { return !IsTraitDisabled && !IsTraitPaused && ((ammoPool != null && ammoPool.HasAmmo) || (ammoPool == null && !Armament.IsTraitDisabled && !Armament.IsReloading)); }
+			get {
+				return !IsTraitDisabled
+					&& !IsTraitPaused
+					&& !enabled
+					&& ((ammoPool != null && ammoPool.HasAmmo) || (ammoPool == null && !Armament.IsTraitDisabled && !Armament.IsReloading));
+			}
 		}
 
 		void Enable(Actor self)
 		{
+			enabled = true;
 			if (conditionToken == Actor.InvalidConditionToken)
 				conditionToken = self.GrantCondition(Info.ActiveCondition);
 		}
 
 		void Disable(Actor self)
 		{
+			enabled = false;
 			if (conditionToken != Actor.InvalidConditionToken)
 				conditionToken = self.RevokeCondition(conditionToken);
 		}

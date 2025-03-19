@@ -17,3 +17,23 @@ UnitExplodeHeli:
 UnitExplodeHeliEmpty:
 	Warhead@1Dam: SpreadDamage
 		Damage: 200
+
+CraterMaker1:
+	ReloadDelay: 1000
+	Warhead@Smu: LeaveSmudge
+		SmudgeType: Crater
+
+CraterMaker2:
+	Inherits: CraterMaker1
+	Warhead@Smu2: LeaveSmudge
+		SmudgeType: Crater
+
+ScorchMaker1:
+	ReloadDelay: 1000
+	Warhead@Smu: LeaveSmudge
+		SmudgeType: Scorch
+
+ScorchMaker2:
+	Inherits: ScorchMaker1
+	Warhead@Smu2: LeaveSmudge
+		SmudgeType: Scorch

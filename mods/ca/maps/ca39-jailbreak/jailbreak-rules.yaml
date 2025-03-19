@@ -1,0 +1,45 @@
+
+^Palettes:
+	GlobalLightingPaletteEffect:
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, jailbreak.lua
+	MissionData:
+		Briefing: We can now expect regular shipments of Chinese equipment and ammunition to bolster our forces, but there is much work still to do.\n\nThe fortuitous interception of GDI transmissions and your subsequent capture of their communications center now leads us to a mission of extreme urgency. The data we retrieved included the whereabouts of our lost comrade Yuri. He is being held by the Allies in a high security prison, and we are now gathering what forces we can muster in the area which you must use to rescue him.\n\nIt goes without saying that Yuri's powers will be invaluable to us. Failure is not an option.
+	MapOptions:
+		ShortGameCheckboxEnabled: False
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: dropdown-difficulty.label
+		Description: dropdown-difficulty.description
+		Values:
+			easy: options-difficulty.easy
+			normal: options-difficulty.normal
+			hard: options-difficulty.hard
+		Default: normal
+	MusicPlaylist:
+		StartingMusic: jank
+
+Player:
+	PlayerResources:
+		DefaultCash: 6000
+
+MISS:
+	Tooltip:
+		Name: Prison
+	TooltipDescription:
+		Description: Prisoners of war are kept here.
+		ValidRelationships: Ally
+	Health:
+		HP: 200000
+	Targetable@NoAutoTarget:
+		TargetTypes: NoAutoTarget
+
+HTNK.Drone:
+	GrantCondition@Radar:
+		Condition: radarenabled
+
+# Hunt() requires only 1 AttackBase
+BATF.AI:
+	-AttackFrontal:

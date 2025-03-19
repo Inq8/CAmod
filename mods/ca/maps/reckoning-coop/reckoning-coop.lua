@@ -29,12 +29,16 @@ RiftEnabledTime = {
 	hard = DateTime.Seconds((60 * 20) + 17),
 }
 
-table.insert(UnitCompositions.Scrin.Main.hard, {
-	Infantry = { "s3", "s4", "evis", "evis", "evis", "evis", "s1", "s1", "s4", "s1", "s4", "s1", "s4", "s1", "mast" },
-	Vehicles = { "shrw", TripodVariant, TripodVariant, "shrw", CorrupterDevourerOrDarkener, "oblt", "shrw" },
-	Aircraft = { PacOrDevastator, "pac" },
-	MinTime = DateTime.Minutes(22)
-})
+if Difficulty == "hard" then
+	table.insert(UnitCompositions.Scrin, {
+		Infantry = { "s3", "s4", "evis", "evis", "evis", "evis", "s1", "s1", "s4", "s1", "s4", "s1", "s4", "s1", "mast" },
+		Vehicles = { "shrw", TripodVariant, TripodVariant, "shrw", CorrupterDevourerOrDarkener, "oblt", "shrw" },
+		Aircraft = { PacOrDevastator, "pac" },
+		MinTime = DateTime.Minutes(22)
+	})
+end
+
+AdjustedScrinCompositions = AdjustedScrinCompositions
 
 Squads = {
 	ScrinVsNod = {
@@ -47,20 +51,14 @@ Squads = {
 			hard = DateTime.Minutes(2)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(16), Value = 50 } },
-			normal = { { MinTime = 0, Value = 50 }, { MinTime = DateTime.Minutes(14), Value = 100 } },
-			hard = { { MinTime = 0, Value = 80 }, { MinTime = DateTime.Minutes(12), Value = 160 } },
-		},
-		QueueProductionStatuses = {
-			Infantry = false,
-			Vehicles = false,
-			Aircraft = false,
+			easy = { Min = 20, Max = 50 },
+			normal = { Min = 50, Max = 100 },
+			hard = { Min = 80, Max = 160 },
 		},
 		FollowLeader = true,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { Portal1 }, Vehicles = { WarpSphere1 }, Aircraft = { GravityStabilizer1, GravityStabilizer2 } },
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
-		Units = UnitCompositions.Scrin.Main,
+		Units = AdjustedScrinCompositions,
 		AttackPaths = {
 			{ L1.Location, L2.Location, L3.Location, L4.Location },
 			{ L1.Location, L2.Location, M3.Location, M4.Location },
@@ -78,20 +76,14 @@ Squads = {
 			hard = DateTime.Minutes(2)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(16), Value = 50 } },
-			normal = { { MinTime = 0, Value = 50 }, { MinTime = DateTime.Minutes(14), Value = 100 } },
-			hard = { { MinTime = 0, Value = 80 }, { MinTime = DateTime.Minutes(12), Value = 160 } },
-		},
-		QueueProductionStatuses = {
-			Infantry = false,
-			Vehicles = false,
-			Aircraft = false,
+			easy = { Min = 20, Max = 50 },
+			normal = { Min = 50, Max = 100 },
+			hard = { Min = 80, Max = 160 },
 		},
 		FollowLeader = true,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { Portal3 }, Vehicles = { WarpSphere4 }, Aircraft = { GravityStabilizer3 } },
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
-		Units = UnitCompositions.Scrin.Main,
+		Units = AdjustedScrinCompositions,
 		AttackPaths = {
 			{ R7.Location, R6.Location, GDIBase.Location },
 			{ R10.Location, R6.Location, GDIBase.Location },
@@ -99,20 +91,14 @@ Squads = {
 	},
 	ScrinRebelKiller = {
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 20 } },
-			normal = { { MinTime = 0, Value = 40 } },
-			hard = { { MinTime = 0, Value = 60 }, { MinTime = DateTime.Minutes(30), Value = 80 } },
-		},
-		QueueProductionStatuses = {
-			Infantry = false,
-			Vehicles = false,
-			Aircraft = false,
+			easy = { Min = 20, Max = 20 },
+			normal = { Min = 40, Max = 40 },
+			hard = { Min = 60, Max = 80 },
 		},
 		FollowLeader = true,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { Portal2 }, Vehicles = { WarpSphere2 }, Aircraft = { GravityStabilizer1, GravityStabilizer2, GravityStabilizer3 } },
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
-		Units = UnitCompositions.Scrin.Main,
+		Units = AdjustedScrinCompositions,
 		AttackPaths = {
 			{ M1.Location, M2.Location, R4.Location, M5.Location },
 			{ R1.Location, R2.Location, R3.Location, R4.Location, R5.Location }
@@ -120,20 +106,14 @@ Squads = {
 	},
 	ScrinRebelsMain = {
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 35 } },
-			normal = { { MinTime = 0, Value = 35 } },
-			hard = { { MinTime = 0, Value = 35 }, { MinTime = DateTime.Minutes(20), Value = 55 } },
-		},
-		QueueProductionStatuses = {
-			Infantry = false,
-			Vehicles = false,
-			Aircraft = false,
+			easy = { Min = 35, Max = 35 },
+			normal = { Min = 35, Max = 35 },
+			hard = { Min = 35, Max = 55, RampDuration = DateTime.Minutes(22) },
 		},
 		FollowLeader = true,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { RebelPortal1 }, Vehicles = { RebelWarpSphere1 }, Aircraft = { RebelGravityStabilizer1 } },
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
-		Units = UnitCompositions.Scrin.Main,
+		Units = AdjustedScrinCompositions,
 		AttackPaths = {
 			{ M5.Location, M2.Location, M1.Location },
 			{ M5.Location, R4.Location, M2.Location },
@@ -149,15 +129,11 @@ Squads = {
 			normal = DateTime.Minutes(5),
 			hard = DateTime.Minutes(4)
 		},
-		Interval = {
-			easy = DateTime.Minutes(6),
-			normal = DateTime.Minutes(4),
-			hard = DateTime.Minutes(2)
+		AttackValuePerSecond = {
+			easy = { Min = 7, Max = 7 },
+			normal = { Min = 14, Max = 14 },
+			hard = { Min = 21, Max = 21 },
 		},
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
 		ProducerActors = { Aircraft = { GravityStabilizer1, GravityStabilizer2 } },
 		ProducerTypes = { Aircraft = { "grav" } },
 		Units = {
@@ -183,15 +159,11 @@ Squads = {
 			normal = DateTime.Minutes(5),
 			hard = DateTime.Minutes(4)
 		},
-		Interval = {
-			easy = DateTime.Minutes(6),
-			normal = DateTime.Minutes(4),
-			hard = DateTime.Minutes(2)
+		AttackValuePerSecond = {
+			easy = { Min = 7, Max = 7 },
+			normal = { Min = 14, Max = 14 },
+			hard = { Min = 21, Max = 21 },
 		},
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
 		ProducerActors = { Aircraft = { GravityStabilizer3, GravityStabilizer4 } },
 		ProducerTypes = { Aircraft = { "grav" } },
 		Units = {
@@ -212,16 +184,12 @@ Squads = {
 		Interval = {
 			hard = DateTime.Seconds(90)
 		},
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
 		ActiveCondition = function()
 			return NodHasMassAir()
 		end,
 		OnProducedAction = function(a)
 			a.Patrol({ A2APatrol1.Location, A2APatrol2.Location, A2APatrol3.Location, A2APatrol4.Location, A2APatrol5.Location, A2APatrol6.Location, A2APatrol7.Location, A2APatrol8.Location })
 		end,
-		IdleUnits = { },
 		ProducerActors = { Aircraft = { GravityStabilizer1, GravityStabilizer2 } },
 		ProducerTypes = { Aircraft = { "grav" } },
 		Units = {
@@ -234,16 +202,12 @@ Squads = {
 		Interval = {
 			hard = DateTime.Seconds(90)
 		},
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
 		ActiveCondition = function()
 			return GDIHasMassAir()
 		end,
 		OnProducedAction = function(a)
 			a.Patrol({ A2ABPatrol1.Location, A2ABPatrol2.Location, A2ABPatrol3.Location, A2ABPatrol4.Location, A2ABPatrol5.Location })
 		end,
-		IdleUnits = { },
 		ProducerActors = { Aircraft = { GravityStabilizer3, GravityStabilizer4 } },
 		ProducerTypes = { Aircraft = { "grav" } },
 		Units = {
@@ -258,16 +222,11 @@ Squads = {
 			normal = DateTime.Minutes(5),
 			hard = DateTime.Minutes(5)
 		},
-		Interval = {
-			easy = DateTime.Minutes(4),
-			normal = DateTime.Minutes(4),
-			hard = DateTime.Minutes(4)
+		AttackValuePerSecond = {
+			easy = { Min = 14, Max = 14 },
+			normal = { Min = 14, Max = 14 },
+			hard = { Min = 14, Max = 14 },
 		},
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Aircraft = { "grav" } },
 		Units = {
 			easy = {
@@ -311,7 +270,7 @@ WorldLoaded = function()
 
 	InitObjectives(Nod)
 	InitObjectives(GDI)
-	AdjustStartingCash()
+	AdjustPlayerStartingCashForDifficulty()
 	InitScrin()
 	InitScrinRebels()
 
@@ -385,6 +344,7 @@ InitScrin = function()
 	AutoRepairAndRebuildBuildings(Scrin, 15)
 	SetupRefAndSilosCaptureCredits(Scrin)
 	AutoReplaceHarvesters(Scrin)
+	InitAiUpgrades(Scrin)
 
 	local scrinGroundAttackers = Scrin.GetGroundAttackers()
 
@@ -392,15 +352,6 @@ InitScrin = function()
 		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnitExcludingExterminators, function(p) return p == Nod or p == ScrinRebels or p == GDI end)
 	end)
-
-	if Difficulty == "hard" then
-		Actor.Create("ioncon.upgrade", true, { Owner = Scrin })
-		Actor.Create("shields.upgrade", true, { Owner = Scrin })
-
-		Trigger.AfterDelay(DateTime.Minutes(15), function()
-			Actor.Create("carapace.upgrade", true, { Owner = Scrin })
-		end)
-	end
 
 	Trigger.AfterDelay(DateTime.Minutes(1), function()
 		InitAttackSquad(Squads.ScrinRebelKiller, Scrin, ScrinRebels)
@@ -449,9 +400,7 @@ InitScrin = function()
 	end)
 
 	Trigger.AfterDelay(RiftEnabledTime[Difficulty], function()
-		if not RiftGenerator.IsDead then
-			RiftGenerator.GrantCondition("rift-enabled")
-		end
+		Actor.Create("ai.superweapons.enabled", true, { Owner = Scrin })
 	end)
 
 	Utils.Do({ Exterminator1, Exterminator2, Exterminator3, Exterminator4, Exterminator5, Exterminator6, Exterminator7, Exterminator8 }, function(a)

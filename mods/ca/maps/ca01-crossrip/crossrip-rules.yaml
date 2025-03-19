@@ -1,0 +1,154 @@
+
+^Palettes:
+	GlobalLightingPaletteEffect:
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, crossrip.lua
+	MissionData:
+		Briefing: Strange and inexplicable occurrences continue to leave our best scientists dumbfounded.\n\nWe have detected unusual energy readings emanating from a Soviet facility in the area, and there may be a connection.\n\nEstablish a base and investigate.\n\nIf the Soviets put up strong resistance then they must be hiding something of importance, in which case you are authorized to launch a full scale attack.\n\nUnfortunately we can't commit our most advanced equipment or aircraft until we've assessed if there is a significant threat.
+		WinVideo: crontest.vqa
+		LossVideo: battle.vqa
+	MapOptions:
+		ShortGameCheckboxEnabled: True
+		TechLevel: medium
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: dropdown-difficulty.label
+		Description: dropdown-difficulty.description
+		Values:
+			easy: options-difficulty.easy
+			normal: options-difficulty.normal
+			hard: options-difficulty.hard
+		Default: normal
+	MusicPlaylist:
+		StartingMusic: radio2ca
+
+Player:
+	PlayerResources:
+		DefaultCash: 6000
+
+# Disable powers for AI
+
+^ParabombsPower:
+	AirstrikePowerCA@Russianparabombs:
+		Prerequisites: ~support.parabombs, ~!botplayer
+
+^ParatroopersPower:
+	ParatroopersPowerCA@paratroopers:
+		Prerequisites: ~support.paratroopers, ~!botplayer
+
+# To silence unit lost notifications when announcer is speaking
+
+UNITLOSTSILENCER:
+	Inherits@DUMMY: ^InvisibleDummy
+	ProvidesPrerequisite:
+
+^Infantry:
+	ActorLostNotification:
+		RequiresCondition: !unit-lost-notification-silenced
+	GrantConditionOnPrerequisite@UNITLOSTSILENCED:
+		Condition: unit-lost-notification-silenced
+		Prerequisites: unitlostsilencer
+
+^VEHICLE-NOUPG:
+	ActorLostNotification:
+		RequiresCondition: !unit-lost-notification-silenced
+	GrantConditionOnPrerequisite@UNITLOSTSILENCED:
+		Condition: unit-lost-notification-silenced
+		Prerequisites: unitlostsilencer
+
+BRUT.Mutating:
+	ActorLostNotification:
+		RequiresCondition: !unit-lost-notification-silenced
+
+GSCR.Mutating:
+	ActorLostNotification:
+		RequiresCondition: !unit-lost-notification-silenced
+
+# Chronosphere modifications
+
+PDOX:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+	-ChronoshiftPowerCA@chronoshift:
+	-DetonateWeaponPower@ChronoAI:
+	-GrantExternalConditionPowerCA@TimeWarp:
+	Power:
+		Amount: 0
+	ExternalCondition@DISABLED:
+		Condition: disabled
+	-GrantConditionOnPowerState@LOWPOWER:
+	-GrantCondition@IDISABLE:
+	-Explodes:
+	-SpawnActorOnDeath:
+	-SpawnRandomActorOnDeath:
+	AnnounceOnSeen:
+		PingRadar: true
+	-GrantConditionOnPrerequisite@OwnedByAi:
+	-GrantConditionOnPrerequisite@AiSuperweaponsEnabled:
+
+PDOX.CROSSRIP:
+	Inherits@1: ^ExistsInWorld
+	Inherits@2: ^SpriteActor
+	Inherits@SHAPE: ^2x2Shape
+	WithSpriteBody:
+	RenderSprites:
+	Interactable:
+	WithRestartableIdleOverlay:
+		Image: chronobubble
+		StartSequence: warpin
+		RestartSequence: warpin
+		Sequence: warpout
+		PlayOnce: true
+		Palette: ra2effect-ignore-lighting-alpha75
+	Building:
+		Footprint: xx xx
+		Dimensions: 2,2
+		TerrainTypes: Clear,Road
+	FrozenUnderFog:
+	PeriodicExplosion:
+		Weapon: Crossrip
+
+# Disable tech
+
+HPAD:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+SYRD:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+SPEN:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+hazmat.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+# Misc
+
+MIG:
+	AutoTarget:
+		InitialStanceAI: HoldFire
+
+TSLA:
+	-Targetable@TeslaBoost:
+
+WORMHOLE:
+	-PopControlled:
+	-Targetable:
+
+HALO.paradrop:
+	Health:
+		HP: 75000
+
+LST:
+	Health:
+		HP: 100000
+
+# Hunt() requires only 1 AttackBase
+DEVA:
+	-AttackFrontalCharged:
+	-Armament@PRIMARYUPG:
+	-AmbientSound@CHARGE:
+	-WithIdleOverlay@CHARGE1:
+	-WithIdleOverlay@CHARGE2:
+	-WithIdleOverlay@CHARGE3:

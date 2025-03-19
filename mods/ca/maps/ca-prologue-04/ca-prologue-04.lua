@@ -6,26 +6,18 @@ GDIAttackPaths = {
 
 Squads = {
 	Main = {
-		Player = nil,
 		Delay = {
 			normal = DateTime.Minutes(5),
 		},
 		AttackValuePerSecond = {
-			normal = { { MinTime = 0, Value = 12 } },
-		},
-		QueueProductionStatuses = {
-			Infantry = false,
-			Vehicles = false
+			normal = { Min = 12, Max = 12 },
 		},
 		FollowLeader = true,
-		IdleUnits = { },
 		ProducerTypes = { Infantry = { "pyle" }, Vehicles = { "weap.td" } },
 		Units = {
-			normal = {
-				{
-					Infantry = { "e1", "e1", "e1", "e2" },
-					Vehicles = { { "hmmv", "mtnk", "apc2" } },
-				},
+			{
+				Infantry = { "e1", "e1", "e1", "e2" },
+				Vehicles = { { "hmmv", "mtnk", "apc2" } },
 			},
 		},
 		AttackPaths = GDIAttackPaths,

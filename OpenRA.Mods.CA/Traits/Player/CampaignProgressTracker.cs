@@ -42,6 +42,9 @@ namespace OpenRA.Mods.CA.Traits
 			if (player != player.World.LocalPlayer)
 				return;
 
+			if (!player.World.Map.Categories.Contains("Campaign"))
+				return;
+
 			var missionTitle = GetMapTileWithoutNumber(player.World.Map.Title);
 			var difficulty = player.World.WorldActor.TraitsImplementing<ScriptLobbyDropdown>()
 				.FirstOrDefault(sld => sld.Info.ID == "difficulty");

@@ -1,0 +1,138 @@
+^Palettes:
+	GlobalLightingPaletteEffect:
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, decimation.lua
+	MissionData:
+		Briefing: Another of the human factions, the Soviets, have recently turned the tide in their favour.\n\nTheir numbers include one named Yuri who posseses substantial psionic power, which has enabled the Soviets to assert control over a large portion of Kane's cybernetically enhanced troops.\n\nThe Soviets are now in the process of rebuilding their armies which had suffered significant losses, and if left unchecked they could threaten us.\n\nUltimately we seek to usurp Yuri's domnination of the cyborgs, but it is critical that the already sizeable Soviet armies are not bolstered further.\n\nYour mission is to launch a full scale attack against the Soviet industrial heartland. Numerous factories are located here which are rapidly producing new equipment. Many of their vehicles are without crews, pending final maintenance and preparations.\n\nThey must be destroyed along with the factories that produced them.
+	MapOptions:
+		ShortGameCheckboxEnabled: True
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: dropdown-difficulty.label
+		Description: dropdown-difficulty.description
+		Values:
+			easy: options-difficulty.easy
+			normal: options-difficulty.normal
+			hard: options-difficulty.hard
+		Default: normal
+	MusicPlaylist:
+		StartingMusic: valves1b
+
+Player:
+	PlayerResources:
+		DefaultCash: 6000
+
+INTL.Loaded:
+	Inherits: INTL
+	RenderSprites:
+		Image: intl
+	Cargo:
+		InitialUnits: S1,S1,S1,S3,S3
+	-Buildable:
+
+fleetaccess:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	ProvidesPrerequisite:
+
+reaperaccess:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	ProvidesPrerequisite:
+
+NERV:
+	Inherits@IONSURGEPOWER: ^IonSurgePower
+	DetonateWeaponPower@STORMSPIKE:
+		-Prerequisites:
+	DetonateWeaponPower@IONSURGE:
+		-Prerequisites:
+
+# Enable subfaction specific tech
+
+DARK:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.scrin
+
+STCR:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.scrin
+
+LCHR:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.scrin
+
+RUIN:
+	Buildable:
+		Prerequisites: scrt, ~vehicles.scrin
+
+ATMZ:
+	Buildable:
+		Prerequisites: scrt, ~vehicles.scrin
+
+stellar.upgrade:
+	Buildable:
+		Prerequisites: scrt
+
+coalescence.upgrade:
+	Buildable:
+		Prerequisites: scrt
+
+# Triggered access to Reaper Tripods, Enervators, Devastators, Carriers
+
+RTPD:
+	Buildable:
+		Prerequisites: scrt, ~vehicles.scrin, ~reaperaccess
+
+ENRV:
+	Buildable:
+		Prerequisites: scrt, ~aircraft.scrin, ~fleetaccess
+
+DEVA:
+	Buildable:
+		Prerequisites: scrt, ~aircraft.scrin, ~fleetaccess
+
+PAC:
+	Buildable:
+		Prerequisites: sign, scrt, ~aircraft.scrin, ~fleetaccess
+
+SIGN:
+	Buildable:
+		Prerequisites: ~structures.scrin, scrt, ~fleetaccess
+
+shields.upgrade:
+	Buildable:
+		Prerequisites: ~player.scrin, sign, ~fleetaccess
+
+# Disable tech
+
+MAST:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+THF:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+BORI:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+MSHP:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+DOME:
+	ParatroopersPowerCA@paratroopers:
+		RequiresCondition: paratroopers-enabled
+	ExternalCondition@paratroopers:
+		Condition: paratroopers-enabled
+
+AFLD:
+	AirstrikePowerCA@Russianparabombs:
+		RequiresCondition: parabombs-enabled
+	ExternalCondition@parabombs:
+		Condition: parabombs-enabled
+
+V3RL:
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Structure, Defense

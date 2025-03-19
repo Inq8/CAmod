@@ -59,17 +59,35 @@ namespace OpenRA.Mods.CA.Activities
 
 		protected override void OnFirstRun(Actor self)
 		{
+			if (!ability.CanLeap)
+			{
+				canceling = true;
+				return;
+			}
+
 			originPos = self.CenterPosition;
 
 			var cell = ChooseBestDestinationCell(self, targetCell);
 			if (cell.HasValue)
+			{
 				destinationCell = cell.Value;
+			}
 			else
+			{
 				canceling = true;
+				return;
+			}
 
 			var subCell = mobile.GetAvailableSubCell(destinationCell);
 			if (subCell != SubCell.Invalid)
+			{
 				destinationSubCell = subCell;
+			}
+			else
+			{
+				canceling = true;
+				return;
+			}
 
 			destinationPos = self.World.Map.CenterOfSubCell(destinationCell, destinationSubCell);
 			length = Math.Max((originPos - destinationPos).Length / speed, 1);
@@ -145,21 +163,27 @@ namespace OpenRA.Mods.CA.Activities
 
 		CPos? ChooseBestDestinationCell(Actor self, CPos destination)
 		{
-			var restrictTo = self.World.Map.FindTilesInCircle(self.Location, ability.Info.MaxDistance);
-			destination = restrictTo.MinBy(x => (x - destination).LengthSquared);
-
+			var maxDistance = ability.Info.MaxDistance;
+			var restrictTo = self.World.Map.FindTilesInCircle(self.Location, maxDistance).ToList();
 			var pos = self.Trait<IPositionable>();
-			if (pos.CanEnterCell(destination)
-				&& self.Owner.Shroud.IsExplored(destination))
-				return destination;
 
-			foreach (var tile in self.World.Map.FindTilesInCircle(destination, ability.Info.MaxDistance))
+			// Check if the original destination is within MaxDistance and is valid
+			if ((destination - self.Location).LengthSquared <= maxDistance * maxDistance &&
+				restrictTo.Contains(destination) &&
+				pos.CanEnterCell(destination) &&
+				self.Owner.Shroud.IsExplored(destination))
 			{
-				if (self.Owner.Shroud.IsExplored(tile)
-					&& (restrictTo == null || (restrictTo != null && restrictTo.Contains(tile)))
-					&& pos.CanEnterCell(tile))
-					return tile;
+				return destination;
 			}
+
+			// Find the closest valid cell within MaxDistance
+			var closestValidCell = restrictTo
+				.Where(tile => pos.CanEnterCell(tile) && self.Owner.Shroud.IsExplored(tile))
+				.OrderBy(tile => (tile - destination).LengthSquared)
+				.FirstOrDefault();
+
+			if (closestValidCell != default)
+				return closestValidCell;
 
 			return null;
 		}

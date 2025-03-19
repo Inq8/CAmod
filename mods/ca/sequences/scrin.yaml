@@ -433,6 +433,116 @@ s6:
 	icon:
 		Filename: s6icon.shp
 
+mrdr:
+	Inherits: ^ScrinCommonDeaths
+	stand:
+		Filename: mrdr.shp
+		Facings: 8
+	stand2:
+		Filename: mrdr.shp
+		Facings: 8
+	run:
+		Filename: mrdr.shp
+		Start: 8
+		Length: 4
+		Facings: 8
+		Tick: 120
+	shoot:
+		Filename: mrdr.shp
+		Frames: 43,44,48,49,53,54,58,59,63,64,68,69,73,74,78,79
+		Length: 2
+		Facings: 8
+		Tick: 80
+	idle1:
+		Filename: mrdr.shp
+		Length: 2
+		Tick: 120
+	idle2:
+		Filename: mrdr.shp
+		Start: 2
+		Length: 2
+		Tick: 120
+	idle3:
+		Filename: mrdr.shp
+		Start: 4
+		Length: 2
+		Tick: 120
+	idle4:
+		Filename: mrdr.shp
+		Start: 6
+		Length: 2
+		Tick: 120
+	parachute:
+		Filename: mrdr.shp
+		Start: 3
+	die1:
+		Filename: mrdr.shp
+		Start: 80
+		Length: 8
+		Tick: 80
+	die2:
+		Filename: mrdr.shp
+		Start: 88
+		Length: 9
+		Tick: 80
+	die3:
+		Filename: mrdr.shp
+		Start: 88
+		Length: 9
+		Tick: 80
+	die4:
+		Filename: mrdr.shp
+		Start: 88
+		Length: 9
+		Tick: 80
+	die5:
+		Filename: gscr.shp
+		Start: 97
+		Length: 11
+		Tick: 80
+	die6:
+		Filename: gscr.shp
+		Length: 13
+		Start: 116
+	die7:
+		Filename: mrdr.shp
+		Start: 80
+		Length: 8
+		Tick: 80
+	die8:
+		Filename: chronozap.shp
+		Length: *
+		BlendMode: Alpha
+	die9:
+		Filename: gscr.shp
+		Start: 108
+		Length: 8
+		Tick: 80
+	die10:
+		Filename: gscr.shp
+		Start: 108
+		Length: 8
+		Tick: 80
+	die11:
+		Filename: mrdr.shp
+		Start: 80
+		Length: 8
+		Tick: 80
+	die12:
+		Filename: mrdr.shp
+		Start: 80
+		Length: 8
+		Tick: 80
+	chrono-overlay:
+		Filename: chronofade_small.shp
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		ZOffset: 512
+		Tick: 80
+	icon:
+		Filename: mrdricon.shp
+
 evis:
 	Inherits: ^ScrinCommonDeaths
 	stand:
@@ -1857,6 +1967,49 @@ rtpd.destroyed:
 		UseClassicFacings: True
 		ZOffset: -512
 
+etpd:
+	Inherits: ^VehicleOverlays
+	idle:
+		Filename: etpd.shp
+		Facings: 1
+		Start: 32
+	turret:
+		Filename: etpd.shp
+		Facings: 32
+		UseClassicFacings: True
+	move:
+		Filename: etpd.shp
+		Start: 33
+		Facings: 8
+		Length: 14
+		Tick: 90
+	muzzle:
+		Filename: leechhit.shp
+		Length: *
+		Frames: 4,3,2,1,0,4,3,2,1,0
+		BlendMode: Additive
+	icon:
+		Filename: tpodicon.shp
+	shield:
+		Filename: etpdshield.shp
+		Facings: 1
+		ZOffset: 1022
+		BlendMode: Additive
+		Offset: 0,-12
+
+etpd.destroyed:
+	Inherits: ^VehicleOverlays
+	idle:
+		Filename: etpd.shp
+		Facings: 1
+		Start: 32
+		ZOffset: -512
+	turret:
+		Filename: etpd.shp
+		Facings: 32
+		UseClassicFacings: True
+		ZOffset: -512
+
 oblt:
 	Inherits: ^VehicleOverlays
 	idle:
@@ -2748,6 +2901,18 @@ plasdisclg:
 		ZOffset: 2047
 		Tick: 50
 
+mrdrdisc:
+	idle:
+		Filename: mrdrdisc.shp
+		BlendMode: Additive
+		IgnoreWorldTint: true
+		Length: 2
+		Facings: 8
+		ZOffset: 2047
+		Tick: 50
+		InterpolatedFacings: 32
+		Alpha: 0.8
+
 tibglob:
 	idle:
 		Filename: tibglob.shp
@@ -3244,48 +3409,38 @@ strm2:
 		IgnoreWorldTint: true
 
 wormhole:
-	idle:
+	Defaults:
 		Filename: wormhole.shp
-		Length: 13
 		ZOffset: 1023
 		BlendMode: Additive
 		IgnoreWorldTint: true
+	idle:
+		Length: 13
 	die:
-		Filename: wormhole.shp
 		Length: 8
 		Start: 13
-		ZOffset: 1023
-		BlendMode: Additive
-		IgnoreWorldTint: true
 	make:
-		Filename: wormhole.shp
 		Frames: 20, 19, 18, 17, 16, 15, 14, 13
 		Length: 8
-		ZOffset: 1023
-		BlendMode: Additive
-		IgnoreWorldTint: true
 
 wormholelg:
-	idle:
+	Inherits: wormhole
+	Defaults:
 		Filename: wormholelg.shp
-		Length: 13
-		ZOffset: 1023
-		BlendMode: Additive
-		IgnoreWorldTint: true
-	die:
-		Filename: wormholelg.shp
-		Length: 8
-		Start: 13
-		ZOffset: 1023
-		BlendMode: Additive
-		IgnoreWorldTint: true
-	make:
-		Filename: wormholelg.shp
-		Frames: 20, 19, 18, 17, 16, 15, 14, 13
-		Length: 8
-		ZOffset: 1023
-		BlendMode: Additive
-		IgnoreWorldTint: true
+
+wormholexl:
+	Inherits: wormhole
+	Defaults:
+		Filename: wormholexl.shp
+	-die:
+	-make:
+
+wormholexxl:
+	Inherits: wormhole
+	Defaults:
+		Filename: wormholexxl.shp
+	-die:
+	-make:
 
 plasmatorp1:
 	Defaults:
@@ -3471,3 +3626,13 @@ tibmeteor:
 		BlendMode: Alpha
 		Alpha: 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.95, 0.9, 0.85, 0.8, 0.75, 0.7, 0.65, 0.6, 0.55, 0.5, 0.45, 0.4, 0.35, 0.3 ,0.25 ,0.2 ,0.15 ,0.1, 0.1
 		Offset: 0, -10
+
+scrinpurifier:
+	Inherits: ^StructureOverlays
+	idle:
+		Filename: scrinpurifier.shp
+	purification:
+		Filename: scrinpurification.shp
+		Length: *
+		BlendMode: Additive
+		ZOffset: 2047

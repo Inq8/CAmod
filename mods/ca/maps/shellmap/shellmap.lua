@@ -7,89 +7,73 @@ SealPatrolPath = { AlliedCamp.Location, ScrinAttack1.Location, SovietAttack3a.Lo
 
 UnitCompositionsShellmap = {
 	Soviet = {
-		normal = {
-			{ Infantry = { "e3", "e1", "e1", "e3", "e4" }, Vehicles = { "btr.ai" } },
-			{ Infantry = { "e3", "e1", "e1", "ttrp", "shok", "e1", "shok", "e3", "e4" }, Vehicles = { TeslaVariant, "btr.ai", SovietMammothVariant, "grad" } },
-			{ Infantry = { "e3", "e1", "e1", "ttrp", "shok", "e1", "e2", "e3", "e4" }, Vehicles = { "3tnk.rhino.atomic", "btr.ai", SovietMammothVariant, "grad" } },
-			{ Infantry = { "e3", "e1", "e1", "ttrp", "e8", "e1", "e2", "e3", "e4" }, Vehicles = { "3tnk.rhino.yuri", "btr.ai", SovietMammothVariant, "grad" } },
-			{ Infantry = { "e3", "e1", "e1", "ttrp", "deso", "e1", "e2", "e3", "e4" }, Vehicles = { "3tnk.rhino", "btr.yuri.ai", SovietMammothVariant, SovietBasicArty } },
-			{ Infantry = { "e3", "e1", "e1", "ttrp", "deso", "e1", "e2", "e3", "e4" }, Vehicles = { "3tnk", "btr.yuri.ai", "isu", SovietBasicArty } }
-		}
+		{ Infantry = { "e3", "e1", "e1", "e3", "e4" }, Vehicles = { "btr.ai" } },
+		{ Infantry = { "e3", "e1", "e1", "ttrp", "shok", "e1", "shok", "e3", "e4" }, Vehicles = { TeslaVariant, "btr.ai", SovietMammothVariant, "grad" } },
+		{ Infantry = { "e3", "e1", "e1", "ttrp", "shok", "e1", "e2", "e3", "e4" }, Vehicles = { "3tnk.rhino.atomic", "btr.ai", SovietMammothVariant, "grad" } },
+		{ Infantry = { "e3", "e1", "e1", "ttrp", "e8", "e1", "e2", "e3", "e4" }, Vehicles = { "3tnk.rhino.yuri", "btr.ai", SovietMammothVariant, "grad" } },
+		{ Infantry = { "e3", "e1", "e1", "ttrp", "deso", "e1", "e2", "e3", "e4" }, Vehicles = { "3tnk.rhino", "btr.yuri.ai", SovietMammothVariant, SovietBasicArty } },
+		{ Infantry = { "e3", "e1", "e1", "ttrp", "deso", "e1", "e2", "e3", "e4" }, Vehicles = { "3tnk", "btr.yuri.ai", "isu", SovietBasicArty } }
 	},
 	Allies = {
-		normal = {
-			{ Infantry = { "e3", "e1", "e1", "e3", "e1" }, Vehicles = { "apc.ai" } },
-			{ Infantry = { "e3", "e1", "e1", "cryt", "cryt", "e1", "cryt", "e3", "snip" }, Vehicles = { "arty", "apc.ai", "pcan", "ptnk" } },
-			{ Infantry = { "e3", "e1", "e1", "cryt", "cryt", "e1", "e1", "e3", "snip" }, Vehicles = { "2tnk", "apc.ai", "batf.ai", "ptnk" } },
-			{ Infantry = { "e3", "e1", "e1", "cryt", "enfo", "e1", "e1", "e3", "snip" }, Vehicles = { "2tnk", "apc.ai", "chpr", "ptnk" } },
-			{ Infantry = { "e3", "e1", "e1", "cryt", "cryt", "e1", "e1", "e3", "snip" }, Vehicles = { "tnkd", "rapc.ai", "batf.ai", "ptnk" } },
-			{ Infantry = { "e3", "e1", "e1", "cryt", "cryt", "e1", "e1", "e3", "snip" }, Vehicles = { "2tnk", "rapc.ai", "cryo", "ptnk" } }
-		}
+		{ Infantry = { "e3", "e1", "e1", "e3", "e1" }, Vehicles = { "apc.ai" } },
+		{ Infantry = { "e3", "e1", "e1", "cryt", "cryt", "e1", "cryt", "e3", "snip" }, Vehicles = { "arty", "apc.ai", "pcan", "ptnk" } },
+		{ Infantry = { "e3", "e1", "e1", "cryt", "cryt", "e1", "e1", "e3", "snip" }, Vehicles = { "2tnk", "apc.ai", "batf.ai", "ptnk" } },
+		{ Infantry = { "e3", "e1", "e1", "cryt", "enfo", "e1", "e1", "e3", "snip" }, Vehicles = { "2tnk", "apc.ai", "chpr", "ptnk" } },
+		{ Infantry = { "e3", "e1", "e1", "cryt", "cryt", "e1", "e1", "e3", "snip" }, Vehicles = { "tnkd", "rapc.ai", "batf.ai", "ptnk" } },
+		{ Infantry = { "e3", "e1", "e1", "cryt", "cryt", "e1", "e1", "e3", "snip" }, Vehicles = { "2tnk", "rapc.ai", "cryo", "ptnk" } }
 	},
 	GDI = {
-		normal = {
-			{ Infantry = { "n1", "n1", "n1", "n3", "n2", "n1", "n1" }, Vehicles = { "vulc.ai", "gdrn", "gdrn", "hmmv"  } },
-			{ Infantry = { "n1", "n1", "n1", "n3", "n2", "n1", "n1" }, Vehicles = { "mtnk", "vulc", "gdrn", "mtnk" } },
-			{ Infantry = { "n1", "n1", "n1", "n3", "n2", "n1", "n1" }, Vehicles = { "hsam", "hsam", "hsam", "mtnk" } },
-			{ Infantry = { "n3", "n1", "n1", "n1", "n3", "n2", "n1", "n1", "n3" }, Vehicles = { "mtnk", "vulc", "apc2.gdiai", "vulc.ai" } },
-			{ Infantry = { "n3", "n1", "n1", "n1", "n3", "n1", "n1", "n1", "n3" }, Vehicles = { "mtnk", "vulc", "apc2.gdiai", "msam" } },
-			{ Infantry = { "jjet", "jjet", "jjet", "bjet" }, Vehicles = { "vulc", "vulc", "hmmv.tow", "hmmv.tow" } },
-			{ Infantry = { "n1", "n1", "n3" }, Vehicles = { GDIMammothVariant, "vulc", "hsam", "disr", "xo", "xo" } },
-			{ Infantry = { "n1", "n3", "n1", "n1", "n2", "n3", "n1", "n1" }, Vehicles = { GDIMammothVariant, "vulc", GDIMammothVariant, "xo" } },
-		}
+		{ Infantry = { "n1", "n1", "n1", "n3", "n2", "n1", "n1" }, Vehicles = { "vulc.ai", "gdrn", "gdrn", "hmmv"  } },
+		{ Infantry = { "n1", "n1", "n1", "n3", "n2", "n1", "n1" }, Vehicles = { "mtnk", "vulc", "gdrn", "mtnk" } },
+		{ Infantry = { "n1", "n1", "n1", "n3", "n2", "n1", "n1" }, Vehicles = { "hsam", "hsam", "hsam", "mtnk" } },
+		{ Infantry = { "n3", "n1", "n1", "n1", "n3", "n2", "n1", "n1", "n3" }, Vehicles = { "mtnk", "vulc", "apc2.gdiai", "vulc.ai" } },
+		{ Infantry = { "n3", "n1", "n1", "n1", "n3", "n1", "n1", "n1", "n3" }, Vehicles = { "mtnk", "vulc", "apc2.gdiai", "msam" } },
+		{ Infantry = { "jjet", "jjet", "jjet", "bjet" }, Vehicles = { "vulc", "vulc", "hmmv.tow", "hmmv.tow" } },
+		{ Infantry = { "n1", "n1", "n3" }, Vehicles = { GDIMammothVariant, "vulc", "hsam", "disr", "xo", "xo" } },
+		{ Infantry = { "n1", "n3", "n1", "n1", "n2", "n3", "n1", "n1" }, Vehicles = { GDIMammothVariant, "vulc", GDIMammothVariant, "xo" } },
 	},
 	Nod = {
-		normal = {
-			{ Infantry = {}, Vehicles = { "bggy", "bike", "bike", "bike", "bggy" } },
-			{ Infantry = { "n1", "n3", "n4", "n1" }, Vehicles = { "bggy", "bike", "bike", "stnk.nod", "bike", "bggy" } },
-			{ Infantry = { "n3", "n1", "n1", "n4", "n1", "bh", "bh" }, Vehicles = { "ltnk", "ltnk", "hftk", "hftk", "bike" } },
-			{ Infantry = { "n3", "n1", "n1", "n4", "n1", "n1c", "acol", "n1" }, Vehicles = { "ltnk", "arty.nod", "ltnk", "stnk.nod" } },
-			{ Infantry = { AdvancedCyborg, AdvancedCyborg, BasicCyborg, BasicCyborg, BasicCyborg, BasicCyborg, BasicCyborg }, Vehicles = { "ftnk", "ltnk", "bike" } },
-			{ Infantry = { "n3", "n1", "n3", "n1", "n4", "n1", BasicCyborg, AdvancedCyborg }, Vehicles = { "ltnk", "arty.nod", "wtnk" } },
-		}
+		{ Infantry = {}, Vehicles = { "bggy", "bike", "bike", "bike", "bggy" } },
+		{ Infantry = { "n1", "n3", "n4", "n1" }, Vehicles = { "bggy", "bike", "bike", "stnk.nod", "bike", "bggy" } },
+		{ Infantry = { "n3", "n1", "n1", "n4", "n1", "bh", "bh" }, Vehicles = { "ltnk", "ltnk", "hftk", "hftk", "bike" } },
+		{ Infantry = { "n3", "n1", "n1", "n4", "n1", "n1c", "acol", "n1" }, Vehicles = { "ltnk", "arty.nod", "ltnk", "stnk.nod" } },
+		{ Infantry = { AdvancedCyborg, AdvancedCyborg, BasicCyborg, BasicCyborg, BasicCyborg, BasicCyborg, BasicCyborg }, Vehicles = { "ftnk", "ltnk", "bike" } },
+		{ Infantry = { "n3", "n1", "n3", "n1", "n4", "n1", BasicCyborg, AdvancedCyborg }, Vehicles = { "ltnk", "arty.nod", "wtnk" } },
 	},
 	Scrin = {
-		normal = {
-			{ Infantry = { "s3", "s1", "s1", "s1", "s3", "s1", "s4", "s4" }, Vehicles = { "intl.ai2", "intl.ai2", GunWalkerSeekerOrLacerator, CorrupterDevourerOrDarkener, CorrupterDevourerOrDarkener, GunWalkerSeekerOrLacerator } },
-			{ Infantry = { "s3", "s1", "s1", "s1", "s3", "s1", "s4", "s4" }, Vehicles = { "intl.ai2", "tpod", GunWalkerSeekerOrLacerator, CorrupterDevourerOrDarkener, CorrupterDevourerOrDarkener, GunWalkerSeekerOrLacerator } },
-			{ Infantry = {}, Vehicles = { "lace", "lace", "lace", "seek", "seek" }, Aircraft = {} },
-			{ Infantry = {}, Vehicles = {}, Aircraft = { PacOrDevastator, "deva", "pac" } }
-		}
+		{ Infantry = { "s3", "s1", "s1", "s1", "s3", "s1", "s4", "s4" }, Vehicles = { "intl.ai2", "intl.ai2", GunWalkerSeekerOrLacerator, CorrupterDevourerOrDarkener, CorrupterDevourerOrDarkener, GunWalkerSeekerOrLacerator } },
+		{ Infantry = { "s3", "s1", "s1", "s1", "s3", "s1", "s4", "s4" }, Vehicles = { "intl.ai2", "tpod", GunWalkerSeekerOrLacerator, CorrupterDevourerOrDarkener, CorrupterDevourerOrDarkener, GunWalkerSeekerOrLacerator } },
+		{ Infantry = {}, Vehicles = { "lace", "lace", "lace", "seek", "seek" }, Aircraft = {} },
+		{ Infantry = {}, Vehicles = {}, Aircraft = { PacOrDevastator, "deva", "pac" } }
 	}
 }
 
 Squads = {
 	NodVsGDI = {
 		AttackValuePerSecond = {
-			normal = { { MinTime = 0, Value = 80 } },
+			normal = { Min = 80, Max = 80 },
 		},
 		DispatchDelay = DateTime.Seconds(30),
-		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = false,
-		IdleUnits = { },
 		ProducerTypes = { Infantry = { "hand" }, Vehicles = { "airs" } },
 		Units = UnitCompositionsShellmap.Nod,
 		AttackPaths = { { NodAttack1.Location, GDIBase.Location }, { NodGroup1.Location, GDIBase.Location }, { GDIAttack1.Location, GDIBase.Location } },
 	},
 	NodVsScrin = {
 		AttackValuePerSecond = {
-			normal = { { MinTime = 0, Value = 90 } },
+			normal = { Min = 90, Max = 90 },
 		},
 		DispatchDelay = DateTime.Seconds(30),
-		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = false,
-		IdleUnits = { },
 		ProducerTypes = { Infantry = { "hand" }, Vehicles = { "airs" } },
 		Units = UnitCompositionsShellmap.Nod,
 		AttackPaths = { { GDICamp.Location, ScrinBase.Location } },
 	},
 	GDIVsNod = {
 		AttackValuePerSecond = {
-			normal = { { MinTime = 0, Value = 80 } },
+			normal = { Min = 80, Max = 80 },
 		},
-		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = false,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { GDISouthBarracks }, Vehicles = { GDISouthFactory } },
 		ProducerTypes = { Infantry = { "pyle" }, Vehicles = { "weap.td" } },
 		Units = UnitCompositionsShellmap.GDI,
@@ -97,11 +81,9 @@ Squads = {
 	},
 	GDIVsScrin = {
 		AttackValuePerSecond = {
-			normal = { { MinTime = 0, Value = 80 } },
+			normal = { Min = 80, Max = 80 },
 		},
-		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = false,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { GDINorthEastBarracks }, Vehicles = { GDINorthEastFactory } },
 		ProducerTypes = { Infantry = { "pyle" }, Vehicles = { "weap.td" } },
 		Units = UnitCompositionsShellmap.GDI,
@@ -109,11 +91,9 @@ Squads = {
 	},
 	GDIVsSoviets = {
 		AttackValuePerSecond = {
-			normal = { { MinTime = 0, Value = 80 } },
+			normal = { Min = 80, Max = 80 },
 		},
-		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = false,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { GDINorthWestBarracks }, Vehicles = { GDINorthWestFactory } },
 		ProducerTypes = { Infantry = { "pyle" }, Vehicles = { "weap.td" } },
 		Units = UnitCompositionsShellmap.GDI,
@@ -121,11 +101,9 @@ Squads = {
 	},
 	AlliesVsSoviets = {
 		AttackValuePerSecond = {
-			normal = { { MinTime = 0, Value = 80 } },
+			normal = { Min = 80, Max = 80 },
 		},
-		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = false,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { AlliesNorthWestBarracks }, Vehicles = { AlliesNorthWestFactory } },
 		ProducerTypes = { Infantry = { "tent" }, Vehicles = { "weap" } },
 		Units = UnitCompositionsShellmap.Allies,
@@ -133,11 +111,9 @@ Squads = {
 	},
 	SovietVsAllies = {
 		AttackValuePerSecond = {
-			normal = { { MinTime = 0, Value = 110 } },
+			normal = { Min = 110, Max = 110 },
 		},
-		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = false,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { SovietNorthBarracks }, Vehicles = { SovietNorthFactory } },
 		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
 		Units = UnitCompositionsShellmap.Soviet,
@@ -145,11 +121,9 @@ Squads = {
 	},
 	SovietVsGDI = {
 		AttackValuePerSecond = {
-			normal = { { MinTime = 0, Value = 110 } },
+			normal = { Min = 110, Max = 110 },
 		},
-		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = false,
-		IdleUnits = { },
 		ProducerActors = { Infantry = { SovietSouthBarracks }, Vehicles = { SovietSouthFactory } },
 		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
 		Units = UnitCompositionsShellmap.Soviet,
@@ -157,22 +131,18 @@ Squads = {
 	},
 	ScrinVsSoviets = {
 		AttackValuePerSecond = {
-			normal = { { MinTime = 0, Value = 125 } },
+			normal = { Min = 125, Max = 125 },
 		},
-		QueueProductionStatuses = { Infantry = false, Vehicles = false, Aircraft = false },
 		FollowLeader = false,
-		IdleUnits = { },
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
 		Units = UnitCompositionsShellmap.Scrin,
 		AttackPaths = { { ScrinAttack1.Location, AlliedCamp.Location, ScrinAttack2a.Location, SovietBase.Location }, { ScrinAttack1.Location, AlliedCamp.Location, ScrinAttack2b.Location, SovietBase.Location } },
 	},
 	ScrinVsGDI = {
 		AttackValuePerSecond = {
-			normal = { { MinTime = 0, Value = 90 } },
+			normal = { Min = 90, Max = 90 },
 		},
-		QueueProductionStatuses = { Infantry = false, Vehicles = false, Aircraft = false },
 		FollowLeader = false,
-		IdleUnits = { },
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
 		Units = UnitCompositionsShellmap.Scrin,
 		AttackPaths = { { GDICamp.Location, GDIBase.Location } },
@@ -181,11 +151,6 @@ Squads = {
 		Interval = {
 			normal = DateTime.Minutes(1),
 		},
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Aircraft = { "afld.gdi" } },
 		Units = {
 			normal = {
@@ -198,11 +163,6 @@ Squads = {
 		Interval = {
 			normal = DateTime.Minutes(1),
 		},
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Aircraft = { "hpad.td" } },
 		Units = {
 			normal = {
@@ -217,11 +177,6 @@ Squads = {
 		Interval = {
 			normal = DateTime.Minutes(1),
 		},
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Aircraft = { "grav" } },
 		Units = {
 			normal = {
@@ -234,11 +189,6 @@ Squads = {
 		Interval = {
 			normal = DateTime.Minutes(1),
 		},
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
-		ProducerActors = nil,
 		ProducerTypes = { Aircraft = { "afld" } },
 		Units = {
 			normal = {
@@ -283,11 +233,11 @@ WorldLoaded = function()
 	Camera.Position = CameraStart.CenterPosition
 	ViewportOrigin = Camera.Position
 
-	Actor.Create("POWERCHEAT", true, { Owner = Greece })
-	Actor.Create("POWERCHEAT", true, { Owner = USSR })
-	Actor.Create("POWERCHEAT", true, { Owner = GDI })
-	Actor.Create("POWERCHEAT", true, { Owner = Nod })
-	Actor.Create("POWERCHEAT", true, { Owner = Scrin })
+	Actor.Create("ai.unlimited.power", true, { Owner = Greece })
+	Actor.Create("ai.unlimited.power", true, { Owner = USSR })
+	Actor.Create("ai.unlimited.power", true, { Owner = GDI })
+	Actor.Create("ai.unlimited.power", true, { Owner = Nod })
+	Actor.Create("ai.unlimited.power", true, { Owner = Scrin })
 
 	Actor.Create("sonic.upgrade", true, { Owner = GDI })
 	Actor.Create("empgren.upgrade", true, { Owner = GDI })

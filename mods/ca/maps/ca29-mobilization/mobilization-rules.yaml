@@ -1,0 +1,142 @@
+
+^Palettes:
+	PaletteFromFile@terrain-temperat:
+		Filename: dark.pal
+	GlobalLightingPaletteEffect:
+		Red: 0.80
+		Green: 0.90
+		Blue: 1.05
+		Ambient: 0.80
+	FlashPaletteEffect@LIGHTNINGSTRIKE:
+		Type: LightningStrike
+		ExcludePalettes: cursor, chrome, colorpicker, colorpickertd, colorpickerscrin, fog, shroud
+	WeatherOverlay@RAIN:
+		WindTick: 150, 550
+		UseSquares: false
+		ScatterDirection: 0, 0
+		Gravity: 20, 25
+		SwingOffset: 0, 0
+		SwingSpeed: 0, 0
+		SwingAmplitude: 0, 0
+		ParticleColors: 72aaae, 72aea6, 5caea3, 6da69f
+		LineTailAlphaValue: 30
+		ParticleSize: 1, 1
+		ParticleDensityFactor: 10
+
+^BaseWorld:
+	TerrainLighting:
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, mobilization.lua
+	MissionData:
+		Briefing: The assault on the Tiberium storage facility bought us valuable time, and preparations for our final assault are underway. The troops we freed from Scrin mind control have provided us with vital intel, and it seems that our suspicions were correct. The Scrin are cut off from their homeworld and they seek to open an interstellar gateway. They have been stockpiling Tiberium to provide the vast amount of energy this will require.\n\nThe main Scrin stronghold has been located and we are gathering whatever forces we can. Kane has apparently done one of his disappearing acts, and with Stalin dead the interim Nod and the Soviet leadership have agreed to a truce so that we can defeat the alien threat. Their commanders are attending a joint meeting at a command post near the front line.\n\n[ incoming transmission ]\n\nIt seems the Scrin have become aware of our plans.. Our command post has reported Scrin wormholes appearing throughout the area, and our reinforcements are being cut off.\n\nProtect the command post. Reinforcements will be arriving intermittently, but you'll need to take out these wormholes as quickly as possible or you'll be overwhelmed. Good luck.
+	MapOptions:
+		ShortGameCheckboxEnabled: True
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: dropdown-difficulty.label
+		Description: dropdown-difficulty.description
+		Values:
+			easy: options-difficulty.easy
+			normal: options-difficulty.normal
+			hard: options-difficulty.hard
+		Default: normal
+	MusicPlaylist:
+		StartingMusic: voic226m
+
+Player:
+	PlayerResources:
+		DefaultCash: 6000
+
+SPLIT2:
+	TerrainLightSource:
+		Range: 6c0
+		Intensity: 0.1
+		GreenTint: 0.3
+
+SPLIT3:
+	TerrainLightSource:
+		Range: 6c0
+		Intensity: 0.1
+		GreenTint: 0.3
+
+AMCV:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+PBOX:
+	Power:
+		Amount: 0
+
+AGUN:
+	Power:
+		Amount: 0
+
+MISS:
+	Tooltip:
+		Name: Command Center
+	Health:
+		HP: 200000
+	RepairableBuilding:
+		RepairStep: 500
+		RepairPercent: 30
+		RepairingNotification: Repairing
+	-SpawnActorOnDeath:
+	-OwnerLostAction:
+	Explodes:
+		Type: Footprint
+		Weapon: BuildingExplode
+		EmptyWeapon: BuildingExplode
+	WithBuildingRepairDecoration:
+		Image: allyrepair
+		Sequence: repair
+		Position: Center
+		Palette: player
+		IsPlayerPalette: True
+
+WORMHOLE:
+	Inherits@INF: ^ProducesInfantry
+	Inherits@VEH: ^ProducesVehicles
+	-PopControlled:
+	-TeleportNetwork:
+	Health:
+		HP: 300000
+	ChangesHealth:
+		PercentageStep: 1
+		Delay: 25
+		StartIfBelow: 101
+		DamageCooldown: 0
+		RequiresCondition: !regen-disabled
+	ExternalCondition@NOREGEN:
+		Condition: regen-disabled
+	ExternalCondition@FIX1:
+		Condition: forceshield
+	ExternalCondition@FIX2:
+		Condition: being-warped
+	MustBeDestroyed:
+		RequiredForShortGame: true
+	TerrainLightSource:
+		Range: 2c512
+		Intensity: 0.4
+		BlueTint: 1
+		RedTint: 0.2
+
+HIDDENSPAWNER:
+	Exit:
+		SpawnOffset: 0,0,2816
+		-ExitCell:
+
+# Removing TeleportNetwork from Wormhole above causes exception as no actors with TeleportNetwork are defined
+dummyteleport:
+	Inherits: ^InvisibleDummy
+	TeleportNetwork:
+		Type: Wormhole
+
+# Hunt() requires only 1 AttackBase
+DEVA:
+	-AttackFrontalCharged:
+	-Armament@PRIMARYUPG:
+	-AmbientSound@CHARGE:
+	-WithIdleOverlay@CHARGE1:
+	-WithIdleOverlay@CHARGE2:
+	-WithIdleOverlay@CHARGE3:

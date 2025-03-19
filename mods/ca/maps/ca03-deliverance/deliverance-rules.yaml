@@ -1,0 +1,225 @@
+^Palettes:
+	GlobalLightingPaletteEffect:
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, deliverance.lua
+	MissionData:
+		Briefing: We have been contacted by forces belonging to a group calling themselves the Global Defense Initiative. Though we have no knowledge of such an organization, we have reason to believe they can shed some light on everything that has been happening.\n\nA GDI base apparently materialized inside Soviet territory. Their commander was taken prisoner and they are soon to be overrun by Soviet forces.\n\nTake a detachment to find the base and—assuming this is not a Soviet ruse—defend it until reinforcements arrive.\n\nWith their commander captured and their chain of command in disarray due to the temporal and dimensional upheaval, the GDI forces have agreed to follow your orders. Once our position is secure, locate and rescue the GDI commander.\n\nWe don't know yet if we can trust these people, so remain vigilant. Hopefully we have found ourselves a new ally, and rescuing their commander is surely a good first step towards securing such an alliance.
+		LossVideo: battle.vqa
+	MapOptions:
+		ShortGameCheckboxEnabled: True
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: dropdown-difficulty.label
+		Description: dropdown-difficulty.description
+		Values:
+			easy: options-difficulty.easy
+			normal: options-difficulty.normal
+			hard: options-difficulty.hard
+		Default: normal
+	MusicPlaylist:
+		StartingMusic: aoi
+
+Player:
+	PlayerResources:
+		DefaultCash: 3500
+
+# Disable powers for AI
+
+^ParabombsPower:
+	AirstrikePowerCA@Russianparabombs:
+		Prerequisites: ~support.parabombs, ~!botplayer
+
+^ParatroopersPower:
+	ParatroopersPowerCA@paratroopers:
+		Prerequisites: ~support.paratroopers, ~!botplayer
+
+# Palette & voice overrides so GDI forces are gold regardless of player color and always use TD voices
+
+^TDPalette:
+	RenderSprites:
+		Palette: temptd
+
+^VehicleTD-NOUPG:
+	Voiced:
+		VoiceSet: VehicleTDVoice
+
+^PlaneTD:
+	Voiced:
+		VoiceSet: VehicleTDVoice
+
+^HelicopterTD:
+	Voiced:
+		VoiceSet: VehicleTDVoice
+
+^GDIInfantry:
+	RenderSprites:
+		Palette: temptd
+	WithDeathAnimation:
+		DeathSequencePalette: temptd
+		DeathPaletteIsPlayerPalette: false
+		CrushedSequencePalette: temptd
+		CrushedPaletteIsPlayerPalette: false
+	Voiced:
+		VoiceSet: GenericTDVoice
+
+^BuildingTD:
+	WithDeathAnimation:
+		DeathSequencePalette: temptd
+		DeathPaletteIsPlayerPalette: false
+
+N1:
+	Inherits@GDIPAL: ^GDIInfantry
+
+N2:
+	Inherits@GDIPAL: ^GDIInfantry
+
+N3:
+	Inherits@GDIPAL: ^GDIInfantry
+
+N6:
+	Inherits@GDIPAL: ^GDIInfantry
+
+CRYO:
+	RenderSprites:
+		-Palette:
+
+# Prerequisite adjustments
+
+N6:
+	Buildable:
+		Prerequisites: ~infantry.any
+
+MEDI:
+	Buildable:
+		Prerequisites: ~tent
+
+MNLY:
+	Buildable:
+		Prerequisites: ~vehicles.allies, repair
+
+ORCA:
+	Buildable:
+		Prerequisites: hpad.td
+
+vulcan.upgrade:
+	Buildable:
+		Prerequisites: anyradar, ~radar.gdi
+
+rapc.upgrade:
+	Buildable:
+		Prerequisites: anyradar, ~radar.allies
+
+# Disable tech
+
+E6:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+JJET:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+BJET:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+RMBO:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+E7:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+BORI:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+XO:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+PBUL:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+WOLV:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+DISR:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+MSAR:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+HTNK:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+MEMP:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+A10:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+OCAR:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+ORCB:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+AMCV:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+CA:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+PDOX:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+IRON:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+OREP:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+INDP:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+WEAT:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+MSLO:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+charv.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+# Disable powers
+
+HQ:
+	-AirstrikePowerCA@uav:
+
+HPAD.TD:
+	-InterceptorPower@AirDef:
+
+# Misc
+
+REP:
+	ProximityExternalCondition@AIRCRAFTREPAIR:
+		Range: 12c0
+	WithRangeCircle@AIRCRAFTREPAIR:
+		Range: 12c0
+
+MISS:
+	Tooltip:
+		Name: Prison
+	TooltipDescription:
+		Description: Prisoners of war are kept here.
+		ValidRelationships: Ally
+	Health:
+		HP: 200000
+
+GNRL:
+	Tooltip:
+		Name: GDI Commander
+	-Valued:
+	Health:
+		HP: 80000
+
+V3RL:
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Structure, Defense

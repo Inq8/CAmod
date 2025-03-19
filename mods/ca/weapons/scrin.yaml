@@ -246,6 +246,26 @@ IntruderDiscs:
 			Heavy: 90
 			Concrete: 100
 
+MarauderDiscs:
+	Inherits: IntruderDiscs
+	Range: 7c0
+	Burst: 2
+	BurstDelays: 5
+	Report: mrdr-fire1.aud, mrdr-fire2.aud
+	Projectile: Missile
+		Image: mrdrdisc
+		Speed: 550
+		LockOnProbability: 100
+		RangeLimit: 7c0
+		Palette: scrin
+	Warhead@1Dam: SpreadDamage
+		Damage: 4100
+		Spread: 448
+		Versus:
+			None: 10
+	Warhead@3Eff: CreateEffect
+		Explosions: large_explosion
+
 IntruderDiscsBATF:
 	Inherits: IntruderDiscs
 	Range: 5c768
@@ -700,6 +720,38 @@ ReaperLaserChargedReversed:
 		StartOffset: -150,-300,0
 		FollowingOffset: 50,100,0
 
+ExterminatorLaser:
+	Inherits: TripodLaser
+	ReloadDelay: 55
+	Report: etpd-fire1.aud, etpd-fire2.aud
+	Projectile: PlasmaBeam
+		InnerLightness: 170
+		OuterLightness: 130
+		Colors: 880000EE, AA0000EE
+		CenterBeam: true
+		CenterBeamWidth: 40
+		CenterBeamColor: ffeeeeff
+		Radius: 3
+		Distortion: 64
+		DistortionAnimation: 64
+		SegmentLength: 196
+		RecalculateDistortionInterval: 2
+		MaxFacingDeviation: 256
+	Warhead@1Dam: SpreadDamage
+		Damage: 2250
+		Spread: 512
+		Versus:
+			Wood: 45
+			Concrete: 50
+	Warhead@3Eff: CreateEffect
+		Explosions: large_explosion, small_explosion_alt1, small_explosion_alt2, small_explosion_alt3
+
+ExterminatorLaserReversed:
+	Inherits: ExterminatorLaser
+	Projectile: PlasmaBeam
+		StartOffset: -150,-300,0
+		FollowingOffset: 50,100,0
+
 StormriderZap:
 	Range: 5c768
 	Report: stormrider-fire1.aud, stormrider-fire2.aud, stormrider-fire3.aud
@@ -828,7 +880,6 @@ EnervatorBolts:
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
 		Damage: 13000
-		ValidTargets: Ground, Water
 		Versus:
 			None: 30
 			Wood: 55
