@@ -796,7 +796,7 @@ ProduceNextAttackSquadUnit = function(squad, queue, unitIndex)
 
 				if #engineersNearby == 0 then
 					producer.Produce(nextUnit)
-					squad.WaveTotalCost = squad.WaveTotalCost + Actor.Cost(nextUnit)
+					squad.WaveTotalCost = squad.WaveTotalCost + ActorCA.CostOrDefault(nextUnit)
 				end
 			end
 
@@ -1350,7 +1350,7 @@ AdjustCompositionsForDifficulty = function(compositions, difficulty)
 	local unitCosts = { }
 
 	Utils.Do(compositions, function(comp)
-		local updatedCompostion = AdjustCompositionForDifficulty(comp, unitCosts, difficulty)
+		local updatedComposition = AdjustCompositionForDifficulty(comp, unitCosts, difficulty)
 		table.insert(updatedCompositions, updatedComposition)
 	end)
 
@@ -1400,7 +1400,7 @@ AdjustCompositionForDifficulty = function(composition, unitCosts, difficulty)
 				end
 
 				if unitCosts[chosenUnit] == nil then
-					unitCosts[chosenUnit] = Actor.Cost(chosenUnit)
+					unitCosts[chosenUnit] = ActorCA.CostOrDefault(chosenUnit)
 				end
 
 				-- add the cost to the total cost for the queue
@@ -1431,7 +1431,7 @@ AdjustCompositionForDifficulty = function(composition, unitCosts, difficulty)
 				table.insert(updatedComposition[queueName], unit)
 
 				if unitCosts[chosenUnit] == nil then
-					unitCosts[chosenUnit] = Actor.Cost(chosenUnit)
+					unitCosts[chosenUnit] = ActorCA.CostOrDefault(chosenUnit)
 				end
 
 				queueAllocatedTotalUnitCost[queueName] = queueAllocatedTotalUnitCost[queueName] + unitCosts[chosenUnit]
@@ -1569,7 +1569,7 @@ UnitCompositions = {
 		{ Infantry = { "bh", "bh", "bh", "bh", "bh", "bh", "bh", "bh", "bh" }, Vehicles = { "hftk", "hftk", "hftk", "hftk", "hftk", "hftk" }, MinTime = DateTime.Minutes(18), IsSpecial = true },
 		{ Infantry = { "n3", "n1", "n1", "n1", "n4", "n1", "n3", "n1", "n1", "n1", "n1", "n1", "n1", "n3", "n1", "n1" }, Vehicles = { "wtnk", "wtnk", "wtnk", "wtnk", "wtnk" }, MinTime = DateTime.Minutes(18), IsSpecial = true },
 		{ Infantry = { }, Vehicles = { "bike", "bike", "bike", "bike", "bike", "bike", "bike", "bike", "bike", "bike", "bike", "bike", "bike", "bike" }, MinTime = DateTime.Minutes(18), IsSpecial = true },
-		{ Infantry = { "rmbc", "rmbc", "rmbc", "rmbc", "rmbc", "enli", "rmbc", "rmbc" }, MinTime = DateTime.Minutes(18), IsSpecial = true },
+		{ Infantry = { "rmbc", "rmbc", "rmbc", "rmbc", "rmbc", "enli", "rmbc", "rmbc", "enli" }, MinTime = DateTime.Minutes(18), IsSpecial = true },
 	},
 	Scrin = {
 		-- 0 to 10 minutes

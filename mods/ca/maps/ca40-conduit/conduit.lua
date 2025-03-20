@@ -135,7 +135,10 @@ WorldLoaded = function()
 	Nod3 = Player.GetPlayer("Nod3")
 	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { USSR }
-	TimerTicks = TimeLimit[Difficulty]
+
+	if Difficulty ~= "easy" then
+		TimerTicks = TimeLimit[Difficulty]
+	end
 
 	Camera.Position = PlayerStart.CenterPosition
 
@@ -213,6 +216,7 @@ InitNod = function()
 		AutoRepairAndRebuildBuildings(p)
 		SetupRefAndSilosCaptureCredits(p)
 		AutoReplaceHarvesters(p)
+		InitAiUpgrades(p)
 
 		local nodGroundAttackers = p.GetGroundAttackers()
 

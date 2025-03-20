@@ -128,6 +128,11 @@ WorldLoaded = function()
 	Trigger.AfterDelay(DateTime.Seconds(3), function()
 		Media.DisplayMessage("Assist us to annihilate Kane and the rebels, and you will be rewarded.", "Scrin Overlord", HSLColor.FromHex("7700FF"))
 		MediaCA.PlaySound("ovld_assist.aud", 2)
+
+		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(11)), function()
+			Media.DisplayMessage("The vastness of space, uncorrupted by capitalism, is ours for the taking!", "Premier Cherdenko", HSLColor.FromHex("FF0000"))
+			MediaCA.PlaySound("cdko_space.aud", 2)
+		end)
 	end)
 
 	local transmitters = { SignalTransmitter1, SignalTransmitter2, SignalTransmitter3 }
@@ -215,7 +220,7 @@ end
 
 UpdateMissionText = function()
 	if TimerTicks > 0 then
-		UserInterface.SetMissionText("Gateway collapses in " .. UtilsCA.FormatTimeForGameSpeed(TimerTicks), HSLColor.Yellow)
+		UserInterface.SetMissionText("Capture Nerve Center. Gateway collapses in " .. UtilsCA.FormatTimeForGameSpeed(TimerTicks), HSLColor.Yellow)
 	else
 		UserInterface.SetMissionText("")
 	end
@@ -332,7 +337,7 @@ NodSellOff = function()
 	end
 	NodSold = true
 	Utils.Do(NodBuildingsToSell, function(b)
-		if not b.IsDead then
+		if not b.IsDead and b.Owner == Nod then
 			b.Sell()
 		end
 	end)

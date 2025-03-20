@@ -61,6 +61,24 @@ ETPD:
 		Cursor: mc-capture
 	TooltipExtras:
 		Attributes: • Can crush concrete walls.\n• Target Purification device to begin extraction.
+	ExternalCondition@HARD:
+		Condition: difficulty-hard
+	-ExternalCondition@EASY:
+	-FirepowerMultiplier@EASY:
+	-DamageMultiplier@EASY:
+	-DamageTypeDamageMultiplier@A2GPROTECTION:
+	DamageMultiplier@NORMAL:
+		Modifier: 110
+		RequiresCondition: difficulty-normal
+	DamageMultiplier@HARD:
+		Modifier: 120
+		RequiresCondition: difficulty-hard
+	FirepowerMultiplier@NORMAL:
+		Modifier: 90
+		RequiresCondition: difficulty-normal
+	FirepowerMultiplier@HARD:
+		Modifier: 75
+		RequiresCondition: difficulty-hard
 
 IRON:
 	GrantExternalConditionPowerCA@IRONCURTAIN:
@@ -90,6 +108,8 @@ SCRINPURIFIER:
 		RequiresCondition: teleporting
 	ExternalCondition@Gateway:
 		Condition: teleporting
+	Health:
+		HP: 200000
 	-CaptureManager:
 	-CapturableProgressBlink:
 	-Capturable:

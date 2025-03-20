@@ -346,10 +346,6 @@ end
 InitUSSR = function(paths, cameras)
 	Squads.Soviets.AttackPaths = paths
 
-	AutoRepairAndRebuildBuildings(USSR)
-	SetupRefAndSilosCaptureCredits(USSR)
-	AutoReplaceHarvesters(USSR)
-
 	local ussrGroundAttackers = USSR.GetGroundAttackers()
 
 	Utils.Do(ussrGroundAttackers, function(a)
@@ -360,6 +356,13 @@ InitUSSR = function(paths, cameras)
 	Trigger.AfterDelay(DateTime.Seconds(1), function()
 		Utils.Do(USSRSavedAdvancedBuildings, function(b)
 			Actor.Create(b.Type, true, { Location = b.Location, Owner = USSR })
+		end)
+
+		Trigger.AfterDelay(1, function()
+			AutoRepairAndRebuildBuildings(USSR)
+			SetupRefAndSilosCaptureCredits(USSR)
+			AutoReplaceHarvesters(USSR)
+			InitAiUpgrades(USSR)
 		end)
 	end)
 
@@ -384,10 +387,6 @@ end
 InitGreece = function(paths, cameras)
 	Squads.Allies.AttackPaths = paths
 
-	AutoRepairAndRebuildBuildings(Greece)
-	SetupRefAndSilosCaptureCredits(Greece)
-	AutoReplaceHarvesters(Greece)
-
 	local greeceGroundAttackers = Greece.GetGroundAttackers()
 
 	Utils.Do(greeceGroundAttackers, function(a)
@@ -398,6 +397,13 @@ InitGreece = function(paths, cameras)
 	Trigger.AfterDelay(DateTime.Seconds(1), function()
 		Utils.Do(AlliedSavedAdvancedBuildings, function(b)
 			Actor.Create(b.Type, true, { Location = b.Location, Owner = Greece })
+		end)
+
+		Trigger.AfterDelay(1, function()
+			AutoRepairAndRebuildBuildings(Greece)
+			SetupRefAndSilosCaptureCredits(Greece)
+			AutoReplaceHarvesters(Greece)
+			InitAiUpgrades(Greece)
 		end)
 	end)
 
@@ -422,10 +428,6 @@ end
 InitNod = function(paths, cameras)
 	Squads.Nod.AttackPaths = paths
 
-	AutoRepairAndRebuildBuildings(Nod)
-	SetupRefAndSilosCaptureCredits(Nod)
-	AutoReplaceHarvesters(Nod)
-
 	local nodGroundAttackers = Nod.GetGroundAttackers()
 
 	Utils.Do(nodGroundAttackers, function(a)
@@ -436,6 +438,13 @@ InitNod = function(paths, cameras)
 	Trigger.AfterDelay(DateTime.Seconds(1), function()
 		Utils.Do(NodSavedAdvancedBuildings, function(b)
 			Actor.Create(b.Type, true, { Location = b.Location, Owner = Nod })
+		end)
+
+		Trigger.AfterDelay(1, function()
+			AutoRepairAndRebuildBuildings(Nod)
+			SetupRefAndSilosCaptureCredits(Nod)
+			AutoReplaceHarvesters(Nod)
+			InitAiUpgrades(Nod)
 		end)
 	end)
 
