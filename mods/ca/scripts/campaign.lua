@@ -576,7 +576,9 @@ CallForHelp = function(self, range, filter, validAttackingPlayerFunc)
 			end
 		end
 
-		local nearbyUnits = Map.ActorsInCircle(self.CenterPosition, range, filter)
+		local nearbyUnits = Map.ActorsInCircle(self.CenterPosition, range, function(a)
+			return a.Owner.IsAlliedWith(self.Owner) and filter(a)
+		end)
 
 		Utils.Do(nearbyUnits, function(nearbyUnit)
 			local nearbyUnitId = tostring(nearbyUnit)
@@ -1228,23 +1230,23 @@ IsGroundHunterUnit = function(actor)
 end
 
 IsGreeceGroundHunterUnit = function(actor)
-	return actor.Owner == Greece and IsGroundHunterUnit(actor) and actor.Type ~= "arty" and actor.Type ~= "cryo" and actor.Type ~= "mgg" and actor.Type ~= "mrj"
+	return IsGroundHunterUnit(actor) and actor.Type ~= "arty" and actor.Type ~= "cryo" and actor.Type ~= "mgg" and actor.Type ~= "mrj"
 end
 
 IsUSSRGroundHunterUnit = function(actor)
-	return actor.Owner == USSR and IsGroundHunterUnit(actor) and actor.Type ~= "v2rl" and actor.Type ~= "v3rl" and actor.Type ~= "katy" and actor.Type ~= "grad" and actor.Type ~= "nukc"
+	return IsGroundHunterUnit(actor) and actor.Type ~= "v2rl" and actor.Type ~= "v3rl" and actor.Type ~= "katy" and actor.Type ~= "grad" and actor.Type ~= "nukc"
 end
 
 IsGDIGroundHunterUnit = function(actor)
-	return actor.Owner == GDI and (IsGroundHunterUnit(actor) or actor.Type == "jjet") and actor.Type ~= "msam" and actor.Type ~= "memp" and actor.Type ~= "thwk"
+	return (IsGroundHunterUnit(actor) or actor.Type == "jjet") and actor.Type ~= "msam" and actor.Type ~= "memp" and actor.Type ~= "thwk"
 end
 
 IsNodGroundHunterUnit = function(actor)
-	return actor.Owner == Nod and IsGroundHunterUnit(actor) and actor.Type ~= "mlrs" and actor.Type ~= "arty.nod"
+	return IsGroundHunterUnit(actor) and actor.Type ~= "mlrs" and actor.Type ~= "arty.nod"
 end
 
 IsScrinGroundHunterUnit = function(actor)
-	return actor.Owner == Scrin and IsGroundHunterUnit(actor) and actor.Type ~= "mast" and actor.Type ~= "pdgy"
+	return IsGroundHunterUnit(actor) and actor.Type ~= "mast" and actor.Type ~= "pdgy"
 end
 
 -- Upgrades

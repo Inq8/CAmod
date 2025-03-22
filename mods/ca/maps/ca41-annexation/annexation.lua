@@ -186,6 +186,18 @@ end
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
 		ScrinRebels1.Resources = ScrinRebels1.ResourceCapacity - 500
+		ScrinRebels2.Resources = ScrinRebels2.ResourceCapacity - 500
+		ScrinRebels3.Resources = ScrinRebels3.ResourceCapacity - 500
+
+		if ScrinRebels1.HasNoRequiredUnits() and ScrinRebels2.HasNoRequiredUnits() and ScrinRebels3.HasNoRequiredUnits() then
+			if not USSR.IsObjectiveCompleted(ObjectiveHoldNerveCenter) then
+				USSR.MarkCompletedObjective(ObjectiveHoldNerveCenter)
+			end
+
+			if not USSR.IsObjectiveCompleted(ObjectiveEliminateRebels) then
+				USSR.MarkCompletedObjective(ObjectiveEliminateRebels)
+			end
+		end
 
 		if USSR.HasNoRequiredUnits() then
 			if not USSR.IsObjectiveCompleted(ObjectiveEliminateRebels) then
