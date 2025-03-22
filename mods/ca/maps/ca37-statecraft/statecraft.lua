@@ -357,7 +357,7 @@ OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
 		UpdatePlayerBaseLocations()
 
-		if not MarineskoSubdued and Marinesko.HasNoRequiredUnits() then
+		if not MarineskoSubdued and not PlayerHasBuildings(Marinesko) then
 			USSR.MarkCompletedObjective(ObjectiveSubdueMarinesko)
 			MarineskoSubdued = true
 			Squads.RomanovVsMarinesko.TargetPlayer = USSR
@@ -365,7 +365,7 @@ OncePerFiveSecondChecks = function()
 			Squads.RomanovVsMarinesko.AttackPaths = Squads.RomanovMain.AttackPaths
 		end
 
-		if not RomanovSubdued and Romanov.HasNoRequiredUnits() then
+		if not RomanovSubdued and not PlayerHasBuildings(Romanov) then
 			USSR.MarkCompletedObjective(ObjectiveSubdueRomanov)
 			RomanovSubdued = true
 			Squads.MarineskoVsRomanov.TargetPlayer = USSR
@@ -373,7 +373,7 @@ OncePerFiveSecondChecks = function()
 			Squads.MarineskoVsRomanov.AttackPaths = Squads.MarineskoMain.AttackPaths
 		end
 
-		if not KrukovSubdued and Krukov.HasNoRequiredUnits() then
+		if not KrukovSubdued and not PlayerHasBuildings(Krukov) then
 			USSR.MarkCompletedObjective(ObjectiveSubdueKrukov)
 			KrukovSubdued = true
 			Squads.MarineskoVsKrukov.TargetPlayer = USSR

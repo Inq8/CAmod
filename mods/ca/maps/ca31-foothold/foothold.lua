@@ -217,7 +217,7 @@ OncePerSecondChecks = function()
 			end
 		end
 
-		if Scrin.HasNoRequiredUnits() and ObjectiveDestroyScrinBase ~= nil and not GDI.IsObjectiveCompleted(ObjectiveDestroyScrinBase) then
+		if not PlayerHasBuildings(Scrin) and ObjectiveDestroyScrinBase ~= nil and not GDI.IsObjectiveCompleted(ObjectiveDestroyScrinBase) then
 			GDI.MarkCompletedObjective(ObjectiveProtectNerveCenter)
 			GDI.MarkCompletedObjective(ObjectiveDestroyScrinBase)
 		end

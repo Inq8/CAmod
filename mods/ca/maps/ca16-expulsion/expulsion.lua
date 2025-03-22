@@ -153,7 +153,7 @@ OncePerSecondChecks = function()
 			end
 		end
 
-		if GDI.HasNoRequiredUnits() then
+		if not PlayerHasBuildings(GDI) then
 			USSR.MarkCompletedObjective(ObjectiveExpelGDI)
 		end
 

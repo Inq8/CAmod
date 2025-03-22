@@ -214,7 +214,7 @@ OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
 		Nod.Resources = Nod.ResourceCapacity - 500
 
-		if Nod.HasNoRequiredUnits() then
+		if not PlayerHasBuildings(Nod) then
 			GDI.MarkCompletedObjective(ObjectiveEliminateNod)
 		end
 

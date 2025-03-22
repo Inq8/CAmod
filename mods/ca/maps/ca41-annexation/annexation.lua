@@ -189,7 +189,7 @@ OncePerSecondChecks = function()
 		ScrinRebels2.Resources = ScrinRebels2.ResourceCapacity - 500
 		ScrinRebels3.Resources = ScrinRebels3.ResourceCapacity - 500
 
-		if ScrinRebels1.HasNoRequiredUnits() and ScrinRebels2.HasNoRequiredUnits() and ScrinRebels3.HasNoRequiredUnits() then
+		if not PlayerHasBuildings(ScrinRebels1) and not PlayerHasBuildings(ScrinRebels2) and not PlayerHasBuildings(ScrinRebels3) then
 			if not USSR.IsObjectiveCompleted(ObjectiveHoldNerveCenter) then
 				USSR.MarkCompletedObjective(ObjectiveHoldNerveCenter)
 			end

@@ -254,7 +254,7 @@ OncePerSecondChecks = function()
 
 		UpdateObjectiveText()
 
-		if McvArrived and GDI.HasNoRequiredUnits() then
+		if GDI.HasNoRequiredUnits() then
 			GDI.MarkFailedObjective(ObjectiveCaptureOrDestroyBunker)
 		end
 	end
