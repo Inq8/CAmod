@@ -181,6 +181,12 @@ OncePerSecondChecks = function()
 				Nod.MarkCompletedObjective(ObjectiveDestroyGDI)
 			end
 		end
+
+		if not Nod.IsObjectiveCompleted(ObjectiveReinforce) then
+			if not PlayerHasBuildings(Nod2) and not PlayerHasBuildings(Nod3) then
+				Nod.MarkFailedObjective(ObjectiveReinforce)
+			end
+		end
 	end
 end
 
@@ -263,7 +269,7 @@ InitWestAttackers = function()
 			local dest = CPos.New(WestBaseCenter.Location.X + Utils.RandomInteger(-5,5), WestBaseCenter.Location.Y + Utils.RandomInteger(-5,5))
 			a.AttackMove(dest)
 			a.Hunt()
-			Trigger.AfterDelay(DateTime.Seconds(80), function()
+			Trigger.AfterDelay(DateTime.Seconds(75), function()
 				if not a.IsDead then
 					a.Stop()
 					Trigger.AfterDelay(DateTime.Minutes(1), function()
@@ -278,6 +284,13 @@ InitWestAttackers = function()
 					end)
 				end
 			end)
+		end
+	end)
+
+	local westDefenders = Nod3.GetGroundAttackers()
+	Utils.Do(westDefenders, function(a)
+		if not a.IsDead then
+			a.Hunt()
 		end
 	end)
 end
@@ -318,7 +331,8 @@ InitEastAttackers = function()
 		if a.Owner == GDI and not a.IsDead then
 			local dest = CPos.New(EastBaseCenter.Location.X + Utils.RandomInteger(-5,5), EastBaseCenter.Location.Y + Utils.RandomInteger(-5,5))
 			a.AttackMove(dest)
-			Trigger.AfterDelay(DateTime.Seconds(80), function()
+			a.Hunt()
+			Trigger.AfterDelay(DateTime.Seconds(75), function()
 				if not a.IsDead then
 					a.Stop()
 					Trigger.AfterDelay(DateTime.Minutes(1), function()
@@ -333,6 +347,13 @@ InitEastAttackers = function()
 					end)
 				end
 			end)
+		end
+	end)
+
+	local eastDefenders = Nod2.GetGroundAttackers()
+	Utils.Do(eastDefenders, function(a)
+		if not a.IsDead then
+			a.Hunt()
 		end
 	end)
 end

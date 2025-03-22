@@ -542,20 +542,17 @@ CallForHelpOnDamagedOrKilled = function(actor, range, filter, validAttackingPlay
 	end
 	Trigger.OnDamaged(actor, function(self, attacker, damage)
 		if validAttackingPlayerFunc(attacker.Owner) then
-			CallForHelp(self, range, filter, validAttackingPlayerFunc)
+			CallForHelp(self, range, filter)
 		end
 	end)
 	Trigger.OnKilled(actor, function(self, killer)
 		if validAttackingPlayerFunc(killer.Owner) then
-			CallForHelp(self, range, filter, validAttackingPlayerFunc)
+			CallForHelp(self, range, filter)
 		end
 	end)
 end
 
-CallForHelp = function(self, range, filter, validAttackingPlayerFunc)
-	if validAttackingPlayerFunc == nil then
-		validAttackingPlayerFunc = function(p) return IsMissionPlayer(p) end
-	end
+CallForHelp = function(self, range, filter)
 	if IsMissionPlayer(self.Owner) then
 		return
 	end
@@ -571,7 +568,7 @@ CallForHelp = function(self, range, filter, validAttackingPlayerFunc)
 		end
 
 		local nearbyUnits = Map.ActorsInCircle(self.CenterPosition, range, function(a)
-			return a.Owner.IsAlliedWith(self.Owner) and filter(a)
+			return a.Owner.IsAlliedWith(self.Owner) and not IsMissionPlayer(a.Owner) and filter(a)
 		end)
 
 		Utils.Do(nearbyUnits, function(nearbyUnit)
