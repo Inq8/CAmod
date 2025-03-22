@@ -10,6 +10,7 @@
  */
 #endregion
 
+using OpenRA.Mods.Common.Traits;
 using OpenRA.Mods.Common.Widgets;
 using OpenRA.Scripting;
 
@@ -51,6 +52,18 @@ namespace OpenRA.Mods.CA.Scripting
 			var reference = Game.ModData.Hotkeys[hotkeyName];
 			var hotkey = reference.GetValue();
 			return hotkey.DisplayString();
+		}
+
+		[Desc("Returns whether a specified building type can be placed at a given cell location.")]
+		public bool CanPlaceBuilding(string type, CPos cell)
+		{
+			var ai = world.Map.Rules.Actors[type];
+			var bi = ai.TraitInfoOrDefault<BuildingInfo>();
+
+			if (bi == null)
+				return false;
+
+			return BuildingUtils.CanPlaceBuilding(world, cell, ai, bi, null);
 		}
 	}
 }

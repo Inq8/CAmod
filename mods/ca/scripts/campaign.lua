@@ -466,20 +466,14 @@ CanRebuild = function(queueItem)
 		end
 	end
 
-	local topLeft = WPos.New(pos.X - 2048, pos.Y - 2048, 0)
-	local bottomRight = WPos.New(pos.X + 2048, pos.Y + 2048, 0)
-
-	local nearbyUnits = Map.ActorsInBox(topLeft, bottomRight, function(a)
-		return not a.IsDead and a.HasProperty("Move") and not a.HasProperty("Land")
-	end)
-
 	-- require no nearby units (stops building on top of them)
-	if #nearbyUnits > 0 then
+	if not UtilsCA.CanPlaceBuilding(queueItem.Actor.Type, queueItem.Location) then
 		return false
 	end
 
-	topLeft = WPos.New(pos.X - 8192, pos.Y - 8192, 0)
-	bottomRight = WPos.New(pos.X + 8192, pos.Y + 8192, 0)
+	local topLeft = WPos.New(pos.X - 8192, pos.Y - 8192, 0)
+	local bottomRight = WPos.New(pos.X + 8192, pos.Y + 8192, 0)
+
 	local nearbyBuildings = Map.ActorsInBox(topLeft, bottomRight, function(a)
 		return not a.IsDead and a.Owner == queueItem.Player and a.HasProperty("StartBuildingRepairs") and not a.HasProperty("Attack") and a.Type ~= "silo" and a.Type ~= "silo.td" and a.Type ~= "silo.scrin"
 	end)
