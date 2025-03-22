@@ -604,21 +604,6 @@
 	TimedConditionBar@SUPPRESSION:
 		Condition: suppression
 		Color: f454d0
-	ExternalCondition@SUPPRESSIONSIPHON:
-		Condition: suppression-siphon
-	ChangesHealth@SUPPRESSIONSIPHON:
-		RequiresCondition: suppression-siphon
-		Step: 0
-		PercentageStep: -1
-		Delay: 25
-		StartIfBelow: 101
-		DamageTypes: BulletDeath
-	WithIdleOverlay@SUPPRESSIONSIPHON:
-		Sequence: idle
-		Image: siphon-overlay-lg
-		Palette: scrin-ignore-lighting-alpha15
-		RequiresCondition: suppression-siphon
-		IsDecoration: true
 
 ^Atomizable:
 	ExternalCondition@ATOMIZED:
@@ -1149,10 +1134,10 @@
 		Palette: gyro
 	RangeMultiplier@GYRO:
 		RequiresCondition: gyrostabilizers
-		Modifier: 165
+		Modifier: 133
 	ReloadDelayMultiplier@GYRO:
 		RequiresCondition: gyrostabilizers
-		Modifier: 165
+		Modifier: 133
 	TimedConditionBar@GYRO:
 		Condition: gyrostabilizers
 	ExternalCondition@GYRO:
@@ -2557,8 +2542,6 @@
 		OnCrushCondition: crush-slow
 		OnCrushDuration: 50
 	TeleportNetworkTransportable:
-	WithIdleOverlay@SUPPRESSIONSIPHON:
-		Image: siphon-overlay-sm
 	DamageMultiplier@MINDCONTROL:
 		Modifier: 70
 		RequiresCondition: mindcontrolled

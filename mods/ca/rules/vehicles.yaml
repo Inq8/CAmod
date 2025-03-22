@@ -7076,6 +7076,12 @@ TITN:
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
+	RangeMultiplier@SEEK:
+		RequiresCondition: seek && !gyrostabilizers
+	RangeMultiplier@SEEK2:
+		RequiresCondition: seek2 && !gyrostabilizers
+	RangeMultiplier@SEEK3:
+		RequiresCondition: seek3 && !gyrostabilizers
 
 TITN.RAIL:
 	Inherits: TITN
@@ -7205,9 +7211,9 @@ JUGG:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 		Condition: moving
 	RangeMultiplier@GYRO:
-		Modifier: 150
+		Modifier: 140
 	ReloadDelayMultiplier@GYRO:
-		Modifier: 150
+		Modifier: 140
 	Carryable:
 		LocalOffset: 0,0,700
 	-Crushable:
