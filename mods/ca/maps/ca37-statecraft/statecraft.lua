@@ -432,7 +432,7 @@ InitGenerals = function()
 		end)
 
 		Trigger.AfterDelay(Squads.KrukovAntiTankAir.Delay[Difficulty], function()
-			InitAirAttackSquad(Squads.KrukovAntiTankAir, USSR, Krukov, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic" })
+			InitAirAttackSquad(Squads.KrukovAntiTankAir, Krukov, USSR, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic" })
 		end)
 	end
 end
