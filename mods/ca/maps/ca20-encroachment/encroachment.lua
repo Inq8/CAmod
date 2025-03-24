@@ -276,7 +276,7 @@ InitGDI = function()
 	AutoRepairAndRebuildBuildings(GDI, 15)
 	SetupRefAndSilosCaptureCredits(GDI)
 	AutoReplaceHarvesters(GDI)
-	InitGDIUpgrades(GDI)
+	InitAiUpgrades(GDI)
 
 	local gdiGroundAttackers = GDI.GetGroundAttackers()
 
