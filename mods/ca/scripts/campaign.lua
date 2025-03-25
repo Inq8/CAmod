@@ -466,20 +466,14 @@ CanRebuild = function(queueItem)
 		end
 	end
 
-	local topLeft = WPos.New(pos.X - 2048, pos.Y - 2048, 0)
-	local bottomRight = WPos.New(pos.X + 2048, pos.Y + 2048, 0)
-
-	local nearbyUnits = Map.ActorsInBox(topLeft, bottomRight, function(a)
-		return not a.IsDead and a.HasProperty("Move") and not a.HasProperty("Land")
-	end)
-
 	-- require no nearby units (stops building on top of them)
-	if #nearbyUnits > 0 then
+	if not UtilsCA.CanPlaceBuilding(queueItem.Actor.Type, queueItem.Location) then
 		return false
 	end
 
-	topLeft = WPos.New(pos.X - 8192, pos.Y - 8192, 0)
-	bottomRight = WPos.New(pos.X + 8192, pos.Y + 8192, 0)
+	local topLeft = WPos.New(pos.X - 8192, pos.Y - 8192, 0)
+	local bottomRight = WPos.New(pos.X + 8192, pos.Y + 8192, 0)
+
 	local nearbyBuildings = Map.ActorsInBox(topLeft, bottomRight, function(a)
 		return not a.IsDead and a.Owner == queueItem.Player and a.HasProperty("StartBuildingRepairs") and not a.HasProperty("Attack") and a.Type ~= "silo" and a.Type ~= "silo.td" and a.Type ~= "silo.scrin"
 	end)
@@ -548,20 +542,17 @@ CallForHelpOnDamagedOrKilled = function(actor, range, filter, validAttackingPlay
 	end
 	Trigger.OnDamaged(actor, function(self, attacker, damage)
 		if validAttackingPlayerFunc(attacker.Owner) then
-			CallForHelp(self, range, filter, validAttackingPlayerFunc)
+			CallForHelp(self, range, filter)
 		end
 	end)
 	Trigger.OnKilled(actor, function(self, killer)
 		if validAttackingPlayerFunc(killer.Owner) then
-			CallForHelp(self, range, filter, validAttackingPlayerFunc)
+			CallForHelp(self, range, filter)
 		end
 	end)
 end
 
-CallForHelp = function(self, range, filter, validAttackingPlayerFunc)
-	if validAttackingPlayerFunc == nil then
-		validAttackingPlayerFunc = function(p) return IsMissionPlayer(p) end
-	end
+CallForHelp = function(self, range, filter)
 	if IsMissionPlayer(self.Owner) then
 		return
 	end
@@ -576,7 +567,9 @@ CallForHelp = function(self, range, filter, validAttackingPlayerFunc)
 			end
 		end
 
-		local nearbyUnits = Map.ActorsInCircle(self.CenterPosition, range, filter)
+		local nearbyUnits = Map.ActorsInCircle(self.CenterPosition, range, function(a)
+			return a.Owner.IsAlliedWith(self.Owner) and not IsMissionPlayer(a.Owner) and filter(a)
+		end)
 
 		Utils.Do(nearbyUnits, function(nearbyUnit)
 			local nearbyUnitId = tostring(nearbyUnit)
@@ -796,7 +789,7 @@ ProduceNextAttackSquadUnit = function(squad, queue, unitIndex)
 
 				if #engineersNearby == 0 then
 					producer.Produce(nextUnit)
-					squad.WaveTotalCost = squad.WaveTotalCost + Actor.Cost(nextUnit)
+					squad.WaveTotalCost = squad.WaveTotalCost + ActorCA.CostOrDefault(nextUnit)
 				end
 			end
 
@@ -1228,23 +1221,23 @@ IsGroundHunterUnit = function(actor)
 end
 
 IsGreeceGroundHunterUnit = function(actor)
-	return actor.Owner == Greece and IsGroundHunterUnit(actor) and actor.Type ~= "arty" and actor.Type ~= "cryo" and actor.Type ~= "mgg" and actor.Type ~= "mrj"
+	return IsGroundHunterUnit(actor) and actor.Type ~= "arty" and actor.Type ~= "cryo" and actor.Type ~= "mgg" and actor.Type ~= "mrj"
 end
 
 IsUSSRGroundHunterUnit = function(actor)
-	return actor.Owner == USSR and IsGroundHunterUnit(actor) and actor.Type ~= "v2rl" and actor.Type ~= "v3rl" and actor.Type ~= "katy" and actor.Type ~= "grad" and actor.Type ~= "nukc"
+	return IsGroundHunterUnit(actor) and actor.Type ~= "v2rl" and actor.Type ~= "v3rl" and actor.Type ~= "katy" and actor.Type ~= "grad" and actor.Type ~= "nukc"
 end
 
 IsGDIGroundHunterUnit = function(actor)
-	return actor.Owner == GDI and (IsGroundHunterUnit(actor) or actor.Type == "jjet") and actor.Type ~= "msam" and actor.Type ~= "memp" and actor.Type ~= "thwk"
+	return (IsGroundHunterUnit(actor) or actor.Type == "jjet") and actor.Type ~= "msam" and actor.Type ~= "memp" and actor.Type ~= "thwk"
 end
 
 IsNodGroundHunterUnit = function(actor)
-	return actor.Owner == Nod and IsGroundHunterUnit(actor) and actor.Type ~= "mlrs" and actor.Type ~= "arty.nod"
+	return IsGroundHunterUnit(actor) and actor.Type ~= "mlrs" and actor.Type ~= "arty.nod"
 end
 
 IsScrinGroundHunterUnit = function(actor)
-	return actor.Owner == Scrin and IsGroundHunterUnit(actor) and actor.Type ~= "mast" and actor.Type ~= "pdgy"
+	return IsGroundHunterUnit(actor) and actor.Type ~= "mast" and actor.Type ~= "pdgy"
 end
 
 -- Upgrades
@@ -1350,7 +1343,7 @@ AdjustCompositionsForDifficulty = function(compositions, difficulty)
 	local unitCosts = { }
 
 	Utils.Do(compositions, function(comp)
-		local updatedCompostion = AdjustCompositionForDifficulty(comp, unitCosts, difficulty)
+		local updatedComposition = AdjustCompositionForDifficulty(comp, unitCosts, difficulty)
 		table.insert(updatedCompositions, updatedComposition)
 	end)
 
@@ -1400,7 +1393,7 @@ AdjustCompositionForDifficulty = function(composition, unitCosts, difficulty)
 				end
 
 				if unitCosts[chosenUnit] == nil then
-					unitCosts[chosenUnit] = Actor.Cost(chosenUnit)
+					unitCosts[chosenUnit] = ActorCA.CostOrDefault(chosenUnit)
 				end
 
 				-- add the cost to the total cost for the queue
@@ -1431,7 +1424,7 @@ AdjustCompositionForDifficulty = function(composition, unitCosts, difficulty)
 				table.insert(updatedComposition[queueName], unit)
 
 				if unitCosts[chosenUnit] == nil then
-					unitCosts[chosenUnit] = Actor.Cost(chosenUnit)
+					unitCosts[chosenUnit] = ActorCA.CostOrDefault(chosenUnit)
 				end
 
 				queueAllocatedTotalUnitCost[queueName] = queueAllocatedTotalUnitCost[queueName] + unitCosts[chosenUnit]
@@ -1569,7 +1562,7 @@ UnitCompositions = {
 		{ Infantry = { "bh", "bh", "bh", "bh", "bh", "bh", "bh", "bh", "bh" }, Vehicles = { "hftk", "hftk", "hftk", "hftk", "hftk", "hftk" }, MinTime = DateTime.Minutes(18), IsSpecial = true },
 		{ Infantry = { "n3", "n1", "n1", "n1", "n4", "n1", "n3", "n1", "n1", "n1", "n1", "n1", "n1", "n3", "n1", "n1" }, Vehicles = { "wtnk", "wtnk", "wtnk", "wtnk", "wtnk" }, MinTime = DateTime.Minutes(18), IsSpecial = true },
 		{ Infantry = { }, Vehicles = { "bike", "bike", "bike", "bike", "bike", "bike", "bike", "bike", "bike", "bike", "bike", "bike", "bike", "bike" }, MinTime = DateTime.Minutes(18), IsSpecial = true },
-		{ Infantry = { "rmbc", "rmbc", "rmbc", "rmbc", "rmbc", "enli", "rmbc", "rmbc" }, MinTime = DateTime.Minutes(18), IsSpecial = true },
+		{ Infantry = { "rmbc", "rmbc", "rmbc", "rmbc", "rmbc", "enli", "rmbc", "rmbc", "enli" }, MinTime = DateTime.Minutes(18), IsSpecial = true },
 	},
 	Scrin = {
 		-- 0 to 10 minutes

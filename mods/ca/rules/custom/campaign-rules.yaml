@@ -517,6 +517,12 @@ SHOK:
 	AttackMove:
 		-AttackMoveCondition:
 
+# Kirov damage boost since no subfaction variants are available
+
+KIRO:
+	FirepowerMultiplier@CampaignDamage:
+		Modifier: 110
+
 # Special units/buildings
 
 TRAN.evac:
@@ -625,8 +631,6 @@ ETPD:
 	DamageMultiplier@EASY:
 		Modifier: 150
 		RequiresCondition: difficulty-easy
-	MustBeDestroyed:
-		RequiredForShortGame: true
 	Targetable@ETPD:
 		TargetTypes: ExterminatorTripod
 	Targetable@SHIELDED:

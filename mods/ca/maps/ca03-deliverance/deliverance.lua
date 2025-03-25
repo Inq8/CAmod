@@ -325,7 +325,7 @@ OncePerSecondChecks = function()
 			UpdateReinforcementCountdown()
 		end
 
-		if PlayerForcesDefeated() or not GDICommanderAlive then
+		if Greece.HasNoRequiredUnits() or not GDICommanderAlive then
 			if ObjectiveFindBase ~= nil and not Greece.IsObjectiveCompleted(ObjectiveFindBase) then
 				Greece.MarkFailedObjective(ObjectiveFindBase)
 			end
@@ -463,15 +463,6 @@ RevealPrison = function()
 		end)
 
 		IsPrisonRevealed = true
-	end
-end
-
-PlayerForcesDefeated = function()
-	if ObjectiveFindBase ~= nil and not Greece.IsObjectiveCompleted(ObjectiveFindBase) then
-		local playerActors = Greece.GetActors()
-		return #playerActors == 0
-	else
-		return Greece.HasNoRequiredUnits()
 	end
 end
 

@@ -1339,7 +1339,7 @@ BikeRockets.TibCore:
 	Warhead@antiHeavySplash: SpreadDamage
 		Damage: 4300
 		Spread: 341
-		ValidTargets: Vehicle, Husk
+		ValidTargets: Vehicle, Ship, Husk
 		Versus:
 			Heavy: 66
 			None: 0
@@ -1643,7 +1643,7 @@ StnkMissile:
 	Warhead@tankbuster: SpreadDamage
 		Spread: 128
 		Damage: 5500
-		ValidTargets: Vehicle, Husk
+		ValidTargets: Vehicle, Ship, Husk
 		Versus:
 			Heavy: 30
 			None: 0
@@ -2406,7 +2406,7 @@ CyborgReaperSnare:
 		ValidTargets: Ground, Ship, Trees
 
 KamovRockets:
-	Inherits: ^AntiGroundMissile
+	Inherits: ^AirToGroundMissile
 	ReloadDelay: 100
 	Range: 9c0
 	MinRange: 3c0
@@ -2433,7 +2433,7 @@ KamovRockets:
 			Concrete: 40
 			Light: 65
 			Heavy: 100
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster, FlakVestMitigated
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, AirToGround, TankBuster, FlakVestMitigated
 	Warhead@3Eff: CreateEffect
 		Explosions: frag_3
 		ExplosionPalette: temptd

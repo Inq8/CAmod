@@ -197,7 +197,7 @@ OncePerSecondChecks = function()
 		end
 
 		if ObjectiveDestroyRemainingLoyalists ~= nil then
-			if Scrin.HasNoRequiredUnits() then
+			if not PlayerHasBuildings(Scrin) and #Scrin.GetActorsByType("wormhole") == 0 then
 				Nod.MarkCompletedObjective(ObjectiveDestroyRemainingLoyalists)
 			end
 		end

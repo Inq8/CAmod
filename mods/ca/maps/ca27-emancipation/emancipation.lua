@@ -322,7 +322,7 @@ OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
 		Scrin.Resources = Scrin.ResourceCapacity - 500
 
-		if Scrin.HasNoRequiredUnits() then
+		if not PlayerHasBuildings(Scrin) then
 			if ObjectiveEliminateScrin == nil then
 				ObjectiveEliminateScrin = GDI.AddObjective("Eliminate the Scrin presence.")
 			end

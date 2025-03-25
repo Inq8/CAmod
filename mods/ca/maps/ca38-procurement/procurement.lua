@@ -229,8 +229,12 @@ InitGDI = function()
 	if Difficulty ~= "easy" then
 
 		Trigger.AfterDelay(DateTime.Minutes(13), function()
-			Carrier1.Patrol({ CarrierPatrol1.Location, CarrierPatrol2.Location, CarrierPatrol3.Location, CarrierPatrol2.Location })
-			Carrier2.Patrol({ CarrierPatrol1.Location, CarrierPatrol2.Location, CarrierPatrol3.Location, CarrierPatrol2.Location })
+			if not Carrier1.IsDead then
+				Carrier1.Patrol({ CarrierPatrol1.Location, CarrierPatrol2.Location, CarrierPatrol3.Location, CarrierPatrol2.Location })
+			end
+			if not Carrier2.IsDead then
+				Carrier2.Patrol({ CarrierPatrol1.Location, CarrierPatrol2.Location, CarrierPatrol3.Location, CarrierPatrol2.Location })
+			end
 		end)
 
 		Utils.Do({ Carrier1, Carrier2 }, function(c)
@@ -244,7 +248,7 @@ InitGDI = function()
 		end)
 
 		Trigger.OnProduction(NavalYard, function(producer, produced)
-			if produced.Type == "cv" then
+			if produced.Type == "cv" and not produced.IsDead then
 				produced.Patrol({ CarrierPatrol1.Location, CarrierPatrol2.Location, CarrierPatrol3.Location, CarrierPatrol2.Location })
 			end
 		end)

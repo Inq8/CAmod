@@ -4,10 +4,40 @@ ChemMissileEnabledTime = {
 	hard = DateTime.Seconds((60 * 15) + 41),
 }
 
+table.insert(UnitCompositions.Nod, {
+	Infantry = { "n3", "n1", "n1", "n1", "n4", "n1", "n3", "n1", "n1", "n1", "n1", "n1", "n1", "n3", "n1", "n1" },
+	Vehicles = { "mlrs", "mlrs", "mlrs", "mlrs", "mlrs", "mlrs", "mlrs" },
+	MinTime = DateTime.Minutes(15),
+	IsSpecial = true
+})
+
 AdjustedNodCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Nod)
 
 Squads = {
 	Main1 = {
+		Delay = {
+			easy = DateTime.Minutes(5),
+			normal = DateTime.Minutes(3),
+			hard = DateTime.Minutes(1),
+		},
+		AttackValuePerSecond = {
+			easy = { Min = 10, Max = 25 },
+			normal = { Min = 25, Max = 50 },
+			hard = { Min = 40, Max = 80 },
+		},
+		FollowLeader = true,
+		DispatchDelay = DateTime.Seconds(15),
+		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
+		Units = AdjustedNodCompositions,
+		AttackPaths = {
+			{ NodRally1.Location },
+			{ NodRally2.Location },
+			{ NodRally3.Location },
+			{ NodRally4.Location },
+			{ NodRally5.Location },
+		},
+	},
+	Main2 = {
 		Delay = {
 			easy = DateTime.Minutes(6),
 			normal = DateTime.Minutes(4),
@@ -30,34 +60,11 @@ Squads = {
 			{ NodRally5.Location },
 		},
 	},
-	Main2 = {
-		Delay = {
-			easy = DateTime.Minutes(7),
-			normal = DateTime.Minutes(5),
-			hard = DateTime.Minutes(3),
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 10, Max = 25 },
-			normal = { Min = 25, Max = 50 },
-			hard = { Min = 40, Max = 80 },
-		},
-		FollowLeader = true,
-		DispatchDelay = DateTime.Seconds(15),
-		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
-		Units = AdjustedNodCompositions,
-		AttackPaths = {
-			{ NodRally1.Location },
-			{ NodRally2.Location },
-			{ NodRally3.Location },
-			{ NodRally4.Location },
-			{ NodRally5.Location },
-		},
-	},
 	Air = {
 		Delay = {
 			easy = DateTime.Minutes(13),
-			normal = DateTime.Minutes(12),
-			hard = DateTime.Minutes(11)
+			normal = DateTime.Minutes(11),
+			hard = DateTime.Minutes(9)
 		},
 		AttackValuePerSecond = {
 			easy = { Min = 7, Max = 7 },
@@ -83,7 +90,7 @@ Squads = {
 	},
 	AntiTankAir = {
 		Delay = {
-			hard = DateTime.Minutes(15)
+			hard = DateTime.Minutes(10)
 		},
 		ActiveCondition = function()
 			return #USSR.GetActorsByTypes({ "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" }) > 8
@@ -94,7 +101,7 @@ Squads = {
 		ProducerTypes = { Aircraft = { "hpad.td" } },
 		Units = {
 			hard = {
-				{ Aircraft = { "scrn", "scrn", "scrn", "scrn", "scrn", "scrn" } },
+				{ Aircraft = { "scrn", "scrn", "scrn", "scrn", "scrn", "scrn", "scrn" } },
 			}
 		},
 	}

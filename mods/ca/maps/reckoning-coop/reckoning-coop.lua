@@ -307,7 +307,7 @@ OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
 		UpdatePlayerBaseLocations()
 
-		if Scrin.HasNoRequiredUnits() and not Victory then
+		if not PlayerHasBuildings(Scrin) and #Scrin.GetActorsByType("etpd") == 0 and not Victory then
 			Victory = true
 			Media.DisplayMessage("The Overlord's fate is sealed, and the Scrin are liberated. Now we must return to Earth and forge a new beginning for mankind. With purified Tiberium the possibilites are truly limitless, and those who embrace its light will share in its blessings. Those who do not, will be left in the darkness.", "Kane", HSLColor.FromHex("FF0000"))
 			MediaCA.PlaySound("../ca30-reckoning/kane_newbeginning.aud", 2)
@@ -320,7 +320,7 @@ OncePerFiveSecondChecks = function()
 			end)
 		end
 
-		if ScrinRebels.HasNoRequiredUnits() and not Victory then
+		if not PlayerHasBuildings(ScrinRebels) and not Victory then
 			Utils.Do(MissionPlayers, function(p)
 				p.MarkFailedObjective(Objectives.DefendRebels[p.InternalName])
 			end)

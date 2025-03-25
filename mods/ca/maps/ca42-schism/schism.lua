@@ -15,7 +15,7 @@ MaleficSpawns = { MaleficSpawn1.Location, MaleficSpawn2.Location, MaleficSpawn3.
 if Difficulty == "hard" then
 	table.insert(UnitCompositions.Nod, {
 		Infantry = {},
-		Vehicles = { "avtr", "avtr", "avtr", "avtr", "avtr", "avtr" },
+		Vehicles = { "avtr", "avtr", "avtr", "avtr", "avtr", "avtr", "avtr" },
 		MinTime = DateTime.Minutes(5),
 		IsSpecial = true
 	})
@@ -117,6 +117,51 @@ Squads = {
 			}
 		},
 	},
+	Banshees = {
+		ActiveCondition = function()
+			return not Exterminator.IsDead
+		end,
+		OnProducedAction = function(unit)
+			unit.Patrol({ BansheePatrol1.Location, BansheePatrol2.Location, BansheePatrol3.Location }, true)
+		end,
+		Delay = {
+			normal = DateTime.Minutes(5),
+			hard = DateTime.Minutes(4)
+		},
+		AttackValuePerSecond = {
+			normal = { Min = 20, Max = 20 },
+			hard = { Min = 30, Max = 30 },
+		},
+		ProducerTypes = { Aircraft = { "hpad.td" } },
+		Units = {
+			normal = {
+				{ Aircraft = { "scrn", "scrn", "scrn" } },
+			},
+			hard = {
+				{ Aircraft = { "scrn", "scrn", "scrn", "scrn", "scrn", "scrn", "scrn" } },
+			}
+		},
+	},
+	Enervators = {
+		ActiveCondition = function()
+			return not Exterminator.IsDead
+		end,
+		OnProducedAction = function(unit)
+			unit.Patrol({ EnervatorPatrol1.Location, EnervatorPatrol2.Location, EnervatorPatrol3.Location, EnervatorPatrol4.Location }, true)
+		end,
+		Delay = {
+			hard = DateTime.Minutes(4)
+		},
+		AttackValuePerSecond = {
+			hard = { Min = 30, Max = 30 },
+		},
+		ProducerTypes = { Aircraft = { "grav" } },
+		Units = {
+			hard = {
+				{ Aircraft = { "enrv", "enrv", "enrv", "enrv", "enrv", "enrv" } },
+			}
+		},
+	}
 }
 
 -- Setup and Tick
@@ -147,11 +192,6 @@ WorldLoaded = function()
 
 	local spyPlaneDummy1 = Actor.Create("spy.plane.dummy", true, { Owner = SpyPlaneProvider })
 
-	Trigger.AfterDelay(DateTime.Seconds(20), function()
-		spyPlaneDummy1.TargetAirstrike(Purifier.CenterPosition, Angle.NorthEast)
-		spyPlaneDummy1.Destroy()
-	end)
-
 	Trigger.OnKilled(Purifier, function(self, killer)
 		if not USSR.IsObjectiveCompleted(ObjectiveSecurePurifier) then
 			USSR.MarkFailedObjective(ObjectiveSecurePurifier)
@@ -167,20 +207,35 @@ WorldLoaded = function()
 		end
 	end)
 
-	Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(6)), function()
+	Trigger.AfterDelay(DateTime.Seconds(10), function()
 		Exterminator.Owner = USSR
+		if Difficulty ~= "easy" then
+			Exterminator.GrantCondition("difficulty-" .. Difficulty)
+		end
 	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(4), function()
 		Media.DisplayMessage("Stop this madness. You have no idea what you are dealing with. You will be the end of us all!", "Kane", HSLColor.FromHex("FF0000"))
 		MediaCA.PlaySound("kane_stopmadness.aud", 2)
-	end)
+		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(7)), function()
+			Media.DisplayMessage("Your foolish quest ends here Kane. The Overlord will have your head.", "Premier Cherdenko", HSLColor.FromHex("FF0000"))
+			MediaCA.PlaySound("cdko_quest.aud", 2)
+			Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(7)), function()
+				spyPlaneDummy1.TargetAirstrike(Purifier.CenterPosition, Angle.NorthEast)
+				spyPlaneDummy1.Destroy()
 
-	Trigger.AfterDelay(DateTime.Seconds(20), function()
-		Media.PlaySpeechNotification(USSR, "ReinforcementsArrived")
-		Notification("Reinforcements have arrived.")
-		Reinforcements.Reinforce(USSR, { "kiro" }, { KirovSpawn1.Location, KirovRally1.Location })
-		Reinforcements.Reinforce(USSR, { "kiro" }, { KirovSpawn2.Location, KirovRally2.Location })
+				Media.PlaySpeechNotification(USSR, "ReinforcementsArrived")
+				Notification("Reinforcements have arrived.")
+				Reinforcements.Reinforce(USSR, { "kiro" }, { KirovSpawn1.Location, KirovRally1.Location })
+				Reinforcements.Reinforce(USSR, { "kiro" }, { KirovSpawn2.Location, KirovRally2.Location })
+
+				Utils.Do({ SSMNorth, SSMEast1, SSMEast2 }, function(s)
+					if not s.IsDead then
+						s.Hunt()
+					end
+				end)
+			end)
+		end)
 	end)
 end
 
@@ -287,10 +342,15 @@ InitScrinRebels = function()
 		InitAirAttackSquad(Squads.ScrinRebelsAir, ScrinRebels, USSR, { "etpd", "harv", "4tnk", "4tnk.atomic", "3tnk", "3tnk.atomic", "3tnk.rhino", "3tnk.rhino.atomic",
 			"katy", "v3rl", "ttra", "v3rl", "apwr", "tpwr", "npwr", "tsla", "proc", "nukc", "ovld", "apoc", "apoc.atomic", "ovld.atomic" })
 	end)
+
+	if Difficulty == "hard" then
+		Trigger.AfterDelay(Squads.Enervators.Delay[Difficulty], function()
+			InitAirAttackSquad(Squads.Enervators, ScrinRebels, USSR, { "etpd" })
+		end)
+	end
 end
 
 InitNod = function()
-	AutoRepairBuildings(Nod)
 	AutoRepairAndRebuildBuildings(Nod)
 	SetupRefAndSilosCaptureCredits(Nod)
 	AutoReplaceHarvesters(Nod)
@@ -311,6 +371,12 @@ InitNod = function()
 		InitAirAttackSquad(Squads.NodAir, Nod, USSR, { "etpd", "harv", "4tnk", "4tnk.atomic", "3tnk", "3tnk.atomic", "3tnk.rhino", "3tnk.rhino.atomic",
 			"katy", "v3rl", "ttra", "v3rl", "apwr", "tpwr", "npwr", "tsla", "proc", "nukc", "ovld", "apoc", "apoc.atomic", "ovld.atomic" })
 	end)
+
+	if Difficulty ~= "easy" then
+		Trigger.AfterDelay(Squads.Banshees.Delay[Difficulty], function()
+			InitAirAttackSquad(Squads.Banshees, Nod, USSR, { "etpd" })
+		end)
+	end
 end
 
 PurificationWave = function()
@@ -390,7 +456,7 @@ GetPlayerArmyValue = function()
 	local value = 0
 	Utils.Do(USSR.GetActors(), function(a)
 		if a.HasProperty("Attack") then
-			value = value + Actor.Cost(a.Type)
+			value = value + ActorCA.CostOrDefault(a.Type)
 		end
 	end)
 	return value

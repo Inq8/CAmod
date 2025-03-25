@@ -135,7 +135,18 @@ WorldLoaded = function()
 	Nod3 = Player.GetPlayer("Nod3")
 	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { USSR }
-	TimerTicks = TimeLimit[Difficulty]
+
+	if Difficulty ~= "easy" then
+		TimerTicks = TimeLimit[Difficulty]
+	end
+
+	if Difficulty ~= "hard" then
+		ICBMSub1.Destroy()
+
+		if Difficulty == "easy" then
+			ICBMSub2.Destroy()
+		end
+	end
 
 	Camera.Position = PlayerStart.CenterPosition
 
@@ -169,7 +180,7 @@ OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
 		Nod1.Resources = Nod1.ResourceCapacity - 500
 
-		if TimerTicks > 0 and Difficulty ~= "easy" then
+		if Difficulty ~= "easy" and TimerTicks > 0 then
 			if TimerTicks > 25 then
 				TimerTicks = TimerTicks - 25
 				UserInterface.SetMissionText("Kane's forces will begin returning in " .. UtilsCA.FormatTimeForGameSpeed(TimerTicks), HSLColor.Yellow)
@@ -213,6 +224,7 @@ InitNod = function()
 		AutoRepairAndRebuildBuildings(p)
 		SetupRefAndSilosCaptureCredits(p)
 		AutoReplaceHarvesters(p)
+		InitAiUpgrades(p)
 
 		local nodGroundAttackers = p.GetGroundAttackers()
 
@@ -332,7 +344,9 @@ SetupSubterraneanStrikes = function()
 				Media.PlaySound("subrumble.aud")
 				Trigger.AfterDelay(DateTime.Seconds(3), function()
 					Utils.Do(subStrike1Spawns, function(s)
-						local spawner = Actor.Create("substrike.spawner", true, { Owner = Nod1, Location = s })
+						Trigger.AfterDelay(Utils.RandomInteger(1, 35), function()
+							Actor.Create("substrike.spawner", true, { Owner = Nod1, Location = s })
+						end)
 					end)
 				end)
 			end
@@ -347,7 +361,9 @@ SetupSubterraneanStrikes = function()
 				Media.PlaySound("subrumble.aud")
 				Trigger.AfterDelay(DateTime.Seconds(3), function()
 					Utils.Do(subStrike2Spawns, function(s)
-						local spawner = Actor.Create("substrike.spawner", true, { Owner = Nod1, Location = s })
+						Trigger.AfterDelay(Utils.RandomInteger(1, 35), function()
+							Actor.Create("substrike.spawner", true, { Owner = Nod1, Location = s })
+						end)
 					end)
 				end)
 			end
@@ -362,7 +378,9 @@ SetupSubterraneanStrikes = function()
 				Media.PlaySound("subrumble.aud")
 				Trigger.AfterDelay(DateTime.Seconds(3), function()
 					Utils.Do(subStrike3Spawns, function(s)
-						local spawner = Actor.Create("substrike.spawner", true, { Owner = Nod1, Location = s })
+						Trigger.AfterDelay(Utils.RandomInteger(1, 35), function()
+							Actor.Create("substrike.spawner", true, { Owner = Nod1, Location = s })
+						end)
 					end)
 				end)
 			end
@@ -372,7 +390,9 @@ SetupSubterraneanStrikes = function()
 	if Difficulty ~= "easy" then
 		Trigger.AfterDelay(DateTime.Minutes(15), function()
 			Utils.Do(subStrike4Spawns, function(s)
-				local spawner = Actor.Create("substrike.spawner", true, { Owner = Nod1, Location = s })
+				Trigger.AfterDelay(Utils.RandomInteger(1, 35), function()
+					Actor.Create("substrike.spawner", true, { Owner = Nod1, Location = s })
+				end)
 			end)
 		end)
 	end

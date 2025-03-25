@@ -81,6 +81,12 @@ WorldLoaded = function()
             GDI.MarkCompletedObjective(ObjectiveCaptureComms)
         end
     end)
+
+	Trigger.OnKilled(NodCommsCenter, function(self, killer)
+		if not GDI.IsObjectiveCompleted(ObjectiveCaptureComms) then
+			GDI.MarkFailedObjective(ObjectiveCaptureComms)
+		end
+	end)
 end
 
 Tick = function()

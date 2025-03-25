@@ -268,7 +268,7 @@ OncePerSecondChecks = function()
 			end
 		end
 
-		if DateTime.GameTime > DateTime.Minutes(15) and #Scrin.GetActorsByTypes({ "reac", "rea2", "sfac", "proc.scrin", "port", "wsph", "nerv", "grav", "scrt", "srep" }) == 0 then
+		if DateTime.GameTime > DateTime.Minutes(15) and not PlayerHasBuildings(Scrin) then
 			if ObjectiveDestroyScrinBase ~= nil and not Greece.IsObjectiveCompleted(ObjectiveDestroyScrinBase) then
 				Greece.MarkCompletedObjective(ObjectiveDestroyScrinBase)
 			end

@@ -293,7 +293,7 @@ SpawnScrinSquad = function(cave, continuous)
 		a.Wait(Utils.RandomInteger(1, 75))
 		a.Scatter()
 		TargetSwapChance(a, 10)
-		ca28_CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
+		ca34_CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
 		Trigger.OnIdle(a, function(self)
 			a.Patrol(cave.PatrolPath)
 			local selfId = tostring(self);
@@ -317,34 +317,32 @@ SpawnScrinSquad = function(cave, continuous)
 	end)
 end
 
-ca28_CallForHelpOnDamagedOrKilled = function(actor, range, filter, validAttackingPlayerFunc)
+ca34_CallForHelpOnDamagedOrKilled = function(actor, range, filter, validAttackingPlayerFunc)
 	if validAttackingPlayerFunc == nil then
-		validAttackingPlayerFunc = function(p) return p == Nod end
+		validAttackingPlayerFunc = function(p) return IsMissionPlayer(p) end
 	end
 	Trigger.OnDamaged(actor, function(self, attacker, damage)
 		if validAttackingPlayerFunc(attacker.Owner) then
-			ca28_CallForHelp(self, range, attacker, filter, validAttackingPlayerFunc)
+			ca34_CallForHelp(self, range, attacker, filter)
 		end
 	end)
 	Trigger.OnKilled(actor, function(self, killer)
 		if validAttackingPlayerFunc(killer.Owner) then
-			ca28_CallForHelp(self, range, killer, filter, validAttackingPlayerFunc)
+			ca34_CallForHelp(self, range, killer, filter)
 		end
 	end)
 end
 
-ca28_CallForHelp = function(self, range, attacker, filter, validAttackingPlayerFunc)
-	if validAttackingPlayerFunc == nil then
-		validAttackingPlayerFunc = function(p) return p == Nod end
-	end
-	if validAttackingPlayerFunc(self.Owner) then
+ca34_CallForHelp = function(self, range, attacker, filter)
+	if IsMissionPlayer(self.Owner) then
 		return
 	end
+
 	if attacker.IsDead then
 		return
 	end
 
-	local selfId = tostring(self);
+	local selfId = tostring(self)
 	if AlertedUnits[selfId] == nil then
 		if not self.IsDead then
 			AlertedUnits[selfId] = true
@@ -354,7 +352,9 @@ ca28_CallForHelp = function(self, range, attacker, filter, validAttackingPlayerF
 			end
 		end
 
-		local nearbyUnits = Map.ActorsInCircle(self.CenterPosition, range, filter)
+		local nearbyUnits = Map.ActorsInCircle(self.CenterPosition, range, function(a)
+			return a.Owner.IsAlliedWith(self.Owner) and not IsMissionPlayer(a.Owner) and filter(a)
+		end)
 
 		Utils.Do(nearbyUnits, function(nearbyUnit)
 			local nearbyUnitId = tostring(nearbyUnit)

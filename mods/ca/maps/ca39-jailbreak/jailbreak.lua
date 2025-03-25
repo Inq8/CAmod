@@ -203,9 +203,12 @@ WorldLoaded = function()
 	Trigger.OnEnteredProximityTrigger(AlliedOutpost.CenterPosition, WDist.New(6 * 1024), function(a, id)
 		if a.Owner == USSR and a.Type == "e6" then
 			Trigger.RemoveProximityTrigger(id)
-			NorthConyard.Sell()
-			NorthFactory.Sell()
-			NorthBarracks.Sell()
+
+			Utils.Do({NorthConyard, NorthFactory, NorthBarracks}, function(b)
+				if not b.IsDead and b.Owner == GreeceNorth then
+					b.Sell()
+				end
+			end)
 		end
 	end)
 
@@ -274,6 +277,7 @@ InitGreece = function()
 	AutoRepairAndRebuildBuildings(Greece, 15)
 	SetupRefAndSilosCaptureCredits(Greece)
 	AutoReplaceHarvesters(Greece)
+	InitAiUpgrades(Greece)
 
 	Utils.Do({ Greece, GreeceNorth }, function(p)
 		local greeceGroundAttackers = p.GetGroundAttackers()
