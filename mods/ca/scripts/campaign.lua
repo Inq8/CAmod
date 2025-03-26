@@ -626,16 +626,42 @@ InitAttackSquad = function(squad, player, targetPlayer)
 
 		-- filter possible compositions based on game time
 		local validCompositions = Utils.Where(allCompositions, function(composition)
-			return (composition.MinTime == nil or DateTime.GameTime >= composition.MinTime + squad.InitTime) and (composition.MaxTime == nil or DateTime.GameTime < composition.MaxTime + squad.InitTime) and (not composition.IsSpecial or SpecialCompositionMinTimes[squad.Player.InternalName] == nil or DateTime.GameTime >= SpecialCompositionMinTimes[squad.Player.InternalName])
+			return (composition.MinTime == nil or DateTime.GameTime >= composition.MinTime + squad.InitTime) -- after min time
+				and (composition.MaxTime == nil or DateTime.GameTime < composition.MaxTime + squad.InitTime) -- before max time
 		end)
+
+		-- determine whether to choose a special composition (33% chance if enough time has elapsed since last used)
+		local useSpecialComposition = false
+
+		if SpecialCompositionMinTimes[squad.Player.InternalName] == nil or DateTime.GameTime >= SpecialCompositionMinTimes[squad.Player.InternalName] then
+			useSpecialComposition = Utils.RandomInteger(1, 100) > 66
+		end
+
+		local validStandardCompositions = Utils.Where(validCompositions, function(composition)
+			return not composition.IsSpecial
+		end)
+
+		if useSpecialComposition then
+			local validSpecialCompositions = Utils.Where(validCompositions, function(composition)
+				return composition.IsSpecial
+			end)
+
+			if #validSpecialCompositions > 0 then
+				validCompositions = validSpecialCompositions
+			else
+				validCompositions = validStandardCompositions
+			end
+		else
+			validCompositions = validStandardCompositions
+		end
 
 		if #validCompositions > 0 then
 			-- randomly select a unit composition for next wave
 			local chosenComposition = Utils.Random(validCompositions)
 
-			-- if this is a special composition, another special composition can't be chosen for 12 minutes
+			-- if this is a special composition, another special composition can't be chosen for 10 minutes
 			if chosenComposition.IsSpecial then
-				SpecialCompositionMinTimes[squad.Player.InternalName] = DateTime.GameTime + DateTime.Minutes(12)
+				SpecialCompositionMinTimes[squad.Player.InternalName] = DateTime.GameTime + DateTime.Minutes(10)
 			end
 
 			squad.QueuedUnits = chosenComposition
