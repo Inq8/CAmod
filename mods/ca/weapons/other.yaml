@@ -3769,3 +3769,110 @@ TroopCrawlerDummyWeapon:
 	Projectile: InstantHit
 	Warhead@1Dam: Dummy
 		ValidRelationships: Ally
+
+TSIonCannonSpawner: ### THIS ONE GENERATES THE MAIN ION BEAM DUMMY
+	ReloadDelay: 6
+	Range: 12c0
+	AirThreshold: 8c0
+	ValidTargets: Ground, Water, Air
+	Warhead@4BeamEff: FireReverseRadius
+		ValidTargets: Ground, Water, Air
+		Weapon: TSIonBeamMini
+		ImpactActors: false
+		Amount: 10
+		AirThreshold: 8c0
+	Warhead@5BeamEff: FireShrapnel
+		Delay: 100
+		ImpactActors: false
+		Weapon: TSIonBeam
+		ValidTargets: Ground, Water, Air
+		AirThreshold: 8c0
+	Warhead@6BeamEff: FireShrapnel
+		Delay: 110
+		ImpactActors: false
+		Weapon: TSIonBeamMiniEnd
+		ValidTargets: Ground, Water, Air
+		AirThreshold: 8c0
+	Warhead@3Smu_area: LeaveSmudge
+		Delay: 110
+		SmudgeType: Scorch
+		Size: 3,2
+		AirThreshold: 8c0
+	Warhead@3Effect: CreateEffect
+		Delay: 110
+		Image: tsioncannon
+		Explosions: ionring
+		ExplosionPalette: tseffect
+		ImpactSounds: ion1.aud
+		AffectsParent: true
+		ImpactActors: false
+		ValidTargets: Ground, Water, BlueTiberium, Tiberium, Air
+		AirThreshold: 8c0
+	Warhead@Shake: ShakeScreen
+		Duration: 15
+		Intensity: 8
+		Multiplier: 1,1
+		AirThreshold: 8c0
+		Delay: 114
+	Warhead@1Dam: SpreadDamage
+		Spread: 420
+		Delay: 112
+		Damage: 37500
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		Versus:
+			None: 100
+			Light: 100
+			Wood: 100
+			Heavy: 100
+			Concrete: 100
+			Brick: 100
+
+TSIonBeam:
+	ReloadDelay: 9999
+	AirThreshold: 8c0
+	ValidTargets: Ground, Water, Air
+	Projectile: SpriteAthenaLaser
+		Image: tsioncannon
+		Sequence: ionbeam
+		Palette: tseffect-ignore-lighting-alpha75
+		RingImage: tsioncannon
+		RingSequence: ringmini2
+		SpriteNumber: 8
+		HeightOffset: 4146
+		StayTicks: 39
+		Speed: 0
+		ExplosionInterval: 9999
+
+TSIonBeamMini:
+	Inherits: TSIonBeam
+	Range: 5c256
+	AirThreshold: 8c0
+	Projectile: SpriteAthenaLaser
+		Sequence: ionbeamstart
+		RingSequence: ringmini2
+		Palette: tseffect
+		StayTicks: 5
+		ExplosionInterval: 3
+		Speed: 52
+		RotSpeed: 12
+	Warhead@1Dam: SpreadDamage
+		Spread: 100
+		Damage: 5500
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		Versus:
+			None: 250
+			Light: 101
+			Wood: 60
+			Heavy: 101
+			Concrete: 90
+			Brick: 50
+	Warhead@3Eff: CreateEffect
+		Explosions: small_explosion, small_explosion_alt1, small_explosion_alt2, small_explosion_alt3
+
+TSIonBeamMiniEnd:
+	Inherits: TSIonBeam
+	Projectile: SpriteAthenaLaser
+		StayTicks: 43
+		Sequence: ionbeamstart
+		RingSequence: ringmini2
+		Palette: tseffect
