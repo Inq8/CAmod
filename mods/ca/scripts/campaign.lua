@@ -112,6 +112,9 @@ SpecialCompositionMinTimes = { }
 -- caches unit costs for adjusting composition difficulty
 UnitCosts = { }
 
+-- player characteristics used to enable AI behaviours
+PlayerCharacteristics = { }
+
 --
 -- end automatically populated vars
 --
@@ -1468,6 +1471,50 @@ AdjustCompositionForDifficulty = function(composition, difficulty)
 	end
 
 	return updatedComposition
+end
+
+CalculatePlayerCharacteristics = function()
+	Utils.Do(MissionPlayers, function(p)
+		PlayerCharacteristics[p.InternalName] = {
+			InfantryDominant = false,
+			InfantrySpam = false,
+			HeavyUnitDominant = false,
+			HeavyUnitSpam = false
+		}
+
+		local infantryUnits = p.GetActorsByArmorType("None")
+		local heavyUnits = p.GetActorsByArmorType("Heavy")
+		local infantryValue = 0
+		local heavyValue = 0
+
+		Utils.Do(infantryUnits, function(u)
+			if UnitCosts[u.Type] == nil then
+				UnitCosts[u.Type] = ActorCA.CostOrDefault(u)
+			end
+			infantryValue = infantryValue + UnitCosts[u.Type]
+		end)
+
+		Utils.Do(heavyUnits, function(u)
+			if UnitCosts[u.Type] == nil then
+				UnitCosts[u.Type] = ActorCA.CostOrDefault(u)
+			end
+			heavyValue = heavyValue + UnitCosts[u.Type]
+		end)
+
+		if infantryValue > heavyValue * 2 then
+			PlayerCharacteristics[p.InternalName].InfantryDominant = true
+		elseif heavyValue > infantryValue * 2 then
+			PlayerCharacteristics[p.InternalName].HeavyUnitDominant = true
+		end
+
+		if infantryValue > 15000 then
+			PlayerCharacteristics[p.InternalName].InfantrySpam = true
+		end
+
+		if heavyValue > 15000 then
+			PlayerCharacteristics[p.InternalName].HeavyUnitSpam = true
+		end
+	end)
 end
 
 AlliedT3SupportVehicle = { "mgg", "mrj", "cryo" }
