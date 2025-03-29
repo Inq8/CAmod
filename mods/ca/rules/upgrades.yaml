@@ -1514,7 +1514,7 @@ malefic.allegiance:
 	Buildable:
 		BuildPaletteOrder: 18
 		Prerequisites: ~player.scrin, scrin.allegiances.available, !loyalist.allegiance, !rebel.allegiance, ~techlevel.medium
-		Description: Declare your allegiance and side with the Malefic Scrin.\n\nRequired for:\n• Mutilator\n• Darkener\n• Anathema\n\n
+		Description: Declare your allegiance and side with the Malefic Scrin.\n\nRequired for:\n• Stalker\n• Darkener\n• Anathema\n\n
 		IconPalette: chromes
 	TooltipExtras:
 		Attributes: (!) Only ONE allegiance may be chosen.
@@ -1547,7 +1547,7 @@ allegiance.upgrade:
 		BuildPaletteOrder: 20
 		Prerequisites: ~player.scrin, anyradar, anyallegiance, ~!loyalist.allegiance, ~!rebel.allegiance, ~!malefic.allegiance, ~techlevel.medium
 		IconPalette: chromes
-		Description: Upgrade depends on chosen allegiance.\n\n• Loyalist: Eviscerator research\n• Rebel: Impaler research\n• Malefic: Mutilator research
+		Description: Upgrade depends on chosen allegiance.\n\n• Loyalist: Eviscerator research\n• Rebel: Impaler research\n• Malefic: Stalker research
 	Valued:
 		Cost: 750
 	RenderSprites:
@@ -1587,10 +1587,10 @@ impl.upgrade:
 	RenderSprites:
 		Image: impl.upgrade
 
-muti.upgrade:
+stlk.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Mutilator
+		Name: Research: Stalker
 	Buildable:
 		BuildPaletteOrder: 20
 		Prerequisites: ~player.scrin, anyradar, ~malefic.allegiance, ~techlevel.medium
@@ -1602,7 +1602,7 @@ muti.upgrade:
 	Valued:
 		Cost: 750
 	RenderSprites:
-		Image: muti.upgrade
+		Image: stlk.upgrade
 
 shrw.upgrade:
 	Inherits: ^Upgrade

@@ -501,7 +501,7 @@ S2:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 120
-		Prerequisites: anyradar, ~infantry.scrin, ~!evis.upgrade, ~!impl.upgrade, ~!muti.upgrade, ~techlevel.medium
+		Prerequisites: anyradar, ~infantry.scrin, ~!evis.upgrade, ~!impl.upgrade, ~!stlk.upgrade, ~techlevel.medium
 		IconPalette: chromes
 		Description: Fast moving anti-personnel infantry.
 	TooltipExtras:
@@ -534,7 +534,7 @@ S2:
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 	ReplacedInQueue:
-		Actors: evis, impl, muti
+		Actors: evis, impl, stlk
 
 S3:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -952,7 +952,7 @@ IMPL:
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 
-MUTI:
+STLK:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
@@ -960,7 +960,7 @@ MUTI:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 123
-		Prerequisites: anyradar, ~infantry.scrin, ~muti.upgrade, ~techlevel.medium
+		Prerequisites: anyradar, ~infantry.scrin, ~stlk.upgrade, ~techlevel.medium
 		IconPalette: chromes
 		Description: Fast moving anti-personnel infantry.
 	Selectable:
@@ -968,7 +968,7 @@ MUTI:
 	Valued:
 		Cost: 500
 	Tooltip:
-		Name: Mutilator
+		Name: Stalker
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor, Infantry
 		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
@@ -985,11 +985,11 @@ MUTI:
 		FacingTolerance: 64
 		PauseOnCondition: being-warped || blinded || reapersnare
 	Armament@PRIMARY:
-		Weapon: MutilatorShards
+		Weapon: StalkerShards
 		LocalOffset: 0,-100,250, 0,100,250
 	Armament@BATF:
 		Name: batf
-		Weapon: MutilatorShards
+		Weapon: StalkerShards
 	AutoTarget:
 		ScanRadius: 5
 	WithInfantryBody:
@@ -999,7 +999,7 @@ MUTI:
 		ShowSelectionBar: true
 		StartsFullyCharged: true
 		DeployedTicks: 250
-		CooldownTicks: 750
+		CooldownTicks: 500
 		ShowSelectionBarWhenFull: false
 		ChargingColor: 808080
 		DischargingColor: ffffff

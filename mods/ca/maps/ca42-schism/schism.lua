@@ -435,10 +435,10 @@ MaleficSpawn = function()
 	}
 
 	local invasionCompositions = {
-		{ "intl", "s1", "s1", "s1", "s1", "s3", "s3", "s4", "s4", "muti", "muti", "muti" },
-		{ "dark", "s1", "s1", "s1", "s1", "s3", "s4", "muti", "muti", "muti" },
-		{ "tpod", "s1", "s1", "s1", "s3", "s3", "s4", "muti", "muti" },
-		{ "dark", "s1", "s1", "s1", "s3", "s3", "s4", "muti", "muti", "muti" },
+		{ "intl", "s1", "s1", "s1", "s1", "s3", "s3", "s4", "s4", "stlk", "stlk", "stlk" },
+		{ "dark", "s1", "s1", "s1", "s1", "s3", "s4", "stlk", "stlk", "stlk" },
+		{ "tpod", "s1", "s1", "s1", "s3", "s3", "s4", "stlk", "stlk" },
+		{ "dark", "s1", "s1", "s1", "s3", "s3", "s4", "stlk", "stlk", "stlk" },
 	}
 
 	Utils.Do(MaleficSpawns, function(s)
