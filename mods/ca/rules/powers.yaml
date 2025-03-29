@@ -1727,6 +1727,36 @@
 		SupportPowerPaletteOrder: 50
 		SelectProducer: false
 
+^ConfessorCabalPower:
+	ProduceActorPowerCA@ConfessorCabal:
+		OrderName: confessorcabal
+		Prerequisites: ~disabled, deceit.covenant, ~!botplayer
+		Icon: confessorcabal
+		IconPalette: chrometd
+		Type: ParadropInfantry
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		ChargeInterval: 6000
+		Name: Confessor Cabal
+		Description: \nDeploy a Confessor Cabal.
+		Actors: conf, conf, conf
+		LaunchSound: conf-create.aud
+		EndChargeSpeechNotification: ConfessorCabalReady
+		EndChargeTextNotification: Confessor Cabal ready.
+		SupportPowerPaletteOrder: 50
+	ProduceActorPowerCA@ConfessorCabalAI:
+		OrderName: confessorcabalai
+		Prerequisites: deceit.covenant, ~botplayer
+		Icon: infiltrators
+		IconPalette: chrometd
+		Type: ParadropInfantry
+		ChargeInterval: 6000
+		Name: Confessor Cabal (AI)
+		Description: \nDeploy a Confessor Cabal.
+		Actors: conf, conf, conf
+		SupportPowerPaletteOrder: 50
+		SelectProducer: false
+
 ^TibStealthPower:
 	GrantExternalConditionPowerCA@SGEN:
 		OrderName: stealthgen
