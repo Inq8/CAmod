@@ -972,13 +972,13 @@ MUTI:
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor, Infantry
 		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
-		Attributes: • Special Ability: Teleport (with upgrade)\n• Takes reduced damage for a brief time after teleporting
+		Attributes: • Special Ability: Cloak\n• Moves faster while cloaked.
 	Health:
 		HP: 13000
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Mobile:
-		Speed: 108
+		Speed: 92
 	RevealsShroud:
 		Range: 6c0
 	AttackFrontal:
@@ -994,32 +994,35 @@ MUTI:
 		ScanRadius: 5
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
-	PortableChronoCA:
-		ChargeDelay: 500
-		MaxDistance: 16
-		ChronoshiftSound: scrinport.aud
-		RequiresCondition: blink-upgrade
-		TeleportCondition: blink
-		ConditionDuration: 3
+	GrantTimedConditionOnDeploy@Cloak:
+		DeployedCondition: cloak
+		ShowSelectionBar: true
+		StartsFullyCharged: true
+		DeployedTicks: 250
+		CooldownTicks: 750
 		ShowSelectionBarWhenFull: false
-		CircleColor: c8b8ed66
-	GrantConditionOnPrerequisite@BLINKPACKS:
-		Condition: blink-upgrade
-		Prerequisites: blink.upgrade
-	WithColoredOverlay@BLINKFLASH:
-		Color: ffffff80
-		RequiresCondition: blink
-	GrantTimedCondition@BlinkShield:
-		Duration: 40
-		Condition: blinkshield
-		RequiresCondition: blink
-		ForceFullDuration: true
-	DamageMultiplier@BlinkShield:
-		Modifier: 33
-		RequiresCondition: blinkshield
-	WithColoredOverlay@BlinkShield:
-		Color: 15091f77
-		RequiresCondition: blinkshield
+		ChargingColor: 808080
+		DischargingColor: ffffff
+		Instant: true
+	Cloak@NORMAL:
+		InitialDelay: 0
+		CloakDelay: 50
+		CloakSound: stlk-cloak.aud
+		UncloakSound: stlk-uncloak.aud
+		CloakedCondition: hidden
+		Palette: cloak
+		IsPlayerPalette: false
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
+		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead && !parachute && cloak
+		PauseOnCondition: invisibility
+	Cloak@CRATE-CLOAK:
+		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
+	WithColoredSelectionBox@INVIS:
+		RequiresCondition: invisibility || hidden
+		ColorSource: Player
+	SpeedMultiplier@CloakSpeed:
+		Modifier: 150
+		RequiresCondition: hidden
 
 SMEDI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
