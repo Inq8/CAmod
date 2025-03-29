@@ -1425,7 +1425,7 @@
 		Prerequisites: vehicles.shadow
 		SupportPowerPaletteOrder: 60
 		PrerequisiteDropItems:
-			deceit.covenant: hstk, hstk
+			hstk.upgrade: hstk, hstk
 
 ^SatHackPower:
 	SpawnActorPowerCA@sathack:
@@ -1697,40 +1697,10 @@
 		SupportPowerPaletteOrder: 50
 		SelectProducer: false
 
-^InfiltratorsPower:
-	ProduceActorPowerCA@Infiltrators:
-		OrderName: infiltrators
-		Prerequisites: deceit.covenant, ~!botplayer
-		Icon: infiltrators
-		IconPalette: chrometd
-		Type: ParadropInfantry
-		SelectTargetSpeechNotification: SelectTarget
-		SelectTargetTextNotification: Select target.
-		ChargeInterval: 6000
-		Name: Infiltrators
-		Description: \nDeploy a squad of Infiltrators that can\n    infiltrate buildings to steal or lock technology.\n\nTarget infantry production structure to deploy.
-		Actors: sab, sab, sab
-		LaunchSpeechNotification: ReinforcementsArrived
-		EndChargeSpeechNotification: InfiltratorsReady
-		EndChargeTextNotification: Infiltrators ready.
-		SupportPowerPaletteOrder: 50
-	ProduceActorPowerCA@InfiltratorsAI:
-		OrderName: infiltratorsai
-		Prerequisites: deceit.covenant, ~botplayer
-		Icon: infiltrators
-		IconPalette: chrometd
-		Type: ParadropInfantry
-		ChargeInterval: 6000
-		Name: Infiltrators (AI)
-		Description: \nDeploy a squad of Infiltrators that can\n    infiltrate buildings to steal or lock technology.
-		Actors: sab, sab, sab
-		SupportPowerPaletteOrder: 50
-		SelectProducer: false
-
 ^ConfessorCabalPower:
 	ProduceActorPowerCA@ConfessorCabal:
 		OrderName: confessorcabal
-		Prerequisites: ~disabled, deceit.covenant, ~!botplayer
+		Prerequisites: ~disabled, zeal.covenant, ~!botplayer
 		Icon: confessorcabal
 		IconPalette: chrometd
 		Type: ParadropInfantry
@@ -1746,8 +1716,8 @@
 		SupportPowerPaletteOrder: 50
 	ProduceActorPowerCA@ConfessorCabalAI:
 		OrderName: confessorcabalai
-		Prerequisites: deceit.covenant, ~botplayer
-		Icon: infiltrators
+		Prerequisites: zeal.covenant, ~botplayer
+		Icon: confessorcabal
 		IconPalette: chrometd
 		Type: ParadropInfantry
 		ChargeInterval: 6000

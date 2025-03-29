@@ -1013,10 +1013,10 @@ STLK:
 		Palette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
-		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead && !parachute && cloak
+		RequiresCondition: !cloak-force-disabled && !being-warped && !parachute && cloak
 		PauseOnCondition: invisibility
 	Cloak@CRATE-CLOAK:
-		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
+		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden)
 	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || hidden
 		ColorSource: Player
@@ -4727,10 +4727,6 @@ PORT:
 		Proxy: stolentech.port
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
-	SpawnActorOnDeath@STOLENTECH:
-		Actor: stolentech.port
-		OwnerType: Killer
-		DeathType: AssassinC4
 	SpawnActorOnMindControlled@STOLENTECH:
 		Actor: stolentech.port
 		OwnerType: Master
@@ -4824,10 +4820,6 @@ WSPH:
 		Proxy: stolentech.wsph
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
-	SpawnActorOnDeath@STOLENTECH:
-		Actor: stolentech.wsph
-		OwnerType: Killer
-		DeathType: AssassinC4
 	SpawnActorOnMindControlled@STOLENTECH:
 		Actor: stolentech.wsph
 		OwnerType: Master
@@ -5102,10 +5094,6 @@ GRAV:
 		Proxy: stolentech.grav
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
-	SpawnActorOnDeath@STOLENTECH:
-		Actor: stolentech.grav
-		OwnerType: Killer
-		DeathType: AssassinC4
 	SpawnActorOnMindControlled@STOLENTECH:
 		Actor: stolentech.grav
 		OwnerType: Master

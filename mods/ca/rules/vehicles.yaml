@@ -3536,6 +3536,12 @@ BGGY:
 	GrantConditionOnPrerequisite@Decoy:
 		Condition: decoy-upgrade
 		Prerequisites: decoy.upgrade
+	GrantConditionOnPrerequisite@ZealBonus:
+		Condition: zeal-covenant
+		Prerequisites: zeal.covenant
+	SpeedMultiplier@ZealBonus:
+		Modifier: 115
+		RequiresCondition: zeal-covenant
 
 ^DecoyUnit:
 	GrantTimedCondition@Decoy:
@@ -5114,9 +5120,6 @@ STNK.Nod:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: vehicles.upgraded
-	ProductionCostMultiplier@ShadowBonus:
-		Multiplier: 90
-		Prerequisites: player.shadow
 	GrantConditionOnPrerequisite@UPG:
 		Condition: tibcore-upgrade
 		Prerequisites: tibcore.upgrade
@@ -5228,9 +5231,6 @@ HSTK:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: vehicles.upgraded
-	ProductionCostMultiplier@ShadowBonus:
-		Multiplier: 90
-		Prerequisites: player.shadow
 	GrantConditionOnPrerequisite@UPG:
 		Condition: tibcore-upgrade
 		Prerequisites: tibcore.upgrade
@@ -5313,6 +5313,12 @@ BIKE:
 	GrantConditionOnPrerequisite@UPG:
 		Condition: tibcore-upgrade
 		Prerequisites: tibcore.upgrade
+	GrantConditionOnPrerequisite@ZealBonus:
+		Condition: zeal-covenant
+		Prerequisites: zeal.covenant
+	SpeedMultiplier@ZealBonus:
+		Modifier: 115
+		RequiresCondition: zeal-covenant
 
 FTNK:
 	Inherits: ^TankTD
@@ -5598,7 +5604,7 @@ HARV.TD.UPG:
 		HP: 65000
 	Tooltip:
 		Name: Stealth Harvester
-	Cloak@Deceit:
+	Cloak@NORMAL:
 		InitialDelay: 74
 		CloakDelay: 75
 		CloakSound: trans1.aud

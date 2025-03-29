@@ -243,7 +243,6 @@ WorldLoaded = function()
 	Actor.Create("empgren.upgrade", true, { Owner = GDI })
 	Actor.Create("sidewinders.upgrade", true, { Owner = GDI })
 	Actor.Create("shields.upgrade", true, { Owner = Scrin })
-	Actor.Create("alphacomanche.upgrade", true, { Owner = Nod })
 	Actor.Create("tibcore.upgrade", true, { Owner = Nod })
 
 	XODropProxy = Actor.Create("powerproxy.paratroopers.xo", true, { Owner = GDI, })
