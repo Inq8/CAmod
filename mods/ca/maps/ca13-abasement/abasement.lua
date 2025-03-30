@@ -254,7 +254,7 @@ InitNod = function()
 		if a.Owner == Nod then
 			Trigger.ClearAll(a)
 			Trigger.AfterDelay(1, function()
-				if not a.IsDead then
+				if not a.IsDead and a.HasProperty("Hunt") then
 					a.Stop()
 					a.Move(NodRally.Location)
 					a.Hunt()
