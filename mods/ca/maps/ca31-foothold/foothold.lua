@@ -28,9 +28,9 @@ Squads = {
 			hard = DateTime.Minutes(3)
 		},
 		AttackValuePerSecond = {
-			easy = { Min = 20, Max = 50, RampDuration.Minutes(13) },
-			normal = { Min = 50, Max = 100, RampDuration.Minutes(11) },
-			hard = { Min = 80, Max = 160, RampDuration.Minutes(9) },
+			easy = { Min = 20, Max = 50, RampDuration = DateTime.Minutes(13) },
+			normal = { Min = 50, Max = 100, RampDuration = DateTime.Minutes(11) },
+			hard = { Min = 80, Max = 160, RampDuration = DateTime.Minutes(9) },
 		},
 		FollowLeader = true,
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
@@ -45,8 +45,8 @@ Squads = {
 			hard = DateTime.Minutes(6)
 		},
 		AttackValuePerSecond = {
-			normal = { Min = 20, Max = 20 },
-			hard = { Min = 28, Max = 55, RampDuration.Minutes(11) },
+			normal = { Min = 20, Max = 20,  },
+			hard = { Min = 28, Max = 55, RampDuration = DateTime.Minutes(11) },
 		},
 		FollowLeader = true,
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" } },

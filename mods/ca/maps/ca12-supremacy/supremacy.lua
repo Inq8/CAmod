@@ -275,11 +275,13 @@ InitWestAttackers = function()
 					Trigger.AfterDelay(DateTime.Minutes(1), function()
 						if not a.IsDead then
 							a.AttackMove(EastRally4.Location)
-							Trigger.AfterDelay(DateTime.Minutes(1), function()
-								if not a.IsDead then
-									a.Hunt()
-								end
-							end)
+							if Difficulty == "hard" then
+								Trigger.AfterDelay(DateTime.Minutes(1), function()
+									if not a.IsDead then
+										a.Hunt()
+									end
+								end)
+							end
 						end
 					end)
 				end
@@ -338,11 +340,13 @@ InitEastAttackers = function()
 					Trigger.AfterDelay(DateTime.Minutes(1), function()
 						if not a.IsDead then
 							a.AttackMove(WestRally1.Location)
-							Trigger.AfterDelay(DateTime.Minutes(1), function()
-								if not a.IsDead then
-									a.Hunt()
-								end
-							end)
+							if Difficulty == "hard" then
+								Trigger.AfterDelay(DateTime.Minutes(1), function()
+									if not a.IsDead then
+										a.Hunt()
+									end
+								end)
+							end
 						end
 					end)
 				end
@@ -372,9 +376,11 @@ FlipEastBase = function()
 			end
 		end)
 
-		Trigger.AfterDelay(DateTime.Seconds(15), function()
-			InitEastAttackers()
-		end)
+		if Difficulty ~= "easy" then
+			Trigger.AfterDelay(DateTime.Seconds(15), function()
+				InitEastAttackers()
+			end)
+		end
     end
 end
 
@@ -392,9 +398,11 @@ FlipWestBase = function()
 			end
 		end)
 
-		Trigger.AfterDelay(DateTime.Seconds(15), function()
-			InitWestAttackers()
-		end)
+		if Difficulty ~= "easy" then
+			Trigger.AfterDelay(DateTime.Seconds(15), function()
+				InitWestAttackers()
+			end)
+		end
     end
 end
 
