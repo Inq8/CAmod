@@ -2483,7 +2483,7 @@ CONF:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
-		Attributes: • ???
+		Attributes: • Special Ability: Idol of Kane
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -2491,7 +2491,7 @@ CONF:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 5000
+		HP: 10000
 	Armament@PRIMARY:
 		Weapon: ConfessorGun
 	Armament@BATF:
@@ -2518,6 +2518,30 @@ CONF:
 		Voice: Move
 	Guard:
 		Voice: Move
+	SpawnActorAbility:
+		Actor: iok
+		Range: 1c896
+		SkipMakeAnimations: false
+		CircleColor: ff000099
+		SpawnSounds: iok-place.aud
+		AmmoPool: idol
+		TargetModifiedCursor: ability2
+	AmmoPool@IdolOfKane:
+		Name: idol
+		Armaments: none
+		Ammo: 1
+	ReloadAmmoPoolCA@IdolOfKane:
+		AmmoPool: idol
+		Delay: 3000
+		Count: 1
+		ShowSelectionBar: true
+		SelectionBarColor: aaaaaa
+		ReloadWhenAmmoReaches: 0
+	WithAmmoPipsDecoration@IdolOfKane:
+		AmmoPools: idol
+		RequiresSelection: true
+		Position: BottomLeft
+		Margin: 4, 3
 
 ACOL:
 	Inherits: ^Cyborg

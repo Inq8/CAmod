@@ -6094,3 +6094,44 @@ WEAT:
 		TargetTypes: ResetSupportPowerInfiltrate
 	WithBuildingBib:
 		HasMinibib: true
+
+IOK:
+	Inherits: ^BasicBuilding
+	-FrozenUnderFog:
+	-FrozenUnderFogUpdatedByGpsRadar:
+	-ShakeOnDeath:
+	Explodes:
+		Weapon: SmallBuildingExplode
+		EmptyWeapon: SmallBuildingExplode
+	HiddenUnderFog:
+	Selectable:
+		DecorationBounds: 896, 1706, 0, -341
+	Health:
+		HP: 5000
+	Tooltip:
+		Name: Idol of Kane
+	Armor:
+		Type: Concrete
+	Targetable:
+		TargetTypes: Ground, Structure, Defense
+	Building:
+		Dimensions: 1,1
+		Footprint: x
+		TerrainTypes: Clear,Road
+	WithIdleOverlay:
+		Sequence: holo
+		Palette: player
+		IsPlayerPalette: True
+		RequiresCondition: !build-incomplete
+	WithIdleOverlay@Outline:
+		Sequence: outline
+		Palette: player
+		IsPlayerPalette: True
+	WithMakeAnimation:
+		Condition: build-incomplete
+	AmbientSoundCA:
+		Interval: 100000
+		SoundFiles: iok-create1.aud, iok-create2.aud, iok-create3.aud, iok-create4.aud, iok-create5.aud
+	SoundOnDamageTransition:
+		-DamagedSounds:
+		DestroyedSounds: kaboom15.aud
