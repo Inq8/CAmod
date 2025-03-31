@@ -81,6 +81,9 @@ RebuildFunctions = {
 -- should be populated with the human players in the mission
 MissionPlayers = { }
 
+-- should be populated with squads definitions needed by the mission
+Squads = { }
+
 --
 -- begin automatically populated vars (do not assign values to these)
 --
@@ -171,7 +174,7 @@ Tip = function(text)
 end
 
 AttackAircraftTargets = { }
-InitAttackAircraft = function(aircraft, targetPlayer, targetTypes)
+InitAttackAircraft = function(aircraft, targetPlayer, targetList, targetType)
 	if not aircraft.IsDead then
 		Trigger.OnIdle(aircraft, function(self)
 			if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
@@ -179,12 +182,10 @@ InitAttackAircraft = function(aircraft, targetPlayer, targetTypes)
 				local target = AttackAircraftTargets[actorId]
 
 				if not target or not target.IsInWorld then
-					if targetTypes ~= nil then
-						target = ChooseRandomTargetOfTypes(self, targetPlayer, targetTypes)
-						if target == nil then
-							target = ChooseRandomTarget(self, targetPlayer)
-						end
-					else
+					if targetList ~= nil and #targetList > 0 and targetType ~= nil then
+						target = ChooseRandomTargetOfTypes(self, targetPlayer, targetList, targetType)
+					end
+					if target == nil then
 						target = ChooseRandomTarget(self, targetPlayer)
 					end
 				end
@@ -212,14 +213,28 @@ ChooseRandomTarget = function(unit, targetPlayer)
 	return target
 end
 
-ChooseRandomTargetOfTypes = function(unit, targetPlayer, types)
+ChooseRandomTargetOfTypes = function(unit, targetPlayer, targetList, targetType)
 	local target = nil
-	local enemies = Utils.Where(targetPlayer.GetActors(), function(self)
-		return self.HasProperty("Health") and unit.CanTarget(self) and Utils.Any(types, function(type) return self.Type == type end)
-	end)
-	if #enemies > 0 then
-		target = Utils.Random(enemies)
+	local enemies = {}
+
+	if targetList ~= nil and #targetList > 0 then
+		if targetType == "ArmorType" then
+			enemies = targetPlayer.GetActorsByArmorTypes(targetList)
+		elseif targetType == "TargetType" then
+			enemies = targetPlayer.GetActorsByTargetTypes(targetList)
+		else
+			enemies = targetPlayer.GetActorsByTypes(targetList)
+		end
+
+		local enemies = Utils.Where(enemies, function(self)
+			return self.HasProperty("Health") and unit.CanTarget(self)
+		end)
+
+		if #enemies > 0 then
+			target = Utils.Random(enemies)
+		end
 	end
+
 	return target
 end
 
@@ -593,6 +608,16 @@ InitAttackSquad = function(squad, player, targetPlayer)
 	squad.WaveTotalCost = 0
 	squad.WaveStartTime = DateTime.GameTime
 
+	-- set the squad's name based on the key if it hasn't been set manually
+	if squad.Name == nil then
+		for key, value in pairs(Squads) do
+			if value == squad then
+				squad.Name = key
+				break
+			end
+		end
+	end
+
 	if squad.InitTime == nil then
 		squad.InitTime = DateTime.GameTime
 	end
@@ -705,12 +730,22 @@ GetQueuesForComposition = function(composition)
 end
 
 IsCompositionSetting = function(key)
-	return key == "MinTime" or key == "MaxTime" or key == "IsSpecial" or key == "RequiredTargetCharacteristics" or key == "Prerequisites"
+	local settings = {
+		MinTime = true,
+		MaxTime = true,
+		IsSpecial = true,
+		RequiredTargetCharacteristics = true,
+		Prerequisites = true,
+		TargetList = true,
+		TargetType = true
+	}
+	return settings[key] or false
 end
 
-InitAirAttackSquad = function(squad, player, targetPlayer, targetTypes)
-	squad.IsAir = true
-	squad.AirTargetTypes = targetTypes
+InitAirAttackSquad = function(squad, player, targetPlayer, targetList, targetType)
+	squad.IsAirSquad = true
+	squad.AirTargetList = targetList
+	squad.AirTargetType = targetType
 	InitAttackSquad(squad, player, targetPlayer)
 end
 
@@ -786,11 +821,12 @@ ProduceNextAttackSquadUnit = function(squad, queue, unitIndex)
 					producerActors = Utils.Shuffle(producerActors)
 				end
 
-				Utils.Do(producerActors, function(a)
-					if producer == nil and not a.IsDead and a.Owner == squad.Player then
-						producer = a
+				for _, producerActor in pairs(producerActors) do
+					if not producerActor.IsDead and producerActor.Owner == squad.Player then
+						producer = producerActor
+						break
 					end
-				end)
+				end
 			end
 
 			if producer == nil and squad.ProducerTypes ~= nil and squad.ProducerTypes[queue] ~= nil then
@@ -802,8 +838,9 @@ ProduceNextAttackSquadUnit = function(squad, queue, unitIndex)
 
 			-- create the unit
 			if producer ~= nil then
-
 				local producerId = tostring(producer)
+
+				-- set that the next unit produced from this producer should be assigned to the specified squad
 				AddToSquadAssignmentQueue(producerId, squad)
 
 				-- add production trigger once for the producer (once for every owner, as the producer may be captured)
@@ -822,6 +859,8 @@ ProduceNextAttackSquadUnit = function(squad, queue, unitIndex)
 					return not a.IsDead and (a.Type == "e6" or a.Type == "n6" or a.Type == "s6" or a.Type == "mast") and a.Owner ~= producer.Owner
 				end)
 
+				-- prevents capturing player getting a free unit
+				-- the capture blocks the production until the capture completes
 				if #engineersNearby == 0 then
 					producer.Produce(nextUnit)
 					squad.WaveTotalCost = squad.WaveTotalCost + ActorCA.CostOrDefault(nextUnit)
@@ -845,28 +884,45 @@ HandleProducedSquadUnit = function(produced, producerId, squad)
 	end)
 
 	if not isHarvester then
-		InitSquadAssignmentQueueForProducer(producerId, squad)
+		InitSquadAssignmentQueueForProducer(producerId, squad.Player)
 
 		-- assign unit to IdleUnits of the next squad in the assignment queue of the producer
 		if SquadAssignmentQueue[produced.Owner.InternalName][producerId][1] ~= nil then
 			local assignedSquad = SquadAssignmentQueue[produced.Owner.InternalName][producerId][1]
-			SquadAssignmentQueue[produced.Owner.InternalName][producerId][1].IdleUnits[#assignedSquad.IdleUnits + 1] = produced
+			assignedSquad.IdleUnits[#assignedSquad.IdleUnits + 1] = produced
 			table.remove(SquadAssignmentQueue[produced.Owner.InternalName][producerId], 1)
+
+			if produced.HasProperty("HasPassengers") and not produced.IsDead then
+				Trigger.OnPassengerExited(produced, function(transport, passenger)
+					AssaultPlayerBaseOrHunt(passenger, assignedSquad.TargetPlayer)
+				end)
+			end
+
+			if assignedSquad.OnProducedAction ~= nil then
+				assignedSquad.OnProducedAction(produced)
+			end
+
 		elseif produced.HasProperty("Hunt") then
 			produced.Hunt()
 		end
 
-		if produced.HasProperty("HasPassengers") and not produced.IsDead then
-			Trigger.OnPassengerExited(produced, function(transport, passenger)
-				AssaultPlayerBaseOrHunt(passenger, squad.TargetPlayer)
-			end)
-		end
-
-		if squad.OnProducedAction ~= nil then
-			squad.OnProducedAction(produced)
-		end
-
 		TargetSwapChance(produced, 10)
+	end
+end
+
+-- used to make sure multiple squads being produced from the same structure don't get mixed up
+-- also split by player to prevent these getting jumbled if producer owner changes
+AddToSquadAssignmentQueue = function(producerId, squad)
+	InitSquadAssignmentQueueForProducer(producerId, squad.Player)
+	SquadAssignmentQueue[squad.Player.InternalName][producerId][#SquadAssignmentQueue[squad.Player.InternalName][producerId] + 1] = squad
+end
+
+InitSquadAssignmentQueueForProducer = function(producerId, player)
+	if SquadAssignmentQueue[player.InternalName] == nil then
+		SquadAssignmentQueue[player.InternalName] = { }
+	end
+	if SquadAssignmentQueue[player.InternalName][producerId] == nil then
+		SquadAssignmentQueue[player.InternalName][producerId] = { }
 	end
 end
 
@@ -914,22 +970,6 @@ function CalculateValuePerSecond(currentTick, attackValues)
     return math.min(math.floor(value), maxValue)
 end
 
--- used to make sure multiple squads being produced from the same structure don't get mixed up
--- also split by player to prevent these getting jumbled if producer owner changes
-AddToSquadAssignmentQueue = function(producerId, squad)
-	InitSquadAssignmentQueueForProducer(producerId, squad)
-	SquadAssignmentQueue[squad.Player.InternalName][producerId][#SquadAssignmentQueue[squad.Player.InternalName][producerId] + 1] = squad
-end
-
-InitSquadAssignmentQueueForProducer = function(producerId, squad)
-	if SquadAssignmentQueue[squad.Player.InternalName] == nil then
-		SquadAssignmentQueue[squad.Player.InternalName] = { }
-	end
-	if SquadAssignmentQueue[squad.Player.InternalName][producerId] == nil then
-		SquadAssignmentQueue[squad.Player.InternalName][producerId] = { }
-	end
-end
-
 IsSquadInProduction = function(squad)
 	for _, isProducing in pairs(squad.QueueProductionStatuses) do
 		if isProducing then
@@ -947,10 +987,22 @@ SendAttackSquad = function(squad)
 		end
 	end)
 
-	if squad.IsAir ~= nil and squad.IsAir then
+	if squad.IsAirSquad ~= nil and squad.IsAirSquad then
 		Utils.Do(squad.IdleUnits, function(a)
 			if not a.IsDead then
-				InitAttackAircraft(a, squad.TargetPlayer, squad.AirTargetTypes)
+				local targetList = squad.AirTargetList
+				local targetType = squad.AirTargetType
+				local typeKey = string.gsub(a.Type, "%.", "_")
+
+				if targetList == nil and AircraftTargets[typeKey] ~= nil then
+					targetList = AircraftTargets[typeKey].TargetList
+				end
+
+				if targetType == nil and AircraftTargets[typeKey] ~= nil then
+					targetType = AircraftTargets[typeKey].TargetType
+				end
+
+				InitAttackAircraft(a, squad.TargetPlayer, targetList, targetType)
 			end
 		end)
 	else
@@ -1484,8 +1536,8 @@ CalculatePlayerCharacteristics = function()
 			MassHeavy = false,
 		}
 
-		local infantryUnits = p.GetActorsByArmorType("None")
-		local heavyUnits = p.GetActorsByArmorType("Heavy")
+		local infantryUnits = p.GetActorsByArmorTypes({ "None" })
+		local heavyUnits = p.GetActorsByArmorTypes({ "Heavy" })
 		local infantryValue = 0
 		local heavyValue = 0
 
@@ -1518,6 +1570,37 @@ CalculatePlayerCharacteristics = function()
 		end
 	end)
 end
+
+AircraftTargets = {
+	heli = { TargetList = { "Heavy", "Concrete", "Aircraft" }, TargetType = "ArmorType" },
+	harr = { TargetList = { "None", "Light", "Wood", "Aircraft" }, TargetType = "ArmorType" },
+	pmak = { TargetList = { "Heavy", "Light", "Concrete" }, TargetType = "ArmorType" },
+	nhaw = { TargetList = { "None", "Light" }, TargetType = "ArmorType" },
+	beag = { TargetList = { "Heavy", "Light", "Aircraft" }, TargetType = "ArmorType" },
+	hind = { TargetList = { "Vehicle", "Infantry" }, TargetType = "TargetType" },
+	yak = { TargetList = { "None", "Light", "Wood" }, TargetType = "ArmorType" },
+	mig = { TargetList = { "Heavy", "Concrete", "Aircraft" }, TargetType = "ArmorType" },
+	suk = { TargetList = { "Heavy", "Light", "Concrete" }, TargetType = "ArmorType" },
+	suk_upg = { TargetList = { "Heavy", "Light", "Concrete" }, TargetType = "ArmorType" },
+	kiro = { TargetList = { "Wood", "Concrete" }, TargetType = "ArmorType" },
+	disc = { TargetList = { "Heavy", "Light", "None" }, TargetType = "ArmorType" },
+	orca = { TargetList = { "Heavy", "Concrete", "Aircraft" }, TargetType = "ArmorType" },
+	a10 = { TargetList = { "None", "Wood" }, TargetType = "ArmorType" },
+	a10_gau = { TargetList = { "None", "Light", "Wood" }, TargetType = "ArmorType" },
+	a10_sw = { TargetList = { "None", "Wood", "Aircraft" }, TargetType = "ArmorType" },
+	orcb = { TargetList = { "Heavy", "Light", "Concrete" }, TargetType = "ArmorType" },
+	auro = { TargetList = { "Concrete", "Heavy" }, TargetType = "ArmorType" },
+	jack = { TargetList = { "Heavy", "Light" }, TargetType = "ArmorType" },
+	apch = { TargetList = { "None", "Light", "Aircraft" }, TargetType = "ArmorType" },
+	venm = { TargetList = { "None", "Light", "Aircraft" }, TargetType = "ArmorType" },
+	rah = { TargetList = { "None", "Light", "Wood" }, TargetType = "ArmorType" },
+	scrn = { TargetList = { "Heavy", "Concrete", "Aircraft" }, TargetType = "ArmorType" },
+	stmr = { TargetList = { "None", "Light", "Aircraft" }, TargetType = "ArmorType" },
+	torm = { TargetList = { "Heavy", "Concrete", "Aircraft" }, TargetType = "ArmorType" },
+	enrv = { TargetList = { "Heavy", "Concrete", "Aircraft" }, TargetType = "ArmorType" },
+	deva = { TargetList = { "None", "Concrete", "Wood" }, TargetType = "ArmorType" },
+	pac = { TargetList = { "Heavy", "Light" }, TargetType = "ArmorType" },
+}
 
 AlliedT3SupportVehicle = { "mgg", "mrj", "cryo" }
 AlliedAdvancedInfantry = { "snip", "enfo", "cryt" }

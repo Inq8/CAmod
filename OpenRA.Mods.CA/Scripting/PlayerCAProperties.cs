@@ -33,14 +33,14 @@ namespace OpenRA.Mods.Common.Scripting
 			return result.ToArray();
 		}
 
-		[Desc("Returns all living actors of the specified armor type of this player.")]
-		public Actor[] GetActorsByArmorType(string armorType)
+		[Desc("Returns all living actors of the specified armor types of this player.")]
+		public Actor[] GetActorsByArmorTypes(string[] armorType)
 		{
 			var result = new List<Actor>();
 
 			result.AddRange(Player.World.Actors
 				.Where(actor => actor.Owner == Player && !actor.IsDead && actor.IsInWorld &&
-					actor.Info.TraitInfos<ArmorInfo>().Any(ai => ai.Type == armorType)));
+					actor.Info.TraitInfos<ArmorInfo>().Any(ai => armorType.Contains(ai.Type.ToString()))));
 
 			return result.ToArray();
 		}
