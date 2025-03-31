@@ -1,5 +1,6 @@
 MINV:
 	Inherits: ^Mine
+	Inherits@1: ^1x1Shape
 	RenderSprites:
 		Image: minv
 		FactionImages:
@@ -22,6 +23,8 @@ MINV:
 		DecorationBounds: 896, 896
 	WithColoredSelectionBox@PlayerColorBox:
 		ColorSource: Player
+	HitShape:
+		TargetableOffsets: -256,256,0, -256,-256,0, 256,-256,0, 256,256,0
 
 MINVS:
 	Inherits: MINV
