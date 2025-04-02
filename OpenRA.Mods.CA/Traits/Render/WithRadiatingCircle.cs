@@ -8,6 +8,7 @@
  */
 #endregion
 
+using System;
 using System.Collections.Generic;
 using OpenRA.Graphics;
 using OpenRA.Mods.Common.Graphics;
@@ -24,9 +25,6 @@ namespace OpenRA.Mods.CA.Traits.Render
 	{
 		[Desc("Range circle line width.")]
 		public readonly int Width = 1;
-
-		[Desc("Range of the circle")]
-		public readonly WDist Range = WDist.Zero;
 
 		public readonly int Interval = 0;
 
@@ -117,7 +115,7 @@ namespace OpenRA.Mods.CA.Traits.Render
 				{
 					yield return new CircleAnnotationRenderable(
 						self.CenterPosition,
-						Info.EndRadius,
+						Info.EndRadius > Info.StartRadius ? Info.EndRadius : Info.StartRadius,
 						Info.Width,
 						flash ? Info.MaxRadiusFlashColor : Info.MaxRadiusColor,
 						false);

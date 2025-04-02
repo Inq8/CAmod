@@ -498,6 +498,24 @@
 		RequiresCondition: herooftheunion
 		Condition: rank-elite
 
+^IdolOfKane:
+	ExternalCondition@IdolOfKaneBuff:
+		Condition: iokbuff
+	SpeedMultiplier@IdolOfKaneBuff:
+		RequiresCondition: iokbuff
+		Modifier: 130
+	ReloadDelayMultiplier@IdolOfKaneBuff:
+		RequiresCondition: iokbuff
+		Modifier: 80
+	ExternalCondition@IdolOfKaneDebuff:
+		Condition: iokdebuff
+	SpeedMultiplier@IdolOfKaneDebuff:
+		RequiresCondition: iokdebuff
+		Modifier: 80
+	ReloadDelayMultiplier@IdolOfKaneDebuff:
+		RequiresCondition: iokdebuff
+		Modifier: 120
+
 ^Chronoshiftable:
 	ChronoshiftableCA:
 		Image: chrono
@@ -2335,6 +2353,7 @@
 	Inherits@KillZoneTargetable: ^KillZoneTargetable
 	Inherits@ReaperSnareable: ^ReaperSnareable
 	Inherits@rflash: ^RedFlash
+	Inherits@IdolOfKane: ^IdolOfKane
 	RenderSprites:
 		PlayerPalette: playertd
 	Huntable:

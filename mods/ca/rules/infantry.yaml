@@ -2483,7 +2483,7 @@ CONF:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
-		Attributes: • Special Ability: Idol of Kane
+		Attributes: • Special Ability: Idol of Kane (max 1 per Confessor)
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -2526,17 +2526,18 @@ CONF:
 		SpawnSounds: iok-place.aud
 		AmmoPool: idol
 		TargetModifiedCursor: ability2
+		ConcurrentLimit: 1
+		KillExcessDamageTypes: SmallExplosionDeath
 	AmmoPool@IdolOfKane:
 		Name: idol
 		Armaments: none
 		Ammo: 1
 	ReloadAmmoPoolCA@IdolOfKane:
 		AmmoPool: idol
-		Delay: 3000
+		Delay: 750
 		Count: 1
 		ShowSelectionBar: true
 		SelectionBarColor: aaaaaa
-		ReloadWhenAmmoReaches: 0
 	WithAmmoPipsDecoration@IdolOfKane:
 		AmmoPools: idol
 		RequiresSelection: true

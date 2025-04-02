@@ -96,6 +96,12 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("When selecting a group, different types will not be activated together.")]
 		public readonly string Type = null;
 
+		[Desc("If greater than zero, when number of actors spawned exceeds this number the oldest actor will be killed or removed.")]
+		public readonly int ConcurrentLimit = 0;
+
+		[Desc("Types of damage to kill excess actors with. Leave empty to dispose instead of kill.")]
+		public readonly BitSet<DamageType> KillExcessDamageTypes = default;
+
 		public override object Create(ActorInitializer init) { return new SpawnActorAbility(init, this); }
 	}
 
@@ -104,6 +110,7 @@ namespace OpenRA.Mods.CA.Traits
 		public new readonly SpawnActorAbilityInfo Info;
 
 		readonly IMove move;
+		readonly Queue<Actor> spawns;
 		AmmoPool ammoPool;
 
 		public SpawnActorAbility(ActorInitializer init, SpawnActorAbilityInfo info)
@@ -111,6 +118,7 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			Info = info;
 			move = init.Self.Trait<IMove>();
+			spawns = new Queue<Actor>();
 		}
 
 		protected override void Created(Actor self)
@@ -172,7 +180,7 @@ namespace OpenRA.Mods.CA.Traits
 				if (Info.Range > WDist.Zero)
 					self.QueueActivity(move.MoveWithinRange(order.Target, Info.Range, targetLineColor: Info.TargetLineColor));
 
-				self.QueueActivity(new SpawnActor(self, cell, order.Target.CenterPosition, Info.Actor, Info.SkipMakeAnimations, Info.SpawnSounds, ammoPool, 3, true, Info.Range, Info.CanTargetShroud, Info.AllowedTerrainTypes));
+				self.QueueActivity(new SpawnActor(self, cell, order.Target.CenterPosition, Info.Actor, Info.SkipMakeAnimations, Info.SpawnSounds, ammoPool, 3, true, Info.Range, Info.CanTargetShroud, Info.AllowedTerrainTypes, ActorSpawned));
 				self.ShowTargetLines();
 			}
 		}
@@ -185,6 +193,21 @@ namespace OpenRA.Mods.CA.Traits
 		public bool CanSpawnActor
 		{
 			get { return ammoPool == null || ammoPool.HasAmmo; }
+		}
+
+		public void ActorSpawned(Actor self, Actor spawned)
+		{
+			spawns.Enqueue(spawned);
+
+			if (Info.ConcurrentLimit > 0 && spawns.Count > Info.ConcurrentLimit)
+			{
+				var oldest = spawns.Dequeue();
+
+				if (Info.KillExcessDamageTypes.Any())
+					oldest.Kill(self, Info.KillExcessDamageTypes);
+				else
+					oldest.Dispose();
+			}
 		}
 	}
 

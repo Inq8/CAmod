@@ -6107,13 +6107,22 @@ IOK:
 	Selectable:
 		DecorationBounds: 896, 1706, 0, -341
 	Health:
-		HP: 5000
+		HP: 10000
 	Tooltip:
 		Name: Idol of Kane
+	TooltipExtras:
+		Strengths: • Buffs friendly infantry\n• Debuffs enemy infantry\n• Provides vision
+		Weaknesses: • Cannot attack
 	Armor:
 		Type: Concrete
 	Targetable:
 		TargetTypes: Ground, Structure, Defense
+	RevealsShroud:
+		MinRange: 6c0
+		Range: 8c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 6c0
 	Building:
 		Dimensions: 1,1
 		Footprint: x
@@ -6135,3 +6144,22 @@ IOK:
 	SoundOnDamageTransition:
 		-DamagedSounds:
 		DestroyedSounds: kaboom15.aud
+	ProximityExternalCondition@IdolOfKaneBuff:
+		Condition: iokbuff
+		Range: 5c0
+		ValidRelationships: Ally
+	ProximityExternalCondition@IdolOfKaneDebuff:
+		Condition: iokdebuff
+		Range: 5c0
+		ValidRelationships: Neutral, Enemy
+	WithRadiatingCircle:
+		EndRadius: 5c0
+		Interval: 30
+		Duration: 30
+		ValidRelationships: Ally, Enemy, Neutral
+		AlwaysShowMaxRange: true
+		Visible: Always
+		MaxRadiusColor: 66666660
+		MaxRadiusFlashColor: 66666660
+		Color: 66666630
+		Width: 2
