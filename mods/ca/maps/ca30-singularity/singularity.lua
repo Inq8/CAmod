@@ -474,6 +474,7 @@ InitScrin = function()
 
 	Mothership.Attack(Wormhole, true, true)
 	Actor.Create("ai.unlimited.power", true, { Owner = Scrin })
+	IonConduits = Actor.Create("ioncon.upgrade", true, { Owner = Scrin })
 	ScrinDefenseBuff1 = Actor.Create("scrindefensebuff1", true, { Owner = Scrin })
 	ScrinDefenseBuff2 = Actor.Create("scrindefensebuff2", true, { Owner = Scrin })
 	MothershipShields = Actor.Create("mothership.shields", true, { Owner = Scrin })
