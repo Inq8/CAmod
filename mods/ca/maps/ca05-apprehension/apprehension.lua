@@ -134,6 +134,12 @@ OncePerSecondChecks = function()
 			if not Greece.IsObjectiveCompleted(ObjectiveDestroySAMSites) then
 				Greece.MarkFailedObjective(ObjectiveDestroySAMSites)
 			end
+			if not Greece.IsObjectiveCompleted(ObjectiveClearBase) then
+				Greece.MarkFailedObjective(ObjectiveClearBase)
+			end
+			if not Greece.IsObjectiveCompleted(ObjectiveApprehendTransports) then
+				Greece.MarkFailedObjective(ObjectiveApprehendTransports)
+			end
 		end
 	end
 end
