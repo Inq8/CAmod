@@ -1,3 +1,4 @@
+RespawnEnabled = Map.LobbyOption("respawn") == "enabled"
 
 Patrols = {
 	{
@@ -36,7 +37,6 @@ WorldLoaded = function()
 	InitNod()
 
 	ObjectiveStealCodes = USSR.AddObjective("Steal Nod cyborg encryption codes.")
-	ObjectiveKeepYuriAlive = USSR.AddObjective("Yuri must survive.")
 
 	if Difficulty == "easy" then
 		StartLightTank.Destroy()
@@ -63,6 +63,27 @@ WorldLoaded = function()
 		NodCommando.Destroy()
 		SouthStealthTank.Destroy()
 		HardOnlyTurret1.Destroy()
+	end
+
+	if RespawnEnabled then
+		RespawnTrigger(Yuri)
+		RespawnTrigger(Thief)
+	else
+		ObjectiveKeepYuriAlive = USSR.AddObjective("Yuri must survive.")
+
+		Trigger.OnKilled(Thief, function(self, killer)
+			if not USSR.IsObjectiveCompleted(ObjectiveStealCodes) then
+				USSR.MarkFailedObjective(ObjectiveStealCodes)
+			end
+		end)
+
+		Trigger.OnKilled(Yuri, function(self, killer)
+			USSR.MarkFailedObjective(ObjectiveKeepYuriAlive)
+
+			if ObjectiveEscape ~= nil and not USSR.IsObjectiveCompleted(ObjectiveEscape) then
+				USSR.MarkFailedObjective(ObjectiveEscape)
+			end
+		end)
 	end
 
 	Trigger.AfterDelay(DateTime.Seconds(3), function()
@@ -104,20 +125,6 @@ WorldLoaded = function()
 		end
 	end)
 
-	Trigger.OnKilled(Thief, function(self, killer)
-		if not USSR.IsObjectiveCompleted(ObjectiveStealCodes) then
-			USSR.MarkFailedObjective(ObjectiveStealCodes)
-		end
-	end)
-
-	Trigger.OnKilled(Yuri, function(self, killer)
-		USSR.MarkFailedObjective(ObjectiveKeepYuriAlive)
-
-		if ObjectiveEscape ~= nil and not USSR.IsObjectiveCompleted(ObjectiveEscape) then
-			USSR.MarkFailedObjective(ObjectiveEscape)
-		end
-	end)
-
 	Trigger.OnInfiltrated(CyberneticsLab, function(self, infiltrator)
 		Actor.Create("cyborgsdecrypted", true, { Owner = Nod })
 		ObjectiveDestroyTemple = USSR.AddObjective("Locate and destroy the Temple of Nod.")
@@ -147,7 +154,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnEnteredProximityTrigger(EvacLanding.CenterPosition, WDist.New(2560), function(a, id)
-		if ObjectiveEscape ~= nil and not EvacStarted and a.Owner == USSR and a == Yuri then
+		if ObjectiveEscape ~= nil and not EvacStarted and a.Owner == USSR and a.Type == "yuri" then
 			EvacStarted = true
 			Trigger.RemoveProximityTrigger(id)
 
@@ -284,16 +291,59 @@ SendEvac = function()
 	Reinforcements.ReinforceWithTransport(USSR, "halo.paradrop", nil, { EvacSpawn.Location, EvacLanding.Location }, nil, function(transport, cargo)
 		Trigger.OnPassengerEntered(transport, function(t, passenger)
 			t.Stop()
-			if passenger == Yuri then
+			if passenger.Type == "yuri" then
 				EvacExiting = true
 				t.Move(EvacSpawn.Location)
 				Trigger.AfterDelay(DateTime.Seconds(2), function()
 					USSR.MarkCompletedObjective(ObjectiveEscape)
-					USSR.MarkCompletedObjective(ObjectiveKeepYuriAlive)
+					if ObjectiveKeepYuriAlive ~= nil then
+						USSR.MarkCompletedObjective(ObjectiveKeepYuriAlive)
+					end
 				end)
 			end
 		end)
 
 		transport.Land(EvacLanding)
+	end)
+end
+
+RespawnTrigger = function(a)
+	Trigger.OnKilled(a, function(self, killer)
+		local name
+
+		if a.Type == "yuri" then
+			name = "Yuri"
+			message = "Yuri has used his tremendous psionic power to cheat death. He will return in 30 seconds."
+		else
+			name = "Thief"
+			message = "Yuri has used his tremendous psionic power to save the Thief from death. He will return in 30 seconds."
+		end
+
+		Notification(message)
+
+		local respawnLocation = PlayerStart.Location
+
+		if USSR.IsObjectiveCompleted(ObjectiveStealCodes) then
+			if a.Type == "thf" then
+				return
+			end
+			respawnLocation = MidRespawn.Location
+		end
+
+		if not RespawnFlare or RespawnFlare.IsDead then
+			RespawnFlare = Actor.Create("flare", true, { Owner = USSR, Location = respawnLocation })
+		end
+
+		Beacon.New(a.Owner, Map.CenterOfCell(respawnLocation), DateTime.Seconds(30))
+
+		Trigger.AfterDelay(DateTime.Seconds(30), function()
+			local respawnedActor = Actor.Create(a.Type, true, { Owner = a.Owner, Location = respawnLocation })
+			Media.PlaySpeechNotification(a.Owner, "ReinforcementsArrived")
+			Beacon.New(a.Owner, Map.CenterOfCell(respawnLocation))
+			RespawnTrigger(respawnedActor)
+			if not RespawnFlare or RespawnFlare.IsDead then
+				RespawnFlare.Destroy()
+			end
+		end)
 	end)
 end

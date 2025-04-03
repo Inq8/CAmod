@@ -1,3 +1,4 @@
+RespawnEnabled = Map.LobbyOption("respawn") == "enabled"
 
 PowerGrids = {
 	{
@@ -68,6 +69,7 @@ WorldLoaded = function()
 	ObjectiveDestroyAirfields = Scrin.AddObjective("Destroy all airfields and helipads.")
 	ObjectiveDestroyAntiAir = Scrin.AddObjective("Destroy or disable all air defense structures.")
 
+	Actor.Create("radar.dummy", true, { Owner = Scrin })
 	Actor.Create("blink.upgrade", true, { Owner = Scrin })
 	Actor.Create("coalescence.upgrade", true, { Owner = Scrin })
 
@@ -81,7 +83,7 @@ WorldLoaded = function()
 	end
 
 	Trigger.AfterDelay(DateTime.Seconds(3), function()
-		Tip("Intruders can teleport short distances using either the deploy command or force move (they can be teleported as a group).")
+		Tip("Intruders can teleport short distances using either the deploy command [" .. UtilsCA.Hotkey("Deploy") .. "] or force move (they can be teleported as a group).")
 	end)
 
 	Utils.Do(GroundedAircraft, function(i)
@@ -104,26 +106,13 @@ WorldLoaded = function()
 		end)
 	end)
 
+	LeechersRespawning = true
+
 	Trigger.AfterDelay(DateTime.Seconds(5), function()
-		local wormhole = Actor.Create("wormhole", true, { Owner = Scrin, Location = LeecherSpawn.Location })
-
-		Trigger.AfterDelay(DateTime.Seconds(2), function()
-			Media.PlaySpeechNotification(Scrin, "ReinforcementsArrived")
-
-			local leecherSquad = { "lchr", "lchr" }
-			if Difficulty == "hard" then
-				leecherSquad = { "lchr" }
-			end
-
-			local leechers = Reinforcements.Reinforce(Scrin, leecherSquad, { LeecherSpawn.Location }, 1)
-			Utils.Do(leechers, function(leecher)
-				leecher.Scatter()
-			end)
-		end)
+		SpawnLeechers()
 
 		Trigger.AfterDelay(DateTime.Seconds(5), function()
-			wormhole.Kill()
-			Tip("Leechers can be deployed to temporarily transform into balls of bio-matter which heal nearby allies.")
+			Tip("Leechers can be deployed using [" .. UtilsCA.Hotkey("Deploy") .. "] to temporarily transform into balls of bio-matter which heal nearby allies.")
 		end)
 
 		Trigger.AfterDelay(DateTime.Seconds(10), function()
@@ -198,13 +187,24 @@ OncePerSecondChecks = function()
 			end
 		end
 
-		scrinUnits = Scrin.GetActorsByTypes({ "lchr", "lchr.orb", "s4" })
-		if #scrinUnits == 0 then
-			if ObjectiveDestroyAirfields ~= nil and not Scrin.IsObjectiveCompleted(ObjectiveDestroyAirfields) then
-				Scrin.MarkFailedObjective(ObjectiveDestroyAirfields)
+		local intruders = Scrin.GetActorsByType("s4")
+		local leechers = Scrin.GetActorsByTypes({ "lchr", "lchr.orb" })
+
+		if RespawnEnabled then
+			if #intruders == 0 and not IntrudersRespawning then
+				RespawnIntruders()
 			end
-			if ObjectiveDestroyAntiAir ~= nil and not Scrin.IsObjectiveCompleted(ObjectiveDestroyAntiAir) then
-				Scrin.MarkFailedObjective(ObjectiveDestroyAntiAir)
+			if #leechers == 0 and not LeechersRespawning then
+				RespawnLeechers()
+			end
+		else
+			if #intruders + #leechers == 0 then
+				if ObjectiveDestroyAirfields ~= nil and not Scrin.IsObjectiveCompleted(ObjectiveDestroyAirfields) then
+					Scrin.MarkFailedObjective(ObjectiveDestroyAirfields)
+				end
+				if ObjectiveDestroyAntiAir ~= nil and not Scrin.IsObjectiveCompleted(ObjectiveDestroyAntiAir) then
+					Scrin.MarkFailedObjective(ObjectiveDestroyAntiAir)
+				end
 			end
 		end
 	end
@@ -315,4 +315,76 @@ IonStorm = function()
 	until(soundNumber ~= LastIonSoundNumber)
 	LastIonSoundNumber = soundNumber
 	Media.PlaySound("ionstorm" .. soundNumber .. ".aud")
+end
+
+RespawnLeechers = function()
+	if not LeechersRespawning then
+		LeechersRespawning = true
+		Notification("Reinforcements will arrive in 30 seconds.")
+		Trigger.AfterDelay(DateTime.Seconds(30), function()
+			SpawnLeechers()
+		end)
+	end
+end
+
+RespawnIntruders = function()
+	if not IntrudersRespawning then
+		IntrudersRespawning = true
+		Notification("Reinforcements will arrive in 30 seconds.")
+		Trigger.AfterDelay(DateTime.Seconds(30), function()
+			SpawnIntruders()
+		end)
+	end
+end
+
+SpawnLeechers = function()
+	local wormhole = Actor.Create("wormhole", true, { Owner = Scrin, Location = LeecherSpawn.Location })
+	Beacon.New(Scrin, LeecherSpawn.CenterPosition, DateTime.Seconds(30))
+
+	Trigger.AfterDelay(DateTime.Seconds(2), function()
+		Media.PlaySpeechNotification(Scrin, "ReinforcementsArrived")
+
+		local leecherSquad = { "lchr", "lchr" }
+		if Difficulty == "hard" then
+			leecherSquad = { "lchr" }
+		end
+
+		local leechers = Reinforcements.Reinforce(Scrin, leecherSquad, { LeecherSpawn.Location }, 1)
+		Utils.Do(leechers, function(leecher)
+			leecher.Scatter()
+		end)
+
+		LeechersRespawning = false
+
+		Trigger.AfterDelay(DateTime.Seconds(5), function()
+			wormhole.Kill()
+		end)
+	end)
+end
+
+SpawnIntruders = function()
+	local wormhole = Actor.Create("wormhole", true, { Owner = Scrin, Location = IntruderSpawn.Location })
+	Beacon.New(Scrin, IntruderSpawn.CenterPosition, DateTime.Seconds(30))
+
+	Trigger.AfterDelay(DateTime.Seconds(2), function()
+		Media.PlaySpeechNotification(Scrin, "ReinforcementsArrived")
+		local intruderSquad = { "s4", "s4", "s4", "s4", "s4", "s4" }
+
+		if Difficulty == "hard" then
+			intruderSquad = { "s4", "s4", "s4" }
+		elseif Difficulty == "normal" then
+			intruderSquad = { "s4", "s4", "s4", "s4" }
+		end
+
+		local intruders = Reinforcements.Reinforce(Scrin, intruderSquad, { IntruderSpawn.Location }, 1)
+		Utils.Do(intruders, function(intruder)
+			intruder.Scatter()
+		end)
+
+		IntrudersRespawning = false
+
+		Trigger.AfterDelay(DateTime.Seconds(5), function()
+			wormhole.Kill()
+		end)
+	end)
 end

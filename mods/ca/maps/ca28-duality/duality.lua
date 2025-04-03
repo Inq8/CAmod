@@ -1,4 +1,6 @@
 
+RespawnEnabled = Map.LobbyOption("respawn") == "enabled"
+
 ProdigyPatrolPath = { ProdigyPatrol1.Location, ProdigyPatrol2.Location, ProdigyPatrol3.Location, ProdigyPatrol4.Location, ProdigyPatrol5.Location, ProdigyPatrol6.Location, ProdigyPatrol7.Location, ProdigyPatrol8.Location, ProdigyPatrol9.Location, ProdigyPatrol10.Location, ProdigyPatrol11.Location, ProdigyPatrol12.Location, ProdigyPatrol13.Location, ProdigyPatrol14.Location, ProdigyPatrol15.Location, ProdigyPatrol16.Location, ProdigyPatrol17.Location, ProdigyPatrol18.Location, ProdigyPatrol19.Location, ProdigyPatrol9.Location, ProdigyPatrol8.Location, ProdigyPatrol20.Location }
 
 ScrinReinforcementInterval = {
@@ -20,8 +22,11 @@ WorldLoaded = function()
 
 	ObjectiveFindTanya = GDI.AddObjective("Find Tanya.")
 	ObjectiveDestroyTiberiumStores = GDI.AddObjective("Destroy all Scrin Tiberium stores.")
-	ObjectiveCommandoSurvive = GDI.AddObjective("Commando must survive.")
-	ObjectiveTanyaSurvive = GDI.AddObjective("Tanya must survive.")
+
+	if not RespawnEnabled then
+		ObjectiveCommandoSurvive = GDI.AddObjective("Commando must survive.")
+		ObjectiveTanyaSurvive = GDI.AddObjective("Tanya must survive.")
+	end
 
 	Scrin.Resources = Scrin.ResourceCapacity
 
@@ -38,17 +43,8 @@ WorldLoaded = function()
 		end
 	end)
 
-	Trigger.OnKilled(Commando, function(self, killer)
-		if not CommandoEscaped then
-			GDI.MarkFailedObjective(ObjectiveCommandoSurvive)
-		end
-	end)
-
-	Trigger.OnKilled(Tanya, function(self, killer)
-		if not TanyaEscaped then
-			GDI.MarkFailedObjective(ObjectiveTanyaSurvive)
-		end
-	end)
+	CommandoDeathTrigger(Commando)
+	TanyaDeathTrigger(Tanya)
 
 	local silos = Scrin.GetActorsByTypes({ "silo.scrin", "silo.scrinblue"})
 	Utils.Do(silos, function(a)
@@ -115,12 +111,12 @@ OncePerSecondChecks = function()
 						if GDI.IsObjectiveCompleted(ObjectiveFindTanya) then
 							CommandoEscaped = true
 							GDI.MarkCompletedObjective(ObjectiveCommandoSurvive)
-							Commando.Destroy()
+							a.Destroy()
 						end
 					elseif a.Type == "e7" then
 						TanyaEscaped = true
 						GDI.MarkCompletedObjective(ObjectiveTanyaSurvive)
-						Tanya.Destroy()
+						a.Destroy()
 					end
 				end
 			end)
@@ -200,6 +196,48 @@ UpdateProdigyTarget = function()
 
 	Trigger.AfterDelay(DateTime.Seconds(15), function()
 		UpdateProdigyTarget()
+	end)
+end
+
+CommandoDeathTrigger = function(commando)
+	Trigger.OnKilled(commando, function(self, killer)
+		if not RespawnEnabled and not CommandoEscaped then
+			GDI.MarkFailedObjective(ObjectiveCommandoSurvive)
+		elseif RespawnEnabled then
+			Notification("Commando respawns in 30 seconds.")
+			Trigger.AfterDelay(DateTime.Seconds(30), function()
+				local respawnWaypoint = Exit
+				if NumSilosRemaining == 0 then
+					respawnWaypoint = EscapeRespawn
+				end
+				Commando = Actor.Create("rmbo", true, { Owner = GDI, Location = respawnWaypoint.Location })
+				Beacon.New(GDI, respawnWaypoint.CenterPosition)
+				Media.PlaySpeechNotification(GDI, "ReinforcementsArrived")
+				Commando.GrantCondition("difficulty-" .. Difficulty)
+				CommandoDeathTrigger(Commando)
+			end)
+		end
+	end)
+end
+
+TanyaDeathTrigger = function(tanya)
+	Trigger.OnKilled(tanya, function(self, killer)
+		if not RespawnEnabled and not TanyaEscaped then
+			GDI.MarkFailedObjective(ObjectiveTanyaSurvive)
+		elseif RespawnEnabled then
+			Notification("Tanya respawns in 30 seconds.")
+			Trigger.AfterDelay(DateTime.Seconds(30), function()
+				local respawnWaypoint = Exit
+				if NumSilosRemaining == 0 then
+					respawnWaypoint = EscapeRespawn
+				end
+				Tanya = Actor.Create("e7", true, { Owner = GDI, Location = respawnWaypoint.Location })
+				Beacon.New(GDI, respawnWaypoint.CenterPosition)
+				Media.PlaySpeechNotification(GDI, "ReinforcementsArrived")
+				Tanya.GrantCondition("difficulty-" .. Difficulty)
+				TanyaDeathTrigger(Tanya)
+			end)
+		end
 	end)
 end
 
