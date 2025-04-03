@@ -138,7 +138,7 @@ WorldLoaded = function()
 	AdjustPlayerStartingCashForDifficulty()
 	InitUSSR()
 
-	ObjectiveDestroyFactories = Scrin.AddObjective("Destroy Soviet Industrial Plant and all factories.")
+	ObjectiveDestroyBases = Scrin.AddObjective("Eliminate Soviet bases.")
 	ObjectiveDestroyUncrewed = Scrin.AddObjective("Destroy all uncrewed Soviet vehicles.")
 	ObjectiveDestroySAMs = Scrin.AddSecondaryObjective("Destroy front line of Soviet SAM Sites.")
 
@@ -168,12 +168,7 @@ WorldLoaded = function()
 		end)
 	end)
 
-	local factoriesAndIndustrialPlant = USSR.GetActorsByTypes({ "weap", "indp" })
 	local unmannedVehicles = USSRUnmanned.GetActorsByTypes({ "btr", "3tnk", "4tnk", "apoc", "ttra", "ttnk" })
-
-	Trigger.OnAllKilledOrCaptured(factoriesAndIndustrialPlant, function()
-		Scrin.MarkCompletedObjective(ObjectiveDestroyFactories)
-	end)
 
 	Trigger.OnAllKilledOrCaptured(unmannedVehicles, function()
 		Scrin.MarkCompletedObjective(ObjectiveDestroyUncrewed)
@@ -241,9 +236,15 @@ OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
 		USSR.Resources = USSR.ResourceCapacity - 500
 
+		if not PlayerHasBuildings(USSR) then
+			if not Scrin.IsObjectiveCompleted(ObjectiveDestroyBases) then
+				Scrin.MarkCompletedObjective(ObjectiveDestroyBases)
+			end
+		end
+
 		if Scrin.HasNoRequiredUnits() then
-			if ObjectiveDestroyFactories ~= nil and not Scrin.IsObjectiveCompleted(ObjectiveDestroyFactories) then
-				Scrin.MarkFailedObjective(ObjectiveDestroyFactories)
+			if ObjectiveDestroyBases ~= nil and not Scrin.IsObjectiveCompleted(ObjectiveDestroyBases) then
+				Scrin.MarkFailedObjective(ObjectiveDestroyBases)
 			end
 			if ObjectiveDestroyUncrewed ~= nil and not Scrin.IsObjectiveCompleted(ObjectiveDestroyUncrewed) then
 				Scrin.MarkFailedObjective(ObjectiveDestroyUncrewed)
@@ -259,7 +260,7 @@ OncePerFiveSecondChecks = function()
 end
 
 InitUSSR = function()
-	RebuildExcludes.USSR = { Types = { "weap", "indp", "npwr", "tpwr", "tsla" }, Actors = { IslandAirfield1, IslandAirfield2, IslandAirfield3, IslandAirfield4, IslandAirfield5 } }
+	RebuildExcludes.USSR = { Types = { "npwr", "tpwr", "tsla" }, Actors = { IslandAirfield1, IslandAirfield2, IslandAirfield3, IslandAirfield4, IslandAirfield5 } }
 
 	AutoRepairAndRebuildBuildings(USSR, 15)
 	SetupRefAndSilosCaptureCredits(USSR)

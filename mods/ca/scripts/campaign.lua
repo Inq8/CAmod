@@ -227,7 +227,7 @@ ChooseRandomTargetOfTypes = function(unit, targetPlayer, targetList, targetType)
 		end
 
 		local enemies = Utils.Where(enemies, function(self)
-			return self.HasProperty("Health") and unit.CanTarget(self)
+			return self.HasProperty("Health") and (actor.HasProperty("Move") or actor.HasProperty("StartBuildingRepairs")) and unit.CanTarget(self)
 		end)
 
 		if #enemies > 0 then
