@@ -54,35 +54,43 @@ Players:
 		Bot: campaign
 		Faction: scrin
 		Color: 2FB4A6
-		Allies: Nod, ScrinRebels2, ScrinRebels3
+		Allies: Nod, ScrinRebels2, ScrinRebels3, SignalTransmittersPlayer
 		Enemies: USSR, Scrin, Creeps
 	PlayerReference@ScrinRebels2:
 		Name: ScrinRebels2
 		Bot: campaign
 		Faction: scrin
 		Color: 2FB4A6
-		Allies: Nod, ScrinRebels1, ScrinRebels3
+		Allies: Nod, ScrinRebels1, ScrinRebels3, SignalTransmittersPlayer
 		Enemies: USSR, Scrin, Creeps
 	PlayerReference@ScrinRebels3:
 		Name: ScrinRebels3
 		Bot: campaign
 		Faction: scrin
 		Color: 2FB4A6
-		Allies: Nod, ScrinRebels1, ScrinRebels2
+		Allies: Nod, ScrinRebels1, ScrinRebels2, SignalTransmittersPlayer
 		Enemies: USSR, Scrin, Creeps
 	PlayerReference@Nod:
 		Name: Nod
 		Bot: campaign
 		Faction: nod
 		Color: 6D738C
-		Allies: ScrinRebels1, ScrinRebels2, ScrinRebels3
+		Allies: ScrinRebels1, ScrinRebels2, ScrinRebels3, SignalTransmittersPlayer
 		Enemies: USSR, Scrin, Creeps
-	PlayerReference@NodGateway:
-		Name: NodGateway
+	PlayerReference@NodGatewayPlayer:
+		Name: NodGatewayPlayer
 		Bot: campaign
 		NonCombatant: True
 		Faction: nod
 		Color: FE1100
+	PlayerReference@SignalTransmittersPlayer:
+		Name: SignalTransmittersPlayer
+		Bot: campaign
+		NonCombatant: True
+		Faction: scrin
+		Color: 2FB4A6
+		Allies: Nod, ScrinRebels1, ScrinRebels2, ScrinRebels3
+		Enemies: USSR
 
 Actors:
 	Actor5: brik
@@ -1848,7 +1856,7 @@ Actors:
 		Owner: Neutral
 		Location: 103,30
 	SignalTransmitter1: sign
-		Owner: ScrinRebels1
+		Owner: SignalTransmittersPlayer
 		Location: 80,17
 	Actor711: shar
 		Owner: ScrinRebels2
@@ -2603,7 +2611,7 @@ Actors:
 		Owner: ScrinRebels1
 		Location: 18,47
 	SignalTransmitter2: sign
-		Owner: ScrinRebels1
+		Owner: SignalTransmittersPlayer
 		Location: 19,47
 	Actor954: swal
 		Owner: ScrinRebels1
@@ -2654,7 +2662,7 @@ Actors:
 		Owner: ScrinRebels1
 		Location: 79,88
 	SignalTransmitter3: sign
-		Owner: ScrinRebels1
+		Owner: SignalTransmittersPlayer
 		Location: 80,88
 	Actor971: swal
 		Owner: ScrinRebels1
@@ -3010,7 +3018,7 @@ Actors:
 		Location: 13,6
 		Facing: 626
 	Gateway: nodgateway
-		Owner: NodGateway
+		Owner: NodGatewayPlayer
 		Location: 66,62
 	Actor1055: e1
 		Owner: USSR

@@ -208,7 +208,7 @@ WorldLoaded = function()
 	Kane = Player.GetPlayer("Kane")
 	NeutralGDI = Player.GetPlayer("NeutralGDI")
 	NeutralScrin = Player.GetPlayer("NeutralScrin")
-	SignalTransmitterPlayer = Player.GetPlayer("SignalTransmitter") -- separate player to prevent AI from attacking it
+	SignalTransmitterPlayer = Player.GetPlayer("SignalTransmitterPlayer") -- separate player to prevent AI from attacking it
 	MissionPlayers = { GDI }
 	TimerTicks = 0
 
