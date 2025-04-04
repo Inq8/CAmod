@@ -1362,16 +1362,13 @@
 	CaptureManager:
 	Targetable@DRIVERKILL:
 		TargetTypes: DriverKill
-		RequiresCondition: !driver-dead && hp-below-75-perc && !invulnerability
+		RequiresCondition: !driver-dead && !invulnerability
 	Targetable@DRIVERKILLLOWHP:
 		TargetTypes: DriverKillLow
 		RequiresCondition: !driver-dead && hp-below-50-perc && !invulnerability
 	GrantConditionOnDamageState@DriverKillLessThan50:
 		Condition: hp-below-50-perc
 		ValidDamageStates: Heavy, Critical
-	GrantConditionOnDamageState@DriverKillLessThan75:
-		Condition: hp-below-75-perc
-		ValidDamageStates: Medium, Heavy, Critical
 	Targetable@AICAPTURE:
 		TargetTypes: NoCrew
 		RequiresCondition: driver-dead
