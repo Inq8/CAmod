@@ -208,7 +208,7 @@ WorldLoaded = function()
 	Kane = Player.GetPlayer("Kane")
 	NeutralGDI = Player.GetPlayer("NeutralGDI")
 	NeutralScrin = Player.GetPlayer("NeutralScrin")
-	SignalTransmitterPlayer = Player.GetPlayer("SignalTransmitter") -- separate player to prevent AI from attacking it
+	SignalTransmitterPlayer = Player.GetPlayer("SignalTransmitterPlayer") -- separate player to prevent AI from attacking it
 	MissionPlayers = { GDI }
 	TimerTicks = 0
 
@@ -474,6 +474,7 @@ InitScrin = function()
 
 	Mothership.Attack(Wormhole, true, true)
 	Actor.Create("ai.unlimited.power", true, { Owner = Scrin })
+	IonConduits = Actor.Create("ioncon.upgrade", true, { Owner = Scrin })
 	ScrinDefenseBuff1 = Actor.Create("scrindefensebuff1", true, { Owner = Scrin })
 	ScrinDefenseBuff2 = Actor.Create("scrindefensebuff2", true, { Owner = Scrin })
 	MothershipShields = Actor.Create("mothership.shields", true, { Owner = Scrin })

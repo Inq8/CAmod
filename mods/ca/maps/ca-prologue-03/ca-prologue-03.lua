@@ -32,7 +32,7 @@ WorldLoaded = function()
 	}
 
 	Trigger.OnEnteredProximityTrigger(Reveal2.CenterPosition, WDist.New(11 * 1024), function(a, id)
-		if a.Owner == Greece and a.Type ~= cameraType and not FirstRevealComplete then
+		if a.Owner == GDI and a.Type ~= "smallcamera" and not FirstRevealComplete then
 			Trigger.RemoveProximityTrigger(id)
 			FirstRevealComplete = true
 			local camera = Actor.Create("smallcamera", true, { Owner = GDI, Location = Reveal2.Location })

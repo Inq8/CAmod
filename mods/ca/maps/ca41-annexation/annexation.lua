@@ -103,6 +103,7 @@ WorldLoaded = function()
 	ScrinRebels1 = Player.GetPlayer("ScrinRebels1")
 	ScrinRebels2 = Player.GetPlayer("ScrinRebels2")
 	ScrinRebels3 = Player.GetPlayer("ScrinRebels3")
+	SignalTransmittersPlayer = Player.GetPlayer("SignalTransmittersPlayer") -- separate player to prevent AI from attacking it
 	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { USSR }
 	TimerTicks = DateTime.Minutes(3)
@@ -188,6 +189,7 @@ OncePerSecondChecks = function()
 		ScrinRebels1.Resources = ScrinRebels1.ResourceCapacity - 500
 		ScrinRebels2.Resources = ScrinRebels2.ResourceCapacity - 500
 		ScrinRebels3.Resources = ScrinRebels3.ResourceCapacity - 500
+		SignalTransmittersPlayer.Resources = SignalTransmittersPlayer.ResourceCapacity - 500
 
 		if not PlayerHasBuildings(ScrinRebels1) and not PlayerHasBuildings(ScrinRebels2) and not PlayerHasBuildings(ScrinRebels3) then
 			if not USSR.IsObjectiveCompleted(ObjectiveHoldNerveCenter) then
@@ -241,6 +243,9 @@ end
 -- Functions
 
 InitScrinRebels = function()
+	AutoRepairAndRebuildBuildings(SignalTransmittersPlayer)
+	Actor.Create("ai.unlimited.power", true, { Owner = SignalTransmittersPlayer })
+
 	local scrinRebelPlayers = { ScrinRebels1, ScrinRebels2, ScrinRebels3 }
 
 	Utils.Do(scrinRebelPlayers, function(p)
@@ -297,7 +302,7 @@ InitSignalTransmittersObjective = function()
 		MediaCA.PlaySound("ovld_capture.aud", 2)
 
 		local transmitters = Utils.Where({ SignalTransmitter1, SignalTransmitter2, SignalTransmitter3 }, function(a)
-			return not a.IsDead and a.Owner == ScrinRebels1
+			return not a.IsDead and a.Owner == SignalTransmittersPlayer
 		end)
 
 		Utils.Do(transmitters, function(t)
@@ -335,7 +340,7 @@ InitSignalTransmittersObjective = function()
 			end)
 
 			Trigger.OnKilled(t, function(self, killer)
-				if self.Owner == ScrinRebels1 then
+				if self.Owner == SignalTransmittersPlayer then
 					USSR.MarkFailedObjective(ObjectiveSignalTransmitters)
 				end
 			end)

@@ -135,13 +135,12 @@ WorldLoaded = function()
 		NormalEasyOnlyUnit3.Destroy()
 	end
 
-	Trigger.OnRemovedFromWorld(NerveCenter1, function()
-		if not GDI.IsObjectiveCompleted(ObjectiveCaptureNerveCenter) then
-			GDI.MarkFailedObjective(ObjectiveCaptureNerveCenter)
-		end
-		if ObjectiveProtectNerveCenter ~= nil and not GDI.IsObjectiveCompleted(ObjectiveProtectNerveCenter) then
-			GDI.MarkFailedObjective(ObjectiveProtectNerveCenter)
-		end
+	Trigger.OnKilled(NerveCenter1, function(self, killer)
+		NerveCenterLost()
+	end)
+
+	Trigger.OnSold(NerveCenter1, function(self)
+		NerveCenterLost()
 	end)
 
 	Trigger.OnCapture(NerveCenter1, function(self, captor, oldOwner, newOwner)
@@ -387,4 +386,13 @@ PeriodicReinforcements = function()
 	Trigger.AfterDelay(groupDelay, function()
 		PeriodicReinforcements()
 	end)
+end
+
+NerveCenterLost = function()
+	if not GDI.IsObjectiveCompleted(ObjectiveCaptureNerveCenter) then
+		GDI.MarkFailedObjective(ObjectiveCaptureNerveCenter)
+	end
+	if ObjectiveProtectNerveCenter ~= nil and not GDI.IsObjectiveCompleted(ObjectiveProtectNerveCenter) then
+		GDI.MarkFailedObjective(ObjectiveProtectNerveCenter)
+	end
 end

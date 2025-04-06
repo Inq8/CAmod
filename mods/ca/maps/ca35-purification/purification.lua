@@ -133,7 +133,7 @@ WorldLoaded = function()
 
 	Trigger.OnEnteredFootprint({ LiquidTibPickup1.Location, LiquidTibPickup2.Location }, function(a)
 		if a.Owner == Nod and not a.IsDead and a.Type == "ttrk" then
-			if LiquidTibFacility.AmmoCount("primary") == 0 then
+			if not LiquidTibFacility.IsDead and LiquidTibFacility.AmmoCount("primary") == 0 then
 				Notification("No liquid Tiberium currently available for pickup.")
 			end
 		end
@@ -178,7 +178,7 @@ OncePerSecondChecks = function()
 			UpdateMissionText()
 		end
 
-		if LiquidTibFacility.AmmoCount("primary") > 0 then
+		if not LiquidTibFacility.IsDead and LiquidTibFacility.AmmoCount("primary") > 0 then
 			local nearbyTrucks = Map.ActorsInBox(LiquidTibPickup1.CenterPosition, LiquidTibPickup2.CenterPosition, function(a)
 				return a.Owner == Nod and not a.IsDead and a.Type == "ttrk"
 			end)

@@ -44,22 +44,13 @@ Player:
 	PlayerResources:
 		DefaultCash: 6000
 
-SIGN:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-	CaptureNotification:
-		TextNotification: Structure captured.
-		LoseNotification: OurBuildingCaptured
-		LoseTextNotification: Structure lost (captured).
-	CaptureManager:
-	Capturable:
-		RequiresCondition: !build-incomplete && !being-warped
-		Types: building
-	CapturableProgressBar:
-	CapturableProgressBlink:
-	Tooltip:
-		GenericVisibility: None
-	TooltipExtras:
-		Attributes: • Maximum 1 can be built
+# Disable powers for AI
+
+^NodAirdropPowers:
+	ParatroopersPowerCA@NodAirDrop:
+		Prerequisites: ~!botplayer
+
+# Disable tech
 
 BORI:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
@@ -78,6 +69,25 @@ TMPP:
 
 SGEN:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+# Misc
+
+SIGN:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+	CaptureNotification:
+		TextNotification: Structure captured.
+		LoseNotification: OurBuildingCaptured
+		LoseTextNotification: Structure lost (captured).
+	CaptureManager:
+	Capturable:
+		RequiresCondition: !build-incomplete && !being-warped
+		Types: building
+	CapturableProgressBar:
+	CapturableProgressBlink:
+	Tooltip:
+		GenericVisibility: None
+	TooltipExtras:
+		Attributes: • Maximum 1 can be built
 
 SCOL:
 	Power:

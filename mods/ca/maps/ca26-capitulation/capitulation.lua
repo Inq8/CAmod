@@ -109,9 +109,9 @@ Squads = {
 	},
 	AirAntiAir = {
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 10 } },
-			normal = { { MinTime = 0, Value = 15 } },
-			hard = { { MinTime = 0, Value = 25 } },
+			easy = { Min = 10, Max = 10 },
+			normal = { Min = 15, Max = 15 },
+			hard = { Min = 25, Max = 25 },
 		},
 		ActiveCondition = function()
 			local gdiAircraft = GDI.GetActorsByTypes({ "orca", "a10", "orcb", "auro" })
