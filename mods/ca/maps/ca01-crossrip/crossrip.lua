@@ -632,23 +632,23 @@ GetInvasionInterval = function()
 
 	if Difficulty == "easy" then
 		if armyValue >= 10000 then
-			return DateTime.Seconds(18)
+			return DateTime.Seconds(22)
 		else
 			return DateTime.Seconds(24)
 		end
 	else
 		if armyValue >= 48000 then
-			return DateTime.Seconds(12)
+			return DateTime.Seconds(13)
 		elseif armyValue >= 38000 then
-			return DateTime.Seconds(14)
+			return DateTime.Seconds(15)
 		elseif armyValue >= 28000 then
-			return DateTime.Seconds(16)
+			return DateTime.Seconds(17)
 		elseif armyValue >= 18000 then
-			return DateTime.Seconds(18)
+			return DateTime.Seconds(19)
 		elseif armyValue >= 10000 then
-			return DateTime.Seconds(21)
+			return DateTime.Seconds(22)
 		else
-			return DateTime.Seconds(25)
+			return DateTime.Seconds(24)
 		end
 	end
 end

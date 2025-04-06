@@ -2014,9 +2014,11 @@ LCHR:
 	GrantConditionOnPrerequisite@COALESCENCE:
 		Condition: coalescence-upgrade
 		Prerequisites: coalescence.upgrade
-	SpawnActorOnDeath:
+	SpawnActorOnDeathCA:
 		Actor: lchr.orb
 		RequiresCondition: coalescence-upgrade && !being-warped
+		AddToSelection: true
+		AddToControlGroup: true
 	KillsSelf:
 		RequiresCondition: triggered
 	ActorLostNotification:
@@ -2092,9 +2094,11 @@ LCHR.Orb:
 		ShowSelectionBar: true
 		SelectionBarColor: ff0000
 		PauseOnCondition: being-warped
-	SpawnActorOnDeath:
+	SpawnActorOnDeathCA:
 		Actor: lchr
 		RequiresCondition: resurrect
+		AddToSelection: true
+		AddToControlGroup: true
 	ProximityExternalCondition@LCHRHEAL:
 		Condition: lchr-healing
 		Range: 2c256
@@ -6132,7 +6136,7 @@ WORMHOLE:
 		Bounds: 1365, 1365
 	HitShape:
 	Targetable:
-		TargetTypes: Ground, Structure, Wormhole
+		TargetTypes: Ground, Structure, Defense, Wormhole
 	Health:
 		HP: 100000
 	Armor:

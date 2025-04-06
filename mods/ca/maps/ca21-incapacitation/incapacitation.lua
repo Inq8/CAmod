@@ -31,6 +31,8 @@ PowerPlants = { NWPower1, NWPower2, NWPower3, NWPower4, NPower1, NPower2, NPower
 AircraftStructures = { OrcaPad1, OrcaPad2, OrcaPad3, OrcaPad4, WarthogAirfield1, WarthogAirfield2, WarthogAirfield3, WarthogAirfield4, AuroraAirfield1, AuroraAirfield2, LongbowPad1, LongbowPad2, LongbowPad3, LongbowPad4, HarrierPad1, HarrierPad2 }
 CoastAAGuns = { CoastAAGun1, CoastAAGun2, CoastAAGun3, CoastAAGun4, CoastAAGun5 }
 
+DisabledAntiAir = { }
+
 GroundedAircraft = {
 	{ Orca1, OrcaPad1 },
 	{ Orca2, OrcaPad2 },
@@ -60,11 +62,14 @@ WorldLoaded = function()
 
 	Camera.Position = PlayerStart.CenterPosition
 
+	AntiAir = Utils.Concat(Greece.GetActorsByType("agun"), GDI.GetActorsByType("cram"))
+
 	InitObjectives(Scrin)
 	InitGreece()
 	InitGDI()
 	SetupLightning()
 	SetupIonStorm()
+	UpdateObjective()
 
 	ObjectiveDestroyAirfields = Scrin.AddObjective("Destroy all airfields and helipads.")
 	ObjectiveDestroyAntiAir = Scrin.AddObjective("Destroy or disable all air defense structures.")
@@ -101,8 +106,12 @@ WorldLoaded = function()
 			Utils.Do(grid.Consumers, function(consumer)
 				if not consumer.IsDead then
 					consumer.GrantCondition("disabled")
+					if consumer.Type == "agun" or consumer.Type == "cram" then
+						DisabledAntiAir[tostring(consumer)] = true
+					end
 				end
 			end)
+			UpdateObjective()
 		end)
 	end)
 
@@ -149,6 +158,12 @@ WorldLoaded = function()
 					nearbyUnit.Attack(attacker)
 				end)
 			end
+		end)
+	end)
+
+	Utils.Do(Utils.Concat(AntiAir, AircraftStructures), function(a)
+		Trigger.OnKilled(a, function(self, killer)
+			UpdateObjective()
 		end)
 	end)
 
@@ -387,4 +402,10 @@ SpawnIntruders = function()
 			wormhole.Kill()
 		end)
 	end)
+end
+
+UpdateObjective = function()
+	local activeAA = Utils.Where(AntiAir, function(a) return not a.IsDead and not DisabledAntiAir[tostring(a)] end)
+	local aircraftStructuresRemaining = Utils.Where(AircraftStructures, function(a) return not a.IsDead end)
+	UserInterface.SetMissionText(#activeAA .. " active anti-aircraft defenses remaining. " .. #aircraftStructuresRemaining .. " aircraft structures remaining.", HSLColor.Yellow)
 end

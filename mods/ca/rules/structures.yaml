@@ -6105,7 +6105,8 @@ IOK:
 		EmptyWeapon: SmallBuildingExplode
 	HiddenUnderFog:
 	Selectable:
-		DecorationBounds: 896, 1706, 0, -341
+		Bounds: 1024, 1024
+		DecorationBounds: 896, 1706, 0, -448
 	Health:
 		HP: 10000
 	Tooltip:
@@ -6113,6 +6114,7 @@ IOK:
 	TooltipExtras:
 		Strengths: • Buffs friendly infantry\n• Debuffs enemy infantry\n• Provides vision
 		Weaknesses: • Cannot attack
+		Attributes: • Special Ability: Rage Generator (enemy units within range go berserk)
 	Armor:
 		Type: Concrete
 	Targetable:
@@ -6148,13 +6150,20 @@ IOK:
 		Condition: iokbuff
 		Range: 5c0
 		ValidRelationships: Ally
+		RequiresCondition: !rage-active
 	ProximityExternalCondition@IdolOfKaneDebuff:
 		Condition: iokdebuff
 		Range: 5c0
 		ValidRelationships: Neutral, Enemy
+		RequiresCondition: !rage-active
+	ProximityExternalCondition@Rage:
+		Condition: berserk
+		Range: 5c0
+		ValidRelationships: Neutral, Enemy
+		RequiresCondition: rage-active
 	WithRadiatingCircle:
 		EndRadius: 5c0
-		Interval: 30
+		Interval: 40
 		Duration: 30
 		ValidRelationships: Ally, Enemy, Neutral
 		AlwaysShowMaxRange: true
@@ -6163,3 +6172,40 @@ IOK:
 		MaxRadiusFlashColor: 66666660
 		Color: 66666630
 		Width: 2
+		RequiresCondition: !rage-active
+	WithRadiatingCircle@Rage:
+		EndRadius: 5c0
+		Interval: 5
+		Duration: 50
+		ValidRelationships: Ally, Enemy, Neutral
+		AlwaysShowMaxRange: true
+		Visible: Always
+		MaxRadiusColor: FF000070
+		MaxRadiusFlashColor: FF000090
+		Color: FF000040
+		Width: 2
+		RequiresCondition: rage-active
+	GrantTimedConditionOnDeploy@Rage:
+		DeployedCondition: rage-active
+		ShowSelectionBar: true
+		DeployedTicks: 125
+		CooldownTicks: 375
+		ShowSelectionBarWhenFull: false
+		ChargingColor: 770000
+		DischargingColor: ff0000
+		DeploySound: rage-gen.aud
+		Instant: true
+		StartsFullyCharged: true
+		RequiresCondition: initialized
+	WithColoredOverlay@Rage:
+		RequiresCondition: rage-active
+		Color: FF000033
+	ReloadAmmoPoolCA@InitialRage:
+		Ammo: 1
+		ReloadCount: 1
+		Delay: 125
+		SelectionBarColor: 770000
+	AmmoPool@InitialRage:
+		Ammo: 1
+		InitialAmmo: 0
+		AmmoCondition: initialized
