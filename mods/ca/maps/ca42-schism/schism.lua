@@ -234,6 +234,10 @@ WorldLoaded = function()
 						s.Hunt()
 					end
 				end)
+
+				Trigger.AfterDelay(DateTime.Seconds(5), function()
+					Tip("Use the Iron Curtain to shield the Exterminator Tripod from purification waves.")
+				end)
 			end)
 		end)
 	end)
