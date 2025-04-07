@@ -1651,7 +1651,7 @@
 		SelectTargetTextNotification: Select target.
 		ChargeInterval: 6000
 		Name: Assassin Squad
-		Description: \nDeploy a squad of Assassins that can\n    destroy buildings and salvage technology.\n\nTarget infantry production structure to deploy.
+		Description: \nDeploy a squad of Assassins that can snipe infantry from long range\n    and destroy buildings with C4.\n\nTarget infantry production structure to deploy.
 		Actors: assa, assa, assa
 		LaunchSpeechNotification: ReinforcementsArrived
 		EndChargeSpeechNotification: AssassinSquadReady
@@ -1700,7 +1700,7 @@
 ^ConfessorCabalPower:
 	ProduceActorPowerCA@ConfessorCabal:
 		OrderName: confessorcabal
-		Prerequisites: ~disabled, zeal.covenant, ~!botplayer
+		Prerequisites: zeal.covenant, ~!botplayer
 		Icon: confessorcabal
 		IconPalette: chrometd
 		Type: ParadropInfantry
@@ -1708,7 +1708,7 @@
 		SelectTargetTextNotification: Select target.
 		ChargeInterval: 6000
 		Name: Confessor Cabal
-		Description: \nDeploy a Confessor Cabal.
+		Description: \nDeploy a Confessor Cabal which is able to construct\n    Idols of Kane that buffs allies and debuffs enemies.\n\nTarget infantry production structure to deploy.
 		Actors: conf, conf, conf
 		LaunchSound: conf-create.aud
 		EndChargeSpeechNotification: ConfessorCabalReady
@@ -1722,7 +1722,7 @@
 		Type: ParadropInfantry
 		ChargeInterval: 6000
 		Name: Confessor Cabal (AI)
-		Description: \nDeploy a Confessor Cabal.
+		Description: \nDeploy a Confessor Cabal which is able to construct\n    Idols of Kane that buffs allies and debuffs enemies.
 		Actors: conf, conf, conf
 		SupportPowerPaletteOrder: 50
 		SelectProducer: false
