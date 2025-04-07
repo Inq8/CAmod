@@ -87,6 +87,11 @@ DOG:
 	-Captures@DRIVER_KILL:
 	-CaptureManager:
 	-Targetable@SpyDisguise:
+	TargetedAttackAbility:
+		TargetCursor: attack
+		ArmamentName: primary
+		CircleWidth: 0
+		Type: DogAttack
 
 TDOG:
 	Inherits: DOG
@@ -100,7 +105,7 @@ TDOG:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor, Heavy Armor
 		Weaknesses: • Cannot attack Aircraft
-		Attributes: • Can detect cloaked units, spies, mines\n• Detects the scent of enemy infantry beyond vision range\n• Immune to mind control\n• Explodes on contact with a target
+		Attributes: • Can detect cloaked units, spies, mines\n• Detects the scent of enemy infantry beyond vision range\n• Immune to mind control\n• Explodes on death or on contact with a target
 	Valued:
 		Cost: 300
 	KillsSelf:
@@ -115,13 +120,6 @@ TDOG:
 		TargetFrozenActors: False
 	Targetable@TerrorDog:
 		TargetTypes: TerrorDog
-	GrantTimedConditionOnDeploy:
-		DeployedCondition: eating
-		CooldownTicks: 2
-		DeployedTicks: 1
-		RequiresCondition: !being-warped
-		Instant: true
-		ShowSelectionBar: false
 	AutoTarget:
 		ScanRadius: 4
 	ProductionCostMultiplier@UkraineBonus:

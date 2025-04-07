@@ -802,7 +802,7 @@ BRST:
 		BuildPaletteOrder: 160
 		Prerequisites: scrt, ~infantry.scrin, ~techlevel.high
 		IconPalette: chromes
-		Description: Explodes on death or when triggered.
+		Description: Explodes on death or on contact with target.
 	Valued:
 		Cost: 550
 	Tooltip:
@@ -828,8 +828,6 @@ BRST:
 		Weapon: BursterTargeting
 	GrantConditionOnAttack:
 		Condition: triggered
-	GrantConditionOnDeploy:
-		DeployedCondition: triggered
 	KillsSelf:
 		RequiresCondition: (triggered || berserk)
 	-TakeCover:
@@ -837,6 +835,11 @@ BRST:
 		TargetTypes: Burster
 	AutoTarget:
 		ScanRadius: 4
+	TargetedAttackAbility:
+		TargetCursor: attack
+		ArmamentName: primary
+		CircleWidth: 0
+		Type: BursterAttack
 
 EVIS:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
