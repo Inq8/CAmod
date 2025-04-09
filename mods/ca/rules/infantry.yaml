@@ -87,6 +87,11 @@ DOG:
 	-Captures@DRIVER_KILL:
 	-CaptureManager:
 	-Targetable@SpyDisguise:
+	TargetedAttackAbility:
+		TargetCursor: attack
+		ArmamentName: primary
+		CircleWidth: 0
+		Type: DogAttack
 
 TDOG:
 	Inherits: DOG
@@ -100,7 +105,7 @@ TDOG:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor, Heavy Armor
 		Weaknesses: • Cannot attack Aircraft
-		Attributes: • Can detect cloaked units, spies, mines\n• Detects the scent of enemy infantry beyond vision range\n• Immune to mind control\n• Explodes on contact with a target
+		Attributes: • Can detect cloaked units, spies, mines\n• Detects the scent of enemy infantry beyond vision range\n• Immune to mind control\n• Explodes on death or on contact with a target
 	Valued:
 		Cost: 300
 	KillsSelf:
@@ -115,15 +120,11 @@ TDOG:
 		TargetFrozenActors: False
 	Targetable@TerrorDog:
 		TargetTypes: TerrorDog
-	GrantTimedConditionOnDeploy:
-		DeployedCondition: eating
-		CooldownTicks: 2
-		DeployedTicks: 1
-		RequiresCondition: !being-warped
-		Instant: true
-		ShowSelectionBar: false
 	AutoTarget:
 		ScanRadius: 4
+	ProductionCostMultiplier@UkraineBonus:
+		Multiplier: 80
+		Prerequisites: player.ukraine
 
 E1:
 	Inherits: ^Soldier
@@ -2209,6 +2210,7 @@ BORI:
 		Voice: Attack
 		PauseOnCondition: being-warped || blinded || reapersnare
 		FacingTolerance: 0
+		TargetFrozenActors: True
 	AttackMove:
 		Voice: Move
 	Armament@PRIMARY:
@@ -2280,9 +2282,12 @@ SAB:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Buildable:
-		Queue: Infiltrators
-	TooltipExtras:
+		Queue: InfantrySQ, InfantryMQ
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 113
+		Prerequisites: anyradar, ~hand, ~techlevel.medium
 		Description: Covert infantry that infiltrates enemy structures\n  to steal or lock technology.
+	TooltipExtras:
 		Strengths: • Strong vs Infantry
 		Weaknesses: • Can only attack Infantry
 		Attributes: • Can detect cloaked ground units and spies\n• Limited stealth (drains while moving)\n• Infiltrates production buildings to steal technology\n    • Allies: Cryo Mortar, Reckoner, Phantom\n    • Soviets: Cyberdog, Cyclops, Kamov\n    • GDI: Sonic Mortar, Basilisk, Shade\n    • Nod: Chem Mortar, Mantis, Vertigo\n    • Scrin: Cyberscrin, Viper, Manticore\n• Infiltrates radars/tech centers to lock technology\n• Infiltrates any building for vision
@@ -2382,7 +2387,7 @@ ASSA:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Buildings, Defenses
 		Weaknesses: • Weak vs Heavy Armor, Light Armor\n• Cannot attack aircraft
-		Attributes: • Plants C4 to destroy structures\n• Destroy production buildings to steal technology\n    • Allies: Cryo Mortar, Reckoner, Phantom\n    • Soviets: Cyberdog, Cyclops, Kamov\n    • GDI: Sonic Mortar, Basilisk, Shade\n    • Nod: Chem Mortar, Mantis, Vertigo\n    • Scrin: Cyberscrin, Viper, Manticore
+		Attributes: • Plants C4 to destroy structures
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -2471,6 +2476,73 @@ ASSA:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
 
+CONF:
+	Inherits: ^Soldier
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
+		Attributes: • Special Ability: Idol of Kane (max 1 per Confessor)
+	Valued:
+		Cost: 500
+	Tooltip:
+		Name: Confessor
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 13000
+	Armament@PRIMARY:
+		Weapon: ConfessorGun
+	Armament@BATF:
+		Name: batf
+		Weapon: ConfessorGun
+		MuzzleSequence: garrison-muzzle
+	AttackFrontal:
+		PauseOnCondition: being-warped || blinded || reapersnare
+		FacingTolerance: 0
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
+	Mobile:
+		Voice: Move
+	Voiced:
+		VoiceSet: ConfessorVoice
+	AttackMove:
+		Voice: Move
+	Passenger:
+		Voice: Move
+	Guard:
+		Voice: Move
+	SpawnActorAbility:
+		Actor: iok
+		Range: 1c896
+		SkipMakeAnimations: false
+		CircleColor: ff000077
+		SpawnSounds: iok-place.aud
+		AmmoPool: idol
+		TargetModifiedCursor: ability2
+		ConcurrentLimit: 1
+		KillExcessDamageTypes: SmallExplosionDeath
+	AmmoPool@IdolOfKane:
+		Name: idol
+		Armaments: none
+		Ammo: 1
+	ReloadAmmoPoolCA@IdolOfKane:
+		AmmoPool: idol
+		Delay: 750
+		Count: 1
+		ShowSelectionBar: true
+		SelectionBarColor: aaaaaa
+	WithAmmoPipsDecoration@IdolOfKane:
+		AmmoPools: idol
+		RequiresSelection: true
+		Position: BottomLeft
+		Margin: 4, 3
+
 ACOL:
 	Inherits: ^Cyborg
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -2544,7 +2616,7 @@ TPLR:
 	Health:
 		HP: 21000
 	Buildable:
-		Prerequisites: obliortmpl, anyradar, ~infantry.marked, ~tmpp, ~techlevel.high
+		Prerequisites: obliortmpl, anyradar, tmpp, ~infantry.marked, ~techlevel.high
 		BuildPaletteOrder: 112
 	-TakeCover:
 	-Convertible:
@@ -3137,7 +3209,7 @@ RMBC:
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 232
 		IconPalette: chrometd
-		Prerequisites: ~infantry.nod, tmpp, advcyber.upgrade, ~!wrath.covenant, ~techlevel.high
+		Prerequisites: ~infantry.nod, tmpp, advcyber.upgrade, ~techlevel.high
 		Description: Elite cyborg infantry unit armed with\n  a plasma cannon.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
@@ -4126,8 +4198,8 @@ ENLI:
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 230
 		IconPalette: chrometd
-		Prerequisites: ~infantry.nod, tmpp, advcyber.upgrade, ~!unity.covenant, ~techlevel.high
-		Description: Heavy cyborg infantry unit armed with\n  a particle cannon that deals area damage.
+		Prerequisites: ~infantry.nod, tmpp, advcyber.upgrade, ~zeal.covenant, ~techlevel.high
+		Description: Heavy cyborg infantry unit armed with a particle cannon.\n  Damage scales with the max health of the target.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
@@ -4481,7 +4553,7 @@ CMSR:
 		ValidRelationships: Ally, Enemy, Neutral
 	WithRadiatingCircle:
 		EndRadius: 7c0
-		Interval: 25
+		Interval: 75
 		Duration: 50
 		ValidRelationships: Ally
 		AlwaysShowMaxRange: true
@@ -4567,7 +4639,7 @@ ZTRP:
 		ShowSelectionBarWhenFull: false
 		ChargeDelay: 250
 		SelectionBarColor: ffaa00
-		CircleColor: ffaa00a0
+		CircleColor: ffaa0077
 		MaxDistance: 7
 		Speed: 175
 		RequiresCondition: !being-warped && !reapersnare

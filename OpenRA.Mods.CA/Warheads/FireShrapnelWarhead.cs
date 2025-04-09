@@ -117,7 +117,7 @@ namespace OpenRA.Mods.CA.Warheads
 
 			var amount = Amount.Length == 2
 					? world.SharedRandom.Next(Amount[0], Amount[1])
-					: Amount[0];
+					: Amount[0] == 0 ? availableTargetActors.Count() : Amount[0];
 
 			var targetFound = false;
 

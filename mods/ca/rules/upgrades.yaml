@@ -242,10 +242,11 @@ avenger.upgrade:
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.gdi, gtek, ~bombard.strat, ~techlevel.high
-		IconPalette: chrometd
+		IconPalette: chrome
 		Description: Replaces Warthog's incendiary bombs with\n  GAU-8 Avenger rotary cannon and Hydra rockets.\n\nUpgrades: Warthog
 	TooltipExtras:
-		Strengths: +Increased damage\n+ Increased range
+		Strengths: + Increased damage\n+ Increased range
+		Weaknesses: – Requires two passes
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -546,7 +547,7 @@ gyro.upgrade:
 		BuildPaletteOrder: 40
 		Prerequisites: ~player.talon, upgc, ~techlevel.high
 		IconPalette: chrometd
-		Description: Allows mech units to activate gyro stabilizers, greatly increasing range but reducing rate of fire.\n\nUpgrades: Wolverine\nUpgrades: Titan\nUpgrades: Railgun Titan\nUpgrades: Juggernaut
+		Description: Allows mech units to activate gyro stabilizers, increasing range but reducing rate of fire.\n\nUpgrades: Wolverine\nUpgrades: Titan\nUpgrades: Railgun Titan\nUpgrades: Juggernaut
 	TooltipExtras:
 		Strengths: + Added Gyro Stabilizers ability (increased range, reduced rate of fire)
 	Valued:
@@ -572,8 +573,8 @@ wrath.covenant:
 		Name: Covenant of Wrath
 	Buildable:
 		BuildPaletteOrder: 13
-		Prerequisites: ~player.nod, nod.covenants.available, ~!unity.covenant, ~!deceit.covenant, ~techlevel.medium
-		Description: Required for:\n• Avatar (replaces Cyborg Elite)\n• Assassin Squad\n• Compressed Plasma (+3 Banshee ammo)\n• Cyborg Firepower Upgrade\n\n
+		Prerequisites: ~player.nod, nod.covenants.available, !unity.covenant, !zeal.covenant, ~techlevel.medium
+		Description: Required for:\n• Avatar\n• Assassin Squad\n• Compressed Plasma (+3 Banshee ammo)\n• Cyborg Firepower Upgrade\n\n
 		IconPalette: chrometd
 	TooltipExtras:
 		Attributes: (!) Only ONE Covenant may be chosen.
@@ -588,8 +589,8 @@ unity.covenant:
 		Name: Covenant of Unity
 	Buildable:
 		BuildPaletteOrder: 14
-		Prerequisites: ~player.nod, nod.covenants.available, ~!wrath.covenant, ~!deceit.covenant, ~techlevel.medium
-		Description: Required for:\n• Cyborg Reaper (replaces Enlightened)\n• Hacker Cell\n• Siphoned Funds ($ from Hackers in Comms Center)\n• Augmented Fabrication\n\n
+		Prerequisites: ~player.nod, nod.covenants.available, !wrath.covenant, !zeal.covenant, ~techlevel.medium
+		Description: Required for:\n• Cyborg Reaper\n• Hacker Cell\n• Siphoned Funds ($ from Hackers in Comms Center)\n• Augmented Fabrication\n\n
 		IconPalette: chrometd
 	TooltipExtras:
 		Attributes: (!) Only ONE Covenant may be chosen.
@@ -598,21 +599,21 @@ unity.covenant:
 	RenderSprites:
 		Image: unity.covenant
 
-deceit.covenant:
+zeal.covenant:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Covenant of Deceit
+		Name: Covenant of Zeal
 	Buildable:
 		BuildPaletteOrder: 15
-		Prerequisites: ~player.nod, nod.covenants.available, ~!unity.covenant, ~!wrath.covenant, ~techlevel.medium
-		Description: Required for:\n• Heavy Stealth Tank Upgrade\n• Infiltrator Squad\n• Stealth Harvester Upgrade\n• Cyborg Speed Upgrade\n\n
+		Prerequisites: ~player.nod, nod.covenants.available, !unity.covenant, !wrath.covenant, ~techlevel.medium
+		Description: Required for:\n• Enlightened\n• Confessor Cabal\n• Fast Harrassers (+15% Bike/Buggy speed)\n• Cyborg Speed Upgrade\n\n
 		IconPalette: chrometd
 	TooltipExtras:
 		Attributes: (!) Only ONE Covenant may be chosen.
 	Valued:
 		Cost: 500
 	RenderSprites:
-		Image: deceit.covenant
+		Image: zeal.covenant
 
 howi.upgrade:
 	Inherits: ^Upgrade
@@ -656,14 +657,14 @@ sharv.upgrade:
 	Tooltip:
 		Name: Upgrade: Stealth Harvester
 	Buildable:
-		BuildPaletteOrder: 20
-		Prerequisites: ~player.nod, ~deceit.covenant, anyradar, ~techlevel.medium
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.nod, tmpl, ~techlevel.high
 		Description: Allows construction of Stealth Harvesters which\n  are cloaked while moving.\n\nUpgrades: Harvester
 	TooltipExtras:
 		Strengths: + Hidden while moving
 		Weaknesses: – Reduced health
 	Valued:
-		Cost: 1250
+		Cost: 1500
 	RenderSprites:
 		Image: sharv.upgrade
 
@@ -752,34 +753,19 @@ quantum.upgrade:
 	RenderSprites:
 		Image: quantum.upgrade
 
-alphacomanche.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Alpha Comanche
-	Buildable:
-		BuildPaletteOrder: 30
-		Prerequisites: ~player.shadow, tmpl, ~techlevel.high
-		Description: Improves stealth and air-to-air combat capabilities of Comanche.\n\nUpgrades: Comanche
-	TooltipExtras:
-		Strengths: + Added air-to-air missiles\n+ Increased speed\n+ Damage no longer disrupts cloak\n+ Reduced cloaking time
-	Valued:
-		Cost: 1000
-	RenderSprites:
-		Image: alphacomanche.upgrade
-
 hstk.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
 		Name: Research: Heavy Stealth Tank
 	Buildable:
 		BuildPaletteOrder: 30
-		Prerequisites: ~player.nod, ~deceit.covenant, tmpl, ~techlevel.high
+		Prerequisites: ~player.shadow, tmpl, ~techlevel.high
 		Description: Upgrades: Stealth Tank
 	TooltipExtras:
 		Strengths: + Increased damage\n+ Increased durability
 		Weaknesses: – Reduced mobility\n– Increased cost\n– Increased cloaking delay
 	Valued:
-		Cost: 500
+		Cost: 1000
 	RenderSprites:
 		Image: hstk.upgrade
 
@@ -791,7 +777,7 @@ advcyber.upgrade:
 		BuildPaletteOrder: 40
 		Prerequisites: ~player.nod, tmpp, ~techlevel.high
 		IconPalette: chrometd
-		Description: Allows production of advanced cybernetic units.\n\nUnlocks: Enlightened (Wrath/Deceit Covenants Only)\nUnlocks: Cyborg Elite (Unity/Deceit Covenants Only)\nUnlocks: Avatar (Wrath Covenant Only)\nUnlocks: Cyborg Reaper (Unity Convenant only)
+		Description: Allows production of advanced cybernetic units.\n\nUnlocks: Enlightened (Zeal Covenant only)\nUnlocks: Cyborg Elite\nUnlocks: Avatar (Wrath Covenant Only)\nUnlocks: Cyborg Reaper (Unity Convenant only)
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -819,9 +805,9 @@ covenant.upgrade:
 		Name: Covenant Dependent Upgrade
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~player.nod, anycovenant, ~!wrath.covenant, ~!unity.covenant, ~!deceit.covenant, ~techlevel.high
+		Prerequisites: ~player.nod, anycovenant, ~!wrath.covenant, ~!unity.covenant, ~!zeal.covenant, ~techlevel.high
 		IconPalette: chrometd
-		Description: Upgrade depends on chosen covenant.\n\n• Wrath: Cyborg Firepower\n• Unity: Augmented Fabrication\n• Deceit: Cyborg Speed
+		Description: Upgrade depends on chosen covenant.\n\n• Wrath: Cyborg Firepower\n• Unity: Augmented Fabrication\n• Zeal: Cyborg Speed
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -835,7 +821,7 @@ cyborgdmg.upgrade:
 		BuildPaletteOrder: 40
 		Prerequisites: ~player.nod, tmpp, ~wrath.covenant, ~techlevel.high
 		IconPalette: chrometd
-		Description: Increases cyborg firepower.\n\nUpgrades: Cyborg\nUpgrades: Cyborg Rocket Soldier\nUpgrades: Chemical Warrior\nUpgrades: Acolyte/Templar\nUpgrades: Cyborg Mechanic\nUpgrades: Enlightened
+		Description: Increases cyborg firepower.\n\nUpgrades: Cyborg\nUpgrades: Cyborg Rocket Soldier\nUpgrades: Chemical Warrior\nUpgrades: Acolyte/Templar\nUpgrades: Cyborg Mechanic\nUpgrades: Cyborg Elite
 	TooltipExtras:
 		Strengths: + 10% increased firepower
 	Valued:
@@ -865,7 +851,7 @@ cyborgspeed.upgrade:
 		Name: Upgrade: Improved Cyborg Speed
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~player.nod, tmpp, ~deceit.covenant, ~techlevel.high
+		Prerequisites: ~player.nod, tmpp, ~zeal.covenant, ~techlevel.high
 		IconPalette: chrometd
 		Description: Increases cyborg movement speed.\n\nUpgrades: Cyborg\nUpgrades: Cyborg Rocket Soldier\nUpgrades: Chemical Warrior\nUpgrades: Acolyte/Templar\nUpgrades: Cyborg Mechanic\nUpgrades: Enlightened\nUpgrades: Cyborg Elite
 	TooltipExtras:
@@ -1482,7 +1468,7 @@ loyalist.allegiance:
 	Buildable:
 		BuildPaletteOrder: 16
 		Prerequisites: ~player.scrin, scrin.allegiances.available, !rebel.allegiance, !malefic.allegiance, ~techlevel.medium
-		Description: Declare your allegiance and side with the Scrin Overlord.\n\nRequired for:\n• Eviscerator\n• Obliterator\n• Overlord's Wrath\n\n
+		Description: Declare your allegiance and side with the Scrin Overlord.\n\nRequired for:\n• Eviscerator\n• Ruiner\n• Overlord's Wrath\n\n
 		IconPalette: chromes
 	TooltipExtras:
 		Attributes: (!) Only ONE allegiance may be chosen.
@@ -1514,7 +1500,7 @@ malefic.allegiance:
 	Buildable:
 		BuildPaletteOrder: 18
 		Prerequisites: ~player.scrin, scrin.allegiances.available, !loyalist.allegiance, !rebel.allegiance, ~techlevel.medium
-		Description: Declare your allegiance and side with the Malefic Scrin.\n\nRequired for:\n• Mutilator\n• Tormentor\n• Anathema\n\n
+		Description: Declare your allegiance and side with the Malefic Scrin.\n\nRequired for:\n• Stalker\n• Darkener\n• Anathema\n\n
 		IconPalette: chromes
 	TooltipExtras:
 		Attributes: (!) Only ONE allegiance may be chosen.
@@ -1547,7 +1533,7 @@ allegiance.upgrade:
 		BuildPaletteOrder: 20
 		Prerequisites: ~player.scrin, anyradar, anyallegiance, ~!loyalist.allegiance, ~!rebel.allegiance, ~!malefic.allegiance, ~techlevel.medium
 		IconPalette: chromes
-		Description: Upgrade depends on chosen allegiance.\n\n• Loyalist: Eviscerator research\n• Rebel: Impaler research\n• Malefic: Mutilator research
+		Description: Upgrade depends on chosen allegiance.\n\n• Loyalist: Eviscerator research\n• Rebel: Impaler research\n• Malefic: Stalker research
 	Valued:
 		Cost: 750
 	RenderSprites:
@@ -1587,22 +1573,22 @@ impl.upgrade:
 	RenderSprites:
 		Image: impl.upgrade
 
-muti.upgrade:
+stlk.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Mutilator
+		Name: Research: Stalker
 	Buildable:
 		BuildPaletteOrder: 20
 		Prerequisites: ~player.scrin, anyradar, ~malefic.allegiance, ~techlevel.medium
 		Description: Replaces: Ravager
 		IconPalette: chromes
 	TooltipExtras:
-		Strengths: + Increased speed\n+ Increased damage\n+ Increased health\n+ Affected by Blink Packs upgrade
+		Strengths: + Increased damage\n+ Increased health\n+ Cloaking ability with speed boost
 		Weaknesses: – Increased cost\n– Reduced range
 	Valued:
 		Cost: 750
 	RenderSprites:
-		Image: muti.upgrade
+		Image: stlk.upgrade
 
 shrw.upgrade:
 	Inherits: ^Upgrade
@@ -1660,7 +1646,7 @@ blink.upgrade:
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.scrin, scrt, ~techlevel.high
-		Description: Equips Intruders and Watchers with blink packs\n  allowing them to teleport.\n\nUpgrades: Intruder\nUpgrades: Watcher\nUpgrades: Mutilator
+		Description: Equips Intruders and Watchers with blink packs\n  allowing them to teleport.\n\nUpgrades: Intruder\nUpgrades: Marauder\nUpgrades: Watcher
 		IconPalette: chromes
 	TooltipExtras:
 		Strengths: + Teleport ability
@@ -1708,7 +1694,7 @@ regen.upgrade:
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.scrin, scrt, ~techlevel.high
-		Description: Scrin aircraft will regenerate health over time when not in combat.\n\nUpgrades: Stormrider\nUpgrades: Enervator\nUpgrades: Devastator Warship\nUpgrades: Planetary Assault Carrier\nUpgrades: Mothership
+		Description: Scrin aircraft and Stormcrawlers will regenerate health over time when not in combat.\n\nUpgrades: Stormrider\nUpgrades: Tormentor\nUpgrades: Enervator\nUpgrades: Devastator Warship\nUpgrades: Planetary Assault Carrier\nUpgrades: Mothership\nUpgrades: Stormcrawler
 		IconPalette: chromes
 	TooltipExtras:
 		Strengths: + Out-of-combat health regeneration

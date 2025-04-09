@@ -8,6 +8,7 @@
  */
 #endregion
 
+using System;
 using System.Collections.Generic;
 using OpenRA.Graphics;
 using OpenRA.Mods.Common.Graphics;
@@ -25,13 +26,10 @@ namespace OpenRA.Mods.CA.Traits.Render
 		[Desc("Range circle line width.")]
 		public readonly int Width = 1;
 
-		[Desc("Range of the circle")]
-		public readonly WDist Range = WDist.Zero;
-
 		public readonly int Interval = 0;
 
 		[Desc("Start color of the radiating circle.")]
-		public readonly Color Color = Color.FromArgb(64, Color.Red);
+		public readonly Color Color = Color.FromArgb(80, Color.Red);
 
 		[Desc("Range of the circle")]
 		public readonly WDist StartRadius = WDist.Zero;
@@ -61,27 +59,40 @@ namespace OpenRA.Mods.CA.Traits.Render
 	{
 		public new readonly WithRadiatingCircleInfo Info;
 		readonly Actor self;
-		WDist currentRadius;
-		WDist radiusChangePerTick;
-		int ticks;
-		bool interval;
+		Queue<RadiatingCircle> activeCircles;
+		int intervalTicks;
 		bool flash;
+
+		struct RadiatingCircle
+		{
+			public WDist CurrentRadius;
+			int tick;
+
+			public RadiatingCircle(WDist startRadius)
+			{
+				CurrentRadius = startRadius;
+				tick = 0;
+			}
+
+			public int CurrentTick
+			{
+				get { return tick; }
+			}
+
+			public void Tick()
+			{
+				tick++;
+			}
+		}
 
 		public WithRadiatingCircle(Actor self, WithRadiatingCircleInfo info)
 			: base(info)
 		{
 			Info = info;
 			this.self = self;
-
-			if (info.Duration > 0)
-				radiusChangePerTick = (info.EndRadius - info.StartRadius) / info.Duration;
-			else
-				radiusChangePerTick = WDist.Zero;
-
-			ticks = 0;
-			interval = false;
+			activeCircles = new Queue<RadiatingCircle>();
+			intervalTicks = 0;
 			flash = false;
-			currentRadius = Info.StartRadius;
 		}
 
 		bool Visible
@@ -103,11 +114,11 @@ namespace OpenRA.Mods.CA.Traits.Render
 		{
 			if (Info.Visible == visibility && Visible)
 			{
-				if (!interval)
+				foreach (var circle in activeCircles)
 				{
 					yield return new CircleAnnotationRenderable(
 						self.CenterPosition,
-						currentRadius,
+						circle.CurrentRadius,
 						Info.Width,
 						Info.Color,
 						false);
@@ -117,7 +128,7 @@ namespace OpenRA.Mods.CA.Traits.Render
 				{
 					yield return new CircleAnnotationRenderable(
 						self.CenterPosition,
-						Info.EndRadius,
+						Info.EndRadius > Info.StartRadius ? Info.EndRadius : Info.StartRadius,
 						Info.Width,
 						flash ? Info.MaxRadiusFlashColor : Info.MaxRadiusColor,
 						false);
@@ -142,38 +153,56 @@ namespace OpenRA.Mods.CA.Traits.Render
 		void ITick.Tick(Actor self)
 		{
 			if (!Visible)
-			{
-				ticks = 0;
-				interval = false;
-				flash = false;
-				currentRadius = Info.StartRadius;
 				return;
+
+			intervalTicks++;
+
+			// Create new circle every interval
+			if (intervalTicks >= Info.Interval)
+			{
+				intervalTicks = 0;
+				activeCircles.Enqueue(new RadiatingCircle(Info.StartRadius));
 			}
 
-			ticks++;
+			// Update all active circles
+			var radiusChangePerTick = (Info.EndRadius - Info.StartRadius) / Info.Duration;
+			var tempCircles = new Queue<RadiatingCircle>();
+			var circleCompleted = false;
 
-			if (interval)
+			while (activeCircles.Count > 0)
 			{
-				if (ticks > Info.Interval)
+				var circle = activeCircles.Dequeue();
+				circle.Tick();
+
+				// Only keep circles that haven't completed
+				if (circle.CurrentTick < Info.Duration)
 				{
-					ticks = 0;
-					interval = false;
+					circle.CurrentRadius += radiusChangePerTick;
+					tempCircles.Enqueue(circle);
 				}
-
-				flash = false;
-				return;
-			}
-			else if (!interval && ticks > Info.Duration)
-			{
-				ticks = 0;
-				interval = true;
-				flash = true;
-				currentRadius = Info.StartRadius;
-				return;
+				else
+				{
+					circleCompleted = true;
+				}
 			}
 
+			// Flash when a circle completes its expansion
+			flash = circleCompleted;
+
+			// Replace the old queue with updated circles
+			activeCircles = tempCircles;
+		}
+
+		protected override void TraitEnabled(Actor self)
+		{
+			activeCircles.Enqueue(new RadiatingCircle(Info.StartRadius));
+		}
+
+		protected override void TraitDisabled(Actor self)
+		{
+			activeCircles.Clear();
+			intervalTicks = 0;
 			flash = false;
-			currentRadius += radiusChangePerTick;
 		}
 	}
 }

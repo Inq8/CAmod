@@ -96,7 +96,7 @@ Squads = {
 				{ Vehicles = { "seek", "seek", "seek" }, MaxTime = DateTime.Minutes(7) },
 				{ Vehicles = { "lace", "lace", "seek", "seek" }, },
 				{ Vehicles = { "devo", "intl.ai2", "ruin", "seek" }, MinTime = DateTime.Minutes(7) },
-				{ Vehicles = { "intl", "intl.ai2", { "seek", "lace" }, { "devo", "dark", "ruin" }, { "devo", "dark", "ruin" }  }, MinTime = DateTime.Minutes(12) }
+				{ Vehicles = { "intl", "intl.ai2", { "seek", "lace" }, { "devo", "devo", "ruin" }, { "devo", "atmz", "ruin" }  }, MinTime = DateTime.Minutes(12) }
 			}
 		},
 		AttackPaths = {

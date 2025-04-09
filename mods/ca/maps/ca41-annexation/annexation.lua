@@ -6,7 +6,7 @@ ScrinAttackValues = {
 
 NodBuildingsToSell = { NodConyard, NodHand, NodFactory, NodComms }
 
-ScrinReinforcementSquad = { "s3", "s1", "s1", "s1", "s1", "s1", "s2", "s2", "s3", "intl", "rtpd", GunWalkerSeekerOrLacerator, CorrupterDevourerOrDarkener, CorrupterDevourerOrDarkener, GunWalkerSeekerOrLacerator, GunWalkerSeekerOrLacerator }
+ScrinReinforcementSquad = { "s3", "s1", "s1", "s1", "s1", "s1", "s2", "s2", "s3", "intl", "rtpd", GunWalkerSeekerOrLacerator, CorrupterOrDevourer, CorrupterOrDevourer, GunWalkerSeekerOrLacerator, GunWalkerSeekerOrLacerator }
 
 if Difficulty == "hard" then
 	table.insert(UnitCompositions.Scrin, {

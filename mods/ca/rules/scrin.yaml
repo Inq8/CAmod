@@ -205,7 +205,6 @@ VEHICLES.SCRIN:
 		RecreationInterval: 150
 		RequiresCondition: storm-level
 	GrantConditionOnAttackCA@IONSTORM:
-		RequiresActorTarget: true
 		Condition: storm-active
 		RevokeDelay: 75
 		RequiresCondition: ioncon-upgrade
@@ -352,9 +351,12 @@ VEHICLES.SCRIN:
 	FirepowerMultiplier@Anathema4:
 		Modifier: 220
 		RequiresCondition: anathema >= 4
-	DamageMultiplier@Anathema:
+	DamageMultiplier@Anathema1:
+		Modifier: 75
+		RequiresCondition: anathema && anathema < 4
+	DamageMultiplier@Anathema2:
 		Modifier: 50
-		RequiresCondition: anathema
+		RequiresCondition: anathema >= 4
 	GrantTimedCondition@Anathema:
 		Condition: anathema-alive
 		Duration: 750
@@ -498,7 +500,7 @@ S2:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 120
-		Prerequisites: anyradar, ~infantry.scrin, ~!evis.upgrade, ~!impl.upgrade, ~!muti.upgrade, ~techlevel.medium
+		Prerequisites: anyradar, ~infantry.scrin, ~!evis.upgrade, ~!impl.upgrade, ~!stlk.upgrade, ~techlevel.medium
 		IconPalette: chromes
 		Description: Fast moving anti-personnel infantry.
 	TooltipExtras:
@@ -531,7 +533,7 @@ S2:
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 	ReplacedInQueue:
-		Actors: evis, impl, muti
+		Actors: evis, impl, stlk
 
 S3:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -598,7 +600,7 @@ S4:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 124
-		Prerequisites: anyradar, ~infantry.scrin, ~techlevel.medium
+		Prerequisites: anyradar, ~infantry.intruder, ~techlevel.medium
 		IconPalette: chrome
 		Description: Heavy assault infantry with high burst damage.
 	TooltipExtras:
@@ -639,6 +641,7 @@ S4:
 		TeleportCondition: blink
 		ConditionDuration: 3
 		ShowSelectionBarWhenFull: false
+		CircleColor: c8b8ed66
 	GrantConditionOnPrerequisite@BLINKPACKS:
 		Condition: blink-upgrade
 		Prerequisites: blink.upgrade
@@ -655,8 +658,8 @@ MRDR:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 124
-		Prerequisites: ~disabled
+		BuildPaletteOrder: 125
+		Prerequisites: anyradar, ~infantry.harbinger, ~techlevel.medium
 		IconPalette: chromes
 		Description: Heavy assault infantry with high burst damage.
 	TooltipExtras:
@@ -697,6 +700,7 @@ MRDR:
 		TeleportCondition: blink
 		ConditionDuration: 3
 		ShowSelectionBarWhenFull: false
+		CircleColor: c8b8ed66
 	GrantConditionOnPrerequisite@BLINKPACKS:
 		Condition: blink-upgrade
 		Prerequisites: blink.upgrade
@@ -725,7 +729,7 @@ WCHR:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 125
+		BuildPaletteOrder: 126
 		Prerequisites: anyradar, ~infantry.scrin, ~techlevel.medium
 		Description: Infiltration unit used to gain vision of enemies.
 	Valued:
@@ -779,6 +783,7 @@ WCHR:
 		TeleportCondition: blink
 		ConditionDuration: 3
 		ShowSelectionBarWhenFull: false
+		CircleColor: c8b8ed66
 	GrantConditionOnPrerequisite@BLINKPACKS:
 		Condition: blink-upgrade
 		Prerequisites: blink.upgrade
@@ -797,7 +802,7 @@ BRST:
 		BuildPaletteOrder: 160
 		Prerequisites: scrt, ~infantry.scrin, ~techlevel.high
 		IconPalette: chromes
-		Description: Explodes on death or when triggered.
+		Description: Explodes on death or on contact with target.
 	Valued:
 		Cost: 550
 	Tooltip:
@@ -823,8 +828,6 @@ BRST:
 		Weapon: BursterTargeting
 	GrantConditionOnAttack:
 		Condition: triggered
-	GrantConditionOnDeploy:
-		DeployedCondition: triggered
 	KillsSelf:
 		RequiresCondition: (triggered || berserk)
 	-TakeCover:
@@ -832,6 +835,11 @@ BRST:
 		TargetTypes: Burster
 	AutoTarget:
 		ScanRadius: 4
+	TargetedAttackAbility:
+		TargetCursor: attack
+		ArmamentName: primary
+		CircleWidth: 0
+		Type: BursterAttack
 
 EVIS:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -931,7 +939,7 @@ IMPL:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Mobile:
-		Speed: 72
+		Speed: 60
 	RevealsShroud:
 		Range: 6c0
 	AttackFrontal:
@@ -946,7 +954,7 @@ IMPL:
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 
-MUTI:
+STLK:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
@@ -954,7 +962,7 @@ MUTI:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 123
-		Prerequisites: anyradar, ~infantry.scrin, ~muti.upgrade, ~techlevel.medium
+		Prerequisites: anyradar, ~infantry.scrin, ~stlk.upgrade, ~techlevel.medium
 		IconPalette: chromes
 		Description: Fast moving anti-personnel infantry.
 	Selectable:
@@ -962,57 +970,61 @@ MUTI:
 	Valued:
 		Cost: 500
 	Tooltip:
-		Name: Mutilator
+		Name: Stalker
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor, Infantry
 		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
-		Attributes: • Special Ability: Teleport (with upgrade)\n• Takes reduced damage for a brief time after teleporting
+		Attributes: • Special Ability: Cloak\n• Moves faster while cloaked.
 	Health:
 		HP: 13000
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Mobile:
-		Speed: 108
+		Speed: 92
 	RevealsShroud:
 		Range: 6c0
 	AttackFrontal:
 		FacingTolerance: 64
 		PauseOnCondition: being-warped || blinded || reapersnare
 	Armament@PRIMARY:
-		Weapon: MutilatorShards
+		Weapon: StalkerShards
 		LocalOffset: 0,-100,250, 0,100,250
 	Armament@BATF:
 		Name: batf
-		Weapon: MutilatorShards
+		Weapon: StalkerShards
 	AutoTarget:
 		ScanRadius: 5
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
-	PortableChronoCA:
-		ChargeDelay: 500
-		MaxDistance: 16
-		ChronoshiftSound: scrinport.aud
-		RequiresCondition: blink-upgrade
-		TeleportCondition: blink
-		ConditionDuration: 3
+	GrantTimedConditionOnDeploy@Cloak:
+		DeployedCondition: cloak
+		ShowSelectionBar: true
+		StartsFullyCharged: true
+		DeployedTicks: 250
+		CooldownTicks: 500
 		ShowSelectionBarWhenFull: false
-	GrantConditionOnPrerequisite@BLINKPACKS:
-		Condition: blink-upgrade
-		Prerequisites: blink.upgrade
-	WithColoredOverlay@BLINKFLASH:
-		Color: ffffff80
-		RequiresCondition: blink
-	GrantTimedCondition@BlinkShield:
-		Duration: 40
-		Condition: blinkshield
-		RequiresCondition: blink
-		ForceFullDuration: true
-	DamageMultiplier@BlinkShield:
-		Modifier: 50
-		RequiresCondition: blinkshield
-	WithColoredOverlay@BlinkShield:
-		Color: 32154c66
-		RequiresCondition: blinkshield
+		ChargingColor: 808080
+		DischargingColor: ffffff
+		Instant: true
+	Cloak@NORMAL:
+		InitialDelay: 0
+		CloakDelay: 50
+		CloakSound: stlk-cloak.aud
+		UncloakSound: stlk-uncloak.aud
+		CloakedCondition: hidden
+		Palette: cloak
+		IsPlayerPalette: false
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
+		RequiresCondition: !cloak-force-disabled && !being-warped && !parachute && cloak
+		PauseOnCondition: invisibility
+	Cloak@CRATE-CLOAK:
+		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden)
+	WithColoredSelectionBox@INVIS:
+		RequiresCondition: invisibility || hidden
+		ColorSource: Player
+	SpeedMultiplier@CloakSpeed:
+		Modifier: 150
+		RequiresCondition: hidden
 
 SMEDI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -1960,7 +1972,7 @@ LCHR:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Buildings, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
-		Attributes: • Regenerates health while dealing damage (without upgrade)\n• Disables power plants\n• Slows vehicles & cyborgs\n• Regenerates and heals allies when in coalescence form (with upgrade)\n• Special Ability: Coalescence (with upgrade)
+		Attributes: • Regenerates health while dealing damage (without upgrade)\n• Disables power plants\n• Regenerates and heals allies when in coalescence form (with upgrade)\n• Special Ability: Coalescence (with upgrade)
 	Mobile:
 		Speed: 82
 		TurnSpeed: 20
@@ -2005,9 +2017,11 @@ LCHR:
 	GrantConditionOnPrerequisite@COALESCENCE:
 		Condition: coalescence-upgrade
 		Prerequisites: coalescence.upgrade
-	SpawnActorOnDeath:
+	SpawnActorOnDeathCA:
 		Actor: lchr.orb
 		RequiresCondition: coalescence-upgrade && !being-warped
+		AddToSelection: true
+		AddToControlGroup: true
 	KillsSelf:
 		RequiresCondition: triggered
 	ActorLostNotification:
@@ -2083,9 +2097,11 @@ LCHR.Orb:
 		ShowSelectionBar: true
 		SelectionBarColor: ff0000
 		PauseOnCondition: being-warped
-	SpawnActorOnDeath:
+	SpawnActorOnDeathCA:
 		Actor: lchr
 		RequiresCondition: resurrect
+		AddToSelection: true
+		AddToControlGroup: true
 	ProximityExternalCondition@LCHRHEAL:
 		Condition: lchr-healing
 		Range: 2c256
@@ -2110,6 +2126,7 @@ STCR:
 	Inherits@BERSERK: ^Berserk
 	Inherits@IONCONDUITS: ^IonConduits
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
+	Inherits@HULLREGEN: ^HullRegen
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -2119,7 +2136,7 @@ STCR:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 214
+		BuildPaletteOrder: 213
 		Prerequisites: anyradar, ~vehicles.reaper, ~techlevel.medium
 		Queue: VehicleSQ, VehicleMQ
 		Description: Slow moving, very durable, short-range assault unit.
@@ -2184,7 +2201,7 @@ DEVO:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 212
-		Prerequisites: anyradar, ~vehicles.devo, ~techlevel.medium
+		Prerequisites: anyradar, ~vehicles.scrin, ~techlevel.medium
 		Description: Maneuverable medium-range hover tank.
 		IconPalette: chrome
 	TooltipExtras:
@@ -2274,8 +2291,8 @@ DARK:
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 213
-		Prerequisites: anyradar, ~vehicles.harbinger, ~techlevel.medium
+		BuildPaletteOrder: 292
+		Prerequisites: scrt, ~vehicles.scrin, ~malefic.allegiance, ~techlevel.high
 		Description: Heavy hover tank armed with a rift cannon.
 		IconPalette: chromes
 	TooltipExtras:
@@ -2357,8 +2374,8 @@ RUIN:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 280
-		Prerequisites: scrt, ~vehicles.harbinger, ~techlevel.high
+		BuildPaletteOrder: 290
+		Prerequisites: scrt, ~vehicles.scrin, ~loyalist.allegiance, ~techlevel.high
 		Queue: VehicleSQ, VehicleMQ
 		Description: Long-range hover artillery.
 		IconPalette: chrome
@@ -2705,9 +2722,9 @@ OBLT:
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 290
-		Prerequisites: scrt, ~vehicles.scrin, ~loyalist.allegiance, ~techlevel.high
-		Description: Heavy artillery that fires a plasma ball, damaging everything it passes through.
+		BuildPaletteOrder: 281
+		Prerequisites: scrt, ~vehicles.harbinger, ~techlevel.high
+		Description: Heavy artillery that creates a charged particle stream through which\n  it projects a powerful energy pulse, damaging everything it passes through.
 		IconPalette: chromes
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Light Armor, Infantry
@@ -2744,9 +2761,43 @@ OBLT:
 		Range: 4c0
 	Armament@PRIMARY:
 		Weapon: ObliteratorBolt
-		LocalOffset: 850,0,400
+		LocalOffset: 750,0,400
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
+		PauseOnCondition: !ammo
+		ReloadingCondition: reloading
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: ObliteratorCharge
+		LocalOffset: 750,0,400
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+		PauseOnCondition: reloading
+	AmbientSoundCA@CHARGING:
+		SoundFiles: oblt-charge2.aud
+		InitialSound: oblt-charge1.aud
+		RequiresCondition: charging
+		AudibleThroughFog: true
+	GrantConditionOnAttack@CHARGING:
+		Condition: charging
+		ArmamentNames: secondary
+		RevokeDelay: 6
+	AmmoPool:
+		Ammo: 1
+		InitialAmmo: 0
+		AmmoCondition: ammo
+		Armaments: primary
+	ReloadAmmoPoolCA@CHARGE:
+		Delay: 100
+		Count: 1
+		RequiresCondition: charging && !reloading
+		ShowSelectionBar: true
+		SelectionBarColor: ff00ff
+	ReloadAmmoPoolCA@DRAIN:
+		Count: -1
+		Delay: 1
+		RequiresCondition: !charging
+		ShowSelectionBar: false
 	WithMuzzleOverlay:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -3063,7 +3114,7 @@ TORM:
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 61
-		Prerequisites: nerv, ~aircraft.scrin, ~malefic.allegiance, ~techlevel.medium
+		Prerequisites: ~aircraft.scrin, ~techlevel.medium
 		Description: Small anti-vehicle harrasser aircraft.
 		IconPalette: chromes
 	TooltipExtras:
@@ -3886,6 +3937,9 @@ MSHP:
 	Targetable@FleetRecallable:
 		RequiresCondition: !attacking
 	-SoundOnDamageTransitionCA:
+	ProductionCostMultiplier@HarbingerBonus:
+		Multiplier: 90
+		Prerequisites: player.harbinger
 
 #
 # ---- Husks
@@ -4666,6 +4720,9 @@ PORT:
 	ProvidesPrerequisiteValidatedFaction@collector:
 		Factions: collector
 		Prerequisite: infantry.collector
+	ProvidesPrerequisiteValidatedFaction@intruder:
+		Factions: scrin, reaper, traveler, collector
+		Prerequisite: infantry.intruder
 	Power:
 		Amount: -20
 	ProvidesPrerequisite@buildingname:
@@ -4677,10 +4734,6 @@ PORT:
 		Proxy: stolentech.port
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
-	SpawnActorOnDeath@STOLENTECH:
-		Actor: stolentech.port
-		OwnerType: Killer
-		DeathType: AssassinC4
 	SpawnActorOnMindControlled@STOLENTECH:
 		Actor: stolentech.port
 		OwnerType: Master
@@ -4749,9 +4802,6 @@ WSPH:
 	ProvidesPrerequisiteValidatedFaction@corr:
 		Factions: scrin, reaper, traveler, harbinger
 		Prerequisite: vehicles.corr
-	ProvidesPrerequisiteValidatedFaction@devo:
-		Factions: scrin, reaper, traveler, collector
-		Prerequisite: vehicles.devo
 	ProvidesPrerequisiteValidatedFaction@tpod:
 		Factions: scrin, traveler, harbinger, collector
 		Prerequisite: vehicles.tpod
@@ -4777,10 +4827,6 @@ WSPH:
 		Proxy: stolentech.wsph
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
-	SpawnActorOnDeath@STOLENTECH:
-		Actor: stolentech.wsph
-		OwnerType: Killer
-		DeathType: AssassinC4
 	SpawnActorOnMindControlled@STOLENTECH:
 		Actor: stolentech.wsph
 		OwnerType: Master
@@ -5055,10 +5101,6 @@ GRAV:
 		Proxy: stolentech.grav
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
-	SpawnActorOnDeath@STOLENTECH:
-		Actor: stolentech.grav
-		OwnerType: Killer
-		DeathType: AssassinC4
 	SpawnActorOnMindControlled@STOLENTECH:
 		Actor: stolentech.grav
 		OwnerType: Master
@@ -5357,9 +5399,6 @@ RFGN:
 		TargetTypes: ResetSupportPowerInfiltrate
 	WithBuildingBib:
 		HasMinibib: true
-	ProductionCostMultiplier@HarbingerBonus:
-		Multiplier: 80
-		Prerequisites: player.harbinger
 
 PTUR:
 	Inherits: ^Defense
@@ -6100,7 +6139,7 @@ WORMHOLE:
 		Bounds: 1365, 1365
 	HitShape:
 	Targetable:
-		TargetTypes: Ground, Structure, Wormhole
+		TargetTypes: Ground, Structure, Defense, Wormhole
 	Health:
 		HP: 100000
 	Armor:

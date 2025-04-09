@@ -209,7 +209,6 @@ FlamerTD:
 	TargetActorCenter: true
 	Projectile: LinearPulse
 		Speed: 256
-		ImpactInterval: 1
 		MinimumImpactDistance: 0c768
 		MaximumImpactDistance: 1c768
 		ForceGround: true
@@ -250,7 +249,6 @@ BigFlamerTD:
 	Projectile: LinearPulse
 		Speed: 288
 		VisualSpeed: 96
-		ImpactInterval: 1
 		Image: flameallfast
 		Inaccuracy: 484
 		Palette: tseffect-ignore-lighting-alpha90
@@ -406,7 +404,6 @@ BlackHandFlamer:
 	Projectile: LinearPulse
 		Speed: 440
 		VisualSpeed: 220
-		ImpactInterval: 1
 		Inaccuracy: 160
 		Image: thinblueflame
 		Palette: effect-ignore-lighting-alpha85
@@ -861,15 +858,6 @@ C4:
 
 AssassinC4:
 	Inherits: C4
-	Warhead@1Dam: HealthPercentageDamage
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, AssassinC4
-		ValidRelationships: Enemy, Neutral
-	Warhead@2Dam: HealthPercentageDamage
-		ValidRelationships: Ally
-		ValidTargets: Air, Ground, Water
-		Spread: 64
-		Damage: 200
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 
 Ivanbomb:
 	Inherits: ^Artillery
@@ -1031,6 +1019,9 @@ MADTankDetonate:
 	Warhead@1Dam: HealthPercentageDamage
 		Spread: 7c0
 		Damage: 19
+		Versus:
+			Heavy: 85
+			Light: 75
 		InvalidTargets: MADTank, Infantry
 	Warhead@2Dam: HealthPercentageDamage
 		Spread: 5c0
@@ -1324,16 +1315,18 @@ EnlightenedBeam:
 		RecalculateColors: true
 		TrackTarget: false
 		MaxFacingDeviation: 64
-	Warhead@1Dam: SpreadDamage
-		Spread: 512
-		Damage: 5000
-		Falloff: 100, 85, 60, 25, 0
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+	Warhead@1Dam: HealthPercentageSpreadDamage
+		Spread: 341
+		Falloff: 100, 45, 25, 15, 0
+		Damage: 100
 		Versus:
-			None: 5
-			Wood: 70
-			Concrete: 45
-			Light: 70
+			Wood: 5
+			None: 10
+			Concrete: 10
+			Brick: 10
+			Light: 17
+			Heavy: 17
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 		ValidRelationships: Enemy, Neutral
 	Warhead@friendlyFire: SpreadDamage
 		Spread: 256
@@ -1355,7 +1348,7 @@ EnlightenedBeam:
 
 EnlightenedEmp:
 	ReloadDelay: 500
-	Range: 5c0
+	Range: 6c512
 	Report: enli-empfire.aud
 	Projectile: Missile
 		Blockable: false
@@ -1366,19 +1359,19 @@ EnlightenedEmp:
 		MaximumLaunchSpeed: 190
 		MinimumLaunchSpeed: 190
 		Speed: 190
-		RangeLimit: 5c0
+		RangeLimit: 6c512
 		Jammable: false
 		TrailImage: smokey
 		TrailPalette: scrinplasma
 	Warhead@1Emp: GrantExternalConditionCA
 		Range: 0c896
-		Duration: 100
+		Duration: 150
 		Condition: empdisable
 		ValidTargets: Vehicle
 		InvalidTargets: Cyborg, EmpImmune
 	Warhead@2Emp: GrantExternalConditionCA
 		Range: 0c896
-		Duration: 75
+		Duration: 100
 		Condition: empdisable
 		ValidTargets: Cyborg, Defense
 		InvalidTargets: EmpImmune
@@ -2205,7 +2198,7 @@ MicrowaveZap:
 			Wood: 5
 			Concrete: 40
 			Light: 100
-			Heavy: 60
+			Heavy: 85
 			Brick: 5
 	Warhead@2Dam: SpreadDamage
 		ValidTargets: Infantry
@@ -2226,8 +2219,8 @@ MicrowaveZap:
 
 MicrowaveZap.UPG:
 	Inherits: MicrowaveZap
-	Warhead@3: ChangeOwnerToNeutral
-		ValidTargets: DriverKill
+	Warhead@DriverKill: ChangeOwnerToNeutral
+		ValidTargets: DriverKillLow
 		ValidRelationships: Enemy, Ally
 		CargoEffect: Kill
 		Range: 0c511
@@ -2244,7 +2237,7 @@ MicrowaveZap.UPG:
 		ValidRelationships: Enemy, Ally
 		Duration: 2
 		Condition: highlight
-		ValidTargets: DriverKill
+		ValidTargets: DriverKillLow
 
 HornetLauncher:
 	ReloadDelay: 15
@@ -2730,7 +2723,6 @@ SonicPulse:
 	TargetActorCenter: true
 	Projectile: LinearPulse
 		Speed: 768
-		ImpactInterval: 1
 		MinimumImpactDistance: 768
 	Warhead@1Dam: SpreadDamage
 		Spread: 0c256
@@ -3625,7 +3617,6 @@ CryoSprayer:
 	TargetActorCenter: true
 	Projectile: LinearPulse
 		Speed: 341
-		ImpactInterval: 1
 		MinimumImpactDistance: 0
 		MaximumImpactDistance: 5456
 	Warhead@1Dam: SpreadDamage
@@ -3720,7 +3711,6 @@ BasiliskPulse:
 	TargetActorCenter: true
 	Projectile: LinearPulse
 		Speed: 512
-		ImpactInterval: 1
 		MinimumImpactDistance: 512
 		Image: sparks_overlay
 		Sequences: idle

@@ -451,14 +451,14 @@ RiftCannon:
 		DamageTypes: BulletDeath
 	Warhead@2Dam: HealthPercentageDamage
 		Spread: 341
-		Damage: 10
+		Damage: 100
 		Versus:
-			Wood: 35
-			None: 60
-			Concrete: 60
-			Brick: 75
-			Light: 120
-			Heavy: 120
+			Wood: 4
+			None: 6
+			Concrete: 6
+			Brick: 6
+			Light: 12
+			Heavy: 12
 		DamageTypes: BulletDeath
 	Warhead@antiShip: SpreadDamage
 		ValidTargets: Water
@@ -1293,9 +1293,9 @@ EvisceratorShardsCharged:
 		Versus:
 			Wood: 30
 
-MutilatorShards:
+StalkerShards:
 	Inherits: RavagerShards
-	StartBurstReport: muti-fire1.aud, muti-fire2.aud
+	StartBurstReport: stlk-fire1.aud, stlk-fire2.aud
 	Range: 3c512
 	Burst: 2
 	BurstDelays: 4
@@ -1305,7 +1305,6 @@ MutilatorShards:
 		ContrailStartColor: 954fff
 	Warhead@1Dam: SpreadDamage
 		Damage: 7500
-		Spread: 320
 		Versus:
 			Wood: 15
 			Concrete: 10
@@ -1724,7 +1723,7 @@ LeecherBeam:
 	StartBurstReport: leecher-fire1.aud
 	Range: 5c512
 	ReloadDelay: 60
-	Burst: 7
+	Burst: 9
 	BurstDelays: 5
 	Projectile: PlasmaBeam
 		Duration: 7
@@ -1753,11 +1752,6 @@ LeecherBeam:
 		Duration: 100
 		Condition: powerdrain
 		ValidTargets: PowerDrainable
-	Warhead@SLOW: GrantExternalConditionCA
-		Range: 0c768
-		Duration: 30
-		Condition: slowed
-		ValidTargets: Vehicle, Cyborg
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: scrin
@@ -1821,6 +1815,7 @@ GreaterCoalescenceZap:
 	Inherits: LeecherBeam
 	Range: 4c512
 	ValidTargets: Infantry, Vehicle, Structure, Ship
+	Burst: 7
 	Projectile: PlasmaBeam
 		Duration: 6
 		Inaccuracy: 0
@@ -1838,6 +1833,11 @@ GreaterCoalescenceZap:
 	Warhead@3Eff: CreateEffect
 		Image: leechhit
 		Inaccuracy: 128
+	Warhead@SLOW: GrantExternalConditionCA
+		Range: 0c768
+		Duration: 30
+		Condition: slowed
+		ValidTargets: Vehicle, Cyborg
 
 TiberiumCoalescence:
 	Inherits: GreaterCoalescence
@@ -1898,16 +1898,14 @@ AtomizerBolts:
 		ThrowWithoutTarget: false
 		AimTargetStances: Enemy, Neutral
 		AllowDirectHit: true
-	Warhead@red: GrantExternalConditionCA
-		Range: 0c341
-		Duration: 2
-		Condition: redhighlight
-		ValidTargets: Vehicle, Ship, Defense
-	Warhead@atomize: GrantExternalConditionCA
-		Range: 0c341
-		Duration: 150
-		Condition: atomized
-		ValidTargets: Vehicle, Ship, Defense
+	Warhead@ArcInfantry: FireShrapnel
+		Weapon: AtomizerArcInfantry
+		TargetClosest: true
+		Amount: 0
+		AimChance: 100
+		ThrowWithoutTarget: false
+		AimTargetStances: Enemy, Neutral
+		AllowDirectHit: true
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: scrin
@@ -1924,6 +1922,7 @@ AtomizerArc:
 	-Projectile:
 	-Warhead@1Dam:
 	-Warhead@Arc:
+	-Warhead@ArcInfantry:
 	Projectile: PlasmaBeam
 		Duration: 7
 		Colors: ee000008
@@ -1934,37 +1933,59 @@ AtomizerArc:
 		DistortionAnimation: 150
 		SegmentLength: 350
 		TrackTarget: true
+	Warhead@red: GrantExternalConditionCA
+		Range: 0c42
+		Duration: 2
+		Condition: redhighlight
+		ValidTargets: Vehicle, Ship, Defense, Infantry
+	Warhead@atomize: GrantExternalConditionCA
+		Range: 0c42
+		Duration: 150
+		Condition: atomized
+		ValidTargets: Vehicle, Ship, Defense, Infantry
 	Warhead@2Dam: TargetDamage
-		ValidTargets: Vehicle, Ship, Defense
 		DamageTypes: Prone50Percent, AtomizedDeath
-		Damage: 2600
+		Damage: 2000
 		Delay: 35
 		Versus:
+			None: 15
 			Light: 65
+			Concrete: 90
 	Warhead@3Dam: TargetDamage
-		ValidTargets: Vehicle, Ship, Defense
 		DamageTypes: Prone50Percent, AtomizedDeath
-		Damage: 2600
+		Damage: 2000
 		Delay: 70
 		Versus:
+			None: 15
 			Light: 65
+			Concrete: 90
 	Warhead@4Dam: TargetDamage
-		ValidTargets: Vehicle, Ship, Defense
 		DamageTypes: Prone50Percent, AtomizedDeath
-		Damage: 2600
+		Damage: 2000
 		Delay: 105
 		Versus:
+			None: 15
 			Light: 65
+			Concrete: 90
 	Warhead@5Dam: TargetDamage
-		ValidTargets: Vehicle, Ship, Defense
 		DamageTypes: Prone50Percent, AtomizedDeath
-		Damage: 2600
+		Damage: 2000
 		Delay: 140
 		Versus:
+			None: 15
 			Light: 65
+			Concrete: 90
 	Warhead@3Eff: CreateEffect
 		Image: leechhitlg
 		-ImpactSounds:
+
+AtomizerArcInfantry:
+	Inherits: AtomizerArc
+	Range: 0c768
+	ValidTargets: Infantry
+	-Projectile:
+	-Warhead@3Eff:
+	Projectile: InstantHit
 
 BursterTargeting:
 	ValidTargets: Vehicle, Infantry, Structure
@@ -2060,16 +2081,32 @@ MindSparkZap:
 			Wood: 5
 		DamageTypes: ElectricityDeath
 
+ObliteratorCharge:
+	Range: 15c0
+	ReloadDelay: 5
+	Projectile: LinearPulse
+		Speed: 2c0
+		ImpactInterval: 448
+	Warhead@2Eff: CreateEffect
+		Explosions: idle, idle2, idle3, idle4, idle5, idle6, idle7, idle8
+		ExplosionPalette: scrin
+		Image: obltboltcharge
+		ValidTargets: Ground, Air, Ship, Trees
+		Inaccuracy: 341
+
 ObliteratorBolt:
 	Range: 15c0
-	ReloadDelay: 150
+	ReloadDelay: 75
 	Report: oblt-fire1.aud
 	Projectile: LinearPulse
-		Speed: 130
+		Speed: 1c0
 		Image: obltbolt
 		Sequences: idle, idle2
 		Palette: scrin
-		ImpactInterval: 3
+		ImpactInterval: 390
+		FinalHitAnimSequence: idle
+		FinalHitAnimPalette: scrin
+		FinalHitAnim: enrvbolthit
 	Warhead@1Dam: SpreadDamage
 		Spread: 390
 		Falloff: 100, 50, 0
@@ -2094,11 +2131,13 @@ ObliteratorBolt:
 		ValidRelationships: Ally
 		InvalidTargets: Obliterator
 	Warhead@2Eff: CreateFacingEffect
-		Explosions: trail, trail2
+		Explosions: trail, trail2, trail3
 		ExplosionPalette: scrin
 		Image: obltbolt
 		ValidTargets: Ground, Air, Ship, Trees
 		Inaccuracy: 110
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Scorch
 
 NullifierBolt:
 	Range: 8c0
@@ -2162,3 +2201,4 @@ ScrinRepair:
 		Duration: 2
 		Condition: highlight
 		ValidTargets: Repair
+

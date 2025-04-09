@@ -1,3 +1,5 @@
+RespawnEnabled = Map.LobbyOption("respawn") == "enabled"
+
 BattleTankPatrolPath = { BattleTankPatrol1.Location, BattleTankPatrol2.Location, BattleTankPatrol3.Location, BattleTankPatrol4.Location, BattleTankPatrol5.Location, BattleTankPatrol6.Location, BattleTankPatrol5.Location, BattleTankPatrol4.Location, BattleTankPatrol3.Location, BattleTankPatrol2.Location }
 
 GuardianPatrolPath = { GuardianPatrol1.Location, GuardianPatrol2.Location, GuardianPatrol3.Location, GuardianPatrol4.Location,  GuardianPatrol3.Location, GuardianPatrol2.Location }
@@ -63,6 +65,12 @@ WorldLoaded = function()
 
 	ObjectiveHackIonControl = Nod.AddObjective("Hack into GDI Advanced Comms Center.")
 
+	CommandoDeathTrigger(Commando)
+	HackerDeathTrigger(Hacker1)
+	HackerDeathTrigger(Hacker2)
+	StealthTankDeathTrigger(StealthTank1)
+	StealthTankDeathTrigger(StealthTank2)
+
 	Trigger.OnKilled(IonControl, function(self, killer)
 		if ObjectiveHackIonControl ~= nil and not Nod.IsObjectiveCompleted(ObjectiveHackIonControl) then
 			Nod.MarkFailedObjective(ObjectiveHackIonControl)
@@ -78,12 +86,6 @@ WorldLoaded = function()
 		end
 		if ObjectiveDestroyAlliedBase ~= nil then
 			Nod.MarkCompletedObjective(ObjectiveDestroyAlliedBase)
-		end
-	end)
-
-	Trigger.OnAllKilled({ Hacker1, Hacker2 }, function()
-		if not Nod.IsObjectiveCompleted(ObjectiveHackIonControl) then
-			Nod.MarkFailedObjective(ObjectiveHackIonControl)
 		end
 	end)
 
@@ -221,4 +223,61 @@ InitGDIPatrols = function()
 	if not BattleTankPatroller1.IsDead then
 		BattleTankPatroller1.Patrol(BattleTankPatrolPath, true)
 	end
+end
+
+CommandoDeathTrigger = function(commando)
+	Trigger.OnKilled(commando, function(self, killer)
+		if RespawnEnabled then
+			Notification("Commando arriving in 20 seconds.")
+			Trigger.AfterDelay(DateTime.Seconds(20), function()
+				Commando = Reinforcements.Reinforce(Nod, { "rmbo" }, { Respawn.Location, RespawnRally.Location })[1]
+				Beacon.New(Nod, RespawnRally.CenterPosition)
+				Media.PlaySpeechNotification(Nod, "ReinforcementsArrived")
+				if Difficulty ~= "hard" then
+					Commando.GrantCondition("difficulty-" .. Difficulty)
+				end
+				CommandoDeathTrigger(Commando)
+			end)
+		end
+	end)
+end
+
+HackerDeathTrigger = function(hacker)
+	Trigger.OnKilled(hacker, function(self, killer)
+		if #Nod.GetActorsByType("hack") == 0 and not Nod.IsObjectiveCompleted(ObjectiveHackIonControl) then
+			if RespawnEnabled then
+				Notification("Hacker arriving in 20 seconds.")
+				Trigger.AfterDelay(DateTime.Seconds(20), function()
+					Hacker = Reinforcements.Reinforce(Nod, { "hack" }, { Respawn.Location, RespawnRally.Location })[1]
+					Beacon.New(Nod, RespawnRally.CenterPosition)
+					Media.PlaySpeechNotification(Nod, "ReinforcementsArrived")
+					if Difficulty ~= "hard" then
+						Hacker.GrantCondition("difficulty-" .. Difficulty)
+					end
+					HackerDeathTrigger(Hacker)
+				end)
+			else
+				Nod.MarkFailedObjective(ObjectiveHackIonControl)
+			end
+		end
+	end)
+end
+
+StealthTankDeathTrigger = function(stealthTank)
+	Trigger.OnKilled(stealthTank, function(self, killer)
+		if #Nod.GetActorsByType("stnk.nod") == 0 then
+			if RespawnEnabled then
+				Notification("Stealth Tank arriving in 20 seconds.")
+				Trigger.AfterDelay(DateTime.Seconds(20), function()
+					StealthTank = Reinforcements.Reinforce(Nod, { "stnk.nod" }, { Respawn.Location, RespawnRally.Location })[1]
+					Beacon.New(Nod, RespawnRally.CenterPosition)
+					Media.PlaySpeechNotification(Nod, "ReinforcementsArrived")
+					if Difficulty ~= "hard" then
+						StealthTank.GrantCondition("difficulty-" .. Difficulty)
+					end
+					StealthTankDeathTrigger(StealthTank)
+				end)
+			end
+		end
+	end)
 end

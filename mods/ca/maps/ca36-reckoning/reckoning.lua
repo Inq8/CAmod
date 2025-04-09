@@ -33,7 +33,7 @@ RiftEnabledTime = {
 if Difficulty == "hard" then
 	table.insert(UnitCompositions.Scrin, {
 		Infantry = { "s3", "s4", "evis", "evis", "evis", "evis", "s1", "s1", "s4", "s1", "s4", "s1", "s4", "s1", "mast" },
-		Vehicles = { "shrw", TripodVariant, TripodVariant, "shrw", CorrupterDevourerOrDarkener, "oblt", "shrw" },
+		Vehicles = { "shrw", TripodVariant, TripodVariant, "shrw", CorrupterOrDevourer, "oblt", "shrw" },
 		Aircraft = { PacOrDevastator, "pac" },
 		MinTime = DateTime.Minutes(22)
 	})

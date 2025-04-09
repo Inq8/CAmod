@@ -2280,7 +2280,7 @@ JEEP:
 		Color: 00bbff40
 		MaxRadiusColor: 00bbff66
 		MaxRadiusFlashColor: 00bbff66
-		Interval: 25
+		Interval: 75
 		Duration: 50
 		ValidRelationships: Ally
 		AlwaysShowMaxRange: true
@@ -3120,9 +3120,6 @@ QTNK:
 	Targetable@MADTank:
 		RequiresCondition: !being-warped
 		TargetTypes: MADTank
-	ProductionCostMultiplier@UkraineBonus:
-		Multiplier: 75
-		Prerequisites: player.ukraine
 	FirepowerMultiplier@MADIC:
 		Modifier: 40
 		RequiresCondition: invulnerability
@@ -3405,7 +3402,6 @@ GDRN:
 	-Targetable@DRIVERKILL:
 	-Targetable@DRIVERKILLLOWHP:
 	-GrantConditionOnDamageState@DriverKillLessThan50:
-	-GrantConditionOnDamageState@DriverKillLessThan75:
 	-Targetable@AICAPTURE:
 	Sellable:
 		RequiresCondition: unit-sellable && !c4 && !being-warped
@@ -3539,6 +3535,12 @@ BGGY:
 	GrantConditionOnPrerequisite@Decoy:
 		Condition: decoy-upgrade
 		Prerequisites: decoy.upgrade
+	GrantConditionOnPrerequisite@ZealBonus:
+		Condition: zeal-covenant
+		Prerequisites: zeal.covenant
+	SpeedMultiplier@ZealBonus:
+		Modifier: 115
+		RequiresCondition: zeal-covenant
 
 ^DecoyUnit:
 	GrantTimedCondition@Decoy:
@@ -3610,7 +3612,6 @@ FTNK.Decoy:
 	-Targetable@DRIVERKILL:
 	-Targetable@DRIVERKILLLOWHP:
 	-GrantConditionOnDamageState@DriverKillLessThan50:
-	-GrantConditionOnDamageState@DriverKillLessThan75:
 	-Targetable@AICAPTURE:
 	-GivesExperienceCA:
 	-GrantConditionOnPrerequisite@GLOBALBOUNTY:
@@ -3665,7 +3666,6 @@ HFTK.Decoy:
 	-Targetable@DRIVERKILL:
 	-Targetable@DRIVERKILLLOWHP:
 	-GrantConditionOnDamageState@DriverKillLessThan50:
-	-GrantConditionOnDamageState@DriverKillLessThan75:
 	-Targetable@AICAPTURE:
 	-GivesExperienceCA:
 	-GrantConditionOnPrerequisite@GLOBALBOUNTY:
@@ -4354,7 +4354,6 @@ MTNK.Drone:
 	-Targetable@DRIVERKILL:
 	-Targetable@DRIVERKILLLOWHP:
 	-GrantConditionOnDamageState@DriverKillLessThan50:
-	-GrantConditionOnDamageState@DriverKillLessThan75:
 	-Targetable@AICAPTURE:
 	-SpeedMultiplier@BERSERK:
 	-ReloadDelayMultiplier@BERSERK:
@@ -4483,7 +4482,6 @@ MDRN:
 	-Targetable@DRIVERKILL:
 	-Targetable@DRIVERKILLLOWHP:
 	-GrantConditionOnDamageState@DriverKillLessThan50:
-	-GrantConditionOnDamageState@DriverKillLessThan75:
 	-Targetable@AICAPTURE:
 	-Targetable@MINIDRONE:
 	-ChangesHealth@MINIDRONE:
@@ -4774,7 +4772,6 @@ HTNK.Drone:
 	-Targetable@DRIVERKILL:
 	-Targetable@DRIVERKILLLOWHP:
 	-GrantConditionOnDamageState@DriverKillLessThan50:
-	-GrantConditionOnDamageState@DriverKillLessThan75:
 	-Targetable@AICAPTURE:
 	-SpeedMultiplier@BERSERK:
 	-ReloadDelayMultiplier@BERSERK:
@@ -5117,9 +5114,6 @@ STNK.Nod:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: vehicles.upgraded
-	ProductionCostMultiplier@ShadowBonus:
-		Multiplier: 90
-		Prerequisites: player.shadow
 	GrantConditionOnPrerequisite@UPG:
 		Condition: tibcore-upgrade
 		Prerequisites: tibcore.upgrade
@@ -5231,9 +5225,6 @@ HSTK:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: vehicles.upgraded
-	ProductionCostMultiplier@ShadowBonus:
-		Multiplier: 90
-		Prerequisites: player.shadow
 	GrantConditionOnPrerequisite@UPG:
 		Condition: tibcore-upgrade
 		Prerequisites: tibcore.upgrade
@@ -5316,6 +5307,12 @@ BIKE:
 	GrantConditionOnPrerequisite@UPG:
 		Condition: tibcore-upgrade
 		Prerequisites: tibcore.upgrade
+	GrantConditionOnPrerequisite@ZealBonus:
+		Condition: zeal-covenant
+		Prerequisites: zeal.covenant
+	SpeedMultiplier@ZealBonus:
+		Modifier: 115
+		RequiresCondition: zeal-covenant
 
 FTNK:
 	Inherits: ^TankTD
@@ -5601,7 +5598,7 @@ HARV.TD.UPG:
 		HP: 65000
 	Tooltip:
 		Name: Stealth Harvester
-	Cloak@Deceit:
+	Cloak@NORMAL:
 		InitialDelay: 74
 		CloakDelay: 75
 		CloakSound: trans1.aud
@@ -5999,7 +5996,7 @@ TRPC:
 		ValidRelationships: Ally
 	WithRadiatingCircle:
 		EndRadius: 3c0
-		Interval: 25
+		Interval: 75
 		Duration: 50
 		ValidRelationships: Ally
 		AlwaysShowMaxRange: true
@@ -6041,7 +6038,7 @@ IFV:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 170
-		Prerequisites: infantry.any, radarorrepair, ~vehicles.allies, ~techlevel.medium
+		Prerequisites: radarorrepair, ~vehicles.allies, ~techlevel.medium
 		Description: Adaptable infantry transport.
 	Tooltip:
 		Name: Infantry Fighting Vehicle
@@ -6547,7 +6544,7 @@ IFV:
 			s2: sharturr
 			evis: sharturr
 			impl: sharturr
-			muti: sharturr
+			stlk: sharturr
 			s3: samturr
 			s4: discturr
 			s6: engturr
@@ -6849,7 +6846,6 @@ IFV.AI:
 	-Capturable:
 	-Capturable@DRIVER_DEAD:
 	-Targetable@DRIVERKILL:
-	-GrantConditionOnDamageState@DriverKillLessThan75:
 	AutoTarget:
 		AttackAnythingCondition: stance-attackanything
 		ScanRadius: 6
@@ -6904,7 +6900,7 @@ RECK:
 		TurnSpeed: 24
 	Buildable:
 		BuildPaletteOrder: 500
-		Prerequisites: infantry.any, radarorrepair, ~vehicles.reck
+		Prerequisites: radarorrepair, ~vehicles.reck
 	Tooltip:
 		Name: Reckoner
 		RequiresCondition: !full || nochange
@@ -7079,6 +7075,12 @@ TITN:
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
+	RangeMultiplier@SEEK:
+		RequiresCondition: seek && !gyrostabilizers
+	RangeMultiplier@SEEK2:
+		RequiresCondition: seek2 && !gyrostabilizers
+	RangeMultiplier@SEEK3:
+		RequiresCondition: seek3 && !gyrostabilizers
 
 TITN.RAIL:
 	Inherits: TITN
@@ -7208,9 +7210,9 @@ JUGG:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 		Condition: moving
 	RangeMultiplier@GYRO:
-		Modifier: 150
+		Modifier: 140
 	ReloadDelayMultiplier@GYRO:
-		Modifier: 150
+		Modifier: 140
 	Carryable:
 		LocalOffset: 0,0,700
 	-Crushable:
@@ -7514,7 +7516,7 @@ RTNK:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 34000
+		HP: 32000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -8007,7 +8009,7 @@ WTNK:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses, Infantry
 		Weaknesses: • Weak vs Buildings\n• Cannot attack Aircraft
-		Attributes: • Briefly disables vehicles/defenses\n• Kills crew of vehicles with less than 75% HP (with upgrade)\n• Crewless vehicles capturable by infantry
+		Attributes: • Briefly disables vehicles/defenses\n• Kills crew of vehicles with less than 50% HP (with upgrade)\n• Crewless vehicles capturable by infantry
 	Valued:
 		Cost: 1500
 	Tooltip:
@@ -8188,7 +8190,7 @@ BATF:
 			s6: loaded-repair
 			evis: loaded
 			impl: loaded
-			muti: loaded
+			stlk: loaded
 			mast: loaded-cmdo
 	WithCargoSounds:
 		EnterSounds: genter1a.aud
@@ -8421,7 +8423,6 @@ MEMP:
 	-Targetable@DRIVERKILL:
 	-Targetable@DRIVERKILLLOWHP:
 	-GrantConditionOnDamageState@DriverKillLessThan50:
-	-GrantConditionOnDamageState@DriverKillLessThan75:
 	-Targetable@AICAPTURE:
 	WithColoredOverlay@DRONEDISABLE:
 		RequiresCondition: (!radarenabled || empdisable) && !triggered
@@ -8524,7 +8525,6 @@ CDRN:
 	-Targetable@DRIVERKILL:
 	-Targetable@DRIVERKILLLOWHP:
 	-GrantConditionOnDamageState@DriverKillLessThan50:
-	-GrantConditionOnDamageState@DriverKillLessThan75:
 	-Targetable@AICAPTURE:
 	Sellable:
 		RequiresCondition: unit-sellable && !c4 && !being-warped
@@ -9046,7 +9046,7 @@ WOLV:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 250
 		Prerequisites: gtek, ~vehicles.talon, ~techlevel.medium
-		Description: Light battle-mech with dual chainguns.
+		Description: Compact & durable battle-mech with dual chainguns.
 		IconPalette: chrometd
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Buildings, Light Armor
@@ -9061,7 +9061,7 @@ WOLV:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 36000
+		HP: 44000
 	Armor:
 		Type: Light
 	Mobile:
@@ -9204,7 +9204,7 @@ XO:
 		ShowSelectionBarWhenFull: false
 		ChargeDelay: 625
 		SelectionBarColor: ffaa00
-		CircleColor: ffaa00a0
+		CircleColor: ffaa0077
 		MaxDistance: 7
 		Speed: 140
 	Contrail@Jumping:
@@ -9562,7 +9562,7 @@ OVLD:
 		AffectsParent: true
 	WithRadiatingCircle:
 		EndRadius: 5c0
-		Interval: 25
+		Interval: 75
 		Duration: 50
 		ValidRelationships: Ally
 		AlwaysShowMaxRange: true

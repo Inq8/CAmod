@@ -101,6 +101,10 @@ WorldLoaded = function()
 	RespawnTrigger(Seal2)
 	RespawnTrigger(Spy)
 
+	Actor.Create("radar.dummy", true, { Owner = USA1 })
+	Actor.Create("radar.dummy", true, { Owner = USA2 })
+	Actor.Create("radar.dummy", true, { Owner = England })
+
 	Trigger.OnAllKilled({ Seal1, Seal2 }, function(self, killer)
 		if not RespawnEnabled then
 			if not AllReactorsDead then
@@ -452,11 +456,15 @@ DropChronoPrison = function()
 
 				local chronoPrisons = ChronoPrisonPlayer.GetActorsByType("chpr")
 				Trigger.OnKilled(chronoPrisons[1], function(self, killer)
-					Utils.Do(Players, function(p)
-						if not p.IsObjectiveCompleted(Objectives.NeutralizeChronosphere[p.InternalName]) then
-							p.MarkFailedObjective(Objectives.NeutralizeChronosphere[p.InternalName])
-						end
-					end)
+					if RespawnEnabled then
+						DropChronoPrison()
+					else
+						Utils.Do(Players, function(p)
+							if not p.IsObjectiveCompleted(Objectives.NeutralizeChronosphere[p.InternalName]) then
+								p.MarkFailedObjective(Objectives.NeutralizeChronosphere[p.InternalName])
+							end
+						end)
+					end
 				end)
 			end
 		end)

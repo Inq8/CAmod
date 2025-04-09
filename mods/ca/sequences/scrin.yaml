@@ -763,65 +763,65 @@ impl:
 	icon:
 		Filename: implicon.shp
 
-muti:
+stlk:
 	Inherits: ^ScrinCommonDeaths
 	stand:
-		Filename: muti.shp
+		Filename: stlk.shp
 		Facings: 8
 	stand2:
-		Filename: muti.shp
+		Filename: stlk.shp
 		Facings: 8
 	run:
-		Filename: muti.shp
+		Filename: stlk.shp
 		Start: 8
 		Length: 4
 		Facings: 8
 		Tick: 120
 	shoot:
-		Filename: muti.shp
+		Filename: stlk.shp
 		Frames: 43,44,48,49,53,54,58,59,63,64,68,69,73,74,78,79
 		Length: 2
 		Facings: 8
 		Tick: 80
 	idle1:
-		Filename: muti.shp
+		Filename: stlk.shp
 		Length: 2
 		Tick: 120
 	idle2:
-		Filename: muti.shp
+		Filename: stlk.shp
 		Start: 2
 		Length: 2
 		Tick: 120
 	idle3:
-		Filename: muti.shp
+		Filename: stlk.shp
 		Start: 4
 		Length: 2
 		Tick: 120
 	idle4:
-		Filename: muti.shp
+		Filename: stlk.shp
 		Start: 6
 		Length: 2
 		Tick: 120
 	parachute:
-		Filename: muti.shp
+		Filename: stlk.shp
 		Start: 3
 	die1:
-		Filename: muti.shp
+		Filename: stlk.shp
 		Start: 80
 		Length: 8
 		Tick: 80
 	die2:
-		Filename: muti.shp
+		Filename: stlk.shp
 		Start: 88
 		Length: 9
 		Tick: 80
 	die3:
-		Filename: muti.shp
+		Filename: stlk.shp
 		Start: 88
 		Length: 9
 		Tick: 80
 	die4:
-		Filename: muti.shp
+		Filename: stlk.shp
 		Start: 88
 		Length: 9
 		Tick: 80
@@ -835,7 +835,7 @@ muti:
 		Length: 13
 		Start: 116
 	die7:
-		Filename: muti.shp
+		Filename: stlk.shp
 		Start: 80
 		Length: 8
 		Tick: 80
@@ -854,12 +854,12 @@ muti:
 		Length: 8
 		Tick: 80
 	die11:
-		Filename: muti.shp
+		Filename: stlk.shp
 		Start: 80
 		Length: 8
 		Tick: 80
 	die12:
-		Filename: muti.shp
+		Filename: stlk.shp
 		Start: 80
 		Length: 8
 		Tick: 80
@@ -871,7 +871,7 @@ muti:
 		ZOffset: 512
 		Tick: 80
 	icon:
-		Filename: mutiicon.shp
+		Filename: stlkicon.shp
 
 wchr:
 	Inherits: ^ScrinCommonDeaths
@@ -3255,11 +3255,18 @@ ionsurge-overlay:
 		IgnoreWorldTint: true
 
 atomize-overlay:
-	idle:
+	vehicle:
 		Filename: atomizeoverlay.shp
 		Length: *
 		BlendMode: Additive
 		Offset: 0, 0
+		ZOffset: 512
+		IgnoreWorldTint: true
+	infantry:
+		Filename: atomizeoverlaysm.shp
+		Length: *
+		BlendMode: Additive
+		Offset: 0, -5
 		ZOffset: 512
 		IgnoreWorldTint: true
 
@@ -3551,7 +3558,7 @@ obltbolt:
 		Frames: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
 		Start: 0
 		Length: 10
-		Tick: 60
+		Tick: 50
 		Facings: 4
 		ZOffset: 2046
 		InterpolatedFacings: 32
@@ -3561,13 +3568,52 @@ obltbolt:
 		Frames: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
 		Start: 0
 		Length: 10
-		Tick: 60
+		Tick: 50
 		Facings: 4
 		ZOffset: 2046
 		FlipX: true
 		FlipY: true
 		InterpolatedFacings: 32
 		Alpha: 0.75
+	trail3:
+		Filename: obltbolttrail.shp
+		Frames: 1, 0, 3, 2, 5, 4, 6, 7, 8, 9, 11, 10, 13, 12, 15, 14, 16, 17, 18, 19, 1, 0, 3, 2, 5, 4, 6, 7, 8, 9, 11, 10, 13, 12, 15, 14, 16, 17, 18, 19
+		Start: 0
+		Length: 10
+		Tick: 50
+		Facings: 4
+		ZOffset: 2046
+		InterpolatedFacings: 32
+		Alpha: 0.75
+
+obltboltcharge:
+	Defaults:
+		Filename: obltboltcharge.shp
+		Length: 7
+		Tick: 80
+		ZOffset: 2046
+		IgnoreWorldTint: true
+		Alpha: 0.3
+	idle:
+	idle2:
+		FlipX: true
+	idle3:
+		FlipY: true
+	idle4:
+		FlipX: true
+		FlipY: true
+	idle5:
+		Frames: 6, 5, 4, 3, 2, 1, 0
+	idle6:
+		Frames: 6, 5, 4, 3, 2, 1, 0
+		FlipX: true
+	idle7:
+		Frames: 6, 5, 4, 3, 2, 1, 0
+		FlipY: true
+	idle8:
+		Frames: 6, 5, 4, 3, 2, 1, 0
+		FlipX: true
+		FlipY: true
 
 nullbolt:
 	idle:

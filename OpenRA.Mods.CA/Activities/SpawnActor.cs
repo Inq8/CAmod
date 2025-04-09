@@ -8,6 +8,7 @@
  */
 #endregion
 
+using System;
 using System.Linq;
 using System.Collections.Generic;
 using OpenRA.Activities;
@@ -31,9 +32,11 @@ namespace OpenRA.Mods.CA.Activities
 		readonly WDist maxRange;
 		readonly bool spawnInShroud;
 		readonly HashSet<string> allowedTerrainTypes;
+		readonly Action<Actor, Actor> onActorSpawned;
 
 		public SpawnActor(Actor self, CPos targetCell, WPos targetPos, string type, bool skipMakeAnims, string[] spawnSounds,
-			AmmoPool ammoPool, int range, bool avoidActors, WDist maxRange, bool spawnInShroud, HashSet<string> allowedTerrainTypes)
+			AmmoPool ammoPool, int range, bool avoidActors, WDist maxRange, bool spawnInShroud, HashSet<string> allowedTerrainTypes,
+			Action<Actor, Actor> onActorSpawned = null)
 		{
 			this.targetPos = targetPos;
 			this.targetCell = targetCell;
@@ -46,6 +49,7 @@ namespace OpenRA.Mods.CA.Activities
 			this.maxRange = maxRange;
 			this.spawnInShroud = spawnInShroud;
 			this.allowedTerrainTypes = allowedTerrainTypes;
+			this.onActorSpawned = onActorSpawned;
 		}
 
 		public override bool Tick(Actor self)
@@ -97,7 +101,7 @@ namespace OpenRA.Mods.CA.Activities
 						placed = true;
 
 					if (placed)
-						self.World.CreateActor(type, td);
+						unit = self.World.CreateActor(type, td);
 				}
 				else
 				{
@@ -138,6 +142,8 @@ namespace OpenRA.Mods.CA.Activities
 
 					if (spawnSounds.Length > 0)
 						Game.Sound.Play(SoundType.World, spawnSounds, self.World, unit.CenterPosition);
+
+					onActorSpawned?.Invoke(self, unit);
 				}
 			});
 		}
