@@ -21,9 +21,9 @@ Squads = {
 			hard = DateTime.Minutes(1),
 		},
 		AttackValuePerSecond = {
-			easy = { Min = 10, Max = 25 },
-			normal = { Min = 25, Max = 50 },
-			hard = { Min = 40, Max = 80 },
+			easy = { Min = 12, Max = 25, RampDuration = DateTime.Minutes(7) },
+			normal = { Min = 25, Max = 50, RampDuration = DateTime.Minutes(5) },
+			hard = { Min = 40, Max = 80, RampDuration = DateTime.Minutes(3) },
 		},
 		FollowLeader = true,
 		DispatchDelay = DateTime.Seconds(15),
@@ -44,9 +44,9 @@ Squads = {
 			hard = DateTime.Minutes(2),
 		},
 		AttackValuePerSecond = {
-			easy = { Min = 10, Max = 25 },
-			normal = { Min = 25, Max = 50 },
-			hard = { Min = 40, Max = 80 },
+			easy = { Min = 12, Max = 25, RampDuration = DateTime.Minutes(7) },
+			normal = { Min = 25, Max = 50, RampDuration = DateTime.Minutes(5) },
+			hard = { Min = 40, Max = 80, RampDuration = DateTime.Minutes(3) },
 		},
 		FollowLeader = true,
 		DispatchDelay = DateTime.Seconds(15),
@@ -101,7 +101,7 @@ Squads = {
 		ProducerTypes = { Aircraft = { "hpad.td" } },
 		Units = {
 			hard = {
-				{ Aircraft = { "scrn", "scrn", "scrn", "scrn", "scrn", "scrn", "scrn" } },
+				{ Aircraft = { "scrn", "scrn", "scrn", "scrn", "scrn", "scrn", "scrn", "scrn" } },
 			}
 		},
 	}
@@ -197,6 +197,7 @@ end
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
+	OncePerThirtySecondChecks()
 end
 
 OncePerSecondChecks = function()
@@ -221,6 +222,12 @@ OncePerFiveSecondChecks = function()
 	end
 end
 
+OncePerThirtySecondChecks = function()
+	if DateTime.GameTime > 1 and DateTime.GameTime % DateTime.Seconds(30) == 0 then
+		CalculatePlayerCharacteristics()
+	end
+end
+
 InitNod = function()
 	AutoRepairAndRebuildBuildings(Nod, 15)
 	SetupRefAndSilosCaptureCredits(Nod)
@@ -238,6 +245,14 @@ InitNod = function()
 		Actor.Create("ai.superweapons.enabled", true, { Owner = Nod })
 	end)
 
+	if Difficulty == "hard" then
+		Squads.Main1.InitTime = 0
+		Squads.Main2.InitTime = 0
+	elseif Difficulty == "normal" then
+		Squads.Main1.InitTime = DateTime.Minutes(3)
+		Squads.Main2.InitTime = DateTime.Minutes(3)
+	end
+
     Trigger.AfterDelay(Squads.Main1.Delay[Difficulty], function()
         InitAttackSquad(Squads.Main1, Nod)
     end)
@@ -247,8 +262,7 @@ InitNod = function()
     end)
 
     Trigger.AfterDelay(Squads.Air.Delay[Difficulty], function()
-        InitAirAttackSquad(Squads.Air, Nod, USSR, { "harv", "4tnk", "4tnk.atomic", "3tnk", "3tnk.atomic", "3tnk.rhino", "3tnk.rhino.atomic",
-			"katy", "v3rl", "ttra", "v3rl", "apwr", "tpwr", "npwr", "tsla", "proc", "nukc", "ovld", "apoc", "apoc.atomic", "ovld.atomic" })
+        InitAirAttackSquad(Squads.Air, Nod)
     end)
 
 	if Difficulty == "hard" then

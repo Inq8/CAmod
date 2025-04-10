@@ -184,6 +184,7 @@ end
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
+	OncePerThirtySecondChecks()
 end
 
 OncePerSecondChecks = function()
@@ -215,6 +216,12 @@ OncePerFiveSecondChecks = function()
 	end
 end
 
+OncePerThirtySecondChecks = function()
+	if DateTime.GameTime > 1 and DateTime.GameTime % DateTime.Seconds(30) == 0 then
+		CalculatePlayerCharacteristics()
+	end
+end
+
 InitScrin = function()
 	if Difficulty == "easy" then
 		RebuildExcludes.Scrin = { Types = { "scol", "ptur" } }
@@ -234,7 +241,7 @@ InitScrin = function()
 	end)
 
 	Trigger.AfterDelay(Squads.ScrinAir.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.ScrinAir, Scrin, USSR, { "harv", "v2rl", "powr", "apwr", "tsla", "ttra", "v3rl", "mig", "hind", "suk", "suk.upg", "kiro", "apoc" })
+		InitAirAttackSquad(Squads.ScrinAir, Scrin)
 	end)
 
 	local scrinGroundAttackers = Scrin.GetGroundAttackers()

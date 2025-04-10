@@ -379,7 +379,7 @@ InitUSSR = function()
 
 	-- MiG attacks
 	Trigger.AfterDelay(Squads.Migs.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.Migs, USSR, Greece, { "harv", "pris", "agun", "pbox" })
+		InitAirAttackSquad(Squads.Migs, USSR)
 	end)
 
 	-- On player crossing Soviet border start making infantry at western barracks

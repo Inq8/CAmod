@@ -23,6 +23,7 @@ SuperweaponsEnabledTime = {
 
 Squads = {
 	Main = {
+		InitTime = 0,
 		Delay = {
             easy = DateTime.Minutes(6),
 			normal = DateTime.Minutes(4),
@@ -220,6 +221,7 @@ end
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
+	OncePerThirtySecondChecks()
 end
 
 OncePerSecondChecks = function()
@@ -268,6 +270,12 @@ OncePerFiveSecondChecks = function()
 	end
 end
 
+OncePerThirtySecondChecks = function()
+	if DateTime.GameTime > 1 and DateTime.GameTime % DateTime.Seconds(30) == 0 then
+		CalculatePlayerCharacteristics()
+	end
+end
+
 -- Functions
 
 InitGreece = function()
@@ -301,12 +309,11 @@ InitGreece = function()
 	end
 
 	Trigger.AfterDelay(Squads.Air.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.Air, Greece, USSR, { "harv", "4tnk", "4tnk.atomic", "3tnk", "3tnk.atomic", "3tnk.rhino", "3tnk.rhino.atomic",
-			"katy", "v3rl", "ttra", "v3rl", "apwr", "tsla", "proc", "nukc", "ovld", "apoc", "apoc.atomic", "ovld.atomic" })
+		InitAirAttackSquad(Squads.Air, Greece)
 	end)
 
 	Trigger.AfterDelay(Squads.Air2.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.Air2, Greece, USSR)
+		InitAirAttackSquad(Squads.Air2, Greece)
 	end)
 end
 

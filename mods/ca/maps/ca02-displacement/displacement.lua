@@ -428,7 +428,7 @@ InitScrin = function()
 	end)
 
 	Trigger.AfterDelay(Squads.Stormriders.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.Stormriders, Scrin, Greece, { "dome", "atek", "apwr", "apwr", "apwr", "ptnk", "cryo", "heli", "harr" })
+		InitAirAttackSquad(Squads.Stormriders, Scrin)
 	end)
 
 	if Difficulty ~= "easy" then

@@ -289,6 +289,7 @@ end
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
+	OncePerThirtySecondChecks()
 end
 
 OncePerSecondChecks = function()
@@ -341,6 +342,12 @@ OncePerFiveSecondChecks = function()
 	end
 end
 
+OncePerThirtySecondChecks = function()
+	if DateTime.GameTime > 1 and DateTime.GameTime % DateTime.Seconds(30) == 0 then
+		CalculatePlayerCharacteristics()
+	end
+end
+
 -- Functions
 
 InitUSSR = function(paths, cameras)
@@ -371,7 +378,7 @@ InitUSSR = function(paths, cameras)
 	end)
 
 	Trigger.AfterDelay(Squads.SovietAir.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.SovietAir, USSR, Scrin)
+		InitAirAttackSquad(Squads.SovietAir, USSR)
 	end)
 
 	Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
@@ -412,7 +419,7 @@ InitGreece = function(paths, cameras)
 	end)
 
     Trigger.AfterDelay(Squads.AlliedAir.Delay[Difficulty], function()
-        InitAirAttackSquad(Squads.AlliedAir, Nod, Scrin)
+        InitAirAttackSquad(Squads.AlliedAir, Nod)
     end)
 
 	Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
@@ -453,7 +460,7 @@ InitNod = function(paths, cameras)
 	end)
 
     Trigger.AfterDelay(Squads.NodAir.Delay[Difficulty], function()
-        InitAirAttackSquad(Squads.NodAir, Nod, Scrin)
+        InitAirAttackSquad(Squads.NodAir, Nod)
     end)
 
 	Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()

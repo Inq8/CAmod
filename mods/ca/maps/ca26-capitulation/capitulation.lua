@@ -236,6 +236,7 @@ end
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
+	OncePerThirtySecondChecks()
 	PanToStart()
 end
 
@@ -263,6 +264,12 @@ end
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
 		UpdatePlayerBaseLocations()
+	end
+end
+
+OncePerThirtySecondChecks = function()
+	if DateTime.GameTime > 1 and DateTime.GameTime % DateTime.Seconds(30) == 0 then
+		CalculatePlayerCharacteristics()
 	end
 end
 
@@ -294,17 +301,17 @@ InitUSSR = function()
 	end)
 
 	Trigger.AfterDelay(Squads.AirAntiLight.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.AirAntiLight, USSR, GDI, { "msam", "xo", "rmbo", "nuk2", "hq", "gtek", "n3", "hsam" })
+		InitAirAttackSquad(Squads.AirAntiLight, USSR, GDI, { "Light" }, "ArmorType")
 	end)
 
 	Trigger.AfterDelay(Squads.AirAntiHeavy.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.AirAntiHeavy, USSR, GDI, { "atwr", "htnk", "htnk.ion", "mtnk", "disr", "thwk" })
+		InitAirAttackSquad(Squads.AirAntiHeavy, USSR, GDI, { "Heavy" }, "ArmorType")
 	end)
 
-	InitAirAttackSquad(Squads.AirAntiAir, USSR, GDI, { "orca", "a10", "a10.sw", "a10.gau", "auro" })
+	InitAirAttackSquad(Squads.AirAntiAir, USSR, GDI, { "orca", "orcb", "a10", "a10.sw", "a10.gau", "auro" })
 
 	Trigger.AfterDelay(Squads.Kirovs.Delay[Difficulty], function()
-		InitAttackSquad(Squads.Kirovs, USSR, GDI)
+		InitAttackSquad(Squads.Kirovs, USSR)
 	end)
 
 	Trigger.AfterDelay(ParabombsEnabledDelay[Difficulty], function()

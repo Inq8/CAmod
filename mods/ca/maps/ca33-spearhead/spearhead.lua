@@ -142,7 +142,7 @@ InitNod = function()
 	end)
 
 	Trigger.AfterDelay(Squads.NodAir.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.NodAir, Nod, GDI)
+		InitAirAttackSquad(Squads.NodAir, Nod)
 	end)
 end
 

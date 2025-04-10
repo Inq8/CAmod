@@ -166,6 +166,7 @@ end
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
+	OncePerThirtySecondChecks()
 end
 
 OncePerSecondChecks = function()
@@ -197,6 +198,12 @@ OncePerFiveSecondChecks = function()
 		if ObjectiveDestroyGDI ~= nil and not PlayerHasBuildings(GDI) then
 			Nod.MarkCompletedObjective(ObjectiveDestroyGDI)
 		end
+	end
+end
+
+OncePerThirtySecondChecks = function()
+	if DateTime.GameTime > 1 and DateTime.GameTime % DateTime.Seconds(30) == 0 then
+		CalculatePlayerCharacteristics()
 	end
 end
 
@@ -416,7 +423,7 @@ InitGDIAttacks = function()
 	end)
 
 	Trigger.AfterDelay(Squads.GDIAir.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.GDIAir, GDI, Nod, { "harv", "harv.td", "arty.nod", "mlrs", "wtnk", "avtr", "reap", "rmbc", "enli", "tplr", "obli", "atwr", "gtwr", "stwr", "tmpl", "tmpp", "mslo.nod", "gun.nod", "hq", "nuk2" })
+		InitAirAttackSquad(Squads.GDIAir, GDI)
 	end)
 
 	if Difficulty == "hard" then
