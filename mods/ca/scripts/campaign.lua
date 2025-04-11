@@ -1543,14 +1543,14 @@ CalculatePlayerCharacteristics = function()
 
 		Utils.Do(infantryUnits, function(u)
 			if UnitCosts[u.Type] == nil then
-				UnitCosts[u.Type] = ActorCA.CostOrDefault(u)
+				UnitCosts[u.Type] = ActorCA.CostOrDefault(u.Type)
 			end
 			infantryValue = infantryValue + UnitCosts[u.Type]
 		end)
 
 		Utils.Do(heavyUnits, function(u)
 			if UnitCosts[u.Type] == nil then
-				UnitCosts[u.Type] = ActorCA.CostOrDefault(u)
+				UnitCosts[u.Type] = ActorCA.CostOrDefault(u.Type)
 			end
 			heavyValue = heavyValue + UnitCosts[u.Type]
 		end)
