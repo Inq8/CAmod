@@ -2020,8 +2020,10 @@ LCHR:
 	SpawnActorOnDeathCA:
 		Actor: lchr.orb
 		RequiresCondition: coalescence-upgrade && !being-warped
-		AddToSelection: true
-		AddToControlGroup: true
+		InheritsSelection: true
+		InheritsControlGroup: true
+		InheritsStance: true
+		InheritsExperience: true
 	KillsSelf:
 		RequiresCondition: triggered
 	ActorLostNotification:
@@ -2031,11 +2033,11 @@ LCHR:
 		RequiresCondition: coalescence-upgrade && !being-warped
 	GivesBountyCA:
 		RequiresCondition: global-bounty && !coalescence-upgrade
-	TransfersStanceToDeathActor:
 
 LCHR.Orb:
 	Inherits@1: ^1x1Shape
 	Inherits@2: ^SelectableSupportUnit
+	Inherits@GAINSEXPERIENCE: ^GainsExperience	
 	Inherits@bounty: ^GlobalBounty
 	Inherits@Warpable: ^Warpable
 	Selectable:
@@ -2100,13 +2102,14 @@ LCHR.Orb:
 	SpawnActorOnDeathCA:
 		Actor: lchr
 		RequiresCondition: resurrect
-		AddToSelection: true
-		AddToControlGroup: true
+		InheritsSelection: true
+		InheritsControlGroup: true
+		InheritsStance: true
+		InheritsExperience: true
 	ProximityExternalCondition@LCHRHEAL:
 		Condition: lchr-healing
 		Range: 2c256
 	AutoTarget:
-	TransfersStanceToDeathActor:
 	AttackOmni:
 	WithColoredSelectionBox@PLAYERBOX:
 		ColorSource: Player
