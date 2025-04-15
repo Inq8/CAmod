@@ -24,7 +24,7 @@ SuperweaponsEnabledTime = {
 
 Squads = {
 	Main = {
-		InitTime = 0,
+		InitTime = 0 - DateTime.Minutes(5),
 		Delay = {
             easy = DateTime.Minutes(6),
 			normal = DateTime.Minutes(4),

@@ -365,7 +365,7 @@ AutoRepairAndRebuildBuildings = function(player, maxAttempts)
 	local buildings = Utils.Where(Map.ActorsInWorld, function(self) return self.Owner == player and self.HasProperty("StartBuildingRepairs") end)
 	Utils.Do(buildings, function(a)
 		local excludeFromRebuilding = false
-
+		
 		-- never rebuild silos or conyards
 		if a.Type == "fact" or a.Type == "afac" or a.Type == "sfac" or a.Type == "silo" or a.Type == "silo.td" or a.Type == "silo.scrin" then
 			excludeFromRebuilding = true
