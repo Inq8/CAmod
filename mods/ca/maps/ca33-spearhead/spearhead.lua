@@ -25,8 +25,8 @@ Squads = {
 		},
 		AttackValuePerSecond = {
 			easy = { Min = 7, Max = 7 },
-			normal = { Min = 14, Max = 14 },
-			hard = { Min = 21, Max = 21 },
+			normal = { Min = 21, Max = 21 },
+			hard = { Min = 35, Max = 35 },
 		},
 		ProducerTypes = { Aircraft = { "hpad.td" } },
 		Units = {
@@ -64,6 +64,18 @@ WorldLoaded = function()
 
 	ObjectiveDestroyShardLaunchers = GDI.AddObjective("Destroy Scrin Shard Launchers.")
     ObjectiveCaptureComms = GDI.AddObjective("Locate and capture Nod Communications Center.")
+
+	HardOnlyCyborg1.Destroy()
+	HardOnlyCyborg2.Destroy()
+	HardOnlyCyborg3.Destroy()
+	HardOnlyCyborg4.Destroy()
+	HardOnlyCyborg5.Destroy()
+	HardOnlyCyborg6.Destroy()
+	HardOnlyCyborg7.Destroy()
+	HardOnlyCyborg8.Destroy()
+	HardOnlyTripod.Destroy()
+	HardOnlyAvatar1.Destroy()
+	HardOnlyAvatar2.Destroy()
 
     Trigger.OnAllKilled(ShardLaunchers, function()
         InitMcv()

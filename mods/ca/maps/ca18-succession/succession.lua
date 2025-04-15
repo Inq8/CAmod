@@ -15,15 +15,16 @@ AdjustedNodCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Nod)
 
 Squads = {
 	Main1 = {
+		InitTime = 0 - DateTime.Minutes(10),
 		Delay = {
 			easy = DateTime.Minutes(5),
 			normal = DateTime.Minutes(3),
 			hard = DateTime.Minutes(1),
 		},
 		AttackValuePerSecond = {
-			easy = { Min = 12, Max = 25, RampDuration = DateTime.Minutes(7) },
-			normal = { Min = 25, Max = 50, RampDuration = DateTime.Minutes(5) },
-			hard = { Min = 40, Max = 80, RampDuration = DateTime.Minutes(3) },
+			easy = { Min = 12, Max = 25, RampDuration = DateTime.Minutes(16) },
+			normal = { Min = 25, Max = 50, RampDuration = DateTime.Minutes(14) },
+			hard = { Min = 40, Max = 80, RampDuration = DateTime.Minutes(12) },
 		},
 		FollowLeader = true,
 		DispatchDelay = DateTime.Seconds(15),
@@ -38,15 +39,16 @@ Squads = {
 		},
 	},
 	Main2 = {
+		InitTime = 0 - DateTime.Minutes(10),
 		Delay = {
 			easy = DateTime.Minutes(6),
 			normal = DateTime.Minutes(4),
 			hard = DateTime.Minutes(2),
 		},
 		AttackValuePerSecond = {
-			easy = { Min = 12, Max = 25, RampDuration = DateTime.Minutes(7) },
-			normal = { Min = 25, Max = 50, RampDuration = DateTime.Minutes(5) },
-			hard = { Min = 40, Max = 80, RampDuration = DateTime.Minutes(3) },
+			easy = { Min = 12, Max = 25, RampDuration = DateTime.Minutes(16) },
+			normal = { Min = 25, Max = 50, RampDuration = DateTime.Minutes(14) },
+			hard = { Min = 40, Max = 80, RampDuration = DateTime.Minutes(12) },
 		},
 		FollowLeader = true,
 		DispatchDelay = DateTime.Seconds(15),
@@ -244,14 +246,6 @@ InitNod = function()
 	Trigger.AfterDelay(ChemMissileEnabledTime[Difficulty], function()
 		Actor.Create("ai.superweapons.enabled", true, { Owner = Nod })
 	end)
-
-	if Difficulty == "hard" then
-		Squads.Main1.InitTime = 0
-		Squads.Main2.InitTime = 0
-	elseif Difficulty == "normal" then
-		Squads.Main1.InitTime = DateTime.Minutes(3)
-		Squads.Main2.InitTime = DateTime.Minutes(3)
-	end
 
     Trigger.AfterDelay(Squads.Main1.Delay[Difficulty], function()
         InitAttackSquad(Squads.Main1, Nod)

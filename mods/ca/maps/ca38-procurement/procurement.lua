@@ -11,6 +11,7 @@ SuperweaponsEnabledTime = {
 AdjustedGDICompositions = AdjustCompositionsForDifficulty(UnitCompositions.GDI)
 
 Squads = {
+	InitTime = 0 - DateTime.Minutes(2),
 	GDIMain1 = {
 		Delay = {
 			easy = DateTime.Minutes(5),
@@ -32,6 +33,7 @@ Squads = {
 		},
 	},
 	GDIMain2 = {
+		InitTime = 0 - DateTime.Minutes(2),		
 		Delay = {
 			easy = DateTime.Minutes(6),
 			normal = DateTime.Minutes(4),

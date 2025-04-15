@@ -2,8 +2,8 @@ AlliedSavedAdvancedBuildings = {}
 USSRSavedAdvancedBuildings = {}
 NodSavedAdvancedBuildings = {}
 
-AlliesVsNodPaths = { { AlliesVsNodRally1.Location }, { AlliesVsNodRally2.Location }, { AlliesVsNodRally3.Location } }
-AlliesVsSovietPaths = { { AlliesVsSovietsRally1.Location }, { AlliesVsSovietsRally2.Location }, { AlliesVsSovietsRally3.Location } }
+AlliesVsNodPaths = { { AlliesVsNodRally1.Location }, { AlliesVsNodRally2.Location }, { AlliesVsNodRally3.Location }, { AlliesVsNodRally4.Location } }
+AlliesVsSovietPaths = { { AlliesVsSovietsRally1.Location }, { AlliesVsSovietsRally2.Location }, { AlliesVsSovietsRally3.Location }, { AlliesVsSovietsRally4.Location } }
 SovietsVsNodPaths = { { SovietsVsNodRally1.Location }, { SovietsVsNodRally2.Location }, { SovietsVsNodRally3.Location }, { SovietsVsNodRally4.Location } }
 SovietsVsAlliesPaths = { { SovietsVsAlliesRally1.Location }, { SovietsVsAlliesRally2.Location }, { SovietsVsAlliesRally3.Location }, { SovietsVsAlliesRally4.Location } }
 NodVsAlliesPaths = { { NodVsAlliesRally1.Location }, { NodVsAlliesRally2.Location }, { NodVsAlliesRally3.Location } }
@@ -21,15 +21,16 @@ SuperweaponsEnabledTime = {
 
 Squads = {
 	Allies = {
+		InitTime = 0 - DateTime.Minutes(10),
 		Delay = {
 			easy = DateTime.Minutes(3),
 			normal = DateTime.Minutes(2),
 			hard = DateTime.Seconds(10),
 		},
 		AttackValuePerSecond = {
-			easy = { Min = 12, Max = 25, RampDuration = DateTime.Minutes(7) },
-			normal = { Min = 25, Max = 50, RampDuration = DateTime.Minutes(5) },
-			hard = { Min = 40, Max = 80, RampDuration = DateTime.Minutes(3) },
+			easy = { Min = 12, Max = 25, RampDuration = DateTime.Minutes(16) },
+			normal = { Min = 25, Max = 50, RampDuration = DateTime.Minutes(14) },
+			hard = { Min = 40, Max = 80, RampDuration = DateTime.Minutes(12) },
 		},
 		FollowLeader = true,
 		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
@@ -39,15 +40,16 @@ Squads = {
 		},
 	},
 	Nod = {
+		InitTime = 0 - DateTime.Minutes(10),
 		Delay = {
 			easy = DateTime.Minutes(3),
 			normal = DateTime.Minutes(2),
 			hard = DateTime.Seconds(10),
 		},
 		AttackValuePerSecond = {
-			easy = { Min = 12, Max = 25, RampDuration = DateTime.Minutes(7) },
-			normal = { Min = 25, Max = 50, RampDuration = DateTime.Minutes(5) },
-			hard = { Min = 40, Max = 80, RampDuration = DateTime.Minutes(3) },
+			easy = { Min = 12, Max = 25, RampDuration = DateTime.Minutes(16) },
+			normal = { Min = 25, Max = 50, RampDuration = DateTime.Minutes(14) },
+			hard = { Min = 40, Max = 80, RampDuration = DateTime.Minutes(12) },
 		},
 		DispatchDelay = DateTime.Seconds(15),
 		FollowLeader = true,
@@ -58,15 +60,16 @@ Squads = {
 		},
 	},
 	Soviets = {
+		InitTime = 0 - DateTime.Minutes(10),
 		Delay = {
 			easy = DateTime.Minutes(3),
 			normal = DateTime.Minutes(2),
 			hard = DateTime.Seconds(10),
 		},
 		AttackValuePerSecond = {
-			easy = { Min = 12, Max = 25, RampDuration = DateTime.Minutes(7) },
-			normal = { Min = 25, Max = 50, RampDuration = DateTime.Minutes(5) },
-			hard = { Min = 40, Max = 80, RampDuration = DateTime.Minutes(3) },
+			easy = { Min = 12, Max = 25, RampDuration = DateTime.Minutes(16) },
+			normal = { Min = 25, Max = 50, RampDuration = DateTime.Minutes(14) },
+			hard = { Min = 40, Max = 80, RampDuration = DateTime.Minutes(12) },
 		},
 		FollowLeader = true,
 		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },

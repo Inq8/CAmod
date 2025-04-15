@@ -138,7 +138,7 @@ Squads = {
 		},
 		AttackValuePerSecond = {
 			easy = { Min = 5, Max = 10 },
-			normal = { Min = 9, Max = 15 },
+			normal = { Min = 9, Max = 25 },
 			hard = { Min = 13, Max = 40 },
 		},
 		ProducerTypes = { Aircraft = { "afld" } },
@@ -147,12 +147,14 @@ Squads = {
 				{ Aircraft = { "kiro" } },
 			},
 			normal = {
-				{ Aircraft = { "kiro" } },
+				{ Aircraft = { "kiro" }, MaxTime = DateTime.Minutes(20) },
+				{ Aircraft = { "kiro", "kiro" }, MinTime = DateTime.Minutes(20) },
 			},
 			hard = {
-				{ Aircraft = { "kiro" }, MaxTime = DateTime.Minutes(15) },
-				{ Aircraft = { "kiro", "kiro" }, MinTime = DateTime.Minutes(15), MaxTime = DateTime.Minutes(30) },
-				{ Aircraft = { "kiro", "kiro", "kiro" }, MinTime = DateTime.Minutes(30), },
+				{ Aircraft = { "kiro" }, MaxTime = DateTime.Minutes(10) },
+				{ Aircraft = { "kiro", "kiro" }, MinTime = DateTime.Minutes(10), MaxTime = DateTime.Minutes(20) },
+				{ Aircraft = { "kiro", "kiro", "kiro" }, MinTime = DateTime.Minutes(20), MaxTime = DateTime.Minutes(30) },
+				{ Aircraft = { "kiro", "kiro", "kiro", "kiro" }, MinTime = DateTime.Minutes(30)) }
 			}
 		},
 		AttackPaths = {

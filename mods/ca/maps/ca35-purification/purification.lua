@@ -1,4 +1,10 @@
 
+UnitBuildTimeMultipliers = {
+	easy = 0.8,
+	normal = 0.5,
+	hard = 0.25,
+}
+
 LiquidTibCooldown = DateTime.Minutes(5)
 
 RiftEnabledTime = {
