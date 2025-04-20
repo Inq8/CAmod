@@ -6167,7 +6167,8 @@ WORMHOLE:
 
 REBELGATEWAY:
 	Inherits: ^WormholeBase
-	Inherits@3: ^SelectableBuilding
+	Inherits@SelectableBuilding: ^SelectableBuilding
+	Inherits@Warpable: ^Warpable
 	-Interactable:
 	Tooltip:
 		Name: Gateway
@@ -6185,90 +6186,28 @@ REBELGATEWAY:
 		Type: Concrete
 	Health:
 		HP: 50000
-	KillsSelf:
-		Delay: 625
 	RallyPoint:
-	Exit@1:
-		ProductionTypes: Gateway
-		ExitCell: -1,-1
-	Exit@2:
-		ProductionTypes: Gateway
-		ExitCell: 0,-1
-	Exit@3:
-		ProductionTypes: Gateway
-		ExitCell: 1,-1
-	Exit@4:
-		ProductionTypes: Gateway
-		ExitCell: -1,0
-	Exit@5:
-		ProductionTypes: Gateway
-		ExitCell: 1,0
-	Exit@6:
-		ProductionTypes: Gateway
-		ExitCell: -1,1
-	Exit@7:
-		ProductionTypes: Gateway
-		ExitCell: 0,1
-	Exit@8:
-		ProductionTypes: Gateway
-		ExitCell: 1,1
-	Production:
-		Produces: Gateway
-	GrantDelayedCondition@Wave1:
-		Condition: wave1-deployed
-		Delay: 255
-	PeriodicProducerCA@1:
-		Type: Gateway
-		ChargeDuration: 250
-		Actors: s1, s1, s1, s3, s3, s1, s1
-		ReadyAudio: ReinforcementsArrived
-		RequiresCondition: !wave1-deployed
-	PeriodicProducerCA@2Standard:
-		Type: Gateway
-		ChargeDuration: 625
-		Actors: gunw, gunw, tpod
-		ReadyAudio: ReinforcementsArrived
-		RequiresCondition: !reaper && !shard
-	PeriodicProducerCA@2Reaper:
-		Type: Gateway
-		ChargeDuration: 625
-		Actors: gunw, gunw, rtpd
-		ReadyAudio: ReinforcementsArrived
-		RequiresCondition: reaper && !shard
-	PeriodicProducerCA@2ReaperShard:
-		Type: Gateway
-		ChargeDuration: 625
-		Actors: shrw, shrw, rtpd
-		ReadyAudio: ReinforcementsArrived
-		RequiresCondition: reaper && shard
-	AmmoPool@Wave1:
-		Name: wave1
-		InitialAmmo: 0
-	AmmoPool@Wave2:
-		Name: wave2
-		InitialAmmo: 0
-	ReloadAmmoPoolCA@Wave1:
-		AmmoPool: wave1
-		Delay: 250
-		ShowSelectionBar: true
-		SelectionBarColor: ff00ff
-	ReloadAmmoPoolCA@Wave2:
-		AmmoPool: wave2
-		Delay: 375
-		ShowSelectionBar: true
-		SelectionBarColor: ff00ff
-		RequiresCondition: wave1-deployed
-	GrantConditionOnPrerequisite@Reaper:
-		Prerequisites: player.reaper
-		Condition: reaper
-	GrantConditionOnPrerequisite@Shard:
-		Prerequisites: shrw.upgrade
-		Condition: shard
 	WithDeathAnimation:
 		UseDeathTypeSuffix: false
 		CrushedSequence: die
 		FallbackSequence: die
 	WithMakeAnimation:
+	LinkedProducerTarget:
+		Mode: Exit
+		Types: InfantrySQ, InfantryMQ, VehicleSQ, VehicleMQ
+		RequiresCondition: !powerdown
+	Sellable:
+		RequiresCondition: !being-warped
+		SellSounds: cashturn.aud
+	WithSpriteBody:
+		RequiresCondition: !powerdown
+	WithSpriteBody@Disabled:
+		Name: disabled
+		RequiresCondition: powerdown
+		Sequence: faded
+	ToggleConditionOnOrder:
+		Condition: powerdown
+		OrderName: PowerDown
 
 # infiltrator stolen tech
 

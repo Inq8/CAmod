@@ -5291,6 +5291,10 @@ CVAT:
 	Production:
 		Produces: Clone
 		PauseOnCondition: tech-locked || being-warped
+	LinkedProducerTarget:
+		Mode: Clone
+		Types: InfantrySQ, InfantryMQ
+		Produces: Clone
 	Exit@1:
 		SpawnOffset: -700,1000,0
 		ExitCell: -2,2
@@ -5299,9 +5303,6 @@ CVAT:
 		SpawnOffset: 190,-400,0
 		ExitCell: 1,-1
 	RallyPoint:
-	CloneProducer:
-		Types: InfantrySQ, InfantryMQ
-		CloneType: Clone
 	Power:
 		Amount: -150
 	WithDeathAnimation:

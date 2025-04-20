@@ -11,6 +11,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Effects;
 using OpenRA.Mods.Common.Orders;
 using OpenRA.Primitives;
@@ -18,56 +19,61 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.Common.Traits
 {
-	[Desc("Used to waypoint units after production or repair is finished.")]
-	public class CloneProducerInfo : ConditionalTraitInfo
+	public enum LinkedProducerMode { Clone, Exit }
+
+	[Desc("The target of a linked producer. Any units produced at the targeted source will be either cloned or redirect at the target.")]
+	public class LinkedProducerTargetInfo : ConditionalTraitInfo
 	{
 		[FieldLoader.Require]
-		[Desc("Production types (must share one or more values of the `Produces` property of the clone source's Production trait).")]
-		public readonly string[] Types = Array.Empty<string>();
+		[Desc("`Clone` means the produced unit is copied. `Exit` means produced units are just moved to the target.")]
+		public readonly LinkedProducerMode Mode = default;
 
 		[FieldLoader.Require]
-		[Desc("Clone type. Matches the `Produces` property of the clone producer's Production trait.")]
-		public readonly string CloneType = null;
+		[Desc("Production types (must share one or more values of the `Produces` property of the source's Production trait).")]
+		public readonly string[] Types = Array.Empty<string>();
 
-		[Desc("Valid target types, to further limit valid clone sources.")]
+		[Desc("Matches the `Produces` property of the Production trait (for Clone mode only).")]
+		public readonly string Produces = null;
+
+		[Desc("Valid target types, to further limit valid sources.")]
 		public readonly BitSet<TargetableType> TargetTypes = default;
 
-		[Desc("List of actors that cannot be cloned.")]
+		[Desc("List of actors to ignore.")]
 		public readonly string[] InvalidActors = Array.Empty<string>();
 
 		[Desc("Actors to use instead of specific source actors.")]
 		public readonly Dictionary<string, string> CloneActors = new Dictionary<string, string>();
 
 		[CursorReference]
-		[Desc("Cursor to display when selecting a clone source.")]
+		[Desc("Cursor to display when selecting a source.")]
 		public readonly string Cursor = "chrono-target";
 
 		[NotificationReference("Speech")]
-		[Desc("Speech notification to play when setting a new clone source.")]
+		[Desc("Speech notification to play when setting a new source.")]
 		public readonly string SourceSetNotification = null;
 
-		[Desc("Text notification to display when setting a new clone source.")]
+		[Desc("Text notification to display when setting a new source.")]
 		public readonly string SourceSetTextNotification = null;
 
-		public override object Create(ActorInitializer init) { return new CloneProducer(init.Self, this); }
+		public override object Create(ActorInitializer init) { return new LinkedProducerTarget(init.Self, this); }
 	}
 
-	public class CloneProducer : ConditionalTrait<ConditionalTraitInfo>, IIssueOrder, IResolveOrder, INotifyOwnerChanged, INotifyCreated, INotifyKilled, INotifySold, INotifyAddedToWorld, INotifyRemovedFromWorld
+	public class LinkedProducerTarget : ConditionalTrait<ConditionalTraitInfo>, IIssueOrder, IResolveOrder, INotifyOwnerChanged, INotifyCreated, INotifyKilled, INotifySold, INotifyAddedToWorld, INotifyRemovedFromWorld
 	{
-		const string OrderID = "SetCloneSource";
+		const string OrderID = "SetLinkedProducerSource";
 
 		private readonly Actor self;
 		private bool singleQueue;
-		private CloneSource cloneSource;
-		public CloneProducerInfo info;
-		CloneSourceIndicator effect;
+		private LinkedProducerSource linkedProducerSource;
+		public LinkedProducerTargetInfo info;
+		LinkedProducerSourceIndicator effect;
 
 		public List<WPos> LinkNodes;
 		bool delayUntilNext;
 
 		public string[] Types => info.Types;
 
-		public CloneProducer(Actor self, CloneProducerInfo info)
+		public LinkedProducerTarget(Actor self, LinkedProducerTargetInfo info)
 			: base(info)
 		{
 			this.info = info;
@@ -79,7 +85,7 @@ namespace OpenRA.Mods.Common.Traits
 		void INotifyCreated.Created(Actor self)
 		{
 			singleQueue = self.World.LobbyInfo.GlobalSettings.OptionOrDefault("queuetype", "") == "global.singlequeue";
-			effect = new CloneSourceIndicator(self, this);
+			effect = new LinkedProducerSourceIndicator(self, this);
 			SetSourceToPreferred();
 		}
 
@@ -109,10 +115,44 @@ namespace OpenRA.Mods.Common.Traits
 				return;
 			}
 
+			if (info.Mode == LinkedProducerMode.Clone)
+			{
+				ProduceClone(actorName);
+			}
+			else
+			{
+				if (!unit.IsInWorld)
+					return;
+
+				self.World.Remove(unit);
+				self.World.AddFrameEndTask(w => {
+					w.Add(unit);
+					unit.Trait<IPositionable>().SetPosition(unit, self.Location);
+					unit.CancelActivity();
+					var rp = self.TraitOrDefault<RallyPoint>();
+					var move = unit.TraitOrDefault<IMove>();
+
+					if (move != null && rp != null && rp.Path.Count > 0)
+					{
+						foreach (var cell in rp.Path)
+							unit.QueueActivity(new AttackMoveActivity(unit, () => move.MoveTo(cell, 1, evaluateNearestMovableCell: true, targetLineColor: Color.OrangeRed)));
+					}
+					else
+					{
+						var mobile = unit.TraitOrDefault<Mobile>();
+						if (mobile != null)
+							mobile.Nudge(self);
+					}
+				});
+			}
+		}
+
+		void ProduceClone(string actorName)
+		{
 			var cloneActor = self.World.Map.Rules.Actors[info.CloneActors.ContainsKey(actorName) ? info.CloneActors[actorName] : actorName];
 
 			var sp = self.TraitsImplementing<Production>()
-				.FirstOrDefault(p => !p.IsTraitDisabled && !p.IsTraitPaused && p.Info.Produces.Where(p => info.CloneType.Contains(p)).Any());
+				.FirstOrDefault(p => !p.IsTraitDisabled && !p.IsTraitPaused && p.Info.Produces.Where(p => info.Produces.Contains(p)).Any());
 
 			if (sp != null)
 			{
@@ -129,13 +169,16 @@ namespace OpenRA.Mods.Common.Traits
 		public void PrimaryUpdated()
 		{
 			if (singleQueue)
+			{
+				UnlinkSource();
 				SetSourceToPreferred();
+			}
 		}
 
 		private void SetSourceToPreferred()
 		{
 			self.World.AddFrameEndTask(w => {
-				var producer = self.World.ActorsWithTrait<CloneSource>()
+				var producer = self.World.ActorsWithTrait<LinkedProducerSource>()
 					.Where(a => !a.Actor.IsDead && a.Actor.IsInWorld && a.Actor.Owner == self.Owner && a.Trait.ProductionTypes.Where(t => info.Types.Contains(t)).Any())
 					.OrderByDescending(p => p.Actor.TraitOrDefault<PrimaryBuilding>()?.IsPrimary)
 					.ThenByDescending(p => p.Actor.ActorID)
@@ -156,7 +199,7 @@ namespace OpenRA.Mods.Common.Traits
 				if (singleQueue)
 					yield break;
 
-				yield return new CloneProducerSetSourceOrderTargeter(info.Cursor);
+				yield return new LinkedProducerTargetSetSourceOrderTargeter(info.Cursor);
 			}
 		}
 
@@ -188,14 +231,14 @@ namespace OpenRA.Mods.Common.Traits
 			else if (order.OrderString == OrderID)
 			{
 				UnlinkSource();
-				SetSource(order.Target.Actor, order.Target.Actor.Trait<CloneSource>());
+				SetSource(order.Target.Actor, order.Target.Actor.Trait<LinkedProducerSource>());
 			}
 		}
 
-		void SetSource(Actor producer, CloneSource source)
+		void SetSource(Actor producer, LinkedProducerSource source)
 		{
-			cloneSource = source;
-			cloneSource.AddCloneProducer(this);
+			linkedProducerSource = source;
+			linkedProducerSource.AddLinkedProducerTarget(this);
 			LinkNodes.Clear();
 			LinkNodes.Add(producer.CenterPosition);
 
@@ -220,9 +263,9 @@ namespace OpenRA.Mods.Common.Traits
 			UnlinkSource();
 		}
 
-		public void SourceInvalidated(CloneSource cloneSource)
+		public void SourceInvalidated(LinkedProducerSource linkedProducerSource)
 		{
-			if (this.cloneSource == cloneSource)
+			if (this.linkedProducerSource == linkedProducerSource)
 				UnlinkSource();
 
 			SetSourceToPreferred();
@@ -230,19 +273,19 @@ namespace OpenRA.Mods.Common.Traits
 
 		private void UnlinkSource()
 		{
-			if (cloneSource != null)
-				cloneSource.RemoveCloneProducer(this);
+			if (linkedProducerSource != null)
+				linkedProducerSource.RemoveLinkedProducerTarget(this);
 
-			cloneSource = null;
+			linkedProducerSource = null;
 		}
 
-		sealed class CloneProducerSetSourceOrderTargeter : UnitOrderTargeter
+		sealed class LinkedProducerTargetSetSourceOrderTargeter : UnitOrderTargeter
 		{
-			public const string Id = "SetCloneSource";
+			public const string Id = "SetLinkedProducerSource";
 
 			private string cursor;
 
-			public CloneProducerSetSourceOrderTargeter(string cursor)
+			public LinkedProducerTargetSetSourceOrderTargeter(string cursor)
 				: base(Id, 6, cursor, false, true)
 			{
 				this.cursor = cursor;
@@ -252,7 +295,7 @@ namespace OpenRA.Mods.Common.Traits
 			{
 				cursor = null;
 
-				if (!target.Info.HasTraitInfo<CloneSourceInfo>())
+				if (!target.Info.HasTraitInfo<LinkedProducerSourceInfo>())
 					return false;
 
 				if (self.Owner != target.Owner)

@@ -15,30 +15,30 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.Common.Traits
 {
-	[Desc("A possible source for a CloneProducer.")]
-	public class CloneSourceInfo : TraitInfo, Requires<ProductionInfo>
+	[Desc("A possible source for a LinkedProducerTarget.")]
+	public class LinkedProducerSourceInfo : TraitInfo, Requires<ProductionInfo>
 	{
-		public override object Create(ActorInitializer init) { return new CloneSource(init.Self, this); }
+		public override object Create(ActorInitializer init) { return new LinkedProducerSource(init.Self, this); }
 	}
 
-	public class CloneSource : INotifyProduction, INotifyOwnerChanged, INotifyKilled, INotifyActorDisposing, IResolveOrder, INotifyCreated
+	public class LinkedProducerSource : INotifyProduction, INotifyOwnerChanged, INotifyKilled, INotifyActorDisposing, IResolveOrder, INotifyCreated
 	{
-		HashSet<CloneProducer> cloneProducers = new HashSet<CloneProducer>();
+		HashSet<LinkedProducerTarget> linkedProducerTargets = new HashSet<LinkedProducerTarget>();
 		public IEnumerable<string> ProductionTypes { get; private set; }
 
-		public CloneSource(Actor self, CloneSourceInfo info)
+		public LinkedProducerSource(Actor self, LinkedProducerSourceInfo info)
 		{
 			ProductionTypes =  self.Info.TraitInfos<ProductionInfo>().SelectMany(p => p.Produces);
 		}
 
-		public void AddCloneProducer(CloneProducer cloningVat)
+		public void AddLinkedProducerTarget(LinkedProducerTarget cloningVat)
 		{
-			cloneProducers.Add(cloningVat);
+			linkedProducerTargets.Add(cloningVat);
 		}
 
-		public void RemoveCloneProducer(CloneProducer cloningVat)
+		public void RemoveLinkedProducerTarget(LinkedProducerTarget cloningVat)
 		{
-			cloneProducers.Remove(cloningVat);
+			linkedProducerTargets.Remove(cloningVat);
 		}
 
 		void INotifyCreated.Created(Actor self)
@@ -64,15 +64,15 @@ namespace OpenRA.Mods.Common.Traits
 
 		void INotifyProduction.UnitProduced(Actor self, Actor other, CPos exit)
 		{
-			foreach (var cloningVat in cloneProducers)
+			foreach (var cloningVat in linkedProducerTargets)
 				cloningVat.UnitProduced(other);
 		}
 
 		private void SeverConnections()
 		{
-			foreach (var cloningVat in cloneProducers.ToList())
+			foreach (var cloningVat in linkedProducerTargets.ToList())
 			{
-				RemoveCloneProducer(cloningVat);
+				RemoveLinkedProducerTarget(cloningVat);
 				cloningVat.SourceInvalidated(this);
 			}
 		}
@@ -87,10 +87,10 @@ namespace OpenRA.Mods.Common.Traits
 
 		private void UpdatePrimary(Actor self)
 		{
-			var cloneProducers = self.World.ActorsWithTrait<CloneProducer>().Where(a => a.Actor.Owner == self.Owner
+			var linkedProducerTargets = self.World.ActorsWithTrait<LinkedProducerTarget>().Where(a => a.Actor.Owner == self.Owner
 				&& ProductionTypes.Where(t => a.Trait.Types.Contains(t)).Any());
 
-			foreach (var p in cloneProducers)
+			foreach (var p in linkedProducerTargets)
 				p.Trait.PrimaryUpdated();
 		}
 	}

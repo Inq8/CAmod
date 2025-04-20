@@ -2471,8 +2471,6 @@
 		WaterImpactSound: splash9.aud
 		WaterCorpseSequence: small_splash
 		ParachutingCondition: parachute
-	Cloneable:
-		Types: Infantry
 	Voiced:
 		VoiceSet: GenericVoice
 	WithParachute:
@@ -4519,7 +4517,7 @@
 	ProductionCostMultiplier@MQS2:
 		Multiplier: 200
 		Prerequisites: infantry.any, global.multiqueuescaled, optimized.production1, !optimized.production2
-	CloneSource:
+	LinkedProducerSource:
 	UpdatesUnitsProduced:
 
 ^ProducesCyborgs:
@@ -4590,6 +4588,7 @@
 		Prerequisites: vehicles.any, global.multiqueuescaled, optimized.production1, !optimized.production2
 	GrantExternalConditionToProduced:
 		Condition: produced
+	LinkedProducerSource:
 	UpdatesUnitsProduced:
 
 ^ProducesNaval:
