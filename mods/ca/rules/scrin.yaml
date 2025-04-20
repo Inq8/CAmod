@@ -6263,6 +6263,7 @@ WORMHOLE:
 REBELGATEWAY:
 	Inherits: ^WormholeBase
 	Inherits@SelectableBuilding: ^SelectableBuilding
+	Inherits@Warpable: ^Warpable
 	-Interactable:
 	Tooltip:
 		Name: Gateway
@@ -6289,21 +6290,6 @@ REBELGATEWAY:
 		CrushedSequence: die
 		FallbackSequence: die
 	WithMakeAnimation:
-	LinkedProducerTarget:
-		Mode: Exit
-		Types: InfantrySQ, InfantryMQ, VehicleSQ, VehicleMQ
-		RequiresCondition: !powerdown
-	Sellable:
-		SellSounds: cashturn.aud
-	WithSpriteBody:
-		RequiresCondition: !powerdown
-	WithSpriteBody@Disabled:
-		Name: disabled
-		RequiresCondition: powerdown
-		Sequence: faded
-	ToggleConditionOnOrder:
-		Condition: powerdown
-		OrderName: PowerDown
 
 # infiltrator stolen tech
 
