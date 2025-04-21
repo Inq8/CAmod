@@ -206,6 +206,7 @@ end
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
+	OncePerThirtySecondChecks()
 end
 
 OncePerSecondChecks = function()
@@ -227,6 +228,12 @@ end
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
 		UpdatePlayerBaseLocations()
+	end
+end
+
+OncePerThirtySecondChecks = function()
+	if DateTime.GameTime > 1 and DateTime.GameTime % DateTime.Seconds(30) == 0 then
+		CalculatePlayerCharacteristics()
 	end
 end
 
@@ -260,7 +267,7 @@ InitGreece = function()
 	end)
 
 	Trigger.AfterDelay(Squads.AlliedAir.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.AlliedAir, Greece, Scrin, { "harv.scrin", "scol", "proc.scrin", "ptur", "shar", "stmr", "enrv", "tpod" })
+		InitAirAttackSquad(Squads.AlliedAir, Greece)
 	end)
 end
 
@@ -294,6 +301,6 @@ InitGDI = function()
 	end)
 
 	Trigger.AfterDelay(Squads.GDIAir.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.GDIAir, GDI, Scrin, { "harv.scrin", "scol", "proc.scrin", "ptur", "shar", "stmr", "enrv", "tpod" })
+		InitAirAttackSquad(Squads.GDIAir, GDI)
 	end)
 end

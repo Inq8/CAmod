@@ -296,6 +296,7 @@ end
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
+	OncePerThirtySecondChecks()
 end
 
 OncePerSecondChecks = function()
@@ -328,6 +329,12 @@ end
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
 		UpdatePlayerBaseLocations()
+	end
+end
+
+OncePerThirtySecondChecks = function()
+	if DateTime.GameTime > 1 and DateTime.GameTime % DateTime.Seconds(30) == 0 then
+		CalculatePlayerCharacteristics()
 	end
 end
 
@@ -446,7 +453,7 @@ InitAlliedAttacks = function()
 		end)
 
 		Trigger.AfterDelay(Squads.Air.Delay[Difficulty], function()
-			InitAirAttackSquad(Squads.Air, Greece, Nod, { "harv", "harv.td", "arty.nod", "mlrs", "obli", "atwr", "gtwr", "gun.nod", "hq", "nuk2" })
+			InitAirAttackSquad(Squads.Air, Greece)
 		end)
 
 		Trigger.AfterDelay(ChinookDropStart[Difficulty], function()

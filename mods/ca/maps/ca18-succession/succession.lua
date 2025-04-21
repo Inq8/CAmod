@@ -15,15 +15,16 @@ AdjustedNodCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Nod)
 
 Squads = {
 	Main1 = {
+		InitTime = 0 - DateTime.Minutes(10),
 		Delay = {
 			easy = DateTime.Minutes(5),
 			normal = DateTime.Minutes(3),
 			hard = DateTime.Minutes(1),
 		},
 		AttackValuePerSecond = {
-			easy = { Min = 10, Max = 25 },
-			normal = { Min = 25, Max = 50 },
-			hard = { Min = 40, Max = 80 },
+			easy = { Min = 12, Max = 25, RampDuration = DateTime.Minutes(16) },
+			normal = { Min = 25, Max = 50, RampDuration = DateTime.Minutes(14) },
+			hard = { Min = 40, Max = 80, RampDuration = DateTime.Minutes(12) },
 		},
 		FollowLeader = true,
 		DispatchDelay = DateTime.Seconds(15),
@@ -38,15 +39,16 @@ Squads = {
 		},
 	},
 	Main2 = {
+		InitTime = 0 - DateTime.Minutes(10),
 		Delay = {
 			easy = DateTime.Minutes(6),
 			normal = DateTime.Minutes(4),
 			hard = DateTime.Minutes(2),
 		},
 		AttackValuePerSecond = {
-			easy = { Min = 10, Max = 25 },
-			normal = { Min = 25, Max = 50 },
-			hard = { Min = 40, Max = 80 },
+			easy = { Min = 12, Max = 25, RampDuration = DateTime.Minutes(16) },
+			normal = { Min = 25, Max = 50, RampDuration = DateTime.Minutes(14) },
+			hard = { Min = 40, Max = 80, RampDuration = DateTime.Minutes(12) },
 		},
 		FollowLeader = true,
 		DispatchDelay = DateTime.Seconds(15),
@@ -101,7 +103,7 @@ Squads = {
 		ProducerTypes = { Aircraft = { "hpad.td" } },
 		Units = {
 			hard = {
-				{ Aircraft = { "scrn", "scrn", "scrn", "scrn", "scrn", "scrn", "scrn" } },
+				{ Aircraft = { "scrn", "scrn", "scrn", "scrn", "scrn", "scrn", "scrn", "scrn" } },
 			}
 		},
 	}
@@ -197,6 +199,7 @@ end
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
+	OncePerThirtySecondChecks()
 end
 
 OncePerSecondChecks = function()
@@ -218,6 +221,12 @@ end
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
 		UpdatePlayerBaseLocations()
+	end
+end
+
+OncePerThirtySecondChecks = function()
+	if DateTime.GameTime > 1 and DateTime.GameTime % DateTime.Seconds(30) == 0 then
+		CalculatePlayerCharacteristics()
 	end
 end
 
@@ -247,8 +256,7 @@ InitNod = function()
     end)
 
     Trigger.AfterDelay(Squads.Air.Delay[Difficulty], function()
-        InitAirAttackSquad(Squads.Air, Nod, USSR, { "harv", "4tnk", "4tnk.atomic", "3tnk", "3tnk.atomic", "3tnk.rhino", "3tnk.rhino.atomic",
-			"katy", "v3rl", "ttra", "v3rl", "apwr", "tpwr", "npwr", "tsla", "proc", "nukc", "ovld", "apoc", "apoc.atomic", "ovld.atomic" })
+        InitAirAttackSquad(Squads.Air, Nod)
     end)
 
 	if Difficulty == "hard" then

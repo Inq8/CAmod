@@ -26,6 +26,12 @@ Player:
 	PlayerResources:
 		DefaultCash: 0
 
+# Disable powers for AI
+
+^InterceptorsPower:
+	InterceptorPower@AirDef:
+		Prerequisites: ~aircraft.gdi, ~!botplayer
+
 amcv.enabled:
 	AlwaysVisible:
 	Interactable:
@@ -78,9 +84,11 @@ UAV:
 		Range: 10c0
 
 bdrone.upgrade:
+	-Buildable:
 	-AnnounceOnCreation:
 
 mdrone.upgrade:
+	-Buildable:
 	-AnnounceOnCreation:
 
 # Hunt() requires only 1 AttackBase

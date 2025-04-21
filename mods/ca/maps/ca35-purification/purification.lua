@@ -1,4 +1,10 @@
 
+UnitBuildTimeMultipliers = {
+	easy = 0.8,
+	normal = 0.5,
+	hard = 0.25,
+}
+
 LiquidTibCooldown = DateTime.Minutes(5)
 
 RiftEnabledTime = {
@@ -162,6 +168,7 @@ end
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
+	OncePerThirtySecondChecks()
 end
 
 OncePerSecondChecks = function()
@@ -218,6 +225,12 @@ OncePerFiveSecondChecks = function()
 	end
 end
 
+OncePerThirtySecondChecks = function()
+	if DateTime.GameTime > 1 and DateTime.GameTime % DateTime.Seconds(30) == 0 then
+		CalculatePlayerCharacteristics()
+	end
+end
+
 InitScrin = function()
 	RebuildExcludes.Scrin = { Types = { "rfgn" } }
 
@@ -246,7 +259,7 @@ BeginScrinAttacks = function()
 	end)
 
 	Trigger.AfterDelay(Squads.ScrinAir.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.ScrinAir, Scrin, Nod, { "harv", "harv.td", "arty.nod", "mlrs", "obli", "gun.nod", "wtnk", "hq", "tmpl", "nuk2", "rmbc", "enli", "tplr" })
+		InitAirAttackSquad(Squads.ScrinAir, Scrin)
 	end)
 end
 

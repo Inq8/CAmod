@@ -50,7 +50,6 @@ SILO.SCRINBLUE:
 	Inherits: SILO.SCRIN
 
 WORMHOLE:
-	-PopControlled:
 	-Selectable:
 	Interactable:
 	DamageMultiplier@INVULN:
@@ -64,6 +63,13 @@ WORMHOLE:
 WORMHOLEXXL:
 	Inherits: WORMHOLE
 	-Targetable:
+	ExternalCondition@KaneRevealed:
+		Condition: kane-revealed
+	ProximityExternalCondition@KaneRevealed:
+		Condition: kane-revealed
+		Range: 20c0
+		RequiresCondition: kane-revealed
+		ValidRelationships: Enemy, Ally, Neutral
 
 MSHP:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
@@ -228,6 +234,8 @@ mothership.shields:
 		PauseOnCondition: !kane-revealed && bluebuff
 	ExternalCondition@BLUEBUFF:
 		Condition: bluebuff
+	ExternalCondition@Warned:
+		Condition: warned
 	ExternalCondition@KANE:
 		Condition: kane-revealed
 	ExternalCondition@PROVOKED:
@@ -238,6 +246,9 @@ mothership.shields:
 	AttackFrontal:
 		PauseOnCondition: !kane-revealed && bluebuff && !provoked
 		FacingTolerance: 128
+	Targetable@Warned:
+		TargetTypes: NoAutoTarget
+		RequiresCondition: warned && !provoked
 
 RMBC:
 	Inherits@BLUEBUFF: ^BlueBuff
@@ -254,10 +265,8 @@ TPLR:
 		PauseOnCondition: !kane-revealed && bluebuff && !provoked
 		FacingTolerance: 128
 
-N3C:
+REAP:
 	Inherits@BLUEBUFF: ^BlueBuff
-	Health:
-		HP: 30000
 
 SIGN:
 	Inherits@HACKABLE: ^Hackable
@@ -350,7 +359,7 @@ KANE:
 	Tooltip:
 		Name: Kane
 	Health:
-		HP: 500000
+		HP: 5000000
 	Mobile:
 		Speed: 60
 	RevealsShroud:

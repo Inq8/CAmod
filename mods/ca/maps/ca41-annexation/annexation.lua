@@ -182,6 +182,7 @@ end
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
+	OncePerThirtySecondChecks()
 end
 
 OncePerSecondChecks = function()
@@ -232,6 +233,12 @@ OncePerFiveSecondChecks = function()
 	end
 end
 
+OncePerThirtySecondChecks = function()
+	if DateTime.GameTime > 1 and DateTime.GameTime % DateTime.Seconds(30) == 0 then
+		CalculatePlayerCharacteristics()
+	end
+end
+
 UpdateMissionText = function()
 	if TimerTicks > 0 then
 		UserInterface.SetMissionText("Capture Nerve Center. Gateway collapses in " .. UtilsCA.FormatTimeForGameSpeed(TimerTicks), HSLColor.Yellow)
@@ -272,8 +279,7 @@ InitScrinRebels = function()
 		InitAttackSquad(Squads.ScrinRebels3, ScrinRebels3)
 	end)
 	Trigger.AfterDelay(Squads.ScrinRebelsAir.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.ScrinRebelsAir, ScrinRebels1, USSR, { "harv", "4tnk", "4tnk.atomic", "3tnk", "3tnk.atomic", "3tnk.rhino", "3tnk.rhino.atomic",
-			"katy", "v3rl", "ttra", "v3rl", "apwr", "tpwr", "npwr", "tsla", "proc", "nukc", "ovld", "apoc", "apoc.atomic", "ovld.atomic" })
+		InitAirAttackSquad(Squads.ScrinRebelsAir, ScrinRebels1)
 	end)
 end
 

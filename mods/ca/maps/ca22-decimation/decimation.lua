@@ -25,6 +25,11 @@ AirFleetKillersThreshold = {
 	hard = 3
 }
 
+TripodKillersThreshold = {
+	normal = 12,
+	hard = 7
+}
+
 ParabombsEnabledDelay = {
 	easy = DateTime.Minutes(5),
 	normal = DateTime.Minutes(4),
@@ -121,6 +126,25 @@ Squads = {
 			}
 		},
 	},
+	TripodKillers = {
+		AttackValuePerSecond = {
+			normal = { Min = 20, Max = 20 },
+			hard = { Min = 30, Max = 30 },
+		},
+		ActiveCondition = function()
+			local tripods = Scrin.GetActorsByTypes({ "tpod", "rtpd" })
+			return #tripods > TripodKillersThreshold[Difficulty]
+		end,
+		ProducerTypes = { Aircraft = { "afld" } },
+		Units = {
+			normal = {
+				{ Aircraft = { "suk", "suk", "suk" } }
+			},
+			hard = {
+				{ Aircraft = { "suk", "suk", "suk", "suk" } }
+			}
+		},
+	}
 }
 
 WorldLoaded = function()
@@ -230,6 +254,7 @@ end
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
+	OncePerThirtySecondChecks()
 end
 
 OncePerSecondChecks = function()
@@ -256,6 +281,12 @@ end
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
 		UpdatePlayerBaseLocations()
+	end
+end
+
+OncePerThirtySecondChecks = function()
+	if DateTime.GameTime > 1 and DateTime.GameTime % DateTime.Seconds(30) == 0 then
+		CalculatePlayerCharacteristics()
 	end
 end
 
@@ -294,11 +325,15 @@ InitUSSR = function()
 	end)
 
 	Trigger.AfterDelay(Squads.AirMain.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.AirMain, USSR, Scrin, { "harv.scrin", "scol", "proc.scrin", "ptur", "shar", "stmr", "enrv", "tpod" })
+		InitAirAttackSquad(Squads.AirMain, USSR)
 	end)
 
 	if Difficulty ~= "easy" then
-		InitAirAttackSquad(Squads.AirFleetKillers, USSR, Scrin, { "pac", "deva", "stmr", "enrv" })
+		InitAirAttackSquad(Squads.AirFleetKillers, USSR, Scrin, { "pac", "deva", "stmr", "enrv", "torm" })
+	end
+
+	if Difficulty ~= "easy" then
+		InitAirAttackSquad(Squads.TripodKillers, USSR, Scrin, { "tpod", "rtpd" })
 	end
 
 	Trigger.AfterDelay(ParabombsEnabledDelay[Difficulty], function()

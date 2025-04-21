@@ -251,11 +251,11 @@ InitUSSR = function()
 	end
 
 	Trigger.AfterDelay(Squads.Planes.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.Planes, USSR, Nod, { "ltnk", "ftnk", "mlrs", "bggy", "bike", "arty.nod", "nuke", "nuk2" })
+		InitAirAttackSquad(Squads.Planes, USSR)
 	end)
 
 	Trigger.AfterDelay(Squads.Helicopters.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.Helicopters, USSR, Nod, { "ltnk", "ftnk", "mlrs", "bggy", "bike", "arty.nod", "nuke", "nuk2" })
+		InitAirAttackSquad(Squads.Helicopters, USSR)
 	end)
 
 	Trigger.AfterDelay(HaloDropStart[Difficulty], function()

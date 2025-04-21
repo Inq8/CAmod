@@ -1,5 +1,6 @@
 CruisersEnabledTime = {
-	normal = DateTime.Minutes(25),
+	easy = DateTime.Minutes(25),
+	normal = DateTime.Minutes(20),
 	hard = DateTime.Minutes(15),
 }
 
@@ -23,6 +24,7 @@ SuperweaponsEnabledTime = {
 
 Squads = {
 	Main = {
+		InitTime = 0 - DateTime.Minutes(5),
 		Delay = {
             easy = DateTime.Minutes(6),
 			normal = DateTime.Minutes(4),
@@ -52,8 +54,8 @@ Squads = {
 		},
 		AttackValuePerSecond = {
 			easy = { Min = 7, Max = 7 },
-			normal = { Min = 14, Max = 14 },
-			hard = { Min = 21, Max = 21 },
+			normal = { Min = 21, Max = 21 },
+			hard = { Min = 35, Max = 35 },
 		},
 		ProducerTypes = { Aircraft = { "hpad" } },
 		Units = {
@@ -213,13 +215,14 @@ WorldLoaded = function()
 	end)
 
 	Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
-		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = GDI })
+		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = Greece })
 	end)
 end
 
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
+	OncePerThirtySecondChecks()
 end
 
 OncePerSecondChecks = function()
@@ -268,6 +271,12 @@ OncePerFiveSecondChecks = function()
 	end
 end
 
+OncePerThirtySecondChecks = function()
+	if DateTime.GameTime > 1 and DateTime.GameTime % DateTime.Seconds(30) == 0 then
+		CalculatePlayerCharacteristics()
+	end
+end
+
 -- Functions
 
 InitGreece = function()
@@ -294,19 +303,22 @@ InitGreece = function()
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGDIGroundHunterUnit)
 	end)
 
-	if Difficulty ~= "easy" then
-		Trigger.AfterDelay(CruisersEnabledTime[Difficulty], function()
-			InitCruisers()
-		end)
-	end
+	Trigger.OnProduction(AlliedNavalYard, function(producer, produced)
+		if produced.Type == "ca" and not produced.IsDead then
+			produced.Patrol({ CruiserPatrol1.Location, CruiserPatrol2.Location })
+		end
+	end)
+
+	Trigger.AfterDelay(CruisersEnabledTime[Difficulty], function()
+		InitCruisers()
+	end)
 
 	Trigger.AfterDelay(Squads.Air.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.Air, Greece, USSR, { "harv", "4tnk", "4tnk.atomic", "3tnk", "3tnk.atomic", "3tnk.rhino", "3tnk.rhino.atomic",
-			"katy", "v3rl", "ttra", "v3rl", "apwr", "tsla", "proc", "nukc", "ovld", "apoc", "apoc.atomic", "ovld.atomic" })
+		InitAirAttackSquad(Squads.Air, Greece)
 	end)
 
 	Trigger.AfterDelay(Squads.Air2.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.Air2, Greece, USSR)
+		InitAirAttackSquad(Squads.Air2, Greece)
 	end)
 end
 
@@ -357,6 +369,10 @@ SendLandingCraft = function()
 end
 
 InitCruisers = function()
+	if AlliedNavalYard.IsDead then
+		return
+	end
+
 	local currentCruisers = Greece.GetActorsByType("ca")
 
 	if #currentCruisers == 0 then
@@ -371,8 +387,9 @@ InitCruisers = function()
 
 		for i = 1, cruiserCount do
 			Trigger.AfterDelay(DateTime.Seconds(10 * (i - 1)) + 1, function()
-				local cruiser = Reinforcements.Reinforce(Greece, { "ca" }, { CruiserSpawn.Location, CruiserPatrol1.Location })[1]
-				cruiser.Patrol({ CruiserPatrol1.Location, CruiserPatrol2.Location })
+				if not AlliedNavalYard.IsDead and AlliedNavalYard.Owner == Greece then
+					AlliedNavalYard.Produce("ca")
+				end
 			end)
 		end
 	end
@@ -383,6 +400,11 @@ InitCruisers = function()
 end
 
 InitChronoTankAttack = function()
+	local alliedFactories = Greece.GetActorsByType("weap")
+	if #alliedFactories == 0 then
+		return
+	end
+
 	local chronoTanksSquad = { "ctnk", "ctnk", "ctnk" }
 
 	if Difficulty == "normal" then

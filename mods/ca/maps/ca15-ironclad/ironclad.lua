@@ -128,6 +128,7 @@ end
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
+	OncePerThirtySecondChecks()
 end
 
 OncePerSecondChecks = function()
@@ -167,6 +168,12 @@ end
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
 		UpdatePlayerBaseLocations()
+	end
+end
+
+OncePerThirtySecondChecks = function()
+	if DateTime.GameTime > 1 and DateTime.GameTime % DateTime.Seconds(30) == 0 then
+		CalculatePlayerCharacteristics()
 	end
 end
 
@@ -235,7 +242,7 @@ StartAttacks = function()
 		InitAttackSquad(Squads.GDIMain, GDI)
 
 		Trigger.AfterDelay(Squads.GDIAir.Delay[Difficulty], function()
-			InitAirAttackSquad(Squads.GDIAir, GDI, USSR, { "harv", "v2rl", "apwr", "tsla", "ttra", "v3rl", "mig", "hind", "suk", "suk.upg", "kiro", "apoc" })
+			InitAirAttackSquad(Squads.GDIAir, GDI)
 		end)
 	end
 end

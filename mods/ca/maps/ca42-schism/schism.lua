@@ -246,6 +246,7 @@ end
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
+	OncePerThirtySecondChecks()
 end
 
 OncePerSecondChecks = function()
@@ -304,6 +305,12 @@ OncePerFiveSecondChecks = function()
 	end
 end
 
+OncePerThirtySecondChecks = function()
+	if DateTime.GameTime > 1 and DateTime.GameTime % DateTime.Seconds(30) == 0 then
+		CalculatePlayerCharacteristics()
+	end
+end
+
 -- Functions
 
 UpdateMissionText = function()
@@ -343,8 +350,7 @@ InitScrinRebels = function()
 	end)
 
 	Trigger.AfterDelay(Squads.ScrinRebelsAir.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.ScrinRebelsAir, ScrinRebels, USSR, { "etpd", "harv", "4tnk", "4tnk.atomic", "3tnk", "3tnk.atomic", "3tnk.rhino", "3tnk.rhino.atomic",
-			"katy", "v3rl", "ttra", "v3rl", "apwr", "tpwr", "npwr", "tsla", "proc", "nukc", "ovld", "apoc", "apoc.atomic", "ovld.atomic" })
+		InitAirAttackSquad(Squads.ScrinRebelsAir, ScrinRebels)
 	end)
 
 	if Difficulty == "hard" then
@@ -372,8 +378,7 @@ InitNod = function()
 	end)
 
 	Trigger.AfterDelay(Squads.NodAir.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.NodAir, Nod, USSR, { "etpd", "harv", "4tnk", "4tnk.atomic", "3tnk", "3tnk.atomic", "3tnk.rhino", "3tnk.rhino.atomic",
-			"katy", "v3rl", "ttra", "v3rl", "apwr", "tpwr", "npwr", "tsla", "proc", "nukc", "ovld", "apoc", "apoc.atomic", "ovld.atomic" })
+		InitAirAttackSquad(Squads.NodAir, Nod)
 	end)
 
 	if Difficulty ~= "easy" then

@@ -17,24 +17,24 @@ using OpenRA.Mods.Common.Traits;
 
 namespace OpenRA.Mods.Common.Effects
 {
-	public class CloneSourceIndicator : IEffect, IEffectAboveShroud, IEffectAnnotation
+	public class LinkedProducerSourceIndicator : IEffect, IEffectAboveShroud, IEffectAnnotation
 	{
 		readonly Actor building;
-		readonly CloneProducer cp;
+		readonly LinkedProducerTarget lpt;
 
 		readonly List<WPos> targetLineNodes = new() { };
 		List<WPos> cachedNodes;
 
-		public CloneSourceIndicator(Actor building, CloneProducer cp)
+		public LinkedProducerSourceIndicator(Actor building, LinkedProducerTarget lpt)
 		{
 			this.building = building;
-			this.cp = cp;
+			this.lpt = lpt;
 			UpdateTargetLineNodes(building.World);
 		}
 
 		void IEffect.Tick(World world)
 		{
-			if (cachedNodes == null || !cachedNodes.SequenceEqual(cp.LinkNodes))
+			if (cachedNodes == null || !cachedNodes.SequenceEqual(lpt.LinkNodes))
 			{
 				UpdateTargetLineNodes(world);
 			}
@@ -45,7 +45,7 @@ namespace OpenRA.Mods.Common.Effects
 
 		void UpdateTargetLineNodes(World world)
 		{
-			cachedNodes = new List<WPos>(cp.LinkNodes);
+			cachedNodes = new List<WPos>(lpt.LinkNodes);
 			targetLineNodes.Clear();
 			foreach (var n in cachedNodes)
 				targetLineNodes.Add(n);

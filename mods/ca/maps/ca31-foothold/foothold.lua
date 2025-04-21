@@ -202,6 +202,7 @@ end
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
+	OncePerThirtySecondChecks()
 end
 
 OncePerSecondChecks = function()
@@ -228,6 +229,12 @@ end
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
 		UpdatePlayerBaseLocations()
+	end
+end
+
+OncePerThirtySecondChecks = function()
+	if DateTime.GameTime > 1 and DateTime.GameTime % DateTime.Seconds(30) == 0 then
+		CalculatePlayerCharacteristics()
 	end
 end
 
@@ -325,7 +332,7 @@ BeginScrinAttacks = function()
 	end)
 
 	Trigger.AfterDelay(Squads.ScrinAir.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.ScrinAir, Scrin, GDI, { "harv.td", "msam", "hsam", "nuke", "nuk2", "orca", "a10", "a10.sw", "a10.gau", "auro", "htnk", "htnk.drone", "htnk.ion", "htnk.hover", "titn", "titn.rail" })
+		InitAirAttackSquad(Squads.ScrinAir, Scrin)
 	end)
 
 	if Difficulty ~= "easy" then

@@ -237,7 +237,7 @@ WorldLoaded = function()
 		if ScrinDefenseBuff2.IsDead then
 			IonConduits.Destroy()
 			if NodFreed then
-				InitHackers()
+				InitHackers(HackersDelay[Difficulty])
 			end
 		end
 
@@ -254,7 +254,7 @@ WorldLoaded = function()
 		if ScrinDefenseBuff1.IsDead then
 			IonConduits.Destroy()
 			if NodFreed then
-				InitHackers()
+				InitHackers(HackersDelay[Difficulty])
 			end
 		end
 	end)
@@ -287,10 +287,23 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnDamaged(SignalTransmitter, function(self, attacker, damage)
-		if not SignalTransmitterDamageWarning and not FirstHackersArrived and self.Health < self.MaxHealth / 2 then
-			SignalTransmitterDamageWarning = true
-			Notification("We have reason to believe the Signal Transmitter may be key to bringing the Mothership's shields down. Recommend we leave it intact, pending confirmation.")
-			MediaCA.PlaySound("c_leavesignaltransmitter.aud", 2)
+		if attacker.Owner == GDI then
+			InitHackers(0)
+		end
+	end)
+
+	Trigger.OnEnteredProximityTrigger(SignalTransmitter.CenterPosition, WDist.New(12 * 1024), function(a, id)
+		if a.Owner == GDI and a.HasProperty("Health") and not a.HasProperty("Land") then
+			Trigger.RemoveProximityTrigger(id)
+			InitHackers(0)
+		end
+	end)
+
+	Trigger.OnEnteredProximityTrigger(WormholeWP.CenterPosition, WDist.New(6 * 1024), function(a, id)
+		if a.Owner == Nod and not a.IsDead and a.HasProperty("Hunt") then
+			a.Stop()
+			Trigger.ClearAll(a)
+			a.Hunt()
 		end
 	end)
 
@@ -304,7 +317,7 @@ WorldLoaded = function()
 		end
 	end)
 
-	local cyborgs = CyborgSlaves.GetActorsByTypes({ "rmbc", "enli", "tplr", "n3c" })
+	local cyborgs = CyborgSlaves.GetActorsByTypes({ "rmbc", "enli", "tplr", "reap" })
 	Utils.Do(cyborgs, function(c)
 		c.GrantCondition("bluebuff")
 
@@ -313,6 +326,11 @@ WorldLoaded = function()
 				SleepingCyborgsMessageShown = true
 				Notification("Nod cyborgs appear to be in a hibernation state. The enriched Tiberium is providing powerful regeneration. Recommendation is to not engage.")
 				MediaCA.PlaySound("c_hibernation.aud", 2)
+				Utils.Do(cyborgs, function(c)
+					if not c.IsDead then
+						c.GrantCondition("warned")
+					end
+				end)
 			end
 		end)
 	end)
@@ -348,6 +366,7 @@ end
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
+	OncePerThirtySecondChecks()
 	PanToFinale()
 end
 
@@ -455,6 +474,12 @@ OncePerFiveSecondChecks = function()
 	end
 end
 
+OncePerThirtySecondChecks = function()
+	if DateTime.GameTime > 1 and DateTime.GameTime % DateTime.Seconds(30) == 0 then
+		CalculatePlayerCharacteristics()
+	end
+end
+
 InitScrin = function()
 	RebuildExcludes.Scrin = { Types = { "sign", "rfgn", "reac", "rea2" } }
 
@@ -484,7 +509,7 @@ InitScrin = function()
 	end)
 
 	Trigger.AfterDelay(Squads.ScrinAir.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.ScrinAir, Scrin, GDI, { "harv.td", "msam", "hsam", "nuke", "nuk2", "orca", "a10", "a10.sw", "a10.gau", "auro", "htnk", "htnk.drone", "htnk.ion", "htnk.hover", "titn", "titn.rail" })
+		InitAirAttackSquad(Squads.ScrinAir, Scrin)
 	end)
 
 	local scrinPower = Scrin.GetActorsByTypes({ "reac", "rea2" })
@@ -570,14 +595,14 @@ InitGreece = function()
 	end)
 end
 
-InitHackers = function()
+InitHackers = function(delay)
 	if FirstHackersRequested then
 		return
 	end
 
 	FirstHackersRequested = true
 
-	Trigger.AfterDelay(HackersDelay[Difficulty], function()
+	Trigger.AfterDelay(delay, function()
 		if SignalTransmitter.IsDead then
 			return
 		end
@@ -785,7 +810,7 @@ FlipSlaveFaction = function(player)
 		InitNod()
 		InitAttackSquad(Squads.ScrinEast, Scrin)
 		if ScrinDefenseBuff1.IsDead and ScrinDefenseBuff2.IsDead then
-			InitHackers()
+			InitHackers(HackersDelay[Difficulty])
 		end
 		Notification("Nod forces have been released from Scrin control.")
 		MediaCA.PlaySound("c_nodreleased.aud", 2)
@@ -865,10 +890,13 @@ DoFinale = function()
 	Actor.Create("camera", true, { Owner = GDI, Location = WormholeWP.Location })
 
 	Trigger.AfterDelay(1, function()
-		Actor.Create("wormholexxl", true, { Owner = Scrin, Location = WormholeWP.Location })
+		Gateway = Actor.Create("wormholexxl", true, { Owner = Scrin, Location = WormholeWP.Location })
 	end)
 
 	Actor.Create("wormhole", true, { Owner = Kane, Location = KaneSpawn.Location })
+	Actor.Create("wormhole", true, { Owner = Kane, Location = CyborgWormhole1.Location })
+	Actor.Create("wormhole", true, { Owner = Kane, Location = CyborgWormhole2.Location })
+
 	local kane = Actor.Create("kane", true, { Owner = Kane, Location = KaneSpawn.Location, Facing = Angle.South })
 
 	Trigger.AfterDelay(DateTime.Seconds(5), function()
@@ -876,7 +904,7 @@ DoFinale = function()
 		kane.Move(KaneSpawn.Location + CVec.New(0, 3))
 	end)
 
-	local cyborgs = CyborgSlaves.GetActorsByTypes({ "rmbc", "enli", "tplr", "n3c" })
+	local cyborgs = CyborgSlaves.GetActorsByTypes({ "rmbc", "enli", "tplr", "reap" })
 
 	Utils.Do(cyborgs, function(a)
 		a.Owner = Kane
@@ -887,13 +915,17 @@ DoFinale = function()
 		Media.DisplayMessage("Well commander, we meet at last! Your contribution has been invaluable, unwitting as it may be.", "Kane", HSLColor.FromHex("FF0000"))
 		MediaCA.PlaySound("outro.aud", 2.5)
 
-		Utils.Do(cyborgs, function(a)
-			Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(25)), function()
-				if not a.IsDead then
-					a.GrantCondition("kane-revealed")
-				end
+		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(25)), function()
+			if not Gateway.IsDead then
+				Gateway.GrantCondition("kane-revealed")
+			end
+
+			Utils.Do(cyborgs, function(a)
 				MoveToWormhole(a)
 			end)
+
+			Reinforcements.Reinforce(Kane, { "n1c", "rmbc", "rmbc", "enli", "reap", "rmbc", "enli", "reap", "rmbc", "enli", "enli", "n3c", "rmbc", "reap", "n3c" }, { CyborgWormhole1.Location, WormholeWP.Location }, 25)
+			Reinforcements.Reinforce(Kane, { "rmbc", "rmbc", "enli", "reap", "rmbc", "enli", "reap", "rmbc", "enli", "n1c", "reap", "n1c", "n3c", "enli", "rmbc" }, { CyborgWormhole2.Location, WormholeWP.Location }, 25)
 		end)
 
 		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(6)), function()

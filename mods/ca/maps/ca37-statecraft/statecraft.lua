@@ -285,7 +285,7 @@ Squads = {
 			hard = DateTime.Minutes(10)
 		},
 		ActiveCondition = function()
-			return #USSR.GetActorsByTypes({ "4tnk", "4tnk.atomic", "apoc", "apoc.atomic" }) > 10
+			return #USSR.GetActorsByTypes({ "4tnk", "4tnk.atomic", "apoc", "apoc.atomic" }) > 8
 		end,
 		AttackValuePerSecond = {
 			hard = { Min = 35, Max = 35 },
@@ -331,6 +331,7 @@ end
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
+	OncePerThirtySecondChecks()
 end
 
 OncePerSecondChecks = function()
@@ -384,6 +385,12 @@ OncePerFiveSecondChecks = function()
 	end
 end
 
+OncePerThirtySecondChecks = function()
+	if DateTime.GameTime > 1 and DateTime.GameTime % DateTime.Seconds(30) == 0 then
+		CalculatePlayerCharacteristics()
+	end
+end
+
 InitGenerals = function()
 	Generals = { Marinesko, Romanov, Krukov }
 
@@ -420,8 +427,7 @@ InitGenerals = function()
 	end)
 
 	Trigger.AfterDelay(Squads.KrukovAir.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.KrukovAir, Krukov, USSR, { "harv", "4tnk", "4tnk.atomic", "3tnk", "3tnk.atomic", "3tnk.rhino", "3tnk.rhino.atomic",
-			"katy", "v3rl", "ttra", "v3rl", "apwr", "tpwr", "npwr", "tsla", "proc", "nukc", "ovld", "apoc", "apoc.atomic", "ovld.atomic" })
+		InitAirAttackSquad(Squads.KrukovAir, Krukov)
 	end)
 
 	if Difficulty == "hard" then

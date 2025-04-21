@@ -294,6 +294,7 @@ end
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
+	OncePerThirtySecondChecks()
 end
 
 OncePerSecondChecks = function()
@@ -338,6 +339,12 @@ OncePerFiveSecondChecks = function()
 	end
 end
 
+OncePerThirtySecondChecks = function()
+	if DateTime.GameTime > 1 and DateTime.GameTime % DateTime.Seconds(30) == 0 then
+		CalculatePlayerCharacteristics()
+	end
+end
+
 InitScrin = function()
 	RebuildExcludes.Scrin = { Types = { "rfgn" } }
 
@@ -366,11 +373,11 @@ InitScrin = function()
 	end)
 
 	Trigger.AfterDelay(Squads.ScrinAirVsNod.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.ScrinAirVsNod, Scrin, Nod, { "harv", "harv.td", "arty.nod", "mlrs", "obli", "wtnk", "gun.nod", "hq", "tmpl", "nuk2", "rmbc", "enli", "tplr" })
+		InitAirAttackSquad(Squads.ScrinAirVsNod, Scrin, Nod)
 	end)
 
 	Trigger.AfterDelay(Squads.ScrinAirVsGDI.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.ScrinAirVsGDI, Scrin, GDI, { "harv", "harv.td", "msam", "hsam", "atwr", "stwr", "gtwr", "hq", "gtek", "nuk2", "htnk", "htnk.ion", "htnk.hover", "htnk.drone", "titn", "titn.rail" })
+		InitAirAttackSquad(Squads.ScrinAirVsGDI, Scrin, GDI)
 	end)
 
 	if Difficulty == "hard" then

@@ -11,6 +11,7 @@ SuperweaponsEnabledTime = {
 AdjustedGDICompositions = AdjustCompositionsForDifficulty(UnitCompositions.GDI)
 
 Squads = {
+	InitTime = 0 - DateTime.Minutes(2),
 	GDIMain1 = {
 		Delay = {
 			easy = DateTime.Minutes(5),
@@ -32,6 +33,7 @@ Squads = {
 		},
 	},
 	GDIMain2 = {
+		InitTime = 0 - DateTime.Minutes(2),		
 		Delay = {
 			easy = DateTime.Minutes(6),
 			normal = DateTime.Minutes(4),
@@ -172,6 +174,7 @@ end
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
+	OncePerThirtySecondChecks()
 end
 
 OncePerSecondChecks = function()
@@ -203,6 +206,12 @@ end
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
 		UpdatePlayerBaseLocations()
+	end
+end
+
+OncePerThirtySecondChecks = function()
+	if DateTime.GameTime > 1 and DateTime.GameTime % DateTime.Seconds(30) == 0 then
+		CalculatePlayerCharacteristics()
 	end
 end
 
@@ -271,8 +280,7 @@ InitGDIAttacks = function()
 		end)
 
 		Trigger.AfterDelay(Squads.GDIAir.Delay[Difficulty], function()
-			InitAirAttackSquad(Squads.GDIAir, GDI, USSR, { "harv", "4tnk", "4tnk.atomic", "3tnk", "3tnk.atomic", "3tnk.rhino", "3tnk.rhino.atomic",
-				"katy", "v3rl", "ttra", "v3rl", "apwr", "tpwr", "npwr", "tsla", "proc", "nukc", "ovld", "apoc", "apoc.atomic", "ovld.atomic" })
+			InitAirAttackSquad(Squads.GDIAir, GDI)
 		end)
 
 		if Difficulty == "hard" then

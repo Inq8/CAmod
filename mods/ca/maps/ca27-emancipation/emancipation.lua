@@ -316,6 +316,7 @@ end
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
+	OncePerThirtySecondChecks()
 end
 
 OncePerSecondChecks = function()
@@ -346,6 +347,12 @@ OncePerFiveSecondChecks = function()
 	end
 end
 
+OncePerThirtySecondChecks = function()
+	if DateTime.GameTime > 1 and DateTime.GameTime % DateTime.Seconds(30) == 0 then
+		CalculatePlayerCharacteristics()
+	end
+end
+
 InitScrin = function()
 	Actor.Create("ai.unlimited.power", true, { Owner = GDISlaves })
 
@@ -372,7 +379,7 @@ InitScrin = function()
 	end)
 
 	Trigger.AfterDelay(Squads.ScrinAir.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.ScrinAir, Scrin, GDI, { "harv.td", "msam", "nuke", "nuk2", "orca", "a10", "a10.sw", "a10.gau", "htnk", "htnk.drone", "mtnk.drone" })
+		InitAirAttackSquad(Squads.ScrinAir, Scrin)
 	end)
 end
 

@@ -1163,10 +1163,12 @@ HACK:
 	Armament@PRIMARY:
 		Weapon: PrepareHack
 		PauseOnCondition: deployed || bothacking
+		TargetRelationships: Enemy, Neutral
 	Armament@PRIMARYDEPLOYED:
 		Weapon: Hack
 		RequiresCondition: deployed
 		LocalOffset: 0,0,50
+		TargetRelationships: Enemy, Neutral
 	AttackFrontal:
 		Voice: Action
 		FacingTolerance: 512

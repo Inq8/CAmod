@@ -57,10 +57,16 @@ namespace OpenRA.Mods.Common.Traits
 		public readonly bool SpawnAfterDefeat = true;
 
 		[Desc("Should the spawned actor be added to the selection?")]
-		public readonly bool AddToSelection = false;
+		public readonly bool InheritsSelection = false;
 
 		[Desc("Should the spawned actor be added to the control group?")]
-		public readonly bool AddToControlGroup = false;
+		public readonly bool InheritsControlGroup = false;
+
+		[Desc("Should the spawned actor inhert stance from the killed actor.")]
+		public readonly bool InheritsStance = false;
+
+		[Desc("Should the spawned actor inhert experience from the killed actor.")]
+		public readonly bool InheritsExperience = false;
 
 		public override object Create(ActorInitializer init) { return new SpawnActorOnDeathCA(init, this); }
 	}
@@ -146,6 +152,18 @@ namespace OpenRA.Mods.Common.Traits
 			foreach (var modifier in self.TraitsImplementing<IDeathActorInitModifier>())
 				modifier.ModifyDeathActorInit(self, td);
 
+			if (Info.InheritsStance)
+			{
+				var autoTarget = self.TraitOrDefault<AutoTarget>();
+				if (autoTarget != null)
+				{
+					var stance = autoTarget.Stance;
+					td.Add(new StanceInit(Info, stance));
+				}
+			}
+
+			var oldGainsExperience = Info.InheritsExperience ? self.TraitOrDefault<GainsExperience>() : null;
+
 			var huskActor = self.TraitsImplementing<IHuskModifier>()
 				.Select(ihm => ihm.HuskActor(self))
 				.FirstOrDefault(a => a != null);
@@ -153,11 +171,17 @@ namespace OpenRA.Mods.Common.Traits
 			self.World.AddFrameEndTask(w => {
 				var actor = w.CreateActor(huskActor ?? Info.Actor, td);
 
-				if (Info.AddToSelection && wasSelected)
+				if (Info.InheritsSelection && wasSelected)
 					w.Selection.Add(actor);
 
-				if (Info.AddToControlGroup && controlGroup != null)
+				if (Info.InheritsControlGroup && controlGroup != null)
 					w.ControlGroups.AddToControlGroup(actor, controlGroup.Value);
+
+				if (Info.InheritsExperience) {
+					var newGainsExperience = actor.TraitOrDefault<GainsExperience>();
+					if (oldGainsExperience != null && newGainsExperience != null)
+						newGainsExperience.GiveExperience(oldGainsExperience.Experience);
+				}
 			});
 		}
 	}

@@ -353,7 +353,9 @@ AutoRepairAndRebuildBuildings = function(player, maxAttempts)
 	local buildings = Utils.Where(Map.ActorsInWorld, function(self) return self.Owner == player and self.HasProperty("StartBuildingRepairs") end)
 	Utils.Do(buildings, function(a)
 		local excludeFromRebuilding = false
-		if a.Type == "fact" or a.Type == "afac" or a.Type == "sfac" then
+		
+		-- never rebuild silos or conyards
+		if a.Type == "fact" or a.Type == "afac" or a.Type == "sfac" or a.Type == "silo" or a.Type == "silo.td" or a.Type == "silo.scrin" then
 			excludeFromRebuilding = true
 		else
 			if RebuildExcludes ~= nil and RebuildExcludes[player.InternalName] ~= nil then
@@ -1543,14 +1545,14 @@ CalculatePlayerCharacteristics = function()
 
 		Utils.Do(infantryUnits, function(u)
 			if UnitCosts[u.Type] == nil then
-				UnitCosts[u.Type] = ActorCA.CostOrDefault(u)
+				UnitCosts[u.Type] = ActorCA.CostOrDefault(u.Type)
 			end
 			infantryValue = infantryValue + UnitCosts[u.Type]
 		end)
 
 		Utils.Do(heavyUnits, function(u)
 			if UnitCosts[u.Type] == nil then
-				UnitCosts[u.Type] = ActorCA.CostOrDefault(u)
+				UnitCosts[u.Type] = ActorCA.CostOrDefault(u.Type)
 			end
 			heavyValue = heavyValue + UnitCosts[u.Type]
 		end)
@@ -1652,7 +1654,7 @@ UnitCompositions = {
 		{ Infantry = { "e3", "e1", "e3", "e3", "e1", "e3", "e1", "e3", "e1", "e3", "e3", "e1", "e3", "e3", "e3", "e3" }, Vehicles = { "tnkd", "tnkd", "tnkd", "tnkd", "tnkd", "tnkd" }, MinTime = DateTime.Minutes(16), RequiredTargetCharacteristics = { "MassHeavy" } },
 
 		------ Anti-infantry
-		{ Infantry = { "e3", "enfo", "e1", "e1", "e1", "enfo", "e1", "e1", "enfo", "e3", "e1", "e1", "enfo", "e1", "e1", "e1", "e1", "e1", "e1", "enfo", "enfo" }, Vehicles = { "ptnk", "ptnk", "ptnk", "ptnk", "ptnk", "ptnk" }, MinTime = DateTime.Minutes(16), RequiredTargetCharacteristics = { "MassInfantry" } },
+		{ Infantry = { "e3", "enfo", "e1", "e1", "e1", "enfo", "e1", "e1", "enfo", "e3", "e1", "e1", "enfo", "e1", "e1", "e1", "e1", "e1", "e1", "enfo", "enfo" }, Vehicles = { "ptnk", "ptnk", "ptnk", "cryo", "ptnk", "ptnk" }, MinTime = DateTime.Minutes(16), RequiredTargetCharacteristics = { "MassInfantry" } },
 
 		-- Specials
 		{ Infantry = {}, Vehicles = { "ctnk", "ctnk", "ctnk", "ctnk", "ctnk", "ctnk"  }, MinTime = DateTime.Minutes(18), IsSpecial = true },
