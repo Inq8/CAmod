@@ -465,8 +465,6 @@ OncePerFiveSecondChecks = function()
 						return
 					end
 
-					MediaCA.PlaySound("seth_morehackers.aud", 2)
-					Media.DisplayMessage("We are sending you another squad of hackers. Perhaps you'll be more careful with them this time.", "Nod Commander", HSLColor.FromHex("FF0000"))
 					DropHackers()
 				end)
 			end
@@ -615,8 +613,13 @@ end
 DropHackers = function()
 	Beacon.New(GDI, HackerDropLanding.CenterPosition)
 
-	MediaCA.PlaySound("seth_hackers.aud", 2)
-	Media.DisplayMessage("Attention GDI commander. We are sending you some of our hackers. Use them to hack into the Scrin Signal Transmitter. They will be able to bring the Mothership's shields down for you.", "Nod Commander", HSLColor.FromHex("FF0000"))
+	if not FirstHackersArrived then
+		MediaCA.PlaySound("seth_hackers.aud", 2)
+		Media.DisplayMessage("Attention GDI commander. We are sending you some of our hackers. Use them to hack into the Scrin Signal Transmitter. They will be able to bring the Mothership's shields down for you.", "Nod Commander", HSLColor.FromHex("FF0000"))
+	else
+		MediaCA.PlaySound("seth_morehackers.aud", 2)
+		Media.DisplayMessage("We are sending you another squad of hackers. Perhaps you'll be more careful with them this time.", "Nod Commander", HSLColor.FromHex("FF0000"))
+	end
 
 	local hackerFlare = Actor.Create("flare", true, { Owner = GDI, Location = HackerDropLanding.Location })
 	Trigger.AfterDelay(DateTime.Seconds(10), function()

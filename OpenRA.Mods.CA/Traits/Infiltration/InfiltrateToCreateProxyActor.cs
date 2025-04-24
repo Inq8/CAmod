@@ -8,6 +8,7 @@
  */
 #endregion
 
+using System.Collections.Generic;
 using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
@@ -46,16 +47,21 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("If true, spawn at the location of the infiltrated actor.")]
 		public readonly bool UseCenterPosition = false;
 
+		[Desc("If true, the spawned actor is destroyed if the parent actor dies, is sold, or is captured.")]
+		public readonly bool LinkedToParent = false;
+
 		public override object Create(ActorInitializer init) { return new InfiltrateToCreateProxyActor(this); }
 	}
 
-	class InfiltrateToCreateProxyActor : INotifyInfiltrated
+	class InfiltrateToCreateProxyActor : INotifyInfiltrated, INotifyRemovedFromWorld
 	{
 		readonly InfiltrateToCreateProxyActorInfo info;
+		List<Actor> spawnedActors;
 
 		public InfiltrateToCreateProxyActor(InfiltrateToCreateProxyActorInfo info)
 		{
 			this.info = info;
+			spawnedActors = new List<Actor>();
 		}
 
 		void INotifyInfiltrated.Infiltrated(Actor self, Actor infiltrator, BitSet<TargetableType> types)
@@ -89,7 +95,16 @@ namespace OpenRA.Mods.CA.Traits
 			else if (info.UseLocation)
 				td.Add(new LocationInit(self.Location));
 
-			infiltrator.World.AddFrameEndTask(w => w.CreateActor(info.Proxy, td));
+			infiltrator.World.AddFrameEndTask(w => spawnedActors.Add(w.CreateActor(info.Proxy, td)));
+		}
+
+		void INotifyRemovedFromWorld.RemovedFromWorld(Actor self)
+		{
+			foreach (var a in spawnedActors)
+			{
+				if (!a.IsDead)
+					a.Dispose();
+			}
 		}
 	}
 }

@@ -226,8 +226,8 @@ ChooseRandomTargetOfTypes = function(unit, targetPlayer, targetList, targetType)
 			enemies = targetPlayer.GetActorsByTypes(targetList)
 		end
 
-		local enemies = Utils.Where(enemies, function(self)
-			return self.HasProperty("Health") and (actor.HasProperty("Move") or actor.HasProperty("StartBuildingRepairs")) and unit.CanTarget(self)
+		local enemies = Utils.Where(enemies, function(e)
+			return e.HasProperty("Health") and (e.HasProperty("Move") or e.HasProperty("StartBuildingRepairs")) and unit.CanTarget(e)
 		end)
 
 		if #enemies > 0 then
@@ -240,8 +240,8 @@ end
 
 ChooseRandomBuildingTarget = function(unit, targetPlayer)
 	local target = nil
-	local enemies = Utils.Where(targetPlayer.GetActors(), function(self)
-		return self.HasProperty("Health") and self.HasProperty("StartBuildingRepairs") and unit.CanTarget(self) and not Utils.Any(WallTypes, function(type) return self.Type == type end)
+	local enemies = Utils.Where(targetPlayer.GetActors(), function(e)
+		return e.HasProperty("Health") and e.HasProperty("StartBuildingRepairs") and unit.CanTarget(e) and not Utils.Any(WallTypes, function(t) return e.Type == t end)
 	end)
 	if #enemies > 0 then
 		target = Utils.Random(enemies)
