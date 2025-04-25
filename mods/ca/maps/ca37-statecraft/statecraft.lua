@@ -102,9 +102,6 @@ SecondaryAttackValues = {
 
 Squads = {
 	MarineskoMain = {
-		ActiveCondition = function()
-			return not MarineskoSubdued
-		end,
 		Delay = {
 			easy = DateTime.Minutes(7),
 			normal = DateTime.Minutes(5),
@@ -120,9 +117,6 @@ Squads = {
 		},
 	},
 	MarineskoVsRomanov = {
-		ActiveCondition = function()
-			return not MarineskoSubdued
-		end,
 		Delay = {
 			easy = DateTime.Minutes(8),
 			normal = DateTime.Minutes(6),
@@ -137,9 +131,6 @@ Squads = {
 		},
 	},
 	MarineskoVsKrukov = {
-		ActiveCondition = function()
-			return not MarineskoSubdued
-		end,
 		Delay = {
 			easy = DateTime.Minutes(8),
 			normal = DateTime.Minutes(6),
@@ -154,9 +145,6 @@ Squads = {
 		},
 	},
 	RomanovMain = {
-		ActiveCondition = function()
-			return not RomanovSubdued
-		end,
 		Delay = {
 			easy = DateTime.Minutes(7),
 			normal = DateTime.Minutes(5),
@@ -172,9 +160,6 @@ Squads = {
 		},
 	},
 	RomanovVsMarinesko = {
-		ActiveCondition = function()
-			return not RomanovSubdued
-		end,
 		Delay = {
 			easy = DateTime.Minutes(8),
 			normal = DateTime.Minutes(6),
@@ -189,9 +174,6 @@ Squads = {
 		},
 	},
 	RomanovVsKrukov = {
-		ActiveCondition = function()
-			return not RomanovSubdued
-		end,
 		Delay = {
 			easy = DateTime.Minutes(8),
 			normal = DateTime.Minutes(6),
@@ -206,9 +188,6 @@ Squads = {
 		},
 	},
 	KrukovMain = {
-		ActiveCondition = function()
-			return not KrukovSubdued
-		end,
 		Delay = {
 			easy = DateTime.Minutes(7),
 			normal = DateTime.Minutes(5),
@@ -223,9 +202,6 @@ Squads = {
 		},
 	},
 	KrukovVsMarinesko = {
-		ActiveCondition = function()
-			return not KrukovSubdued
-		end,
 		Delay = {
 			easy = DateTime.Minutes(8),
 			normal = DateTime.Minutes(6),
@@ -240,9 +216,6 @@ Squads = {
 		},
 	},
 	KrukovVsRomanov = {
-		ActiveCondition = function()
-			return not KrukovSubdued
-		end,
 		Delay = {
 			easy = DateTime.Minutes(8),
 			normal = DateTime.Minutes(6),
@@ -304,6 +277,9 @@ WorldLoaded = function()
 	Marinesko = Player.GetPlayer("Marinesko")
 	Romanov = Player.GetPlayer("Romanov")
 	Krukov = Player.GetPlayer("Krukov")
+	MarineskoUnited = Player.GetPlayer("MarineskoUnited")
+	RomanovUnited = Player.GetPlayer("RomanovUnited")
+	KrukovUnited = Player.GetPlayer("KrukovUnited")
 	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { USSR }
 	TimerTicks = 0
@@ -314,9 +290,9 @@ WorldLoaded = function()
 	AdjustPlayerStartingCashForDifficulty()
 	InitGenerals()
 
-	ObjectiveSubdueMarinesko = USSR.AddObjective("Defeat General Marinesko's forces.")
-	ObjectiveSubdueRomanov = USSR.AddObjective("Defeat Deputy Chairman Romanov's forces.")
-	ObjectiveSubdueKrukov = USSR.AddObjective("Defeat General Krukov's forces.")
+	ObjectiveEliminateMarinesko = USSR.AddObjective("Defeat General Marinesko's forces.")
+	ObjectiveEliminateRomanov = USSR.AddObjective("Defeat Deputy Chairman Romanov's forces.")
+	ObjectiveEliminateKrukov = USSR.AddObjective("Defeat General Krukov's forces.")
 
 	Trigger.OnCapture(RomanovIndustrialPlant, function(self, captor, oldOwner, newOwner)
 		Actor.Create("captured.indp", true, { Owner = USSR })
@@ -341,14 +317,14 @@ OncePerSecondChecks = function()
 		Krukov.Resources = Krukov.ResourceCapacity - 500
 
 		if USSR.HasNoRequiredUnits() then
-			if not USSR.IsObjectiveCompleted(ObjectiveSubdueMarinesko) then
-				USSR.MarkFailedObjective(ObjectiveSubdueMarinesko)
+			if not USSR.IsObjectiveCompleted(ObjectiveEliminateMarinesko) then
+				USSR.MarkFailedObjective(ObjectiveEliminateMarinesko)
 			end
-			if not USSR.IsObjectiveCompleted(ObjectiveSubdueRomanov) then
-				USSR.MarkFailedObjective(ObjectiveSubdueRomanov)
+			if not USSR.IsObjectiveCompleted(ObjectiveEliminateRomanov) then
+				USSR.MarkFailedObjective(ObjectiveEliminateRomanov)
 			end
-			if not USSR.IsObjectiveCompleted(ObjectiveSubdueKrukov) then
-				USSR.MarkFailedObjective(ObjectiveSubdueKrukov)
+			if not USSR.IsObjectiveCompleted(ObjectiveEliminateKrukov) then
+				USSR.MarkFailedObjective(ObjectiveEliminateKrukov)
 			end
 		end
 	end
@@ -358,29 +334,16 @@ OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
 		UpdatePlayerBaseLocations()
 
-		if not MarineskoSubdued and not PlayerHasBuildings(Marinesko) then
-			USSR.MarkCompletedObjective(ObjectiveSubdueMarinesko)
-			MarineskoSubdued = true
-			Squads.RomanovVsMarinesko.TargetPlayer = USSR
-			Squads.KrukovVsMarinesko.TargetPlayer = USSR
-			Squads.RomanovVsMarinesko.AttackPaths = Squads.RomanovMain.AttackPaths
+		if not USSR.IsObjectiveCompleted(ObjectiveEliminateMarinesko) and not PlayerHasBuildings(Marinesko) and not PlayerHasBuildings(MarineskoUnited) then
+			USSR.MarkCompletedObjective(ObjectiveEliminateMarinesko)
 		end
 
-		if not RomanovSubdued and not PlayerHasBuildings(Romanov) then
-			USSR.MarkCompletedObjective(ObjectiveSubdueRomanov)
-			RomanovSubdued = true
-			Squads.MarineskoVsRomanov.TargetPlayer = USSR
-			Squads.KrukovVsRomanov.TargetPlayer = USSR
-			Squads.MarineskoVsRomanov.AttackPaths = Squads.MarineskoMain.AttackPaths
+		if not USSR.IsObjectiveCompleted(ObjectiveEliminateRomanov) and not PlayerHasBuildings(Romanov) and not PlayerHasBuildings(RomanovUnited) then
+			USSR.MarkCompletedObjective(ObjectiveEliminateRomanov)
 		end
 
-		if not KrukovSubdued and not PlayerHasBuildings(Krukov) then
-			USSR.MarkCompletedObjective(ObjectiveSubdueKrukov)
-			KrukovSubdued = true
-			Squads.MarineskoVsKrukov.TargetPlayer = USSR
-			Squads.RomanovVsKrukov.TargetPlayer = USSR
-			Squads.MarineskoVsKrukov.AttackPaths = Squads.MarineskoMain.Attack
-			Squads.RomanovVsKrukov.AttackPaths = Squads.RomanovMain.AttackPaths
+		if not USSR.IsObjectiveCompleted(ObjectiveEliminateKrukov) and not PlayerHasBuildings(Krukov) and not PlayerHasBuildings(KrukovUnited) then
+			USSR.MarkCompletedObjective(ObjectiveEliminateKrukov)
 		end
 	end
 end
@@ -388,6 +351,7 @@ end
 OncePerThirtySecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % DateTime.Seconds(30) == 0 then
 		CalculatePlayerCharacteristics()
+		Unification()
 	end
 end
 
@@ -439,6 +403,108 @@ InitGenerals = function()
 
 		Trigger.AfterDelay(Squads.KrukovAntiTankAir.Delay[Difficulty], function()
 			InitAirAttackSquad(Squads.KrukovAntiTankAir, Krukov, USSR, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic" })
+		end)
+	end
+end
+
+Unification = function()
+	if UnificationComplete then
+		return
+	end
+
+	for _, g in pairs(Generals) do
+		local units = Utils.Where(g.GetActors(), function(a)
+			return a.HasProperty("Attack")
+		end)
+
+		local unitValue = 0
+		for _, u in pairs(units) do
+			if UnitCosts[u.Type] == nil then
+				UnitCosts[u.Type] = ActorCA.CostOrDefault(u.Type)
+			end
+			unitValue = unitValue + UnitCosts[u.Type]
+		end
+
+		if unitValue < 20000 then
+			SubduedGeneral = g
+			break
+		end
+	end
+
+	if not SubduedGeneral then
+		return
+	end
+
+	UnificationComplete = true
+
+	local unifiedGeneralMap = {
+		{ From = Marinesko, To = MarineskoUnited },
+		{ From = Romanov, To = RomanovUnited },
+		{ From = Krukov, To = KrukovUnited }
+	}
+
+	-- unify
+	for _, m in pairs(unifiedGeneralMap) do
+		for _, a in pairs(m.From.GetActors()) do
+			if a.Type ~= "player" then
+				a.Owner = m.To
+			end
+		end
+
+		BuildingQueues[m.To.InternalName]= { }
+
+		if BuildingQueues[m.From.InternalName] ~= nil then
+			for _, queueItem in pairs (BuildingQueues[m.From.InternalName]) do
+				local copiedQueueItem = {
+					Actor = queueItem.Actor,
+					Player = m.To,
+					Location = queueItem.Location,
+					CenterPosition = queueItem.CenterPosition,
+					AttemptsRemaining = queueItem.AttemptsRemaining,
+					MaxAttempts = queueItem.MaxAttemps
+				}
+
+				table.insert(BuildingQueues[m.To.InternalName], copiedQueueItem)
+			end
+
+			BuildingQueues[m.From.InternalName] = { }
+		end
+
+		-- copy squads
+		for _, squad in pairs(Squads) do
+			if squad.Player == m.From then
+				local copiedSquad = {
+					Name = squad.Name .. "United",
+					Player = m.To,
+					TargetPlayer = USSR,
+					InitTime = squad.InitTime,
+					AttackValuePerSecond = squad.AttackValuePerSecond,
+					FollowLeader = squad.FollowLeader,
+					ProducerTypes = squad.ProducerTypes,
+					Units = squad.Units,
+					AttackPaths = squad.AttackPaths,
+				}
+
+				if squad.IsAirSquad then
+					copiedSquad.IsAirSquad = true
+					copiedSquad.AirTargetList = squad.AirTargetList
+					copiedSquad.AirTargetType = squad.AirTargetType
+				end
+
+				Squads[copiedSquad.Name] = copiedSquad
+				InitAttackSquad(Squads[copiedSquad.Name], m.To)
+
+				-- disble old squad
+				squad.ActiveCondition = function()
+					return false
+				end
+			end
+		end
+
+		Trigger.AfterDelay(1, function()
+			AutoRepairAndRebuildBuildings(m.To)
+			AutoReplaceHarvesters(m.To)
+			RebuildNextBuilding(m.To)
 		end)
 	end
 end

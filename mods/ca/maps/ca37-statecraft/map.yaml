@@ -28,7 +28,7 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
-		Enemies: USSR, Marinesko, Romanov, Krukov
+		Enemies: USSR, Marinesko, Romanov, Krukov, MarineskoUnited, RomanovUnited, KrukovUnited
 	PlayerReference@USSR:
 		Name: USSR
 		AllowBots: False
@@ -40,7 +40,7 @@ Players:
 		Color: FE1100
 		LockSpawn: True
 		LockTeam: True
-		Enemies: Marinesko, Romanov, Krukov, Creeps
+		Enemies: Marinesko, Romanov, Krukov, MarineskoUnited, RomanovUnited, KrukovUnited, Creeps
 	PlayerReference@Marinesko:
 		Name: Marinesko
 		Bot: campaign
@@ -59,6 +59,27 @@ Players:
 		Faction: soviet
 		Color: 485183
 		Enemies: USSR, Marinesko, Romanov, Creeps
+	PlayerReference@MarineskoUnited:
+		Name: MarineskoUnited
+		Bot: campaign
+		Faction: soviet
+		Color: 994050
+		Allies: RomanovUnited, KrukovUnited
+		Enemies: USSR, Creeps
+	PlayerReference@RomanovUnited:
+		Name: RomanovUnited
+		Bot: campaign
+		Faction: soviet
+		Color: FF9922
+		Allies: MarineskoUnited, KrukovUnited
+		Enemies: USSR, Creeps
+	PlayerReference@KrukovUnited:
+		Name: KrukovUnited
+		Bot: campaign
+		Faction: soviet
+		Color: 485183
+		Allies: MarkineskoUnited, RomanovUnited
+		Enemies: USSR, Creeps
 
 Actors:
 	Actor0: mcv

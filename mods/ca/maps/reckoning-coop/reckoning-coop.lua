@@ -38,7 +38,7 @@ if Difficulty == "hard" then
 	})
 end
 
-AdjustedScrinCompositions = AdjustedScrinCompositions
+AdjustedScrinCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Scrin)
 
 Squads = {
 	ScrinVsNod = {
