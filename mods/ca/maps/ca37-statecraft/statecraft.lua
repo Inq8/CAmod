@@ -315,6 +315,9 @@ OncePerSecondChecks = function()
 		Marinesko.Resources = Marinesko.ResourceCapacity - 500
 		Romanov.Resources = Romanov.ResourceCapacity - 500
 		Krukov.Resources = Krukov.ResourceCapacity - 500
+		MarineskoUnited.Resources = MarineskoUnited.ResourceCapacity - 500
+		RomanovUnited.Resources = RomanovUnited.ResourceCapacity - 500
+		KrukovUnited.Resources = KrukovUnited.ResourceCapacity - 500
 
 		if USSR.HasNoRequiredUnits() then
 			if not USSR.IsObjectiveCompleted(ObjectiveEliminateMarinesko) then

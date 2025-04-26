@@ -47,6 +47,8 @@ ConyardTypes = { "fact", "afac", "sfac" }
 
 HarvesterTypes = { "harv", "harv.td", "harv.td.upg", "harv.scrin", "harv.chrono", "harv.td.upg" }
 
+McvTypes = { "mcv", "amcv", "smcv" }
+
 BarracksTypes = { "tent", "barr", "pyle", "hand", "port" }
 
 FactoryTypes = { "weap", "weap.td", "wsph", "airs" }
@@ -889,11 +891,9 @@ HandleProducedSquadUnit = function(produced, producerId, squad)
 		return
 	end
 
-	local isHarvester = false
-
-	-- we don't want to add harvesters to squads, which are produced when replacements are needed
-	for _, harvesterType in pairs(HarvesterTypes) do
-		if produced.Type == harvesterType then
+	-- we don't want to add harvesters or mcvs to squads, which are produced when replacements are needed
+	for _, t in pairs(Utils.Concat(HarvesterTypes, McvTypes)) do
+		if produced.Type == t then
 			return
 		end
 	end

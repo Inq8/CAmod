@@ -40,9 +40,9 @@ FinalBattleVehiclesList = {
 }
 
 FinalBattleInfantryInterval = {
-	easy = { Min = DateTime.Seconds(8), Max = DateTime.Seconds(10) },
-	normal = { Min = DateTime.Seconds(7), Max = DateTime.Seconds(9) },
-	hard = { Min = DateTime.Seconds(6), Max = DateTime.Seconds(8) }
+	easy = { Min = DateTime.Seconds(8), Max = DateTime.Seconds(9) },
+	normal = { Min = DateTime.Seconds(7), Max = DateTime.Seconds(8) },
+	hard = { Min = DateTime.Seconds(6), Max = DateTime.Seconds(7) }
 }
 
 FinalBattleVehicleInterval = {
