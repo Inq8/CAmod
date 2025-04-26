@@ -373,6 +373,15 @@ Player:
 		LevelUpSound: PlayerRankUp
 		DummyActor: QueueUpdaterDummy
 	CountManager:
+	ProvidesPrerequisitesOnTimeline:
+		Type: AlliedDevelopment
+		Factions: allies, england, france, germany, usa
+		MaxTicks: 30000
+		Prerequisites:
+			20: player.level1
+			60: player.level2
+			100: player.level3
+		DummyActor: QueueUpdaterDummy
 	ProvidesPrerequisiteOnKillCount@NodCovenants:
 		Type: NodCovenant
 		Factions: nod, blackh, marked, legion, shadow

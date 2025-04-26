@@ -58,9 +58,12 @@ options-difficulty =
     .normal = Normal
     .hard = Hard
 
-label-player-level = Current Rank: { $level }
+label-player-level = Current rank: { $level }
 label-player-level-current-xp = Current XP: { $currentXp }
-label-player-level-required-xp = Next Rank XP: { $nextLevelXp }
+label-player-level-required-xp = Next rank XP: { $nextLevelXp }
+
+label-player-development-level = Development level: { $level }
+label-player-development-level-time = Next level in { $time }
 
 ## ObserverStatsLogic
 options-observer-stats =

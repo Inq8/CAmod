@@ -745,15 +745,24 @@ Container@PLAYER_WIDGETS:
 					Y: 295
 					Width: 204
 					Height: 24
-				Container@ALLIED_COALITION:
-					Logic: AlliedCoalitionIndicatorLogic
+				Container@ALLIED_DEVELOPMENT:
+					Logic: AlliedDevelopmentIndicatorLogic
 					Children:
-						Image@ALLIED_COALITION_IMAGE:
+						Image@ALLIED_DEVELOPMENT_IMAGE:
 							X: 18
 							Y: 518
 							Width: 43
 							Height: 78
 							ImageCollection: allied-coalition
+						AlliedDevelopmentMeter@ALLIED_DEVELOPMENT_METER:
+							X: 18
+							Y: 524
+							Width: 36
+							Height: 72
+							BarColor: 1a8ae5
+							ThresholdColor: 4ea8f1
+							TooltipContainer: TOOLTIP_CONTAINER
+							TooltipTemplate: SIMPLE_TOOLTIP
 				Container@PLAYER_EXPERIENCE:
 					Logic: PlayerExperienceLevelIndicatorLogic
 					Children:
