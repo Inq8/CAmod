@@ -230,7 +230,6 @@ FlamerTD:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 		InvalidTargets: Vehicle, Building, Wall
-	Warhead@Dummy: Dummy
 
 FlamerTDFF:
 	Inherits: FlamerTD
@@ -824,7 +823,6 @@ PrepareC4Seal:
 	Inherits: PlaceC4Seal
 	-Report:
 	-Warhead@AttachDelayedWeapon:
-	Warhead@Dummy: Dummy
 	Warhead@highlight: GrantExternalConditionCA
 		Condition: redhighlight
 	Warhead@ProgressBar: GrantExternalConditionCA
@@ -1522,7 +1520,6 @@ PrisLaserSupport:
 		SecondaryBeamWidth: 65
 		SecondaryBeamZOffset: 511
 		SecondaryBeamColor: 75D1FF
-	Warhead@1Dum: Dummy
 	AirThreshold: 1000
 
 PrisBurst:
@@ -1664,7 +1661,6 @@ HopliteTargeter:
 	Projectile: InstantHit
 	-Warhead@1Dam:
 	-Warhead@2Smu:
-	Warhead@Dummy: Dummy
 
 KirovBomb:
 	ReloadDelay: 25
@@ -1887,7 +1883,6 @@ SonicZapVisual:
 		Blockable: true
 		TrackTarget: true
 		Color: 00fffb35
-	Warhead@1Dam: Dummy
 
 SonicZapVisual.UPG:
 	Inherits: SonicZapVisual
@@ -1909,7 +1904,6 @@ GapBeam:
 		Distortion: 32
 		DistortionAnimation: 64
 		TrackTarget: true
-	Warhead@1Dum: Dummy
 	Warhead@Debuff: GrantExternalConditionCA
 		Range: 1c256
 		Duration: 15
@@ -1941,7 +1935,6 @@ RadarJammer:
 	Report: jammed.aud
 	Range: 10c0
 	Projectile: InstantHit
-	Warhead@1Dum: Dummy
 	Warhead@2Spawn: SpawnActor
 		Actors: jamming.field
 		Range: 1
@@ -2278,13 +2271,11 @@ THTargetter:
 	Range: 21c511
 	MinRange: 6c0
 	Projectile: InstantHit
-	Warhead@1Dum: Dummy
 
 THLauncher:
 	Inherits: THTargetter
 	Report: tomahawk.aud
 	Projectile: InstantHit
-	-Warhead@1Dum:
 	Warhead@1Dam: TargetDamage
 		Damage: 50000
 		Versus:
@@ -2421,13 +2412,11 @@ ChaosDroneTargeting:
 	Projectile: InstantHit
 	ValidTargets: Infantry, Vehicle, Ship
 	InvalidTargets: ChaosImmune
-	Warhead@1Dam: Dummy
 
 MempTargeting:
 	Range: 2c0
 	Projectile: InstantHit
 	ValidTargets: Structure, Vehicle, Ship
-	Warhead@1Dam: Dummy
 
 RadTrooperBeam:
 	Range: 6c0
@@ -3160,16 +3149,12 @@ AirDummyAim:
 	ReloadDelay: 20
 	ValidTargets: Air
 	Projectile: InstantHit
-	Warhead@1Dam: TargetDamage
-		ValidTargets: Air
 
 YuriDummyAim:
 	Range: 3c0
 	ReloadDelay: 20
 	ValidTargets: Structure
 	Projectile: InstantHit
-	Warhead@1Dam: TargetDamage
-		ValidTargets: Structure
 
 DropDummy:
 	ValidTargets: Ground
@@ -3178,9 +3163,6 @@ DropDummy:
 	Range: 4c0
 	Projectile: Bullet
 		Speed: 200
-	Warhead: SpreadDamage
-		Spread: 56
-		Damage: 1
 
 MineDefuser:
 	Range: 1c640
@@ -3203,8 +3185,6 @@ MineDefuser:
 MineDefuserCharger:
 	Inherits: MineDefuser
 	-Warhead@1Dam:
-	Warhead@Dummy: Dummy
-		ValidTargets: Mine
 	-Warhead@1Def:
 	-Warhead@3Eff:
 
@@ -3227,7 +3207,6 @@ DecoyHeavyFlameTankSpawner:
 DecoyDespawn:
 	Report: decoydespawn.aud
 	Projectile: InstantHit
-	Warhead@Dummy: Dummy
 
 MantisLaser:
 	Inherits: Laser
@@ -3411,7 +3390,6 @@ VertigoBombTargeter:
 	MinRange: 5c0
 	ReloadDelay: 50
 	Projectile: InstantHit
-	Warhead@1Dam: Dummy
 
 PeacemakerBombs:
 	Range: 1c832
@@ -3492,8 +3470,6 @@ FloatingDiscLaser:
 	Range: 0c512
 	Projectile: InstantHit
 	TargetActorCenter: true
-	Warhead@Dummy: Dummy
-		ValidRelationships: Enemy
 
 FloatingDiscPowerDrainer:
 	Inherits: ^FloatingDiscDrainer
@@ -3750,12 +3726,9 @@ JackknifeTargeter:
 	MinRange: 0c768
 	ReloadDelay: 25
 	Projectile: InstantHit
-	Warhead@1Dam: Dummy
 
 TroopCrawlerDummyWeapon:
 	Range: 1c0
 	ValidTargets: Infantry
 	ReloadDelay: 25
 	Projectile: InstantHit
-	Warhead@1Dam: Dummy
-		ValidRelationships: Ally

@@ -121,7 +121,6 @@ GunwalkerZapVisual:
 		Speed: 800
 		Palette: scrin
 	-Warhead@1Dam:
-	Warhead@1Dum: Dummy
 	Warhead@2Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: scrin
@@ -163,7 +162,6 @@ GunWalkerZapAAVisual:
 		Speed: 1c682
 	-Warhead@1Dam:
 	-Warhead@smallDamage:
-	Warhead@1Dum: Dummy
 	Warhead@2Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: scrin
@@ -1089,7 +1087,6 @@ IonCloudChargeSource:
 	ReloadDelay: 250
 	Range: 0c512
 	Projectile: InstantHit
-	Warhead@1Dam: Dummy
 	Warhead@Charge: FireShrapnel
 		Weapon: IonCloudChargeZap
 		Amount: 1
@@ -1153,8 +1150,6 @@ GravityStabilizerZap:
 		PlayerColorZapAlpha: 100, 180
 		Duration: 6
 		Width: 32
-	Warhead@1Dum: Dummy
-		ValidRelationships: Ally
 	Warhead@highlight: GrantExternalConditionCA
 		Range: 0c511
 		Duration: 1
@@ -1163,8 +1158,6 @@ GravityStabilizerZap:
 
 MothershipCharge:
 	ReloadDelay: 10
-	Warhead@Dummy: Dummy
-		ValidTargets: Ground, Water, Air
 	Warhead@Zaps: FireShrapnel
 		ValidTargets: Ground, Water, Air
 		Weapon: MothershipChargeZap
@@ -1185,9 +1178,6 @@ MothershipChargeZap:
 		Duration: 3
 		Distortion: 160
 		DistortionAnimation: 160
-	Warhead@1Dum: Dummy
-		ValidRelationships: Ally
-		ValidTargets: MothershipRearmable
 	Warhead@highlight: GrantExternalConditionCA
 		ValidTargets: MothershipRearmable
 	Warhead@rearm: GrantExternalConditionCA
@@ -1651,7 +1641,6 @@ MothershipChargeBeam:
 		DistortionAnimation: 0
 		SegmentLength: 0
 		ZOffset: 2048
-	Warhead@1Dum: Dummy
 
 MothershipBeam:
 	ReloadDelay: 150
@@ -1785,7 +1774,6 @@ LeecherOrbHealInit:
 GreaterCoalescenceSpawner:
 	ReloadDelay: 1
 	Projectile: InstantExplode
-	Warhead@1Dum: Dummy
 	Warhead@Spawn: SpawnActor
 		Actors: grcl
 		Range: 1
@@ -1795,7 +1783,6 @@ GreaterCoalescenceSpawner:
 
 GreaterCoalescence:
 	ReloadDelay: 5
-	Warhead@1Dam: Dummy
 	Warhead@heal: SpreadDamage
 		Range: 0, 4c512
 		Falloff: 100, 100

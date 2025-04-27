@@ -8317,6 +8317,7 @@ MEMP:
 	Inherits@IDISABLE: ^DisabledByRadarLoss
 	Inherits@HACKABLE: ^Hackable
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
+	Inherits@AUTOTARGET: ^AutoTargetGround
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 410
@@ -8436,6 +8437,8 @@ MEMP:
 		RequiresCondition: (!radarenabled || empdisable) && !triggered
 	Sellable:
 		RequiresCondition: unit-sellable && !c4 && !being-warped
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Vehicle, Defense
 
 CDRN:
 	Inherits: ^VehicleTD
