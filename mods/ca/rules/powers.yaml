@@ -794,7 +794,7 @@
 		Duration: 0
 		AllowMultiple: false
 		Description: \nTargeted basic infantry units become Heroes of the Union,\n    significantly increasing their damage, speed and resilience.\n\nCan affect Rifle Infantry and Rocket Soldiers.
-		Prerequisites: ~infantry.doctrine, player.level2
+		Prerequisites: ~infantry.doctrine, playerxp.level2
 		OnFireSound: heroes.aud
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
@@ -837,7 +837,7 @@
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
-		Prerequisites: ~armor.doctrine, player.level2
+		Prerequisites: ~armor.doctrine, playerxp.level2
 		SupportPowerPaletteOrder: 30
 		PrerequisiteGroupings:
 			AtomicThrasher: armor.doctrine, lasher.upgrade, atomicengines.upgrade
@@ -859,7 +859,7 @@
 ^KillZonePower:
 	AirstrikePowerCA@KillZone:
 		OrderName: killzone
-		Prerequisites: ~arty.doctrine, player.level2
+		Prerequisites: ~arty.doctrine, playerxp.level2
 		Icon: killzone
 		ChargeInterval: 6000
 		Name: Kill Zone

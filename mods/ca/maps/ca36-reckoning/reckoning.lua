@@ -395,6 +395,7 @@ InitScrinRebels = function()
 
 	AutoRepairAndRebuildBuildings(ScrinRebels, 15)
 	AutoReplaceHarvesters(ScrinRebels)
+	InitAiUpgrades(ScrinRebels)
 
 	local scrinRebelGroundAttackers = ScrinRebels.GetGroundAttackers()
 
@@ -418,6 +419,10 @@ InitGDI = function()
 
 		Media.DisplayMessage("Our forces were successful in luring GDI here and they have established a base. The situation has been explained to them and they have agreed to a cease fire, but remain vigilant commander, our old enemy cannot be trusted.", "Kane", HSLColor.FromHex("FF0000"))
 		MediaCA.PlaySound("kane_gdibase.aud", 2)
+
+		AutoRepairAndRebuildBuildings(GDI, 15)
+		AutoReplaceHarvesters(GDI)
+		InitAiUpgrades(GDI)
 
 		local gdiUnits = GDIHostile.GetActors()
 		Utils.Do(gdiUnits, function(a)

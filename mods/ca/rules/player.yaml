@@ -131,11 +131,14 @@ Player:
 	Production@Upgrade:
 		Produces: Upgrade
 		RequiresCondition: upgrades-available
+	GrantConditionOnFaction@AlliedDevelopment:
+		Condition: upgrades-available
+		Factions: allies, england, france, germany, usa
 	GrantConditionOnPrerequisite@AllegiancesAvailable:
 		Prerequisites: scrin.allegiances.available
 		Condition: upgrades-available
 	GrantConditionOnPrerequisite@DoctrinesAvailable:
-		Prerequisites: player.level1
+		Prerequisites: playerxp.level1
 		Condition: upgrades-available
 	GrantConditionOnPrerequisite@UpgradesAvailable:
 		Prerequisites: upgrades.producer
@@ -367,7 +370,7 @@ Player:
 	PlayerExperienceLevels:
 		Factions: soviet, russia, ukraine, iraq, yuri
 		LevelXpRequirements: 75, 250, 450
-		LevelPrerequisites: player.level1, player.level2, player.level3
+		LevelPrerequisites: playerxp.level1, playerxp.level2, playerxp.level3
 		LevelUpTextNotification: You have gained a rank! You are now rank {0}.
 		LevelUpNotification: Promoted
 		LevelUpSound: PlayerRankUp
@@ -378,10 +381,11 @@ Player:
 		Factions: allies, england, france, germany, usa
 		MaxTicks: 30000
 		Prerequisites:
-			20: player.level1
-			60: player.level2
-			100: player.level3
+			20: development.level1
+			60: development.level2
+			100: development.level3
 		DummyActor: QueueUpdaterDummy
+		PrerequisiteGrantedSound: PlayerRankUp
 	ProvidesPrerequisiteOnKillCount@NodCovenants:
 		Type: NodCovenant
 		Factions: nod, blackh, marked, legion, shadow

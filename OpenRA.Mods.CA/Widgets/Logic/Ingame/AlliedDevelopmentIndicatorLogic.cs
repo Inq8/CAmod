@@ -42,7 +42,17 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			var container = widget.Get<ContainerWidget>("ALLIED_DEVELOPMENT");
 			var coalitionImage = container.Get<ImageWidget>("ALLIED_DEVELOPMENT_IMAGE");
 			developmentMeter = container.Get<AlliedDevelopmentMeterWidget>("ALLIED_DEVELOPMENT_METER");
+
+			if (world.LocalPlayer.Faction.Side != "Allies")
+			{
+				coalitionImage.GetImageName = () => DisabledImage;
+				coalitionImage.IsVisible = () => false;
+				developmentMeter.IsVisible = () => false;
+				return;
+			}
+
 			developmentMeter.Thresholds = timeline.Thresholds;
+			developmentMeter.MaxTicks = timeline.Info.MaxTicks;
 
 			var tooltipTextCached = new CachedTransform<int?, string>((secs) =>
 			{
@@ -63,13 +73,6 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			{
 				return tooltipTextCached.Update(timeline.TicksUntilNextThreshold / 25);
 			};
-
-			if (world.LocalPlayer.Faction.Side != "Allies")
-			{
-				coalitionImage.GetImageName = () => DisabledImage;
-				coalitionImage.IsVisible = () => false;
-				return;
-			}
 
 			upgradesManager = world.LocalPlayer.PlayerActor.Trait<UpgradesManager>();
 

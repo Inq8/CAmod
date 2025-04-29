@@ -115,7 +115,7 @@ namespace OpenRA.Mods.CA.Traits
 				if (nextThreshold == 0)
 					return 0;
 
-				var ticksNeededForThreshold = (Info.MaxTicks * nextThreshold) / 100;
+				var ticksNeededForThreshold = Info.MaxTicks * nextThreshold / 100;
 				return ticksNeededForThreshold - ticksElapsed;
 			}
 		}
@@ -135,6 +135,32 @@ namespace OpenRA.Mods.CA.Traits
 			techTree.ActorChanged(self);
 		}
 
+		void HandlePrerequisiteThreshold(int percentage)
+		{
+			if (Info.Prerequisites == null || !Info.Prerequisites.ContainsKey(percentage) || thresholdsPassed.Contains(percentage))
+				return;
+
+			thresholdsPassed.Add(percentage);
+			var prerequisite = Info.Prerequisites[percentage];
+
+			if (!prerequisitesGranted.Contains(prerequisite))
+			{
+				prerequisitesGranted.Add(prerequisite);
+				techTree.ActorChanged(self);
+
+				if (Info.PrerequisiteGrantedSound != null)
+					Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Sounds",
+						Info.PrerequisiteGrantedSound, self.Owner.Faction.InternalName);
+
+				if (Info.DummyActor != null)
+				{
+					notificationQueued = true;
+					dummyActorQueued = true;
+					ticksUntilSpawnDummyActor = 1;
+				}
+			}
+		}
+
 		void ITick.Tick(Actor self)
 		{
 			if (!Enabled)
@@ -149,27 +175,7 @@ namespace OpenRA.Mods.CA.Traits
 				if (previousPercentage != PercentageComplete)
 					PercentageChanged?.Invoke(PercentageComplete);
 
-				if (Info.Prerequisites != null && Info.Prerequisites.ContainsKey(PercentageComplete) && !thresholdsPassed.Contains(PercentageComplete))
-				{
-					thresholdsPassed.Add(PercentageComplete);
-					var prerequisite = Info.Prerequisites[PercentageComplete];
-
-					if (!prerequisitesGranted.Contains(prerequisite))
-					{
-						prerequisitesGranted.Add(prerequisite);
-						techTree.ActorChanged(self);
-
-						if (Info.PrerequisiteGrantedSound != null)
-							Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Sounds", Info.PrerequisiteGrantedSound, self.Owner.Faction.InternalName);
-
-						if (Info.DummyActor != null)
-						{
-							notificationQueued = true;
-							dummyActorQueued = true;
-							ticksUntilSpawnDummyActor = 1;
-						}
-					}
-				}
+				HandlePrerequisiteThreshold(PercentageComplete);
 			}
 
 			if (notificationQueued && --ticksUntilNotification <= 0)
@@ -196,6 +202,35 @@ namespace OpenRA.Mods.CA.Traits
 						new FacingInit(WAngle.Zero),
 					});
 				});
+			}
+		}
+
+		public void AddTicks(int ticks)
+		{
+			if (!Enabled || ticks <= 0)
+				return;
+
+			var previousPercentage = PercentageComplete;
+			var initialTicks = ticksElapsed;
+
+			ticksElapsed = Math.Min(ticksElapsed + ticks, Info.MaxTicks);
+
+			if (initialTicks == ticksElapsed)
+				return;
+
+			if (previousPercentage != PercentageComplete)
+				PercentageChanged?.Invoke(PercentageComplete);
+
+			if (Info.Prerequisites != null)
+			{
+				var startPercentage = initialTicks * 100 / Info.MaxTicks;
+				var endPercentage = PercentageComplete;
+
+				foreach (var threshold in Info.Prerequisites)
+				{
+					if (threshold.Key > startPercentage && threshold.Key <= endPercentage)
+						HandlePrerequisiteThreshold(threshold.Key);
+				}
 			}
 		}
 	}

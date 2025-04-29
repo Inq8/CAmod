@@ -512,10 +512,10 @@ CanRebuild = function(queueItem)
 	end
 
 	local nearbyEnemyBuildings = Map.ActorsInBox(topLeft, bottomRight, function(a)
-		return not a.IsDead and IsMissionPlayer(a.Owner) and a.HasProperty("StartBuildingRepairs")
+		return not a.IsDead and not a.Owner.IsAlliedWith(queueItem.Player) and a.HasProperty("StartBuildingRepairs")
 	end)
 
-	-- require no player owned buildings nearby
+	-- require no enemy buildings nearby
 	if #nearbyEnemyBuildings > 0 then
 		return false
 	end

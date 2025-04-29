@@ -879,7 +879,7 @@ infantry.doctrine:
 		Name: Doctrine: Infantry
 	Buildable:
 		BuildPaletteOrder: 4
-		Prerequisites: ~player.soviet, !infantry.doctrine, !armor.doctrine, !arty.doctrine, player.level1, ~techlevel.medium
+		Prerequisites: ~player.soviet, !infantry.doctrine, !armor.doctrine, !arty.doctrine, playerxp.level1, ~techlevel.medium
 		Description: Specialize in infantry:\n• Troop Crawler\n• Overlord Tank (replaces Mammoth Tank)\n• Improved Paratroopers\n• Heroes of the Union\n• Cloning Vat\n\n
 	TooltipExtras:
 		Attributes: (!) Only ONE Doctrine may be chosen.
@@ -894,7 +894,7 @@ armor.doctrine:
 		Name: Doctrine: Armor
 	Buildable:
 		BuildPaletteOrder: 5
-		Prerequisites: ~player.soviet, !infantry.doctrine, !armor.doctrine, !arty.doctrine, player.level1, ~techlevel.medium
+		Prerequisites: ~player.soviet, !infantry.doctrine, !armor.doctrine, !arty.doctrine, playerxp.level1, ~techlevel.medium
 		Description: Specialize in tanks:\n• Rhino Tank (replaces Heavy Tank)\n• Apocalypse Tank (replaces Mammoth Tank)\n• Reactive Armor\n• Tank Drop\n• Industrial Plant\n\n
 	TooltipExtras:
 		Attributes: (!) Only ONE Doctrine may be chosen.
@@ -909,7 +909,7 @@ arty.doctrine:
 		Name: Doctrine: Artillery
 	Buildable:
 		BuildPaletteOrder: 6
-		Prerequisites: ~player.soviet, !infantry.doctrine, !armor.doctrine, !arty.doctrine, player.level1, ~techlevel.medium
+		Prerequisites: ~player.soviet, !infantry.doctrine, !armor.doctrine, !arty.doctrine, playerxp.level1, ~techlevel.medium
 		Description: Specialize in artillery:\n• Grad (replaces Katyusha)\n• Nuke Cannon\n• Rocket Pods\n• Kill Zone\n• Munitions Plant\n\n
 	TooltipExtras:
 		Attributes: (!) Only ONE Doctrine may be chosen.
@@ -1070,7 +1070,7 @@ doctrine.upgrade1:
 		Name: Doctrine Dependent Upgrade
 	Buildable:
 		BuildPaletteOrder: 30
-		Prerequisites: ~player.soviet, anydoctrine, player.level2, ~!infantry.doctrine, ~!armor.doctrine, ~!arty.doctrine, ~techlevel.medium
+		Prerequisites: ~player.soviet, anydoctrine, playerxp.level2, ~!infantry.doctrine, ~!armor.doctrine, ~!arty.doctrine, ~techlevel.medium
 		Description: Upgrade depends on chosen doctrine.\n\n• Infantry: Improved Paratroopers\n• Tanks: Reactive Armor\n• Artillery: Rocket Pods
 	Valued:
 		Cost: 750
@@ -1083,7 +1083,7 @@ imppara.upgrade:
 		Name: Upgrade: Improved Paratroopers
 	Buildable:
 		BuildPaletteOrder: 30
-		Prerequisites: player.level2, ~player.soviet, ~!player.russia, ~!player.yuri, ~infantry.doctrine, ~techlevel.medium
+		Prerequisites: playerxp.level2, ~player.soviet, ~!player.russia, ~!player.yuri, ~infantry.doctrine, ~techlevel.medium
 		Description: Upgrades the Paratroopers support power.\n\nUpgrades: Paratroopers
 	TooltipExtras:
 		Strengths: + Additional units dropped
@@ -1098,7 +1098,7 @@ impstorm.upgrade:
 		Name: Upgrade: Improved Stormtroopers
 	Buildable:
 		BuildPaletteOrder: 30
-		Prerequisites: player.level2, ~player.russia, ~infantry.doctrine, ~techlevel.medium
+		Prerequisites: playerxp.level2, ~player.russia, ~infantry.doctrine, ~techlevel.medium
 		Description: Upgrades the Stormtroopers support power.\n\nUpgrades: Stormtroopers
 	TooltipExtras:
 		Strengths: + Additional units dropped
@@ -1113,7 +1113,7 @@ impmuta.upgrade:
 		Name: Upgrade: Improved Genetic Mutation
 	Buildable:
 		BuildPaletteOrder: 30
-		Prerequisites: player.level2, ~player.yuri, ~infantry.doctrine, ~techlevel.medium
+		Prerequisites: playerxp.level2, ~player.yuri, ~infantry.doctrine, ~techlevel.medium
 		Description: Enhances Genetic Mutation Bomb and Brutes.\n\nUpgrades: Genetic Mutation Bomb\nUpgrades: Brute
 	TooltipExtras:
 		Strengths: + Increased area of effect (Mutation Bomb)\n+ Increased maximum number of targets (Mutation Bomb)\n+ Increased movement speed (Brute)
@@ -1128,7 +1128,7 @@ reactive.upgrade:
 		Name: Upgrade: Reactive Armor
 	Buildable:
 		BuildPaletteOrder: 30
-		Prerequisites: ~player.soviet, ~armor.doctrine, player.level2, ~techlevel.high
+		Prerequisites: ~player.soviet, ~armor.doctrine, playerxp.level2, ~techlevel.high
 		Description: Upgrades Rhino Tanks and BTRs with reactive armor for additional protection.\n\nUpgrades: Rhino Tank\nUpgrades: BTR\nUpgrades: Gattling BTR
 	TooltipExtras:
 		Strengths: + Increased armor
@@ -1143,7 +1143,7 @@ rocketpods.upgrade:
 		Name: Upgrade: Rocket Pods
 	Buildable:
 		BuildPaletteOrder: 30
-		Prerequisites: ~player.soviet, ~arty.doctrine, player.level2, ~techlevel.high
+		Prerequisites: ~player.soviet, ~arty.doctrine, playerxp.level2, ~techlevel.high
 		Description: Upgrades Grad and Hind rocket pods.\n\nUpgrades: Grad\nUpgrades: Hind
 	TooltipExtras:
 		Strengths: + Increased salvo size (Grad)\n+ Increased ammo & rate of fire (Hind)
@@ -1203,7 +1203,7 @@ ovld.upgrade:
 		Name: Research: Overlord Tank
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: player.level3, ~player.soviet, ~infantry.doctrine, ~techlevel.high
+		Prerequisites: playerxp.level3, ~player.soviet, ~infantry.doctrine, ~techlevel.high
 		Description: Allows production of Overlord Tanks.\n\nReplaces: Mammoth Tank
 	TooltipExtras:
 		Strengths: + Increased health\n+ Increased firepower\n+ Increased range\n+ Empowers nearby infantry
@@ -1219,7 +1219,7 @@ apoc.upgrade:
 		Name: Research: Apocalypse Tank
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: player.level3, ~player.soviet, ~armor.doctrine, ~techlevel.high
+		Prerequisites: playerxp.level3, ~player.soviet, ~armor.doctrine, ~techlevel.high
 		Description: Allows production of Apocalypse Tanks.\n\nReplaces: Mammoth Tank
 	TooltipExtras:
 		Strengths: + Increased firepower\n+ Increased health\n+ Increased range\n+ Increased splash damage
@@ -1235,7 +1235,7 @@ nukc.upgrade:
 		Name: Research: Nuke Cannon
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: player.level3, ~player.soviet, ~arty.doctrine, ~techlevel.high
+		Prerequisites: playerxp.level3, ~player.soviet, ~arty.doctrine, ~techlevel.high
 		Description: Allows production of Nuclear long range artillery.
 	TooltipExtras:
 		Strengths: + Strong vs Buildings, Defenses, Infantry, Light Armor\n+ Extremely long range
@@ -1256,6 +1256,51 @@ ANYCOALITION:
 	Buildable:
 		Description: Active Coalition
 	ProvidesPrerequisite:
+
+economy.policy:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Policy: Economy
+	Buildable:
+		BuildPaletteOrder: 1
+		Prerequisites: ~player.allies, development.level1, !economy.policy, !defense.policy, !infrastructure.policy, ~techlevel.medium
+		Description: Pursue economic policy.
+	TooltipExtras:
+		Attributes: (!) Only ONE Policy may be chosen.
+	Valued:
+		Cost: 500
+	RenderSprites:
+		Image: economy.policy
+
+defense.policy:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Policy: Defense
+	Buildable:
+		BuildPaletteOrder: 1
+		Prerequisites: ~player.allies, development.level1, !economy.policy, !defense.policy, !infrastructure.policy, ~techlevel.medium
+		Description: Pursue defense policy.
+	TooltipExtras:
+		Attributes: (!) Only ONE Policy may be chosen.
+	Valued:
+		Cost: 500
+	RenderSprites:
+		Image: defense.policy
+
+infrastructure.policy:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Policy: Infrastructure
+	Buildable:
+		BuildPaletteOrder: 1
+		Prerequisites: ~player.allies, development.level1, !economy.policy, !defense.policy, !infrastructure.policy, ~techlevel.medium
+		Description: Pursue infrastructure policy.
+	TooltipExtras:
+		Attributes: (!) Only ONE Policy may be chosen.
+	Valued:
+		Cost: 500
+	RenderSprites:
+		Image: infrastructure.policy
 
 greece.coalition:
 	Inherits: ^Upgrade
@@ -1310,6 +1355,24 @@ sweden.coalition:
 	AnnounceOnCreation:
 		SpeechNotification: CoalitionActive
 		Delay: 40
+
+timeskip.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Time Skip
+	Buildable:
+		BuildPaletteOrder: 4
+		Prerequisites: ~player.allies, ~techlevel.medium, !development.level3
+		Description: Advances development time by 1:00.
+		-BuildLimit:
+		BuildDuration: 50
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: timeskip.upgrade
+	AdvancesTimeline:
+		Type: AlliedDevelopment
+		Ticks: 1500
 
 rapc.upgrade:
 	Inherits: ^Upgrade

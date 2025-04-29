@@ -11,7 +11,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenRA.Graphics;
 using OpenRA.Mods.Common.Widgets;
 using OpenRA.Primitives;
 using OpenRA.Widgets;
@@ -31,6 +30,7 @@ namespace OpenRA.Mods.CA.Widgets
 		private int2[] polygonPoints;
 
 		public int Percentage = 0;
+		public int MaxTicks = 0;
 		public int[] Thresholds = { };
 
 		public Func<string> GetTooltipText = () => "";
@@ -43,12 +43,12 @@ namespace OpenRA.Mods.CA.Widgets
 
 			polygonPoints = new[]
 			{
-				new int2(7, 0),
-				new int2(21, 14),
-				new int2(21, 50),
-				new int2(36, 65),
-				new int2(24, 65),
-				new int2(7, 48),
+				new int2(0, 0),
+				new int2(14, 14),
+				new int2(14, 50),
+				new int2(29, 65),
+				new int2(17, 65),
+				new int2(0, 48),
 			};
 		}
 
@@ -78,9 +78,9 @@ namespace OpenRA.Mods.CA.Widgets
 				bounds.Top + p.Y
 			)).ToArray();
 
-			 // Calculate total possible stripes accounting for partial stripes
+			// Calculate total possible stripes accounting for partial stripes
 			var totalStripes = (bounds.Height + 1) / 2;
-			var ticksPerStripe = 30000 / totalStripes;
+			var ticksPerStripe = MaxTicks / totalStripes;
 			var activeStripes = (totalStripes * Percentage) / 100;
 
 			 // Calculate threshold positions
