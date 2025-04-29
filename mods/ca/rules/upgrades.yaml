@@ -1356,24 +1356,6 @@ sweden.coalition:
 		SpeechNotification: CoalitionActive
 		Delay: 40
 
-timeskip.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Time Skip
-	Buildable:
-		BuildPaletteOrder: 4
-		Prerequisites: ~player.allies, ~techlevel.medium, !development.level3
-		Description: Advances development time by 1:00.
-		-BuildLimit:
-		BuildDuration: 50
-	Valued:
-		Cost: 1000
-	RenderSprites:
-		Image: timeskip.upgrade
-	AdvancesTimeline:
-		Type: AlliedDevelopment
-		Ticks: 1500
-
 rapc.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:

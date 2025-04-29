@@ -30,6 +30,20 @@
 		TargetCircleColor: 0066ff
 		Range: 3c0
 
+^TimeSkipPower:
+	ProduceActorPowerCA@TimeSkip:
+		OrderName: timeskip
+		Prerequisites: player.allies, ~!development.level3
+		Icon: placeholder
+		Type: Upgrade
+		ChargeInterval: 50
+		Name: Time Skip
+		Description: Advances development time by 1:00.
+		Actors: timeskip.upgrade
+		SupportPowerPaletteOrder: 0
+		SelectProducer: false
+		Cost: 1000
+
 ^VeilOfWarPower:
 	SpawnActorPowerCA@VeilOfWar:
 		Actor: veilofwar1

@@ -13,6 +13,7 @@ EditorPlayer:
 
 Player:
 	Inherits: ^BasePlayer
+	Inherits@TimeSkip: ^TimeSkipPower
 	Inherits@HeroesOfTheUnion: ^HeroesOfTheUnionPower
 	Inherits@TankDrop: ^TankDropPower
 	Inherits@KillZone: ^KillZonePower
@@ -131,9 +132,6 @@ Player:
 	Production@Upgrade:
 		Produces: Upgrade
 		RequiresCondition: upgrades-available
-	GrantConditionOnFaction@AlliedDevelopment:
-		Condition: upgrades-available
-		Factions: allies, england, france, germany, usa
 	GrantConditionOnPrerequisite@AllegiancesAvailable:
 		Prerequisites: scrin.allegiances.available
 		Condition: upgrades-available
