@@ -5677,6 +5677,69 @@ zdef:
 	icon:
 		Filename: zdeficnh.shp
 
+drag:
+	Inherits: ^CommonDeaths
+	Defaults:
+		Filename: drag.shp
+	stand:
+		Facings: 8
+	stand2:
+		Facings: 8
+	run:
+		Start: 16
+		Length: 6
+		Facings: 8
+		Tick: 120
+	shoot:
+		Start: 64
+		Length: 4
+		Facings: 8
+		Tick: 60
+	idle:
+		Start: 96
+		Length: 8
+		Tick: 160
+	idle2:
+		Start: 104
+		Length: 8
+		Tick: 160
+	die1:
+		Start: 111
+		Length: 14
+		Tick: 80
+	die2:
+		Start: 125
+		Length: 12
+	die3:
+		Start: 125
+		Length: 12
+	die4:
+		Start: 125
+		Length: 12
+	die5:
+		Start: 125
+		Length: 12
+	die7:
+		Start: 125
+		Length: 12
+	parachute:
+		Start: 3
+	chrono-overlay:
+		Filename: chronofade_small.shp
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		ZOffset: 512
+		Tick: 80
+	emp-overlay:
+		Filename: emp_fx02.shp
+		Length: *
+		BlendMode: Additive
+		Offset: 0, -5
+		ZOffset: 512
+	icon:
+		Filename: dragicon.shp
+
 cryt:
 	Inherits: ^CommonDeaths
 	stand:
@@ -5833,6 +5896,7 @@ hopl:
 		Facings: 8
 	stand2:
 		Filename: hopl.shp
+		Start: 8
 		Facings: 8
 	run:
 		Filename: hopl.shp

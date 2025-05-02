@@ -1150,11 +1150,13 @@ EnforcerVoice:
 		Zapped: enfo-die1, enfo-die2, enfo-die3
 		Poisoned: enfo-die1, enfo-die2, enfo-die3
 
-HopliteVoice:
-	Inherits: EnforcerVoice
+DragonGuardVoice:
+	Inherits: ^InfantryDeaths
 	Voices:
-		Select: hopl-select1, enfo-select2, enfo-select3, enfo-select4
-		Attack: enfo-attack1, enfo-attack2, enfo-attack3, hopli-attack1
+		Select: drag-select1, drag-select2, drag-select3, drag-select4
+		Move: drag-move1, drag-move2, drag-move3, drag-move4
+		Attack: drag-attack1, drag-attack2, drag-attack3, drag-attack4
+		Action: drag-move4
 
 BlackEagleVoice:
 	Voices:
@@ -1162,6 +1164,14 @@ BlackEagleVoice:
 		Move: vblemoa, vblemob, vblemoc
 		Attack: vbleata, vbleatb, vbleatc
 		Action: vblemoa, vblemob, vblemoc
+
+HopliteVoice:
+	Inherits: ^InfantryDeaths
+	Voices:
+		Select: hopl-select1, hopl-select2, hopl-select3, hopl-select4
+		Move: hopl-move1, hopl-move2, hopl-move3, hopl-move4
+		Attack: hopl-attack1, hopl-attack2, hopl-attack3, hopl-attack4
+		Action: hopl-move2, hopl-move3
 
 ZeusVoice:
 	Voices:

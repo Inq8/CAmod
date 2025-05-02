@@ -2433,3 +2433,57 @@ KamovRocketsWide:
 	Inherits: KamovRockets
 	Projectile: Bullet
 		Inaccuracy: 2c512
+
+^DragonGuardMissileProjectile:
+	Projectile: MissileCA
+		Speed: 180
+		Image: missilesm
+		RangeLimit: 15c0
+		TrailImage: smokeydark
+		Arm: 0
+		Inaccuracy: 0
+		HorizontalRateOfTurn: 40
+		LockOnProbability: 100
+		HomingActivationDelay: 2
+		CruiseAltitude: 1c0
+		MinimumLaunchSpeed: 12
+		MaximumLaunchSpeed: 36
+		MinimumLaunchAngle: 160
+		MaximumLaunchAngle: 160
+		Acceleration: 768
+		ContrailLength: 10
+		ContrailStartWidth: 48
+		ContrailStartColor: aaaaaa88
+		ContrailStartColorAlpha: 128
+
+DragonGuardMissile:
+	Inherits: ^AntiGroundMissile
+	Inherits@Projectile: ^DragonGuardMissileProjectile
+	ReloadDelay: 125
+	Range: 12c0
+	MinRange: 3c0
+	Report: drag-fire1.aud, drag-fire2.aud
+	Warhead@1Dam: SpreadDamage
+		Damage: 8000
+		Versus:
+			None: 10
+			Wood: 40
+			Light: 75
+			Heavy: 100
+			Concrete: 50
+			Brick: 75
+
+DragonGuardMissileAA:
+	Inherits: ^AntiAirMissile
+	Inherits@Projectile: ^DragonGuardMissileProjectile
+	ReloadDelay: 125
+	Range: 9c0
+	Report: drag-fire1.aud, drag-fire2.aud
+	Projectile: MissileCA
+		RangeLimit: 12c0
+	Warhead@1Dam: SpreadDamage
+		Damage: 8000
+	Warhead@smallDamage: SpreadDamage
+		Damage: 12000
+	Warhead@3Eff: CreateEffect
+		ValidTargets: Air, AirSmall, ICBM, Ground, Water, Trees

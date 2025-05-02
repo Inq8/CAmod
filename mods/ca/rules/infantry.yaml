@@ -1487,6 +1487,7 @@ SHOK:
 
 TTRP:
 	Inherits: SHOK
+	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	Buildable:
 		BuildPaletteOrder: 91
 		Prerequisites: tslaorstek, anyradar, ~infantry.shok, ~ttrp.upgrade, ~techlevel.medium
@@ -2915,7 +2916,6 @@ E8:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
-	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -2990,6 +2990,7 @@ E8:
 
 DESO:
 	Inherits: E8
+	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	Buildable:
 		BuildPaletteOrder: 93
 		Prerequisites: ~infantry.iraq, tturorstek, anyradar, ~deso.upgrade, ~techlevel.medium
@@ -4761,7 +4762,7 @@ ENFO:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 130
-		Prerequisites: ~tent, alhq, ~!greece.coalition, ~techlevel.high
+		Prerequisites: ~tent, alhq, ~techlevel.high
 		Description: Elite short-range front-line infantry.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
@@ -4818,12 +4819,33 @@ ENFO:
 		RequiredHealing: 20000
 
 HOPL:
-	Inherits: ENFO
+	Inherits: ^Soldier
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	Buildable:
+		Queue: InfantrySQ, InfantryMQ
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 132
 		Prerequisites: ~tent, alhq, ~greece.coalition, ~techlevel.high
-		Description: Elite front-line infantry armed with a prism rifle\n  which periodically fires charged shots to blind enemies.
+		Description: Elite infantry armed with a prism rifle\n  which periodically fires charged shots to blind enemies.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
+	Valued:
+		Cost: 650
 	Tooltip:
 		Name: Hoplite
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 10000
+	Armor:
+		Type: None
+	Mobile:
+		Voice: Move
+	RevealsShroud:
+		Range: 6c0
 	Armament@PRIMARY:
 		Weapon: HopliteGunCharged
 		LocalOffset: 350,40,341
@@ -4841,10 +4863,36 @@ HOPL:
 		Weapon: HopliteTargeter
 		LocalOffset: 350,0,341
 	Armament@BATF:
+		Name: batf
 		Weapon: HopliteGun
+	AttackFrontalCharged:
+		Voice: Attack
+		FacingTolerance: 32
+		ChargeLevel: 0,2
+		PauseOnCondition: being-warped || blinded || reapersnare
+		Armaments: primary, secondary, tertiary
+		ChargeConsumingArmaments: primary, secondary
+	AttackMove:
+		Voice: Move
+	Passenger:
+		Voice: Move
+	Guard:
+		Voice: Move
 	Voiced:
 		VoiceSet: HopliteVoice
-	-ReplacedInQueue:
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
+	-Crushable:
+	TakeCover:
+		ProneOffset: 0,0,0
+		ProneSequencePrefix:
+	WithInfantryBody:
+		IdleSequences: idle, idle2
+		StandSequences: stand, stand2
+		DefaultAttackSequence: shoot
 	AmmoPool@Primary:
 		Ammo: 1
 		AmmoCondition: primary-ammo
@@ -4875,9 +4923,71 @@ HOPL:
 		Count: -3
 		ShowSelectionBar: false
 		RequiresCondition: !attacking
+
+DRAG:
+	Inherits: ^Soldier
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
+	Buildable:
+		Queue: InfantrySQ, InfantryMQ
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 132
+		Prerequisites: ~tent, alhq, ~korea.coalition, ~techlevel.high
+		Description: Elite infantry with a long range rocket launcher.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Aircraft
+		Weaknesses: • Weak vs Infantry, Defenses, Buildings
+	Valued:
+		Cost: 650
+	Tooltip:
+		Name: Dragonguard
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 10000
+	Armor:
+		Type: None
+	Mobile:
+		Voice: Move
+	RevealsShroud:
+		Range: 6c0
+	Armament@PRIMARY:
+		Weapon: DragonGuardMissileAA
+		LocalOffset: 427,0,341
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: DragonGuardMissile
+		LocalOffset: 427,0,341
+	Armament@BATF:
+		Name: batf
+		Weapon: DragonBATF
 	AttackFrontalCharged:
-		Armaments: primary, secondary, tertiary
-		ChargeConsumingArmaments: primary, secondary
+		Voice: Attack
+		FacingTolerance: 32
+		ChargeLevel: 0,2
+		PauseOnCondition: being-warped || blinded || reapersnare
+	AttackMove:
+		Voice: Move
+	Passenger:
+		Voice: Move
+	Guard:
+		Voice: Move
+	Voiced:
+		VoiceSet: DragonGuardVoice
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
+	-Crushable:
+	TakeCover:
+		ProneOffset: 0,0,0
+		ProneSequencePrefix:
+	WithInfantryBody:
+		IdleSequences: idle, idle2
+		StandSequences: stand, stand2
+		DefaultAttackSequence: shoot
 
 CRYT:
 	Inherits: ^Soldier
