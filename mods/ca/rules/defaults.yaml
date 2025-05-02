@@ -4677,15 +4677,6 @@
 	ProductionCostMultiplier@MQS2:
 		Multiplier: 130
 		Prerequisites: aircraft.any, global.multiqueuescaled, optimized.production1, !optimized.production2
-	GrantConditionOnPrerequisite@KoreanBonus:
-		Prerequisites: korea.coalition
-		Condition: korea-coalition
-	GrantCondition@KoreanBonus:
-		RequiresCondition: korea-coalition
-		Condition: aircraft-repair
-	DamageMultiplier@KoreanBonus:
-		Modifier: 50
-		RequiresCondition: korea-coalition
 	GrantExternalConditionToProduced:
 		Condition: produced
 	UpdatesUnitsProduced:
