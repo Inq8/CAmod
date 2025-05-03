@@ -25,9 +25,11 @@ namespace OpenRA.Mods.Common.Traits
 	{
 		HashSet<LinkedProducerTarget> linkedProducerTargets = new HashSet<LinkedProducerTarget>();
 		public IEnumerable<string> ProductionTypes { get; private set; }
+		public Actor Actor { get; private set; }
 
 		public LinkedProducerSource(Actor self, LinkedProducerSourceInfo info)
 		{
+			Actor = self;
 			ProductionTypes =  self.Info.TraitInfos<ProductionInfo>().SelectMany(p => p.Produces);
 		}
 

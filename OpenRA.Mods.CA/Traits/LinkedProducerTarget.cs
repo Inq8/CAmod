@@ -72,6 +72,7 @@ namespace OpenRA.Mods.Common.Traits
 		bool delayUntilNext;
 
 		public string[] Types => info.Types;
+		public LinkedProducerSource Source => linkedProducerSource;
 
 		public LinkedProducerTarget(Actor self, LinkedProducerTargetInfo info)
 			: base(info)

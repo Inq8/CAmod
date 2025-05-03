@@ -53,12 +53,26 @@ namespace OpenRA.Mods.CA.Traits
 				.SelectMany(a => a.TraitsImplementing<ProductionQueue>())
 				.FirstOrDefault(q => q.Enabled);
 
+			// Linked producer queue
+			if (queue == null)
+			{
+				queue = world.Selection.Actors
+					.Where(a => a.IsInWorld && a.World.LocalPlayer == a.Owner)
+					.SelectMany(a => a.TraitsImplementing<LinkedProducerTarget>())
+					.Select(t => t.Source.Actor)
+					.SelectMany(s => s.TraitsImplementing<ProductionQueue>())
+					.FirstOrDefault(q => q.Enabled);
+			}
+
 			// Queue-per-player
 			if (queue == null)
 			{
 				var types = world.Selection.Actors.Where(a => a.IsInWorld && a.World.LocalPlayer == a.Owner)
 					.SelectMany(a => a.TraitsImplementing<Production>().Where(p => !p.IsTraitDisabled))
-					.SelectMany(t => t.Info.Produces);
+					.SelectMany(t => t.Info.Produces)
+					.Concat(world.Selection.Actors.Where(a => a.IsInWorld && a.World.LocalPlayer == a.Owner)
+					.SelectMany(a => a.TraitsImplementing<LinkedProducerTarget>())
+					.SelectMany(t => t.Types));
 
 				queue = world.LocalPlayer.PlayerActor.TraitsImplementing<ProductionQueue>()
 					.FirstOrDefault(q => q.Enabled && types.Contains(q.Info.Type));
