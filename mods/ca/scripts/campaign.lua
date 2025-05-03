@@ -120,6 +120,12 @@ UnitCosts = { }
 -- player characteristics used to enable AI behaviours
 PlayerCharacteristics = { }
 
+-- stores original AI conyards for rebuilding purposes
+AiConyards = { }
+
+-- stores actors that have a trigger assigned for rebuilding AI conyards
+McvProductionTriggers = { }
+
 --
 -- end automatically populated vars
 --
@@ -521,6 +527,137 @@ CanRebuild = function(queueItem)
 	end
 
 	return true
+end
+
+AutoRebuildConyards = function(player)
+	if Difficulty ~= "hard" then
+		return
+	end
+	local conyards = player.GetActorsByTypes(ConyardTypes)
+	Utils.Do(conyards, function(a)
+		local conyard = ConyardEntry(player, a)
+		table.insert(AiConyards, conyard)
+		McvRequestTrigger(a, conyard)
+	end)
+end
+
+ConyardEntry = function(player, a)
+	local conyard = {
+		Player = player,
+		Actor = a,
+		AssignedMcv = nil
+	}
+
+	if a.Type == "fact" then
+		conyard.McvType = "mcv"
+		conyard.DeployLocation = a.Location + CVec.New(1, 1)
+	elseif a.Type == "afac" then
+		conyard.McvType = "amcv"
+		conyard.DeployLocation = a.Location + CVec.New(1, 1)
+	elseif a.Type == "sfac" then
+		conyard.McvType = "smcv"
+		conyard.DeployLocation = a.Location + CVec.New(1, 1)
+	end
+
+	return conyard
+end
+
+McvRequestTrigger = function(a, conyard)
+	local isMcv = IsMcv(a)
+
+	if not isMcv then
+		Trigger.OnCapture(a, function(self, captor, oldOwner, newOwner)
+			for idx, c in pairs(AiConyards) do
+				if c.Actor == self then
+					table.remove(AiConyards, idx)
+				end
+			end
+		end)
+	end
+
+	Trigger.OnKilled(a, function(self, killer)
+		local mcvType
+		local owner
+
+		-- if it was an mcv that was killed, unassign it from the conyard
+		if isMcv then
+			mcvType = self.Type
+			owner = self.Owner
+			for idx, c in pairs(AiConyards) do
+				if c.AssignedMcv == self then
+					c.AssignedMcv = nil
+					break
+				end
+			end
+		else
+			mcvType = conyard.McvType
+			owner = conyard.Player
+		end
+
+		if isMcv or conyard.Player == self.Owner then
+			QueueMcv(owner, mcvType)
+		end
+	end)
+end
+
+QueueMcv = function(player, mcvType)
+	Trigger.AfterDelay(DateTime.Seconds(5), function()
+		local producers = player.GetActorsByTypes(FactoryTypes)
+		if #producers > 0 then
+			local producer = Utils.Random(producers)
+
+			if not McvProductionTriggers[tostring(producer)] then
+				McvProductionTriggers[tostring(producer)] = player.InternalName
+				Trigger.OnProduction(producer, function(p, produced)
+					if IsMcv(produced) and produced.Owner == player then
+
+						-- get a conyard without an assigned mcv
+						local possibleConyards = Utils.Where(AiConyards, function(c)
+							return c.AssignedMcv == nil and c.Player == player
+						end)
+
+						local targetConyard
+						if #possibleConyards > 0 then
+							targetConyard = Utils.Random(possibleConyards)
+							targetConyard.AssignedMcv = produced
+
+							Trigger.OnIdle(produced, function(self)
+								produced.Move(targetConyard.DeployLocation)
+								produced.Deploy()
+
+								-- move to a random location within 5 cells to prevent excessive idle calls
+								local randomCell = CPos.New(targetConyard.DeployLocation.X + Utils.RandomInteger(-5, 5), targetConyard.DeployLocation.Y + Utils.RandomInteger(-5, 5))
+								produced.Move(randomCell)
+							end)
+
+							-- if deployed
+							Trigger.OnRemovedFromWorld(produced, function(self)
+								if not self.IsDead then
+									Trigger.AfterDelay(DateTime.Minutes(8), function()
+										local nearbyConyards = Map.ActorsInCircle(Map.CenterOfCell(targetConyard.DeployLocation), WDist.FromCells(3), function(a)
+											return a.Owner == player and IsConyard(a)
+										end)
+										if #nearbyConyards > 0 then
+											local deployedConyard = Utils.Random(nearbyConyards)
+											targetConyard.Actor = deployedConyard
+											targetConyard.AssignedMcv = nil
+											McvRequestTrigger(deployedConyard, targetConyard)
+											AutoRepairBuilding(deployedConyard, player)
+										end
+									end)
+								end
+							end)
+
+							-- if mcv is killed, re-request
+							McvRequestTrigger(produced)
+						end
+					end
+				end)
+			end
+
+			producer.Produce(mcvType)
+		end
+	end)
 end
 
 RestoreSquadProduction = function(oldBuilding, newBuilding)
@@ -1315,6 +1452,22 @@ PanToPos = function(targetPos, speed)
 end
 
 -- Filters
+
+IsMcv = function(actor)
+	for _, t in pairs(McvTypes) do
+		if actor.Type == t then
+			return true
+		end
+	end
+end
+
+IsConyard = function(actor)
+	for _, t in pairs(ConyardTypes) do
+		if actor.Type == t then
+			return true
+		end
+	end
+end
 
 IsGroundHunterUnit = function(actor)
 	return not actor.IsDead and actor.HasProperty("Move") and not actor.HasProperty("Land") and actor.HasProperty("Hunt")
