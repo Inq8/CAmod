@@ -236,7 +236,7 @@ WorldLoaded = function()
 				end)
 
 				Trigger.AfterDelay(DateTime.Seconds(5), function()
-					Tip("Use the Iron Curtain to shield the Exterminator Tripod from purification waves.")
+					Tip("The Iron Curtain must be intact and powered to shield the Exterminator Tripod from purification waves.")
 				end)
 			end)
 		end)
@@ -260,6 +260,9 @@ OncePerSecondChecks = function()
 					TimerTicks = TimerTicks - 25
 					if TimerTicks == 125 then
 						Media.PlaySound("buzzy1.aud")
+					end
+					if TimerTicks == 75 then
+						ApplyIronCurtain()
 					end
 				else
 					TimerTicks = 0
@@ -494,5 +497,17 @@ GetInvasionInterval = function()
 		else
 			return DateTime.Seconds(30)
 		end
+	end
+end
+
+ApplyIronCurtain = function()
+	if USSR.PowerState ~= "Normal" then
+		return
+	end
+	local ics = USSR.GetActorsByType("iron")
+	if #ics > 0 then
+		local ic = ics[1]
+		Media.PlaySound("ironcur9.aud")
+		Exterminator.GrantCondition("invulnerability", DateTime.Seconds(8))
 	end
 end
