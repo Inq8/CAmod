@@ -50,6 +50,12 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				developmentMeter.IsVisible = () => false;
 				return;
 			}
+			else if (timeline == null)
+			{
+				coalitionImage.GetImageName = () => NoneImage;
+				developmentMeter.IsVisible = () => false;
+				return;
+			}
 
 			developmentMeter.Thresholds = timeline.Thresholds;
 			developmentMeter.MaxTicks = timeline.Info.MaxTicks;
