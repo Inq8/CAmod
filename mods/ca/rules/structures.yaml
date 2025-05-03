@@ -990,6 +990,7 @@ ATEK:
 	Inherits@TEMPINCPOWER: ^TemporalIncursionPower
 	Inherits@TECHLOCKABLE: ^TechLockable
 	Inherits@ProductionOptimizer2: ^ProductionOptimizer2
+	Inherits@EnhancementPolicyDiscount: ^EnhancementPolicyDiscount
 	Selectable:
 		Bounds: 2048, 2048
 	Buildable:
@@ -1369,8 +1370,13 @@ FACT:
 		Condition: factundeploy
 		Prerequisites: global-factundeploy
 	BaseProvider:
-		PauseOnCondition: being-captured
 		Range: 16c0
+		PauseOnCondition: being-captured
+		RequiresCondition: !defense-policy2
+	BaseProvider@DefensePolicy2:
+		Range: 20c0
+		PauseOnCondition: being-captured
+		RequiresCondition: defense-policy2
 	WithBuildingBib:
 	WithBuildingPlacedAnimation:
 		RequiresCondition: !build-incomplete && !chrono-vortex
@@ -1401,6 +1407,7 @@ PROC:
 	Inherits: ^Building
 	Inherits@BOTREF: ^BotRefinery
 	Inherits@ResourceDrainable: ^ResourceDrainable
+	Inherits@EconomyPolicyDiscount: ^EconomyPolicyDiscount
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 60
@@ -3273,8 +3280,13 @@ AFAC:
 	ProvidesPrerequisite@anyconyard:
 		Prerequisite: anyconyard
 	BaseProvider:
-		PauseOnCondition: being-captured
 		Range: 16c0
+		PauseOnCondition: being-captured
+		RequiresCondition: !defense-policy2
+	BaseProvider@DefensePolicy2:
+		Range: 20c0
+		PauseOnCondition: being-captured
+		RequiresCondition: defense-policy2
 	WithBuildingPlacedAnimation:
 		RequiresCondition: !build-incomplete && !chrono-vortex
 	Power:
@@ -4059,6 +4071,7 @@ PROC.TD:
 	Inherits: ^BuildingTD
 	Inherits@BOTREF: ^BotRefinery
 	Inherits@ResourceDrainable: ^ResourceDrainable
+	Inherits@EconomyPolicyDiscount: ^EconomyPolicyDiscount
 	HitShape:
 		Type: Rectangle
 			TopLeft: -1536, -512
@@ -5251,7 +5264,6 @@ CVAT:
 	Inherits: ^Building
 	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@SHAPE: ^2x2Shape
-	Inherits@UPG: ^ProducesUpgrades
 	Inherits@TECHLOCKABLE: ^TechLockable
 	HitShape:
 		UseTargetableCellsOffsets: false
@@ -5329,7 +5341,6 @@ INDP:
 	Inherits: ^Building
 	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@SHAPE: ^3x2Shape
-	Inherits@UPG: ^ProducesUpgrades
 	Inherits@TECHLOCKABLE: ^TechLockable
 	Selectable:
 		Bounds: 3072, 2816, 0, -256
@@ -5400,7 +5411,6 @@ MUNP:
 	Inherits: ^Building
 	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@SHAPE: ^3x2Shape
-	Inherits@UPG: ^ProducesUpgrades
 	Inherits@TECHLOCKABLE: ^TechLockable
 	Selectable:
 		Bounds: 3072, 2816, 0, -256
@@ -5510,12 +5520,18 @@ OREP:
 	-CapturableProgressBlink:
 	-CaptureManager:
 	Valued:
-		Cost: 2000
+		Cost: 1800
 	Tooltip:
 		Name: Ore Purifier
-	ResourcePurifierCA:
+	ResourcePurifierCA@Normal:
+		Modifier: 10
+		RequiresCondition: !disabled && !being-warped && !tech-locked && !economy-policy3
+	ResourcePurifierCA@EconomyPolicy3:
 		Modifier: 15
-		RequiresCondition: !disabled && !being-warped && !tech-locked
+		RequiresCondition: !disabled && !being-warped && !tech-locked && economy-policy3
+	GrantConditionOnPrerequisite@EconomyPolicy3:
+		Condition: economy-policy3
+		Prerequisites: economy.policy, development.level3
 	Power:
 		Amount: -100
 	WithDeathAnimation:

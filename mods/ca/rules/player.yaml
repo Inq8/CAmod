@@ -132,16 +132,19 @@ Player:
 	Production@Upgrade:
 		Produces: Upgrade
 		RequiresCondition: upgrades-available
-	Production@Timeskip:
+	Production@TimeSkip:
 		Produces: TimeSkip
-	GrantConditionOnPrerequisite@AllegiancesAvailable:
-		Prerequisites: scrin.allegiances.available
+	GrantConditionOnPrerequisite@UpgradesAvailable:
+		Prerequisites: upgrades.producer
+		Condition: upgrades-available
+	GrantConditionOnPrerequisite@PoliciesAvailable:
+		Prerequisites: development.level1
 		Condition: upgrades-available
 	GrantConditionOnPrerequisite@DoctrinesAvailable:
 		Prerequisites: playerxp.level1
 		Condition: upgrades-available
-	GrantConditionOnPrerequisite@UpgradesAvailable:
-		Prerequisites: upgrades.producer
+	GrantConditionOnPrerequisite@AllegiancesAvailable:
+		Prerequisites: scrin.allegiances.available
 		Condition: upgrades-available
 	PlaceBuilding:
 		NewOptionsNotification: NewOptions

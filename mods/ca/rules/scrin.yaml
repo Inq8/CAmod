@@ -2905,6 +2905,7 @@ SMCV:
 	Inherits@HOVERTRAIL: ^HoverTrail
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
+	Inherits@EconomyPolicyDiscount: ^EconomyPolicyDiscount
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 602
@@ -4480,8 +4481,13 @@ SFAC:
 	ProvidesPrerequisite@anyconyard:
 		Prerequisite: anyconyard
 	BaseProvider:
-		PauseOnCondition: being-captured
 		Range: 16c0
+		PauseOnCondition: being-captured
+		RequiresCondition: !defense-policy2
+	BaseProvider@DefensePolicy2:
+		Range: 20c0
+		PauseOnCondition: being-captured
+		RequiresCondition: defense-policy2
 	WithBuildingPlacedAnimation:
 		RequiresCondition: !build-incomplete && !chrono-vortex
 	Power:
@@ -4580,6 +4586,7 @@ PROC.SCRIN:
 	Inherits: ^ScrinBuilding
 	Inherits@BOTREF: ^BotRefinery
 	Inherits@ResourceDrainable: ^ResourceDrainable
+	Inherits@EconomyPolicyDiscount: ^EconomyPolicyDiscount
 	HitShape:
 		Type: Rectangle
 			TopLeft: -1536, -512
