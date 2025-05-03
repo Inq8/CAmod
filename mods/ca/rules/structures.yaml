@@ -5158,11 +5158,10 @@ LASF:
 		Bounds: 2048, 1024
 
 PATR:
-	Inherits: ^DefenseTD
+	Inherits: ^BuildingTD
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Inherits@SHAPE: ^2x2Shape
 	Inherits@EMPMISSILEPOWER: ^EmpMissilePower
-	Inherits@ForceShieldable: ^ForceShieldable
 	Buildable:
 		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 130
@@ -5194,8 +5193,6 @@ PATR:
 	RevealsShroud@GAPGEN:
 		Range: 5c0
 		RequiresCondition: !disabled
-	Targetable:
-		TargetTypes: Ground, Structure
 	Turreted:
 		TurnSpeed: 15
 		InitialFacing: 192
@@ -5231,9 +5228,6 @@ PATR:
 	Power:
 		Amount: -200
 	ClassicFacingBodyOrientation:
-	Explodes:
-		Weapon: BuildingExplode
-		EmptyWeapon: BuildingExplode
 	WithBuildingBib:
 		HasMinibib: true
 	Selectable:
@@ -5251,15 +5245,10 @@ PATR:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: ResetSupportPowerInfiltrate
-	Sellable:
-		RequiresCondition: !build-incomplete && !(c4 || tnt) && !being-captured && !being-warped && !hacked
-	CaptureManager:
-		BeingCapturedCondition: being-captured
-	Capturable:
-		RequiresCondition: !build-incomplete && !being-warped
-		Types: building
-	CapturableProgressBar:
-	CapturableProgressBlink:
+	RenderRangeCircle:
+		RangeCircleType: DefenseRange
+		Color: C12900
+	-WithDeathAnimation:
 
 CVAT:
 	Inherits: ^Building

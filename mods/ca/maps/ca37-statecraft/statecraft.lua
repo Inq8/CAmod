@@ -189,9 +189,9 @@ Squads = {
 	},
 	KrukovMain = {
 		Delay = {
-			easy = DateTime.Minutes(7),
-			normal = DateTime.Minutes(5),
-			hard = DateTime.Minutes(3)
+			easy = DateTime.Minutes(8),
+			normal = DateTime.Minutes(6),
+			hard = DateTime.Minutes(4)
 		},
 		AttackValuePerSecond = MainAttackValues,
 		FollowLeader = true,

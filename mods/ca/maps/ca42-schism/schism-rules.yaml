@@ -106,12 +106,15 @@ ETPD:
 		RequiresCondition: invulnerability
 
 IRON:
-	-GrantExternalConditionPowerCA@IRONCURTAIN:
+	GrantExternalConditionPowerCA@IRONCURTAIN:
+		Prerequisites: ~disabled
 	Health:
 		HP: 200000
 	-ToggleConditionOnOrder:
-	ExternalCondition:
+	ExternalCondition@PowerDown:
 		Condition: powerdown
+	ExternalCondition@ForceDisabled:
+		Condition: forcedisabled
 
 purification.dummy:
 	Inherits: CAMERA
