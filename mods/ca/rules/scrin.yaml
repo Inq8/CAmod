@@ -4483,11 +4483,14 @@ SFAC:
 	BaseProvider:
 		Range: 16c0
 		PauseOnCondition: being-captured
-		RequiresCondition: !defense-policy2
-	BaseProvider@DefensePolicy2:
+		RequiresCondition: !economy-policy2
+	BaseProvider@EconomyPolicy2:
 		Range: 20c0
 		PauseOnCondition: being-captured
-		RequiresCondition: defense-policy2
+		RequiresCondition: economy-policy2
+	GrantConditionOnPrerequisite@EconomyPolicy2:
+		Condition: economy-policy2
+		Prerequisites: economy.policy, development.level2
 	WithBuildingPlacedAnimation:
 		RequiresCondition: !build-incomplete && !chrono-vortex
 	Power:
@@ -4512,6 +4515,7 @@ REAC:
 	Inherits@SHAPE: ^2x2Shape
 	Inherits@POWERDRAIN: ^PowerDrainable
 	Inherits@OVERLOAD: ^HackableOverloadable
+	Inherits@DefensePolicyPowerBonus: ^DefensePolicyPowerBonus
 	HitShape:
 		TargetableOffsets: 630,299,0
 	WithSpriteBody:
@@ -4550,6 +4554,7 @@ REA2:
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@POWERDRAIN: ^PowerDrainable
 	Inherits@OVERLOAD: ^HackableOverloadable
+	Inherits@DefensePolicyPowerBonus: ^DefensePolicyPowerBonus
 	HitShape:
 		TargetableOffsets: -355,-1024,0
 	WithSpriteBody:

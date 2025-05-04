@@ -2434,7 +2434,7 @@ KamovRocketsWide:
 	Projectile: Bullet
 		Inaccuracy: 2c512
 
-^DragonGuardMissileProjectile:
+^TigerGuardMissileProjectile:
 	Projectile: MissileCA
 		Speed: 180
 		Image: missilesm
@@ -2456,13 +2456,13 @@ KamovRocketsWide:
 		ContrailStartColor: aaaaaa88
 		ContrailStartColorAlpha: 128
 
-DragonGuardMissile:
+TigerGuardMissile:
 	Inherits: ^AntiGroundMissile
-	Inherits@Projectile: ^DragonGuardMissileProjectile
+	Inherits@Projectile: ^TigerGuardMissileProjectile
 	ReloadDelay: 125
 	Range: 12c0
 	MinRange: 3c0
-	Report: drag-fire1.aud, drag-fire2.aud
+	Report: tigr-fire1.aud, tigr-fire2.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 8000
 		Versus:
@@ -2473,12 +2473,12 @@ DragonGuardMissile:
 			Concrete: 50
 			Brick: 75
 
-DragonGuardMissileAA:
+TigerGuardMissileAA:
 	Inherits: ^AntiAirMissile
-	Inherits@Projectile: ^DragonGuardMissileProjectile
+	Inherits@Projectile: ^TigerGuardMissileProjectile
 	ReloadDelay: 125
 	Range: 9c0
-	Report: drag-fire1.aud, drag-fire2.aud
+	Report: tigr-fire1.aud, tigr-fire2.aud
 	Projectile: MissileCA
 		RangeLimit: 12c0
 	Warhead@1Dam: SpreadDamage
@@ -2488,6 +2488,6 @@ DragonGuardMissileAA:
 	Warhead@3Eff: CreateEffect
 		ValidTargets: Air, AirSmall, ICBM, Ground, Water, Trees
 
-DragonGuardMissileBATF:
-	Inherits: DragonGuardMissile
+TigerGuardMissileBATF:
+	Inherits: TigerGuardMissile
 	Range: 8c0
