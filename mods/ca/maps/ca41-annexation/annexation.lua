@@ -259,6 +259,7 @@ InitScrinRebels = function()
 		AutoRepairAndRebuildBuildings(p)
 		SetupRefAndSilosCaptureCredits(p)
 		AutoReplaceHarvesters(p)
+		AutoRebuildConyards(p)
 		InitAiUpgrades(p)
 
 		local scrinRebelsGroundAttackers = p.GetGroundAttackers()

@@ -230,6 +230,7 @@ InitScrin = function()
 	AutoRepairAndRebuildBuildings(Scrin, 15)
 	SetupRefAndSilosCaptureCredits(Scrin)
 	AutoReplaceHarvesters(Scrin)
+	AutoRebuildConyards(Scrin)
 	InitAiUpgrades(Scrin)
 
 	Trigger.AfterDelay(Squads.ScrinMain.Delay[Difficulty], function()

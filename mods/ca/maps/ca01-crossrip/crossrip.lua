@@ -342,6 +342,7 @@ InitUSSR = function()
 	AutoRepairAndRebuildBuildings(USSR, 10)
 	SetupRefAndSilosCaptureCredits(USSR)
 	AutoReplaceHarvesters(USSR)
+	AutoRebuildConyards(USSR)
 
 	-- Set western patrol
 	Utils.Do(WestPatrolUnits, function(unit)

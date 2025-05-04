@@ -294,6 +294,7 @@ InitNod = function()
 	AutoRepairAndRebuildBuildings(Nod, 15)
 	SetupRefAndSilosCaptureCredits(Nod)
 	AutoReplaceHarvesters(Nod)
+	AutoRebuildConyards(Nod)
 	InitAiUpgrades(Nod)
 
 	Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()

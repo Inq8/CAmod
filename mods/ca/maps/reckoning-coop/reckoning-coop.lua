@@ -351,6 +351,7 @@ InitScrin = function()
 	AutoRepairAndRebuildBuildings(Scrin, 15)
 	SetupRefAndSilosCaptureCredits(Scrin)
 	AutoReplaceHarvesters(Scrin)
+	AutoRebuildConyards(Scrin)
 	InitAiUpgrades(Scrin)
 
 	local scrinGroundAttackers = Scrin.GetGroundAttackers()
@@ -432,6 +433,7 @@ InitScrinRebels = function()
 
 	AutoRepairAndRebuildBuildings(ScrinRebels, 15)
 	AutoReplaceHarvesters(ScrinRebels)
+	AutoRebuildConyards(ScrinRebels, true)
 
 	local scrinRebelGroundAttackers = ScrinRebels.GetGroundAttackers()
 

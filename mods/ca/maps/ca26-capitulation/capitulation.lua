@@ -281,6 +281,7 @@ InitUSSR = function()
 	AutoRepairAndRebuildBuildings(USSR, 15)
 	SetupRefAndSilosCaptureCredits(USSR)
 	AutoReplaceHarvesters(USSR)
+	AutoRebuildConyards(USSR)
 	InitAiUpgrades(USSR)
 
 	Actor.Create("ai.unlimited.power", true, { Owner = USSR })

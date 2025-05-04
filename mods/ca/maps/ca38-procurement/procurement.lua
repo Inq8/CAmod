@@ -33,7 +33,7 @@ Squads = {
 		},
 	},
 	GDIMain2 = {
-		InitTime = 0 - DateTime.Minutes(2),		
+		InitTime = 0 - DateTime.Minutes(2),
 		Delay = {
 			easy = DateTime.Minutes(6),
 			normal = DateTime.Minutes(4),
@@ -221,6 +221,7 @@ InitGDI = function()
 	AutoRepairAndRebuildBuildings(GDI, 15)
 	SetupRefAndSilosCaptureCredits(GDI)
 	AutoReplaceHarvesters(GDI)
+	AutoRebuildConyards(GDI)
 	InitAiUpgrades(GDI)
 
 	local gdiGroundAttackers = GDI.GetGroundAttackers()

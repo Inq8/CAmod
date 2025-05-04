@@ -505,11 +505,20 @@ CanRebuild = function(queueItem)
 		return false
 	end
 
+	-- require an owned building nearby, and no enemy buildings nearby
+	if not HasOwnedBuildingsNearby(queueItem.Player, pos, true) then
+		return false
+	end
+
+	return true
+end
+
+HasOwnedBuildingsNearby = function(player, pos, noEnemyBuildings)
 	local topLeft = WPos.New(pos.X - 8192, pos.Y - 8192, 0)
 	local bottomRight = WPos.New(pos.X + 8192, pos.Y + 8192, 0)
 
 	local nearbyBuildings = Map.ActorsInBox(topLeft, bottomRight, function(a)
-		return not a.IsDead and a.Owner == queueItem.Player and a.HasProperty("StartBuildingRepairs") and not a.HasProperty("Attack") and a.Type ~= "silo" and a.Type ~= "silo.td" and a.Type ~= "silo.scrin"
+		return not a.IsDead and a.Owner == player and a.HasProperty("StartBuildingRepairs") and not a.HasProperty("Attack") and a.Type ~= "silo" and a.Type ~= "silo.td" and a.Type ~= "silo.scrin"
 	end)
 
 	-- require an owned building nearby
@@ -517,20 +526,22 @@ CanRebuild = function(queueItem)
 		return false
 	end
 
-	local nearbyEnemyBuildings = Map.ActorsInBox(topLeft, bottomRight, function(a)
-		return not a.IsDead and not a.Owner.IsAlliedWith(queueItem.Player) and a.HasProperty("StartBuildingRepairs")
-	end)
-
 	-- require no enemy buildings nearby
-	if #nearbyEnemyBuildings > 0 then
-		return false
+	if noEnemyBuildings then
+		local nearbyEnemyBuildings = Map.ActorsInBox(topLeft, bottomRight, function(a)
+			return not a.IsDead and not a.Owner.IsAlliedWith(player) and a.HasProperty("StartBuildingRepairs")
+		end)
+
+		if #nearbyEnemyBuildings > 0 then
+			return false
+		end
 	end
 
 	return true
 end
 
-AutoRebuildConyards = function(player)
-	if Difficulty ~= "hard" then
+AutoRebuildConyards = function(player, allDifficulties)
+	if Difficulty ~= "hard" and not allDifficulties then
 		return
 	end
 	local conyards = player.GetActorsByTypes(ConyardTypes)
@@ -601,19 +612,29 @@ McvRequestTrigger = function(a, conyard)
 end
 
 QueueMcv = function(player, mcvType)
-	Trigger.AfterDelay(DateTime.Seconds(5), function()
+	Trigger.AfterDelay(1, function()
 		local producers = player.GetActorsByTypes(FactoryTypes)
+
 		if #producers > 0 then
 			local producer = Utils.Random(producers)
+
+			-- get a conyard without an assigned mcv that has friendly buildings nearby
+			local possibleConyards = Utils.Where(AiConyards, function(c)
+				return c.Actor.IsDead and c.AssignedMcv == nil and c.Player == player and HasOwnedBuildingsNearby(player, Map.CenterOfCell(c.DeployLocation), true)
+			end)
+
+			if #possibleConyards == 0 then
+				return
+			end
 
 			if not McvProductionTriggers[tostring(producer)] then
 				McvProductionTriggers[tostring(producer)] = player.InternalName
 				Trigger.OnProduction(producer, function(p, produced)
 					if IsMcv(produced) and produced.Owner == player then
 
-						-- get a conyard without an assigned mcv
+						-- get a conyard without an assigned mcv that has friendly buildings nearby (repeated inside the production trigger)
 						local possibleConyards = Utils.Where(AiConyards, function(c)
-							return c.AssignedMcv == nil and c.Player == player
+							return c.Actor.IsDead and c.AssignedMcv == nil and c.Player == player and HasOwnedBuildingsNearby(player, Map.CenterOfCell(c.DeployLocation), true)
 						end)
 
 						local targetConyard
@@ -633,8 +654,8 @@ QueueMcv = function(player, mcvType)
 							-- if deployed
 							Trigger.OnRemovedFromWorld(produced, function(self)
 								if not self.IsDead then
-									Trigger.AfterDelay(DateTime.Minutes(8), function()
-										local nearbyConyards = Map.ActorsInCircle(Map.CenterOfCell(targetConyard.DeployLocation), WDist.FromCells(3), function(a)
+									Trigger.AfterDelay(DateTime.Seconds(1), function()
+										local nearbyConyards = Map.ActorsInCircle(Map.CenterOfCell(targetConyard.DeployLocation), WDist.FromCells(2), function(a)
 											return a.Owner == player and IsConyard(a)
 										end)
 										if #nearbyConyards > 0 then
@@ -650,6 +671,8 @@ QueueMcv = function(player, mcvType)
 
 							-- if mcv is killed, re-request
 							McvRequestTrigger(produced)
+						else
+							produced.Destroy()
 						end
 					end
 				end)

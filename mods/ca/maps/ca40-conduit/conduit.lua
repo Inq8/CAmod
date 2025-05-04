@@ -231,6 +231,7 @@ InitNod = function()
 		AutoRepairAndRebuildBuildings(p)
 		SetupRefAndSilosCaptureCredits(p)
 		AutoReplaceHarvesters(p)
+		AutoRebuildConyards(p)
 		InitAiUpgrades(p)
 
 		local nodGroundAttackers = p.GetGroundAttackers()

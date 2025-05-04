@@ -409,6 +409,7 @@ InitScrin = function()
 	AutoRepairAndRebuildBuildings(Scrin, 15)
 	SetupRefAndSilosCaptureCredits(Scrin)
 	AutoReplaceHarvesters(Scrin)
+	AutoRebuildConyards(Scrin)
 
 	StormriderAttacker1.Attack(PlayerRefinery)
 	StormriderAttacker2.Attack(PlayerRefinery)

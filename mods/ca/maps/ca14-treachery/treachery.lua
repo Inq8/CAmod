@@ -283,6 +283,7 @@ InitGreece = function()
 	AutoRepairAndRebuildBuildings(Greece, 15)
 	SetupRefAndSilosCaptureCredits(Greece)
 	AutoReplaceHarvesters(Greece)
+	AutoRebuildConyards(Greece)
 	InitAiUpgrades(Greece)
 	InitAiUpgrades(Traitor)
 
