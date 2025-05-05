@@ -2116,13 +2116,13 @@
 		Condition: defense-policy3
 		Prerequisites: defense.policy, development.level3
 	DamageMultiplier@DefensePolicy1:
-		Modifier: 90
+		Modifier: 91
 		RequiresCondition: defense-policy1
 	DamageMultiplier@DefensePolicy2:
-		Modifier: 80
+		Modifier: 83
 		RequiresCondition: defense-policy2
 	DamageMultiplier@DefensePolicy3:
-		Modifier: 70
+		Modifier: 77
 		RequiresCondition: defense-policy3
 
 ^DefensePolicyPowerBonus:
@@ -2134,6 +2134,9 @@
 		RequiresCondition: defense-policy2
 
 ^DefensePolicyRangeBonus:
+	GrantConditionOnPrerequisite@DefensePolicy3:
+		Condition: defense-policy3
+		Prerequisites: defense.policy, development.level3
 	RevealsShroudMultiplier@DefensePolicy3:
 		Modifier: 115
 		RequiresCondition: defense-policy3
@@ -4366,6 +4369,7 @@
 	DetectCloaked:
 		Range: 5c0
 		DetectionTypes: Mine
+	MineImmune:
 
 ^Viceroid:
 	Inherits@1: ^ExistsInWorld

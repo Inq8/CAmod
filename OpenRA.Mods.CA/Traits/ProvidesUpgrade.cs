@@ -9,7 +9,6 @@
 #endregion
 
 using OpenRA.Mods.Common.Traits;
-using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
@@ -22,7 +21,7 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new ProvidesUpgrade(init.Self, this); }
 	}
 
-	public class ProvidesUpgrade : ConditionalTrait<ProvidesUpgradeInfo>, INotifyCreated
+	public class ProvidesUpgrade : ConditionalTrait<ProvidesUpgradeInfo>
 	{
 		public readonly new ProvidesUpgradeInfo Info;
 		readonly string type;
@@ -37,16 +36,6 @@ namespace OpenRA.Mods.CA.Traits
 
 			if (string.IsNullOrEmpty(type))
 				type = self.Info.Name;
-		}
-
-		protected override void Created(Actor self)
-		{
-			if (IsTraitDisabled)
-				return;
-
-			upgradesManager.UpgradeProviderCreated(type);
-
-			base.Created(self);
 		}
 
 		protected override void TraitEnabled(Actor self)

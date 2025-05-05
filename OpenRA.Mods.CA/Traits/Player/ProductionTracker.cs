@@ -17,7 +17,7 @@ namespace OpenRA.Mods.CA.Traits
 	public class ProductionTrackerInfo : TraitInfo
 	{
 		[Desc("Maximum number of build order items to track.")]
-		public readonly int MaxBuildOrderItems = 12;
+		public readonly int MaxBuildOrderItems = 18;
 
 		public override object Create(ActorInitializer init) { return new ProductionTracker(init.Self, this); }
 	}

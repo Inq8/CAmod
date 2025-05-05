@@ -27,17 +27,17 @@ namespace OpenRA.Mods.CA.Traits
 	{
 		readonly Actor self;
 		Dictionary<string, UpgradeInfo> upgrades;
-		HashSet<string> unlockedUpgradeTypes;
+		Dictionary<string, int> unlockedUpgradeTypes;
 
 		public int Hash { get; private set; }
 
-		public HashSet<string> UnlockedUpgradeTypes => unlockedUpgradeTypes;
+		public Dictionary<string, int> UnlockedUpgradeTypes => unlockedUpgradeTypes;
 
 		public UpgradesManager(Actor self, UpgradesManagerInfo info)
 		{
 			this.self = self;
 			upgrades = new Dictionary<string, UpgradeInfo>();
-			unlockedUpgradeTypes = new HashSet<string>();
+			unlockedUpgradeTypes = new Dictionary<string, int>();
 			Hash = 0;
 		}
 
@@ -79,23 +79,26 @@ namespace OpenRA.Mods.CA.Traits
 
 		public void UpgradeProviderCreated(string type)
 		{
-			if (IsUnlocked(type))
-				return;
+			if (unlockedUpgradeTypes.ContainsKey(type))
+				unlockedUpgradeTypes[type]++;
+			else
+				unlockedUpgradeTypes.Add(type, 1);
 
-			Update();
+			if (!IsUnlocked(type))
+			{
+				var upgradeables = self.World.ActorsWithTrait<Upgradeable>().Where(x => x.Trait.Info.Type == type && x.Actor.Owner == self.Owner).ToList();
 
-			unlockedUpgradeTypes.Add(type);
-			var upgradeables = self.World.ActorsWithTrait<Upgradeable>().Where(x => x.Trait.Info.Type == type && x.Actor.Owner == self.Owner).ToList();
-
-			foreach (var p in upgradeables)
-				p.Trait.Unlock();
+				foreach (var p in upgradeables)
+					p.Trait.Unlock();
+			}
 
 			UpgradeCompleted?.Invoke(type);
+			Update();
 		}
 
 		public bool IsUnlocked(string upgradeType)
 		{
-			return unlockedUpgradeTypes.Contains(upgradeType);
+			return unlockedUpgradeTypes.ContainsKey(upgradeType);
 		}
 
 		int CalculateCost(string sourceActorType, string targetActorType)

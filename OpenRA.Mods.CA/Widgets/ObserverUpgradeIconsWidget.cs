@@ -141,6 +141,17 @@ namespace OpenRA.Mods.Common.Widgets
 
 			Game.Renderer.DisableAntialiasingFilter();
 
+			var bold = Game.Renderer.Fonts["TinyBold"];
+			foreach (var armyIcon in armyIcons)
+			{
+				if (armyIcon.Unit.Count == 1)
+					continue;
+
+				var text = armyIcon.Unit.Count.ToString();
+				bold.DrawTextWithContrast(text, armyIcon.Bounds.Location + new float2(iconSize.X, 0) - new float2(bold.Measure(text).X, bold.TopOffset),
+					Color.White, Color.Black, 1);
+			}
+
 			var parentWidth = Bounds.X + Bounds.Width;
 			Parent.Bounds.Width = parentWidth;
 
@@ -158,7 +169,9 @@ namespace OpenRA.Mods.Common.Widgets
 		IOrderedEnumerable<ArmyUnit> UpdateUpgrades(UpgradesManager upgradesManager, Player player)
 		{
 			lastHash = upgradesManager.Hash;
-			return upgradesManager.UnlockedUpgradeTypes.Select(u => new ArmyUnit(player.World.Map.Rules.Actors[u], player)).OrderBy(u => u.BuildPaletteOrder);
+			return upgradesManager.UnlockedUpgradeTypes
+				.Select(kvp => new ArmyUnit(player.World.Map.Rules.Actors[kvp.Key], player) { Count = kvp.Value })
+				.OrderBy(u => u.BuildPaletteOrder);
 		}
 
 		public override Widget Clone()
