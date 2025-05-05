@@ -23,12 +23,19 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 		[TranslationReference("time")]
 		const string PlayerDevelopmentLevelTime = "label-player-development-level-time";
 
+		[TranslationReference("coalition")]
+		const string ChosenCoalition = "label-player-development-coalition";
+
+		[TranslationReference("policy")]
+		const string ChosenPolicy = "label-player-development-policy";
+
 		const string NoneImage = "none";
 		const string DisabledImage = "disabled";
 
 		ProvidesPrerequisitesOnTimeline timeline;
 
 		string chosenCoalition;
+		string chosenPolicy;
 
 		private readonly UpgradesManager upgradesManager;
 		private readonly AlliedDevelopmentMeterWidget developmentMeter;
@@ -40,9 +47,10 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				.FirstOrDefault(c => c.Info.Type == "AlliedDevelopment");
 
 			var container = widget.Get<ContainerWidget>("ALLIED_DEVELOPMENT");
-			var coalitionImage = container.Get<ImageWidget>("ALLIED_DEVELOPMENT_IMAGE");
+			var coalitionImage = container.Get<ImageWidget>("ALLIED_COALITION_IMAGE");
 			developmentMeter = container.Get<AlliedDevelopmentMeterWidget>("ALLIED_DEVELOPMENT_METER");
 
+			// development meter is only shown if player is an allied faction
 			if (world.LocalPlayer.Faction.Side != "Allies")
 			{
 				coalitionImage.GetImageName = () => DisabledImage;
@@ -50,68 +58,70 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				developmentMeter.IsVisible = () => false;
 				return;
 			}
-			else if (timeline == null)
+
+			upgradesManager = world.LocalPlayer.PlayerActor.Trait<UpgradesManager>();
+			upgradesManager.UpgradeCompleted += HandleUpgradeCompleted;
+
+			if (timeline != null)
+			{
+				developmentMeter.Thresholds = timeline.Thresholds;
+				developmentMeter.MaxTicks = timeline.Info.MaxTicks;
+
+				var developmentMeterTooltipTextCached = new CachedTransform<string, string>((timeCoalitionPolicy) =>
+				{
+					var thresholdsPassed = timeline.ThresholdsPassed;
+
+					var tooltip = TranslationProvider.GetString(PlayerDevelopmentLevel, Translation.Arguments("level", thresholdsPassed));
+
+					if (timeline.TicksUntilNextThreshold > 0)
+						tooltip += "\n" + TranslationProvider.GetString(PlayerDevelopmentLevelTime, Translation.Arguments("time", WidgetUtils.FormatTime(timeline.TicksUntilNextThreshold, world.Timestep)));
+
+					if (chosenCoalition != null)
+						tooltip += "\n" + TranslationProvider.GetString(ChosenCoalition, Translation.Arguments("coalition", char.ToUpper(chosenCoalition[0]) + chosenCoalition[1..]));
+
+					if (chosenPolicy != null)
+						tooltip += "\n" + TranslationProvider.GetString(ChosenPolicy, Translation.Arguments("policy", char.ToUpper(chosenPolicy[0]) + chosenPolicy[1..]));
+
+					return tooltip;
+				});
+
+				developmentMeter.GetTooltipText = () =>
+				{
+					var timeCoalitionPolicy = $"{(timeline.TicksUntilNextThreshold / 25).ToString()}-{chosenCoalition}-{chosenPolicy}";
+					return developmentMeterTooltipTextCached.Update(timeCoalitionPolicy);
+				};
+
+				timeline.PercentageChanged += HandlePercentageChanged;
+
+				coalitionImage.GetImageName = () =>  {
+					if (timeline.PercentageComplete == 100)
+						return chosenCoalition ?? NoneImage;
+
+					return DisabledImage;
+				};
+
+				coalitionImage.GetTooltipText = () =>
+				{
+					var timeCoalitionPolicy = $"0-{chosenCoalition}-{chosenPolicy}";
+					return developmentMeterTooltipTextCached.Update(timeCoalitionPolicy);
+				};
+			}
+			else
 			{
 				coalitionImage.GetImageName = () => NoneImage;
 				developmentMeter.IsVisible = () => false;
-				return;
 			}
-
-			developmentMeter.Thresholds = timeline.Thresholds;
-			developmentMeter.MaxTicks = timeline.Info.MaxTicks;
-
-			var tooltipTextCached = new CachedTransform<int?, string>((secs) =>
-			{
-				if (timeline == null)
-					return "";
-
-				var thresholdsPassed = timeline.ThresholdsPassed;
-
-				var tooltip = TranslationProvider.GetString(PlayerDevelopmentLevel, Translation.Arguments("level", thresholdsPassed));
-
-				if (timeline.TicksUntilNextThreshold > 0)
-					tooltip += "\n" + TranslationProvider.GetString(PlayerDevelopmentLevelTime, Translation.Arguments("time", WidgetUtils.FormatTime(timeline.TicksUntilNextThreshold, world.Timestep)));
-
-				return tooltip;
-			});
-
-			developmentMeter.GetTooltipText = () =>
-			{
-				return tooltipTextCached.Update(timeline.TicksUntilNextThreshold / 25);
-			};
-
-			upgradesManager = world.LocalPlayer.PlayerActor.Trait<UpgradesManager>();
-
-			if (upgradesManager == null)
-			{
-				coalitionImage.GetImageName = () => NoneImage;
-				coalitionImage.IsVisible = () => true;
-				return;
-			}
-
-			upgradesManager.UpgradeCompleted += HandleUpgradeCompleted;
-			timeline.PercentageChanged += HandlePercentageChanged;
-
-			coalitionImage.GetImageName = () =>  {
-				if (timeline == null)
-					return NoneImage;
-
-				if (timeline.PercentageComplete == 100)
-					return chosenCoalition ?? NoneImage;
-
-				return DisabledImage;
-			};
-
-			coalitionImage.IsVisible = () => true;
 		}
 
-		private void HandleUpgradeCompleted(string coalitionName)
+		private void HandleUpgradeCompleted(string upgradeName)
 		{
-			if (coalitionName.EndsWith(".coalition"))
-			{
-				chosenCoalition = coalitionName.Split('.')[0];
+			if (upgradeName.EndsWith(".coalition"))
+				chosenCoalition = upgradeName.Split('.')[0];
+			else if (upgradeName.EndsWith(".policy"))
+				chosenPolicy = upgradeName.Split('.')[0];
+
+			if (chosenCoalition != null && chosenPolicy != null)
 				upgradesManager.UpgradeCompleted -= HandleUpgradeCompleted;
-			}
 		}
 
 		private void HandlePercentageChanged(int percentage)
