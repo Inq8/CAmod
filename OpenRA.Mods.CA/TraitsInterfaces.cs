@@ -87,4 +87,7 @@ namespace OpenRA.Mods.CA.Traits
 
 	[RequireExplicitImplementation]
 	public interface INotifyCountChanged { void Incremented(string type); void Decremented(string type); }
+
+	[RequireExplicitImplementation]
+	public interface ISeedsResourceIntervalModifier { int GetModifier(); }
 }

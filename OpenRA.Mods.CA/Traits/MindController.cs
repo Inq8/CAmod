@@ -164,6 +164,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		protected override void Created(Actor self)
 		{
+			base.Created(self);
 			deployTrait = self.TraitOrDefault<GrantConditionOnDeploy>();
 		}
 

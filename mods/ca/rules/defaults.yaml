@@ -3708,8 +3708,28 @@
 	-Targetable:
 	Interactable:
 
+^ResourceNode:
+	GrantConditionOnPrerequisite@FastRegrowth:
+		Condition: fast-regrowth
+		Prerequisites: global.fastregrowth
+	SeedsResourceMultiplier@FastRegrowth:
+		Modifier: 50
+		RequiresCondition: fast-regrowth
+	SeedsResourceMultiplier@IchorBoost:
+		Modifier: 80
+		RequiresCondition: ichor-boost
+	ExternalCondition@IchorBoost:
+		Condition: ichor-boost
+	WithIdleOverlay@IchorBoost:
+		Image: resconv
+		Sequence: green
+		Palette: scrin
+		RequiresCondition: ichor-boost
+		Offset: 0,0,300
+
 ^TibTree:
 	Inherits@1: ^SpriteActor
+	Inherits@ResourceNode: ^ResourceNode
 	Interactable:
 	Tooltip:
 		Name: Blossom Tree
@@ -3733,9 +3753,6 @@
 		Condition: on-tib
 		Range: 4c0
 		ValidRelationships: Ally, Neutral, Enemy
-	GrantConditionOnPrerequisite@FastRegrowth:
-		Condition: fast-regrowth
-		Prerequisites: global.fastregrowth
 
 ^Tree:
 	Inherits@1: ^SpriteActor

@@ -2906,6 +2906,7 @@ SMCV:
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Inherits@EconomyPolicyDiscount: ^EconomyPolicyDiscount
+	Inherits@BLD: ^ProducesBuildings
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 602
@@ -2965,6 +2966,54 @@ SMCV:
 		Modifier: 60
 	UpdatesKillCount:
 		Type: BuildingsOrHarvesters
+	-PrimaryBuilding:
+	-WithDecoration@primary:
+	GrantConditionOnPrerequisite@Rebel:
+		Prerequisites: rebel.allegiance
+		Condition: rebel-allegiance
+	ProvidesPrerequisite@scrin:
+		Prerequisite: structures.scrin
+		RequiresCondition: rebel-allegiance
+	ProvidesPrerequisiteValidatedFaction@reaper:
+		Factions: reaper
+		Prerequisite: structures.reaper
+		RequiresCondition: rebel-allegiance
+	ProvidesPrerequisiteValidatedFaction@traveler:
+		Factions: traveler
+		Prerequisite: structures.traveler
+		RequiresCondition: rebel-allegiance
+	ProvidesPrerequisiteValidatedFaction@harbinger:
+		Factions: harbinger
+		Prerequisite: structures.harbinger
+		RequiresCondition: rebel-allegiance
+	ProvidesPrerequisiteValidatedFaction@collector:
+		Factions: collector
+		Prerequisite: structures.collector
+		RequiresCondition: rebel-allegiance
+	ProvidesPrerequisite@anyconyard:
+		Prerequisite: anyconyard
+		RequiresCondition: rebel-allegiance
+	FreeActor@QUEUEUPDATER:
+		RequiresCondition: updatequeue && rebel-allegiance
+	-SpawnActorOnCapture@QUEUEUPDATER:
+	-GrantConditionOnPrerequisite@MQF:
+	-GrantConditionOnPrerequisite@MQS:
+	GrantDelayedCondition@QUEUEUPDATER:
+		RequiresCondition: rebel-allegiance
+	Production@SQBLD:
+		RequiresCondition: !global-multiqueuefull && rebel-allegiance
+		PauseOnCondition: being-warped
+	Production@MQBLD:
+		RequiresCondition: global-multiqueuefull && rebel-allegiance
+		PauseOnCondition: being-warped
+	ProductionBar@SQBLD:
+		RequiresCondition: !global-multiqueuefull && rebel-allegiance
+	ProductionBar@SQDEF:
+		RequiresCondition: !global-multiqueuefull && rebel-allegiance
+	ProductionBar@MQBLD:
+		RequiresCondition: global-multiqueuefull && rebel-allegiance
+	ProductionBar@MQDEF:
+		RequiresCondition: global-multiqueuefull && rebel-allegiance
 
 #
 # ---- Aircraft
@@ -4508,6 +4557,40 @@ SFAC:
 		ActorTypes: s1,s1,s1,s1,s6
 		GuaranteedActorTypes: s1, s1
 	-UpdatesBuildOrder:
+	GrantConditionOnPrerequisite@LoyalistBonus:
+		Condition: loyalist-allegiance
+		Prerequisites: loyalist.allegiance
+	GrantConditionOnPrerequisite@MaleficBonus:
+		Condition: malefic-allegiance
+		Prerequisites: malefic.allegiance
+	Cloak@NORMAL:
+		InitialDelay: 80
+		CloakDelay: 120
+		UncloakOn: Damage
+		CloakedCondition: hidden
+		CloakSound: stlk-cloak.aud
+		UncloakSound: stlk-uncloak.aud
+		DetectionTypes: Cloak
+		IsPlayerPalette: false
+		RequiresCondition: !cloak-force-disabled && !being-warped && malefic-allegiance
+		PauseOnCondition: invisibility
+	GrantConditionOnDamageState@UNCLOAK:
+		Condition: cloak-force-disabled
+		ValidDamageStates: Critical
+	WithColoredSelectionBox@INVIS:
+		RequiresCondition: invisibility || hidden
+		ColorSource: Player
+	ProximityExternalCondition@IchorBoost:
+		Range: 12c0
+		Condition: ichor-boost
+		ValidRelationships: Neutral
+		RequiresCondition: loyalist-allegiance
+	WithRangeCircleCA@IchorBoost:
+		Type: IchorBoost
+		Color: 00ff00aa
+		Range: 12c0
+		ValidRelationships: Ally
+		RequiresCondition: loyalist-allegiance
 
 REAC:
 	Inherits: ^ScrinBuilding

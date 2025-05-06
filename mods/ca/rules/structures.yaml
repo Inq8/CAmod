@@ -1146,6 +1146,11 @@ ALHQ:
 	-WithDecoration@HACKED:
 	-WithDecoration@RESTORING:
 	-PowerMultiplier@HACKED:
+	FreeActor@ProductionOptimizer2:
+		RequiresCondition: optimized-production1
+	GrantConditionOnPrerequisite@ProductionOptimizer1:
+		Condition: optimized-production1
+		Prerequisites: optimized.production1
 
 WEAP:
 	Inherits: ^Building

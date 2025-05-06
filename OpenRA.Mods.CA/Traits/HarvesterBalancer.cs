@@ -49,6 +49,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		protected override void Created(Actor self)
 		{
+			base.Created(self);
 			movingToResources = true;
 			unlinkedBuffTicks = Info.UnlinkedDuration;
 		}
