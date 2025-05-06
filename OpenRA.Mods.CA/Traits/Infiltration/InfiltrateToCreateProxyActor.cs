@@ -100,6 +100,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		void INotifyRemovedFromWorld.RemovedFromWorld(Actor self)
 		{
+			if (!info.LinkedToParent)
+				return;
+
 			foreach (var a in spawnedActors)
 			{
 				if (!a.IsDead)
