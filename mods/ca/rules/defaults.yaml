@@ -982,7 +982,7 @@
 		BlinkPatterns:
 			bino: Off, On
 	GrantConditionOnTerrain@HAZMATSOVIET:
-		TerrainTypes: Rough, Beach, Ford, Ore, Gems, Tiberium, BlueTiberium
+		TerrainTypes: Rough, Beach, Ford, Ore, Gems, Tiberium, BlueTiberium, BlackTiberium
 		Condition: onrough
 	SpeedMultiplier@HAZMATSOVIET:
 		RequiresCondition: hazmatsuits-soviet && onrough
@@ -2124,23 +2124,18 @@
 	DamageMultiplier@DefensePolicy3:
 		Modifier: 77
 		RequiresCondition: defense-policy3
+	ChangesHealth@DefensePolicy2:
+		Step: 200
+		StartIfBelow: 100
+		Delay: 24
+		DamageCooldown: 0
+		RequiresCondition: defense-policy2 && being-repaired
 
-^DefensePolicyPowerBonus:
-	GrantConditionOnPrerequisite@DefensePolicy2:
-		Condition: defense-policy2
-		Prerequisites: defense.policy, development.level2, !development.level3
-	PowerMultiplier@DefensePolicy2:
-		Modifier: 115
-		RequiresCondition: defense-policy2
-
-^DefensePolicyRangeBonus:
+^DefensePolicyDamageBonus:
 	GrantConditionOnPrerequisite@DefensePolicy3:
 		Condition: defense-policy3
 		Prerequisites: defense.policy, development.level3
-	RevealsShroudMultiplier@DefensePolicy3:
-		Modifier: 115
-		RequiresCondition: defense-policy3
-	RangeMultiplier@DefensePolicy3:
+	FirepowerMultiplier@DefensePolicy3:
 		Modifier: 115
 		RequiresCondition: defense-policy3
 
@@ -2459,14 +2454,14 @@
 		PauseOnCondition: being-warped || reapersnare
 	GrantConditionOnTerrain@ONTIB:
 		Condition: on-tib
-		TerrainTypes: Tiberium, BlueTiberium
+		TerrainTypes: Tiberium, BlueTiberium, BlackTiberium
 	GrantStackingCondition@TIBEXPOSED:
 		Condition: tibexposed
 		RequiresCondition: on-tib
 		DelayPerInstance: 250
 		RevokeDelay: 200
 	DamagedByTerrain@TIBDAMAGE:
-		Terrain: Tiberium, BlueTiberium
+		Terrain: Tiberium, BlueTiberium, BlackTiberium
 		Damage: 125
 		DamageInterval: 16
 		DamageTypes: ToxinDeath
@@ -2781,7 +2776,7 @@
 	Wanders:
 		MinMoveDelay: 150
 		MaxMoveDelay: 750
-		AvoidTerrainTypes: Tiberium, BlueTiberium
+		AvoidTerrainTypes: Tiberium, BlueTiberium, BlackTiberium
 	MapEditorData:
 		Categories: Civilian infantry
 
@@ -3179,7 +3174,7 @@
 		VTOL: true
 		InitialFacing: 896
 		CanSlide: True
-		LandableTerrainTypes: Clear,Rough,Road,Ore,Beach,Gems,Tiberium,BlueTiberium
+		LandableTerrainTypes: Clear,Rough,Road,Ore,Beach,Gems,Tiberium,BlueTiberium,BlackTiberium
 		Crushes: crate, mine, infantry, husk
 	Repairable:
 		RepairActors: fix, rep, srep, hpad, hpad.td, afld, afld.gdi, grav
@@ -3311,6 +3306,7 @@
 		RepairPercent: 30
 		RepairingNotification: Repairing
 		RequiresCondition: !being-warped
+		RepairCondition: being-repaired
 	InstantlyRepairable:
 		RequiresCondition: !tnt && !c4
 	AcceptsDeliveredCash:
@@ -3416,7 +3412,7 @@
 	Inherits@veilable: ^Veilable
 	Inherits@weapjammable: ^WeaponJammable
 	Inherits@atomize: ^Atomizable
-	Inherits@DefensePolicyRangeBonus: ^DefensePolicyRangeBonus
+	Inherits@DefensePolicyDamageBonus: ^DefensePolicyDamageBonus
 	-SpeedMultiplier@concussion:
 	WithPalettedOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability
@@ -3487,6 +3483,8 @@
 	GivesExperienceCA:
 		ActorExperienceModifier: 10000
 	-UpdatesBuildOrder:
+	ChangesHealth@DefensePolicy2:
+		Step: 140
 
 ^DefenseTD:
 	Inherits@1: ^Defense
@@ -3709,6 +3707,8 @@
 	Interactable:
 
 ^ResourceNode:
+	SeedsResourceCA:
+		RequiresCondition: !voidspike
 	GrantConditionOnPrerequisite@FastRegrowth:
 		Condition: fast-regrowth
 		Prerequisites: global.fastregrowth
@@ -3720,12 +3720,21 @@
 		RequiresCondition: ichor-boost
 	ExternalCondition@IchorBoost:
 		Condition: ichor-boost
+	ExternalCondition@VoidSpike:
+		Condition: voidspike
 	WithIdleOverlay@IchorBoost:
 		Image: resconv
 		Sequence: green
 		Palette: scrin
 		RequiresCondition: ichor-boost
 		Offset: 0,0,300
+	SeedsResource@BlackTiberium:
+		ResourceType: BlackTiberium
+		Interval: 66
+		RequiresCondition: voidspike
+	WithColoredOverlay@VoidSpike:
+		Color: 00000070
+		RequiresCondition: voidspike
 
 ^TibTree:
 	Inherits@1: ^SpriteActor
@@ -3858,7 +3867,7 @@
 	Inherits: ^BasicHusk
 	Inherits@chrono: ^Chronoshiftable
 	Husk:
-		AllowedTerrain: Clear, Rough, Road, Ore, Gems, Beach, Tiberium, BlueTiberium
+		AllowedTerrain: Clear, Rough, Road, Ore, Gems, Beach, Tiberium, BlueTiberium, BlackTiberium
 	WithIdleOverlay@Burns:
 		Image: fire
 		Sequence: 1
@@ -4077,7 +4086,7 @@
 		ShowOwnerRow: false
 	Crate:
 		Duration: 4500
-		TerrainTypes: Clear, Rough, Road, Ore, Beach, Tiberium, BlueTiberium, Water
+		TerrainTypes: Clear, Rough, Road, Ore, Beach, Tiberium, BlueTiberium, BlackTiberium, Water
 	RenderSprites:
 		Palette: effect
 		Image: scrate

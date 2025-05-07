@@ -43,6 +43,7 @@
 		SupportPowerPaletteOrder: 0
 		SelectProducer: false
 		Cost: 1000
+		LaunchSound: timeskip.aud
 
 ^VeilOfWarPower:
 	SpawnActorPowerCA@VeilOfWar:
@@ -1813,6 +1814,31 @@
 		CircleColor: 00BB00AA
 		CircleBorderColor: 007700AA
 		SupportPowerPaletteOrder: 10
+
+^VoidSpikePower:
+	DetonateWeaponPower@VoidSpike:
+		OrderName: voidspike
+		Icon: voidspike
+		IconPalette: chromes
+		Prerequisites: malefic.allegiance
+		Cursor: ability
+		ChargeInterval: 7500
+		Name: Voidspike
+		ActivationDelay: 1
+		Description: \nCreates an void spike at the target location.\n    Gradually transforms nearby resources into Black Tiberium\n    which is devoid of most of its useful properties.\n\nDamages nearby enemy units.
+		LaunchSound: scrinbuild.aud
+		Weapon: VoidSpikeSpawner
+		AirburstAltitude: 0c0
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		EndChargeSpeechNotification: VoidSpikeReady
+		EndChargeTextNotification: Void Spike ready.
+		CameraActor: camera.dummy
+		CameraRemoveDelay: 1
+		DisplayRadarPing: True
+		SupportPowerPaletteOrder: 50
+		TargetCircleRange: 7c511
+		TargetCircleColor: 471f8c90
 
 ^ResourceScanPower:
 	RevealActorsPower@RESOURCESCAN:

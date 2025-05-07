@@ -445,8 +445,6 @@ VEHICLES.SCRIN:
 	GrantConditionOnPrerequisite@CARAPACE:
 		Condition: carapace-upgrade
 		Prerequisites: carapace.upgrade
-	SpawnActorOnDeath@GMUT:
-		Actor: gscr.mutating
 
 S1:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -4598,7 +4596,6 @@ REAC:
 	Inherits@SHAPE: ^2x2Shape
 	Inherits@POWERDRAIN: ^PowerDrainable
 	Inherits@OVERLOAD: ^HackableOverloadable
-	Inherits@DefensePolicyPowerBonus: ^DefensePolicyPowerBonus
 	HitShape:
 		TargetableOffsets: 630,299,0
 	WithSpriteBody:
@@ -4637,7 +4634,6 @@ REA2:
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@POWERDRAIN: ^PowerDrainable
 	Inherits@OVERLOAD: ^HackableOverloadable
-	Inherits@DefensePolicyPowerBonus: ^DefensePolicyPowerBonus
 	HitShape:
 		TargetableOffsets: -355,-1024,0
 	WithSpriteBody:
@@ -5837,6 +5833,76 @@ SCOL.Temp:
 	GrantConditionOnDamage@IONSTORM:
 		RequiresCondition: ioncon-upgrade && !(empdisable || being-warped)
 	-MapEditorData:
+	RepairableBuilding:
+		-RepairCondition:
+	-ChangesHealth@DefensePolicy2:
+
+VSPK:
+	Inherits: ^BasicBuilding
+	-FrozenUnderFog:
+	-FrozenUnderFogUpdatedByGpsRadar:
+	-ShakeOnDeath:
+	RenderSprites:
+		PlayerPalette: playerscrin
+	Explodes:
+		Weapon: SmallBuildingExplode
+		EmptyWeapon: SmallBuildingExplode
+	HiddenUnderFog:
+	Selectable:
+		Bounds: 1280, 1792, 0, -512
+		DecorationBounds: 1280, 2560, 0, -768
+	Health:
+		HP: 30000
+	Tooltip:
+		Name: Voidspike
+	TooltipExtras:
+		Attributes: • Corrupts resources\n• Damages nearby enemies
+		Description: Gradually transforms nearby resources into Black Tiberium,\n  which is devoid of most of its useful properties.
+	Armor:
+		Type: Concrete
+	Targetable:
+		TargetTypes: Ground, Structure, Defense
+	RevealsShroud:
+		MinRange: 6c0
+		Range: 8c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 6c0
+	Building:
+		Dimensions: 1,1
+		Footprint: x
+		TerrainTypes: Clear,Road,Ore,Gems,Tiberium,BlueTiberium,BlackTiberium
+		AllowPlacementOnResources: true
+	WithMakeAnimation:
+	SoundOnDamageTransition:
+		-DamagedSounds:
+		DestroyedSounds: kaboom15.aud
+	ProximityExternalCondition@VoidSpike:
+		Condition: voidspike
+		Range: 8c0
+		ValidRelationships: Enemy, Neutral
+	WithRangeCircleCA@VoidSpike:
+		Type: VoidSpike
+		Range: 8c0
+		ValidRelationships: Ally, Enemy, Neutral
+		UsePlayerColor: true
+		PlayerColorAlpha: 160
+	ConvertsResources:
+		Range: 8c0
+		ConvertFrom: Tiberium, BlueTiberium
+		ConvertTo: BlackTiberium
+		Interval: 15
+		Amount: 1
+	PeriodicExplosion:
+		Weapon: VoidSpike
+	AmbientSoundCA:
+		SoundFiles: grcl-loop1.aud, grcl-loop2.aud
+		Delay: 0
+		Interval: 20
+		VolumeMultiplier: 0.3
+	WithIdleOverlay:
+		Sequence: overlay
+		Palette: scrin
 
 #
 # ---- misc

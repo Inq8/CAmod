@@ -44,9 +44,7 @@ namespace OpenRA.Mods.CA.Traits
 		protected override void Created(Actor self)
 		{
 			base.Created(self);
-
-			seedsResourceModifiers = self.TraitsImplementing<ISeedsResourceIntervalModifier>()
-				.Concat(self.Owner.PlayerActor.TraitsImplementing<ISeedsResourceIntervalModifier>()).ToArray();
+			seedsResourceModifiers = self.TraitsImplementing<ISeedsResourceIntervalModifier>().ToArray();
 		}
 
 		void ITick.Tick(Actor self)
