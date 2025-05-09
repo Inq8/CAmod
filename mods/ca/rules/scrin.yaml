@@ -4558,26 +4558,6 @@ SFAC:
 	GrantConditionOnPrerequisite@LoyalistBonus:
 		Condition: loyalist-allegiance
 		Prerequisites: loyalist.allegiance
-	GrantConditionOnPrerequisite@MaleficBonus:
-		Condition: malefic-allegiance
-		Prerequisites: malefic.allegiance
-	Cloak@NORMAL:
-		InitialDelay: 80
-		CloakDelay: 120
-		UncloakOn: Damage
-		CloakedCondition: hidden
-		CloakSound: stlk-cloak.aud
-		UncloakSound: stlk-uncloak.aud
-		DetectionTypes: Cloak
-		IsPlayerPalette: false
-		RequiresCondition: !cloak-force-disabled && !being-warped && malefic-allegiance
-		PauseOnCondition: invisibility
-	GrantConditionOnDamageState@UNCLOAK:
-		Condition: cloak-force-disabled
-		ValidDamageStates: Critical
-	WithColoredSelectionBox@INVIS:
-		RequiresCondition: invisibility || hidden
-		ColorSource: Player
 	ProximityExternalCondition@IchorBoost:
 		Range: 12c0
 		Condition: ichor-boost
