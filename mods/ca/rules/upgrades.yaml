@@ -77,6 +77,7 @@ bombard.strat:
 		Delay: 60
 	UpdatesCount:
 		Type: StrategyLevel
+	UpdatesBuildOrder:
 
 bombard2.strat:
 	Inherits: bombard.strat
@@ -94,6 +95,7 @@ bombard2.strat:
 		Image: bombard2.strat
 	UpdatesCount:
 		Type: StrategyLevel
+	UpdatesBuildOrder:
 
 seek.strat:
 	Inherits: ^Upgrade
@@ -116,6 +118,7 @@ seek.strat:
 		Delay: 60
 	UpdatesCount:
 		Type: StrategyLevel
+	UpdatesBuildOrder:
 
 seek2.strat:
 	Inherits: seek.strat
@@ -133,6 +136,7 @@ seek2.strat:
 		Image: seek2.strat
 	UpdatesCount:
 		Type: StrategyLevel
+	UpdatesBuildOrder:
 
 hold.strat:
 	Inherits: ^Upgrade
@@ -155,6 +159,7 @@ hold.strat:
 		Delay: 60
 	UpdatesCount:
 		Type: StrategyLevel
+	UpdatesBuildOrder:
 
 hold2.strat:
 	Inherits: hold.strat
@@ -172,6 +177,7 @@ hold2.strat:
 		Image: hold2.strat
 	UpdatesCount:
 		Type: StrategyLevel
+	UpdatesBuildOrder:
 
 vulcan.upgrade:
 	Inherits: ^Upgrade
@@ -582,6 +588,7 @@ wrath.covenant:
 		Cost: 500
 	RenderSprites:
 		Image: wrath.covenant
+	UpdatesBuildOrder:
 
 unity.covenant:
 	Inherits: ^Upgrade
@@ -598,6 +605,7 @@ unity.covenant:
 		Cost: 500
 	RenderSprites:
 		Image: unity.covenant
+	UpdatesBuildOrder:
 
 zeal.covenant:
 	Inherits: ^Upgrade
@@ -614,6 +622,7 @@ zeal.covenant:
 		Cost: 500
 	RenderSprites:
 		Image: zeal.covenant
+	UpdatesBuildOrder:
 
 howi.upgrade:
 	Inherits: ^Upgrade
@@ -887,6 +896,7 @@ infantry.doctrine:
 		Cost: 500
 	RenderSprites:
 		Image: infantry.doctrine
+	UpdatesBuildOrder:
 
 armor.doctrine:
 	Inherits: ^Upgrade
@@ -902,6 +912,7 @@ armor.doctrine:
 		Cost: 500
 	RenderSprites:
 		Image: armor.doctrine
+	UpdatesBuildOrder:
 
 arty.doctrine:
 	Inherits: ^Upgrade
@@ -917,6 +928,7 @@ arty.doctrine:
 		Cost: 500
 	RenderSprites:
 		Image: arty.doctrine
+	UpdatesBuildOrder:
 
 hazmatsoviet.upgrade:
 	Inherits: ^Upgrade
@@ -1264,13 +1276,14 @@ economy.policy:
 	Buildable:
 		BuildPaletteOrder: 1
 		Prerequisites: ~player.allies, influence.level1, !economy.policy, !defense.policy, !development.policy, ~techlevel.medium
-		Description: Pursue economic policy.\n\n• Level 1: -10% cost of Refineries, Harvesters & MCVs\n• Level 2: -20% cost of Refineries, Harvesters & MCVs, Increased Construction Yard build radius\n• Level 3: -30% cost of Refineries, Harvesters & MCVs, +50% Ore Purifier income
+		Description: Pursue economic policy.\n\n• Level 1: -10% cost of Refineries, Harvesters & MCVs\n• Level 2: -20% cost of Refineries, Harvesters & MCVs, +25% Construction Yard build radius\n• Level 3: -30% cost of Refineries, Harvesters & MCVs, +50% Ore Purifier income
 	TooltipExtras:
 		Attributes: (!) Only ONE Policy may be chosen.
 	Valued:
 		Cost: 300
 	RenderSprites:
 		Image: economy.policy
+	UpdatesBuildOrder:
 
 defense.policy:
 	Inherits: ^Upgrade
@@ -1286,6 +1299,7 @@ defense.policy:
 		Cost: 300
 	RenderSprites:
 		Image: defense.policy
+	UpdatesBuildOrder:
 
 development.policy:
 	Inherits: ^Upgrade
@@ -1301,6 +1315,7 @@ development.policy:
 		Cost: 300
 	RenderSprites:
 		Image: development.policy
+	UpdatesBuildOrder:
 
 greece.coalition:
 	Inherits: ^Upgrade
@@ -1319,6 +1334,7 @@ greece.coalition:
 	AnnounceOnCreation:
 		SpeechNotification: CoalitionActive
 		Delay: 40
+	UpdatesBuildOrder:
 
 korea.coalition:
 	Inherits: ^Upgrade
@@ -1337,6 +1353,7 @@ korea.coalition:
 	AnnounceOnCreation:
 		SpeechNotification: CoalitionActive
 		Delay: 40
+	UpdatesBuildOrder:
 
 sweden.coalition:
 	Inherits: ^Upgrade
@@ -1355,6 +1372,7 @@ sweden.coalition:
 	AnnounceOnCreation:
 		SpeechNotification: CoalitionActive
 		Delay: 40
+	UpdatesBuildOrder:
 
 rapc.upgrade:
 	Inherits: ^Upgrade
@@ -1530,6 +1548,7 @@ loyalist.allegiance:
 		Cost: 500
 	RenderSprites:
 		Image: loyalist.allegiance
+	UpdatesBuildOrder:
 
 rebel.allegiance:
 	Inherits: ^Upgrade
@@ -1546,6 +1565,7 @@ rebel.allegiance:
 		Cost: 500
 	RenderSprites:
 		Image: rebel.allegiance
+	UpdatesBuildOrder:
 
 malefic.allegiance:
 	Inherits: ^Upgrade
@@ -1562,6 +1582,7 @@ malefic.allegiance:
 		Cost: 500
 	RenderSprites:
 		Image: malefic.allegiance
+	UpdatesBuildOrder:
 
 hyper.upgrade:
 	Inherits: ^Upgrade
