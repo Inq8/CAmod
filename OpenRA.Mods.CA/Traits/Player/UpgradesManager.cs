@@ -79,13 +79,11 @@ namespace OpenRA.Mods.CA.Traits
 
 		public void UpgradeProviderCreated(string type)
 		{
-			if (unlockedUpgradeTypes.ContainsKey(type))
+			if (IsUnlocked(type))
 				unlockedUpgradeTypes[type]++;
 			else
-				unlockedUpgradeTypes.Add(type, 1);
-
-			if (!IsUnlocked(type))
 			{
+				unlockedUpgradeTypes.Add(type, 1);
 				var upgradeables = self.World.ActorsWithTrait<Upgradeable>().Where(x => x.Trait.Info.Type == type && x.Actor.Owner == self.Owner).ToList();
 
 				foreach (var p in upgradeables)

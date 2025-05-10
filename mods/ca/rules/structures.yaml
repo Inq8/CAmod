@@ -990,7 +990,7 @@ ATEK:
 	Inherits@TEMPINCPOWER: ^TemporalIncursionPower
 	Inherits@TECHLOCKABLE: ^TechLockable
 	Inherits@ProductionOptimizer2: ^ProductionOptimizer2
-	Inherits@EnhancementPolicyDiscount: ^EnhancementPolicyDiscount
+	Inherits@DevelopmentPolicyDiscount: ^DevelopmentPolicyDiscount
 	Selectable:
 		Bounds: 2048, 2048
 	Buildable:
@@ -1104,7 +1104,7 @@ ALHQ:
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 200
-		Prerequisites: vehicles.any, development.level2, ~structures.allies, ~techlevel.high
+		Prerequisites: vehicles.any, influence.level2, ~structures.allies, ~techlevel.high
 		Description: Provides access to coalitions and other advanced technologies.
 		BuildLimit: 1
 	TooltipExtras:
@@ -1384,7 +1384,7 @@ FACT:
 		RequiresCondition: economy-policy2
 	GrantConditionOnPrerequisite@EconomyPolicy2:
 		Condition: economy-policy2
-		Prerequisites: economy.policy, development.level2
+		Prerequisites: economy.policy, influence.level2
 	WithBuildingBib:
 	WithBuildingPlacedAnimation:
 		RequiresCondition: !build-incomplete && !chrono-vortex
@@ -3297,7 +3297,7 @@ AFAC:
 		RequiresCondition: economy-policy2
 	GrantConditionOnPrerequisite@EconomyPolicy2:
 		Condition: economy-policy2
-		Prerequisites: economy.policy, development.level2
+		Prerequisites: economy.policy, influence.level2
 	WithBuildingPlacedAnimation:
 		RequiresCondition: !build-incomplete && !chrono-vortex
 	Power:
@@ -5532,7 +5532,7 @@ OREP:
 		RequiresCondition: !disabled && !being-warped && !tech-locked && economy-policy3
 	GrantConditionOnPrerequisite@EconomyPolicy3:
 		Condition: economy-policy3
-		Prerequisites: economy.policy, development.level3
+		Prerequisites: economy.policy, influence.level3
 	Power:
 		Amount: -100
 	WithDeathAnimation:

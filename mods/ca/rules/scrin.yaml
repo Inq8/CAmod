@@ -2035,7 +2035,7 @@ LCHR:
 LCHR.Orb:
 	Inherits@1: ^1x1Shape
 	Inherits@2: ^SelectableSupportUnit
-	Inherits@GAINSEXPERIENCE: ^GainsExperience	
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@bounty: ^GlobalBounty
 	Inherits@Warpable: ^Warpable
 	Selectable:
@@ -4537,7 +4537,7 @@ SFAC:
 		RequiresCondition: economy-policy2
 	GrantConditionOnPrerequisite@EconomyPolicy2:
 		Condition: economy-policy2
-		Prerequisites: economy.policy, development.level2
+		Prerequisites: economy.policy, influence.level2
 	WithBuildingPlacedAnimation:
 		RequiresCondition: !build-incomplete && !chrono-vortex
 	Power:
@@ -5816,6 +5816,7 @@ SCOL.Temp:
 	RepairableBuilding:
 		-RepairCondition:
 	-ChangesHealth@DefensePolicy2:
+	-UpdatesKillCount:
 
 VSPK:
 	Inherits: ^BasicBuilding
@@ -5832,7 +5833,7 @@ VSPK:
 		Bounds: 1280, 1792, 0, -512
 		DecorationBounds: 1280, 2560, 0, -768
 	Health:
-		HP: 30000
+		HP: 40000
 	Tooltip:
 		Name: Voidspike
 	TooltipExtras:
@@ -5869,9 +5870,9 @@ VSPK:
 		PlayerColorAlpha: 160
 	ConvertsResources:
 		Range: 8c0
-		ConvertFrom: Tiberium, BlueTiberium
+		ConvertFrom: Tiberium, BlueTiberium, Ore, Gems
 		ConvertTo: BlackTiberium
-		Interval: 15
+		Interval: 10
 		Amount: 1
 	PeriodicExplosion:
 		Weapon: VoidSpike
@@ -6309,7 +6310,6 @@ WORMHOLE:
 REBELGATEWAY:
 	Inherits: ^WormholeBase
 	Inherits@SelectableBuilding: ^SelectableBuilding
-	Inherits@Warpable: ^Warpable
 	-Interactable:
 	Tooltip:
 		Name: Gateway
@@ -6336,6 +6336,21 @@ REBELGATEWAY:
 		CrushedSequence: die
 		FallbackSequence: die
 	WithMakeAnimation:
+	LinkedProducerTarget:
+		Mode: Exit
+		Types: InfantrySQ, InfantryMQ, VehicleSQ, VehicleMQ
+		RequiresCondition: !powerdown
+	Sellable:
+		SellSounds: cashturn.aud
+	WithSpriteBody:
+		RequiresCondition: !powerdown
+	WithSpriteBody@Disabled:
+		Name: disabled
+		RequiresCondition: powerdown
+		Sequence: faded
+	ToggleConditionOnOrder:
+		Condition: powerdown
+		OrderName: PowerDown
 
 # infiltrator stolen tech
 

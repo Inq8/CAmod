@@ -140,7 +140,7 @@ Player:
 		Prerequisites: upgrades.producer
 		Condition: upgrades-available
 	GrantConditionOnPrerequisite@PoliciesAvailable:
-		Prerequisites: development.level1
+		Prerequisites: influence.level1
 		Condition: upgrades-available
 	GrantConditionOnPrerequisite@DoctrinesAvailable:
 		Prerequisites: playerxp.level1
@@ -382,16 +382,16 @@ Player:
 		DummyActor: QueueUpdaterDummy
 	CountManager:
 	ProvidesPrerequisitesOnTimeline:
-		Type: AlliedDevelopment
+		Type: AlliedInfluence
 		Factions: allies, england, france, germany, usa
-		MaxTicks: 30000
+		MaxTicks: 24000
 		Prerequisites:
-			20: development.level1
-			60: development.level2
-			100: development.level3
+			25: influence.level1
+			62: influence.level2
+			100: influence.level3
 		PrerequisiteGrantedNotifications:
-			20: DevLevel1
-			60: DevLevel2
+			25: InfluenceLevel1
+			62: InfluenceLevel2
 		DummyActor: QueueUpdaterDummy
 		PrerequisiteGrantedSound: PlayerRankUp
 	ProvidesPrerequisiteOnKillCount@NodCovenants:

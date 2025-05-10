@@ -62,10 +62,10 @@ label-player-level = Current rank: { $level }
 label-player-level-current-xp = Current XP: { $currentXp }
 label-player-level-required-xp = Next rank XP: { $nextLevelXp }
 
-label-player-development-level = Development level: { $level }
-label-player-development-level-time = Next level in { $time }
-label-player-development-coalition = Coalition: { $coalition }
-label-player-development-policy = Policy: { $policy }
+label-player-influence-level = Influence level: { $level }
+label-player-influence-level-time = Next level in { $time }
+label-player-influence-coalition = Coalition: { $coalition }
+label-player-influence-policy = Policy: { $policy }
 
 ## ObserverStatsLogic
 options-observer-stats =

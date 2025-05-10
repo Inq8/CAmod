@@ -32,6 +32,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Sound to play when condition is granted.")]
 		public readonly string ActiveSound = null;
 
+		[Desc("Will apply if the order is queued.")]
+		public readonly bool IncludeQueued = false;
+
 		[Desc("Valid relationships of the attacker for triggering the condition.")]
 		public readonly PlayerRelationship ValidTargetRelationships = PlayerRelationship.Ally | PlayerRelationship.Neutral | PlayerRelationship.Enemy;
 
@@ -50,23 +53,28 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled || IsTraitPaused)
 				return;
 
-			if (!Info.OrderNames.Contains(order.OrderString) && !order.Queued)
-				RevokeCondition(self);
-
-			if (Info.RequiresActorTarget && order.Target.Type != TargetType.Actor && order.Target.Type != TargetType.FrozenActor)
-				return;
-
 			if (Info.OrderNames.Contains(order.OrderString))
-				GrantCondition(self);
+			{
+				if (order.Queued && !Info.IncludeQueued)
+					return;
 
-			Actor targetActor = null;
-			if (order.Target.Type == TargetType.Actor)
-				targetActor = order.Target.Actor;
-			else if (order.Target.Type == TargetType.FrozenActor)
-				targetActor = order.Target.FrozenActor.Actor;
+				if (Info.RequiresActorTarget && order.Target.Type != TargetType.Actor && order.Target.Type != TargetType.FrozenActor)
+					return;
 
-			if (targetActor != null && !Info.ValidTargetRelationships.HasRelationship(targetActor.Owner.RelationshipWith(self.Owner)))
-				return;
+				Actor targetActor = null;
+				if (order.Target.Type == TargetType.Actor)
+					targetActor = order.Target.Actor;
+				else if (order.Target.Type == TargetType.FrozenActor)
+					targetActor = order.Target.FrozenActor.Actor;
+
+				if (targetActor != null && !Info.ValidTargetRelationships.HasRelationship(targetActor.Owner.RelationshipWith(self.Owner)))
+					return;
+
+				if (Info.OrderNames.Contains(order.OrderString))
+					GrantCondition(self);
+			}
+			else if (!order.Queued)
+				RevokeCondition(self);
 		}
 
 		void INotifyBecomingIdle.OnBecomingIdle(Actor self)

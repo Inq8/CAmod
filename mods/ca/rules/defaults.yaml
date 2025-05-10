@@ -252,7 +252,7 @@
 		RequiresCondition: rank-veteran == 2
 		Modifier: 90
 	DamageMultiplier@RANK-ELITE:
-		RequiresCondition: rank-elite && !enhancement-policy3
+		RequiresCondition: rank-elite && !development-policy3
 		Modifier: 75
 	FirepowerMultiplier@RANK-1:
 		RequiresCondition: rank-veteran == 1
@@ -261,7 +261,7 @@
 		RequiresCondition: rank-veteran == 2
 		Modifier: 110
 	FirepowerMultiplier@RANK-ELITE:
-		RequiresCondition: rank-elite && !enhancement-policy3
+		RequiresCondition: rank-elite && !development-policy3
 		Modifier: 130
 	ReloadDelayMultiplier@RANK-1:
 		RequiresCondition: rank-veteran == 1
@@ -270,7 +270,7 @@
 		RequiresCondition: rank-veteran == 2
 		Modifier: 90
 	ReloadDelayMultiplier@RANK-ELITE:
-		RequiresCondition: rank-elite && !enhancement-policy3
+		RequiresCondition: rank-elite && !development-policy3
 		Modifier: 80
 	ChangesHealth@ELITE:
 		PercentageStep: 5
@@ -356,17 +356,17 @@
 	GrantConditionOnPrerequisite@SCRINRANK:
 		Condition: player-scrin
 		Prerequisites: player.scrin
-	GrantConditionOnPrerequisite@EnhancementPolicy3:
-		Condition: enhancement-policy3
-		Prerequisites: enhancement.policy, development.level3
-	DamageMultiplier@EliteEnhancementPolicy3:
-		RequiresCondition: rank-elite && enhancement-policy3
+	GrantConditionOnPrerequisite@DevelopmentPolicy3:
+		Condition: development-policy3
+		Prerequisites: development.policy, influence.level3
+	DamageMultiplier@EliteDevelopmentPolicy3:
+		RequiresCondition: rank-elite && development-policy3
 		Modifier: 60
-	FirepowerMultiplier@EliteEnhancementPolicy3:
-		RequiresCondition: rank-elite && enhancement-policy3
+	FirepowerMultiplier@EliteDevelopmentPolicy3:
+		RequiresCondition: rank-elite && development-policy3
 		Modifier: 140
-	ReloadDelayMultiplier@EliteEnhancementPolicy3:
-		RequiresCondition: rank-elite && enhancement-policy3
+	ReloadDelayMultiplier@EliteDevelopmentPolicy3:
+		RequiresCondition: rank-elite && development-policy3
 		Modifier: 70
 
 ^Berserk:
@@ -2097,24 +2097,24 @@
 ^EconomyPolicyDiscount:
 	ProductionCostMultiplier@EconomyPolicy1:
 		Multiplier: 90
-		Prerequisites: economy.policy, development.level1, !development.level2
+		Prerequisites: economy.policy, influence.level1, !influence.level2
 	ProductionCostMultiplier@EconomyPolicy2:
 		Multiplier: 80
-		Prerequisites: economy.policy, development.level2, !development.level3
+		Prerequisites: economy.policy, influence.level2, !influence.level3
 	ProductionCostMultiplier@EconomyPolicy3:
 		Multiplier: 70
-		Prerequisites: economy.policy, development.level3
+		Prerequisites: economy.policy, influence.level3
 
 ^DefensePolicyDamageReduction:
 	GrantConditionOnPrerequisite@DefensePolicy1:
 		Condition: defense-policy1
-		Prerequisites: defense.policy, development.level1, !development.level2
+		Prerequisites: defense.policy, influence.level1, !influence.level2
 	GrantConditionOnPrerequisite@DefensePolicy2:
 		Condition: defense-policy2
-		Prerequisites: defense.policy, development.level2, !development.level3
+		Prerequisites: defense.policy, influence.level2, !influence.level3
 	GrantConditionOnPrerequisite@DefensePolicy3:
 		Condition: defense-policy3
-		Prerequisites: defense.policy, development.level3
+		Prerequisites: defense.policy, influence.level3
 	DamageMultiplier@DefensePolicy1:
 		Modifier: 91
 		RequiresCondition: defense-policy1
@@ -2134,35 +2134,35 @@
 ^DefensePolicyDamageBonus:
 	GrantConditionOnPrerequisite@DefensePolicy3:
 		Condition: defense-policy3
-		Prerequisites: defense.policy, development.level3
+		Prerequisites: defense.policy, influence.level3
 	FirepowerMultiplier@DefensePolicy3:
 		Modifier: 115
 		RequiresCondition: defense-policy3
 
-^EnhancementPolicyVeterancyBonus:
-	GrantConditionOnPrerequisite@EnhancementPolicy1:
-		Condition: enhancement-policy1
-		Prerequisites: enhancement.policy, development.level1, !development.level2
-	GrantConditionOnPrerequisite@EnhancementPolicy2:
-		Condition: enhancement-policy2
-		Prerequisites: enhancement.policy, development.level2, !development.level3
-	GrantConditionOnPrerequisite@EnhancementPolicy3:
-		Condition: enhancement-policy3
-		Prerequisites: enhancement.policy, development.level3
-	GainsExperienceMultiplier@EnhancementPolicy1:
+^DevelopmentPolicyVeterancyBonus:
+	GrantConditionOnPrerequisite@DevelopmentPolicy1:
+		Condition: development-policy1
+		Prerequisites: development.policy, influence.level1, !influence.level2
+	GrantConditionOnPrerequisite@DevelopmentPolicy2:
+		Condition: development-policy2
+		Prerequisites: development.policy, influence.level2, !influence.level3
+	GrantConditionOnPrerequisite@DevelopmentPolicy3:
+		Condition: development-policy3
+		Prerequisites: development.policy, influence.level3
+	GainsExperienceMultiplier@DevelopmentPolicy1:
 		Modifier: 133
-		RequiresCondition: enhancement-policy1
-	GainsExperienceMultiplier@EnhancementPolicy2:
+		RequiresCondition: development-policy1
+	GainsExperienceMultiplier@DevelopmentPolicy2:
 		Modifier: 166
-		RequiresCondition: enhancement-policy2
-	GainsExperienceMultiplier@EnhancementPolicy3:
+		RequiresCondition: development-policy2
+	GainsExperienceMultiplier@DevelopmentPolicy3:
 		Modifier: 200
-		RequiresCondition: enhancement-policy3
+		RequiresCondition: development-policy3
 
-^EnhancementPolicyDiscount:
-	ProductionCostMultiplier@EnhancementPolicy2:
+^DevelopmentPolicyDiscount:
+	ProductionCostMultiplier@DevelopmentPolicy2:
 		Multiplier: 90
-		Prerequisites: enhancement.policy, development.level2
+		Prerequisites: development.policy, influence.level2
 
 ^SovietT4Boost:
 	ProductionTimeMultiplier@IndustrialPlantBoost:
@@ -2231,7 +2231,7 @@
 	Inherits@Blindable: ^Blindable
 	Inherits@KillZoneTargetable: ^KillZoneTargetable
 	Inherits@Anathema: ^Anathema
-	Inherits@EnhancementPolicyVeterancyBonus: ^EnhancementPolicyVeterancyBonus
+	Inherits@DevelopmentPolicyVeterancyBonus: ^DevelopmentPolicyVeterancyBonus
 	Huntable:
 	EdibleByLeap:
 	OwnerLostAction:
@@ -2435,7 +2435,7 @@
 	Inherits@ReaperSnareable: ^ReaperSnareable
 	Inherits@rflash: ^RedFlash
 	Inherits@IdolOfKane: ^IdolOfKane
-	Inherits@EnhancementPolicyVeterancyBonus: ^EnhancementPolicyVeterancyBonus
+	Inherits@DevelopmentPolicyVeterancyBonus: ^DevelopmentPolicyVeterancyBonus
 	RenderSprites:
 		PlayerPalette: playertd
 	Huntable:
@@ -2848,7 +2848,7 @@
 	Inherits@Blindable: ^Blindable
 	Inherits@KillZoneTargetable: ^KillZoneTargetable
 	Inherits@Anathema: ^Anathema
-	Inherits@EnhancementPolicyVeterancyBonus: ^EnhancementPolicyVeterancyBonus
+	Inherits@DevelopmentPolicyVeterancyBonus: ^DevelopmentPolicyVeterancyBonus
 	Huntable:
 	RenderSprites:
 		PlayerPalette: playernavy
@@ -3091,7 +3091,7 @@
 	Inherits@ionsurge: ^IonSurgable
 	Inherits@atomize: ^Atomizable
 	Inherits@Blindable: ^Blindable
-	Inherits@EnhancementPolicyVeterancyBonus: ^EnhancementPolicyVeterancyBonus
+	Inherits@DevelopmentPolicyVeterancyBonus: ^DevelopmentPolicyVeterancyBonus
 	-GrantConditionOnPrerequisite@MunitionsPlantBoost:
 	-ReloadDelayMultiplier@MunitionsPlantBoost:
 	Huntable:

@@ -17,7 +17,7 @@ using OpenRA.Widgets;
 
 namespace OpenRA.Mods.CA.Widgets
 {
-	public class AlliedDevelopmentMeterWidget : Widget
+	public class AlliedInfluenceMeterWidget : Widget
 	{
 		public readonly Color BarColor = Color.Lime;
 		public readonly Color InactiveBarColor = Color.FromArgb(128, Color.Gray);
@@ -36,7 +36,7 @@ namespace OpenRA.Mods.CA.Widgets
 		public Func<string> GetTooltipText = () => "";
 
 		[ObjectCreator.UseCtor]
-		public AlliedDevelopmentMeterWidget()
+		public AlliedInfluenceMeterWidget()
 		{
 			tooltipContainer = Exts.Lazy(() =>
 				Ui.Root.Get<TooltipContainerWidget>(TooltipContainer));
@@ -115,11 +115,27 @@ namespace OpenRA.Mods.CA.Widgets
 
 					// Choose color based on stripe position
 					Color color;
-
 					if (i < activeStripes)
-						color = thresholdStripes.Contains(i) ? ThresholdColor : BarColor;
+					{
+						var isThresholdStripe = thresholdStripes.Contains(i);
+						if (isThresholdStripe)
+						{
+							// Find which threshold this stripe represents
+							var thresholdIndex = Array.IndexOf(thresholdStripes, i);
+							var actualThreshold = Thresholds[thresholdIndex];
+
+							// Only use threshold color if we've actually reached this threshold
+							color = Percentage >= actualThreshold ? ThresholdColor : BarColor;
+						}
+						else
+						{
+							color = BarColor;
+						}
+					}
 					else
+					{
 						color = thresholdStripes.Contains(i) ? InactiveThresholdColor : InactiveBarColor;
+					}
 
 					Game.Renderer.RgbaColorRenderer.DrawLine(start, end, 1, color);
 				}
