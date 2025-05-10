@@ -1593,6 +1593,14 @@ StormSpikeSpawner:
 		Range: 3
 		ValidTargets: Ground, Water, Trees
 
+VoidSpikeSpawner:
+	ReloadDelay: 1
+	Projectile: InstantExplode
+	Warhead@spawn: SpawnBuilding
+		Buildings: vspk
+		Range: 3
+		ValidTargets: Ground, Water, Trees
+
 IonSurgeSpawner:
 	ReloadDelay: 1
 	Projectile: InstantExplode
@@ -1852,6 +1860,16 @@ TiberiumCoalescenceZap:
 		ExplosionPalette: scrin
 	-Warhead@DRAIN:
 	-Warhead@SLOW:
+
+VoidSpike:
+	ReloadDelay: 15
+	Projectile: InstantHit
+	Warhead@1Dam: SpreadDamage
+		Spread: 8c0
+		Damage: 200
+		Falloff: 100, 50
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+		ValidRelationships: Enemy, Neutral
 
 AtomizerBolts:
 	Report: atomizer-fire1.aud

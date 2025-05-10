@@ -34,9 +34,8 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("List of factions that can affect this count. Leave blank for any faction.")]
 		public readonly string[] Factions = { };
 
-		[NotificationReference("Speech")]
 		[Desc("Speech notification to play when player reaches the required count.")]
-		public readonly string PrerequisiteGrantedNotification = null;
+		public readonly Dictionary<int, string> PrerequisiteGrantedNotifications = null;
 
 		[Desc("Text notification to display when player reaches the required count.")]
 		public readonly string PrerequisiteGrantedTextNotification = null;
@@ -73,7 +72,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		int ticksElapsed;
 		HashSet<int> thresholdsPassed;
-		bool notificationQueued;
+		string notificationQueued;
 		int ticksUntilNotification;
 		bool dummyActorQueued;
 		int ticksUntilSpawnDummyActor;
@@ -154,7 +153,9 @@ namespace OpenRA.Mods.CA.Traits
 
 				if (Info.DummyActor != null)
 				{
-					notificationQueued = true;
+					if (Info.PrerequisiteGrantedNotifications != null && Info.PrerequisiteGrantedNotifications.ContainsKey(percentage))
+						notificationQueued = Info.PrerequisiteGrantedNotifications[percentage];
+
 					dummyActorQueued = true;
 					ticksUntilSpawnDummyActor = 1;
 				}
@@ -178,15 +179,14 @@ namespace OpenRA.Mods.CA.Traits
 				HandlePrerequisiteThreshold(PercentageComplete);
 			}
 
-			if (notificationQueued && --ticksUntilNotification <= 0)
+			if (notificationQueued != null && --ticksUntilNotification <= 0)
 			{
-				if (Info.PrerequisiteGrantedNotification != null)
-					Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", Info.PrerequisiteGrantedNotification, self.Owner.Faction.InternalName);
+				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", notificationQueued, self.Owner.Faction.InternalName);
 
 				if (Info.PrerequisiteGrantedTextNotification != null)
 					TextNotificationsManager.AddTransientLine(Info.PrerequisiteGrantedTextNotification, self.Owner);
 
-				notificationQueued = false;
+				notificationQueued = null;
 				ticksUntilNotification = Info.NotificationDelay;
 			}
 

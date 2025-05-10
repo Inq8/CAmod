@@ -612,7 +612,7 @@ McvRequestTrigger = function(a, conyard)
 end
 
 QueueMcv = function(player, mcvType)
-	Trigger.AfterDelay(1, function()
+	Trigger.AfterDelay(DateTime.Minutes(8), function()
 		local producers = player.GetActorsByTypes(FactoryTypes)
 
 		if #producers > 0 then

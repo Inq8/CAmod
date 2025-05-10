@@ -417,6 +417,10 @@
 				Sequences: bti1,bti2,bti3,bti4,bti5,bti6,bti7,bti8,bti9,bti10,bti11,bti12
 				Palette: bluetiberium
 				Name: Azure Tiberium
+			BlackTiberium:
+				Sequences: bti1,bti2,bti3,bti4,bti5,bti6,bti7,bti8,bti9,bti10,bti11,bti12
+				Palette: blacktiberium
+				Name: Black Tiberium
 
 World:
 	Inherits: ^BaseWorld
@@ -496,6 +500,11 @@ World:
 				TerrainType: BlueTiberium
 				AllowedTerrainTypes: Clear, Road
 				MaxDensity: 8
+			BlackTiberium:
+				ResourceIndex: 5
+				TerrainType: Tiberium
+				AllowedTerrainTypes: Clear, Road
+				MaxDensity: 12
 	ResourceClaimLayer:
 	TintedCellsLayer@RADSTRONG:
 		Color: 00FF00
@@ -718,6 +727,11 @@ EditorWorld:
 				TerrainType: BlueTiberium
 				AllowedTerrainTypes: Clear, Road
 				MaxDensity: 8
+			BlackTiberium:
+				ResourceIndex: 5
+				TerrainType: Tiberium
+				AllowedTerrainTypes: Clear, Road
+				MaxDensity: 12
 	EditorSelectionLayer:
 	LoadWidgetAtGameStart:
 	EditorActionManager:

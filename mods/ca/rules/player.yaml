@@ -7,6 +7,7 @@
 			Gems: 38
 			Tiberium: 25
 			BlueTiberium: 38
+			BlackTiberium: 8
 
 EditorPlayer:
 	Inherits: ^BasePlayer
@@ -20,6 +21,7 @@ Player:
 	Inherits@AssassinSquad: ^AssassinSquadPower
 	Inherits@HackerCell: ^HackerCellPower
 	Inherits@ConfessorCabal: ^ConfessorCabalPower
+	Inherits@VoidSpike: ^VoidSpikePower
 	TechTree:
 	ClassicProductionQueue@Building:
 		Type: BuildingSQ
@@ -387,6 +389,9 @@ Player:
 			20: development.level1
 			60: development.level2
 			100: development.level3
+		PrerequisiteGrantedNotifications:
+			20: DevLevel1
+			60: DevLevel2
 		DummyActor: QueueUpdaterDummy
 		PrerequisiteGrantedSound: PlayerRankUp
 	ProvidesPrerequisiteOnKillCount@NodCovenants:
