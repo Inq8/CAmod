@@ -5816,6 +5816,7 @@ SCOL.Temp:
 	RepairableBuilding:
 		-RepairCondition:
 	-ChangesHealth@DefensePolicy2:
+	-UpdatesKillCount:
 
 VSPK:
 	Inherits: ^BasicBuilding
@@ -5832,7 +5833,7 @@ VSPK:
 		Bounds: 1280, 1792, 0, -512
 		DecorationBounds: 1280, 2560, 0, -768
 	Health:
-		HP: 30000
+		HP: 40000
 	Tooltip:
 		Name: Voidspike
 	TooltipExtras:
@@ -5869,9 +5870,9 @@ VSPK:
 		PlayerColorAlpha: 160
 	ConvertsResources:
 		Range: 8c0
-		ConvertFrom: Tiberium, BlueTiberium
+		ConvertFrom: Tiberium, BlueTiberium, Ore, Gems
 		ConvertTo: BlackTiberium
-		Interval: 15
+		Interval: 10
 		Amount: 1
 	PeriodicExplosion:
 		Weapon: VoidSpike

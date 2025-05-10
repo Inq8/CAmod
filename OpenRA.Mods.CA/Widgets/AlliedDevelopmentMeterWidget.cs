@@ -115,11 +115,27 @@ namespace OpenRA.Mods.CA.Widgets
 
 					// Choose color based on stripe position
 					Color color;
-
 					if (i < activeStripes)
-						color = thresholdStripes.Contains(i) ? ThresholdColor : BarColor;
+					{
+						var isThresholdStripe = thresholdStripes.Contains(i);
+						if (isThresholdStripe)
+						{
+							// Find which threshold this stripe represents
+							var thresholdIndex = Array.IndexOf(thresholdStripes, i);
+							var actualThreshold = Thresholds[thresholdIndex];
+
+							// Only use threshold color if we've actually reached this threshold
+							color = Percentage >= actualThreshold ? ThresholdColor : BarColor;
+						}
+						else
+						{
+							color = BarColor;
+						}
+					}
 					else
+					{
 						color = thresholdStripes.Contains(i) ? InactiveThresholdColor : InactiveBarColor;
+					}
 
 					Game.Renderer.RgbaColorRenderer.DrawLine(start, end, 1, color);
 				}
