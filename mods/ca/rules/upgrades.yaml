@@ -1263,7 +1263,7 @@ economy.policy:
 		Name: Policy: Economy
 	Buildable:
 		BuildPaletteOrder: 1
-		Prerequisites: ~player.allies, development.level1, !economy.policy, !defense.policy, !enhancement.policy, ~techlevel.medium
+		Prerequisites: ~player.allies, influence.level1, !economy.policy, !defense.policy, !development.policy, ~techlevel.medium
 		Description: Pursue economic policy.\n\n• Level 1: -10% cost of Refineries, Harvesters & MCVs\n• Level 2: -20% cost of Refineries, Harvesters & MCVs, Increased Construction Yard build radius\n• Level 3: -30% cost of Refineries, Harvesters & MCVs, +50% Ore Purifier income
 	TooltipExtras:
 		Attributes: (!) Only ONE Policy may be chosen.
@@ -1278,7 +1278,7 @@ defense.policy:
 		Name: Policy: Defense
 	Buildable:
 		BuildPaletteOrder: 1
-		Prerequisites: ~player.allies, development.level1, !economy.policy, !defense.policy, !enhancement.policy, ~techlevel.medium
+		Prerequisites: ~player.allies, influence.level1, !economy.policy, !defense.policy, !development.policy, ~techlevel.medium
 		Description: Pursue defense policy.\n\n• Level 1: +10% building HP\n• Level 2: +20% building HP, +40% building repair rate & +20% defense repair rate\n• Level 3: +30% building HP, +15% defense weapon damage
 	TooltipExtras:
 		Attributes: (!) Only ONE Policy may be chosen.
@@ -1287,20 +1287,20 @@ defense.policy:
 	RenderSprites:
 		Image: defense.policy
 
-enhancement.policy:
+development.policy:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Policy: Enhancement
+		Name: Policy: Development
 	Buildable:
 		BuildPaletteOrder: 1
-		Prerequisites: ~player.allies, development.level1, !economy.policy, !defense.policy, !enhancement.policy, ~techlevel.medium
-		Description: Pursue enhancement policy.\n\n• Level 1: +33% unit experience gain\n• Level 2: +66% unit experience gain, 10% discount on Tech Center & all upgrades\n• Level 3: +100% unit experience gain, rank 3 units gain additional health & damage
+		Prerequisites: ~player.allies, influence.level1, !economy.policy, !defense.policy, !development.policy, ~techlevel.medium
+		Description: Pursue development policy.\n\n• Level 1: +33% unit experience gain\n• Level 2: +66% unit experience gain, 10% discount on Tech Center & all upgrades\n• Level 3: +100% unit experience gain, rank 3 units gain additional health & damage
 	TooltipExtras:
 		Attributes: (!) Only ONE Policy may be chosen.
 	Valued:
 		Cost: 300
 	RenderSprites:
-		Image: enhancement.policy
+		Image: development.policy
 
 greece.coalition:
 	Inherits: ^Upgrade
@@ -1358,7 +1358,7 @@ sweden.coalition:
 
 rapc.upgrade:
 	Inherits: ^Upgrade
-	Inherits@EnhancementPolicyDiscount: ^EnhancementPolicyDiscount
+	Inherits@DevelopmentPolicyDiscount: ^DevelopmentPolicyDiscount
 	Tooltip:
 		Name: Research: Raider APC
 	Buildable:
@@ -1375,7 +1375,7 @@ rapc.upgrade:
 
 optics.upgrade:
 	Inherits: ^Upgrade
-	Inherits@EnhancementPolicyDiscount: ^EnhancementPolicyDiscount
+	Inherits@DevelopmentPolicyDiscount: ^DevelopmentPolicyDiscount
 	Tooltip:
 		Name: Upgrade: Advanced Optics
 	Buildable:
@@ -1391,7 +1391,7 @@ optics.upgrade:
 
 entrench.upgrade:
 	Inherits: ^Upgrade
-	Inherits@EnhancementPolicyDiscount: ^EnhancementPolicyDiscount
+	Inherits@DevelopmentPolicyDiscount: ^DevelopmentPolicyDiscount
 	Tooltip:
 		Name: Upgrade: Entrenchment
 	Buildable:
@@ -1407,7 +1407,7 @@ entrench.upgrade:
 
 cryw.upgrade:
 	Inherits: ^Upgrade
-	Inherits@EnhancementPolicyDiscount: ^EnhancementPolicyDiscount
+	Inherits@DevelopmentPolicyDiscount: ^DevelopmentPolicyDiscount
 	Tooltip:
 		Name: Upgrade: Cryo Warheads
 	Buildable:
@@ -1423,7 +1423,7 @@ cryw.upgrade:
 
 pcan.upgrade:
 	Inherits: ^Upgrade
-	Inherits@EnhancementPolicyDiscount: ^EnhancementPolicyDiscount
+	Inherits@DevelopmentPolicyDiscount: ^DevelopmentPolicyDiscount
 	Tooltip:
 		Name: Research: Prism Cannon
 	Buildable:
@@ -1440,7 +1440,7 @@ pcan.upgrade:
 
 apb.upgrade:
 	Inherits: ^Upgrade
-	Inherits@EnhancementPolicyDiscount: ^EnhancementPolicyDiscount
+	Inherits@DevelopmentPolicyDiscount: ^DevelopmentPolicyDiscount
 	Tooltip:
 		Name: Upgrade: Raufoss Ammo
 	Buildable:
@@ -1457,7 +1457,7 @@ apb.upgrade:
 
 airborne.upgrade:
 	Inherits: ^Upgrade
-	Inherits@EnhancementPolicyDiscount: ^EnhancementPolicyDiscount
+	Inherits@DevelopmentPolicyDiscount: ^DevelopmentPolicyDiscount
 	Tooltip:
 		Name: Upgrade: Advanced Airborne Training
 	Buildable:
@@ -1473,7 +1473,7 @@ airborne.upgrade:
 
 tflx.upgrade:
 	Inherits: ^Upgrade
-	Inherits@EnhancementPolicyDiscount: ^EnhancementPolicyDiscount
+	Inherits@DevelopmentPolicyDiscount: ^DevelopmentPolicyDiscount
 	Tooltip:
 		Name: Upgrade: Temporal Flux
 	Buildable:
@@ -1489,7 +1489,7 @@ tflx.upgrade:
 
 charv.upgrade:
 	Inherits: ^Upgrade
-	Inherits@EnhancementPolicyDiscount: ^EnhancementPolicyDiscount
+	Inherits@DevelopmentPolicyDiscount: ^DevelopmentPolicyDiscount
 	Tooltip:
 		Name: Upgrade: Chrono Miner
 	Buildable:

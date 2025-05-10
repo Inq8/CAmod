@@ -17,7 +17,7 @@ using OpenRA.Widgets;
 
 namespace OpenRA.Mods.CA.Widgets
 {
-	public class AlliedDevelopmentMeterWidget : Widget
+	public class AlliedInfluenceMeterWidget : Widget
 	{
 		public readonly Color BarColor = Color.Lime;
 		public readonly Color InactiveBarColor = Color.FromArgb(128, Color.Gray);
@@ -36,7 +36,7 @@ namespace OpenRA.Mods.CA.Widgets
 		public Func<string> GetTooltipText = () => "";
 
 		[ObjectCreator.UseCtor]
-		public AlliedDevelopmentMeterWidget()
+		public AlliedInfluenceMeterWidget()
 		{
 			tooltipContainer = Exts.Lazy(() =>
 				Ui.Root.Get<TooltipContainerWidget>(TooltipContainer));
