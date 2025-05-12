@@ -129,9 +129,9 @@ namespace OpenRA.Mods.CA.Traits
 	public class MindController : PausableConditionalTrait<MindControllerInfo>, INotifyAttack, INotifyKilled, INotifyActorDisposing, INotifyCreated, IIssueOrder, IResolveOrder, ITick
 	{
 		readonly List<Actor> slaves = new List<Actor>();
-		readonly Stack<int> controllingTokens = new Stack<int>();
+		readonly Queue<int> controllingTokens = new Queue<int>();
 
-		public IEnumerable<Actor> Slaves { get { return slaves; } }
+		public List<Actor> Slaves { get { return slaves; } }
 
 		MindControllerInfo info;
 		int capacity;
@@ -157,31 +157,33 @@ namespace OpenRA.Mods.CA.Traits
 			this.info = info;
 			slaveHistory = new HashSet<Actor>();
 			gainsExperience = self.TraitOrDefault<GainsExperience>();
-			ResetProgress(self);
 			capacityModifiers = self.TraitsImplementing<MindControllerCapacityModifier>();
-			UpdateCapacity(self);
 		}
 
 		protected override void Created(Actor self)
 		{
 			base.Created(self);
 			deployTrait = self.TraitOrDefault<GrantConditionOnDeploy>();
+			ResetProgress(self);
+			UpdateCapacity(self);
 		}
 
-		void StackControllingCondition(Actor self, string condition)
+		void AddControllingCondition(Actor self)
 		{
+			var condition = Info.ControllingCondition;
 			if (string.IsNullOrEmpty(condition))
 				return;
 
-			controllingTokens.Push(self.GrantCondition(condition));
+			controllingTokens.Enqueue(self.GrantCondition(condition));
 		}
 
-		void UnstackControllingCondition(Actor self, string condition)
+		void SubtractControllingCondition(Actor self)
 		{
+			var condition = Info.ControllingCondition;
 			if (string.IsNullOrEmpty(condition))
 				return;
 
-			self.RevokeCondition(controllingTokens.Pop());
+			self.RevokeCondition(controllingTokens.Dequeue());
 		}
 
 		public void UnlinkSlave(Actor self, Actor slave)
@@ -189,7 +191,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (slaves.Contains(slave))
 			{
 				slaves.Remove(slave);
-				UnstackControllingCondition(self, Info.ControllingCondition);
+				SubtractControllingCondition(self);
 				MaxControlledCheck(self);
 			}
 		}
@@ -424,7 +426,7 @@ namespace OpenRA.Mods.CA.Traits
 			}
 
 			slaves.Add(currentTarget.Actor);
-			StackControllingCondition(self, Info.ControllingCondition);
+			AddControllingCondition(self);
 			mindControllable.LinkMaster(currentTarget.Actor, self);
 
 			if (capacity > 0 && Info.ControlAtCapacityBehaviour != ControlAtCapacityBehaviour.BlockNew && slaves.Count() > capacity)
@@ -482,7 +484,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			slaves.Clear();
 			while (controllingTokens.Count > 0)
-				UnstackControllingCondition(self, Info.ControllingCondition);
+				SubtractControllingCondition(self);
 
 			RevokeMaxControlledCondition(self);
 		}

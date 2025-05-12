@@ -126,7 +126,7 @@ namespace OpenRA.Mods.CA.Traits
 				if (ammoPool != null && !ammoPool.TakeAmmo(self, 1))
 					return;
 
-				var slaves = mc.Slaves.ToList();
+				var slaves = mc.Slaves;
 
 				for (int i = 0; i < slaves.Count; i++)
 				{
