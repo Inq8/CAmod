@@ -1815,20 +1815,15 @@
 		RequiresCondition: tnt >= 6
 		Position: CenterCenter
 
-^MindControllableBase:
-	MindControllable:
+^MindControllable:
+	MindControllable@MINDCONTROL:
+		ControlType: MindControl
 		ControlledConditions:
 			mast: mindcontrolled
 			yuri: mindcontrolled
-			hack: hacked
-		RevokingConditions:
-			hack: restoring
-
-^MindControllable:
-	Inherits: ^MindControllableBase
 	Targetable@MINDCONTROL:
 		TargetTypes: MindControllable
-		RequiresCondition: !mindcontrolled && !hacked && !restoring
+		RequiresCondition: !mindcontrolled
 	MindControllableProgressBar@MINDCONTROL:
 		ControlTypes: MindControl
 		Color: ff00ff
@@ -1849,10 +1844,15 @@
 		RequiresCondition: mindcontrolled
 
 ^Hackable:
-	Inherits: ^MindControllableBase
+	MindControllable@HACKABLE:
+		ControlType: Hack
+		ControlledConditions:
+			hack: hacked
+		RevokingConditions:
+			hack: restoring
 	Targetable@HACKABLE:
 		TargetTypes: Hackable
-		RequiresCondition: !mindcontrolled && !hacked
+		RequiresCondition: !hacked
 	MindControllableProgressBar@HACKABLE:
 		ControlTypes: Hack
 		Color: 1ce312
@@ -2338,7 +2338,7 @@
 		Sequence: Vehicle
 	TeleportNetworkTransportable:
 	Targetable@MINDCONTROL:
-		RequiresCondition: !mindcontrolled && !hacked && !restoring && !invulnerability
+		RequiresCondition: !mindcontrolled && !invulnerability
 	GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
 		Condition: repair-cooldown
 		RequiredHealing: 85000

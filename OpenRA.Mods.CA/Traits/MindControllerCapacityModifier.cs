@@ -8,6 +8,7 @@
  */
 #endregion
 
+using System.Collections.Generic;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
 
@@ -25,25 +26,27 @@ namespace OpenRA.Mods.CA.Traits
 	public class MindControllerCapacityModifier : ConditionalTrait<MindControllerCapacityModifierInfo>
 	{
 		readonly MindControllerCapacityModifierInfo info;
-		readonly MindController mindController;
+		readonly IEnumerable<MindController> mindControllers;
 
 		public MindControllerCapacityModifier(Actor self, MindControllerCapacityModifierInfo info)
 			: base(info)
 		{
 			this.info = info;
-			mindController = self.Trait<MindController>();
+			mindControllers = self.TraitsImplementing<MindController>();
 		}
 
 		public int Amount { get { return IsTraitDisabled ? 0 : info.Amount; } }
 
 		protected override void TraitEnabled(Actor self)
 		{
-			mindController.ModifierUpdated();
+			foreach (var mindController in mindControllers)
+				mindController.ModifierUpdated();
 		}
 
 		protected override void TraitDisabled(Actor self)
 		{
-			mindController.ModifierUpdated();
+			foreach (var mindController in mindControllers)
+				mindController.ModifierUpdated();
 		}
 	}
 }

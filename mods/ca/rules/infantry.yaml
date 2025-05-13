@@ -1227,6 +1227,7 @@ HACK:
 		Palette: effect
 		ValidRelationships: Ally, Neutral, Enemy
 	WithMindControlArc@HACK:
+		ControlType: Hack
 		Color: 1ce312
 		Transparency: 65
 		Angle: 60
@@ -3904,6 +3905,7 @@ YURI:
 		TargetTypeTicksToControl:
 			MindControlResistant: 105
 	WithMindControlArc@MC:
+		ControlType: MindControl
 		Color: c71585
 		Transparency: 55
 		Offset: 0,0,511
@@ -3920,6 +3922,7 @@ YURI:
 		InitialDelay: 18
 		RequiresCondition: deployed && !being-warped
 	PeriodicExplosionOnSlaves:
+		ControlType: MindControl
 		Weapon: MindblastSlave
 		InitialDelay: 18
 		RequiresCondition: deployed && !being-warped

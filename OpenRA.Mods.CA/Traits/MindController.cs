@@ -107,6 +107,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Percentage of targets cost gained as XP when successfully mind controlled.")]
 		public readonly int ExperienceFromControl = 0;
 
+		[Desc("If true, the mind controller transfer slaves to transport on entering. If the transport doesn't have a matching MindController trait, control will not be transferred.")]
+		public readonly bool TransferToTransport = true;
+
 		public override object Create(ActorInitializer init) { return new MindController(init.Self, this); }
 
 		public override void RulesetLoaded(Ruleset rules, ActorInfo ai)
@@ -126,12 +129,12 @@ namespace OpenRA.Mods.CA.Traits
 		}
 	}
 
-	public class MindController : PausableConditionalTrait<MindControllerInfo>, INotifyAttack, INotifyKilled, INotifyActorDisposing, INotifyCreated, IIssueOrder, IResolveOrder, ITick
+	public class MindController : PausableConditionalTrait<MindControllerInfo>, INotifyAttack, INotifyKilled, INotifyActorDisposing, INotifyCreated, IIssueOrder, IResolveOrder, ITick, INotifyEnteredCargo, INotifyExitedCargo
 	{
-		readonly List<Actor> slaves = new List<Actor>();
+		readonly List<TraitPair<MindControllable>> slaves = new List<TraitPair<MindControllable>>();
 		readonly Queue<int> controllingTokens = new Queue<int>();
 
-		public List<Actor> Slaves { get { return slaves; } }
+		public List<TraitPair<MindControllable>> Slaves { get { return slaves; } }
 
 		MindControllerInfo info;
 		int capacity;
@@ -188,9 +191,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		public void UnlinkSlave(Actor self, Actor slave)
 		{
-			if (slaves.Contains(slave))
+			if (slaves.Any(s => s.Actor == slave))
 			{
-				slaves.Remove(slave);
+				slaves.Remove(slaves.First(s => s.Actor == slave));
 				SubtractControllingCondition(self);
 				MaxControlledCheck(self);
 			}
@@ -228,7 +231,7 @@ namespace OpenRA.Mods.CA.Traits
 			UpdateProgressBar(self, currentTarget, currentTargetTicksToControl);
 
 			if (controlTicks == currentTargetTicksToControl)
-				AddSlave(self);
+				AddSlave(self, currentTarget.Actor);
 		}
 
 		public void GrantProgressCondition(Actor self)
@@ -285,7 +288,7 @@ namespace OpenRA.Mods.CA.Traits
 				if (order.Target.Type != TargetType.Actor)
 					return;
 
-				order.Target.Actor.Trait<MindControllable>().RevokeMindControl(order.Target.Actor, 0);
+				slaves.First(s => s.Actor == order.Target.Actor).Trait.RevokeMindControl(order.Target.Actor, 0);
 
 				if (Info.SlaveDeployEffect == SlaveDeployEffect.Kill)
 				{
@@ -394,24 +397,24 @@ namespace OpenRA.Mods.CA.Traits
 					return;
 			}
 
-			AddSlave(self);
+			AddSlave(self, currentTarget.Actor);
 		}
 
-		void AddSlave(Actor self)
+		public void AddSlave(Actor self, Actor slaveToAdd, bool transfer = false)
 		{
-			if (IsTraitDisabled || IsTraitPaused)
+			if (!transfer && (IsTraitDisabled || IsTraitPaused))
 				return;
 
 			if (controlTicks < currentTargetTicksToControl)
 				return;
 
-			if (self.Owner.RelationshipWith(currentTarget.Actor.Owner) == PlayerRelationship.Ally)
+			if (!transfer && self.Owner.RelationshipWith(slaveToAdd.Owner) == PlayerRelationship.Ally)
 				return;
 
-			var mindControllable = currentTarget.Actor.TraitOrDefault<MindControllable>();
+			var mindControllable = slaveToAdd.TraitsImplementing<MindControllable>().FirstOrDefault(mc => mc.Info.ControlType == info.ControlType);
 
 			if (mindControllable == null)
-				throw new InvalidOperationException($"`{self.Info.Name}` tried to mindcontrol `{currentTarget.Actor.Info.Name}`, but the latter does not have the necessary trait!");
+				throw new InvalidOperationException($"`{self.Info.Name}` tried to mindcontrol `{slaveToAdd.Info.Name}`, but the latter does not have the necessary trait!");
 
 			if (mindControllable.IsTraitDisabled || mindControllable.IsTraitPaused)
 				return;
@@ -419,40 +422,43 @@ namespace OpenRA.Mods.CA.Traits
 			if (capacity > 0 && Info.ControlAtCapacityBehaviour == ControlAtCapacityBehaviour.BlockNew && slaves.Count() >= capacity)
 				return;
 
-			if (mindControllable.Master != null)
+			if (!transfer && mindControllable.Master != null)
 			{
 				ResetProgress(self);
 				return;
 			}
 
-			slaves.Add(currentTarget.Actor);
+			var traitPair = new TraitPair<MindControllable>(slaveToAdd, mindControllable);
+			slaves.Add(traitPair);
 			AddControllingCondition(self);
-			mindControllable.LinkMaster(currentTarget.Actor, self);
+			mindControllable.LinkMaster(slaveToAdd, self);
 
 			if (capacity > 0 && Info.ControlAtCapacityBehaviour != ControlAtCapacityBehaviour.BlockNew && slaves.Count() > capacity)
 			{
 				var oldestSlave = slaves[0];
-				oldestSlave.Trait<MindControllable>().RevokeMindControl(slaves[0], 0);
+				oldestSlave.Trait.RevokeMindControl(oldestSlave.Actor, 0);
 
 				if (Info.ControlAtCapacityBehaviour == ControlAtCapacityBehaviour.KillOldest)
 				{
 					self.World.AddFrameEndTask(w => {
-						if (!oldestSlave.IsDead)
-							oldestSlave.Kill(oldestSlave, Info.SlaveKillDamageTypes);
+						if (!oldestSlave.Actor.IsDead)
+							oldestSlave.Actor.Kill(oldestSlave.Actor, Info.SlaveKillDamageTypes);
 					});
 				}
 				else if (Info.ControlAtCapacityBehaviour == ControlAtCapacityBehaviour.DetonateOldest)
 				{
-					self.World.AddFrameEndTask(w => DetonateSlave(self, oldestSlave));
+					self.World.AddFrameEndTask(w => DetonateSlave(self, oldestSlave.Actor));
 				}
 			}
 
-			GiveExperience(currentTarget.Actor);
+			if (!transfer)
+				GiveExperience(slaveToAdd);
+
 			ControlComplete(self);
 			MaxControlledCheck(self);
 
 			foreach (var notify in self.TraitsImplementing<INotifyMindControlling>())
-				notify.MindControlling(self, currentTarget.Actor);
+				notify.MindControlling(self, slaveToAdd);
 		}
 
 		void ControlComplete(Actor self)
@@ -476,10 +482,13 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			foreach (var s in slaves)
 			{
-				if (s.IsDead || s.Disposed)
+				if (s.Actor.IsDead || s.Actor.Disposed)
 					continue;
 
-				s.Trait<MindControllable>().RevokeMindControl(s, ticks);
+				if (s.Trait.Master.Value.Actor != self)
+					continue;
+
+				s.Trait.RevokeMindControl(s.Actor, ticks);
 			}
 
 			slaves.Clear();
@@ -491,8 +500,11 @@ namespace OpenRA.Mods.CA.Traits
 
 		public void TransformSlave(Actor self, Actor oldSlave, Actor newSlave)
 		{
-			if (slaves.Contains(oldSlave))
-				slaves[slaves.FindIndex(o => o == oldSlave)] = newSlave;
+			if (slaves.Any(s => s.Actor == oldSlave))
+			{
+				var traitPair = new TraitPair<MindControllable>(newSlave, newSlave.TraitsImplementing<MindControllable>().First(mc => mc.Info.ControlType == info.ControlType));
+				slaves[slaves.FindIndex(o => o.Actor == oldSlave)] = traitPair;
+			}
 		}
 
 		void INotifyKilled.Killed(Actor self, AttackInfo e)
@@ -561,7 +573,7 @@ namespace OpenRA.Mods.CA.Traits
 			var currentSlaveCount = slaves.Count();
 			var numSlavesToRemove = currentSlaveCount - capacity;
 			for (var i = numSlavesToRemove; i > 0; i--)
-				slaves[i].Trait<MindControllable>().RevokeMindControl(slaves[i], 0);
+				slaves[i].Trait.RevokeMindControl(slaves[i].Actor, 0);
 
 			MaxControlledCheck(self);
 		}
@@ -615,7 +627,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (Info.SlaveDeployEffect == SlaveDeployEffect.None)
 				return false;
 
-			return slaves.Contains(a);
+			return slaves.Any(s => s.Actor == a);
 		}
 
 		void DetonateSlave(Actor self, Actor slave)
@@ -639,6 +651,62 @@ namespace OpenRA.Mods.CA.Traits
 			};
 
 			weapon.Impact(pos, args);
+		}
+
+		public void TransferSlaves(Actor self, Actor newMaster)
+		{
+			if (self.IsDead || self.Disposed)
+				return;
+
+			foreach (var s in slaves)
+			{
+				if (s.Actor.IsDead || s.Actor.Disposed)
+					continue;
+
+				s.Trait.LinkMaster(s.Actor, newMaster);
+			}
+		}
+
+		void INotifyEnteredCargo.OnEnteredCargo(Actor self, Actor cargo)
+		{
+			if (Info.TransferToTransport)
+			{
+				//self.World.AddFrameEndTask(w => {
+					var transportMc = cargo.TraitsImplementing<MindController>().FirstOrDefault(mc => mc.Info.ControlType == info.ControlType);
+					if (transportMc != null)
+					{
+						foreach (var s in slaves)
+						{
+							if (s.Actor.IsDead || s.Actor.Disposed)
+								continue;
+
+							TextNotificationsManager.Debug("transferring {0} to {1}", s.Actor, cargo);
+							transportMc.AddSlave(cargo, s.Actor, true);
+						}
+					}
+				//});
+			}
+		}
+
+		void INotifyExitedCargo.OnExitedCargo(Actor self, Actor cargo)
+		{
+			if (Info.TransferToTransport)
+			{
+				//self.World.AddFrameEndTask(w => {
+					var transportMc = cargo.TraitsImplementing<MindController>().FirstOrDefault(mc => mc.Info.ControlType == info.ControlType);
+					if (transportMc != null)
+					{
+						foreach (var s in transportMc.Slaves)
+						{
+							if (s.Actor.IsDead || s.Actor.Disposed)
+								continue;
+
+							TextNotificationsManager.Debug("transferring {0} to {1}", s.Actor, self);
+							AddSlave(self, s.Actor, true);
+						}
+					}
+				//});
+			}
 		}
 	}
 }

@@ -1262,6 +1262,7 @@ MAST:
 		TargetTypeTicksToControl:
 			MindControlResistant: 105
 	WithMindControlArc@MC:
+		ControlType: MindControl
 		Color: c71585
 		Transparency: 55
 		Offset: 0,0,511
@@ -1273,6 +1274,7 @@ MAST:
 		InitialDelay: 10
 		RequiresCondition: deployed && !being-warped
 	PeriodicExplosionOnSlaves:
+		ControlType: MindControl
 		Weapon: MindSparkSpawnerSlave
 		InitialDelay: 18
 		RequiresCondition: deployed && !being-warped
@@ -5235,7 +5237,7 @@ SIGN:
 		RequiresCondition: !being-warped
 	WithDecoration@TechLock:
 		RequiresCondition: tech-locked
-	-MindControllable:
+	-MindControllable@HACKABLE:
 	-Targetable@HACKABLE:
 	-MindControllableProgressBar@HACKABLE:
 	-WithDecoration@HACKED:
