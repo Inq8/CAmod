@@ -52,6 +52,20 @@ DisintegratorBeamAA:
 		Falloff: 100, 50, 14, 0
 		Damage: 3750
 
+DisintegratorIFVBeam:
+	Inherits: DisintegratorBeam
+	ReloadDelay: 25
+	Warhead@1Dam: SpreadDamage
+		Damage: 3400
+
+DisintegratorIFVBeamAA:
+	Inherits: DisintegratorBeamAA
+	ReloadDelay: 25
+	Warhead@1Dam: SpreadDamage
+		Damage: 4500
+	Warhead@smallDamage: SpreadDamage
+		Damage: 6800
+
 EnslaveInfantry:
 	Range: 7c0
 	ReloadDelay: 35

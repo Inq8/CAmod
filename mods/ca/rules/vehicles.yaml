@@ -6122,10 +6122,10 @@ IFV:
 		Name: Sonic Mortar IFV
 		RequiresCondition: mortsonicturr
 	Tooltip@discturr:
-		Name: Intruder IFV
+		Name: Plasma Disc IFV
 		RequiresCondition: discturr
 	Tooltip@sharturr:
-		Name: Ravager IFV
+		Name: Shard IFV
 		RequiresCondition: sharturr
 	Tooltip@ggiturr:
 		Name: GGI IFV
@@ -6139,16 +6139,49 @@ IFV:
 	Tooltip@enfoturr:
 		Name: Enforcer IFV
 		RequiresCondition: enfoturr
+	Tooltip@ztrpturr:
+		Name: Zone Trooper IFV
+		RequiresCondition: ztrpturr
+	Tooltip@zdefturr:
+		Name: Zone Defender IFV
+		RequiresCondition: zdefturr
+	Tooltip@zraiturr:
+		Name: Zone Raider IFV
+		RequiresCondition: zraiturr
+	Tooltip@tigrturr:
+		Name: Tiger Guard IFV
+		RequiresCondition: tigrturr
+	Tooltip@disinturr:
+		Name: Disintegrator IFV
+		RequiresCondition: disinturr
+	Tooltip@implturr:
+		Name: Impaler IFV
+		RequiresCondition: implturr
+	Tooltip@stlkturr:
+		Name: Stalker IFV
+		RequiresCondition: stlkturr
+	Tooltip@hoplturr:
+		Name: Hoplite IFV
+		RequiresCondition: hoplturr
+	Tooltip@cmsrturr:
+		Name: Commissar IFV
+		RequiresCondition: cmsrturr
+	Tooltip@shadturr:
+		Name: Shadow IFV
+		RequiresCondition: shadturr
+	Tooltip@hackturr:
+		Name: Hacker IFV
+		RequiresCondition: hackturr
 	TooltipExtras:
 		Strengths: • Strong vs Aircraft, Heavy Armor
 		Weaknesses: • Weak vs Infantry
 		Attributes: • Weapon/function changes depending on infantry passenger
-		RequiresCondition: !full || samturr || ggiturr || nochange
+		RequiresCondition: !full || samturr || ggiturr || disinturr || tigrturr || nochange
 	TooltipExtras@gunturr:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 		IsStandard: false
-		RequiresCondition: gunturr || enfoturr
+		RequiresCondition: gunturr || enfoturr || shadturr
 	TooltipExtras@fragturr:
 		Strengths: • Strong vs Buildings, Defenses, Light Armor
 		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
@@ -6183,7 +6216,7 @@ IFV:
 		Strengths: • Strong vs Infantry, Light Armor, Buildings
 		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
 		IsStandard: false
-		RequiresCondition: flamturr || chemturr || acolturr
+		RequiresCondition: flamturr || chemturr || hoplturr
 	TooltipExtras@spyturr:
 		Weaknesses: • Unarmed
 		Attributes: • Long vision range\n• Can detect cloaked units
@@ -6203,12 +6236,44 @@ IFV:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Defenses, Buildings\n• Cannot attack Aircraft
 		IsStandard: false
-		RequiresCondition: desoturr
+		RequiresCondition: desoturr || acolturr || sharturr || implturr || stlkturr
 	TooltipExtras@testurr:
-		Strengths: Strong vs Infantry, Heavy Armor, Light Armor
+		Strengths: • Strong vs Infantry, Heavy Armor, Light Armor
 		Weaknesses: • Cannot attack Aircraft
 		IsStandard: false
 		RequiresCondition: testurr
+	TooltipExtras@bhturr:
+		Strengths: • Strong vs Heavy Armor, Light Armor
+		Weaknesses: • Weak vs Buildings, Defenses\n• Cannot attack Aircraft
+		IsStandard: false
+		RequiresCondition: bhturr || enliturr
+	TooltipExtras@ztrpturr:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses
+		Weaknesses: • Weak vs Infantry, Buildings\n• Cannot attack Aircraft
+		IsStandard: false
+		RequiresCondition: ztrpturr || zdefturr
+	TooltipExtras@zraiturr:
+		Strengths: • Strong vs Light Armor, Buildings
+		Weaknesses: • Cannot attack Aircraft
+		IsStandard: false
+		RequiresCondition: zraiturr
+	TooltipExtras@psyturr:
+		Strengths: • Strong vs Infantry, Vehicles
+		Weaknesses: • Cannot deal damage\n• Cannot attack Aircraft
+		Attributes: • Can mind control enemy units\n• Control lost if passenger exits
+		IsStandard: false
+		RequiresCondition: psyturr
+	TooltipExtras@hackturr:
+		Strengths: • Strong vs Defenses, Buildings
+		Weaknesses: • Cannot deal damage\n• Control lost if passenger exits
+		IsStandard: false
+		RequiresCondition: hackturr
+	TooltipExtras@cryoturr:
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Weak vs Buildings, Defenses\n• Cannot attack Aircraft
+		Attributes: • Slows enemy units and makes them take increased damage
+		IsStandard: false
+		RequiresCondition: cryoturr
 	Valued:
 		Cost: 750
 	UpdatesPlayerStatistics:
@@ -6251,7 +6316,7 @@ IFV:
 		Weapon: M60mgIFV
 		MuzzleSequence: muzzle
 		LocalOffset: 250,0,150
-		RequiresCondition: gunturr
+		RequiresCondition: gunturr || shadturr || cmsrturr
 		CasingWeapon: BrassDebris
 		CasingSpawnLocalOffset: 0,-125,200
 		CasingTargetOffset: 0, -500, 0
@@ -6384,7 +6449,7 @@ IFV:
 		RequiresCondition: discturr
 	Armament@Shard:
 		Weapon: ShardWalkerShards
-		LocalOffset: 250,0,300
+		LocalOffset: 300,0,300
 		RequiresCondition: sharturr
 	Armament@ChemMortar:
 		Weapon: ChemicalMortar
@@ -6410,10 +6475,61 @@ IFV:
 		LocalOffset: 385,0,300
 		RequiresCondition: enfoturr
 		MuzzleSequence: muzzle
+	Armament@Disintegrator:
+		Weapon: DisintegratorIFVBeam
+		LocalOffset: 350,0,250
+		RequiresCondition: disinturr
+	Armament@DisintegratorAA:
+		Weapon: DisintegratorIFVBeamAA
+		LocalOffset: 350,0,250
+		RequiresCondition: disinturr
+	Armament@Hoplite:
+		Weapon: HopliteIFVGun
+		LocalOffset: 100,0,300
+		RequiresCondition: hoplturr
+	Armament@ZoneTrooper:
+		Weapon: ZoneTrooperRailgun
+		LocalOffset: 350,0,250
+		RequiresCondition: ztrpturr
+	Armament@ZoneDefender:
+		Weapon: ZoneDefenderGun
+		LocalOffset: 350,0,250
+		RequiresCondition: zdefturr
+	Armament@ZoneRaider:
+		Weapon: ZoneRaiderGrenade
+		LocalOffset: 350,0,250
+		RequiresCondition: zraiturr
+	Armament@TigerGuard:
+		Weapon: TigerGuardMissile
+		LocalOffset: 192,100,256, 192,-100,256
+		RequiresCondition: tigrturr
+	Armament@TigerGuardMissileAA:
+		Weapon: TigerGuardMissileAA
+		LocalOffset: 192,100,256, 192,-100,256
+		RequiresCondition: tigrturr
+	Armament@Impaler:
+		Weapon: ImpalerSpike
+		LocalOffset: 450,0,250
+		RequiresCondition: implturr
+	Armament@Stalker:
+		Weapon: StalkerShards
+		LocalOffset: 350,0,300
+		RequiresCondition: stlkturr
 	Armament@MC:
 		Weapon: PsychicBeamBATF
 		LocalOffset: 200,0,300
 		RequiresCondition: psyturr
+	Armament@Spy:
+		Weapon: TroopCrawlerDummyWeapon
+		TargetRelationships: Ally
+		ForceTargetRelationships: None
+		Cursor: guard
+		OutsideRangeCursor: guard
+		RequiresCondition: spyturr
+	AutoTargetPriority@Unarmed:
+		ValidTargets: Infantry, Vehicle
+		ValidRelationships: Ally
+		RequiresCondition: spyturr
 	AttackSoundsCA@REPAIRSOUND:
 		Sounds: repair11.aud
 		RequiresCondition: mechturr
@@ -6429,76 +6545,102 @@ IFV:
 		RequiresCondition: testurr
 	WithIdleOverlay@PSY:
 		Sequence: psy
-		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: psyturr
 		Palette: scrin
+	WithIdleOverlay@HACK:
+		Sequence: hack
+		RequiresCondition: hackturr
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped || blinded
-		RequiresCondition: !spyturr
 	WithMuzzleOverlay:
 	WithSpriteTurret@defaultturr:
 		RequiresCondition: !full || nochange
 		Sequence: turret
 	WithSpriteTurret@samturr:
 		RequiresCondition: samturr
-		Sequence: turret2
+		Sequence: turret-rocket
 	WithSpriteTurret@ggiturr:
 		RequiresCondition: ggiturr
-		Sequence: turret18
+		Sequence: turret-ggi
 	WithSpriteTurret@gun:
-		RequiresCondition: gunturr
-		Sequence: turret3
+		RequiresCondition: gunturr || shadturr || cmsrturr
+		Sequence: turret-mg
 	WithSpriteTurret@frg:
-		Sequence: turret4
+		Sequence: turret-frag
 		RequiresCondition: fragturr
 	WithSpriteTurret@fla:
-		Sequence: turret5
+		Sequence: turret-flame
 		RequiresCondition: flamturr
 	WithSpriteTurret@che:
-		Sequence: turret6
+		Sequence: turret-chem
 		RequiresCondition: chemturr
 	WithSpriteTurret@las:
-		Sequence: turret7
+		Sequence: turret-laser
 		RequiresCondition: acolturr
 	WithSpriteTurret@des:
-		Sequence: turret8
+		Sequence: turret-rad
 		RequiresCondition: desoturr
 	WithSpriteTurret@com:
-		Sequence: turret9
+		Sequence: turret-cmdo
 		RequiresCondition: commturr || sealturr
 	WithSpriteTurret@mech:
-		Sequence: turret10
+		Sequence: turret-mech
 		RequiresCondition: mechturr
 	WithSpriteTurret@snip:
-		Sequence: turret11
+		Sequence: turret-snip
 		RequiresCondition: snipturr
 	WithSpriteTurret@enli:
-		Sequence: turret12
+		Sequence: turret-enli
 		RequiresCondition: enliturr
 	WithSpriteTurret@rmbc:
-		Sequence: turret13
+		Sequence: turret-rmbc
 		RequiresCondition: rmbcturr
 	WithSpriteTurret@bh:
-		Sequence: turret14
+		Sequence: turret-bh
 		RequiresCondition: bhturr
 	WithSpriteTurret@disc:
-		Sequence: turret15
+		Sequence: turret-pdisc
 		RequiresCondition: discturr
 	WithSpriteTurret@shar:
-		Sequence: turret16
+		Sequence: turret-shard
 		RequiresCondition: sharturr
 	WithSpriteTurret@mort:
-		Sequence: turret17
+		Sequence: turret-mort
 		RequiresCondition: mortchemturr || mortcryoturr || mortsonicturr
 	WithSpriteTurret@cryo:
-		Sequence: turret19
+		Sequence: turret-cryo
 		RequiresCondition: cryoturr
 	WithSpriteTurret@enfo:
-		Sequence: turret20
+		Sequence: turret-enfo
 		RequiresCondition: enfoturr
 	WithSpriteTurret@engi:
-		Sequence: turret21
+		Sequence: turret-engi
 		RequiresCondition: engturr
+	WithSpriteTurret@ztrp:
+		Sequence: turret-ztrp
+		RequiresCondition: ztrpturr
+	WithSpriteTurret@zdef:
+		Sequence: turret-zdef
+		RequiresCondition: zdefturr
+	WithSpriteTurret@zrai:
+		Sequence: turret-zrai
+		RequiresCondition: zraiturr
+	WithSpriteTurret@tigr:
+		Sequence: turret-tigr
+		RequiresCondition: tigrturr
+	WithSpriteTurret@hopl:
+		Sequence: turret-hopl
+		RequiresCondition: hoplturr
+	WithSpriteTurret@impl:
+		Sequence: turret-impl
+		RequiresCondition: implturr
+	WithSpriteTurret@stlk:
+		Sequence: turret-stlk
+		RequiresCondition: stlkturr
+		Palette: playerscrin
+	WithSpriteTurret@disin:
+		Sequence: turret-disin
+		RequiresCondition: disinturr
 	Cargo:
 		Types: Infantry, Hacker
 		MaxWeight: 1
@@ -6506,22 +6648,24 @@ IFV:
 		LoadedCondition: full
 		PassengerConditions:
 			e1: gunturr
-			e2: fragturr
-			e3: samturr
-			e4: flamturr
 			n1: gunturr
 			n1c: gunturr
+			s1: gunturr
+			e2: fragturr
 			n2: fragturr
+			e3: samturr
 			n3: samturr
 			n3c: samturr
+			e4: flamturr
+			n4: flamturr
 			u3: ggiturr
 			u3r2: ggiturr
-			n4: flamturr
 			n5: chemturr
 			e8: desoturr
 			deso: desoturr
 			e6: engturr
 			n6: engturr
+			s6: engturr
 			mech: mechturr
 			cmec: mechturr
 			arti: mechturr
@@ -6530,49 +6674,49 @@ IFV:
 			mort.sonic: mortsonicturr
 			shok: testurr
 			ttrp: testurr
-			ztrp: samturr
-			zrai: samturr
-			zdef: samturr
+			ztrp: ztrpturr
+			zrai: zraiturr
+			zdef: zdefturr
 			rmbo: commturr
 			bori: commturr
 			e7: commturr
 			cryt: cryoturr
 			enfo: enfoturr
-			hopl: enfoturr
-			tigr: samturr
+			hopl: hoplturr
+			tigr: tigrturr
 			seal: sealturr
-			sab: spyturr
 			snip: snipturr
 			assa: snipturr
-			spy: spyturr
-			thf: spyturr
-			hack: spyturr
-			medi: medturr
+			hack: hackturr
 			acol: acolturr
 			tplr: acolturr
 			cscr: acolturr
 			enli: enliturr
 			rmbc: rmbcturr
-			s1: gunturr
 			s2: sharturr
 			evis: sharturr
-			impl: sharturr
-			stlk: sharturr
-			s3: samturr
+			impl: implturr
+			stlk: stlkturr
+			s3: disinturr
 			s4: discturr
-			s6: engturr
+			mrdr: discturr
+			medi: medturr
 			smedi: medturr
 			mast: psyturr
 			yuri: psyturr
-			brst: ivanturr
-			dog: spyturr
-			tdog: ivanturr
-			cdog: spyturr
-			ivan: ivanturr
 			bh: bhturr
-			shad: spyturr
-			cmsr: spyturr
+			shad: shadturr
+			sab: shadturr
+			cmsr: cmsrturr
+			brst: ivanturr
+			tdog: ivanturr
+			ivan: ivanturr
+			spy: spyturr
+			thf: spyturr
+			dog: spyturr
+			cdog: spyturr
 			wchr: spyturr
+			conf: nochange
 			tecn: nochange
 			c1: nochange
 			c2: nochange
@@ -6636,33 +6780,36 @@ IFV:
 	Targetable@MindControlImmune:
 		TargetTypes: MindControlImmune
 		RequiresCondition: commturr || psyturr
+	GrantCondition@IsAA:
+		Condition: is-aa
+		RequiresCondition: !full || samturr || ggiturr || disinturr || tigrturr || nochange
 	AutoTarget:
 		AttackAnythingCondition: stance-attackanything
 		ScanRadius: 6
 	AutoTargetPriority@DEFAULTAA:
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Defense
 		InvalidTargets: NoAutoTarget, WaterStructure, AntiAirDefense
-		RequiresCondition: (!stance-attackanything && !assault-move) && (!full || samturr || ggiturr)
+		RequiresCondition: (!stance-attackanything && !assault-move) && is-aa
 	AutoTargetPriority@ATTACKANYTHINGAA:
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Structure, Defense
 		InvalidTargets: NoAutoTarget
-		RequiresCondition: (stance-attackanything || assault-move) && (!full || samturr || ggiturr)
+		RequiresCondition: (stance-attackanything || assault-move) && is-aa
 	AutoTargetPriority@DEFAULTAAPRIO:
-		RequiresCondition: (!stance-attackanything && !assault-move) && (!full || samturr || ggiturr)
+		RequiresCondition: (!stance-attackanything && !assault-move) && is-aa
 		ValidTargets: Air, AirSmall
 		InvalidTargets: NoAutoTarget
 		Priority: 10
 	AutoTargetPriority@ATTACKANYTHINGAAPRIO:
-		RequiresCondition: (!stance-attackanything && !assault-move) && (!full || samturr || ggiturr)
+		RequiresCondition: (!stance-attackanything && !assault-move) && is-aa
 		ValidTargets: Air, AirSmall
 		InvalidTargets: NoAutoTarget
 		Priority: 10
 	AutoTargetPriority@DEFAULTG:
-		RequiresCondition: !stance-attackanything && !assault-move && full && !(samturr || ggiturr)
+		RequiresCondition: !stance-attackanything && !assault-move && !is-aa
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
 		InvalidTargets: NoAutoTarget, WaterStructure, AntiAirDefense
 	AutoTargetPriority@ATTACKANYTHINGG:
-		RequiresCondition: (stance-attackanything || assault-move) && full && !(samturr || ggiturr)
+		RequiresCondition: (stance-attackanything || assault-move) && !is-aa
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Structure, Defense, Mine
 		InvalidTargets: NoAutoTarget
 	AttackMove:
@@ -6705,10 +6852,16 @@ IFV:
 		Palette: effect
 		Position: TopLeft
 		ValidRelationships: Ally, Enemy, Neutral
+	WithDecoration@CMSR:
+		RequiresCondition: cmsrturr
+		Image: pips
+		Sequence: pip-cmsr
+		Position: TopLeft
+		ValidRelationships: Ally, Enemy, Neutral
 	KeepsDistance:
 		RequiresCondition: engturr || mechturr || medturr || spyturr
 	DamageTypeDamageMultiplier@A2GPROTECTION:
-		RequiresCondition: !full || samturr || ggiturr
+		RequiresCondition: is-aa
 	AmbientSoundCA@BlackHand:
 		SoundFiles: flamer-loop1.aud
 		InitialSound: flamer-start1.aud
@@ -6756,6 +6909,35 @@ IFV:
 	GrantConditionOnDamage@InterruptCapture:
 		Condition: capture-interrupt
 		Duration: 1
+	Cloak@NORMAL:
+		InitialDelay: 75
+		CloakDelay: 76
+		CloakSound: trans1.aud
+		CloakedCondition: hidden
+		UncloakSound: appear1md.aud
+		Palette: cloak
+		IsPlayerPalette: false
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
+		RequiresCondition: (shadturr || stlkturr) && !cloak-force-disabled && !being-warped && !empdisable && !driver-dead && !parachute
+		PauseOnCondition: invisibility
+	Cloak@CRATE-CLOAK:
+		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
+	GrantConditionOnDamageState@UNCLOAK:
+		Condition: cloak-force-disabled
+		ValidDamageStates: Critical
+	ProximityExternalCondition@Inspiration:
+		Range: 5c0
+		Condition: cmsr-inspiration
+		ValidRelationships: Ally
+		AffectsParent: true
+		RequiresCondition: cmsrturr
+	WithRadiatingCircle:
+		EndRadius: 5c0
+		Interval: 75
+		Duration: 50
+		ValidRelationships: Ally
+		AlwaysShowMaxRange: true
+		RequiresCondition: cmsrturr
 
 IFV.AI:
 	Inherits: ^Tank
@@ -6848,10 +7030,10 @@ IFV.AI:
 		RequiresCondition: defturr
 	WithSpriteTurret@gun:
 		RequiresCondition: gunturr
-		Sequence: turret3
+		Sequence: turret-mg
 	WithSpriteTurret@samturr:
 		RequiresCondition: samturr
-		Sequence: turret2
+		Sequence: turret-rocket
 	RenderSprites:
 		Image: ifv
 	GrantRandomCondition:
@@ -6916,7 +7098,6 @@ RECK:
 		Prerequisites: radarorrepair, ~vehicles.reck
 	Tooltip:
 		Name: Reckoner
-		RequiresCondition: !full || nochange
 	Tooltip@gunturr:
 		Name: MG Reckoner
 	Tooltip@fragturr:
@@ -6962,15 +7143,37 @@ RECK:
 	Tooltip@mortsonicturr:
 		Name: Sonic Mortar Reckoner
 	Tooltip@discturr:
-		Name: Intruder Reckoner
+		Name: Plasma Disc Reckoner
 	Tooltip@sharturr:
-		Name: Ravager Reckoner
+		Name: Shard Reckoner
 	Tooltip@ggiturr:
 		Name: GGI Reckoner
 	Tooltip@psyturr:
 		Name: Psychic Reckoner
 	Tooltip@enfoturr:
 		Name: Enforcer Reckoner
+	Tooltip@ztrpturr:
+		Name: Zone Trooper Reckoner
+	Tooltip@zdefturr:
+		Name: Zone Defender Reckoner
+	Tooltip@zraiturr:
+		Name: Zone Raider Reckoner
+	Tooltip@tigrturr:
+		Name: Tiger Guard Reckoner
+	Tooltip@disinturr:
+		Name: Disintegrator Reckoner
+	Tooltip@implturr:
+		Name: Impaler Reckoner
+	Tooltip@stlkturr:
+		Name: Stalker Reckoner
+	Tooltip@hoplturr:
+		Name: Hoplite Reckoner
+	Tooltip@cmsrturr:
+		Name: Commissar Reckoner
+	Tooltip@shadturr:
+		Name: Shadow Reckoner
+	Tooltip@hackturr:
+		Name: Hacker Reckoner
 	ReloadDelayMultiplier@CyborgElite:
 		RequiresCondition: rmbcturr
 		Modifier: 80
@@ -7716,7 +7919,7 @@ V3:
 TNKD:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMovePrioritizeVehicles
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
@@ -7777,20 +7980,6 @@ TNKD:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1194, 1194
-	AutoTargetPriority@DEFAULT:
-		ValidTargets: Infantry, Water, Underwater, Defense
-	AutoTargetPriority@ATTACKANYTHING:
-		ValidTargets: Infantry, Water, Underwater, Structure, Defense, Mine
-	AutoTargetPriority@TANKDEFAULT:
-		RequiresCondition: !stance-attackanything && !assault-move
-		ValidTargets: Vehicle
-		InvalidTargets: NoAutoTarget
-		Priority: 10
-	AutoTargetPriority@TANKATTACKANYTHING:
-		RequiresCondition: (stance-attackanything || assault-move)
-		ValidTargets: Vehicle
-		InvalidTargets: NoAutoTarget
-		Priority: 10
 
 TNKD.TEMP:
 	Inherits: TNKD

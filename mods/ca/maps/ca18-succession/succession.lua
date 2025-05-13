@@ -17,9 +17,9 @@ Squads = {
 	Main1 = {
 		InitTime = 0 - DateTime.Minutes(10),
 		Delay = {
-			easy = DateTime.Minutes(5),
-			normal = DateTime.Minutes(3),
-			hard = DateTime.Minutes(1),
+			easy = DateTime.Minutes(3),
+			normal = DateTime.Minutes(1) + DateTime.Seconds(30),
+			hard = DateTime.Seconds(1),
 		},
 		AttackValuePerSecond = {
 			easy = { Min = 12, Max = 25, RampDuration = DateTime.Minutes(16) },
@@ -193,6 +193,29 @@ WorldLoaded = function()
 		Notification("Reinforcements have arrived.")
 		Reinforcements.Reinforce(USSR, { "kiro" }, { KirovSpawn1.Location, KirovRally1.Location })
 		Reinforcements.Reinforce(USSR, { "kiro" }, { KirovSpawn2.Location, KirovRally2.Location })
+	end)
+
+	Trigger.AfterDelay(1, function()
+		for k, v in pairs({ InitSquad1, InitSquad2, InitSquad3, InitSquad4, InitSquad5 }) do
+			local actors = Map.ActorsInCircle(v.CenterPosition, WDist.New(8 * 1024));
+			local attackers = Utils.Where(actors, function(a)
+				return a.Owner == Nod and a.HasProperty("Hunt")
+			end)
+
+			if (k > 3 and Difficulty == "easy") or (k > 4 and Difficulty == "normal") then
+				Utils.Do(attackers, function(a)
+					a.Destroy()
+				end)
+			else
+				Trigger.AfterDelay(DateTime.Seconds(k * 8), function()
+					Utils.Do(attackers, function(a)
+						if not a.IsDead then
+							a.Hunt()
+						end
+					end)
+				end)
+			end
+		end
 	end)
 end
 
