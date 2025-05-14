@@ -9,6 +9,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Linq;
 using OpenRA.Graphics;
 using OpenRA.Mods.CA.Traits;
 using OpenRA.Primitives;
@@ -18,6 +19,10 @@ namespace OpenRA.Mods.CA.Graphics
 {
 	public class WithMindControlArcInfo : TraitInfo
 	{
+		[FieldLoader.Require]
+		[Desc("Named type of mind control. Must match that of MindController.")]
+		public readonly string ControlType = null;
+
 		[Desc("Color of the arc")]
 		public readonly Color Color = Color.Red;
 
@@ -56,8 +61,8 @@ namespace OpenRA.Mods.CA.Graphics
 
 		void INotifyCreated.Created(Actor self)
 		{
-			mindController = self.TraitOrDefault<MindController>();
-			mindControllable = self.TraitOrDefault<MindControllable>();
+			mindController = self.TraitsImplementing<MindController>().FirstOrDefault(mc => mc.Info.ControlType == info.ControlType);
+			mindControllable = self.TraitsImplementing<MindControllable>().FirstOrDefault(mc => mc.Info.ControlType == info.ControlType);
 		}
 
 		void INotifySelected.Selected(Actor a) { }
@@ -71,16 +76,16 @@ namespace OpenRA.Mods.CA.Graphics
 				foreach (var s in mindController.Slaves)
 					yield return new ArcRenderable(
 						self.CenterPosition + info.Offset,
-						s.CenterPosition + info.Offset,
+						s.Actor.CenterPosition + info.Offset,
 						info.ZOffset, info.Angle, color, info.Width, info.QuantizedSegments);
 				yield break;
 			}
 
-			if (mindControllable == null || mindControllable.Master == null || !mindControllable.Master.IsInWorld)
+			if (mindControllable == null || mindControllable.Master == null || !mindControllable.Master.Value.Actor.IsInWorld)
 				yield break;
 
 			yield return new ArcRenderable(
-				mindControllable.Master.CenterPosition + info.Offset,
+				mindControllable.Master.Value.Actor.CenterPosition + info.Offset,
 				self.CenterPosition + info.Offset,
 				info.ZOffset, info.Angle, color, info.Width, info.QuantizedSegments);
 		}

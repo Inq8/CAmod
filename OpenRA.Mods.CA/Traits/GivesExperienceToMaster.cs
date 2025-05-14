@@ -75,8 +75,8 @@ namespace OpenRA.Mods.CA.Traits
 			experienceModifiers = experienceModifiers.Append((int)(((float)e.Damage.Value / (float)health.MaxHP) * 100));
 
 			foreach (var mindControllable in mindControllables)
-				if (mindControllable.Master != null)
-					GiveExperience(mindControllable.Master, exp, experienceModifiers);
+				if (mindControllable.Master.HasValue)
+					GiveExperience(mindControllable.Master.Value.Actor, exp, experienceModifiers);
 
 			foreach (var SpawnerSlaveBase in spawnerSlaveBases)
 				if (SpawnerSlaveBase.Master != null)

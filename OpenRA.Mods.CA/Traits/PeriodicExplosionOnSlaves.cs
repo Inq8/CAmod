@@ -30,6 +30,10 @@ namespace OpenRA.Mods.CA.Traits
 		+ "Reload/BurstDelays are used as explosion intervals.")]
 	public class PeriodicExplosionOnSlavesInfo : ConditionalTraitInfo, IRulesetLoaded, Requires<MindControllerInfo>
 	{
+		[FieldLoader.Require]
+		[Desc("Named type of mind control. Must match that of MindController.")]
+		public readonly string ControlType = null;
+
 		[WeaponReference]
 		[FieldLoader.Require]
 		[Desc("Weapon to be used for explosion.")]
@@ -78,6 +82,7 @@ namespace OpenRA.Mods.CA.Traits
 		readonly PeriodicExplosionOnSlavesInfo info;
 		readonly WeaponInfo weapon;
 		readonly BodyOrientation body;
+		readonly MindController mc;
 
 		int fireDelay;
 		int burst;
@@ -93,6 +98,7 @@ namespace OpenRA.Mods.CA.Traits
 			weapon = info.WeaponInfo;
 			burst = weapon.Burst;
 			body = self.TraitOrDefault<BodyOrientation>();
+			mc = self.TraitsImplementing<MindController>().First(mc => mc.Info.ControlType == info.ControlType);
 		}
 
 		protected override void Created(Actor self)
@@ -119,7 +125,6 @@ namespace OpenRA.Mods.CA.Traits
 
 			if (--fireDelay + Info.InitialDelay < 0)
 			{
-				var mc = self.Trait<MindController>();
 				if (!mc.Slaves.Any())
 					return;
 
@@ -144,16 +149,16 @@ namespace OpenRA.Mods.CA.Traits
 						DamageModifiers = self.TraitsImplementing<IFirepowerModifier>().Select(a => a.GetFirepowerModifier()).ToArray(),
 						Source = self.CenterPosition,
 						SourceActor = self,
-						WeaponTarget = Target.FromPos(slave.CenterPosition + localoffset)
+						WeaponTarget = Target.FromPos(slave.Actor.CenterPosition + localoffset)
 					};
 
-					weapon.Impact(Target.FromPos(slave.CenterPosition + localoffset), args);
+					weapon.Impact(Target.FromPos(slave.Actor.CenterPosition + localoffset), args);
 
 					if (weapon.Report != null && weapon.Report.Length > 0)
-						Game.Sound.Play(SoundType.World, weapon.Report.Random(self.World.SharedRandom), slave.CenterPosition);
+						Game.Sound.Play(SoundType.World, weapon.Report.Random(self.World.SharedRandom), slave.Actor.CenterPosition);
 
 					if (burst == weapon.Burst && weapon.StartBurstReport != null && weapon.StartBurstReport.Length > 0)
-						Game.Sound.Play(SoundType.World, weapon.StartBurstReport.Random(self.World.SharedRandom), slave.CenterPosition);
+						Game.Sound.Play(SoundType.World, weapon.StartBurstReport.Random(self.World.SharedRandom), slave.Actor.CenterPosition);
 
 					if (--burst > 0)
 					{
@@ -173,7 +178,7 @@ namespace OpenRA.Mods.CA.Traits
 						{
 							ScheduleDelayedAction(weapon.AfterFireSoundDelay, () =>
 							{
-								Game.Sound.Play(SoundType.World, weapon.AfterFireSound.Random(self.World.SharedRandom), slave.CenterPosition);
+								Game.Sound.Play(SoundType.World, weapon.AfterFireSound.Random(self.World.SharedRandom), slave.Actor.CenterPosition);
 							});
 						}
 					}
@@ -184,9 +189,9 @@ namespace OpenRA.Mods.CA.Traits
 						fireDelay = initialFireDelay;
 					}
 
-					var targetTypes = slaves[i].GetEnabledTargetTypes();
+					var targetTypes = slaves[i].Actor.GetEnabledTargetTypes();
 					if (Info.KillSlaveTypes.Overlaps(targetTypes))
-						slaves[i].Kill(slaves[i], Info.KillSlavesDamageTypes);
+						slaves[i].Actor.Kill(slaves[i].Actor, Info.KillSlavesDamageTypes);
 				}
 
 				if (Info.PostExplosionAction == ExplodedSlaveAction.Unlink || Info.PostExplosionAction == ExplodedSlaveAction.Neutralize)
@@ -196,8 +201,8 @@ namespace OpenRA.Mods.CA.Traits
 				{
 					for (int i = 0; i < slaves.Count; i++)
 					{
-						slaves[i].ChangeOwner(self.World.Players.First(p => p.InternalName == "Neutral"));
-						slaves[i].CancelActivity();
+						slaves[i].Actor.ChangeOwner(self.World.Players.First(p => p.InternalName == "Neutral"));
+						slaves[i].Actor.CancelActivity();
 					}
 				}
 			}

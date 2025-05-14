@@ -107,9 +107,7 @@ Player:
 
 ^Defense:
 	Inherits@INDESTRUCTIBLE: ^IndestructibleWhenNeutral
-	Targetable@MINDCONTROL:
-		TargetTypes: MindControllable
-		RequiresCondition: !mindcontrolled
+	Inherits@MindControllable: ^MindControllable
 
 ^AffectedByDriverKill:
 	GrantConditionIfOwnerIsNeutral:

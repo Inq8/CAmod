@@ -21,6 +21,10 @@ namespace OpenRA.Mods.CA.Traits
 	[Desc("This actor can be mind controlled by other actors.")]
 	public class MindControllableInfo : PausableConditionalTraitInfo
 	{
+		[FieldLoader.Require]
+		[Desc("Named type of mind control. Must match that of MindController.")]
+		public readonly string ControlType = null;
+
 		[Desc("The sound played when the mindcontrol is revoked.")]
 		public readonly string[] RevokeControlSounds = { };
 
@@ -61,7 +65,7 @@ namespace OpenRA.Mods.CA.Traits
 		int revokeTicks;
 		bool revoking = false;
 
-		public Actor Master { get; private set; }
+		public TraitPair<MindController>? Master { get; private set; }
 
 		public MindControllable(Actor self, MindControllableInfo info)
 			: base(info)
@@ -69,28 +73,28 @@ namespace OpenRA.Mods.CA.Traits
 			this.info = info;
 		}
 
-		public void LinkMaster(Actor self, Actor master)
+		public void LinkMaster(Actor self, Actor masterActor)
 		{
 			self.CancelActivity();
 
-			HandleCargo(self, master);
+			HandleCargo(self, masterActor);
 
 			if (Master == null)
 				creatorOwner = self.Owner;
 
 			controlChanging = true;
-			self.ChangeOwner(master.Owner);
+			if (self.Owner != masterActor.Owner)
+				self.ChangeOwner(masterActor.Owner);
 
-			UnlinkMaster(self, Master);
-			Master = master;
+			UnlinkMaster(self);
+			var mindController = masterActor.TraitsImplementing<MindController>().Single(mc => mc.Info.ControlType == info.ControlType);
+			Master = new TraitPair<MindController>(masterActor, mindController);
 
-			var mindController = Master.Trait<MindController>();
+			if (controlledToken == Actor.InvalidConditionToken && Info.ControlledConditions.ContainsKey(masterActor.Info.Name))
+				controlledToken = self.GrantCondition(Info.ControlledConditions[masterActor.Info.Name]);
 
-			if (controlledToken == Actor.InvalidConditionToken && Info.ControlledConditions.ContainsKey(Master.Info.Name))
-				controlledToken = self.GrantCondition(Info.ControlledConditions[Master.Info.Name]);
-
-			if (master.Owner == creatorOwner)
-				UnlinkMaster(self, master);
+			if (masterActor.Owner == creatorOwner)
+				UnlinkMaster(self);
 
 			self.World.AddFrameEndTask(w =>
 			{
@@ -99,28 +103,30 @@ namespace OpenRA.Mods.CA.Traits
 			});
 
 			foreach (var notify in self.TraitsImplementing<INotifyMindControlled>())
-				notify.MindControlled(self, master);
+				notify.MindControlled(self, masterActor);
 		}
 
-		void UnlinkMaster(Actor self, Actor master)
+		void UnlinkMaster(Actor self)
 		{
-			if (master == null)
+			if (Master == null)
 				return;
 
-			HandleCargo(self, master);
+			var master = Master.Value;
+
+			HandleCargo(self, master.Actor);
 
 			self.World.AddFrameEndTask(_ =>
 			{
-				if (master.IsDead || master.Disposed)
+				if (master.Actor.IsDead || master.Actor.Disposed)
 					return;
 
-				master.Trait<MindController>().UnlinkSlave(master, self);
+				master.Trait.UnlinkSlave(master.Actor, self);
 			});
 
 			Master = null;
 
 			foreach (var notify in self.TraitsImplementing<INotifyMindControlled>())
-				notify.Released(self, master);
+				notify.Released(self, master.Actor);
 		}
 
 		public void RevokeMindControl(Actor self, int ticks)
@@ -130,8 +136,9 @@ namespace OpenRA.Mods.CA.Traits
 			if (Master == null)
 				return;
 
-			var masterName = Master.Info.Name;
-			UnlinkMaster(self, Master);
+			var masterActor = Master.Value.Actor;
+			var masterName = masterActor.Info.Name;
+			UnlinkMaster(self);
 
 			if (ticks == 0)
 				RevokeComplete(self);
@@ -203,20 +210,26 @@ namespace OpenRA.Mods.CA.Traits
 
 		void INotifyKilled.Killed(Actor self, AttackInfo e)
 		{
-			UnlinkMaster(self, Master);
+			if (Master == null)
+				return;
+
+			UnlinkMaster(self);
 		}
 
 		void INotifyActorDisposing.Disposing(Actor self)
 		{
-			UnlinkMaster(self, Master);
+			if (Master == null)
+				return;
+
+			UnlinkMaster(self);
 		}
 
 		void INotifyOwnerChanged.OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)
 		{
-			if (controlChanging)
+			if (Master == null || controlChanging)
 				return;
 
-			UnlinkMaster(self, Master);
+			UnlinkMaster(self);
 
 			if (controlledToken != Actor.InvalidConditionToken)
 				controlledToken = self.RevokeCondition(controlledToken);
@@ -241,12 +254,12 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			if (Master != null)
 			{
-				var mc = self.TraitOrDefault<MindControllable>();
+				var mc = self.TraitsImplementing<MindControllable>().FirstOrDefault(m => m.Info.ControlType == Info.ControlType);
 				if (mc != null)
 				{
 					mc.TransferMindControl(this);
 					if (oldSelf != null)
-						Master.Trait<MindController>().TransformSlave(Master, oldSelf, self);
+						Master.Value.Trait.TransformSlave(Master.Value.Actor, oldSelf, self);
 				}
 				else
 					self.ChangeOwner(creatorOwner);

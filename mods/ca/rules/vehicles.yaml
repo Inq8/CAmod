@@ -4553,9 +4553,11 @@ MDRN.Attached:
 		StartIfBelow: 100
 		DamageCooldown: 50
 	-Targetable@HACKABLE:
+	-MindControllable@HACKABLE:
 	-MindControllableProgressBar@HACKABLE:
 	-WithDecoration@HACKED:
 	-WithDecoration@RESTORING:
+	-PowerMultiplier@HACKED:
 	-ChronoshiftableCA:
 	-HealthCapDamageMultiplier@CHRONO:
 
@@ -6515,10 +6517,6 @@ IFV:
 		Weapon: StalkerShards
 		LocalOffset: 350,0,300
 		RequiresCondition: stlkturr
-	Armament@MC:
-		Weapon: PsychicBeamBATF
-		LocalOffset: 200,0,300
-		RequiresCondition: psyturr
 	Armament@Spy:
 		Weapon: TroopCrawlerDummyWeapon
 		TargetRelationships: Ally
@@ -6906,9 +6904,14 @@ IFV:
 		CaptureDelay: 300
 		ConsumedByCapture: false
 		RequiresCondition: !capture-interrupt && engturr
+	CaptureManager:
+		CapturingCondition: capturing
 	GrantConditionOnDamage@InterruptCapture:
 		Condition: capture-interrupt
 		Duration: 1
+	GrantCondition@CaptureDecloak:
+		Condition: cloak-force-disabled
+		RequiresCondition: capturing
 	Cloak@NORMAL:
 		InitialDelay: 75
 		CloakDelay: 76
@@ -6918,7 +6921,7 @@ IFV:
 		Palette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
-		RequiresCondition: (shadturr || stlkturr) && !cloak-force-disabled && !being-warped && !empdisable && !driver-dead && !parachute
+		RequiresCondition: (shadturr || stlkturr) && !cloak-force-disabled && !capturing && !being-warped && !empdisable && !driver-dead && !parachute
 		PauseOnCondition: invisibility
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
@@ -6938,6 +6941,59 @@ IFV:
 		ValidRelationships: Ally
 		AlwaysShowMaxRange: true
 		RequiresCondition: cmsrturr
+	Armament@Psi:
+		Weapon: EnslaveInfantry
+		LocalOffset: 200,0,300
+		RequiresCondition: psyturr
+	Armament@PsiVehicle:
+		Weapon: EnslaveVehicle
+		LocalOffset: 200,0,300
+		RequiresCondition: psyturr
+	MindController@MC:
+		ControlType: MindControl
+		Capacity: 3
+		ControlSounds: iyurat1a.aud
+		ReleaseSounds: yuri-release.aud
+		ControlAtCapacityBehaviour: DetonateOldest
+		SlaveDeployEffect: Detonate
+		SlaveDetonateWeapon: DetonateSlave
+		SlaveKillDamageTypes: BulletDeath
+		ExperienceFromControl: 100
+		TargetTypeTicksToControl:
+			MindControlResistant: 105
+		RequiresCondition: psyturr
+	WithMindControlArc@MC:
+		ControlType: MindControl
+		Color: c71585
+		Transparency: 55
+		Offset: 0,0,300
+		Angle: 32
+		Width: 116
+	Armament@Hack:
+		Weapon: Hack
+		TargetRelationships: Enemy, Neutral
+		RequiresCondition: hackturr
+		LocalOffset: 200,0,300
+	MindController@HACK:
+		ControlType: Hack
+		ArmamentNames: primary
+		Capacity: -1
+		TicksToControl: 150
+		TicksToRevoke: 25
+		InitSounds: hacker-init.aud
+		InitSoundControllerOnly: true
+		ControlSounds: hacker-hacked.aud
+		AutoUndeploy: true
+		TargetTypeTicksToControl:
+			Structure: 300
+		RequiresCondition: hackturr
+	WithMindControlArc@HACK:
+		ControlType: Hack
+		Color: 1ce312
+		Transparency: 65
+		Angle: 60
+		Width: 86
+		Offset: 0,0,300
 
 IFV.AI:
 	Inherits: ^Tank
