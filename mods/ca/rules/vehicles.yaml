@@ -6221,7 +6221,7 @@ IFV:
 		RequiresCondition: flamturr || chemturr || hoplturr
 	TooltipExtras@spyturr:
 		Weaknesses: • Unarmed
-		Attributes: • Long vision range\n• Can detect cloaked units
+		Attributes: • Long vision range\n• Can detect cloaked units\n• Marks vehicle/structure targets\n    revealing them and increasing the damage they take
 		IsStandard: false
 		RequiresCondition: spyturr
 	TooltipExtras@rmbcturr:
@@ -6294,7 +6294,7 @@ IFV:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	RevealsShroud@SPY:
-		Range: 10c0
+		Range: 9c0
 		MinRange: 4c0
 		RevealGeneratedShroud: False
 		RequiresCondition: spyturr
@@ -6518,15 +6518,11 @@ IFV:
 		LocalOffset: 350,0,300
 		RequiresCondition: stlkturr
 	Armament@Spy:
-		Weapon: TroopCrawlerDummyWeapon
-		TargetRelationships: Ally
-		ForceTargetRelationships: None
-		Cursor: guard
-		OutsideRangeCursor: guard
+		Weapon: SpyIFV
 		RequiresCondition: spyturr
-	AutoTargetPriority@Unarmed:
-		ValidTargets: Infantry, Vehicle
-		ValidRelationships: Ally
+		LocalOffset: 0,0,100
+	AutoTargetPriority@Spy:
+		ValidTargets: Vehicle, Structure
 		RequiresCondition: spyturr
 	AttackSoundsCA@REPAIRSOUND:
 		Sounds: repair11.aud
@@ -6536,7 +6532,7 @@ IFV:
 		Sequence: spinner
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: spyturr
-		Offset: 0,0,200
+		Offset: 20,0,200
 	WithIdleOverlay@TESLA:
 		Sequence: tesla
 		PauseOnCondition: empdisable || being-warped
@@ -6783,7 +6779,6 @@ IFV:
 		RequiresCondition: !full || samturr || ggiturr || disinturr || tigrturr || nochange
 	AutoTarget:
 		AttackAnythingCondition: stance-attackanything
-		ScanRadius: 6
 	AutoTargetPriority@DEFAULTAA:
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Defense
 		InvalidTargets: NoAutoTarget, WaterStructure, AntiAirDefense
@@ -6857,7 +6852,7 @@ IFV:
 		Position: TopLeft
 		ValidRelationships: Ally, Enemy, Neutral
 	KeepsDistance:
-		RequiresCondition: engturr || mechturr || medturr || spyturr
+		RequiresCondition: engturr || mechturr || medturr
 	DamageTypeDamageMultiplier@A2GPROTECTION:
 		RequiresCondition: is-aa
 	AmbientSoundCA@BlackHand:

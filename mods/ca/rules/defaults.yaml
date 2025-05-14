@@ -1990,6 +1990,21 @@
 		Limit: 1
 		AttachedCondition: observer-attached
 
+^SpyIFVTargetable:
+	ExternalCondition@SpyIFVTarget:
+		Condition: spy-ifv-target
+	DamageMultiplier@SpyIFVTarget:
+		Modifier: 133
+		RequiresCondition: spy-ifv-target
+	WithDecoration@SpyIFVTarget:
+		Image: spyifvtarget
+		Sequence: idle
+		Palette: effect
+		Position: Top
+		ValidRelationships: Ally, Enemy, Neutral
+		Margin: 0, 8
+		RequiresCondition: spy-ifv-target
+
 ^HoverTrail:
 	LeavesTrails:
 		Image: twake
@@ -2227,6 +2242,7 @@
 	Inherits@minidrone: ^MiniDroneAttachable
 	Inherits@WatcherParasite: ^WatcherParasiteAttachable
 	Inherits@ShadowBeacon: ^ShadowBeaconAttachable
+	Inherits@SpyIFVTargetable: ^SpyIFVTargetable
 	Inherits@lchrheal: ^LeecherHealable
 	Inherits@Blindable: ^Blindable
 	Inherits@KillZoneTargetable: ^KillZoneTargetable
@@ -2845,6 +2861,7 @@
 	Inherits@TNTPlantable: ^TNTPlantable
 	Inherits@minidrone: ^MiniDroneAttachable
 	Inherits@WatcherParasite: ^WatcherParasiteAttachable
+	Inherits@SpyIFVTargetable: ^SpyIFVTargetable
 	Inherits@Blindable: ^Blindable
 	Inherits@KillZoneTargetable: ^KillZoneTargetable
 	Inherits@Anathema: ^Anathema
@@ -3291,6 +3308,7 @@
 	Inherits@gflash: ^GreenFlash
 	Inherits@HACKABLE: ^Hackable
 	Inherits@WatcherParasite: ^WatcherParasiteAttachable
+	Inherits@SpyIFVTargetable: ^SpyIFVTargetable
 	Inherits@DefensePolicyDamageReduction: ^DefensePolicyDamageReduction
 	WithPalettedOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability && !forceshield

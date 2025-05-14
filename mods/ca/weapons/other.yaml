@@ -3736,3 +3736,23 @@ TroopCrawlerDummyWeapon:
 	ValidTargets: Infantry
 	ReloadDelay: 25
 	Projectile: InstantHit
+
+SpyIFV:
+	Range: 15c0
+	ReloadDelay: 25
+	ValidTargets: Vehicle, Ship, Structure
+	Report: spyifvbeep.aud
+	Projectile: ArcLaserZap
+		Color: 55555560
+		Angle: 70
+		Width: 70
+		Duration: 20
+		HitAnim: empty
+	Warhead@1Dam: RevealShroud
+		Duration: 26
+		Radius: 6c0
+	Warhead@Cond: GrantExternalConditionCA
+		Range: 0c42
+		Duration: 26
+		Condition: spy-ifv-target
+		ValidTargets: Vehicle, Ship, Structure
