@@ -6174,6 +6174,12 @@ IFV:
 	Tooltip@hackturr:
 		Name: Hacker IFV
 		RequiresCondition: hackturr
+	Tooltip@confturr:
+		Name: Confessor IFV
+		RequiresCondition: confturr
+	Tooltip@reapturr:
+		Name: Reaper IFV
+		RequiresCondition: reapturr
 	TooltipExtras:
 		Strengths: • Strong vs Aircraft, Heavy Armor
 		Weaknesses: • Weak vs Infantry
@@ -6276,6 +6282,17 @@ IFV:
 		Attributes: • Slows enemy units and makes them take increased damage
 		IsStandard: false
 		RequiresCondition: cryoturr
+	TooltipExtras@reapturr:
+		Strengths: • Strong vs Infantry, Light Armor, Buildings
+		Weaknesses: • Weak vs Heavy Armor
+		IsStandard: false
+		RequiresCondition: reapturr
+	TooltipExtras@confturr:
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor, Defenses, Buildings\n• Cannot attack Aircraft
+		Attributes: • Explosion causes units to attack indiscriminately
+		IsStandard: false
+		RequiresCondition: confturr
 	Valued:
 		Cost: 750
 	UpdatesPlayerStatistics:
@@ -6517,6 +6534,14 @@ IFV:
 		Weapon: StalkerShards
 		LocalOffset: 350,0,300
 		RequiresCondition: stlkturr
+	Armament@Confessor:
+		Weapon: HallucinationGrenade
+		LocalOffset: 300,0,400
+		RequiresCondition: confturr
+	Armament@Reaper:
+		Weapon: CyborgReaperMissiles
+		LocalOffset: 192,100,256, 192,-100,256
+		RequiresCondition: reapturr
 	Armament@Spy:
 		Weapon: SpyIFV
 		RequiresCondition: spyturr
@@ -6635,6 +6660,12 @@ IFV:
 	WithSpriteTurret@disin:
 		Sequence: turret-disin
 		RequiresCondition: disinturr
+	WithSpriteTurret@conf:
+		Sequence: turret-conf
+		RequiresCondition: confturr
+	WithSpriteTurret@reap:
+		Sequence: turret-reap
+		RequiresCondition: reapturr
 	Cargo:
 		Types: Infantry, Hacker
 		MaxWeight: 1
@@ -6682,9 +6713,11 @@ IFV:
 			snip: snipturr
 			assa: snipturr
 			hack: hackturr
+			conf: confturr
 			acol: acolturr
 			tplr: acolturr
 			cscr: acolturr
+			reap: reapturr
 			enli: enliturr
 			rmbc: rmbcturr
 			s2: sharturr
@@ -6710,7 +6743,6 @@ IFV:
 			dog: spyturr
 			cdog: spyturr
 			wchr: spyturr
-			conf: nochange
 			tecn: nochange
 			c1: nochange
 			c2: nochange
@@ -6768,6 +6800,9 @@ IFV:
 		RequiresCondition: !being-warped && !full
 	Capturable@DRIVER_DEAD:
 		RequiresCondition: driver-dead && !full
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
+		RequiresCondition: confturr || psyturr || commturr || hackturr
 	Targetable@MindControlResistant:
 		TargetTypes: MindControlResistant
 		RequiresCondition: full
@@ -6776,7 +6811,7 @@ IFV:
 		RequiresCondition: commturr || psyturr
 	GrantCondition@IsAA:
 		Condition: is-aa
-		RequiresCondition: !full || samturr || ggiturr || disinturr || tigrturr || nochange
+		RequiresCondition: !full || samturr || ggiturr || disinturr || tigrturr || reapturr || nochange
 	AutoTarget:
 		AttackAnythingCondition: stance-attackanything
 	AutoTargetPriority@DEFAULTAA:
@@ -7229,6 +7264,10 @@ RECK:
 		Name: Shadow Reckoner
 	Tooltip@hackturr:
 		Name: Hacker Reckoner
+	Tooltip@confturr:
+		Name: Confessor Reckoner
+	Tooltip@reapturr:
+		Name: Reaper Reckoner
 	ReloadDelayMultiplier@CyborgElite:
 		RequiresCondition: rmbcturr
 		Modifier: 80

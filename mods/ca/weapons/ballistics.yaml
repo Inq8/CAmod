@@ -904,6 +904,21 @@ SonicMortar:
 	Warhead@4Eff: CreateEffect
 		Explosions: med_explosion
 
+HallucinationGrenade:
+	Inherits: ^Mortar
+	Projectile: Bullet
+		ContrailStartColor: dc289c
+		ContrailStartColorAlpha: 128
+	Warhead@3Eff: CreateEffect
+		Explosions: chaosexplosion
+		ExplosionPalette: caneon
+		ImpactSounds: firebl3.aud
+	Warhead@Cloud1: SpawnActor
+		Actors: chaoscloud2
+		Range: 2
+		ValidTargets: Ground, Water
+		ImpactActors: false
+
 DepthCharge:
 	Inherits: ^Artillery
 	-Report:
