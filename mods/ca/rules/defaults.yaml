@@ -1818,9 +1818,7 @@
 ^MindControllable:
 	MindControllable@MINDCONTROL:
 		ControlType: MindControl
-		ControlledConditions:
-			mast: mindcontrolled
-			yuri: mindcontrolled
+		ControlledCondition: mindcontrolled
 	Targetable@MINDCONTROL:
 		TargetTypes: MindControllable
 		RequiresCondition: !mindcontrolled
@@ -1846,10 +1844,8 @@
 ^Hackable:
 	MindControllable@HACKABLE:
 		ControlType: Hack
-		ControlledConditions:
-			hack: hacked
-		RevokingConditions:
-			hack: restoring
+		ControlledCondition: hacked
+		RevokingCondition: restoring
 	Targetable@HACKABLE:
 		TargetTypes: Hackable
 		RequiresCondition: !hacked

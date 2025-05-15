@@ -671,20 +671,17 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			if (Info.TransferToTransport)
 			{
-				//self.World.AddFrameEndTask(w => {
-					var transportMc = cargo.TraitsImplementing<MindController>().FirstOrDefault(mc => mc.Info.ControlType == info.ControlType);
-					if (transportMc != null)
+				var transportMc = cargo.TraitsImplementing<MindController>().FirstOrDefault(mc => mc.Info.ControlType == info.ControlType);
+				if (transportMc != null)
+				{
+					foreach (var s in slaves)
 					{
-						foreach (var s in slaves)
-						{
-							if (s.Actor.IsDead || s.Actor.Disposed)
-								continue;
+						if (s.Actor.IsDead || s.Actor.Disposed)
+							continue;
 
-							TextNotificationsManager.Debug("transferring {0} to {1}", s.Actor, cargo);
-							transportMc.AddSlave(cargo, s.Actor, true);
-						}
+						transportMc.AddSlave(cargo, s.Actor, true);
 					}
-				//});
+				}
 			}
 		}
 
@@ -692,20 +689,17 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			if (Info.TransferToTransport)
 			{
-				//self.World.AddFrameEndTask(w => {
-					var transportMc = cargo.TraitsImplementing<MindController>().FirstOrDefault(mc => mc.Info.ControlType == info.ControlType);
-					if (transportMc != null)
+				var transportMc = cargo.TraitsImplementing<MindController>().FirstOrDefault(mc => mc.Info.ControlType == info.ControlType);
+				if (transportMc != null)
+				{
+					foreach (var s in transportMc.Slaves)
 					{
-						foreach (var s in transportMc.Slaves)
-						{
-							if (s.Actor.IsDead || s.Actor.Disposed)
-								continue;
+						if (s.Actor.IsDead || s.Actor.Disposed)
+							continue;
 
-							TextNotificationsManager.Debug("transferring {0} to {1}", s.Actor, self);
-							AddSlave(self, s.Actor, true);
-						}
+						AddSlave(self, s.Actor, true);
 					}
-				//});
+				}
 			}
 		}
 	}

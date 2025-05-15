@@ -8,7 +8,6 @@
  */
 #endregion
 
-using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Traits;
@@ -34,21 +33,15 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("What happens to cargo on being mind controlled, and when control is lost.")]
 		public readonly CargoBehaviour CargoBehaviour = CargoBehaviour.DoNothing;
 
-		[ActorReference(dictionaryReference: LintDictionaryReference.Keys)]
+		[GrantedConditionReference]
 		[Desc("Condition to grant when under mindcontrol.",
 			"A dictionary of [actor id]: [condition].")]
-		public readonly Dictionary<string, string> ControlledConditions = new Dictionary<string, string>();
+		public readonly string ControlledCondition = null;
 
-		[ActorReference(dictionaryReference: LintDictionaryReference.Keys)]
+		[GrantedConditionReference]
 		[Desc("Condition to grant when revoking mindcontrol.",
 			"A dictionary of [actor id]: [condition].")]
-		public readonly Dictionary<string, string> RevokingConditions = new Dictionary<string, string>();
-
-		[GrantedConditionReference]
-		public IEnumerable<string> LinterControlledConditions { get { return ControlledConditions.Values; } }
-
-		[GrantedConditionReference]
-		public IEnumerable<string> LinterRevokingConditions { get { return RevokingConditions.Values; } }
+		public readonly string RevokingCondition = null;
 
 		public override object Create(ActorInitializer init) { return new MindControllable(init.Self, this); }
 	}
@@ -90,8 +83,8 @@ namespace OpenRA.Mods.CA.Traits
 			var mindController = masterActor.TraitsImplementing<MindController>().Single(mc => mc.Info.ControlType == info.ControlType);
 			Master = new TraitPair<MindController>(masterActor, mindController);
 
-			if (controlledToken == Actor.InvalidConditionToken && Info.ControlledConditions.ContainsKey(masterActor.Info.Name))
-				controlledToken = self.GrantCondition(Info.ControlledConditions[masterActor.Info.Name]);
+			if (controlledToken == Actor.InvalidConditionToken && Info.ControlledCondition != null)
+				controlledToken = self.GrantCondition(Info.ControlledCondition);
 
 			if (masterActor.Owner == creatorOwner)
 				UnlinkMaster(self);
@@ -136,8 +129,6 @@ namespace OpenRA.Mods.CA.Traits
 			if (Master == null)
 				return;
 
-			var masterActor = Master.Value.Actor;
-			var masterName = masterActor.Info.Name;
 			UnlinkMaster(self);
 
 			if (ticks == 0)
@@ -147,8 +138,8 @@ namespace OpenRA.Mods.CA.Traits
 				revokeTicks = ticks;
 				revoking = true;
 
-				if (revokingToken == Actor.InvalidConditionToken && Info.RevokingConditions.ContainsKey(masterName))
-					revokingToken = self.GrantCondition(Info.RevokingConditions[masterName]);
+				if (revokingToken == Actor.InvalidConditionToken && Info.RevokingCondition != null)
+					revokingToken = self.GrantCondition(Info.RevokingCondition);
 			}
 		}
 
