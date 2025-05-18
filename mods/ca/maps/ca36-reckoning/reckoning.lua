@@ -445,6 +445,7 @@ end
 
 SendNextExterminator = function()
 	if NextExterminatorIndex <= ExterminatorAttackCount[Difficulty] and not Victory then
+		local exterminator
 
 		if Exterminators[NextExterminatorIndex] ~= nil then
 			exterminator = Exterminators[NextExterminatorIndex]
