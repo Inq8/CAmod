@@ -4741,7 +4741,7 @@ DISC:
 		Description: Heavily armored attack craft.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Light Armor
-		Attributes: • Shuts down power\n• Drains resources from refineries
+		Attributes: • Special Ability: Power Drain\n• Special Ability: Resource Drain
 	Health:
 		HP: 65000
 	RevealsShroud:
@@ -4769,20 +4769,24 @@ DISC:
 		Armaments: primary, secondary, tertiary
 		Voice: Attack
 		PauseOnCondition: empdisable || being-warped || blinded
+		PersistentTargeting: false
 	Armament@PRIMARY:
 		Weapon: FloatingDiscLaser
 		FireDelay: 5
 		LocalOffset: 828,0,0
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
+		PauseOnCondition: draining
 	Armament@Secondary:
 		Weapon: FloatingDiscPowerDrainer
 		ForceTargetRelationships: Enemy
 		Name: secondary
+		PauseOnCondition: !draining
 	Armament@Tertiary:
 		Weapon: FloatingDiscResourceDrainer
 		ForceTargetRelationships: Enemy
 		Name: tertiary
+		PauseOnCondition: !draining
 	Turreted:
 		TurnSpeed: 512
 	WithAttackOverlay:
@@ -4867,6 +4871,14 @@ DISC:
 	-RangeMultiplier@SEEK:
 	-RangeMultiplier@SEEK2:
 	-RangeMultiplier@SEEK3:
+	TargetedAttackAbility:
+		ActiveCondition: draining
+		ArmamentNames: secondary, tertiary
+		CircleWidth: 0
+		Type: Drain
+		ActiveUntilCancelled: true
+		CancelOnNewOrder: true
+
 
 JACK:
 	Inherits: ^PlaneTD
@@ -4884,8 +4896,8 @@ JACK:
 		Prerequisites: afld.gdi, anyradar, ~aircraft.arc, ~techlevel.medium
 		Description: Loitering munition that dives at targets and explodes.
 	TooltipExtras:
-		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
-		Weaknesses: • Weak vs Buildings, Defenses\n• Cannot attack Aircraft
+		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry, Defenses
+		Weaknesses: • Weak vs Buildings\n• Cannot attack Aircraft
 	Aircraft:
 		AltitudeVelocity: 0c100
 		TurnSpeed: 20

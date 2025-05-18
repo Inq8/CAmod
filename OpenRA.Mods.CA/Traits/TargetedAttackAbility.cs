@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Graphics;
+using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Graphics;
 using OpenRA.Mods.Common.Orders;
 using OpenRA.Mods.Common.Traits;
@@ -75,13 +76,16 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly string ActiveCondition = null;
 
 		[Desc("Name of the armament used to attack with.")]
-		public readonly string ArmamentName = "primary";
+		public readonly string[] ArmamentNames = { "primary" };
 
 		[Desc("Ability type. When selecting a group, different types will not be activated together.")]
 		public readonly string Type = null;
 
 		[Desc("If true, the unit will stop attacking after firing the ability.")]
 		public readonly bool CancelAfterAttack = false;
+
+		[Desc("If true, the condition will persist until attack is manually cancelled or target is changed, otherwise it will be removed after firing a single burst.")]
+		public readonly bool ActiveUntilCancelled = false;
 
 		[Desc("Ammo pool to use for the ability. If set, having ammo will determine whether the ability can be activated,",
 			"otherwise this is determined by the armament being not disabled and not reloading.")]
@@ -97,24 +101,25 @@ namespace OpenRA.Mods.CA.Traits
 		IOrderVoice, IIssueDeployOrder, INotifyBurstComplete
 	{
 		public new readonly TargetedAttackAbilityInfo Info;
-		public readonly Armament Armament;
+		public readonly IEnumerable<Armament> Armaments;
 		readonly AttackBase attack;
 		int conditionToken = Actor.InvalidConditionToken;
-		bool enabled;
+		bool activated;
 		AmmoPool ammoPool;
+		public bool Activated => activated;
 
 		public TargetedAttackAbility(ActorInitializer init, TargetedAttackAbilityInfo info)
 			: base(info)
 		{
 			Info = info;
-			Armament = init.Self.TraitsImplementing<Armament>()
-				.Single(a => a.Info.Name == Info.ArmamentName);
+			Armaments = init.Self.TraitsImplementing<Armament>()
+				.Where(a => Info.ArmamentNames.Contains(a.Info.Name));
 
 			if (Info.AmmoPool != null)
 				ammoPool = init.Self.TraitsImplementing<AmmoPool>().Single(a => a.Info.Name == Info.AmmoPool);
 
 			attack = init.Self.Trait<AttackBase>();
-			enabled = false;
+			activated = false;
 		}
 
 		protected override void Created(Actor self)
@@ -190,34 +195,34 @@ namespace OpenRA.Mods.CA.Traits
 			get {
 				return !IsTraitDisabled
 					&& !IsTraitPaused
-					&& !enabled
-					&& ((ammoPool != null && ammoPool.HasAmmo) || (ammoPool == null && !Armament.IsTraitDisabled && !Armament.IsReloading));
+					&& ((ammoPool != null && ammoPool.HasAmmo) || (ammoPool == null && Armaments.Any(a => !a.IsTraitDisabled && !a.IsReloading)));
 			}
 		}
 
 		void Enable(Actor self)
 		{
-			enabled = true;
+			activated = true;
 			if (conditionToken == Actor.InvalidConditionToken)
 				conditionToken = self.GrantCondition(Info.ActiveCondition);
 		}
 
 		void Disable(Actor self)
 		{
-			enabled = false;
+			activated = false;
 			if (conditionToken != Actor.InvalidConditionToken)
 				conditionToken = self.RevokeCondition(conditionToken);
 		}
 
 		void INotifyBurstComplete.FiredBurst(Actor self, in Target target, Armament a)
 		{
-			if (Info.ArmamentName != a.Info.Name)
+			if (!Info.ArmamentNames.Contains(a.Info.Name))
 				return;
 
 			if (target.Type == TargetType.Terrain || target.Type == TargetType.Invalid || Info.CancelAfterAttack)
 				self.CancelActivity();
 
-			Disable(self);
+			if (!Info.ActiveUntilCancelled)
+				Disable(self);
 		}
 	}
 
@@ -259,7 +264,7 @@ namespace OpenRA.Mods.CA.Traits
 
 				var target = underCursor != null ? Target.FromActor(underCursor) : Target.FromCell(world, cell);
 
-				if (!ability.Armament.Weapon.IsValidAgainst(target, world, self))
+				if (!ability.Armaments.Any(a => a.Weapon.IsValidAgainst(target, world, self)))
 					yield break;
 
 				var selectedOrderedByDistance = selectedWithAbility
@@ -267,7 +272,8 @@ namespace OpenRA.Mods.CA.Traits
 						&& a.Actor.Owner == self.Owner
 						&& a.Actor.IsInWorld
 						&& a.Trait.IsAvailable)
-					.OrderBy(a => (a.Actor.CenterPosition - target.CenterPosition).Length);
+					.OrderBy(a => a.Trait.Activated)
+					.ThenBy(a => (a.Actor.CenterPosition - target.CenterPosition).Length);
 
 				var closestOnly = (info.DefaultGroupCastBehaviour == DefaultGroupCastBehaviour.ClosestOnly && !mi.Modifiers.HasModifier(Modifiers.Ctrl))
 					|| (info.DefaultGroupCastBehaviour == DefaultGroupCastBehaviour.All && mi.Modifiers.HasModifier(Modifiers.Ctrl));
@@ -309,7 +315,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (!self.IsInWorld || self.Owner != self.World.LocalPlayer)
 				yield break;
 
-			if (ability.Armament.MaxRange() == WDist.Zero)
+			if (ability.Armaments.Max(a => a.MaxRange()) == WDist.Zero)
 				yield break;
 
 			if (info.CircleWidth > 0)
@@ -320,7 +326,7 @@ namespace OpenRA.Mods.CA.Traits
 					{
 						yield return new RangeCircleAnnotationRenderable(
 							other.Actor.CenterPosition + new WVec(0, other.Actor.CenterPosition.Z, 0),
-							other.Trait.Armament.MaxRange(),
+							other.Trait.Armaments.Max(a => a.MaxRange()),
 							0,
 							other.Trait.Info.CircleColor,
 							other.Trait.Info.CircleWidth,

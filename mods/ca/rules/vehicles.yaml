@@ -6490,10 +6490,14 @@ IFV:
 		LocalOffset: 150,0,150
 		RequiresCondition: cryoturr
 	Armament@Enforcer:
-		Weapon: EnforcerShotgun
+		Weapon: EnforcerIFVShotgun
 		LocalOffset: 385,0,300
 		RequiresCondition: enfoturr
 		MuzzleSequence: muzzle
+	Armament@EnforcerLine:
+		Weapon: EnforcerIFVShotgunLine
+		LocalOffset: 385,0,300
+		RequiresCondition: enfoturr
 	Armament@Disintegrator:
 		Weapon: DisintegratorIFVBeam
 		LocalOffset: 350,0,250
@@ -6927,9 +6931,9 @@ IFV:
 		Modifier: 115
 	DamageMultiplier@Enforcer:
 		RequiresCondition: enfoturr
-		Modifier: 70
-	SpeedMultiplier@TigerGuard:
-		RequiresCondition: tigrturr
+		Modifier: 50
+	SpeedMultiplier@EnfoTigr:
+		RequiresCondition: tigrturr || enfoturr
 		Modifier: 60
 	Captures@Engineer:
 		CaptureTypes: building

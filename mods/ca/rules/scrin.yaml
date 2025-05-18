@@ -835,7 +835,7 @@ BRST:
 		ScanRadius: 4
 	TargetedAttackAbility:
 		TargetCursor: attack
-		ArmamentName: primary
+		ArmamentNames: primary
 		CircleWidth: 0
 		Type: BursterAttack
 
@@ -4561,15 +4561,9 @@ SFAC:
 		Condition: loyalist-allegiance
 		Prerequisites: loyalist.allegiance
 	ProximityExternalCondition@IchorBoost:
-		Range: 12c0
+		Range: 16c0
 		Condition: ichor-boost
 		ValidRelationships: Neutral
-		RequiresCondition: loyalist-allegiance
-	WithRangeCircleCA@IchorBoost:
-		Type: IchorBoost
-		Color: 00ff00aa
-		Range: 12c0
-		ValidRelationships: Ally
 		RequiresCondition: loyalist-allegiance
 
 REAC:

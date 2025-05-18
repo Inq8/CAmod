@@ -1663,8 +1663,15 @@ HopliteTargeter:
 
 HopliteIFVGun:
 	Inherits: HopliteGun
+	ReloadDelay: 60
 	Report: ptnkfire.aud
-	Range: 7c0
+	Projectile: LaserZapCA
+		HitAnim: plaserfire
+	Warhead@1Dam: SpreadDamage
+		Damage: 8000
+		Spread: 288
+		Versus:
+			Heavy: 30
 
 KirovBomb:
 	ReloadDelay: 25
@@ -3449,7 +3456,6 @@ PeacemakerBombs:
 FloatingDiscLaser:
 	Inherits: Laser
 	ValidTargets: Ground, Water, Air, AirSmall
-	InvalidTargets: PowerDrainable, ResourceDrainable
 	ReloadDelay: 60
 	Range: 6c0
 	Report: vfloatta.aud
