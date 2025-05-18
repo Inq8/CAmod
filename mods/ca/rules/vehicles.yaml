@@ -1475,6 +1475,8 @@ GTNK.squad:
 		Prerequisites: stek, ~vehicles.soviet, ~atomicengines.upgrade, ~erad.upgrade, ~!ovld.upgrade, ~!apoc.upgrade, ~techlevel.high
 		Description: Big and slow tank armed with a radiation cannon.
 		BuildPaletteOrder: 234
+	Selectable:
+		Class: 4tnk.erad
 	Armament@PRIMARY:
 		Weapon: RadBeamWeaponHeavy
 		MuzzlePalette: caneon
@@ -2960,7 +2962,7 @@ DTRK:
 		DeployedCondition: triggered
 	-DamageMultiplier@IRONCURTAIN:
 	KillsSelf:
-		RequiresCondition: invulnerability || triggered || berserk
+		RequiresCondition: invulnerability || tibstealth || triggered || berserk
 	ChronoshiftableCA:
 		ExplodeInstead: true
 	Passenger:
@@ -6789,7 +6791,7 @@ IFV:
 	DamageMultiplier@IRONCURTAIN:
 		RequiresCondition: invulnerability && !ivanturr
 	KillsSelf:
-		RequiresCondition: ivanturr && (invulnerability || triggered || berserk)
+		RequiresCondition: ivanturr && (invulnerability || tibstealth || triggered || berserk)
 	ProximityExternalCondition@MEDIC:
 		RequiresCondition: medturr
 		EnableSound: heal2.aud
