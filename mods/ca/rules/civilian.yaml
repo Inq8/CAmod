@@ -902,3 +902,347 @@ ARCO:
 	Tooltip:
 		Name: Oil Pump
 		ShowOwnerRow: True
+
+V19:
+	Inherits: ^CivBuilding
+	RenderSprites:
+		Palette: player
+	Tooltip:
+		Name: Oil Pump
+	SpawnActorOnDeath:
+		Actor: V19.Husk
+	Targetable:
+		TargetTypes: Ground, Structure, NoAutoTarget
+
+App1:
+	Inherits: ^CivLargeBuilding
+	Inherits@shape: ^3x2Shape
+	HitShape:
+		UseTargetableCellsOffsets: false
+		TargetableOffsets: 0,0,0, 840,0,0, 840,-1024,0, 420,768,0, -840,0,0, -840,-1024,0, -840,1024,0
+	Selectable:
+		Priority: 0
+		Bounds: 3072, 4096
+	OwnerLostAction:
+		Action: ChangeOwner
+	Building:
+		Footprint: ___ === xxx xxx
+		Dimensions: 3,4
+		LocalCenterOffset: 0,0,0
+	GrantRandomCondition:
+		Conditions: husk1, husk2, husk3
+	SpawnActorOnDeath@1:
+		Actor: App1.Husk
+		RequiresCondition: husk1
+	SpawnActorOnDeath@2:
+		Actor: App1.Husk.2
+		RequiresCondition: husk2
+	SpawnActorOnDeath@3:
+		Actor: App1.Husk.3
+		RequiresCondition: husk3
+	Targetable:
+		TargetTypes: Ground, Structure, NoAutoTarget
+		
+App1.Husk:
+	Inherits: ^CivLargeBuilding
+	Inherits@shape: ^3x2Shape
+	HitShape:
+		UseTargetableCellsOffsets: false
+		TargetableOffsets: 0,0,0, 840,0,0, 840,-1024,0, 420,768,0, -840,0,0, -840,-1024,0, -840,1024,0
+	Selectable:
+		Priority: 0
+		Bounds: 3072, 4096
+	OwnerLostAction:
+		Action: ChangeOwner
+	Building:
+		Footprint: ___ xx= === xxx
+		Dimensions: 3,4
+		LocalCenterOffset: 0,0,0
+	WithIdleOverlay@Crater:
+		Image: Crater
+		Sequence: idle
+		IsDecoration: false
+		Palette: terrain
+		Offset: -1024,0,0
+	Tooltip:
+		Name: Destroyed Building
+	RenderSprites:
+		Image: app1.destroyed.1
+	-Selectable:
+	-Targetable:
+	-Targetable@C4Plantable:
+	-Targetable@TNTPlantable:
+	-Explodes:
+	-Explodes@CIVPANIC:
+	Interactable:
+
+App1.Husk.2:
+	Inherits: App1.Husk
+	RenderSprites:
+		Image: app1.destroyed.2
+
+App1.Husk.3:
+	Inherits: App1.Husk
+	RenderSprites:
+		Image: app1.destroyed.3
+
+
+Shop1:
+	Inherits: ^CivLargeBuilding
+	Inherits@shape: ^3x2Shape
+	HitShape:
+		UseTargetableCellsOffsets: false
+		TargetableOffsets: 0,0,0, 840,0,0, 840,-1024,0, 420,768,0, -840,0,0, -840,-1024,0, -840,1024,0
+	Selectable:
+		Priority: 0
+		Bounds: 3072, 4096
+	OwnerLostAction:
+		Action: ChangeOwner
+	Building:
+		Footprint: ___ === xxx xxx
+		Dimensions: 3,4
+		LocalCenterOffset: 0,0,0
+	SpawnActorOnDeath:
+		Actor: Shop1.Husk
+	Targetable:
+		TargetTypes: Ground, Structure, NoAutoTarget
+		
+Shop1.Husk:
+	Inherits: ^CivLargeBuilding
+	Inherits@shape: ^3x2Shape
+	HitShape:
+		UseTargetableCellsOffsets: false
+		TargetableOffsets: 0,0,0, 840,0,0, 840,-1024,0, 420,768,0, -840,0,0, -840,-1024,0, -840,1024,0
+	Selectable:
+		Priority: 0
+		Bounds: 3072, 4096
+	OwnerLostAction:
+		Action: ChangeOwner
+	Building:
+		Footprint: ___ === xxx xxx
+		Dimensions: 3,4
+		LocalCenterOffset: 0,0,0
+	Tooltip:
+		Name: Destroyed Building
+	RenderSprites:
+		Image: shop1.destroyed
+	WithIdleOverlay@Burns:
+		Image: fire
+		Sequence: 1
+		IsDecoration: true
+		Palette: effect
+	-Selectable:
+	-Targetable:
+	-Targetable@C4Plantable:
+	-Targetable@TNTPlantable:
+	-Explodes:
+	-Explodes@CIVPANIC:
+	Interactable:
+
+Hotel1:
+	Inherits: ^CivLargeBuilding
+	Inherits@shape: ^3x2Shape
+	HitShape:
+		UseTargetableCellsOffsets: false
+		TargetableOffsets: 0,0,0, 840,0,0, 840,-1024,0, 420,768,0, -840,0,0, -840,-1024,0, -840,1024,0
+	Selectable:
+		Priority: 0
+		Bounds: 3072, 5120
+	OwnerLostAction:
+		Action: ChangeOwner
+	Building:
+		Footprint: ___ ___ === xxx xxx
+		Dimensions: 3,5
+		LocalCenterOffset: 0,0,0
+	SpawnActorOnDeath:
+		Actor: Hotel1.Husk
+	Targetable:
+		TargetTypes: Ground, Structure, NoAutoTarget
+		
+Hotel1.Husk:
+	Inherits: ^CivLargeBuilding
+	Inherits@shape: ^3x2Shape
+	HitShape:
+		UseTargetableCellsOffsets: false
+		TargetableOffsets: 0,0,0, 840,0,0, 840,-1024,0, 420,768,0, -840,0,0, -840,-1024,0, -840,1024,0
+	Selectable:
+		Priority: 0
+		Bounds: 3072, 5120
+	OwnerLostAction:
+		Action: ChangeOwner
+	Building:
+		Footprint: ___ ___ === xxx xxx
+		Dimensions: 3,5
+		LocalCenterOffset: 0,0,0
+	Tooltip:
+		Name: Destroyed Building
+	RenderSprites:
+		Image: hotel1.destroyed
+	WithIdleOverlay@Burns:
+		Image: fire
+		Sequence: 1
+		IsDecoration: true
+		Palette: effect
+	-Selectable:
+	-Targetable:
+	-Targetable@C4Plantable:
+	-Targetable@TNTPlantable:
+	-Explodes:
+	-Explodes@CIVPANIC:
+	Interactable:
+
+High1:
+	Inherits: ^CivLargeBuilding
+	Inherits@shape: ^3x2Shape
+	HitShape:
+		UseTargetableCellsOffsets: false
+		TargetableOffsets: 0,0,0, 840,0,0, 840,-1024,0, 420,768,0, -840,0,0, -840,-1024,0, -840,1024,0
+	Selectable:
+		Priority: 0
+		Bounds: 4096, 5120
+	OwnerLostAction:
+		Action: ChangeOwner
+	Building:
+		Footprint: ____ ____ ==== xxxx xxxx xxxx
+		Dimensions: 4,6
+		LocalCenterOffset: 0,0,0
+	SpawnActorOnDeath:
+		Actor: High1.Husk
+	Targetable:
+		TargetTypes: Ground, Structure, NoAutoTarget
+		
+High1.Husk:
+	Inherits: ^CivLargeBuilding
+	Inherits@shape: ^3x2Shape
+	HitShape:
+		UseTargetableCellsOffsets: false
+		TargetableOffsets: 0,0,0, 840,0,0, 840,-1024,0, 420,768,0, -840,0,0, -840,-1024,0, -840,1024,0
+	Selectable:
+		Priority: 0
+		Bounds: 4096, 5120
+	OwnerLostAction:
+		Action: ChangeOwner
+	Building:
+		Footprint: ____ ____ ==== xxxx xxxx xxxx
+		Dimensions: 4,6
+		LocalCenterOffset: 0,0,0
+	Tooltip:
+		Name: Destroyed Building
+	RenderSprites:
+		Image: high1.destroyed
+	WithIdleOverlay@Burns:
+		Image: fire
+		Sequence: 1
+		IsDecoration: true
+		Palette: effect
+	-Selectable:
+	-Targetable:
+	-Targetable@C4Plantable:
+	-Targetable@TNTPlantable:
+	-Explodes:
+	-Explodes@CIVPANIC:
+	Interactable:
+
+High2:
+	Inherits: ^CivLargeBuilding
+	Inherits@shape: ^3x2Shape
+	HitShape:
+		UseTargetableCellsOffsets: false
+		TargetableOffsets: 0,0,0, 840,0,0, 840,-1024,0, 420,768,0, -840,0,0, -840,-1024,0, -840,1024,0
+	Selectable:
+		Priority: 0
+		Bounds: 4096, 6144
+	OwnerLostAction:
+		Action: ChangeOwner
+	Building:
+		Footprint: ____ ____ ____ ==== xxxx xxxx xxxx
+		Dimensions: 4,7
+		LocalCenterOffset: 0,0,0
+	SpawnActorOnDeath:
+		Actor: High2.Husk
+	Targetable:
+		TargetTypes: Ground, Structure, NoAutoTarget
+		
+High2.Husk:
+	Inherits: ^CivLargeBuilding
+	Inherits@shape: ^3x2Shape
+	HitShape:
+		UseTargetableCellsOffsets: false
+		TargetableOffsets: 0,0,0, 840,0,0, 840,-1024,0, 420,768,0, -840,0,0, -840,-1024,0, -840,1024,0
+	Selectable:
+		Priority: 0
+		Bounds: 4096, 6144
+	OwnerLostAction:
+		Action: ChangeOwner
+	Building:
+		Footprint: ____ ____ ____ ==== xxxx xxxx xxxx
+		Dimensions: 4,7
+		LocalCenterOffset: 0,0,0
+	Tooltip:
+		Name: Destroyed Building
+	RenderSprites:
+		Image: high2.destroyed
+	WithIdleOverlay@Burns:
+		Image: fire
+		Sequence: 1
+		IsDecoration: true
+		Palette: effect
+	-Selectable:
+	-Targetable:
+	-Targetable@C4Plantable:
+	-Targetable@TNTPlantable:
+	-Explodes:
+	-Explodes@CIVPANIC:
+	Interactable:
+
+PKG:
+	Inherits: ^CivLargeBuilding
+	Inherits@shape: ^3x2Shape
+	HitShape:
+		UseTargetableCellsOffsets: false
+		TargetableOffsets: 0,0,0, 840,0,0, 840,-1024,0, 420,768,0, -840,0,0, -840,-1024,0, -840,1024,0
+	Selectable:
+		Priority: 0
+		Bounds: 6144, 5120
+	OwnerLostAction:
+		Action: ChangeOwner
+	Building:
+		Footprint: ______ ______  ====== xxxxxx xxxxxx
+		Dimensions: 6,5
+		LocalCenterOffset: 0,0,0
+	SpawnActorOnDeath:
+		Actor: PKG.Husk
+	Targetable:
+		TargetTypes: Ground, Structure, NoAutoTarget
+		
+PKG.Husk:
+	Inherits: ^CivLargeBuilding
+	Inherits@shape: ^3x2Shape
+	HitShape:
+		UseTargetableCellsOffsets: false
+		TargetableOffsets: 0,0,0, 840,0,0, 840,-1024,0, 420,768,0, -840,0,0, -840,-1024,0, -840,1024,0
+	Selectable:
+		Priority: 0
+		Bounds: 6144, 5120
+	OwnerLostAction:
+		Action: ChangeOwner
+	Building:
+		Footprint: ______ ______  ====== xxxxxx xxxxxx
+		Dimensions: 6,5
+		LocalCenterOffset: 0,0,0
+	Tooltip:
+		Name: Destroyed Building
+	RenderSprites:
+		Image: pkg.destroyed
+	WithIdleOverlay@Burns:
+		Image: fire
+		Sequence: 1
+		IsDecoration: true
+		Palette: effect
+	-Selectable:
+	-Targetable:
+	-Targetable@C4Plantable:
+	-Targetable@TNTPlantable:
+	-Explodes:
+	-Explodes@CIVPANIC:
+	Interactable:
