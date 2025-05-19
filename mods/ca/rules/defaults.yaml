@@ -3707,6 +3707,20 @@
 	Explodes@CIVPANIC:
 		Weapon: CivPanicExplosion
 
+^CivLargeBuilding:
+	Inherits: ^CivBuilding
+	ExplosionOnDamageTransition:
+		Weapon: BuildingExplode
+		DamageState: Medium
+	ThrowsShrapnel@small:
+		Weapons: SmallDebris
+		Pieces: 4, 10
+		Range: 1c511, 4c0
+	Explodes:
+		Weapon: BuildingExplode
+	Explodes@CIVPANIC:
+		Weapon: CivPanicExplosion
+
 ^CivField:
 	Inherits: ^CivBuilding
 	-HitShape:
