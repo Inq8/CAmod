@@ -1,4 +1,3 @@
-
 AttackPaths = {
 	{ WestDelivery3.Location, AttackRally1.Location },
 	{ WestDelivery3.Location, AttackRally2.Location },
@@ -154,7 +153,7 @@ Squads = {
 				{ Aircraft = { "kiro" }, MaxTime = DateTime.Minutes(10) },
 				{ Aircraft = { "kiro", "kiro" }, MinTime = DateTime.Minutes(10), MaxTime = DateTime.Minutes(20) },
 				{ Aircraft = { "kiro", "kiro", "kiro" }, MinTime = DateTime.Minutes(20), MaxTime = DateTime.Minutes(30) },
-				{ Aircraft = { "kiro", "kiro", "kiro", "kiro" }, MinTime = DateTime.Minutes(30)) }
+				{ Aircraft = { "kiro", "kiro", "kiro", "kiro" }, MinTime = DateTime.Minutes(30) }
 			}
 		},
 		AttackPaths = {

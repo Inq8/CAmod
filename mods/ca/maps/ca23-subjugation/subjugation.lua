@@ -226,7 +226,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnEnteredProximityTrigger(YuriHQ.CenterPosition, WDist.New(18 * 1024), function(a, id)
-		if a.Owner == Scrin and a.Type ~= cameraType then
+		if a.Owner == Scrin and a.Type ~= "smallcamera" then
 			Trigger.RemoveProximityTrigger(id)
 			if not YuriDefenderTipShown then
 				YuriDefenderTipShown = true

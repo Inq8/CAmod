@@ -1663,8 +1663,16 @@ HopliteTargeter:
 
 HopliteIFVGun:
 	Inherits: HopliteGun
+	ReloadDelay: 60
 	Report: ptnkfire.aud
-	Range: 7c0
+	Projectile: LaserZapCA
+		HitAnim: plaserfire
+	Warhead@1Dam: SpreadDamage
+		Damage: 7000
+		Spread: 288
+		Versus:
+			Wood: 80
+			Heavy: 30
 
 KirovBomb:
 	ReloadDelay: 25
@@ -2829,6 +2837,7 @@ JDAM:
 	ReloadDelay: 50
 	Report: bwhis.aud
 	Range: 3c0
+	MinRange: 2c0
 	TargetActorCenter: true
 	Projectile: GravityBomb
 		Image: MOAB_BOMB
@@ -3449,7 +3458,6 @@ PeacemakerBombs:
 FloatingDiscLaser:
 	Inherits: Laser
 	ValidTargets: Ground, Water, Air, AirSmall
-	InvalidTargets: PowerDrainable, ResourceDrainable
 	ReloadDelay: 60
 	Range: 6c0
 	Report: vfloatta.aud
@@ -3662,9 +3670,9 @@ ZeusBolt:
 		Spread: 384
 		Falloff: 1000, 448, 192, 50, 18, 7, 0
 		Damage: 3500
-		DamageTypes: TriggerProne, ElectricityDeath
+		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath, FlakVestMitigatedMinor
 		Versus:
-			None: 80
+			None: 85
 			Wood: 100
 			Concrete: 65
 			Brick: 50
@@ -3736,3 +3744,27 @@ TroopCrawlerDummyWeapon:
 	ValidTargets: Infantry
 	ReloadDelay: 25
 	Projectile: InstantHit
+
+TargetPainter:
+	Range: 15c0
+	ReloadDelay: 25
+	ValidTargets: Vehicle, Ship, Structure
+	Report: targetpainterbeep.aud
+	Projectile: ArcLaserZap
+		Color: 55555560
+		Angle: 70
+		Width: 70
+		Duration: 20
+		HitAnim: empty
+	Warhead@1Dam: RevealShroud
+		Duration: 26
+		Radius: 6c0
+	Warhead@Cond: GrantExternalConditionCA
+		Range: 0c42
+		Duration: 26
+		Condition: painted-target
+		ValidTargets: Vehicle, Ship, Structure
+	Warhead@highlight: FlashTarget
+		Spread: 0c42
+		Color: ff0000
+		ValidTargets: Vehicle, Ship, Structure

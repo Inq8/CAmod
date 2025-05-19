@@ -424,7 +424,7 @@ InitGreece = function(paths, cameras)
 	end)
 
     Trigger.AfterDelay(Squads.AlliedAir.Delay[Difficulty], function()
-        InitAirAttackSquad(Squads.AlliedAir, Nod)
+        InitAirAttackSquad(Squads.AlliedAir, Greece)
     end)
 
 	Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()

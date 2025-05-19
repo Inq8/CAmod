@@ -8,7 +8,7 @@
  */
 #endregion
 
-using System;
+using System.Linq;
 using System.Collections.Generic;
 using OpenRA.Graphics;
 using OpenRA.Mods.Common.Graphics;
@@ -62,6 +62,7 @@ namespace OpenRA.Mods.CA.Traits.Render
 		Queue<RadiatingCircle> activeCircles;
 		int intervalTicks;
 		bool flash;
+		WDist radiusChangePerTick;
 
 		struct RadiatingCircle
 		{
@@ -165,7 +166,6 @@ namespace OpenRA.Mods.CA.Traits.Render
 			}
 
 			// Update all active circles
-			var radiusChangePerTick = (Info.EndRadius - Info.StartRadius) / Info.Duration;
 			var tempCircles = new Queue<RadiatingCircle>();
 			var circleCompleted = false;
 
@@ -195,7 +195,15 @@ namespace OpenRA.Mods.CA.Traits.Render
 
 		protected override void TraitEnabled(Actor self)
 		{
-			activeCircles.Enqueue(new RadiatingCircle(Info.StartRadius));
+			if (Info.Duration > 0)
+				radiusChangePerTick = (Info.EndRadius - Info.StartRadius) / Info.Duration;
+			else
+				radiusChangePerTick = WDist.Zero;
+
+			if (Info.Interval == 0 || !activeCircles.Any())
+				activeCircles.Enqueue(new RadiatingCircle(Info.StartRadius));
+
+			intervalTicks = 0;
 		}
 
 		protected override void TraitDisabled(Actor self)

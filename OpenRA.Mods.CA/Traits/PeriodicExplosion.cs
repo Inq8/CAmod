@@ -72,6 +72,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		List<(int Tick, Action Action)> delayedActions = new List<(int, Action)>();
 
+		IFirepowerModifier[] firepowerModifiers;
+		IReloadModifier[] reloadModifiers;
+
 		public PeriodicExplosion(Actor self, PeriodicExplosionInfo info)
 			: base(info)
 		{
@@ -86,6 +89,17 @@ namespace OpenRA.Mods.CA.Traits
 		protected override void Created(Actor self)
 		{
 			ammoPool = self.TraitsImplementing<AmmoPool>().FirstOrDefault(la => la.Info.Name == Info.AmmoPoolName);
+
+			if (info.ApplyModifiers)
+			{
+				firepowerModifiers = self.TraitsImplementing<IFirepowerModifier>().ToArray();
+				reloadModifiers = self.TraitsImplementing<IReloadModifier>().ToArray();
+			}
+			else
+			{
+				firepowerModifiers = Array.Empty<IFirepowerModifier>();
+				reloadModifiers = Array.Empty<IReloadModifier>();
+			}
 
 			base.Created(self);
 		}
@@ -123,7 +137,7 @@ namespace OpenRA.Mods.CA.Traits
 				};
 
 				if (info.ApplyModifiers)
-					args.DamageModifiers = self.TraitsImplementing<IFirepowerModifier>().Select(a => a.GetFirepowerModifier()).ToArray();
+					args.DamageModifiers = firepowerModifiers.Select(a => a.GetFirepowerModifier()).ToArray();
 
 				weapon.Impact(Target.FromPos(self.CenterPosition + localoffset), args);
 
@@ -144,7 +158,7 @@ namespace OpenRA.Mods.CA.Traits
 				{
 					if (info.ApplyModifiers)
 					{
-						var modifiers = self.TraitsImplementing<IReloadModifier>().Select(m => m.GetReloadModifier());
+						var modifiers = reloadModifiers.Select(m => m.GetReloadModifier());
 						fireDelay = Util.ApplyPercentageModifiers(weapon.ReloadDelay, modifiers);
 					}
 					else

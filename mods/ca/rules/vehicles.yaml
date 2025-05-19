@@ -1475,6 +1475,8 @@ GTNK.squad:
 		Prerequisites: stek, ~vehicles.soviet, ~atomicengines.upgrade, ~erad.upgrade, ~!ovld.upgrade, ~!apoc.upgrade, ~techlevel.high
 		Description: Big and slow tank armed with a radiation cannon.
 		BuildPaletteOrder: 234
+	Selectable:
+		Class: 4tnk.erad
 	Armament@PRIMARY:
 		Weapon: RadBeamWeaponHeavy
 		MuzzlePalette: caneon
@@ -2960,7 +2962,7 @@ DTRK:
 		DeployedCondition: triggered
 	-DamageMultiplier@IRONCURTAIN:
 	KillsSelf:
-		RequiresCondition: invulnerability || triggered || berserk
+		RequiresCondition: invulnerability || tibstealth || triggered || berserk
 	ChronoshiftableCA:
 		ExplodeInstead: true
 	Passenger:
@@ -6174,6 +6176,12 @@ IFV:
 	Tooltip@hackturr:
 		Name: Hacker IFV
 		RequiresCondition: hackturr
+	Tooltip@confturr:
+		Name: Confessor IFV
+		RequiresCondition: confturr
+	Tooltip@reapturr:
+		Name: Reaper IFV
+		RequiresCondition: reapturr
 	TooltipExtras:
 		Strengths: • Strong vs Aircraft, Heavy Armor
 		Weaknesses: • Weak vs Infantry
@@ -6220,8 +6228,8 @@ IFV:
 		IsStandard: false
 		RequiresCondition: flamturr || chemturr || hoplturr
 	TooltipExtras@spyturr:
-		Weaknesses: • Unarmed
-		Attributes: • Long vision range\n• Can detect cloaked units
+		Weaknesses: • Cannot deal damage
+		Attributes: • Long vision range\n• Can detect cloaked units\n• Marks vehicle/structure targets,\n    revealing them and increasing the damage they take
 		IsStandard: false
 		RequiresCondition: spyturr
 	TooltipExtras@rmbcturr:
@@ -6276,6 +6284,17 @@ IFV:
 		Attributes: • Slows enemy units and makes them take increased damage
 		IsStandard: false
 		RequiresCondition: cryoturr
+	TooltipExtras@reapturr:
+		Strengths: • Strong vs Infantry, Light Armor, Buildings
+		Weaknesses: • Weak vs Heavy Armor
+		IsStandard: false
+		RequiresCondition: reapturr
+	TooltipExtras@confturr:
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor, Defenses, Buildings\n• Cannot attack Aircraft
+		Attributes: • Explosion causes units to attack indiscriminately
+		IsStandard: false
+		RequiresCondition: confturr
 	Valued:
 		Cost: 750
 	UpdatesPlayerStatistics:
@@ -6294,7 +6313,7 @@ IFV:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	RevealsShroud@SPY:
-		Range: 10c0
+		Range: 9c0
 		MinRange: 4c0
 		RevealGeneratedShroud: False
 		RequiresCondition: spyturr
@@ -6473,10 +6492,14 @@ IFV:
 		LocalOffset: 150,0,150
 		RequiresCondition: cryoturr
 	Armament@Enforcer:
-		Weapon: EnforcerShotgun
+		Weapon: EnforcerIFVShotgun
 		LocalOffset: 385,0,300
 		RequiresCondition: enfoturr
 		MuzzleSequence: muzzle
+	Armament@EnforcerLine:
+		Weapon: EnforcerIFVShotgunLine
+		LocalOffset: 385,0,300
+		RequiresCondition: enfoturr
 	Armament@Disintegrator:
 		Weapon: DisintegratorIFVBeam
 		LocalOffset: 350,0,250
@@ -6517,16 +6540,20 @@ IFV:
 		Weapon: StalkerShards
 		LocalOffset: 350,0,300
 		RequiresCondition: stlkturr
+	Armament@Confessor:
+		Weapon: HallucinationGrenade
+		LocalOffset: 300,0,400
+		RequiresCondition: confturr
+	Armament@Reaper:
+		Weapon: CyborgReaperMissiles
+		LocalOffset: 192,100,256, 192,-100,256
+		RequiresCondition: reapturr
 	Armament@Spy:
-		Weapon: TroopCrawlerDummyWeapon
-		TargetRelationships: Ally
-		ForceTargetRelationships: None
-		Cursor: guard
-		OutsideRangeCursor: guard
+		Weapon: TargetPainter
 		RequiresCondition: spyturr
-	AutoTargetPriority@Unarmed:
-		ValidTargets: Infantry, Vehicle
-		ValidRelationships: Ally
+		LocalOffset: 0,0,100
+	AutoTargetPriority@Spy:
+		ValidTargets: Vehicle, Structure
 		RequiresCondition: spyturr
 	AttackSoundsCA@REPAIRSOUND:
 		Sounds: repair11.aud
@@ -6639,6 +6666,12 @@ IFV:
 	WithSpriteTurret@disin:
 		Sequence: turret-disin
 		RequiresCondition: disinturr
+	WithSpriteTurret@conf:
+		Sequence: turret-conf
+		RequiresCondition: confturr
+	WithSpriteTurret@reap:
+		Sequence: turret-reap
+		RequiresCondition: reapturr
 	Cargo:
 		Types: Infantry, Hacker
 		MaxWeight: 1
@@ -6686,9 +6719,11 @@ IFV:
 			snip: snipturr
 			assa: snipturr
 			hack: hackturr
+			conf: confturr
 			acol: acolturr
 			tplr: acolturr
 			cscr: acolturr
+			reap: reapturr
 			enli: enliturr
 			rmbc: rmbcturr
 			s2: sharturr
@@ -6714,7 +6749,6 @@ IFV:
 			dog: spyturr
 			cdog: spyturr
 			wchr: spyturr
-			conf: nochange
 			tecn: nochange
 			c1: nochange
 			c2: nochange
@@ -6757,7 +6791,7 @@ IFV:
 	DamageMultiplier@IRONCURTAIN:
 		RequiresCondition: invulnerability && !ivanturr
 	KillsSelf:
-		RequiresCondition: ivanturr && (invulnerability || triggered || berserk)
+		RequiresCondition: ivanturr && (invulnerability || tibstealth || triggered || berserk)
 	ProximityExternalCondition@MEDIC:
 		RequiresCondition: medturr
 		EnableSound: heal2.aud
@@ -6772,6 +6806,9 @@ IFV:
 		RequiresCondition: !being-warped && !full
 	Capturable@DRIVER_DEAD:
 		RequiresCondition: driver-dead && !full
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
+		RequiresCondition: confturr || psyturr || commturr || hackturr
 	Targetable@MindControlResistant:
 		TargetTypes: MindControlResistant
 		RequiresCondition: full
@@ -6780,10 +6817,9 @@ IFV:
 		RequiresCondition: commturr || psyturr
 	GrantCondition@IsAA:
 		Condition: is-aa
-		RequiresCondition: !full || samturr || ggiturr || disinturr || tigrturr || nochange
+		RequiresCondition: !full || samturr || ggiturr || disinturr || tigrturr || reapturr || nochange
 	AutoTarget:
 		AttackAnythingCondition: stance-attackanything
-		ScanRadius: 6
 	AutoTargetPriority@DEFAULTAA:
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Defense
 		InvalidTargets: NoAutoTarget, WaterStructure, AntiAirDefense
@@ -6803,7 +6839,7 @@ IFV:
 		InvalidTargets: NoAutoTarget
 		Priority: 10
 	AutoTargetPriority@DEFAULTG:
-		RequiresCondition: !stance-attackanything && !assault-move && !is-aa
+		RequiresCondition: !maxcontrolled && !stance-attackanything && !assault-move && !is-aa
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
 		InvalidTargets: NoAutoTarget, WaterStructure, AntiAirDefense
 	AutoTargetPriority@ATTACKANYTHINGG:
@@ -6857,7 +6893,7 @@ IFV:
 		Position: TopLeft
 		ValidRelationships: Ally, Enemy, Neutral
 	KeepsDistance:
-		RequiresCondition: engturr || mechturr || medturr || spyturr
+		RequiresCondition: engturr || mechturr || medturr
 	DamageTypeDamageMultiplier@A2GPROTECTION:
 		RequiresCondition: is-aa
 	AmbientSoundCA@BlackHand:
@@ -6897,7 +6933,10 @@ IFV:
 		Modifier: 115
 	DamageMultiplier@Enforcer:
 		RequiresCondition: enfoturr
-		Modifier: 70
+		Modifier: 50
+	SpeedMultiplier@EnfoTigr:
+		RequiresCondition: tigrturr || enfoturr
+		Modifier: 60
 	Captures@Engineer:
 		CaptureTypes: building
 		PlayerExperience: 25
@@ -6954,6 +6993,7 @@ IFV:
 		Capacity: 3
 		ControlSounds: iyurat1a.aud
 		ReleaseSounds: yuri-release.aud
+		MaxControlledCondition: maxcontrolled
 		ControlAtCapacityBehaviour: DetonateOldest
 		SlaveDeployEffect: Detonate
 		SlaveDetonateWeapon: DetonateSlave
@@ -6994,6 +7034,15 @@ IFV:
 		Angle: 60
 		Width: 86
 		Offset: 0,0,300
+	MindControllerCapacityModifier@RANK-1:
+		Amount: 1
+		RequiresCondition: rank-veteran == 1
+	MindControllerCapacityModifier@RANK-2:
+		Amount: 2
+		RequiresCondition: rank-veteran == 2
+	MindControllerCapacityModifier@RANK-ELITE:
+		Amount: 3
+		RequiresCondition: rank-elite
 
 IFV.AI:
 	Inherits: ^Tank
@@ -7230,9 +7279,15 @@ RECK:
 		Name: Shadow Reckoner
 	Tooltip@hackturr:
 		Name: Hacker Reckoner
+	Tooltip@confturr:
+		Name: Confessor Reckoner
+	Tooltip@reapturr:
+		Name: Reaper Reckoner
 	ReloadDelayMultiplier@CyborgElite:
 		RequiresCondition: rmbcturr
 		Modifier: 80
+	SpeedMultiplier@TigerGuard:
+		Modifier: 90
 
 TITN:
 	Inherits: ^TankTD
@@ -8990,11 +9045,11 @@ PBUL:
 		BuildPaletteOrder: 252
 		IconPalette: chrometd
 		Prerequisites: gtek, ~vehicles.eagle, ~techlevel.high
-		Description: Fast scout vehicle with rockets that briefly disable\n  the weapons and vision of vehicles and aircraft.
+		Description: Fast scout vehicle with rockets that briefly disable\n  the weapons and vision of vehicles and aircraft.\n  Can designate vehicles & buildings targets,\n  revealing them and increasing the damage they take.
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor, Aircraft
 		Weaknesses: • Weak vs Infantry, Buildings, Defenses
-		Attributes: • Can detect spies and cloaked units.
+		Attributes: • Can detect spies and cloaked units.\n• Special Ability: Target Painter
 	Valued:
 		Cost: 850
 	Tooltip:
@@ -9031,9 +9086,15 @@ PBUL:
 		LocalOffset: 0,-100,250, 0,100,250
 		PauseOnCondition: reloading-primary
 		ReloadingCondition: reloading-secondary
+	Armament@TERTIARY:
+		Name: tertiary
+		Weapon: TargetPainter
+		LocalOffset: 0,0,250
+		RequiresCondition: target-painting
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped || blinded
 		Voice: Attack
+		Armaments: primary, secondary, tertiary
 	AttackMove:
 		Voice: Attack
 	WithSpriteTurret:
@@ -9049,6 +9110,15 @@ PBUL:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: vehicles.upgraded
+	TargetedAttackAbility:
+		ActiveCondition: target-painting
+		ArmamentNames: tertiary
+		CircleColor: ffffff88
+		Type: PitbullTargetPainter
+		TargetModifiedCursor: ability2
+		ActiveUntilCancelled: true
+		CancelOnNewOrder: true
+		UseDisabledArmaments: true
 
 CYCP:
 	Inherits: ^Tank

@@ -74,7 +74,7 @@ namespace OpenRA.Mods.CA.Projectiles
 		readonly Color color;
 
 		[Sync]
-		readonly WPos source;
+		WPos source;
 
 		int ticks = 0;
 		bool doneDamage;
@@ -104,6 +104,8 @@ namespace OpenRA.Mods.CA.Projectiles
 
 		public void Tick(World world)
 		{
+			source = args.CurrentSource();
+
 			// Beam tracks target
 			if (info.TrackTarget && args.GuidedTarget.IsValidFor(args.SourceActor))
 				target = args.Weapon.TargetActorCenter ? args.GuidedTarget.CenterPosition : args.GuidedTarget.Positions.PositionClosestTo(source);
@@ -141,13 +143,13 @@ namespace OpenRA.Mods.CA.Projectiles
 		public IEnumerable<IRenderable> Render(WorldRenderer wr)
 		{
 			if (wr.World.FogObscures(target) &&
-				wr.World.FogObscures(args.Source))
+				wr.World.FogObscures(source))
 				yield break;
 
 			if (ticks < info.Duration)
 			{
 				var rc = Color.FromArgb((info.Duration - ticks) * color.A / info.Duration, color);
-				yield return new ArcRenderable(args.Source, target, info.ZOffset, info.Angle, rc, info.Width, info.QuantizedSegments);
+				yield return new ArcRenderable(source, target, info.ZOffset, info.Angle, rc, info.Width, info.QuantizedSegments);
 			}
 
 			if (hitanim != null)
