@@ -288,7 +288,8 @@ namespace OpenRA.Mods.CA.Traits
 				if (order.Target.Type != TargetType.Actor)
 					return;
 
-				slaves.First(s => s.Actor == order.Target.Actor).Trait.RevokeMindControl(order.Target.Actor, 0);
+				var slave = slaves.SingleOrDefault(s => s.Actor == order.Target.Actor);
+				slave.Trait?.RevokeMindControl(order.Target.Actor, 0);
 
 				if (Info.SlaveDeployEffect == SlaveDeployEffect.Kill)
 				{
@@ -485,7 +486,7 @@ namespace OpenRA.Mods.CA.Traits
 				if (s.Actor.IsDead || s.Actor.Disposed)
 					continue;
 
-				if (s.Trait.Master.Value.Actor != self)
+				if (s.Trait.Master.HasValue && s.Trait.Master.Value.Actor != self)
 					continue;
 
 				s.Trait.RevokeMindControl(s.Actor, ticks);
@@ -671,20 +672,17 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			if (Info.TransferToTransport)
 			{
-				//self.World.AddFrameEndTask(w => {
-					var transportMc = cargo.TraitsImplementing<MindController>().FirstOrDefault(mc => mc.Info.ControlType == info.ControlType);
-					if (transportMc != null)
+				var transportMc = cargo.TraitsImplementing<MindController>().FirstOrDefault(mc => mc.Info.ControlType == info.ControlType);
+				if (transportMc != null)
+				{
+					foreach (var s in slaves)
 					{
-						foreach (var s in slaves)
-						{
-							if (s.Actor.IsDead || s.Actor.Disposed)
-								continue;
+						if (s.Actor.IsDead || s.Actor.Disposed)
+							continue;
 
-							TextNotificationsManager.Debug("transferring {0} to {1}", s.Actor, cargo);
-							transportMc.AddSlave(cargo, s.Actor, true);
-						}
+						transportMc.AddSlave(cargo, s.Actor, true);
 					}
-				//});
+				}
 			}
 		}
 
@@ -692,20 +690,17 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			if (Info.TransferToTransport)
 			{
-				//self.World.AddFrameEndTask(w => {
-					var transportMc = cargo.TraitsImplementing<MindController>().FirstOrDefault(mc => mc.Info.ControlType == info.ControlType);
-					if (transportMc != null)
+				var transportMc = cargo.TraitsImplementing<MindController>().FirstOrDefault(mc => mc.Info.ControlType == info.ControlType);
+				if (transportMc != null)
+				{
+					foreach (var s in transportMc.Slaves)
 					{
-						foreach (var s in transportMc.Slaves)
-						{
-							if (s.Actor.IsDead || s.Actor.Disposed)
-								continue;
+						if (s.Actor.IsDead || s.Actor.Disposed)
+							continue;
 
-							TextNotificationsManager.Debug("transferring {0} to {1}", s.Actor, self);
-							AddSlave(self, s.Actor, true);
-						}
+						AddSlave(self, s.Actor, true);
 					}
-				//});
+				}
 			}
 		}
 	}

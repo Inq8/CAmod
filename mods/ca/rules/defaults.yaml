@@ -1818,9 +1818,7 @@
 ^MindControllable:
 	MindControllable@MINDCONTROL:
 		ControlType: MindControl
-		ControlledConditions:
-			mast: mindcontrolled
-			yuri: mindcontrolled
+		ControlledCondition: mindcontrolled
 	Targetable@MINDCONTROL:
 		TargetTypes: MindControllable
 		RequiresCondition: !mindcontrolled
@@ -1846,10 +1844,8 @@
 ^Hackable:
 	MindControllable@HACKABLE:
 		ControlType: Hack
-		ControlledConditions:
-			hack: hacked
-		RevokingConditions:
-			hack: restoring
+		ControlledCondition: hacked
+		RevokingCondition: restoring
 	Targetable@HACKABLE:
 		TargetTypes: Hackable
 		RequiresCondition: !hacked
@@ -1989,6 +1985,21 @@
 		Type: ShadowBeacon
 		Limit: 1
 		AttachedCondition: observer-attached
+
+^TargetPaintable:
+	ExternalCondition@PaintedTarget:
+		Condition: painted-target
+	DamageMultiplier@PaintedTarget:
+		Modifier: 133
+		RequiresCondition: painted-target
+	WithDecoration@PaintedTarget:
+		Image: targetpainter
+		Sequence: idle
+		Palette: effect
+		Position: Top
+		ValidRelationships: Ally, Enemy, Neutral
+		Margin: 0, 8
+		RequiresCondition: painted-target
 
 ^HoverTrail:
 	LeavesTrails:
@@ -2227,6 +2238,7 @@
 	Inherits@minidrone: ^MiniDroneAttachable
 	Inherits@WatcherParasite: ^WatcherParasiteAttachable
 	Inherits@ShadowBeacon: ^ShadowBeaconAttachable
+	Inherits@TargetPaintable: ^TargetPaintable
 	Inherits@lchrheal: ^LeecherHealable
 	Inherits@Blindable: ^Blindable
 	Inherits@KillZoneTargetable: ^KillZoneTargetable
@@ -2845,6 +2857,7 @@
 	Inherits@TNTPlantable: ^TNTPlantable
 	Inherits@minidrone: ^MiniDroneAttachable
 	Inherits@WatcherParasite: ^WatcherParasiteAttachable
+	Inherits@TargetPaintable: ^TargetPaintable
 	Inherits@Blindable: ^Blindable
 	Inherits@KillZoneTargetable: ^KillZoneTargetable
 	Inherits@Anathema: ^Anathema
@@ -3291,6 +3304,7 @@
 	Inherits@gflash: ^GreenFlash
 	Inherits@HACKABLE: ^Hackable
 	Inherits@WatcherParasite: ^WatcherParasiteAttachable
+	Inherits@TargetPaintable: ^TargetPaintable
 	Inherits@DefensePolicyDamageReduction: ^DefensePolicyDamageReduction
 	WithPalettedOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability && !forceshield

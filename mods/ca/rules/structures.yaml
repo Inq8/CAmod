@@ -5778,6 +5778,9 @@ UPGC:
 		RequiresCondition: !build-incomplete && tower.shield
 		Prerequisite: hold3.strat
 		RequiresPrerequisites: hold.strat
+	ProvidesPrerequisite@AMPDROP:
+		RequiresCondition: !build-incomplete && tower.drop
+		Prerequisite: dropzone
 	GrantConditionOnPrerequisite:
 		Prerequisites: nshield
 		Condition: nshield-active
@@ -5823,6 +5826,9 @@ UPGC.BOMB:
 		Amount: -75
 	RenderSprites:
 		PlayerPalette: playertd
+	WithProductionIconOverlay:
+		Types: Upgrade
+		Prerequisites: bombard3.strat
 
 UPGC.SEEK:
 	Inherits: ^BuildingPlug
@@ -5845,6 +5851,9 @@ UPGC.SEEK:
 		Amount: -75
 	RenderSprites:
 		PlayerPalette: playertd
+	WithProductionIconOverlay:
+		Types: Upgrade
+		Prerequisites: seek3.strat
 
 UPGC.HOLD:
 	Inherits: ^BuildingPlug
@@ -5867,6 +5876,9 @@ UPGC.HOLD:
 		Amount: -75
 	RenderSprites:
 		PlayerPalette: playertd
+	WithProductionIconOverlay:
+		Types: Upgrade
+		Prerequisites: hold3.strat
 
 UPGC.DROP:
 	Inherits: ^BuildingPlug
@@ -5889,6 +5901,9 @@ UPGC.DROP:
 		Amount: -50
 	RenderSprites:
 		PlayerPalette: playertd
+	WithProductionIconOverlay:
+		Types: Upgrade
+		Prerequisites: dropzone
 
 TMPP:
 	Inherits: ^BuildingTD
@@ -6130,7 +6145,7 @@ IOK:
 	Tooltip:
 		Name: Idol of Kane
 	TooltipExtras:
-		Strengths: • Buffs friendly infantry\n• Debuffs enemy infantry\n• Provides vision
+		Strengths: • Increases damage and movement speed of friendly infantry\n• Reduces damage and movement speed of enemy infantry\n• Provides vision
 		Weaknesses: • Cannot attack
 		Attributes: • Special Ability: Rage Generator (enemy units within range go berserk)
 	Armor:

@@ -6,6 +6,8 @@
 		BuildDurationModifier: 100
 	ProvidesPrerequisite@upgradename:
 	ProvidesUpgrade@upgradename:
+	WithProductionIconOverlay:
+		Types: Upgrade
 
 #########################SHARED#########
 ########################################
@@ -28,6 +30,8 @@ hazmat.upgrade:
 	ProductionCostMultiplier@NODDISCOUNT:
 		Multiplier: 70
 		Prerequisites: player.nod
+	WithProductionIconOverlay:
+		Prerequisites: hazmat.upgrade
 
 flakarmor.upgrade:
 	Inherits: ^Upgrade
@@ -43,6 +47,8 @@ flakarmor.upgrade:
 		Cost: 1500
 	RenderSprites:
 		Image: flakarmor.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: flakarmor.upgrade
 
 #########################GDI#########
 ########################################
@@ -78,6 +84,8 @@ bombard.strat:
 	UpdatesCount:
 		Type: StrategyLevel
 	UpdatesBuildOrder:
+	WithProductionIconOverlay:
+		Prerequisites: bombard.strat
 
 bombard2.strat:
 	Inherits: bombard.strat
@@ -96,6 +104,8 @@ bombard2.strat:
 	UpdatesCount:
 		Type: StrategyLevel
 	UpdatesBuildOrder:
+	WithProductionIconOverlay:
+		Prerequisites: bombard2.strat
 
 seek.strat:
 	Inherits: ^Upgrade
@@ -119,6 +129,8 @@ seek.strat:
 	UpdatesCount:
 		Type: StrategyLevel
 	UpdatesBuildOrder:
+	WithProductionIconOverlay:
+		Prerequisites: seek.strat
 
 seek2.strat:
 	Inherits: seek.strat
@@ -137,6 +149,8 @@ seek2.strat:
 	UpdatesCount:
 		Type: StrategyLevel
 	UpdatesBuildOrder:
+	WithProductionIconOverlay:
+		Prerequisites: seek2.strat
 
 hold.strat:
 	Inherits: ^Upgrade
@@ -160,6 +174,8 @@ hold.strat:
 	UpdatesCount:
 		Type: StrategyLevel
 	UpdatesBuildOrder:
+	WithProductionIconOverlay:
+		Prerequisites: hold.strat
 
 hold2.strat:
 	Inherits: hold.strat
@@ -178,6 +194,8 @@ hold2.strat:
 	UpdatesCount:
 		Type: StrategyLevel
 	UpdatesBuildOrder:
+	WithProductionIconOverlay:
+		Prerequisites: hold2.strat
 
 vulcan.upgrade:
 	Inherits: ^Upgrade
@@ -194,6 +212,8 @@ vulcan.upgrade:
 		Cost: 750
 	RenderSprites:
 		Image: vulcan.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: vulcan.upgrade
 
 bjet.upgrade:
 	Inherits: ^Upgrade
@@ -210,6 +230,8 @@ bjet.upgrade:
 		Cost: 750
 	RenderSprites:
 		Image: bjet.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: bjet.upgrade
 
 empgren.upgrade:
 	Inherits: ^Upgrade
@@ -226,6 +248,8 @@ empgren.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: empgren.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: empgren.upgrade
 
 strata10.upgrade:
 	Inherits: ^Upgrade
@@ -240,6 +264,8 @@ strata10.upgrade:
 		Cost: 750
 	RenderSprites:
 		Image: strategic.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: strata10.upgrade
 
 avenger.upgrade:
 	Inherits: ^Upgrade
@@ -257,6 +283,8 @@ avenger.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: avenger.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: avenger.upgrade
 
 sidewinders.upgrade:
 	Inherits: ^Upgrade
@@ -273,6 +301,8 @@ sidewinders.upgrade:
 		Cost: 750
 	RenderSprites:
 		Image: sidewinders.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: sidewinders.upgrade
 
 ceramic.upgrade:
 	Inherits: ^Upgrade
@@ -289,6 +319,8 @@ ceramic.upgrade:
 		Cost: 750
 	RenderSprites:
 		Image: ceramic.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: ceramic.upgrade
 
 strategic.upgrade:
 	Inherits: ^Upgrade
@@ -303,6 +335,8 @@ strategic.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: strategic.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: strategic.upgrade
 
 thwk.upgrade:
 	Inherits: ^Upgrade
@@ -320,6 +354,8 @@ thwk.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: thwk.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: thwk.upgrade
 
 tow.upgrade:
 	Inherits: ^Upgrade
@@ -336,6 +372,8 @@ tow.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: tow.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: tow.upgrade
 
 pointdef.upgrade:
 	Inherits: ^Upgrade
@@ -352,6 +390,8 @@ pointdef.upgrade:
 		Cost: 1500
 	RenderSprites:
 		Image: pointdef.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: pointdef.upgrade
 
 stratmiss.upgrade:
 	Inherits: ^Upgrade
@@ -366,6 +406,8 @@ stratmiss.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: strategic.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: stratmiss.upgrade
 
 hailstorm.upgrade:
 	Inherits: ^Upgrade
@@ -383,6 +425,8 @@ hailstorm.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: hailstorm.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: hailstorm.upgrade
 
 hypersonic.upgrade:
 	Inherits: ^Upgrade
@@ -399,6 +443,8 @@ hypersonic.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: hypersonic.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: hypersonic.upgrade
 
 hammerhead.upgrade:
 	Inherits: ^Upgrade
@@ -415,6 +461,8 @@ hammerhead.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: hammerhead.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: hammerhead.upgrade
 
 sonic.upgrade:
 	Inherits: ^Upgrade
@@ -431,6 +479,8 @@ sonic.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: sonic.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: sonic.upgrade
 
 abur.upgrade:
 	Inherits: ^Upgrade
@@ -447,6 +497,8 @@ abur.upgrade:
 		Cost: 750
 	RenderSprites:
 		Image: abur.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: abur.upgrade
 
 bdrone.upgrade:
 	Inherits: ^Upgrade
@@ -467,6 +519,8 @@ bdrone.upgrade:
 	AnnounceOnCreation:
 		SoundNotification: UPG-bdrone
 		Delay: 60
+	WithProductionIconOverlay:
+		Prerequisites: bdrone.upgrade
 
 railgun.upgrade:
 	Inherits: ^Upgrade
@@ -486,6 +540,8 @@ railgun.upgrade:
 		Delay: 60
 	RenderSprites:
 		Image: railgun.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: railgun.upgrade
 
 ionmam.upgrade:
 	Inherits: ^Upgrade
@@ -505,6 +561,8 @@ ionmam.upgrade:
 	AnnounceOnCreation:
 		SoundNotification: UPG-ionmam
 		Delay: 60
+	WithProductionIconOverlay:
+		Prerequisites: ionmam.upgrade
 
 hovermam.upgrade:
 	Inherits: ^Upgrade
@@ -524,6 +582,8 @@ hovermam.upgrade:
 	AnnounceOnCreation:
 		SoundNotification: UPG-hovermam
 		Delay: 60
+	WithProductionIconOverlay:
+		Prerequisites: hovermam.upgrade
 
 mdrone.upgrade:
 	Inherits: ^Upgrade
@@ -544,6 +604,8 @@ mdrone.upgrade:
 	AnnounceOnCreation:
 		SoundNotification: UPG-mdrone
 		Delay: 60
+	WithProductionIconOverlay:
+		Prerequisites: mdrone.upgrade
 
 gyro.upgrade:
 	Inherits: ^Upgrade
@@ -560,6 +622,8 @@ gyro.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: gyro.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: gyro.upgrade
 
 #########################NOD#########
 ########################################
@@ -589,6 +653,8 @@ wrath.covenant:
 	RenderSprites:
 		Image: wrath.covenant
 	UpdatesBuildOrder:
+	WithProductionIconOverlay:
+		Prerequisites: wrath.covenant
 
 unity.covenant:
 	Inherits: ^Upgrade
@@ -606,6 +672,8 @@ unity.covenant:
 	RenderSprites:
 		Image: unity.covenant
 	UpdatesBuildOrder:
+	WithProductionIconOverlay:
+		Prerequisites: unity.covenant
 
 zeal.covenant:
 	Inherits: ^Upgrade
@@ -623,6 +691,8 @@ zeal.covenant:
 	RenderSprites:
 		Image: zeal.covenant
 	UpdatesBuildOrder:
+	WithProductionIconOverlay:
+		Prerequisites: zeal.covenant
 
 howi.upgrade:
 	Inherits: ^Upgrade
@@ -645,6 +715,8 @@ howi.upgrade:
 	ProductionTimeMultiplier@blackh:
 		Multiplier: 0
 		Prerequisites: radar.blackh
+	WithProductionIconOverlay:
+		Prerequisites: howi.upgrade
 
 decoy.upgrade:
 	Inherits: ^Upgrade
@@ -660,6 +732,8 @@ decoy.upgrade:
 		Cost: 750
 	RenderSprites:
 		Image: decoy.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: decoy.upgrade
 
 sharv.upgrade:
 	Inherits: ^Upgrade
@@ -676,6 +750,8 @@ sharv.upgrade:
 		Cost: 1500
 	RenderSprites:
 		Image: sharv.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: sharv.upgrade
 
 tibcore.upgrade:
 	Inherits: ^Upgrade
@@ -695,6 +771,8 @@ tibcore.upgrade:
 	AnnounceOnCreation:
 		SoundNotification: UPG-tibcore
 		Delay: 60
+	WithProductionIconOverlay:
+		Prerequisites: tibcore.upgrade
 
 lastnk.upgrade:
 	Inherits: ^Upgrade
@@ -711,6 +789,8 @@ lastnk.upgrade:
 		Cost: 750
 	RenderSprites:
 		Image: lastnk.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: lastnk.upgrade
 
 blacknapalm.upgrade:
 	Inherits: ^Upgrade
@@ -727,6 +807,8 @@ blacknapalm.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: blacknapalm.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: blacknapalm.upgrade
 
 microwave.upgrade:
 	Inherits: ^Upgrade
@@ -746,6 +828,8 @@ microwave.upgrade:
 	AnnounceOnCreation:
 		SoundNotification: UPG-microwave
 		Delay: 60
+	WithProductionIconOverlay:
+		Prerequisites: microwave.upgrade
 
 quantum.upgrade:
 	Inherits: ^Upgrade
@@ -761,6 +845,8 @@ quantum.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: quantum.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: quantum.upgrade
 
 hstk.upgrade:
 	Inherits: ^Upgrade
@@ -777,6 +863,8 @@ hstk.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: hstk.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: hstk.upgrade
 
 advcyber.upgrade:
 	Inherits: ^Upgrade
@@ -791,6 +879,8 @@ advcyber.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: advcyber.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: advcyber.upgrade
 
 cyborgarmor.upgrade:
 	Inherits: ^Upgrade
@@ -807,6 +897,8 @@ cyborgarmor.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: cyborgarmor.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: cyborgarmor.upgrade
 
 covenant.upgrade:
 	Inherits: ^Upgrade
@@ -821,6 +913,8 @@ covenant.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: covenant.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: covenant.upgrade
 
 cyborgdmg.upgrade:
 	Inherits: ^Upgrade
@@ -837,6 +931,8 @@ cyborgdmg.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: cyborgdmg.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: cyborgdmg.upgrade
 
 cyborgprod.upgrade:
 	Inherits: ^Upgrade
@@ -853,6 +949,8 @@ cyborgprod.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: cyborgprod.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: cyborgprod.upgrade
 
 cyborgspeed.upgrade:
 	Inherits: ^Upgrade
@@ -869,6 +967,8 @@ cyborgspeed.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: cyborgspeed.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: cyborgspeed.upgrade
 
 #########################SOVIET#########
 ########################################
@@ -897,6 +997,8 @@ infantry.doctrine:
 	RenderSprites:
 		Image: infantry.doctrine
 	UpdatesBuildOrder:
+	WithProductionIconOverlay:
+		Prerequisites: infantry.doctrine
 
 armor.doctrine:
 	Inherits: ^Upgrade
@@ -913,6 +1015,8 @@ armor.doctrine:
 	RenderSprites:
 		Image: armor.doctrine
 	UpdatesBuildOrder:
+	WithProductionIconOverlay:
+		Prerequisites: armor.doctrine
 
 arty.doctrine:
 	Inherits: ^Upgrade
@@ -929,6 +1033,8 @@ arty.doctrine:
 	RenderSprites:
 		Image: arty.doctrine
 	UpdatesBuildOrder:
+	WithProductionIconOverlay:
+		Prerequisites: arty.doctrine
 
 hazmatsoviet.upgrade:
 	Inherits: ^Upgrade
@@ -945,6 +1051,8 @@ hazmatsoviet.upgrade:
 		Cost: 850
 	RenderSprites:
 		Image: hazmats.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: hazmatsoviet.upgrade
 
 tdog.upgrade:
 	Inherits: ^Upgrade
@@ -961,6 +1069,8 @@ tdog.upgrade:
 		Cost: 750
 	RenderSprites:
 		Image: tdog.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: tdog.upgrade
 
 lasher.upgrade:
 	Inherits: ^Upgrade
@@ -977,6 +1087,8 @@ lasher.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: lasher.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: lasher.upgrade
 
 gattling.upgrade:
 	Inherits: ^Upgrade
@@ -993,6 +1105,8 @@ gattling.upgrade:
 		Cost: 750
 	RenderSprites:
 		Image: gattling.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: gattling.upgrade
 
 v3.upgrade:
 	Inherits: ^Upgrade
@@ -1009,6 +1123,8 @@ v3.upgrade:
 		Cost: 750
 	RenderSprites:
 		Image: v3.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: v3.upgrade
 
 ttrp.upgrade:
 	Inherits: ^Upgrade
@@ -1025,6 +1141,8 @@ ttrp.upgrade:
 		Cost: 500
 	RenderSprites:
 		Image: ttrp.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: ttrp.upgrade
 
 deso.upgrade:
 	Inherits: ^Upgrade
@@ -1041,6 +1159,8 @@ deso.upgrade:
 		Cost: 500
 	RenderSprites:
 		Image: deso.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: deso.upgrade
 
 tarc.upgrade:
 	Inherits: ^Upgrade
@@ -1056,6 +1176,8 @@ tarc.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: tarc.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: tarc.upgrade
 
 seismic.upgrade:
 	Inherits: ^Upgrade
@@ -1075,6 +1197,8 @@ seismic.upgrade:
 	AnnounceOnCreation:
 		SoundNotification: UPG-seismic
 		Delay: 60
+	WithProductionIconOverlay:
+		Prerequisites: seismic.upgrade
 
 doctrine.upgrade1:
 	Inherits: ^Upgrade
@@ -1088,6 +1212,8 @@ doctrine.upgrade1:
 		Cost: 750
 	RenderSprites:
 		Image: doctrine.upgrade1
+	WithProductionIconOverlay:
+		Prerequisites: doctrine.upgrade1
 
 imppara.upgrade:
 	Inherits: ^Upgrade
@@ -1103,6 +1229,8 @@ imppara.upgrade:
 		Cost: 750
 	RenderSprites:
 		Image: imppara.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: imppara.upgrade
 
 impstorm.upgrade:
 	Inherits: ^Upgrade
@@ -1118,6 +1246,8 @@ impstorm.upgrade:
 		Cost: 750
 	RenderSprites:
 		Image: impstorm.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: impstorm.upgrade
 
 impmuta.upgrade:
 	Inherits: ^Upgrade
@@ -1133,6 +1263,8 @@ impmuta.upgrade:
 		Cost: 750
 	RenderSprites:
 		Image: impmuta.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: impmuta.upgrade
 
 reactive.upgrade:
 	Inherits: ^Upgrade
@@ -1148,6 +1280,8 @@ reactive.upgrade:
 		Cost: 750
 	RenderSprites:
 		Image: reactive.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: reactive.upgrade
 
 rocketpods.upgrade:
 	Inherits: ^Upgrade
@@ -1163,6 +1297,8 @@ rocketpods.upgrade:
 		Cost: 750
 	RenderSprites:
 		Image: rocketpods.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: rocketpods.upgrade
 
 atomicengines.upgrade:
 	Inherits: ^Upgrade
@@ -1179,6 +1315,8 @@ atomicengines.upgrade:
 		Cost: 750
 	RenderSprites:
 		Image: atomicengines.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: atomicengines.upgrade
 
 erad.upgrade:
 	Inherits: ^Upgrade
@@ -1195,6 +1333,8 @@ erad.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: erad.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: erad.upgrade
 
 doctrine.upgrade2:
 	Inherits: ^Upgrade
@@ -1208,6 +1348,8 @@ doctrine.upgrade2:
 		Cost: 1000
 	RenderSprites:
 		Image: doctrine.upgrade2
+	WithProductionIconOverlay:
+		Prerequisites: doctrine.upgrade2
 
 ovld.upgrade:
 	Inherits: ^Upgrade
@@ -1224,6 +1366,8 @@ ovld.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: ovld.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: ovld.upgrade
 
 apoc.upgrade:
 	Inherits: ^Upgrade
@@ -1240,6 +1384,8 @@ apoc.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: apoc.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: apoc.upgrade
 
 nukc.upgrade:
 	Inherits: ^Upgrade
@@ -1256,6 +1402,8 @@ nukc.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: nukc.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: nukc.upgrade
 
 #######################ALLIES############################
 #########################################################
@@ -1284,6 +1432,8 @@ economy.policy:
 	RenderSprites:
 		Image: economy.policy
 	UpdatesBuildOrder:
+	WithProductionIconOverlay:
+		Prerequisites: economy.policy
 
 defense.policy:
 	Inherits: ^Upgrade
@@ -1300,6 +1450,8 @@ defense.policy:
 	RenderSprites:
 		Image: defense.policy
 	UpdatesBuildOrder:
+	WithProductionIconOverlay:
+		Prerequisites: defense.policy
 
 development.policy:
 	Inherits: ^Upgrade
@@ -1316,6 +1468,8 @@ development.policy:
 	RenderSprites:
 		Image: development.policy
 	UpdatesBuildOrder:
+	WithProductionIconOverlay:
+		Prerequisites: development.policy
 
 greece.coalition:
 	Inherits: ^Upgrade
@@ -1335,6 +1489,8 @@ greece.coalition:
 		SpeechNotification: CoalitionActive
 		Delay: 40
 	UpdatesBuildOrder:
+	WithProductionIconOverlay:
+		Prerequisites: greece.coalition
 
 korea.coalition:
 	Inherits: ^Upgrade
@@ -1354,6 +1510,8 @@ korea.coalition:
 		SpeechNotification: CoalitionActive
 		Delay: 40
 	UpdatesBuildOrder:
+	WithProductionIconOverlay:
+		Prerequisites: korea.coalition
 
 sweden.coalition:
 	Inherits: ^Upgrade
@@ -1373,6 +1531,8 @@ sweden.coalition:
 		SpeechNotification: CoalitionActive
 		Delay: 40
 	UpdatesBuildOrder:
+	WithProductionIconOverlay:
+		Prerequisites: sweden.coalition
 
 rapc.upgrade:
 	Inherits: ^Upgrade
@@ -1390,6 +1550,8 @@ rapc.upgrade:
 		Cost: 750
 	RenderSprites:
 		Image: rapc.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: rapc.upgrade
 
 optics.upgrade:
 	Inherits: ^Upgrade
@@ -1406,6 +1568,8 @@ optics.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: optics.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: optics.upgrade
 
 entrench.upgrade:
 	Inherits: ^Upgrade
@@ -1422,6 +1586,8 @@ entrench.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: entrench.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: entrench.upgrade
 
 cryw.upgrade:
 	Inherits: ^Upgrade
@@ -1438,6 +1604,8 @@ cryw.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: cryw.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: cryw.upgrade
 
 pcan.upgrade:
 	Inherits: ^Upgrade
@@ -1455,6 +1623,8 @@ pcan.upgrade:
 		Cost: 750
 	RenderSprites:
 		Image: pcan.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: pcan.upgrade
 
 apb.upgrade:
 	Inherits: ^Upgrade
@@ -1472,6 +1642,8 @@ apb.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: apb.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: apb.upgrade
 
 airborne.upgrade:
 	Inherits: ^Upgrade
@@ -1488,6 +1660,8 @@ airborne.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: airborne.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: airborne.upgrade
 
 tflx.upgrade:
 	Inherits: ^Upgrade
@@ -1504,6 +1678,8 @@ tflx.upgrade:
 		Cost: 750
 	RenderSprites:
 		Image: tflx.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: tflx.upgrade
 
 charv.upgrade:
 	Inherits: ^Upgrade
@@ -1520,6 +1696,8 @@ charv.upgrade:
 		Cost: 1250
 	RenderSprites:
 		Image: charv.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: charv.upgrade
 
 ################################SCRIN##############################
 ###################################################################
@@ -1549,6 +1727,8 @@ loyalist.allegiance:
 	RenderSprites:
 		Image: loyalist.allegiance
 	UpdatesBuildOrder:
+	WithProductionIconOverlay:
+		Prerequisites: loyalist.allegiance
 
 rebel.allegiance:
 	Inherits: ^Upgrade
@@ -1566,6 +1746,8 @@ rebel.allegiance:
 	RenderSprites:
 		Image: rebel.allegiance
 	UpdatesBuildOrder:
+	WithProductionIconOverlay:
+		Prerequisites: rebel.allegiance
 
 malefic.allegiance:
 	Inherits: ^Upgrade
@@ -1583,6 +1765,8 @@ malefic.allegiance:
 	RenderSprites:
 		Image: malefic.allegiance
 	UpdatesBuildOrder:
+	WithProductionIconOverlay:
+		Prerequisites: malefic.allegiance
 
 hyper.upgrade:
 	Inherits: ^Upgrade
@@ -1599,6 +1783,8 @@ hyper.upgrade:
 		Cost: 1250
 	RenderSprites:
 		Image: hyper.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: hyper.upgrade
 
 allegiance.upgrade:
 	Inherits: ^Upgrade
@@ -1613,6 +1799,8 @@ allegiance.upgrade:
 		Cost: 750
 	RenderSprites:
 		Image: allegiance.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: allegiance.upgrade
 
 evis.upgrade:
 	Inherits: ^Upgrade
@@ -1630,6 +1818,8 @@ evis.upgrade:
 		Cost: 750
 	RenderSprites:
 		Image: evis.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: evis.upgrade
 
 impl.upgrade:
 	Inherits: ^Upgrade
@@ -1647,6 +1837,8 @@ impl.upgrade:
 		Cost: 750
 	RenderSprites:
 		Image: impl.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: impl.upgrade
 
 stlk.upgrade:
 	Inherits: ^Upgrade
@@ -1664,6 +1856,8 @@ stlk.upgrade:
 		Cost: 750
 	RenderSprites:
 		Image: stlk.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: stlk.upgrade
 
 shrw.upgrade:
 	Inherits: ^Upgrade
@@ -1681,6 +1875,8 @@ shrw.upgrade:
 		Cost: 750
 	RenderSprites:
 		Image: shrw.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: shrw.upgrade
 
 advart.upgrade:
 	Inherits: ^Upgrade
@@ -1697,6 +1893,8 @@ advart.upgrade:
 		Cost: 1250
 	RenderSprites:
 		Image: advart.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: advart.upgrade
 
 carapace.upgrade:
 	Inherits: ^Upgrade
@@ -1713,6 +1911,8 @@ carapace.upgrade:
 		Cost: 1500
 	RenderSprites:
 		Image: carapace.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: carapace.upgrade
 
 blink.upgrade:
 	Inherits: ^Upgrade
@@ -1729,6 +1929,8 @@ blink.upgrade:
 		Cost: 750
 	RenderSprites:
 		Image: blink.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: blink.upgrade
 
 resconv.upgrade:
 	Inherits: ^Upgrade
@@ -1737,7 +1939,7 @@ resconv.upgrade:
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.scrin, scrt, ~techlevel.high
-		Description: Weapons of certain units are empowered\n  by Tiberium and other resources. Reaper Tripod gains\n  additional charges\n\nUpgrades: Devourer\nUpgrades: Ruiner\nUpgrades: Reaper Tripod\nUpgrades: Eviscerator
+		Description: Weapons of certain units are empowered\n  by Tiberium and other resources. Reaper Tripod gains\n  additional charges.\n\nUpgrades: Devourer\nUpgrades: Ruiner\nUpgrades: Reaper Tripod\nUpgrades: Eviscerator
 		IconPalette: chromes
 	TooltipExtras:
 		Strengths: + Increased damage when charged\n+ Doubled charge capacity (Reaper Tripod only)
@@ -1745,6 +1947,8 @@ resconv.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: resconv.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: resconv.upgrade
 
 ioncon.upgrade:
 	Inherits: ^Upgrade
@@ -1761,6 +1965,8 @@ ioncon.upgrade:
 		Cost: 1250
 	RenderSprites:
 		Image: ioncon.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: ioncon.upgrade
 
 regen.upgrade:
 	Inherits: ^Upgrade
@@ -1777,6 +1983,8 @@ regen.upgrade:
 		Cost: 1500
 	RenderSprites:
 		Image: regen.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: regen.upgrade
 
 stellar.upgrade:
 	Inherits: ^Upgrade
@@ -1794,6 +2002,8 @@ stellar.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: stellar.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: stellar.upgrade
 
 coalescence.upgrade:
 	Inherits: ^Upgrade
@@ -1811,6 +2021,8 @@ coalescence.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: coalescence.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: coalescence.upgrade
 
 shields.upgrade:
 	Inherits: ^Upgrade
@@ -1827,3 +2039,5 @@ shields.upgrade:
 		Cost: 1500
 	RenderSprites:
 		Image: shields.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: shields.upgrade

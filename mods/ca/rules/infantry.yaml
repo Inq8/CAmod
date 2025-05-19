@@ -89,7 +89,7 @@ DOG:
 	-Targetable@SpyDisguise:
 	TargetedAttackAbility:
 		TargetCursor: attack
-		ArmamentName: primary
+		ArmamentNames: primary
 		CircleWidth: 0
 		Type: DogAttack
 
@@ -3586,7 +3586,7 @@ SHAD:
 		ColorSource: Player
 	TargetedAttackAbility:
 		ActiveCondition: throwing-beacon
-		ArmamentName: tertiary
+		ArmamentNames: tertiary
 		CircleColor: 8888aa
 		Type: ShadowBeacon
 		CancelAfterAttack: true
@@ -4282,7 +4282,7 @@ ENLI:
 		ShowSelectionBar: true
 	TargetedAttackAbility:
 		ActiveCondition: emp-attack
-		ArmamentName: secondary
+		ArmamentNames: secondary
 		CircleColor: b2b2e888
 		Type: EnlightenedEmp
 		TargetModifiedCursor: ability2
@@ -4787,6 +4787,9 @@ ENFO:
 	Armament@PRIMARY:
 		Weapon: EnforcerShotgun
 		LocalOffset: 350,0,341
+	Armament@PRIMARYLINE:
+		Weapon: EnforcerShotgunLine
+		LocalOffset: 350,0,341
 	Armament@BATF:
 		Name: batf
 		Weapon: EnforcerShotgun
@@ -4835,6 +4838,7 @@ HOPL:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
+		Attributes: • 25% of shots blind the target
 	Valued:
 		Cost: 650
 	Tooltip:
@@ -4852,13 +4856,13 @@ HOPL:
 	Armament@PRIMARY:
 		Weapon: HopliteGunCharged
 		LocalOffset: 350,40,341
-		PauseOnCondition: !primary-ammo || secondary-reloading
+		PauseOnCondition: recharge || secondary-reloading
 		ReloadingCondition: primary-reloading
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: HopliteGun
 		LocalOffset: 350,0,341
-		PauseOnCondition: !secondary-ammo || primary-ammo || primary-reloading
+		PauseOnCondition: !recharge || primary-reloading || charged-fired
 		ReloadingCondition: secondary-reloading
 	# to prevent moving forward while real weapons are paused
 	Armament@Targeter:
@@ -4896,36 +4900,17 @@ HOPL:
 		IdleSequences: idle, idle2
 		StandSequences: stand, stand2
 		DefaultAttackSequence: shoot
-	AmmoPool@Primary:
-		Ammo: 1
-		AmmoCondition: primary-ammo
-		Armaments: primary
-	AmmoPool@Secondary:
-		Name: secondary
-		Ammo: 3
-		InitialAmmo: 0
-		AmmoCondition: secondary-ammo
-		Armaments: secondary
-	ReloadAmmoPool@Primary:
-		AmmoPool: primary
-		Delay: 5
-		Count: 1
-		RequiresCondition: (secondary-ammo == 0 && !primary-reloading) || !attacking
-	ReloadAmmoPool@Secondary:
-		AmmoPool: secondary
-		Delay: 5
-		Count: 3
-		RequiresCondition: (primary-ammo == 0 && !secondary-reloading)
-	GrantConditionOnAttack@Attacking:
-		Condition: attacking
+	GrantConditionOnAttack@Charge:
+		Condition: recharge
 		ArmamentNames: primary, secondary
-		RevokeDelay: 100
-	ReloadAmmoPoolCA@SecondaryReset:
-		AmmoPool: secondary
-		Delay: 5
-		Count: -3
-		ShowSelectionBar: false
-		RequiresCondition: !attacking
+		RevokeDelay: 225
+		MaximumInstances: 3
+		IsCyclic: true
+		RevokeAll: true
+	GrantConditionOnAttack@ChargedFired:
+		Condition: charged-fired
+		ArmamentNames: primary
+		RevokeDelay: 1
 
 TIGR:
 	Inherits: ^Soldier
@@ -5117,7 +5102,6 @@ REAP:
 		Voice: Move
 	Passenger:
 		Voice: Move
-		CargoType: Vehicle
 	Guard:
 		Voice: Move
 	Voiced:
@@ -5163,7 +5147,7 @@ REAP:
 		RequiresCondition: !being-warped
 	TargetedAttackAbility:
 		ActiveCondition: snare-attack
-		ArmamentName: secondary
+		ArmamentNames: secondary
 		CircleColor: 00cc0088
 		Type: ReaperSnare
 		TargetModifiedCursor: ability2
