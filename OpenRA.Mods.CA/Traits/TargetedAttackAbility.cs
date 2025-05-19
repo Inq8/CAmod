@@ -12,7 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Graphics;
-using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Graphics;
 using OpenRA.Mods.Common.Orders;
 using OpenRA.Mods.Common.Traits;
@@ -77,6 +76,10 @@ namespace OpenRA.Mods.CA.Traits
 
 		[Desc("Name of the armament used to attack with.")]
 		public readonly string[] ArmamentNames = { "primary" };
+
+		[Desc("If true, the ability is usable with disabled (or reloading) armament(s).",
+			"Useful if the ability armament has longer range than standard armament(s) where the ability armament(s) being paused would interfere with their targeting.")]
+		public readonly bool UseDisabledArmaments = false;
 
 		[Desc("Ability type. When selecting a group, different types will not be activated together.")]
 		public readonly string Type = null;
@@ -195,7 +198,7 @@ namespace OpenRA.Mods.CA.Traits
 			get {
 				return !IsTraitDisabled
 					&& !IsTraitPaused
-					&& ((ammoPool != null && ammoPool.HasAmmo) || (ammoPool == null && Armaments.Any(a => !a.IsTraitDisabled && !a.IsReloading)));
+					&& ((ammoPool != null && ammoPool.HasAmmo) || (ammoPool == null && Armaments.Any(a => Info.UseDisabledArmaments || (!a.IsTraitDisabled && !a.IsReloading))));
 			}
 		}
 

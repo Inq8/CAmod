@@ -6549,7 +6549,7 @@ IFV:
 		LocalOffset: 192,100,256, 192,-100,256
 		RequiresCondition: reapturr
 	Armament@Spy:
-		Weapon: SpyIFV
+		Weapon: TargetPainter
 		RequiresCondition: spyturr
 		LocalOffset: 0,0,100
 	AutoTargetPriority@Spy:
@@ -7034,6 +7034,15 @@ IFV:
 		Angle: 60
 		Width: 86
 		Offset: 0,0,300
+	MindControllerCapacityModifier@RANK-1:
+		Amount: 1
+		RequiresCondition: rank-veteran == 1
+	MindControllerCapacityModifier@RANK-2:
+		Amount: 2
+		RequiresCondition: rank-veteran == 2
+	MindControllerCapacityModifier@RANK-ELITE:
+		Amount: 3
+		RequiresCondition: rank-elite
 
 IFV.AI:
 	Inherits: ^Tank
@@ -9036,11 +9045,11 @@ PBUL:
 		BuildPaletteOrder: 252
 		IconPalette: chrometd
 		Prerequisites: gtek, ~vehicles.eagle, ~techlevel.high
-		Description: Fast scout vehicle with rockets that briefly disable\n  the weapons and vision of vehicles and aircraft.
+		Description: Fast scout vehicle with rockets that briefly disable\n  the weapons and vision of vehicles and aircraft.\n  Can designate vehicles & buildings targets,\n  revealing them and increasing the damage they take.
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor, Aircraft
 		Weaknesses: • Weak vs Infantry, Buildings, Defenses
-		Attributes: • Can detect spies and cloaked units.
+		Attributes: • Can detect spies and cloaked units.\n• Special Ability: Target Painter
 	Valued:
 		Cost: 850
 	Tooltip:
@@ -9077,9 +9086,15 @@ PBUL:
 		LocalOffset: 0,-100,250, 0,100,250
 		PauseOnCondition: reloading-primary
 		ReloadingCondition: reloading-secondary
+	Armament@TERTIARY:
+		Name: tertiary
+		Weapon: TargetPainter
+		LocalOffset: 0,0,250
+		RequiresCondition: target-painting
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped || blinded
 		Voice: Attack
+		Armaments: primary, secondary, tertiary
 	AttackMove:
 		Voice: Attack
 	WithSpriteTurret:
@@ -9095,6 +9110,15 @@ PBUL:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: vehicles.upgraded
+	TargetedAttackAbility:
+		ActiveCondition: target-painting
+		ArmamentNames: tertiary
+		CircleColor: ffffff88
+		Type: PitbullTargetPainter
+		TargetModifiedCursor: ability2
+		ActiveUntilCancelled: true
+		CancelOnNewOrder: true
+		UseDisabledArmaments: true
 
 CYCP:
 	Inherits: ^Tank

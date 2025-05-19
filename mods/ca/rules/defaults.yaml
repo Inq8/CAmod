@@ -1986,20 +1986,20 @@
 		Limit: 1
 		AttachedCondition: observer-attached
 
-^SpyIFVTargetable:
-	ExternalCondition@SpyIFVTarget:
-		Condition: spy-ifv-target
-	DamageMultiplier@SpyIFVTarget:
+^TargetPaintable:
+	ExternalCondition@PaintedTarget:
+		Condition: painted-target
+	DamageMultiplier@PaintedTarget:
 		Modifier: 133
-		RequiresCondition: spy-ifv-target
-	WithDecoration@SpyIFVTarget:
-		Image: spyifvtarget
+		RequiresCondition: painted-target
+	WithDecoration@PaintedTarget:
+		Image: targetpainter
 		Sequence: idle
 		Palette: effect
 		Position: Top
 		ValidRelationships: Ally, Enemy, Neutral
 		Margin: 0, 8
-		RequiresCondition: spy-ifv-target
+		RequiresCondition: painted-target
 
 ^HoverTrail:
 	LeavesTrails:
@@ -2238,7 +2238,7 @@
 	Inherits@minidrone: ^MiniDroneAttachable
 	Inherits@WatcherParasite: ^WatcherParasiteAttachable
 	Inherits@ShadowBeacon: ^ShadowBeaconAttachable
-	Inherits@SpyIFVTargetable: ^SpyIFVTargetable
+	Inherits@TargetPaintable: ^TargetPaintable
 	Inherits@lchrheal: ^LeecherHealable
 	Inherits@Blindable: ^Blindable
 	Inherits@KillZoneTargetable: ^KillZoneTargetable
@@ -2857,7 +2857,7 @@
 	Inherits@TNTPlantable: ^TNTPlantable
 	Inherits@minidrone: ^MiniDroneAttachable
 	Inherits@WatcherParasite: ^WatcherParasiteAttachable
-	Inherits@SpyIFVTargetable: ^SpyIFVTargetable
+	Inherits@TargetPaintable: ^TargetPaintable
 	Inherits@Blindable: ^Blindable
 	Inherits@KillZoneTargetable: ^KillZoneTargetable
 	Inherits@Anathema: ^Anathema
@@ -3304,7 +3304,7 @@
 	Inherits@gflash: ^GreenFlash
 	Inherits@HACKABLE: ^Hackable
 	Inherits@WatcherParasite: ^WatcherParasiteAttachable
-	Inherits@SpyIFVTargetable: ^SpyIFVTargetable
+	Inherits@TargetPaintable: ^TargetPaintable
 	Inherits@DefensePolicyDamageReduction: ^DefensePolicyDamageReduction
 	WithPalettedOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability && !forceshield

@@ -288,7 +288,8 @@ namespace OpenRA.Mods.CA.Traits
 				if (order.Target.Type != TargetType.Actor)
 					return;
 
-				slaves.First(s => s.Actor == order.Target.Actor).Trait.RevokeMindControl(order.Target.Actor, 0);
+				var slave = slaves.SingleOrDefault(s => s.Actor == order.Target.Actor);
+				slave.Trait?.RevokeMindControl(order.Target.Actor, 0);
 
 				if (Info.SlaveDeployEffect == SlaveDeployEffect.Kill)
 				{
@@ -485,7 +486,7 @@ namespace OpenRA.Mods.CA.Traits
 				if (s.Actor.IsDead || s.Actor.Disposed)
 					continue;
 
-				if (s.Trait.Master.Value.Actor != self)
+				if (s.Trait.Master.HasValue && s.Trait.Master.Value.Actor != self)
 					continue;
 
 				s.Trait.RevokeMindControl(s.Actor, ticks);

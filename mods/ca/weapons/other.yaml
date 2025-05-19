@@ -2837,6 +2837,7 @@ JDAM:
 	ReloadDelay: 50
 	Report: bwhis.aud
 	Range: 3c0
+	MinRange: 2c0
 	TargetActorCenter: true
 	Projectile: GravityBomb
 		Image: MOAB_BOMB
@@ -3744,11 +3745,11 @@ TroopCrawlerDummyWeapon:
 	ReloadDelay: 25
 	Projectile: InstantHit
 
-SpyIFV:
+TargetPainter:
 	Range: 15c0
 	ReloadDelay: 25
 	ValidTargets: Vehicle, Ship, Structure
-	Report: spyifvbeep.aud
+	Report: targetpainterbeep.aud
 	Projectile: ArcLaserZap
 		Color: 55555560
 		Angle: 70
@@ -3761,5 +3762,9 @@ SpyIFV:
 	Warhead@Cond: GrantExternalConditionCA
 		Range: 0c42
 		Duration: 26
-		Condition: spy-ifv-target
+		Condition: painted-target
+		ValidTargets: Vehicle, Ship, Structure
+	Warhead@highlight: FlashTarget
+		Spread: 0c42
+		Color: ff0000
 		ValidTargets: Vehicle, Ship, Structure
