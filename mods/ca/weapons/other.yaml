@@ -516,10 +516,9 @@ PortaTeslaCharge:
 		Condition: charged
 		ValidRelationships: Ally
 		ValidTargets: TeslaBoost
-	Warhead@highlight: GrantExternalConditionCA
-		Range: 0c511
-		Duration: 2
-		Condition: highlight
+	Warhead@Flash: FlashTarget
+		Spread: 0c511
+		Color: ffffff
 		ValidTargets: Ground, Vehicle
 
 TTrackZap:
@@ -726,10 +725,9 @@ Repair:
 	-Warhead@2Dam:
 	-Warhead@3Dam:
 	-Warhead@4Dam:
-	Warhead@highlight: GrantExternalConditionCA
-		Range: 0c511
-		Duration: 2
-		Condition: highlight
+	Warhead@Flash: FlashTarget
+		Spread: 0c511
+		Color: ffffff
 		ValidTargets: Repair
 
 CyborgRepair:
@@ -756,18 +754,14 @@ RepairFlash:
 	-Warhead@2Dam:
 	-Warhead@3Dam:
 	-Warhead@4Dam:
-	Warhead@highlight: GrantExternalConditionCA
-		Range: 2c511
-		Duration: 2
-		Condition: highlight
+	Warhead@Flash: FlashTarget
+		Spread: 1c0
+		Color: ffffff
 		ValidTargets: Repair
 
 ShieldFlash:
 	Inherits: RepairFlash
-	Warhead@highlight: GrantExternalConditionCA
-		Range: 2c511
-		Duration: 2
-		Condition: highlight
+	Warhead@Flash: FlashTarget
 		ValidTargets: Structure
 
 Demolish:
@@ -798,10 +792,9 @@ PlaceC4:
 		DeathTypes: ExplosionDeath
 		Range: 1
 	Warhead@TargetValidator: SpreadDamage
-	Warhead@highlight: GrantExternalConditionCA
-		Range: 0c256
-		Duration: 2
-		Condition: highlight
+	Warhead@Flash: FlashTarget
+		Spread: 0c256
+		Color: ffffff
 		ValidTargets: Ground, Structure, Vehicle
 
 PlaceC4Seal:
@@ -811,7 +804,7 @@ PlaceC4Seal:
 		TriggerTime: 20
 		Type: c4seal
 		ScaleTriggerTimeWithValue: true
-	Warhead@highlight: GrantExternalConditionCA
+	Warhead@Flash: FlashTarget
 		ValidTargets: Ground, Structure
 
 PlaceC4Assassin:
@@ -823,8 +816,8 @@ PrepareC4Seal:
 	Inherits: PlaceC4Seal
 	-Report:
 	-Warhead@AttachDelayedWeapon:
-	Warhead@highlight: GrantExternalConditionCA
-		Condition: redhighlight
+	Warhead@Flash: FlashTarget
+		Color: ff0000
 	Warhead@ProgressBar: GrantExternalConditionCA
 		Range: 0c256
 		Condition: c4seal-preparing
@@ -887,10 +880,9 @@ Ivanbomb:
 		AttachSounds: icraatta.aud
 		MissWeapon: DelayedTNT
 	Warhead@TargetValidator: SpreadDamage
-	Warhead@highlight: GrantExternalConditionCA
-		Range: 0c256
-		Duration: 2
-		Condition: highlight
+	Warhead@Flash: FlashTarget
+		Spread: 0c256
+		Color: ffffff
 		ValidTargets: Ground, Structure, Vehicle
 	-Warhead@1Dam:
 	-Warhead@2Smu:
@@ -992,10 +984,9 @@ Hack:
 		Actors: camera.hacker
 		Range: 1
 		ImpactActors: false
-	Warhead@green: GrantExternalConditionCA
-		Range: 0c511
-		Duration: 2
-		Condition: greenhighlight
+	Warhead@Flash: FlashTarget
+		Spread: 0c511
+		Color: 00ff00
 		ValidTargets: Structure, Vehicle
 		ValidRelationships: Neutral, Enemy
 	Warhead@BeingCaptured: GrantExternalConditionCA
@@ -1010,7 +1001,7 @@ PrepareHack:
 	-Report:
 	-Projectile:
 	Projectile: InstantHit
-	-Warhead@green:
+	-Warhead@Flash:
 
 MADTankDetonate:
 	InvalidTargets: Infantry
@@ -1343,6 +1334,10 @@ EnlightenedBeam:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees, Creep
+	Warhead@Flash: FlashTarget
+		Spread: 1c0
+		Color: 00ffff
+		ValidTargets: Vehicle, Ship
 
 EnlightenedEmp:
 	ReloadDelay: 500
@@ -2237,12 +2232,11 @@ MicrowaveZap.UPG:
 		Condition: empdisable
 		ValidTargets: Vehicle, Ship, Defense
 		InvalidTargets: EmpImmune
-	Warhead@highlight: GrantExternalConditionCA
-		Range: 0c511
-		ValidRelationships: Enemy, Ally
-		Duration: 2
-		Condition: highlight
+	Warhead@Flash: FlashTarget
+		Spread: 0c511
+		Color: ffffff
 		ValidTargets: DriverKillLow
+		ValidRelationships: Enemy, Ally
 
 HornetLauncher:
 	ReloadDelay: 15
@@ -2630,10 +2624,9 @@ CyCannon:
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
 		ImpactSounds: expnew16.aud, expnew17.aud
-	Warhead@green: GrantExternalConditionCA
-		Range: 0c511
-		Duration: 2
-		Condition: greenhighlight
+	Warhead@Flash: FlashTarget
+		Spread: 0c511
+		Color: 00ff00
 		ValidTargets: Ground, Vehicle
 
 NeutronCannon:
@@ -2999,10 +2992,9 @@ AttachShadowBeacon:
 		ValidTargets: ShadowBeaconAttachable
 	Warhead@TargetValidator: SpreadDamage
 		ValidTargets: ShadowBeaconAttachable
-	Warhead@highlight: GrantExternalConditionCA
-		Range: 341
-		Duration: 2
-		Condition: redhighlight
+	Warhead@Flash: FlashTarget
+		Spread: 341
+		Color: ff0000
 		ValidTargets: ShadowBeaconAttachable
 
 ^Debris:
@@ -3763,8 +3755,4 @@ TargetPainter:
 		Range: 0c42
 		Duration: 26
 		Condition: painted-target
-		ValidTargets: Vehicle, Ship, Structure
-	Warhead@highlight: FlashTarget
-		Spread: 0c42
-		Color: ff0000
 		ValidTargets: Vehicle, Ship, Structure

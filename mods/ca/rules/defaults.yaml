@@ -1832,11 +1832,6 @@
 		RequiresCondition: mindcontrolled
 		Offset: 0,0,300
 		IsDecoration: True
-	ExternalCondition@PHIGH:
-		Condition: pinkhighlight
-	WithColoredOverlay@PHIGH:
-		Color: ff00ff80
-		RequiresCondition: pinkhighlight
 	RejectsOrders@MindControlled:
 		Reject: Unload
 		RequiresCondition: mindcontrolled
@@ -1999,6 +1994,10 @@
 		Position: Top
 		ValidRelationships: Ally, Enemy, Neutral
 		Margin: 0, 8
+		RequiresCondition: painted-target
+	WithFlashEffect@PaintedTarget:
+		Color: ff0000
+		Interval: 25
 		RequiresCondition: painted-target
 
 ^HoverTrail:

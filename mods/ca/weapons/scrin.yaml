@@ -79,10 +79,9 @@ EnslaveInfantry:
 		Image: mindcontrol
 		ValidTargets: Ground
 		ValidRelationships: Neutral, Enemy
-	Warhead@PinkHighlight: GrantExternalConditionCA
-		Range: 0c341
-		Duration: 2
-		Condition: pinkhighlight
+	Warhead@Flash: FlashTarget
+		Spread: 341
+		Color: ff00ff
 		ValidTargets: Infantry
 		ValidRelationships: Neutral, Enemy
 
@@ -90,7 +89,7 @@ EnslaveVehicle:
 	Inherits: EnslaveInfantry
 	Range: 4c512
 	InvalidTargets: Infantry, MindControlImmune
-	Warhead@PinkHighlight: GrantExternalConditionCA
+	Warhead@Flash: FlashTarget
 		ValidTargets: Vehicle
 
 DetonateSlave:
@@ -1124,10 +1123,9 @@ IonCloudChargeZap:
 	-Warhead@1Dam:
 	-Warhead@2Smu:
 	-Warhead@3Eff:
-	Warhead@highlight: GrantExternalConditionCA
-		Range: 0c511
-		Duration: 2
-		Condition: highlight
+	Warhead@Flash: FlashTarget
+		Spread: 0c511
+		Color: ffffff
 		ValidTargets: Ground, Water, Air
 
 StormcrawlerZap:
@@ -1164,10 +1162,9 @@ GravityStabilizerZap:
 		PlayerColorZapAlpha: 100, 180
 		Duration: 6
 		Width: 32
-	Warhead@highlight: GrantExternalConditionCA
-		Range: 0c511
-		Duration: 1
-		Condition: highlight
+	Warhead@Flash: FlashTarget
+		Spread: 0c511
+		Color: ffffff
 		ValidTargets: Resupplying
 
 MothershipCharge:
@@ -1192,7 +1189,7 @@ MothershipChargeZap:
 		Duration: 3
 		Distortion: 160
 		DistortionAnimation: 160
-	Warhead@highlight: GrantExternalConditionCA
+	Warhead@Flash: FlashTarget
 		ValidTargets: MothershipRearmable
 	Warhead@rearm: GrantExternalConditionCA
 		Range: 0c511
@@ -1476,10 +1473,9 @@ WatcherDart:
 		MissSounds: dud1.aud
 		ValidTargets: WatcherParasiteAttachable
 		ValidRelationships: Enemy, Neutral
-	Warhead@highlight: GrantExternalConditionCA
-		Range: 341
-		Duration: 2
-		Condition: highlight
+	Warhead@Flash: FlashTarget
+		Spread: 341
+		Color: ffffff
 		ValidTargets: WatcherParasiteAttachable
 
 RiftInit:
@@ -1955,10 +1951,9 @@ AtomizerArc:
 		DistortionAnimation: 150
 		SegmentLength: 350
 		TrackTarget: true
-	Warhead@red: GrantExternalConditionCA
-		Range: 0c42
-		Duration: 2
-		Condition: redhighlight
+	Warhead@Flash: FlashTarget
+		Spread: 0c42
+		Color: ff0000
 		ValidTargets: Vehicle, Ship, Defense, Infantry
 	Warhead@atomize: GrantExternalConditionCA
 		Range: 0c42
@@ -2160,6 +2155,10 @@ ObliteratorBolt:
 		Inaccuracy: 110
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
+	Warhead@Flash: FlashTarget
+		Spread: 1c0
+		Color: 9c3ee0
+		ValidTargets: Infantry, Structure, Vehicle
 
 NullifierBolt:
 	Range: 8c0
@@ -2202,6 +2201,10 @@ NullifierBolt:
 		ExplosionPalette: caneon
 		Image: nullhit
 		ImpactSounds: null-hit1.aud
+	Warhead@Flash: FlashTarget
+		Spread: 0c128
+		Color: ffff00
+		ValidTargets: Infantry, Vehicle, Ship, Defense
 
 ScrinRepair:
 	Inherits: Heal
@@ -2218,9 +2221,7 @@ ScrinRepair:
 	-Warhead@2Dam:
 	-Warhead@3Dam:
 	-Warhead@4Dam:
-	Warhead@highlight: GrantExternalConditionCA
-		Range: 0c511
-		Duration: 2
-		Condition: highlight
+	Warhead@Flash: FlashTarget
+		Spread: 0c511
+		Color: ff0000
 		ValidTargets: Repair
-
