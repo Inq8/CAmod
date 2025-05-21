@@ -115,7 +115,8 @@ namespace OpenRA.Mods.CA.Warheads
 
 				firedBy.World.AddFrameEndTask(w =>
 				{
-					var isPositionable = firedBy.World.Map.Rules.Actors[a].TraitInfoOrDefault<IPositionableInfo>() != null;
+					var actorName = a.ToLowerInvariant();
+					var isPositionable = firedBy.World.Map.Rules.Actors[actorName].TraitInfoOrDefault<IPositionableInfo>() != null;
 					cell = targetCells.GetEnumerator();
 
 					if (!isPositionable)
@@ -141,7 +142,7 @@ namespace OpenRA.Mods.CA.Warheads
 					}
 					else
 					{
-						var unit = firedBy.World.CreateActor(false, a.ToLowerInvariant(), td);
+						var unit = firedBy.World.CreateActor(false, actorName, td);
 						var positionable = unit.TraitOrDefault<IPositionable>();
 
 						while (cell.MoveNext() && !placed)
