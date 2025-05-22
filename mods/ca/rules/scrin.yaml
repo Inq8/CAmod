@@ -1237,12 +1237,11 @@ MAST:
 	Armament@PRIMARY:
 		Weapon: EnslaveInfantry
 		LocalOffset: 150,0,400
-		PauseOnCondition: deployed
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: EnslaveVehicle
 		LocalOffset: 150,0,400
-		PauseOnCondition: deployed || !vs-vehicle-ammo
+		PauseOnCondition: !vs-vehicle-ammo
 	Armament@BATF:
 		Name: batf
 		Weapon: PsychicBeamBATF
@@ -1268,28 +1267,6 @@ MAST:
 		Offset: 0,0,511
 		Angle: 32
 		Width: 116
-	PeriodicExplosion:
-		Weapon: MindSparkSpawnerMaster
-		LocalOffset: 0,0,128
-		InitialDelay: 10
-		RequiresCondition: deployed && !being-warped
-	PeriodicExplosionOnSlaves:
-		ControlType: MindControl
-		Weapon: MindSparkSpawnerSlave
-		InitialDelay: 18
-		RequiresCondition: deployed && !being-warped
-	GrantTimedConditionOnDeploy:
-		DeployedTicks: 25
-		CooldownTicks: 250
-		DeployedCondition: deployed
-		ShowSelectionBar: true
-		ShowSelectionBarWhenFull: false
-		StartsFullyCharged: true
-		Voice: Action
-		PauseOnCondition: being-warped
-		DischargingColor: bb0000
-		ChargingColor: cc00cc
-		Instant: true
 	AttackFrontal:
 		PauseOnCondition: being-warped || blinded || reapersnare || parachute || !ammo
 		FacingTolerance: 0
@@ -1411,6 +1388,24 @@ MAST:
 		RequiresCondition: rank-elite
 	ChangesHealth@ELITE:
 		Delay: 50
+	SpawnActorAbility:
+		Actors: mspk
+		SpawnSounds: mastermind-shatter.aud
+		TargetModifiedCursor: ability2
+		Behavior: SpawnAtSelfAndSlavesAndMoveToTarget
+		RequiresCondition: !being-warped && mspk-ammo
+		AmmoPool: mspk
+	AmmoPool@MindSpark:
+		Name: mspk
+		Ammo: 1
+		Armaments: none
+		AmmoCondition: mspk-ammo
+	ReloadAmmoPoolCA@MindSpark:
+		AmmoPool: mspk
+		Delay: 375
+		Count: 1
+		ShowSelectionBar: true
+		SelectionBarColor: ff00ff
 
 MAST.Clone:
 	Inherits: MAST
@@ -3960,7 +3955,7 @@ MSHP:
 	Shielded:
 		MaxStrength: 26000
 	SpawnActorAbility:
-		Actor: wormhole
+		Actors: wormhole
 		SkipMakeAnimations: false
 		Range: 18c0
 		CircleColor: 9988ff
@@ -3969,6 +3964,7 @@ MSHP:
 		AmmoPool: wormholespawner
 		TargetModifiedCursor: ability2
 		ConcurrentLimit: 2
+		AvoidActors: true
 	AmmoPool@WORMHOLESPAWNER:
 		Name: wormholespawner
 		Armaments: none
@@ -5601,7 +5597,6 @@ SCOL:
 	Inherits: ^Defense
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
 	Inherits@AUTOTARGET: ^AutoTargetGround
-	Inherits@Flash: ^WhiteFlash
 	Inherits@IONCONDUITS: ^IonConduits
 	RenderSprites:
 		PlayerPalette: playerscrin
@@ -5952,6 +5947,8 @@ BUZZ:
 		Range: 1c256
 		Condition: blinded
 		ValidRelationships: Enemy, Neutral
+	Targetable:
+		TargetTypes: BuzzerSwarm
 
 BUZZ.AI:
 	Inherits: BUZZ
@@ -5964,7 +5961,7 @@ BUZZ.AI:
 MSPK:
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^SpriteActor
-	Inherits@selection: ^SelectableCombatUnit
+	Inherits@selection: ^SelectableSupportUnit
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Tooltip:
 		Name: Mind Spark
@@ -5975,6 +5972,9 @@ MSPK:
 		QuantizedFacings: 1
 	HiddenUnderFog:
 		Type: CenterPosition
+	Selectable:
+		Bounds: 896, 896
+		DecorationBounds: 896, 896
 	HitShape:
 	RevealsShroud:
 		Range: 5c0
@@ -6001,6 +6001,11 @@ MSPK:
 	WithColoredSelectionBox@PLAYERBOX:
 		ColorSource: Player
 		ValidRelationships: Ally, Enemy
+	Targetable:
+		TargetTypes: MindSpark
+	PeriodicExplosion:
+		Weapon: MindSparkEruption
+		LocalOffset: 0,0,128
 
 GRCL:
 	Inherits@1: ^ExistsInWorld

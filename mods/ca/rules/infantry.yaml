@@ -184,6 +184,7 @@ E2:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@Inspirable: ^Inspirable
+	Inherits@HeroOfTheUnionTargetableGrenFlamer: ^HeroOfTheUnionTargetableGrenFlamer
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -580,6 +581,7 @@ E4:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@Inspirable: ^Inspirable
+	Inherits@HeroOfTheUnionTargetableGrenFlamer: ^HeroOfTheUnionTargetableGrenFlamer
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -1577,6 +1579,7 @@ N2:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@Inspirable: ^Inspirable
+	Inherits@HeroOfTheUnionTargetableGrenFlamer: ^HeroOfTheUnionTargetableGrenFlamer
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -1750,6 +1753,7 @@ N4:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@Inspirable: ^Inspirable
+	Inherits@HeroOfTheUnionTargetableGrenFlamer: ^HeroOfTheUnionTargetableGrenFlamer
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -1804,6 +1808,10 @@ N4:
 		SpawnActors: N5
 	ReplacedInQueue:
 		Actors: n5
+	-RangeMultiplier@HeroOfTheUnion:
+	FirepowerMultiplier@HeroOfTheUnion:
+		RequiresCondition: herooftheunion
+		Modifier: 120
 
 N5:
 	Inherits: ^Cyborg
@@ -2522,7 +2530,7 @@ CONF:
 	Guard:
 		Voice: Move
 	SpawnActorAbility:
-		Actor: iok
+		Actors: iok
 		Range: 1c896
 		SkipMakeAnimations: false
 		CircleColor: ff000077
@@ -2531,6 +2539,7 @@ CONF:
 		TargetModifiedCursor: ability2
 		ConcurrentLimit: 1
 		KillExcessDamageTypes: SmallExplosionDeath
+		AvoidActors: true
 	AmmoPool@IdolOfKane:
 		Name: idol
 		Armaments: none

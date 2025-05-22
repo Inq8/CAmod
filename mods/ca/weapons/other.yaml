@@ -940,12 +940,10 @@ DefuseKit:
 		Width: 48
 		Duration: 4
 		Color: FFFFFF80
-	Warhead@flash: GrantExternalConditionCA
-		Range: 128
-		Duration: 3
-		Condition: detach
+	Warhead@Flash: FlashTarget
+		Spread: 128
+		Color: ffffff
 		ValidTargets: C4Attached, TNTAttached
-		ValidRelationships: Ally
 	Warhead@DetachDelayedWeapon: DetachDelayedWeapon
 		Types: c4, tnt, c4seal
 		Range: 128
@@ -3742,6 +3740,7 @@ TargetPainter:
 	ReloadDelay: 25
 	ValidTargets: Vehicle, Ship, Structure
 	Report: targetpainterbeep.aud
+	TargetActorCenter: true
 	Projectile: ArcLaserZap
 		Color: 55555560
 		Angle: 70

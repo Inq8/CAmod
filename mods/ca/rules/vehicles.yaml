@@ -3509,6 +3509,18 @@ BGGY:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: vehicles.upgraded
+	GrantConditionOnPrerequisite@ZealBonus:
+		Condition: zeal-covenant
+		Prerequisites: zeal.covenant
+	SpeedMultiplier@ZealBonus:
+		Modifier: 115
+		RequiresCondition: zeal-covenant
+	GrantConditionOnPrerequisite@BlackHandPlayer:
+		Condition: player-blackh
+		Prerequisites: player.blackh
+	GrantConditionOnPrerequisite@Decoy:
+		Condition: decoy-upgrade
+		Prerequisites: decoy.upgrade
 	AmmoPool@Decoy:
 		Name: decoyspawner
 		Armaments: decoyspawner
@@ -3523,47 +3535,30 @@ BGGY:
 		Delay: 1500
 		ShowSelectionBar: true
 		SelectionBarColor: aaaaaa
-	GrantTimedConditionOnDeploy@Decoy:
-		DeployedCondition: spawndecoy
-		RequiresCondition: decoy-upgrade && !(empdisable || being-warped)
-		ShowSelectionBar: false
-		StartsFullyCharged: true
-		DeployedTicks: 1
-		CooldownTicks: 1500
-		DeploySound: decoyspawn.aud
-		AudibleThroughFog: false
-		Instant: true
-	GrantConditionOnPrerequisite@BlackHandPlayer:
-		Condition: player-blackh
-		Prerequisites: player.blackh
-	PeriodicExplosion@DecoyFlameTank:
-		Weapon: DecoyFlameTankSpawner
-		RequiresCondition: spawndecoy && ammo && !player-blackh
-		AmmoPoolName: decoyspawner
-	PeriodicExplosion@DecoyHeavyFlameTank:
-		Weapon: DecoyHeavyFlameTankSpawner
-		RequiresCondition: spawndecoy && ammo && player-blackh
-		AmmoPoolName: decoyspawner
-	GrantConditionOnPrerequisite@Decoy:
-		Condition: decoy-upgrade
-		Prerequisites: decoy.upgrade
-	GrantConditionOnPrerequisite@ZealBonus:
-		Condition: zeal-covenant
-		Prerequisites: zeal.covenant
-	SpeedMultiplier@ZealBonus:
-		Modifier: 115
-		RequiresCondition: zeal-covenant
+	SpawnActorAbility@Decoy:
+		Actors: ftnk.decoy, ftnk.decoy
+		SpawnSounds: decoyspawn.aud
+		TargetModifiedCursor: ability2
+		Behavior: SpawnAtSelfAndMoveToTarget
+		RequiresCondition: !player-blackh && decoy-upgrade && ammo && !(empdisable || being-warped)
+		AmmoPool: decoyspawner
+		FaceTarget: true
+	SpawnActorAbility@BlackHandDecoy:
+		Actors: hftk.decoy, hftk.decoy
+		SpawnSounds: decoyspawn.aud
+		TargetModifiedCursor: ability2
+		Behavior: SpawnAtSelfAndMoveToTarget
+		RequiresCondition: player-blackh && decoy-upgrade && ammo && !(empdisable || being-warped)
+		AmmoPool: decoyspawner
+		FaceTarget: true
 
 ^DecoyUnit:
 	GrantTimedCondition@Decoy:
 		Condition: active
 		Duration: 750
-	GrantTimedCondition@DecoySpawn:
-		Condition: highlight
-		Duration: 1
-	GrantDelayedCondition@DecoyDespawn:
-		Condition: highlight
-		Delay: 749
+	WithFlashEffect@Flash:
+		Color: ffffff
+		Interval: 748
 	KillsSelf:
 		RequiresCondition: !active
 	WithTextDecoration@Decoy:
@@ -9045,7 +9040,7 @@ PBUL:
 		BuildPaletteOrder: 252
 		IconPalette: chrometd
 		Prerequisites: gtek, ~vehicles.eagle, ~techlevel.high
-		Description: Fast scout vehicle with rockets that briefly disable\n  the weapons and vision of vehicles and aircraft.\n  Can designate vehicles & buildings targets,\n  revealing them and increasing the damage they take.
+		Description: Fast scout vehicle with rockets that disrupts weapons and vision.\n  Can designates targets, revealing them and increasing the damage they take.
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor, Aircraft
 		Weaknesses: • Weak vs Infantry, Buildings, Defenses
@@ -9118,6 +9113,7 @@ PBUL:
 		TargetModifiedCursor: ability2
 		ActiveUntilCancelled: true
 		UseDisabledArmaments: true
+		TargetFrozenActors: true
 
 CYCP:
 	Inherits: ^Tank

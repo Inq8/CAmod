@@ -2043,8 +2043,8 @@ BursterExplode:
 	Warhead@4Eff: CreateEffect
 		Explosions: artillery_explosion
 
-MindSparkSpawnerMaster:
-	ReloadDelay: 100
+MindSparkEruption:
+	ReloadDelay: 1000
 	Projectile: InstantExplode
 	Warhead@2Eff: CreateEffect
 		Explosions: reverse
@@ -2052,30 +2052,17 @@ MindSparkSpawnerMaster:
 		Image: mindcontrol
 		ValidTargets: Ground
 		ImpactSounds: mastermind-shatter.aud
-	Warhead@Spawn: SpawnActor
-		Actors: mspk
-		Range: 1
-		ForceGround: false
-		ValidTargets: Ground, Water
 		ImpactActors: false
-		Delay: 8
+		AirThreshold: 512
 	Warhead@Suppress: GrantExternalConditionCA
 		Range: 2c0
-		Duration: 325
+		Duration: 200
 		Condition: suppression
 		ValidRelationships: Enemy, Neutral
-		Delay: 8
-
-MindSparkSpawnerSlave:
-	Inherits: MindSparkSpawnerMaster
-	-Warhead@2Eff:
-	Warhead@Spawn: SpawnActor
-		-Delay:
-	Warhead@Suppress: GrantExternalConditionCA
-		-Delay:
+		AirThreshold: 512
 
 MindSparkZap:
-	ReloadDelay: 50
+	ReloadDelay: 60
 	Range: 2c512
 	Report: mindspark-zap1.aud, mindspark-zap2.aud
 	Projectile: PlasmaBeam
@@ -2097,6 +2084,8 @@ MindSparkZap:
 			Concrete: 10
 			Wood: 5
 		DamageTypes: ElectricityDeath
+	Warhead@3Eff: CreateEffect
+		Explosions: small_explosion
 
 ObliteratorCharge:
 	Range: 15c0

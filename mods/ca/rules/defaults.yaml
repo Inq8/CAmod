@@ -510,6 +510,17 @@
 		RequiresCondition: herooftheunion
 		Condition: rank-elite
 
+^HeroOfTheUnionTargetableGrenFlamer:
+	Inherits: ^HeroOfTheUnionTargetable
+	DamageMultiplier@HeroOfTheUnion:
+		Modifier: 60
+	ReloadDelayMultiplier@HeroOfTheUnion:
+		Modifier: 90
+	SpeedMultiplier@HeroOfTheUnion:
+		Modifier: 150
+	RangeMultiplier@HeroOfTheUnion:
+		Modifier: 170
+
 ^IdolOfKane:
 	ExternalCondition@IdolOfKaneBuff:
 		Condition: iokbuff
@@ -1186,9 +1197,9 @@
 	GrantConditionOnPrerequisite@GYRO:
 		Condition: gyro-upgrade
 		Prerequisites: gyro.upgrade
-	GrantTimedCondition@GYRO:
-		Duration: 2
-		Condition: highlight
+	WithFlashEffect@GYRO:
+		Color: ffffff
+		Interval: 5000
 		RequiresCondition: gyrostabilizers
 
 ^Irradiatable:
@@ -1392,27 +1403,6 @@
 	Captures@DRIVER_KILL:
 		CaptureTypes: driverless_vehicle
 	CaptureManager:
-
-^GreenFlash:
-	ExternalCondition@GHIGH:
-		Condition: greenhighlight
-	WithColoredOverlay@GHIGH:
-		Color: 80ff8080
-		RequiresCondition: greenhighlight
-
-^RedFlash:
-	ExternalCondition@RHIGH:
-		Condition: redhighlight
-	WithColoredOverlay@RHIGH:
-		Color: ff404080
-		RequiresCondition: redhighlight
-
-^WhiteFlash:
-	ExternalCondition@HIGH:
-		Condition: highlight
-	WithColoredOverlay@HIGH:
-		Color: ffffff80
-		RequiresCondition: highlight
 
 ^Cloakable:
 	ExternalCondition@INVIS:
@@ -1738,11 +1728,6 @@
 		RequiresCondition: c4 || c4seal
 		RequiresSelection: False
 		ValidRelationships: Ally, Neutral, Enemy
-	ExternalCondition@detachable:
-		Condition: detach
-	WithColoredOverlay@detach:
-		RequiresCondition: detach
-		Color: ffffff40
 	AmbientSound@c4:
 		SoundFiles: icoltima.aud, icoltimb.aud, icoltimc.aud
 		Delay: 5
@@ -1784,11 +1769,6 @@
 		RequiresCondition: tnt
 		RequiresSelection: False
 		ValidRelationships: Ally, Neutral, Enemy
-	ExternalCondition@detachable:
-		Condition: detach
-	WithColoredOverlay@detach:
-		RequiresCondition: detach
-		Color: ffffff40
 	AmbientSound@tnt:
 		SoundFiles: icraloop.aud
 		Delay: 6
@@ -2221,9 +2201,6 @@
 	Inherits@21: ^AuraRepairable
 	Inherits@C4Plantable: ^C4Plantable
 	Inherits@TNTPlantable: ^TNTPlantable
-	Inherits@gflash: ^GreenFlash
-	Inherits@rflash: ^RedFlash
-	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
 	Inherits@SovietT4Boost: ^SovietT4Boost
 	Inherits@oilcost: ^OilRefCostReduction
@@ -2444,7 +2421,6 @@
 	Inherits@Blindable: ^Blindable
 	Inherits@KillZoneTargetable: ^KillZoneTargetable
 	Inherits@ReaperSnareable: ^ReaperSnareable
-	Inherits@rflash: ^RedFlash
 	Inherits@IdolOfKane: ^IdolOfKane
 	Inherits@DevelopmentPolicyVeterancyBonus: ^DevelopmentPolicyVeterancyBonus
 	RenderSprites:
@@ -2841,9 +2817,6 @@
 	Inherits@19: ^WeaponJammable
 	Inherits@20: ^AuraRepairable
 	Inherits@slowable: ^Slowable
-	Inherits@gflash: ^GreenFlash
-	Inherits@rflash: ^RedFlash
-	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
 	Inherits@selection: ^SelectableCombatUnit
 	Inherits@SovietT4Boost: ^SovietT4Boost
@@ -3093,9 +3066,6 @@
 	Inherits@11: ^Suppressable
 	Inherits@12: ^Veilable
 	Inherits@CRATE-CLOAK: ^CrateCloak
-	Inherits@gflash: ^GreenFlash
-	Inherits@rflash: ^RedFlash
-	Inherits@wflash: ^WhiteFlash
 	Inherits@SovietT4Boost: ^SovietT4Boost
 	Inherits@oilcost: ^OilRefCostReduction
 	Inherits@C4: ^C4Plantable
@@ -3298,9 +3268,6 @@
 	Inherits@6: ^WarpableBuilding
 	Inherits@7: ^BotBuilding
 	Inherits@8: ^Chillable
-	Inherits@wflash: ^WhiteFlash
-	Inherits@rflash: ^RedFlash
-	Inherits@gflash: ^GreenFlash
 	Inherits@HACKABLE: ^Hackable
 	Inherits@WatcherParasite: ^WatcherParasiteAttachable
 	Inherits@TargetPaintable: ^TargetPaintable
@@ -3644,9 +3611,9 @@
 		SkipMakeAnimation: true
 		DeployCursor: c4
 		RequiresCondition: !detonate-disabled
-	GrantTimedCondition@highlight:
-		Duration: 2
-		Condition: redhighlight
+	WithFlashEffect@Detonate:
+		Color: ff0000
+		Interval: 5000
 		RequiresCondition: detonate
 	PeriodicExplosion:
 		Weapon: FakeBuildingSelfDestruct

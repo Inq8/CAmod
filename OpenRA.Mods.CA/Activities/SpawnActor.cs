@@ -21,10 +21,10 @@ namespace OpenRA.Mods.CA.Activities
 {
 	public class SpawnActor : Activity
 	{
-		readonly WPos targetPos;
 		readonly CPos targetCell;
+		readonly WAngle? initFacing;
 		readonly bool skipMakeAnims;
-		readonly string type;
+		readonly string[]types;
 		readonly string[] spawnSounds;
 		readonly AmmoPool ammoPool;
 		readonly int range;
@@ -34,14 +34,14 @@ namespace OpenRA.Mods.CA.Activities
 		readonly HashSet<string> allowedTerrainTypes;
 		readonly Action<Actor, Actor> onActorSpawned;
 
-		public SpawnActor(Actor self, CPos targetCell, WPos targetPos, string type, bool skipMakeAnims, string[] spawnSounds,
+		public SpawnActor(string[] types, CPos targetCell, WAngle? initFacing, bool skipMakeAnims, string[] spawnSounds,
 			AmmoPool ammoPool, int range, bool avoidActors, WDist maxRange, bool spawnInShroud, HashSet<string> allowedTerrainTypes,
 			Action<Actor, Actor> onActorSpawned = null)
 		{
-			this.targetPos = targetPos;
 			this.targetCell = targetCell;
+			this.initFacing = initFacing;
 			this.skipMakeAnims = skipMakeAnims;
-			this.type = type;
+			this.types = types;
 			this.spawnSounds = spawnSounds;
 			this.ammoPool = ammoPool;
 			this.range = range;
@@ -50,6 +50,8 @@ namespace OpenRA.Mods.CA.Activities
 			this.spawnInShroud = spawnInShroud;
 			this.allowedTerrainTypes = allowedTerrainTypes;
 			this.onActorSpawned = onActorSpawned;
+
+			IsInterruptible = false;
 		}
 
 		public override bool Tick(Actor self)
@@ -66,86 +68,94 @@ namespace OpenRA.Mods.CA.Activities
 			var map = self.World.Map;
 			var targetCells = map.FindTilesInCircle(targetCell, range);
 			var cell = targetCells.GetEnumerator();
-			var ai = map.Rules.Actors[type.ToLowerInvariant()];
-			var td = CreateTypeDictionary(self, targetCell);
-			var placed = false;
+			var soundPlayed = false;
 
-			self.World.AddFrameEndTask(w =>
+			foreach (var type in types)
 			{
-				var unit = self.World.CreateActor(false, type, td);
-				var positionable = unit.TraitOrDefault<IPositionable>();
+				var actorType = type.ToLowerInvariant();
+				var ai = map.Rules.Actors[actorType];
+				var td = CreateTypeDictionary(self, targetCell);
+				var placed = false;
 
-				cell = targetCells.GetEnumerator();
-
-				if (positionable == null)
+				self.World.AddFrameEndTask(w =>
 				{
-					unit.Dispose();
+					Actor unit = null;
+					cell = targetCells.GetEnumerator();
 
-					if (avoidActors)
+					if (!ai.HasTraitInfo<IPositionableInfo>())
 					{
+						if (avoidActors)
+						{
+							while (cell.MoveNext() && !placed)
+							{
+								if (!IsValidTargetCell(cell.Current, self))
+									continue;
+
+								var actorsInCell = self.World.ActorMap.GetActorsAt(cell.Current);
+
+								if (actorsInCell.Any())
+									continue;
+
+								placed = true;
+								td = CreateTypeDictionary(self, cell.Current);
+							}
+						}
+						else
+							placed = true;
+
+						if (placed)
+							unit = self.World.CreateActor(type, td);
+					}
+					else
+					{
+						unit = self.World.CreateActor(false, actorType, td);
+						var positionable = unit.TraitOrDefault<IPositionable>();
+
 						while (cell.MoveNext() && !placed)
 						{
+							var subCell = positionable.GetAvailableSubCell(cell.Current);
+
+							if (ai.HasTraitInfo<AircraftInfo>()
+								&& ai.TraitInfo<AircraftInfo>().CanEnterCell(self.World, unit, cell.Current, SubCell.FullCell, null, BlockedByActor.None))
+								subCell = SubCell.FullCell;
+
 							if (!IsValidTargetCell(cell.Current, self))
 								continue;
 
-							var actorsInCell = self.World.ActorMap.GetActorsAt(cell.Current);
+							if (subCell != SubCell.Invalid)
+							{
+								positionable.SetPosition(unit, cell.Current, subCell);
 
-							if (actorsInCell.Any())
-								continue;
+								var pos = unit.CenterPosition;
 
-							placed = true;
-							td = CreateTypeDictionary(self, cell.Current);
+								positionable.SetCenterPosition(unit, pos);
+								w.Add(unit);
+
+								unit.QueueActivity(new FallDown(unit, pos, 130));
+
+								placed = true;
+							}
 						}
-					}
-					else
-						placed = true;
 
-					if (placed)
-						unit = self.World.CreateActor(type, td);
-				}
-				else
-				{
-					while (cell.MoveNext() && !placed)
+						if (!placed)
+							unit.Dispose();
+					}
+
+					if (placed && unit != null)
 					{
-						var subCell = positionable.GetAvailableSubCell(cell.Current);
+						if (ammoPool != null)
+							ammoPool.TakeAmmo(self, 1);
 
-						if (ai.HasTraitInfo<AircraftInfo>()
-							&& ai.TraitInfo<AircraftInfo>().CanEnterCell(self.World, unit, cell.Current, SubCell.FullCell, null, BlockedByActor.None))
-							subCell = SubCell.FullCell;
-
-						if (!IsValidTargetCell(cell.Current, self))
-							continue;
-
-						if (subCell != SubCell.Invalid)
+						if (!soundPlayed && spawnSounds.Length > 0)
 						{
-							positionable.SetPosition(unit, cell.Current, subCell);
-
-							var pos = unit.CenterPosition;
-
-							positionable.SetCenterPosition(unit, pos);
-							w.Add(unit);
-
-							unit.QueueActivity(new FallDown(unit, pos, 130));
-
-							placed = true;
+							Game.Sound.Play(SoundType.World, spawnSounds, self.World, unit.CenterPosition);
+							soundPlayed = true;
 						}
+
+						onActorSpawned?.Invoke(self, unit);
 					}
-
-					if (!placed)
-						unit.Dispose();
-				}
-
-				if (placed)
-				{
-					if (ammoPool != null)
-						ammoPool.TakeAmmo(self, 1);
-
-					if (spawnSounds.Length > 0)
-						Game.Sound.Play(SoundType.World, spawnSounds, self.World, unit.CenterPosition);
-
-					onActorSpawned?.Invoke(self, unit);
-				}
-			});
+				});
+			}
 		}
 
 		bool IsValidTargetCell(CPos cell, Actor self)
@@ -153,7 +163,7 @@ namespace OpenRA.Mods.CA.Activities
 			var targetPos = self.World.Map.CenterOfCell(cell);
 			var sourcePos = self.CenterPosition;
 
-			return ((targetPos - sourcePos).Length <= maxRange.Length
+			return ((maxRange == WDist.Zero || (targetPos - sourcePos).Length <= maxRange.Length)
 				&& (spawnInShroud || self.Owner.Shroud.IsExplored(cell))
 				&& (allowedTerrainTypes.Count == 0 || allowedTerrainTypes.Contains(self.World.Map.GetTerrainInfo(cell).Type)));
 		}
@@ -166,6 +176,9 @@ namespace OpenRA.Mods.CA.Activities
 				new OwnerInit(self.Owner),
 				new LocationInit(targetCell)
 			};
+
+			if (initFacing.HasValue)
+				td.Add(new FacingInit(initFacing.Value));
 
 			if (skipMakeAnims)
 				td.Add(new SkipMakeAnimsInit());
