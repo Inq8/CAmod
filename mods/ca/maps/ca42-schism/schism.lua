@@ -5,18 +5,26 @@ PurificationInterval = {
 }
 
 DefendDuration = {
-	easy = DateTime.Minutes(2),
-	normal = DateTime.Minutes(3),
+	easy = DateTime.Minutes(3),
+	normal = DateTime.Minutes(3) + DateTime.Seconds(30),
 	hard = DateTime.Minutes(4),
 }
 
 MaleficSpawns = { MaleficSpawn1.Location, MaleficSpawn2.Location, MaleficSpawn3.Location, MaleficSpawn4.Location, MaleficSpawn5.Location, MaleficSpawn6.Location, MaleficSpawn7.Location }
+OverlordSpawns = { OverlordSpawn1.Location, OverlordSpawn2.Location, OverlordSpawn3.Location }
 
 if Difficulty == "hard" then
 	table.insert(UnitCompositions.Nod, {
 		Infantry = {},
 		Vehicles = { "avtr", "avtr", "avtr", "avtr", "avtr", "avtr", "avtr" },
-		MinTime = DateTime.Minutes(5),
+		MinTime = DateTime.Minutes(6),
+		IsSpecial = true
+	})
+
+	table.insert(UnitCompositions.Scrin, {
+		Infantry = { "s3", "s1", "mast", "s1", "s1", "s1", "s1", "s1", "s1", "s3", "s4", "s1", "s1", "s1", "s1", "s3", "s1", "s1", "s1", "s1", "s1", "s1", "s3", "s1", "s1", "s1", "s4", "s1", "s1", "s3", "s1", "s1", "s1", "s3", "s1", "s1", "s1", "s1", "s1", "s1" },
+		Vehicles = { "intl.ai2", "gunw", "intl.ai2", "gunw", "intl.ai2", "gunw", "intl.ai2", "gunw", "intl.ai2", "gunw" },
+		MinTime = DateTime.Minutes(14),
 		IsSpecial = true
 	})
 end
@@ -24,9 +32,9 @@ end
 Squads = {
 	Nod = {
 		Delay = {
-			easy = DateTime.Minutes(5),
-			normal = DateTime.Minutes(3),
-			hard = DateTime.Minutes(1)
+			easy = DateTime.Minutes(4),
+			normal = DateTime.Minutes(2),
+			hard = DateTime.Seconds(1)
 		},
 		AttackValuePerSecond = {
 			easy = { Min = 10, Max = 25 },
@@ -44,9 +52,9 @@ Squads = {
 	},
 	ScrinRebels = {
 		Delay = {
-			easy = DateTime.Minutes(5),
-			normal = DateTime.Minutes(3),
-			hard = DateTime.Minutes(1)
+			easy = DateTime.Minutes(4),
+			normal = DateTime.Minutes(2),
+			hard = DateTime.Seconds(1)
 		},
 		AttackValuePerSecond = {
 			easy = { Min = 10, Max = 25 },
@@ -63,9 +71,9 @@ Squads = {
 	},
 	ScrinRebelsAir = {
 		Delay = {
-			easy = DateTime.Minutes(14),
-			normal = DateTime.Minutes(10),
-			hard = DateTime.Minutes(6)
+			easy = DateTime.Minutes(12),
+			normal = DateTime.Minutes(8),
+			hard = DateTime.Minutes(4)
 		},
 		AttackValuePerSecond = {
 			easy = { Min = 3, Max = 3 },
@@ -431,6 +439,13 @@ MaleficInit = function()
 		Trigger.AfterDelay(DateTime.Seconds(8), function()
 			Media.DisplayMessage("Impossible! These Scrin are not..  Do not allow the device to be destroyed!", "Scrin Overlord", HSLColor.FromHex("7700FF"))
 			MediaCA.PlaySound("ovld_impossible.aud", 2)
+
+			Trigger.AfterDelay(DateTime.Seconds(8), function()
+				Utils.Do(OverlordSpawns, function(loc)
+					Actor.Create("wormhole", true, { Owner = Scrin, Location = loc})
+				end)
+				OverlordSpawn()
+			end)
 		end)
 
 		MaleficSpawn()
@@ -438,12 +453,6 @@ MaleficInit = function()
 end
 
 MaleficSpawn = function()
-	local invasionInterval = {
-		easy = DateTime.Seconds(35),
-		normal = DateTime.Seconds(25),
-		hard = DateTime.Seconds(15),
-	}
-
 	local invasionCompositions = {
 		{ "intl", "s1", "s1", "s1", "s1", "s3", "s3", "s4", "s4", "stlk", "stlk", "stlk" },
 		{ "dark", "s1", "s1", "s1", "s1", "s3", "s4", "stlk", "stlk", "stlk" },
@@ -456,6 +465,7 @@ MaleficSpawn = function()
 		Utils.Do(units, function(unit)
 			unit.Scatter()
 			Trigger.AfterDelay(5, function()
+				unit.AttackMove(Purifier.Location)
 				if not unit.IsDead then
 					unit.Hunt()
 				end
@@ -464,6 +474,28 @@ MaleficSpawn = function()
 	end)
 
 	Trigger.AfterDelay(GetInvasionInterval(), MaleficSpawn)
+end
+
+OverlordSpawn = function()
+	local overlordCompositions = {
+		{ "devo", "s1", "s1", "s1", "s3", "s4", "evis", "evis", "evis" },
+		{ "tpod", "s1", "s1", "s1", "s3", "evis", "evis" },
+		{ "ruin","s1", "s1", "s1", "s1", "s3", "s4", "evis", "evis" },
+	}
+
+	Utils.Do(OverlordSpawns, function(s)
+		local units = Reinforcements.Reinforce(Scrin, Utils.Shuffle(Utils.Random(overlordCompositions)), { s }, 1)
+		Utils.Do(units, function(unit)
+			unit.Scatter()
+			Trigger.AfterDelay(5, function()
+				if not unit.IsDead then
+					unit.Hunt()
+				end
+			end)
+		end)
+	end)
+
+	Trigger.AfterDelay(DateTime.Seconds(30), OverlordSpawn)
 end
 
 GetPlayerArmyValue = function()

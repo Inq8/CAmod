@@ -6,7 +6,8 @@ ScrinAttackValues = {
 
 NodBuildingsToSell = { NodConyard, NodHand, NodFactory, NodComms }
 
-ScrinReinforcementSquad = { "s3", "s1", "s1", "s1", "s1", "s1", "s2", "s2", "s3", "intl", "rtpd", GunWalkerSeekerOrLacerator, CorrupterOrDevourer, CorrupterOrDevourer, GunWalkerSeekerOrLacerator, GunWalkerSeekerOrLacerator }
+ScrinReinforcementInitialSquad = { "s3", "s1", "s1", "s1", "s1", "s1", "s2", "s2", "s3", "intl", "rtpd", GunWalkerSeekerOrLacerator, CorrupterOrDevourer, CorrupterOrDevourer, GunWalkerSeekerOrLacerator, GunWalkerSeekerOrLacerator }
+ScrinReinforcementSquad = { "s3", "s1", "s1", "s1", "s1", "s2", "s3", "intl", "rtpd", GunWalkerSeekerOrLacerator, CorrupterOrDevourer }
 
 if Difficulty == "hard" then
 	table.insert(UnitCompositions.Scrin, {
@@ -371,14 +372,22 @@ SpawnWormhole = function(loc)
 	return Actor.Create("wormhole", true, { Owner = Scrin, Location = loc })
 end
 
-InitScrinReinforcements = function(wormhole)
-	DeployScrinReinforcements(wormhole)
+InitScrinReinforcements = function(wormhole, initial)
+	DeployScrinReinforcements(wormhole, true)
 end
 
-DeployScrinReinforcements = function(wormhole)
+DeployScrinReinforcements = function(wormhole, initial)
 	if not wormhole.IsDead then
 		local unitsList = {}
-		Utils.Do(ScrinReinforcementSquad, function(u)
+
+		local compositionUnits
+		if initial then
+			compositionUnits = ScrinReinforcementInitialSquad
+		else
+			compositionUnits = ScrinReinforcementSquad
+		end
+
+		Utils.Do(compositionUnits, function(u)
 			if type(u) == "table" then
 				table.insert(unitsList, Utils.Random(u))
 			else
@@ -395,7 +404,7 @@ DeployScrinReinforcements = function(wormhole)
 		end)
 
 		Trigger.AfterDelay(DateTime.Minutes(3), function()
-			DeployScrinReinforcements(wormhole)
+			DeployScrinReinforcements(wormhole, false)
 		end)
 	end
 end
