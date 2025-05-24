@@ -897,10 +897,14 @@ TNT:
 		Spread: 341
 		Damage: 2800
 		Falloff: 1000, 448, 192, 50, 18, 7, 0
-		ValidTargets: Ground, Water, Air
 		Versus:
 			Light: 70
 			Heavy: 20
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+	Warhead@AirDam: SpreadDamage
+		Spread: 128
+		Damage: 28000
+		ValidTargets: Air, AirSmall
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: building, building2
