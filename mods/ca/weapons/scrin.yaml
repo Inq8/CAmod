@@ -1519,14 +1519,6 @@ SuppressionField:
 		Condition: suppression
 		ValidTargets: Air, AirSmall
 
-SuppressionSiphonField:
-	Inherits: SuppressionField
-	Warhead@Siphon: GrantExternalConditionCA
-		Range: 3c0
-		Duration: 600
-		Condition: suppression-siphon
-		ValidTargets: Ground, Air, AirSmall, Ship
-
 BuzzerSpawner:
 	ReloadDelay: 1
 	Projectile: InstantExplode
@@ -2089,6 +2081,7 @@ MindSparkZap:
 
 ObliteratorCharge:
 	Range: 15c0
+	MinRange: 1c0
 	ReloadDelay: 5
 	Projectile: LinearPulse
 		Speed: 2c0
@@ -2102,6 +2095,7 @@ ObliteratorCharge:
 
 ObliteratorBolt:
 	Range: 15c0
+	MinRange: 1c0
 	ReloadDelay: 75
 	Report: oblt-fire1.aud
 	Projectile: LinearPulse

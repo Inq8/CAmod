@@ -2791,6 +2791,7 @@ OBLT:
 		RequiresCondition: charging && !reloading
 		ShowSelectionBar: true
 		SelectionBarColor: ff00ff
+		DrainAmountOnDisabled: 2
 	ReloadAmmoPoolCA@DRAIN:
 		Count: -1
 		Delay: 1
@@ -5875,6 +5876,7 @@ VSPK:
 	WithIdleOverlay:
 		Sequence: overlay
 		Palette: scrin
+		IsDecoration: true
 
 #
 # ---- misc
@@ -5996,6 +5998,8 @@ MSPK:
 		FallbackSequence: die
 		DeathSequencePalette: caneon
 		DeathPaletteIsPlayerPalette: false
+	Health:
+		HP: 1
 	Voiced:
 		VoiceSet: MindSparkVoice
 	WithColoredSelectionBox@PLAYERBOX:

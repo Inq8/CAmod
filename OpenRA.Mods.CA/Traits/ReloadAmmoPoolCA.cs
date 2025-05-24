@@ -45,6 +45,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Only begin reloading when ammo is equal to or less than this number. -1 means reload whenever below full ammo.")]
 		public readonly int ReloadWhenAmmoReaches = -1;
 
+		[Desc("If greater than zero, instead of resettng the reload, the reload timer will reverse by this amount per tick.")]
+		public readonly int DrainAmountOnDisabled = 0;
+
 		public readonly bool ShowSelectionBar = true;
 		public readonly Color SelectionBarColor = Color.FromArgb(128, 200, 255);
 
@@ -69,6 +72,8 @@ namespace OpenRA.Mods.CA.Traits
 		int remainingTicks;
 		int remainingDelay;
 
+		int MaxTicks => Util.ApplyPercentageModifiers(Info.Delay, modifiers.Select(m => m.GetReloadAmmoModifier()));
+
 		public ReloadAmmoPoolCA(Actor self, ReloadAmmoPoolCAInfo info)
 			: base(info)
 		{
@@ -83,14 +88,14 @@ namespace OpenRA.Mods.CA.Traits
 
 			self.World.AddFrameEndTask(w =>
 			{
-				remainingTicks = Util.ApplyPercentageModifiers(Info.Delay, modifiers.Select(m => m.GetReloadAmmoModifier()));
+				remainingTicks = MaxTicks;;
 				remainingDelay = Info.DelayAfterReset;
 			});
 		}
 
 		void INotifyAttack.Attacking(Actor self, in Target target, Armament a, Barrel barrel)
 		{
-			var maxTicks = Util.ApplyPercentageModifiers(Info.Delay, modifiers.Select(m => m.GetReloadAmmoModifier()));
+			var maxTicks = MaxTicks;
 			if (Info.ResetOnFire)
 			{
 				remainingTicks = maxTicks;
@@ -112,8 +117,23 @@ namespace OpenRA.Mods.CA.Traits
 
 		void ITick.Tick(Actor self)
 		{
-			if (IsTraitPaused || IsTraitDisabled)
+			if (IsTraitPaused)
 				return;
+
+			if (IsTraitDisabled)
+			{
+				if (Info.DrainAmountOnDisabled > 0)
+				{
+					var maxTicks = MaxTicks;
+					if (remainingTicks < maxTicks)
+						remainingTicks += Info.DrainAmountOnDisabled;
+
+					if (remainingTicks > maxTicks)
+						remainingTicks = maxTicks;
+				}
+
+				return;
+			}
 
 			Reload(self, Info.Delay, Info.Count, Info.Sound);
 		}
@@ -128,7 +148,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			if (((reloadCount > 0 && !ammoPool.HasFullAmmo) || (reloadCount < 0 && ammoPool.HasAmmo)) && --remainingTicks == 0)
 			{
-				remainingTicks = Util.ApplyPercentageModifiers(reloadDelay, modifiers.Select(m => m.GetReloadAmmoModifier()));
+				remainingTicks = MaxTicks;
 				if (!string.IsNullOrEmpty(sound))
 					Game.Sound.PlayToPlayer(SoundType.World, self.Owner, sound, self.CenterPosition);
 
@@ -143,7 +163,7 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			if (!Info.ShowSelectionBar || remainingDelay > 0 || !self.Owner.IsAlliedWith(self.World.RenderPlayer))
 				return 0;
-			var maxTicks = Util.ApplyPercentageModifiers(Info.Delay, modifiers.Select(m => m.GetReloadAmmoModifier()));
+			var maxTicks = MaxTicks;
 			if (remainingTicks == maxTicks)
 				return 0;
 
@@ -156,7 +176,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		protected override void TraitDisabled(Actor self)
 		{
-			remainingTicks = Util.ApplyPercentageModifiers(Info.Delay, modifiers.Select(m => m.GetReloadAmmoModifier()));
+			if (Info.DrainAmountOnDisabled == 0)
+				remainingTicks = MaxTicks;
+
 			remainingDelay = Info.DelayAfterReset;
 		}
 	}
