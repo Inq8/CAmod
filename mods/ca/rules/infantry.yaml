@@ -2399,7 +2399,7 @@ ASSA:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Buildings, Defenses
 		Weaknesses: • Weak vs Heavy Armor, Light Armor\n• Cannot attack aircraft
-		Attributes: • Plants C4 to destroy structures
+		Attributes: • Plants C4 to destroy structures\n• Resistant to mind control
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -2487,6 +2487,8 @@ ASSA:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
+	Targetable@MindControlResistant:
+		TargetTypes: MindControlResistant
 
 CONF:
 	Inherits: ^Soldier
@@ -2494,7 +2496,7 @@ CONF:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
-		Attributes: • Special Ability: Idol of Kane (max 1 per Confessor)
+		Attributes: • Special Ability: Idol of Kane (max 1 per Confessor)\n• Immune to mind control
 	Buildable:
 		Queue: ConfessorCabal
 	Valued:
@@ -2557,6 +2559,10 @@ CONF:
 		RequiresSelection: true
 		Position: BottomLeft
 		Margin: 4, 3
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 
 ACOL:
 	Inherits: ^Cyborg

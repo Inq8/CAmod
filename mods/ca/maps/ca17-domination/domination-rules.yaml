@@ -37,6 +37,10 @@ Player:
 
 # Disable powers for AI
 
+^SatHackPower:
+	SpawnActorPowerCA@sathack:
+		Prerequisites: ~radar.nod, ~!player.legion, ~!botplayer
+
 ^NodAirdropPowers:
 	ParatroopersPowerCA@NodAirDrop:
 		Prerequisites: ~!botplayer
@@ -195,9 +199,11 @@ NSAM:
 		TargetTypes: Ground, Structure
 
 OBLI:
-	Targetable@NoAutoAttackWhenDisabled:
-		TargetTypes: NoAutoAttack
-		RequiresCondition: disabled
+	Targetable:
+		TargetTypes: Ground, Structure
+	Targetable@Defense:
+		TargetTypes: Defense
+		RequiresCondition: !disabled
 
 LASP:
 	DamageMultiplier@REDUC:
