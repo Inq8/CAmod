@@ -2559,6 +2559,11 @@ RadEruptionWeapon:
 		Explosions: radspike, radspike2
 		ExplosionPalette: tdeffect
 
+RadEruptionWeaponStage2:
+	Inherits: RadEruptionWeapon
+	Warhead@1Radiation: CreateTintedCells
+		Falloff: 100, 80, 60, 40, 20, 0
+
 PsychicBeamBATF:
 	Inherits: DesolatorBeam
 	ReloadDelay: 75
@@ -3695,7 +3700,7 @@ BasiliskPulse:
 	ReloadDelay: 60
 	Burst: 3
 	BurstDelays: 5
-	Range: 5c0
+	Range: 8c0
 	StartBurstReport: basiwave.aud
 	TargetActorCenter: true
 	Projectile: LinearPulse

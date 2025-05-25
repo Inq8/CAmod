@@ -188,6 +188,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		void IResolveOrder.ResolveOrder(Actor self, Order order)
 		{
+			if (IsTraitDisabled || IsTraitPaused)
+				return;
+
 			if (order.OrderString == "SpawnActorAbility" && order.Target.Type != TargetType.Invalid)
 			{
 				if (!order.Queued)
@@ -297,9 +300,11 @@ namespace OpenRA.Mods.CA.Traits
 					ability.Info.SelectTargetSpeechNotification, self.Owner.Faction.InternalName);
 
 			selectedWithAbility = self.World.Selection.Actors
-				.Where(a => a.Info.HasTraitInfo<SpawnActorAbilityInfo>() && a.Owner == self.Owner && !a.IsDead)
-				.Select(a => new TraitPair<SpawnActorAbility>(a, a.Trait<SpawnActorAbility>()))
-				.Where(s => s.Trait.Info.Type == ability.Info.Type);
+				.Where(a => a.Owner == self.Owner
+					&& !a.IsDead
+					&& a.Info.HasTraitInfo<SpawnActorAbilityInfo>()
+					&& a.TraitsImplementing<SpawnActorAbility>().Any(t => t.Info.Type == ability.Info.Type))
+				.Select(a => new TraitPair<SpawnActorAbility>(a, a.TraitsImplementing<SpawnActorAbility>().First(t => t.Info.Type == ability.Info.Type)));
 		}
 
 		protected override IEnumerable<Order> OrderInner(World world, CPos cell, int2 worldPixel, MouseInput mi)
@@ -332,7 +337,7 @@ namespace OpenRA.Mods.CA.Traits
 				else
 				{
 					var closest = selectedOrderedByDistance.First();
-					yield return new Order("SpawnActorAbility", self, Target.FromCell(world, cell), mi.Modifiers.HasModifier(Modifiers.Shift));
+					yield return new Order("SpawnActorAbility", closest.Actor, Target.FromCell(world, cell), mi.Modifiers.HasModifier(Modifiers.Shift));
 				}
 			}
 		}

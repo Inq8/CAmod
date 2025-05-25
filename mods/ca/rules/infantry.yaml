@@ -3054,6 +3054,13 @@ DESO:
 		Weapon: DesolatorBeam
 	PeriodicExplosion:
 		Weapon: RadEruptionWeapon
+		RequiresCondition: deployed && deployed-initial
+	PeriodicExplosion@Stage2:
+		Weapon: RadEruptionWeaponStage2
+		RequiresCondition: deployed && !deployed-initial
+	GrantTimedCondition@InitialDeploy:
+		Condition: deployed-initial
+		Duration: 141
 		RequiresCondition: deployed
 	WithSpriteBody@DEPLOYED:
 		Sequence: deployed

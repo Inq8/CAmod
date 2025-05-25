@@ -356,6 +356,33 @@ KirovExplode:
 		Dimensions: 2,2
 		Footprint: xx xx
 
+MothershipExplode:
+	Inherits: KirovExplode
+	Warhead@3Eff: CreateEffect
+		Explosions: large_artillery_explosion
+		ImpactSounds: artyhit2.aud, artyhit3.aud
+	Warhead@Cluster1: FireCluster
+		Weapon: MothershipExplodeCluster
+		Dimensions: 5,5
+		Footprint: __X__ _XX__ X__X_ __X_X _____
+		Delay: 2
+	Warhead@Cluster2: FireCluster
+		Weapon: MothershipExplodeCluster
+		Dimensions: 5,5
+		Footprint: _____ X__XX _X__X XX_X_ __X__
+		Delay: 4
+	Warhead@5Shake: ShakeScreen
+		Duration: 5
+		Intensity: 1
+		Multiplier: 0.5,0.5
+
+MothershipExplodeCluster:
+	Projectile: InstantHit
+	Warhead@1Dam: SpreadDamage
+		Damage: 3000
+	Warhead@2Eff: CreateEffect
+		Explosions: napalm
+
 ATMine:
 	Warhead@1Dam: SpreadDamage
 		Spread: 448

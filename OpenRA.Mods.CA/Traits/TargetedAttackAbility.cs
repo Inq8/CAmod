@@ -279,6 +279,10 @@ namespace OpenRA.Mods.CA.Traits
 					var frozenUnderCursor = world.ScreenMap.FrozenActorsAtMouse(world.RenderPlayer, mi).FirstOrDefault();
 					target = frozenUnderCursor != null ? Target.FromFrozenActor(frozenUnderCursor) : Target.FromCell(world, cell);
 				}
+				else
+				{
+					target = Target.FromCell(world, cell);
+				}
 
 				if (!ability.Armaments.Any(a => a.Weapon.IsValidAgainst(target, world, self)))
 					yield break;

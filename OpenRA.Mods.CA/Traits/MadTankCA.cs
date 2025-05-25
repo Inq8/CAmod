@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Activities;
 using OpenRA.GameRules;
+using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Orders;
 using OpenRA.Mods.Common.Traits;
@@ -101,11 +102,29 @@ namespace OpenRA.Mods.CA.Traits
 		readonly MadTankCAInfo info;
 		public bool FirstDetonationComplete { get; set; }
 
+		IReloadModifier[] reloadModifiers;
+
 		public MadTankCA(Actor self, MadTankCAInfo info)
 			: base(info)
 		{
 			this.info = info;
 			FirstDetonationComplete = false;
+		}
+
+		protected override void Created(Actor self)
+		{
+			reloadModifiers = self.TraitsImplementing<IReloadModifier>().ToArray();
+			base.Created(self);
+		}
+
+		int GetModifiedChargeDelay()
+		{
+			return Util.ApplyPercentageModifiers(info.ChargeDelay, reloadModifiers.Select(m => m.GetReloadModifier()));
+		}
+
+		int GetModifiedDetonationDelay()
+		{
+			return Util.ApplyPercentageModifiers(info.DetonationDelay, reloadModifiers.Select(m => m.GetReloadModifier()));
 		}
 
 		public IEnumerable<IOrderTargeter> Orders
@@ -164,6 +183,9 @@ namespace OpenRA.Mods.CA.Traits
 			bool initiated;
 			Target target;
 
+			int chargeDelay;
+			int detonationDelay;
+
 			public DetonationSequence(Actor self, MadTankCA mad)
 				: this(self, mad, Target.Invalid)
 			{
@@ -179,6 +201,10 @@ namespace OpenRA.Mods.CA.Traits
 				move = self.Trait<IMove>();
 				wfsb = self.Trait<WithFacingSpriteBody>();
 				screenShaker = self.World.WorldActor.Trait<ScreenShaker>();
+
+				// Cache delays with modifiers applied
+				chargeDelay = mad.GetModifiedChargeDelay();
+				detonationDelay = mad.GetModifiedDetonationDelay();
 			}
 
 			protected override void OnFirstRun(Actor self)
@@ -234,10 +260,10 @@ namespace OpenRA.Mods.CA.Traits
 						wfsb.PlayCustomAnimation(self, mad.info.ThumpSequence);
 				}
 
-				if (ticks == mad.info.ChargeDelay)
+				if (ticks == chargeDelay)
 					Game.Sound.Play(SoundType.World, mad.info.ChargeSound, self.CenterPosition);
 
-				return ticks == mad.info.ChargeDelay + mad.info.DetonationDelay;
+				return ticks == chargeDelay + detonationDelay;
 			}
 
 			protected override void OnLastRun(Actor self)

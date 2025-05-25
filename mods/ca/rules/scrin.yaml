@@ -3865,6 +3865,8 @@ MSHP:
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
 	WithMuzzleOverlay:
+	WithShadow:
+		ZOffset: -3072
 	Aircraft:
 		CruiseAltitude: 3c512
 		InitialFacing: 768
@@ -4362,7 +4364,7 @@ MSHP.Husk:
 	FallsToEarth:
 		MaximumSpinSpeed: 0
 		Velocity: 35
-		Explosion: KirovExplode
+		Explosion: MothershipExplode
 	RevealsShroud:
 		Range: 10c0
 		MinRange: 8c0
@@ -4379,6 +4381,8 @@ MSHP.Husk:
 		Image: mshp
 		Sequence: ring
 		Offset: 0,0,0
+	WithShadow:
+		ZOffset: -3072
 
 MSHP.Husk.EMP:
 	Inherits: MSHP.Husk
@@ -4396,7 +4400,7 @@ MSHP.Husk.Ground:
 		Delay: 1
 		-RequiresCondition:
 	Explodes:
-		Weapon: KirovExplode
+		Weapon: MothershipExplode
 	WithIdleOverlay@RING:
 		Image: mshp
 		Sequence: ring

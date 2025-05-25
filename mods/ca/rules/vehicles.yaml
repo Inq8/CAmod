@@ -3536,6 +3536,7 @@ BGGY:
 		ShowSelectionBar: true
 		SelectionBarColor: aaaaaa
 	SpawnActorAbility@Decoy:
+		Type: Decoy
 		Actors: ftnk.decoy, ftnk.decoy
 		SpawnSounds: decoyspawn.aud
 		TargetModifiedCursor: ability2
@@ -3544,6 +3545,7 @@ BGGY:
 		AmmoPool: decoyspawner
 		FaceTarget: true
 	SpawnActorAbility@BlackHandDecoy:
+		Type: BlackHandDecoy
 		Actors: hftk.decoy, hftk.decoy
 		SpawnSounds: decoyspawn.aud
 		TargetModifiedCursor: ability2
@@ -9183,7 +9185,7 @@ BASI:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 502
 		Prerequisites: anyradar, ~vehicles.basi
-		Description: Stealth tank with a short range EMP weapon.
+		Description: Stealth tank with an EMP wave weapon.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses
 		Weaknesses: • Cannot attack Aircraft\n• No effect on infantry\n• Can be spotted by nearby infantry and defense structures
