@@ -639,6 +639,7 @@ DOME:
 		Type: RadarDetection
 		Range: 12c0
 		RequiresCondition: !jammed && !disabled && !being-warped && !build-incomplete
+	SupportPowerChargeBar:
 	InfiltrateForExploration:
 		Types: ResetShroudInfiltrate
 	Power:
@@ -3643,6 +3644,11 @@ HQ:
 		Description: Provides an overview of the battlefield.
 	TooltipExtras:
 		Attributes: • Requires power to operate\n• Detects nearby enemy vehicles, aircraft and structures in fog of war
+		RequiresCondition: !arc-built
+	TooltipExtras@ARC:
+		Attributes: • Requires power to operate\n• Detects nearby enemy vehicles, aircraft and structures in fog of war\n• Has limited emergency backup power
+		RequiresCondition: arc-built
+		IsStandard: false
 	Valued:
 		Cost: 1800
 	Tooltip:
@@ -3656,7 +3662,7 @@ HQ:
 		Dimensions: 2,3
 		LocalCenterOffset: 0,-512,0
 	WithSpriteBody:
-		PauseOnCondition: disabled || being-warped
+		PauseOnCondition: (disabled && !backup-power) || being-warped
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: ResetShroudInfiltrate
@@ -3678,16 +3684,17 @@ HQ:
 		Range: 5c0
 		RequiresCondition: !disabled
 	ProvidesRadar:
-		RequiresCondition: !jammed && !disabled && !being-warped && !build-incomplete
+		RequiresCondition: !jammed && (!disabled || backup-power) && !being-warped && !build-incomplete
 	RangedGpsRadarProvider:
 		Range: 12c0
 		TargetTypes: Vehicle, Air, Structure
-		RequiresCondition: !jammed && !disabled && !being-warped && !build-incomplete
+		RequiresCondition: !jammed && (!disabled || backup-power) && !being-warped && !build-incomplete
 	WithRangeCircle:
 		Type: RadarDetection
 		Range: 12c0
-		RequiresCondition: !jammed && !disabled && !being-warped && !build-incomplete
+		RequiresCondition: !jammed && (!disabled || backup-power) && !being-warped && !build-incomplete
 	WithBuildingBib:
+	SupportPowerChargeBar:
 	InfiltrateForExploration:
 		Types: ResetShroudInfiltrate
 	Power:
@@ -3746,7 +3753,7 @@ HQ:
 		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@radar-active:
 		Prerequisite: radar-active
-		RequiresCondition: !jammed && !disabled && !being-warped
+		RequiresCondition: !jammed && (!disabled || backup-power) && !being-warped
 	ExternalCondition@JAMMED:
 		Condition: jammed
 	ProductionCostMultiplier@ARCDISCOUNT:
@@ -3762,6 +3769,17 @@ HQ:
 		IntoActor: HQ.UPG
 		SkipMakeAnims: false
 		RequiresCondition: unity-upgrade && !build-incomplete
+	GrantChargingCondition@ArcBackupPower:
+		Condition: backup-power
+		RequiresCondition: arc-built
+		PauseOnCondition: disabled
+		InitialCharge: 250
+		MaxCharge: 750
+		ChargeRate: 1
+		DischargeRate: 2
+		ChargingColor: aaaa00
+		DischargingColor: ffff00
+		ShowSelectionBarWhenFull: false
 
 HQ.UPG:
 	Inherits: HQ
