@@ -859,7 +859,7 @@ EVIS:
 		Name: Eviscerator
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor, Infantry
-		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
+		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 	Health:
 		HP: 13000
 	UpdatesPlayerStatistics:
@@ -930,7 +930,7 @@ IMPL:
 		Name: Impaler
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor, Infantry
-		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
+		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 		Attributes: • Slows targets
 	Health:
 		HP: 10000
@@ -971,7 +971,7 @@ STLK:
 		Name: Stalker
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor, Infantry
-		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
+		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 		Attributes: • Special Ability: Cloak\n• Moves faster while cloaked.
 	Health:
 		HP: 13000
@@ -1023,6 +1023,16 @@ STLK:
 	SpeedMultiplier@CloakSpeed:
 		Modifier: 150
 		RequiresCondition: hidden
+	GrantTimedCondition@Uncloaked:
+		Condition: phaseshield
+		RequiresCondition: !hidden
+		Duration: 25
+	DamageMultiplier@UncloakShield:
+		Modifier: 33
+		RequiresCondition: phaseshield
+	WithColoredOverlay@UncloakShield:
+		Color: 15091f77
+		RequiresCondition: phaseshield
 
 SMEDI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry

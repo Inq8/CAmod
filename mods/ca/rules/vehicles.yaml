@@ -7038,6 +7038,9 @@ IFV:
 	MindControllerCapacityModifier@RANK-ELITE:
 		Amount: 3
 		RequiresCondition: rank-elite
+	RejectsOrders@AnathemaNoUnload:
+		Reject: Unload
+		RequiresCondition: anathema
 
 IFV.AI:
 	Inherits: ^Tank
@@ -8603,6 +8606,9 @@ BATF:
 	GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
 		RequiredHealing: 120000
 		StackDuration: 1050
+	RejectsOrders@AnathemaNoUnload:
+		Reject: Unload
+		RequiresCondition: anathema
 
 BATF.AI:
 	Inherits: BATF

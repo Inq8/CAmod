@@ -274,7 +274,7 @@ MarauderDiscs:
 		VerticalRateOfTurn: 90
 	Warhead@1Dam: SpreadDamage
 		Damage: 4100
-		Spread: 448
+		Spread: 384
 		Versus:
 			None: 10
 	Warhead@3Eff: CreateEffect
@@ -1278,14 +1278,15 @@ RavagerShards:
 
 EvisceratorShards:
 	Inherits: RavagerShards
+	Range: 6c0
 	ReloadDelay: 30
 	BurstDelays: 4
+	Projectile: Missile
+		Speed: 350
 	Warhead@1Dam: SpreadDamage
 		Damage: 2100
-		Spread: 288
 		Versus:
 			Wood: 20
-			Light: 60
 
 EvisceratorShardsCharged:
 	Inherits: EvisceratorShards
@@ -1305,6 +1306,7 @@ StalkerShards:
 	BurstDelays: 4
 	ReloadDelay: 40
 	Projectile: Missile
+		Speed: 350
 		Image: scrinzap
 		ContrailStartColor: 954fff
 	Warhead@1Dam: SpreadDamage
@@ -1411,9 +1413,9 @@ LaceratorShards.Hypercharged:
 
 ImpalerSpike:
 	Range: 7c0
-	ReloadDelay: 120
+	ReloadDelay: 125
 	Burst: 2
-	BurstDelays: 35
+	BurstDelays: 25
 	Report: impl-fire1.aud
 	Projectile: Missile
 		Speed: 750
