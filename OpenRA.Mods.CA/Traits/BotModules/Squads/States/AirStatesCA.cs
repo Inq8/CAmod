@@ -138,7 +138,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			if (!unitsAroundPos.Any())
 				return true;
 
-			var possibleTargets = unitsAroundPos.Where(a => owner.SquadManager.IsAirSquadTargetType(a, owner)).ToList();
+			var possibleTargets = unitsAroundPos.Where(a => owner.SquadManager.IsAirSquadTargetArmorType(a, owner)).ToList();
 			var possibleAntiAir = unitsAroundPos.ToList();
 
 			if (CountStaticAntiAir(possibleAntiAir, owner) < owner.Units.Count)
@@ -204,8 +204,8 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 				{
 					var a = owner.Units.Random(owner.Random);
 
-					// copied from FindClosestEnemy() so that non-air squads don't check IsAirSquadTargetType unnecessarily
-					var units = a.World.Actors.Where(t => owner.SquadManager.IsPreferredEnemyUnit(t) && owner.SquadManager.IsAirSquadTargetType(t, owner));
+					// copied from FindClosestEnemy() so that non-air squads don't check IsAirSquadTargetArmorType unnecessarily
+					var units = a.World.Actors.Where(t => owner.SquadManager.IsPreferredEnemyUnit(t) && owner.SquadManager.IsAirSquadTargetArmorType(t, owner));
 					closestEnemy = units.Where(owner.SquadManager.IsNotHiddenUnit).ClosestTo(a.CenterPosition) ?? units.ClosestTo(a.CenterPosition);
 				}
 
