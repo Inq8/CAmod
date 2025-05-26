@@ -28,11 +28,15 @@ TimeBetweenWaves = {
 FleetSpawns = {
 	Left = { LSpawn1, LSpawn2, LSpawn3 },
 	Middle = { MSpawn1, MSpawn2 },
-	Right = { RSpawn1, RSpawn2 }
+	Right = { RSpawn1, RSpawn2 },
+	LeftAndRight = { LSpawn1, LSpawn2, LSpawn3, RSpawn1, RSpawn2 },
+	MiddleAndRight = { MSpawn1, MSpawn2, RSpawn1, RSpawn2 },
+	MiddleAndLeft = { MSpawn1, MSpawn2, LSpawn1, LSpawn2, LSpawn3 },
+	Any = { LSpawn1, LSpawn2, LSpawn3, MSpawn1, MSpawn2, RSpawn1, RSpawn2 },
 }
 
 WaveSpawns = {
-	FleetSpawns.Left, FleetSpawns.Left, FleetSpawns.Left, FleetSpawns.Middle, FleetSpawns.Right, FleetSpawns.Middle, FleetSpawns.Left, FleetSpawns.Right, FleetSpawns.Middle, FleetSpawns.Right
+	FleetSpawns.Left, FleetSpawns.Left, FleetSpawns.Left, FleetSpawns.Middle, FleetSpawns.Right, FleetSpawns.MiddleAndLeft, FleetSpawns.MiddleAndRight, FleetSpawns.LeftAndRight, FleetSpawns.Any, FleetSpawns.Any
 }
 
 UnitBuildTimeMultipliers = {
@@ -277,19 +281,35 @@ end
 SendFleetWave = function()
 	Notification("Scrin fleet vessels approaching.")
 	MediaCA.PlaySound("c_scrinfleetvessels.aud", 2)
+	local currentWave = NextWave
+	local interval = 1
+
+	if currentWave == 5 then
+		Utils.Do(FleetWaveCompositions[Difficulty], function(c)
+			table.insert(c, "pac")
+			if Difficulty == "hard" then
+				table.insert(c, "deva")
+			end
+		end)
+	end
+	if currentWave == 8 then
+		Utils.Do(FleetWaveCompositions[Difficulty], function(c)
+			table.insert(c, "deva")
+			if Difficulty == "hard" then
+				table.insert(c, "pac")
+			end
+		end)
+	end
+	if currentWave == 10 and Difficulty ~= "easy" then
+		Utils.Do(FleetWaveCompositions[Difficulty], function(c)
+			table.insert(c, "deva")
+			if Difficulty == "hard" then
+				table.insert(c, "pac")
+			end
+		end)
+	end
 
 	local composition = Utils.Random(FleetWaveCompositions[Difficulty])
-	local interval = 1
-	local currentWave = NextWave
-
-	if Difficulty == "hard" and currentWave >= 7 then
-		table.insert(composition, "pac")
-		table.insert(composition, "deva")
-	end
-
-	if Difficulty == "normal" and currentWave >= 9 then
-		table.insert(composition, "pac")
-	end
 
 	local xUsed = { }
 
@@ -321,7 +341,14 @@ SendFleetWave = function()
 			end
 			Media.PlaySound("beepslct.aud")
 		end)
-		interval = interval + DateTime.Seconds(5)
+
+		if currentWave >= 8 and Difficulty == "hard" then
+			interval = interval + DateTime.Seconds(3)
+		elseif currentWave >= 5 then
+			interval = interval + DateTime.Seconds(4)
+		else
+			interval = interval + DateTime.Seconds(5)
+		end
 	end)
 
 	if currentWave == #WaveSpawns then

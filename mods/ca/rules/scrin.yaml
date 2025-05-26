@@ -2316,7 +2316,7 @@ DARK:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 36000
+		HP: 38000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -2751,9 +2751,14 @@ OBLT:
 	Armor:
 		Type: Heavy
 	Mobile:
-		TurnSpeed: 14
+		TurnSpeed: 512
 		Speed: 48
 		Locomotor: lighthover
+	TurretedFloating:
+		TurnSpeed: 10
+		Offset: 0,0,0
+		RealignDelay: 100
+	WithSpriteTurret:
 	WithShadow:
 		Offset: 43, 128, 0
 		ZOffset: -129
@@ -2813,11 +2818,11 @@ OBLT:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: vehicles.upgraded
-	AttackFrontal:
+	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped || blinded
-		FacingTolerance: 16
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
+		Armaments: primary, secondary
 	GrantConditionOnTerrain@ONWATER:
 		TerrainTypes: Water
 		Condition: onwater
@@ -2970,7 +2975,7 @@ SMCV:
 		RequiresCondition: !empdisable && !being-warped && !driver-dead
 	DamageTypeDamageMultiplier@A2GPROTECTION:
 		Modifier: 60
-	UpdatesKillCount:
+	UpdatesKillCount@BuildingsOrHarvesters:
 		Type: BuildingsOrHarvesters
 	-PrimaryBuilding:
 	-WithDecoration@primary:
@@ -5780,6 +5785,8 @@ STRM2:
 
 SCOL.Temp:
 	Inherits: SCOL
+	Tooltip:
+		Name: Storm Spike
 	RenderSprites:
 		Image: scol
 	-Sellable:
@@ -5822,7 +5829,7 @@ SCOL.Temp:
 	RepairableBuilding:
 		-RepairCondition:
 	-ChangesHealth@DefensePolicy2:
-	-UpdatesKillCount:
+	-UpdatesKillCount@BuildingsOrHarvesters:
 
 VSPK:
 	Inherits: ^BasicBuilding
@@ -6195,7 +6202,7 @@ RiftMinor:
 	EditorOnlyTooltip:
 		Name: (Minor Rift)
 	RenderSprites:
-		Image: miniriftanim
+		Image: riftanimmd
 	PeriodicExplosion:
 		Weapon: MiniRift
 	KillsSelf:

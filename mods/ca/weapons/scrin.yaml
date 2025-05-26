@@ -463,8 +463,9 @@ RiftCannon:
 			Light: 100
 			Brick: 75
 		DamageTypes: BulletDeath
-	Warhead@2Dam: HealthPercentageDamage
+	Warhead@2Dam: HealthPercentageSpreadDamage
 		Spread: 341
+		Falloff: 100, 37, 23, 10, 0
 		Damage: 100
 		Versus:
 			Wood: 4
@@ -2101,7 +2102,7 @@ ObliteratorBolt:
 	ReloadDelay: 75
 	Report: oblt-fire1.aud
 	Projectile: LinearPulse
-		Speed: 1c0
+		Speed: 768
 		Image: obltbolt
 		Sequences: idle, idle2
 		Palette: scrin
