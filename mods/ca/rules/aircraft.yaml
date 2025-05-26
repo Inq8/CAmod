@@ -3525,7 +3525,7 @@ POD:
 		MaximumPitch: 110
 		VTOL: true
 		Repulsable: False
-		LandableTerrainTypes: Clear,Road,Rough,Ore,Gems,Tiberium,BlueTiberium,Water,Tree,River
+		LandableTerrainTypes: Clear,Road,Rough,Ore,Gems,Tiberium,BlueTiberium,BlackTiberium,Beach,Bridge,Tunnel,Ford
 	HiddenUnderFog:
 		Type: CenterPosition
 	ClassicFacingBodyOrientation:
@@ -4965,3 +4965,6 @@ JACK:
 		ArmamentNames: primary
 		CircleWidth: 0
 		Type: JackKnifeDive
+	-AttackMove:
+	AutoTargetPriority@ATTACKANYTHING:
+		RequiresCondition: stance-attackanything
