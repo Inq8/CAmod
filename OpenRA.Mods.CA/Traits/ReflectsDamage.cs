@@ -96,8 +96,11 @@ namespace OpenRA.Mods.CA.Traits
 			var totalDamage = e.Damage.Value;
 			var damageTypes = e.Damage.DamageTypes;
 
-			var percentageAsList = new List<int>();
-			percentageAsList.Add(Info.DamagePercentage);
+			var percentageAsList = new List<int>
+			{
+				Info.DamagePercentage
+			};
+
 			var damageAmt = Util.ApplyPercentageModifiers(totalDamage, percentageAsList);
 
 			if (Info.SplitDamage)

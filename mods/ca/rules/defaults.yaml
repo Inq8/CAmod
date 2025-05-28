@@ -1367,7 +1367,7 @@
 		ValidRelationships: Ally, Neutral
 
 ^AffectedByDriverKill:
-	GrantConditionIfOwnerIsNeutral:
+	GrantConditionIfOwnerIsNeutral@DRIVER_DEAD:
 		Condition: driver-dead
 	Capturable@DRIVER_DEAD:
 		Types: driverless_vehicle
@@ -2324,7 +2324,7 @@
 		Sequence: Vehicle
 	TeleportNetworkTransportable:
 	Targetable@MINDCONTROL:
-		RequiresCondition: !mindcontrolled && !invulnerability
+		RequiresCondition: !mindcontrolled && !invulnerability && !driver-dead
 	GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
 		Condition: repair-cooldown
 		RequiredHealing: 85000

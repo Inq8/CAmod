@@ -554,17 +554,6 @@ ETPD:
 	Tooltip:
 		Name: Exterminator Tripod
 	-Buildable:
-	-CaptureManager:
-	-Capturable:
-	-CaptureNotification:
-	-Capturable@DRIVER_DEAD:
-	-GrantConditionIfOwnerIsNeutral:
-	-ChangesHealth@DRIVER_DEAD:
-	-TooltipDescription@DRIVER_DEAD:
-	-Targetable@DRIVERKILL:
-	-Targetable@DRIVERKILLLOWHP:
-	-GrantConditionOnDamageState@DriverKillLessThan50:
-	-Targetable@AICAPTURE:
 	TooltipExtras:
 		Description: Super heavy assault walker with beam weapons.
 		Strengths: Strong vs all ground units and structures.
@@ -640,6 +629,10 @@ ETPD:
 	Targetable@ChaosImmune:
 		TargetTypes: ChaosImmune
 		RequiresCondition: shields-up
+	Targetable@DriverKillImmune:
+		TargetTypes: DriverKillImmune
+	CaptureManager:
+		-BeingCapturedCondition:
 	DamageTypeDamageMultiplier@A2GPROTECTION:
 		Modifier: 75
 		RequiresCondition: !difficulty-easy

@@ -1489,8 +1489,8 @@ PrisLaser:
 			None: 40
 			Wood: 40
 			Concrete: 90
-			Light: 75
-			Heavy: 75
+			Light: 80
+			Heavy: 80
 			Brick: 50
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
@@ -2229,6 +2229,7 @@ MicrowaveZap.UPG:
 	Inherits: MicrowaveZap
 	Warhead@DriverKill: ChangeOwnerToNeutral
 		ValidTargets: DriverKillLow
+		InvalidTargets: DriverKillImmune
 		ValidRelationships: Enemy, Ally
 		CargoEffect: Kill
 		Range: 0c511
@@ -2244,6 +2245,7 @@ MicrowaveZap.UPG:
 		Spread: 0c511
 		Color: ffffff
 		ValidTargets: DriverKillLow
+		InvalidTargets: DriverKillImmune
 		ValidRelationships: Enemy, Ally
 
 HornetLauncher:

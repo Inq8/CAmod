@@ -3221,7 +3221,7 @@ TORM:
 		PauseOnCondition: empdisable || being-warped || blinded
 	Aircraft:
 		CruiseAltitude: 2560
-		TurnSpeed: 28
+		TurnSpeed: 32
 		Speed: 201
 		IdleSpeed: 146
 		IdleTurnSpeed: 15
@@ -5850,7 +5850,7 @@ VSPK:
 	Tooltip:
 		Name: Voidspike
 	TooltipExtras:
-		Attributes: • Corrupts resources\n• Damages nearby enemies
+		Attributes: • Corrupts resources\n• Damages nearby enemies over time\n• Direct damage is reflected back to the attacker
 		Description: Gradually transforms nearby resources into Black Tiberium,\n  which is devoid of most of its useful properties.
 	Armor:
 		Type: Concrete
@@ -5898,6 +5898,10 @@ VSPK:
 		Sequence: overlay
 		Palette: scrin
 		IsDecoration: true
+	ReflectsDamage:
+		DamagePercentage: 50
+		ValidRelationships: Ally, Enemy, Neutral
+		ReflectToAttacker: true
 
 #
 # ---- misc

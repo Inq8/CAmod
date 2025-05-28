@@ -3134,6 +3134,12 @@ QTNK:
 	FirepowerMultiplier@MADIC:
 		Modifier: 40
 		RequiresCondition: invulnerability
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+		RequiresCondition: deployed || driver-dead
+	Targetable@DriverKillImmune:
+		TargetTypes: DriverKillImmune
+		RequiresCondition: deployed
 
 AMCV:
 	Inherits: ^VehicleTD-NOUPG
@@ -3349,7 +3355,6 @@ GDRN:
 		TurnSpeed: 40
 		Speed: 126
 		Voice: Move
-		PauseOnCondition: empdisable || being-warped || notmobile
 	RevealsShroud:
 		MinRange: 5c0
 		Range: 7c0
@@ -3374,6 +3379,8 @@ GDRN:
 		TargetTypes: MindControlImmune
 	Targetable@ChaosImmune:
 		TargetTypes: ChaosImmune
+	Targetable@DriverKillImmune:
+		TargetTypes: DriverKillImmune
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
@@ -3404,17 +3411,6 @@ GDRN:
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 200
 		RequiresCondition: !mindcontrolled
-	-CaptureManager:
-	-Capturable:
-	-CaptureNotification:
-	-Capturable@DRIVER_DEAD:
-	-GrantConditionIfOwnerIsNeutral:
-	-ChangesHealth@DRIVER_DEAD:
-	-TooltipDescription@DRIVER_DEAD:
-	-Targetable@DRIVERKILL:
-	-Targetable@DRIVERKILLLOWHP:
-	-GrantConditionOnDamageState@DriverKillLessThan50:
-	-Targetable@AICAPTURE:
 	Sellable:
 		RequiresCondition: unit-sellable && !c4 && !being-warped
 
@@ -3577,6 +3573,8 @@ BGGY:
 		ValidRelationships: Ally
 	Targetable@MindControlImmune:
 		TargetTypes: MindControlImmune
+	Targetable@DriverKillImmune:
+		TargetTypes: DriverKillImmune
 	Targetable@IronCurtainImmune:
 		TargetTypes: IronCurtainImmune
 	Targetable@ChronoshiftImmune:
@@ -3593,7 +3591,6 @@ FTNK.Decoy:
 		HP: 50
 	Mobile:
 		Locomotor: wheeled
-		PauseOnCondition: notmobile
 	Armament@PRIMARY:
 		Weapon: BigFlamerTD.Decoy
 	-Armament@FF:
@@ -3611,17 +3608,6 @@ FTNK.Decoy:
 	-Passenger:
 	-Berserkable@BERSERK:
 	-RejectsOrders@BERSERK:
-	-CaptureManager:
-	-Capturable:
-	-CaptureNotification:
-	-Capturable@DRIVER_DEAD:
-	-GrantConditionIfOwnerIsNeutral:
-	-ChangesHealth@DRIVER_DEAD:
-	-TooltipDescription@DRIVER_DEAD:
-	-Targetable@DRIVERKILL:
-	-Targetable@DRIVERKILLLOWHP:
-	-GrantConditionOnDamageState@DriverKillLessThan50:
-	-Targetable@AICAPTURE:
 	-GivesExperienceCA:
 	-GrantConditionOnPrerequisite@GLOBALBOUNTY:
 	-GivesBountyCA:
@@ -3644,7 +3630,6 @@ HFTK.Decoy:
 		HP: 50
 	Mobile:
 		Locomotor: wheeled
-		PauseOnCondition: notmobile
 	Armament@PRIMARY:
 		Weapon: HeavyFlameTankFlamer.Decoy
 	Armament@PRIMARYUPG:
@@ -3665,17 +3650,6 @@ HFTK.Decoy:
 	-Passenger:
 	-Berserkable@BERSERK:
 	-RejectsOrders@BERSERK:
-	-CaptureManager:
-	-Capturable:
-	-CaptureNotification:
-	-Capturable@DRIVER_DEAD:
-	-GrantConditionIfOwnerIsNeutral:
-	-ChangesHealth@DRIVER_DEAD:
-	-TooltipDescription@DRIVER_DEAD:
-	-Targetable@DRIVERKILL:
-	-Targetable@DRIVERKILLLOWHP:
-	-GrantConditionOnDamageState@DriverKillLessThan50:
-	-Targetable@AICAPTURE:
 	-GivesExperienceCA:
 	-GrantConditionOnPrerequisite@GLOBALBOUNTY:
 	-GivesBountyCA:
@@ -4318,7 +4292,7 @@ MTNK.Drone:
 		Name: Battle Drone
 		-RequiresCondition:
 	Mobile:
-		PauseOnCondition: !radarenabled || empdisable || being-warped || notmobile
+		PauseOnCondition: !radarenabled || being-captured || empdisable || being-warped || driver-dead || notmobile
 		Voice: Move
 	Passenger:
 		Voice: Move
@@ -4353,17 +4327,6 @@ MTNK.Drone:
 	-WithSpriteTurret@LaserTank:
 	WithSpriteTurret@default:
 		RequiresCondition: !pointdef-upgrade
-	-CaptureManager:
-	-Capturable:
-	-CaptureNotification:
-	-Capturable@DRIVER_DEAD:
-	-GrantConditionIfOwnerIsNeutral:
-	-ChangesHealth@DRIVER_DEAD:
-	-TooltipDescription@DRIVER_DEAD:
-	-Targetable@DRIVERKILL:
-	-Targetable@DRIVERKILLLOWHP:
-	-GrantConditionOnDamageState@DriverKillLessThan50:
-	-Targetable@AICAPTURE:
 	-SpeedMultiplier@BERSERK:
 	-ReloadDelayMultiplier@BERSERK:
 	-ExternalCondition@BERSERK:
@@ -4453,7 +4416,7 @@ MDRN:
 		TurnSpeed: 255
 		Locomotor: seal
 		Voice: Move
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: being-captured || empdisable || being-warped || driver-dead
 	Voiced:
 		VoiceSet: MiniDroneVoice
 	Armament@PRIMARY:
@@ -4480,18 +4443,9 @@ MDRN:
 		TargetTypes: MindControlImmune
 	Targetable@ChaosImmune:
 		TargetTypes: ChaosImmune
+	Targetable@DriverKillImmune:
+		TargetTypes: DriverKillImmune
 	-WithDamageOverlay:
-	-CaptureManager:
-	-Capturable:
-	-CaptureNotification:
-	-Capturable@DRIVER_DEAD:
-	-GrantConditionIfOwnerIsNeutral:
-	-ChangesHealth@DRIVER_DEAD:
-	-TooltipDescription@DRIVER_DEAD:
-	-Targetable@DRIVERKILL:
-	-Targetable@DRIVERKILLLOWHP:
-	-GrantConditionOnDamageState@DriverKillLessThan50:
-	-Targetable@AICAPTURE:
 	-Targetable@MINIDRONE:
 	-ChangesHealth@MINIDRONE:
 	-AttachableTo@MINIDRONE:
@@ -4551,6 +4505,8 @@ MDRN.Attached:
 		Delay: 25
 		StartIfBelow: 100
 		DamageCooldown: 50
+	CaptureManager:
+		-BeingCapturedCondition:
 	-Targetable@HACKABLE:
 	-MindControllable@HACKABLE:
 	-MindControllableProgressBar@HACKABLE:
@@ -4747,7 +4703,7 @@ HTNK.Drone:
 	Tooltip:
 		Name: Mammoth Drone
 	Mobile:
-		PauseOnCondition: !radarenabled || empdisable || being-warped || notmobile
+		PauseOnCondition: !radarenabled || being-captured || empdisable || being-warped || driver-dead || notmobile
 		Voice: Move
 	Passenger:
 		Voice: Move
@@ -4770,20 +4726,11 @@ HTNK.Drone:
 		TargetTypes: MindControlImmune
 	Targetable@ChaosImmune:
 		TargetTypes: ChaosImmune
+	Targetable@DriverKillImmune:
+		TargetTypes: DriverKillImmune
 	ChangesHealth:
 		StartIfBelow: 100
 		RequiresCondition: !mdrn-attached
-	-CaptureManager:
-	-Capturable:
-	-CaptureNotification:
-	-Capturable@DRIVER_DEAD:
-	-GrantConditionIfOwnerIsNeutral:
-	-ChangesHealth@DRIVER_DEAD:
-	-TooltipDescription@DRIVER_DEAD:
-	-Targetable@DRIVERKILL:
-	-Targetable@DRIVERKILLLOWHP:
-	-GrantConditionOnDamageState@DriverKillLessThan50:
-	-Targetable@AICAPTURE:
 	-SpeedMultiplier@BERSERK:
 	-ReloadDelayMultiplier@BERSERK:
 	-ExternalCondition@BERSERK:
@@ -8653,7 +8600,7 @@ MEMP:
 	Selectable:
 		Voice: SelectEMP
 	Mobile:
-		PauseOnCondition: !radarenabled || empdisable || being-warped || notmobile
+		PauseOnCondition: !radarenabled || being-captured || empdisable || being-warped || driver-dead || notmobile
 		Speed: 126
 		Voice: Move
 		TurnSpeed: 28
@@ -8719,6 +8666,8 @@ MEMP:
 		TargetTypes: MindControlImmune
 	Targetable@ChaosImmune:
 		TargetTypes: ChaosImmune
+	Targetable@DriverKillImmune:
+		TargetTypes: DriverKillImmune
 	Targetable@EmpImmune:
 		TargetTypes: EmpImmune
 	WithRangeCircle:
@@ -8731,17 +8680,6 @@ MEMP:
 	Voiced@OFFLINE:
 		VoiceSet: OfflineDroneVoice
 		RequiresCondition: !radarenabled || empdisable
-	-CaptureManager:
-	-Capturable:
-	-CaptureNotification:
-	-Capturable@DRIVER_DEAD:
-	-GrantConditionIfOwnerIsNeutral:
-	-ChangesHealth@DRIVER_DEAD:
-	-TooltipDescription@DRIVER_DEAD:
-	-Targetable@DRIVERKILL:
-	-Targetable@DRIVERKILLLOWHP:
-	-GrantConditionOnDamageState@DriverKillLessThan50:
-	-Targetable@AICAPTURE:
 	WithColoredOverlay@DRONEDISABLE:
 		RequiresCondition: (!radarenabled || empdisable) && !triggered
 	WithDecoration@DRONEDISABLE:
@@ -8787,7 +8725,6 @@ CDRN:
 	Mobile:
 		Speed: 135
 		Voice: Move
-		PauseOnCondition: empdisable || being-warped || notmobile
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 5c0
@@ -8833,19 +8770,10 @@ CDRN:
 		TargetTypes: MindControlImmune
 	Targetable@ChaosImmune:
 		TargetTypes: ChaosImmune
+	Targetable@DriverKillImmune:
+		TargetTypes: DriverKillImmune
 	Voiced:
 		VoiceSet: ChaosDroneVoice
-	-CaptureManager:
-	-Capturable:
-	-CaptureNotification:
-	-Capturable@DRIVER_DEAD:
-	-GrantConditionIfOwnerIsNeutral:
-	-ChangesHealth@DRIVER_DEAD:
-	-TooltipDescription@DRIVER_DEAD:
-	-Targetable@DRIVERKILL:
-	-Targetable@DRIVERKILLLOWHP:
-	-GrantConditionOnDamageState@DriverKillLessThan50:
-	-Targetable@AICAPTURE:
 	Sellable:
 		RequiresCondition: unit-sellable && !c4 && !being-warped
 	WithRangeCircle:
