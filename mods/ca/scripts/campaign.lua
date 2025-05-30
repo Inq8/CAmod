@@ -829,7 +829,7 @@ InitAttackSquad = function(squad, player, targetPlayer)
 			return (composition.MinTime == nil or DateTime.GameTime >= composition.MinTime + squad.InitTime) -- after min time
 				and (composition.MaxTime == nil or DateTime.GameTime < composition.MaxTime + squad.InitTime) -- before max time
 				and (composition.RequiredTargetCharacteristics == nil or Utils.All(composition.RequiredTargetCharacteristics, function(characteristic)
-					return PlayerCharacteristics[targetPlayer.InternalName] ~= nil and PlayerCharacteristics[targetPlayer.InternalName][characteristic] ~= nil and PlayerCharacteristics[targetPlayer.InternalName][characteristic]
+					return PlayerCharacteristics[squad.TargetPlayer.InternalName] ~= nil and PlayerCharacteristics[squad.TargetPlayer.InternalName][characteristic] ~= nil and PlayerCharacteristics[squad.TargetPlayer.InternalName][characteristic]
 				end)) -- target player has all required characteristics
 				and (composition.Prerequisites == nil or squad.Player.HasPrerequisites(composition.Prerequisites)) -- player has prerequisites
 		end)

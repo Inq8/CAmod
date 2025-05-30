@@ -45,6 +45,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Armaments that count towards shots per charge. Leave empty for all.")]
 		public readonly string[] ChargeConsumingArmaments = default;
 
+		[Desc("If true, charge will be lost while turning.")]
+		public readonly bool LosesChargeWhileTurning = false;
+
 		public readonly bool ShowSelectionBar = false;
 		public readonly Color SelectionBarColor = Color.FromArgb(128, 200, 255);
 
@@ -118,6 +121,9 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled || IsTraitPaused)
 				return;
 
+			if (!IsAiming && ChargeLevel == 0)
+				return;
+
 			var reloading = false;
 			foreach (var armament in Armaments)
 			{
@@ -129,7 +135,13 @@ namespace OpenRA.Mods.CA.Traits
 			}
 
 			// Stop charging when we lose our target
-			charging = (self.CurrentActivity is AttackCharged || self.CurrentActivity is AttackMoveActivity) && !reloading && IsAiming && (ChargeLevel > 0 || !IsTurning);
+			bool isTurning = IsTurning;
+
+			charging =
+				(self.CurrentActivity is AttackCharged || self.CurrentActivity is AttackMoveActivity)
+				&& !reloading
+				&& IsAiming
+				&& (!isTurning || (isTurning && ChargeLevel > 0 && !Info.LosesChargeWhileTurning));
 
 			var delta = charging ? Info.ChargeRate : -Info.DischargeRate;
 			ChargeLevel = (ChargeLevel + delta).Clamp(0, requiredChargeLevel);
