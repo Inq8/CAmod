@@ -5304,7 +5304,7 @@ CVAT:
 	Valued:
 		Cost: 2000
 	Health:
-		HP: 100000
+		HP: 120000
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -5391,7 +5391,7 @@ INDP:
 		Dimensions: 3,3
 		LocalCenterOffset: 0,-512,0
 	Health:
-		HP: 100000
+		HP: 120000
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -5461,7 +5461,7 @@ MUNP:
 		Dimensions: 3,3
 		LocalCenterOffset: 0,-512,0
 	Health:
-		HP: 100000
+		HP: 120000
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -5539,7 +5539,7 @@ OREP:
 	-CapturableProgressBlink:
 	-CaptureManager:
 	Valued:
-		Cost: 1800
+		Cost: 1600
 	Tooltip:
 		Name: Ore Purifier
 	ResourcePurifierCA@Normal:
@@ -5606,7 +5606,7 @@ UPGC:
 			TopLeft: -1536, -1024
 			BottomRight: 1536, 1536
 	Health:
-		HP: 120000
+		HP: 140000
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -5654,7 +5654,7 @@ UPGC:
 		Prerequisite: gdiorupgc
 	ProvidesPrerequisite@Name:
 	Power:
-		Amount: -150
+		Amount: -100
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
 	SpawnActorOnDeath:
@@ -5826,7 +5826,7 @@ UPGC.SOCK:
 UPGC.BOMB:
 	Inherits: ^BuildingPlug
 	Valued:
-		Cost: 1250
+		Cost: 1000
 	Tooltip:
 		Name: Upgrade: Firestorm Missile System
 	Buildable:
@@ -5841,17 +5841,22 @@ UPGC.BOMB:
 	Plug:
 		Type: tower.rocket
 	Power:
-		Amount: -75
+		Amount: -50
 	RenderSprites:
 		PlayerPalette: playertd
 	WithProductionIconOverlay:
 		Types: Upgrade
 		Prerequisites: bombard3.strat
+	ProductionCostMultiplier@SubsequentDiscount:
+		Multiplier: 20
+		Prerequisites: upgc.bomb.previous
+	FreeActor@SubsequentDiscount:
+		Actor: upgc.bomb.previous
 
 UPGC.SEEK:
 	Inherits: ^BuildingPlug
 	Valued:
-		Cost: 1250
+		Cost: 1000
 	Tooltip:
 		Name: Upgrade: Advanced Radar System
 	Buildable:
@@ -5866,17 +5871,22 @@ UPGC.SEEK:
 	Plug:
 		Type: tower.radar
 	Power:
-		Amount: -75
+		Amount: -50
 	RenderSprites:
 		PlayerPalette: playertd
 	WithProductionIconOverlay:
 		Types: Upgrade
 		Prerequisites: seek3.strat
+	ProductionCostMultiplier@SubsequentDiscount:
+		Multiplier: 20
+		Prerequisites: upgc.seek.previous
+	FreeActor@SubsequentDiscount:
+		Actor: upgc.seek.previous
 
 UPGC.HOLD:
 	Inherits: ^BuildingPlug
 	Valued:
-		Cost: 1250
+		Cost: 1000
 	Tooltip:
 		Name: Upgrade: Nanoshield Generator
 	Buildable:
@@ -5891,12 +5901,17 @@ UPGC.HOLD:
 	Plug:
 		Type: tower.shield
 	Power:
-		Amount: -75
+		Amount: -50
 	RenderSprites:
 		PlayerPalette: playertd
 	WithProductionIconOverlay:
 		Types: Upgrade
 		Prerequisites: hold3.strat
+	ProductionCostMultiplier@SubsequentDiscount:
+		Multiplier: 20
+		Prerequisites: upgc.hold.previous
+	FreeActor@SubsequentDiscount:
+		Actor: upgc.hold.previous
 
 UPGC.DROP:
 	Inherits: ^BuildingPlug
@@ -5911,17 +5926,39 @@ UPGC.DROP:
 		Description: Provides a dropzone for emergency supplies.
 		IconPalette: chrometd
 	TooltipExtras:
-		Strengths: + $1000 delivered every 60 seconds (normal speed)
+		Strengths: + $1250 delivered every 60 seconds (normal speed)
 		Attributes: \n• Place on Upgrade Center\n(!) Mutually exclusive with Firestorm Missile System,\n       Advanced Radar System and Nanoshield Generator
 	Plug:
 		Type: tower.drop
 	Power:
-		Amount: -50
+		Amount: -25
 	RenderSprites:
 		PlayerPalette: playertd
 	WithProductionIconOverlay:
 		Types: Upgrade
 		Prerequisites: dropzone
+	ProductionCostMultiplier@SubsequentDiscount:
+		Multiplier: 20
+		Prerequisites: upgc.drop.previous
+	FreeActor@SubsequentDiscount:
+		Actor: upgc.drop.previous
+
+^BuildingPlugPrevious:
+	Inherits@DUMMY: ^InvisibleDummy
+	ProvidesPrerequisite:
+	PopControlled:
+
+upgc.bomb.previous:
+	Inherits: ^BuildingPlugPrevious
+
+upgc.seek.previous:
+	Inherits: ^BuildingPlugPrevious
+
+upgc.hold.previous:
+	Inherits: ^BuildingPlugPrevious
+
+upgc.drop.previous:
+	Inherits: ^BuildingPlugPrevious
 
 TMPP:
 	Inherits: ^BuildingTD
