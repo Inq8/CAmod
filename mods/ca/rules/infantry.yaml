@@ -92,6 +92,10 @@ DOG:
 		ArmamentNames: primary
 		CircleWidth: 0
 		Type: DogAttack
+	KeepsDistance:
+	GuardsSelection:
+		ValidOrders: AttackMove, AssaultMove, ForceAttack, KeepDistance
+		ValidTargets: Infantry, Vehicle
 
 TDOG:
 	Inherits: DOG
@@ -125,6 +129,8 @@ TDOG:
 	ProductionCostMultiplier@UkraineBonus:
 		Multiplier: 80
 		Prerequisites: player.ukraine
+	-GuardsSelection:
+	-KeepsDistance:
 
 E1:
 	Inherits: ^Soldier
@@ -4789,7 +4795,7 @@ ENFO:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 130
-		Prerequisites: ~tent, alhq, ~techlevel.high
+		Prerequisites: ~tent, atekoralhq, ~techlevel.high
 		Description: Elite short-range front-line infantry.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor

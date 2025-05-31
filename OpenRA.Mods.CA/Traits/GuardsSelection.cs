@@ -22,6 +22,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Will only guard units with these target types.")]
 		public readonly BitSet<TargetableType> ValidTargets = new BitSet<TargetableType>("Ground", "Water");
 
+		[Desc("Will only guard units with these target types.")]
+		public readonly HashSet<string> ValidOrders = new HashSet<string>() { "AttackMove", "AssaultMove", "Attack", "ForceAttack", "KeepDistance" };
+
 		[Desc("Maximum number of guard orders to chain together.")]
 		public readonly int MaxTargets = 10;
 
@@ -58,9 +61,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (order.Queued)
 				return;
 
-			var validOrders = new HashSet<string> { "AttackMove", "AssaultMove", "Attack", "ForceAttack", "KeepDistance" };
-
-			if (!validOrders.Contains(order.OrderString))
+			if (!Info.ValidOrders.Contains(order.OrderString))
 				return;
 
 			if (self.Owner.IsBot)
