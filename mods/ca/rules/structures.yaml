@@ -3780,6 +3780,7 @@ HQ:
 		ChargingColor: aaaa00
 		DischargingColor: ffff00
 		ShowSelectionBarWhenFull: false
+		ShowSelectionBarWhenEmpty: false
 
 HQ.UPG:
 	Inherits: HQ
@@ -5816,6 +5817,33 @@ UPGC:
 	UpdatesCount:
 		Type: StrategyLevel
 		RequiresCondition: tower.rocket || tower.radar || tower.shield || tower.drop
+	FreeActor@SubsequentDiscountBomb:
+		Actor: upgc.bomb.previous
+		RequiresCondition: tower.rocket
+	FreeActor@SubsequentDiscountSeek:
+		Actor: upgc.seek.previous
+		RequiresCondition: tower.radar
+	FreeActor@SubsequentDiscountHold:
+		Actor: upgc.hold.previous
+		RequiresCondition: tower.shield
+	FreeActor@SubsequentDiscountDrop:
+		Actor: upgc.drop.previous
+		RequiresCondition: tower.drop
+	UpdatesSupportPowerTimer@Firestorm:
+		OrderName: rocketbarrage
+		InitialOnly: true
+		RequiresCondition: tower.rocket
+		Ticks: 75
+	UpdatesSupportPowerTimer@AdvancedRadar:
+		OrderName: advradarorder
+		InitialOnly: true
+		RequiresCondition: tower.radar
+		Ticks: 75
+	UpdatesSupportPowerTimer@NaniteShield:
+		OrderName: nshieldorder
+		InitialOnly: true
+		RequiresCondition: tower.shield
+		Ticks: 75
 
 UPGC.SOCK:
 	AlwaysVisible:
@@ -5850,8 +5878,6 @@ UPGC.BOMB:
 	ProductionCostMultiplier@SubsequentDiscount:
 		Multiplier: 20
 		Prerequisites: upgc.bomb.previous
-	FreeActor@SubsequentDiscount:
-		Actor: upgc.bomb.previous
 
 UPGC.SEEK:
 	Inherits: ^BuildingPlug
@@ -5880,8 +5906,6 @@ UPGC.SEEK:
 	ProductionCostMultiplier@SubsequentDiscount:
 		Multiplier: 20
 		Prerequisites: upgc.seek.previous
-	FreeActor@SubsequentDiscount:
-		Actor: upgc.seek.previous
 
 UPGC.HOLD:
 	Inherits: ^BuildingPlug
@@ -5910,8 +5934,6 @@ UPGC.HOLD:
 	ProductionCostMultiplier@SubsequentDiscount:
 		Multiplier: 20
 		Prerequisites: upgc.hold.previous
-	FreeActor@SubsequentDiscount:
-		Actor: upgc.hold.previous
 
 UPGC.DROP:
 	Inherits: ^BuildingPlug
@@ -5940,8 +5962,6 @@ UPGC.DROP:
 	ProductionCostMultiplier@SubsequentDiscount:
 		Multiplier: 20
 		Prerequisites: upgc.drop.previous
-	FreeActor@SubsequentDiscount:
-		Actor: upgc.drop.previous
 
 ^BuildingPlugPrevious:
 	Inherits@DUMMY: ^InvisibleDummy

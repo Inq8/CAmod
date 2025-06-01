@@ -1170,7 +1170,7 @@
 		TargetTintColor: 00ddbb40
 
 ^FirestormPower:
-	AttackOrderPower@ROCKET:
+	AttackOrderPowerCA@ROCKET:
 		OrderName: rocketbarrage
 		PauseOnCondition: empdisable || disabled || being-warped
 		Cursor: ability
@@ -1188,7 +1188,6 @@
 		RequiresCondition: tower.rocket
 		Prerequisites: ~techlevel.high
 		SupportPowerPaletteOrder: 30
-		StartFullyCharged: true
 
 ^AdvancedRadarPower:
 	GrantPrerequisiteChargeDrainPowerCA@RADAR:
@@ -1211,7 +1210,6 @@
 		Prerequisites: ~techlevel.high
 		EarlyDeactivationPenalty: 1500
 		SupportPowerPaletteOrder: 30
-		StartFullyCharged: true
 
 ^NaniteShieldPower:
 	SpawnActorPowerCA@NSHIELD:
@@ -1241,7 +1239,6 @@
 		TargetCircleRange: 6c0
 		TargetCircleColor: 64a5dcbb
 		SupportPowerPaletteOrder: 30
-		StartFullyCharged: true
 
 ^EmpMissilePower:
 	AttackOrderPowerCA@EMPMISSILE:
@@ -1676,7 +1673,6 @@
 		EndChargeSpeechNotification: AssassinSquadReady
 		EndChargeTextNotification: Assassin Squad ready.
 		SupportPowerPaletteOrder: 50
-		StartFullyCharged: true
 	ProduceActorPowerCA@AssassinSquadAI:
 		OrderName: assassinsquadai
 		Prerequisites: wrath.covenant, ~botplayer
@@ -1688,7 +1684,6 @@
 		Description: \nDeploy a squad of Assassins that can\n    destroy buildings and salvage technology.
 		Actors: assa, assa, assa
 		SupportPowerPaletteOrder: 50
-		StartFullyCharged: true
 
 ^HackerCellPower:
 	ProduceActorPowerCA@HackerCell:
@@ -1706,7 +1701,6 @@
 		EndChargeSpeechNotification: HackerCellReady
 		EndChargeTextNotification: Hacker Cell ready.
 		SupportPowerPaletteOrder: 50
-		StartFullyCharged: true
 	ProduceActorPowerCA@HackerCellAI:
 		OrderName: hackercellai
 		Prerequisites: unity.covenant, ~botplayer
@@ -1718,7 +1712,6 @@
 		Actors: hack, hack, hack
 		SupportPowerPaletteOrder: 50
 		SelectProducer: false
-		StartFullyCharged: true
 
 ^ConfessorCabalPower:
 	ProduceActorPowerCA@ConfessorCabal:
@@ -1737,7 +1730,6 @@
 		EndChargeSpeechNotification: ConfessorCabalReady
 		EndChargeTextNotification: Confessor Cabal ready.
 		SupportPowerPaletteOrder: 50
-		StartFullyCharged: true
 	ProduceActorPowerCA@ConfessorCabalAI:
 		OrderName: confessorcabalai
 		Prerequisites: zeal.covenant, ~botplayer
@@ -1750,7 +1742,6 @@
 		Actors: conf, conf, conf
 		SupportPowerPaletteOrder: 50
 		SelectProducer: false
-		StartFullyCharged: true
 
 ^TibStealthPower:
 	GrantExternalConditionPowerCA@SGEN:
@@ -1833,7 +1824,6 @@
 		Prerequisites: malefic.allegiance
 		Cursor: ability
 		ChargeInterval: 6000
-		StartFullyCharged: true
 		Name: Voidspike
 		ActivationDelay: 1
 		Description: \nCreates an void spike at the target location.\n    Gradually transforms nearby resources into Black Tiberium\n    which is devoid of most of its useful properties.\n\nDamages nearby enemy units.
@@ -2265,3 +2255,37 @@
 		WarpToImage: fleetrecall
 		WarpToSequence: idle
 		WarpEffectPalette: scrineffect
+
+# Providers
+
+voidspike.provider:
+	Inherits@DUMMY: ^InvisibleDummy
+	Inherits@VoidSpike: ^VoidSpikePower
+	UpdatesSupportPowerTimer:
+		OrderName: voidspike
+		InitialOnly: true
+		Ticks: 75
+
+assassinsquad.provider:
+	Inherits@DUMMY: ^InvisibleDummy
+	Inherits@AssassinSquad: ^AssassinSquadPower
+	UpdatesSupportPowerTimer:
+		OrderName: assassinsquad
+		InitialOnly: true
+		Ticks: 1500
+
+hackercell.provider:
+	Inherits@DUMMY: ^InvisibleDummy
+	Inherits@HackerCell: ^HackerCellPower
+	UpdatesSupportPowerTimer:
+		OrderName: hackercell
+		InitialOnly: true
+		Ticks: 1500
+
+confessorcabal.provider:
+	Inherits@DUMMY: ^InvisibleDummy
+	Inherits@ConfessorCabal: ^ConfessorCabalPower
+	UpdatesSupportPowerTimer:
+		OrderName: confessorcabal
+		InitialOnly: true
+		Ticks: 1500

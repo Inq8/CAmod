@@ -11,6 +11,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Graphics;
+using OpenRA.Mods.CA.Traits;
 using OpenRA.Mods.Common.Graphics;
 using OpenRA.Mods.Common.Orders;
 using OpenRA.Mods.Common.Traits;
@@ -55,6 +56,11 @@ namespace OpenRA.Mods.Cnc.Traits
 		public override void SelectTarget(Actor self, string order, SupportPowerManager manager)
 		{
 			self.World.OrderGenerator = new SelectAttackOrderPowerCATarget(self, order, manager, info.Cursor, MouseButton.Left, attack, this);
+		}
+
+		public override SupportPowerInstance CreateInstance(string key, SupportPowerManager manager)
+		{
+			return new SupportPowerInstanceCA(key, Info, manager);
 		}
 
 		public override void Activate(Actor self, Order order, SupportPowerManager manager)
@@ -109,8 +115,11 @@ namespace OpenRA.Mods.Cnc.Traits
 		{
 			var pos = world.Map.CenterOfCell(cell);
 			var range = attack.GetMaximumRange().LengthSquared;
+			var minRange = attack.GetMinimumRange().LengthSquared;
 
-			return world.Map.Contains(cell) && instance.Instances.Any(a => !a.IsTraitPaused && (a.Self.CenterPosition - pos).HorizontalLengthSquared < range);
+			return world.Map.Contains(cell) && instance.Instances.Any(a => !a.IsTraitPaused
+				&& (a.Self.CenterPosition - pos).HorizontalLengthSquared < range
+				&& (a.Self.CenterPosition - pos).HorizontalLengthSquared >= minRange);
 		}
 
 		protected override IEnumerable<Order> OrderInner(World world, CPos cell, int2 worldPixel, MouseInput mi)
@@ -135,7 +144,6 @@ namespace OpenRA.Mods.Cnc.Traits
 
 		protected override IEnumerable<IRenderable> RenderAnnotations(WorldRenderer wr, World world)
 		{
-			var xy = wr.Viewport.ViewToWorld(Viewport.LastMousePos);
 			var info = instance.Info as AttackOrderPowerCAInfo;
 
 			foreach (var a in instance.Instances.Where(i => !i.IsTraitPaused))
@@ -161,6 +169,8 @@ namespace OpenRA.Mods.Cnc.Traits
 
 			if (info.TargetCircleRadius > WDist.Zero)
 			{
+				var xy = wr.Viewport.ViewToWorld(Viewport.LastMousePos);
+
 				yield return new RangeCircleAnnotationRenderable(
 					world.Map.CenterOfCell(xy),
 					info.TargetCircleRadius,

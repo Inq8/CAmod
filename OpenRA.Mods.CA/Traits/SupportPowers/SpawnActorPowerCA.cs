@@ -42,10 +42,14 @@ namespace OpenRA.Mods.CA.Traits
 			Info = info;
 		}
 
+		public override SupportPowerInstance CreateInstance(string key, SupportPowerManager manager)
+		{
+			return new SupportPowerInstanceCA(key, Info, manager);
+		}
+
 		public override void Activate(Actor self, Order order, SupportPowerManager manager)
 		{
 			base.Activate(self, order, manager);
-
 
 			if (Info.DisplayBeacon)
 			{

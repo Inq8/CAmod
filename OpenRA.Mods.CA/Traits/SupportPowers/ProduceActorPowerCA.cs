@@ -76,6 +76,11 @@ namespace OpenRA.Mods.CA.Traits
 			faction = init.GetValue<FactionInit, string>(init.Self.Owner.Faction.InternalName);
 		}
 
+		public override SupportPowerInstance CreateInstance(string key, SupportPowerManager manager)
+		{
+			return new SupportPowerInstanceCA(key, Info, manager);
+		}
+
 		public override void SelectTarget(Actor self, string order, SupportPowerManager manager)
 		{
 			if (info.AutoFire || !info.SelectProducer)

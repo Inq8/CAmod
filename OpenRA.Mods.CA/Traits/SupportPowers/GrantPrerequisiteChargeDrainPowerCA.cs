@@ -89,7 +89,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		IEnumerable<string> ITechTreePrerequisite.ProvidesPrerequisites => active ? prerequisites : Enumerable.Empty<string>();
 
-		public class DischargeableSupportPowerInstance : SupportPowerInstance
+		public class DischargeableSupportPowerInstance : SupportPowerInstanceCA
 		{
 			// Whether the power is available to activate (even if not fully charged)
 			bool available;
