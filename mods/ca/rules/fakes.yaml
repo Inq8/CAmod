@@ -1,10 +1,228 @@
+FPWR:
+	Inherits: ^FakeBuilding
+	Inherits@infiltrate: ^InfiltratableFake
+	Inherits@SHAPE: ^2x2Shape
+	Buildable:
+		BuildPaletteOrder: 900
+		Queue: DefenseSQ, DefenseMQ
+		Prerequisites: powr, ~structures.england, ~techlevel.low
+		Description: Looks like a Power Plant. Packed with explosives.
+		Icon: fake-icon
+	Tooltip:
+		Name: Fake Power Plant
+		GenericName: Power Plant
+		GenericVisibility: Enemy
+		GenericStancePrefix: False
+	TooltipExtras:
+		FakeActor: powr
+	Building:
+		Footprint: xx xx ==
+		Dimensions: 2,3
+		LocalCenterOffset: 0,-512,0
+	RenderSprites:
+		Image: powr
+	Selectable:
+		Bounds: 2048, 2048
+	HitShape:
+		UseTargetableCellsOffsets: false
+		TargetableOffsets: 0,0,0, 640,-384,0, 640,512,0, -710,-512,0, -710,512,0
+	Valued:
+		Cost: 150
+	Health:
+		HP: 40000
+	Armor:
+		Type: Wood
+	WithBuildingBib:
+	WithDeathAnimation:
+		DeathSequence: dead
+		UseDeathTypeSuffix: false
+
+FREF:
+	Inherits: ^FakeBuilding
+	Inherits@SHAPE: ^2x2Shape
+	Buildable:
+		BuildPaletteOrder: 910
+		Queue: DefenseSQ, DefenseMQ
+		Prerequisites: proc, ~structures.england, ~techlevel.low
+		Description: Looks like a Refinery. Packed with explosives.
+		Icon: fake-icon
+	Tooltip:
+		Name: Fake Refinery
+		GenericName: Refinery
+		GenericVisibility: Enemy
+		GenericStancePrefix: False
+	TooltipExtras:
+		FakeActor: proc
+	Building:
+		Footprint: _X_ xxx X++ ===
+		Dimensions: 3,4
+		LocalCenterOffset: 0,-512,0
+	Selectable:
+		Bounds: 3072, 2133, 0, 170
+		DecorationBounds: 3072, 2986, 0, -85
+	HitShape:
+		Type: Rectangle
+			TopLeft: -1536, -512
+			BottomRight: 1536, 598
+	HitShape@TOP:
+		TargetableOffsets: 1680,0,0
+		Type: Rectangle
+			TopLeft: -512, -1536
+			BottomRight: 512, -512
+	HitShape@BOTTOMLEFT:
+		TargetableOffsets: -1260,-1024,0
+		Type: Rectangle
+			TopLeft: -1536, 598
+			BottomRight: -512, 1280
+	WithBuildingBib:
+	WithBuildingPlacedAnimation:
+		RequiresCondition: !build-incomplete
+	RenderSprites:
+		Image: proc
+	Valued:
+		Cost: 200
+	Health:
+		HP: 90000
+	Armor:
+		Type: Wood
+	RequiresBuildableArea:
+		AreaTypes: building
+	WithResourceStoragePipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
+		PipCount: 17
+		FullSequence: pip-yellow
+	Targetable@Infiltration:
+		TargetTypes: StealCreditsInfiltrate, VisionInfiltrate
+
+WEAF:
+	Inherits: ^FakeBuilding
+	Inherits@infiltrate: ^InfiltratableFake
+	Inherits@SHAPE: ^3x2Shape
+	Buildable:
+		BuildPaletteOrder: 920
+		Prerequisites: weap, ~structures.england, ~techlevel.low
+		Queue: DefenseSQ, DefenseMQ
+		Description: Looks like a War Factory. Packed with explosives.
+		Icon: fake-icon
+	Tooltip:
+		Name: Fake War Factory
+		GenericName: War Factory
+		GenericVisibility: Enemy
+		GenericStancePrefix: False
+	TooltipExtras:
+		FakeActor: weap
+	Building:
+		Footprint: xxx xxx +++
+		Dimensions: 3,3
+		LocalCenterOffset: 0,-512,0
+	WithBuildingBib:
+	RenderSprites:
+		Image: WEAP
+	WithProductionDoorOverlay:
+		Sequence: build-top
+		RequiresCondition: !build-incomplete
+	Valued:
+		Cost: 225
+	Health:
+		HP: 150000
+	Armor:
+		Type: Wood
+	-ActorPreviewPlaceBuildingPreview:
+	SequencePlaceBuildingPreview:
+		Sequence: place
+	RequiresBuildableArea:
+		AreaTypes: building
+	Targetable@Infiltration:
+		TargetTypes: VetInfiltrate, StealTechInfiltrate, VisionInfiltrate
+
+DOMF:
+	Inherits: ^FakeBuilding
+	Inherits@infiltrate: ^InfiltratableFake
+	Inherits@SHAPE: ^2x2Shape
+	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
+	Tooltip:
+		Name: Fake Radar Dome
+		GenericName: Radar Dome
+		GenericVisibility: Enemy
+		GenericStancePrefix: False
+	TooltipExtras:
+		FakeActor: dome
+	Buildable:
+		BuildPaletteOrder: 930
+		Queue: DefenseSQ, DefenseMQ
+		Prerequisites: dome, ~structures.england, ~techlevel.medium
+		Description: Looks like a Radar Dome. Packed with explosives.
+		Icon: fake-icon
+	Building:
+		Footprint: xx xx ==
+		Dimensions: 2,3
+		LocalCenterOffset: 0,-512,0
+	WithBuildingBib:
+	RenderSprites:
+		Image: DOME
+	Valued:
+		Cost: 200
+	Health:
+		HP: 110000
+	Armor:
+		Type: Wood
+	RequiresBuildableArea:
+		AreaTypes: building
+	Targetable@Infiltration:
+		TargetTypes: ResetShroudInfiltrate, TechLockInfiltrate, VisionInfiltrate
+
+FACF:
+	Inherits: ^FakeBuilding
+	Inherits@infiltrate: ^InfiltratableFake
+	Buildable:
+		BuildPaletteOrder: 1000
+		Queue: DefenseSQ, DefenseMQ
+		Prerequisites: ~structures.england
+		Description: Looks like a Construction Yard. Packed with explosives.
+		Icon: fake-icon
+	Tooltip:
+		Name: Fake Construction Yard
+		GenericName: Construction Yard
+		GenericVisibility: Enemy
+		GenericStancePrefix: False
+	TooltipExtras:
+		FakeActor: fact
+	Building:
+		Footprint: xxX xxx XxX ===
+		Dimensions: 3,4
+		LocalCenterOffset: 0,-512,0
+	Selectable:
+		Bounds: 3072, 3072
+	HitShape:
+		TargetableOffsets: 1273,939,0, -980,-640,0, -980,640,0
+		Type: Rectangle
+			TopLeft: -1536, -1536
+			BottomRight: 1536, 1536
+	WithBuildingBib:
+	WithBuildingPlacedAnimation:
+		RequiresCondition: !build-incomplete
+	RenderSprites:
+		Image: FACT
+	Valued:
+		Cost: 250
+	Health:
+		HP: 150000
+	Armor:
+		Type: Wood
+	RequiresBuildableArea:
+		AreaTypes: building
+	Targetable@Infiltration:
+		TargetTypes: VisionInfiltrate
+
 SYRF:
 	Inherits: ^FakeBuilding
 	Inherits@infiltrate: ^InfiltratableFake
 	RenderSprites:
 		PlayerPalette: playernavy
 	Buildable:
-		BuildPaletteOrder: 890
+		BuildPaletteOrder: 1100
 		Queue: DefenseSQ, DefenseMQ
 		Prerequisites: syrd, ~structures.england, ~techlevel.navy, ~techlevel.low
 		Description: Looks like a Naval yard. Packed with explosives.
@@ -46,116 +264,5 @@ SYRF:
 	RequiresBuildableArea:
 		AreaTypes: building
 		Adjacent: 8
-
-WEAF:
-	Inherits: ^FakeBuilding
-	Inherits@infiltrate: ^InfiltratableFake
-	Inherits@SHAPE: ^3x2Shape
-	Buildable:
-		BuildPaletteOrder: 920
-		Prerequisites: weap, ~structures.england, ~techlevel.low
-		Queue: DefenseSQ, DefenseMQ
-		Description: Looks like a War Factory. Packed with explosives.
-		Icon: fake-icon
-	Tooltip:
-		Name: Fake War Factory
-		GenericName: War Factory
-		GenericVisibility: Enemy
-		GenericStancePrefix: False
-	TooltipExtras:
-		FakeActor: weap
-	Building:
-		Footprint: xxx xxx +++
-		Dimensions: 3,3
-		LocalCenterOffset: 0,-512,0
-	WithBuildingBib:
-	RenderSprites:
-		Image: WEAP
-	WithProductionDoorOverlay:
-		Sequence: build-top
-		RequiresCondition: !build-incomplete
-	Valued:
-		Cost: 225
-	Health:
-		HP: 150000
-	Armor:
-		Type: Wood
-	-ActorPreviewPlaceBuildingPreview:
-	SequencePlaceBuildingPreview:
-		Sequence: place
-	RequiresBuildableArea:
-		AreaTypes: building
-
-DOMF:
-	Inherits: ^FakeBuilding
-	Inherits@infiltrate: ^InfiltratableFake
-	Inherits@SHAPE: ^2x2Shape
-	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
-	Tooltip:
-		Name: Fake Radar Dome
-		GenericName: Radar Dome
-		GenericVisibility: Enemy
-		GenericStancePrefix: False
-	TooltipExtras:
-		FakeActor: dome
-	Buildable:
-		BuildPaletteOrder: 930
-		Queue: DefenseSQ, DefenseMQ
-		Prerequisites: dome, ~structures.england, ~techlevel.medium
-		Description: Looks like a Radar Dome. Packed with explosives.
-		Icon: fake-icon
-	Building:
-		Footprint: xx xx ==
-		Dimensions: 2,3
-		LocalCenterOffset: 0,-512,0
-	WithBuildingBib:
-	RenderSprites:
-		Image: DOME
-	Valued:
-		Cost: 200
-	Health:
-		HP: 110000
-	Armor:
-		Type: Wood
-	RequiresBuildableArea:
-		AreaTypes: building
-
-FACF:
-	Inherits: ^FakeBuilding
-	Buildable:
-		BuildPaletteOrder: 1000
-		Queue: DefenseSQ, DefenseMQ
-		Prerequisites: ~structures.england
-		Description: Looks like a Construction Yard. Packed with explosives.
-		Icon: fake-icon
-	Tooltip:
-		Name: Fake Construction Yard
-		GenericName: Construction Yard
-		GenericVisibility: Enemy
-		GenericStancePrefix: False
-	TooltipExtras:
-		FakeActor: fact
-	Building:
-		Footprint: xxX xxx XxX ===
-		Dimensions: 3,4
-		LocalCenterOffset: 0,-512,0
-	Selectable:
-		Bounds: 3072, 3072
-	HitShape:
-		TargetableOffsets: 1273,939,0, -980,-640,0, -980,640,0
-		Type: Rectangle
-			TopLeft: -1536, -1536
-			BottomRight: 1536, 1536
-	WithBuildingBib:
-	WithBuildingPlacedAnimation:
-		RequiresCondition: !build-incomplete
-	RenderSprites:
-		Image: FACT
-	Valued:
-		Cost: 250
-	Health:
-		HP: 150000
-	Armor:
-		Type: Wood
-	RequiresBuildableArea:
-		AreaTypes: building
+	Targetable@Infiltration:
+		TargetTypes: GrantSupportPowerInfiltrate, VisionInfiltrate
