@@ -1,3 +1,4 @@
+# Attach most powers to the player, remove announcements/prerequisites and set them to instantly charge
 Player:
 	Inherits@FORCESHIELDPOWER: ^ForceShieldPower
 	Inherits@VEILOFWARPOWER: ^VeilOfWarPower
@@ -20,6 +21,9 @@ Player:
 	Inherits@SHADOWTEAMPOWER: ^ShadowTeamPower
 	Inherits@@INFERNOBOMBPOWER: ^InfernoBombPower
 	Inherits@FRENZYPOWER: ^FrenzyPower
+	Inherits@ASSASSINSQUADPOWER: ^AssassinSquadPower
+	Inherits@HACKERCELLPOWER: ^HackerCellPower
+	Inherits@CONFESSORCABALPOWER: ^ConfessorCabalPower
 	Inherits@TIBSTEALTHPOWER: ^TibStealthPower
 	Inherits@STORMSPIKEPOWER: ^StormSpikePower
 	Inherits@BUZZERSWARMPOWER: ^BuzzerSwarmPower
@@ -27,6 +31,7 @@ Player:
 	Inherits@GREATERCOALESCENCEPOWER: ^GreaterCoalescencePower
 	Inherits@OVERLORDSWRATHPOWER: ^OverlordsWrathPower
 	Inherits@ANATHEMAPOWER: ^AnathemaPower
+	Inherits@VOIDSPIKEPOWER: ^VoidSpikePower
 	Inherits@SUPPRESSIONPOWER: ^SuppressionPower
 	GrantExternalConditionPowerCA@FSHIELD:
 		-Prerequisites:
@@ -128,9 +133,6 @@ Player:
 		-Prerequisites:
 		-EndChargeSpeechNotification:
 		ChargeInterval: 1
-	-ProduceActorPowerCA@AssassinSquadAI:
-	-ProduceActorPowerCA@HackerCellAI:
-	-ProduceActorPowerCA@ConfessorCabalAI:
 	AirReinforcementsPower@ShadowTeam:
 		-Prerequisites:
 		-EndChargeSpeechNotification:
@@ -175,6 +177,11 @@ Player:
 		-Prerequisites:
 		-EndChargeSpeechNotification:
 		ChargeInterval: 1
+	DetonateWeaponPower@VoidSpike:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		DisplayTimerRelationships: None
+		ChargeInterval: 1
 	GrantExternalConditionPowerCA@SUPPRESSION:
 		-Prerequisites:
 		-BeginChargeSpeechNotification:
@@ -195,6 +202,8 @@ Player:
 		Condition: being-warped
 	ExternalCondition@5:
 		Condition: tower.shield
+
+# Powers that depend on a structure in the world (can't be attached to the player)
 
 ALHQ:
 	MissileStrikePower@BlackSkyStrike:

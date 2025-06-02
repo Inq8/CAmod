@@ -809,7 +809,7 @@
 		ValidTargets: HeroOfUnionTargetable
 		Duration: 0
 		AllowMultiple: false
-		Description: \nTargeted basic infantry units become Heroes of the Union,\n    significantly increasing their damage, speed and resilience.\n\nCan affect Rifle Infantry and Rocket Soldiers.
+		Description: \nTargeted basic infantry units become Heroes of the Union,\n    significantly increasing their damage, speed, range and resilience.\n\nCan affect Rifle Infantry, Rocket Soldiers, Grenadiers and Flamethrowers.
 		Prerequisites: ~infantry.doctrine, playerxp.level2
 		OnFireSound: heroes.aud
 		SelectTargetSpeechNotification: SelectTarget
@@ -877,7 +877,7 @@
 		OrderName: killzone
 		Prerequisites: ~arty.doctrine, playerxp.level2
 		Icon: killzone
-		ChargeInterval: 6000
+		ChargeInterval: 4500
 		Name: Kill Zone
 		Description: \nCalls in a Spy Plane which marks a target area. Any enemy units\n    within it take increased damage.
 		SelectTargetSpeechNotification: SelectTarget
@@ -1170,7 +1170,7 @@
 		TargetTintColor: 00ddbb40
 
 ^FirestormPower:
-	AttackOrderPower@ROCKET:
+	AttackOrderPowerCA@ROCKET:
 		OrderName: rocketbarrage
 		PauseOnCondition: empdisable || disabled || being-warped
 		Cursor: ability
@@ -1824,7 +1824,6 @@
 		Prerequisites: malefic.allegiance
 		Cursor: ability
 		ChargeInterval: 6000
-		StartFullyCharged: true
 		Name: Voidspike
 		ActivationDelay: 1
 		Description: \nCreates an void spike at the target location.\n    Gradually transforms nearby resources into Black Tiberium\n    which is devoid of most of its useful properties.\n\nDamages nearby enemy units.
@@ -2256,3 +2255,37 @@
 		WarpToImage: fleetrecall
 		WarpToSequence: idle
 		WarpEffectPalette: scrineffect
+
+# Providers
+
+voidspike.provider:
+	Inherits@DUMMY: ^InvisibleDummy
+	Inherits@VoidSpike: ^VoidSpikePower
+	UpdatesSupportPowerTimer:
+		OrderName: voidspike
+		InitialOnly: true
+		Ticks: 75
+
+assassinsquad.provider:
+	Inherits@DUMMY: ^InvisibleDummy
+	Inherits@AssassinSquad: ^AssassinSquadPower
+	UpdatesSupportPowerTimer:
+		OrderName: assassinsquad
+		InitialOnly: true
+		Ticks: 1500
+
+hackercell.provider:
+	Inherits@DUMMY: ^InvisibleDummy
+	Inherits@HackerCell: ^HackerCellPower
+	UpdatesSupportPowerTimer:
+		OrderName: hackercell
+		InitialOnly: true
+		Ticks: 1500
+
+confessorcabal.provider:
+	Inherits@DUMMY: ^InvisibleDummy
+	Inherits@ConfessorCabal: ^ConfessorCabalPower
+	UpdatesSupportPowerTimer:
+		OrderName: confessorcabal
+		InitialOnly: true
+		Ticks: 1500

@@ -523,10 +523,7 @@ M60mgJJAA:
 	ValidTargets: Air, AirSmall
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Air, AirSmall
-		Damage: 350
-		Versus:
-			Light: 100
-			Heavy: 100
+		Damage: 600
 
 M60mgNHAW:
 	Inherits: M60mg
@@ -820,15 +817,16 @@ SNIPER.vehicleElite:
 		InvalidTargets: DriverKillLow
 	Warhead@DriverKill: ChangeOwnerToNeutral
 		ValidTargets: DriverKillLow
+		InvalidTargets: DriverKillImmune
 		InvalidTargets: Infantry, Ship, Structure, Wall, Husk, Air, AirSmall
 		ValidRelationships: Enemy
 		CargoEffect: Block
 		Range: 0c511
-	Warhead@highlight: GrantExternalConditionCA
-		Range: 0c511
-		Duration: 2
-		Condition: highlight
+	Warhead@Flash: FlashTarget
+		Spread: 0c511
+		Color: ffffff
 		ValidTargets: DriverKillLow
+		InvalidTargets: DriverKillImmune
 
 SNIPERBATF:
 	Inherits: SNIPER

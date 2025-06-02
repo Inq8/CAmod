@@ -75,7 +75,7 @@ bombard.strat:
 		Strengths: + Increases firepower and rate of fire of vehicles and aircraft by 3%
 		Attributes: \n(!) Only ONE Strategy may be chosen.
 	Valued:
-		Cost: 1000
+		Cost: 750
 	RenderSprites:
 		Image: bombard.strat
 	AnnounceOnCreation:
@@ -120,7 +120,7 @@ seek.strat:
 		Strengths: + Increases speed and weapon range of vehicles and aircraft by 5%
 		Attributes: \n(!) Only ONE Strategy may be chosen.
 	Valued:
-		Cost: 1000
+		Cost: 750
 	RenderSprites:
 		Image: seek.strat
 	AnnounceOnCreation:
@@ -165,7 +165,7 @@ hold.strat:
 		Strengths: + Increases armor of vehicles and aircraft by 5%
 		Attributes: \n(!) Only ONE Strategy may be chosen.
 	Valued:
-		Cost: 1000
+		Cost: 750
 	RenderSprites:
 		Image: hold.strat
 	AnnounceOnCreation:
@@ -655,6 +655,8 @@ wrath.covenant:
 	UpdatesBuildOrder:
 	WithProductionIconOverlay:
 		Prerequisites: wrath.covenant
+	FreeActorCA@AssassinSquad:
+		Actor: assassinsquad.provider
 
 unity.covenant:
 	Inherits: ^Upgrade
@@ -674,6 +676,8 @@ unity.covenant:
 	UpdatesBuildOrder:
 	WithProductionIconOverlay:
 		Prerequisites: unity.covenant
+	FreeActorCA@HackerCell:
+		Actor: hackercell.provider
 
 zeal.covenant:
 	Inherits: ^Upgrade
@@ -693,6 +697,8 @@ zeal.covenant:
 	UpdatesBuildOrder:
 	WithProductionIconOverlay:
 		Prerequisites: zeal.covenant
+	FreeActorCA@ConfessorCabal:
+		Actor: confessorcabal.provider
 
 howi.upgrade:
 	Inherits: ^Upgrade
@@ -989,7 +995,7 @@ infantry.doctrine:
 	Buildable:
 		BuildPaletteOrder: 4
 		Prerequisites: ~player.soviet, !infantry.doctrine, !armor.doctrine, !arty.doctrine, playerxp.level1, ~techlevel.medium
-		Description: Specialize in infantry:\n• Troop Crawler\n• Overlord Tank (replaces Mammoth Tank)\n• Improved Paratroopers\n• Heroes of the Union\n• Cloning Vat\n\n
+		Description: Specialize in infantry:\n• Troop Crawler\n• Overlord Tank (replaces Mammoth Tank)\n• Improved Paratroopers Upgrade\n• Heroes of the Union\n• Cloning Vat\n\n
 	TooltipExtras:
 		Attributes: (!) Only ONE Doctrine may be chosen.
 	Valued:
@@ -1007,7 +1013,7 @@ armor.doctrine:
 	Buildable:
 		BuildPaletteOrder: 5
 		Prerequisites: ~player.soviet, !infantry.doctrine, !armor.doctrine, !arty.doctrine, playerxp.level1, ~techlevel.medium
-		Description: Specialize in tanks:\n• Rhino Tank (replaces Heavy Tank)\n• Apocalypse Tank (replaces Mammoth Tank)\n• Reactive Armor\n• Tank Drop\n• Industrial Plant\n\n
+		Description: Specialize in tanks:\n• Rhino Tank (replaces Heavy Tank)\n• Apocalypse Tank (replaces Mammoth Tank)\n• Reactive Armor Upgrade\n• Tank Drop\n• Industrial Plant\n\n
 	TooltipExtras:
 		Attributes: (!) Only ONE Doctrine may be chosen.
 	Valued:
@@ -1025,7 +1031,7 @@ arty.doctrine:
 	Buildable:
 		BuildPaletteOrder: 6
 		Prerequisites: ~player.soviet, !infantry.doctrine, !armor.doctrine, !arty.doctrine, playerxp.level1, ~techlevel.medium
-		Description: Specialize in artillery:\n• Grad (replaces Katyusha)\n• Nuke Cannon\n• Rocket Pods\n• Kill Zone\n• Munitions Plant\n\n
+		Description: Specialize in artillery:\n• Grad (replaces Katyusha)\n• Nuke Cannon\n• Rocket Pods Upgrade\n• Kill Zone\n• Munitions Plant\n\n
 	TooltipExtras:
 		Attributes: (!) Only ONE Doctrine may be chosen.
 	Valued:
@@ -1460,7 +1466,7 @@ development.policy:
 	Buildable:
 		BuildPaletteOrder: 1
 		Prerequisites: ~player.allies, influence.level1, !economy.policy, !defense.policy, !development.policy, ~techlevel.medium
-		Description: Pursue development policy.\n\n• Level 1: +33% unit experience gain\n• Level 2: +66% unit experience gain, 10% discount on Tech Center & all upgrades\n• Level 3: +100% unit experience gain, rank 3 units gain additional health & damage
+		Description: Pursue development policy.\n\n• Level 1: +20% unit experience gain\n• Level 2: +40% unit experience gain, 10% discount on Tech Center & all upgrades\n• Level 3: +60% unit experience gain, rank 3 units gain additional health & damage
 	TooltipExtras:
 		Attributes: (!) Only ONE Policy may be chosen.
 	Valued:
@@ -1767,6 +1773,8 @@ malefic.allegiance:
 	UpdatesBuildOrder:
 	WithProductionIconOverlay:
 		Prerequisites: malefic.allegiance
+	FreeActorCA@VoidSpike:
+		Actor: voidspike.provider
 
 hyper.upgrade:
 	Inherits: ^Upgrade
@@ -1812,7 +1820,7 @@ evis.upgrade:
 		Description: Replaces: Ravager
 		IconPalette: chromes
 	TooltipExtras:
-		Strengths: + Increased damage\n+ Increased health\n+ Increased rate of fire\n+ Affected by Resource Conversion upgrade
+		Strengths: + Increased damage\n+ Increased health\n+ Increased range\n+ Increased rate of fire\n+ Affected by Resource Conversion upgrade
 		Weaknesses: – Increased cost
 	Valued:
 		Cost: 750
@@ -2031,7 +2039,7 @@ shields.upgrade:
 	Buildable:
 		BuildPaletteOrder: 40
 		Prerequisites: ~player.scrin, sign, ~techlevel.high
-		Description: Equip Scrin airborne units and Interlopers with shields.\n\nUpgrades: Interloper\n\nUpgrades: Stormrider\nUpgrades: Tormentor\nUpgrades: Enervator\nUpgrades: Devastator Warship\nUpgrades: Planetary Assault Carrier\nUpgrades: Mothership
+		Description: Equip Scrin airborne units and certain ground units with shields.\n\nUpgrades: Interloper\nUpgrades: Stormcrawler\nUpgrades: Stormrider\nUpgrades: Tormentor\nUpgrades: Enervator\nUpgrades: Devastator Warship\nUpgrades: Planetary Assault Carrier\nUpgrades: Mothership
 		IconPalette: chromes
 	TooltipExtras:
 		Strengths: + Grants an additonal health pool\n+ Resistance to EMP for aircraft

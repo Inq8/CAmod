@@ -18,10 +18,6 @@ Player:
 	Inherits@HeroesOfTheUnion: ^HeroesOfTheUnionPower
 	Inherits@TankDrop: ^TankDropPower
 	Inherits@KillZone: ^KillZonePower
-	Inherits@AssassinSquad: ^AssassinSquadPower
-	Inherits@HackerCell: ^HackerCellPower
-	Inherits@ConfessorCabal: ^ConfessorCabalPower
-	Inherits@VoidSpike: ^VoidSpikePower
 	TechTree:
 	ClassicProductionQueue@Building:
 		Type: BuildingSQ
@@ -145,6 +141,9 @@ Player:
 	GrantConditionOnPrerequisite@DoctrinesAvailable:
 		Prerequisites: playerxp.level1
 		Condition: upgrades-available
+	GrantConditionOnPrerequisite@CovenantsAvailable:
+		Prerequisites: nod.covenants.available
+		Condition: upgrades-available
 	GrantConditionOnPrerequisite@AllegiancesAvailable:
 		Prerequisites: scrin.allegiances.available
 		Condition: upgrades-available
@@ -154,6 +153,7 @@ Player:
 		NewOptionsTextNotification: New construction options.
 		CannotPlaceTextNotification: Cannot deploy here.
 	SupportPowerManager:
+	SupportPowerInstanceManager:
 	ScriptTriggers:
 	MissionObjectives:
 		WinNotification: Win
@@ -375,6 +375,7 @@ Player:
 	CapturedFactionsManager:
 	UpgradesManager:
 	ProductionTracker:
+	PopController:
 	PlayerBountyPool:
 	PlayerExperience:
 	PlayerExperienceLevels:

@@ -36,28 +36,33 @@ Player:
 		SquadValueRandomBonus: 0
 		SquadSize: 1
 		SquadSizeRandomBonus: 0
-		AirSquadTargetTypes:
-			heli: Aircraft, Vehicle
-			nhaw: Infantry
-			hind: Infantry, Vehicle
-			yak: Infantry, Aircraft
-			mig: Aircraft, Vehicle, Defense
-			suk: Vehicle, Defense
-			suk.upg: Vehicle
-			kiro: Infantry, Vehicle
-			orca: Aircraft, Vehicle
-			orcb: Vehicle, Defense
-			a10: Infantry
-			a10.sw: Infantry, Aircraft
-			a10.gau: Infantry
-			apch: Infantry, Aircraft
-			venm: Infantry, Aircraft
-			rah: Infantry
-			harr: Infantry, Aircraft
-			scrn: Aircraft, Vehicle, Defense
-			stmr: Aircraft, Infantry
-			enrv: Aircraft, Vehicle, Defense
-			mshp: Infantry, Vehicle
+		AirSquadTargetArmorTypes:
+			heli: Aircraft, Heavy
+			nhaw: None
+			hind: None, Heavy, Light
+			yak: Wood, None, Aircraft, Light
+			mig: Aircraft, Heavy, Light, Concrete
+			pmak: Heavy, Concrete
+			beag: Aircraft, Heavy, Light, Concrete
+			suk: Heavy, Concrete
+			suk.upg: Heavy, Wood
+			kiro: Wood
+			orca: Aircraft, Heavy
+			orcb: Heavy, Light, Concrete
+			a10: None, Wood
+			a10.sw: None, Wood, Aircraft
+			a10.gau: None, Wood, Light
+			auro: Heavy, Concrete, Wood
+			jack: Heavy, Light, Concrete
+			apch: None, Wood, Aircraft, Light
+			venm: None, Aircraft, Light
+			rah: None, Wood, Light
+			harr: None, Wood, Aircraft, Light
+			scrn: Aircraft, Heavy, Concrete
+			stmr: Aircraft, None, Wood, Light
+			torm: Aircraft, Heavy
+			enrv: Aircraft, Heavy, Concrete
+			mshp: Wood
 	CaptureManagerBotModuleCA:
 		CapturableActorTypes: miss
 	-ModularBot@BrutalAI:

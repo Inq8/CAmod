@@ -110,7 +110,7 @@ Player:
 	Inherits@MindControllable: ^MindControllable
 
 ^AffectedByDriverKill:
-	GrantConditionIfOwnerIsNeutral:
+	GrantConditionIfOwnerIsNeutral@DRIVER_DEAD:
 		Condition: is-neutral
 	GrantCondition@HACK:
 		Condition: driver-dead
@@ -123,8 +123,6 @@ MAST:
 	-PassengerBlocked:
 	-MassEntersCargo:
 	-TakeCover:
-	-PeriodicExplosion:
-	-PeriodicExplosionOnSlaves:
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: HoldFire
@@ -151,6 +149,9 @@ MAST:
 		-ShowSelectionBar:
 		-Voice:
 		-PauseOnCondition:
+		DischargingColor: bb0000
+		ChargingColor: cc00cc
+		Instant: true
 	Cloak:
 		InitialDelay: 0
 		CloakDelay: 25
@@ -175,6 +176,9 @@ MAST:
 		ExperienceFromControl: 0
 	ReloadAmmoPool@Vehicles:
 		Delay: 50
+	-SpawnActorAbility:
+	-AmmoPool@MindSpark:
+	-ReloadAmmoPoolCA@MindSpark:
 
 RNDV:
 	Inherits@1: ^1x1Shape

@@ -614,7 +614,7 @@ S4:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 10000
+		HP: 9000
 	RevealsShroud:
 		Range: 5c0
 	Armament@PRIMARY:
@@ -663,7 +663,7 @@ MRDR:
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Heavy Armor, Light Armor
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
-		Attributes: • Special Ability: Teleport (with upgrade)
+		Attributes: • Damage against vehicles scales with the max health of the target\n• Special Ability: Teleport (with upgrade)
 	Mobile:
 		Speed: 46
 	Valued:
@@ -673,7 +673,7 @@ MRDR:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 16000
+		HP: 14000
 	RevealsShroud:
 		Range: 5c0
 	Armament@PRIMARY:
@@ -859,9 +859,9 @@ EVIS:
 		Name: Eviscerator
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor, Infantry
-		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
+		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 	Health:
-		HP: 13000
+		HP: 12000
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Mobile:
@@ -930,10 +930,10 @@ IMPL:
 		Name: Impaler
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor, Infantry
-		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
+		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 		Attributes: • Slows targets
 	Health:
-		HP: 10000
+		HP: 9000
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Mobile:
@@ -971,10 +971,10 @@ STLK:
 		Name: Stalker
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor, Infantry
-		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
+		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 		Attributes: • Special Ability: Cloak\n• Moves faster while cloaked.
 	Health:
-		HP: 13000
+		HP: 12000
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Mobile:
@@ -1023,6 +1023,16 @@ STLK:
 	SpeedMultiplier@CloakSpeed:
 		Modifier: 150
 		RequiresCondition: hidden
+	GrantTimedCondition@Uncloaked:
+		Condition: phaseshield
+		RequiresCondition: !hidden
+		Duration: 25
+	DamageMultiplier@UncloakShield:
+		Modifier: 33
+		RequiresCondition: phaseshield
+	WithColoredOverlay@UncloakShield:
+		Color: 15091f77
+		RequiresCondition: phaseshield
 
 SMEDI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -1237,12 +1247,11 @@ MAST:
 	Armament@PRIMARY:
 		Weapon: EnslaveInfantry
 		LocalOffset: 150,0,400
-		PauseOnCondition: deployed
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: EnslaveVehicle
 		LocalOffset: 150,0,400
-		PauseOnCondition: deployed || !vs-vehicle-ammo
+		PauseOnCondition: !vs-vehicle-ammo
 	Armament@BATF:
 		Name: batf
 		Weapon: PsychicBeamBATF
@@ -1268,28 +1277,6 @@ MAST:
 		Offset: 0,0,511
 		Angle: 32
 		Width: 116
-	PeriodicExplosion:
-		Weapon: MindSparkSpawnerMaster
-		LocalOffset: 0,0,128
-		InitialDelay: 10
-		RequiresCondition: deployed && !being-warped
-	PeriodicExplosionOnSlaves:
-		ControlType: MindControl
-		Weapon: MindSparkSpawnerSlave
-		InitialDelay: 18
-		RequiresCondition: deployed && !being-warped
-	GrantTimedConditionOnDeploy:
-		DeployedTicks: 25
-		CooldownTicks: 250
-		DeployedCondition: deployed
-		ShowSelectionBar: true
-		ShowSelectionBarWhenFull: false
-		StartsFullyCharged: true
-		Voice: Action
-		PauseOnCondition: being-warped
-		DischargingColor: bb0000
-		ChargingColor: cc00cc
-		Instant: true
 	AttackFrontal:
 		PauseOnCondition: being-warped || blinded || reapersnare || parachute || !ammo
 		FacingTolerance: 0
@@ -1411,6 +1398,24 @@ MAST:
 		RequiresCondition: rank-elite
 	ChangesHealth@ELITE:
 		Delay: 50
+	SpawnActorAbility:
+		Actors: mspk
+		SpawnSounds: mastermind-shatter.aud
+		TargetModifiedCursor: ability2
+		Behavior: SpawnAtSelfAndSlavesAndMoveToTarget
+		RequiresCondition: !being-warped && mspk-ammo
+		AmmoPool: mspk
+	AmmoPool@MindSpark:
+		Name: mspk
+		Ammo: 1
+		Armaments: none
+		AmmoCondition: mspk-ammo
+	ReloadAmmoPoolCA@MindSpark:
+		AmmoPool: mspk
+		Delay: 375
+		Count: 1
+		ShowSelectionBar: true
+		SelectionBarColor: ff00ff
 
 MAST.Clone:
 	Inherits: MAST
@@ -2130,6 +2135,7 @@ STCR:
 	Inherits@IONCONDUITS: ^IonConduits
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Inherits@HULLREGEN: ^HullRegen
+	Inherits@SHIELDS: ^ScrinShields
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -2151,7 +2157,7 @@ STCR:
 		Speed: 46
 		TurnSpeed: 16
 	Health:
-		HP: 94000
+		HP: 84000
 	Armor:
 		Type: Heavy
 	RevealsShroud:
@@ -2192,6 +2198,8 @@ STCR:
 		Modifier: 120
 	RangeMultiplier@IONSTORM3:
 		Modifier: 130
+	Shielded:
+		MaxStrength: 10000
 
 DEVO:
 	Inherits: ^Vehicle
@@ -2301,7 +2309,7 @@ DARK:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses
 		Weaknesses: • Weak vs Buildings, Infantry\n• Cannot attack Aircraft
-		Attributes: • Can traverse water
+		Attributes: • Can traverse water\n• Damage scales with the max health of the target
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -2311,7 +2319,7 @@ DARK:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 36000
+		HP: 38000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -2746,9 +2754,14 @@ OBLT:
 	Armor:
 		Type: Heavy
 	Mobile:
-		TurnSpeed: 14
+		TurnSpeed: 512
 		Speed: 48
 		Locomotor: lighthover
+	TurretedFloating:
+		TurnSpeed: 10
+		Offset: 0,0,0
+		RealignDelay: 100
+	WithSpriteTurret:
 	WithShadow:
 		Offset: 43, 128, 0
 		ZOffset: -129
@@ -2796,6 +2809,7 @@ OBLT:
 		RequiresCondition: charging && !reloading
 		ShowSelectionBar: true
 		SelectionBarColor: ff00ff
+		DrainAmountOnDisabled: 2
 	ReloadAmmoPoolCA@DRAIN:
 		Count: -1
 		Delay: 1
@@ -2807,11 +2821,11 @@ OBLT:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: vehicles.upgraded
-	AttackFrontal:
+	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped || blinded
-		FacingTolerance: 16
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
+		Armaments: primary, secondary
 	GrantConditionOnTerrain@ONWATER:
 		TerrainTypes: Water
 		Condition: onwater
@@ -2964,7 +2978,7 @@ SMCV:
 		RequiresCondition: !empdisable && !being-warped && !driver-dead
 	DamageTypeDamageMultiplier@A2GPROTECTION:
 		Modifier: 60
-	UpdatesKillCount:
+	UpdatesKillCount@BuildingsOrHarvesters:
 		Type: BuildingsOrHarvesters
 	-PrimaryBuilding:
 	-WithDecoration@primary:
@@ -3210,7 +3224,7 @@ TORM:
 		PauseOnCondition: empdisable || being-warped || blinded
 	Aircraft:
 		CruiseAltitude: 2560
-		TurnSpeed: 28
+		TurnSpeed: 32
 		Speed: 201
 		IdleSpeed: 146
 		IdleTurnSpeed: 15
@@ -3859,6 +3873,8 @@ MSHP:
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
 	WithMuzzleOverlay:
+	WithShadow:
+		ZOffset: -3072
 	Aircraft:
 		CruiseAltitude: 3c512
 		InitialFacing: 768
@@ -3960,7 +3976,7 @@ MSHP:
 	Shielded:
 		MaxStrength: 26000
 	SpawnActorAbility:
-		Actor: wormhole
+		Actors: wormhole
 		SkipMakeAnimations: false
 		Range: 18c0
 		CircleColor: 9988ff
@@ -3969,6 +3985,7 @@ MSHP:
 		AmmoPool: wormholespawner
 		TargetModifiedCursor: ability2
 		ConcurrentLimit: 2
+		AvoidActors: true
 	AmmoPool@WORMHOLESPAWNER:
 		Name: wormholespawner
 		Armaments: none
@@ -4355,7 +4372,7 @@ MSHP.Husk:
 	FallsToEarth:
 		MaximumSpinSpeed: 0
 		Velocity: 35
-		Explosion: KirovExplode
+		Explosion: MothershipExplode
 	RevealsShroud:
 		Range: 10c0
 		MinRange: 8c0
@@ -4372,6 +4389,8 @@ MSHP.Husk:
 		Image: mshp
 		Sequence: ring
 		Offset: 0,0,0
+	WithShadow:
+		ZOffset: -3072
 
 MSHP.Husk.EMP:
 	Inherits: MSHP.Husk
@@ -4389,7 +4408,7 @@ MSHP.Husk.Ground:
 		Delay: 1
 		-RequiresCondition:
 	Explodes:
-		Weapon: KirovExplode
+		Weapon: MothershipExplode
 	WithIdleOverlay@RING:
 		Image: mshp
 		Sequence: ring
@@ -5193,7 +5212,7 @@ SIGN:
 		Dimensions: 3,3
 		LocalCenterOffset: 0,-512,0
 	Health:
-		HP: 120000
+		HP: 130000
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -5601,7 +5620,6 @@ SCOL:
 	Inherits: ^Defense
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
 	Inherits@AUTOTARGET: ^AutoTargetGround
-	Inherits@Flash: ^WhiteFlash
 	Inherits@IONCONDUITS: ^IonConduits
 	RenderSprites:
 		PlayerPalette: playerscrin
@@ -5770,6 +5788,8 @@ STRM2:
 
 SCOL.Temp:
 	Inherits: SCOL
+	Tooltip:
+		Name: Storm Spike
 	RenderSprites:
 		Image: scol
 	-Sellable:
@@ -5812,13 +5832,15 @@ SCOL.Temp:
 	RepairableBuilding:
 		-RepairCondition:
 	-ChangesHealth@DefensePolicy2:
-	-UpdatesKillCount:
+	-UpdatesKillCount@BuildingsOrHarvesters:
 
 VSPK:
 	Inherits: ^BasicBuilding
 	-FrozenUnderFog:
 	-FrozenUnderFogUpdatedByGpsRadar:
 	-ShakeOnDeath:
+	OwnerLostAction:
+		Action: Kill
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Explodes:
@@ -5833,7 +5855,7 @@ VSPK:
 	Tooltip:
 		Name: Voidspike
 	TooltipExtras:
-		Attributes: • Corrupts resources\n• Damages nearby enemies
+		Attributes: • Corrupts resources\n• Damages nearby enemies over time\n• Direct damage is reflected back to the attacker
 		Description: Gradually transforms nearby resources into Black Tiberium,\n  which is devoid of most of its useful properties.
 	Armor:
 		Type: Concrete
@@ -5880,6 +5902,11 @@ VSPK:
 	WithIdleOverlay:
 		Sequence: overlay
 		Palette: scrin
+		IsDecoration: true
+	ReflectsDamage:
+		DamagePercentage: 50
+		ValidRelationships: Ally, Enemy, Neutral
+		ReflectToAttacker: true
 
 #
 # ---- misc
@@ -5920,7 +5947,7 @@ BUZZ:
 		CanHover: True
 		Speed: 33
 		CruiseAltitude: 1
-		LandableTerrainTypes: Clear,Road,Rough,Ore,Gems,Tiberium,BlueTiberium,Water,Tree,River
+		LandableTerrainTypes: Clear,Road,Rough,Ore,Gems,Tiberium,BlueTiberium,BlackTiberium,Water,Tree,River,Rock,Beach,Bridge,Tunnel,Wall,Ford
 	AmbientSound:
 		SoundFiles: buzzers-idle1.aud, buzzers-idle2.aud, buzzers-idle3.aud
 		Interval: 10
@@ -5952,6 +5979,8 @@ BUZZ:
 		Range: 1c256
 		Condition: blinded
 		ValidRelationships: Enemy, Neutral
+	Targetable:
+		TargetTypes: BuzzerSwarm
 
 BUZZ.AI:
 	Inherits: BUZZ
@@ -5964,7 +5993,7 @@ BUZZ.AI:
 MSPK:
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^SpriteActor
-	Inherits@selection: ^SelectableCombatUnit
+	Inherits@selection: ^SelectableSupportUnit
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Tooltip:
 		Name: Mind Spark
@@ -5975,6 +6004,9 @@ MSPK:
 		QuantizedFacings: 1
 	HiddenUnderFog:
 		Type: CenterPosition
+	Selectable:
+		Bounds: 896, 896
+		DecorationBounds: 896, 896
 	HitShape:
 	RevealsShroud:
 		Range: 5c0
@@ -5987,7 +6019,7 @@ MSPK:
 		CanHover: True
 		Speed: 46
 		CruiseAltitude: 1
-		LandableTerrainTypes: Clear,Road,Rough,Ore,Gems,Tiberium,BlueTiberium,Water,Tree,River
+		LandableTerrainTypes: Clear,Road,Rough,Ore,Gems,Tiberium,BlueTiberium,BlackTiberium,Water,Tree,River,Rock,Beach,Bridge,Tunnel,Wall,Ford
 	KillsSelf:
 		Delay: 325
 	WithDeathAnimation:
@@ -5996,11 +6028,18 @@ MSPK:
 		FallbackSequence: die
 		DeathSequencePalette: caneon
 		DeathPaletteIsPlayerPalette: false
+	Health:
+		HP: 1
 	Voiced:
 		VoiceSet: MindSparkVoice
 	WithColoredSelectionBox@PLAYERBOX:
 		ColorSource: Player
 		ValidRelationships: Ally, Enemy
+	Targetable:
+		TargetTypes: MindSpark
+	PeriodicExplosion:
+		Weapon: MindSparkEruption
+		LocalOffset: 0,0,128
 
 GRCL:
 	Inherits@1: ^ExistsInWorld
@@ -6038,7 +6077,7 @@ GRCL:
 		CanHover: True
 		Speed: 33
 		CruiseAltitude: 1
-		LandableTerrainTypes: Clear,Road,Rough,Ore,Gems,Tiberium,BlueTiberium,Water,Tree,River
+		LandableTerrainTypes: Clear,Road,Rough,Ore,Gems,Tiberium,BlueTiberium,BlackTiberium,Water,Tree,River,Rock,Beach,Bridge,Tunnel,Wall,Ford
 	Voiced:
 		VoiceSet: GiantScrinVoice
 	WithColoredSelectionBox@PLAYERBOX:
@@ -6099,7 +6138,7 @@ TBCL:
 	-ChangesHealth:
 	-WithRangeCircleCA:
 	Health:
-		HP: 150000
+		HP: 200000
 	AttackFrontal:
 		FacingTolerance: 0
 	Targetable@TBCL:
@@ -6109,6 +6148,11 @@ TBCL:
 		ShadowColor: 00110070
 	GpsRadarDot:
 		Sequence: LargeInfantry
+	ChangesHealth:
+		PercentageStep: 1
+		Delay: 50
+		StartIfBelow: 101
+		DamageCooldown: 0
 
 ^RiftBase:
 	Interactable:
@@ -6167,7 +6211,7 @@ RiftMinor:
 	EditorOnlyTooltip:
 		Name: (Minor Rift)
 	RenderSprites:
-		Image: miniriftanim
+		Image: riftanimmd
 	PeriodicExplosion:
 		Weapon: MiniRift
 	KillsSelf:

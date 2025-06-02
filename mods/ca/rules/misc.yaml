@@ -451,7 +451,7 @@ ToxicCloud:
 		CanHover: True
 		Speed: 20
 		CruiseAltitude: 1
-		LandableTerrainTypes: Clear,Road,Rough,Ore,Gems,Tiberium,BlueTiberium,Water,Tree,River
+		LandableTerrainTypes: Clear,Road,Rough,Ore,Gems,Tiberium,BlueTiberium,BlackTiberium,Water,Tree,River,Rock,Beach,Bridge,Tunnel,Wall,Ford
 	Wanders:
 		WanderMoveRadius: 5
 		ReduceMoveRadiusDelay: 3
@@ -556,7 +556,7 @@ FLARE.KillZone:
 	Inherits: FLARE
 	-RevealsShroud:
 	KillsSelf:
-		Delay: 750 # matches killzone actor
+		Delay: 1500 # matches killzone actor
 		RemoveInstead: true
 	-MapEditorData:
 
@@ -1366,7 +1366,7 @@ killzone:
 		Image: killzone
 		PlayerPalette: player
 	KillsSelf:
-		Delay: 750 # matches killzone flare
+		Delay: 1500 # matches killzone flare
 		RemoveInstead: true
 	WithRangeCircleCA:
 		Type: KillZone
@@ -1384,7 +1384,7 @@ shadow.beacon.camera:
 		CanHover: true
 		Repulsable: false
 		CruiseAltitude: 1
-		LandableTerrainTypes: Clear,Road,Rough,Ore,Gems,Tiberium,BlueTiberium,Water,Tree,River
+		LandableTerrainTypes: Clear,Road,Rough,Ore,Gems,Tiberium,BlueTiberium,BlackTiberium,Water,Tree,River,Rock,Beach,Bridge,Tunnel,Wall,Ford
 	Attachable:
 		Type: ShadowBeacon
 		TargetTypes: ShadowBeaconAttachable
@@ -1434,13 +1434,11 @@ optimized.production1:
 	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
 	PopControlled:
-		Limit: 1
 
 optimized.production2:
 	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
 	PopControlled:
-		Limit: 1
 
 nod.covenants.available:
 	AlwaysVisible:

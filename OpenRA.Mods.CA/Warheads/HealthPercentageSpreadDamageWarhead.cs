@@ -16,15 +16,27 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Warheads
 {
-	public enum DamageCalculationType { HitShape, ClosestTargetablePosition, CenterPosition }
-
 	[Desc("Apply damage in a specified range.")]
 	public class HealthPercentageSpreadDamageWarhead : SpreadDamageWarhead, IRulesetLoaded<WeaponInfo>
 	{
+		[Desc("If target health is higher than this, assume this amount instead.")]
+		public readonly int MaxReferenceHp = 0;
+
+		[Desc("If target health is lower than this, assume this amount instead.")]
+		public readonly int MinReferenceHp = 0;
+
 		protected override void InflictDamage(Actor victim, Actor firedBy, HitShape shape, WarheadArgs args)
 		{
 			var healthInfo = victim.Info.TraitInfo<HealthInfo>();
-			var damage = Util.ApplyPercentageModifiers(healthInfo.HP, args.DamageModifiers.Append(Damage, DamageVersus(victim, shape, args)));
+			var referenceHp = healthInfo.HP;
+
+			if (MaxReferenceHp > 0 && referenceHp > MaxReferenceHp)
+				referenceHp = MaxReferenceHp;
+
+			if (MinReferenceHp > 0 && referenceHp < MinReferenceHp)
+				referenceHp = MinReferenceHp;
+
+			var damage = Util.ApplyPercentageModifiers(referenceHp, args.DamageModifiers.Append(Damage, DamageVersus(victim, shape, args)));
 			victim.InflictDamage(firedBy, new Damage(damage, DamageTypes));
 		}
 	}

@@ -107,7 +107,8 @@ namespace OpenRA.Mods.CA.Warheads
 			foreach (var a in Actors)
 			{
 				var placed = false;
-				var ai = map.Rules.Actors[a.ToLowerInvariant()];
+				var actorType = a.ToLowerInvariant();
+				var ai = map.Rules.Actors[actorType];
 				var td = CreateTypeDictionary(firedBy, targetCell);
 
 				// Lambdas can't use 'in' variables, so capture a copy for later
@@ -115,14 +116,10 @@ namespace OpenRA.Mods.CA.Warheads
 
 				firedBy.World.AddFrameEndTask(w =>
 				{
-					var unit = firedBy.World.CreateActor(false, a.ToLowerInvariant(), td);
-					var positionable = unit.TraitOrDefault<IPositionable>();
 					cell = targetCells.GetEnumerator();
 
-					if (positionable == null)
+					if (!ai.HasTraitInfo<IPositionableInfo>())
 					{
-						unit.Dispose();
-
 						if (AvoidActors)
 						{
 							while (cell.MoveNext() && !placed)
@@ -144,6 +141,9 @@ namespace OpenRA.Mods.CA.Warheads
 					}
 					else
 					{
+						var unit = firedBy.World.CreateActor(false, actorType, td);
+						var positionable = unit.TraitOrDefault<IPositionable>();
+
 						while (cell.MoveNext() && !placed)
 						{
 							var subCell = positionable.GetAvailableSubCell(cell.Current);

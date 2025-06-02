@@ -44,6 +44,7 @@ WorldLoaded = function()
 		SouthWestTurret1.Destroy()
 		SouthWestTurret2.Destroy()
 		FirstStealthTank.Destroy()
+		NodAssassin3.Destroy()
 	else
 		EasyGren1.Destroy()
 		EasyGren2.Destroy()
@@ -60,9 +61,10 @@ WorldLoaded = function()
 		HardOnlyAcolyte3.Destroy()
 		HardOnlyChemWarrior1.Destroy()
 		HardOnlyChemWarrior2.Destroy()
-		NodCommando.Destroy()
 		SouthStealthTank.Destroy()
 		HardOnlyTurret1.Destroy()
+		NodAssassin1.Destroy()
+		NodAssassin2.Destroy()
 	end
 
 	if RespawnEnabled then
@@ -99,7 +101,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnAllKilledOrCaptured(SouthWestPowerPlants, function()
-		local centerDefenses = { SouthWestSAM, CenterObelisk1, CenterObelisk2, CenterObelisk3, CenterObelisk4, CenterSAM1, CenterSAM2, CenterSAM3 }
+		local centerDefenses = { SouthWestSAM, CenterObelisk1, CenterObelisk2, CenterObelisk3, CenterObelisk4, CenterSAM1, CenterSAM2, CenterSAM3, LeftObelisk }
 		DisableDefenses(centerDefenses)
 		DisableLaserFences()
 		Media.PlaySound("powrdn1.aud")
@@ -115,7 +117,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnAllKilledOrCaptured(NorthPowerPlants, function()
-		local northDefenses = { NorthSAM1, NorthSAM2, NorthObelisk1, NorthObelisk2, NorthObelisk3, NorthObelisk4 }
+		local northDefenses = { NorthSAM1, NorthSAM2, NorthSAM3, NorthSAM4, NorthObelisk1, NorthObelisk2, NorthObelisk3, NorthObelisk4 }
 		DisableDefenses(northDefenses)
 	end)
 
@@ -175,7 +177,33 @@ WorldLoaded = function()
 		end
 	end)
 
-	SetupReveals({ EntranceReveal1, EntranceReveal2, EntranceReveal3 })
+	if Difficulty == "hard" then
+		Trigger.OnProduction(NorthHand1, function(p, produced)
+			if produced.Type == "rmbo" and not produced.IsDead then
+				produced.Hunt()
+
+				Trigger.OnKilled(produced, function(self, killer)
+					Trigger.AfterDelay(DateTime.Minutes(2), function()
+						SpawnCommando()
+					end)
+				end)
+			end
+		end)
+
+		Utils.Do({ CommandoTrigger1, CommandoTrigger2 }, function(t)
+			Trigger.OnEnteredProximityTrigger(t.CenterPosition, WDist.New(9 * 1024), function(a, id)
+				if a.Owner == USSR and not a.HasProperty("Land") then
+					Trigger.RemoveProximityTrigger(id)
+					if not CommandosInitialized then
+						CommandosInitialized = true
+						SpawnCommando()
+					end
+				end
+			end)
+		end)
+	end
+
+	SetupReveals({ LaserFenceReveal, EntranceReveal1, EntranceReveal2, EntranceReveal3 })
 end
 
 Tick = function()
@@ -227,6 +255,12 @@ InitNod = function()
 			end
 		end)
 	end)
+end
+
+SpawnCommando = function()
+	if not NorthHand1.IsDead then
+		NorthHand1.Produce("rmbo")
+	end
 end
 
 DisableLaserFences = function()

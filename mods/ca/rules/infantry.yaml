@@ -92,6 +92,10 @@ DOG:
 		ArmamentNames: primary
 		CircleWidth: 0
 		Type: DogAttack
+	KeepsDistance:
+	GuardsSelection:
+		ValidOrders: AttackMove, AssaultMove, ForceAttack, KeepDistance
+		ValidTargets: Infantry, Vehicle
 
 TDOG:
 	Inherits: DOG
@@ -125,6 +129,8 @@ TDOG:
 	ProductionCostMultiplier@UkraineBonus:
 		Multiplier: 80
 		Prerequisites: player.ukraine
+	-GuardsSelection:
+	-KeepsDistance:
 
 E1:
 	Inherits: ^Soldier
@@ -184,6 +190,7 @@ E2:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@Inspirable: ^Inspirable
+	Inherits@HeroOfTheUnionTargetableGrenFlamer: ^HeroOfTheUnionTargetableGrenFlamer
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -580,6 +587,7 @@ E4:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@Inspirable: ^Inspirable
+	Inherits@HeroOfTheUnionTargetableGrenFlamer: ^HeroOfTheUnionTargetableGrenFlamer
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -1577,6 +1585,7 @@ N2:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@Inspirable: ^Inspirable
+	Inherits@HeroOfTheUnionTargetableGrenFlamer: ^HeroOfTheUnionTargetableGrenFlamer
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -1633,6 +1642,8 @@ N2:
 	GrantConditionOnPrerequisite@EMPUPG:
 		Condition: empgren-upgrade
 		Prerequisites: empgren.upgrade
+	RangeMultiplier@HeroOfTheUnion:
+		RequiresCondition: herooftheunion && !empgren-upgrade
 
 N2R1:
 	Inherits: N2
@@ -1750,6 +1761,7 @@ N4:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@Inspirable: ^Inspirable
+	Inherits@HeroOfTheUnionTargetableGrenFlamer: ^HeroOfTheUnionTargetableGrenFlamer
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -1804,6 +1816,10 @@ N4:
 		SpawnActors: N5
 	ReplacedInQueue:
 		Actors: n5
+	-RangeMultiplier@HeroOfTheUnion:
+	FirepowerMultiplier@HeroOfTheUnion:
+		RequiresCondition: herooftheunion
+		Modifier: 120
 
 N5:
 	Inherits: ^Cyborg
@@ -2389,7 +2405,7 @@ ASSA:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Buildings, Defenses
 		Weaknesses: • Weak vs Heavy Armor, Light Armor\n• Cannot attack aircraft
-		Attributes: • Plants C4 to destroy structures
+		Attributes: • Plants C4 to destroy structures\n• Resistant to mind control
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -2477,6 +2493,8 @@ ASSA:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
+	Targetable@MindControlResistant:
+		TargetTypes: MindControlResistant
 
 CONF:
 	Inherits: ^Soldier
@@ -2484,7 +2502,7 @@ CONF:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
-		Attributes: • Special Ability: Idol of Kane (max 1 per Confessor)
+		Attributes: • Special Ability: Idol of Kane (max 1 per Confessor)\n• Immune to mind control
 	Buildable:
 		Queue: ConfessorCabal
 	Valued:
@@ -2522,7 +2540,7 @@ CONF:
 	Guard:
 		Voice: Move
 	SpawnActorAbility:
-		Actor: iok
+		Actors: iok
 		Range: 1c896
 		SkipMakeAnimations: false
 		CircleColor: ff000077
@@ -2531,6 +2549,7 @@ CONF:
 		TargetModifiedCursor: ability2
 		ConcurrentLimit: 1
 		KillExcessDamageTypes: SmallExplosionDeath
+		AvoidActors: true
 	AmmoPool@IdolOfKane:
 		Name: idol
 		Armaments: none
@@ -2546,6 +2565,10 @@ CONF:
 		RequiresSelection: true
 		Position: BottomLeft
 		Margin: 4, 3
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 
 ACOL:
 	Inherits: ^Cyborg
@@ -2753,7 +2776,7 @@ JJET:
 		IdealSeparation: 0c384
 		InitialFacing: 92
 		Speed: 118
-		LandableTerrainTypes: Clear,Rough,Road,Ore,Beach,Gems,Tiberium,BlueTiberium
+		LandableTerrainTypes: Clear,Road,Rough,Ore,Gems,Tiberium,BlueTiberium,BlackTiberium,Beach,Bridge,Tunnel,Ford
 		AirborneCondition: airborne
 		CruisingCondition: cruising
 		CanHover: true
@@ -3037,6 +3060,13 @@ DESO:
 		Weapon: DesolatorBeam
 	PeriodicExplosion:
 		Weapon: RadEruptionWeapon
+		RequiresCondition: deployed && deployed-initial
+	PeriodicExplosion@Stage2:
+		Weapon: RadEruptionWeaponStage2
+		RequiresCondition: deployed && !deployed-initial
+	GrantTimedCondition@InitialDeploy:
+		Condition: deployed-initial
+		Duration: 141
 		RequiresCondition: deployed
 	WithSpriteBody@DEPLOYED:
 		Sequence: deployed
@@ -4205,11 +4235,11 @@ ENLI:
 		BuildPaletteOrder: 230
 		IconPalette: chrometd
 		Prerequisites: ~infantry.nod, tmpp, advcyber.upgrade, ~zeal.covenant, ~techlevel.high
-		Description: Heavy cyborg infantry unit armed with a particle cannon.\n  Damage scales with the max health of the target.
+		Description: Heavy cyborg infantry unit armed with a particle cannon.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
-		Attributes: • Heals on Tiberium\n• Special Ability: EMP Blast
+		Attributes: • Heals on Tiberium\n• Damage scales with the max health of the target\n• Special Ability: EMP Blast
 	Valued:
 		Cost: 1000
 	Tooltip:
@@ -4765,7 +4795,7 @@ ENFO:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 130
-		Prerequisites: ~tent, alhq, ~techlevel.high
+		Prerequisites: ~tent, atekoralhq, ~techlevel.high
 		Description: Elite short-range front-line infantry.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
@@ -4871,7 +4901,7 @@ HOPL:
 		LocalOffset: 350,0,341
 	Armament@BATF:
 		Name: batf
-		Weapon: HopliteGun
+		Weapon: HopliteGunBATF
 	AttackFrontalCharged:
 		Voice: Attack
 		FacingTolerance: 32

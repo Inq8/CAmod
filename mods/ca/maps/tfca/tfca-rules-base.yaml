@@ -334,7 +334,7 @@ MEDI:
 	Health:
 		HP: 20000
 	SpawnActorAbility:
-		Actor: shieldzone
+		Actors: shieldzone
 		SkipMakeAnimations: false
 		Range: 6c0
 		CircleColor: 00ffbbaa
@@ -476,12 +476,13 @@ E6:
 	Selectable:
 		Priority: 10
 	SpawnActorAbility:
-		Actor: gun
+		Actors: gun
 		SkipMakeAnimations: false
 		Range: 5c0
 		CircleColor: 999999
 		SpawnSounds: placbldg.aud, build5.aud
 		AmmoPool: turretspawner
+		AvoidActors: true
 	AmmoPool@TURRET:
 		Name: turretspawner
 		Armaments: none
@@ -565,7 +566,7 @@ SAB:
 		RequiresCondition: !cloak-force-disabled && !being-warped
 		CloakDelay: 66
 	SpawnActorAbility:
-		Actor: spyreveal
+		Actors: spyreveal
 		SkipMakeAnimations: false
 		SpawnSounds: hacksat.aud
 		SelectTargetSpeechNotification: SelectTarget

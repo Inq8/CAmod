@@ -137,6 +137,9 @@ namespace OpenRA.Mods.CA.Traits
 			if (self.IsDead)
 				return;
 
+			if (attacker.IsDead || attacker.WillDispose)
+				attacker = self;
+
 			// Grant MasterDead condition.
 			self.GrantCondition(info.MasterDeadCondition);
 

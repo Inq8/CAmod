@@ -13,7 +13,6 @@ using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Graphics;
 using OpenRA.Mods.CA.Activities;
-using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Graphics;
 using OpenRA.Mods.Common.Orders;
 using OpenRA.Mods.Common.Traits;
@@ -22,9 +21,19 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
+	public enum SpawnActorAbilityBehavior
+	{
+		SpawnAtTarget,
+		SpawnAtSelfAndMoveToTarget,
+		SpawnAtSelfAndSlavesAndMoveToTarget,
+	}
+
 	[Desc("Actor can deploy to be able to target a location and spawn an actor there.")]
 	public class SpawnActorAbilityInfo : PausableConditionalTraitInfo, Requires<IMoveInfo>
 	{
+		[Desc("How the ability behaves.")]
+		public readonly SpawnActorAbilityBehavior Behavior = SpawnActorAbilityBehavior.SpawnAtTarget;
+
 		[Desc("Range.")]
 		public readonly WDist Range = WDist.Zero;
 
@@ -34,7 +43,7 @@ namespace OpenRA.Mods.CA.Traits
 		[ActorReference]
 		[FieldLoader.Require]
 		[Desc("Actor to spawn.")]
-		public readonly string Actor = null;
+		public readonly string[] Actors = null;
 
 		[CursorReference]
 		[Desc("Cursor to display when able to deploy the actor.")]
@@ -102,6 +111,12 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Types of damage to kill excess actors with. Leave empty to dispose instead of kill.")]
 		public readonly BitSet<DamageType> KillExcessDamageTypes = default;
 
+		[Desc("If true, faces the target.")]
+		public readonly bool FaceTarget = false;
+
+		[Desc("Avoid actors.")]
+		public readonly bool AvoidActors = false;
+
 		public override object Create(ActorInitializer init) { return new SpawnActorAbility(init, this); }
 	}
 
@@ -112,6 +127,7 @@ namespace OpenRA.Mods.CA.Traits
 		readonly IMove move;
 		readonly Queue<Actor> spawns;
 		AmmoPool ammoPool;
+		IEnumerable<MindController> mindControllers;
 
 		public SpawnActorAbility(ActorInitializer init, SpawnActorAbilityInfo info)
 			: base(info)
@@ -119,6 +135,7 @@ namespace OpenRA.Mods.CA.Traits
 			Info = info;
 			move = init.Self.Trait<IMove>();
 			spawns = new Queue<Actor>();
+			mindControllers = init.Self.TraitsImplementing<MindController>();
 		}
 
 		protected override void Created(Actor self)
@@ -171,16 +188,67 @@ namespace OpenRA.Mods.CA.Traits
 
 		void IResolveOrder.ResolveOrder(Actor self, Order order)
 		{
+			if (IsTraitDisabled || IsTraitPaused)
+				return;
+
 			if (order.OrderString == "SpawnActorAbility" && order.Target.Type != TargetType.Invalid)
 			{
 				if (!order.Queued)
 					self.CancelActivity();
 
 				var cell = self.World.Map.CellContaining(order.Target.CenterPosition);
-				if (Info.Range > WDist.Zero)
-					self.QueueActivity(move.MoveWithinRange(order.Target, Info.Range, targetLineColor: Info.TargetLineColor));
 
-				self.QueueActivity(new SpawnActor(self, cell, order.Target.CenterPosition, Info.Actor, Info.SkipMakeAnimations, Info.SpawnSounds, ammoPool, 3, true, Info.Range, Info.CanTargetShroud, Info.AllowedTerrainTypes, ActorSpawned));
+				WAngle? initFacing = null;
+
+				if (Info.FaceTarget)
+					initFacing = (order.Target.CenterPosition - self.CenterPosition).Yaw;
+
+				if (Info.Behavior == SpawnActorAbilityBehavior.SpawnAtSelfAndMoveToTarget || Info.Behavior == SpawnActorAbilityBehavior.SpawnAtSelfAndSlavesAndMoveToTarget)
+				{
+					var spawnCell = self.Location;
+					var spawnPos = self.CenterPosition;
+
+					self.QueueActivity(new SpawnActor(Info.Actors, spawnCell, initFacing, Info.SkipMakeAnimations, Info.SpawnSounds, ammoPool, 3, Info.AvoidActors, WDist.Zero, Info.CanTargetShroud, Info.AllowedTerrainTypes, (actor, spawned) =>
+					{
+						ActorSpawned(actor, spawned);
+
+						var moveTrait = spawned.TraitOrDefault<IMove>();
+						if (moveTrait != null)
+							spawned.QueueActivity(moveTrait.MoveTo(self.World.Map.CellContaining(order.Target.CenterPosition)));
+					}));
+
+					if (Info.Behavior == SpawnActorAbilityBehavior.SpawnAtSelfAndSlavesAndMoveToTarget)
+					{
+						foreach (var mc in mindControllers)
+						{
+							foreach (var slave in mc.Slaves)
+							{
+								if (slave.Actor.IsInWorld && !slave.Actor.IsDead)
+								{
+									var slaveCell = slave.Actor.Location;
+									var slavePos = slave.Actor.CenterPosition;
+
+									self.QueueActivity(new SpawnActor(Info.Actors, slaveCell, initFacing, Info.SkipMakeAnimations, Info.SpawnSounds, ammoPool, 3, Info.AvoidActors, WDist.Zero, Info.CanTargetShroud, Info.AllowedTerrainTypes, (actor, spawned) =>
+									{
+										ActorSpawned(actor, spawned);
+
+										var moveTrait = spawned.TraitOrDefault<IMove>();
+										if (moveTrait != null)
+											spawned.QueueActivity(moveTrait.MoveTo(self.World.Map.CellContaining(order.Target.CenterPosition)));
+									}));
+								}
+							}
+						}
+					}
+				}
+				else
+				{
+					if (Info.Range > WDist.Zero)
+						self.QueueActivity(move.MoveWithinRange(order.Target, Info.Range, targetLineColor: Info.TargetLineColor));
+
+					self.QueueActivity(new SpawnActor(Info.Actors, cell, initFacing, Info.SkipMakeAnimations, Info.SpawnSounds, ammoPool, 3, Info.AvoidActors, Info.Range, Info.CanTargetShroud, Info.AllowedTerrainTypes, ActorSpawned));
+				}
+
 				self.ShowTargetLines();
 			}
 		}
@@ -197,9 +265,12 @@ namespace OpenRA.Mods.CA.Traits
 
 		public void ActorSpawned(Actor self, Actor spawned)
 		{
+			if (Info.ConcurrentLimit == 0)
+				return;
+
 			spawns.Enqueue(spawned);
 
-			if (Info.ConcurrentLimit > 0 && spawns.Count > Info.ConcurrentLimit)
+			if (spawns.Count > Info.ConcurrentLimit)
 			{
 				var oldest = spawns.Dequeue();
 
@@ -229,9 +300,11 @@ namespace OpenRA.Mods.CA.Traits
 					ability.Info.SelectTargetSpeechNotification, self.Owner.Faction.InternalName);
 
 			selectedWithAbility = self.World.Selection.Actors
-				.Where(a => a.Info.HasTraitInfo<SpawnActorAbilityInfo>() && a.Owner == self.Owner && !a.IsDead)
-				.Select(a => new TraitPair<SpawnActorAbility>(a, a.Trait<SpawnActorAbility>()))
-				.Where(s => s.Trait.Info.Type == ability.Info.Type);
+				.Where(a => a.Owner == self.Owner
+					&& !a.IsDead
+					&& a.Info.HasTraitInfo<SpawnActorAbilityInfo>()
+					&& a.TraitsImplementing<SpawnActorAbility>().Any(t => t.Info.Type == ability.Info.Type))
+				.Select(a => new TraitPair<SpawnActorAbility>(a, a.TraitsImplementing<SpawnActorAbility>().First(t => t.Info.Type == ability.Info.Type)));
 		}
 
 		protected override IEnumerable<Order> OrderInner(World world, CPos cell, int2 worldPixel, MouseInput mi)
@@ -264,7 +337,7 @@ namespace OpenRA.Mods.CA.Traits
 				else
 				{
 					var closest = selectedOrderedByDistance.First();
-					yield return new Order("SpawnActorAbility", self, Target.FromCell(world, cell), mi.Modifiers.HasModifier(Modifiers.Shift));
+					yield return new Order("SpawnActorAbility", closest.Actor, Target.FromCell(world, cell), mi.Modifiers.HasModifier(Modifiers.Shift));
 				}
 			}
 		}

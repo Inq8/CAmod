@@ -786,6 +786,8 @@ InitAttackSquad = function(squad, player, targetPlayer)
 		end
 	end
 
+	-- by default the init time is whenever the squad is initialized,
+	-- this can be overridden so that the AI will use later game compositions and attack values
 	if squad.InitTime == nil then
 		squad.InitTime = DateTime.GameTime
 	end
@@ -827,7 +829,7 @@ InitAttackSquad = function(squad, player, targetPlayer)
 			return (composition.MinTime == nil or DateTime.GameTime >= composition.MinTime + squad.InitTime) -- after min time
 				and (composition.MaxTime == nil or DateTime.GameTime < composition.MaxTime + squad.InitTime) -- before max time
 				and (composition.RequiredTargetCharacteristics == nil or Utils.All(composition.RequiredTargetCharacteristics, function(characteristic)
-					return PlayerCharacteristics[targetPlayer.InternalName] ~= nil and PlayerCharacteristics[targetPlayer.InternalName][characteristic] ~= nil and PlayerCharacteristics[targetPlayer.InternalName][characteristic]
+					return PlayerCharacteristics[squad.TargetPlayer.InternalName] ~= nil and PlayerCharacteristics[squad.TargetPlayer.InternalName][characteristic] ~= nil and PlayerCharacteristics[squad.TargetPlayer.InternalName][characteristic]
 				end)) -- target player has all required characteristics
 				and (composition.Prerequisites == nil or squad.Player.HasPrerequisites(composition.Prerequisites)) -- player has prerequisites
 		end)
@@ -1950,7 +1952,7 @@ UnitCompositions = {
 		{ Infantry = { "s3", "s1", "s1", "s1", "s1", "s1", "s2", "s2", "s3", "s3", "s1", "s1", "s1", "s2" }, Vehicles = { "shrw", "corr", "corr", "shrw", "corr", "shrw", "corr", "corr" }, MinTime = DateTime.Minutes(16), RequiredTargetCharacteristics = { "MassInfantry" } },
 
 		------ Anti-tank
-		{ Infantry = { "s3", "s4", "s1", "s4", "s4", "s1", "s4", "s4", "s3", "s1", "s4", "s1", "s4" }, Vehicles = { "gunw", "devo", "devo", "gunw", "devo", "devo", "tpod" }, MinTime = DateTime.Minutes(16), RequiredTargetCharacteristics = { "MassHeavy" } },
+		{ Infantry = { "s3", "s4", "s1", "s4", "s4", "s1", "s4", "s4", "s3", "s1", "s4", "s1", "s4", "s4", "s4" }, Vehicles = { "gunw", "devo", "devo", "gunw", "devo", "atmz", "devo", "tpod", "atmz", "devo" }, MinTime = DateTime.Minutes(16), RequiredTargetCharacteristics = { "MassHeavy" } },
 
 		-- 19 minutes onwards
 		{ Infantry = { "s3", "s1", "s1", "s1", "s1", "s1", "s2", "s2", "s3", "s3", "s3", "s4", "s4" }, Vehicles = { "intl.ai2", GunWalkerSeekerOrLacerator, "intl.ai2", CorrupterOrDevourer, GunWalkerSeekerOrLacerator, TripodVariant, AtomizerObliteratorOrRuiner }, Aircraft = { PacOrDevastator, "pac" }, MinTime = DateTime.Minutes(19), },

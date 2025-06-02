@@ -67,6 +67,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Color to use for the target line.")]
 		public readonly Color TargetLineColor = Color.Magenta;
 
+		[Desc("If true allow targeting frozen actors.")]
+		public readonly bool TargetFrozenActors = false;
+
 		[Desc("If true allow targeting in shroud.")]
 		public readonly bool CanTargetShroud = true;
 
@@ -265,7 +268,21 @@ namespace OpenRA.Mods.CA.Traits
 					.Select(a => a.Actor)
 					.FirstOrDefault(a => !world.FogObscures(a));
 
-				var target = underCursor != null ? Target.FromActor(underCursor) : Target.FromCell(world, cell);
+				var target = Target.Invalid;
+
+				if (underCursor != null)
+				{
+					target = underCursor != null ? Target.FromActor(underCursor) : Target.FromCell(world, cell);
+				}
+				else if (info.TargetFrozenActors)
+				{
+					var frozenUnderCursor = world.ScreenMap.FrozenActorsAtMouse(world.RenderPlayer, mi).FirstOrDefault();
+					target = frozenUnderCursor != null ? Target.FromFrozenActor(frozenUnderCursor) : Target.FromCell(world, cell);
+				}
+				else
+				{
+					target = Target.FromCell(world, cell);
+				}
 
 				if (!ability.Armaments.Any(a => a.Weapon.IsValidAgainst(target, world, self)))
 					yield break;

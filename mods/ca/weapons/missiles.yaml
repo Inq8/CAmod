@@ -771,7 +771,7 @@ StingerAA:
 
 StingerGTWR:
 	Inherits: Stinger
-	ReloadDelay: 50
+	ReloadDelay: 60
 	Range: 7c0
 	Report: rocket2.aud
 	BurstDelays: 10
@@ -779,10 +779,10 @@ StingerGTWR:
 		Arm: 0
 		HorizontalRateOfTurn: 40
 		RangeLimit: 11c819
-		Speed: 320
+		Speed: 350
 		LockOnProbability: 66
 	Warhead@1Dam: SpreadDamage
-		Damage: 6600
+		Damage: 7800
 		Spread: 341
 		Versus:
 			None: 40
@@ -1785,10 +1785,9 @@ HstkMissile.TibCore:
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
 		ImpactSounds: expnew16.aud, expnew17.aud
-	Warhead@green: GrantExternalConditionCA
-		Range: 0c511
-		Duration: 2
-		Condition: greenhighlight
+	Warhead@Flash: FlashTarget
+		Spread: 0c511
+		Color: 00ff00
 		ValidTargets: Ground, Vehicle
 
 HstkMissileAA.TibCore:
@@ -1804,10 +1803,9 @@ HstkMissileAA.TibCore:
 		Damage: 3850
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: expnew17.aud
-	Warhead@green: GrantExternalConditionCA
-		Range: 0c511
-		Duration: 2
-		Condition: greenhighlight
+	Warhead@Flash: FlashTarget
+		Spread: 0c511
+		Color: 00ff00
 		ValidTargets: Air, AirSmall
 
 BoatMissile:
@@ -1968,10 +1966,9 @@ ScrinTorp:
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
 		ImpactSounds: expnew16.aud, expnew17.aud
-	Warhead@green: GrantExternalConditionCA
-		Range: 0c511
-		Duration: 2
-		Condition: greenhighlight
+	Warhead@Flash: FlashTarget
+		Spread: 0c511
+		Color: 00ff00
 		ValidTargets: Ground, Vehicle
 
 ScrinTorpAA:
@@ -1992,10 +1989,9 @@ ScrinTorpAA:
 		Damage: 4000
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: expnew17.aud
-	Warhead@green: GrantExternalConditionCA
-		Range: 0c511
-		Duration: 2
-		Condition: greenhighlight
+	Warhead@Flash: FlashTarget
+		Spread: 0c511
+		Color: 00ff00
 		ValidTargets: Air, AirSmall
 
 SMIGBomb:
@@ -2428,6 +2424,11 @@ KamovRockets:
 		ExplosionPalette: temptd
 		ImpactSounds: kaboom15.aud
 		ValidTargets: Ground, Ship, Trees
+	Warhead@Concussion: GrantExternalConditionCA
+		Range: 1c0
+		Duration: 150
+		Condition: concussion
+		ValidTargets: Ground, Infantry, Vehicle, Ship
 
 KamovRocketsWide:
 	Inherits: KamovRockets
@@ -2481,6 +2482,7 @@ TigerGuardMissileAA:
 	Report: tigr-fire1.aud, tigr-fire2.aud
 	Projectile: MissileCA
 		RangeLimit: 12c0
+		CruiseAltitude: 1c256
 	Warhead@1Dam: SpreadDamage
 		Damage: 8000
 	Warhead@smallDamage: SpreadDamage
@@ -2490,4 +2492,4 @@ TigerGuardMissileAA:
 
 TigerGuardMissileBATF:
 	Inherits: TigerGuardMissile
-	Range: 8c0
+	Range: 12c0

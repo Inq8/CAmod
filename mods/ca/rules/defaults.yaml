@@ -367,7 +367,7 @@
 		Modifier: 140
 	ReloadDelayMultiplier@EliteDevelopmentPolicy3:
 		RequiresCondition: rank-elite && development-policy3
-		Modifier: 70
+		Modifier: 75
 
 ^Berserk:
 	SpeedMultiplier@BERSERK:
@@ -509,6 +509,15 @@
 	GrantCondition@HeroElite:
 		RequiresCondition: herooftheunion
 		Condition: rank-elite
+
+^HeroOfTheUnionTargetableGrenFlamer:
+	Inherits: ^HeroOfTheUnionTargetable
+	DamageMultiplier@HeroOfTheUnion:
+		Modifier: 60
+	ReloadDelayMultiplier@HeroOfTheUnion:
+		Modifier: 90
+	RangeMultiplier@HeroOfTheUnion:
+		Modifier: 170
 
 ^IdolOfKane:
 	ExternalCondition@IdolOfKaneBuff:
@@ -1186,9 +1195,9 @@
 	GrantConditionOnPrerequisite@GYRO:
 		Condition: gyro-upgrade
 		Prerequisites: gyro.upgrade
-	GrantTimedCondition@GYRO:
-		Duration: 2
-		Condition: highlight
+	WithFlashEffect@GYRO:
+		Color: ffffff
+		Interval: 5000
 		RequiresCondition: gyrostabilizers
 
 ^Irradiatable:
@@ -1358,7 +1367,7 @@
 		ValidRelationships: Ally, Neutral
 
 ^AffectedByDriverKill:
-	GrantConditionIfOwnerIsNeutral:
+	GrantConditionIfOwnerIsNeutral@DRIVER_DEAD:
 		Condition: driver-dead
 	Capturable@DRIVER_DEAD:
 		Types: driverless_vehicle
@@ -1392,27 +1401,6 @@
 	Captures@DRIVER_KILL:
 		CaptureTypes: driverless_vehicle
 	CaptureManager:
-
-^GreenFlash:
-	ExternalCondition@GHIGH:
-		Condition: greenhighlight
-	WithColoredOverlay@GHIGH:
-		Color: 80ff8080
-		RequiresCondition: greenhighlight
-
-^RedFlash:
-	ExternalCondition@RHIGH:
-		Condition: redhighlight
-	WithColoredOverlay@RHIGH:
-		Color: ff404080
-		RequiresCondition: redhighlight
-
-^WhiteFlash:
-	ExternalCondition@HIGH:
-		Condition: highlight
-	WithColoredOverlay@HIGH:
-		Color: ffffff80
-		RequiresCondition: highlight
 
 ^Cloakable:
 	ExternalCondition@INVIS:
@@ -1738,11 +1726,6 @@
 		RequiresCondition: c4 || c4seal
 		RequiresSelection: False
 		ValidRelationships: Ally, Neutral, Enemy
-	ExternalCondition@detachable:
-		Condition: detach
-	WithColoredOverlay@detach:
-		RequiresCondition: detach
-		Color: ffffff40
 	AmbientSound@c4:
 		SoundFiles: icoltima.aud, icoltimb.aud, icoltimc.aud
 		Delay: 5
@@ -1784,11 +1767,6 @@
 		RequiresCondition: tnt
 		RequiresSelection: False
 		ValidRelationships: Ally, Neutral, Enemy
-	ExternalCondition@detachable:
-		Condition: detach
-	WithColoredOverlay@detach:
-		RequiresCondition: detach
-		Color: ffffff40
 	AmbientSound@tnt:
 		SoundFiles: icraloop.aud
 		Delay: 6
@@ -1832,11 +1810,6 @@
 		RequiresCondition: mindcontrolled
 		Offset: 0,0,300
 		IsDecoration: True
-	ExternalCondition@PHIGH:
-		Condition: pinkhighlight
-	WithColoredOverlay@PHIGH:
-		Color: ff00ff80
-		RequiresCondition: pinkhighlight
 	RejectsOrders@MindControlled:
 		Reject: Unload
 		RequiresCondition: mindcontrolled
@@ -2000,6 +1973,10 @@
 		ValidRelationships: Ally, Enemy, Neutral
 		Margin: 0, 8
 		RequiresCondition: painted-target
+	WithFlashEffect@PaintedTarget:
+		Color: ff0000
+		Interval: 25
+		RequiresCondition: painted-target
 
 ^HoverTrail:
 	LeavesTrails:
@@ -2161,13 +2138,13 @@
 		Condition: development-policy3
 		Prerequisites: development.policy, influence.level3
 	GainsExperienceMultiplier@DevelopmentPolicy1:
-		Modifier: 133
+		Modifier: 120
 		RequiresCondition: development-policy1
 	GainsExperienceMultiplier@DevelopmentPolicy2:
-		Modifier: 166
+		Modifier: 140
 		RequiresCondition: development-policy2
 	GainsExperienceMultiplier@DevelopmentPolicy3:
-		Modifier: 200
+		Modifier: 160
 		RequiresCondition: development-policy3
 
 ^DevelopmentPolicyDiscount:
@@ -2222,9 +2199,6 @@
 	Inherits@21: ^AuraRepairable
 	Inherits@C4Plantable: ^C4Plantable
 	Inherits@TNTPlantable: ^TNTPlantable
-	Inherits@gflash: ^GreenFlash
-	Inherits@rflash: ^RedFlash
-	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
 	Inherits@SovietT4Boost: ^SovietT4Boost
 	Inherits@oilcost: ^OilRefCostReduction
@@ -2350,7 +2324,7 @@
 		Sequence: Vehicle
 	TeleportNetworkTransportable:
 	Targetable@MINDCONTROL:
-		RequiresCondition: !mindcontrolled && !invulnerability
+		RequiresCondition: !mindcontrolled && !invulnerability && !driver-dead
 	GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
 		Condition: repair-cooldown
 		RequiredHealing: 85000
@@ -2445,7 +2419,6 @@
 	Inherits@Blindable: ^Blindable
 	Inherits@KillZoneTargetable: ^KillZoneTargetable
 	Inherits@ReaperSnareable: ^ReaperSnareable
-	Inherits@rflash: ^RedFlash
 	Inherits@IdolOfKane: ^IdolOfKane
 	Inherits@DevelopmentPolicyVeterancyBonus: ^DevelopmentPolicyVeterancyBonus
 	RenderSprites:
@@ -2842,9 +2815,6 @@
 	Inherits@19: ^WeaponJammable
 	Inherits@20: ^AuraRepairable
 	Inherits@slowable: ^Slowable
-	Inherits@gflash: ^GreenFlash
-	Inherits@rflash: ^RedFlash
-	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
 	Inherits@selection: ^SelectableCombatUnit
 	Inherits@SovietT4Boost: ^SovietT4Boost
@@ -3094,9 +3064,6 @@
 	Inherits@11: ^Suppressable
 	Inherits@12: ^Veilable
 	Inherits@CRATE-CLOAK: ^CrateCloak
-	Inherits@gflash: ^GreenFlash
-	Inherits@rflash: ^RedFlash
-	Inherits@wflash: ^WhiteFlash
 	Inherits@SovietT4Boost: ^SovietT4Boost
 	Inherits@oilcost: ^OilRefCostReduction
 	Inherits@C4: ^C4Plantable
@@ -3187,7 +3154,7 @@
 		VTOL: true
 		InitialFacing: 896
 		CanSlide: True
-		LandableTerrainTypes: Clear,Rough,Road,Ore,Beach,Gems,Tiberium,BlueTiberium,BlackTiberium
+		LandableTerrainTypes: Clear,Road,Rough,Ore,Gems,Tiberium,BlueTiberium,BlackTiberium,Beach,Bridge,Tunnel,Ford
 		Crushes: crate, mine, infantry, husk
 	Repairable:
 		RepairActors: fix, rep, srep, hpad, hpad.td, afld, afld.gdi, grav
@@ -3299,9 +3266,6 @@
 	Inherits@6: ^WarpableBuilding
 	Inherits@7: ^BotBuilding
 	Inherits@8: ^Chillable
-	Inherits@wflash: ^WhiteFlash
-	Inherits@rflash: ^RedFlash
-	Inherits@gflash: ^GreenFlash
 	Inherits@HACKABLE: ^Hackable
 	Inherits@WatcherParasite: ^WatcherParasiteAttachable
 	Inherits@TargetPaintable: ^TargetPaintable
@@ -3388,7 +3352,7 @@
 		CloakSound: cloak5.aud
 		UncloakSound: appear1.aud
 	UpdatesBuildOrder:
-	UpdatesKillCount:
+	UpdatesKillCount@BuildingsOrHarvesters:
 		Type: BuildingsOrHarvesters
 	InfiltrateToCreateProxyActor@InfiltratorVision:
 		Proxy: camera.infiltrator
@@ -3645,9 +3609,9 @@
 		SkipMakeAnimation: true
 		DeployCursor: c4
 		RequiresCondition: !detonate-disabled
-	GrantTimedCondition@highlight:
-		Duration: 2
-		Condition: redhighlight
+	WithFlashEffect@Detonate:
+		Color: ff0000
+		Interval: 5000
 		RequiresCondition: detonate
 	PeriodicExplosion:
 		Weapon: FakeBuildingSelfDestruct
@@ -3881,7 +3845,7 @@
 	Inherits: ^BasicHusk
 	Inherits@chrono: ^Chronoshiftable
 	Husk:
-		AllowedTerrain: Clear, Rough, Road, Ore, Gems, Beach, Tiberium, BlueTiberium, BlackTiberium
+		AllowedTerrain: Clear,Road,Rough,Ore,Gems,Tiberium,BlueTiberium,BlackTiberium,Beach,Bridge,Tunnel,Ford
 	WithIdleOverlay@Burns:
 		Image: fire
 		Sequence: 1

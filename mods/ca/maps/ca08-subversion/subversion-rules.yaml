@@ -66,7 +66,7 @@ MEMP:
 	ExternalCondition@IMMOBILISE:
 		Condition: notmobile
 	Mobile:
-		PauseOnCondition: triggered || empdisable || being-warped || notmobile
+		PauseOnCondition: triggered || being-captured || empdisable || being-warped || driver-dead || notmobile
 	GrantTimedConditionOnDeploy:
 		RequiresCondition: !(empdisable || being-warped)
 	Tooltip:
@@ -84,7 +84,7 @@ HTNK.Drone:
 	ExternalCondition@IMMOBILISE:
 		Condition: notmobile
 	Mobile:
-		PauseOnCondition: empdisable || being-warped || notmobile
+		PauseOnCondition: empdisable || being-captured || empdisable || being-warped || driver-dead || notmobile
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 	Tooltip:
@@ -101,7 +101,7 @@ MTNK.Drone:
 	ExternalCondition@IMMOBILISE:
 		Condition: notmobile
 	Mobile:
-		PauseOnCondition: empdisable || being-warped || notmobile
+		PauseOnCondition: empdisable || being-captured || empdisable || being-warped || driver-dead || notmobile
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 	Tooltip:

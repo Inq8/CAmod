@@ -443,7 +443,6 @@ TSLA:
 	Inherits: ^Defense
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
 	Inherits@AUTOTARGET: ^AutoTargetGround
-	Inherits@Flash: ^WhiteFlash
 	Buildable:
 		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 80
@@ -640,6 +639,7 @@ DOME:
 		Type: RadarDetection
 		Range: 12c0
 		RequiresCondition: !jammed && !disabled && !being-warped && !build-incomplete
+	SupportPowerChargeBar:
 	InfiltrateForExploration:
 		Types: ResetShroudInfiltrate
 	Power:
@@ -1908,6 +1908,7 @@ TPWR:
 		Prerequisites: anyradar, ~techlevel.medium, ~structures.russia
 		Description: Provides triple the power of\n  a standard Power Plant.
 	TooltipExtras:
+		Strengths: • Power output unaffected by damage
 		Weaknesses: • Unstable when damaged
 	Valued:
 		Cost: 600
@@ -3643,6 +3644,11 @@ HQ:
 		Description: Provides an overview of the battlefield.
 	TooltipExtras:
 		Attributes: • Requires power to operate\n• Detects nearby enemy vehicles, aircraft and structures in fog of war
+		RequiresCondition: !arc-built
+	TooltipExtras@ARC:
+		Attributes: • Requires power to operate\n• Detects nearby enemy vehicles, aircraft and structures in fog of war\n• Has limited emergency backup power
+		RequiresCondition: arc-built
+		IsStandard: false
 	Valued:
 		Cost: 1800
 	Tooltip:
@@ -3656,7 +3662,7 @@ HQ:
 		Dimensions: 2,3
 		LocalCenterOffset: 0,-512,0
 	WithSpriteBody:
-		PauseOnCondition: disabled || being-warped
+		PauseOnCondition: (disabled && !backup-power) || being-warped
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: ResetShroudInfiltrate
@@ -3678,16 +3684,17 @@ HQ:
 		Range: 5c0
 		RequiresCondition: !disabled
 	ProvidesRadar:
-		RequiresCondition: !jammed && !disabled && !being-warped && !build-incomplete
+		RequiresCondition: !jammed && (!disabled || backup-power) && !being-warped && !build-incomplete
 	RangedGpsRadarProvider:
 		Range: 12c0
 		TargetTypes: Vehicle, Air, Structure
-		RequiresCondition: !jammed && !disabled && !being-warped && !build-incomplete
+		RequiresCondition: !jammed && (!disabled || backup-power) && !being-warped && !build-incomplete
 	WithRangeCircle:
 		Type: RadarDetection
 		Range: 12c0
-		RequiresCondition: !jammed && !disabled && !being-warped && !build-incomplete
+		RequiresCondition: !jammed && (!disabled || backup-power) && !being-warped && !build-incomplete
 	WithBuildingBib:
+	SupportPowerChargeBar:
 	InfiltrateForExploration:
 		Types: ResetShroudInfiltrate
 	Power:
@@ -3746,7 +3753,7 @@ HQ:
 		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@radar-active:
 		Prerequisite: radar-active
-		RequiresCondition: !jammed && !disabled && !being-warped
+		RequiresCondition: !jammed && (!disabled || backup-power) && !being-warped
 	ExternalCondition@JAMMED:
 		Condition: jammed
 	ProductionCostMultiplier@ARCDISCOUNT:
@@ -3762,6 +3769,18 @@ HQ:
 		IntoActor: HQ.UPG
 		SkipMakeAnims: false
 		RequiresCondition: unity-upgrade && !build-incomplete
+	GrantChargingCondition@ArcBackupPower:
+		Condition: backup-power
+		RequiresCondition: arc-built
+		PauseOnCondition: disabled
+		InitialCharge: 0
+		MaxCharge: 3000
+		ChargeRate: 1
+		DischargeRate: 8
+		ChargingColor: aaaa00
+		DischargingColor: ffff00
+		ShowSelectionBarWhenFull: false
+		ShowSelectionBarWhenEmpty: false
 
 HQ.UPG:
 	Inherits: HQ
@@ -5286,7 +5305,7 @@ CVAT:
 	Valued:
 		Cost: 2000
 	Health:
-		HP: 100000
+		HP: 120000
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -5373,7 +5392,7 @@ INDP:
 		Dimensions: 3,3
 		LocalCenterOffset: 0,-512,0
 	Health:
-		HP: 100000
+		HP: 120000
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -5443,7 +5462,7 @@ MUNP:
 		Dimensions: 3,3
 		LocalCenterOffset: 0,-512,0
 	Health:
-		HP: 100000
+		HP: 120000
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -5521,7 +5540,7 @@ OREP:
 	-CapturableProgressBlink:
 	-CaptureManager:
 	Valued:
-		Cost: 1800
+		Cost: 1600
 	Tooltip:
 		Name: Ore Purifier
 	ResourcePurifierCA@Normal:
@@ -5588,7 +5607,7 @@ UPGC:
 			TopLeft: -1536, -1024
 			BottomRight: 1536, 1536
 	Health:
-		HP: 120000
+		HP: 140000
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -5636,7 +5655,7 @@ UPGC:
 		Prerequisite: gdiorupgc
 	ProvidesPrerequisite@Name:
 	Power:
-		Amount: -150
+		Amount: -100
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
 	SpawnActorOnDeath:
@@ -5798,6 +5817,33 @@ UPGC:
 	UpdatesCount:
 		Type: StrategyLevel
 		RequiresCondition: tower.rocket || tower.radar || tower.shield || tower.drop
+	FreeActor@SubsequentDiscountBomb:
+		Actor: upgc.bomb.previous
+		RequiresCondition: tower.rocket
+	FreeActor@SubsequentDiscountSeek:
+		Actor: upgc.seek.previous
+		RequiresCondition: tower.radar
+	FreeActor@SubsequentDiscountHold:
+		Actor: upgc.hold.previous
+		RequiresCondition: tower.shield
+	FreeActor@SubsequentDiscountDrop:
+		Actor: upgc.drop.previous
+		RequiresCondition: tower.drop
+	UpdatesSupportPowerTimer@Firestorm:
+		OrderName: rocketbarrage
+		InitialOnly: true
+		RequiresCondition: tower.rocket
+		Ticks: 75
+	UpdatesSupportPowerTimer@AdvancedRadar:
+		OrderName: advradarorder
+		InitialOnly: true
+		RequiresCondition: tower.radar
+		Ticks: 75
+	UpdatesSupportPowerTimer@NaniteShield:
+		OrderName: nshieldorder
+		InitialOnly: true
+		RequiresCondition: tower.shield
+		Ticks: 75
 
 UPGC.SOCK:
 	AlwaysVisible:
@@ -5808,7 +5854,7 @@ UPGC.SOCK:
 UPGC.BOMB:
 	Inherits: ^BuildingPlug
 	Valued:
-		Cost: 1250
+		Cost: 1000
 	Tooltip:
 		Name: Upgrade: Firestorm Missile System
 	Buildable:
@@ -5823,17 +5869,20 @@ UPGC.BOMB:
 	Plug:
 		Type: tower.rocket
 	Power:
-		Amount: -75
+		Amount: -50
 	RenderSprites:
 		PlayerPalette: playertd
 	WithProductionIconOverlay:
 		Types: Upgrade
 		Prerequisites: bombard3.strat
+	ProductionCostMultiplier@SubsequentDiscount:
+		Multiplier: 20
+		Prerequisites: upgc.bomb.previous
 
 UPGC.SEEK:
 	Inherits: ^BuildingPlug
 	Valued:
-		Cost: 1250
+		Cost: 1000
 	Tooltip:
 		Name: Upgrade: Advanced Radar System
 	Buildable:
@@ -5848,17 +5897,20 @@ UPGC.SEEK:
 	Plug:
 		Type: tower.radar
 	Power:
-		Amount: -75
+		Amount: -50
 	RenderSprites:
 		PlayerPalette: playertd
 	WithProductionIconOverlay:
 		Types: Upgrade
 		Prerequisites: seek3.strat
+	ProductionCostMultiplier@SubsequentDiscount:
+		Multiplier: 20
+		Prerequisites: upgc.seek.previous
 
 UPGC.HOLD:
 	Inherits: ^BuildingPlug
 	Valued:
-		Cost: 1250
+		Cost: 1000
 	Tooltip:
 		Name: Upgrade: Nanoshield Generator
 	Buildable:
@@ -5873,12 +5925,15 @@ UPGC.HOLD:
 	Plug:
 		Type: tower.shield
 	Power:
-		Amount: -75
+		Amount: -50
 	RenderSprites:
 		PlayerPalette: playertd
 	WithProductionIconOverlay:
 		Types: Upgrade
 		Prerequisites: hold3.strat
+	ProductionCostMultiplier@SubsequentDiscount:
+		Multiplier: 20
+		Prerequisites: upgc.hold.previous
 
 UPGC.DROP:
 	Inherits: ^BuildingPlug
@@ -5893,17 +5948,37 @@ UPGC.DROP:
 		Description: Provides a dropzone for emergency supplies.
 		IconPalette: chrometd
 	TooltipExtras:
-		Strengths: + $1000 delivered every 60 seconds (normal speed)
+		Strengths: + $1250 delivered every 60 seconds (normal speed)
 		Attributes: \n• Place on Upgrade Center\n(!) Mutually exclusive with Firestorm Missile System,\n       Advanced Radar System and Nanoshield Generator
 	Plug:
 		Type: tower.drop
 	Power:
-		Amount: -50
+		Amount: -25
 	RenderSprites:
 		PlayerPalette: playertd
 	WithProductionIconOverlay:
 		Types: Upgrade
 		Prerequisites: dropzone
+	ProductionCostMultiplier@SubsequentDiscount:
+		Multiplier: 20
+		Prerequisites: upgc.drop.previous
+
+^BuildingPlugPrevious:
+	Inherits@DUMMY: ^InvisibleDummy
+	ProvidesPrerequisite:
+	PopControlled:
+
+upgc.bomb.previous:
+	Inherits: ^BuildingPlugPrevious
+
+upgc.seek.previous:
+	Inherits: ^BuildingPlugPrevious
+
+upgc.hold.previous:
+	Inherits: ^BuildingPlugPrevious
+
+upgc.drop.previous:
+	Inherits: ^BuildingPlugPrevious
 
 TMPP:
 	Inherits: ^BuildingTD

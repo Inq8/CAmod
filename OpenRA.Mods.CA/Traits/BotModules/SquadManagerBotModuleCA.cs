@@ -98,7 +98,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly int AirToAirPriority = 85;
 
 		[Desc("Limit target types for specific air unit squads.")]
-		public readonly Dictionary<string, BitSet<TargetableType>> AirSquadTargetTypes = null;
+		public readonly Dictionary<string, BitSet<TargetableType>> AirSquadTargetArmorTypes = null;
 
 		[Desc("Enemy building types around which to scan for targets for naval squads.")]
 		public readonly HashSet<string> StaticAntiAirTypes = new HashSet<string>();
@@ -196,18 +196,16 @@ namespace OpenRA.Mods.CA.Traits
 			return IsValidEnemyUnit(a) && Info.HighValueTargetTypes.Contains(a.Info.Name);
 		}
 
-		public bool IsAirSquadTargetType(Actor a, SquadCA owner)
+		public bool IsAirSquadTargetArmorType(Actor a, SquadCA owner)
 		{
 			if (a == null || a.IsDead)
 				return false;
 
 			var airSquadUnitType = owner.Units.First().Info.Name;
-			if (owner.SquadManager.Info.AirSquadTargetTypes.ContainsKey(airSquadUnitType))
+			if (owner.SquadManager.Info.AirSquadTargetArmorTypes.ContainsKey(airSquadUnitType))
 			{
-				var targetTypes = a.GetEnabledTargetTypes();
-
-				if (targetTypes.IsEmpty || !targetTypes.Overlaps(owner.SquadManager.Info.AirSquadTargetTypes[airSquadUnitType]))
-					return false;
+				var desiredArmorTypes = owner.SquadManager.Info.AirSquadTargetArmorTypes[airSquadUnitType];
+				return a.Info.TraitInfos<ArmorInfo>().Any(ai => desiredArmorTypes.Contains(ai.Type.ToString()));
 			}
 
 			return true;

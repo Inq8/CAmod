@@ -8,7 +8,6 @@
  */
 #endregion
 
-using System.Linq;
 using OpenRA.Primitives;
 using OpenRA.Traits;
 
@@ -17,60 +16,45 @@ namespace OpenRA.Mods.CA.Traits
 	[Desc("Population control for an actor type.")]
 	public class PopControlledInfo : TraitInfo
 	{
-		[Desc("Population limit.")]
-		public readonly int Limit = 2;
+		[Desc("The type of pop control (defaults to the actor name).")]
+		public readonly string Type = null;
 
 		[Desc("Remove the actor from the world (and destroy it) instead of killing it.")]
 		public readonly bool RemoveInstead = false;
 
 		[Desc("Types of damage that this trait causes. Leave empty for no damage types.")]
-		public readonly BitSet<DamageType> DamageTypes = default(BitSet<DamageType>);
+		public readonly BitSet<DamageType> DamageTypes = default;
 
-		public override object Create(ActorInitializer init) { return new PopControlled(init, this); }
+		public override object Create(ActorInitializer init) { return new PopControlled(this); }
 	}
 
-	public class PopControlled : INotifyCreated
+	public class PopControlled : INotifyCreated, INotifyOwnerChanged
 	{
-		readonly PopControlledInfo i;
-		Actor self;
+		readonly PopControlledInfo info;
+		PopController controller;
 
-		public PopControlled(ActorInitializer init, PopControlledInfo info)
+		public PopControlledInfo Info => info;
+
+		public PopControlled(PopControlledInfo info)
 		{
-			i = info;
-			self = init.Self;
+			this.info = info;
 		}
 
 		void INotifyCreated.Created(Actor self)
 		{
-			var instances = self.World.Actors.Where(a => !a.IsDead && a.Owner == self.Owner &&
-				a.Info.Name == self.Info.Name).ToList();
-
-			if (instances.Count < i.Limit)
-				return;
-
-			var numToRemove = (instances.Count + 1) - i.Limit;
-
-			for (var i = 0; i < numToRemove; i++)
-			{
-				var instance = instances.FirstOrDefault();
-				if (instance != null)
-				{
-					var popControlled = instance.TraitOrDefault<PopControlled>();
-					if (popControlled != null)
-						popControlled.Kill(instance);
-				}
-			}
+			UpdateController(self.Owner);
+			controller.Update(self, info.Type);
 		}
 
-		void Kill(Actor self)
+		void INotifyOwnerChanged.OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)
 		{
-			if (self.IsDead)
-				return;
+			UpdateController(newOwner);
+			controller.Update(self, info.Type);
+		}
 
-			if (i.RemoveInstead || !self.Info.HasTraitInfo<IHealthInfo>())
-				self.Dispose();
-			else
-				self.Kill(self, i.DamageTypes);
+		void UpdateController(Player owner)
+		{
+			controller = owner.PlayerActor.Trait<PopController>();
 		}
 	}
 }

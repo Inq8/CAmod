@@ -79,10 +79,9 @@ EnslaveInfantry:
 		Image: mindcontrol
 		ValidTargets: Ground
 		ValidRelationships: Neutral, Enemy
-	Warhead@PinkHighlight: GrantExternalConditionCA
-		Range: 0c341
-		Duration: 2
-		Condition: pinkhighlight
+	Warhead@Flash: FlashTarget
+		Spread: 341
+		Color: ff00ff
 		ValidTargets: Infantry
 		ValidRelationships: Neutral, Enemy
 
@@ -90,7 +89,7 @@ EnslaveVehicle:
 	Inherits: EnslaveInfantry
 	Range: 4c512
 	InvalidTargets: Infantry, MindControlImmune
-	Warhead@PinkHighlight: GrantExternalConditionCA
+	Warhead@Flash: FlashTarget
 		ValidTargets: Vehicle
 
 DetonateSlave:
@@ -260,7 +259,6 @@ IntruderDiscs:
 
 MarauderDiscs:
 	Inherits: IntruderDiscs
-	Range: 7c0
 	Burst: 2
 	BurstDelays: 5
 	Report: mrdr-fire1.aud, mrdr-fire2.aud
@@ -275,9 +273,22 @@ MarauderDiscs:
 		VerticalRateOfTurn: 90
 	Warhead@1Dam: SpreadDamage
 		Damage: 4100
-		Spread: 448
+		Spread: 384
 		Versus:
 			None: 10
+			Light: 0
+			Heavy: 0
+	Warhead@2Dam: HealthPercentageSpreadDamage
+		Damage: 100
+		Spread: 384
+		MaxReferenceHp: 60000
+		MinReferenceHp: 30000
+		Versus:
+			None: 0
+			Wood: 0
+			Concrete: 0
+			Light: 9
+			Heavy: 8
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
 
@@ -464,8 +475,9 @@ RiftCannon:
 			Light: 100
 			Brick: 75
 		DamageTypes: BulletDeath
-	Warhead@2Dam: HealthPercentageDamage
+	Warhead@2Dam: HealthPercentageSpreadDamage
 		Spread: 341
+		Falloff: 100, 37, 23, 10, 0
 		Damage: 100
 		Versus:
 			Wood: 4
@@ -849,7 +861,7 @@ TormentorZap:
 		Duration: 3
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
-		Damage: 2500
+		Damage: 2000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, TankBuster, AirToGround
 		Versus:
 			None: 20
@@ -1124,10 +1136,9 @@ IonCloudChargeZap:
 	-Warhead@1Dam:
 	-Warhead@2Smu:
 	-Warhead@3Eff:
-	Warhead@highlight: GrantExternalConditionCA
-		Range: 0c511
-		Duration: 2
-		Condition: highlight
+	Warhead@Flash: FlashTarget
+		Spread: 0c511
+		Color: ffffff
 		ValidTargets: Ground, Water, Air
 
 StormcrawlerZap:
@@ -1164,10 +1175,9 @@ GravityStabilizerZap:
 		PlayerColorZapAlpha: 100, 180
 		Duration: 6
 		Width: 32
-	Warhead@highlight: GrantExternalConditionCA
-		Range: 0c511
-		Duration: 1
-		Condition: highlight
+	Warhead@Flash: FlashTarget
+		Spread: 0c511
+		Color: ffffff
 		ValidTargets: Resupplying
 
 MothershipCharge:
@@ -1192,7 +1202,7 @@ MothershipChargeZap:
 		Duration: 3
 		Distortion: 160
 		DistortionAnimation: 160
-	Warhead@highlight: GrantExternalConditionCA
+	Warhead@Flash: FlashTarget
 		ValidTargets: MothershipRearmable
 	Warhead@rearm: GrantExternalConditionCA
 		Range: 0c511
@@ -1281,14 +1291,15 @@ RavagerShards:
 
 EvisceratorShards:
 	Inherits: RavagerShards
+	Range: 6c0
 	ReloadDelay: 30
 	BurstDelays: 4
+	Projectile: Missile
+		Speed: 350
 	Warhead@1Dam: SpreadDamage
 		Damage: 2100
-		Spread: 288
 		Versus:
 			Wood: 20
-			Light: 60
 
 EvisceratorShardsCharged:
 	Inherits: EvisceratorShards
@@ -1308,6 +1319,7 @@ StalkerShards:
 	BurstDelays: 4
 	ReloadDelay: 40
 	Projectile: Missile
+		Speed: 350
 		Image: scrinzap
 		ContrailStartColor: 954fff
 	Warhead@1Dam: SpreadDamage
@@ -1414,9 +1426,9 @@ LaceratorShards.Hypercharged:
 
 ImpalerSpike:
 	Range: 7c0
-	ReloadDelay: 120
+	ReloadDelay: 125
 	Burst: 2
-	BurstDelays: 35
+	BurstDelays: 25
 	Report: impl-fire1.aud
 	Projectile: Missile
 		Speed: 750
@@ -1476,10 +1488,9 @@ WatcherDart:
 		MissSounds: dud1.aud
 		ValidTargets: WatcherParasiteAttachable
 		ValidRelationships: Enemy, Neutral
-	Warhead@highlight: GrantExternalConditionCA
-		Range: 341
-		Duration: 2
-		Condition: highlight
+	Warhead@Flash: FlashTarget
+		Spread: 341
+		Color: ffffff
 		ValidTargets: WatcherParasiteAttachable
 
 RiftInit:
@@ -1522,14 +1533,6 @@ SuppressionField:
 		Duration: 600
 		Condition: suppression
 		ValidTargets: Air, AirSmall
-
-SuppressionSiphonField:
-	Inherits: SuppressionField
-	Warhead@Siphon: GrantExternalConditionCA
-		Range: 3c0
-		Duration: 600
-		Condition: suppression-siphon
-		ValidTargets: Ground, Air, AirSmall, Ship
 
 BuzzerSpawner:
 	ReloadDelay: 1
@@ -1955,10 +1958,9 @@ AtomizerArc:
 		DistortionAnimation: 150
 		SegmentLength: 350
 		TrackTarget: true
-	Warhead@red: GrantExternalConditionCA
-		Range: 0c42
-		Duration: 2
-		Condition: redhighlight
+	Warhead@Flash: FlashTarget
+		Spread: 0c42
+		Color: ff0000
 		ValidTargets: Vehicle, Ship, Defense, Infantry
 	Warhead@atomize: GrantExternalConditionCA
 		Range: 0c42
@@ -2048,8 +2050,8 @@ BursterExplode:
 	Warhead@4Eff: CreateEffect
 		Explosions: artillery_explosion
 
-MindSparkSpawnerMaster:
-	ReloadDelay: 100
+MindSparkEruption:
+	ReloadDelay: 1000
 	Projectile: InstantExplode
 	Warhead@2Eff: CreateEffect
 		Explosions: reverse
@@ -2057,30 +2059,17 @@ MindSparkSpawnerMaster:
 		Image: mindcontrol
 		ValidTargets: Ground
 		ImpactSounds: mastermind-shatter.aud
-	Warhead@Spawn: SpawnActor
-		Actors: mspk
-		Range: 1
-		ForceGround: false
-		ValidTargets: Ground, Water
 		ImpactActors: false
-		Delay: 8
+		AirThreshold: 512
 	Warhead@Suppress: GrantExternalConditionCA
 		Range: 2c0
-		Duration: 325
+		Duration: 200
 		Condition: suppression
 		ValidRelationships: Enemy, Neutral
-		Delay: 8
-
-MindSparkSpawnerSlave:
-	Inherits: MindSparkSpawnerMaster
-	-Warhead@2Eff:
-	Warhead@Spawn: SpawnActor
-		-Delay:
-	Warhead@Suppress: GrantExternalConditionCA
-		-Delay:
+		AirThreshold: 512
 
 MindSparkZap:
-	ReloadDelay: 50
+	ReloadDelay: 60
 	Range: 2c512
 	Report: mindspark-zap1.aud, mindspark-zap2.aud
 	Projectile: PlasmaBeam
@@ -2097,14 +2086,17 @@ MindSparkZap:
 		Spread: 42
 		Damage: 25000
 		Versus:
-			Light: 20
-			Heavy: 15
+			Light: 15
+			Heavy: 5
 			Concrete: 10
 			Wood: 5
 		DamageTypes: ElectricityDeath
+	Warhead@3Eff: CreateEffect
+		Explosions: small_explosion
 
 ObliteratorCharge:
 	Range: 15c0
+	MinRange: 1c0
 	ReloadDelay: 5
 	Projectile: LinearPulse
 		Speed: 2c0
@@ -2118,10 +2110,11 @@ ObliteratorCharge:
 
 ObliteratorBolt:
 	Range: 15c0
+	MinRange: 1c0
 	ReloadDelay: 75
 	Report: oblt-fire1.aud
 	Projectile: LinearPulse
-		Speed: 1c0
+		Speed: 768
 		Image: obltbolt
 		Sequences: idle, idle2
 		Palette: scrin
@@ -2160,6 +2153,10 @@ ObliteratorBolt:
 		Inaccuracy: 110
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
+	Warhead@Flash: FlashTarget
+		Spread: 1c0
+		Color: 9c3ee0
+		ValidTargets: Infantry, Structure, Vehicle
 
 NullifierBolt:
 	Range: 8c0
@@ -2202,6 +2199,10 @@ NullifierBolt:
 		ExplosionPalette: caneon
 		Image: nullhit
 		ImpactSounds: null-hit1.aud
+	Warhead@Flash: FlashTarget
+		Spread: 0c128
+		Color: ffff00
+		ValidTargets: Infantry, Vehicle, Ship, Defense
 
 ScrinRepair:
 	Inherits: Heal
@@ -2218,9 +2219,7 @@ ScrinRepair:
 	-Warhead@2Dam:
 	-Warhead@3Dam:
 	-Warhead@4Dam:
-	Warhead@highlight: GrantExternalConditionCA
-		Range: 0c511
-		Duration: 2
-		Condition: highlight
+	Warhead@Flash: FlashTarget
+		Spread: 0c511
+		Color: ff0000
 		ValidTargets: Repair
-

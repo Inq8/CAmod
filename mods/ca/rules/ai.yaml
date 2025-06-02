@@ -2158,7 +2158,7 @@ Player:
 		SquadValueRandomBonus: 3000
 		SquadSize: 25
 		SquadSizeRandomBonus: 11
-		AirUnitsTypes: heli, harr, pmak, beag, hind, yak, mig, suk, suk.upg, kiro, orca, a10, a10.sw, a10.gau, orcb, auro, apch, venm, rah, scrn, stmr, torm, enrv, mshp, phan, kamv, shde, vert, mcor
+		AirUnitsTypes: heli, harr, pmak, beag, hind, yak, mig, suk, suk.upg, kiro, orca, a10, a10.sw, a10.gau, orcb, auro, jack, apch, venm, rah, scrn, stmr, torm, enrv, mshp, phan, kamv, shde, vert, mcor
 		ExcludeFromSquadsTypes: harv, harv.td, harv.td.upg, harv.scrin, harv.chrono, mcv, amcv, smcv, dog, e6, n6, s6, badr, badr.bomber, badr.cbomber, badr.nbomber, badr.mbomber, b2b, p51, tran.paradrop, halo.paradrop, nhaw.paradrop, u2, smig, a10.bomber, c17, c17.cargo, c17.clustermines, c17.xo, galx, uav, ocar.reinforce, ocar.xo, ocar.pod, horn, yf23.bomber, pod, pod2, pod3, buzz, buzz.ai, mspk
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,dd2,pt2,ss2,isub,sb,seas
 		NavalProductionTypes: syrd, spen, syrd.gdi, spen.nod
@@ -2173,30 +2173,33 @@ Player:
 		HighValueTargetPriority: 20
 		AirToAirPriority: 60
 		BigAirThreats: pac, deva, kiro, mshp
-		AirSquadTargetTypes:
-			heli: Aircraft, Vehicle
-			nhaw: Infantry
-			hind: Infantry, Vehicle
-			yak: Building, Infantry, Aircraft
-			mig: Aircraft, Vehicle, Defense
-			beag: Aircraft, Vehicle, Defense
-			suk: Vehicle, Defense
-			suk.upg: Vehicle, Building
-			kiro: Building
-			orca: Aircraft, Vehicle
-			orcb: Vehicle, Defense
-			a10: Infantry, Building
-			a10.sw: Infantry, Building, Aircraft
-			a10.gau: Infantry, Building
-			apch: Infantry, Building, Aircraft
-			venm: Infantry, Aircraft
-			rah: Infantry, Building
-			harr: Infantry, Building, Aircraft
-			scrn: Aircraft, Vehicle, Defense
-			stmr: Aircraft, Infantry, Building
-			torm: Aircraft, Vehicle
-			enrv: Aircraft, Vehicle, Defense
-			mshp: Building
+		AirSquadTargetArmorTypes:
+			heli: Aircraft, Heavy
+			nhaw: None
+			hind: None, Heavy, Light
+			yak: Wood, None, Aircraft, Light
+			mig: Aircraft, Heavy, Light, Concrete
+			pmak: Heavy, Concrete
+			beag: Aircraft, Heavy, Light, Concrete
+			suk: Heavy, Concrete
+			suk.upg: Heavy, Wood
+			kiro: Wood
+			orca: Aircraft, Heavy
+			orcb: Heavy, Light, Concrete
+			a10: None, Wood
+			a10.sw: None, Wood, Aircraft
+			a10.gau: None, Wood, Light
+			auro: Heavy, Concrete, Wood
+			jack: Heavy, Light, Concrete
+			apch: None, Wood, Aircraft, Light
+			venm: None, Aircraft, Light
+			rah: None, Wood, Light
+			harr: None, Wood, Aircraft, Light
+			scrn: Aircraft, Heavy, Concrete
+			stmr: Aircraft, None, Wood, Light
+			torm: Aircraft, Heavy
+			enrv: Aircraft, Heavy, Concrete
+			mshp: Wood
 	UnitBuilderBotModuleCA@brutal-vhard:
 		RequiresCondition: enable-brutal-ai || enable-vhard-ai
 		IdleBaseUnitsMaximum: 50
@@ -2485,7 +2488,7 @@ Player:
 		SquadValueRandomBonus: 2500
 		SquadSize: 22
 		SquadSizeRandomBonus: 9
-		AirUnitsTypes: heli, harr, pmak, beag, hind, yak, mig, suk, suk.upg, kiro, orca, a10, a10.sw, a10.gau, orcb, auro, apch, venm, rah, scrn, stmr, torm, enrv, mshp, phan, kamv, shde, vert, mcor
+		AirUnitsTypes: heli, harr, pmak, beag, hind, yak, mig, suk, suk.upg, kiro, orca, a10, a10.sw, a10.gau, orcb, auro, jack, apch, venm, rah, scrn, stmr, torm, enrv, mshp, phan, kamv, shde, vert, mcor
 		ExcludeFromSquadsTypes: harv, harv.td, harv.td.upg, harv.scrin, harv.chrono, mcv, amcv, smcv, dog, e6, n6, s6, badr, badr.bomber, badr.cbomber, badr.nbomber, badr.mbomber, b2b, p51, tran.paradrop, halo.paradrop, nhaw.paradrop, u2, smig, a10.bomber, c17, c17.cargo, c17.clustermines, c17.xo, galx, uav, ocar.reinforce, ocar.xo, ocar.pod, horn, yf23.bomber, pod, pod2, pod3, buzz, buzz.ai, mspk
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,dd2,pt2,ss2,isub,sb,seas
 		NavalProductionTypes: syrd, spen, syrd.gdi, spen.nod
@@ -2496,30 +2499,33 @@ Player:
 		HighValueTargetPriority: 10
 		AirToAirPriority: 50
 		BigAirThreats: pac, deva, kiro, mshp
-		AirSquadTargetTypes:
-			heli: Aircraft, Vehicle
-			nhaw: Infantry
-			hind: Infantry, Vehicle
-			yak: Building, Infantry, Aircraft
-			mig: Aircraft, Vehicle, Defense
-			beag: Aircraft, Vehicle, Defense
-			suk: Vehicle, Defense
-			suk.upg: Vehicle, Building
-			kiro: Building
-			orca: Aircraft, Vehicle
-			orcb: Vehicle, Defense
-			a10: Infantry, Building
-			a10.sw: Infantry, Building, Aircraft
-			a10.gau: Infantry, Building
-			apch: Infantry, Building, Aircraft
-			venm: Infantry, Aircraft
-			rah: Infantry, Building
-			harr: Infantry, Building, Aircraft
-			scrn: Aircraft, Vehicle, Defense
-			stmr: Aircraft, Infantry, Building
-			torm: Aircraft, Vehicle
-			enrv: Aircraft, Vehicle, Defense
-			mshp: Building
+		AirSquadTargetArmorTypes:
+			heli: Aircraft, Heavy
+			nhaw: None
+			hind: None, Heavy, Light
+			yak: Wood, None, Aircraft, Light
+			mig: Aircraft, Heavy, Light, Concrete
+			pmak: Heavy, Concrete
+			beag: Aircraft, Heavy, Light, Concrete
+			suk: Heavy, Concrete
+			suk.upg: Heavy, Wood
+			kiro: Wood
+			orca: Aircraft, Heavy
+			orcb: Heavy, Light, Concrete
+			a10: None, Wood
+			a10.sw: None, Wood, Aircraft
+			a10.gau: None, Wood, Light
+			auro: Heavy, Concrete, Wood
+			jack: Heavy, Light, Concrete
+			apch: None, Wood, Aircraft, Light
+			venm: None, Aircraft, Light
+			rah: None, Wood, Light
+			harr: None, Wood, Aircraft, Light
+			scrn: Aircraft, Heavy, Concrete
+			stmr: Aircraft, None, Wood, Light
+			torm: Aircraft, Heavy
+			enrv: Aircraft, Heavy, Concrete
+			mshp: Wood
 	UnitBuilderBotModuleCA@hard:
 		RequiresCondition: enable-hard-ai
 		IdleBaseUnitsMaximum: 50
@@ -2812,15 +2818,15 @@ Player:
 		SquadValueRandomBonus: 2100
 		SquadSize: 18
 		SquadSizeRandomBonus: 8
-		AirUnitsTypes: heli, harr, pmak, beag, hind, yak, mig, suk, suk.upg, kiro, orca, a10, a10.sw, a10.gau, orcb, auro, apch, venm, rah, scrn, stmr, torm, enrv, mshp, phan, kamv, shde, vert, mcor
+		AirUnitsTypes: heli, harr, pmak, beag, hind, yak, mig, suk, suk.upg, kiro, orca, a10, a10.sw, a10.gau, orcb, auro, jack, apch, venm, rah, scrn, stmr, torm, enrv, mshp, phan, kamv, shde, vert, mcor
 		ExcludeFromSquadsTypes: harv, harv.td, harv.td.upg, harv.scrin, harv.chrono, mcv, amcv, smcv, dog, e6, n6, s6, badr, badr.bomber, badr.cbomber, badr.nbomber, badr.mbomber, b2b, p51, tran.paradrop, halo.paradrop, nhaw.paradrop, u2, smig, a10.bomber, c17, c17.cargo, c17.clustermines, c17.xo, galx, uav, ocar.reinforce, ocar.xo, ocar.pod, horn, yf23.bomber, pod, pod2, pod3, buzz, buzz.ai, mspk
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,pt2,ss2,dd2,isub,sb,seas
 		ConstructionYardTypes: fact,afac,sfac
 		StaticAntiAirTypes: agun, sam, nsam, cram, shar
 		NavalProductionTypes: spen,syrd,spen.nod,syrd.gdi
 		AirToAirPriority: 40
-		AirSquadTargetTypes:
-			mshp: Building
+		AirSquadTargetArmorTypes:
+			mshp: Wood
 	UnitBuilderBotModuleCA@normal:
 		RequiresCondition: enable-normal-ai
 		IdleBaseUnitsMaximum: 50
@@ -3098,15 +3104,15 @@ Player:
 		MinimumAttackForceDelay: 25
 		SquadSize: 14
 		SquadSizeRandomBonus: 5
-		AirUnitsTypes: heli, harr, pmak, beag, hind, yak, mig, suk, suk.upg, kiro, orca, a10, a10.sw, a10.gau, orcb, auro, apch, venm, rah, scrn, stmr, torm, enrv, mshp, phan, kamv, shde, vert, mcor
+		AirUnitsTypes: heli, harr, pmak, beag, hind, yak, mig, suk, suk.upg, kiro, orca, a10, a10.sw, a10.gau, orcb, auro, jack, apch, venm, rah, scrn, stmr, torm, enrv, mshp, phan, kamv, shde, vert, mcor
 		ExcludeFromSquadsTypes: harv, harv.td, harv.td.upg, harv.scrin, harv.chrono, mcv, amcv, smcv, dog, e6, n6, s6, badr, badr.bomber, badr.cbomber, badr.nbomber, badr.mbomber, b2b, p51, tran.paradrop, halo.paradrop, nhaw.paradrop, u2, smig, a10.bomber, c17, c17.cargo, c17.clustermines, c17.xo, galx, uav, ocar.reinforce, ocar.xo, ocar.pod, horn, yf23.bomber, pod, pod2, pod3, buzz, buzz.ai, mspk
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,pt2,ss2,dd2,isub,sb,seas
 		ConstructionYardTypes: fact,afac,sfac
 		StaticAntiAirTypes: agun, sam, nsam, cram, shar
 		NavalProductionTypes: spen,syrd,spen.nod,syrd.gdi
 		AirToAirPriority: 30
-		AirSquadTargetTypes:
-			mshp: Building
+		AirSquadTargetArmorTypes:
+			mshp: Wood
 	UnitBuilderBotModuleCA@easy:
 		RequiresCondition: enable-easy-ai
 		MaxAircraft: 2
@@ -3381,14 +3387,14 @@ Player:
 		RequiresCondition: enable-naval-ai
 		MinimumAttackForceDelay: 25
 		SquadSize: 1
-		AirUnitsTypes: heli, harr, pmak, beag, hind, yak, mig, suk, suk.upg, kiro, orca, a10, a10.sw, a10.gau, orcb, auro, apch, venm, rah, scrn, stmr, torm, enrv, mshp, phan, kamv, shde, vert, mcor
+		AirUnitsTypes: heli, harr, pmak, beag, hind, yak, mig, suk, suk.upg, kiro, orca, a10, a10.sw, a10.gau, orcb, auro, jack, apch, venm, rah, scrn, stmr, torm, enrv, mshp, phan, kamv, shde, vert, mcor
 		ExcludeFromSquadsTypes: harv, harv.td, harv.td.upg, harv.scrin, harv.chrono, mcv, amcv, smcv, dog, e6, n6, s6, badr, badr.bomber, badr.cbomber, badr.nbomber, badr.mbomber, b2b, p51, tran.paradrop, halo.paradrop, nhaw.paradrop, u2, smig, a10.bomber, c17, c17.cargo, c17.clustermines, c17.xo, galx, uav, ocar.reinforce, ocar.xo, ocar.pod, horn, yf23.bomber, pod, pod2, pod3, buzz, buzz.ai, mspk
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,pt2,dd2,ss2,isub,sb,seas
 		ConstructionYardTypes: fact,afac,sfac
 		StaticAntiAirTypes: agun, sam, nsam, cram, shar
 		NavalProductionTypes: spen,syrd,spen.nod,syrd.gdi
-		AirSquadTargetTypes:
-			mshp: Building
+		AirSquadTargetArmorTypes:
+			mshp: Wood
 	UnitBuilderBotModuleCA@naval:
 		RequiresCondition: enable-naval-ai
 		MaxAircraft: 4
