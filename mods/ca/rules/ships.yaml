@@ -303,9 +303,16 @@ LST:
 		PassengerFacing: 0
 		LoadingCondition: notmobile
 		LoadedCondition: cargo
+		PassengerConditions:
+			mcv: contains-mcv
+			amcv: contains-mcv
+			smcv: contains-mcv
 	WithCargoSounds:
 		EnterSounds: genter1a.aud
 		ExitSounds: gexit1a.aud
+	ProvidesPrerequisite@MCV:
+		Condition: contains-mcv
+		Prerequisites: anyconyard
 	Selectable:
 		DecorationBounds: 1536, 1536
 	-Targetable@MINIDRONE:

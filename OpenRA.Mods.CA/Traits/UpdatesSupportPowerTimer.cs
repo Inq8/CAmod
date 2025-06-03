@@ -24,11 +24,11 @@ namespace OpenRA.Mods.CA.Traits
 	class UpdatesSupportPowerTimerInfo : ConditionalTraitInfo
 	{
 		[FieldLoader.Require]
-		[Desc("The support power to charge.")]
+		[Desc("The support power to update.")]
 		public readonly string OrderName = null;
 
-		[Desc("If set to true, the support power will be fully charged the first time it becomes available. " +
-			"Otherwise it will be fully charged every time the trait is enabled.")]
+		[Desc("If set to true, the support power timer will be updated the first time it becomes available. " +
+			"Otherwise it will be updated every time the trait is enabled.")]
 		public readonly bool InitialOnly = false;
 
 		public readonly int Ticks = 0;

@@ -3619,12 +3619,15 @@
 	GrantTimedCondition@DETONATEDELAY:
 		Condition: detonate-disabled
 		Duration: 125
+	-UpdatesKillCount@BuildingsOrHarvesters:
+	-InfiltrateToCreateProxyActor@InfiltratorVision:
+	-Targetable@InfiltratorVision:
 
 ^InfiltratableFake:
 	Targetable@Infiltration:
-		TargetTypes: PowerOutageInfiltrate
+		TargetTypes: PowerOutageInfiltrate, VisionInfiltrate
 	InfiltrateForDecoration:
-		Types: PowerOutageInfiltrate
+		Types: PowerOutageInfiltrate, VisionInfiltrate, StealCreditsInfiltrate, VetInfiltrate, ResetShroudInfiltrate, GrantSupportPowerInfiltrate
 		RequiresSelection: true
 		Image: pips
 		Palette: chrome
