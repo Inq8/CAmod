@@ -1431,7 +1431,7 @@ PROC:
 		Dimensions: 3,4
 		LocalCenterOffset: 0,-512,0
 	Selectable:
-		Bounds: 3072, 2133, 0, 170
+		Bounds: 3072, 2512, 0, 256
 		DecorationBounds: 3072, 2986, 0, -85
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
@@ -4175,7 +4175,7 @@ PROC.TD:
 		RequiresSelection: true
 		PipCount: 17
 	Selectable:
-		Bounds: 3072, 2389, 0, 512
+		Bounds: 3072, 2512, 0, 256
 		DecorationBounds: 3114, 3072
 	InfiltrateForCash:
 		Types: StealCreditsInfiltrate
@@ -6228,7 +6228,7 @@ IOK:
 		Bounds: 1024, 1024
 		DecorationBounds: 896, 1706, 0, -448
 	Health:
-		HP: 10000
+		HP: 15000
 	Tooltip:
 		Name: Idol of Kane
 	TooltipExtras:
@@ -6270,12 +6270,12 @@ IOK:
 		Condition: iokbuff
 		Range: 5c0
 		ValidRelationships: Ally
-		RequiresCondition: !rage-active
+		RequiresCondition: !rage-active && initialized
 	ProximityExternalCondition@IdolOfKaneDebuff:
 		Condition: iokdebuff
 		Range: 5c0
 		ValidRelationships: Neutral, Enemy
-		RequiresCondition: !rage-active
+		RequiresCondition: !rage-active && initialized
 	ProximityExternalCondition@Rage:
 		Condition: berserk
 		Range: 5c0
@@ -6292,7 +6292,7 @@ IOK:
 		MaxRadiusFlashColor: 66666660
 		Color: 66666630
 		Width: 2
-		RequiresCondition: !rage-active
+		RequiresCondition: !rage-active && initialized
 	WithRadiatingCircle@Rage:
 		EndRadius: 5c0
 		Interval: 5
