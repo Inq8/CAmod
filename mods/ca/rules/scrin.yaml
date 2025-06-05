@@ -4622,6 +4622,8 @@ REAC:
 		Amount: 100
 	ScalePowerWithHealth:
 	ProvidesPrerequisite@buildingname:
+	UpdatesBuildOrder:
+		Limit: 2
 
 REA2:
 	Inherits: ^ScrinBuilding
@@ -4660,6 +4662,8 @@ REA2:
 		Amount: 200
 	ProvidesPrerequisite@buildingname:
 	ScalePowerWithHealth:
+	UpdatesBuildOrder:
+		Limit: 1
 
 PROC.SCRIN:
 	Inherits: ^ScrinBuilding
@@ -5371,6 +5375,7 @@ SILO.SCRIN:
 	Explodes:
 		Weapon: SmallBuildingExplode
 		EmptyWeapon: SmallBuildingExplode
+	-UpdatesBuildOrder:
 
 MANI:
 	Inherits: ^ScrinBuilding

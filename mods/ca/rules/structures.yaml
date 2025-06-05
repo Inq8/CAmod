@@ -1560,6 +1560,7 @@ SILO:
 	Explodes:
 		Weapon: SmallBuildingExplode
 		EmptyWeapon: SmallBuildingExplode
+	-UpdatesBuildOrder:
 
 HPAD:
 	Inherits: ^Building
@@ -1784,6 +1785,8 @@ POWR:
 	WithDeathAnimation:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
+	UpdatesBuildOrder:
+		Limit: 2
 
 APWR:
 	Inherits: ^Building
@@ -1824,6 +1827,8 @@ APWR:
 	WithDeathAnimation:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
+	UpdatesBuildOrder:
+		Limit: 1
 
 NPWR:
 	Inherits: ^Building
@@ -1931,6 +1936,8 @@ TPWR:
 	Power:
 		Amount: 300
 	-ScalePowerWithHealth:
+	UpdatesBuildOrder:
+		Limit: 1
 
 STEK:
 	Inherits: ^Building
@@ -3127,6 +3134,8 @@ NUKE:
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite:
 		Prerequisite: anypower
+	UpdatesBuildOrder:
+		Limit: 2
 
 NUK2:
 	Inherits: ^BuildingTD
@@ -3172,6 +3181,8 @@ NUK2:
 		Amount: 200
 	ProvidesPrerequisite@buildingname:
 	ScalePowerWithHealth:
+	UpdatesBuildOrder:
+		Limit: 1
 
 AFAC:
 	Inherits: ^BuildingTD
@@ -4253,6 +4264,7 @@ SILO.TD:
 	Explodes:
 		Weapon: SmallBuildingExplode
 		EmptyWeapon: SmallBuildingExplode
+	-UpdatesBuildOrder:
 
 AFLD.GDI:
 	Inherits: ^Building

@@ -45,36 +45,16 @@ namespace OpenRA.Mods.CA.Traits
 
 		public UpgradeInfo UpgradeableActorCreated(Upgradeable upgradeable, string upgradeType, string sourceActorType, string targetActorType, int cost, int buildDuration, int buildDurationModifier)
 		{
-			if (upgrades.ContainsKey(upgradeType))
+			if (!upgrades.ContainsKey(upgradeType))
 			{
-				if (IsUnlocked(upgradeType))
-					upgradeable.Unlock();
-
-				return upgrades[upgradeType];
+				var upgradeInfo = GetUpgradeInfo(sourceActorType, targetActorType, cost, buildDuration, buildDurationModifier);
+				upgrades.Add(upgradeType, upgradeInfo);
 			}
 
-			if (cost == -1)
-				cost = CalculateCost(sourceActorType, targetActorType);
+			if (IsUnlocked(upgradeType))
+				upgradeable.Unlock();
 
-			if (buildDuration == -1)
-				buildDuration = CalculateBuildDuration(cost, buildDurationModifier);
-
-			var upgradeInfo = new UpgradeInfo()
-			{
-				Cost = cost,
-				BuildDuration = buildDuration,
-			};
-
-			if (targetActorType != null && self.World.Map.Rules.Actors.ContainsKey(targetActorType))
-			{
-				var targetActorInfo = self.World.Map.Rules.Actors[targetActorType];
-				var tooltip = targetActorInfo.TraitInfoOrDefault<TooltipInfo>();
-				if (tooltip != null)
-					upgradeInfo.ActorName = tooltip.Name;
-			}
-
-			upgrades.Add(upgradeType, upgradeInfo);
-			return upgradeInfo;
+			return upgrades[upgradeType];
 		}
 
 		public void UpgradeProviderCreated(string type)
@@ -97,6 +77,31 @@ namespace OpenRA.Mods.CA.Traits
 		public bool IsUnlocked(string upgradeType)
 		{
 			return unlockedUpgradeTypes.ContainsKey(upgradeType);
+		}
+
+		UpgradeInfo GetUpgradeInfo(string sourceActorType, string targetActorType, int cost, int buildDuration, int buildDurationModifier)
+		{
+			if (cost == -1)
+				cost = CalculateCost(sourceActorType, targetActorType);
+
+			if (buildDuration == -1)
+				buildDuration = CalculateBuildDuration(cost, buildDurationModifier);
+
+			var upgradeInfo = new UpgradeInfo()
+			{
+				Cost = cost,
+				BuildDuration = buildDuration,
+			};
+
+			if (targetActorType != null && self.World.Map.Rules.Actors.ContainsKey(targetActorType))
+			{
+				var targetActorInfo = self.World.Map.Rules.Actors[targetActorType];
+				var tooltip = targetActorInfo.TraitInfoOrDefault<TooltipInfo>();
+				if (tooltip != null)
+					upgradeInfo.ActorName = tooltip.Name;
+			}
+
+			return upgradeInfo;
 		}
 
 		int CalculateCost(string sourceActorType, string targetActorType)
