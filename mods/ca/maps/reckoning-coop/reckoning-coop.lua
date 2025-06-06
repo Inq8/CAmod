@@ -18,7 +18,7 @@ ExterminatorAttackCount = {
 }
 
 Exterminators = {
-	{ SpawnLocation = ExterminatorSpawnWest.Location, Path = { Exterminator1Patrol1.Location, Exterminator1Patrol2.Location, Exterminator1Patrol3.Location, Exterminator1Patrol4.Location } },
+	{ SpawnLocation = ExterminatorFirstSpawn.Location, Path = { Exterminator1Patrol1.Location, Exterminator1Patrol2.Location, Exterminator1Patrol3.Location, Exterminator1Patrol4.Location } },
 	{ SpawnLocation = ExterminatorSpawnWest.Location, Path = { Exterminator2Patrol1.Location, Exterminator2Patrol2.Location, Exterminator2Patrol3.Location, Exterminator2Patrol4.Location } },
 	{ SpawnLocation = ExterminatorSpawnWest.Location, Path = { Exterminator3Patrol1.Location, Exterminator3Patrol2.Location, Exterminator3Patrol3.Location, Exterminator3Patrol4.Location } },
 }
@@ -282,12 +282,20 @@ WorldLoaded = function()
 
 	Trigger.AfterDelay(DateTime.Seconds(3), function()
 		Media.DisplayMessage("The Overlord's tyranny will die today commander, and a new era will begin. Elsewhere, battles are still raging, but the decisive blow must be dealt here where his most elite forces are gathered. Show no mercy commander. Peace through power.", "Kane", HSLColor.FromHex("FF0000"))
-		MediaCA.PlaySound("../ca30-reckoning/kane_nomercy.aud", 2)
+		MediaCA.PlaySound("../ca36-reckoning/kane_nomercy.aud", 2)
 
 		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(14)), function()
 			Media.DisplayMessage("Foolish humans! Your armies will be crushed, the rebellion will fall, and you will die here!", "Scrin Overlord", HSLColor.FromHex("7700FF"))
-			MediaCA.PlaySound("../ca30-reckoning/overlordwarning.aud", 2)
+			MediaCA.PlaySound("../ca36-reckoning/overlordwarning.aud", 2)
 		end)
+	end)
+
+	NodRadarProvider = Actor.Create("radar.dummy", true, { Owner = Nod })
+	GDIRadarProvider = Actor.Create("radar.dummy", true, { Owner = GDI })
+
+	Trigger.OnKilled(RebelMainNerveCenter, function(self, killer)
+		NodRadarProvider.Destroy()
+		GDIRadarProvider.Destroy()
 	end)
 end
 
@@ -311,7 +319,7 @@ OncePerFiveSecondChecks = function()
 		if not PlayerHasBuildings(Scrin) and #Scrin.GetActorsByType("etpd") == 0 and not Victory then
 			Victory = true
 			Media.DisplayMessage("The Overlord's fate is sealed, and the Scrin are liberated. Now we must return to Earth and forge a new beginning for mankind. With purified Tiberium the possibilites are truly limitless, and those who embrace its light will share in its blessings. Those who do not, will be left in the darkness.", "Kane", HSLColor.FromHex("FF0000"))
-			MediaCA.PlaySound("../ca30-reckoning/kane_newbeginning.aud", 2)
+			MediaCA.PlaySound("../ca36-reckoning/kane_newbeginning.aud", 2)
 
 			Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(19)), function()
 				Utils.Do(MissionPlayers, function(p)
@@ -386,25 +394,26 @@ InitScrin = function()
 		InitAirAttackSquad(Squads.ScrinAirToAirVsGDI, Scrin, GDI, { "orca", "orcb", "a10", "a10.gau", "a10.sw", "auro" })
 	end
 
-	Trigger.AfterDelay(1, function()
-		local initialAttackers = Map.ActorsInBox(InitialAttackersTopLeft.CenterPosition, InitialAttackersBottomRight.CenterPosition, function(a)
-			return a.Owner == Scrin and not a.IsDead
-		end)
-
-		Utils.Do(initialAttackers, function(a)
-			Trigger.ClearAll(a)
-			Trigger.AfterDelay(1, function()
-				if not a.IsDead then
-					a.AttackMove(Exterminator1Patrol3.Location, 2)
-					a.Wait(Utils.RandomInteger(25, 75))
-					a.Patrol({ R1.Location, L1.Location })
-				end
-			end)
-		end)
-	end)
-
 	Trigger.AfterDelay(ExterminatorsStartTime[Difficulty], function()
 		SendNextExterminator()
+	end)
+
+	Trigger.OnEnteredProximityTrigger(FirstExterminatorDetector.CenterPosition, WDist.New(5 * 1024), function(a, id)
+		if a.Owner == Scrin and a.Type == "etpd" then
+			Trigger.RemoveProximityTrigger(id)
+			local camera = Actor.Create("camera", true, { Owner = Nod, Location = a.Location })
+			Beacon.New(Nod, a.CenterPosition)
+			Media.PlaySound("beacon.aud")
+			Trigger.AfterDelay(DateTime.Seconds(6), function()
+				camera.Destroy()
+			end)
+			local rebelDefenders = Utils.Where(Map.ActorsInCircle(Exterminator1Patrol1.CenterPosition, WDist.New(13 * 1024)), function(a)
+				return a.Owner == ScrinRebels and not a.IsDead and a.HasProperty("Hunt")
+			end)
+			Utils.Do(rebelDefenders, function(a)
+				a.Hunt()
+			end)
+		end
 	end)
 
 	Trigger.AfterDelay(RiftEnabledTime[Difficulty], function()
@@ -480,7 +489,7 @@ SendNextExterminator = function()
 			if NextExterminatorIndex == 1 then
 				Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(2)), function()
 					Media.DisplayMessage("Commander, the Overlord's most powerful weapons are being deployed. Use everything at your disposal to destroy them.", "Kane", HSLColor.FromHex("FF0000"))
-					MediaCA.PlaySound("../ca30-reckoning/kane_exterminators.aud", 2)
+					MediaCA.PlaySound("../ca36-reckoning/kane_exterminators.aud", 2)
 				end)
 			elseif #exterminators > 1 then
 				Notification("Exterminator Tripods detected.")

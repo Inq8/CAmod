@@ -43,7 +43,7 @@ namespace OpenRA.Mods.Common.Widgets
 
 		readonly CachedTransform<Player, UpgradesManager> stats = new(player => player.PlayerActor.TraitOrDefault<UpgradesManager>());
 
-		IOrderedEnumerable<ArmyUnit> upgrades;
+		IOrderedEnumerable<(ArmyUnit, int)> upgrades;
 		int lastHash;
 
 		int lastIconIdx;
@@ -105,8 +105,11 @@ namespace OpenRA.Mods.Common.Widgets
 
 			if (upgrades != null)
 			{
-				foreach (var unit in upgrades)
+				foreach (var item in upgrades)
 				{
+					var unit = item.Item1;
+					var time = item.Item2;
+
 					var icon = unit.Icon;
 					var topLeftOffset = new int2(queueCol * (IconWidth + IconSpacing), 0);
 
@@ -119,7 +122,8 @@ namespace OpenRA.Mods.Common.Widgets
 					armyIcons.Add(new ArmyIcon
 					{
 						Bounds = new Rectangle(iconTopLeft.X, iconTopLeft.Y, (int)iconSize.X, (int)iconSize.Y),
-						Unit = unit
+						Unit = unit,
+						Ticks = time
 					});
 
 					queueCol++;
@@ -141,14 +145,12 @@ namespace OpenRA.Mods.Common.Widgets
 
 			Game.Renderer.DisableAntialiasingFilter();
 
-			var bold = Game.Renderer.Fonts["TinyBold"];
+			var tiny = Game.Renderer.Fonts["Tiny"];
 			foreach (var armyIcon in armyIcons)
 			{
-				if (armyIcon.Unit.Count == 1)
-					continue;
-
-				var text = armyIcon.Unit.Count.ToString();
-				bold.DrawTextWithContrast(text, armyIcon.Bounds.Location + new float2(iconSize.X, 0) - new float2(bold.Measure(text).X, bold.TopOffset),
+				var text = WidgetUtils.FormatTime(armyIcon.Ticks, world.Timestep);
+				tiny.DrawTextWithContrast(text,
+					new float2(armyIcon.Bounds.X, armyIcon.Bounds.Y) + new float2(16, 12) - new float2(tiny.Measure(text).X / 2, 0),
 					Color.White, Color.Black, 1);
 			}
 
@@ -166,12 +168,24 @@ namespace OpenRA.Mods.Common.Widgets
 			Parent.Parent.Bounds.Width = Math.Max(25 + widestChildWidth, Bounds.Left + MinWidth);
 		}
 
-		IOrderedEnumerable<ArmyUnit> UpdateUpgrades(UpgradesManager upgradesManager, Player player)
+		IOrderedEnumerable<(ArmyUnit, int)> UpdateUpgrades(UpgradesManager upgradesManager, Player player)
 		{
 			lastHash = upgradesManager.Hash;
-			return upgradesManager.UnlockedUpgradeTypes
-				.Select(kvp => new ArmyUnit(player.World.Map.Rules.Actors[kvp.Key], player) { Count = kvp.Value })
-				.OrderBy(u => u.BuildPaletteOrder);
+
+			var upgrades = upgradesManager.UnlockedUpgradeTypes
+				.Select(kvp => (new ArmyUnit(world.Map.Rules.Actors[kvp.Key], player), kvp.Value));
+
+			var instances = new List<(ArmyUnit, int)>();
+
+			foreach (var upgrade in upgrades)
+			{
+				foreach (var time in upgrade.Item2)
+				{
+					instances.Add((upgrade.Item1, time));
+				}
+			}
+
+			return instances.OrderBy(x => x.Item2);
 		}
 
 		public override Widget Clone()
@@ -223,6 +237,7 @@ namespace OpenRA.Mods.Common.Widgets
 		{
 			public Rectangle Bounds { get; set; }
 			public ArmyUnit Unit { get; set; }
+			public int Ticks { get; set; }
 		}
 	}
 }

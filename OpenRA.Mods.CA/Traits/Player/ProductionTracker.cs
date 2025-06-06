@@ -52,7 +52,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (limit > 0 && buildOrder.Count(i => i.Name == type) >= limit)
 				return;
 
-			buildOrder.Add(new ProductionTrackerBuildOrderItem { Name = type, Tick = world.WorldTick });
+			buildOrder.Add(new ProductionTrackerBuildOrderItem { Name = type, Ticks = world.WorldTick });
 		}
 
 		public void UnitCreated(string type, int value)
@@ -72,7 +72,7 @@ namespace OpenRA.Mods.CA.Traits
 	public class ProductionTrackerBuildOrderItem
 	{
 		public string Name;
-		public int Tick;
+		public int Ticks;
 	}
 
 	public class ProductionTrackerUnitValueItem

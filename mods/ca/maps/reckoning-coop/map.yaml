@@ -464,7 +464,7 @@ Actors:
 	Actor160: srep
 		Owner: ScrinRebels
 		Location: 78,12
-	Actor150: nerv
+	RebelMainNerveCenter: nerv
 		Owner: ScrinRebels
 		Location: 72,7
 	Actor161: proc.scrin
@@ -1253,14 +1253,6 @@ Actors:
 		Owner: ScrinRebels
 		Location: 77,121
 		Health: 28
-	FallenRebel5: port
-		Owner: ScrinRebels
-		Location: 78,128
-		Health: 43
-	FallenRebel4: wsph
-		Owner: ScrinRebels
-		Location: 81,124
-		Health: 36
 	FallenRebel3: rea2
 		Owner: ScrinRebels
 		Location: 88,130
@@ -2744,65 +2736,6 @@ Actors:
 		Owner: Scrin
 		Location: 11,89
 		Facing: 840
-	InitialDevastator1: deva
-		Owner: Scrin
-		Location: 62,120
-		Facing: 705
-	InitialDevastator2: deva
-		Owner: Scrin
-		Location: 62,132
-		Facing: 832
-	Actor859: tpod
-		Owner: Scrin
-		Location: 63,123
-		Facing: 713
-	Actor860: tpod
-		Owner: Scrin
-		Location: 63,128
-		Facing: 793
-	Actor861: tpod
-		Owner: Scrin
-		Location: 64,135
-		Facing: 816
-	Actor862: ruin
-		Owner: Scrin
-		Location: 62,122
-		Facing: 713
-	Actor863: s1
-		Owner: Scrin
-		SubCell: 3
-		Location: 63,125
-		Facing: 793
-	Actor864: s1
-		Owner: Scrin
-		SubCell: 3
-		Location: 64,126
-		Facing: 745
-	Actor865: s1
-		Owner: Scrin
-		SubCell: 3
-		Location: 64,131
-		Facing: 729
-	Actor866: s1
-		Owner: Scrin
-		SubCell: 3
-		Location: 65,132
-		Facing: 682
-	Actor867: s1
-		Owner: Scrin
-		SubCell: 3
-		Location: 63,135
-		Facing: 697
-	Actor868: s1
-		Owner: Scrin
-		SubCell: 3
-		Location: 65,137
-		Facing: 808
-	Actor869: s1
-		Owner: Scrin
-		SubCell: 3
-		Location: 64,120
-		Facing: 761
 	Actor870: camera
 		Owner: Scrin
 		Location: 80,126
@@ -2857,12 +2790,6 @@ Actors:
 	Exterminator3Patrol4: waypoint
 		Owner: Neutral
 		Location: 87,14
-	InitialAttackersTopLeft: waypoint
-		Owner: Neutral
-		Location: 59,119
-	InitialAttackersBottomRight: waypoint
-		Owner: Neutral
-		Location: 66,138
 	Actor878: seek
 		Owner: Scrin
 		Location: 34,50
@@ -4610,6 +4537,20 @@ Actors:
 	GravityStabilizer4: grav
 		Owner: Scrin
 		Location: 110,111
+	FallenRebel4: srep
+		Owner: ScrinRebels
+		Location: 82,123
+		Health: 44
+	FallenRebel5: reac
+		Owner: ScrinRebels
+		Location: 78,128
+		Health: 33
+	ExterminatorFirstSpawn: waypoint
+		Owner: Neutral
+		Location: 51,115
+	FirstExterminatorDetector: waypoint
+		Owner: Neutral
+		Location: 69,122
 
 Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|maps/ca36-reckoning/reckoning-rules.yaml, rules.yaml
 

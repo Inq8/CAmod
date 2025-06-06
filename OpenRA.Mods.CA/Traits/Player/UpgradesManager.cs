@@ -27,17 +27,17 @@ namespace OpenRA.Mods.CA.Traits
 	{
 		readonly Actor self;
 		Dictionary<string, UpgradeInfo> upgrades;
-		Dictionary<string, int> unlockedUpgradeTypes;
+		Dictionary<string, List<int>> unlockedUpgradeTypes;
 
 		public int Hash { get; private set; }
 
-		public Dictionary<string, int> UnlockedUpgradeTypes => unlockedUpgradeTypes;
+		public Dictionary<string, List<int>> UnlockedUpgradeTypes => unlockedUpgradeTypes;
 
 		public UpgradesManager(Actor self, UpgradesManagerInfo info)
 		{
 			this.self = self;
 			upgrades = new Dictionary<string, UpgradeInfo>();
-			unlockedUpgradeTypes = new Dictionary<string, int>();
+			unlockedUpgradeTypes = new Dictionary<string, List<int>>();
 			Hash = 0;
 		}
 
@@ -60,10 +60,10 @@ namespace OpenRA.Mods.CA.Traits
 		public void UpgradeProviderCreated(string type)
 		{
 			if (IsUnlocked(type))
-				unlockedUpgradeTypes[type]++;
+				unlockedUpgradeTypes[type].Add(self.World.WorldTick);
 			else
 			{
-				unlockedUpgradeTypes.Add(type, 1);
+				unlockedUpgradeTypes.Add(type, new List<int> { self.World.WorldTick });
 				var upgradeables = self.World.ActorsWithTrait<Upgradeable>().Where(x => x.Trait.Info.Type == type && x.Actor.Owner == self.Owner).ToList();
 
 				foreach (var p in upgradeables)
