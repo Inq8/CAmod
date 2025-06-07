@@ -142,7 +142,7 @@ namespace OpenRA.Mods.Common.Traits
 					{
 						var mobile = unit.TraitOrDefault<Mobile>();
 						if (mobile != null)
-							mobile.Nudge(self);
+							self.QueueActivity(false, new Nudge(self));
 					}
 				});
 			}
@@ -212,7 +212,7 @@ namespace OpenRA.Mods.Common.Traits
 			if (order.OrderID == OrderID)
 			{
 				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", info.SourceSetNotification, self.Owner.Faction.InternalName);
-				TextNotificationsManager.AddTransientLine(info.SourceSetTextNotification, self.Owner);
+				TextNotificationsManager.AddTransientLine(self.Owner, info.SourceSetTextNotification);
 
 				return new Order(order.OrderID, self, target, queued);
 			}

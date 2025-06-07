@@ -119,7 +119,7 @@ namespace OpenRA.Mods.CA.Widgets
 
 		float2 CalcTextLocation(int y, int2 textSize)
 		{
-			var location = new float2(Bounds.Location) + new float2(0, y);
+			var location = new float2(Bounds.X, Bounds.Y + y);
 
 			if (Align == TextAlign.Center)
 				location += new int2((Bounds.Width - textSize.X) / 2, 0);

@@ -80,9 +80,15 @@ namespace OpenRA.Mods.CA
 				TextNotificationsManager.Debug(s, args);
 		}
 
+		// temporarily added here (they were removed from WorldUtils)
 		public static Actor ClosestTo(this IEnumerable<Actor> actors, WPos pos)
 		{
 			return actors.MinByOrDefault(a => (a.CenterPosition - pos).LengthSquared);
+		}
+
+		public static WPos PositionClosestTo_Old(this IEnumerable<WPos> positions, WPos pos)
+		{
+			return positions.MinByOrDefault(p => (p - pos).LengthSquared);
 		}
 	}
 }

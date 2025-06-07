@@ -203,7 +203,7 @@ namespace OpenRA.Mods.CA.Projectiles
 			if (!args.GuidedTarget.IsValidFor(args.SourceActor))
 				return;
 
-			var guidedTargetPos = args.Weapon.TargetActorCenter ? args.GuidedTarget.CenterPosition : args.GuidedTarget.Positions.PositionClosestTo(args.Source);
+			var guidedTargetPos = args.Weapon.TargetActorCenter ? args.GuidedTarget.CenterPosition : args.GuidedTarget.Positions.ClosestToIgnoringPath(args.Source);
 			target = guidedTargetPos + inaccuracyOffset;
 		}
 

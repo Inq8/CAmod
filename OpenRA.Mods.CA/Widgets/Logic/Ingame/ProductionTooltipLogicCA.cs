@@ -127,7 +127,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				var requiresSize = int2.Zero;
 				if (prereqs.Any())
 				{
-					requiresLabel.Text = FluentProvider.GetMessage(Requires, Translation.Arguments("prequisites", prereqs.JoinWith(", ")));
+					requiresLabel.Text = FluentProvider.GetMessage(Requires, "prequisites", prereqs.JoinWith(", "));
 					requiresSize = requiresFont.Measure(requiresLabel.Text);
 					requiresLabel.Visible = true;
 					descLabel.Bounds.Y = descLabelY + requiresLabel.Bounds.Height + (descLabel.Bounds.X / 2);

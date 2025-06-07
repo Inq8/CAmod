@@ -279,7 +279,7 @@ namespace OpenRA.Mods.CA.Projectiles
 				return;
 			}
 
-			var guidedTargetPos = args.Weapon.TargetActorCenter ? args.GuidedTarget.CenterPosition : args.GuidedTarget.Positions.PositionClosestTo(args.Source);
+			var guidedTargetPos = args.Weapon.TargetActorCenter ? args.GuidedTarget.CenterPosition : args.GuidedTarget.Positions.ClosestToIgnoringPath(args.Source);
 			target = guidedTargetPos + inaccuracyOffset;
 		}
 

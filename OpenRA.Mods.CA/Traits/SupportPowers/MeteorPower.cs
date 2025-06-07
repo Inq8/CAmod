@@ -203,7 +203,7 @@ namespace OpenRA.Mods.CA.Traits
 		readonly MeteorPowerInfo info;
 
 		public SelectMeteorPowerTarget(string order, SupportPowerManager manager, MeteorPowerInfo info, MouseButton button)
-			: base(order, manager, info.Cursor, button)
+			: base(order, manager, info, button)
 		{
 			this.info = info;
 		}

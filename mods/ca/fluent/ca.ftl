@@ -1,3 +1,7 @@
+## Metadata
+mod-title = Combined Arms
+mod-windowtitle = OpenRA Combined Arms
+
 ## Player
 options-tech-level =
     .infantry-only = Infantry Only

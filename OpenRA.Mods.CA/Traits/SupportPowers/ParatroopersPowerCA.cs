@@ -22,7 +22,7 @@ using OpenRA.Traits;
 namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("Support power that delivers paratroopers. CA version adds overrides based on prerequisites.")]
-	public class ParatroopersPowerCAInfo : SupportPowerInfo
+	public class ParatroopersPowerCAInfo : DirectionalSupportPowerInfo
 	{
 		[ActorReference(typeof(AircraftInfo))]
 		public readonly string UnitType = "badr";
@@ -56,15 +56,6 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Amount of time (in ticks) to keep the camera alive while the passengers drop.")]
 		public readonly int CameraRemoveDelay = 85;
 
-		[Desc("Enables the player directional targeting")]
-		public readonly bool UseDirectionalTarget = false;
-
-		[Desc("Animation used to render the direction arrows.")]
-		public readonly string DirectionArrowAnimation = null;
-
-		[Desc("Palette for direction cursor animation.")]
-		public readonly string DirectionArrowPalette = "chrome";
-
 		[Desc("Weapon range offset to apply during the beacon clock calculation.")]
 		public readonly WDist BeaconDistanceOffset = WDist.FromCells(4);
 
@@ -86,7 +77,7 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new ParatroopersPowerCA(init.Self, this); }
 	}
 
-	public class ParatroopersPowerCA : SupportPower
+	public class ParatroopersPowerCA : DirectionalSupportPower
 	{
 		readonly ParatroopersPowerCAInfo info;
 		TechTree techTree;
@@ -101,14 +92,6 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			base.Created(self);
 			techTree = self.Owner.PlayerActor.Trait<TechTree>();
-		}
-
-		public override void SelectTarget(Actor self, string order, SupportPowerManager manager)
-		{
-			if (info.UseDirectionalTarget)
-				self.World.OrderGenerator = new SelectDirectionalTarget(self.World, order, manager, Info.Cursor, info.DirectionArrowAnimation, info.DirectionArrowPalette);
-			else
-				base.SelectTarget(self, order, manager);
 		}
 
 		public override void Activate(Actor self, Order order, SupportPowerManager manager)
@@ -171,7 +154,7 @@ namespace OpenRA.Mods.CA.Traits
 					Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech",
 						info.ReinforcementsArrivedSpeechNotification, self.Owner.Faction.InternalName);
 
-					TextNotificationsManager.AddTransientLine(info.ReinforcementsArrivedTextNotification, self.Owner);
+					TextNotificationsManager.AddTransientLine(self.Owner, info.ReinforcementsArrivedTextNotification);
 				}
 
 				aircraftInRange[a] = true;

@@ -126,7 +126,7 @@ namespace OpenRA.Mods.CA.Traits
 					Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", Info.LevelUpNotification, self.Owner.Faction.InternalName);
 
 				if (Info.LevelUpTextNotification != null)
-					TextNotificationsManager.AddTransientLine(string.Format(Info.LevelUpTextNotification, currentLevel), self.Owner);
+					TextNotificationsManager.AddTransientLine(self.Owner, string.Format(Info.LevelUpTextNotification, currentLevel));
 
 				notificationQueued = false;
 				ticksUntilNotification = Info.NotificationDelay;

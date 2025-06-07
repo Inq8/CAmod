@@ -314,7 +314,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			teamArmyValueGraph.GetSeries = () =>
 				teams.Select(t => new LineGraphSeries(
-					t.Key > 0 ? FluentProvider.GetMessage(TeamNumber, Translation.Arguments("team", $"{t.Key} ({t.First().PlayerName})")) : FluentProvider.GetMessage(NoTeam),
+					t.Key > 0 ? FluentProvider.GetMessage(TeamNumber, "team", $"{t.Key} ({t.First().PlayerName})") : FluentProvider.GetMessage(NoTeam),
 					t.First().Color,
 					t.Select(p => (p.PlayerActor.TraitOrDefault<PlayerStatistics>() ?? new PlayerStatistics(p.PlayerActor)).ArmySamples.Select(s => (float)s)).Aggregate((a, b) => a.Zip(b, (x, y) => x + y))));
 		}
@@ -329,7 +329,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 					tt.IgnoreMouseOver = true;
 
 					var teamLabel = tt.Get<LabelWidget>("TEAM");
-					var teamText = team.Key > 0 ? FluentProvider.GetMessage(TeamNumber, Translation.Arguments("team", team.Key))
+					var teamText = team.Key > 0 ? FluentProvider.GetMessage(TeamNumber, "team", team.Key)
 						: FluentProvider.GetMessage(NoTeam);
 					teamLabel.GetText = () => teamText;
 					tt.Bounds.Width = teamLabel.Bounds.Width = Game.Renderer.Fonts[tt.Font].Measure(teamText).X;

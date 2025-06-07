@@ -42,7 +42,7 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			if (info.CargoActors.Any() && info.CargoActors.Contains(cargo.Info.Name) && (cargo.IsDead || !info.OnlyIfCargoIsDead))
 			{
-				self.TraitOrDefault<Mobile>()?.Nudge(self);
+				self.QueueActivity(false, new Nudge(self));
 			}
 		}
 	}
