@@ -5064,6 +5064,10 @@ STNK.Nod:
 		PersistentTargeting: false
 		Voice: Attack
 	WithSpriteTurret:
+		RequiresCondition: !tibcore-upgrade
+	WithSpriteTurret@UPG:
+		RequiresCondition: tibcore-upgrade
+		Sequence: turret-upg
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: ReturnFire
@@ -5175,6 +5179,10 @@ HSTK:
 		PersistentTargeting: false
 		Voice: Attack
 	WithSpriteTurret:
+		RequiresCondition: !tibcore-upgrade
+	WithSpriteTurret@UPG:
+		RequiresCondition: tibcore-upgrade
+		Sequence: turret-upg
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: ReturnFire
@@ -5271,6 +5279,11 @@ BIKE:
 	SpeedMultiplier@ZealBonus:
 		Modifier: 115
 		RequiresCondition: zeal-covenant
+	WithFacingSpriteBody:
+		RequiresCondition: !tibcore-upgrade
+	WithFacingSpriteBody@UPG:
+		RequiresCondition: tibcore-upgrade
+		Sequence: idle-upgrade
 
 FTNK:
 	Inherits: ^TankTD
