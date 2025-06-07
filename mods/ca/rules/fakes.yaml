@@ -5,7 +5,7 @@ FPWR:
 	Buildable:
 		BuildPaletteOrder: 900
 		Queue: DefenseSQ, DefenseMQ
-		Prerequisites: powr, ~structures.england, ~techlevel.low
+		Prerequisites: anypower, ~structures.england, ~techlevel.low
 		Description: Looks like a Power Plant. Packed with explosives.
 		Icon: fake-icon
 	Tooltip:
@@ -58,7 +58,7 @@ FREF:
 		Dimensions: 3,4
 		LocalCenterOffset: 0,-512,0
 	Selectable:
-		Bounds: 3072, 2133, 0, 170
+		Bounds: 3072, 2512, 0, 256
 		DecorationBounds: 3072, 2986, 0, -85
 	HitShape:
 		Type: Rectangle
@@ -75,8 +75,6 @@ FREF:
 			TopLeft: -1536, 598
 			BottomRight: -512, 1280
 	WithBuildingBib:
-	WithBuildingPlacedAnimation:
-		RequiresCondition: !build-incomplete
 	RenderSprites:
 		Image: proc
 	Valued:

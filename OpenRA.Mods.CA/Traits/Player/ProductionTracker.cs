@@ -9,6 +9,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Linq;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
@@ -43,12 +44,15 @@ namespace OpenRA.Mods.CA.Traits
 			world = self.World;
 		}
 
-		public void BuildingCreated(string type)
+		public void BuildOrderItemCreated(string type, int limit, bool ignoreMaxItems = false)
 		{
-			if (BuildOrderCount >= info.MaxBuildOrderItems)
+			if (!ignoreMaxItems && BuildOrderCount >= info.MaxBuildOrderItems)
 				return;
 
-			buildOrder.Add(new ProductionTrackerBuildOrderItem { Name = type, Tick = world.WorldTick });
+			if (limit > 0 && buildOrder.Count(i => i.Name == type) >= limit)
+				return;
+
+			buildOrder.Add(new ProductionTrackerBuildOrderItem { Name = type, Ticks = world.WorldTick });
 		}
 
 		public void UnitCreated(string type, int value)
@@ -68,7 +72,7 @@ namespace OpenRA.Mods.CA.Traits
 	public class ProductionTrackerBuildOrderItem
 	{
 		public string Name;
-		public int Tick;
+		public int Ticks;
 	}
 
 	public class ProductionTrackerUnitValueItem

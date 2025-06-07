@@ -18,7 +18,7 @@ ExterminatorAttackCount = {
 }
 
 Exterminators = {
-	{ SpawnLocation = ExterminatorSpawnWest.Location, Path = { Exterminator1Patrol1.Location, Exterminator1Patrol2.Location, Exterminator1Patrol3.Location, Exterminator1Patrol4.Location } },
+	{ SpawnLocation = ExterminatorFirstSpawn.Location, Path = { Exterminator1Patrol1.Location, Exterminator1Patrol2.Location, Exterminator1Patrol3.Location, Exterminator1Patrol4.Location } },
 	{ SpawnLocation = ExterminatorSpawnWest.Location, Path = { Exterminator2Patrol1.Location, Exterminator2Patrol2.Location, Exterminator2Patrol3.Location, Exterminator2Patrol4.Location } },
 	{ SpawnLocation = ExterminatorSpawnWest.Location, Path = { Exterminator3Patrol1.Location, Exterminator3Patrol2.Location, Exterminator3Patrol3.Location, Exterminator3Patrol4.Location } },
 	{ SpawnLocation = ExterminatorSpawnEast.Location, Path = { Exterminator4Patrol1.Location, Exterminator4Patrol2.Location, Exterminator4Patrol3.Location, Exterminator4Patrol4.Location } },
@@ -272,6 +272,12 @@ WorldLoaded = function()
 			InitGDI()
 		end
 	end)
+
+	NodRadarProvider = Actor.Create("radar.dummy", true, { Owner = Nod })
+
+	Trigger.OnKilled(RebelMainNerveCenter, function(self, killer)
+		NodRadarProvider.Destroy()
+	end)
 end
 
 Tick = function()
@@ -349,25 +355,26 @@ InitScrin = function()
 		InitAirAttackSquad(Squads.ScrinAirToAir, Scrin, Nod, { "Aircraft" }, "ArmorType")
 	end
 
-	Trigger.AfterDelay(1, function()
-		local initialAttackers = Map.ActorsInBox(InitialAttackersTopLeft.CenterPosition, InitialAttackersBottomRight.CenterPosition, function(a)
-			return a.Owner == Scrin and not a.IsDead
-		end)
-
-		Utils.Do(initialAttackers, function(a)
-			Trigger.ClearAll(a)
-			Trigger.AfterDelay(1, function()
-				if not a.IsDead then
-					a.AttackMove(Exterminator1Patrol3.Location, 2)
-					a.Wait(Utils.RandomInteger(25, 75))
-					a.Patrol({ R1.Location, L1.Location })
-				end
-			end)
-		end)
-	end)
-
 	Trigger.AfterDelay(ExterminatorsStartTime[Difficulty], function()
 		SendNextExterminator()
+	end)
+
+	Trigger.OnEnteredProximityTrigger(FirstExterminatorDetector.CenterPosition, WDist.New(5 * 1024), function(a, id)
+		if a.Owner == Scrin and a.Type == "etpd" then
+			Trigger.RemoveProximityTrigger(id)
+			local camera = Actor.Create("camera", true, { Owner = Nod, Location = a.Location })
+			Beacon.New(Nod, a.CenterPosition)
+			Media.PlaySound("beacon.aud")
+			Trigger.AfterDelay(DateTime.Seconds(6), function()
+				camera.Destroy()
+			end)
+			local rebelDefenders = Utils.Where(Map.ActorsInCircle(Exterminator1Patrol1.CenterPosition, WDist.New(13 * 1024)), function(a)
+				return a.Owner == ScrinRebels and not a.IsDead and a.HasProperty("Hunt")
+			end)
+			Utils.Do(rebelDefenders, function(a)
+				a.Hunt()
+			end)
+		end
 	end)
 
 	Trigger.AfterDelay(RiftEnabledTime[Difficulty], function()
@@ -419,8 +426,13 @@ InitGDI = function()
 	if not GDIActive then
 		GDIActive = true
 
-		Media.DisplayMessage("Our forces were successful in luring GDI here and they have established a base. The situation has been explained to them and they have agreed to a cease fire, but remain vigilant commander, our old enemy cannot be trusted.", "Kane", HSLColor.FromHex("FF0000"))
-		MediaCA.PlaySound("kane_gdibase.aud", 2)
+		Beacon.New(Nod, GDIBase.CenterPosition)
+		Media.PlaySound("beacon.aud")
+
+		Trigger.AfterDelay(DateTime.Seconds(1), function()
+			Media.DisplayMessage("Our forces were successful in luring GDI here and they have established a base. The situation has been explained to them and they have agreed to a cease fire, but remain vigilant commander, our old enemy cannot be trusted.", "Kane", HSLColor.FromHex("FF0000"))
+			MediaCA.PlaySound("kane_gdibase.aud", 2)
+		end)
 
 		AutoRepairAndRebuildBuildings(GDI, 15)
 		AutoReplaceHarvesters(GDI)

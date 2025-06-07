@@ -107,7 +107,7 @@ namespace OpenRA.Mods.Common.Widgets
 				foreach (var item in buildOrder)
 				{
 					var unit = item.Item1;
-					var time = item.Item2.Tick;
+					var time = item.Item2.Ticks;
 
 					var icon = unit.Icon;
 					var topLeftOffset = new int2(queueCol * (IconWidth + IconSpacing), 0);
@@ -122,7 +122,7 @@ namespace OpenRA.Mods.Common.Widgets
 					{
 						Bounds = new Rectangle(iconTopLeft.X, iconTopLeft.Y, (int)iconSize.X, (int)iconSize.Y),
 						Unit = unit,
-						Tick = time
+						Ticks = time
 					});
 
 					queueCol++;
@@ -145,16 +145,13 @@ namespace OpenRA.Mods.Common.Widgets
 			Game.Renderer.DisableAntialiasingFilter();
 
 			var tiny = Game.Renderer.Fonts["Tiny"];
-			var bold = Game.Renderer.Fonts["Small"];
 			foreach (var icon in armyIcons)
 			{
-				var text = WidgetUtils.FormatTime(icon.Tick, world.Timestep);
+				var text = WidgetUtils.FormatTime(icon.Ticks, world.Timestep);
 				tiny.DrawTextWithContrast(text,
 					new float2(icon.Bounds.X, icon.Bounds.Y) + new float2(16, 12) - new float2(tiny.Measure(text).X / 2, 0),
 					Color.White, Color.Black, 1);
 			}
-
-
 
 			var parentWidth = Bounds.X + Bounds.Width;
 			Parent.Bounds.Width = parentWidth;
@@ -226,7 +223,7 @@ namespace OpenRA.Mods.Common.Widgets
 		{
 			public Rectangle Bounds { get; set; }
 			public ArmyUnit Unit { get; set; }
-			public int Tick	{ get; set; }
+			public int Ticks { get; set; }
 		}
 	}
 }

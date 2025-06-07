@@ -105,6 +105,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Range in which to apply condition.")]
 		public readonly WDist Range = WDist.Zero;
 
+		[Desc("If true, order by value, otherwise order by distance.")]
+		public readonly bool PrioritizeByValue = false;
+
 		// Footprint mode only
 
 		[Desc("Size of the footprint of the affected area.")]
@@ -223,10 +226,9 @@ namespace OpenRA.Mods.CA.Traits
 			var centerPos = Self.World.Map.CenterOfCell(xy);
 
 			var actorsInRange = Self.World.FindActorsInCircle(centerPos, info.Range)
-				.Where(a => {
-					return IsValidTarget(a);
-				})
-				.OrderBy(a => (a.CenterPosition - centerPos).LengthSquared);
+				.Where(a => IsValidTarget(a))
+				.OrderByDescending(a => info.PrioritizeByValue ? a.Info.TraitInfoOrDefault<ValuedInfo>()?.Cost ?? 0 : 0)
+				.ThenBy(a => (a.CenterPosition - centerPos).LengthSquared);
 
 			if (info.MaxTargets > 0)
 				return actorsInRange.Take(info.MaxTargets);
