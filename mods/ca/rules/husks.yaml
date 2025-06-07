@@ -1526,6 +1526,24 @@ OILR.Husk:
 	WithIdleOverlay@Burns:
 		Offset: -511,0,0
 
+BUNK.Husk:
+	Inherits: ^TechHusk
+	Building:
+		Footprint: xx xx
+		Dimensions: 2,2
+	Tooltip:
+		Name: Ruin (Bunker)
+	TransformOnCapture:
+		IntoActor: bunk
+	InfiltrateForTransform:
+		IntoActor: bunk
+	RenderSprites:
+		Image: BUNK.destroyed
+	Explodes:
+		Weapon: BarrelExplode
+	WithIdleOverlay@Burns:
+		Offset: -511,0,0
+
 HARR.Husk:
 	Inherits: ^PlaneHusk
 	Tooltip:
