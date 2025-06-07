@@ -116,7 +116,7 @@ TDOG:
 		RequiresCondition: eating
 	Armament:
 		Weapon: TerrorDogJaw
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: DogExplode
 		EmptyWeapon: DogExplode
 		RequiresCondition: !being-warped
@@ -226,7 +226,7 @@ E2:
 	WithInfantryBody:
 		StandSequences: stand
 		DefaultAttackSequence: throw
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: UnitExplodeGrenade
 		EmptyWeapon: UnitExplodeGrenade
 		Chance: 100
@@ -623,7 +623,7 @@ E4:
 		FacingTolerance: 0
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: UnitExplodeFlameSmall
 		EmptyWeapon: UnitExplodeFlameSmall
 		Chance: 100
@@ -1629,7 +1629,7 @@ N2:
 	WithInfantryBody:
 		StandSequences: stand
 		DefaultAttackSequence: throw
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: UnitExplodeGrenadeTD
 		EmptyWeapon: UnitExplodeGrenadeTD
 		Chance: 100
@@ -1804,7 +1804,7 @@ N4:
 		PauseOnCondition: being-warped || blinded || reapersnare
 		FacingTolerance: 0
 	WithMuzzleOverlay:
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: UnitExplodeFlameSmall
 		EmptyWeapon: UnitExplodeFlameSmall
 		Chance: 100
@@ -1882,7 +1882,7 @@ N5:
 	Crushable:
 		CrushClasses: heavyinfantry
 	WithMuzzleOverlay:
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: UnitExplodeChemSmall
 		EmptyWeapon: UnitExplodeChemSmall
 		Chance: 33
@@ -2058,7 +2058,7 @@ VICE:
 		Locomotor: foot
 	Tooltip:
 	ActorLostNotification:
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: UnitExplodeVice
 		EmptyWeapon: UnitExplodeVice
 		Chance: 100
@@ -3291,7 +3291,7 @@ RMBC:
 	Armament@BATF:
 		Name: batf
 		Weapon: CyCannon
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: UnitExplodeSmall
 		EmptyWeapon: UnitExplodeSmall
 		Chance: 100
@@ -3380,7 +3380,7 @@ IVAN:
 	WithInfantryBody:
 		StandSequences: stand
 		DefaultAttackSequence: throw
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: ArtilleryExplode
 		EmptyWeapon: ArtilleryExplode
 		Chance: 100
@@ -3722,7 +3722,7 @@ SGLI:
 	RejectsOrders:
 		RequiresCondition: !gliding
 	-EjectOnDeath:
-	-Explodes:
+	-FireWarheadsOnDeath:
 	-Contrail@1:
 	-Contrail@2:
 	-ActorLostNotification:
@@ -3857,7 +3857,7 @@ BH:
 		FacingTolerance: 0
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: UnitExplodeFlameSmall
 		EmptyWeapon: UnitExplodeFlameSmall
 		Chance: 33
@@ -4215,9 +4215,7 @@ SEAL:
 			tertiary: plant
 		RequiresCondition: !onwater && !parachute &&  !being-warped && !reapersnare
 	WithInfantryBody@Swim:
-		-IdleSequences:
 		StandSequences: swimidle
-		-AttackSequences:
 		DefaultAttackSequence: swim
 		MoveSequence: swim
 		RequiresCondition: !being-warped && onwater
@@ -4450,7 +4448,7 @@ MORT.Chem:
 		Description: Infantry armed with a Chemical Mortar, delivering a corrosive payload\n  which is particularly effective against cyborgs.
 	Tooltip:
 		Name: Chemical Mortar
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: UnitExplodeChemSmall
 		EmptyWeapon: UnitExplodeChemSmall
 		Chance: 33
@@ -5182,7 +5180,7 @@ REAP:
 		MinimumHealing: 2500
 		DamageTypes: DirectRepair
 		ShowSelectionBar: true
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: UnitExplodeSmall
 		EmptyWeapon: UnitExplodeSmall
 		RequiresCondition: !being-warped

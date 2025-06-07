@@ -2797,7 +2797,7 @@ KIRO:
 		RequiresCondition: produced
 		Voice: Build
 		ValidRelationships: Neutral, Ally
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: KirovExplode
 		RequiresCondition: !airborne
 	DamageMultiplier@doorsopen:
@@ -3392,7 +3392,7 @@ HORN:
 		AmmoCondition: ammo
 	RejectsOrders:
 	-SpawnActorOnDeath:
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: VisualExplodeAirborne
 		-RequiresCondition:
 	-Selectable:
@@ -4929,8 +4929,8 @@ JACK:
 		Type: GroundPosition
 	Armament@PRIMARY:
 		Weapon: JackknifeTargeter
-		PauseOnCondition:  blinded
-	Explodes:
+		PauseOnCondition: blinded
+	FireWarheadsOnDeath:
 		Weapon: JackknifeExplosion
 		EmptyWeapon: JackknifeExplosion
 		-RequiresCondition:

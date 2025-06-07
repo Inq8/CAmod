@@ -105,7 +105,7 @@ GAP:
 		Amount: -60
 	MustBeDestroyed:
 		RequiredForShortGame: false
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: SmallBuildingExplode
 		EmptyWeapon: SmallBuildingExplode
 	HitShape:
@@ -913,7 +913,7 @@ FTUR:
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite@FlameTowerOrRadar:
 		Prerequisite: fturorradar
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: BuildingExplode
 		EmptyWeapon: BuildingExplode
 	DetectCloaked:
@@ -1453,8 +1453,10 @@ PROC:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Refinery:
+	DockHost:
+		Type: Unload
 		DockAngle: 256
-		DockOffset: 1,2
+		DockOffset: 0, 1c0, 0
 	StoresPlayerResourcesCA:
 		Capacity: 2000
 	WithResourceStoragePipsDecoration:
@@ -1564,7 +1566,7 @@ SILO:
 	-SpawnActorsOnSellCA:
 	Power:
 		Amount: -10
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: SmallBuildingExplode
 		EmptyWeapon: SmallBuildingExplode
 	-UpdatesBuildOrder:
@@ -1905,7 +1907,7 @@ NPWR:
 		Sequence: idle3
 		Palette: effect-ignore-lighting-alpha50
 		RequiresCondition: !(empdisable || being-warped || build-incomplete)
-	Explodes:
+	FireWarheadsOnDeath:
 		Type: CenterPosition
 		Weapon: CrateNuke
 		EmptyWeapon: CrateNuke
@@ -4186,12 +4188,14 @@ PROC.TD:
 		RequiresCondition: !being-warped
 		TargetTypes: StealCreditsInfiltrate
 	Refinery:
+		TickRate: 15
+	DockHost:
+		Type: Unload
 		DockAngle: 448
-		DockOffset: 0,2
+		DockOffset: -1c0, 1c0, 0
 		IsDragRequired: True
 		DragOffset: -554,512,0
 		DragLength: 12
-		TickRate: 15
 	StoresPlayerResourcesCA:
 		Capacity: 2000
 	WithResourceStoragePipsDecoration:
@@ -4287,7 +4291,7 @@ SILO.TD:
 		Amount: -10
 	Selectable:
 		DecorationBounds: 2090, 1280
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: SmallBuildingExplode
 		EmptyWeapon: SmallBuildingExplode
 	-UpdatesBuildOrder:
@@ -4853,7 +4857,7 @@ HTUR:
 	Power:
 		Amount: -100
 	ClassicFacingBodyOrientation:
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: BuildingExplode
 		EmptyWeapon: BuildingExplode
 	WithBuildingBib:
@@ -4968,7 +4972,7 @@ TTUR:
 		Prerequisite: fturorradar
 	ProvidesPrerequisite@ChemTowerOrSovietTechCenter:
 		Prerequisite: tturorstek
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: BuildingExplode
 		EmptyWeapon: BuildingExplode
 	DetectCloaked:
@@ -5169,7 +5173,7 @@ LASP:
 	LineBuildSegmentExternalCondition:
 		RequiresCondition: !disabled && !empdisable && !being-warped && !hacked
 		Condition: active-posts
-	Explodes@TEMPORAL:
+	FireWarheadsOnDeath@TEMPORAL:
 		Weapon: TemporalExplode
 		EmptyWeapon: TemporalExplode
 	-SpawnActorsOnSellCA:
@@ -6266,7 +6270,7 @@ IOK:
 	-FrozenUnderFog:
 	-FrozenUnderFogUpdatedByGpsRadar:
 	-ShakeOnDeath:
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: SmallBuildingExplode
 		EmptyWeapon: SmallBuildingExplode
 	HiddenUnderFog:

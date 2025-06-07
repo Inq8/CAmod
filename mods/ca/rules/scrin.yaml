@@ -368,7 +368,7 @@ VEHICLES.SCRIN:
 		TargetTypes: AnathemaTargetable
 	KillsSelf@Anathema:
 		RequiresCondition: anathema && !anathema-alive
-	Explodes@Anathema:
+	FireWarheadsOnDeath@Anathema:
 		Weapon: KirovExplode
 		EmptyWeapon: KirovExplode
 		RequiresCondition: anathema && !anathema-alive
@@ -816,7 +816,7 @@ BRST:
 		Speed: 92
 	RevealsShroud:
 		Range: 7c0
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: BursterExplode
 		EmptyWeapon: BursterExplode
 	AttackFrontal:
@@ -1934,7 +1934,7 @@ CORR:
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped || blinded
 		FacingTolerance: 0
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: CorrupterExplode
 		EmptyWeapon: CorrupterExplode
 	ProducibleWithLevel:
@@ -2010,11 +2010,11 @@ LCHR:
 		DamagePercentConverted: 30
 		RequiresCondition: !coalescence-upgrade
 		InvalidTargetTypes: Husk
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: LeecherExplode
 		EmptyWeapon: LeecherExplode
 		RequiresCondition: !coalescence-upgrade && !being-warped
-	Explodes@COALESCENCE:
+	FireWarheadsOnDeath@COALESCENCE:
 		Weapon: LeecherCoalesce
 		EmptyWeapon: LeecherCoalesce
 		RequiresCondition: coalescence-upgrade && !being-warped
@@ -2083,11 +2083,11 @@ LCHR.Orb:
 	KillsSelf:
 		Delay: 0
 		RequiresCondition: resurrect
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: LeecherExplode
 		EmptyWeapon: LeecherExplode
 		RequiresCondition: !resurrect
-	Explodes@COALESCENCE:
+	FireWarheadsOnDeath@COALESCENCE:
 		Weapon: LeecherCoalesce
 		EmptyWeapon: LeecherCoalesce
 		RequiresCondition: resurrect
@@ -2421,7 +2421,7 @@ RUIN:
 		MuzzlePalette: scrin
 		PauseOnCondition: !ammo || uncharged-fire
 	WithMuzzleOverlay:
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: ArtilleryExplode
 		LoadedChance: 75
 	ProducibleWithLevel:
@@ -3550,7 +3550,7 @@ DEVA:
 	Selectable:
 		Bounds: 1536, 1194, 0, 85
 		DecorationBounds: 1706, 1706, 0, 42
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: KirovExplode
 		RequiresCondition: !airborne
 	SpawnActorOnDeath:
@@ -3639,7 +3639,7 @@ PAC:
 	Selectable:
 		Bounds: 1536, 1194, 0, 85
 		DecorationBounds: 1706, 1706, 0, 42
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: KirovExplode
 		RequiresCondition: !airborne
 	SpawnActorOnDeath:
@@ -3771,7 +3771,7 @@ INVA:
 		LandingSounds: invader-dock.aud
 	RejectsOrders:
 	-SpawnActorOnDeath:
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: VisualExplodeInvader
 		-RequiresCondition:
 	-Selectable:
@@ -3893,7 +3893,7 @@ MSHP:
 	Selectable:
 		Bounds: 1792, 1792, 0, 85
 		DecorationBounds: 2048, 2218, 0, 42
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: KirovExplode
 		RequiresCondition: !airborne
 	SpawnActorOnDeath:
@@ -4290,7 +4290,7 @@ DEVA.Husk.Ground:
 	KillsSelf:
 		Delay: 1
 		-RequiresCondition:
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: KirovExplode
 	-OwnerLostAction:
 	-CaptureManager:
@@ -4345,7 +4345,7 @@ PAC.Husk.Ground:
 	KillsSelf:
 		Delay: 1
 		-RequiresCondition:
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: KirovExplode
 	-OwnerLostAction:
 	-CaptureManager:
@@ -4406,7 +4406,7 @@ MSHP.Husk.Ground:
 	KillsSelf:
 		Delay: 1
 		-RequiresCondition:
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: MothershipExplode
 	WithIdleOverlay@RING:
 		Image: mshp
@@ -4709,12 +4709,14 @@ PROC.SCRIN:
 		RequiresCondition: !being-warped
 		TargetTypes: StealCreditsInfiltrate
 	Refinery:
+		TickRate: 15
+	DockHost:
+		Type: Unload
 		DockAngle: 448
-		DockOffset: 0,2
+		DockOffset: -1c0, 1c0, 0
 		IsDragRequired: True
 		DragOffset: -554,512,0
 		DragLength: 12
-		TickRate: 15
 	StoresPlayerResourcesCA:
 		Capacity: 2000
 	WithResourceStoragePipsDecoration:
@@ -5377,7 +5379,7 @@ SILO.SCRIN:
 		Amount: -10
 	Selectable:
 		Bounds: 1024, 1024
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: SmallBuildingExplode
 		EmptyWeapon: SmallBuildingExplode
 	-UpdatesBuildOrder:
@@ -5841,8 +5843,6 @@ SCOL.Temp:
 	GrantConditionOnDamage@IONSTORM:
 		RequiresCondition: ioncon-upgrade && !(empdisable || being-warped)
 	-MapEditorData:
-	RepairableBuilding:
-		-RepairCondition:
 	-ChangesHealth@DefensePolicy2:
 	-UpdatesKillCount@BuildingsOrHarvesters:
 
@@ -5853,7 +5853,7 @@ VSPK:
 		Action: Kill
 	RenderSprites:
 		PlayerPalette: playerscrin
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: SmallBuildingExplode
 		EmptyWeapon: SmallBuildingExplode
 	Selectable:
@@ -6092,7 +6092,7 @@ GRCL:
 	WithColoredSelectionBox@PLAYERBOX:
 		ColorSource: Player
 		ValidRelationships: Ally, Enemy
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: LeecherExplode
 		EmptyWeapon: LeecherExplode
 	ConvertsDamageToHealth:
@@ -6137,7 +6137,7 @@ TBCL:
 		-Attributes:
 	PeriodicExplosion:
 		Weapon: TiberiumCoalescence
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: CorrupterExplode
 		EmptyWeapon: CorrupterExplode
 	-GrantConditionOnHealingReceived:

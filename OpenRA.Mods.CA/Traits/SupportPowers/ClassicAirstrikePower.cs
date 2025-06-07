@@ -30,7 +30,6 @@ namespace OpenRA.Mods.CA.Traits
 
 		public ClassicAirstrikePowerSquadMember(MiniYamlNode yamlNode)
 		{
-			UnitType = yamlNode.Key;
 			FieldLoader.Load(this, yamlNode.Value);
 		}
 	}

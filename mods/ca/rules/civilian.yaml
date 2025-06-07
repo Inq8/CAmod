@@ -86,7 +86,7 @@ FCOM:
 	SpawnActorOnDeath:
 		Actor: FCOM.Husk
 		OwnerType: InternalName
-	-Explodes:
+	-FireWarheadsOnDeath:
 	AppearsOnMapPreview:
 
 HOSP:
@@ -122,7 +122,7 @@ HOSP:
 	SpawnActorOnDeath:
 		Actor: HOSP.Husk
 		OwnerType: InternalName
-	-Explodes:
+	-FireWarheadsOnDeath:
 	AppearsOnMapPreview:
 	ProximityExternalCondition@HOSPITAL:
 		Condition: hospitalheal
@@ -201,7 +201,7 @@ MACS:
 	SpawnActorOnDeath:
 		Actor: MACS.Husk
 		OwnerType: InternalName
-	-Explodes:
+	-FireWarheadsOnDeath:
 	AppearsOnMapPreview:
 	ProximityExternalCondition@MACS:
 		Condition: macsrepair
@@ -425,8 +425,8 @@ V19.Husk:
 	-Targetable:
 	-Targetable@C4Plantable:
 	-Targetable@TNTPlantable:
-	-Explodes:
-	-Explodes@CIVPANIC:
+	-FireWarheadsOnDeath:
+	-FireWarheadsOnDeath@CIVPANIC:
 	Interactable:
 
 BARL:
@@ -490,7 +490,7 @@ MISS:
 	SpawnActorOnDeath:
 		Actor: MISS.Husk
 		OwnerType: InternalName
-	-Explodes:
+	-FireWarheadsOnDeath:
 
 BIO:
 	Inherits: ^TechBuilding
@@ -525,7 +525,7 @@ BIO:
 	SpawnActorOnDeath:
 		Actor: BIO.Husk
 		OwnerType: InternalName
-	-Explodes:
+	-FireWarheadsOnDeath:
 	AppearsOnMapPreview:
 	ProvidesPrerequisite@mortar:
 		Prerequisite: stolentech.hand
@@ -565,12 +565,12 @@ OILB:
 	TooltipDescription@other:
 		Description: Capture to receive additional funds.
 		ValidRelationships: Neutral, Enemy
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: BarrelExplode
 	SpawnActorOnDeath:
 		Actor: OILB.Husk
 		OwnerType: InternalName
-	-Explodes:
+	-FireWarheadsOnDeath:
 	UpdatesDerrickCount:
 	AppearsOnMapPreview:
 	GrantConditionOnCombatantOwner:
@@ -633,13 +633,13 @@ OILR:
 	TooltipDescription@other:
 		Description: Capture to receive a 10% production discount.
 		ValidRelationships: Neutral, Enemy
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: BarrelExplode
 	ProvidesPrerequisite@buildingname:
 	SpawnActorOnDeath:
 		Actor: OILR.Husk
 		OwnerType: InternalName
-	-Explodes:
+	-FireWarheadsOnDeath:
 	AppearsOnMapPreview:
 	GrantConditionOnDamageState:
 		Condition: damaged

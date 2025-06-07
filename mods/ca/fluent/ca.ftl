@@ -2,7 +2,7 @@
 mod-title = Combined Arms
 mod-windowtitle = OpenRA Combined Arms
 
-## Player
+## Player options
 options-tech-level =
     .infantry-only = Infantry Only
     .low = Low
@@ -47,7 +47,7 @@ options-queuetype =
     .multiqueuefull = Multi-Queue
     .multiqueuescaled = Competitive
 
-## World
+## World options
 options-starting-units =
     .mcv-only = MCV Only
     .light-support = Light Support
@@ -62,6 +62,7 @@ options-difficulty =
     .normal = Normal
     .hard = Hard
 
+## Player ranks
 label-player-level = Current rank: { $level }
 label-player-level-current-xp = Current XP: { $currentXp }
 label-player-level-required-xp = Next rank XP: { $nextLevelXp }
