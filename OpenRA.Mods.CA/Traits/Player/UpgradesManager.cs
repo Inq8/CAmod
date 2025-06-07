@@ -27,17 +27,17 @@ namespace OpenRA.Mods.CA.Traits
 	{
 		readonly Actor self;
 		Dictionary<string, UpgradeInfo> upgrades;
-		Dictionary<string, int> unlockedUpgradeTypes;
+		Dictionary<string, List<int>> unlockedUpgradeTypes;
 
 		public int Hash { get; private set; }
 
-		public Dictionary<string, int> UnlockedUpgradeTypes => unlockedUpgradeTypes;
+		public Dictionary<string, List<int>> UnlockedUpgradeTypes => unlockedUpgradeTypes;
 
 		public UpgradesManager(Actor self, UpgradesManagerInfo info)
 		{
 			this.self = self;
 			upgrades = new Dictionary<string, UpgradeInfo>();
-			unlockedUpgradeTypes = new Dictionary<string, int>();
+			unlockedUpgradeTypes = new Dictionary<string, List<int>>();
 			Hash = 0;
 		}
 
@@ -45,14 +45,42 @@ namespace OpenRA.Mods.CA.Traits
 
 		public UpgradeInfo UpgradeableActorCreated(Upgradeable upgradeable, string upgradeType, string sourceActorType, string targetActorType, int cost, int buildDuration, int buildDurationModifier)
 		{
-			if (upgrades.ContainsKey(upgradeType))
+			if (!upgrades.ContainsKey(upgradeType))
 			{
-				if (IsUnlocked(upgradeType))
-					upgradeable.Unlock();
-
-				return upgrades[upgradeType];
+				var upgradeInfo = GetUpgradeInfo(sourceActorType, targetActorType, cost, buildDuration, buildDurationModifier);
+				upgrades.Add(upgradeType, upgradeInfo);
 			}
 
+			if (IsUnlocked(upgradeType))
+				upgradeable.Unlock();
+
+			return upgrades[upgradeType];
+		}
+
+		public void UpgradeProviderCreated(string type)
+		{
+			if (IsUnlocked(type))
+				unlockedUpgradeTypes[type].Add(self.World.WorldTick);
+			else
+			{
+				unlockedUpgradeTypes.Add(type, new List<int> { self.World.WorldTick });
+				var upgradeables = self.World.ActorsWithTrait<Upgradeable>().Where(x => x.Trait.Info.Type == type && x.Actor.Owner == self.Owner).ToList();
+
+				foreach (var p in upgradeables)
+					p.Trait.Unlock();
+			}
+
+			UpgradeCompleted?.Invoke(type);
+			Update();
+		}
+
+		public bool IsUnlocked(string upgradeType)
+		{
+			return unlockedUpgradeTypes.ContainsKey(upgradeType);
+		}
+
+		UpgradeInfo GetUpgradeInfo(string sourceActorType, string targetActorType, int cost, int buildDuration, int buildDurationModifier)
+		{
 			if (cost == -1)
 				cost = CalculateCost(sourceActorType, targetActorType);
 
@@ -73,30 +101,7 @@ namespace OpenRA.Mods.CA.Traits
 					upgradeInfo.ActorName = tooltip.Name;
 			}
 
-			upgrades.Add(upgradeType, upgradeInfo);
 			return upgradeInfo;
-		}
-
-		public void UpgradeProviderCreated(string type)
-		{
-			if (IsUnlocked(type))
-				unlockedUpgradeTypes[type]++;
-			else
-			{
-				unlockedUpgradeTypes.Add(type, 1);
-				var upgradeables = self.World.ActorsWithTrait<Upgradeable>().Where(x => x.Trait.Info.Type == type && x.Actor.Owner == self.Owner).ToList();
-
-				foreach (var p in upgradeables)
-					p.Trait.Unlock();
-			}
-
-			UpgradeCompleted?.Invoke(type);
-			Update();
-		}
-
-		public bool IsUnlocked(string upgradeType)
-		{
-			return unlockedUpgradeTypes.ContainsKey(upgradeType);
 		}
 
 		int CalculateCost(string sourceActorType, string targetActorType)

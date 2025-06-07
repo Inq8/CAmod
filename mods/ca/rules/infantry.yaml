@@ -451,7 +451,6 @@ U3:
 		UndeploySounds: igidepa.aud, igidepb.aud
 		PauseOnCondition: being-warped
 		SmartDeploy: True
-		RequiresCondition: !parachute
 		Facing: 332
 	GrantCondition:
 		Condition: editorhack
@@ -1914,7 +1913,7 @@ N5:
 		ShowSelectionBar: true
 		ShowSelectionBarWhenFull: false
 		StartsFullyCharged: true
-		PauseOnCondition: being-warped || parachute
+		PauseOnCondition: being-warped
 		DischargingColor: 00ff00
 		ChargingColor: 008800
 		Instant: true
@@ -3046,6 +3045,7 @@ DESO:
 		Voice: Attack
 		PauseOnCondition: being-warped || reapersnare
 		SmartDeploy: True
+	UndeployOnStop:
 	Crushable:
 		CrushClasses: heavyinfantry
 	TakeCover:

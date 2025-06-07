@@ -15,6 +15,12 @@ namespace OpenRA.Mods.CA.Traits
 	[Desc("Added to build order when the actor is created.")]
 	public class UpdatesBuildOrderInfo : TraitInfo
 	{
+		[Desc("Won't add more than this number to the build order. Zero for unlimited.")]
+		public readonly int Limit = 0;
+
+		[Desc("If true, ignores the maximum.")]
+		public readonly bool IgnoreMaxItems = false;
+
 		public override object Create(ActorInitializer init) { return new UpdatesBuildOrder(init, this); }
 	}
 
@@ -31,7 +37,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		void INotifyCreated.Created(Actor self)
 		{
-			productionTracker.BuildingCreated(self.Info.Name);
+			productionTracker.BuildOrderItemCreated(self.Info.Name, Info.Limit, Info.IgnoreMaxItems);
 		}
 	}
 }

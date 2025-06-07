@@ -4622,6 +4622,8 @@ REAC:
 		Amount: 100
 	ScalePowerWithHealth:
 	ProvidesPrerequisite@buildingname:
+	UpdatesBuildOrder:
+		Limit: 2
 
 REA2:
 	Inherits: ^ScrinBuilding
@@ -4660,6 +4662,8 @@ REA2:
 		Amount: 200
 	ProvidesPrerequisite@buildingname:
 	ScalePowerWithHealth:
+	UpdatesBuildOrder:
+		Limit: 1
 
 PROC.SCRIN:
 	Inherits: ^ScrinBuilding
@@ -4720,7 +4724,7 @@ PROC.SCRIN:
 		RequiresSelection: true
 		PipCount: 17
 	Selectable:
-		Bounds: 3072, 2389, 0, 512
+		Bounds: 3072, 2512, 0, 256
 		DecorationBounds: 3114, 3072
 	InfiltrateForCash:
 		Types: StealCreditsInfiltrate
@@ -5371,6 +5375,7 @@ SILO.SCRIN:
 	Explodes:
 		Weapon: SmallBuildingExplode
 		EmptyWeapon: SmallBuildingExplode
+	-UpdatesBuildOrder:
 
 MANI:
 	Inherits: ^ScrinBuilding
