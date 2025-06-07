@@ -25,9 +25,6 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("The `TargetTypes` from `Targetable` that can be targeted.")]
 		public readonly BitSet<TargetableType> Types = default;
 
-		[Desc("Cursor to display when unable to target.")]
-		public readonly string BlockedCursor = "move-blocked";
-
 		[Desc("Should visibility (Shroud, Fog, Cloak, etc) be considered when searching for targets?")]
 		public readonly bool RequireVisibleTarget = true;
 

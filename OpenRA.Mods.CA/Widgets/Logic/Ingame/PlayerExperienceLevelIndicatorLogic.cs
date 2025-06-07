@@ -11,19 +11,20 @@
 using OpenRA.Mods.CA.Traits;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Mods.Common.Widgets;
+using OpenRA.Primitives;
 using OpenRA.Widgets;
 
 namespace OpenRA.Mods.CA.Widgets.Logic
 {
 	class PlayerExperienceLevelIndicatorLogic : ChromeLogic
 	{
-		[TranslationReference("level")]
+		[FluentReference("level")]
 		const string PlayerLevel = "label-player-level";
 
-		[TranslationReference("currentXp")]
+		[FluentReference("currentXp")]
 		const string PlayerLevelCurrentXp = "label-player-level-current-xp";
 
-		[TranslationReference("nextLevelXp")]
+		[FluentReference("nextLevelXp")]
 		const string PlayerLevelRequiredXp = "label-player-level-required-xp";
 
 		const string DisabledImage = "disabled";
@@ -52,7 +53,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			{
 				rankImage.GetImageName = () => DisabledImage;
 				rankImage.IsVisible = () => true;
-				rankImage.GetTooltipText = () => TranslationProvider.GetString(PlayerLevel, Translation.Arguments("level", "N/A"));
+				rankImage.GetTooltipText = () => FluentProvider.GetMessage(PlayerLevel, "level", "N/A");
 
 				rankImageGlow.GetImageName = () => DisabledImage;
 				rankImageGlow.IsVisible = () => false;
@@ -80,20 +81,20 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			var tooltipTextCached = new CachedTransform<int?, string>((CurrentXp) =>
 			{
-				var tooltip = TranslationProvider.GetString(
+				var tooltip = FluentProvider.GetMessage(
 					PlayerLevel,
-					Translation.Arguments("level", playerExperienceLevels.CurrentLevel));
+					"level", playerExperienceLevels.CurrentLevel);
 
 				if (playerExperienceLevels.XpRequiredForNextLevel != null) {
 					tooltip = tooltip
 					+ "\n\n"
-					+ TranslationProvider.GetString(
+					+ FluentProvider.GetMessage(
 					PlayerLevelCurrentXp,
-					Translation.Arguments("currentXp", CurrentXp))
+					"currentXp", CurrentXp)
 					+ "\n"
-					+ TranslationProvider.GetString(
+					+ FluentProvider.GetMessage(
 					PlayerLevelRequiredXp,
-					Translation.Arguments("nextLevelXp", playerExperienceLevels.XpRequiredForNextLevel));
+					"nextLevelXp", playerExperienceLevels.XpRequiredForNextLevel);
 				}
 
 				return tooltip;

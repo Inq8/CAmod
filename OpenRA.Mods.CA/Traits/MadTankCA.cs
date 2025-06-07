@@ -22,7 +22,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	class MadTankCAInfo : PausableConditionalTraitInfo, IRulesetLoaded, Requires<ExplodesInfo>, Requires<WithFacingSpriteBodyInfo>
+	class MadTankCAInfo : PausableConditionalTraitInfo, IRulesetLoaded, Requires<FireWarheadsOnDeathInfo>, Requires<WithFacingSpriteBodyInfo>
 	{
 		[SequenceReference]
 		public readonly string ThumpSequence = null;
@@ -315,7 +315,7 @@ namespace OpenRA.Mods.CA.Traits
 					new LocationInit(self.Location),
 					new OwnerInit(self.Owner)
 				});
-				driver.TraitOrDefault<Mobile>()?.Nudge(driver);
+				driver.QueueActivity(false, new Nudge(driver));
 			}
 		}
 	}

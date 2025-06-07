@@ -16,7 +16,7 @@ using OpenRA.Traits;
 namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("This actor explodes when killed and the kill XP goes to the Spawner.")]
-	public class SpawnedExplodesInfo : ExplodesInfo
+	public class SpawnedExplodesInfo : FireWarheadsOnDeathInfo
 	{
 		public override object Create(ActorInitializer init) { return new SpawnedExplodes(this, init.Self); }
 	}

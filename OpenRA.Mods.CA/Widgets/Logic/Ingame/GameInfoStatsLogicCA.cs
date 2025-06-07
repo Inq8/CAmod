@@ -24,40 +24,40 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 {
 	class GameInfoStatsLogicCA : ChromeLogic
 	{
-		[TranslationReference]
+		[FluentReference]
 		const string Unmute = "label-unmute-player";
 
-		[TranslationReference]
+		[FluentReference]
 		const string Mute = "label-mute-player";
 
-		[TranslationReference]
+		[FluentReference]
 		const string Accomplished = "label-mission-accomplished";
 
-		[TranslationReference]
+		[FluentReference]
 		const string Failed = "label-mission-failed";
 
-		[TranslationReference]
+		[FluentReference]
 		const string InProgress = "label-mission-in-progress";
 
-		[TranslationReference("team")]
+		[FluentReference("team")]
 		const string TeamNumber = "label-team-name";
 
-		[TranslationReference]
+		[FluentReference]
 		const string NoTeam = "label-no-team";
 
-		[TranslationReference]
+		[FluentReference]
 		const string Spectators = "label-spectators";
 
-		[TranslationReference]
+		[FluentReference]
 		const string Gone = "label-client-state-disconnected";
 
-		[TranslationReference("player")]
+		[FluentReference("player")]
 		const string KickTitle = "dialog-kick.title";
 
-		[TranslationReference]
+		[FluentReference]
 		const string KickPrompt = "dialog-kick.prompt";
 
-		[TranslationReference]
+		[FluentReference]
 		const string KickAccept = "dialog-kick.confirm";
 
 		[ObjectCreator.UseCtor]
@@ -81,9 +81,9 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 					checkbox.GetText = () => mo.Objectives[0].Description;
 				}
 
-				var failed = TranslationProvider.GetString(Failed);
-				var inProgress = TranslationProvider.GetString(InProgress);
-				var accomplished = TranslationProvider.GetString(Accomplished);
+				var failed = FluentProvider.GetMessage(Failed);
+				var inProgress = FluentProvider.GetMessage(InProgress);
+				var accomplished = FluentProvider.GetMessage(Accomplished);
 				statusLabel.GetText = () => player.WinState == WinState.Won ? accomplished :
 					player.WinState == WinState.Lost ? failed : inProgress;
 				statusLabel.GetColor = () => player.WinState == WinState.Won ? Color.LimeGreen :
@@ -106,8 +106,8 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			var teamTemplate = playerPanel.Get<ScrollItemWidget>("TEAM_TEMPLATE");
 			var playerTemplate = playerPanel.Get("PLAYER_TEMPLATE");
 			var spectatorTemplate = playerPanel.Get("SPECTATOR_TEMPLATE");
-			var unmuteTooltip = TranslationProvider.GetString(Unmute);
-			var muteTooltip = TranslationProvider.GetString(Mute);
+			var unmuteTooltip = FluentProvider.GetMessage(Unmute);
+			var muteTooltip = FluentProvider.GetMessage(Mute);
 			playerPanel.RemoveChildren();
 
 			var teams = world.Players.Where(p => !p.NonCombatant && p.Playable)
@@ -124,8 +124,8 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				{
 					var teamHeader = ScrollItemWidget.Setup(teamTemplate, () => false, () => { });
 					var team = t.Key > 0
-						? TranslationProvider.GetString(TeamNumber, Translation.Arguments("team", t.Key))
-						: TranslationProvider.GetString(NoTeam);
+						? FluentProvider.GetMessage(TeamNumber, Translation.Arguments("team", t.Key))
+						: FluentProvider.GetMessage(NoTeam);
 					teamHeader.Get<LabelWidget>("TEAM").GetText = () => team;
 					var teamRating = teamHeader.Get<LabelWidget>("TEAM_SCORE");
 					var scoreCache = new CachedTransform<int, string>(s => s.ToString());
@@ -192,7 +192,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			if (spectators.Count > 0)
 			{
 				var spectatorHeader = ScrollItemWidget.Setup(teamTemplate, () => false, () => { });
-				var spectatorTeam = TranslationProvider.GetString(Spectators);
+				var spectatorTeam = FluentProvider.GetMessage(Spectators);
 				spectatorHeader.Get<LabelWidget>("TEAM").GetText = () => spectatorTeam;
 
 				playerPanel.AddChild(spectatorHeader);
@@ -211,7 +211,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 					nameLabel.GetText = () =>
 					{
-						var suffix = client.State == Session.ClientState.Disconnected ? $" ({TranslationProvider.GetString(Gone)})" : "";
+						var suffix = client.State == Session.ClientState.Disconnected ? $" ({FluentProvider.GetMessage(Gone)})" : "";
 						return name.Update((client.Name, suffix));
 					};
 

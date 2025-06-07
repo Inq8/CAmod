@@ -29,34 +29,34 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 		enum PlayingVideo { None, Info, Briefing, GameStart }
 		enum PanelType { MissionInfo, Options }
 
-		[TranslationReference]
+		[FluentReference]
 		const string NoVideoTitle = "dialog-no-video.title";
 
-		[TranslationReference]
+		[FluentReference]
 		const string NoVideoPrompt = "dialog-no-video.prompt";
 
-		[TranslationReference]
+		[FluentReference]
 		const string NoVideoCancel = "dialog-no-video.cancel";
 
-		[TranslationReference]
+		[FluentReference]
 		const string CantPlayTitle = "dialog-cant-play-video.title";
 
-		[TranslationReference]
+		[FluentReference]
 		const string CantPlayPrompt = "dialog-cant-play-video.prompt";
 
-		[TranslationReference]
+		[FluentReference]
 		const string CantPlayCancel = "dialog-cant-play-video.cancel";
 
 		// Added to prevent unused language string warnings
-		[TranslationReference]
+		[FluentReference]
 		const string DifficultyLabel = "dropdown-difficulty.label";
-		[TranslationReference]
+		[FluentReference]
 		const string DifficultyDescription = "dropdown-difficulty.description";
-		[TranslationReference]
+		[FluentReference]
 		const string DifficultyEasy = "options-difficulty.easy";
-		[TranslationReference]
+		[FluentReference]
 		const string DifficultyNormal = "options-difficulty.normal";
-		[TranslationReference]
+		[FluentReference]
 		const string DifficultyHard = "options-difficulty.hard";
 
 		readonly ModData modData;

@@ -40,9 +40,6 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Sound to instantly play at the targeted area.")]
 		public readonly string OnFireSound = null;
 
-		[Desc("Cursor to display when unable to Cash Hack.")]
-		public readonly string BlockedCursor = "move-blocked";
-
 		[NotificationReference("Speech")]
 		[Desc("Sound the victim will hear when they get robbed.")]
 		public readonly string Notification = null;

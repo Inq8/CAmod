@@ -92,10 +92,6 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("If true, targets must not be under shroud/fog.")]
 		public readonly bool TargetMustBeVisible = true;
 
-		[CursorReference]
-		[Desc("Cursor to display when there are no units to apply the condition in range.")]
-		public readonly string BlockedCursor = "move-blocked";
-
 		[Desc("Ticks between launches.")]
 		public readonly int LaunchInterval = 10;
 
