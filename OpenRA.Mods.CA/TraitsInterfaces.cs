@@ -60,6 +60,18 @@ namespace OpenRA.Mods.CA.Traits
 	}
 
 	[RequireExplicitImplementation]
+	public interface INotifyEnteredGarrison { void OnEnteredGarrison(Actor self, Actor garrison); }
+
+	[RequireExplicitImplementation]
+	public interface INotifyExitedGarrison { void OnExitedGarrison(Actor self, Actor garrison); }
+
+	[RequireExplicitImplementation]
+	public interface INotifyGarrisonerEntered { void OnGarrisonerEntered(Actor self, Actor garrisoner); }
+
+	[RequireExplicitImplementation]
+	public interface INotifyGarrisonerExited { void OnGarrisonerExited(Actor self, Actor garrisoner); }
+
+	[RequireExplicitImplementation]
 	public interface INotifyChronosphere { void Teleporting(WPos from, WPos to); }
 
 	public interface ILoadsOverlayPlayerPalettes { void LoadOverlayPlayerPalettes(WorldRenderer wr, string playerName, Color playerColor, bool replaceExisting); }

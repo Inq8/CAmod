@@ -576,7 +576,6 @@ OILB:
 	SpawnActorOnDeath:
 		Actor: OILB.Husk
 		OwnerType: InternalName
-	-Explodes:
 	UpdatesDerrickCount:
 	AppearsOnMapPreview:
 	GrantConditionOnCombatantOwner:
@@ -646,7 +645,6 @@ OILR:
 	SpawnActorOnDeath:
 		Actor: OILR.Husk
 		OwnerType: InternalName
-	-Explodes:
 	AppearsOnMapPreview:
 	GrantConditionOnDamageState:
 		Condition: damaged
@@ -672,6 +670,188 @@ OILR:
 		Delay: 1
 		Condition: has-been-captured
 		RequiresCondition: !is-neutral
+
+BUNK:
+	Inherits: ^TechBuilding
+	Inherits@2: ^Cloakable
+	Inherits@shape: ^2x2Shape
+	Inherits@AUTOTARGET: ^AutoTargetGround
+	Inherits@COMMANDOSKULL: ^CommandoSkull
+	Inherits@TRANSPORT: ^Transport
+	Selectable:
+		Priority: 0
+		Bounds: 2048, 2048
+	OwnerLostAction:
+		Action: ChangeOwner
+	Building:
+		Footprint: xx xx
+		Dimensions: 2,2
+	Health:
+		HP: 150000
+	Armor:
+		Type: Concrete
+	RevealsShroud:
+		Range: 4c0
+	InstantlyRepairable:
+	Tooltip:
+		Name: Bunker
+	TooltipDescription@ally:
+		Description: Provides defensive position.
+		ValidRelationships: Ally
+	TooltipDescription@other:
+		Description: Capture to receive defensive position.
+		ValidRelationships: Neutral, Enemy
+	SpawnActorOnDeath:
+		Actor: bunk.Husk
+		OwnerType: InternalName
+	AppearsOnMapPreview:
+	WithSpriteBody:
+		RequiresCondition: !loaded
+	WithSpriteBody@GARRISONED:
+		Name: garrisoned
+		Sequence: garrisoned
+		RequiresCondition: loaded || loaded-air || loaded-repair || loaded-cmdo || loaded-seal || loaded-medic || loaded-spy
+	ChangeOwnerOnGarrisoner:
+		EnterSounds: ugarris.aud
+		ExitSounds: ugarris.aud
+	Garrisonable:
+		Types: Garrisoner
+		MaxWeight: 5
+		AfterLoadDelay: 0
+		BeforeUnloadDelay: 0
+		AfterUnloadDelay: 0
+		EjectOnDeath: true
+		OwnerChangedAffectsGarrisoners: false
+		LoadedCondition: cargo
+		GarrisonerConditions:
+			e1: loaded
+			e2: loaded
+			e3: loaded-air
+			e4: loaded
+			e6: loaded-repair
+			e7: loaded-cmdo
+			e8: loaded
+			u3: loaded-air
+			u3r2: loaded-air
+			n1: loaded
+			n2: loaded
+			n3: loaded-air
+			n4: loaded
+			n5: loaded
+			n6: loaded-repair
+			bh: loaded
+			ivan: loaded
+			shad: loaded
+			medi: loaded-medic
+			mech: loaded-repair
+			seal: loaded-seal
+			rmbo: loaded-cmdo
+			bori: loaded-cmdo
+			yuri: loaded-cmdo
+			acol: loaded
+			tplr: loaded
+			cscr: loaded
+			enfo: loaded
+			hopl: loaded
+			tigr: loaded
+			cryt: loaded
+			ztrp: loaded
+			zrai: loaded
+			zdef: loaded
+			mort.cryo: loaded
+			mort.sonic: loaded
+			mort.chem: loaded
+			cmsr: loaded
+			spy: loaded-spy
+			snip: loaded
+			assa: loaded
+			shok: loaded
+			sab: loaded-spy
+			thf: loaded-spy
+			n1c: loaded
+			n3c: loaded-air
+			tecn: loaded
+			enli: loaded
+			rmbc: loaded
+			s1: loaded
+			s2: loaded
+			s3: loaded
+			s4: loaded
+			s6: loaded-repair
+			evis: loaded
+			impl: loaded
+			stlk: loaded
+			mast: loaded-cmdo
+		PauseOnCondition: being-warped
+	WithGarrisonPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
+	AttackOpenTopped:
+		Voice: Attack
+		Armaments: batf, batf-bh, batf-cryt
+		PortOffsets: 825,0,256, 348,-482,256, -348,-482,256, -448,482,256, 448,482,256
+		PauseOnCondition: being-warped || empdisable || blinded
+		RequiresCondition: loaded || loaded-cmdo || loaded-seal || loaded-air
+	Targetable@MindControlResistant:
+		TargetTypes: MindControlResistant
+		RequiresCondition: cargo
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+		RequiresCondition: loaded-cmdo
+	ProvidesPrerequisite@buildingname:
+	SpawnActorOnDeath:
+		Actor: BUNK.Husk
+		OwnerType: InternalName
+	ChangesHealth@REPAIR:
+		PercentageStep: 1
+		Delay: 25
+		StartIfBelow: 100
+		DamageCooldown: 50
+		RequiresCondition: loaded-repair
+	WithDecoration@COMMANDOSKULL:
+		RequiresCondition: loaded-cmdo
+	WithDecoration@SEALSKULL:
+		RequiresCondition: loaded-seal && !loaded-cmdo
+		Image: pips
+		Sequence: pip-seal
+		Palette: effect
+		Position: TopLeft
+		ValidRelationships: Ally, Enemy, Neutral
+	WithIdleOverlay@MEDIC:
+		Sequence: medic
+		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: loaded-medic
+		Offset: 0,0,250
+	ProximityExternalCondition@MEDIC:
+		RequiresCondition: loaded-medic
+		Condition: hospitalheal
+		Range: 4c512
+	WithRangeCircle@MEDIC:
+		Type: IFVHeal
+		Color: 00FF0080
+		Range: 4c512
+		RequiresCondition: loaded-medic
+	AmbientSoundCA@BlackHand:
+		SoundFiles: flamer-loop1.aud
+		InitialSound: flamer-start1.aud
+		FinalSound: flamer-end1.aud
+		RequiresCondition: attacking-bh
+		InitialSoundLength: 20
+	GrantConditionOnAttackCA@BlackHand:
+		ArmamentNames: batf-bh
+		Condition: attacking-bh
+		RevokeDelay: 3
+	AmbientSoundCA@CryoTrooper:
+		SoundFiles: cryobeam.aud
+		InitialSound: cryobeamstart.aud
+		FinalSound: cryobeamend.aud
+		RequiresCondition: attacking-cryt
+		InitialSoundLength: 10
+	GrantConditionOnAttackCA@CryoTrooper:
+		ArmamentNames: batf-cryt
+		Condition: attacking-cryt
+		RevokeDelay: 6
 
 V20:
 	Inherits: ^DesertCivBuilding

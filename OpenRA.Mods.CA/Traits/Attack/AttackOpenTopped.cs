@@ -28,6 +28,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly WVec[] PortOffsets = null;
 
 		public override object Create(ActorInitializer init) { return new AttackOpenTopped(init.Self, this); }
+
 		public override void RulesetLoaded(Ruleset rules, ActorInfo ai)
 		{
 			if (PortOffsets.Length == 0)
@@ -37,9 +38,9 @@ namespace OpenRA.Mods.CA.Traits
 		}
 	}
 
-	public class AttackOpenTopped : AttackFollow, IRender, INotifyPassengerEntered, INotifyPassengerExited
+	public class AttackOpenTopped : AttackFollow, INotifyGarrisonerEntered, INotifyGarrisonerExited, IRender, INotifyPassengerEntered, INotifyPassengerExited
 	{
-		public readonly new AttackOpenToppedInfo Info;
+		public new readonly AttackOpenToppedInfo Info;
 		readonly Lazy<BodyOrientation> coords;
 		readonly List<Actor> actors;
 		readonly List<Armament> armaments;
@@ -84,6 +85,16 @@ namespace OpenRA.Mods.CA.Traits
 			paxPos.Remove(exiter);
 			paxRender.Remove(exiter);
 			armaments.RemoveAll(a => a.Actor == exiter);
+		}
+
+		void INotifyGarrisonerEntered.OnGarrisonerEntered(Actor self, Actor garrisoner)
+		{
+			OnActorEntered(garrisoner);
+		}
+
+		void INotifyGarrisonerExited.OnGarrisonerExited(Actor self, Actor garrisoner)
+		{
+			OnActorExited(garrisoner);
 		}
 
 		void INotifyPassengerEntered.OnPassengerEntered(Actor self, Actor passenger)
@@ -132,7 +143,6 @@ namespace OpenRA.Mods.CA.Traits
 				var muzzleFacing = targetYaw;
 				paxFacing[a.Actor].Facing = muzzleFacing;
 				paxPos[a.Actor].SetCenterPosition(a.Actor, pos + PortOffset(self, port));
-
 				var barrel = a.CheckFire(a.Actor, facing, target);
 				if (barrel == null)
 					continue;

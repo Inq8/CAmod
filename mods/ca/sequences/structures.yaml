@@ -315,6 +315,72 @@ orep.destroyed:
 			BARREN: bib2.bar
 		Length: *
 
+bunk:
+	Inherits: ^StructureOverlays
+	Defaults:
+		Filename: bunk.tem
+		TilesetFilenames:
+			SNOW: bunk.sno
+			WINTER: bunk.sno
+		Offset: 0,-6
+	idle:
+		Length: 10
+		Tick: 100
+	damaged-idle:
+		Start: 10
+		Length: 10
+		Tick: 100
+	garrisoned:
+		Start: 20
+		Length: 10
+		Tick: 100
+	damaged-garrisoned:
+		Start: 30
+		Length: 10
+		Tick: 100
+	dead:
+		Start: 40
+		Tick: 800
+	muzzle:
+		Filename: minigun16.shp
+		Length: 6
+		Facings: 16
+	medic:
+		Filename: mouse.shp
+		Start: 194
+		Length: 1
+	bib:
+		Filename: bib3.tem
+		TilesetFilenames:
+			SNOW: bib3.sno
+			DESERT: bib3.des
+			JUNGLE: bib3.jun
+			WINTER: bib3.win
+			BARREN: bib3.bar
+		Length: *
+		Offset: 0,0
+
+bunk.destroyed:
+	Defaults:
+		Filename: bunk.tem
+		TilesetFilenames:
+			SNOW: bunk.sno
+			WINTER: bunk.sno
+		Offset: 0,-6
+	idle:
+		Filename: bunk.tem
+		Start: 40
+	bib:
+		Filename: bib3.tem
+		TilesetFilenames:
+			SNOW: bib3.sno
+			DESERT: bib3.des
+			JUNGLE: bib3.jun
+			WINTER: bib3.win
+			BARREN: bib3.bar
+		Length: *
+		Offset: 0,0
+
 fact:
 	Inherits: ^StructureOverlays
 	idle:
