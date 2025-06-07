@@ -79,5 +79,10 @@ namespace OpenRA.Mods.CA
 			if (Game.Settings.Debug.BotDebug)
 				TextNotificationsManager.Debug(s, args);
 		}
+
+		public static Actor ClosestTo(this IEnumerable<Actor> actors, WPos pos)
+		{
+			return actors.MinByOrDefault(a => (a.CenterPosition - pos).LengthSquared);
+		}
 	}
 }
