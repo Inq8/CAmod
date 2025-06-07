@@ -7,200 +7,60 @@ Metadata:
 
 PackageFormats: Mix
 
-Packages:
-	~^SupportDir|Content/ca
-	~^SupportDir|Content/ca/expand
-	~^SupportDir|Content/ca/ra
-	~^SupportDir|Content/ca/cnc
-	~^SupportDir|Content/ca/ts
-	~^SupportDir|Content/ca/firestorm
-	~^SupportDir|Content/ca/ra2
-	~^SupportDir|Content/ca/movies
-	~^SupportDir|Content/ca/music
-	^EngineDir
-	^EngineDir|mods/common: common
-	$ca: ca
-	~main.mix
-	~conquer.mix
-	~lores.mix: lores
-	~hires.mix
-	~local.mix
-	~sounds.mix
-	~speech.mix
-	~allies.mix
-	~russian.mix
-	~temperat.mix
-	~snow.mix
-	~interior.mix
-	~./cnc/scores.mix
-	~./ra/scores.mix
-	~./ts/scores.mix
-	~./ts/scores01.mix
-	~./ra2/theme.mix
-	~./ra2/thememd.mix
-	~expand2.mix
-	~hires1.mix
-	~desert.mix
-	ca|bits
-	ca|bits/desert
-	ca|bits/jungle
-	ca|bits/winter
-	ca|bits/barren
-	ca|bits/temp
-	ca|bits/int
-	ca|bits/snow
-	ca|bits/audio
-	ca|bits/music
-	ca|uibits
-	ca|bits/scrin
-	ca|bits/scrin/audio
-	ca|bits/scrin/terrain
-	ca|scripts
+FileSystem: DefaultFileSystem
+	Packages:
+		~^SupportDir|Content/ca
+		~^SupportDir|Content/ca/expand
+		~^SupportDir|Content/ca/ra
+		~^SupportDir|Content/ca/cnc
+		~^SupportDir|Content/ca/ts
+		~^SupportDir|Content/ca/firestorm
+		~^SupportDir|Content/ca/ra2
+		~^SupportDir|Content/ca/movies
+		~^SupportDir|Content/ca/music
+		^EngineDir
+		^EngineDir|mods/common: common
+		$ca: ca
+		~main.mix
+		~conquer.mix
+		~lores.mix: lores
+		~hires.mix
+		~local.mix
+		~sounds.mix
+		~speech.mix
+		~allies.mix
+		~russian.mix
+		~temperat.mix
+		~snow.mix
+		~interior.mix
+		~./cnc/scores.mix
+		~./ra/scores.mix
+		~./ts/scores.mix
+		~./ts/scores01.mix
+		~./ra2/theme.mix
+		~./ra2/thememd.mix
+		~expand2.mix
+		~hires1.mix
+		~desert.mix
+		ca|bits
+		ca|bits/desert
+		ca|bits/jungle
+		ca|bits/winter
+		ca|bits/barren
+		ca|bits/temp
+		ca|bits/int
+		ca|bits/snow
+		ca|bits/audio
+		ca|bits/music
+		ca|uibits
+		ca|bits/scrin
+		ca|bits/scrin/audio
+		ca|bits/scrin/terrain
+		ca|scripts
 
 MapFolders:
 	ca|maps: System
 	~^SupportDir|maps/ca/prep-CA: User
-
-Rules:
-	ca|rules/misc.yaml
-	ca|rules/ai.yaml
-	ca|rules/player.yaml
-	ca|rules/palettes.yaml
-	ca|rules/world.yaml
-	ca|rules/defaults.yaml
-	ca|rules/powers.yaml
-	ca|rules/vehicles.yaml
-	ca|rules/husks.yaml
-	ca|rules/structures.yaml
-	ca|rules/infantry.yaml
-	ca|rules/civilian.yaml
-	ca|rules/decoration.yaml
-	ca|rules/aircraft.yaml
-	ca|rules/ships.yaml
-	ca|rules/fakes.yaml
-	ca|rules/bridges.yaml
-	ca|rules/scrin.yaml
-	ca|rules/upgrades.yaml
-
-Sequences:
-	ca|sequences/misc.yaml
-	ca|sequences/ships.yaml
-	ca|sequences/vehicles.yaml
-	ca|sequences/structures.yaml
-	ca|sequences/infantry.yaml
-	ca|sequences/aircraft.yaml
-	ca|sequences/decorations.yaml
-	ca|sequences/scrin.yaml
-	ca|sequences/upgrades.yaml
-
-TileSets:
-	ca|tilesets/snow.yaml
-	ca|tilesets/interior.yaml
-	ca|tilesets/temperat.yaml
-	ca|tilesets/desert.yaml
-	ca|tilesets/jungle.yaml
-	ca|tilesets/winter.yaml
-	ca|tilesets/barren.yaml
-
-Cursors:
-	ca|cursors.yaml
-
-Chrome:
-	ca|chrome.yaml
-
-Assemblies:
-	^BinDir|OpenRA.Mods.Common.dll
-	^BinDir|OpenRA.Mods.Cnc.dll
-	^BinDir|OpenRA.Mods.CA.dll
-
-ChromeLayout:
-	common|chrome/ingame.yaml
-	common|chrome/ingame-chat.yaml
-	ca|chrome/ingame-transients.yaml
-	common|chrome/ingame-fmvplayer.yaml
-	common|chrome/ingame-info.yaml
-	common|chrome/ingame-infoscripterror.yaml
-	common|chrome/ingame-infobriefing.yaml
-	common|chrome/ingame-infoobjectives.yaml
-	ca|chrome/ingame-infostats.yaml
-	common|chrome/ingame-info-lobby-options.yaml
-	ca|chrome/ingame-menu.yaml
-	ca|chrome/ingame-observer.yaml
-	ca|chrome/ingame-player.yaml
-	common|chrome/ingame-perf.yaml
-	common|chrome/ingame-debug.yaml
-	common|chrome/ingame-debuginfo.yaml
-	common|chrome/ingame-infochat.yaml
-	ca|chrome/mainmenu.yaml
-	common|chrome/settings.yaml
-	ca|chrome/settings-display.yaml
-	common|chrome/settings-audio.yaml
-	common|chrome/settings-input.yaml
-	common|chrome/settings-hotkeys.yaml
-	common|chrome/settings-advanced.yaml
-	common|chrome/credits.yaml
-	common|chrome/lobby.yaml
-	common|chrome/lobby-mappreview.yaml
-	common|chrome/lobby-players.yaml
-	ca|chrome/lobby-options.yaml
-	common|chrome/lobby-music.yaml
-	common|chrome/lobby-servers.yaml
-	common|chrome/lobby-kickdialogs.yaml
-	ca|chrome/color-picker.yaml
-	common|chrome/mainmenu-prompts.yaml
-	common|chrome/map-chooser.yaml
-	common|chrome/multiplayer-browser.yaml
-	common|chrome/multiplayer-browserpanels.yaml
-	common|chrome/multiplayer-createserver.yaml
-	common|chrome/multiplayer-directconnect.yaml
-	common|chrome/connection.yaml
-	common|chrome/replaybrowser.yaml
-	common|chrome/gamesave-browser.yaml
-	ca|chrome/gamesave-loading.yaml
-	common|chrome/dropdowns.yaml
-	common|chrome/musicplayer.yaml
-	ca|chrome/tooltips.yaml
-	common|chrome/assetbrowser.yaml
-	ca|chrome/missionbrowser.yaml
-	common|chrome/confirmation-dialogs.yaml
-	common|chrome/editor.yaml
-	common|chrome/playerprofile.yaml
-	common|chrome/text-notifications.yaml
-
-Weapons:
-	ca|weapons/explosions.yaml
-	ca|weapons/ballistics.yaml
-	ca|weapons/missiles.yaml
-	ca|weapons/other.yaml
-	ca|weapons/smallcaliber.yaml
-	ca|weapons/superweapons.yaml
-	ca|weapons/scrin.yaml
-
-Voices:
-	ca|audio/voices.yaml
-
-Notifications:
-	ca|audio/notifications.yaml
-
-Music:
-	ca|audio/music.yaml
-
-Translations:
-	common|languages/en.ftl
-	common|languages/rules/en.ftl
-	ca|languages/rules/en.ftl
-
-Hotkeys:
-	common|hotkeys/game.yaml
-	common|hotkeys/observer.yaml
-	common|hotkeys/production-common.yaml
-	common|hotkeys/production-peractor.yaml
-	common|hotkeys/supportpowers.yaml
-	common|hotkeys/viewport.yaml
-	common|hotkeys/chat.yaml
-	common|hotkeys/editor.yaml
-	common|hotkeys/control-groups.yaml
-	ca|hotkeys.yaml
 
 LoadScreen: ImageLoadScreen
 	Image: ca|uibits/ca-loading-artwork.png
@@ -210,56 +70,21 @@ LoadScreen: ImageLoadScreen
 	Height: 256
 	Text: Loading...
 
+Assemblies: OpenRA.Mods.Common.dll, OpenRA.Mods.Cnc.dll, OpenRA.Mods.CA.dll
+
+FluentMessages:
+	common|fluent/common.ftl
+	common|fluent/chrome.ftl
+	common|fluent/hotkeys.ftl
+	common|fluent/rules.ftl
+	ca|fluent/rules/en.ftl
+
 ServerTraits:
 	LobbyCommands
+	SkirmishLogic
 	PlayerPinger
 	MasterServerPinger
 	LobbySettingsNotification
-
-ChromeMetrics:
-	common|metrics.yaml
-	ca|metrics.yaml
-
-Fonts:
-	Tiny:
-		Font: ca|bombardreg.ttf
-		Size: 12
-		Ascender: 8
-	TinyBold:
-		Font: ca|bombardreg.ttf
-		Size: 12
-		Ascender: 8
-	Small:
-		Font: ca|bombardreg.ttf
-		Size: 14
-		Ascender: 9
-	Regular:
-		Font: ca|bombardreg.ttf
-		Size: 16
-		Ascender: 11
-	Bold:
-		Font: ca|bombard.ttf
-		Size: 18
-		Ascender: 11
-	Medium:
-		Font: ca|bombardreg.ttf
-		Size: 20
-		Ascender: 14
-	MediumBold:
-		Font: ca|bombard.ttf
-		Size: 20
-		Ascender: 14
-	BigBold:
-		Font: ca|bombard.ttf
-		Size: 26
-		Ascender: 18
-	Title:
-		Font: ca|bombard.ttf
-		Size: 32
-		Ascender: 26
-
-Missions:
-	ca|missions.yaml
 
 MapGrid:
 	TileSize: 24,24
@@ -290,8 +115,6 @@ SpriteSequenceFormat: ClassicTilesetSpecificSpriteSequence
 		JUNGLE: .jun
 		WINTER: .win
 		BARREN: .bar
-
-ModelSequenceFormat: PlaceholderModelSequence
 
 VideoFormats: Vqa, Wsa
 
@@ -424,3 +247,6 @@ ModContent:
 
 DiscordService:
 	ApplicationId: 787647352399200277
+
+Include: mod.content.yaml
+Include: mod.chrome.yaml
