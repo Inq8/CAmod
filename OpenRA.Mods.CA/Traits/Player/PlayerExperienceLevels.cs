@@ -59,7 +59,7 @@ namespace OpenRA.Mods.CA.Traits
 	{
 		PlayerExperience playerExperience;
 		TechTree techTree;
-		ProductionTracker productionTracker;
+		UpgradesManager upgradesManager;
 		readonly int maxLevel;
 		readonly bool validFaction;
 		int currentLevel;
@@ -109,7 +109,7 @@ namespace OpenRA.Mods.CA.Traits
 			var playerActor = self.Info.Name == "player" ? self : self.Owner.PlayerActor;
 			playerExperience = playerActor.Trait<PlayerExperience>();
 			techTree = playerActor.Trait<TechTree>();
-			productionTracker = playerActor.Trait<ProductionTracker>();
+			upgradesManager = playerActor.Trait<UpgradesManager>();
 			base.Created(self);
 		}
 
@@ -164,7 +164,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			// if there's an actor that represents the prerequisite, add it to the build order
 			if (self.World.Map.Rules.Actors.ContainsKey(Info.LevelPrerequisites[currentLevel - 1]))
-				productionTracker.BuildOrderItemCreated(Info.LevelPrerequisites[currentLevel - 1], 1, true);
+				upgradesManager.UpgradeProviderCreated(Info.LevelPrerequisites[currentLevel - 1]);
 
 			if (Info.DummyActor != null)
 			{

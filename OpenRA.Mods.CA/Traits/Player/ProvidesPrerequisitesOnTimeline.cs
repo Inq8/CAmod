@@ -69,7 +69,7 @@ namespace OpenRA.Mods.CA.Traits
 		readonly HashSet<string> prerequisitesGranted;
 		readonly bool validFaction;
 		TechTree techTree;
-		ProductionTracker productionTracker;
+		UpgradesManager upgradesManager;
 
 		int ticksElapsed;
 		HashSet<int> thresholdsPassed;
@@ -133,7 +133,7 @@ namespace OpenRA.Mods.CA.Traits
 			var playerActor = self.Info.Name == "player" ? self : self.Owner.PlayerActor;
 			techTree = playerActor.Trait<TechTree>();
 			techTree.ActorChanged(self);
-			productionTracker = playerActor.Trait<ProductionTracker>();
+			upgradesManager = playerActor.Trait<UpgradesManager>();
 		}
 
 		void HandlePrerequisiteThreshold(int percentage)
@@ -151,7 +151,7 @@ namespace OpenRA.Mods.CA.Traits
 
 				// if there's an actor that represents the prerequisite, add it to the build order
 				if (self.World.Map.Rules.Actors.ContainsKey(prerequisite))
-					productionTracker.BuildOrderItemCreated(prerequisite, 1, true);
+					upgradesManager.UpgradeProviderCreated(prerequisite);
 
 				if (Info.PrerequisiteGrantedSound != null)
 					Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Sounds",
