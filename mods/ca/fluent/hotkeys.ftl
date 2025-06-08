@@ -1,4 +1,3 @@
-## ca.yaml
 hotkey-description-nextproductiontab = Next tab
 hotkey-description-previousproductiontab = Previous tab
 hotkey-description-productiontypebuilding = Building Tab
