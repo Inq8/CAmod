@@ -31,7 +31,10 @@ namespace OpenRA.Mods.CA.Projectiles
 		[Desc("The maximum/constant/incremental inaccuracy used in conjunction with the InaccuracyType property.")]
 		public readonly WDist Inaccuracy = WDist.Zero;
 
-		[Desc("Controls the way inaccuracy is calculated. Possible values are 'Maximum' - scale from 0 to max with range, 'PerCellIncrement' - scale from 0 with range and 'Absolute' - use set value regardless of range.")]
+		[Desc("Controls the way inaccuracy is calculated. Possible values are " +
+			"'Maximum' - scale from 0 to max with range, " +
+			"'PerCellIncrement' - scale from 0 with range, " +
+			"'Absolute' - use set value regardless of range.")]
 		public readonly InaccuracyType InaccuracyType = InaccuracyType.Maximum;
 
 		[Desc("Can this projectile be blocked when hitting actors with an IBlocksProjectiles trait.")]
@@ -210,7 +213,7 @@ namespace OpenRA.Mods.CA.Projectiles
 
 			CycleCount = SourceToTarget.Length / info.HelixPitch.Length;
 			if (SourceToTarget.Length % info.HelixPitch.Length != 0)
-				CycleCount += 1; // math.ceil, int version.
+				CycleCount++; // math.ceil, int version.
 
 			// Using ForwardStep * CycleCount, the helix and the main beam gets "out of sync"
 			// if drawn from source to target. Instead, the main beam is drawn from source to end point of helix.

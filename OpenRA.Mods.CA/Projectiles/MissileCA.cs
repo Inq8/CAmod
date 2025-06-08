@@ -78,7 +78,10 @@ namespace OpenRA.Mods.CA.Projectiles
 		[Desc("The maximum/constant/incremental inaccuracy used in conjunction with the InaccuracyType property.")]
 		public readonly WDist Inaccuracy = WDist.Zero;
 
-		[Desc("Controls the way inaccuracy is calculated. Possible values are 'Maximum' - scale from 0 to max with range, 'PerCellIncrement' - scale from 0 with range and 'Absolute' - use set value regardless of range.")]
+		[Desc("Controls the way inaccuracy is calculated. Possible values are " +
+			"'Maximum' - scale from 0 to max with range, " +
+			"'PerCellIncrement' - scale from 0 with range, " +
+			"'Absolute' - use set value regardless of range.")]
 		public readonly InaccuracyType InaccuracyType = InaccuracyType.Absolute;
 
 		[Desc("Inaccuracy override when successfully locked onto target. Defaults to Inaccuracy if negative.")]
@@ -273,6 +276,9 @@ namespace OpenRA.Mods.CA.Projectiles
 			maxSpeed = info.Speed.Length;
 			minLaunchAngle = directFire ? WAngle.Zero : info.MinimumLaunchAngle;
 			maxLaunchAngle = directFire ? WAngle.Zero : info.MaximumLaunchAngle;
+
+			// Make sure the projectile on being spawned is approximately looking at the correct direction.
+			renderFacing = args.Facing;
 
 			var world = args.SourceActor.World;
 
@@ -516,8 +522,8 @@ namespace OpenRA.Mods.CA.Projectiles
 			lastHt = 0; // Height just before the last height change
 
 			// NOTE: Might be desired to unhardcode the lookahead step size
-			var stepSize = 32;
-			var step = new WVec(0, -stepSize, 0)
+			const int StepSize = 32;
+			var step = new WVec(0, -StepSize, 0)
 				.Rotate(new WRot(WAngle.Zero, WAngle.Zero, WAngle.FromFacing(hFacing))); // Step vector of length 128
 
 			// Probe terrain ahead of the missile
@@ -525,7 +531,7 @@ namespace OpenRA.Mods.CA.Projectiles
 			var maxLookaheadDistance = loopRadius * 4;
 			var posProbe = pos;
 			var curDist = 0;
-			var tickLimit = System.Math.Min(maxLookaheadDistance, distCheck) / stepSize;
+			var tickLimit = System.Math.Min(maxLookaheadDistance, distCheck) / StepSize;
 			var prevHt = 0;
 
 			// TODO: Make sure cell on map!!!
@@ -537,7 +543,7 @@ namespace OpenRA.Mods.CA.Projectiles
 
 				var ht = world.Map.Height[world.Map.CellContaining(posProbe)] * 512;
 
-				curDist += stepSize;
+				curDist += StepSize;
 				if (ht > predClfHgt)
 				{
 					predClfHgt = ht;
