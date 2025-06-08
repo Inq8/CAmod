@@ -101,6 +101,7 @@ namespace OpenRA.Mods.CA.Traits
 	{
 		readonly MadTankCAInfo info;
 		public bool FirstDetonationComplete { get; set; }
+		bool initiated;
 
 		IReloadModifier[] reloadModifiers;
 
@@ -131,8 +132,12 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			get
 			{
-				yield return new TargetTypeOrderTargeter(new BitSet<TargetableType>("DetonateAttack"), "DetonateAttack", 5, "attack", true, false) { ForceAttack = false };
-				yield return new DeployOrderTargeter("Detonate", 5, () => Info.DeployCursor);
+				yield return
+					new TargetTypeOrderTargeter(new BitSet<TargetableType>("DetonateAttack"), "DetonateAttack", 5, "attack", true, false)
+					{ ForceAttack = false };
+
+				if (!initiated)
+					yield return new DeployOrderTargeter("Detonate", 5, () => Info.DeployCursor);
 			}
 		}
 
@@ -180,7 +185,6 @@ namespace OpenRA.Mods.CA.Traits
 			readonly bool assignTargetOnFirstRun;
 
 			int ticks;
-			bool initiated;
 			Target target;
 
 			int chargeDelay;
@@ -227,7 +231,7 @@ namespace OpenRA.Mods.CA.Traits
 					return false;
 				}
 
-				if (!initiated)
+				if (!mad.initiated)
 				{
 					// If the target has died while we were moving, we should abort detonation.
 					if (target.Type == TargetType.Invalid)
@@ -245,7 +249,7 @@ namespace OpenRA.Mods.CA.Traits
 					}
 
 					IsInterruptible = false;
-					initiated = true;
+					mad.initiated = true;
 				}
 
 				if (++ticks % mad.info.ThumpInterval == 0)
@@ -268,7 +272,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			protected override void OnLastRun(Actor self)
 			{
-				if (!initiated)
+				if (!mad.initiated)
 					return;
 
 				Game.Sound.Play(SoundType.World, mad.info.DetonationSound, self.CenterPosition);

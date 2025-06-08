@@ -235,14 +235,12 @@ namespace OpenRA.Mods.CA.Traits
 		private IEnumerable<Actor> GetTargetsInFootprint(CPos xy)
 		{
 			var tiles = CellsMatching(xy, footprint, info.Dimensions);
-			var units = new List<Actor>();
+			var units = new HashSet<Actor>();
 			foreach (var t in tiles)
-				units.AddRange(Self.World.ActorMap.GetActorsAt(t));
+				foreach (var a in Self.World.ActorMap.GetActorsAt(t))
+					units.Add(a);
 
-			return units.Distinct().Where(a =>
-			{
-				return IsValidTarget(a);
-			});
+			return units.Where(a => IsValidTarget(a));
 		}
 
 		bool IsValidTarget(Actor a)
@@ -401,7 +399,7 @@ namespace OpenRA.Mods.CA.Traits
 						world.Map.CenterOfCell(xy),
 						power.info.Range,
 						0,
-						power.info.TargetCircleUsePlayerColor ? power.Self.Owner.Color : power.info.TargetCircleColor,
+						power.info.TargetCircleUsePlayerColor ? power.Self.OwnerColor() : power.info.TargetCircleColor,
 						1,
 						Color.FromArgb(96, Color.Black),
 						3);

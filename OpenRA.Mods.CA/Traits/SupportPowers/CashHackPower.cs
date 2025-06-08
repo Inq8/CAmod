@@ -88,7 +88,7 @@ namespace OpenRA.Mods.CA.Traits
 					Game.Sound.PlayNotification(a.World.Map.Rules, a.Owner, "Speech", info.Notification, a.Owner.Faction.InternalName);
 
 				if (info.ShowTicks)
-					self.World.AddFrameEndTask(w => w.Add(new FloatingText(a.CenterPosition, self.Owner.Color, FloatingText.FormatCashTick(toGive), 30)));
+					self.World.AddFrameEndTask(w => w.Add(new FloatingText(a.CenterPosition, self.OwnerColor(), FloatingText.FormatCashTick(toGive), 30)));
 			}
 		}
 

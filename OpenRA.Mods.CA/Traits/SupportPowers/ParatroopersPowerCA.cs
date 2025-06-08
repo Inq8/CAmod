@@ -107,8 +107,6 @@ namespace OpenRA.Mods.CA.Traits
 			var aircraft = new List<Actor>();
 			var units = new List<Actor>();
 
-			var info = Info as ParatroopersPowerCAInfo;
-
 			if (!facing.HasValue)
 				facing = new WAngle(1024 * self.World.SharedRandom.Next(info.QuantizedFacings) / info.QuantizedFacings);
 

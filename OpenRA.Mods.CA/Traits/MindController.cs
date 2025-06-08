@@ -372,7 +372,7 @@ namespace OpenRA.Mods.CA.Traits
 			lastTarget = currentTarget;
 			currentTarget = target;
 
-			if (TargetChanged() && (Info.TicksToControl > 0 || Info.TargetTypeTicksToControl.Any()))
+			if (TargetChanged(target, lastTarget) && (Info.TicksToControl > 0 || Info.TargetTypeTicksToControl.Any()))
 			{
 				lastTargetTicksToControl = currentTargetTicksToControl;
 				currentTargetTicksToControl = Info.TicksToControl;
@@ -527,32 +527,37 @@ namespace OpenRA.Mods.CA.Traits
 			ReleaseSlaves(self, Info.TicksToRevoke);
 		}
 
-		bool TargetChanged()
+		static bool TargetChanged(in Target lastTarget, in Target target)
 		{
 			// Invalidate reveal changing the target.
-			if (lastTarget.Type == TargetType.FrozenActor && currentTarget.Type == TargetType.Actor)
-				if (lastTarget.FrozenActor.Actor == currentTarget.Actor)
-					return false;
+			if (lastTarget.Type == TargetType.FrozenActor &&
+				target.Type == TargetType.Actor &&
+				lastTarget.FrozenActor.Actor == target.Actor)
+				return false;
 
-			if (lastTarget.Type == TargetType.Actor && currentTarget.Type == TargetType.FrozenActor)
-				if (currentTarget.FrozenActor.Actor == lastTarget.Actor)
-					return false;
+			if (lastTarget.Type == TargetType.Actor &&
+				target.Type == TargetType.FrozenActor &&
+				target.FrozenActor.Actor == lastTarget.Actor)
+				return false;
 
-			if (lastTarget.Type != currentTarget.Type)
+			if (lastTarget.Type != target.Type)
 				return true;
 
 			// Invalidate attacking different targets with shared target types.
-			if (lastTarget.Type == TargetType.Actor && currentTarget.Type == TargetType.Actor)
-				if (lastTarget.Actor != currentTarget.Actor)
-					return true;
+			if (lastTarget.Type == TargetType.Actor &&
+				target.Type == TargetType.Actor &&
+				lastTarget.Actor != target.Actor)
+				return true;
 
-			if (lastTarget.Type == TargetType.FrozenActor && currentTarget.Type == TargetType.FrozenActor)
-				if (lastTarget.FrozenActor != currentTarget.FrozenActor)
-					return true;
+			if (lastTarget.Type == TargetType.FrozenActor &&
+				target.Type == TargetType.FrozenActor &&
+				lastTarget.FrozenActor != target.FrozenActor)
+				return true;
 
-			if (lastTarget.Type == TargetType.Terrain && currentTarget.Type == TargetType.Terrain)
-				if (lastTarget.CenterPosition != currentTarget.CenterPosition)
-					return true;
+			if (lastTarget.Type == TargetType.Terrain &&
+				target.Type == TargetType.Terrain &&
+				lastTarget.CenterPosition != target.CenterPosition)
+				return true;
 
 			return false;
 		}

@@ -9,6 +9,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Linq;
 using OpenRA.Graphics;
 using OpenRA.Mods.Common.Graphics;
 using OpenRA.Mods.Common.Traits;
@@ -63,7 +64,8 @@ namespace OpenRA.Mods.CA.Traits.Render
 			if (exitingActor == null)
 				return;
 
-			if (!exitingActor.IsInWorld || exitingActor.Location != openExit || !(exitingActor.CurrentActivity is Mobile.ReturnToCellActivity))
+			if (!exitingActor.IsInWorld || exitingActor.Location != openExit
+				|| (!exitingActor.CurrentActivity?.ActivitiesImplementing<Mobile.ReturnToCellActivity>().Any() ?? true))
 			{
 				desiredFrame = 0;
 				exitingActor = null;

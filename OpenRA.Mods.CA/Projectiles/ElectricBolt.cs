@@ -112,7 +112,7 @@ namespace OpenRA.Mods.CA.Projectiles
 			this.args = args;
 			this.info = info;
 
-			var playerColor = args.SourceActor.Owner.Color;
+			var playerColor = args.SourceActor.OwnerColor();
 			var colors = info.Colors.ToList();
 
 			for (int i = 0; i < info.PlayerColorZaps; i++)

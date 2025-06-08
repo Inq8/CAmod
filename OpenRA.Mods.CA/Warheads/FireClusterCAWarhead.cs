@@ -60,9 +60,9 @@ namespace OpenRA.Mods.Common.Warheads
 
 			if (RandomClusterCount != 0)
 			{
-				var randomTargetCells = CellsMatching(targetCell, true);
+				var randomTargetCells = CellsMatching(targetCell, true).ToList();
 				var clusterCount = RandomClusterCount < 0 ? randomTargetCells.Count() : RandomClusterCount;
-				if (randomTargetCells.Any())
+				if (randomTargetCells.Count != 0)
 				{
 					var countExceedsCells = clusterCount > randomTargetCells.Count();
 					var shuffledRandomTargetCells = randomTargetCells.Shuffle(firedBy.World.SharedRandom).ToList();

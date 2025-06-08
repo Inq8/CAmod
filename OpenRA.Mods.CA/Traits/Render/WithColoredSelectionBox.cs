@@ -142,7 +142,7 @@ namespace OpenRA.Mods.CA.Traits.Render
 			}
 			else if (Info.ColorSource == ColorSource.Player)
 			{
-				color = self.Owner.Color;
+				color = self.OwnerColor();
 			}
 			else
 			{

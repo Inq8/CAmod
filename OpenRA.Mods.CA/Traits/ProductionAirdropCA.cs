@@ -42,6 +42,15 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Direction the aircraft should face to land.")]
 		public readonly WAngle Facing = new WAngle(256);
 
+		[Desc("Tick that aircraft should wait before producing.")]
+		public readonly int WaitTickBeforeProduce = 0;
+
+		[Desc("Tick that aircraft should wait after producing.")]
+		public readonly int WaitTickAfterProduce = 0;
+
+		[Desc("Offset the aircraft used for landing.")]
+		public readonly WVec LandOffset = WVec.Zero;
+
 		[Desc("If true, the actor's speed will be adjusted based on the distance it needs to travel to deliver its cargo.")]
 		public readonly bool ProportionalSpeed = false;
 
@@ -175,7 +184,9 @@ namespace OpenRA.Mods.CA.Traits
 				}
 
 				var exitCell = self.Location + exit.ExitCell;
-				actor.QueueActivity(new Land(actor, Target.FromActor(self), WDist.Zero, WVec.Zero, info.Facing, clearCells: new CPos[1] { exitCell }));
+				actor.QueueActivity(new Land(actor, Target.FromActor(self), WDist.Zero, info.LandOffset, info.Facing, clearCells: new CPos[1] { exitCell }));
+				if (info.WaitTickBeforeProduce > 0)
+					actor.QueueActivity(new Wait(info.WaitTickBeforeProduce));
 				actor.QueueActivity(new CallFunc(() =>
 				{
 					if (!self.IsInWorld || self.IsDead)
@@ -189,9 +200,10 @@ namespace OpenRA.Mods.CA.Traits
 
 					self.World.AddFrameEndTask(ww => DoProduction(self, producee, exit, productionType, inits));
 					if (info.ReadyAudio != null)
-					Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", info.ReadyAudio, self.Owner.Faction.InternalName);
+						Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", info.ReadyAudio, self.Owner.Faction.InternalName);
 				}));
-
+				if (info.WaitTickAfterProduce > 0)
+					actor.QueueActivity(new Wait(info.WaitTickAfterProduce));
 				actor.QueueActivity(new FlyOffMap(actor, Target.FromCell(w, endPos)));
 				actor.QueueActivity(new RemoveSelf());
 			});

@@ -87,3 +87,12 @@ options-observer-stats =
     .earnings-graph = Earnings (graph)
     .army-graph = Army Value (graph)
     .team-army-graph = Team Value (graph)
+
+## chrome/gamesave-loading.yaml
+label-gamesave-loading-screen-loadtime-line1 = Sorry for the long load times, this is due to how the OpenRA engine handles saved games.
+label-gamesave-loading-screen-loadtime-line2 = It replays the game from the beginning as fast as possible (so a longer game = longer time to load).
+
+## chrome/ingame-player.yaml
+supportpowers-support-powers-palette =
+    .ready = READY
+    .hold = ON HOLD
