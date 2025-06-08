@@ -7,8 +7,11 @@ Metadata:
 
 PackageFormats: Mix
 
-FileSystem: DefaultFileSystem
-	Packages:
+FileSystem: ContentInstallerFileSystem
+	SystemPackages:
+		^EngineDir
+		$ca: ca
+		^EngineDir|mods/common: common
 		~^SupportDir|Content/ca
 		~^SupportDir|Content/ca/expand
 		~^SupportDir|Content/ca/ra
@@ -18,9 +21,9 @@ FileSystem: DefaultFileSystem
 		~^SupportDir|Content/ca/ra2
 		~^SupportDir|Content/ca/movies
 		~^SupportDir|Content/ca/music
-		^EngineDir
-		^EngineDir|mods/common: common
-		$ca: ca
+		ca|scripts
+		ca|uibits
+	ContentPackages:
 		~main.mix
 		~conquer.mix
 		~lores.mix: lores
@@ -52,11 +55,11 @@ FileSystem: DefaultFileSystem
 		ca|bits/snow
 		ca|bits/audio
 		ca|bits/music
-		ca|uibits
 		ca|bits/scrin
 		ca|bits/scrin/audio
 		ca|bits/scrin/terrain
-		ca|scripts
+	RequiredContentFiles:
+	ContentInstallerMod: ca-content
 
 MapFolders:
 	ca|maps: System
@@ -156,95 +159,6 @@ GameSpeeds:
 ModCredits:
 	ModCreditsFile: ca|CREDITS
 	ModTabTitle: Combined Arms
-
-ModContent:
-	Mod: ca
-	InstallPromptMessage: Combined Arms requires artwork and audio from the original games.\n\nQuick Install will automatically download this content (without music\nor videos) from a mirror of the 2008 Command & Conquer/Red Alert\nfreeware release.\n\nAdvanced Install allows you to install music and other content,\nwhich may require original game installations or discs.\n\nYou can also install this additional content later via the main menu.
-	QuickDownload: quickinstall
-	HeaderMessage: Game content may be extracted from the original game discs or an\nexisting digital install. OpenRA can also download the base game\nfiles from an online mirror of the 2008 freeware release of RA.
-	Packages:
-		ContentPackage@base:
-			Title: Base Game Files
-			Identifier: base
-			TestFiles: ^SupportDir|Content/ca/allies.mix, ^SupportDir|Content/ca/conquer.mix, ^SupportDir|Content/ca/interior.mix, ^SupportDir|Content/ca/hires.mix, ^SupportDir|Content/ca/lores.mix, ^SupportDir|Content/ca/local.mix, ^SupportDir|Content/ca/speech.mix, ^SupportDir|Content/ca/russian.mix, ^SupportDir|Content/ca/snow.mix, ^SupportDir|Content/ca/sounds.mix, ^SupportDir|Content/ca/temperat.mix
-			Sources: allied, soviet, tfd, ra-steam, cncr-steam, ra-origin, cncr-origin
-			Required: true
-			Download: basefiles
-		ContentPackage@aftermathbase:
-			Title: Aftermath Expansion Files
-			Identifier: aftermathbase
-			TestFiles: ^SupportDir|Content/ca/expand/expand2.mix
-			Sources: aftermath, tfd, ra-steam, cncr-steam, ra-origin, cncr-origin
-			Required: true
-			Download: aftermath
-		ContentPackage@cncdesert:
-			Title: C&C Desert Tileset
-			Identifier: cncdesert
-			TestFiles: ^SupportDir|Content/ca/cnc/desert.mix
-			Sources: cnc95, tfd, cnc-steam, cncr-steam, cnc-origin, cncr-origin
-			Required: true
-			Download: cncdesert
-		ContentPackage@music-cnc:
-			Title: Tiberian Dawn Music
-			Identifier: music-cnc
-			TestFiles: ^SupportDir|Content/ca/cnc/scores.mix
-			Download: music-cnc
-			Sources: covertops, cnc95, tfd, cnc-steam, cncr-steam, cnc-origin, cncr-origin
-		ContentPackage@music-ra:
-			Title: Red Alert Music
-			Identifier: music-ra
-			TestFiles: ^SupportDir|Content/ca/ra/scores.mix
-			Download: music-ra
-			Sources: allied, soviet, tfd, ra-steam, cncr-steam, ra-origin, cncr-origin
-		ContentPackage@music-counterstrike:
-			Title: Counterstrike Music
-			Identifier: music-counterstrike
-			TestFiles: ^SupportDir|Content/ca/expand/2nd_hand.aud, ^SupportDir|Content/ca/expand/araziod.aud, ^SupportDir|Content/ca/expand/backstab.aud, ^SupportDir|Content/ca/expand/chaos2.aud, ^SupportDir|Content/ca/expand/shut_it.aud, ^SupportDir|Content/ca/expand/twinmix1.aud, ^SupportDir|Content/ca/expand/under3.aud, ^SupportDir|Content/ca/expand/vr2.aud,
-			Sources: counterstrike, ra-steam, cncr-steam, ra-origin, cncr-origin
-		ContentPackage@music-aftermath:
-			Title: Aftermath Music
-			Identifier: music-aftermath
-			TestFiles: ^SupportDir|Content/ca/expand/await.aud, ^SupportDir|Content/ca/expand/bog.aud, ^SupportDir|Content/ca/expand/float_v2.aud, ^SupportDir|Content/ca/expand/gloom_ra.aud, ^SupportDir|Content/ca/expand/grndwire.aud, ^SupportDir|Content/ca/expand/rpt.aud, ^SupportDir|Content/ca/expand/search.aud, ^SupportDir|Content/ca/expand/traction.aud, ^SupportDir|Content/ca/expand/wastelnd.aud
-			Sources: aftermath, ra-steam, cncr-steam, ra-origin, cncr-origin
-		ContentPackage@music-ts:
-			Title: Tiberian Sun Music
-			Identifier: music-ts
-			TestFiles: ^SupportDir|Content/ca/ts/scores.mix
-			Download: music-ts
-			Sources: tibsun, ts-steam, ts-origin
-		ContentPackage@music-firestorm:
-			Title: Firestorm Music
-			Identifier: music-firestorm
-			TestFiles: ^SupportDir|Content/ca/firestorm/dmachine.aud, ^SupportDir|Content/ca/firestorm/elusive.aud, ^SupportDir|Content/ca/firestorm/hacker.aud, ^SupportDir|Content/ca/firestorm/infiltra.aud, ^SupportDir|Content/ca/firestorm/kmachine.aud, ^SupportDir|Content/ca/firestorm/linkup.aud, ^SupportDir|Content/ca/firestorm/rainnite.aud, ^SupportDir|Content/ca/firestorm/slavesys.aud
-			Download: music-fs
-			Sources: firestorm, ts-steam, ts-origin
-		ContentPackage@music-ra2:
-			Title: Red Alert 2 Music
-			Identifier: music-ra2
-			TestFiles: ^SupportDir|Content/ca/ra2/theme.mix
-			Sources: ra2, ra2-steam, ra2-origin
-		ContentPackage@music-yr:
-			Title: Yuri's Revenge Music
-			Identifier: music-yr
-			TestFiles: ^SupportDir|Content/ca/ra2/thememd.mix
-			Sources: ra2yr, ra2-steam, ra2-origin
-
-	Downloads:
-		ca|installer/downloads.yaml
-	Sources:
-		ca|installer/aftermath.yaml
-		ca|installer/allies95.yaml
-		ca|installer/cnc95.yaml
-		ca|installer/counterstrike.yaml
-		ca|installer/covertops.yaml
-		ca|installer/firestorm.yaml
-		ca|installer/firstdecade.yaml
-		ca|installer/origin.yaml
-		ca|installer/ra2.yaml
-		ca|installer/ra2yr.yaml
-		ca|installer/soviet95.yaml
-		ca|installer/steam.yaml
-		ca|installer/tibsun.yaml
 
 DiscordService:
 	ApplicationId: 787647352399200277
