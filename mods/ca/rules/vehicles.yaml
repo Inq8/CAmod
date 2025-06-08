@@ -744,8 +744,6 @@ GTNK.squad:
 		CloakedCondition: hidden
 		UncloakSound: appear1md.aud
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Move, Damage, Heal
-		Palette: player
-		IsPlayerPalette: false
 		RequiresCondition: england && !cloak-force-disabled && !being-warped && !empdisable && !driver-dead
 		PauseOnCondition: invisibility
 	Cloak@CRATE-CLOAK:
@@ -1844,7 +1842,8 @@ SPEC:
 		CloakSound: trans1.aud
 		CloakedCondition: hidden
 		UncloakSound: appear1md.aud
-		Palette: cloak
+		CloakStyle: Palette
+		CloakedPalette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
 		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead
@@ -1942,7 +1941,8 @@ SAPC:
 		CloakSound: trans1.aud
 		CloakedCondition: hidden
 		UncloakSound: appear1md.aud
-		Palette: cloak
+		CloakStyle: Palette
+		CloakedPalette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
 		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead
@@ -5036,7 +5036,8 @@ STNK.Nod:
 		CloakSound: trans1.aud
 		CloakedCondition: hidden
 		UncloakSound: appear1md.aud
-		Palette: cloak
+		CloakStyle: Palette
+		CloakedPalette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
 		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead && !parachute
@@ -5151,7 +5152,8 @@ HSTK:
 		CloakSound: trans1.aud
 		CloakedCondition: hidden
 		UncloakSound: appear1md.aud
-		Palette: cloak
+		CloakStyle: Palette
+		CloakedPalette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
 		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead && !parachute
@@ -5589,7 +5591,8 @@ HARV.TD.UPG:
 		CloakSound: trans1.aud
 		CloakedCondition: hidden
 		UncloakSound: appear1md.aud
-		Palette: cloak
+		CloakStyle: Palette
+		CloakedPalette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
 		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead && !parachute
@@ -6938,7 +6941,8 @@ IFV:
 		CloakSound: trans1.aud
 		CloakedCondition: hidden
 		UncloakSound: appear1md.aud
-		Palette: cloak
+		CloakStyle: Palette
+		CloakedPalette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
 		RequiresCondition: (shadturr || stlkturr) && !cloak-force-disabled && !capturing && !being-warped && !empdisable && !driver-dead && !parachute
@@ -7876,7 +7880,8 @@ RTNK:
 		CloakedCondition: hidden
 		UncloakSound: appear1md.aud
 		UncloakOn: Attack, Dock, Move, Damage, Heal
-		Palette: player
+		CloakStyle: Palette
+		CloakedPalette: player
 		IsPlayerPalette: false
 		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead
 		PauseOnCondition: invisibility
@@ -9208,7 +9213,8 @@ BASI:
 		CloakSound: trans1.aud
 		CloakedCondition: hidden
 		UncloakSound: appear1md.aud
-		Palette: cloak
+		CloakStyle: Palette
+		CloakedPalette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
 		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead && !parachute
