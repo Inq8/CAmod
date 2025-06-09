@@ -49,8 +49,7 @@ WorldLoaded = function()
 
 			if #spawnPoints > 0 then
 				spawnPoint = spawnPoints[1]
-				local spawner = Actor.Create("spawn", true, { Owner = p, Location = spawnPoint.Location })
-				Trigger.OnProduction(spawner, function(producer, produced)
+				Trigger.OnProduction(spawnPoint, function(producer, produced)
 					Trigger.OnKilled(produced, function(self, killer)
 						Trigger.AfterDelay(DateTime.Seconds(10), function()
 							self.Owner.Cash = self.Owner.Cash + 1

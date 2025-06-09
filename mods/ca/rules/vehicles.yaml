@@ -506,7 +506,10 @@ NUKC:
 
 GTNK:
 	Inherits: 2TNK
-	-Buildable:
+	Buildable:
+		Queue: GrizzlyTank
+		-Prerequisites:
+		Description: Allied paradropped battle tank.
 	Valued:
 		Cost: 875
 	Tooltip:
@@ -5282,6 +5285,7 @@ BIKE:
 	WithFacingSpriteBody:
 		RequiresCondition: !tibcore-upgrade
 	WithFacingSpriteBody@UPG:
+		Name: tibcore
 		RequiresCondition: tibcore-upgrade
 		Sequence: idle-upgrade
 
