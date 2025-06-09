@@ -259,13 +259,14 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 					var flag = factionAndLabel.Get<ImageWidget>("FACTIONFLAG");
 					flag.GetImageCollection = () => "flags";
 
-					var tooltipTextSplit = SplitOnFirstToken(pp.Faction.Description);
-					var factionName = pp.DisplayFaction.Name;
+					var tooltipTextSplit = SplitOnFirstToken(FluentProvider.GetMessage(pp.Faction.Description), "\n");
+					var factionName = FluentProvider.GetMessage(pp.DisplayFaction.Name);
 
 					if (realFactionVisible)
 					{
+						var resolvedFactionName = FluentProvider.GetMessage(pp.Faction.Name);
 						flag.GetImageName = () => pp.Faction.InternalName;
-						factionName = pp.Faction.Name != factionName ? $"{factionName} ({pp.Faction.Name})" : pp.Faction.Name;
+						factionName = resolvedFactionName != factionName ? $"{factionName} ({resolvedFactionName})" : resolvedFactionName;
 						factionAndLabel.GetTooltipText = () => tooltipTextSplit.First;
 						factionAndLabel.GetTooltipDesc = () => tooltipTextSplit.Second;
 					}

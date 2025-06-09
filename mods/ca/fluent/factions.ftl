@@ -389,7 +389,7 @@ faction-randomscrin =
     A random Scrin faction will be chosen when the game starts.
 
 faction-random =
-    .name = Random
+    .name = Any
     .description = Random Faction
     A random faction will be chosen when the game starts.
 
