@@ -2093,6 +2093,17 @@
 		Multiplier: 70
 		Prerequisites: economy.policy, influence.level3
 
+^EconomyPolicyTimeReduction:
+	ProductionTimeMultiplier@EconomyPolicy1:
+		Multiplier: 90
+		Prerequisites: economy.policy, influence.level1, !influence.level2
+	ProductionTimeMultiplier@EconomyPolicy2:
+		Multiplier: 80
+		Prerequisites: economy.policy, influence.level2, !influence.level3
+	ProductionTimeMultiplier@EconomyPolicy3:
+		Multiplier: 70
+		Prerequisites: economy.policy, influence.level3
+
 ^DefensePolicyDamageReduction:
 	GrantConditionOnPrerequisite@DefensePolicy1:
 		Condition: defense-policy1
