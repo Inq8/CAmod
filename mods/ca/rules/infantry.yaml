@@ -524,7 +524,7 @@ U3:
 	Voiced:
 		VoiceSet: GGIVoice
 	Crushable:
-		RequiresCondition: undeployed
+		RequiresCondition: !invulnerability && !being-warped && undeployed
 	AutoDeployer@AI:
 		RequiresCondition: botowner && !deployed && !parachute
 		DeployChance: 100
@@ -1393,7 +1393,7 @@ THF:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 		Condition: moving
 	Crushable:
-		RequiresCondition: !moving
+		RequiresCondition: !invulnerability && !being-warped && !moving
 	Targetable@ChaosImmune:
 		TargetTypes: ChaosImmune
 	-SpeedMultiplier@HAZMATSOVIET:

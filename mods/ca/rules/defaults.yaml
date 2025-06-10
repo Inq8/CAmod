@@ -2317,7 +2317,7 @@
 	Crushable:
 		CrushClasses: tank
 		WarnProbability: 0
-		RequiresCondition: !invulnerability
+		RequiresCondition: !invulnerability && !being-warped
 	DamagedByTintedCells@RADSTRONG:
 		Damage: 100
 		DamageInterval: 16
@@ -2527,6 +2527,7 @@
 	Crushable:
 		WarnProbability: 100
 		CrushSound: squishy2.aud
+		RequiresCondition: !invulnerability && !being-warped
 	Guard:
 	Guardable:
 	Tooltip:
