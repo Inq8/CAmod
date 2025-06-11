@@ -7409,7 +7409,7 @@ JUGG:
 		Queue: VehicleSQ, VehicleMQ
 		IconPalette: chrometd
 		Description: Tough artillery battle-mech.
-		Prerequisites: upgc, ~vehicles.talon, ~techlevel.high
+		Prerequisites: gtek, ~vehicles.talon, ~techlevel.high
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
 		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets\n• Cannot fire while moving
@@ -7456,6 +7456,7 @@ JUGG:
 		ReloadingCondition: reloading-secondary
 	Armament@TARGETTER:
 		Name: targetter
+		LocalOffset: 700,0,650, 700,100,650, 700,-100,650
 		Weapon: JuggernautGunTargeting
 		PauseOnCondition: reloading-primary || reloading-secondary
 		RequiresCondition: attack-move || assault-move
@@ -7500,10 +7501,13 @@ JUGG:
 	GrantConditionOnMovement@MOVING:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 		Condition: moving
+	RangeMultiplier@GyroPassive:
+		Modifier: 150
+		RequiresCondition: gyro-upgrade
 	RangeMultiplier@GYRO:
-		Modifier: 140
+		Modifier: 135
 	ReloadDelayMultiplier@GYRO:
-		Modifier: 140
+		Modifier: 135
 	Carryable:
 		LocalOffset: 0,0,700
 	-Crushable:
