@@ -19,25 +19,42 @@ namespace OpenRA.Mods.Common.Traits
 		[Desc("If not set, will use the actor's internal name.")]
 		public readonly string Type = null;
 
+		[Desc("If true, grants a kill on creation (temporary until counts rework).")]
+		public readonly bool OnCreation = false;
+
 		public override object Create(ActorInitializer init) { return new UpdatesKillCount(this, init.Self); }
 	}
 
-	public class UpdatesKillCount : INotifyKilled, INotifyOwnerChanged
+	public class UpdatesKillCount : INotifyKilled, INotifyOwnerChanged, INotifyCreated
 	{
 		readonly string actorName;
+		readonly UpdatesKillCountInfo info;
 
 		public UpdatesKillCount(UpdatesKillCountInfo info, Actor self)
 		{
 			actorName = info.Type ?? self.Info.Name;
+			this.info = info;
+		}
+
+		void INotifyCreated.Created(Actor self)
+		{
+			if (info.OnCreation)
+				AddToCount(self, self.Owner);
 		}
 
 		void INotifyKilled.Killed(Actor self, AttackInfo e)
 		{
+			if (info.OnCreation)
+				return;
+
 			AddToCount(self, e.Attacker.Owner);
 		}
 
 		void INotifyOwnerChanged.OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)
 		{
+			if (info.OnCreation)
+				return;
+
 			AddToCount(self, newOwner);
 		}
 
@@ -46,7 +63,7 @@ namespace OpenRA.Mods.Common.Traits
 			if (self.Owner.WinState != WinState.Undefined)
 				return;
 
-			if (attackingPlayer.RelationshipWith(self.Owner) != PlayerRelationship.Enemy)
+			if (attackingPlayer.RelationshipWith(self.Owner) != PlayerRelationship.Enemy && !info.OnCreation)
 				return;
 
 			var attackerCounters = attackingPlayer.PlayerActor.TraitsImplementing<ProvidesPrerequisiteOnKillCount>();
