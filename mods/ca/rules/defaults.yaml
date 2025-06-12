@@ -3372,6 +3372,10 @@
 		UseLocation: true
 		UseCenterPosition: true
 		LinkedToParent: true
+	InfiltrateForTimedCondition@InfiltratorVisionIcon:
+		Condition: observer-attached
+		Types: VisionInfiltrate
+		Duration: 3000
 	Targetable@InfiltratorVision:
 		TargetTypes: VisionInfiltrate
 		RequiresCondition: !being-warped
@@ -4257,6 +4261,7 @@
 		RequiresCondition: !being-warped
 	InfiltrateForPowerOutage:
 		Types: PowerOutageInfiltrate
+		InfiltrationNotification: BuildingInfiltrated
 	PowerMultiplier@FORCEDISABLE:
 		RequiresCondition: forcedisabled
 		Modifier: 0
