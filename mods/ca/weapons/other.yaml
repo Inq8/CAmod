@@ -156,7 +156,7 @@ NapalmtdBuilding:
 		Delay: 35
 		Versus:
 			None: 0
-			Wood: 42
+			Wood: 36
 			Light: 0
 			Heavy: 0
 			Concrete: 0
@@ -2148,7 +2148,7 @@ OrcaBomb:
 		ValidTargets: Ground, Water
 		Versus:
 			None: 25
-			Wood: 50
+			Wood: 0
 			Light: 75
 			Heavy: 100
 			Concrete: 35
@@ -2175,6 +2175,28 @@ OrcaBomb:
 		Condition: empdisable
 		ValidTargets: Defense
 		InvalidTargets: EmpImmune
+
+OrcaBombBuilding:
+	Inherits: OrcaBomb
+	-Report:
+	-Projectile:
+	Projectile: InstantHit
+	TargetActorCenter: false
+	Warhead@1Dam: SpreadDamage
+		Delay: 35
+		Versus:
+			None: 0
+			Wood: 40
+			Light: 0
+			Heavy: 0
+			Concrete: 0
+			Brick: 0
+		DebugOverlayColor: ffaa00
+	-Warhead@2Smu:
+	-Warhead@3Eff:
+	-Warhead@4Eff:
+	-Warhead@emp:
+	-Warhead@empdef:
 
 MicrowaveZap:
 	ValidTargets: Ground, Water
@@ -2863,7 +2885,7 @@ JDAM:
 		ValidTargets: Ground, Water
 		Versus:
 			None: 0
-			Wood: 100
+			Wood: 80
 			Light: 80
 			Heavy: 100
 			Concrete: 80
@@ -3431,7 +3453,7 @@ PeacemakerBombs:
 		Damage: 24000
 		Versus:
 			None: 10
-			Wood: 40
+			Wood: 0
 			Light: 70
 			Heavy: 100
 			Concrete: 55
@@ -3465,6 +3487,28 @@ PeacemakerBombs:
 		AimChance: 0
 		ValidTargets: Ground, Infantry, Vehicle
 		ThrowWithoutTarget: true
+
+PeacemakerBombsBuilding:
+	Inherits: PeacemakerBombs
+	-Report:
+	-Projectile:
+	Projectile: InstantHit
+	TargetActorCenter: false
+	Warhead@1Dam: SpreadDamage
+		Delay: 35
+		Versus:
+			None: 0
+			Wood: 40
+			Light: 0
+			Heavy: 0
+			Concrete: 0
+			Brick: 0
+		DebugOverlayColor: ffaa00
+	-Warhead@2Dam:
+	-Warhead@2Smu:
+	-Warhead@3Eff:
+	-Warhead@4EffWater:
+	-Warhead@Shrap:
 
 FloatingDiscLaser:
 	Inherits: Laser

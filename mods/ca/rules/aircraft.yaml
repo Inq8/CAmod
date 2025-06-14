@@ -1559,7 +1559,7 @@ A10:
 		Prerequisites: aircraft.upgraded
 	Rearmable:
 		RearmActors: afld, afld.gdi
-		AmmoPools: primary, primarybld, upgrade
+		AmmoPools: primary, upgrade
 	-RangeMultiplier@SEEK:
 	-RangeMultiplier@SEEK2:
 	-RangeMultiplier@SEEK3:
@@ -2313,7 +2313,12 @@ ORCB:
 	RevealsShroud@GAPGEN:
 		Range: 9c0
 		Type: GroundPosition
-	Armament:
+	Armament@PRIMARYBLD:
+		Weapon: OrcaBombBuilding
+		LocalOffset: 2,-256,-43, 2,256,-43
+		PauseOnCondition: !ammo || blinded
+		Name: primarybld
+	Armament@PRIMARY:
 		Weapon: OrcaBomb
 		LocalOffset: 2,-256,-43, 2,256,-43
 		PauseOnCondition: !ammo || blinded
@@ -2325,6 +2330,7 @@ ORCB:
 		PersistentTargeting: false
 		OpportunityFire: true
 		PauseOnCondition: empdisable || being-warped
+		Armaments: primary, primarybld
 	ReturnsToBaseOnAmmoDepleted:
 	Aircraft:
 		CruiseAltitude: 2560
@@ -3888,6 +3894,11 @@ PMAK:
 	RevealsShroud@GAPGEN:
 		Range: 10c0
 		Type: GroundPosition
+	Armament@PRIMARYBLD:
+		Weapon: PeacemakerBombsBuilding
+		LocalOffset: 0,0,-85
+		PauseOnCondition: !ammo || blinded
+		Name: primarybld
 	Armament@PRIMARY:
 		Weapon: PeacemakerBombs
 		LocalOffset: 0,0,-85
@@ -3898,6 +3909,7 @@ PMAK:
 		Voice: Attack
 		OpportunityFire: true
 		PauseOnCondition: empdisable || being-warped
+		Armaments: primary, primarybld
 	Aircraft:
 		CruiseAltitude: 2560
 		TurnSpeed: 14
