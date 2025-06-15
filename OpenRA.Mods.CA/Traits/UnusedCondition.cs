@@ -15,7 +15,7 @@ namespace OpenRA.Mods.CA.Traits
 	[Desc("Just to prevent YAML errors when a condition isn't used (sometimes cleaner than removing a large number of traits/properties).")]
 	public class UnusedConditionInfo : TraitInfo
 	{
-		[GrantedConditionReference]
+		[ConsumedConditionReference]
 		[FieldLoader.Require]
 		public readonly string Condition = null;
 

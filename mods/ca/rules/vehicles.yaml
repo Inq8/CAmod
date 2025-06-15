@@ -2613,12 +2613,11 @@ MGG:
 	Mobile:
 		Speed: 72
 	Carryable:
-		CarriedCondition: pickedup
 	WithIdleOverlay@SPINNER:
 		Offset: -299,0,171
 		Sequence: spinner
 		PauseOnCondition: empdisable || being-warped || mgg-disabled
-		RequiresCondition: !pickedup
+		RequiresCondition: !passenger
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -4460,6 +4459,7 @@ MDRN:
 		OnAttachTransformInto: mdrn.attached
 		AttachSound: mdrn-attach.aud
 	-Carryable:
+	-GrantCondition@CarriedImmobile:
 	WithIdleOverlay@NSHIELD:
 		Image: nshield-overlay-sm
 	Explodes:
@@ -5906,6 +5906,7 @@ TRPC:
 		Voice: Move
 	Passenger:
 		Voice: Move
+		CargoCondition: passenger
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 5c0
@@ -5971,6 +5972,7 @@ TRPC:
 		Range: 3c0
 		Condition: veh-inspiration
 		ValidRelationships: Ally
+		RequiresCondition: !passenger
 	WithRadiatingCircle:
 		EndRadius: 3c0
 		Interval: 75
@@ -5980,6 +5982,7 @@ TRPC:
 	ProximityExternalCondition@HealAura:
 		Condition: hospitalheal
 		Range: 3c0
+		RequiresCondition: !passenger
 	GivesExperienceCA:
 		ActorExperienceModifier: 2000
 		PlayerExperienceModifier: 0
@@ -6753,8 +6756,10 @@ IFV:
 		RequiresCondition: invulnerability && !ivanturr
 	KillsSelf:
 		RequiresCondition: ivanturr && (invulnerability || tibstealth || triggered || berserk)
+	Passenger:
+		CargoCondition: passenger
 	ProximityExternalCondition@MEDIC:
-		RequiresCondition: medturr
+		RequiresCondition: medturr && !passenger
 		EnableSound: heal2.aud
 		Condition: hospitalheal
 		Range: 3c512
@@ -6933,7 +6938,7 @@ IFV:
 		Condition: cmsr-inspiration
 		ValidRelationships: Ally
 		AffectsParent: true
-		RequiresCondition: cmsrturr
+		RequiresCondition: cmsrturr && !passenger
 	WithRadiatingCircle:
 		EndRadius: 5c0
 		Interval: 75
@@ -7007,6 +7012,9 @@ IFV:
 	RejectsOrders@AnathemaNoUnload:
 		Reject: Unload
 		RequiresCondition: anathema
+	WithColoredSelectionBox@INVIS:
+		RequiresCondition: invisibility || hidden
+		ColorSource: Player
 
 IFV.AI:
 	Inherits: ^Tank
@@ -8142,12 +8150,14 @@ MSAR:
 		RequiresCondition: deployed && !(empdisable || being-warped)
 	Selectable:
 		DecorationBounds: 1280, 1280
+	Passenger:
+		CargoCondition: passenger
 	ProximityExternalCondition@Bino:
 		Condition: bino
 		Range: 12c0
 		EnableSound: dsaping1.aud
 		AffectsParent: False
-		RequiresCondition: deployed && !(empdisable || being-warped)
+		RequiresCondition: deployed && !(empdisable || being-warped) && !passenger
 	Targetable@ChaosImmune:
 		TargetTypes: ChaosImmune
 	RangedGpsRadarProvider:
@@ -8387,6 +8397,7 @@ BATF:
 	Passenger:
 		Weight: 2
 		Voice: Move
+		CargoCondition: passenger
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -8545,7 +8556,7 @@ BATF:
 		RequiresCondition: loaded-medic
 		Offset: 0,0,250
 	ProximityExternalCondition@MEDIC:
-		RequiresCondition: loaded-medic
+		RequiresCondition: loaded-medic && !passenger
 		Condition: hospitalheal
 		Range: 4c512
 	WithRangeCircle@MEDIC:
@@ -10202,6 +10213,7 @@ MOLE:
 	-ChronoshiftableCA:
 	-HealthCapDamageMultiplier@CHRONO:
 	-Carryable:
+	-GrantCondition@CarriedImmobile:
 	Tooltip:
 		Name: Subterranean APC
 	Valued:

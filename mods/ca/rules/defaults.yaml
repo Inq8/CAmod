@@ -2305,9 +2305,12 @@
 		Duration: 100
 		Radius: 2c512
 	Carryable:
-		CarriedCondition: notmobile
+		CarriedCondition: passenger
 		LockedCondition: notmobile
 		LocalOffset: 0,0,200
+	GrantCondition@CarriedImmobile:
+		Condition: notmobile
+		RequiresCondition: passenger
 	CancelActivityOnPickup:
 	Crushable:
 		CrushClasses: tank
@@ -2514,6 +2517,9 @@
 	AttackMove:
 	Passenger:
 		CargoType: Infantry
+		CargoCondition: passenger
+	UnusedCondition@Passenger:
+		Condition: passenger
 	MassEntersCargo:
 	PassengerBlocked:
 	HiddenUnderFog:

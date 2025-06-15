@@ -4591,6 +4591,7 @@ CMSR:
 		Condition: cmsr-inspiration
 		ValidRelationships: Ally
 		AffectsParent: true
+		RequiresCondition: !passenger
 	WithDecoration@CMSRPIP:
 		Image: pips
 		Sequence: pip-cmsr
@@ -4793,7 +4794,7 @@ ZDEF:
 		Range: 2c0
 		Condition: zdef-shield
 		ValidRelationships: Ally
-		RequiresCondition: shield-active
+		RequiresCondition: shield-active && !passenger
 		AffectsParent: true
 
 ENFO:
