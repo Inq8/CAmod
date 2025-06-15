@@ -432,31 +432,36 @@
 ^Inspirable:
 	ExternalCondition@InspirationCmsr:
 		Condition: cmsr-inspiration
-	ExternalCondition@InspirationVeh:
-		Condition: veh-inspiration
+	ExternalCondition@InspirationTrpc:
+		Condition: trpc-inspiration
+	ExternalCondition@InspirationOvld:
+		Condition: ovld-inspiration
 	GrantCondition@Inspiration1:
-		RequiresCondition: cmsr-inspiration || veh-inspiration
+		RequiresCondition: cmsr-inspiration
 		Condition: inspiration
 	GrantCondition@Inspiration2:
-		RequiresCondition: cmsr-inspiration && veh-inspiration
+		RequiresCondition: trpc-inspiration
+		Condition: inspiration
+	GrantCondition@Inspiration3:
+		RequiresCondition: ovld-inspiration
 		Condition: inspiration
 	ReloadDelayMultiplier@Inspiration1:
-		RequiresCondition: inspiration
+		RequiresCondition: inspiration == 1
 		Modifier: 92
 	ReloadAmmoDelayMultiplier@Inspiration1:
-		RequiresCondition: inspiration
+		RequiresCondition: inspiration == 1
 		Modifier: 92
 	SpeedMultiplier@Inspiration1:
 		RequiresCondition: inspiration == 1
 		Modifier: 130
 	ReloadDelayMultiplier@Inspiration2:
-		RequiresCondition: inspiration == 2
+		RequiresCondition: inspiration >= 2
 		Modifier: 84
 	ReloadAmmoDelayMultiplier@Inspiration2:
-		RequiresCondition: inspiration == 2
+		RequiresCondition: inspiration >= 2
 		Modifier: 84
 	SpeedMultiplier@Inspiration2:
-		RequiresCondition: inspiration == 2
+		RequiresCondition: inspiration >= 2
 		Modifier: 140
 	WithIdleOverlay@Inspiration1:
 		Image: ussrstar
@@ -468,7 +473,7 @@
 		Image: ussrstar
 		Sequence: idle-overlay2
 		Palette: effect
-		RequiresCondition: inspiration == 2
+		RequiresCondition: inspiration >= 2
 		IsDecoration: True
 
 ^HeroOfTheUnionTargetable:

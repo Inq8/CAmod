@@ -5968,20 +5968,20 @@ TRPC:
 		ForceTargetRelationships: None
 		Cursor: guard
 		OutsideRangeCursor: guard
-	ProximityExternalCondition@InspirationVeh:
-		Range: 3c0
-		Condition: veh-inspiration
+	ProximityExternalCondition@InspirationTrpc:
+		Range: 4c0
+		Condition: trpc-inspiration
 		ValidRelationships: Ally
 		RequiresCondition: !passenger
 	WithRadiatingCircle:
-		EndRadius: 3c0
+		EndRadius: 4c0
 		Interval: 75
 		Duration: 50
 		ValidRelationships: Ally
 		AlwaysShowMaxRange: true
 	ProximityExternalCondition@HealAura:
 		Condition: hospitalheal
-		Range: 3c0
+		Range: 4c0
 		RequiresCondition: !passenger
 	GivesExperienceCA:
 		ActorExperienceModifier: 2000
@@ -9853,13 +9853,13 @@ OVLD:
 	ReloadAmmoPool@ATOMICAMMO:
 		Count: 6
 		RequiresCondition: atomic-ammo && has-atomic-ammo < 6
-	ProximityExternalCondition@InspirationVeh:
-		Range: 5c0
-		Condition: veh-inspiration
+	ProximityExternalCondition@InspirationOvld:
+		Range: 6c0
+		Condition: ovld-inspiration
 		ValidRelationships: Ally
 		AffectsParent: true
 	WithRadiatingCircle:
-		EndRadius: 5c0
+		EndRadius: 6c0
 		Interval: 75
 		Duration: 50
 		ValidRelationships: Ally
