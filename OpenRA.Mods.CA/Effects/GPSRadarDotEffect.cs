@@ -24,7 +24,7 @@ namespace OpenRA.Mods.CA.Effects
 		readonly GpsRadarDot trait;
 		readonly Animation anim;
 
-		readonly PlayerDictionary<DotState> dotStates;
+		readonly DotState dotState;
 		readonly IDefaultVisibility visibility;
 		readonly IVisibilityModifier[] visibilityModifiers;
 
@@ -55,8 +55,9 @@ namespace OpenRA.Mods.CA.Effects
 			visibilityModifiers = actor.TraitsImplementing<IVisibilityModifier>().ToArray();
 			ticksUntilRenderCheck = ticksBetweenRenderChecks;
 
-			dotStates = new PlayerDictionary<DotState>(actor.World,
-				p => new DotState(actor, p.PlayerActor.Trait<GpsRadarWatcher>(), p.FrozenActorLayer));
+			var renderPlayer = actor.World.RenderPlayer;
+			if (renderPlayer != null)
+				dotState = new DotState(actor, renderPlayer.PlayerActor.Trait<GpsRadarWatcher>(), renderPlayer.FrozenActorLayer);
 		}
 
 		bool ShouldRender(DotState state, Player toPlayer)
@@ -96,11 +97,8 @@ namespace OpenRA.Mods.CA.Effects
 			if (--ticksUntilRenderCheck > 0)
 				return;
 
-			for (var playerIndex = 0; playerIndex < dotStates.Count; playerIndex++)
-			{
-				var state = dotStates[playerIndex];
-				state.Visible = ShouldRender(state, world.Players[playerIndex]);
-			}
+			if (dotState != null && world.RenderPlayer != null)
+				dotState.Visible = ShouldRender(dotState, world.RenderPlayer);
 
 			ticksUntilRenderCheck = ticksBetweenRenderChecks;
 		}
@@ -112,7 +110,7 @@ namespace OpenRA.Mods.CA.Effects
 
 		IEnumerable<IRenderable> IEffectAnnotation.RenderAnnotation(WorldRenderer wr)
 		{
-			if (actor.World.RenderPlayer == null || !dotStates[actor.World.RenderPlayer].Visible)
+			if (actor.World.RenderPlayer == null || !dotState.Visible)
 				return SpriteRenderable.None;
 
 			var effectiveOwner = actor.EffectiveOwner != null && actor.EffectiveOwner.Owner != null ?

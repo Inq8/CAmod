@@ -247,8 +247,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			foreach (var a in owner.Units)
 			{
 				var currentActivity = a.CurrentActivity;
-				var activityType = currentActivity.GetType();
-				var nextActivity = currentActivity.NextActivity;
+				var activityType = currentActivity?.GetType();
 
 				var ammoPools = a.TraitsImplementing<AmmoPool>().ToArray();
 				if (!ReloadsAutomatically(ammoPools, a.TraitOrDefault<Rearmable>()))

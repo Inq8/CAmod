@@ -1157,7 +1157,6 @@ WEAP:
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@NOMCV: ^UnlocksMcvIfNoneOwned
 	Inherits@VEH: ^ProducesVehicles
-	Inherits@A2GPROTECTION: ^BuildingAirToGroundProtection
 	Selectable:
 		Bounds: 3072, 2048
 	Buildable:
@@ -1268,7 +1267,6 @@ FACT:
 	Inherits: ^Building
 	Inherits@BOTI: ^BotFallbackInsurance
 	Inherits@BLD: ^ProducesBuildings
-	Inherits@A2GPROTECTION: ^BuildingAirToGroundProtection
 	Selectable:
 		Bounds: 3072, 3072
 	Building:
@@ -1416,6 +1414,7 @@ PROC:
 	Inherits@BOTREF: ^BotRefinery
 	Inherits@ResourceDrainable: ^ResourceDrainable
 	Inherits@EconomyPolicyDiscount: ^EconomyPolicyDiscount
+	Inherits@EconomyPolicyTimeReduction: ^EconomyPolicyTimeReduction
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 60
@@ -2844,7 +2843,6 @@ WEAP.TD:
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@NOMCV: ^UnlocksMcvIfNoneOwned
 	Inherits@VEH: ^ProducesVehicles
-	Inherits@A2GPROTECTION: ^BuildingAirToGroundProtection
 	RenderSprites:
 		Image: awep
 	Selectable:
@@ -2964,7 +2962,6 @@ AIRS:
 	Inherits@NOMCV: ^UnlocksMcvIfNoneOwned
 	Inherits@VEH: ^ProducesVehicles
 	Inherits@NODAIRDROPPOWERS: ^NodAirdropPowers
-	Inherits@A2GPROTECTION: ^BuildingAirToGroundProtection
 	RenderSprites:
 		Image: astrip
 	HitShape:
@@ -3189,7 +3186,6 @@ AFAC:
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@BOTI: ^BotFallbackInsurance
 	Inherits@BLD: ^ProducesBuildings
-	Inherits@A2GPROTECTION: ^BuildingAirToGroundProtection
 	RenderSprites:
 		FactionImages:
 			nod: nodfact
@@ -4113,6 +4109,7 @@ PROC.TD:
 	Inherits@BOTREF: ^BotRefinery
 	Inherits@ResourceDrainable: ^ResourceDrainable
 	Inherits@EconomyPolicyDiscount: ^EconomyPolicyDiscount
+	Inherits@EconomyPolicyTimeReduction: ^EconomyPolicyTimeReduction
 	HitShape:
 		Type: Rectangle
 			TopLeft: -1536, -512
@@ -5856,6 +5853,18 @@ UPGC:
 		InitialOnly: true
 		RequiresCondition: tower.shield
 		Ticks: 75
+	ProvidesUpgrade@Firestorm:
+		RequiresCondition: tower.rocket
+		Type: upgc.bomb
+	ProvidesUpgrade@AdvancedRadar:
+		RequiresCondition: tower.radar
+		Type: upgc.seek
+	ProvidesUpgrade@NaniteShield:
+		RequiresCondition: tower.shield
+		Type: upgc.hold
+	ProvidesUpgrade@SupplyDrop:
+		RequiresCondition: tower.drop
+		Type: upgc.drop
 
 UPGC.SOCK:
 	AlwaysVisible:

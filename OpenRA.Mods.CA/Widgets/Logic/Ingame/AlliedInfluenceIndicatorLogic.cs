@@ -8,6 +8,7 @@
  */
 #endregion
 
+using System;
 using System.Linq;
 using OpenRA.Mods.CA.Traits;
 using OpenRA.Mods.Common.Widgets;
@@ -65,7 +66,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			if (timeline != null)
 			{
 				influenceMeter.Thresholds = timeline.Thresholds;
-				influenceMeter.MaxTicks = timeline.Info.MaxTicks;
+				influenceMeter.MaxTicks = timeline.MaxTicks;
 
 				var influenceMeterTooltipTextCached = new CachedTransform<string, string>((timeCoalitionPolicy) =>
 				{
@@ -91,10 +92,10 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 					return influenceMeterTooltipTextCached.Update(timeCoalitionPolicy);
 				};
 
-				timeline.PercentageChanged += HandlePercentageChanged;
+				timeline.TicksChanged += HandleTicksChanged;
 
 				coalitionImage.GetImageName = () =>  {
-					if (timeline.PercentageComplete == 100)
+					if (timeline.TicksElapsed >= timeline.MaxTicks)
 						return chosenCoalition ?? NoneImage;
 
 					return DisabledImage;
@@ -124,13 +125,13 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				upgradesManager.UpgradeCompleted -= HandleUpgradeCompleted;
 		}
 
-		private void HandlePercentageChanged(int percentage)
+		private void HandleTicksChanged(int ticks)
 		{
-			influenceMeter.Percentage = percentage;
+			influenceMeter.CurrentTicks = ticks;
 
-			if (percentage == 100)
+			if (ticks >= timeline.MaxTicks)
 			{
-				timeline.PercentageChanged -= HandlePercentageChanged;
+				timeline.TicksChanged -= HandleTicksChanged;
 				influenceMeter.IsVisible = () => false;
 			}
 		}

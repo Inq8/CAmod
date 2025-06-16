@@ -29,8 +29,8 @@ namespace OpenRA.Mods.CA.Widgets
 		protected Lazy<TooltipContainerWidget> tooltipContainer;
 		private int2[] polygonPoints;
 
-		public int Percentage = 0;
 		public int MaxTicks = 0;
+		public int CurrentTicks = 0;
 		public int[] Thresholds = { };
 
 		public Func<string> GetTooltipText = () => "";
@@ -78,15 +78,12 @@ namespace OpenRA.Mods.CA.Widgets
 				bounds.Top + p.Y
 			)).ToArray();
 
-			// Calculate total possible stripes accounting for partial stripes
 			var totalStripes = (bounds.Height + 1) / 2;
-			var ticksPerStripe = MaxTicks / totalStripes;
-			var activeStripes = (totalStripes * Percentage) / 100;
+			var activeStripes = (int)Math.Round((double)totalStripes * CurrentTicks / MaxTicks);
 
-			 // Calculate threshold positions
-			var thresholdStripes = Thresholds.Select(t => (totalStripes * t) / 100 - 1).ToArray();
+			// Map each threshold tick to a stripe index
+			var thresholdStripes = Thresholds.Select(t => (int)Math.Round((double)t * totalStripes / MaxTicks) - 1).ToArray();
 
-			 // Draw all stripes from bottom to top
 			for (var i = 0; i < totalStripes; i++)
 			{
 				var y = bounds.Bottom - 1 - (i * 2);
@@ -102,30 +99,31 @@ namespace OpenRA.Mods.CA.Widgets
 
 					if (Intersects(lineStart, lineEnd, p1, p2, out var intersectX))
 						intersections.Add(intersectX);
-				 }
+				}
 
-				 // Sort intersections from left to right
+				// Sort intersections from left to right
 				intersections.Sort();
 
-				 // Draw line segments between pairs of intersections
+				// Draw line segments between pairs of intersections
 				for (var j = 0; j < intersections.Count - 1; j += 2)
 				{
 					var start = new float2(intersections[j], y);
 					var end = new float2(intersections[j + 1], y);
 
-					// Choose color based on stripe position
 					Color color;
+
+					var isThresholdStripe = thresholdStripes.Contains(i);
+
 					if (i < activeStripes)
 					{
-						var isThresholdStripe = thresholdStripes.Contains(i);
+						// If this is a threshold stripe, check if we've reached the threshold
 						if (isThresholdStripe)
 						{
 							// Find which threshold this stripe represents
 							var thresholdIndex = Array.IndexOf(thresholdStripes, i);
 							var actualThreshold = Thresholds[thresholdIndex];
 
-							// Only use threshold color if we've actually reached this threshold
-							color = Percentage >= actualThreshold ? ThresholdColor : BarColor;
+							color = CurrentTicks >= actualThreshold ? ThresholdColor : BarColor;
 						}
 						else
 						{
@@ -134,7 +132,7 @@ namespace OpenRA.Mods.CA.Widgets
 					}
 					else
 					{
-						color = thresholdStripes.Contains(i) ? InactiveThresholdColor : InactiveBarColor;
+						color = isThresholdStripe ? InactiveThresholdColor : InactiveBarColor;
 					}
 
 					Game.Renderer.RgbaColorRenderer.DrawLine(start, end, 1, color);

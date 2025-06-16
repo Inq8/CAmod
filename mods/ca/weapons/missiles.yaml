@@ -202,7 +202,7 @@ SeismicMissile:
 		ValidTargets: Ground, Water
 		Versus:
 			None: 10
-			Wood: 70
+			Wood: 60
 			Light: 75
 			Heavy: 100
 			Concrete: 75
@@ -421,11 +421,14 @@ HellfireAG.Harrier:
 	BurstDelays: 10
 	TargetActorCenter: true
 	Projectile: MissileCA
-		Speed: 256
-		HorizontalRateOfTurn: 40
+		Speed: 488
 		RangeLimit: 12c512
 		ContrailLength: 10
+		ContrailStartColor: dddddd
+		ContrailStartWidth: 52
 		Inaccuracy: 512
+		HorizontalRateOfTurn: 40
+		VerticalRateOfTurn: 30
 	Warhead@1Dam: SpreadDamage
 		Spread: 448
 		Damage: 2000
@@ -433,7 +436,7 @@ HellfireAG.Harrier:
 		ValidTargets: Ground, Water, Trees
 		Versus:
 			None: 100
-			Wood: 65
+			Wood: 56
 			Light: 55
 			Heavy: 28
 			Concrete: 25
@@ -496,8 +499,13 @@ HellfireAA.Harrier:
 	BurstDelays: 10
 	Range: 7c512
 	Projectile: MissileCA
+		Speed: 488
 		RangeLimit: 12c512
 		ContrailLength: 10
+		ContrailStartColor: dddddd
+		ContrailStartWidth: 52
+		HorizontalRateOfTurn: 40
+		VerticalRateOfTurn: 30
 	Warhead@1Dam: SpreadDamage
 		Damage: 8000
 	Warhead@smallDamage: SpreadDamage
@@ -820,6 +828,11 @@ APTusk:
 			Light: 85
 			Heavy: 100
 			Aircraft: 25
+	Warhead@3Eff: CreateEffect
+		Explosions: building, building2
+	Warhead@4EffWater: CreateEffect
+		Explosions: large_splash
+		ImpactSounds: splashl1.aud, splashl2.aud
 	Warhead@5EffAir: CreateEffect
 		Explosions: med_explosion_air
 		ImpactSounds: kaboom25.aud

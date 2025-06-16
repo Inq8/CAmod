@@ -506,7 +506,10 @@ NUKC:
 
 GTNK:
 	Inherits: 2TNK
-	-Buildable:
+	Buildable:
+		Queue: GrizzlyTank
+		-Prerequisites:
+		Description: Allied paradropped battle tank.
 	Valued:
 		Cost: 875
 	Tooltip:
@@ -2610,12 +2613,11 @@ MGG:
 	Mobile:
 		Speed: 72
 	Carryable:
-		CarriedCondition: pickedup
 	WithIdleOverlay@SPINNER:
 		Offset: -299,0,171
 		Sequence: spinner
 		PauseOnCondition: empdisable || being-warped || mgg-disabled
-		RequiresCondition: !pickedup
+		RequiresCondition: !passenger
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -4457,6 +4459,7 @@ MDRN:
 		OnAttachTransformInto: mdrn.attached
 		AttachSound: mdrn-attach.aud
 	-Carryable:
+	-GrantCondition@CarriedImmobile:
 	WithIdleOverlay@NSHIELD:
 		Image: nshield-overlay-sm
 	Explodes:
@@ -5282,6 +5285,7 @@ BIKE:
 	WithFacingSpriteBody:
 		RequiresCondition: !tibcore-upgrade
 	WithFacingSpriteBody@UPG:
+		Name: tibcore
 		RequiresCondition: tibcore-upgrade
 		Sequence: idle-upgrade
 
@@ -5902,6 +5906,7 @@ TRPC:
 		Voice: Move
 	Passenger:
 		Voice: Move
+		CargoCondition: passenger
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 5c0
@@ -5963,19 +5968,21 @@ TRPC:
 		ForceTargetRelationships: None
 		Cursor: guard
 		OutsideRangeCursor: guard
-	ProximityExternalCondition@InspirationVeh:
-		Range: 3c0
-		Condition: veh-inspiration
+	ProximityExternalCondition@InspirationTrpc:
+		Range: 4c0
+		Condition: trpc-inspiration
 		ValidRelationships: Ally
+		RequiresCondition: !passenger
 	WithRadiatingCircle:
-		EndRadius: 3c0
+		EndRadius: 4c0
 		Interval: 75
 		Duration: 50
 		ValidRelationships: Ally
 		AlwaysShowMaxRange: true
 	ProximityExternalCondition@HealAura:
 		Condition: hospitalheal
-		Range: 3c0
+		Range: 4c0
+		RequiresCondition: !passenger
 	GivesExperienceCA:
 		ActorExperienceModifier: 2000
 		PlayerExperienceModifier: 0
@@ -6749,8 +6756,10 @@ IFV:
 		RequiresCondition: invulnerability && !ivanturr
 	KillsSelf:
 		RequiresCondition: ivanturr && (invulnerability || tibstealth || triggered || berserk)
+	Passenger:
+		CargoCondition: passenger
 	ProximityExternalCondition@MEDIC:
-		RequiresCondition: medturr
+		RequiresCondition: medturr && !passenger
 		EnableSound: heal2.aud
 		Condition: hospitalheal
 		Range: 3c512
@@ -6929,7 +6938,7 @@ IFV:
 		Condition: cmsr-inspiration
 		ValidRelationships: Ally
 		AffectsParent: true
-		RequiresCondition: cmsrturr
+		RequiresCondition: cmsrturr && !passenger
 	WithRadiatingCircle:
 		EndRadius: 5c0
 		Interval: 75
@@ -7003,6 +7012,9 @@ IFV:
 	RejectsOrders@AnathemaNoUnload:
 		Reject: Unload
 		RequiresCondition: anathema
+	WithColoredSelectionBox@INVIS:
+		RequiresCondition: invisibility || hidden
+		ColorSource: Player
 
 IFV.AI:
 	Inherits: ^Tank
@@ -7405,7 +7417,7 @@ JUGG:
 		Queue: VehicleSQ, VehicleMQ
 		IconPalette: chrometd
 		Description: Tough artillery battle-mech.
-		Prerequisites: upgc, ~vehicles.talon, ~techlevel.high
+		Prerequisites: gtek, ~vehicles.talon, ~techlevel.high
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
 		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets\n• Cannot fire while moving
@@ -7452,6 +7464,7 @@ JUGG:
 		ReloadingCondition: reloading-secondary
 	Armament@TARGETTER:
 		Name: targetter
+		LocalOffset: 700,0,650, 700,100,650, 700,-100,650
 		Weapon: JuggernautGunTargeting
 		PauseOnCondition: reloading-primary || reloading-secondary
 		RequiresCondition: attack-move || assault-move
@@ -7496,10 +7509,13 @@ JUGG:
 	GrantConditionOnMovement@MOVING:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 		Condition: moving
+	RangeMultiplier@GyroPassive:
+		Modifier: 150
+		RequiresCondition: gyro-upgrade
 	RangeMultiplier@GYRO:
-		Modifier: 140
+		Modifier: 135
 	ReloadDelayMultiplier@GYRO:
-		Modifier: 140
+		Modifier: 135
 	Carryable:
 		LocalOffset: 0,0,700
 	-Crushable:
@@ -8134,12 +8150,14 @@ MSAR:
 		RequiresCondition: deployed && !(empdisable || being-warped)
 	Selectable:
 		DecorationBounds: 1280, 1280
+	Passenger:
+		CargoCondition: passenger
 	ProximityExternalCondition@Bino:
 		Condition: bino
 		Range: 12c0
 		EnableSound: dsaping1.aud
 		AffectsParent: False
-		RequiresCondition: deployed && !(empdisable || being-warped)
+		RequiresCondition: deployed && !(empdisable || being-warped) && !passenger
 	Targetable@ChaosImmune:
 		TargetTypes: ChaosImmune
 	RangedGpsRadarProvider:
@@ -8379,6 +8397,7 @@ BATF:
 	Passenger:
 		Weight: 2
 		Voice: Move
+		CargoCondition: passenger
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -8537,7 +8556,7 @@ BATF:
 		RequiresCondition: loaded-medic
 		Offset: 0,0,250
 	ProximityExternalCondition@MEDIC:
-		RequiresCondition: loaded-medic
+		RequiresCondition: loaded-medic && !passenger
 		Condition: hospitalheal
 		Range: 4c512
 	WithRangeCircle@MEDIC:
@@ -9183,6 +9202,9 @@ BASI:
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
+	WithColoredSelectionBox@INVIS:
+		RequiresCondition: invisibility || hidden
+		ColorSource: Player
 
 MANT:
 	Inherits: ^VehicleTD
@@ -9831,13 +9853,13 @@ OVLD:
 	ReloadAmmoPool@ATOMICAMMO:
 		Count: 6
 		RequiresCondition: atomic-ammo && has-atomic-ammo < 6
-	ProximityExternalCondition@InspirationVeh:
-		Range: 5c0
-		Condition: veh-inspiration
+	ProximityExternalCondition@InspirationOvld:
+		Range: 6c0
+		Condition: ovld-inspiration
 		ValidRelationships: Ally
 		AffectsParent: true
 	WithRadiatingCircle:
-		EndRadius: 5c0
+		EndRadius: 6c0
 		Interval: 75
 		Duration: 50
 		ValidRelationships: Ally
@@ -10191,6 +10213,7 @@ MOLE:
 	-ChronoshiftableCA:
 	-HealthCapDamageMultiplier@CHRONO:
 	-Carryable:
+	-GrantCondition@CarriedImmobile:
 	Tooltip:
 		Name: Subterranean APC
 	Valued:

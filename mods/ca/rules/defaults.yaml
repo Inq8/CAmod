@@ -432,31 +432,36 @@
 ^Inspirable:
 	ExternalCondition@InspirationCmsr:
 		Condition: cmsr-inspiration
-	ExternalCondition@InspirationVeh:
-		Condition: veh-inspiration
+	ExternalCondition@InspirationTrpc:
+		Condition: trpc-inspiration
+	ExternalCondition@InspirationOvld:
+		Condition: ovld-inspiration
 	GrantCondition@Inspiration1:
-		RequiresCondition: cmsr-inspiration || veh-inspiration
+		RequiresCondition: cmsr-inspiration
 		Condition: inspiration
 	GrantCondition@Inspiration2:
-		RequiresCondition: cmsr-inspiration && veh-inspiration
+		RequiresCondition: trpc-inspiration
+		Condition: inspiration
+	GrantCondition@Inspiration3:
+		RequiresCondition: ovld-inspiration
 		Condition: inspiration
 	ReloadDelayMultiplier@Inspiration1:
-		RequiresCondition: inspiration
+		RequiresCondition: inspiration == 1
 		Modifier: 92
 	ReloadAmmoDelayMultiplier@Inspiration1:
-		RequiresCondition: inspiration
+		RequiresCondition: inspiration == 1
 		Modifier: 92
 	SpeedMultiplier@Inspiration1:
 		RequiresCondition: inspiration == 1
 		Modifier: 130
 	ReloadDelayMultiplier@Inspiration2:
-		RequiresCondition: inspiration == 2
+		RequiresCondition: inspiration >= 2
 		Modifier: 84
 	ReloadAmmoDelayMultiplier@Inspiration2:
-		RequiresCondition: inspiration == 2
+		RequiresCondition: inspiration >= 2
 		Modifier: 84
 	SpeedMultiplier@Inspiration2:
-		RequiresCondition: inspiration == 2
+		RequiresCondition: inspiration >= 2
 		Modifier: 140
 	WithIdleOverlay@Inspiration1:
 		Image: ussrstar
@@ -468,7 +473,7 @@
 		Image: ussrstar
 		Sequence: idle-overlay2
 		Palette: effect
-		RequiresCondition: inspiration == 2
+		RequiresCondition: inspiration >= 2
 		IsDecoration: True
 
 ^HeroOfTheUnionTargetable:
@@ -1161,11 +1166,6 @@
 	DamageTypeDamageMultiplier@A2GPROTECTION:
 		DamageTypes: AirToGround
 		Modifier: 50
-
-^BuildingAirToGroundProtection:
-	DamageTypeDamageMultiplier@A2GPROTECTION:
-		DamageTypes: AirToGround
-		Modifier: 85
 
 ^GyroStabilizers:
 	WithPalettedOverlay@GYRO:
@@ -2093,6 +2093,17 @@
 		Multiplier: 70
 		Prerequisites: economy.policy, influence.level3
 
+^EconomyPolicyTimeReduction:
+	ProductionTimeMultiplier@EconomyPolicy1:
+		Multiplier: 90
+		Prerequisites: economy.policy, influence.level1, !influence.level2
+	ProductionTimeMultiplier@EconomyPolicy2:
+		Multiplier: 80
+		Prerequisites: economy.policy, influence.level2, !influence.level3
+	ProductionTimeMultiplier@EconomyPolicy3:
+		Multiplier: 70
+		Prerequisites: economy.policy, influence.level3
+
 ^DefensePolicyDamageReduction:
 	GrantConditionOnPrerequisite@DefensePolicy1:
 		Condition: defense-policy1
@@ -2299,14 +2310,17 @@
 		Duration: 100
 		Radius: 2c512
 	Carryable:
-		CarriedCondition: notmobile
+		CarriedCondition: passenger
 		LockedCondition: notmobile
 		LocalOffset: 0,0,200
+	GrantCondition@CarriedImmobile:
+		Condition: notmobile
+		RequiresCondition: passenger
 	CancelActivityOnPickup:
 	Crushable:
 		CrushClasses: tank
 		WarnProbability: 0
-		RequiresCondition: !invulnerability
+		RequiresCondition: !invulnerability && !being-warped
 	DamagedByTintedCells@RADSTRONG:
 		Damage: 100
 		DamageInterval: 16
@@ -2508,6 +2522,9 @@
 	AttackMove:
 	Passenger:
 		CargoType: Infantry
+		CargoCondition: passenger
+	UnusedCondition@Passenger:
+		Condition: passenger
 	MassEntersCargo:
 	PassengerBlocked:
 	HiddenUnderFog:
@@ -2516,6 +2533,7 @@
 	Crushable:
 		WarnProbability: 100
 		CrushSound: squishy2.aud
+		RequiresCondition: !invulnerability && !being-warped
 	Guard:
 	Guardable:
 	Tooltip:
@@ -3360,6 +3378,10 @@
 		UseLocation: true
 		UseCenterPosition: true
 		LinkedToParent: true
+	InfiltrateForTimedCondition@InfiltratorVisionIcon:
+		Condition: observer-attached
+		Types: VisionInfiltrate
+		Duration: 3000
 	Targetable@InfiltratorVision:
 		TargetTypes: VisionInfiltrate
 		RequiresCondition: !being-warped
@@ -4245,6 +4267,7 @@
 		RequiresCondition: !being-warped
 	InfiltrateForPowerOutage:
 		Types: PowerOutageInfiltrate
+		InfiltrationNotification: BuildingInfiltrated
 	PowerMultiplier@FORCEDISABLE:
 		RequiresCondition: forcedisabled
 		Modifier: 0

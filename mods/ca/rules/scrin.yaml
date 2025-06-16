@@ -4477,7 +4477,6 @@ SFAC:
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@BOTI: ^BotFallbackInsurance
 	Inherits@BLD: ^ProducesBuildings
-	Inherits@A2GPROTECTION: ^BuildingAirToGroundProtection
 	Building:
 		Footprint: xxx xxx ===
 		Dimensions: 3,3
@@ -4670,6 +4669,7 @@ PROC.SCRIN:
 	Inherits@BOTREF: ^BotRefinery
 	Inherits@ResourceDrainable: ^ResourceDrainable
 	Inherits@EconomyPolicyDiscount: ^EconomyPolicyDiscount
+	Inherits@EconomyPolicyTimeReduction: ^EconomyPolicyTimeReduction
 	HitShape:
 		Type: Rectangle
 			TopLeft: -1536, -512
@@ -4844,7 +4844,6 @@ WSPH:
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@NOMCV: ^UnlocksMcvIfNoneOwned
 	Inherits@VEH: ^ProducesVehicles
-	Inherits@A2GPROTECTION: ^BuildingAirToGroundProtection
 	Selectable:
 		Bounds: 3072, 2048
 	Buildable:
@@ -5841,8 +5840,6 @@ SCOL.Temp:
 
 VSPK:
 	Inherits: ^BasicBuilding
-	-FrozenUnderFog:
-	-FrozenUnderFogUpdatedByGpsRadar:
 	-ShakeOnDeath:
 	OwnerLostAction:
 		Action: Kill
@@ -5851,7 +5848,6 @@ VSPK:
 	Explodes:
 		Weapon: SmallBuildingExplode
 		EmptyWeapon: SmallBuildingExplode
-	HiddenUnderFog:
 	Selectable:
 		Bounds: 1280, 1792, 0, -512
 		DecorationBounds: 1280, 2560, 0, -768

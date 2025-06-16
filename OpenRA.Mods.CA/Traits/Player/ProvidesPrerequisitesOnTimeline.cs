@@ -25,10 +25,7 @@ namespace OpenRA.Mods.CA.Traits
 		[FieldLoader.Require]
 		public readonly string Type = null;
 
-		[Desc("Maximum number of ticks.")]
-		public readonly int MaxTicks = 30000;
-
-		[Desc("Prerequesities provided at percentage thresholds.")]
+		[Desc("Prerequisites provided at specific tick counts.")]
 		public readonly Dictionary<int, string> Prerequisites = null;
 
 		[Desc("List of factions that can affect this count. Leave blank for any faction.")]
@@ -51,9 +48,6 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Sound notification to play when count is incremented.")]
 		public readonly string PrerequisiteGrantedSound = null;
 
-		[Desc("Ticks before playing notification.")]
-		public readonly int MaxBoostMultiplier = 1;
-
 		IEnumerable<string> ITechTreePrerequisiteInfo.Prerequisites(ActorInfo info)
 		{
 			return Prerequisites.Values;
@@ -69,7 +63,7 @@ namespace OpenRA.Mods.CA.Traits
 		readonly HashSet<string> prerequisitesGranted;
 		readonly bool validFaction;
 		TechTree techTree;
-		ProductionTracker productionTracker;
+		UpgradesManager upgradesManager;
 
 		int ticksElapsed;
 		HashSet<int> thresholdsPassed;
@@ -78,7 +72,7 @@ namespace OpenRA.Mods.CA.Traits
 		bool dummyActorQueued;
 		int ticksUntilSpawnDummyActor;
 
-		public event Action<int> PercentageChanged;
+		public event Action<int> TicksChanged;
 
 		public ProvidesPrerequisitesOnTimeline(ActorInitializer init, ProvidesPrerequisitesOnTimelineInfo info)
 		{
@@ -93,10 +87,10 @@ namespace OpenRA.Mods.CA.Traits
 			validFaction = info.Factions.Length == 0 || info.Factions.Contains(player.Faction.InternalName);
 		}
 
+		public int MaxTicks => Info.Prerequisites?.Keys.Max() ?? 0;
 		public bool Enabled => validFaction;
 		public int TicksElapsed => ticksElapsed;
-		public int TicksRemaining => Info.MaxTicks - ticksElapsed;
-		public int PercentageComplete => ticksElapsed * 100 / Info.MaxTicks;
+		public int TicksRemaining => MaxTicks - ticksElapsed;
 		public int[] Thresholds => Info.Prerequisites?.Keys.ToArray() ?? Array.Empty<int>();
 		public int ThresholdsPassed => thresholdsPassed.Count;
 
@@ -108,15 +102,14 @@ namespace OpenRA.Mods.CA.Traits
 					return 0;
 
 				var nextThreshold = Info.Prerequisites.Keys
-					.Where(t => t > PercentageComplete)
+					.Where(t => t > ticksElapsed)
 					.OrderBy(t => t)
 					.FirstOrDefault();
 
 				if (nextThreshold == 0)
 					return 0;
 
-				var ticksNeededForThreshold = Info.MaxTicks * nextThreshold / 100;
-				return ticksNeededForThreshold - ticksElapsed;
+				return nextThreshold - ticksElapsed;
 			}
 		}
 
@@ -133,16 +126,16 @@ namespace OpenRA.Mods.CA.Traits
 			var playerActor = self.Info.Name == "player" ? self : self.Owner.PlayerActor;
 			techTree = playerActor.Trait<TechTree>();
 			techTree.ActorChanged(self);
-			productionTracker = playerActor.Trait<ProductionTracker>();
+			upgradesManager = playerActor.Trait<UpgradesManager>();
 		}
 
-		void HandlePrerequisiteThreshold(int percentage)
+		void HandlePrerequisiteThreshold(int tick)
 		{
-			if (Info.Prerequisites == null || !Info.Prerequisites.ContainsKey(percentage) || thresholdsPassed.Contains(percentage))
+			if (Info.Prerequisites == null || !Info.Prerequisites.ContainsKey(tick) || thresholdsPassed.Contains(tick))
 				return;
 
-			thresholdsPassed.Add(percentage);
-			var prerequisite = Info.Prerequisites[percentage];
+			thresholdsPassed.Add(tick);
+			var prerequisite = Info.Prerequisites[tick];
 
 			if (!prerequisitesGranted.Contains(prerequisite))
 			{
@@ -151,7 +144,7 @@ namespace OpenRA.Mods.CA.Traits
 
 				// if there's an actor that represents the prerequisite, add it to the build order
 				if (self.World.Map.Rules.Actors.ContainsKey(prerequisite))
-					productionTracker.BuildOrderItemCreated(prerequisite, 1, true);
+					upgradesManager.UpgradeProviderCreated(prerequisite);
 
 				if (Info.PrerequisiteGrantedSound != null)
 					Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Sounds",
@@ -159,8 +152,8 @@ namespace OpenRA.Mods.CA.Traits
 
 				if (Info.DummyActor != null)
 				{
-					if (Info.PrerequisiteGrantedNotifications != null && Info.PrerequisiteGrantedNotifications.ContainsKey(percentage))
-						notificationQueued = Info.PrerequisiteGrantedNotifications[percentage];
+					if (Info.PrerequisiteGrantedNotifications != null && Info.PrerequisiteGrantedNotifications.ContainsKey(tick))
+						notificationQueued = Info.PrerequisiteGrantedNotifications[tick];
 
 					dummyActorQueued = true;
 					ticksUntilSpawnDummyActor = 1;
@@ -173,16 +166,16 @@ namespace OpenRA.Mods.CA.Traits
 			if (!Enabled)
 				return;
 
-			var previousPercentage = PercentageComplete;
+			var previousTicks = ticksElapsed;
 
-			if (ticksElapsed < Info.MaxTicks)
+			if (ticksElapsed < MaxTicks)
 			{
 				ticksElapsed++;
 
-				if (previousPercentage != PercentageComplete)
-					PercentageChanged?.Invoke(PercentageComplete);
+				if (previousTicks != ticksElapsed)
+					TicksChanged?.Invoke(ticksElapsed);
 
-				HandlePrerequisiteThreshold(PercentageComplete);
+				HandlePrerequisiteThreshold(ticksElapsed);
 			}
 
 			if (notificationQueued != null && --ticksUntilNotification <= 0)
@@ -216,27 +209,20 @@ namespace OpenRA.Mods.CA.Traits
 			if (!Enabled || ticks <= 0)
 				return;
 
-			var previousPercentage = PercentageComplete;
 			var initialTicks = ticksElapsed;
 
-			ticksElapsed = Math.Min(ticksElapsed + ticks, Info.MaxTicks);
+			ticksElapsed = Math.Min(ticksElapsed + ticks, MaxTicks);
 
 			if (initialTicks == ticksElapsed)
 				return;
 
-			if (previousPercentage != PercentageComplete)
-				PercentageChanged?.Invoke(PercentageComplete);
+			if (initialTicks != ticksElapsed)
+				TicksChanged?.Invoke(ticksElapsed);
 
 			if (Info.Prerequisites != null)
 			{
-				var startPercentage = initialTicks * 100 / Info.MaxTicks;
-				var endPercentage = PercentageComplete;
-
-				foreach (var threshold in Info.Prerequisites)
-				{
-					if (threshold.Key > startPercentage && threshold.Key <= endPercentage)
-						HandlePrerequisiteThreshold(threshold.Key);
-				}
+				for (int t = initialTicks + 1; t <= ticksElapsed; t++)
+					HandlePrerequisiteThreshold(t);
 			}
 		}
 	}

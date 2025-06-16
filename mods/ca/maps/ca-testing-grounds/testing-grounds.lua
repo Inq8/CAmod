@@ -129,5 +129,8 @@ ClearUpgrades = function()
 end
 
 IsUpgrade = function(a)
+    if a.Type == "wormhole.clear.upgrades" then
+        return
+    end
 	return string.find(a.Type, ".upgrade") or string.find(a.Type, ".strat")
 end
