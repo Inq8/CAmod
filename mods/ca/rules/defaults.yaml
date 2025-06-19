@@ -3385,6 +3385,13 @@
 	Targetable@InfiltratorVision:
 		TargetTypes: VisionInfiltrate
 		RequiresCondition: !being-warped
+	GivesPlayerExperienceOnCapture:
+		CaptureTypes: building
+		PlayerExperience: 12
+		AddExperienceFromValue: true
+		ValuePercentage: 1
+		PlayerExperienceRelationships: Enemy, Neutral
+		SubsequentCaptureModifier: 50
 
 ^BuildingTD:
 	Inherits@1: ^Building
@@ -3578,6 +3585,11 @@
 		GenericVisibility: None
 	MapEditorData:
 		Categories: Tech building
+	GivesPlayerExperienceOnCapture:
+		CaptureTypes: building
+		PlayerExperience: 10
+		PlayerExperienceRelationships: Enemy, Neutral
+		SubsequentCaptureModifier: 50
 
 ^CommandoSkull:
 	WithDecoration@COMMANDOSKULL:
@@ -4349,7 +4361,6 @@
 		RequiresCondition: capturing
 	Captures:
 		CaptureTypes: building
-		PlayerExperience: 25
 		CaptureDelay: 150
 	Armament@bombdefuser:
 		Weapon: DefuseKit
