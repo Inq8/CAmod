@@ -27,7 +27,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly int Duration = 0;
 
 		[Desc("The `TargetTypes` from `Targetable` that are allowed to enter.")]
-		public readonly BitSet<TargetableType> Types = default(BitSet<TargetableType>);
+		public readonly BitSet<TargetableType> Types = default;
 
 		[NotificationReference("Speech")]
 		[Desc("Sound the victim will hear when technology gets stolen.")]
@@ -36,6 +36,9 @@ namespace OpenRA.Mods.CA.Traits
 		[NotificationReference("Speech")]
 		[Desc("Sound the perpetrator will hear after successful infiltration.")]
 		public readonly string InfiltrationNotification = null;
+
+		[Desc("Experience to grant to the infiltrating player.")]
+		public readonly int PlayerExperience = 0;
 
 		public readonly bool ShowSelectionBar = false;
 		public readonly Color SelectionBarColor = Color.Red;
@@ -69,6 +72,8 @@ namespace OpenRA.Mods.CA.Traits
 
 			if (conditionToken != Actor.InvalidConditionToken)
 				conditionToken = self.RevokeCondition(conditionToken);
+
+			infiltrator.Owner.PlayerActor.TraitOrDefault<PlayerExperience>()?.GiveExperience(info.PlayerExperience);
 
 			conditionToken = self.GrantCondition(info.Condition);
 		}

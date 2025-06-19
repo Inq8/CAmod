@@ -47,6 +47,7 @@ MSLO:
 		Types: ResetSupportPowerInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+		PlayerExperience: 15
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: ResetSupportPowerInfiltrate
@@ -125,6 +126,7 @@ SPEN:
 		Types: GrantSupportPowerInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+		PlayerExperience: 15
 	Valued:
 		Cost: 800
 	Tooltip:
@@ -238,6 +240,7 @@ SYRD:
 		Types: GrantSupportPowerInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+		PlayerExperience: 15
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 210
@@ -368,6 +371,7 @@ IRON:
 		Types: ResetSupportPowerInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+		PlayerExperience: 15
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: ResetSupportPowerInfiltrate
@@ -1247,12 +1251,14 @@ WEAP:
 		Types: VetInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+		PlayerExperience: 15
 	InfiltrateToCreateProxyActor@STOLENTECH:
 		Types: StealTechInfiltrate
 		Proxy: stolentech.weap
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
 		UseTargetFaction: true
+		PlayerExperience: 15
 	SpawnActorOnMindControlled@STOLENTECH:
 		Actor: stolentech.weap
 		OwnerType: Master
@@ -1486,6 +1492,7 @@ PROC:
 		Percentage: 50
 		Types: StealCreditsInfiltrate
 		InfiltrationNotification: CreditsStolen
+		PlayerExperience: 15
 	WithBuildingBib:
 	WithIdleOverlay@TOP:
 		RequiresCondition: !build-incomplete
@@ -1652,12 +1659,14 @@ HPAD:
 		Proxy: powerproxy.paratroopers.allies
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+		PlayerExperience: 15
 	InfiltrateToCreateProxyActor@STOLENTECH:
 		Types: StealTechInfiltrate
 		Proxy: stolentech.hpad
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
 		UseTargetFaction: true
+		PlayerExperience: 15
 	SpawnActorOnMindControlled@STOLENTECH:
 		Actor: stolentech.hpad
 		OwnerType: Master
@@ -1734,11 +1743,13 @@ AFLD:
 		Types: GrantSupportPowerInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+		PlayerExperience: 15
 	InfiltrateToCreateProxyActor@STOLENTECH:
 		Types: StealTechInfiltrate
 		Proxy: stolentech.afld
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
+		PlayerExperience: 15
 	SpawnActorOnMindControlled@STOLENTECH:
 		Actor: stolentech.afld
 		OwnerType: Master
@@ -2093,11 +2104,13 @@ BARR:
 		Types: VetInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+		PlayerExperience: 15
 	InfiltrateToCreateProxyActor@STOLENTECH:
 		Types: StealTechInfiltrate
 		Proxy: stolentech.barr
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
+		PlayerExperience: 15
 	SpawnActorOnMindControlled@STOLENTECH:
 		Actor: stolentech.barr
 		OwnerType: Master
@@ -2228,11 +2241,13 @@ TENT:
 		Types: VetInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+		PlayerExperience: 15
 	InfiltrateToCreateProxyActor@STOLENTECH:
 		Types: StealTechInfiltrate
 		Proxy: stolentech.tent
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
+		PlayerExperience: 15
 	SpawnActorOnMindControlled@STOLENTECH:
 		Actor: stolentech.tent
 		OwnerType: Master
@@ -2731,6 +2746,7 @@ PYLE:
 		Proxy: stolentech.pyle
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
+		PlayerExperience: 15
 	SpawnActorOnMindControlled@STOLENTECH:
 		Actor: stolentech.pyle
 		OwnerType: Master
@@ -2739,6 +2755,7 @@ PYLE:
 		Types: VetInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+		PlayerExperience: 15
 
 HAND:
 	Inherits: ^BuildingTD
@@ -2826,6 +2843,7 @@ HAND:
 		Proxy: stolentech.hand
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
+		PlayerExperience: 15
 	SpawnActorOnMindControlled@STOLENTECH:
 		Actor: stolentech.hand
 		OwnerType: Master
@@ -2837,6 +2855,7 @@ HAND:
 		Types: VetInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+		PlayerExperience: 15
 
 WEAP.TD:
 	Inherits: ^BuildingTD
@@ -2941,12 +2960,14 @@ WEAP.TD:
 		Types: VetInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+		PlayerExperience: 15
 	InfiltrateToCreateProxyActor@STOLENTECH:
 		Types: StealTechInfiltrate
 		Proxy: stolentech.weap.td
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
 		UseTargetFaction: true
+		PlayerExperience: 15
 	SpawnActorOnMindControlled@STOLENTECH:
 		Actor: stolentech.weap.td
 		OwnerType: Master
@@ -3059,6 +3080,7 @@ AIRS:
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
 		UseTargetFaction: true
+		PlayerExperience: 15
 	SpawnActorOnMindControlled@STOLENTECH:
 		Actor: stolentech.airs
 		OwnerType: Master
@@ -3068,6 +3090,7 @@ AIRS:
 		Types: VetInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+		PlayerExperience: 15
 	ProductionCostMultiplier@FirstSQ:
 		Multiplier: 90
 		Prerequisites: !vehicles.any, global.singlequeue
@@ -3704,6 +3727,7 @@ HQ:
 	SupportPowerChargeBar:
 	InfiltrateForExploration:
 		Types: ResetShroudInfiltrate
+		PlayerExperience: 15
 	Power:
 		Amount: -40
 	ValidFactions:
@@ -3914,6 +3938,7 @@ EYE:
 		Types: ResetSupportPowerInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+		PlayerExperience: 15
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
@@ -4094,12 +4119,14 @@ HPAD.TD:
 		Proxy: powerproxy.paratroopers.allies
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+		PlayerExperience: 15
 	InfiltrateToCreateProxyActor@STOLENTECH:
 		Types: StealTechInfiltrate
 		Proxy: stolentech.hpad.td
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
 		UseTargetFaction: true
+		PlayerExperience: 15
 	SpawnActorOnMindControlled@STOLENTECH:
 		Actor: stolentech.hpad.td
 		OwnerType: Master
@@ -4178,6 +4205,7 @@ PROC.TD:
 		Types: StealCreditsInfiltrate
 		Percentage: 50
 		InfiltrationNotification: CreditsStolen
+		PlayerExperience: 15
 	GrantConditionOnPrerequisite@SHARVUPG:
 		Prerequisites: sharv.upgrade
 		Condition: sharv-upgraded
@@ -4334,11 +4362,13 @@ AFLD.GDI:
 		Proxy: powerproxy.airstrike
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+		PlayerExperience: 15
 	InfiltrateToCreateProxyActor@STOLENTECH:
 		Types: StealTechInfiltrate
 		Proxy: stolentech.afld.gdi
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
+		PlayerExperience: 15
 	SpawnActorOnMindControlled@STOLENTECH:
 		Actor: stolentech.afld.gdi
 		OwnerType: Master
@@ -4592,6 +4622,7 @@ SPEN.nod:
 		Proxy: powerproxy.sonarpulse
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+		PlayerExperience: 15
 	Valued:
 		Cost: 800
 	Tooltip:
@@ -4680,6 +4711,7 @@ SYRD.gdi:
 		Proxy: powerproxy.sonarpulse
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+		PlayerExperience: 15
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 230
@@ -4994,6 +5026,7 @@ SGEN:
 		Types: ResetSupportPowerInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+		PlayerExperience: 15
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: ResetSupportPowerInfiltrate
@@ -5281,6 +5314,7 @@ PATR:
 		Types: ResetSupportPowerInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+		PlayerExperience: 15
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: ResetSupportPowerInfiltrate
@@ -6163,6 +6197,7 @@ MSLO.Nod:
 		Types: ResetSupportPowerInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+		PlayerExperience: 15
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: ResetSupportPowerInfiltrate
@@ -6218,6 +6253,7 @@ WEAT:
 		Types: ResetSupportPowerInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+		PlayerExperience: 15
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: ResetSupportPowerInfiltrate

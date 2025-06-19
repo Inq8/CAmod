@@ -4729,6 +4729,7 @@ PROC.SCRIN:
 		Types: StealCreditsInfiltrate
 		Percentage: 50
 		InfiltrationNotification: CreditsStolen
+		PlayerExperience: 15
 	FreeActor:
 		Actor: HARV.Scrin
 		SpawnOffset: 1,2
@@ -4827,6 +4828,7 @@ PORT:
 		Proxy: stolentech.port
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
+		PlayerExperience: 15
 	SpawnActorOnMindControlled@STOLENTECH:
 		Actor: stolentech.port
 		OwnerType: Master
@@ -4835,6 +4837,7 @@ PORT:
 		Types: VetInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+		PlayerExperience: 15
 	WithIdleOverlay:
 		RequiresCondition: !build-incomplete
 
@@ -4914,11 +4917,13 @@ WSPH:
 		Types: VetInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+		PlayerExperience: 15
 	InfiltrateToCreateProxyActor@STOLENTECH:
 		Types: StealTechInfiltrate
 		Proxy: stolentech.wsph
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
+		PlayerExperience: 15
 	SpawnActorOnMindControlled@STOLENTECH:
 		Actor: stolentech.wsph
 		OwnerType: Master
@@ -4985,6 +4990,7 @@ NERV:
 	WithBuildingBib:
 	InfiltrateForExploration:
 		Types: ResetShroudInfiltrate
+		PlayerExperience: 15
 	Power:
 		Amount: -40
 	ValidFactions:
@@ -5193,6 +5199,7 @@ GRAV:
 		Proxy: stolentech.grav
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
+		PlayerExperience: 15
 	SpawnActorOnMindControlled@STOLENTECH:
 		Actor: stolentech.grav
 		OwnerType: Master
@@ -5421,6 +5428,7 @@ MANI:
 		Types: ResetSupportPowerInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+		PlayerExperience: 15
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: ResetSupportPowerInfiltrate
@@ -5487,6 +5495,7 @@ RFGN:
 		Types: ResetSupportPowerInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+		PlayerExperience: 15
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: ResetSupportPowerInfiltrate
