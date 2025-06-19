@@ -1194,7 +1194,7 @@ GTNK.squad:
 	TooltipExtras:
 		Attributes: • Can crush concrete walls
 	Health:
-		HP: 65000
+		HP: 63000
 	Mobile:
 		Locomotor: heavytracked
 	FirepowerMultiplier@Lasher:
@@ -6000,9 +6000,13 @@ TRPC:
 		VoiceSet: TrpcVoice
 	ExternalCondition@InspirationCmsr:
 		Condition: cmsr-inspiration
+	ExternalCondition@InspirationOvld:
+		Condition: ovld-inspiration
+	ExternalCondition@InspirationTrpc:
+		Condition: trpc-inspiration
 	SpeedMultiplier@InspirationCmsr:
 		Modifier: 112
-		RequiresCondition: cmsr-inspiration
+		RequiresCondition: cmsr-inspiration || ovld-inspiration || trpc-inspiration
 	Sellable:
 		RefundPercent: 10
 
