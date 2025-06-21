@@ -2092,7 +2092,7 @@ HARV:
 		Modifier: 60
 	TransformOnCondition:
 		RequiresCondition: charv-upgrade
-		IntoActor: HARV.Chrono
+		IntoActor: harv.chrono
 	RejectsOrders@Transforming:
 		RequiresCondition: charv-upgrade
 	TransferResourcesOnTransform:
@@ -4500,8 +4500,9 @@ MDRN.Attached:
 		Weapon: M60mgMD.Attached
 		LocalOffset: -500,0,72
 	DamageMultiplier@ATTACHED:
-		Modifier: 15
+		Modifier: 10
 	Attachable:
+		OnDetachBehavior: Transform
 		OnDetachTransformInto: mdrn
 	ChangesHealth:
 		PercentageStep: 2
@@ -5556,7 +5557,7 @@ HARV.TD:
 		Prerequisites: sharv.upgrade
 	TransformOnCondition:
 		RequiresCondition: sharv-upgrade
-		IntoActor: HARV.TD.UPG
+		IntoActor: harv.td.upg
 	RejectsOrders@Transforming:
 		RequiresCondition: sharv-upgrade
 	TransferResourcesOnTransform:

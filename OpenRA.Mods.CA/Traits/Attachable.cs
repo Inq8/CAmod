@@ -8,6 +8,7 @@
  */
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Mods.CA.Activities;
@@ -18,6 +19,13 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
+	public enum OnDetachBehavior
+	{
+		Dispose,
+		None,
+		Transform
+	}
+
 	[Desc("Use on an actor to make it attachable to other actors with the AttachableTo trait.",
 		"An actor should only have one Attachable trait.")]
 	public class AttachableInfo : TraitInfo, Requires<IPositionableInfo>
@@ -67,6 +75,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("On detaching, transform into this actor.")]
 		public readonly string OnDetachTransformInto = null;
 
+		[Desc("If true, detatch on host being killed/captured, otherwise dispose.")]
+		public readonly OnDetachBehavior OnDetachBehavior = OnDetachBehavior.Dispose;
+
 		[Desc("The range at which the actor can attach.")]
 		public readonly WDist MinAttachDistance = WDist.Zero;
 
@@ -106,7 +117,7 @@ namespace OpenRA.Mods.CA.Traits
 		/** Called from AttachableTo.Attach() */
 		public void AttachTo(AttachableTo attachableTo, WPos pos)
 		{
-			Detach();
+			CompleteDetach();
 			attachedTo = attachableTo;
 			SetPosition(pos);
 
@@ -119,7 +130,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		public void HostLost()
 		{
-			self.Dispose();
+			InitDetach();
 		}
 
 		public void HostEnteredCargo()
@@ -151,25 +162,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (newAttachableTo != null && newAttachableTo.Attach(this))
 				return;
 
-			if (Info.OnDetachTransformInto != null)
-			{
-				var faction = self.Owner.Faction.InternalName;
-				var transform = new InstantTransform(self, Info.OnDetachTransformInto)
-				{
-					ForceHealthPercentage = 0,
-					Faction = faction,
-					SkipMakeAnims = true,
-					Offset = new CVec(0, 1),
-					OnComplete = a => Detach()
-				};
-
-				self.QueueActivity(transform);
-			}
-			else
-			{
-				Detach();
-				self.Dispose();
-			}
+			InitDetach();
 		}
 
 		public void HostPositionChanged()
@@ -195,21 +188,58 @@ namespace OpenRA.Mods.CA.Traits
 
 		void INotifyActorDisposing.Disposing(Actor self)
 		{
-			Detach();
+			CompleteDetach();
 		}
 
 		void INotifyKilled.Killed(Actor self, AttackInfo e)
 		{
-			Detach();
+			CompleteDetach();
 		}
 
 		void INotifyOwnerChanged.OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)
 		{
-			Detach();
+			InitDetach();
+		}
+
+		void InitDetach()
+		{
+			switch (Info.OnDetachBehavior)
+			{
+				case OnDetachBehavior.Dispose:
+					CompleteDetach();
+					self.Dispose();
+					break;
+
+				case OnDetachBehavior.None:
+					CompleteDetach();
+					break;
+
+				case OnDetachBehavior.Transform:
+					Transform();
+					break;
+			}
+		}
+
+		void Transform()
+		{
+			if (Info.OnDetachTransformInto == null)
+				throw new InvalidOperationException($"No actor defined for {self.Info.Name} to transform into on detaching.");
+
+			var faction = self.Owner.Faction.InternalName;
+			var transform = new InstantTransform(self, Info.OnDetachTransformInto)
+			{
+				ForceHealthPercentage = 0,
+				Faction = faction,
+				SkipMakeAnims = true,
+				Offset = new CVec(0, 1),
+				OnComplete = a => CompleteDetach()
+			};
+
+			self.QueueActivity(false, transform);
 		}
 
 		/** Updates AttachedTo and updates conditions. */
-		void Detach()
+		void CompleteDetach()
 		{
 			if (attachedTo != null)
 			{

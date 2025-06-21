@@ -3227,6 +3227,7 @@
 	Inherits@3: ^SpriteActor
 	Inherits@C4Plantable: ^C4Plantable
 	Inherits@TNTPlantable: ^TNTPlantable
+	Inherits@Chillable: ^Chillable
 	Inherits@shape: ^1x1Shape
 	Inherits@bounty: ^GlobalBounty
 	Inherits@selection: ^SelectableBuilding
@@ -3284,7 +3285,6 @@
 	Inherits@4: ^EmpDisable
 	Inherits@6: ^WarpableBuilding
 	Inherits@7: ^BotBuilding
-	Inherits@8: ^Chillable
 	Inherits@HACKABLE: ^Hackable
 	Inherits@WatcherParasite: ^WatcherParasiteAttachable
 	Inherits@TargetPaintable: ^TargetPaintable
@@ -3576,6 +3576,10 @@
 
 ^TechBuilding:
 	Inherits: ^BasicBuilding
+	Inherits@Cloakable: ^Cloakable
+	Inherits@Hackable: ^Hackable
+	Inherits@WatcherParasite: ^WatcherParasiteAttachable
+	Inherits@TargetPaintable: ^TargetPaintable
 	Huntable:
 	Health:
 		HP: 40000
@@ -3671,14 +3675,16 @@
 		Margin: 0, 4
 
 ^AmmoBox:
-	Inherits: ^TechBuilding
+	Inherits: ^BasicBuilding
 	-Selectable:
+	Huntable:
 	Health:
 		HP: 1000
 	Explodes:
 		Weapon: UnitExplode
 	Tooltip:
 		Name: Ammo Box
+		GenericVisibility: None
 	Targetable:
 		TargetTypes: Ground, Structure, NoAutoTarget
 	Armor:
@@ -3689,7 +3695,15 @@
 		Bounds: 1024, 1024
 
 ^CivBuilding:
-	Inherits: ^TechBuilding
+	Inherits: ^BasicBuilding
+	Huntable:
+	Health:
+		HP: 40000
+	Armor:
+		Type: Wood
+	Tooltip:
+		Name: Civilian Building
+		GenericVisibility: None
 	RenderSprites:
 		Palette: player
 	MapEditorData:
