@@ -372,6 +372,7 @@ InitScrin = function()
 				return a.Owner == ScrinRebels and not a.IsDead and a.HasProperty("Hunt")
 			end)
 			Utils.Do(rebelDefenders, function(a)
+				a.AttackMove(Exterminator1Patrol1.Location)
 				a.Hunt()
 			end)
 		end

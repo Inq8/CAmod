@@ -21,7 +21,7 @@ SuperweaponsEnabledTime = {
 
 Squads = {
 	Allies = {
-		InitTime = 0 - DateTime.Minutes(10),
+		InitTimeAdjustment = -DateTime.Minutes(10),
 		Delay = {
 			easy = DateTime.Minutes(3),
 			normal = DateTime.Minutes(2),
@@ -40,7 +40,7 @@ Squads = {
 		},
 	},
 	Nod = {
-		InitTime = 0 - DateTime.Minutes(10),
+		InitTimeAdjustment = -DateTime.Minutes(10),
 		Delay = {
 			easy = DateTime.Minutes(3),
 			normal = DateTime.Minutes(2),
@@ -60,7 +60,7 @@ Squads = {
 		},
 	},
 	Soviets = {
-		InitTime = 0 - DateTime.Minutes(10),
+		InitTimeAdjustment = -DateTime.Minutes(10),
 		Delay = {
 			easy = DateTime.Minutes(3),
 			normal = DateTime.Minutes(2),
