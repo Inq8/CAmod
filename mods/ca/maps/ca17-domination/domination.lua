@@ -343,13 +343,9 @@ end
 
 RespawnTrigger = function(a)
 	Trigger.OnKilled(a, function(self, killer)
-		local name
-
 		if a.Type == "yuri" then
-			name = "Yuri"
 			message = "Yuri has used his tremendous psionic power to cheat death. He will return in 30 seconds."
 		else
-			name = "Thief"
 			message = "Yuri has used his tremendous psionic power to save the Thief from death. He will return in 30 seconds."
 		end
 

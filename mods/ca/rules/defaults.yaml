@@ -1877,6 +1877,7 @@
 		InfiltrationNotification: TechnologyLocked
 		InfiltratedNotification: OurTechnologyLocked
 		ShowSelectionBar: true
+		PlayerExperience: 15
 	WithDecoration@TechLock:
 		Image: hacked
 		Sequence: techlocked
@@ -3226,6 +3227,7 @@
 	Inherits@3: ^SpriteActor
 	Inherits@C4Plantable: ^C4Plantable
 	Inherits@TNTPlantable: ^TNTPlantable
+	Inherits@Chillable: ^Chillable
 	Inherits@shape: ^1x1Shape
 	Inherits@bounty: ^GlobalBounty
 	Inherits@selection: ^SelectableBuilding
@@ -3283,7 +3285,6 @@
 	Inherits@4: ^EmpDisable
 	Inherits@6: ^WarpableBuilding
 	Inherits@7: ^BotBuilding
-	Inherits@8: ^Chillable
 	Inherits@HACKABLE: ^Hackable
 	Inherits@WatcherParasite: ^WatcherParasiteAttachable
 	Inherits@TargetPaintable: ^TargetPaintable
@@ -3385,6 +3386,13 @@
 	Targetable@InfiltratorVision:
 		TargetTypes: VisionInfiltrate
 		RequiresCondition: !being-warped
+	GivesPlayerExperienceOnCapture:
+		CaptureTypes: building
+		PlayerExperience: 12
+		AddExperienceFromValue: true
+		ValuePercentage: 1
+		PlayerExperienceRelationships: Enemy, Neutral
+		SubsequentCaptureModifier: 50
 
 ^BuildingTD:
 	Inherits@1: ^Building
@@ -3568,6 +3576,10 @@
 
 ^TechBuilding:
 	Inherits: ^BasicBuilding
+	Inherits@Cloakable: ^Cloakable
+	Inherits@Hackable: ^Hackable
+	Inherits@WatcherParasite: ^WatcherParasiteAttachable
+	Inherits@TargetPaintable: ^TargetPaintable
 	Huntable:
 	Health:
 		HP: 40000
@@ -3578,6 +3590,11 @@
 		GenericVisibility: None
 	MapEditorData:
 		Categories: Tech building
+	GivesPlayerExperienceOnCapture:
+		CaptureTypes: building
+		PlayerExperience: 10
+		PlayerExperienceRelationships: Enemy, Neutral
+		SubsequentCaptureModifier: 50
 
 ^CommandoSkull:
 	WithDecoration@COMMANDOSKULL:
@@ -3658,14 +3675,16 @@
 		Margin: 0, 4
 
 ^AmmoBox:
-	Inherits: ^TechBuilding
+	Inherits: ^BasicBuilding
 	-Selectable:
+	Huntable:
 	Health:
 		HP: 1000
 	Explodes:
 		Weapon: UnitExplode
 	Tooltip:
 		Name: Ammo Box
+		GenericVisibility: None
 	Targetable:
 		TargetTypes: Ground, Structure, NoAutoTarget
 	Armor:
@@ -3676,7 +3695,15 @@
 		Bounds: 1024, 1024
 
 ^CivBuilding:
-	Inherits: ^TechBuilding
+	Inherits: ^BasicBuilding
+	Huntable:
+	Health:
+		HP: 40000
+	Armor:
+		Type: Wood
+	Tooltip:
+		Name: Civilian Building
+		GenericVisibility: None
 	RenderSprites:
 		Palette: player
 	MapEditorData:
@@ -4268,6 +4295,7 @@
 	InfiltrateForPowerOutage:
 		Types: PowerOutageInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
+		PlayerExperience: 15
 	PowerMultiplier@FORCEDISABLE:
 		RequiresCondition: forcedisabled
 		Modifier: 0
@@ -4349,7 +4377,6 @@
 		RequiresCondition: capturing
 	Captures:
 		CaptureTypes: building
-		PlayerExperience: 25
 		CaptureDelay: 150
 	Armament@bombdefuser:
 		Weapon: DefuseKit

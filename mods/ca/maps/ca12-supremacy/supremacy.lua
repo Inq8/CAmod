@@ -8,7 +8,7 @@ AdjustedGDICompositions = AdjustCompositionsForDifficulty(UnitCompositions.GDI)
 
 Squads = {
 	Main = {
-		InitTime = 0,
+		InitTimeAdjustment = -DateTime.Minutes(3),
 		Delay = {
 			easy = DateTime.Minutes(7),
 			normal = DateTime.Minutes(5),
@@ -28,7 +28,7 @@ Squads = {
 		},
 	},
 	Forward = {
-		InitTime = 0,
+		InitTimeAdjustment = -DateTime.Minutes(2),
 		Delay = {
 			easy = DateTime.Minutes(4),
 			normal = DateTime.Minutes(3),

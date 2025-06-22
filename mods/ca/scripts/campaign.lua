@@ -792,6 +792,10 @@ InitAttackSquad = function(squad, player, targetPlayer)
 		squad.InitTime = DateTime.GameTime
 	end
 
+	if squad.InitTimeAdjustment ~= nil then
+		squad.InitTime = squad.InitTime + squad.InitTimeAdjustment
+	end
+
 	if targetPlayer ~= nil then
 		squad.TargetPlayer = targetPlayer
 	elseif #MissionPlayers > 0 then

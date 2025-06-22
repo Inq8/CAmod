@@ -13,7 +13,6 @@ using System.Linq;
 using OpenRA.Effects;
 using OpenRA.Graphics;
 using OpenRA.Mods.CA.Traits;
-using OpenRA.Primitives;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Effects
@@ -110,7 +109,7 @@ namespace OpenRA.Mods.CA.Effects
 
 		IEnumerable<IRenderable> IEffectAnnotation.RenderAnnotation(WorldRenderer wr)
 		{
-			if (actor.World.RenderPlayer == null || !dotState.Visible)
+			if (actor.World.RenderPlayer == null || dotState == null || !dotState.Visible)
 				return SpriteRenderable.None;
 
 			var effectiveOwner = actor.EffectiveOwner != null && actor.EffectiveOwner.Owner != null ?

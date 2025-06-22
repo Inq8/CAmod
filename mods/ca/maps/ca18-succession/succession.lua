@@ -15,7 +15,7 @@ AdjustedNodCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Nod)
 
 Squads = {
 	Main1 = {
-		InitTime = 0 - DateTime.Minutes(10),
+		InitTimeAdjustment = -DateTime.Minutes(10),
 		Delay = {
 			easy = DateTime.Minutes(3),
 			normal = DateTime.Minutes(1) + DateTime.Seconds(30),
@@ -39,7 +39,7 @@ Squads = {
 		},
 	},
 	Main2 = {
-		InitTime = 0 - DateTime.Minutes(10),
+		InitTimeAdjustment = -DateTime.Minutes(10),
 		Delay = {
 			easy = DateTime.Minutes(6),
 			normal = DateTime.Minutes(4),

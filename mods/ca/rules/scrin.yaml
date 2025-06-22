@@ -1343,7 +1343,6 @@ MAST:
 	CaptureManager:
 	Captures:
 		CaptureTypes: building
-		PlayerExperience: 25
 		CaptureDelay: 150
 		ConsumedByCapture: false
 		EnterCursor: mc-capture
@@ -2493,7 +2492,7 @@ ATMZ:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses
 		Weaknesses: • Weak vs Infantry, Buildings\n• Cannot attack Aircraft
-		Attributes: • Atomizes up to 4 targets\n• Affected targets take damage over time\n• Affected targets have reduced speed\n• Can traverse water
+		Attributes: • Atomizes up to 4 targets\n• Affected targets take damage over time\n• Affected targets have reduced speed and firepower\n• Can traverse water
 	Mobile:
 		Speed: 72
 		Locomotor: lighthover
@@ -4730,6 +4729,7 @@ PROC.SCRIN:
 		Types: StealCreditsInfiltrate
 		Percentage: 50
 		InfiltrationNotification: CreditsStolen
+		PlayerExperience: 15
 	FreeActor:
 		Actor: HARV.Scrin
 		SpawnOffset: 1,2
@@ -4828,6 +4828,7 @@ PORT:
 		Proxy: stolentech.port
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
+		PlayerExperience: 15
 	SpawnActorOnMindControlled@STOLENTECH:
 		Actor: stolentech.port
 		OwnerType: Master
@@ -4836,6 +4837,7 @@ PORT:
 		Types: VetInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+		PlayerExperience: 15
 	WithIdleOverlay:
 		RequiresCondition: !build-incomplete
 
@@ -4915,11 +4917,13 @@ WSPH:
 		Types: VetInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+		PlayerExperience: 15
 	InfiltrateToCreateProxyActor@STOLENTECH:
 		Types: StealTechInfiltrate
 		Proxy: stolentech.wsph
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
+		PlayerExperience: 15
 	SpawnActorOnMindControlled@STOLENTECH:
 		Actor: stolentech.wsph
 		OwnerType: Master
@@ -4986,6 +4990,7 @@ NERV:
 	WithBuildingBib:
 	InfiltrateForExploration:
 		Types: ResetShroudInfiltrate
+		PlayerExperience: 15
 	Power:
 		Amount: -40
 	ValidFactions:
@@ -5194,6 +5199,7 @@ GRAV:
 		Proxy: stolentech.grav
 		InfiltrationNotification: TechnologyAcquired
 		InfiltratedNotification: OurTechnologyStolen
+		PlayerExperience: 15
 	SpawnActorOnMindControlled@STOLENTECH:
 		Actor: stolentech.grav
 		OwnerType: Master
@@ -5422,6 +5428,7 @@ MANI:
 		Types: ResetSupportPowerInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+		PlayerExperience: 15
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: ResetSupportPowerInfiltrate
@@ -5488,6 +5495,7 @@ RFGN:
 		Types: ResetSupportPowerInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+		PlayerExperience: 15
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: ResetSupportPowerInfiltrate

@@ -96,7 +96,7 @@ namespace OpenRA.Mods.CA.Activities
 				var cell = self.Location + Offset;
 				WPos centerPos;
 
-				if (self.TraitOrDefault<Aircraft>() != null)
+				if (self.Info.TraitInfoOrDefault<AircraftInfo>() != null && self.World.Map.Rules.Actors[ToActor].TraitInfoOrDefault<AircraftInfo>() != null)
 					centerPos = self.CenterPosition;
 				else
 					centerPos = self.World.Map.CenterOfCell(cell) + new WVec(0, 0, self.CenterPosition.Z);

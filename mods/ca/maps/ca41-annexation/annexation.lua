@@ -314,7 +314,9 @@ InitSignalTransmittersObjective = function()
 		end)
 
 		Utils.Do(transmitters, function(t)
-			local transmitterFlare = Actor.Create("flare", true, { Owner = USSR, Location = t.Location })
+			local transmitterLocation = t.Location
+			local transmitterFlare = Actor.Create("flare", true, { Owner = USSR, Location = transmitterLocation })
+
 			Beacon.New(USSR, t.CenterPosition)
 			Trigger.AfterDelay(DateTime.Seconds(20), function()
 				transmitterFlare.Destroy()
@@ -342,7 +344,7 @@ InitSignalTransmittersObjective = function()
 						Media.PlaySpeechNotification(USSR, "ReinforcementsArrived")
 						Notification("Reinforcements have arrived.")
 						InitScrinReinforcements(wormhole)
-						FleetRecall(self)
+						FleetRecall(transmitterLocation)
 					end)
 				end)
 			end)
@@ -409,15 +411,15 @@ DeployScrinReinforcements = function(wormhole, initial)
 	end
 end
 
-FleetRecall = function(transmitter)
-	local effect = Actor.Create("recall.effect", true, { Owner = Scrin, Location = transmitter.Location })
+FleetRecall = function(loc)
+	local effect = Actor.Create("recall.effect", true, { Owner = Scrin, Location = loc })
 	Trigger.AfterDelay(DateTime.Seconds(5), effect.Destroy)
 
 	local spawnLocations = {
-		CPos.New(transmitter.Location.X + 2, transmitter.Location.Y + 1),
-		CPos.New(transmitter.Location.X - 2, transmitter.Location.Y - 1),
-		CPos.New(transmitter.Location.X - 1, transmitter.Location.Y + 2),
-		CPos.New(transmitter.Location.X + 1, transmitter.Location.Y - 2)
+		CPos.New(loc.X + 2, loc.Y + 1),
+		CPos.New(loc.X - 2, loc.Y - 1),
+		CPos.New(loc.X - 1, loc.Y + 2),
+		CPos.New(loc.X + 1, loc.Y - 2)
 	}
 
 	Utils.Do(spawnLocations, function(loc)
