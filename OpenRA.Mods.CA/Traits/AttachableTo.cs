@@ -37,7 +37,7 @@ namespace OpenRA.Mods.CA.Traits
 
 	public class AttachableTo : INotifyKilled, INotifyOwnerChanged, IResolveOrder, INotifyStanceChanged,
 		INotifyExitedCargo, INotifyEnteredCargo, INotifyCreated, INotifyTransform, INotifyRemovedFromWorld, INotifyAddedToWorld,
-		INotifyCenterPositionChanged
+		INotifyCenterPositionChanged, INotifySold
 	{
 		public readonly AttachableToInfo Info;
 		public Carryable Carryable { get; private set; }
@@ -106,6 +106,12 @@ namespace OpenRA.Mods.CA.Traits
 		}
 
 		void INotifyOwnerChanged.OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)
+		{
+			Terminate();
+		}
+
+		void INotifySold.Selling(Actor self) { }
+		void INotifySold.Sold(Actor self)
 		{
 			Terminate();
 		}
