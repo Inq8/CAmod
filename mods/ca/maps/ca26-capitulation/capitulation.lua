@@ -310,7 +310,7 @@ InitUSSR = function()
 		InitAirAttackSquad(Squads.AirAntiHeavy, USSR, GDI, { "Heavy" }, "ArmorType")
 	end)
 
-	InitAirAttackSquad(Squads.AirAntiAir, USSR, GDI, { "orca", "orcb", "a10", "a10.sw", "a10.gau", "auro" })
+	InitAirAttackSquad(Squads.AirAntiAir, USSR, GDI, { "Aircraft" }, "ArmorType")
 
 	Trigger.AfterDelay(Squads.Kirovs.Delay[Difficulty], function()
 		InitAttackSquad(Squads.Kirovs, USSR)
