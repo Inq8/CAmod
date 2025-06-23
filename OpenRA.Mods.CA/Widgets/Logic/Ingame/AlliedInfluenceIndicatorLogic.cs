@@ -49,7 +49,9 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			var container = widget.Get<ContainerWidget>("ALLIED_INFLUENCE");
 			var coalitionImage = container.Get<ImageWidget>("ALLIED_COALITION_IMAGE");
+			var noCoalitionImage = container.Get<ImageWidget>("ALLIED_NO_COALITION_IMAGE");
 			influenceMeter = container.Get<AlliedInfluenceMeterWidget>("ALLIED_INFLUENCE_METER");
+			noCoalitionImage.IsVisible = () => false;
 
 			// influence meter is only shown if player is an allied faction
 			if (world.LocalPlayer.Faction.Side != "Allies")
@@ -94,7 +96,8 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 				timeline.TicksChanged += HandleTicksChanged;
 
-				coalitionImage.GetImageName = () =>  {
+				coalitionImage.GetImageName = () =>
+				{
 					if (timeline.TicksElapsed >= timeline.MaxTicks)
 						return chosenCoalition ?? NoneImage;
 
@@ -111,6 +114,8 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			{
 				coalitionImage.GetImageName = () => NoneImage;
 				influenceMeter.IsVisible = () => false;
+				coalitionImage.IsVisible = () => false;
+				noCoalitionImage.IsVisible = () => true;
 			}
 		}
 

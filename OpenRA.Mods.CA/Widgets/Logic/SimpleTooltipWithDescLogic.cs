@@ -21,14 +21,14 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 		{
 			var label = widget.Get<LabelWidget>("LABEL");
 			var font = Game.Renderer.Fonts[label.Font];
-			var text = containerWidget.GetTooltipText();
+			var text = getText();
 			var labelWidth = font.Measure(text).X;
 
 			label.GetText = () => text;
 			label.Bounds.Width = labelWidth;
 			widget.Bounds.Width = 2 * label.Bounds.X + labelWidth;
 
-			var desc = containerWidget.GetTooltipDesc();
+			var desc = getDesc();
 			if (!string.IsNullOrEmpty(desc))
 			{
 				var descTemplate = widget.Get<LabelWidget>("DESC");
