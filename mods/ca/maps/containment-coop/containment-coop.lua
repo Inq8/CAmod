@@ -429,7 +429,7 @@ DropChronoPrison = function()
 	if England ~= nil then
 		ChronoPrisonPlayer = England
 	else
-		ChronoPrisonPlayer = USA1
+		ChronoPrisonPlayer = USA2
 	end
 
 	ChronoPrisonFlare = Actor.Create("flare", true, { Owner = ChronoPrisonPlayer, Location = CarryallDropPoint.Location })
