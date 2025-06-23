@@ -106,7 +106,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 				coalitionImage.GetTooltipText = () =>
 				{
-					var timeCoalitionPolicy = $"0-{chosenCoalition}-{chosenPolicy}";
+					var timeCoalitionPolicy = $"{(timeline.TicksUntilNextThreshold / 25).ToString()}-{chosenCoalition}-{chosenPolicy}";
 					return influenceMeterTooltipTextCached.Update(timeCoalitionPolicy);
 				};
 			}
