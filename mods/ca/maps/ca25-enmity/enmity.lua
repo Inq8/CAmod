@@ -37,7 +37,7 @@ HoldOutTime = {
 	hard = DateTime.Minutes(2) + DateTime.Seconds(30),
 }
 
-ChemMissileEnabledTime = {
+SuperweaponsEnabledTime = {
 	easy = DateTime.Seconds((60 * 25) + 41),
 	normal = DateTime.Seconds((60 * 20) + 41),
 	hard = DateTime.Seconds((60 * 15) + 41),
@@ -259,7 +259,8 @@ InitNod = function()
 
 	Actor.Create("ai.unlimited.power", true, { Owner = Nod })
 
-	Trigger.AfterDelay(ChemMissileEnabledTime[Difficulty], function()
+	Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
+		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = Nod })
 		Actor.Create("ai.superweapons.enabled", true, { Owner = Nod })
 	end)
 

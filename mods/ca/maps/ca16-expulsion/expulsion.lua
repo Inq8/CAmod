@@ -15,6 +15,11 @@ GDINorthEastAttackPaths = {
 	{ GDIAttack11.Location, GDIAttack12.Location, GDIAttack9.Location, GDIAttack6.Location },
 }
 
+EmpMissileEnabledTime = {
+	normal = DateTime.Minutes(20),
+	hard = DateTime.Minutes(10)
+}
+
 Squads = {
 	GDIMain = {
 		Delay = {
@@ -189,6 +194,12 @@ InitGDI = function()
 		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGDIGroundHunterUnit)
 	end)
+
+	if Difficulty ~= "easy" then
+		Trigger.AfterDelay(EmpMissileEnabledTime[Difficulty], function()
+			Actor.Create("ai.minor.superweapons.enabled", true, { Owner = GDI })
+		end)
+	end
 
 	Trigger.AfterDelay(Squads.GDIMain.Delay[Difficulty], function()
 		InitAttackSquad(Squads.GDIMain, GDI)

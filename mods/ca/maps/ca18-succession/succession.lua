@@ -1,4 +1,4 @@
-ChemMissileEnabledTime = {
+SuperweaponsEnabledTime = {
 	easy = DateTime.Seconds((60 * 25) + 41),
 	normal = DateTime.Seconds((60 * 20) + 41),
 	hard = DateTime.Seconds((60 * 15) + 41),
@@ -267,7 +267,8 @@ InitNod = function()
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsNodGroundHunterUnit)
 	end)
 
-	Trigger.AfterDelay(ChemMissileEnabledTime[Difficulty], function()
+	Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
+		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = Nod })
 		Actor.Create("ai.superweapons.enabled", true, { Owner = Nod })
 	end)
 

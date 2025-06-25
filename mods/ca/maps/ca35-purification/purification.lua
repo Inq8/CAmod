@@ -249,6 +249,8 @@ InitScrin = function()
 
 	BeginScrinAttacks()
 
+	Actor.Create("ai.minor.superweapons.enabled", true, { Owner = Scrin })
+
 	Trigger.AfterDelay(RiftEnabledTime[Difficulty], function()
 		Actor.Create("ai.superweapons.enabled", true, { Owner = Scrin })
 	end)

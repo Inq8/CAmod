@@ -9,6 +9,12 @@ CyborgSquadInterval = {
 	hard = DateTime.Minutes(1),
 }
 
+ClusterMissileEnabledTime = {
+	easy = DateTime.Seconds((60 * 16) + 37),
+	normal = DateTime.Seconds((60 * 12) + 37),
+	hard = DateTime.Seconds((60 * 8) + 37),
+}
+
 AdjustedNodCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Nod)
 
 Squads = {
@@ -259,6 +265,10 @@ InitNod = function()
 			InitAirAttackSquad(Squads.AntiTankAir, Nod1, USSR, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" })
 		end)
 	end
+
+	Trigger.AfterDelay(ClusterMissileEnabledTime[Difficulty], function()
+		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = Nod })
+	end)
 end
 
 InitNodSouth = function()

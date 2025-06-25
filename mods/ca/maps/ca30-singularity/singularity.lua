@@ -503,6 +503,8 @@ InitScrin = function()
 	ScrinDefenseBuff2 = Actor.Create("scrindefensebuff2", true, { Owner = Scrin })
 	MothershipShields = Actor.Create("mothership.shields", true, { Owner = Scrin })
 
+	Actor.Create("ai.minor.superweapons.enabled", true, { Owner = Scrin })
+
 	Trigger.AfterDelay(RiftEnabledTime[Difficulty], function()
 		Actor.Create("ai.superweapons.enabled", true, { Owner = Scrin })
 	end)
