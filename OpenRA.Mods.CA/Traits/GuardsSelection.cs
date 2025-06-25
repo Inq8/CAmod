@@ -108,7 +108,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (!Info.ValidTargets.Overlaps(targetActor.GetEnabledTargetTypes()))
 				return false;
 
-			if (!targetActor.Info.HasTraitInfo<AttackBaseInfo>())
+			if (!targetActor.Info.HasTraitInfo<AttackBaseInfo>() || !targetActor.Info.HasTraitInfo<GuardableInfo>())
 				return false;
 
 			var guardsSelection = targetActor.TraitsImplementing<GuardsSelection>();
