@@ -356,7 +356,7 @@ namespace OpenRA.Mods.CA.Projectiles
 			if (remainingBounces < info.BounceCount && AnyValidTargetsInRadius(world, pos, info.Width, Args.SourceActor, true))
 				return true;
 
-			if (!string.IsNullOrEmpty(info.PointDefenseType) && world.ActorsWithTrait<IPointDefense>().Any(x => x.Trait.Destroy(pos, Args.SourceActor.Owner, info.PointDefenseType)))
+			if (!string.IsNullOrEmpty(info.PointDefenseType) && world.ActorsWithTrait<IPointDefense>().Any(x => x.Trait.Destroy(pos, Args.SourceActor.Owner, info.PointDefenseType, Args)))
 				return true;
 
 			return false;

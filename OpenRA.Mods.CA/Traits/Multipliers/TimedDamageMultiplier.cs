@@ -11,6 +11,7 @@
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
 using OpenRA.Traits;
+using System.Collections.Generic;
 
 namespace OpenRA.Mods.CA.Traits
 {
@@ -21,8 +22,10 @@ namespace OpenRA.Mods.CA.Traits
 		Charging
 	}
 
-	[Desc("On taking damage, gives damage reduction to the actor for a limited time.")]
-	public class TimedDamageMultiplierInfo : ConditionalTraitInfo
+	[Desc("On taking damage, gives damage reduction to the actor for a limited time.",
+		"When disabled/paused damage will not be modified.",
+		"When paused the cooldown will continue to tick down.")]
+	public class TimedDamageMultiplierInfo : PausableConditionalTraitInfo
 	{
 		[GrantedConditionReference]
 		[Desc("The condition to grant.")]
@@ -69,10 +72,10 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly Color DrainingColor = Color.LightCyan;
 		public readonly Color ChargingColor = Color.Cyan;
 
-		public override object Create(ActorInitializer init) { return new TimedDamageMultiplier(this); }
+		public override object Create(ActorInitializer init) { return new TimedDamageMultiplier(this, init.Self); }
 	}
 
-	public class TimedDamageMultiplier : ConditionalTrait<TimedDamageMultiplierInfo>, ITick, IDamageModifier, INotifyDamage, ISelectionBar
+	public class TimedDamageMultiplier : PausableConditionalTrait<TimedDamageMultiplierInfo>, ITick, IDamageModifier, INotifyDamage, ISelectionBar
 	{
 		public new readonly TimedDamageMultiplierInfo Info;
 		public int Ticks { get; private set; }
@@ -80,7 +83,7 @@ namespace OpenRA.Mods.CA.Traits
 		TimedDamageMultiplierState state;
 		int currentChargeTime;
 
-		public TimedDamageMultiplier(TimedDamageMultiplierInfo info)
+		public TimedDamageMultiplier(TimedDamageMultiplierInfo info, Actor self)
 			: base(info)
 		{
 			Info = info;
@@ -89,19 +92,26 @@ namespace OpenRA.Mods.CA.Traits
 
 		int IDamageModifier.GetDamageModifier(Actor attacker, Damage damage)
 		{
-			if (IsTraitDisabled || state == TimedDamageMultiplierState.Charging || damage.Value < Info.MinimumDamage)
+			if (IsTraitDisabled || IsTraitPaused || state == TimedDamageMultiplierState.Charging)
 				return 100;
 
-			var validDamageType = Info.DamageTypes.IsEmpty || damage.DamageTypes.Overlaps(Info.DamageTypes);
-			return validDamageType ? Info.Modifier : 100;
+			var validDamage = damage.Value >= Info.MinimumDamage && (Info.DamageTypes.IsEmpty || damage.DamageTypes.Overlaps(Info.DamageTypes));
+			return validDamage ? Info.Modifier : 100;
 		}
 
-		int GetChargeTime(int damage)
+		static int RemovePercentageModifiers(int number, IEnumerable<int> percentages)
+		{
+			var a = (decimal)number;
+			foreach (var p in percentages)
+				a /= p / 100m;
+
+			return (int)a;
+		}
+
+		int GetChargeTime(int damagePrevented)
 		{
 			if (Info.ScaleChargeTimeWithDamage)
-			{
-				return damage / Info.ScaleChargeTimeWithDamageAmount;
-			}
+				return damagePrevented / Info.ScaleChargeTimeWithDamageAmount;
 
 			return Info.ChargeTime;
 		}
@@ -117,12 +127,19 @@ namespace OpenRA.Mods.CA.Traits
 			if (Info.ResetChargingOnDamage && state == TimedDamageMultiplierState.Charging)
 				Ticks = currentChargeTime;
 
-			if (state != TimedDamageMultiplierState.Ready)
+			if (IsTraitPaused)
 				return;
+
+			if (state != TimedDamageMultiplierState.Ready)
+					return;
 
 			state = TimedDamageMultiplierState.Draining;
 			Ticks = Info.Duration;
-			currentChargeTime = GetChargeTime(e.Damage.Value);
+
+			var unmodifiedDamage = RemovePercentageModifiers(e.Damage.Value, new[] { Info.Modifier });
+			var damagePrevented = unmodifiedDamage - e.Damage.Value;
+
+			currentChargeTime = GetChargeTime(damagePrevented);
 
 			GrantActiveCondition(self);
 

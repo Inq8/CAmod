@@ -947,7 +947,7 @@ namespace OpenRA.Mods.CA.Projectiles
 				|| (height.Length < info.AirburstAltitude.Length && relTarHorDist < info.CloseEnough.Length); // Airburst
 
 			if (!shouldExplode && !string.IsNullOrEmpty(info.PointDefenseType))
-				shouldExplode |= world.ActorsWithTrait<IPointDefense>().Any(x => x.Trait.Destroy(pos, args.SourceActor.Owner, info.PointDefenseType));
+				shouldExplode |= world.ActorsWithTrait<IPointDefense>().Any(x => x.Trait.Destroy(pos, args.SourceActor.Owner, info.PointDefenseType, args));
 
 			if (shouldExplode)
 				Explode(world);

@@ -4208,9 +4208,8 @@ MTNK:
 		Turret: secondary
 		Weapon: PointLaser
 		LocalOffset: 0,10,90
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || pointlaser-charging
 		RequiresCondition: pointdef-upgrade
-		ReloadingCondition: pointlaser-charging
 		ForceTargetRelationships: Enemy
 	AttackTurreted:
 		Turrets: primary, secondary
@@ -4239,6 +4238,10 @@ MTNK:
 		PointDefenseTypes: Missile
 		RequiresCondition: pointdef-upgrade && !gshield && !gshield-charging
 		ValidRelationships: Enemy
+	GrantTimedConditionOnPointDefenseHit@POINTDEF:
+		Condition: pointlaser-charging
+		RequiresCondition: pointdef-upgrade
+		ScaleChargeTimeWithDamageAmount: 21
 	GrantConditionOnPrerequisite@POINTDEF:
 		Condition: pointdef-upgrade
 		Prerequisites: pointdef.upgrade
@@ -4252,8 +4255,9 @@ MTNK:
 		Modifier: 25
 		Duration: 2
 		ScaleChargeTimeWithDamage: true
-		ScaleChargeTimeWithDamageAmount: 7
-		RequiresCondition: pointdef-upgrade && !pointlaser-charging
+		ScaleChargeTimeWithDamageAmount: 21
+		PauseOnCondition: pointlaser-charging
+		RequiresCondition: pointdef-upgrade
 	GrantTimedCondition@NSHIELDVISUAL:
 		Condition: gshieldvisual
 		RequiresCondition: gshield
