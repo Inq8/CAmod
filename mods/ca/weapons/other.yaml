@@ -3802,7 +3802,7 @@ TroopCrawlerDummyWeapon:
 	Projectile: InstantHit
 
 TargetPainter:
-	Range: 15c0
+	Range: 13c0
 	ReloadDelay: 25
 	ValidTargets: Vehicle, Ship, Structure
 	Report: targetpainterbeep.aud
@@ -3813,11 +3813,16 @@ TargetPainter:
 		Width: 70
 		Duration: 20
 		HitAnim: empty
-	Warhead@1Dam: RevealShroud
-		Duration: 26
-		Radius: 6c0
+	Warhead@UnitReveal: RevealShroud
+		Duration: 28
+		Radius: 5c0
+		InvalidTargets: Structure
+	Warhead@BuildingReveal: RevealShroud
+		Duration: 28
+		Radius: 3c0
+		ValidTargets: Structure
 	Warhead@Cond: GrantExternalConditionCA
 		Range: 0c42
-		Duration: 26
+		Duration: 28
 		Condition: painted-target
 		ValidTargets: Vehicle, Ship, Structure

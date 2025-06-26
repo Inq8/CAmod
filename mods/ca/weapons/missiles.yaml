@@ -1510,10 +1510,10 @@ IFVRocketsAAE.TibCore:
 227mmH:
 	Inherits: 227mm
 	Report: hovrmis1.aud
+	Range: 8c512
 
 227mm.upg:
 	Inherits: 227mm
-	Range: 9c0
 	Projectile: MissileCA
 		ContrailLength: 15
 		ContrailStartColorAlpha: 230
@@ -1523,10 +1523,9 @@ IFVRocketsAAE.TibCore:
 227mm.Hypersonic:
 	Inherits: 227mm.upg
 	Report: vaegattb.aud, vaegatta.aud
-	Range: 9c512
 	BurstDelays: 6
 	Projectile: MissileCA
-		Speed: 430
+		Speed: 550
 		Inaccuracy: 256
 		LockOnProbability: 100
 		ContrailStartColor: 00FFFFE6
@@ -1534,7 +1533,7 @@ IFVRocketsAAE.TibCore:
 		MaximumLaunchAngle: 200
 		AllowSnapping: true
 	Warhead@1Dam: SpreadDamage
-		Damage: 900
+		Damage: 880
 
 227mm.Hammerhead:
 	Inherits: 227mm.upg
@@ -1574,6 +1573,18 @@ IFVRocketsAAE.TibCore:
 	Warhead@1Dam: SpreadDamage
 		Spread: 426
 		Damage: 370
+
+227mmH.Hypersonic:
+	Inherits: 227mm.Hypersonic
+	Range: 8c512
+
+227mmH.Hammerhead:
+	Inherits: 227mm.Hammerhead
+	Range: 8c512
+
+227mmH.Hailstorm:
+	Inherits: 227mm.Hailstorm
+	Range: 9c512
 
 227mmAA:
 	Inherits: ^AntiAirMissile
