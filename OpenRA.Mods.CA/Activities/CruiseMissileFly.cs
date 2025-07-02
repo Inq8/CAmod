@@ -40,7 +40,7 @@ namespace OpenRA.Mods.CA.Activities
 			else
 				this.cm = cm;
 
-			if (t.Type == TargetType.Invalid && t.Actor != null && (t.Actor.IsDead || !t.Actor.IsInWorld))
+			if (t.Type == TargetType.Invalid)
 				target = Target.FromPos(initialTargetPos);
 			else
 				target = t;

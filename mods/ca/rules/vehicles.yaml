@@ -5973,7 +5973,10 @@ TRPC:
 		Range: 4c0
 		Condition: trpc-inspiration
 		ValidRelationships: Ally
-		RequiresCondition: !passenger
+		RequiresCondition: !passenger && !inspiration-delay
+	GrantTimedCondition@InspirationDelay:
+		Duration: 10
+		Condition: inspiration-delay
 	WithRadiatingCircle:
 		EndRadius: 4c0
 		Interval: 75
@@ -6282,7 +6285,7 @@ IFV:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	RevealsShroud@SPY:
-		Range: 9c0
+		Range: 7c0
 		MinRange: 4c0
 		RevealGeneratedShroud: False
 		RequiresCondition: spyturr
@@ -6546,6 +6549,7 @@ IFV:
 		RequiresCondition: hackturr
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped || blinded
+		TargetFrozenActors: True
 	WithMuzzleOverlay:
 	WithSpriteTurret@defaultturr:
 		RequiresCondition: !full || nochange
@@ -7733,7 +7737,7 @@ HSAM:
 		PauseOnCondition: reloading-primary
 		ReloadingCondition: reloading-secondary
 	Armament@PRIMARYUPG1:
-		Weapon: 227mm.Hypersonic
+		Weapon: 227mmH.Hypersonic
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 75, -75
 		RequiresCondition: hypersonic-upgrade
@@ -7748,7 +7752,7 @@ HSAM:
 		PauseOnCondition: reloading-primary
 		ReloadingCondition: reloading-secondary
 	Armament@PRIMARYUPG2:
-		Weapon: 227mm.Hammerhead
+		Weapon: 227mmH.Hammerhead
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hammerhead-upgrade
@@ -7763,7 +7767,7 @@ HSAM:
 		PauseOnCondition: reloading-primary
 		ReloadingCondition: reloading-secondary
 	Armament@PRIMARYUPG3:
-		Weapon: 227mm.Hailstorm
+		Weapon: 227mmH.Hailstorm
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hailstorm-upgrade
@@ -8833,7 +8837,7 @@ CHPR:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Defenses, Aircraft
 		Weaknesses: • Weak vs Buildings
-		Attributes: • Target is disabled while being erased\n• Can crush concrete walls
+		Attributes: • Target is disabled while being erased\n• Can crush concrete walls\n• Special Ability: Teleport (with upgrade)
 	Valued:
 		Cost: 1700
 	Tooltip:
@@ -9034,11 +9038,11 @@ PBUL:
 	Passenger:
 		Voice: Move
 	RevealsShroud:
-		MinRange: 6c0
-		Range: 8c0
+		MinRange: 5c0
+		Range: 7c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 6c0
+		Range: 5c0
 	Turreted:
 		TurnSpeed: 40
 		Offset: -200,0,120
@@ -9062,6 +9066,7 @@ PBUL:
 		PauseOnCondition: empdisable || being-warped || blinded
 		Voice: Attack
 		Armaments: primary, secondary, tertiary
+		TargetFrozenActors: true
 	AttackMove:
 		Voice: Attack
 	WithSpriteTurret:
