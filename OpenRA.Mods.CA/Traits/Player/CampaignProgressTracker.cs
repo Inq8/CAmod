@@ -73,7 +73,7 @@ namespace OpenRA.Mods.CA.Traits
 					return;
 			}
 
-			var speed = TranslationProvider.GetString(player.World.GameSpeed.Name);
+			var speed = FluentProvider.GetMessage(player.World.GameSpeed.Name);
 
 			var result = new MissionVictoryResult()
 			{

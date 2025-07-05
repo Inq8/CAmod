@@ -20,7 +20,7 @@ using OpenRA.Widgets;
 
 namespace OpenRA.Mods.CA.Widgets.Logic
 {
-	public enum ReleaseType { Full, PreRelease, DevTest };
+	public enum ReleaseType { Full, PreRelease, DevTest, Invalid };
 
 	public class VersionCheckLogic : ChromeLogic
 	{
@@ -67,20 +67,25 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 					if (currentReleaseType == ReleaseType.DevTest)
 					{
 						var devReleases = await GetReleases(true);
-						releases = releases.Concat(devReleases).OrderByDescending(r => r.created_at).ToList();
+						releases = releases.Concat(devReleases).ToList();
 					}
+
+					releases = releases.Where(r => r.ReleaseType != ReleaseType.Invalid).OrderByDescending(r => r.created_at).ToList();
 
 					foreach (var release in releases)
 					{
 						if (release.draft)
 							continue;
 
-						if (currentReleaseType == ReleaseType.Full && (release.prerelease || release.tag_name.Contains("PreRelease") || release.tag_name.Contains("DevTest")))
+						// If the current release is a full release, ignore pre-releases and dev tests
+						if (currentReleaseType == ReleaseType.Full && (release.ReleaseType == ReleaseType.PreRelease || release.ReleaseType == ReleaseType.DevTest))
 							continue;
 
-						if (currentReleaseType == ReleaseType.PreRelease && release.tag_name.Contains("DevTest"))
+						// If the current release is a pre-release, ignore dev tests
+						if (currentReleaseType == ReleaseType.PreRelease && release.ReleaseType == ReleaseType.DevTest)
 							continue;
 
+						// If the current release matches the release we are checking, we can stop here since all subsequent releases will be older
 						if (release.tag_name == currentVersion)
 						{
 							versionCheck.Release = release;
@@ -122,10 +127,10 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 		ReleaseType GetCurrentReleaseType()
 		{
-			if (currentVersion.Contains("PreRelease"))
-				return ReleaseType.PreRelease;
-			else if (currentVersion == "prep-CA" || currentVersion.Contains("DevTest"))
+			if (currentVersion.Contains("DevTest") || currentVersion == "prep-CA")
 				return ReleaseType.DevTest;
+			else if (currentVersion.Contains("PreRelease"))
+				return ReleaseType.PreRelease;
 
 			return ReleaseType.Full;
 		}
@@ -173,6 +178,20 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			public bool prerelease { get; set; }
 			public bool draft { get; set; }
 			public DateTime created_at { get; set; }
+
+			public ReleaseType ReleaseType
+			{
+				get
+				{
+					if (prerelease && tag_name.Contains("PreRelease"))
+						return ReleaseType.PreRelease;
+					if (prerelease && tag_name.Contains("DevTest"))
+						return ReleaseType.DevTest;
+					if (!prerelease && System.Text.RegularExpressions.Regex.IsMatch(tag_name, @"^\d+\.\d+(\.\d+)?$"))
+						return ReleaseType.Full;
+					return ReleaseType.Invalid;
+				}
+			}
 		}
 	}
 }

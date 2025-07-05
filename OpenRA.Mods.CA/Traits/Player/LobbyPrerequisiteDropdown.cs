@@ -24,11 +24,11 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly string ID = null;
 
 		[FieldLoader.Require]
-		[TranslationReference]
+		[FluentReference]
 		[Desc("Descriptive label for this dropdown.")]
 		public readonly string Label = null;
 
-		[TranslationReference]
+		[FluentReference]
 		[Desc("Tooltip description for this dropdown.")]
 		public readonly string Description = null;
 
@@ -37,7 +37,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly string Default = null;
 
 		[FieldLoader.Require]
-		[TranslationReference(dictionaryReference: LintDictionaryReference.Values)]
+		[FluentReference(dictionaryReference: LintDictionaryReference.Values)]
 		[Desc("Options to choose from.")]
 		public readonly Dictionary<string, string> Values = null;
 

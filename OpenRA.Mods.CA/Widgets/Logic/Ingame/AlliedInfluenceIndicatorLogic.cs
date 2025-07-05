@@ -12,22 +12,23 @@ using System;
 using System.Linq;
 using OpenRA.Mods.CA.Traits;
 using OpenRA.Mods.Common.Widgets;
+using OpenRA.Primitives;
 using OpenRA.Widgets;
 
 namespace OpenRA.Mods.CA.Widgets.Logic
 {
 	class AlliedInfluenceIndicatorLogic : ChromeLogic
 	{
-		[TranslationReference("level")]
+		[FluentReference("level")]
 		const string PlayerInfluenceLevel = "label-player-influence-level";
 
-		[TranslationReference("time")]
+		[FluentReference("time")]
 		const string PlayerInfluenceLevelTime = "label-player-influence-level-time";
 
-		[TranslationReference("coalition")]
+		[FluentReference("coalition")]
 		const string ChosenCoalition = "label-player-influence-coalition";
 
-		[TranslationReference("policy")]
+		[FluentReference("policy")]
 		const string ChosenPolicy = "label-player-influence-policy";
 
 		const string NoneImage = "none";
@@ -74,16 +75,16 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				{
 					var thresholdsPassed = timeline.ThresholdsPassed;
 
-					var tooltip = TranslationProvider.GetString(PlayerInfluenceLevel, Translation.Arguments("level", thresholdsPassed));
+					var tooltip = FluentProvider.GetMessage(PlayerInfluenceLevel, "level", thresholdsPassed);
 
 					if (timeline.TicksUntilNextThreshold > 0)
-						tooltip += "\n" + TranslationProvider.GetString(PlayerInfluenceLevelTime, Translation.Arguments("time", WidgetUtils.FormatTime(timeline.TicksUntilNextThreshold, world.Timestep)));
+						tooltip += "\n" + FluentProvider.GetMessage(PlayerInfluenceLevelTime, "time", WidgetUtils.FormatTime(timeline.TicksUntilNextThreshold, world.Timestep));
 
 					if (chosenCoalition != null)
-						tooltip += "\n" + TranslationProvider.GetString(ChosenCoalition, Translation.Arguments("coalition", char.ToUpper(chosenCoalition[0]) + chosenCoalition[1..]));
+						tooltip += "\n" + FluentProvider.GetMessage(ChosenCoalition, "coalition", char.ToUpper(chosenCoalition[0]) + chosenCoalition[1..]);
 
 					if (chosenPolicy != null)
-						tooltip += "\n" + TranslationProvider.GetString(ChosenPolicy, Translation.Arguments("policy", char.ToUpper(chosenPolicy[0]) + chosenPolicy[1..]));
+						tooltip += "\n" + FluentProvider.GetMessage(ChosenPolicy,"policy", char.ToUpper(chosenPolicy[0]) + chosenPolicy[1..]);
 
 					return tooltip;
 				});

@@ -50,7 +50,7 @@ namespace OpenRA.Mods.CA.Traits.Render
 			: base(self, info)
 		{
 			font = Game.Renderer.Fonts[info.Font];
-			color = info.UsePlayerColor ? self.Owner.Color : info.Color;
+			color = info.UsePlayerColor ? self.OwnerColor() : info.Color;
 			converter = self.Trait<UnitConverter>();
 		}
 

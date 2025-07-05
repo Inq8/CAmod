@@ -146,6 +146,20 @@ Background@LATENCY_TOOLTIP:
 			Height: 26
 			Font: Bold
 
+Background@BOT_TOOLTIP:
+	Logic: BotTooltipLogic
+	Background: dialog4
+	Height: 30
+	Width: 300
+	Children:
+		Label@NAME:
+			X: 7
+			Y: 2
+			Text: label-bot-player-tooltip-name
+			Width: 290
+			Height: 24
+			Font: Bold
+
 Background@ANONYMOUS_PLAYER_TOOLTIP:
 	Logic: AnonymousProfileTooltipLogic
 	Background: dialog4
@@ -195,7 +209,7 @@ Background@REGISTERED_PLAYER_TOOLTIP:
 	Background: dialog4
 	Children:
 		Container@HEADER:
-			Width: PARENT_RIGHT
+			Width: PARENT_WIDTH
 			Children:
 				Container@PROFILE_HEADER:
 					Height: 43
@@ -203,19 +217,19 @@ Background@REGISTERED_PLAYER_TOOLTIP:
 						Label@PROFILE_NAME:
 							X: 7
 							Y: 2
-							Width: PARENT_RIGHT - 20
+							Width: PARENT_WIDTH - 20
 							Height: 24
 							Font: MediumBold
 						Label@PROFILE_RANK:
 							X: 7
 							Y: 24
-							Width: PARENT_RIGHT - 20
+							Width: PARENT_WIDTH - 20
 							Height: 12
 							Font: TinyBold
 						Container@GAME_ADMIN:
 							X: 7
 							Y: 36
-							Width: PARENT_RIGHT - 20
+							Width: PARENT_WIDTH - 20
 							Height: 12
 							Visible: False
 							Children:
@@ -228,20 +242,21 @@ Background@REGISTERED_PLAYER_TOOLTIP:
 								Label@LABEL:
 									X: 10
 									Y: 1
+									Width: 200
 									Height: 12
 									Text: Game Admin
 									Font: TinyBold
 				Container@MESSAGE_HEADER:
 					Height: 26
-					Width: PARENT_RIGHT
+					Width: PARENT_WIDTH
 					Children:
 						Label@MESSAGE:
 							X: 7
-							Width: PARENT_RIGHT - 14
+							Width: PARENT_WIDTH - 14
 							Height: 23
 							Font: Bold
 		Container@BADGES_CONTAINER:
-			Width: PARENT_RIGHT
+			Width: PARENT_WIDTH
 			Visible: false
 			Children:
 				Background@SEPARATOR:
@@ -375,7 +390,7 @@ Background@SUPPORT_POWER_TOOLTIP:
 			Text: $
 
 Background@ARMY_TOOLTIP:
-	Logic: ArmyTooltipLogic
+	Logic: ArmyTooltipLogicCA
 	Background: dialog4
 	Width: 200
 	Height: 65
@@ -392,8 +407,8 @@ Background@ARMY_TOOLTIP:
 			Font: TinyBold
 			VAlign: Top
 
-Background@ARMY_TOOLTIP_CA:
-	Logic: ArmyTooltipLogicCA
+Background@ARMY_VALUE_TOOLTIP:
+	Logic: ArmyValueTooltipLogic
 	Background: dialog4
 	Width: 200
 	Height: 65

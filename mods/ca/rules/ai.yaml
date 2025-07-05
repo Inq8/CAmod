@@ -1,21 +1,21 @@
 Player:
 	ModularBot@BrutalAI:
-		Name: Brutal AI
+		Name: bot-brutal-ai.name
 		Type: brutal
 	ModularBot@VeryHardAI:
-		Name: Very Hard AI
+		Name: bot-vhard-ai.name
 		Type: vhard
 	ModularBot@HardAI:
-		Name: Hard AI
+		Name: bot-hard-ai.name
 		Type: hard
 	ModularBot@NormalAI:
-		Name: Normal AI
+		Name: bot-normal-ai.name
 		Type: normal
 	ModularBot@EasyAI:
-		Name: Easy AI
+		Name: bot-easy-ai.name
 		Type: easy
 	ModularBot@NavalAI:
-		Name: Naval AI
+		Name: bot-naval-ai.name
 		Type: naval
 	GrantConditionOnBotOwner@BrutalAI:
 		Condition: enable-brutal-ai
@@ -799,13 +799,12 @@ Player:
 		RequiresCondition: enable-brutal-ai || enable-vhard-ai || enable-hard-ai || enable-normal-ai || enable-easy-ai || enable-naval-ai
 		HarvesterTypes: harv,harv.td,harv.td.upg,harv.scrin,harv.chrono
 		RefineryTypes: proc,proc.td,proc.scrin
-	CaptureManagerBotModuleCA:
+	CaptureManagerBotModule:
 		RequiresCondition: enable-brutal-ai || enable-vhard-ai || enable-hard-ai || enable-normal-ai || enable-easy-ai
 		CapturingActorTypes: e6,n6,s6
 		CapturableActorTypes: fact,afac,sfac,barr,tent,hand,pyle,port,weap,airs,weap.td,wsph,atek,stek,gtek,tmpl,scrt,dome,hq,hq.upg,nerv,mslo,mslo.nod,weat,eye,rfgn,iron,pdox,sgen,mani,oilb,bio,miss,hosp,fcom
 		CheckCaptureTargetsForVisibility: false
 		MaximumCaptureTargetOptions: 15
-		EnemyAvoidanceRadius: 4c0
 	BridgeRepairBotModule:
 		RequiresCondition: enable-brutal-ai || enable-vhard-ai || enable-hard-ai || enable-normal-ai || enable-easy-ai
 		RepairActorTypes: e6, n6, s6

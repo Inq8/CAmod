@@ -79,7 +79,7 @@ namespace OpenRA.Mods.CA.Traits
 					.FirstOrDefault(q => q.Enabled && types.Contains(q.Info.Type));
 			}
 
-			if (queue == null || !queue.BuildableItems().Any())
+			if (queue == null || !queue.AnyItemsToBuild())
 				return;
 
 			if (tabsWidget.Value != null)

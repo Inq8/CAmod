@@ -20,7 +20,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	class ChargingSelfDestructInfo : TraitInfo, IRulesetLoaded, Requires<ExplodesInfo>, Requires<WithFacingSpriteBodyInfo>
+	class ChargingSelfDestructInfo : TraitInfo, IRulesetLoaded, Requires<FireWarheadsOnDeathInfo>, Requires<WithFacingSpriteBodyInfo>
 	{
 		[SequenceReference]
 		public readonly string ChargingSequence = "charging";

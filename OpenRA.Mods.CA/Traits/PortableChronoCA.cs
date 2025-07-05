@@ -430,8 +430,6 @@ namespace OpenRA.Mods.CA.Traits
 					cursor = targetCursor;
 					return true;
 				}
-
-				return false;
 			}
 
 			return false;
@@ -501,7 +499,6 @@ namespace OpenRA.Mods.CA.Traits
 			if (portableChrono.IsTraitDisabled || portableChrono.IsTraitPaused)
 			{
 				world.CancelInputMode();
-				return;
 			}
 		}
 

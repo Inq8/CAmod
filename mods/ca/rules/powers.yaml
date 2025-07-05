@@ -132,15 +132,18 @@
 	ClassicAirstrikePower@Strafe:
 		OrderName: strafe
 		Squad:
-			p51:
+			1:
+				UnitType: p51
 				SpawnDelay: 20
 				SpawnOffset: -1536,1024,0
 				TargetOffset: -536,0,0
-			p51:
+			2:
+				UnitType: p51
 				SpawnDelay: 0
 				SpawnOffset: 0,0,0
 				TargetOffset: 0,0,0
-			p51:
+			3:
+				UnitType: p51
 				SpawnDelay: 20
 				SpawnOffset: -1536,-1024,0
 				TargetOffset: 536,0,0
@@ -909,7 +912,7 @@
 		Icon: invuln
 		ChargeInterval: 4500
 		ExplosionWeapon: IronCurtain
-		Name: Iron Curtain
+		Name: supportpower-ironcurtain.name
 		Condition: invulnerability
 		Range: 4c0
 		MaxTargets: 5
@@ -919,7 +922,7 @@
 		InvalidTargets: IronCurtainImmune
 		Duration: 600
 		AllowMultiple: false
-		Description: \nMakes up to 5 selected vehicles or structures\n    temporarily immune to damage.\n\nAffected units have limited movement speed.\n\nWarning: Harmful to infantry.
+		Description: supportpower-ironcurtain.desc
 		OnFireSound: ironcur9.aud
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
@@ -1101,6 +1104,7 @@
 		EffectSequence: idle
 		EffectPalette: effect
 		SupportPowerPaletteOrder: 50
+		BlockedCursor: move-blocked
 
 ^GDIRadarPowers:
 	Inherits@RECONDRONEPOWER: ^ReconDronePower
@@ -2007,6 +2011,7 @@
 		EffectSequence: idle
 		EffectPalette: tseffect-ignore-lighting-alpha75
 		SupportPowerPaletteOrder: 40
+		BlockedCursor: move-blocked
 	SpawnActorPower@ICHORSEEDREAPER:
 		OrderName: ichorseedreaper
 		Icon: ichorpower
@@ -2028,6 +2033,7 @@
 		EffectSequence: idle
 		EffectPalette: tseffect-ignore-lighting-alpha75
 		SupportPowerPaletteOrder: 40
+		BlockedCursor: move-blocked
 
 ^GreaterCoalescencePower:
 	DetonateWeaponPower@GREATERCOALESCENCE:

@@ -204,8 +204,6 @@ B2B:
 		CloakDelay: 200
 		UncloakSound: appear1.aud
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
-		IsPlayerPalette: true
-		Palette: cloakra
 		RequiresCondition: !cloak-force-disabled && airborne
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
@@ -2558,7 +2556,8 @@ RAH:
 		CloakDelay: 200
 		CloakSound: trans1.aud
 		UncloakSound: appear1md.aud
-		Palette: cloak
+		CloakStyle: Palette
+		CloakedPalette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Damage, Heal
 		CloakedCondition: hidden
@@ -2797,7 +2796,7 @@ KIRO:
 		RequiresCondition: produced
 		Voice: Build
 		ValidRelationships: Neutral, Ally
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: KirovExplode
 		RequiresCondition: !airborne
 	DamageMultiplier@doorsopen:
@@ -3392,7 +3391,7 @@ HORN:
 		AmmoCondition: ammo
 	RejectsOrders:
 	-SpawnActorOnDeath:
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: VisualExplodeAirborne
 		-RequiresCondition:
 	-Selectable:
@@ -4638,7 +4637,8 @@ VERT:
 		CloakDelay: 200
 		CloakSound: trans1.aud
 		UncloakSound: appear1md.aud
-		Palette: cloak
+		CloakStyle: Palette
+		CloakedPalette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Dock, Damage, Heal
 		CloakedCondition: hidden
@@ -4929,8 +4929,8 @@ JACK:
 		Type: GroundPosition
 	Armament@PRIMARY:
 		Weapon: JackknifeTargeter
-		PauseOnCondition:  blinded
-	Explodes:
+		PauseOnCondition: blinded
+	FireWarheadsOnDeath:
 		Weapon: JackknifeExplosion
 		EmptyWeapon: JackknifeExplosion
 		-RequiresCondition:

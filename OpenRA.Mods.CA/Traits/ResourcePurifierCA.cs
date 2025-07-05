@@ -91,7 +91,7 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				var temp = currentDisplayValue;
 				if (self.Owner.IsAlliedWith(self.World.RenderPlayer))
-					self.World.AddFrameEndTask(w => w.Add(new FloatingText(self.CenterPosition, self.Owner.Color, FloatingText.FormatCashTick(temp), Info.TickLifetime)));
+					self.World.AddFrameEndTask(w => w.Add(new FloatingText(self.CenterPosition, self.OwnerColor(), FloatingText.FormatCashTick(temp), Info.TickLifetime)));
 
 				currentDisplayTick = Info.TickRate;
 				currentDisplayValue = 0;

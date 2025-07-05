@@ -94,7 +94,7 @@ namespace OpenRA.Mods.Common.Traits
 			attackerPool.AddCollectedBounty(collectedBounty);
 
 			if (Info.ShowBounty && self.IsInWorld && displayedBounty != 0 && e.Attacker.Owner.IsAlliedWith(self.World.RenderPlayer))
-				e.Attacker.World.AddFrameEndTask(w => w.Add(new FloatingText(self.CenterPosition, e.Attacker.Owner.Color, FloatingText.FormatCashTick(displayedBounty), 30)));
+				e.Attacker.World.AddFrameEndTask(w => w.Add(new FloatingText(self.CenterPosition, e.Attacker.OwnerColor(), FloatingText.FormatCashTick(displayedBounty), 30)));
 
 			e.Attacker.Owner.PlayerActor.Trait<PlayerResources>().ChangeCash(collectedBounty);
 		}

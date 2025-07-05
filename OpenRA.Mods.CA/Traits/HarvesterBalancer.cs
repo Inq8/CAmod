@@ -34,7 +34,7 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new HarvesterBalancer(this); }
 	}
 
-	public class HarvesterBalancer : ConditionalTrait<HarvesterBalancerInfo>, INotifyCreated, ITick, INotifyHarvesterAction, INotifyDamage
+	public class HarvesterBalancer : ConditionalTrait<HarvesterBalancerInfo>, INotifyCreated, ITick, INotifyHarvestAction, INotifyDockClientMoving, INotifyDamage
 	{
 		int conditionToken = Actor.InvalidConditionToken;
 		Actor destinationRefinery;
@@ -131,24 +131,30 @@ namespace OpenRA.Mods.CA.Traits
 				unlinkedBuffTicks--;
 		}
 
-		public void MovingToResources(Actor self, CPos targetCell)
+		void INotifyHarvestAction.MovingToResources(Actor self, CPos targetCell)
 		{
 		}
 
-		public void MovingToRefinery(Actor self, Actor refineryActor)
+		void INotifyDockClientMoving.MovingToDock(Actor self, Actor hostActor, IDockHost host)
 		{
 			movingToResources = false;
 			movingToRefinery = true;
-			destinationRefinery = refineryActor;
+			destinationRefinery = hostActor;
 		}
 
-		public void MovementCancelled(Actor self)
+		void INotifyHarvestAction.MovementCancelled(Actor self)
 		{
 			movingToRefinery = false;
 			movingToResources = false;
 		}
 
-		public void Harvested(Actor self, string resourceType)
+		void INotifyDockClientMoving.MovementCancelled(Actor self)
+		{
+			movingToRefinery = false;
+			movingToResources = false;
+		}
+
+		void INotifyHarvestAction.Harvested(Actor self, string resourceType)
 		{
 			movingToRefinery = false;
 			movingToResources = false;

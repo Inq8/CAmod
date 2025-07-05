@@ -582,7 +582,7 @@
 		Sequence: chrono-overlay
 		RequiresCondition: being-warped
 		IsDecoration: True
-	Explodes@TEMPORAL:
+	FireWarheadsOnDeath@TEMPORAL:
 		Weapon: TemporalExplode
 		EmptyWeapon: TemporalExplode
 		DeathTypes: ChronoDeath
@@ -607,7 +607,7 @@
 	KillsSelf@TEMPINC:
 		GrantsCondition: warpout
 		RequiresCondition: !warpin
-	Explodes@TEMPINC:
+	FireWarheadsOnDeath@TEMPINC:
 		Weapon: UnitExplodeWarpOut
 		EmptyWeapon: UnitExplodeWarpOut
 		RequiresCondition: warpout
@@ -1416,7 +1416,8 @@
 		InitialDelay: 0
 		CloakDelay: 25
 		IsPlayerPalette: false
-		Palette: cloakgreen
+		CloakStyle: Palette
+		CloakedPalette: cloakgreen
 		CloakSound: cloak5md.aud
 		UncloakSound: appear1md.aud
 		UncloakOn: Attack, Unload, Infiltrate, Demolish
@@ -1431,7 +1432,8 @@
 		InitialDelay: 0
 		CloakDelay: 150
 		IsPlayerPalette: false
-		Palette: cloak
+		CloakStyle: Palette
+		CloakedPalette: cloak
 		CloakSound: cloak5md.aud
 		UncloakSound: appear1md.aud
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Damage, Heal
@@ -1449,7 +1451,8 @@
 		CloakDelay: 90
 		CloakSound: trans1.aud
 		UncloakSound: appear1md.aud
-		Palette: cloak
+		CloakStyle: Palette
+		CloakedPalette: cloak
 		IsPlayerPalette: false
 		RequiresCondition: (crate-cloak) && !(cloak-force-disabled || invisibility)
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Damage, Heal
@@ -2285,7 +2288,7 @@
 		FallRate: 26
 		KilledOnImpassableTerrain: true
 		ParachutingCondition: parachute
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: UnitExplodeSmall
 		EmptyWeapon: UnitExplodeSmall
 		RequiresCondition: !being-warped
@@ -2883,7 +2886,7 @@
 	RepairableNear:
 		RepairActors: syrd, spen, syrd.gdi, spen.nod
 	WithDamageOverlay:
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: UnitExplodeShip
 		EmptyWeapon: UnitExplodeShip
 		RequiresCondition: !being-warped
@@ -2926,7 +2929,8 @@
 		UncloakOn: Unload
 		InitialDelay: 0
 		CloakDelay: 0
-		Palette: submerged
+		CloakStyle: Palette
+		CloakedPalette: submerged
 		RequiresCondition: under-bridge
 	DamageMultiplier@UNDERBRIDGE:
 		RequiresCondition: under-bridge
@@ -2976,7 +2980,7 @@
 	RenderDetectionCircle:
 		Color: 00ff0020
 		BorderColor: 00000020
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: UnitExplodeSubmarine
 		EmptyWeapon: UnitExplodeSubmarine
 		RequiresCondition: !under-bridge && !being-warped
@@ -3045,7 +3049,7 @@
 		Categories: Aircraft
 	SpawnActorOnDeath:
 		RequiresCondition: airborne
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: UnitExplode
 		RequiresCondition: !airborne
 	RevealOnFireCA:
@@ -3130,7 +3134,7 @@
 	ProductionCostMultiplier@EagleBonus:
 		Multiplier: 90
 		Prerequisites: player.eagle
-	Explodes:
+	FireWarheadsOnDeath:
 		RequiresCondition: !airborne && !being-warped
 	Targetable@TEMPORAL:
 		TargetTypes: TemporalAir
@@ -3201,7 +3205,7 @@
 		Bounds: 1024, 1024
 	Health:
 		HP: 1000
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: BarrelExplode
 		Type: Footprint
 	Tooltip:
@@ -3249,7 +3253,7 @@
 		DamagedSounds: kaboom1.aud, xplobig4.aud
 		DestroyedSounds: kaboom22.aud, crumble.aud, xplobig4.aud
 	WithSpriteBody:
-	Explodes:
+	FireWarheadsOnDeath:
 		Type: Footprint
 		Weapon: BuildingExplode
 		EmptyWeapon: BuildingExplode
@@ -3351,9 +3355,9 @@
 	Targetable@HACKCAPTURABLE:
 		TargetTypes: HackCapturable
 		RequiresCondition: !build-incomplete && !being-warped
-	Explodes:
+	FireWarheadsOnDeath:
 		RequiresCondition: !being-warped
-	Explodes@TEMPORAL:
+	FireWarheadsOnDeath@TEMPORAL:
 		Weapon: TemporalExplodeLarge
 		EmptyWeapon: TemporalExplodeLarge
 	GpsRadarDot:
@@ -3456,7 +3460,7 @@
 	RenderRangeCircle:
 		RangeCircleType: DefenseRange
 		Color: C12900
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: SmallBuildingExplode
 		EmptyWeapon: SmallBuildingExplode
 	MapEditorData:
@@ -3473,7 +3477,7 @@
 	ProductionCostMultiplier@FranceBonus:
 		Multiplier: 90
 		Prerequisites: player.france
-	Explodes@TEMPORAL:
+	FireWarheadsOnDeath@TEMPORAL:
 		Weapon: TemporalExplode
 		EmptyWeapon: TemporalExplode
 	DetectCloaked@UNDERBRIDGE:
@@ -3639,7 +3643,7 @@
 		Categories: Fake
 	TooltipExtras:
 		Attributes: • Can be detonated remotely
-	Explodes@FAKE:
+	FireWarheadsOnDeath@FAKE:
 		Weapon: FakeBuildingExplode
 		DamageThreshold: 70
 		Type: CenterPosition
@@ -3680,7 +3684,7 @@
 	Huntable:
 	Health:
 		HP: 1000
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: UnitExplode
 	Tooltip:
 		Name: Ammo Box
@@ -3718,17 +3722,17 @@
 	SpawnRandomActorOnDeath@3:
 		Actors: c5,c7,c8,c9
 		Probability: 15
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: SmallBuildingExplode
-	Explodes@CIVPANIC:
+	FireWarheadsOnDeath@CIVPANIC:
 		Weapon: CivPanicExplosion
 
 ^CivField:
 	Inherits: ^CivBuilding
 	-HitShape:
 	-Health:
-	-Explodes:
-	-Explodes@CIVPANIC:
+	-FireWarheadsOnDeath:
+	-FireWarheadsOnDeath@CIVPANIC:
 	-Selectable:
 	-SelectionDecorations:
 	Tooltip:
@@ -3934,7 +3938,7 @@
 		RequiresForceFire: true
 	Tooltip:
 		GenericName: Destroyed Vehicle
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: VisualExplodeHusk
 		EmptyWeapon: VisualExplodeHusk
 		DamageSource: Killer
@@ -4042,7 +4046,7 @@
 		ForceHealthPercentage: 25
 	Tooltip:
 		GenericName: Destroyed Building
-	Explodes@NORMAL:
+	FireWarheadsOnDeath@NORMAL:
 		Type: Footprint
 		Weapon: BuildingExplode
 		EmptyWeapon: BuildingExplode
@@ -4508,14 +4512,14 @@
 	WithShadow:
 
 ^ThrowsShrapnel:
-	ThrowsShrapnel@small:
+	FireProjectilesOnDeath@small:
 		Weapons: SmallDebris
 		Pieces: 3, 7
 		Range: 1c511, 3c0
 
 ^ThrowsShrapnelBig:
 	Inherits: ^ThrowsShrapnel
-	ThrowsShrapnel@fire:
+	FireProjectilesOnDeath@fire:
 		Weapons: FireDebris
 		Pieces: 3, 7
 		Range: 1c511, 3c0

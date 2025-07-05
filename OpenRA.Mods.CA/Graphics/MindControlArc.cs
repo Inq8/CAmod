@@ -69,7 +69,7 @@ namespace OpenRA.Mods.CA.Graphics
 
 		IEnumerable<IRenderable> IRenderAboveShroudWhenSelected.RenderAboveShroud(Actor self, WorldRenderer wr)
 		{
-			var color = Color.FromArgb(info.Transparency, info.UsePlayerColor ? self.Owner.Color : info.Color);
+			var color = Color.FromArgb(info.Transparency, info.UsePlayerColor ? self.OwnerColor() : info.Color);
 
 			if (mindController != null)
 			{

@@ -8,14 +8,14 @@ V2RL:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 180
 		Prerequisites: anyradar, ~vehicles.soviet, ~!v3.upgrade, ~techlevel.medium
-		Description: Long-range rocket artillery with low rate of fire.
+		Description: actor-v2rl.description
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
 		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets
 	Valued:
 		Cost: 900
 	Tooltip:
-		Name: V2 Rocket Launcher
+		Name: actor-v2rl.name
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -47,7 +47,7 @@ V2RL:
 		RequiresCondition: reloading
 		Sequence: empty-idle
 		Name: reloading
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: BarrelExplode
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -116,7 +116,7 @@ KATY:
 		PauseOnCondition: empdisable || being-warped || blinded
 		FacingTolerance: 0
 		Voice: Attack
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: BarrelExplode
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -311,7 +311,7 @@ NUKC:
 		RequiresCondition: atomic-ammo && !has-atomic-ammo
 	ReloadAmmoPoolCA@ATOMICAMMODECAY:
 		Count: -1
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: UnitExplodeIraqTank
 		LoadedChance: 100
 	ProducibleWithLevel:
@@ -604,7 +604,7 @@ GTNK.squad:
 			traveler: devo
 			harbinger: devo
 	-Buildable:
-	Explodes:
+	FireWarheadsOnDeath:
 		RequiresCondition: !warpout
 	GrantConditionOnFaction@France:
 		Factions: france
@@ -744,8 +744,6 @@ GTNK.squad:
 		CloakedCondition: hidden
 		UncloakSound: appear1md.aud
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Move, Damage, Heal
-		Palette: player
-		IsPlayerPalette: false
 		RequiresCondition: england && !cloak-force-disabled && !being-warped && !empdisable && !driver-dead
 		PauseOnCondition: invisibility
 	Cloak@CRATE-CLOAK:
@@ -776,7 +774,7 @@ GTNK.squad:
 	Inherits@TEMPINC: ^TemporalReinforcement
 	RenderSprites:
 		Image: 2tnk
-	Explodes:
+	FireWarheadsOnDeath:
 		RequiresCondition: !warpout
 	-ActorLostNotification:
 	-SpawnActorOnDeath:
@@ -904,7 +902,7 @@ GTNK.squad:
 	SpeedMultiplier:
 		Modifier: 125
 	-SpawnActorOnDeath:
-	Explodes@ATOMICENGINES:
+	FireWarheadsOnDeath@ATOMICENGINES:
 		Weapon: UnitExplodeIraqTank
 		EmptyWeapon: UnitExplodeIraqTank
 		RequiresCondition: !being-warped
@@ -1171,7 +1169,7 @@ GTNK.squad:
 	SpeedMultiplier:
 		Modifier: 125
 	-SpawnActorOnDeath:
-	Explodes@ATOMICENGINES:
+	FireWarheadsOnDeath@ATOMICENGINES:
 		Weapon: UnitExplodeIraqTank
 		EmptyWeapon: UnitExplodeIraqTank
 		RequiresCondition: !being-warped
@@ -1402,7 +1400,7 @@ GTNK.squad:
 	Tooltip:
 		Name: Atomic Mammoth Tank
 	-SpawnActorOnDeath:
-	Explodes@ATOMICUPGRADE:
+	FireWarheadsOnDeath@ATOMICUPGRADE:
 		Weapon: UnitExplodeIraqTank
 		EmptyWeapon: UnitExplodeIraqTank
 		RequiresCondition: !being-warped
@@ -1549,7 +1547,7 @@ ARTY:
 		PauseOnCondition: empdisable || being-warped || blinded
 		FacingTolerance: 0
 	WithMuzzleOverlay:
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: ArtilleryExplode
 		LoadedChance: 75
 	ProducibleWithLevel:
@@ -1640,7 +1638,7 @@ ARTY.Chrono:
 		Factions: gdi, talon, zocom, eagle, arc, nod, blackh, marked, legion, shadow
 		Condition: td
 	-Buildable:
-	Explodes:
+	FireWarheadsOnDeath:
 		RequiresCondition: !warpout
 	Armament:
 		RequiresCondition: !scrin && !soviet && !td
@@ -1687,7 +1685,7 @@ ARTY.TEMP:
 	Inherits@TEMPINC: ^TemporalReinforcement
 	RenderSprites:
 		Image: arty
-	Explodes:
+	FireWarheadsOnDeath:
 		RequiresCondition: !warpout
 	-ActorLostNotification:
 	-Buildable:
@@ -1761,7 +1759,7 @@ ISU:
 		RequiresCondition: atomic-ammo && has-atomic-ammo < 3
 	ReloadAmmoPoolCA@ATOMICAMMODECAY:
 		Count: -3
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: ArtilleryExplode
 		LoadedChance: 75
 	ProducibleWithLevel:
@@ -1830,7 +1828,7 @@ SPEC:
 		SelectionBarColor: 666666
 		Voice: Attack
 	WithMuzzleOverlay:
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: ArtilleryExplode
 		LoadedChance: 75
 	ProducibleWithLevel:
@@ -1844,7 +1842,8 @@ SPEC:
 		CloakSound: trans1.aud
 		CloakedCondition: hidden
 		UncloakSound: appear1md.aud
-		Palette: cloak
+		CloakStyle: Palette
+		CloakedPalette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
 		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead
@@ -1942,7 +1941,8 @@ SAPC:
 		CloakSound: trans1.aud
 		CloakedCondition: hidden
 		UncloakSound: appear1md.aud
-		Palette: cloak
+		CloakStyle: Palette
+		CloakedPalette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
 		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead
@@ -2008,7 +2008,6 @@ HARV:
 		Priority: 7
 		DecorationBounds: 1792, 1792
 	Harvester:
-		Capacity: 26
 		Resources: Tiberium, BlueTiberium, BlackTiberium, Ore, Gems
 		BaleUnloadDelay: 1
 		BaleLoadDelay: 4
@@ -2017,7 +2016,8 @@ HARV:
 		HarvestFacings: 8
 		EmptyCondition: no-ore
 		MaxUnloadQueue: 8
-	WithHarvesterPipsDecoration:
+	DockClientManager:
+	WithStoresResourcesPipsDecoration:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
@@ -2050,10 +2050,10 @@ HARV:
 	GrantConditionOnTerrain@Ore:
 		Condition: onore
 		TerrainTypes: Ore
-	Explodes@Ore:
+	FireWarheadsOnDeath@Ore:
 		RequiresCondition: !no-ore && onore && !being-warped
 		Weapon: OreExplosion
-	Explodes@Tib:
+	FireWarheadsOnDeath@Tib:
 		RequiresCondition: !no-ore && ontib && !being-warped
 		Weapon: TibExplosion
 	-Crushable:
@@ -2100,6 +2100,9 @@ HARV:
 		Type: BuildingsOrHarvesters
 	ReplacedInQueue:
 		Actors: harv.chrono
+	StoresResources:
+		Capacity: 26
+		Resources: Tiberium, BlueTiberium, BlackTiberium, Ore, Gems
 
 HARV.Chrono:
 	Inherits: HARV
@@ -2117,7 +2120,6 @@ HARV.Chrono:
 	Mobile:
 		Voice: Move
 	Harvester:
-		Capacity: 18
 		HarvestVoice: Harvest
 		DeliverVoice: Deliver
 	ChronoResourceDelivery:
@@ -2138,6 +2140,8 @@ HARV.Chrono:
 	-TransformOnCondition:
 	-TransferResourcesOnTransform:
 	-RejectsOrders@Transforming:
+	StoresResources:
+		Capacity: 18
 
 MCV:
 	Inherits: ^Vehicle-NOUPG
@@ -2305,7 +2309,7 @@ JEEP.TEMP:
 	Inherits@TEMPINC: ^TemporalReinforcement
 	RenderSprites:
 		Image: jeep
-	Explodes:
+	FireWarheadsOnDeath:
 		RequiresCondition: !warpout
 	-ActorLostNotification:
 	-Buildable:
@@ -2505,7 +2509,7 @@ MNLY:
 		DetectionTypes: Mine
 		RequiresCondition: !(empdisable || being-warped)
 	RenderDetectionCircle:
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: ATMine
 	RenderSprites:
 		Image: MNLY
@@ -2949,7 +2953,7 @@ DTRK:
 		Voice: Move
 	RevealsShroud:
 		Range: 4c0
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: MiniNuke
 		EmptyWeapon: MiniNuke
 		DamageSource: Killer
@@ -3119,7 +3123,7 @@ QTNK:
 		DetonationWeapon: MADTankDetonate
 		FirstDetonationImmediate: true
 		PauseOnCondition: empdisable || being-warped
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: ArtilleryExplode
 	Selectable:
 		DecorationBounds: 1877, 1621, 0, -170
@@ -3596,7 +3600,7 @@ FTNK.Decoy:
 	Armament@PRIMARY:
 		Weapon: BigFlamerTD.Decoy
 	-Armament@FF:
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: DecoyDespawn
 		EmptyWeapon: DecoyDespawn
 		-RequiresCondition:
@@ -3638,7 +3642,7 @@ HFTK.Decoy:
 		Weapon: HeavyFlameTankFlamer.UPG.Decoy
 	-Armament@FF:
 	-Armament@FFUPG:
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: DecoyDespawn
 		EmptyWeapon: DecoyDespawn
 		-RequiresCondition:
@@ -4204,9 +4208,8 @@ MTNK:
 		Turret: secondary
 		Weapon: PointLaser
 		LocalOffset: 0,10,90
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || pointlaser-charging
 		RequiresCondition: pointdef-upgrade
-		ReloadingCondition: pointlaser-charging
 		ForceTargetRelationships: Enemy
 	AttackTurreted:
 		Turrets: primary, secondary
@@ -4235,6 +4238,10 @@ MTNK:
 		PointDefenseTypes: Missile
 		RequiresCondition: pointdef-upgrade && !gshield && !gshield-charging
 		ValidRelationships: Enemy
+	GrantTimedConditionOnPointDefenseHit@POINTDEF:
+		Condition: pointlaser-charging
+		RequiresCondition: pointdef-upgrade
+		ScaleChargeTimeWithDamageAmount: 21
 	GrantConditionOnPrerequisite@POINTDEF:
 		Condition: pointdef-upgrade
 		Prerequisites: pointdef.upgrade
@@ -4248,8 +4255,9 @@ MTNK:
 		Modifier: 25
 		Duration: 2
 		ScaleChargeTimeWithDamage: true
-		ScaleChargeTimeWithDamageAmount: 7
-		RequiresCondition: pointdef-upgrade && !pointlaser-charging
+		ScaleChargeTimeWithDamageAmount: 21
+		PauseOnCondition: pointlaser-charging
+		RequiresCondition: pointdef-upgrade
 	GrantTimedCondition@NSHIELDVISUAL:
 		Condition: gshieldvisual
 		RequiresCondition: gshield
@@ -4462,7 +4470,7 @@ MDRN:
 	-GrantCondition@CarriedImmobile:
 	WithIdleOverlay@NSHIELD:
 		Image: nshield-overlay-sm
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: VisualExplodeSmall
 		EmptyWeapon: VisualExplodeSmall
 	Sellable:
@@ -4804,7 +4812,7 @@ MSAM:
 	AttackMove:
 		Voice: Attack
 	WithSpriteTurret:
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: ArtilleryExplode
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -4968,7 +4976,7 @@ MLRS:
 	GrantConditionOnMovement@MOVING:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 		Condition: moving
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: BarrelExplode
 	ReloadAmmoPool@1:
 		Delay: 120
@@ -5032,7 +5040,8 @@ STNK.Nod:
 		CloakSound: trans1.aud
 		CloakedCondition: hidden
 		UncloakSound: appear1md.aud
-		Palette: cloak
+		CloakStyle: Palette
+		CloakedPalette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
 		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead && !parachute
@@ -5147,7 +5156,8 @@ HSTK:
 		CloakSound: trans1.aud
 		CloakedCondition: hidden
 		UncloakSound: appear1md.aud
-		Palette: cloak
+		CloakStyle: Palette
+		CloakedPalette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
 		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead && !parachute
@@ -5337,7 +5347,7 @@ FTNK:
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped || blinded || parachute
 		FacingTolerance: 0
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: BarrelExplode
 		EmptyWeapon: BarrelExplode
 	ProducibleWithLevel:
@@ -5416,7 +5426,7 @@ HFTK:
 	WithMuzzleOverlay:
 	Voiced:
 		VoiceSet: FlameTankVoice
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: BarrelExplode
 		EmptyWeapon: BarrelExplode
 	ProducibleWithLevel:
@@ -5474,7 +5484,6 @@ HARV.TD:
 		Priority: 7
 		DecorationBounds: 1536, 1536
 	Harvester:
-		Capacity: 26
 		Resources: Tiberium, BlueTiberium, BlackTiberium, Ore, Gems
 		BaleUnloadDelay: 1
 		BaleLoadDelay: 4
@@ -5483,7 +5492,8 @@ HARV.TD:
 		HarvestFacings: 8
 		EmptyCondition: no-ore
 		MaxUnloadQueue: 8
-	WithHarvesterPipsDecoration:
+	DockClientManager:
+	WithStoresResourcesPipsDecoration:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
@@ -5516,10 +5526,10 @@ HARV.TD:
 	GrantConditionOnTerrain@Ore:
 		Condition: onore
 		TerrainTypes: Ore
-	Explodes@Ore:
+	FireWarheadsOnDeath@Ore:
 		RequiresCondition: !no-ore && onore && !being-warped
 		Weapon: OreExplosion
-	Explodes@Tib:
+	FireWarheadsOnDeath@Tib:
 		RequiresCondition: !no-ore && ontib && !being-warped
 		Weapon: TibExplosion
 	-Crushable:
@@ -5563,6 +5573,9 @@ HARV.TD:
 	TransferResourcesOnTransform:
 	ReplacedInQueue:
 		Actors: harv.td.upg
+	StoresResources:
+		Capacity: 26
+		Resources: Tiberium, BlueTiberium, BlackTiberium, Ore, Gems
 
 HARV.TD.UPG:
 	Inherits: HARV.TD
@@ -5582,7 +5595,8 @@ HARV.TD.UPG:
 		CloakSound: trans1.aud
 		CloakedCondition: hidden
 		UncloakSound: appear1md.aud
-		Palette: cloak
+		CloakStyle: Palette
+		CloakedPalette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
 		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead && !parachute
@@ -6753,7 +6767,7 @@ IFV:
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: ivanturr
 		Offset: 0,0,40
-	Explodes@IVAN:
+	FireWarheadsOnDeath@IVAN:
 		Weapon: MicroNuke
 		EmptyWeapon: MicroNuke
 		DamageSource: Killer
@@ -6931,7 +6945,8 @@ IFV:
 		CloakSound: trans1.aud
 		CloakedCondition: hidden
 		UncloakSound: appear1md.aud
-		Palette: cloak
+		CloakStyle: Palette
+		CloakedPalette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
 		RequiresCondition: (shadturr || stlkturr) && !cloak-force-disabled && !capturing && !being-warped && !empdisable && !driver-dead && !parachute
@@ -7532,7 +7547,7 @@ JUGG:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: vehicles.upgraded
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: ArtilleryExplode
 		LoadedChance: 75
 	SpawnActorOnDeath:
@@ -7553,7 +7568,7 @@ TTRK:
 		Attributes: • Special Ability: Detonate
 	Tooltip:
 		Name: Toxin Truck
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: UnitExplodeToxinTruck
 		EmptyWeapon: UnitExplodeToxinTruck
 
@@ -7704,7 +7719,7 @@ HSAM:
 	AttackMove:
 		Voice: Attack
 	WithSpriteTurret:
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: ArtilleryExplode
 		LoadedChance: 75
 	ProducibleWithLevel:
@@ -7869,7 +7884,8 @@ RTNK:
 		CloakedCondition: hidden
 		UncloakSound: appear1md.aud
 		UncloakOn: Attack, Dock, Move, Damage, Heal
-		Palette: player
+		CloakStyle: Palette
+		CloakedPalette: player
 		IsPlayerPalette: false
 		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead
 		PauseOnCondition: invisibility
@@ -7963,7 +7979,7 @@ V3RL:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: BarrelExplode
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -8002,10 +8018,10 @@ V3:
 		Weapon: V3Weapon
 		Type: Footprint
 		RequiresCondition: !airborne
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: V3ExplodeAirborne
 		RequiresCondition: airborne
-	ThrowsShrapnel@Debris:
+	FireProjectilesOnDeath@Debris:
 		Weapons: SmallDebris
 		Pieces: 3, 5
 		Range: 1c511, 3c0
@@ -8081,7 +8097,7 @@ TNKD.TEMP:
 	Inherits@TEMPINC: ^TemporalReinforcement
 	RenderSprites:
 		Image: tnkd
-	Explodes:
+	FireWarheadsOnDeath:
 		RequiresCondition: !warpout
 	-ActorLostNotification:
 	-SpawnActorOnDeath:
@@ -8771,7 +8787,7 @@ CDRN:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: ChaosDroneExplodeSmall
 	AttackFrontal:
 		FacingTolerance: 512
@@ -8995,7 +9011,7 @@ CRYO:
 		VoiceSet: CryoVoice
 	AttackMove:
 		Voice: Attack
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: CryoExplosion
 	Selectable:
 		DecorationBounds: 1194, 1194
@@ -9201,7 +9217,8 @@ BASI:
 		CloakSound: trans1.aud
 		CloakedCondition: hidden
 		UncloakSound: appear1md.aud
-		Palette: cloak
+		CloakStyle: Palette
+		CloakedPalette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
 		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead && !parachute
@@ -9674,7 +9691,7 @@ APOC.ATOMIC:
 	WithFacingSpriteBody:
 	SpeedMultiplier:
 		Modifier: 125
-	Explodes@ATOMICUPGRADE:
+	FireWarheadsOnDeath@ATOMICUPGRADE:
 		Weapon: UnitExplodeIraqTank
 		EmptyWeapon: UnitExplodeIraqTank
 		RequiresCondition: !being-warped
@@ -9908,7 +9925,7 @@ OVLD.ATOMIC:
 	Upgradeable@ERAD:
 		Actor: ovld.erad.atomic
 	-Upgradeable@ATOMIC:
-	Explodes@ATOMICENGINES:
+	FireWarheadsOnDeath@ATOMICENGINES:
 		Weapon: UnitExplodeIraqTank
 		EmptyWeapon: UnitExplodeIraqTank
 		RequiresCondition: !being-warped
@@ -10064,7 +10081,7 @@ THWK:
 	GrantConditionOnMovement@MOVING:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 		Condition: moving
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: BarrelExplode
 	Voiced:
 		VoiceSet: ThwkVoice
@@ -10105,10 +10122,10 @@ TH:
 		Weapon: THWeapon
 		EmptyWeapon: VisualExplodeHusk
 		RequiresCondition: !airborne
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: THExplodeAirborne
 		RequiresCondition: airborne
-	ThrowsShrapnel@Debris:
+	FireProjectilesOnDeath@Debris:
 		Weapons: SmallDebris
 		Pieces: 3, 5
 		Range: 1c511, 3c0
@@ -10137,7 +10154,7 @@ BSKY:
 	RevealsShroud:
 		Range: 3c512
 		Type: GroundPosition
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: BSKY
 	WithEnterExitWorldOverlay:
 		Image: smigboom
@@ -10248,7 +10265,7 @@ MOLE:
 		Sequence: empty
 		RequiresCondition: burrowing
 		Name: burrowing
-	Explodes:
+	FireWarheadsOnDeath:
 		RequiresCondition: !burrowing && !being-warped
 	KillsSelf:
 		RemoveInstead: true

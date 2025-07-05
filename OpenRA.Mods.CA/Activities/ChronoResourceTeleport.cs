@@ -32,7 +32,7 @@ namespace OpenRA.Mods.CA.Activities
 			this.harvestedField = harvestedField;
 			this.refinery = refinery;
 
-			var refInfo = refinery.Info.TraitInfoOrDefault<RefineryInfo>();
+			var refInfo = refinery.Info.TraitInfoOrDefault<DockHostInfo>();
 			if (refInfo != null)
 				dockAngle = refInfo.DockAngle;
 		}
@@ -64,7 +64,7 @@ namespace OpenRA.Mods.CA.Activities
 			if (info.WarpOutSound != null && (info.AudibleThroughFog || !self.World.FogObscures(sourcepos)))
 				Game.Sound.Play(SoundType.World, info.WarpOutSound, self.CenterPosition, info.SoundVolume);
 
-			self.QueueActivity(new DeliverResources(self, refinery));
+			self.QueueActivity(new MoveToDock(self, refinery));
 			self.QueueActivity(new FindAndDeliverResources(self, harvestedField));
 
 			return true;

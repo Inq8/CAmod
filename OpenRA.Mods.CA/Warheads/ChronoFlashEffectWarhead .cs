@@ -27,7 +27,7 @@ namespace OpenRA.Mods.CA.Warheads
 				return;
 
 			if (target.IsValidFor(firedBy))
-				foreach (var a in firedBy.World.ActorsWithTrait<ChronoshiftPaletteEffect>())
+				foreach (var a in firedBy.World.ActorsWithTrait<ChronoshiftPostProcessEffect>())
 					a.Trait.Enable();
 		}
 	}

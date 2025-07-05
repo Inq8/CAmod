@@ -160,7 +160,7 @@ namespace OpenRA.Mods.CA.Traits
 					Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", Info.RequiredCountReachedNotification, self.Owner.Faction.InternalName);
 
 				if (Info.RequiredCountReachedTextNotification != null)
-					TextNotificationsManager.AddTransientLine(Info.RequiredCountReachedTextNotification, self.Owner);
+					TextNotificationsManager.AddTransientLine(self.Owner, Info.RequiredCountReachedTextNotification);
 
 				notificationQueued = false;
 				ticksUntilNotification = Info.NotificationDelay;

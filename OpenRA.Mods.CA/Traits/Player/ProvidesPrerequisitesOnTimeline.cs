@@ -183,7 +183,7 @@ namespace OpenRA.Mods.CA.Traits
 				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", notificationQueued, self.Owner.Faction.InternalName);
 
 				if (Info.PrerequisiteGrantedTextNotification != null)
-					TextNotificationsManager.AddTransientLine(Info.PrerequisiteGrantedTextNotification, self.Owner);
+					TextNotificationsManager.AddTransientLine(self.Owner, Info.PrerequisiteGrantedTextNotification);
 
 				notificationQueued = null;
 				ticksUntilNotification = Info.NotificationDelay;

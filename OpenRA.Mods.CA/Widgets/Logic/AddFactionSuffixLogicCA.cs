@@ -49,7 +49,8 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				ptw.Background += suffix;
 			}
 			else
-				throw new InvalidOperationException("AddFactionSuffixLogic only supports ButtonWidget, ImageWidget, BackgroundWidget, TextFieldWidget, ScrollPanelWidget and ProductionTabsWidget");
+				throw new InvalidOperationException(
+					"AddFactionSuffixLogic only supports ButtonWidget, ImageWidget, BackgroundWidget, TextFieldWidget, ScrollPanelWidget and ProductionTabsWidget");
 		}
 	}
 }

@@ -1,4 +1,4 @@
-## Player
+## Player options
 options-tech-level =
     .infantry-only = Infantry Only
     .low = Low
@@ -43,7 +43,7 @@ options-queuetype =
     .multiqueuefull = Multi-Queue
     .multiqueuescaled = Competitive
 
-## World
+## World options
 options-starting-units =
     .mcv-only = MCV Only
     .light-support = Light Support
@@ -57,28 +57,3 @@ options-difficulty =
     .easy = Easy
     .normal = Normal
     .hard = Hard
-
-label-player-level = Current rank: { $level }
-label-player-level-current-xp = Current XP: { $currentXp }
-label-player-level-required-xp = Next rank XP: { $nextLevelXp }
-
-label-player-influence-level = Influence level: { $level }
-label-player-influence-level-time = Next level in { $time }
-label-player-influence-coalition = Coalition: { $coalition }
-label-player-influence-policy = Policy: { $policy }
-
-## ObserverStatsLogic
-options-observer-stats =
-    .none = Information: None
-    .basic = Basic
-    .economy = Economy
-    .production = Production
-    .support-powers = Support Powers
-    .combat = Combat
-    .army = Army
-    .upgrades = Upgrades
-    .build-order = Build Order
-    .units-produced = Units Produced
-    .earnings-graph = Earnings (graph)
-    .army-graph = Army Value (graph)
-    .team-army-graph = Team Value (graph)

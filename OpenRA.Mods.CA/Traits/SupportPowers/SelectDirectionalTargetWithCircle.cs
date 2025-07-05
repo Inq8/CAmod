@@ -23,9 +23,9 @@ namespace OpenRA.Mods.CA.Traits
 		Color targetCircleColor;
 		bool targetCircleUsePlayerColor;
 
-		public SelectDirectionalTargetWithCircle(World world, string order, SupportPowerManager manager, string cursor,
-			string directionArrowAnimation, string directionArrowPalette, WDist targetCircleRange, Color targetCircleColor, bool targetCircleUsePlayerColor)
-			: base(world, order, manager, cursor, directionArrowAnimation, directionArrowPalette)
+		public SelectDirectionalTargetWithCircle(World world, string order, SupportPowerManager manager, DirectionalSupportPowerInfo info,
+			WDist targetCircleRange, Color targetCircleColor, bool targetCircleUsePlayerColor)
+			: base(world, order, manager, info)
 		{
 			this.targetCircleRange = targetCircleRange;
 			this.targetCircleColor = targetCircleColor;

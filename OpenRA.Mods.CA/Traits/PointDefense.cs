@@ -9,7 +9,10 @@
 #endregion
 
 using System.Linq;
+using OpenRA.GameRules;
+using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Traits;
+using OpenRA.Mods.Common.Warheads;
 using OpenRA.Primitives;
 using OpenRA.Traits;
 
@@ -24,7 +27,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		[FieldLoader.Require]
 		[Desc("What kind of projectiles can this actor shoot at.")]
-		public readonly BitSet<string> PointDefenseTypes = default(BitSet<string>);
+		public readonly BitSet<string> PointDefenseTypes = default;
 
 		[Desc("What diplomatic stances are affected.")]
 		public readonly PlayerRelationship ValidRelationships = PlayerRelationship.Neutral | PlayerRelationship.Enemy;
@@ -37,6 +40,8 @@ namespace OpenRA.Mods.CA.Traits
 		readonly Actor self;
 		readonly PointDefenseInfo info;
 		readonly Armament armament;
+		INotifyPointDefenseHit[] notifyHit;
+		IDamageModifier[] damageModifiers;
 
 		bool hasFiredThisTick = false;
 
@@ -48,17 +53,27 @@ namespace OpenRA.Mods.CA.Traits
 			armament = self.TraitsImplementing<Armament>().First(a => a.Info.Name == info.Armament);
 		}
 
+		protected override void Created(Actor self)
+		{
+			base.Created(self);
+			notifyHit = self.TraitsImplementing<INotifyPointDefenseHit>().ToArray();
+			damageModifiers = self.TraitsImplementing<IDamageModifier>().ToArray();
+		}
+
 		void ITick.Tick(Actor self)
 		{
 			hasFiredThisTick = false;
 		}
 
-		bool IPointDefense.Destroy(WPos position, Player attacker, string type)
+		bool IPointDefense.Destroy(WPos position, Player attacker, string type, ProjectileArgs args)
 		{
 			if (IsTraitDisabled || armament.IsTraitDisabled || armament.IsTraitPaused || hasFiredThisTick)
 				return false;
 
 			if (!info.ValidRelationships.HasRelationship(self.Owner.RelationshipWith(attacker)))
+				return false;
+
+			if (!info.PointDefenseTypes.Contains(type))
 				return false;
 
 			if (armament.IsReloading)
@@ -73,9 +88,35 @@ namespace OpenRA.Mods.CA.Traits
 			hasFiredThisTick = true;
 			self.World.AddFrameEndTask(w =>
 			{
-				if (!self.IsDead)
-					armament.CheckFire(self, null, Target.FromPos(position));
+				if (self.IsDead)
+					return;
+
+				var armor = self.TraitsImplementing<Armor>().Where(a => !a.IsTraitDisabled && a.Info.Type != null);
+				var damage = 0;
+				foreach (var wh in args.Weapon.Warheads)
+				{
+					if (wh is DamageWarhead)
+					{
+						var warhead = (DamageWarhead)wh;
+						var armorModifiers = armor.Where(a => warhead.Versus.ContainsKey(a.Info.Type))
+							.Select(a => warhead.Versus[a.Info.Type]);
+
+						// todo: exclude point defense shield modifier in a better way
+						var otherModifiers = damageModifiers.Where(dm => !(dm is TimedDamageMultiplier))
+							.Select(d => d.GetDamageModifier(args.SourceActor, new Damage(warhead.Damage, warhead.DamageTypes)))
+							.Where(d => d != 100);
+
+						var modifiers = armorModifiers.Concat(otherModifiers).Concat(args.DamageModifiers).ToArray();
+
+						damage += Util.ApplyPercentageModifiers(warhead.Damage, modifiers);
+					}
+				}
+
+				if (armament.CheckFire(self, null, Target.FromPos(position)))
+					foreach (var notify in notifyHit)
+						notify.Hit(damage);
 			});
+
 			return true;
 		}
 	}

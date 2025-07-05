@@ -135,7 +135,7 @@ namespace OpenRA.Mods.CA.Traits
 		readonly List<Actor> unitsHangingAroundTheBase = new List<Actor>();
 
 		// Units that the bot already knows about. Any unit not on this list needs to be given a role.
-		readonly List<Actor> activeUnits = new List<Actor>();
+		readonly HashSet<Actor> activeUnits = new();
 
 		public List<SquadCA> Squads = new List<SquadCA>();
 
@@ -291,7 +291,7 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			CleanSquads();
 
-			activeUnits.RemoveAll(unitCannotBeOrdered);
+			activeUnits.RemoveWhere(unitCannotBeOrdered);
 			unitsHangingAroundTheBase.RemoveAll(unitCannotBeOrdered);
 			foreach (var n in notifyIdleBaseUnits)
 				n.UpdatedIdleBaseUnits(unitsHangingAroundTheBase);
@@ -493,52 +493,46 @@ namespace OpenRA.Mods.CA.Traits
 			};
 		}
 
-		void IGameSaveTraitData.ResolveTraitData(Actor self, List<MiniYamlNode> data)
+		void IGameSaveTraitData.ResolveTraitData(Actor self, MiniYaml data)
 		{
 			if (self.World.IsReplay)
 				return;
 
-			var initialBaseCenterNode = data.FirstOrDefault(n => n.Key == "InitialBaseCenter");
-			if (initialBaseCenterNode != null)
-				initialBaseCenter = FieldLoader.GetValue<CPos>("InitialBaseCenter", initialBaseCenterNode.Value.Value);
+			var nodes = data.ToDictionary();
 
-			var unitsHangingAroundTheBaseNode = data.FirstOrDefault(n => n.Key == "UnitsHangingAroundTheBase");
-			if (unitsHangingAroundTheBaseNode != null)
+			if (nodes.TryGetValue("InitialBaseCenter", out var initialBaseCenterNode))
+				initialBaseCenter = FieldLoader.GetValue<CPos>("InitialBaseCenter", initialBaseCenterNode.Value);
+
+			if (nodes.TryGetValue("UnitsHangingAroundTheBase", out var unitsHangingAroundTheBaseNode))
 			{
 				unitsHangingAroundTheBase.Clear();
-				unitsHangingAroundTheBase.AddRange(FieldLoader.GetValue<uint[]>("UnitsHangingAroundTheBase", unitsHangingAroundTheBaseNode.Value.Value)
+				unitsHangingAroundTheBase.AddRange(FieldLoader.GetValue<uint[]>("UnitsHangingAroundTheBase", unitsHangingAroundTheBaseNode.Value)
 					.Select(a => self.World.GetActorById(a)).Where(a => a != null));
 			}
 
-			var activeUnitsNode = data.FirstOrDefault(n => n.Key == "ActiveUnits");
-			if (activeUnitsNode != null)
+			if (nodes.TryGetValue("ActiveUnits", out var activeUnitsNode))
 			{
 				activeUnits.Clear();
-				activeUnits.AddRange(FieldLoader.GetValue<uint[]>("ActiveUnits", activeUnitsNode.Value.Value)
+				activeUnits.UnionWith(FieldLoader.GetValue<uint[]>("ActiveUnits", activeUnitsNode.Value)
 					.Select(a => self.World.GetActorById(a)).Where(a => a != null));
 			}
 
-			var rushTicksNode = data.FirstOrDefault(n => n.Key == "RushTicks");
-			if (rushTicksNode != null)
-				rushTicks = FieldLoader.GetValue<int>("RushTicks", rushTicksNode.Value.Value);
+			if (nodes.TryGetValue("RushTicks", out var rushTicksNode))
+				rushTicks = FieldLoader.GetValue<int>("RushTicks", rushTicksNode.Value);
 
-			var assignRolesTicksNode = data.FirstOrDefault(n => n.Key == "AssignRolesTicks");
-			if (assignRolesTicksNode != null)
-				assignRolesTicks = FieldLoader.GetValue<int>("AssignRolesTicks", assignRolesTicksNode.Value.Value);
+			if (nodes.TryGetValue("AssignRolesTicks", out var assignRolesTicksNode))
+				assignRolesTicks = FieldLoader.GetValue<int>("AssignRolesTicks", assignRolesTicksNode.Value);
 
-			var attackForceTicksNode = data.FirstOrDefault(n => n.Key == "AttackForceTicks");
-			if (attackForceTicksNode != null)
-				attackForceTicks = FieldLoader.GetValue<int>("AttackForceTicks", attackForceTicksNode.Value.Value);
+			if (nodes.TryGetValue("AttackForceTicks", out var attackForceTicksNode))
+				attackForceTicks = FieldLoader.GetValue<int>("AttackForceTicks", attackForceTicksNode.Value);
 
-			var minAttackForceDelayTicksNode = data.FirstOrDefault(n => n.Key == "MinAttackForceDelayTicks");
-			if (minAttackForceDelayTicksNode != null)
-				minAttackForceDelayTicks = FieldLoader.GetValue<int>("MinAttackForceDelayTicks", minAttackForceDelayTicksNode.Value.Value);
+			if (nodes.TryGetValue("MinAttackForceDelayTicks", out var minAttackForceDelayTicksNode))
+				minAttackForceDelayTicks = FieldLoader.GetValue<int>("MinAttackForceDelayTicks", minAttackForceDelayTicksNode.Value);
 
-			var squadsNode = data.FirstOrDefault(n => n.Key == "Squads");
-			if (squadsNode != null)
+			if (nodes.TryGetValue("Squads", out var squadsNode))
 			{
 				Squads.Clear();
-				foreach (var n in squadsNode.Value.Nodes)
+				foreach (var n in squadsNode.Nodes)
 					Squads.Add(SquadCA.Deserialize(bot, this, n.Value));
 			}
 		}

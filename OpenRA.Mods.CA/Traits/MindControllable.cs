@@ -58,12 +58,20 @@ namespace OpenRA.Mods.CA.Traits
 		int revokeTicks;
 		bool revoking = false;
 
+		INotifyMindControlled[] notifyMindControlled;
+
 		public TraitPair<MindController>? Master { get; private set; }
 
 		public MindControllable(Actor self, MindControllableInfo info)
 			: base(info)
 		{
 			this.info = info;
+		}
+
+		protected override void Created(Actor self)
+		{
+			base.Created(self);
+			notifyMindControlled = self.TraitsImplementing<INotifyMindControlled>().ToArray();
 		}
 
 		public void LinkMaster(Actor self, Actor masterActor)
@@ -95,7 +103,7 @@ namespace OpenRA.Mods.CA.Traits
 				revoking = false;
 			});
 
-			foreach (var notify in self.TraitsImplementing<INotifyMindControlled>())
+			foreach (var notify in notifyMindControlled)
 				notify.MindControlled(self, masterActor);
 		}
 
@@ -118,7 +126,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			Master = null;
 
-			foreach (var notify in self.TraitsImplementing<INotifyMindControlled>())
+			foreach (var notify in notifyMindControlled)
 				notify.Released(self, master.Actor);
 		}
 

@@ -50,7 +50,12 @@ namespace OpenRA.Mods.CA.Traits
 	[RequireExplicitImplementation]
 	public interface IPointDefense
 	{
-		bool Destroy(WPos position, Player attacker, string type);
+		bool Destroy(WPos position, Player attacker, string type, ProjectileArgs args);
+	}
+
+	public interface INotifyPointDefenseHit
+	{
+		void Hit(int damagePrevented);
 	}
 
 	public interface IBotCAInfo : ITraitInfoInterface { string Name { get; } }
