@@ -84,7 +84,7 @@ namespace OpenRA.Mods.CA.Widgets
 
 				var value = new ArmyValue
 				{
-					PlayerName = p.PlayerName,
+					PlayerName = p.ResolvedPlayerName,
 					Color = p.Color,
 					Value = totalValue
 				};

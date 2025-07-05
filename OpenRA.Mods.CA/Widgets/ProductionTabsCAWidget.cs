@@ -10,6 +10,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using OpenRA.Graphics;
 using OpenRA.Mods.Common.Traits;
@@ -34,7 +35,7 @@ namespace OpenRA.Mods.CA.Widgets
 
 		public void Update(IEnumerable<ProductionQueue> allQueues)
 		{
-			var queues = allQueues.Where(q => q.Info.Group == Group).ToList();
+			var queues = allQueues.Where(q => q.Enabled && q.Info.Group == Group).ToList();
 			var tabs = new List<ProductionTabCA>();
 
 			Tabs = Tabs.OrderByDescending(t => t.Queue.AllItems().Count()).ToList();
@@ -55,7 +56,7 @@ namespace OpenRA.Mods.CA.Widgets
 			foreach (var queue in queues)
 				tabs.Add(new ProductionTabCA()
 				{
-					Name = (count++).ToString(),
+					Name = (count++).ToString(NumberFormatInfo.CurrentInfo),
 					Queue = queue,
 					Actor = queue.GetType() == typeof(ProductionQueue) ? queue.Actor : null
 				});
@@ -105,6 +106,8 @@ namespace OpenRA.Mods.CA.Widgets
 		Rectangle rightButtonRect;
 		readonly Lazy<ProductionPaletteWidget> paletteWidget;
 		string queueGroup;
+
+		readonly List<(ProductionQueue Queue, bool Enabled)> cachedProductionQueueEnabledStates = new();
 
 		int startTabIndex;
 
@@ -184,15 +187,15 @@ namespace OpenRA.Mods.CA.Widgets
 			}
 		}
 
-		public IEnumerable<ProductionTabCA> GetTabs()
+		public List<ProductionTabCA> GetTabs()
 		{
-			return Groups[queueGroup].Tabs.Where(t => t.Queue.BuildableItems().Any());
+			return Groups[queueGroup].Tabs.Where(t => t.Queue.BuildableItems().Any()).ToList();
 		}
 
 		public override void Draw()
 		{
 			var tabs = GetTabs();
-			var numTabs = tabs.Count();
+			var numTabs = tabs.Count;
 
 			if (numTabs == 0)
 				return;
@@ -302,14 +305,37 @@ namespace OpenRA.Mods.CA.Widgets
 				UpdateQueues(a);
 		}
 
+		public override void Tick()
+		{
+			// It is possible that production queues get enabled/disabled during their lifetime.
+			// This makes sure every enabled production queue always has its tab associated with it.
+			var shouldUpdateQueues = false;
+			foreach (var (queue, enabled) in cachedProductionQueueEnabledStates)
+			{
+				if (queue.Enabled != enabled)
+				{
+					shouldUpdateQueues = true;
+					break;
+				}
+			}
+
+			if (shouldUpdateQueues)
+				foreach (var g in Groups.Values)
+					g.Update(cachedProductionQueueEnabledStates.Select(t => t.Queue));
+		}
+
 		void UpdateQueues(Actor a)
 		{
 			var allQueues = a.World.ActorsWithTrait<ProductionQueue>()
 				.Where(p => p.Actor.Owner == p.Actor.World.LocalPlayer && p.Actor.IsInWorld && p.Trait.Enabled)
 				.Select(p => p.Trait).ToList();
 
+			cachedProductionQueueEnabledStates.Clear();
+			foreach (var queue in allQueues)
+				cachedProductionQueueEnabledStates.Add((queue, queue.Enabled));
+
 			foreach (var g in Groups.Values)
-				g.Update(allQueues);
+				g.Update(cachedProductionQueueEnabledStates.Select(t => t.Queue));
 
 			if (allQueues.Count > 0 && CurrentQueue == null)
 				CurrentQueue = allQueues.First();
@@ -325,7 +351,7 @@ namespace OpenRA.Mods.CA.Widgets
 		public override bool HandleMouseInput(MouseInput mi)
 		{
 			var leftDisabled = startTabIndex == 0;
-			var rightDisabled = startTabIndex >= GetTabs().Count() - MaxTabsVisible;
+			var rightDisabled = startTabIndex >= GetTabs().Count - MaxTabsVisible;
 
 			if (mi.Event == MouseInputEvent.Scroll)
 			{
