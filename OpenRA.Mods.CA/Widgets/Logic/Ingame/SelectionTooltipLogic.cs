@@ -206,7 +206,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			widget.Bounds.Y = Game.Renderer.Resolution.Height - widget.Bounds.Height - 12;
 		}
 
-		LabelWidget GetArmorTypeLabel(LabelWidget armorTypeLabel, ActorInfo actor)
+		public static LabelWidget GetArmorTypeLabel(LabelWidget armorTypeLabel, ActorInfo actor)
 		{
 			var armor = actor.TraitInfos<ArmorInfo>().FirstOrDefault();
 			armorTypeLabel.Text = armor != null ? armor.Type : "";

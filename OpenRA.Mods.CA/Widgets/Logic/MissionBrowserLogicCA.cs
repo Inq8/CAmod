@@ -274,10 +274,10 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 					var completionTime = missionProgress.Time;
 					var difficultyCompleted = missionProgress.Difficulty != null ? char.ToUpper(missionProgress.Difficulty[0]) + missionProgress.Difficulty.Substring(1) : null;
 
-					var details = $"• Date: {dateCompleted}   \\n• Version: {missionProgress.Version}\\n• Duration: {completionTime}\\n• Speed: {missionProgress.Speed}";
+					var details = $"• Date: {dateCompleted}\n• Version: {missionProgress.Version}\n• Duration: {completionTime}\n• Speed: {missionProgress.Speed}";
 
 					if (difficultyCompleted != null)
-						details += $"\\n• Difficulty: {difficultyCompleted}";
+						details += $"\n• Difficulty: {difficultyCompleted}";
 
 					item.GetTooltipText = () => "Completed";
 					item.GetTooltipDesc = () => details;

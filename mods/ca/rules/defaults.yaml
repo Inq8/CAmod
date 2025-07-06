@@ -66,6 +66,18 @@
 	Interactable:
 	ScriptTriggers:
 
+^PreviewDummy:
+	Inherits: ^SpriteActor
+	AlwaysVisible:
+	Interactable:
+	Mobile:
+		Locomotor: foot
+	Tooltip:
+		Name: Preview
+	Armament:
+		Weapon: DummyWeapon
+	AttackFrontal:
+
 ^PrimaryBuilding:
 	PrimaryBuilding:
 		PrimaryCondition: primary
@@ -2358,6 +2370,8 @@
 		Notification: UnitSold
 		TextNotification: Unit sold.
 		Cursor: sell2
+	Encyclopedia:
+		Scale: 2
 
 ^Vehicle:
 	Inherits@1: ^Vehicle-NOUPG
@@ -2660,6 +2674,8 @@
 	Cloak@SGENCLOAK:
 		CloakSound: cloak5sm.aud
 		UncloakSound: appear1sm.aud
+	Encyclopedia:
+		Scale: 2
 
 ^Soldier:
 	Inherits: ^Infantry
@@ -2949,6 +2965,8 @@
 		RequiresCondition: (botowner && under-bridge)
 	GpsRadarDot:
 		Sequence: Ship
+	Encyclopedia:
+		Scale: 2
 
 ^Submarine:
 	Inherits@1: ^Ship
@@ -3160,6 +3178,8 @@
 		Notification: UnitSold
 		TextNotification: Unit sold.
 		Cursor: sell2
+	Encyclopedia:
+		Scale: 2
 
 ^PlaneTD:
 	Inherits@1: ^Plane
@@ -3397,6 +3417,8 @@
 		ValuePercentage: 1
 		PlayerExperienceRelationships: Enemy, Neutral
 		SubsequentCaptureModifier: 50
+	Encyclopedia:
+		Scale: 2
 
 ^BuildingTD:
 	Inherits@1: ^Building
@@ -3599,6 +3621,9 @@
 		PlayerExperience: 10
 		PlayerExperienceRelationships: Enemy, Neutral
 		SubsequentCaptureModifier: 50
+	Encyclopedia:
+		Category: Other/Tech Buildings
+		Scale: 2
 
 ^CommandoSkull:
 	WithDecoration@COMMANDOSKULL:
@@ -3665,6 +3690,8 @@
 	-UpdatesKillCount@BuildingsOrHarvesters:
 	-InfiltrateToCreateProxyActor@InfiltratorVision:
 	-Targetable@InfiltratorVision:
+	Encyclopedia:
+		Category: Allies/Defenses
 
 ^InfiltratableFake:
 	Targetable@Infiltration:

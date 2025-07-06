@@ -54,6 +54,8 @@ MSLO:
 	ProductionCostMultiplier@IRAQBONUS:
 		Multiplier: 60
 		Prerequisites: player.iraq
+	Encyclopedia:
+		Category: Soviets/Buildings
 
 GAP:
 	Inherits: ^Defense
@@ -112,6 +114,8 @@ GAP:
 		Type: Rectangle
 			TopLeft: -512, -512
 			BottomRight: 512, 512
+	Encyclopedia:
+		Category: Allies/Buildings
 
 SPEN:
 	Inherits: ^Building
@@ -226,6 +230,8 @@ SPEN:
 			BottomRight: 555, 1110
 	-SpawnActorOnDeath:
 	-SpawnRandomActorOnDeath:
+	Encyclopedia:
+		Category: Soviets/Buildings
 
 SYRD:
 	Inherits: ^Building
@@ -321,6 +327,8 @@ SYRD:
 			BottomRight: 512, 1110
 	-SpawnActorOnDeath:
 	-SpawnRandomActorOnDeath:
+	Encyclopedia:
+		Category: Allies/Buildings
 
 IRON:
 	Inherits: ^Building
@@ -375,6 +383,8 @@ IRON:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: ResetSupportPowerInfiltrate
+	Encyclopedia:
+		Category: Soviets/Buildings
 
 PDOX:
 	Inherits: ^Building
@@ -442,6 +452,8 @@ PDOX:
 	ProductionCostMultiplier@GermanyBonus:
 		Multiplier: 80
 		Prerequisites: player.germany
+	Encyclopedia:
+		Category: Allies/Buildings
 
 TSLA:
 	Inherits: ^Defense
@@ -522,6 +534,8 @@ TSLA:
 		RequiresCondition: charged
 		BlinkInterval: 64
 		RequiresSelection: true
+	Encyclopedia:
+		Category: Soviets/Defenses
 
 AGUN:
 	Inherits: ^Defense
@@ -583,6 +597,8 @@ AGUN:
 		Range: 7c0
 		DetectionTypes: AirCloak
 		RequiresCondition: !(disabled || empdisable || being-warped)
+	Encyclopedia:
+		Category: Allies/Defenses
 
 DOME:
 	Inherits: ^Building
@@ -702,6 +718,8 @@ DOME:
 		RequiresCondition: !jammed && !disabled && !being-warped
 	ExternalCondition@JAMMED:
 		Condition: jammed
+	Encyclopedia:
+		Category: Allies/Buildings; Soviets/Buildings
 
 PBOX:
 	Inherits: ^Defense
@@ -752,6 +770,8 @@ PBOX:
 	WithMuzzleOverlay:
 	DetectCloaked:
 		Range: 5c0
+	Encyclopedia:
+		Category: Allies/Defenses
 
 HBOX:
 	Inherits: ^Defense
@@ -810,6 +830,8 @@ HBOX:
 	WithMuzzleOverlay:
 	DetectCloaked:
 		Range: 5c0
+	Encyclopedia:
+		Category: Allies/Defenses
 
 GUN:
 	Inherits: ^Defense
@@ -865,6 +887,8 @@ GUN:
 	ClassicFacingBodyOrientation:
 	DetectCloaked:
 		Range: 5c0
+	Encyclopedia:
+		Category: Allies/Defenses
 
 FTUR:
 	Inherits: ^Defense
@@ -918,6 +942,8 @@ FTUR:
 		EmptyWeapon: BuildingExplode
 	DetectCloaked:
 		Range: 5c0
+	Encyclopedia:
+		Category: Soviets/Defenses
 
 SAM:
 	Inherits: ^Defense
@@ -984,6 +1010,8 @@ SAM:
 		Range: 7c0
 		DetectionTypes: AirCloak
 		RequiresCondition: !(disabled || empdisable || being-warped)
+	Encyclopedia:
+		Category: Soviets/Defenses
 
 ATEK:
 	Inherits: ^Building
@@ -1075,6 +1103,8 @@ ATEK:
 		ProductionTypes: Upgrade, SpySatellite
 	GrantExternalConditionPowerCA@FSHIELD:
 		ActiveSequence: false-active
+	Encyclopedia:
+		Category: Allies/Buildings
 
 ALHQ:
 	Inherits: ^Building
@@ -1156,6 +1186,9 @@ ALHQ:
 	GrantConditionOnPrerequisite@ProductionOptimizer1:
 		Condition: optimized-production1
 		Prerequisites: optimized.production1
+	Encyclopedia:
+		Category: Allies/Buildings
+		Scale: 1.8
 
 WEAP:
 	Inherits: ^Building
@@ -1269,6 +1302,8 @@ WEAP:
 	GrantExternalConditionToProduced@DRONEEXIT:
 		Condition: radarenabled
 		Duration: 100
+	Encyclopedia:
+		Category: Allies/Buildings; Soviets/Buildings
 
 FACT:
 	Inherits: ^Building
@@ -1415,6 +1450,8 @@ FACT:
 	SpawnActorsOnSellCA:
 		ActorTypes: e1,e1,e1,e1,e6
 	-UpdatesBuildOrder:
+	Encyclopedia:
+		Category: Allies/Buildings; Soviets/Buildings
 
 PROC:
 	Inherits: ^Building
@@ -1528,6 +1565,8 @@ PROC:
 	CashHackable:
 	UpdatesCount:
 		Type: Refineries
+	Encyclopedia:
+		Category: Allies/Buildings; Soviets/Buildings
 
 SILO:
 	Inherits: ^Building
@@ -1570,6 +1609,8 @@ SILO:
 		Weapon: SmallBuildingExplode
 		EmptyWeapon: SmallBuildingExplode
 	-UpdatesBuildOrder:
+	Encyclopedia:
+		Category: Allies/Buildings; Soviets/Buildings
 
 HPAD:
 	Inherits: ^Building
@@ -1673,6 +1714,8 @@ HPAD:
 	SpawnActorOnMindControlled@STOLENTECH:
 		Actor: stolentech.hpad
 		OwnerType: Master
+	Encyclopedia:
+		Category: Allies/Buildings
 
 AFLD:
 	Inherits: ^Building
@@ -1758,6 +1801,8 @@ AFLD:
 		OwnerType: Master
 	WithResupplyAnimation:
 		RequiresCondition: !build-incomplete
+	Encyclopedia:
+		Category: Soviets/Buildings
 
 POWR:
 	Inherits: ^Building
@@ -1800,6 +1845,8 @@ POWR:
 		UseDeathTypeSuffix: false
 	UpdatesBuildOrder:
 		Limit: 2
+	Encyclopedia:
+		Category: Allies/Buildings; Soviets/Buildings
 
 APWR:
 	Inherits: ^Building
@@ -1842,6 +1889,8 @@ APWR:
 		UseDeathTypeSuffix: false
 	UpdatesBuildOrder:
 		Limit: 1
+	Encyclopedia:
+		Category: Allies/Buildings; Soviets/Buildings
 
 NPWR:
 	Inherits: ^Building
@@ -1918,6 +1967,9 @@ NPWR:
 		Factions: iraq
 		Prerequisite: npwr.iraq
 	SupportPowerChargeBar:
+	Encyclopedia:
+		Category: Soviets/Buildings
+		Scale: 1.3
 
 TPWR:
 	Inherits@AUTOTARGET: ^AutoTargetGround
@@ -1951,6 +2003,8 @@ TPWR:
 	-ScalePowerWithHealth:
 	UpdatesBuildOrder:
 		Limit: 1
+	Encyclopedia:
+		Category: Soviets/Buildings
 
 STEK:
 	Inherits: ^Building
@@ -2015,6 +2069,8 @@ STEK:
 		Factions: iraq
 		Prerequisite: stek.iraq
 		RequiresCondition: !tech-locked
+	Encyclopedia:
+		Category: Soviets/Buildings
 
 BARR:
 	Inherits: ^Building
@@ -2120,6 +2176,8 @@ BARR:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: VetInfiltrate, StealTechInfiltrate
+	Encyclopedia:
+		Category: Soviets/Buildings
 
 KENN:
 	Inherits: ^Building
@@ -2159,6 +2217,8 @@ KENN:
 	Power:
 		Amount: -10
 	ProvidesPrerequisite@buildingname:
+	Encyclopedia:
+		Category: Soviets/Buildings
 
 TENT:
 	Inherits: ^Building
@@ -2257,6 +2317,8 @@ TENT:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: VetInfiltrate, StealTechInfiltrate
+	Encyclopedia:
+		Category: Allies/Buildings
 
 FIX:
 	Inherits: ^Building
@@ -2330,6 +2392,8 @@ FIX:
 		Type: AircraftRepair
 		Color: FFD000AA
 		Range: 10c0
+	Encyclopedia:
+		Category: Allies/Buildings; Soviets/Buildings
 
 SBAG:
 	Inherits: ^Wall
@@ -2356,6 +2420,8 @@ SBAG:
 		Types: sandbag
 	WithWallSpriteBody:
 		Type: sandbag
+	Encyclopedia:
+		Category: Allies/Defenses
 
 FENC:
 	Inherits: ^Wall
@@ -2382,6 +2448,8 @@ FENC:
 		Types: fence
 	WithWallSpriteBody:
 		Type: fence
+	Encyclopedia:
+		Category: Soviets/Defenses
 
 CHAIN:
 	Inherits: ^Wall
@@ -2406,6 +2474,8 @@ CHAIN:
 		Types: chain
 	WithWallSpriteBody:
 		Type: chain
+	Encyclopedia:
+		Category: Nod/Defenses
 
 BRIK:
 	Inherits: ^Wall
@@ -2436,6 +2506,8 @@ BRIK:
 	WithWallSpriteBody:
 		Type: concrete
 	BlocksProjectiles:
+	Encyclopedia:
+		Category: Allies/Defenses; Soviets/Defenses; GDI/Defenses; Nod/Defenses
 
 CYCL:
 	Inherits: ^Wall
@@ -2759,6 +2831,8 @@ PYLE:
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
 		PlayerExperience: 15
+	Encyclopedia:
+		Category: GDI/Buildings
 
 HAND:
 	Inherits: ^BuildingTD
@@ -2859,6 +2933,8 @@ HAND:
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
 		PlayerExperience: 15
+	Encyclopedia:
+		Category: Nod/Buildings
 
 WEAP.TD:
 	Inherits: ^BuildingTD
@@ -2980,6 +3056,8 @@ WEAP.TD:
 	GrantExternalConditionToProduced@DRONEEXIT:
 		Condition: radarenabled
 		Duration: 100
+	Encyclopedia:
+		Category: GDI/Buildings; Nod/Buildings
 
 AIRS:
 	Inherits: ^BuildingTD
@@ -3112,6 +3190,9 @@ AIRS:
 	ProductionCostMultiplier@MQS4:
 		Multiplier: 90
 		Prerequisites: global.multiqueuescaled, !vehicles.any
+	Encyclopedia:
+		Category: Nod/Buildings
+		Scale: 1.6
 
 NUKE:
 	Inherits: ^BuildingTD
@@ -3159,6 +3240,8 @@ NUKE:
 		Prerequisite: anypower
 	UpdatesBuildOrder:
 		Limit: 2
+	Encyclopedia:
+		Category: GDI/Buildings; Nod/Buildings
 
 NUK2:
 	Inherits: ^BuildingTD
@@ -3206,6 +3289,8 @@ NUK2:
 	ScalePowerWithHealth:
 	UpdatesBuildOrder:
 		Limit: 1
+	Encyclopedia:
+		Category: GDI/Buildings; Nod/Buildings
 
 AFAC:
 	Inherits: ^BuildingTD
@@ -3348,6 +3433,8 @@ AFAC:
 	SpawnActorsOnSellCA:
 		ActorTypes: n1,n1,n1,n1,n6
 	-UpdatesBuildOrder:
+	Encyclopedia:
+		Category: GDI/Buildings; Nod/Buildings
 
 NSAM:
 	Inherits: ^DefenseTD
@@ -3416,6 +3503,8 @@ NSAM:
 		RequiresCondition: !(disabled || empdisable || being-warped)
 	RenderRangeCircle:
 		RangeCircleType: DefenseRangeAA
+	Encyclopedia:
+		Category: Nod/Defenses
 
 GTWR:
 	Inherits: ^DefenseTD
@@ -3464,6 +3553,8 @@ GTWR:
 		Amount: -15
 	DetectCloaked:
 		Range: 5c0
+	Encyclopedia:
+		Category: GDI/Defenses
 
 ATWR:
 	Inherits: ^DefenseTD
@@ -3513,6 +3604,8 @@ ATWR:
 		Amount: -70
 	DetectCloaked:
 		RequiresCondition: !(disabled || empdisable || being-warped)
+	Encyclopedia:
+		Category: GDI/Defenses
 
 STWR:
 	Inherits: ^Defense
@@ -3571,6 +3664,8 @@ STWR:
 	GrantConditionOnPrerequisite@SONIC:
 		Condition: sonic-upgrade
 		Prerequisites: sonic.upgrade
+	Encyclopedia:
+		Category: GDI/Defenses
 
 OBLI:
 	Inherits: ^DefenseTD
@@ -3642,6 +3737,8 @@ OBLI:
 		Prerequisite: obliortmpl
 	DetectCloaked:
 		RequiresCondition: !(disabled || empdisable || being-warped)
+	Encyclopedia:
+		Category: Nod/Defenses
 
 HQ:
 	Inherits: ^BuildingTD
@@ -3815,6 +3912,8 @@ HQ:
 		DischargingColor: ffff00
 		ShowSelectionBarWhenFull: false
 		ShowSelectionBarWhenEmpty: false
+	Encyclopedia:
+		Category: GDI/Buildings; Nod/Buildings
 
 HQ.UPG:
 	Inherits: HQ
@@ -3874,6 +3973,8 @@ HQ.UPG:
 		Interval: 375
 		Amount: 400
 		RequiresCondition: cargo == 5
+	Encyclopedia:
+		Category: Nod/Buildings
 
 EYE:
 	Inherits: ^BuildingTD
@@ -3961,6 +4062,8 @@ EYE:
 	ProductionCostMultiplier@ZocomBonus:
 		Multiplier: 60
 		Prerequisites: player.zocom
+	Encyclopedia:
+		Category: GDI/Buildings
 
 REP:
 	Inherits: ^BuildingTD
@@ -4035,6 +4138,8 @@ REP:
 		Type: AircraftRepair
 		Color: FFD000AA
 		Range: 10c0
+	Encyclopedia:
+		Category: GDI/Buildings; Nod/Buildings
 
 HPAD.TD:
 	Inherits: ^BuildingTD
@@ -4133,6 +4238,8 @@ HPAD.TD:
 	SpawnActorOnMindControlled@STOLENTECH:
 		Actor: stolentech.hpad.td
 		OwnerType: Master
+	Encyclopedia:
+		Category: Nod/Buildings
 
 PROC.TD:
 	Inherits: ^BuildingTD
@@ -4245,6 +4352,8 @@ PROC.TD:
 	CashHackable:
 	UpdatesCount:
 		Type: Refineries
+	Encyclopedia:
+		Category: GDI/Buildings; Nod/Buildings
 
 SILO.TD:
 	Inherits: ^BuildingTD
@@ -4295,6 +4404,8 @@ SILO.TD:
 		Weapon: SmallBuildingExplode
 		EmptyWeapon: SmallBuildingExplode
 	-UpdatesBuildOrder:
+	Encyclopedia:
+		Category: GDI/Buildings; Nod/Buildings
 
 AFLD.GDI:
 	Inherits: ^Building
@@ -4382,6 +4493,8 @@ AFLD.GDI:
 	SpawnActorsOnSellCA:
 		ActorTypes: n1,n1,n1,n1,n1,n1,n1,n1,n1,n1,c1,c1,c1,c1,c7,c7,c7,c7,c10,c10
 		GuaranteedActorTypes: n1, n1
+	Encyclopedia:
+		Category: GDI/Buildings
 
 GTEK:
 	Inherits: ^Building
@@ -4454,6 +4567,8 @@ GTEK:
 	ProductionCostMultiplier@TALONBONUS:
 		Multiplier: 90
 		Prerequisites: player.talon
+	Encyclopedia:
+		Category: GDI/Buildings
 
 TMPL:
 	Inherits: ^BuildingTD
@@ -4541,6 +4656,8 @@ TMPL:
 		RequiresCondition: !tech-locked
 	GrantExternalConditionPowerCA@FSHIELD:
 		ActiveSequence: false-active
+	Encyclopedia:
+		Category: Nod/Buildings
 
 PRIS:
 	Inherits: ^Defense
@@ -4614,6 +4731,8 @@ PRIS:
 	WithPrismLinkVisualization:
 		Range: 5c0
 		Color: 00ffffff
+	Encyclopedia:
+		Category: Allies/Defenses
 
 SPEN.nod:
 	Inherits: ^Building
@@ -4703,6 +4822,8 @@ SPEN.nod:
 	-SpawnActorOnDeath:
 	-SpawnRandomActorOnDeath:
 	-SpawnActorsOnSellCA:
+	Encyclopedia:
+		Category: Nod/Buildings
 
 SYRD.gdi:
 	Inherits: ^Building
@@ -4797,6 +4918,8 @@ SYRD.gdi:
 	-SpawnActorOnDeath:
 	-SpawnRandomActorOnDeath:
 	-SpawnActorsOnSellCA:
+	Encyclopedia:
+		Category: GDI/Buildings
 
 HTUR:
 	Inherits: ^Defense
@@ -4867,6 +4990,8 @@ HTUR:
 	DetectCloaked:
 		RequiresCondition: !(disabled || empdisable || being-warped)
 	-ProductionCostMultiplier@FranceBonus:
+	Encyclopedia:
+		Category: Allies/Defenses
 
 GUN.Nod:
 	Inherits: GUN
@@ -4879,6 +5004,8 @@ GUN.Nod:
 		IconPalette: chrometd
 	Armament:
 		Weapon: TurretGunTD
+	Encyclopedia:
+		Category: Nod/Defenses
 
 LTUR:
 	Inherits: GUN.Nod
@@ -4919,6 +5046,8 @@ LTUR:
 		Amount: -15
 	DetectCloaked:
 		Range: 5c0
+	Encyclopedia:
+		Category: Nod/Defenses
 
 TTUR:
 	Inherits: ^DefenseTD
@@ -4977,6 +5106,8 @@ TTUR:
 		EmptyWeapon: BuildingExplode
 	DetectCloaked:
 		Range: 5c0
+	Encyclopedia:
+		Category: Soviets/Defenses
 
 SGEN:
 	Inherits: ^Building
@@ -5048,6 +5179,8 @@ SGEN:
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
+	Encyclopedia:
+		Category: Nod/Buildings
 
 SGEN.Shadow:
 	Inherits: SGEN
@@ -5066,6 +5199,7 @@ SGEN.Shadow:
 		-ActiveCondition:
 	-ExternalCondition@ACTIVE:
 	-GrantConditionOnDamageState@UNCLOAK:
+	-Encyclopedia:
 
 CRAM:
 	Inherits: AGUN
@@ -5118,6 +5252,8 @@ CRAM:
 		RevokeDelay: 55
 		RevokeOnNewTarget: False
 		RevokeAll: True
+	Encyclopedia:
+		Category: GDI/Defenses
 
 LASP:
 	Inherits: ^Building
@@ -5179,6 +5315,8 @@ LASP:
 	-SpawnActorsOnSellCA:
 	-SpawnActorOnDeath:
 	-SpawnRandomActorOnDeath:
+	Encyclopedia:
+		Category: Nod/Defenses
 
 LASF:
 	Inherits: ^Wall
@@ -5327,6 +5465,8 @@ PATR:
 		RangeCircleType: DefenseRange
 		Color: C12900
 	-WithDeathAnimation:
+	Encyclopedia:
+		Category: GDI/Buildings
 
 CVAT:
 	Inherits: ^Building
@@ -5404,6 +5544,8 @@ CVAT:
 	-WithDecoration@HACKED:
 	-WithDecoration@RESTORING:
 	-PowerMultiplier@HACKED:
+	Encyclopedia:
+		Category: Soviets/Buildings
 
 INDP:
 	Inherits: ^Building
@@ -5474,6 +5616,8 @@ INDP:
 	-WithDecoration@HACKED:
 	-WithDecoration@RESTORING:
 	-PowerMultiplier@HACKED:
+	Encyclopedia:
+		Category: Soviets/Buildings
 
 MUNP:
 	Inherits: ^Building
@@ -5550,6 +5694,8 @@ MUNP:
 	-WithDecoration@HACKED:
 	-WithDecoration@RESTORING:
 	-PowerMultiplier@HACKED:
+	Encyclopedia:
+		Category: Soviets/Buildings
 
 OREP:
 	Inherits: ^Building
@@ -5634,6 +5780,8 @@ OREP:
 	-WithDecoration@HACKED:
 	-WithDecoration@RESTORING:
 	-PowerMultiplier@HACKED:
+	Encyclopedia:
+		Category: Allies/Buildings
 
 UPGC:
 	Inherits: ^BuildingTD
@@ -5904,6 +6052,8 @@ UPGC:
 	ProvidesUpgrade@SupplyDrop:
 		RequiresCondition: tower.drop
 		Type: upgc.drop
+	Encyclopedia:
+		Category: GDI/Buildings
 
 UPGC.SOCK:
 	AlwaysVisible:
@@ -6149,6 +6299,8 @@ TMPP:
 	ProductionCostMultiplier@MARKEDBONUS:
 		Multiplier: 90
 		Prerequisites: player.marked
+	Encyclopedia:
+		Category: Nod/Buildings
 
 MSLO.Nod:
 	Inherits: ^Building
@@ -6206,6 +6358,8 @@ MSLO.Nod:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: ResetSupportPowerInfiltrate
+	Encyclopedia:
+		Category: Nod/Buildings
 
 WEAT:
 	Inherits: ^Building
@@ -6264,6 +6418,8 @@ WEAT:
 		TargetTypes: ResetSupportPowerInfiltrate
 	WithBuildingBib:
 		HasMinibib: true
+	Encyclopedia:
+		Category: Allies/Buildings
 
 IOK:
 	Inherits: ^BasicBuilding

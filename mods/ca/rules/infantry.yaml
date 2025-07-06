@@ -96,6 +96,8 @@ DOG:
 	GuardsSelection:
 		ValidOrders: AttackMove, AssaultMove, ForceAttack, KeepDistance
 		ValidTargets: Infantry, Vehicle
+	Encyclopedia:
+		Category: Soviets/Infantry
 
 TDOG:
 	Inherits: DOG
@@ -175,6 +177,8 @@ E1:
 		Prerequisites: barracks.upgraded
 	Convertible:
 		SpawnActors: N1C
+	Encyclopedia:
+		Category: Allies/Infantry; Soviets/Infantry
 
 E1R1:
 	Inherits: E1
@@ -184,6 +188,7 @@ E1R1:
 		-Prerequisites:
 		InitialLevels: 1
 	-Buildable:
+	-Encyclopedia:
 
 E2:
 	Inherits: ^Soldier
@@ -237,6 +242,8 @@ E2:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
+	Encyclopedia:
+		Category: Soviets/Infantry
 
 E3:
 	Inherits: ^Soldier
@@ -348,6 +355,8 @@ E3:
 		CrushedSequence: die-crushed
 	Convertible:
 		SpawnActors: N3C
+	Encyclopedia:
+		Category: Allies/Infantry; Soviets/Infantry; GDI/Infantry; Nod/Infantry
 
 U3:
 	Inherits: ^Soldier
@@ -531,6 +540,8 @@ U3:
 		DeployTrigger: Attack
 		DeployTicks: 5
 		UndeployTicks: 50
+	Encyclopedia:
+		Category: Allies/Infantry
 
 U3R2:
 	Inherits: U3
@@ -541,6 +552,7 @@ U3R2:
 		InitialLevels: 2
 	Selectable:
 		Class: u3
+	-Encyclopedia:
 
 U3.squad:
 	AlwaysVisible:
@@ -583,6 +595,7 @@ E3R1:
 		-Prerequisites:
 		InitialLevels: 1
 	-Buildable:
+	-Encyclopedia:
 
 E4:
 	Inherits: ^Soldier
@@ -636,6 +649,8 @@ E4:
 		Prerequisites: barracks.upgraded
 	Convertible:
 		SpawnActors: N5
+	Encyclopedia:
+		Category: Soviets/Infantry
 
 E6:
 	Inherits: ^Soldier
@@ -703,6 +718,18 @@ E6:
 		RequiresCondition: entrench-upgrade
 	-ReloadAmmoDelayMultiplier@Inspiration1:
 	-ReloadAmmoDelayMultiplier@Inspiration2:
+	Encyclopedia:
+		Category: Allies/Infantry; Soviets/Infantry
+	EncyclopediaExtras:
+		RenderPreviewActor: e6.preview
+
+E6.Preview:
+	Inherits: ^PreviewDummy
+	RenderSprites:
+		Image: e6
+	WithInfantryBody:
+	QuantizeFacingsFromSequence:
+		Sequence: stand
 
 SPY:
 	Inherits: ^Soldier
@@ -806,6 +833,8 @@ SPY:
 	WithColoredSelectionBox@Disguised:
 		RequiresCondition: disguise
 		ColorSource: Player
+	Encyclopedia:
+		Category: Allies/Infantry
 
 E7:
 	Inherits: ^Soldier
@@ -904,6 +933,8 @@ E7:
 			Structure: Demolish
 	ChangesHealth@ELITE:
 		Delay: 50
+	Encyclopedia:
+		Category: Allies/Infantry
 
 MEDI:
 	Inherits: ^Soldier
@@ -964,6 +995,8 @@ MEDI:
 	GuardsSelection:
 		ValidTargets: Infantry
 	KeepsDistance:
+	Encyclopedia:
+		Category: Allies/Infantry; GDI/Infantry
 
 MECH:
 	Inherits: ^Soldier
@@ -1055,6 +1088,8 @@ MECH:
 	ReplacedInQueue:
 		Actors: cmec
 	KeepsDistance:
+	Encyclopedia:
+		Category: Allies/Infantry; Nod/Infantry
 
 CMEC:
 	Inherits: ^Cyborg
@@ -1141,6 +1176,8 @@ CMEC:
 		ValidTargets: Vehicle
 	-TakeCover:
 	KeepsDistance:
+	Encyclopedia:
+		Category: Nod/Infantry
 
 HACK:
 	Inherits: ^Soldier
@@ -1260,6 +1297,8 @@ HACK:
 	GrantConditionOnBotOwner@AIHACKER:
 		Condition: botowner
 		Bots: brutal, vhard, hard, normal, easy, naval
+	Encyclopedia:
+		Category: Nod/Infantry
 
 EINSTEIN:
 	Inherits: ^CivInfantry
@@ -1408,6 +1447,8 @@ THF:
 		TargetTypeVoices:
 			Vehicle: Hijack
 			Building: Steal
+	Encyclopedia:
+		Category: Soviets/Infantry
 
 SHOK:
 	Inherits: ^Soldier
@@ -1498,6 +1539,8 @@ SHOK:
 		Prerequisites: player.russia
 	ReplacedInQueue:
 		Actors: ttrp
+	Encyclopedia:
+		Category: Soviets/Infantry
 
 TTRP:
 	Inherits: SHOK
@@ -1573,6 +1616,8 @@ N1:
 		SpawnActors: N1C
 	ReplacedInQueue:
 		Actors: n1c
+	Encyclopedia:
+		Category: GDI/Infantry; Nod/Infantry
 
 N1R1:
 	Inherits: N1
@@ -1584,6 +1629,7 @@ N1R1:
 	-Buildable:
 	UpdatesPlayerStatistics:
 		OverrideActor: n1
+	-Encyclopedia:
 
 N2:
 	Inherits: ^Soldier
@@ -1649,6 +1695,8 @@ N2:
 		Prerequisites: empgren.upgrade
 	RangeMultiplier@HeroOfTheUnion:
 		RequiresCondition: herooftheunion && !empgren-upgrade
+	Encyclopedia:
+		Category: GDI/Infantry
 
 N2R1:
 	Inherits: N2
@@ -1660,6 +1708,7 @@ N2R1:
 	-Buildable:
 	UpdatesPlayerStatistics:
 		OverrideActor: n2
+	-Encyclopedia:
 
 N3:
 	Inherits: ^Soldier
@@ -1749,6 +1798,8 @@ N3:
 		SpawnActors: N3C
 	ReplacedInQueue:
 		Actors: n3c
+	Encyclopedia:
+		Category: GDI/Infantry; Nod/Infantry
 
 N3R1:
 	Inherits: N3
@@ -1760,6 +1811,7 @@ N3R1:
 	-Buildable:
 	UpdatesPlayerStatistics:
 		OverrideActor: n3
+	-Encyclopedia:
 
 N4:
 	Inherits: ^Soldier
@@ -1825,6 +1877,8 @@ N4:
 	FirepowerMultiplier@HeroOfTheUnion:
 		RequiresCondition: herooftheunion
 		Modifier: 120
+	Encyclopedia:
+		Category: Nod/Infantry
 
 N5:
 	Inherits: ^Cyborg
@@ -1926,6 +1980,8 @@ N5:
 		DeploySound: tibsurge.aud
 	Targetable@ChemWarrior:
 		TargetTypes: ChemWarrior
+	Encyclopedia:
+		Category: Nod/Infantry
 
 N5R1:
 	Inherits: N5
@@ -1937,6 +1993,7 @@ N5R1:
 	-Buildable:
 	UpdatesPlayerStatistics:
 		OverrideActor: n5
+	-Encyclopedia:
 
 RMBO:
 	Inherits: ^Soldier
@@ -2036,6 +2093,8 @@ RMBO:
 			Structure: Demolish
 	ChangesHealth@ELITE:
 		Delay: 50
+	Encyclopedia:
+		Category: GDI/Infantry; Nod/Infantry
 
 N6:
 	Inherits: ^Soldier
@@ -2053,6 +2112,8 @@ N6:
 		StandSequences: stand
 	-ReloadAmmoDelayMultiplier@Inspiration1:
 	-ReloadAmmoDelayMultiplier@Inspiration2:
+	Encyclopedia:
+		Category: GDI/Infantry; Nod/Infantry
 
 VICE:
 	Inherits: ^Viceroid
@@ -2189,6 +2250,8 @@ SNIP:
 	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || hidden
 		ColorSource: Player
+	Encyclopedia:
+		Category: Allies/Infantry
 
 BORI:
 	Inherits: ^Soldier
@@ -2297,6 +2360,8 @@ BORI:
 		ValidTargets: Infantry, Vehicle, Water, Underwater
 	ChangesHealth@ELITE:
 		Delay: 50
+	Encyclopedia:
+		Category: Soviets/Infantry
 
 SAB:
 	Inherits: ^Soldier
@@ -2399,6 +2464,8 @@ SAB:
 	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || hidden
 		ColorSource: Player
+	Encyclopedia:
+		Category: Nod/Infantry
 
 ASSA:
 	Inherits: ^Soldier
@@ -2501,6 +2568,8 @@ ASSA:
 		Prerequisites: barracks.upgraded
 	Targetable@MindControlResistant:
 		TargetTypes: MindControlResistant
+	Encyclopedia:
+		Category: Nod/Infantry
 
 CONF:
 	Inherits: ^Soldier
@@ -2577,6 +2646,8 @@ CONF:
 		TargetTypes: MindControlImmune
 	Targetable@ChaosImmune:
 		TargetTypes: ChaosImmune
+	Encyclopedia:
+		Category: Nod/Infantry
 
 ACOL:
 	Inherits: ^Cyborg
@@ -2640,6 +2711,8 @@ ACOL:
 		SpawnActors: TPLR
 	ReplacedInQueue:
 		Actors: tplr
+	Encyclopedia:
+		Category: Nod/Infantry
 
 TPLR:
 	Inherits: ACOL
@@ -2860,6 +2933,8 @@ JJET:
 	Targetable@MindControlImmune:
 		TargetTypes: MindControlImmune
 		RequiresCondition: airborne
+	Encyclopedia:
+		Category: GDI/Infantry
 
 BJET:
 	Inherits: JJET
@@ -3019,6 +3094,8 @@ E8:
 		-BlinkPatterns:
 	ReplacedInQueue:
 		Actors: deso
+	Encyclopedia:
+		Category: Soviets/Infantry
 
 DESO:
 	Inherits: E8
@@ -3094,6 +3171,16 @@ DESO:
 	GrantConditionOnBotOwner@IAMBOT:
 		Condition: botowner
 		Bots: brutal, vhard, hard, normal, easy, naval
+	EncyclopediaExtras:
+		RenderPreviewActor: deso.preview
+
+DESO.Preview:
+	Inherits: ^PreviewDummy
+	RenderSprites:
+		Image: deso
+	WithInfantryBody:
+	QuantizeFacingsFromSequence:
+		Sequence: stand
 
 N1C:
 	Inherits: ^Cyborg
@@ -3148,6 +3235,8 @@ N1C:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
+	Encyclopedia:
+		Category: Nod/Infantry
 
 N3C:
 	Inherits: ^Cyborg
@@ -3240,6 +3329,8 @@ N3C:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
+	Encyclopedia:
+		Category: Nod/Infantry
 
 RMBC:
 	Inherits: ^Cyborg
@@ -3331,6 +3422,8 @@ RMBC:
 		MinimumHealing: 2500
 		DamageTypes: DirectRepair
 		ShowSelectionBar: true
+	Encyclopedia:
+		Category: Nod/Infantry
 
 IVAN:
 	Inherits: ^Soldier
@@ -3394,6 +3487,8 @@ IVAN:
 		Prerequisites: barracks.upgraded
 	Voiced:
 		VoiceSet: CrazyIvanVoice
+	Encyclopedia:
+		Category: Soviets/Infantry
 
 BRUT:
 	Inherits: ^Soldier
@@ -3497,6 +3592,8 @@ BRUT:
 	-SpawnActorOnDeath@GMUT:
 	-Targetable@GMUT:
 	-Targetable@SpyDisguise:
+	Encyclopedia:
+		Category: Soviets/Infantry
 
 BRUT.Mutating:
 	Inherits: BRUT
@@ -3532,6 +3629,7 @@ BRUT.Mutating:
 	-WithInfantryBody@Warped:
 	-WithDeathAnimation:
 	-MapEditorData:
+	-Encyclopedia:
 
 SHAD:
 	Inherits: ^Soldier
@@ -3644,6 +3742,8 @@ SHAD:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
+	Encyclopedia:
+		Category: Nod/Infantry
 
 SGLI:
 	Inherits: ^Plane
@@ -3882,6 +3982,8 @@ BH:
 		VoiceSet: BlackHandVoice
 	Targetable@STEALTHBUBBLEIMMUNE:
 		TargetTypes: StealthBubbleImmune
+	Encyclopedia:
+		Category: Nod/Infantry
 
 YURI:
 	Inherits: ^Soldier
@@ -4081,6 +4183,8 @@ YURI:
 	KeepsDistance:
 	ChangesHealth@ELITE:
 		Delay: 50
+	Encyclopedia:
+		Category: Soviets/Infantry
 
 YURI.Clone:
 	Inherits: YURI
@@ -4096,6 +4200,7 @@ YURI.Clone:
 		HP: 14000
 	RangeMultiplier@Clone:
 		Modifier: 80
+	-Encyclopedia:
 
 SEAL:
 	Inherits: ^Soldier
@@ -4230,6 +4335,8 @@ SEAL:
 		DeathSequence: splash
 	WithDecoration@COMMANDOSKULL:
 		Sequence: pip-seal
+	Encyclopedia:
+		Category: Allies/Infantry
 
 ENLI:
 	Inherits: ^Cyborg
@@ -4337,6 +4444,8 @@ ENLI:
 		Count: 1
 		ShowSelectionBar: true
 		SelectionBarColor: b8afff
+	Encyclopedia:
+		Category: Soviets/Infantry
 
 ^MortarInfantryBase:
 	Inherits: ^Soldier
@@ -4373,6 +4482,8 @@ ENLI:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
+	Encyclopedia:
+		Category: Nod/Infantry
 
 MORT.Cryo:
 	Inherits: ^MortarInfantryBase
@@ -4418,6 +4529,8 @@ CDOG:
 		Weapon: CyberdogJaw
 	GrantConditionOnAttack:
 		RevokeDelay: 25
+	Encyclopedia:
+		Category: Nod/Infantry
 
 MORT.Sonic:
 	Inherits: ^MortarInfantryBase
@@ -4531,6 +4644,8 @@ CSCR:
 	WithDecoration@RANK-ELITE:
 		BlinkPatterns:
 			on-tib || (damaged && hospitalheal): On, Off
+	Encyclopedia:
+		Category: Nod/Infantry
 
 CMSR:
 	Inherits: ^Soldier
@@ -4607,6 +4722,8 @@ CMSR:
 	DetectCloaked:
 		DetectionTypes: Cloak, AirCloak, Thief
 		Range: 7c0
+	Encyclopedia:
+		Category: Soviets/Infantry
 
 ZTRP:
 	Inherits: ^Soldier
@@ -4708,6 +4825,8 @@ ZTRP:
 	DamageMultiplier@Jumping:
 		Modifier: 50
 		RequiresCondition: jumping
+	Encyclopedia:
+		Category: GDI/Infantry
 
 ZRAI:
 	Inherits: ZTRP
@@ -4863,6 +4982,8 @@ ENFO:
 		Actors: hopl
 	GrantConditionOnHealingReceived@HEALINGCOOLDOWN:
 		RequiredHealing: 20000
+	Encyclopedia:
+		Category: Allies/Infantry
 
 HOPL:
 	Inherits: ^Soldier
@@ -4951,6 +5072,8 @@ HOPL:
 		Condition: charged-fired
 		ArmamentNames: primary
 		RevokeDelay: 1
+	Encyclopedia:
+		Category: Allies/Infantry
 
 TIGR:
 	Inherits: ^Soldier
@@ -5016,6 +5139,8 @@ TIGR:
 		IdleSequences: idle, idle2
 		StandSequences: stand, stand2
 		DefaultAttackSequence: shoot
+	Encyclopedia:
+		Category: Allies/Infantry
 
 CRYT:
 	Inherits: ^Soldier
@@ -5088,6 +5213,8 @@ CRYT:
 	GrantConditionOnAttackCA:
 		Condition: attacking
 		RevokeDelay: 6
+	Encyclopedia:
+		Category: Allies/Infantry
 
 REAP:
 	Inherits: ^Cyborg
@@ -5203,3 +5330,5 @@ REAP:
 		Count: 1
 		ShowSelectionBar: true
 		SelectionBarColor: 00cc00
+	Encyclopedia:
+		Category: Nod/Infantry

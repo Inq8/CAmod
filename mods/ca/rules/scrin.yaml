@@ -11,6 +11,8 @@
 	-SpawnRandomActorOnDeath:
 	Building:
 		BuildSounds: scrinbuild.aud
+	Encyclopedia:
+		Category: Scrin/Buildings
 
 INFANTRY.SCRIN:
 	AlwaysVisible:
@@ -445,6 +447,8 @@ VEHICLES.SCRIN:
 	GrantConditionOnPrerequisite@CARAPACE:
 		Condition: carapace-upgrade
 		Prerequisites: carapace.upgrade
+	Encyclopedia:
+		Category: Scrin/Infantry
 
 S1:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -1040,10 +1044,8 @@ STLK:
 SMEDI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Buildable:
-		Queue: InfantrySQ, InfantryMQ
-		BuildAtProductionType: Soldier
+		Queue: Hospital
 		BuildPaletteOrder: 240
-		Prerequisites: ~disabled, ~infantry.scrin
 		IconPalette: chromes
 		Description: Heals nearby life-forms.
 	TooltipExtras:
@@ -1089,10 +1091,8 @@ SMEDI:
 ARTI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Buildable:
-		Queue: InfantrySQ, InfantryMQ
-		BuildAtProductionType: Soldier
+		Queue: Hospital
 		BuildPaletteOrder: 240
-		Prerequisites: ~disabled, ~infantry.scrin
 		IconPalette: chromes
 		Description: Repairs nearby vehicles.
 	TooltipExtras:
@@ -1435,6 +1435,7 @@ MAST.Clone:
 		HP: 14000
 	RangeMultiplier@Clone:
 		Modifier: 80
+	-Encyclopedia:
 
 #
 # ---- Vehicles
@@ -1471,6 +1472,8 @@ HARV.Scrin:
 	-RejectsOrders@Transforming:
 	-TransferResourcesOnTransform:
 	-ReplacedInQueue:
+	Encyclopedia:
+		Category: Scrin/Vehicles
 
 GUNW:
 	Inherits: ^Tank
@@ -1552,6 +1555,8 @@ GUNW:
 		Actor: shrw
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
+	Encyclopedia:
+		Category: Scrin/Vehicles
 
 SHRW:
 	Inherits: GUNW
@@ -1659,6 +1664,8 @@ SEEK:
 	Targetable@ONWATER:
 		TargetTypes: Water, Ship
 		RequiresCondition: onwater
+	Encyclopedia:
+		Category: Scrin/Vehicles
 
 LACE:
 	Inherits: ^Vehicle
@@ -1743,6 +1750,8 @@ LACE:
 	Targetable@ONWATER:
 		TargetTypes: Water, Ship
 		RequiresCondition: onwater
+	Encyclopedia:
+		Category: Scrin/Vehicles
 
 INTL:
 	Inherits: ^Vehicle
@@ -1873,6 +1882,8 @@ INTL:
 		RequiresCondition: shields-upgrade
 	Shielded:
 		MaxStrength: 6000
+	Encyclopedia:
+		Category: Scrin/Vehicles
 
 INTL.AI:
 	Inherits: INTL
@@ -1882,6 +1893,7 @@ INTL.AI:
 		Prerequisites: ~botplayer, ~vehicles.scrin, ~!scrt, ~techlevel.low
 	WithCargoSounds:
 		-EnterSounds:
+	-Encyclopedia:
 
 INTL.AI2:
 	Inherits: INTL.AI
@@ -1953,6 +1965,8 @@ CORR:
 	SpeedMultiplier@TRAVELERSPEED:
 		RequiresCondition: travelerspeed
 		Modifier: 115
+	Encyclopedia:
+		Category: Scrin/Vehicles
 
 LCHR:
 	Inherits: ^Tank
@@ -2040,6 +2054,8 @@ LCHR:
 		RequiresCondition: coalescence-upgrade && !being-warped
 	GivesBountyCA:
 		RequiresCondition: global-bounty && !coalescence-upgrade
+	Encyclopedia:
+		Category: Scrin/Vehicles
 
 LCHR.Orb:
 	Inherits@1: ^1x1Shape
@@ -2202,6 +2218,10 @@ STCR:
 		Modifier: 130
 	Shielded:
 		MaxStrength: 10000
+	Encyclopedia:
+		Category: Scrin/Vehicles
+	EncyclopediaExtras:
+		Subfaction: Reaper-17
 
 DEVO:
 	Inherits: ^Vehicle
@@ -2292,6 +2312,8 @@ DEVO:
 		Condition: charged-fire
 		RevokeDelay: 40
 		RequiresCondition: anathema
+	Encyclopedia:
+		Category: Scrin/Vehicles
 
 DARK:
 	Inherits: ^Vehicle
@@ -2368,6 +2390,8 @@ DARK:
 	Targetable@ONWATER:
 		TargetTypes: Water, Ship
 		RequiresCondition: onwater
+	Encyclopedia:
+		Category: Scrin/Vehicles
 
 RUIN:
 	Inherits: ^Vehicle
@@ -2469,6 +2493,8 @@ RUIN:
 	Targetable@ONWATER:
 		TargetTypes: Water, Ship
 		RequiresCondition: onwater
+	Encyclopedia:
+		Category: Scrin/Vehicles
 
 ATMZ:
 	Inherits: ^Vehicle
@@ -2538,6 +2564,8 @@ ATMZ:
 	Targetable@ONWATER:
 		TargetTypes: Water, Ship
 		RequiresCondition: onwater
+	Encyclopedia:
+		Category: Scrin/Vehicles
 
 TPOD:
 	Inherits: ^Tank
@@ -2638,6 +2666,8 @@ TPOD:
 		RequiresCondition: on-resource && damaged
 		BlinkInterval: 15
 		BlinkPattern: on, off
+	Encyclopedia:
+		Category: Scrin/Vehicles
 
 RTPD:
 	Inherits: TPOD
@@ -2841,6 +2871,8 @@ OBLT:
 		RequiresCondition: !being-warped
 	Targetable@Obliterator:
 		TargetTypes: Obliterator
+	Encyclopedia:
+		Category: Scrin/Vehicles
 
 NULL:
 	Inherits: ^Vehicle
@@ -2913,6 +2945,8 @@ NULL:
 	SpawnActorOnDeath:
 		Actor: NULL.Husk
 		RequiresCondition: !being-warped
+	Encyclopedia:
+		Category: Scrin/Vehicles
 
 SMCV:
 	Inherits: ^Vehicle-NOUPG
@@ -3030,6 +3064,8 @@ SMCV:
 		RequiresCondition: global-multiqueuefull && rebel-allegiance
 	ProductionBar@MQDEF:
 		RequiresCondition: global-multiqueuefull && rebel-allegiance
+	Encyclopedia:
+		Category: Scrin/Vehicles
 
 #
 # ---- Aircraft
@@ -3172,6 +3208,8 @@ STMR:
 	GpsRadarDot:
 		Sequence: Plane
 	-SoundOnDamageTransitionCA:
+	Encyclopedia:
+		Category: Scrin/Aircraft
 
 TORM:
 	Inherits: ^Helicopter
@@ -3313,6 +3351,8 @@ TORM:
 	ReloadAmmoPool@MothershipRearmable:
 		Count: 4
 	-SoundOnDamageTransitionCA:
+	Encyclopedia:
+		Category: Scrin/Aircraft
 
 ENRV:
 	Inherits: ^Helicopter
@@ -3447,6 +3487,8 @@ ENRV:
 	ReloadAmmoPool@MothershipRearmable:
 		Count: 1
 	-SoundOnDamageTransitionCA:
+	Encyclopedia:
+		Category: Scrin/Aircraft
 
 DEVA:
 	Inherits: ^Helicopter
@@ -3586,6 +3628,9 @@ DEVA:
 	-SoundOnDamageTransitionCA:
 	Targetable@AirHighValue:
 		TargetTypes: AirHighValue
+	Encyclopedia:
+		Category: Scrin/Aircraft
+		Scale: 1.5
 
 PAC:
 	Inherits: ^Helicopter
@@ -3724,6 +3769,9 @@ PAC:
 	-SoundOnDamageTransitionCA:
 	Targetable@AirHighValue:
 		TargetTypes: AirHighValue
+	Encyclopedia:
+		Category: Scrin/Aircraft
+		Scale: 1.5
 
 INVA:
 	Inherits: ^NeutralPlane
@@ -4013,6 +4061,9 @@ MSHP:
 	ProductionCostMultiplier@HarbingerBonus:
 		Multiplier: 90
 		Prerequisites: player.harbinger
+	Encyclopedia:
+		Category: Scrin/Aircraft
+		Scale: 1
 
 #
 # ---- Husks
@@ -4473,6 +4524,8 @@ SWAL:
 		Types: scrinwall
 	WithWallSpriteBody:
 		Type: scrinwall
+	Encyclopedia:
+		Category: Scrin/Defenses
 
 SFAC:
 	Inherits: ^ScrinBuilding
@@ -5567,6 +5620,8 @@ PTUR:
 	-SpawnRandomActorOnDeath:
 	DetectCloaked:
 		Range: 5c0
+	Encyclopedia:
+		Category: Scrin/Defenses
 
 SHAR:
 	Inherits: ^Defense
@@ -5632,6 +5687,8 @@ SHAR:
 	SpawnActorOnDeath:
 		Actor: s1
 	-SpawnRandomActorOnDeath:
+	Encyclopedia:
+		Category: Scrin/Defenses
 
 SCOL:
 	Inherits: ^Defense
@@ -5687,6 +5744,8 @@ SCOL:
 		RequiresCondition: ioncon-upgrade && !(disabled || empdisable || being-warped)
 	GrantConditionOnDamage@IONSTORM:
 		RequiresCondition: ioncon-upgrade && !(disabled || empdisable || being-warped)
+	Encyclopedia:
+		Category: Scrin/Defenses
 
 STRM:
 	Inherits@1: ^ExistsInWorld
@@ -5848,6 +5907,7 @@ SCOL.Temp:
 	-MapEditorData:
 	-ChangesHealth@DefensePolicy2:
 	-UpdatesKillCount@BuildingsOrHarvesters:
+	-Encyclopedia:
 
 VSPK:
 	Inherits: ^BasicBuilding

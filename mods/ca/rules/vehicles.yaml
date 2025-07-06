@@ -65,6 +65,8 @@ V2RL:
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
+	Encyclopedia:
+		Category: Soviets/Vehicles
 
 KATY:
 	Inherits: ^Vehicle
@@ -134,6 +136,8 @@ KATY:
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
+	Encyclopedia:
+		Category: Soviets/Vehicles
 
 GRAD:
 	Inherits: KATY
@@ -372,6 +376,19 @@ NUKC:
 	RejectsOrders:
 		Reject: AttackMove
 		RequiresCondition: !undeployed
+	Encyclopedia:
+		Category: Soviets/Vehicles
+	EncyclopediaExtras:
+		RenderPreviewActor: nukc.preview
+
+NUKC.Preview:
+	Inherits: ^PreviewDummy
+	RenderSprites:
+		Image: nukc
+	WithFacingSpriteBody:
+	WithSpriteTurret:
+		Sequence: turret
+	Turreted:
 
 1TNK:
 	Inherits: ^Tank
@@ -441,6 +458,8 @@ NUKC:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: vehicles.upgraded
+	Encyclopedia:
+		Category: Allies/Vehicles
 
 2TNK:
 	Inherits: ^Tank
@@ -503,6 +522,8 @@ NUKC:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1194, 1194
+	Encyclopedia:
+		Category: Allies/Vehicles
 
 GTNK:
 	Inherits: 2TNK
@@ -547,6 +568,7 @@ GTNKR2:
 	ProducibleWithLevel:
 		-Prerequisites:
 		InitialLevels: 2
+	-Encyclopedia:
 
 GTNK.squad:
 	AlwaysVisible:
@@ -768,6 +790,7 @@ GTNK.squad:
 		InvalidTargets: NoAutoTarget
 		Priority: 10
 	-MapEditorData:
+	-Encyclopedia:
 
 2TNK.TEMP:
 	Inherits: 2TNK
@@ -782,6 +805,7 @@ GTNK.squad:
 	-ChronoshiftableCA:
 	-HealthCapDamageMultiplier@CHRONO:
 	-MapEditorData:
+	-Encyclopedia:
 
 3TNK:
 	Inherits: ^Tank
@@ -876,6 +900,14 @@ GTNK.squad:
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
+	Encyclopedia:
+		Description: Hello
+		Order: 1
+		Category: Soviets/Vehicles
+		PreviewOwner: USSR
+		Scale: 2
+	Encyclopedia:
+		Category: Soviets/Vehicles
 
 3TNK.ATOMIC:
 	Inherits: 3TNK
@@ -1149,6 +1181,8 @@ GTNK.squad:
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
+	Encyclopedia:
+		Category: Soviets/Vehicles
 
 3TNK.RHINO.ATOMIC:
 	Inherits: 3TNK.RHINO
@@ -1385,6 +1419,8 @@ GTNK.squad:
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
+	Encyclopedia:
+		Category: Soviets/Vehicles
 
 4TNK.ATOMIC:
 	Inherits: 4TNK
@@ -1555,6 +1591,8 @@ ARTY:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: vehicles.upgraded
+	Encyclopedia:
+		Category: Allies/Vehicles
 
 ARTY.nod:
 	Inherits: ARTY
@@ -1581,6 +1619,8 @@ ARTY.nod:
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
+	Encyclopedia:
+		Category: Nod/Vehicles
 
 HOWI:
 	Inherits: ARTY.nod
@@ -1679,6 +1719,7 @@ ARTY.Chrono:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 		RequiresCondition: scrin
 	-MapEditorData:
+	-Encyclopedia:
 
 ARTY.TEMP:
 	Inherits: ARTY
@@ -1692,6 +1733,7 @@ ARTY.TEMP:
 	-ChronoshiftableCA:
 	-HealthCapDamageMultiplier@CHRONO:
 	-MapEditorData:
+	-Encyclopedia:
 
 ISU:
 	Inherits: ^Tank
@@ -1774,6 +1816,8 @@ ISU:
 	SpawnActorOnDeath:
 		Actor: ISU.Husk
 		RequiresCondition: !being-warped
+	Encyclopedia:
+		Category: Soviets/Vehicles
 
 SPEC:
 	Inherits: ^VehicleTD
@@ -1861,6 +1905,8 @@ SPEC:
 		ColorSource: Player
 	Voiced:
 		VoiceSet: SpectreVoice
+	Encyclopedia:
+		Category: Nod/Vehicles
 
 SAPC:
 	Inherits: ^Vehicle
@@ -1962,6 +2008,8 @@ SAPC:
 	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || hidden
 		ColorSource: Player
+	Encyclopedia:
+		Category: Nod/Vehicles
 
 SAPC.AI:
 	Inherits: SAPC
@@ -1974,6 +2022,7 @@ SAPC.AI:
 		InitialUnits: N1,N1,N4,N3,N3
 	WithCargoSounds:
 		-EnterSounds:
+	-Encyclopedia:
 
 SAPC.AI2:
 	Inherits: SAPC
@@ -1984,6 +2033,7 @@ SAPC.AI2:
 		Prerequisites: ~botplayer, ~tmpp, tmpl, ~vehicles.nod, ~techlevel.high
 	Cargo:
 		InitialUnits: N1C,N1C,N5,N3C,N3C
+	-Encyclopedia:
 
 HARV:
 	Inherits: ^Vehicle-NOUPG
@@ -2103,6 +2153,8 @@ HARV:
 	StoresResources:
 		Capacity: 26
 		Resources: Tiberium, BlueTiberium, BlackTiberium, Ore, Gems
+	Encyclopedia:
+		Category: Allies/Vehicles; Soviets/Vehicles
 
 HARV.Chrono:
 	Inherits: HARV
@@ -2142,6 +2194,8 @@ HARV.Chrono:
 	-RejectsOrders@Transforming:
 	StoresResources:
 		Capacity: 18
+	Encyclopedia:
+		Category: Allies/Vehicles
 
 MCV:
 	Inherits: ^Vehicle-NOUPG
@@ -2202,6 +2256,8 @@ MCV:
 		Modifier: 60
 	UpdatesKillCount@BuildingsOrHarvesters:
 		Type: BuildingsOrHarvesters
+	Encyclopedia:
+		Category: Allies/Vehicles; Soviets/Vehicles
 
 JEEP:
 	Inherits: ^Vehicle
@@ -2303,6 +2359,8 @@ JEEP:
 		ValidRelationships: Ally
 		AlwaysShowMaxRange: true
 		RequiresCondition: optics-active
+	Encyclopedia:
+		Category: Allies/Vehicles
 
 JEEP.TEMP:
 	Inherits: JEEP
@@ -2316,6 +2374,7 @@ JEEP.TEMP:
 	-ChronoshiftableCA:
 	-HealthCapDamageMultiplier@CHRONO:
 	-MapEditorData:
+	-Encyclopedia:
 
 APC:
 	Inherits: ^Tank
@@ -2402,6 +2461,8 @@ APC:
 		Actor: rapc
 		UpgradeAtActors: fix, rep, srep
 		RequiresCondition: !mindcontrolled
+	Encyclopedia:
+		Category: Allies/Vehicles
 
 RAPC:
 	Inherits: APC
@@ -2448,6 +2509,7 @@ APC.AI:
 	-ReplacedInQueue:
 	-Upgradeable@RAIDER:
 	-WithDecoration@UpgradeOverlay:
+	-Encyclopedia:
 
 RAPC.AI:
 	Inherits: RAPC
@@ -2460,6 +2522,7 @@ RAPC.AI:
 		InitialUnits: E1,E1,E1,E3,E3
 	WithCargoSounds:
 		-EnterSounds:
+	-Encyclopedia:
 
 MNLY:
 	Inherits: ^Tank
@@ -2537,6 +2600,8 @@ MNLY:
 	-WithDecoration@BOMBARD:
 	-WithDecoration@BOMBARD2:
 	-WithDecoration@BOMBARD3:
+	Encyclopedia:
+		Category: Allies/Vehicles; Soviets/Vehicles; GDI/Vehicles; Nod/Vehicles
 
 TRUK:
 	Inherits: ^Vehicle
@@ -2575,6 +2640,8 @@ TRUK:
 	-WithDecoration@BOMBARD:
 	-WithDecoration@BOMBARD2:
 	-WithDecoration@BOMBARD3:
+	Encyclopedia:
+		Category: Allies/Vehicles; Soviets/Vehicles; GDI/Vehicles; Nod/Vehicles
 
 TRUK.DROP:
 	Inherits: TRUK
@@ -2593,6 +2660,7 @@ TRUK.DROP:
 	SelectionDecorations:
 	RejectsOrders:
 	Interactable:
+	-Encyclopedia:
 
 MGG:
 	Inherits: ^Vehicle
@@ -2650,6 +2718,8 @@ MGG:
 		PauseOnCondition: empdisable || being-warped
 	Turreted:
 		Offset: -299,0,171
+	Encyclopedia:
+		Category: Allies/Vehicles
 
 MRJ:
 	Inherits: ^Vehicle
@@ -2705,6 +2775,8 @@ MRJ:
 		RequiresCondition: charging
 		Offset: -256,0,256
 		IsDecoration: True
+	Encyclopedia:
+		Category: Allies/Vehicles
 
 MSG:
 	Inherits: ^Vehicle
@@ -2784,6 +2856,8 @@ MSG:
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
+	Encyclopedia:
+		Category: Nod/Vehicles
 
 TTRA:
 	Inherits: ^Tank
@@ -2857,6 +2931,8 @@ TTRA:
 	GrantConditionOnPrerequisite@TARC:
 		Condition: tarc-upgrade
 		Prerequisites: tarc.upgrade
+	Encyclopedia:
+		Category: Soviets/Vehicles
 
 TTNK:
 	Inherits: ^Tank
@@ -2925,6 +3001,8 @@ TTNK:
 	GrantConditionOnPrerequisite@TARC:
 		Condition: tarc-upgrade
 		Prerequisites: tarc.upgrade
+	Encyclopedia:
+		Category: Soviets/Vehicles
 
 DTRK:
 	Inherits: ^Vehicle
@@ -2984,6 +3062,8 @@ DTRK:
 	ProductionCostMultiplier@IRAQBONUS:
 		Multiplier: 90
 		Prerequisites: player.iraq
+	Encyclopedia:
+		Category: Soviets/Vehicles
 
 CTNK:
 	Inherits: ^Vehicle
@@ -3078,6 +3158,8 @@ CTNK:
 		SoundFiles: chronoprep.aud
 		RequiresCondition: chronoprep
 		Interval: 1000
+	Encyclopedia:
+		Category: Allies/Vehicles
 
 QTNK:
 	Inherits: ^Tank
@@ -3146,6 +3228,8 @@ QTNK:
 	Targetable@DriverKillImmune:
 		TargetTypes: DriverKillImmune
 		RequiresCondition: deployed
+	Encyclopedia:
+		Category: Soviets/Vehicles
 
 AMCV:
 	Inherits: ^VehicleTD-NOUPG
@@ -3207,6 +3291,8 @@ AMCV:
 		Modifier: 60
 	UpdatesKillCount@BuildingsOrHarvesters:
 		Type: BuildingsOrHarvesters
+	Encyclopedia:
+		Category: GDI/Vehicles; Nod/Vehicles
 
 HMMV:
 	Inherits: ^VehicleTD
@@ -3293,6 +3379,8 @@ HMMV:
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 200
 		RequiresCondition: !mindcontrolled
+	Encyclopedia:
+		Category: GDI/Vehicles
 
 HMMV.TOW:
 	Inherits: HMMV
@@ -3419,6 +3507,8 @@ GDRN:
 		RequiresCondition: !mindcontrolled
 	Sellable:
 		RequiresCondition: unit-sellable && !c4 && !being-warped
+	Encyclopedia:
+		Category: GDI/Vehicles
 
 GDRN.TOW:
 	Inherits: GDRN
@@ -3555,6 +3645,8 @@ BGGY:
 		RequiresCondition: player-blackh && decoy-upgrade && ammo && !(empdisable || being-warped)
 		AmmoPool: decoyspawner
 		FaceTarget: true
+	Encyclopedia:
+		Category: Nod/Vehicles
 
 ^DecoyUnit:
 	GrantTimedCondition@Decoy:
@@ -3624,6 +3716,7 @@ FTNK.Decoy:
 	-Sellable:
 	-ExternalCondition@UNITSELL:
 	-MapEditorData:
+	-Encyclopedia:
 
 HFTK.Decoy:
 	Inherits: HFTK
@@ -3666,6 +3759,7 @@ HFTK.Decoy:
 	-Sellable:
 	-ExternalCondition@UNITSELL:
 	-MapEditorData:
+	-Encyclopedia:
 
 APC2:
 	Inherits: ^TankTD
@@ -3762,6 +3856,8 @@ APC2:
 		Actor: vulc
 		UpgradeAtActors: fix, rep, srep
 		RequiresCondition: !mindcontrolled
+	Encyclopedia:
+		Category: GDI/Vehicles; Nod/Vehicles
 
 APC2.NODAI:
 	Inherits: APC2
@@ -3775,6 +3871,7 @@ APC2.NODAI:
 	-ReplacedInQueue:
 	-Upgradeable@VULCAN:
 	-WithDecoration@UpgradeOverlay:
+	-Encyclopedia:
 
 APC2.GDIAI:
 	Inherits: APC2
@@ -3788,6 +3885,7 @@ APC2.GDIAI:
 	-ReplacedInQueue:
 	-Upgradeable@VULCAN:
 	-WithDecoration@UpgradeOverlay:
+	-Encyclopedia:
 
 APC2.Reinforce:
 	Inherits: APC2
@@ -3804,6 +3902,7 @@ APC2.Reinforce:
 	UnloadOnCondition@UNLOAD:
 		RequiresCondition: damage
 		BotOnly: False
+	-Encyclopedia:
 
 VULC:
 	Inherits: ^TankTD
@@ -3978,6 +4077,8 @@ VULC:
 	Targetable@MindControlImmune:
 		TargetTypes: MindControlImmune
 		RequiresCondition: loaded-cmdo
+	Encyclopedia:
+		Category: GDI/Vehicles
 
 VULC.AI:
 	Inherits: VULC
@@ -3990,6 +4091,7 @@ VULC.AI:
 		InitialUnits: N1,N1,N1,N2,N3
 	WithCargoSounds:
 		-EnterSounds:
+	-Encyclopedia:
 
 VULC.Reinforce:
 	Inherits: VULC
@@ -4006,6 +4108,7 @@ VULC.Reinforce:
 	UnloadOnCondition@UNLOAD:
 		RequiresCondition: damage
 		BotOnly: False
+	-Encyclopedia:
 
 LTNK:
 	Inherits: ^TankTD
@@ -4104,6 +4207,8 @@ LTNK:
 		Prerequisites: lastnk.upgrade
 	ReplacedInQueue:
 		Actors: ltnk.laser
+	Encyclopedia:
+		Category: Nod/Vehicles
 
 LTNK.Laser:
 	Inherits: LTNK
@@ -4275,6 +4380,8 @@ MTNK:
 		Cost: 0
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
+	Encyclopedia:
+		Category: GDI/Vehicles; Nod/Vehicles
 
 MTNK.Drone:
 	Inherits: MTNK
@@ -4350,6 +4457,8 @@ MTNK.Drone:
 	-WithDecoration@UpgradeOverlay:
 	Sellable:
 		RequiresCondition: unit-sellable && !c4 && !being-warped
+	Encyclopedia:
+		Category: GDI/Vehicles
 
 MTNK.Laser:
 	Inherits: MTNK
@@ -4366,6 +4475,7 @@ MTNK.Laser:
 	-GrantConditionOnPrerequisite@POINTDEF:
 	-GrantConditionOnPrerequisite@LaserTank:
 	-PointDefense:
+	-GrantTimedConditionOnPointDefenseHit@POINTDEF:
 	-TimedDamageMultiplier@GSHIELD:
 	-GrantTimedCondition@NSHIELDVISUAL:
 	WithIdleOverlay@NSHIELD:
@@ -4383,6 +4493,8 @@ MTNK.Laser:
 		Class: mtnk
 	-ReplacedInQueue:
 	-Upgradeable@BDRONE:
+	Encyclopedia:
+		Category: Nod/Vehicles
 
 MDRN:
 	Inherits: ^Vehicle
@@ -4475,6 +4587,8 @@ MDRN:
 		EmptyWeapon: VisualExplodeSmall
 	Sellable:
 		RequiresCondition: unit-sellable && !c4 && !being-warped
+	Encyclopedia:
+		Category: GDI/Vehicles
 
 MDRN.Attached:
 	Inherits: MDRN
@@ -4527,6 +4641,7 @@ MDRN.Attached:
 	-PowerMultiplier@HACKED:
 	-ChronoshiftableCA:
 	-HealthCapDamageMultiplier@CHRONO:
+	-Encyclopedia:
 
 HTNK:
 	Inherits: ^TankTD
@@ -4635,6 +4750,8 @@ HTNK:
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
+	Encyclopedia:
+		Category: GDI/Vehicles
 
 HTNK.Ion:
 	Inherits: HTNK
@@ -4892,6 +5009,8 @@ MSAM:
 		ReloadingCondition: reloading-secondary
 	Voiced:
 		VoiceSet: MsamVoice
+	Encyclopedia:
+		Category: GDI/Vehicles
 
 MLRS:
 	Inherits: ^TankTD
@@ -4994,6 +5113,20 @@ MLRS:
 	GrantConditionOnPrerequisite@UPG:
 		Condition: blacknapalm-upgrade
 		Prerequisites: blacknapalm.upgrade
+	Encyclopedia:
+		Category: Nod/Vehicles
+	EncyclopediaExtras:
+		RenderPreviewActor: mlrs.preview
+
+MLRS.Preview:
+	Inherits: ^PreviewDummy
+	Inherits@TDPalette: ^TDPalette
+	RenderSprites:
+		Image: mlrs
+	WithFacingSpriteBody:
+	WithSpriteTurret:
+		Sequence: turret
+	Turreted:
 
 STNK.Nod:
 	Inherits: ^VehicleTD
@@ -5111,6 +5244,8 @@ STNK.Nod:
 		Voice: Move
 	AttackMove:
 		Voice: Attack
+	Encyclopedia:
+		Category: Nod/Vehicles
 
 HSTK:
 	Inherits: ^TankTD
@@ -5219,6 +5354,8 @@ HSTK:
 		Voice: Move
 	AttackMove:
 		Voice: Attack
+	Encyclopedia:
+		Category: Nod/Vehicles
 
 BIKE:
 	Inherits: ^VehicleTD
@@ -5299,6 +5436,8 @@ BIKE:
 		Name: tibcore
 		RequiresCondition: tibcore-upgrade
 		Sequence: idle-upgrade
+	Encyclopedia:
+		Category: Nod/Vehicles
 
 FTNK:
 	Inherits: ^TankTD
@@ -5355,6 +5494,8 @@ FTNK:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: vehicles.upgraded
+	Encyclopedia:
+		Category: Nod/Vehicles
 
 HFTK:
 	Inherits: ^TankTD
@@ -5457,6 +5598,8 @@ HFTK:
 	FirepowerMultiplier@Backload:
 		Modifier: 82
 		RequiresCondition: burstcount >= 10
+	Encyclopedia:
+		Category: Nod/Vehicles
 
 HARV.TD:
 	Inherits: ^VehicleTD-NOUPG
@@ -5576,6 +5719,8 @@ HARV.TD:
 	StoresResources:
 		Capacity: 26
 		Resources: Tiberium, BlueTiberium, BlackTiberium, Ore, Gems
+	Encyclopedia:
+		Category: GDI/Vehicles; Nod/Vehicles
 
 HARV.TD.UPG:
 	Inherits: HARV.TD
@@ -5610,6 +5755,8 @@ HARV.TD.UPG:
 	-RejectsOrders@Transforming:
 	-TransferResourcesOnTransform:
 	-ReplacedInQueue:
+	Encyclopedia:
+		Category: Nod/Vehicles
 
 BTR:
 	Inherits: ^Tank
@@ -5730,6 +5877,8 @@ BTR:
 		RequiresCondition: !mindcontrolled
 	Voiced:
 		VoiceSet: BtrVoice
+	Encyclopedia:
+		Category: Soviets/Vehicles
 
 BTR.AI:
 	Inherits: BTR
@@ -5742,6 +5891,7 @@ BTR.AI:
 		InitialUnits: E1,E1,E1,E3,E4
 	WithCargoSounds:
 		-EnterSounds:
+	-Encyclopedia:
 
 BTR.YURI:
 	Inherits: BTR
@@ -5888,6 +6038,7 @@ BTR.YURI.AI:
 		InitialUnits: E1,E1,E1,E3,E4
 	WithCargoSounds:
 		-EnterSounds:
+	-Encyclopedia:
 
 TRPC:
 	Inherits: ^Tank
@@ -6027,6 +6178,8 @@ TRPC:
 		RequiresCondition: cmsr-inspiration || ovld-inspiration || trpc-inspiration
 	Sellable:
 		RefundPercent: 10
+	Encyclopedia:
+		Category: Soviets/Vehicles
 
 IFV:
 	Inherits: ^Tank
@@ -7038,6 +7191,8 @@ IFV:
 	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || hidden
 		ColorSource: Player
+	Encyclopedia:
+		Category: Allies/Vehicles
 
 IFV.AI:
 	Inherits: ^Tank
@@ -7283,6 +7438,8 @@ RECK:
 		Modifier: 80
 	SpeedMultiplier@TigerGuard:
 		Modifier: 90
+	Encyclopedia:
+		Category: Nod/Vehicles
 
 TITN:
 	Inherits: ^TankTD
@@ -7403,6 +7560,8 @@ TITN:
 		RequiresCondition: seek2 && !gyrostabilizers
 	RangeMultiplier@SEEK3:
 		RequiresCondition: seek3 && !gyrostabilizers
+	Encyclopedia:
+		Category: GDI/Vehicles
 
 TITN.RAIL:
 	Inherits: TITN
@@ -7554,6 +7713,8 @@ JUGG:
 		Actor: JUGG.Husk
 	WithIdleOverlay@MINDCONTROL:
 		Offset: 0,0,512
+	Encyclopedia:
+		Category: GDI/Vehicles
 
 TTRK:
 	Inherits: DTRK
@@ -7571,6 +7732,8 @@ TTRK:
 	FireWarheadsOnDeath:
 		Weapon: UnitExplodeToxinTruck
 		EmptyWeapon: UnitExplodeToxinTruck
+	Encyclopedia:
+		Category: Other/Units
 
 DISR:
 	Inherits: ^TankTD
@@ -7659,6 +7822,8 @@ DISR:
 	-RangeMultiplier@SEEK:
 	-RangeMultiplier@SEEK2:
 	-RangeMultiplier@SEEK3:
+	Encyclopedia:
+		Category: GDI/Vehicles
 
 HSAM:
 	Inherits: ^VehicleTD
@@ -7806,6 +7971,8 @@ HSAM:
 		RequiresCondition: onwater
 	Voiced:
 		VoiceSet: MsamVoice
+	Encyclopedia:
+		Category: GDI/Vehicles
 
 RTNK:
 	Inherits: ^Tank
@@ -7915,6 +8082,8 @@ RTNK:
 	FirepowerMultiplier@Ambush:
 		Modifier: 150
 		RequiresCondition: hidden
+	Encyclopedia:
+		Category: Allies/Vehicles
 
 V3RL:
 	Inherits: ^Vehicle
@@ -7993,6 +8162,17 @@ V3RL:
 	ProductionCostMultiplier@UkraineBonus:
 		Multiplier: 90
 		Prerequisites: player.ukraine
+	Encyclopedia:
+		Category: Soviets/Vehicles
+	EncyclopediaExtras:
+		RenderPreviewActor: v3rl.preview
+
+V3RL.Preview:
+	Inherits: ^PreviewDummy
+	Inherits@TDPalette: ^TDPalette
+	RenderSprites:
+		Image: v3rl
+	WithFacingSpriteBody:
 
 V3:
 	Inherits: ^ShootableMissile
@@ -8091,6 +8271,8 @@ TNKD:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1194, 1194
+	Encyclopedia:
+		Category: Allies/Vehicles
 
 TNKD.TEMP:
 	Inherits: TNKD
@@ -8105,6 +8287,7 @@ TNKD.TEMP:
 	-ChronoshiftableCA:
 	-HealthCapDamageMultiplier@CHRONO:
 	-MapEditorData:
+	-Encyclopedia:
 
 MSAR:
 	Inherits: ^VehicleTD
@@ -8200,6 +8383,8 @@ MSAR:
 	-WithDecoration@BOMBARD:
 	-WithDecoration@BOMBARD2:
 	-WithDecoration@BOMBARD3:
+	Encyclopedia:
+		Category: GDI/Vehicles
 
 PTNK:
 	Inherits: ^Tank
@@ -8275,6 +8460,8 @@ PTNK:
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
+	Encyclopedia:
+		Category: Allies/Vehicles
 
 PCAN:
 	Inherits: PTNK
@@ -8386,6 +8573,8 @@ WTNK:
 	GrantConditionOnPrerequisite@UPG:
 		Condition: microwave-upgrade
 		Prerequisites: microwave.upgrade
+	Encyclopedia:
+		Category: Nod/Vehicles
 
 #adjust offsets
 BATF:
@@ -8614,6 +8803,8 @@ BATF:
 	RejectsOrders@AnathemaNoUnload:
 		Reject: Unload
 		RequiresCondition: anathema
+	Encyclopedia:
+		Category: Allies/Vehicles
 
 BATF.AI:
 	Inherits: BATF
@@ -8625,6 +8816,7 @@ BATF.AI:
 		InitialUnits: E1,E1,E3,E3,E3
 	WithCargoSounds:
 		-EnterSounds:
+	-Encyclopedia:
 
 MEMP:
 	Inherits: ^TankTD
@@ -8744,6 +8936,8 @@ MEMP:
 		RequiresCondition: unit-sellable && !c4 && !being-warped
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Vehicle, Defense
+	Encyclopedia:
+		Category: GDI/Vehicles
 
 CDRN:
 	Inherits: ^VehicleTD
@@ -8836,6 +9030,8 @@ CDRN:
 		Type: ChaosDrone
 		Range: 3c0
 		Color: c33d73
+	Encyclopedia:
+		Category: Soviets/Vehicles
 
 CHPR:
 	Inherits: ^Tank
@@ -8959,6 +9155,8 @@ CHPR:
 	RangeMultiplier@TEMPORALFLUX:
 		RequiresCondition: tflx-upgrade
 		Modifier: 130
+	Encyclopedia:
+		Category: Allies/Vehicles
 
 CRYO:
 	Inherits: ^TankTD
@@ -9020,6 +9218,8 @@ CRYO:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: vehicles.upgraded
+	Encyclopedia:
+		Category: Allies/Vehicles
 
 PBUL:
 	Inherits: ^VehicleTD
@@ -9107,6 +9307,8 @@ PBUL:
 		ActiveUntilCancelled: true
 		UseDisabledArmaments: true
 		TargetFrozenActors: true
+	Encyclopedia:
+		Category: GDI/Vehicles
 
 CYCP:
 	Inherits: ^Tank
@@ -9158,6 +9360,8 @@ CYCP:
 	SpawnActorOnDeath:
 		Actor: CYCP.Husk
 		RequiresCondition: !being-warped
+	Encyclopedia:
+		Category: Nod/Vehicles
 
 BASI:
 	Inherits: ^TankTD
@@ -9231,6 +9435,8 @@ BASI:
 	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || hidden
 		ColorSource: Player
+	Encyclopedia:
+		Category: Nod/Vehicles
 
 MANT:
 	Inherits: ^VehicleTD
@@ -9291,6 +9497,8 @@ MANT:
 		DetectionTypes: AirCloak
 		RequiresCondition: empdisable || being-warped
 	KeepsDistance:
+	Encyclopedia:
+		Category: Nod/Vehicles
 
 VIPR:
 	Inherits: ^VehicleTD
@@ -9359,6 +9567,8 @@ VIPR:
 	Targetable@ONWATER:
 		TargetTypes: Water, Ship
 		RequiresCondition: onwater
+	Encyclopedia:
+		Category: Nod/Vehicles
 
 WOLV:
 	Inherits: ^VehicleTD
@@ -9432,6 +9642,8 @@ WOLV:
 		Modifier: 140
 	ReloadDelayMultiplier@GYRO:
 		Modifier: 140
+	Encyclopedia:
+		Category: GDI/Vehicles
 
 XO:
 	Inherits: ^VehicleTD
@@ -9550,6 +9762,8 @@ XO:
 	DamageMultiplier@Jumping:
 		Modifier: 50
 		RequiresCondition: jumping
+	Encyclopedia:
+		Category: GDI/Vehicles
 
 APOC:
 	Inherits: ^Tank
@@ -9673,6 +9887,8 @@ APOC:
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
+	Encyclopedia:
+		Category: Soviets/Vehicles
 
 APOC.ATOMIC:
 	Inherits: APOC
@@ -9906,6 +10122,8 @@ OVLD:
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
+	Encyclopedia:
+		Category: Soviets/Vehicles
 
 OVLD.ATOMIC:
 	Inherits: OVLD
@@ -10092,6 +10310,8 @@ THWK:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1194, 1194
+	Encyclopedia:
+		Category: GDI/Vehicles
 
 TH:
 	Inherits: ^ShootableMissile
@@ -10224,6 +10444,8 @@ ZEUS:
 		RequiresCondition: charging
 	Voiced:
 		VoiceSet: ZeusVoice
+	Encyclopedia:
+		Category: Allies/Vehicles
 
 MOLE:
 	Inherits: ^Vehicle-NOUPG
@@ -10474,3 +10696,5 @@ AVTR:
 	GrantConditionOnPrerequisite@QUANTUM:
 		Condition: quantum-upgrade
 		Prerequisites: quantum.upgrade
+	Encyclopedia:
+		Category: Nod/Vehicles
