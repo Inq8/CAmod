@@ -560,6 +560,8 @@ GTNK:
 		Actor: GTNK.Husk
 	Voiced:
 		VoiceSet: GrizzlyVoice
+	EncyclopediaExtras:
+		Subfaction: USA
 
 GTNKR2:
 	Inherits: GTNK
@@ -569,6 +571,7 @@ GTNKR2:
 		-Prerequisites:
 		InitialLevels: 2
 	-Encyclopedia:
+	-EncyclopediaExtras:
 
 GTNK.squad:
 	AlwaysVisible:
@@ -901,12 +904,6 @@ GTNK.squad:
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
 	Encyclopedia:
-		Description: Hello
-		Order: 1
-		Category: Soviets/Vehicles
-		PreviewOwner: USSR
-		Scale: 2
-	Encyclopedia:
 		Category: Soviets/Vehicles
 
 3TNK.ATOMIC:
@@ -1010,6 +1007,8 @@ GTNK.squad:
 	Upgradeable@RHINO:
 		Actor: 3tnk.rhino.yuri
 	-Upgradeable@LASHER:
+	EncyclopediaExtras:
+		Subfaction: Psi-Corps
 
 3TNK.ATOMICYURI:
 	Inherits: 3TNK.ATOMIC
@@ -1073,6 +1072,8 @@ GTNK.squad:
 	Upgradeable@RHINO:
 		Actor: 3tnk.rhino.atomicyuri
 	-Upgradeable@LASHER:
+	EncyclopediaExtras:
+		Subfaction: Psi-Corps
 
 3TNK.RHINO:
 	Inherits: ^Tank
@@ -1249,6 +1250,8 @@ GTNK.squad:
 	-SpeedMultiplier@CRUSHATTEMPTSLOW:
 	-SpeedMultiplier@CRUSHSLOW:
 	-Upgradeable@LASHER:
+	EncyclopediaExtras:
+		Subfaction: Psi-Corps
 
 3TNK.RHINO.ATOMICYURI:
 	Inherits: 3TNK.RHINO.ATOMIC
@@ -1284,6 +1287,8 @@ GTNK.squad:
 	-ReplacedInQueue:
 	-Upgradeable@LASHER:
 	-WithDecoration@UpgradeOverlay:
+	EncyclopediaExtras:
+		Subfaction: Psi-Corps
 
 4TNK:
 	Inherits: ^Tank
@@ -1816,6 +1821,8 @@ ISU:
 		RequiresCondition: !being-warped
 	Encyclopedia:
 		Category: Soviets/Vehicles
+	EncyclopediaExtras:
+		Subfaction: Ukraine
 
 SPEC:
 	Inherits: ^VehicleTD
@@ -1905,6 +1912,8 @@ SPEC:
 		VoiceSet: SpectreVoice
 	Encyclopedia:
 		Category: Nod/Vehicles
+	EncyclopediaExtras:
+		Subfaction: Shadow
 
 SAPC:
 	Inherits: ^Vehicle
@@ -2856,6 +2865,8 @@ MSG:
 		ValidDamageStates: Critical
 	Encyclopedia:
 		Category: Nod/Vehicles
+	EncyclopediaExtras:
+		Subfaction: Shadow
 
 TTRA:
 	Inherits: ^Tank
@@ -3001,6 +3012,8 @@ TTNK:
 		Prerequisites: tarc.upgrade
 	Encyclopedia:
 		Category: Soviets/Vehicles
+	EncyclopediaExtras:
+		Subfaction: Russia
 
 DTRK:
 	Inherits: ^Vehicle
@@ -3507,6 +3520,8 @@ GDRN:
 		RequiresCondition: unit-sellable && !c4 && !being-warped
 	Encyclopedia:
 		Category: GDI/Vehicles
+	EncyclopediaExtras:
+		Subfaction: ARC
 
 GDRN.TOW:
 	Inherits: GDRN
@@ -4457,6 +4472,8 @@ MTNK.Drone:
 		RequiresCondition: unit-sellable && !c4 && !being-warped
 	Encyclopedia:
 		Category: GDI/Vehicles
+	EncyclopediaExtras:
+		Subfaction: ARC
 
 MTNK.Laser:
 	Inherits: MTNK
@@ -4493,6 +4510,8 @@ MTNK.Laser:
 	-Upgradeable@BDRONE:
 	Encyclopedia:
 		Category: Nod/Vehicles
+	EncyclopediaExtras:
+		Subfaction: Legion
 
 MDRN:
 	Inherits: ^Vehicle
@@ -4587,6 +4606,8 @@ MDRN:
 		RequiresCondition: unit-sellable && !c4 && !being-warped
 	Encyclopedia:
 		Category: GDI/Vehicles
+	EncyclopediaExtras:
+		Subfaction: ARC
 
 MDRN.Attached:
 	Inherits: MDRN
@@ -4769,6 +4790,8 @@ HTNK.Ion:
 	-Upgradeable@HOVER:
 	-Upgradeable@DRONE:
 	-WithDecoration@UpgradeOverlay:
+	EncyclopediaExtras:
+		Subfaction: ZOCOM
 
 HTNK.Hover:
 	Inherits: HTNK
@@ -4810,6 +4833,8 @@ HTNK.Hover:
 	-Upgradeable@HOVER:
 	-Upgradeable@DRONE:
 	-WithDecoration@UpgradeOverlay:
+	EncyclopediaExtras:
+		Subfaction: Eagle
 
 HTNK.Drone:
 	Inherits: HTNK
@@ -4873,6 +4898,8 @@ HTNK.Drone:
 	-WithDecoration@UpgradeOverlay:
 	Sellable:
 		RequiresCondition: unit-sellable && !c4 && !being-warped
+	EncyclopediaExtras:
+		Subfaction: ARC
 
 MSAM:
 	Inherits: ^TankTD
@@ -5354,6 +5381,8 @@ HSTK:
 		Voice: Attack
 	Encyclopedia:
 		Category: Nod/Vehicles
+	EncyclopediaExtras:
+		Subfaction: Shadow
 
 BIKE:
 	Inherits: ^VehicleTD
@@ -5598,6 +5627,8 @@ HFTK:
 		RequiresCondition: burstcount >= 10
 	Encyclopedia:
 		Category: Nod/Vehicles
+	EncyclopediaExtras:
+		Subfaction: Black Hand
 
 HARV.TD:
 	Inherits: ^VehicleTD-NOUPG
@@ -6023,6 +6054,8 @@ BTR.YURI:
 		VoiceSet: GattlingTankVoice
 	-Upgradeable@GATTLING:
 	-WithDecoration@UpgradeOverlay:
+	EncyclopediaExtras:
+		Subfaction: Psi-Corps
 
 BTR.YURI.AI:
 	Inherits: BTR.YURI
@@ -6036,6 +6069,7 @@ BTR.YURI.AI:
 	WithCargoSounds:
 		-EnterSounds:
 	-Encyclopedia:
+	-EncyclopediaExtras:
 
 TRPC:
 	Inherits: ^Tank
@@ -7559,6 +7593,8 @@ TITN:
 		RequiresCondition: seek3 && !gyrostabilizers
 	Encyclopedia:
 		Category: GDI/Vehicles
+	EncyclopediaExtras:
+		Subfaction: Talon
 
 TITN.RAIL:
 	Inherits: TITN
@@ -7712,6 +7748,8 @@ JUGG:
 		Offset: 0,0,512
 	Encyclopedia:
 		Category: GDI/Vehicles
+	EncyclopediaExtras:
+		Subfaction: Talon
 
 TTRK:
 	Inherits: DTRK
@@ -7821,6 +7859,8 @@ DISR:
 	-RangeMultiplier@SEEK3:
 	Encyclopedia:
 		Category: GDI/Vehicles
+	EncyclopediaExtras:
+		Subfaction: ZOCOM
 
 HSAM:
 	Inherits: ^VehicleTD
@@ -7970,6 +8010,8 @@ HSAM:
 		VoiceSet: MsamVoice
 	Encyclopedia:
 		Category: GDI/Vehicles
+	EncyclopediaExtras:
+		Subfaction: Eagle
 
 RTNK:
 	Inherits: ^Tank
@@ -8081,6 +8123,8 @@ RTNK:
 		RequiresCondition: hidden
 	Encyclopedia:
 		Category: Allies/Vehicles
+	EncyclopediaExtras:
+		Subfaction: England
 
 V3RL:
 	Inherits: ^Vehicle
@@ -8270,6 +8314,8 @@ TNKD:
 		DecorationBounds: 1194, 1194
 	Encyclopedia:
 		Category: Allies/Vehicles
+	EncyclopediaExtras:
+		Subfaction: Germany
 
 TNKD.TEMP:
 	Inherits: TNKD
@@ -8285,6 +8331,7 @@ TNKD.TEMP:
 	-HealthCapDamageMultiplier@CHRONO:
 	-MapEditorData:
 	-Encyclopedia:
+	-EncyclopediaExtras:
 
 MSAR:
 	Inherits: ^VehicleTD
@@ -8572,6 +8619,8 @@ WTNK:
 		Prerequisites: microwave.upgrade
 	Encyclopedia:
 		Category: Nod/Vehicles
+	EncyclopediaExtras:
+		Subfaction: Legion
 
 #adjust offsets
 BATF:
@@ -8802,6 +8851,8 @@ BATF:
 		RequiresCondition: anathema
 	Encyclopedia:
 		Category: Allies/Vehicles
+	EncyclopediaExtras:
+		Subfaction: France
 
 BATF.AI:
 	Inherits: BATF
@@ -8814,6 +8865,7 @@ BATF.AI:
 	WithCargoSounds:
 		-EnterSounds:
 	-Encyclopedia:
+	-EncyclopediaExtras:
 
 MEMP:
 	Inherits: ^TankTD
@@ -9029,6 +9081,8 @@ CDRN:
 		Color: c33d73
 	Encyclopedia:
 		Category: Soviets/Vehicles
+	EncyclopediaExtras:
+		Subfaction: Psi-Corps
 
 CHPR:
 	Inherits: ^Tank
@@ -9154,6 +9208,8 @@ CHPR:
 		Modifier: 130
 	Encyclopedia:
 		Category: Allies/Vehicles
+	EncyclopediaExtras:
+		Subfaction: Germany
 
 CRYO:
 	Inherits: ^TankTD
@@ -9306,6 +9362,8 @@ PBUL:
 		TargetFrozenActors: true
 	Encyclopedia:
 		Category: GDI/Vehicles
+	EncyclopediaExtras:
+		Subfaction: Eagle
 
 CYCP:
 	Inherits: ^Tank
@@ -9641,6 +9699,8 @@ WOLV:
 		Modifier: 140
 	Encyclopedia:
 		Category: GDI/Vehicles
+	EncyclopediaExtras:
+		Subfaction: Talon
 
 XO:
 	Inherits: ^VehicleTD
@@ -9761,6 +9821,8 @@ XO:
 		RequiresCondition: jumping
 	Encyclopedia:
 		Category: GDI/Vehicles
+	EncyclopediaExtras:
+		Subfaction: ZOCOM
 
 APOC:
 	Inherits: ^Tank
@@ -9954,6 +10016,8 @@ APOC.ERAD:
 	-Upgradeable@ERAD:
 	Voiced:
 		VoiceSet: EradVoice
+	EncyclopediaExtras:
+		Subfaction: Iraq
 
 APOC.ERAD.ATOMIC:
 	Inherits: APOC.ATOMIC
@@ -9991,6 +10055,8 @@ APOC.ERAD.ATOMIC:
 	-Upgradeable@ERAD:
 	Voiced:
 		VoiceSet: EradVoice
+	EncyclopediaExtras:
+		Subfaction: Iraq
 
 OVLD:
 	Inherits: ^Tank
@@ -10182,6 +10248,8 @@ OVLD.ERAD:
 	-Upgradeable@ERAD:
 	Voiced:
 		VoiceSet: EradVoice
+	EncyclopediaExtras:
+		Subfaction: Iraq
 
 OVLD.ERAD.ATOMIC:
 	Inherits: OVLD.ATOMIC
@@ -10217,6 +10285,8 @@ OVLD.ERAD.ATOMIC:
 	-Upgradeable@ERAD:
 	Voiced:
 		VoiceSet: EradVoice
+	EncyclopediaExtras:
+		Subfaction: Iraq
 
 THWK:
 	Inherits: ^TankTD

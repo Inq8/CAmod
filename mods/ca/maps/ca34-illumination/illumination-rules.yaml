@@ -166,7 +166,7 @@ fragment:
 	MapEditorData:
 		Categories: Decoration
 	Cloak:
-		Palette: scrin
+		CloakedAlpha: 1
 		DetectionTypes: ArtifactFragment
 	WithDeathAnimation:
 		DeathSequencePalette: scrin
@@ -237,6 +237,14 @@ S4:
 SCRINPURIFIER:
 	Tooltip:
 		Name: Ancient Device
+	SeedsResource:
+		ResourceType: BlueTiberium
+		Interval: 2
+		RequiresCondition: !is-neutral
+	WithIdleOverlay@ACTIVE:
+		RequiresCondition: !is-neutral
+	GrantConditionIfOwnerIsNeutral@NEUTRAL:
+		Condition: is-neutral
 
 PURIFIERLIGHT:
 	Inherits: ^InvisibleDummy

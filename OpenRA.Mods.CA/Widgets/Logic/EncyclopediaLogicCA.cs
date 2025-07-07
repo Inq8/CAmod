@@ -1041,6 +1041,15 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 
 		static string GetSubfactionFlagName(string subfactionName)
 		{
+			switch (subfactionName)
+			{
+				case "Black Hand":
+					return "blackh";
+
+				case "Psi-Corps":
+					return "yuri";
+			}
+
 			var flagName = subfactionName.ToLowerInvariant();
 			var spaceIndex = flagName.IndexOf(' ');
 			var hyphenIndex = flagName.IndexOf('-');
