@@ -21,6 +21,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Subfaction to disaply (with flag).")]
 		public readonly string Subfaction;
 
+		[Desc("Additional info/requirements.")]
+		public readonly string AdditionalInfo;
+
 		public override object Create(ActorInitializer init) { return new EncyclopediaExtras(init, this); }
 	}
 

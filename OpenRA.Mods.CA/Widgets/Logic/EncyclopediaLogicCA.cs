@@ -72,6 +72,9 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 		readonly LabelWidget subfactionLabel;
 		readonly ImageWidget subfactionFlag;
 
+		// Additional info widget
+		readonly LabelWidget additionalInfoLabel;
+
 		// Build icon widget
 		readonly SpriteWidget buildIconWidget;
 
@@ -156,6 +159,8 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 
 			subfactionLabel = actorDetailsContainer.GetOrNull<LabelWidget>("SUBFACTION");
 			subfactionFlag = actorDetailsContainer.GetOrNull<ImageWidget>("SUBFACTION_FLAG");
+
+			additionalInfoLabel = actorDetailsContainer.GetOrNull<LabelWidget>("ADDITIONAL_INFO");
 
 			buildIconWidget = widget.GetOrNull<SpriteWidget>("BUILD_ICON");
 
@@ -655,8 +660,8 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 					if (!hasArmorType)
 					{
 						// Move power to armor type position when no armor type
-						productionPowerIcon.Bounds.X = 150;
-						productionPower.Bounds.X = 167;
+						productionPowerIcon.Bounds.X = 160;
+						productionPower.Bounds.X = 177;
 					}
 				}
 				else
@@ -674,6 +679,8 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 				if (armorTypeLabel != null)
 					armorTypeLabel.Visible = false;
 			}
+
+			var currentY = 0;
 
 			// Handle subfaction display
 			var subfactionText = "";
@@ -715,9 +722,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 				}
 			}
 
-			var currentY = 0;
-
-			// Position subfaction display after prerequisites
+			// Position subfaction display first
 			if (!string.IsNullOrEmpty(subfactionText))
 			{
 				if (subfactionLabel != null)
@@ -733,7 +738,30 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 				}
 			}
 
-			// Handle prerequisites separately
+			// Handle AdditionalInfo display
+			var additionalInfoText = "";
+			var additionalInfoHeight = 0;
+			if (encyclopediaExtrasInfo != null && !string.IsNullOrEmpty(encyclopediaExtrasInfo.AdditionalInfo) && additionalInfoLabel != null)
+			{
+				additionalInfoText = WidgetUtils.WrapText(encyclopediaExtrasInfo.AdditionalInfo.Replace("\\n", "\n"), additionalInfoLabel.Bounds.Width, descriptionFont);
+				additionalInfoHeight = descriptionFont.Measure(additionalInfoText).Y;
+			}
+
+			// Set AdditionalInfo text and visibility
+			if (additionalInfoLabel != null)
+			{
+				additionalInfoLabel.GetText = () => additionalInfoText;
+				additionalInfoLabel.Bounds.Height = additionalInfoHeight;
+				additionalInfoLabel.Visible = !string.IsNullOrEmpty(additionalInfoText);
+			}
+
+			// Position AdditionalInfo after subfaction
+			if (!string.IsNullOrEmpty(additionalInfoText) && additionalInfoLabel != null)
+			{
+				additionalInfoLabel.Bounds.Y = currentY;
+				currentY += additionalInfoHeight + 8;
+			}
+
 			var prerequisitesText = "";
 			var descriptionText = "";
 
@@ -745,7 +773,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 					.ToList();
 
 				if (prereqs.Count != 0)
-					prerequisitesText = FluentProvider.GetMessage(Requires, "prerequisites", prereqs.JoinWith(", "));
+					prerequisitesText = WidgetUtils.WrapText(FluentProvider.GetMessage(Requires, "prerequisites", prereqs.JoinWith(", ")), descriptionLabel.Bounds.Width, descriptionFont);
 
 				// Use Buildable description instead of Encyclopedia description
 				if (!string.IsNullOrEmpty(bi.Description))
@@ -776,7 +804,6 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 				currentY += descriptionHeight + 8;
 			}
 
-			// Handle tooltip extras - moved outside container for direct positioning
 			var tooltipExtras = actor.TraitInfos<TooltipExtrasInfo>().FirstOrDefault(info => info.IsStandard);
 
 			var strengthsText = "";

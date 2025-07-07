@@ -185,6 +185,8 @@ GRAD:
 	GrantConditionOnPrerequisite@RocketPods:
 		Prerequisites: rocketpods.upgrade
 		Condition: rocketpods-upgrade
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Artillery Doctrine.
 
 NUKC:
 	Inherits: ^Tank
@@ -380,6 +382,7 @@ NUKC:
 		Category: Soviets/Vehicles
 	EncyclopediaExtras:
 		RenderPreviewActor: nukc.preview
+		AdditionalInfo: Requires Artillery Doctrine.
 
 NUKC.Preview:
 	Inherits: ^PreviewDummy
@@ -1184,6 +1187,8 @@ GTNK.squad:
 		RequiresCondition: !mindcontrolled
 	Encyclopedia:
 		Category: Soviets/Vehicles
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Armor Doctrine.
 
 3TNK.RHINO.ATOMIC:
 	Inherits: 3TNK.RHINO
@@ -5152,6 +5157,7 @@ MLRS.Preview:
 	WithSpriteTurret:
 		Sequence: turret
 	Turreted:
+		Offset: -128,0,128
 
 STNK.Nod:
 	Inherits: ^VehicleTD
@@ -6211,6 +6217,8 @@ TRPC:
 		RefundPercent: 10
 	Encyclopedia:
 		Category: Soviets/Vehicles
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Infantry Doctrine.
 
 IFV:
 	Inherits: ^Tank
@@ -7471,6 +7479,8 @@ RECK:
 		Modifier: 90
 	Encyclopedia:
 		Category: Nod/Vehicles
+	EncyclopediaExtras:
+		AdditionalInfo: Stolen from Allied War Factory.
 
 TITN:
 	Inherits: ^TankTD
@@ -8210,7 +8220,6 @@ V3RL:
 
 V3RL.Preview:
 	Inherits: ^PreviewDummy
-	Inherits@TDPalette: ^TDPalette
 	RenderSprites:
 		Image: v3rl
 	WithFacingSpriteBody:
@@ -9273,6 +9282,8 @@ CRYO:
 		Prerequisites: vehicles.upgraded
 	Encyclopedia:
 		Category: Allies/Vehicles
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Sweden Coalition.
 
 PBUL:
 	Inherits: ^VehicleTD
@@ -9417,6 +9428,8 @@ CYCP:
 		RequiresCondition: !being-warped
 	Encyclopedia:
 		Category: Nod/Vehicles
+	EncyclopediaExtras:
+		AdditionalInfo: Stolen from Soviet War Factory.
 
 BASI:
 	Inherits: ^TankTD
@@ -9492,6 +9505,8 @@ BASI:
 		ColorSource: Player
 	Encyclopedia:
 		Category: Nod/Vehicles
+	EncyclopediaExtras:
+		AdditionalInfo: Stolen from GDI Weapons Factory.
 
 MANT:
 	Inherits: ^VehicleTD
@@ -9554,6 +9569,8 @@ MANT:
 	KeepsDistance:
 	Encyclopedia:
 		Category: Nod/Vehicles
+	EncyclopediaExtras:
+		AdditionalInfo: Stolen from Nod Airstrip.
 
 VIPR:
 	Inherits: ^VehicleTD
@@ -9624,6 +9641,8 @@ VIPR:
 		RequiresCondition: onwater
 	Encyclopedia:
 		Category: Nod/Vehicles
+	EncyclopediaExtras:
+		AdditionalInfo: Stolen from Scrin Warp Sphere.
 
 WOLV:
 	Inherits: ^VehicleTD
@@ -9948,6 +9967,8 @@ APOC:
 		RequiresCondition: !mindcontrolled
 	Encyclopedia:
 		Category: Soviets/Vehicles
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Armor Doctrine.
 
 APOC.ATOMIC:
 	Inherits: APOC
@@ -10187,6 +10208,8 @@ OVLD:
 		RequiresCondition: !mindcontrolled
 	Encyclopedia:
 		Category: Soviets/Vehicles
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Infantry Doctrine.
 
 OVLD.ATOMIC:
 	Inherits: OVLD
@@ -10379,6 +10402,8 @@ THWK:
 		DecorationBounds: 1194, 1194
 	Encyclopedia:
 		Category: GDI/Vehicles
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Bombardment Strategy.
 
 TH:
 	Inherits: ^ShootableMissile
@@ -10513,6 +10538,8 @@ ZEUS:
 		VoiceSet: ZeusVoice
 	Encyclopedia:
 		Category: Allies/Vehicles
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Greece Coalition.
 
 MOLE:
 	Inherits: ^Vehicle-NOUPG
@@ -10765,3 +10792,5 @@ AVTR:
 		Prerequisites: quantum.upgrade
 	Encyclopedia:
 		Category: Nod/Vehicles
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Wrath Covenant.

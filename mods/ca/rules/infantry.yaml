@@ -728,6 +728,7 @@ E6:
 
 E6.Preview:
 	Inherits: ^PreviewDummy
+	Inherits@TDPalette: ^TDPalette
 	RenderSprites:
 		Image: e6
 	WithInfantryBody:
@@ -1304,6 +1305,18 @@ HACK:
 		Bots: brutal, vhard, hard, normal, easy, naval
 	Encyclopedia:
 		Category: Nod/Infantry
+	EncyclopediaExtras:
+		RenderPreviewActor: hack.preview
+		AdditionalInfo: Requires Unity Covenant.
+
+HACK.Preview:
+	Inherits: ^PreviewDummy
+	Inherits@TDPalette: ^TDPalette
+	RenderSprites:
+		Image: hack
+	WithInfantryBody:
+	QuantizeFacingsFromSequence:
+		Sequence: stand
 
 EINSTEIN:
 	Inherits: ^CivInfantry
@@ -2575,6 +2588,8 @@ ASSA:
 		TargetTypes: MindControlResistant
 	Encyclopedia:
 		Category: Nod/Infantry
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Wrath Covenant.
 
 CONF:
 	Inherits: ^Soldier
@@ -2653,6 +2668,8 @@ CONF:
 		TargetTypes: ChaosImmune
 	Encyclopedia:
 		Category: Nod/Infantry
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Zeal Covenant.
 
 ACOL:
 	Inherits: ^Cyborg
@@ -3185,6 +3202,7 @@ DESO:
 
 DESO.Preview:
 	Inherits: ^PreviewDummy
+	Inherits@TDPalette: ^TDPalette
 	RenderSprites:
 		Image: deso
 	WithInfantryBody:
@@ -4466,6 +4484,8 @@ ENLI:
 		SelectionBarColor: b8afff
 	Encyclopedia:
 		Category: Nod/Infantry
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Zeal Covenant.
 
 ^MortarInfantryBase:
 	Inherits: ^Soldier
@@ -4522,6 +4542,8 @@ MORT.Cryo:
 		Weapon: CryoMortar
 	Armament@BATF:
 		Weapon: CryoMortar
+	EncyclopediaExtras:
+		AdditionalInfo: Stolen from Allied Barracks.
 
 CDOG:
 	Inherits: DOG
@@ -4551,6 +4573,8 @@ CDOG:
 		RevokeDelay: 25
 	Encyclopedia:
 		Category: Nod/Infantry
+	EncyclopediaExtras:
+		AdditionalInfo: Stolen from Soviet Barracks.
 
 MORT.Sonic:
 	Inherits: ^MortarInfantryBase
@@ -4570,6 +4594,8 @@ MORT.Sonic:
 		Weapon: SonicMortar
 	Armament@BATF:
 		Weapon: SonicMortar
+	EncyclopediaExtras:
+		AdditionalInfo: Stolen from GDI Barracks.
 
 MORT.Chem:
 	Inherits: ^MortarInfantryBase
@@ -4587,6 +4613,8 @@ MORT.Chem:
 		EmptyWeapon: UnitExplodeChemSmall
 		Chance: 33
 		RequiresCondition: !being-warped
+	EncyclopediaExtras:
+		AdditionalInfo: Stolen from Hand of Nod.
 
 CSCR:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -4666,6 +4694,8 @@ CSCR:
 			on-tib || (damaged && hospitalheal): On, Off
 	Encyclopedia:
 		Category: Nod/Infantry
+	EncyclopediaExtras:
+		AdditionalInfo: Stolen from Scrin Portal.
 
 CMSR:
 	Inherits: ^Soldier
@@ -4847,6 +4877,8 @@ ZTRP:
 		RequiresCondition: jumping
 	Encyclopedia:
 		Category: GDI/Infantry
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Bombardment Strategy.
 
 ZRAI:
 	Inherits: ZTRP
@@ -4874,6 +4906,8 @@ ZRAI:
 	TargetedLeapAbility:
 		MaxDistance: 10
 		Speed: 200
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Seek & Destroy Strategy.
 
 ZDEF:
 	Inherits: ZTRP
@@ -4934,6 +4968,8 @@ ZDEF:
 		ValidRelationships: Ally
 		RequiresCondition: shield-active && !passenger
 		AffectsParent: true
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Hold the Line Strategy.
 
 ENFO:
 	Inherits: ^Soldier
@@ -5094,6 +5130,8 @@ HOPL:
 		RevokeDelay: 1
 	Encyclopedia:
 		Category: Allies/Infantry
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Greece Coalition.
 
 TIGR:
 	Inherits: ^Soldier
@@ -5161,6 +5199,8 @@ TIGR:
 		DefaultAttackSequence: shoot
 	Encyclopedia:
 		Category: Allies/Infantry
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Korea Coalition.
 
 CRYT:
 	Inherits: ^Soldier
@@ -5235,6 +5275,8 @@ CRYT:
 		RevokeDelay: 6
 	Encyclopedia:
 		Category: Allies/Infantry
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Sweden Coalition.
 
 REAP:
 	Inherits: ^Cyborg
@@ -5352,3 +5394,5 @@ REAP:
 		SelectionBarColor: 00cc00
 	Encyclopedia:
 		Category: Nod/Infantry
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Unity Covenant.
