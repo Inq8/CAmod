@@ -411,11 +411,51 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			}
 		}
 
+		void CollapseNonAncestorCategories(string targetPath)
+		{
+			// Get all ancestor paths of the target
+			var ancestorPaths = new HashSet<string>();
+			var currentPath = targetPath;
+
+			while (!string.IsNullOrEmpty(currentPath))
+			{
+				ancestorPaths.Add(currentPath);
+
+				// Find parent path by removing the last segment
+				var lastSeparator = currentPath.LastIndexOf('/');
+				if (lastSeparator > 0)
+					currentPath = currentPath[..lastSeparator];
+				else
+					break;
+			}
+
+			// Collapse all expanded folders that are not ancestors of the target
+			var foldersToCollapse = new List<string>();
+			foreach (var kvp in folderExpanded)
+			{
+				if (kvp.Value && !ancestorPaths.Contains(kvp.Key))
+				{
+					foldersToCollapse.Add(kvp.Key);
+				}
+			}
+
+			foreach (var folder in foldersToCollapse)
+			{
+				folderExpanded[folder] = false;
+			}
+		}
+
 		void ToggleFolder(string folderPath)
 		{
 			var isCurrentlyExpanded = folderExpanded.GetValueOrDefault(folderPath, false);
 
-			// Simply toggle the folder state without affecting siblings
+			if (!isCurrentlyExpanded)
+			{
+				// Expanding: collapse all other categories that are not ancestors of this one
+				CollapseNonAncestorCategories(folderPath);
+			}
+
+			// Toggle the folder state
 			folderExpanded[folderPath] = !isCurrentlyExpanded;
 
 			// Rebuild the entire list
@@ -1054,7 +1094,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			var spaceIndex = flagName.IndexOf(' ');
 			var hyphenIndex = flagName.IndexOf('-');
 
-			int cutIndex = -1;
+			var cutIndex = -1;
 			if (spaceIndex >= 0 && hyphenIndex >= 0)
 				cutIndex = Math.Min(spaceIndex, hyphenIndex);
 			else if (spaceIndex >= 0)
@@ -1063,7 +1103,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 				cutIndex = hyphenIndex;
 
 			if (cutIndex >= 0)
-				flagName = flagName.Substring(0, cutIndex);
+				flagName = flagName[..cutIndex];
 
 			return flagName;
 		}
