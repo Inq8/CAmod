@@ -1384,7 +1384,6 @@
 	Capturable@DRIVER_DEAD:
 		Types: driverless_vehicle
 		RequiresCondition: driver-dead
-		ValidRelationships: Neutral
 		CancelActivity: true
 	ChangesHealth@DRIVER_DEAD:
 		PercentageStep: -1
@@ -1412,6 +1411,7 @@
 ^CanCaptureDriverlessVehicles:
 	Captures@DRIVER_KILL:
 		CaptureTypes: driverless_vehicle
+		ValidRelationships: Neutral
 	CaptureManager:
 
 ^Cloakable:
@@ -2384,7 +2384,7 @@
 	WithDamageOverlay:
 		Image: smoke_mtd
 	Cloak@CRATE-CLOAK:
-		Palette: cloak
+		CloakedPalette: cloak
 
 ^VehicleTD:
 	Inherits@1: ^VehicleTD-NOUPG
@@ -2987,7 +2987,6 @@
 		CloakSound: subshow1.aud
 		UncloakSound: subshow1.aud
 		CloakedCondition: underwater
-		Palette: submerged
 		PauseOnCondition: cloak-force-disabled || invisibility || being-warped || crossing-ford
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
@@ -3946,7 +3945,6 @@
 		BeingCapturedCondition: being-captured
 	Capturable:
 		Types: husk
-		ValidRelationships: Ally, Enemy, Neutral
 	CapturableProgressBar:
 	CapturableProgressBlink:
 	GivesCashOnCaptureCA:
@@ -4066,7 +4064,6 @@
 	CaptureManager:
 	Capturable:
 		Types: building
-		ValidRelationships: Enemy, Neutral, Ally
 	CapturableProgressBar:
 	CapturableProgressBlink:
 	TransformOnCapture:
@@ -4188,7 +4185,6 @@
 	Cloak:
 		CloakSound:
 		UncloakSound:
-		Palette:
 		DetectionTypes: Mine
 		InitialDelay: 0
 	Tooltip:

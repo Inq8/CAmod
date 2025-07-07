@@ -1599,8 +1599,6 @@ ARTY.nod:
 	Inherits@TDPAL: ^TDPalette
 	WithDamageOverlay:
 		Image: smoke_mtd
-	Cloak@CRATE-CLOAK:
-		Palette: cloak
 	RenderSprites:
 		Image: artynod
 	Buildable:
@@ -2065,7 +2063,6 @@ HARV:
 		SearchFromHarvesterRadius: 8
 		HarvestFacings: 8
 		EmptyCondition: no-ore
-		MaxUnloadQueue: 8
 	DockClientManager:
 	WithStoresResourcesPipsDecoration:
 		Position: BottomLeft
@@ -2173,7 +2170,8 @@ HARV.Chrono:
 		Voice: Move
 	Harvester:
 		HarvestVoice: Harvest
-		DeliverVoice: Deliver
+	DockClientManager:
+		Voice: Deliver
 	ChronoResourceDelivery:
 		Image: chrono
 		Palette: ra2effect-ignore-lighting-alpha75
@@ -5634,7 +5632,6 @@ HARV.TD:
 		SearchFromHarvesterRadius: 8
 		HarvestFacings: 8
 		EmptyCondition: no-ore
-		MaxUnloadQueue: 8
 	DockClientManager:
 	WithStoresResourcesPipsDecoration:
 		Position: BottomLeft

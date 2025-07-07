@@ -1057,6 +1057,7 @@ MECH:
 		PlayerExperience: 5
 		ConsumedByCapture: False
 		CaptureDelay: 75
+		ValidRelationships: Ally, Enemy, Neutral
 		PlayerExperienceRelationships: Neutral, Enemy
 		EnterCursor: sell2
 		EnterBlockedCursor: move-blocked
@@ -1150,6 +1151,7 @@ CMEC:
 		PlayerExperience: 5
 		ConsumedByCapture: False
 		CaptureDelay: 75
+		ValidRelationships: Ally, Enemy, Neutral
 		PlayerExperienceRelationships: Neutral, Enemy
 		EnterCursor: sell2
 		EnterBlockedCursor: move-blocked
@@ -2201,7 +2203,6 @@ SNIP:
 		InitialDelay: 200
 		CloakDelay: 200
 		CloakedCondition: hidden
-		Palette: cloaktd
 		CloakSound: gstealon.aud
 		UncloakSound: gstealof.aud
 		DetectionTypes: Cloak
@@ -2425,7 +2426,6 @@ SAB:
 		InitialDelay: 0
 		CloakDelay: 25
 		CloakedCondition: hidden
-		Palette: cloaktd
 		IsPlayerPalette: true
 		DetectionTypes: Cloak
 		RequiresCondition: can-cloak && !cloak-force-disabled && !being-warped
@@ -3703,7 +3703,6 @@ SHAD:
 		InitialDelay: 1
 		CloakDelay: 70
 		CloakedCondition: hidden
-		Palette: cloaktd
 		IsPlayerPalette: true
 		DetectionTypes: Cloak
 		UncloakOn: Unload, Demolish, Dock, Attack, Damage
@@ -3789,7 +3788,6 @@ SGLI:
 	Cloak:
 		InitialDelay: 1
 		CloakDelay: 125
-		Palette: cloakra
 		IsPlayerPalette: true
 		DetectionTypes: AirCloak
 		UncloakOn: Attack, Damage
