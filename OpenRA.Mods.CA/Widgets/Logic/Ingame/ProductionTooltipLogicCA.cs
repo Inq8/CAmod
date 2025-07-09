@@ -91,6 +91,8 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 						cost = valued.Cost;
 				}
 
+				var maxLeftWidth = 300;
+
 				nameLabel.GetText = () => name;
 
 				var nameSize = font.Measure(name);
@@ -157,7 +159,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 					powerSize = font.Measure(powerText);
 				}
 
-				armorTypeLabel = GetArmorTypeLabel(armorTypeLabel, actor);
+				armorTypeLabel = SelectionTooltipLogic.GetArmorTypeLabel(armorTypeLabel, actor);
 				var armorTypeSize = armorTypeLabel.GetText() != "" ? font.Measure(armorTypeLabel.GetText()) : new int2(0, 0);
 				armorTypeIcon.Visible = armorTypeSize.Y > 0;
 
@@ -169,8 +171,9 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				var extrasSpacing = descLabel.Bounds.X / 2;
 
 				var desc = string.IsNullOrEmpty(buildable.Description) ? "" : FluentProvider.GetMessage(buildable.Description);
-				desc = desc.Replace("\\n", "\n");
+				desc = WidgetUtilsCA.WrapTextWithIndent(desc.Replace("\\n", "\n"), maxLeftWidth, descFont);
 				descLabel.GetText = () => desc;
+
 				var descSize = descFont.Measure(desc);
 				descLabel.Bounds.Width = descSize.X;
 				descLabel.Bounds.Height = descSize.Y;
@@ -183,9 +186,9 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 				if (tooltipExtras != null)
 				{
-					strengthsLabelText = tooltipExtras.Strengths.Replace("\\n", "\n");
-					weaknessesLabelText = tooltipExtras.Weaknesses.Replace("\\n", "\n");
-					attributesLabelText = tooltipExtras.Attributes.Replace("\\n", "\n");
+					strengthsLabelText = WidgetUtilsCA.WrapTextWithIndent(tooltipExtras.Strengths.Replace("\\n", "\n"), maxLeftWidth, descFont, 6);
+					weaknessesLabelText = WidgetUtilsCA.WrapTextWithIndent(tooltipExtras.Weaknesses.Replace("\\n", "\n"), maxLeftWidth, descFont, 6);
+					attributesLabelText = WidgetUtilsCA.WrapTextWithIndent(tooltipExtras.Attributes.Replace("\\n", "\n"), maxLeftWidth, descFont, 6);
 				}
 
 				strengthsLabel.GetText = () => strengthsLabelText;
@@ -233,57 +236,6 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			}
 
 			return a;
-		}
-
-		LabelWidget GetArmorTypeLabel(LabelWidget armorTypeLabel, ActorInfo actor)
-		{
-			var armor = actor.TraitInfos<ArmorInfo>().FirstOrDefault();
-			var armorTypeName = armor != null ? armor.Type : "";
-
-			// hard coded, specific to CA - find a better way to set user-friendly names and colors for armor types
-			switch (armorTypeName)
-			{
-				case "None":
-					armorTypeLabel.GetText = () => "Infantry";
-					armorTypeLabel.GetColor = () => Color.ForestGreen;
-					break;
-
-				case "Light":
-					armorTypeLabel.GetText = () => armorTypeName;
-					armorTypeLabel.GetColor = () => Color.MediumPurple;
-					break;
-
-				case "Heavy":
-					armorTypeLabel.GetText = () => armorTypeName;
-					armorTypeLabel.GetColor = () => Color.Firebrick;
-					break;
-
-				case "Concrete":
-					armorTypeLabel.GetText = () => "Defense";
-					armorTypeLabel.GetColor = () => Color.RoyalBlue;
-					break;
-
-				case "Wood":
-					armorTypeLabel.GetText = () => "Building";
-					armorTypeLabel.GetColor = () => Color.Peru;
-					break;
-
-				case "Brick":
-					armorTypeLabel.GetText = () => "Wall";
-					armorTypeLabel.GetColor = () => Color.RosyBrown;
-					break;
-
-				case "Aircraft":
-					armorTypeLabel.GetText = () => armorTypeName;
-					armorTypeLabel.GetColor = () => Color.SkyBlue;
-					break;
-
-				default:
-					armorTypeLabel.GetText = () => "";
-					break;
-			}
-
-			return armorTypeLabel;
 		}
 	}
 }

@@ -759,7 +759,7 @@
 		BlinkPattern: on
 		ValidRelationships: Ally, Neutral
 
-^GDIUpgrade:
+^GDIStrategyBuffs:
 	GrantConditionOnPrerequisite@HOLD:
 		Condition: hold
 		Prerequisites: hold.strat
@@ -932,8 +932,8 @@
 			seek3 && bino: Off, On
 		RequiresSelection: True
 
-^GDIUpgradeAircraft:
-	Inherits: ^GDIUpgrade
+^GDIStrategyBuffsAircraft:
+	Inherits: ^GDIStrategyBuffs
 	WithDecoration@HOLD:
 		-BlinkPatterns:
 		BlinkPatterns:
@@ -2375,7 +2375,7 @@
 
 ^Vehicle:
 	Inherits@1: ^Vehicle-NOUPG
-	Inherits@GDIUPG: ^GDIUpgrade
+	Inherits@GDIUPG: ^GDIStrategyBuffs
 	Inherits@GDIBINO: ^BinoUpgrade
 
 ^VehicleTD-NOUPG:
@@ -2388,7 +2388,7 @@
 
 ^VehicleTD:
 	Inherits@1: ^VehicleTD-NOUPG
-	Inherits@GDIUPG: ^GDIUpgrade
+	Inherits@GDIUPG: ^GDIStrategyBuffs
 	Inherits@GDIBINO: ^BinoUpgrade
 
 ^Tank:
@@ -2839,7 +2839,7 @@
 	Inherits@4: ^SpriteActor
 	Inherits@5: ^EmpDisable
 	Inherits@6: ^Cloakable
-	Inherits@7: ^GDIUpgrade
+	Inherits@7: ^GDIStrategyBuffs
 	Inherits@8: ^BinoUpgrade
 	Inherits@10: ^Warpable
 	Inherits@11: ^Frenzy
@@ -3097,7 +3097,7 @@
 	Inherits@2: ^GainsExperience
 	Inherits@3: ^Cloakable
 	Inherits@4: ^EmpDisable
-	Inherits@5: ^GDIUpgradeAircraft
+	Inherits@5: ^GDIStrategyBuffsAircraft
 	Inherits@8: ^Warpable
 	Inherits@9: ^BotAirProductionBonus
 	Inherits@10: ^Chillable

@@ -69,7 +69,7 @@ GAP:
 		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 110
 		Prerequisites: atek, ~structures.allies, ~techlevel.high
-		Description: Regenerates the shroud nearby, obscuring enemy vision.\n  Can channel the effect to reduce enemy weapon range and vision.
+		Description: Regenerates the shroud nearby, obscuring enemy vision. Can channel the effect to reduce enemy weapon range and vision.
 	TooltipExtras:
 		Attributes: • Requires power to operate
 	Selectable:
@@ -340,7 +340,7 @@ IRON:
 		BuildPaletteOrder: 130
 		Prerequisites: stek, ~structures.soviet, ~techlevel.high
 		BuildLimit: 1
-		Description: Makes a group of units invulnerable\n  for a short time.
+		Description: Makes a group of units invulnerable for a short time.
 	TooltipExtras:
 		Attributes: • Maximum 1 can be built\n• Requires power to operate\n• Special Ability: Iron Curtain
 	Valued:
@@ -1464,7 +1464,7 @@ PROC:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 60
 		Prerequisites: anypower, ~structures.ra
-		Description: Processes raw Tiberium, Ore\n  and Gems into credits.
+		Description: Processes raw Tiberium, Ore and Gems into credits.
 		BuildDuration: 1400
 	Valued:
 		Cost: 1800
@@ -1861,7 +1861,7 @@ APWR:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 110
 		Prerequisites: anyradar, ~structures.apwr, ~techlevel.medium
-		Description: Provides double the power of\n  a standard Power Plant.
+		Description: Provides double the power of a standard Power Plant.
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -1910,7 +1910,7 @@ NPWR:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 165
 		Prerequisites: stek, ~structures.soviet, ~techlevel.high
-		Description: Provides ten times the power of\n  a standard Power Plant.
+		Description: Provides ten times the power of a standard Power Plant.
 	TooltipExtras:
 		Weaknesses: • Explodes when destroyed
 	Valued:
@@ -1977,7 +1977,7 @@ TPWR:
 	Inherits: APWR
 	Buildable:
 		Prerequisites: anyradar, ~techlevel.medium, ~structures.russia
-		Description: Provides triple the power of\n  a standard Power Plant.
+		Description: Provides triple the power of a standard Power Plant.
 	TooltipExtras:
 		Strengths: • Power output unaffected by damage
 		Weaknesses: • Unstable when damaged
@@ -3079,7 +3079,7 @@ AIRS:
 		BuildPaletteOrder: 80
 		Prerequisites: anyrefinery, ~structures.airs, ~techlevel.low
 		IconPalette: chrometd
-		Description: Provides a dropzone for\n  vehicle reinforcements
+		Description: Provides a dropzone for vehicle reinforcements
 	Valued:
 		Cost: 2000
 	Tooltip:
@@ -3268,7 +3268,7 @@ NUK2:
 		BuildPaletteOrder: 110
 		Prerequisites: anyradar, ~structures.td, ~techlevel.medium
 		IconPalette: chrometd
-		Description: Provides double the power of\n  a standard Nuclear Power Plant.
+		Description: Provides double the power of a standard Nuclear Power Plant.
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -4279,7 +4279,7 @@ PROC.TD:
 		Prerequisites: anypower, ~structures.td
 		Queue: BuildingSQ, BuildingMQ
 		IconPalette: chrometd
-		Description: Processes raw Tiberium, Ore\n  and Gems into credits.
+		Description: Processes raw Tiberium, Ore and Gems into credits.
 		BuildDuration: 1400
 	Building:
 		Footprint: _x_ xxx +++ ===
@@ -5128,7 +5128,7 @@ SGEN:
 		Prerequisites: tmpl, ~structures.nod, ~!player.shadow, ~techlevel.high
 		BuildLimit: 1
 		IconPalette: chrometd
-		Description: Makes a group of units/structures invisible\n  for a short time.
+		Description: Makes a group of units/structures invisible for a short time.
 	TooltipExtras:
 		Attributes: • Maximum 1 can be built\n• Cloaks nearby units and structures when not active\n• Requires power to operate\n• Special Ability: Tiberium Stealth
 	Valued:
@@ -5392,7 +5392,7 @@ PATR:
 		Prerequisites: gtek, ~structures.gdi, ~techlevel.high
 		BuildLimit: 1
 		IconPalette: chrometd
-		Description: Launches E.M. Pulse Missiles that\n  disable vehicles & structures.
+		Description: Launches E.M. Pulse Missiles that disable vehicles & structures.
 	TooltipExtras:
 		Attributes: • Maximum 1 can be built\n• Requires power to operate\n• Special Ability: E.M. Pulse Missile
 	Valued:
@@ -5645,7 +5645,7 @@ MUNP:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.soviet, stek, playerxp.level3, ~arty.doctrine, ~techlevel.high
-		Description: Vehicles & aircraft are produced 15% faster.\n  Vehicles have 15% reduced reload time.
+		Description: Vehicles & aircraft are produced 15% faster. Vehicles have 15% reduced reload time.
 		BuildLimit: 1
 	TooltipExtras:
 		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked
@@ -6097,6 +6097,8 @@ UPGC.BOMB:
 	ProductionCostMultiplier@SubsequentDiscount:
 		Multiplier: 20
 		Prerequisites: upgc.bomb.previous
+	Encyclopedia:
+		Category: GDI/Upgrades
 
 UPGC.SEEK:
 	Inherits: ^BuildingPlug
@@ -6125,6 +6127,8 @@ UPGC.SEEK:
 	ProductionCostMultiplier@SubsequentDiscount:
 		Multiplier: 20
 		Prerequisites: upgc.seek.previous
+	Encyclopedia:
+		Category: GDI/Upgrades
 
 UPGC.HOLD:
 	Inherits: ^BuildingPlug
@@ -6153,6 +6157,8 @@ UPGC.HOLD:
 	ProductionCostMultiplier@SubsequentDiscount:
 		Multiplier: 20
 		Prerequisites: upgc.hold.previous
+	Encyclopedia:
+		Category: GDI/Upgrades
 
 UPGC.DROP:
 	Inherits: ^BuildingPlug
@@ -6168,7 +6174,7 @@ UPGC.DROP:
 		IconPalette: chrometd
 	TooltipExtras:
 		Strengths: + $1250 delivered every 60 seconds (normal speed)
-		Attributes: \n• Place on Upgrade Center\n(!) Mutually exclusive with Firestorm Missile System,\n       Advanced Radar System and Nanoshield Generator
+		Attributes: \n• Place on Upgrade Center\n(!) Mutually exclusive with Firestorm Missile System, Advanced Radar System and Nanoshield Generator
 	Plug:
 		Type: tower.drop
 	Power:
@@ -6181,6 +6187,8 @@ UPGC.DROP:
 	ProductionCostMultiplier@SubsequentDiscount:
 		Multiplier: 20
 		Prerequisites: upgc.drop.previous
+	Encyclopedia:
+		Category: GDI/Upgrades
 
 ^BuildingPlugPrevious:
 	Inherits@DUMMY: ^InvisibleDummy

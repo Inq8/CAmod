@@ -2681,7 +2681,7 @@ MGG:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 301
 		Prerequisites: atek, ~vehicles.allies, ~techlevel.high
-		Description: Regenerates the shroud nearby, obscuring enemy vision.\n  Can channel the effect to reduce enemy weapon range and vision.
+		Description: Regenerates the shroud nearby, obscuring enemy vision. Can channel the effect to reduce enemy weapon range and vision.
 	TooltipExtras:
 		Attributes: • Special Ability: Toggle Gap Generator
 	Valued:
@@ -3403,7 +3403,7 @@ HMMV.TOW:
 	RenderSprites:
 		Image: hmmv
 	Buildable:
-		Description: Fast scout & anti-infantry vehicle\n  with anti-tank missile launcher.
+		Description: Fast scout & anti-infantry vehicle with anti-tank missile launcher.
 		Prerequisites: ~vehicles.hmmv, ~tow.upgrade, ~techlevel.high
 	Valued:
 		Cost: 575
@@ -4473,6 +4473,8 @@ MTNK.Drone:
 	-ReplacedInQueue:
 	-Upgradeable@BDRONE:
 	-WithDecoration@UpgradeOverlay:
+	-ProducibleWithLevel:
+	-WithProductionIconOverlay:
 	Sellable:
 		RequiresCondition: unit-sellable && !c4 && !being-warped
 	Encyclopedia:
@@ -4930,7 +4932,7 @@ MSAM:
 		Prerequisites: anyradar, ~vehicles.msam, ~techlevel.medium
 		Queue: VehicleSQ, VehicleMQ
 		IconPalette: chrometd
-		Description: Multiple Launch Rocket System.\n  Long-range guided artillery with anti-air capability.
+		Description: Multiple Launch Rocket System. Long-range guided artillery with anti-air capability.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor
@@ -6407,7 +6409,7 @@ IFV:
 		RequiresCondition: flamturr || chemturr || hoplturr
 	TooltipExtras@spyturr:
 		Weaknesses: • Cannot deal damage
-		Attributes: • Long vision range\n• Can detect cloaked units\n• Marks vehicle/structure targets,\n    revealing them and increasing the damage they take
+		Attributes: • Long vision range\n• Can detect cloaked units\n• Marks vehicle/structure targets, revealing them and increasing the damage they take
 		IsStandard: false
 		RequiresCondition: spyturr
 	TooltipExtras@rmbcturr:
@@ -7892,7 +7894,7 @@ HSAM:
 		Prerequisites: anyradar, ~vehicles.eagle, ~techlevel.medium
 		Queue: VehicleSQ, VehicleMQ
 		IconPalette: chrometd
-		Description: Prototype Hover Multiple Launch Rocket System.\n  Long-range guided artillery with anti-air capability.
+		Description: Prototype Hover Multiple Launch Rocket System. Long-range guided artillery with anti-air capability.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor
@@ -8360,7 +8362,7 @@ MSAR:
 		BuildPaletteOrder: 321
 		IconPalette: chrometd
 		Prerequisites: anyradar, ~vehicles.gdi, ~techlevel.medium
-		Description: When deployed, detects enemy vehicles,\n  aircraft and structures within a large radius.
+		Description: When deployed, detects enemy vehicles, aircraft and structures within a large radius.
 	TooltipExtras:
 		Weaknesses: • Unarmed
 		Attributes: • Can detect cloaked units (when deployed)\n• Increases nearby ground unit vision range (when deployed)\n• Special Ability: Activate Sensor Array
@@ -8646,7 +8648,7 @@ BATF:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 223
 		Prerequisites: atek, ~vehicles.france, ~techlevel.high
-		Description: Tough infantry transport with weapon ports\n  for infantry to fire from.
+		Description: Tough infantry transport with weapon ports for infantry to fire from.
 	TooltipExtras:
 		Attributes: • Can crush smaller vehicles and concrete walls
 	Valued:
@@ -9015,7 +9017,7 @@ CDRN:
 		BuildPaletteOrder: 311
 		IconPalette: chrometd
 		Prerequisites: stek, ~vehicles.yuri, ~techlevel.high
-		Description: Drone armed with Chaos Gas which causes units\n  to become frenzied and attack indiscriminately.
+		Description: Drone armed with Chaos Gas which causes units to become frenzied and attack indiscriminately.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
 		Weaknesses: • Cannot attack Aircraft, Buildings, Defenses
@@ -9237,7 +9239,7 @@ CRYO:
 		Prerequisites: ~vehicles.allies, alhq, ~sweden.coalition, ~techlevel.high
 		Queue: VehicleSQ, VehicleMQ
 		IconPalette: chrometd
-		Description: Long-range support artillery that slows enemies\n  and makes them take more damage.
+		Description: Long-range support artillery that slows enemies and makes them take more damage.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Cannot attack Aircraft
@@ -9296,7 +9298,7 @@ PBUL:
 		BuildPaletteOrder: 252
 		IconPalette: chrometd
 		Prerequisites: gtek, ~vehicles.eagle, ~techlevel.high
-		Description: Fast scout vehicle with rockets that disrupts weapons and vision.\n  Can designates targets, revealing them and increasing the damage they take.
+		Description: Fast scout vehicle with rockets that disrupts weapons and vision. Can designates targets, revealing them and increasing the damage they take.
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor, Aircraft
 		Weaknesses: • Weak vs Infantry, Buildings, Defenses
@@ -9711,6 +9713,9 @@ WOLV:
 		FacingTolerance: 32
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	WithMuzzleOverlay:
 	RangeMultiplier@GYRO:
 		Modifier: 140
@@ -9730,7 +9735,7 @@ XO:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 251
 		Prerequisites: gtek, ~vehicles.zocom, ~techlevel.medium
-		Description: Light battle-mech armed with a laser and a coil-gun.\n  Able to jump short distances using its jump-pack.
+		Description: Light battle-mech armed with a laser and a coil-gun. Able to jump short distances using its jump-pack.
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor, Heavy Armor, Buildings
 		Weaknesses: • Weak vs Defenses\n• Cannot attack Aircraft
@@ -9785,6 +9790,9 @@ XO:
 		FacingTolerance: 32
 		RangeMargin: 0
 	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	WithMuzzleOverlay:
 	Parachutable:
@@ -10092,7 +10100,7 @@ OVLD:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 235
 		Prerequisites: stek, ~vehicles.soviet, ~ovld.upgrade, ~!erad.upgrade, ~!atomicengines.upgrade, ~techlevel.high
-		Description: Enormous slow tank fitted with a commissar tower\n  which supports infantry in combat.
+		Description: Enormous slow tank fitted with a commissar tower which supports infantry in combat.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
 		Weaknesses: • Cannot attack Aircraft
@@ -10475,7 +10483,9 @@ BSKY:
 
 ZEUS:
 	Inherits: ^Vehicle
-	Inherits@AUTOTARGET: ^AutoTargetGround
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
 	Valued:
 		Cost: 2000
 	Tooltip:
@@ -10518,6 +10528,11 @@ ZEUS:
 		ChargingCondition: charging
 		Voice: Attack
 		LosesChargeWhileTurning: true
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	AttackMove:
 		Voice: Attack
 	AmbientSoundCA:

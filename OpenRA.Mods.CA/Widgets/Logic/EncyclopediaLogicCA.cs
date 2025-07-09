@@ -1,11 +1,10 @@
 #region Copyright & License Information
-/*
- * Copyright (c) The OpenRA Developers and Contributors
- * This file is part of OpenRA, which is free software. It is made
- * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation, either version 3 of
- * the License, or (at your option) any later version. For more
- * information, see COPYING.
+/**
+ * Copyright (c) The OpenRA Combined Arms Developers (see CREDITS).
+ * This file is part of OpenRA Combined Arms, which is free software.
+ * It is made available to you under the terms of the GNU General Public License
+ * as published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. For more information, see COPYING.
  */
 #endregion
 
@@ -16,13 +15,14 @@ using System.Linq;
 using OpenRA.FileFormats;
 using OpenRA.Graphics;
 using OpenRA.Mods.CA.Traits;
-using OpenRA.Mods.CA.Widgets.Logic;
+using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Mods.Common.Traits.Render;
+using OpenRA.Mods.Common.Widgets;
 using OpenRA.Primitives;
 using OpenRA.Widgets;
 
-namespace OpenRA.Mods.Common.Widgets.Logic
+namespace OpenRA.Mods.CA.Widgets.Logic
 {
 	public class EncyclopediaLogicCA : ChromeLogic
 	{
@@ -43,6 +43,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 		readonly ScrollPanelWidget actorList;
 		readonly ScrollItemWidget headerTemplate;
 		readonly ScrollItemWidget template;
+		readonly BackgroundWidget previewBackground;
 		readonly ActorPreviewWidget previewWidget;
 
 		readonly Widget tabContainer;
@@ -119,8 +120,10 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 
 			widget.Get("ACTOR_INFO").IsVisible = () => selectedActor != null;
 
+			previewBackground = widget.GetOrNull<BackgroundWidget>("ACTOR_BG");
 			previewWidget = widget.Get<ActorPreviewWidget>("ACTOR_PREVIEW");
-			previewWidget.IsVisible = () => selectedActor != null;
+			previewBackground.IsVisible = () => selectedActor != null &&
+				selectedActor.TraitInfos<IRenderActorPreviewSpritesInfo>().Count > 0;
 
 			descriptionPanel = widget.Get<ScrollPanelWidget>("ACTOR_DESCRIPTION_PANEL");
 			titleLabel = descriptionPanel.GetOrNull<LabelWidget>("ACTOR_TITLE");
@@ -166,9 +169,6 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 
 			foreach (var actor in modData.DefaultRules.Actors.Values)
 			{
-				if (actor.TraitInfos<IRenderActorPreviewSpritesInfo>().Count == 0)
-					continue;
-
 				var statistics = actor.TraitInfoOrDefault<UpdatesPlayerStatisticsInfo>();
 				if (statistics != null && !string.IsNullOrEmpty(statistics.OverrideActor))
 					continue;
@@ -332,7 +332,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 					var name = actor.TraitInfos<TooltipInfo>().FirstOrDefault(info => info.EnabledByDefault)?.Name;
 					if (!string.IsNullOrEmpty(name))
 					{
-						var displayName = FluentProvider.GetMessage(name);
+						var displayName = FluentProvider.GetMessage(name).Replace("Research: ", "").Replace("Upgrade: ", "");
 						label.GetText = () => $"{displayName}";
 						WidgetUtils.TruncateLabelToTooltip(label, displayName);
 					}
@@ -554,30 +554,38 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 					}
 				}
 
-			previewWidget.SetPreview(renderActor, typeDictionary);
-			previewWidget.GetScale = () => selectedInfo.Scale;
+			if (previewBackground.IsVisible())
+			{
+				previewWidget.SetPreview(renderActor, typeDictionary);
+				previewWidget.GetScale = () => selectedInfo.Scale;
+				buildIconWidget.Bounds.Y = previewWidget.Bounds.Bottom + 10;
+			}
+			else
+			{
+				buildIconWidget.Bounds.Y = 0;
+			}
 
 			if (portraitWidget != null)
-			{
-				// PERF: Load individual portrait images directly, bypassing ChromeProvider,
-				// to avoid stalls when loading a single large sheet.
-				// Portrait images are required to all be the same size as the "default.png" image.
-				var portrait = defaultPortrait;
-				if (modData.DefaultFileSystem.TryOpen($"encyclopedia/{actor.Name}.png", out var s))
 				{
-					var p = new Png(s);
-					if (p.Width == defaultPortrait.Width && p.Height == defaultPortrait.Height)
-						portrait = p;
-					else
+					// PERF: Load individual portrait images directly, bypassing ChromeProvider,
+					// to avoid stalls when loading a single large sheet.
+					// Portrait images are required to all be the same size as the "default.png" image.
+					var portrait = defaultPortrait;
+					if (modData.DefaultFileSystem.TryOpen($"encyclopedia/{actor.Name}.png", out var s))
 					{
-						Log.Write("debug", $"Failed to parse load portrait image for {actor.Name}.");
-						Log.Write("debug", $"Expected size {defaultPortrait.Width}, {defaultPortrait.Height}, but found {p.Width}, {p.Height}.");
+						var p = new Png(s);
+						if (p.Width == defaultPortrait.Width && p.Height == defaultPortrait.Height)
+							portrait = p;
+						else
+						{
+							Log.Write("debug", $"Failed to parse load portrait image for {actor.Name}.");
+							Log.Write("debug", $"Expected size {defaultPortrait.Width}, {defaultPortrait.Height}, but found {p.Width}, {p.Height}.");
+						}
 					}
-				}
 
-				OpenRA.Graphics.Util.FastCopyIntoSprite(portraitSprite, portrait);
-				portraitSprite.Sheet.CommitBufferedData();
-			}
+					OpenRA.Graphics.Util.FastCopyIntoSprite(portraitSprite, portrait);
+					portraitSprite.Sheet.CommitBufferedData();
+				}
 
 			if (titleLabel != null)
 				titleLabel.Text = ActorName(modData.DefaultRules, actor.Name);
@@ -619,6 +627,8 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 					buildIconWidget.Visible = false;
 				}
 			}
+
+			var currentY = 0;
 
 			if (productionContainer != null && bi != null && !selectedInfo.HideBuildable)
 			{
@@ -670,17 +680,15 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 					productionPower.Visible = false;
 				}
 			}
-			else if (productionContainer != null)
+			else
 			{
-				productionContainer.Visible = false;
-				// Also hide armor type widgets when production container is hidden
-				if (armorTypeIcon != null)
-					armorTypeIcon.Visible = false;
-				if (armorTypeLabel != null)
-					armorTypeLabel.Visible = false;
-			}
+				currentY -= productionContainer.Bounds.Height;
 
-			var currentY = 0;
+				if (productionContainer != null)
+				{
+					productionContainer.Visible = false;
+				}
+			}
 
 			// Handle subfaction display
 			var subfactionText = "";
@@ -743,7 +751,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			var additionalInfoHeight = 0;
 			if (encyclopediaExtrasInfo != null && !string.IsNullOrEmpty(encyclopediaExtrasInfo.AdditionalInfo) && additionalInfoLabel != null)
 			{
-				additionalInfoText = WidgetUtils.WrapText(encyclopediaExtrasInfo.AdditionalInfo.Replace("\\n", "\n"), additionalInfoLabel.Bounds.Width, descriptionFont);
+				additionalInfoText = WidgetUtilsCA.WrapTextWithIndent(encyclopediaExtrasInfo.AdditionalInfo.Replace("\\n", "\n"), additionalInfoLabel.Bounds.Width, descriptionFont);
 				additionalInfoHeight = descriptionFont.Measure(additionalInfoText).Y;
 			}
 
@@ -773,11 +781,12 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 					.ToList();
 
 				if (prereqs.Count != 0)
-					prerequisitesText = WidgetUtils.WrapText(FluentProvider.GetMessage(Requires, "prerequisites", prereqs.JoinWith(", ")), descriptionLabel.Bounds.Width, descriptionFont);
+					prerequisitesText = WidgetUtilsCA.WrapTextWithIndent(FluentProvider.GetMessage(Requires, "prerequisites", prereqs.JoinWith(", ")), descriptionLabel.Bounds.Width, descriptionFont);
 
-				// Use Buildable description instead of Encyclopedia description
 				if (!string.IsNullOrEmpty(bi.Description))
-					descriptionText = WidgetUtils.WrapText(FluentProvider.GetMessage(bi.Description.Replace("\\n", "")), descriptionLabel.Bounds.Width, descriptionFont);
+				{
+					descriptionText = WidgetUtilsCA.WrapTextWithIndent(FluentProvider.GetMessage(bi.Description.Replace("\\n", "\n")), descriptionLabel.Bounds.Width, descriptionFont);
+				}
 			}
 
 			// Set prerequisites text and height
@@ -812,9 +821,9 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 
 			if (tooltipExtras != null)
 			{
-				strengthsText = WidgetUtils.WrapText(tooltipExtras.Strengths.Replace("\\n", "\n"), strengthsLabel.Bounds.Width, descriptionFont);
-				weaknessesText = WidgetUtils.WrapText(tooltipExtras.Weaknesses.Replace("\\n", "\n"), strengthsLabel.Bounds.Width, descriptionFont);
-				attributesText = WidgetUtils.WrapText(tooltipExtras.Attributes.Replace("\\n", "\n"), strengthsLabel.Bounds.Width, descriptionFont);
+				strengthsText = WidgetUtilsCA.WrapTextWithIndent(tooltipExtras.Strengths.Replace("\\n", "\n"), strengthsLabel.Bounds.Width, descriptionFont, 6);
+				weaknessesText = WidgetUtilsCA.WrapTextWithIndent(tooltipExtras.Weaknesses.Replace("\\n", "\n"), weaknessesLabel.Bounds.Width, descriptionFont, 6);
+				attributesText = WidgetUtilsCA.WrapTextWithIndent(tooltipExtras.Attributes.Replace("\\n", "\n"), attributesLabel.Bounds.Width, descriptionFont, 6);
 			}
 
 			if (strengthsText != null && weaknessesText != null && attributesText != null)
@@ -933,7 +942,8 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 					}
 				}
 
-			previewWidget.SetPreview(renderActor, typeDictionary);
+			if (previewBackground.IsVisible())
+				previewWidget.SetPreview(renderActor, typeDictionary);
 		}
 
 		public override void Tick()
@@ -947,7 +957,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			{
 				var actorTooltip = actor.TraitInfos<TooltipInfo>().FirstOrDefault(info => info.EnabledByDefault);
 				if (actorTooltip != null)
-					return FluentProvider.GetMessage(actorTooltip.Name);
+					return FluentProvider.GetMessage(actorTooltip.Name).Replace("Research: ", "").Replace("Upgrade: ", "");
 			}
 
 			return name;

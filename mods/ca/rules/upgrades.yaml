@@ -20,7 +20,7 @@ hazmat.upgrade:
 		BuildPaletteOrder: 19
 		Prerequisites: anyradar, infantry.any, ~!player.soviet, ~!player.zocom, ~!player.scrin, ~techlevel.medium
 		IconPalette: chrometd
-		Description: Infantry are equipped with hazmat suits which provides\n  protection against Tiberium and radiation.\n\nUpgrades: Infantry
+		Description: Infantry are equipped with hazmat suits which provides protection against Tiberium and radiation.\n\nUpgrades: Infantry
 	TooltipExtras:
 		Strengths: + Tiberium immunity\n+ 50% resistance to irradiated terrain
 	Valued:
@@ -32,6 +32,8 @@ hazmat.upgrade:
 		Prerequisites: player.nod
 	WithProductionIconOverlay:
 		Prerequisites: hazmat.upgrade
+	Encyclopedia:
+		Category: Allies/Upgrades; GDI/Upgrades; Nod/Upgrades
 
 flakarmor.upgrade:
 	Inherits: ^Upgrade
@@ -40,7 +42,7 @@ flakarmor.upgrade:
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: techcenter.any, infantry.any, ~!player.nod, ~!player.scrin, ~techlevel.high
-		Description: Infantry are equipped with advanced flak armor which\n  provides protection against explosives.\n\nUpgrades: Infantry
+		Description: Infantry are equipped with advanced flak armor which provides protection against explosives.\n\nUpgrades: Infantry
 	TooltipExtras:
 		Strengths: + 40% reduced damage from explosives\n+ 20% reduced damage from incendiary explosives
 	Valued:
@@ -49,6 +51,8 @@ flakarmor.upgrade:
 		Image: flakarmor.upgrade
 	WithProductionIconOverlay:
 		Prerequisites: flakarmor.upgrade
+	Encyclopedia:
+		Category: Allies/Upgrades; Soviets/Upgrades; GDI/Upgrades; Nod/Upgrades
 
 #########################GDI#########
 ########################################
@@ -62,8 +66,13 @@ ANYSTRATEGY:
 		Description: Active Strategy
 	ProvidesPrerequisite:
 
-bombard.strat:
+^GDIUpgrade:
 	Inherits: ^Upgrade
+	Encyclopedia:
+		Category: GDI/Upgrades
+
+bombard.strat:
+	Inherits: ^GDIUpgrade
 	Tooltip:
 		Name: Strategy: Bombardment
 	Buildable:
@@ -106,7 +115,7 @@ bombard2.strat:
 		Prerequisites: bombard2.strat
 
 seek.strat:
-	Inherits: ^Upgrade
+	Inherits: ^GDIUpgrade
 	Tooltip:
 		Name: Strategy: Seek & Destroy
 	Buildable:
@@ -149,7 +158,7 @@ seek2.strat:
 		Prerequisites: seek2.strat
 
 hold.strat:
-	Inherits: ^Upgrade
+	Inherits: ^GDIUpgrade
 	Tooltip:
 		Name: Strategy: Hold the Line
 	Buildable:
@@ -192,7 +201,7 @@ hold2.strat:
 		Prerequisites: hold2.strat
 
 vulcan.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^GDIUpgrade
 	Tooltip:
 		Name: Research: Vulcan
 	Buildable:
@@ -210,7 +219,7 @@ vulcan.upgrade:
 		Prerequisites: vulcan.upgrade
 
 bjet.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^GDIUpgrade
 	Tooltip:
 		Name: Research: Bombardier
 	Buildable:
@@ -228,7 +237,7 @@ bjet.upgrade:
 		Prerequisites: bjet.upgrade
 
 empgren.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^GDIUpgrade
 	Tooltip:
 		Name: Upgrade: EMP Grenades
 	Buildable:
@@ -246,7 +255,7 @@ empgren.upgrade:
 		Prerequisites: empgren.upgrade
 
 strata10.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^GDIUpgrade
 	Tooltip:
 		Name: Strategy Dependent Upgrade
 	Buildable:
@@ -260,16 +269,17 @@ strata10.upgrade:
 		Image: strategic.upgrade
 	WithProductionIconOverlay:
 		Prerequisites: strata10.upgrade
+	-Encyclopedia:
 
 avenger.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^GDIUpgrade
 	Tooltip:
 		Name: Upgrade: Avenger
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.gdi, gtek, ~bombard.strat, ~techlevel.high
 		IconPalette: chrome
-		Description: Replaces Warthog's incendiary bombs with\n  GAU-8 Avenger rotary cannon and Hydra rockets.\n\nUpgrades: Warthog
+		Description: Replaces Warthog's incendiary bombs with GAU-8 Avenger rotary cannon and Hydra rockets.\n\nUpgrades: Warthog
 	TooltipExtras:
 		Strengths: + Increased damage\n+ Increased range
 		Weaknesses: – Requires two passes
@@ -281,7 +291,7 @@ avenger.upgrade:
 		Prerequisites: avenger.upgrade
 
 sidewinders.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^GDIUpgrade
 	Tooltip:
 		Name: Upgrade: Sidewinders
 	Buildable:
@@ -299,7 +309,7 @@ sidewinders.upgrade:
 		Prerequisites: sidewinders.upgrade
 
 ceramic.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^GDIUpgrade
 	Tooltip:
 		Name: Upgrade: Ceramic Armor
 	Buildable:
@@ -317,7 +327,7 @@ ceramic.upgrade:
 		Prerequisites: ceramic.upgrade
 
 strategic.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^GDIUpgrade
 	Tooltip:
 		Name: Strategy Dependent Upgrade
 	Buildable:
@@ -331,9 +341,10 @@ strategic.upgrade:
 		Image: strategic.upgrade
 	WithProductionIconOverlay:
 		Prerequisites: strategic.upgrade
+	-Encyclopedia:
 
 thwk.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^GDIUpgrade
 	Tooltip:
 		Name: Research: Tomahawk Launcher
 	Buildable:
@@ -352,13 +363,13 @@ thwk.upgrade:
 		Prerequisites: thwk.upgrade
 
 tow.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^GDIUpgrade
 	Tooltip:
 		Name: Research: TOW Missile
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.gdi, gtek, ~seek.strat, ~techlevel.high
-		Description: Hum-Vees and Guardian Drones will be produced\n  with TOW missile launchers.\n\nReplaces: Hum-Vee\nReplaces: Guardian Drone
+		Description: Hum-Vees and Guardian Drones will be produced with TOW missile launchers.\n\nReplaces: Hum-Vee\nReplaces: Guardian Drone
 	TooltipExtras:
 		Strengths: + Added TOW missile launcher (strong vs Heavy Armor)
 		Weaknesses: – Increased cost\n– Reduced speed
@@ -370,14 +381,14 @@ tow.upgrade:
 		Prerequisites: tow.upgrade
 
 pointdef.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^GDIUpgrade
 	Tooltip:
 		Name: Upgrade: Point Defense Systems
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.gdi, gtek, ~hold.strat, ~techlevel.high
 		IconPalette: chrometd
-		Description: Equips several units with point defense shields and/or point defense lasers\n  which protect against enemy fire.\n\nUpgrades: Battle Tank (Shield and Laser)\nUpgrades: Battle Drone (Shield and Laser)\nUpgrades: Hum-Vee (Shield)\nUpgrades: Guardian Drone (Shield)\nUpgrades: Harvester (Shield)\nUpgrades: Frigate (Laser)
+		Description: Equips several units with point defense shields and/or point defense lasers which protect against enemy fire.\n\nUpgrades: Battle Tank (Shield and Laser)\nUpgrades: Battle Drone (Shield and Laser)\nUpgrades: Hum-Vee (Shield)\nUpgrades: Guardian Drone (Shield)\nUpgrades: Harvester (Shield)\nUpgrades: Frigate (Laser)
 	TooltipExtras:
 		Strengths: + Added Point Defense Shield\n+ Added Point Defense Laser
 	Valued:
@@ -388,7 +399,7 @@ pointdef.upgrade:
 		Prerequisites: pointdef.upgrade
 
 stratmiss.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^GDIUpgrade
 	Tooltip:
 		Name: Strategy Dependent Upgrade
 	Buildable:
@@ -402,9 +413,10 @@ stratmiss.upgrade:
 		Image: strategic.upgrade
 	WithProductionIconOverlay:
 		Prerequisites: stratmiss.upgrade
+	-Encyclopedia:
 
 hailstorm.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^GDIUpgrade
 	Tooltip:
 		Name: Upgrade: Hailstorm Missiles
 	Buildable:
@@ -423,7 +435,7 @@ hailstorm.upgrade:
 		Prerequisites: hailstorm.upgrade
 
 hypersonic.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^GDIUpgrade
 	Tooltip:
 		Name: Upgrade: Hypersonic Missiles
 	Buildable:
@@ -441,7 +453,7 @@ hypersonic.upgrade:
 		Prerequisites: hypersonic.upgrade
 
 hammerhead.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^GDIUpgrade
 	Tooltip:
 		Name: Upgrade: Hammerhead Missiles
 	Buildable:
@@ -459,7 +471,7 @@ hammerhead.upgrade:
 		Prerequisites: hammerhead.upgrade
 
 sonic.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^GDIUpgrade
 	Tooltip:
 		Name: Upgrade: Sonic Amplifiers
 	Buildable:
@@ -477,7 +489,7 @@ sonic.upgrade:
 		Prerequisites: sonic.upgrade
 
 abur.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^GDIUpgrade
 	Tooltip:
 		Name: Upgrade: Afterburner
 	Buildable:
@@ -495,7 +507,7 @@ abur.upgrade:
 		Prerequisites: abur.upgrade
 
 bdrone.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^GDIUpgrade
 	Tooltip:
 		Name: Research: Battle Drone
 	Buildable:
@@ -517,7 +529,7 @@ bdrone.upgrade:
 		Prerequisites: bdrone.upgrade
 
 railgun.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^GDIUpgrade
 	Tooltip:
 		Name: Research: Railgun Titan
 	Buildable:
@@ -538,7 +550,7 @@ railgun.upgrade:
 		Prerequisites: railgun.upgrade
 
 ionmam.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^GDIUpgrade
 	Tooltip:
 		Name: Research: Ion Mammoth
 	Buildable:
@@ -559,7 +571,7 @@ ionmam.upgrade:
 		Prerequisites: ionmam.upgrade
 
 hovermam.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^GDIUpgrade
 	Tooltip:
 		Name: Research: Hover Mammoth
 	Buildable:
@@ -580,7 +592,7 @@ hovermam.upgrade:
 		Prerequisites: hovermam.upgrade
 
 mdrone.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^GDIUpgrade
 	Tooltip:
 		Name: Research: Mammoth Drone
 	Buildable:
@@ -602,7 +614,7 @@ mdrone.upgrade:
 		Prerequisites: mdrone.upgrade
 
 gyro.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^GDIUpgrade
 	Tooltip:
 		Name: Upgrade: Gyro Stabilizers
 	Buildable:
@@ -631,8 +643,13 @@ ANYCOVENANT:
 		Description: Active Covenant
 	ProvidesPrerequisite:
 
-wrath.covenant:
+^NodUpgrade:
 	Inherits: ^Upgrade
+	Encyclopedia:
+		Category: Nod/Upgrades
+
+wrath.covenant:
+	Inherits: ^NodUpgrade
 	Tooltip:
 		Name: Covenant of Wrath
 	Buildable:
@@ -652,7 +669,7 @@ wrath.covenant:
 		Actor: assassinsquad.provider
 
 unity.covenant:
-	Inherits: ^Upgrade
+	Inherits: ^NodUpgrade
 	Tooltip:
 		Name: Covenant of Unity
 	Buildable:
@@ -672,7 +689,7 @@ unity.covenant:
 		Actor: hackercell.provider
 
 zeal.covenant:
-	Inherits: ^Upgrade
+	Inherits: ^NodUpgrade
 	Tooltip:
 		Name: Covenant of Zeal
 	Buildable:
@@ -692,7 +709,7 @@ zeal.covenant:
 		Actor: confessorcabal.provider
 
 howi.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^NodUpgrade
 	Tooltip:
 		Name: Research: Howitzer
 	Buildable:
@@ -716,13 +733,13 @@ howi.upgrade:
 		Prerequisites: howi.upgrade
 
 decoy.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^NodUpgrade
 	Tooltip:
 		Name: Upgrade: Decoy Projectors
 	Buildable:
 		BuildPaletteOrder: 20
 		Prerequisites: ~player.nod, anyradar, ~techlevel.medium
-		Description: Grant Buggies the ability to project a pair of decoy Flame Tanks.\n  Decoys provide small area of vision for a short time after being killed.\n\nUpgrades: Buggy
+		Description: Grant Buggies the ability to project a pair of decoy Flame Tanks. Decoys provide small area of vision for a short time after being killed.\n\nUpgrades: Buggy
 	TooltipExtras:
 		Strengths: + Decoy projection ability
 	Valued:
@@ -733,13 +750,13 @@ decoy.upgrade:
 		Prerequisites: decoy.upgrade
 
 sharv.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^NodUpgrade
 	Tooltip:
 		Name: Upgrade: Stealth Harvester
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.nod, tmpl, ~techlevel.high
-		Description: Allows construction of Stealth Harvesters which\n  are cloaked while moving.\n\nUpgrades: Harvester
+		Description: Allows construction of Stealth Harvesters which are cloaked while moving.\n\nUpgrades: Harvester
 	TooltipExtras:
 		Strengths: + Hidden while moving
 		Weaknesses: – Reduced health
@@ -751,7 +768,7 @@ sharv.upgrade:
 		Prerequisites: sharv.upgrade
 
 tibcore.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^NodUpgrade
 	Tooltip:
 		Name: Upgrade: Tiberium Core Missiles
 	Buildable:
@@ -772,7 +789,7 @@ tibcore.upgrade:
 		Prerequisites: tibcore.upgrade
 
 lastnk.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^NodUpgrade
 	Tooltip:
 		Name: Upgrade: Laser Tanks
 	Buildable:
@@ -790,7 +807,7 @@ lastnk.upgrade:
 		Prerequisites: lastnk.upgrade
 
 blacknapalm.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^NodUpgrade
 	Tooltip:
 		Name: Upgrade: Black Napalm
 	Buildable:
@@ -808,7 +825,7 @@ blacknapalm.upgrade:
 		Prerequisites: blacknapalm.upgrade
 
 microwave.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^NodUpgrade
 	Tooltip:
 		Name: Upgrade: Intensified Microwaves
 	Buildable:
@@ -829,7 +846,7 @@ microwave.upgrade:
 		Prerequisites: microwave.upgrade
 
 quantum.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^NodUpgrade
 	Tooltip:
 		Name: Upgrade: Quantum Capacitors
 	Buildable:
@@ -846,7 +863,7 @@ quantum.upgrade:
 		Prerequisites: quantum.upgrade
 
 hstk.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^NodUpgrade
 	Tooltip:
 		Name: Research: Heavy Stealth Tank
 	Buildable:
@@ -864,7 +881,7 @@ hstk.upgrade:
 		Prerequisites: hstk.upgrade
 
 advcyber.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^NodUpgrade
 	Tooltip:
 		Name: Research: Advanced Cybernetics
 	Buildable:
@@ -880,7 +897,7 @@ advcyber.upgrade:
 		Prerequisites: advcyber.upgrade
 
 cyborgarmor.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^NodUpgrade
 	Tooltip:
 		Name: Upgrade: Improved Cyborg Armor
 	Buildable:
@@ -898,7 +915,7 @@ cyborgarmor.upgrade:
 		Prerequisites: cyborgarmor.upgrade
 
 covenant.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^NodUpgrade
 	Tooltip:
 		Name: Covenant Dependent Upgrade
 	Buildable:
@@ -912,9 +929,10 @@ covenant.upgrade:
 		Image: covenant.upgrade
 	WithProductionIconOverlay:
 		Prerequisites: covenant.upgrade
+	-Encyclopedia:
 
 cyborgdmg.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^NodUpgrade
 	Tooltip:
 		Name: Upgrade: Improved Cyborg Firepower
 	Buildable:
@@ -932,7 +950,7 @@ cyborgdmg.upgrade:
 		Prerequisites: cyborgdmg.upgrade
 
 cyborgprod.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^NodUpgrade
 	Tooltip:
 		Name: Upgrade: Augmented Fabrication
 	Buildable:
@@ -950,7 +968,7 @@ cyborgprod.upgrade:
 		Prerequisites: cyborgprod.upgrade
 
 cyborgspeed.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^NodUpgrade
 	Tooltip:
 		Name: Upgrade: Improved Cyborg Speed
 	Buildable:
@@ -979,8 +997,13 @@ ANYDOCTRINE:
 		Description: Active Doctrine
 	ProvidesPrerequisite:
 
-infantry.doctrine:
+^SovietUpgrade:
 	Inherits: ^Upgrade
+	Encyclopedia:
+		Category: Soviets/Upgrades
+
+infantry.doctrine:
+	Inherits: ^SovietUpgrade
 	Tooltip:
 		Name: Doctrine: Infantry
 	Buildable:
@@ -997,7 +1020,7 @@ infantry.doctrine:
 		Prerequisites: infantry.doctrine
 
 armor.doctrine:
-	Inherits: ^Upgrade
+	Inherits: ^SovietUpgrade
 	Tooltip:
 		Name: Doctrine: Armor
 	Buildable:
@@ -1014,7 +1037,7 @@ armor.doctrine:
 		Prerequisites: armor.doctrine
 
 arty.doctrine:
-	Inherits: ^Upgrade
+	Inherits: ^SovietUpgrade
 	Tooltip:
 		Name: Doctrine: Artillery
 	Buildable:
@@ -1031,13 +1054,13 @@ arty.doctrine:
 		Prerequisites: arty.doctrine
 
 hazmatsoviet.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^SovietUpgrade
 	Tooltip:
 		Name: Upgrade: Heavy Hazmat Suits
 	Buildable:
 		BuildPaletteOrder: 19
 		Prerequisites: ~player.soviet, anyradar, infantry.any, ~techlevel.medium
-		Description: Infantry are equipped with heavy hazmat suits which provides\n  protection against Tiberium and radiation.\n\nUpgrades: Infantry
+		Description: Infantry are equipped with heavy hazmat suits which provides protection against Tiberium and radiation.\n\nUpgrades: Infantry
 	TooltipExtras:
 		Strengths: + Tiberium immunity\n+ High resistance to irradiated terrain
 		Weaknesses: – 33% slower movement across resources and rough terrain
@@ -1049,7 +1072,7 @@ hazmatsoviet.upgrade:
 		Prerequisites: hazmatsoviet.upgrade
 
 tdog.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^SovietUpgrade
 	Tooltip:
 		Name: Research: Terror Dog
 	Buildable:
@@ -1067,13 +1090,13 @@ tdog.upgrade:
 		Prerequisites: tdog.upgrade
 
 lasher.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^SovietUpgrade
 	Tooltip:
 		Name: Research: Lasher Tank
 	Buildable:
 		BuildPaletteOrder: 20
 		Prerequisites: ~player.yuri, anyradar, ~techlevel.medium
-		Description: Upgrades Heavy/Rhino tanks with infantry crushing attachment\n  at the cost of some armor and firepower.\n\nReplaces: Heavy Tank\nReplaces: Rhino Tank
+		Description: Upgrades Heavy/Rhino tanks with infantry crushing attachment at the cost of some armor and firepower.\n\nReplaces: Heavy Tank\nReplaces: Rhino Tank
 	TooltipExtras:
 		Strengths: + 25% faster movement\n+ Improved crushing performance
 		Weaknesses: – Reduced hit points\n– Reduced firepower
@@ -1085,7 +1108,7 @@ lasher.upgrade:
 		Prerequisites: lasher.upgrade
 
 gattling.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^SovietUpgrade
 	Tooltip:
 		Name: Research: Gattling BTR
 	Buildable:
@@ -1103,7 +1126,7 @@ gattling.upgrade:
 		Prerequisites: gattling.upgrade
 
 v3.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^SovietUpgrade
 	Tooltip:
 		Name: Research: V3 Launcher
 	Buildable:
@@ -1121,7 +1144,7 @@ v3.upgrade:
 		Prerequisites: v3.upgrade
 
 ttrp.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^SovietUpgrade
 	Tooltip:
 		Name: Research: Tesla Trooper
 	Buildable:
@@ -1139,7 +1162,7 @@ ttrp.upgrade:
 		Prerequisites: ttrp.upgrade
 
 deso.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^SovietUpgrade
 	Tooltip:
 		Name: Research: Desolator
 	Buildable:
@@ -1157,7 +1180,7 @@ deso.upgrade:
 		Prerequisites: deso.upgrade
 
 tarc.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^SovietUpgrade
 	Tooltip:
 		Name: Upgrade: Tesla Arcing
 	Buildable:
@@ -1174,7 +1197,7 @@ tarc.upgrade:
 		Prerequisites: tarc.upgrade
 
 seismic.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^SovietUpgrade
 	Tooltip:
 		Name: Upgrade: Seismic Missiles
 	Buildable:
@@ -1195,7 +1218,7 @@ seismic.upgrade:
 		Prerequisites: seismic.upgrade
 
 doctrine.upgrade1:
-	Inherits: ^Upgrade
+	Inherits: ^SovietUpgrade
 	Tooltip:
 		Name: Doctrine Dependent Upgrade
 	Buildable:
@@ -1210,7 +1233,7 @@ doctrine.upgrade1:
 		Prerequisites: doctrine.upgrade1
 
 imppara.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^SovietUpgrade
 	Tooltip:
 		Name: Upgrade: Improved Paratroopers
 	Buildable:
@@ -1227,7 +1250,7 @@ imppara.upgrade:
 		Prerequisites: imppara.upgrade
 
 impstorm.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^SovietUpgrade
 	Tooltip:
 		Name: Upgrade: Improved Stormtroopers
 	Buildable:
@@ -1244,7 +1267,7 @@ impstorm.upgrade:
 		Prerequisites: impstorm.upgrade
 
 impmuta.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^SovietUpgrade
 	Tooltip:
 		Name: Upgrade: Improved Genetic Mutation
 	Buildable:
@@ -1261,7 +1284,7 @@ impmuta.upgrade:
 		Prerequisites: impmuta.upgrade
 
 reactive.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^SovietUpgrade
 	Tooltip:
 		Name: Upgrade: Reactive Armor
 	Buildable:
@@ -1278,7 +1301,7 @@ reactive.upgrade:
 		Prerequisites: reactive.upgrade
 
 rocketpods.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^SovietUpgrade
 	Tooltip:
 		Name: Upgrade: Rocket Pods
 	Buildable:
@@ -1295,7 +1318,7 @@ rocketpods.upgrade:
 		Prerequisites: rocketpods.upgrade
 
 atomicengines.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^SovietUpgrade
 	Tooltip:
 		Name: Research: Atomic Engines
 	Buildable:
@@ -1313,13 +1336,13 @@ atomicengines.upgrade:
 		Prerequisites: atomicengines.upgrade
 
 erad.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^SovietUpgrade
 	Tooltip:
 		Name: Research: Eradicator
 	Buildable:
 		BuildPaletteOrder: 35
 		Prerequisites: ~player.iraq, npwr, ~techlevel.high
-		Description: Upgrades Mammoth tanks\n  with volatile radiation cannon.\n\nReplaces: Mammoth Tank
+		Description: Upgrades Mammoth tanks with volatile radiation cannon.\n\nReplaces: Mammoth Tank
 	TooltipExtras:
 		Strengths: + High area damage vs infantry and vehicles\n+ Irradiates impacted vehicles\n+ Increased range
 		Weaknesses: – Loses AA missiles\n– Reduced single-target anti-tank damage\n– Reduced damage vs buildings
@@ -1331,7 +1354,7 @@ erad.upgrade:
 		Prerequisites: erad.upgrade
 
 doctrine.upgrade2:
-	Inherits: ^Upgrade
+	Inherits: ^SovietUpgrade
 	Tooltip:
 		Name: Doctrine Dependent Upgrade
 	Buildable:
@@ -1346,7 +1369,7 @@ doctrine.upgrade2:
 		Prerequisites: doctrine.upgrade2
 
 ovld.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^SovietUpgrade
 	Tooltip:
 		Name: Research: Overlord Tank
 	Buildable:
@@ -1364,7 +1387,7 @@ ovld.upgrade:
 		Prerequisites: ovld.upgrade
 
 apoc.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^SovietUpgrade
 	Tooltip:
 		Name: Research: Apocalypse Tank
 	Buildable:
@@ -1382,7 +1405,7 @@ apoc.upgrade:
 		Prerequisites: apoc.upgrade
 
 nukc.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^SovietUpgrade
 	Tooltip:
 		Name: Research: Nuke Cannon
 	Buildable:
@@ -1411,8 +1434,13 @@ ANYCOALITION:
 		Description: Active Coalition
 	ProvidesPrerequisite:
 
-economy.policy:
+^AlliedUpgrade:
 	Inherits: ^Upgrade
+	Encyclopedia:
+		Category: Allies/Upgrades
+
+economy.policy:
+	Inherits: ^AlliedUpgrade
 	Tooltip:
 		Name: Policy: Economy
 	Buildable:
@@ -1429,7 +1457,7 @@ economy.policy:
 		Prerequisites: economy.policy
 
 defense.policy:
-	Inherits: ^Upgrade
+	Inherits: ^AlliedUpgrade
 	Tooltip:
 		Name: Policy: Defense
 	Buildable:
@@ -1446,7 +1474,7 @@ defense.policy:
 		Prerequisites: defense.policy
 
 development.policy:
-	Inherits: ^Upgrade
+	Inherits: ^AlliedUpgrade
 	Tooltip:
 		Name: Policy: Development
 	Buildable:
@@ -1463,7 +1491,7 @@ development.policy:
 		Prerequisites: development.policy
 
 greece.coalition:
-	Inherits: ^Upgrade
+	Inherits: ^AlliedUpgrade
 	Tooltip:
 		Name: Coalition: Greece
 	Buildable:
@@ -1483,7 +1511,7 @@ greece.coalition:
 		Prerequisites: greece.coalition
 
 korea.coalition:
-	Inherits: ^Upgrade
+	Inherits: ^AlliedUpgrade
 	Tooltip:
 		Name: Coalition: South Korea
 	Buildable:
@@ -1503,7 +1531,7 @@ korea.coalition:
 		Prerequisites: korea.coalition
 
 sweden.coalition:
-	Inherits: ^Upgrade
+	Inherits: ^AlliedUpgrade
 	Tooltip:
 		Name: Coalition: Sweden
 	Buildable:
@@ -1523,7 +1551,7 @@ sweden.coalition:
 		Prerequisites: sweden.coalition
 
 rapc.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^AlliedUpgrade
 	Inherits@DevelopmentPolicyDiscount: ^DevelopmentPolicyDiscount
 	Tooltip:
 		Name: Research: Raider APC
@@ -1542,14 +1570,14 @@ rapc.upgrade:
 		Prerequisites: rapc.upgrade
 
 optics.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^AlliedUpgrade
 	Inherits@DevelopmentPolicyDiscount: ^DevelopmentPolicyDiscount
 	Tooltip:
 		Name: Upgrade: Advanced Optics
 	Buildable:
 		BuildPaletteOrder: 20
 		Prerequisites: ~player.allies, anyradar, ~techlevel.medium
-		Description: Equips rangers with advanced optics which temporarily extends\n  their vision and detection range.\n\nUpgrades: Ranger
+		Description: Equips rangers with advanced optics which temporarily extends their vision and detection range.\n\nUpgrades: Ranger
 	TooltipExtras:
 		Strengths: + Rangers can temporarily increase their vision & detection range
 	Valued:
@@ -1560,7 +1588,7 @@ optics.upgrade:
 		Prerequisites: optics.upgrade
 
 entrench.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^AlliedUpgrade
 	Inherits@DevelopmentPolicyDiscount: ^DevelopmentPolicyDiscount
 	Tooltip:
 		Name: Upgrade: Entrenchment
@@ -1578,14 +1606,14 @@ entrench.upgrade:
 		Prerequisites: entrench.upgrade
 
 cryw.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^AlliedUpgrade
 	Inherits@DevelopmentPolicyDiscount: ^DevelopmentPolicyDiscount
 	Tooltip:
 		Name: Upgrade: Cryo Warheads
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.allies, atek, ~techlevel.high
-		Description: Arms certain rocket equipped units with Cryo warheads which\n  cause targets to move more slowly and take increased damage.\n\nUpgrades: Rocket Soldier\nUpgrades: Longbow\nUpgrades: Guardian GI (USA only)\nUpgrades: Nighthawk (USA only)
+		Description: Arms certain rocket equipped units with Cryo warheads which cause targets to move more slowly and take increased damage.\n\nUpgrades: Rocket Soldier\nUpgrades: Longbow\nUpgrades: Guardian GI (USA only)\nUpgrades: Nighthawk (USA only)
 	TooltipExtras:
 		Strengths: + Equip with Cryo Warheads which slow movement and increase damage taken
 	Valued:
@@ -1596,7 +1624,7 @@ cryw.upgrade:
 		Prerequisites: cryw.upgrade
 
 pcan.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^AlliedUpgrade
 	Inherits@DevelopmentPolicyDiscount: ^DevelopmentPolicyDiscount
 	Tooltip:
 		Name: Research: Prism Cannon
@@ -1615,14 +1643,14 @@ pcan.upgrade:
 		Prerequisites: pcan.upgrade
 
 apb.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^AlliedUpgrade
 	Inherits@DevelopmentPolicyDiscount: ^DevelopmentPolicyDiscount
 	Tooltip:
 		Name: Upgrade: Raufoss Ammo
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.england, atek, ~techlevel.high
-		Description: Upgrades Snipers granting them Raufoss armor piercing rounds,\n  which stun and damage vehicles.\n\nUpgrades: Sniper
+		Description: Upgrades Snipers granting them Raufoss armor piercing rounds, which stun and damage vehicles.\n\nUpgrades: Sniper
 	TooltipExtras:
 		Strengths: + Can damage vehicles with AP rounds which slow movement and rate of fire
 		Weaknesses: – Reduced range
@@ -1634,14 +1662,14 @@ apb.upgrade:
 		Prerequisites: apb.upgrade
 
 airborne.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^AlliedUpgrade
 	Inherits@DevelopmentPolicyDiscount: ^DevelopmentPolicyDiscount
 	Tooltip:
 		Name: Upgrade: Advanced Airborne Training
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.usa, atek, ~techlevel.high
-		Description: Improved training and logistics for airborne troops, resulting in\n  greater effectiveness and faster preparation.\n\nUpgrades: Airdrop: Guardian GIs\nUpgrades: Airdrop: Grizzly Tanks
+		Description: Improved training and logistics for airborne troops, resulting in greater effectiveness and faster preparation.\n\nUpgrades: Airdrop: Guardian GIs\nUpgrades: Airdrop: Grizzly Tanks
 	TooltipExtras:
 		Strengths: + Airborne units have veterancy\n+ Airborne units take 25% less time to prepare
 	Valued:
@@ -1652,14 +1680,14 @@ airborne.upgrade:
 		Prerequisites: airborne.upgrade
 
 tflx.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^AlliedUpgrade
 	Inherits@DevelopmentPolicyDiscount: ^DevelopmentPolicyDiscount
 	Tooltip:
 		Name: Upgrade: Temporal Flux
 	Buildable:
 		BuildPaletteOrder: 40
 		Prerequisites: ~player.germany, pdox, ~techlevel.high
-		Description: Upgrades Chrono Prisons granting them the ability to teleport\n  through time. Improves Chrono Tank chronoshifting.\n\nUpgrades: Chrono Prison\nUpgrades: Chrono Tank
+		Description: Upgrades Chrono Prisons granting them the ability to teleport through time. Improves Chrono Tank chronoshifting.\n\nUpgrades: Chrono Prison\nUpgrades: Chrono Tank
 	TooltipExtras:
 		Strengths: + Chrono Prison gains teleport ability\n+ Chrono Prison weapon range increased\n+ Chrono Tank can teleport twice before recharging
 	Valued:
@@ -1670,7 +1698,7 @@ tflx.upgrade:
 		Prerequisites: tflx.upgrade
 
 charv.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^AlliedUpgrade
 	Inherits@DevelopmentPolicyDiscount: ^DevelopmentPolicyDiscount
 	Tooltip:
 		Name: Upgrade: Chrono Miner
@@ -1699,8 +1727,13 @@ ANYALLEGIANCE:
 		Description: Declared Allegiance
 	ProvidesPrerequisite:
 
-loyalist.allegiance:
+^ScrinUpgrade:
 	Inherits: ^Upgrade
+	Encyclopedia:
+		Category: Scrin/Upgrades
+
+loyalist.allegiance:
+	Inherits: ^ScrinUpgrade
 	Tooltip:
 		Name: Allegiance: Loyalist
 	Buildable:
@@ -1718,7 +1751,7 @@ loyalist.allegiance:
 		Prerequisites: loyalist.allegiance
 
 rebel.allegiance:
-	Inherits: ^Upgrade
+	Inherits: ^ScrinUpgrade
 	Tooltip:
 		Name: Allegiance: Rebel
 	Buildable:
@@ -1736,7 +1769,7 @@ rebel.allegiance:
 		Prerequisites: rebel.allegiance
 
 malefic.allegiance:
-	Inherits: ^Upgrade
+	Inherits: ^ScrinUpgrade
 	Tooltip:
 		Name: Allegiance: Malefic
 	Buildable:
@@ -1756,13 +1789,13 @@ malefic.allegiance:
 		Actor: voidspike.provider
 
 hyper.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^ScrinUpgrade
 	Tooltip:
 		Name: Upgrade: Hypercharge
 	Buildable:
 		BuildPaletteOrder: 20
 		Prerequisites: ~player.scrin, anyradar, ~techlevel.medium
-		Description: Seekers and Lacerators gain Hypercharge ability, allow them to fire an uninterrupted barrage for a limited time.\n    After use, weapon damage and speed is reduced for a short time.\n\nUpgrades: Seeker\nUpgrades: Lacerator
+		Description: Seekers and Lacerators gain Hypercharge ability, allow them to fire an uninterrupted barrage for a limited time. After use, weapon damage and speed is reduced for a short time.\n\nUpgrades: Seeker\nUpgrades: Lacerator
 		IconPalette: chromes
 	TooltipExtras:
 		Strengths: + Hypercharge ability
@@ -1774,7 +1807,7 @@ hyper.upgrade:
 		Prerequisites: hyper.upgrade
 
 allegiance.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^ScrinUpgrade
 	Tooltip:
 		Name: Allegiance Dependent Upgrade
 	Buildable:
@@ -1790,7 +1823,7 @@ allegiance.upgrade:
 		Prerequisites: allegiance.upgrade
 
 evis.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^ScrinUpgrade
 	Tooltip:
 		Name: Research: Eviscerator
 	Buildable:
@@ -1809,7 +1842,7 @@ evis.upgrade:
 		Prerequisites: evis.upgrade
 
 impl.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^ScrinUpgrade
 	Tooltip:
 		Name: Research: Impaler
 	Buildable:
@@ -1828,7 +1861,7 @@ impl.upgrade:
 		Prerequisites: impl.upgrade
 
 stlk.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^ScrinUpgrade
 	Tooltip:
 		Name: Research: Stalker
 	Buildable:
@@ -1847,13 +1880,13 @@ stlk.upgrade:
 		Prerequisites: stlk.upgrade
 
 shrw.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^ScrinUpgrade
 	Tooltip:
 		Name: Research: Shard Walker
 	Buildable:
 		BuildPaletteOrder: 20
 		Prerequisites: ~player.reaper, anyradar, ~techlevel.medium
-		Description: Allows production of Shard Walkers, a heavier and\n  more powerful variant of the Gun Walker.\n\nReplaces: Gun Walker
+		Description: Allows production of Shard Walkers, a heavier and more powerful variant of the Gun Walker.\n\nReplaces: Gun Walker
 		IconPalette: chromes
 	TooltipExtras:
 		Strengths: + Increased durability\n+ Increased damage
@@ -1866,7 +1899,7 @@ shrw.upgrade:
 		Prerequisites: shrw.upgrade
 
 advart.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^ScrinUpgrade
 	Tooltip:
 		Name: Upgrade: Advanced Articulators
 	Buildable:
@@ -1884,13 +1917,13 @@ advart.upgrade:
 		Prerequisites: advart.upgrade
 
 carapace.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^ScrinUpgrade
 	Tooltip:
 		Name: Upgrade: Hardened Carapace
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.scrin, scrt, infantry.any, ~techlevel.high
-		Description: Infantry gain a hardened carapace which\n  provides protection against explosives.\n\nUpgrades: Infantry
+		Description: Infantry gain a hardened carapace which provides protection against explosives.\n\nUpgrades: Infantry
 		IconPalette: chromes
 	TooltipExtras:
 		Strengths: + 40% reduced damage from explosives\n+ 20% reduced damage from incendiary explosives
@@ -1902,13 +1935,13 @@ carapace.upgrade:
 		Prerequisites: carapace.upgrade
 
 blink.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^ScrinUpgrade
 	Tooltip:
 		Name: Upgrade: Blink Packs
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.scrin, scrt, ~techlevel.high
-		Description: Equips Intruders and Watchers with blink packs\n  allowing them to teleport.\n\nUpgrades: Intruder\nUpgrades: Marauder\nUpgrades: Watcher
+		Description: Equips Intruders and Watchers with blink packs allowing them to teleport.\n\nUpgrades: Intruder\nUpgrades: Marauder\nUpgrades: Watcher
 		IconPalette: chromes
 	TooltipExtras:
 		Strengths: + Teleport ability
@@ -1920,13 +1953,13 @@ blink.upgrade:
 		Prerequisites: blink.upgrade
 
 resconv.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^ScrinUpgrade
 	Tooltip:
 		Name: Upgrade: Resource Conversion
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.scrin, scrt, ~techlevel.high
-		Description: Weapons of certain units are empowered\n  by Tiberium and other resources. Reaper Tripod gains\n  additional charges.\n\nUpgrades: Devourer\nUpgrades: Ruiner\nUpgrades: Reaper Tripod\nUpgrades: Eviscerator
+		Description: Weapons of certain units are empowered by Tiberium and other resources. Reaper Tripod gains additional charges.\n\nUpgrades: Devourer\nUpgrades: Ruiner\nUpgrades: Reaper Tripod\nUpgrades: Eviscerator
 		IconPalette: chromes
 	TooltipExtras:
 		Strengths: + Increased damage when charged\n+ Doubled charge capacity (Reaper Tripod only)
@@ -1938,13 +1971,13 @@ resconv.upgrade:
 		Prerequisites: resconv.upgrade
 
 ioncon.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^ScrinUpgrade
 	Tooltip:
 		Name: Upgrade: Ion Conduits
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.scrin, scrt, ~techlevel.high
-		Description: Allows Storm Columns and Stormcrawlers to store ion energy and\n  release it into the atmosphere, creating a localized Ion Storm.\n\nUpgrades: Storm Column\nUpgrades: Stormcrawler
+		Description: Allows Storm Columns and Stormcrawlers to store ion energy and release it into the atmosphere, creating a localized Ion Storm.\n\nUpgrades: Storm Column\nUpgrades: Stormcrawler
 		IconPalette: chromes
 	TooltipExtras:
 		Strengths: + Increases damage and range over time when active\n+ Reduces incoming damage over time when active\n+ Ion storm can damage enemy units and structures
@@ -1956,7 +1989,7 @@ ioncon.upgrade:
 		Prerequisites: ioncon.upgrade
 
 regen.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^ScrinUpgrade
 	Tooltip:
 		Name: Upgrade: Regenerative Hull
 	Buildable:
@@ -1974,7 +2007,7 @@ regen.upgrade:
 		Prerequisites: regen.upgrade
 
 stellar.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^ScrinUpgrade
 	Tooltip:
 		Name: Upgrade: Stellar Fusion Cannon
 	Buildable:
@@ -1993,13 +2026,13 @@ stellar.upgrade:
 		Prerequisites: stellar.upgrade
 
 coalescence.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^ScrinUpgrade
 	Tooltip:
 		Name: Upgrade: Coalescence
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.collector, scrt, ~techlevel.high
-		Description: On death or when deployed, Leechers will transform\n  into a ball of bio-matter which heals nearby allies\n  and eventually coalesces into a new Leecher.\n\nUpgrades: Leecher
+		Description: On death or when deployed, Leechers will transform into a ball of bio-matter which heals nearby allies and eventually coalesces into a new Leecher.\n\nUpgrades: Leecher
 		IconPalette: chromes
 	TooltipExtras:
 		Strengths: + Leecher able to resurrect\n+ Heals allies while in coalescence form
@@ -2012,7 +2045,7 @@ coalescence.upgrade:
 		Prerequisites: coalescence.upgrade
 
 shields.upgrade:
-	Inherits: ^Upgrade
+	Inherits: ^ScrinUpgrade
 	Tooltip:
 		Name: Upgrade: Shield Generation
 	Buildable:
