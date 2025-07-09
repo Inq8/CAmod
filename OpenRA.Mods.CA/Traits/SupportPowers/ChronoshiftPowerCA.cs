@@ -304,7 +304,7 @@ namespace OpenRA.Mods.CA.Traits
 						world.Map.CenterOfCell(xy),
 						power.info.Range,
 						0,
-						power.info.TargetCircleUsePlayerColor ? power.Self.Owner.Color : power.info.TargetCircleColor,
+						power.info.TargetCircleUsePlayerColor ? power.Self.OwnerColor() : power.info.TargetCircleColor,
 						1,
 						Color.FromArgb(96, Color.Black),
 						3);
@@ -446,7 +446,7 @@ namespace OpenRA.Mods.CA.Traits
 							world.Map.CenterOfCell(xy),
 							power.info.Range,
 							0,
-							power.info.TargetCircleUsePlayerColor ? power.Self.Owner.Color : power.info.DestinationCircleColor,
+							power.info.TargetCircleUsePlayerColor ? power.Self.OwnerColor() : power.info.DestinationCircleColor,
 							1,
 							Color.FromArgb(96, Color.Black),
 							3);

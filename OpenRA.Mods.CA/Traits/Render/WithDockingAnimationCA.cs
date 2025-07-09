@@ -35,14 +35,14 @@ namespace OpenRA.Mods.Common.Traits.Render
 	{
 		readonly WithDockingAnimationCAInfo info;
 		readonly WithSpriteBody wsb;
-		readonly Harvester harvester;
+		readonly DockClientManager dockClientManager;
 		bool docked;
 
 		public WithDockingAnimationCA(Actor self, WithDockingAnimationCAInfo info)
 		{
 			this.info = info;
 			wsb = self.Trait<WithSpriteBody>();
-			harvester = self.Trait<Harvester>();
+			dockClientManager = self.Trait<DockClientManager>();
 		}
 
 		bool RefineryIsValid
@@ -52,7 +52,7 @@ namespace OpenRA.Mods.Common.Traits.Render
 				if (!info.RefineryTypes.Any())
 					return true;
 
-				if (harvester.LinkedProc != null && info.RefineryTypes.Contains(harvester.LinkedProc.Info.Name))
+				if (dockClientManager.ReservedHost != null && info.RefineryTypes.Contains(dockClientManager.ReservedHostActor.Info.Name))
 					return true;
 
 				return false;

@@ -1,14 +1,13 @@
 ^Palettes:
 	PaletteFromFile@terrain-temperat:
 		Filename: ca|maps/ca19-proliferation/charred.pal
-	GlobalLightingPaletteEffect:
+	TintPostProcessEffect:
 		Red: 1
 		Green: 1
 		Blue: 1.1
 		Ambient: 0.8
-	FlashPaletteEffect@CHRONO:
+	FlashPostProcessEffect@CHRONO:
 		Type: Chronoshift
-		ExcludePalettes: cursor, chrome, chromes, colorpicker, colorpickertd, colorpickerscrin, fog, shroud
 
 ^BaseWorld:
 	TerrainLighting:
@@ -112,7 +111,7 @@ MSHP.Husk:
 		Explosion: MothershipExplosion
 
 MSHP.Husk.Ground:
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: MothershipExplosion
 
 MAST:
@@ -487,6 +486,7 @@ GTEK:
 HQ:
 	SpawnActorPower@GDIEagleDropzone:
 		Prerequisites: ~radar.gdi
+		BlockedCursor: move-blocked
 	ParatroopersPowerCA@xodrop:
 		Prerequisites: ~radar.gdi
 	DropPodsPowerCA@Zocom:

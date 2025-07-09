@@ -38,7 +38,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 			if (navalProductions.Any())
 			{
-				var nearest = navalProductions.ClosestTo(first);
+				var nearest = navalProductions.ClosestTo(first.CenterPosition);
 
 				// Return nearest when it is FAR enough.
 				// If the naval production is within MaxBaseRadius, it implies that

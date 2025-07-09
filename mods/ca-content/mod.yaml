@@ -1,0 +1,163 @@
+Metadata:
+	Title: mod-title
+	Version: prep-CA
+	Hidden: true
+
+FileSystem: DefaultFileSystem
+	Packages:
+		^EngineDir
+		^EngineDir|mods/common-content: content
+		^EngineDir|mods/common: common
+		$ca-content: cacontent
+
+Rules:
+	content|rules.yaml
+
+Cursors:
+	content|cursors.yaml
+
+Chrome:
+	content|chrome.yaml
+
+Assemblies: OpenRA.Mods.Common.dll, OpenRA.Mods.Cnc.dll, OpenRA.Mods.CA.dll
+
+ChromeLayout:
+	content|content.yaml
+
+Notifications:
+	content|notifications.yaml
+
+LoadScreen: ModContentLoadScreen
+	Image: ^EngineDir|mods/common-content/chrome.png
+	Image2x: ^EngineDir|mods/common-content/chrome-2x.png
+	Image3x: ^EngineDir|mods/common-content/chrome-3x.png
+
+ChromeMetrics:
+	common|metrics.yaml
+	content|metrics.yaml
+
+FluentMessages:
+	common|fluent/common.ftl
+	content|fluent/content.ftl
+	content|fluent/chrome.ftl
+	cacontent|fluent/chrome.ftl
+
+Fonts:
+	Tiny:
+		Font: common|FreeSans.ttf
+		Size: 10
+		Ascender: 8
+	TinyBold:
+		Font: common|FreeSansBold.ttf
+		Size: 10
+		Ascender: 8
+	Regular:
+		Font: common|FreeSans.ttf
+		Size: 14
+		Ascender: 11
+	Bold:
+		Font: common|FreeSansBold.ttf
+		Size: 14
+		Ascender: 11
+	MediumBold:
+		Font: common|FreeSansBold.ttf
+		Size: 18
+		Ascender: 14
+	BigBold:
+		Font: common|FreeSansBold.ttf
+		Size: 24
+		Ascender: 18
+
+ModContent:
+	Mod: ca
+	QuickDownload: quickinstall
+	Packages:
+		ContentPackage@base:
+			Title: modcontent-package-basefiles
+			Identifier: base
+			TestFiles: ^SupportDir|Content/ca/allies.mix, ^SupportDir|Content/ca/conquer.mix, ^SupportDir|Content/ca/interior.mix, ^SupportDir|Content/ca/hires.mix, ^SupportDir|Content/ca/lores.mix, ^SupportDir|Content/ca/local.mix, ^SupportDir|Content/ca/speech.mix, ^SupportDir|Content/ca/russian.mix, ^SupportDir|Content/ca/snow.mix, ^SupportDir|Content/ca/sounds.mix, ^SupportDir|Content/ca/temperat.mix
+			Sources: allied, soviet, tfd, ra-steam, cncr-steam, ra-origin, cncr-origin
+			Required: true
+			Download: basefiles
+		ContentPackage@aftermathbase:
+			Title: modcontent-package-aftermathfiles
+			Identifier: aftermathbase
+			TestFiles: ^SupportDir|Content/ca/expand/expand2.mix
+			Sources: aftermath, tfd, ra-steam, cncr-steam, ra-origin, cncr-origin
+			Required: true
+			Download: aftermath
+		ContentPackage@cncdesert:
+			Title: modcontent-package-deserttileset
+			Identifier: cncdesert
+			TestFiles: ^SupportDir|Content/ca/cnc/desert.mix
+			Sources: cnc95, tfd, cnc-steam, cncr-steam, cnc-origin, cncr-origin
+			Required: true
+			Download: cncdesert
+		ContentPackage@music-cnc:
+			Title: modcontent-package-music-cnc
+			Identifier: music-cnc
+			TestFiles: ^SupportDir|Content/ca/cnc/scores.mix
+			Download: music-cnc
+			Sources: covertops, cnc95, tfd, cnc-steam, cncr-steam, cnc-origin, cncr-origin
+		ContentPackage@music-ra:
+			Title: modcontent-package-music-ra
+			Identifier: music-ra
+			TestFiles: ^SupportDir|Content/ca/ra/scores.mix
+			Download: music-ra
+			Sources: allied, soviet, tfd, ra-steam, cncr-steam, ra-origin, cncr-origin
+		ContentPackage@music-counterstrike:
+			Title: modcontent-package-music-counterstrike
+			Identifier: music-counterstrike
+			TestFiles: ^SupportDir|Content/ca/expand/2nd_hand.aud, ^SupportDir|Content/ca/expand/araziod.aud, ^SupportDir|Content/ca/expand/backstab.aud, ^SupportDir|Content/ca/expand/chaos2.aud, ^SupportDir|Content/ca/expand/shut_it.aud, ^SupportDir|Content/ca/expand/twinmix1.aud, ^SupportDir|Content/ca/expand/under3.aud, ^SupportDir|Content/ca/expand/vr2.aud,
+			Sources: counterstrike, ra-steam, cncr-steam, ra-origin, cncr-origin
+		ContentPackage@music-aftermath:
+			Title: modcontent-package-music-aftermath
+			Identifier: music-aftermath
+			TestFiles: ^SupportDir|Content/ca/expand/await.aud, ^SupportDir|Content/ca/expand/bog.aud, ^SupportDir|Content/ca/expand/float_v2.aud, ^SupportDir|Content/ca/expand/gloom_ra.aud, ^SupportDir|Content/ca/expand/grndwire.aud, ^SupportDir|Content/ca/expand/rpt.aud, ^SupportDir|Content/ca/expand/search.aud, ^SupportDir|Content/ca/expand/traction.aud, ^SupportDir|Content/ca/expand/wastelnd.aud
+			Sources: aftermath, ra-steam, cncr-steam, ra-origin, cncr-origin
+		ContentPackage@music-ts:
+			Title: modcontent-package-music-ts
+			Identifier: music-ts
+			TestFiles: ^SupportDir|Content/ca/ts/scores.mix
+			Download: music-ts
+			Sources: tibsun, ts-steam, ts-origin
+		ContentPackage@music-fs:
+			Title: modcontent-package-music-fs
+			Identifier: music-fs
+			TestFiles: ^SupportDir|Content/ca/firestorm/dmachine.aud, ^SupportDir|Content/ca/firestorm/elusive.aud, ^SupportDir|Content/ca/firestorm/hacker.aud, ^SupportDir|Content/ca/firestorm/infiltra.aud, ^SupportDir|Content/ca/firestorm/kmachine.aud, ^SupportDir|Content/ca/firestorm/linkup.aud, ^SupportDir|Content/ca/firestorm/rainnite.aud, ^SupportDir|Content/ca/firestorm/slavesys.aud
+			Download: music-fs
+			Sources: firestorm, ts-steam, ts-origin
+		ContentPackage@music-ra2:
+			Title: modcontent-package-music-ra2
+			Identifier: music-ra2
+			TestFiles: ^SupportDir|Content/ca/ra2/theme.mix
+			Sources: ra2, ra2-steam, ra2-origin
+		ContentPackage@music-yr:
+			Title: modcontent-package-music-yr
+			Identifier: music-yr
+			TestFiles: ^SupportDir|Content/ca/ra2/thememd.mix
+			Sources: ra2yr, ra2-steam, ra2-origin
+	Downloads:
+		cacontent|installer/downloads.yaml
+	Sources:
+		cacontent|installer/aftermath.yaml
+		cacontent|installer/allies95.yaml
+		cacontent|installer/cnc95.yaml
+		cacontent|installer/counterstrike.yaml
+		cacontent|installer/covertops.yaml
+		cacontent|installer/firestorm.yaml
+		cacontent|installer/firstdecade.yaml
+		cacontent|installer/origin.yaml
+		cacontent|installer/ra2.yaml
+		cacontent|installer/ra2yr.yaml
+		cacontent|installer/soviet95.yaml
+		cacontent|installer/steam.yaml
+		cacontent|installer/tibsun.yaml
+
+SoundFormats:
+
+SpriteFormats: PngSheet
+
+TerrainFormat: DefaultTerrain
+
+SpriteSequenceFormat: DefaultSpriteSequence

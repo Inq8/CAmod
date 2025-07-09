@@ -23,7 +23,7 @@ Exterminators = {
 	{ SpawnLocation = ExterminatorSpawnWest.Location, Path = { Exterminator3Patrol1.Location, Exterminator3Patrol2.Location, Exterminator3Patrol3.Location, Exterminator3Patrol4.Location } },
 }
 
-RiftEnabledTime = {
+SuperweaponsEnabledTime = {
 	easy = DateTime.Seconds((60 * 50) + 17),
 	normal = DateTime.Seconds((60 * 35) + 17),
 	hard = DateTime.Seconds((60 * 20) + 17),
@@ -417,7 +417,8 @@ InitScrin = function()
 		end
 	end)
 
-	Trigger.AfterDelay(RiftEnabledTime[Difficulty], function()
+	Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
+		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = Scrin })
 		Actor.Create("ai.superweapons.enabled", true, { Owner = Scrin })
 	end)
 

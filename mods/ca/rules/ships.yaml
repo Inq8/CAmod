@@ -65,6 +65,8 @@ SS:
 	RangeMultiplier@STOPSHOOTINGROCKS3:
 		Modifier: 25
 		RequiresCondition: im-dumb == 3
+	Encyclopedia:
+		Category: Soviets/Naval
 
 MSUB:
 	Inherits: ^Submarine
@@ -115,6 +117,8 @@ MSUB:
 		DecorationBounds: 1877, 1877
 	Cloak:
 		CloakDelay: 100
+	Encyclopedia:
+		Category: Soviets/Naval
 
 DD:
 	Inherits: ^Ship
@@ -188,6 +192,8 @@ DD:
 		BorderColor: 00000020
 	Selectable:
 		DecorationBounds: 1621, 1621
+	Encyclopedia:
+		Category: Allies/Naval
 
 CA:
 	Inherits: ^Ship
@@ -259,6 +265,8 @@ CA:
 		Turret: secondary
 	Selectable:
 		DecorationBounds: 1877, 1877
+	Encyclopedia:
+		Category: Allies/Naval
 
 LST:
 	Inherits: ^Ship
@@ -320,6 +328,8 @@ LST:
 	-AttachableTo@MINIDRONE:
 	Targetable@MINDCONTROL:
 		RequiresCondition: !cargo && !mindcontrolled
+	Encyclopedia:
+		Category: Allies/Naval; Soviets/Naval; GDI/Naval; Nod/Naval
 
 PT:
 	Inherits: ^Ship
@@ -379,6 +389,8 @@ PT:
 		BorderColor: 00000020
 	Selectable:
 		DecorationBounds: 1536, 1536
+	Encyclopedia:
+		Category: Allies/Naval
 
 PT2:
 	Inherits: ^Ship
@@ -452,6 +464,8 @@ PT2:
 		BorderColor: 00000020
 	Selectable:
 		DecorationBounds: 1536, 1536
+	Encyclopedia:
+		Category: GDI/Naval
 
 DD2:
 	Inherits: ^Ship
@@ -551,6 +565,8 @@ DD2:
 	GrantConditionOnPrerequisite@POINTDEF:
 		Condition: pointdef-upgrade
 		Prerequisites: pointdef.upgrade
+	Encyclopedia:
+		Category: GDI/Naval
 
 SS2:
 	Inherits: ^Submarine
@@ -619,6 +635,8 @@ SS2:
 	RangeMultiplier@STOPSHOOTINGROCKS3:
 		Modifier: 25
 		RequiresCondition: im-dumb == 3
+	Encyclopedia:
+		Category: Nod/Naval
 
 ISUB:
 	Inherits: ^Submarine
@@ -686,6 +704,8 @@ ISUB:
 	RenderRangeCircle@Attack:
 		RangeCircleType: ISUBRange
 		Color: ffdd0060
+	Encyclopedia:
+		Category: Nod/Naval
 
 ICBM:
 	Inherits: ^ShootableMissile
@@ -714,10 +734,10 @@ ICBM:
 		Weapon: HonestJohnSub
 		Type: Footprint
 		RequiresCondition: !airborne
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: V3ExplodeAirborne
 		RequiresCondition: airborne
-	ThrowsShrapnel@Debris:
+	FireProjectilesOnDeath@Debris:
 		Weapons: SmallDebris
 		Pieces: 3, 5
 		Range: 1c511, 3c0
@@ -731,7 +751,7 @@ CV:
 		Queue: ShipSQ, ShipMQ
 		BuildPaletteOrder: 60
 		Prerequisites: ~syrd.gdi, gtek, ~techlevel.high
-		Description: Carrier that launches a squadron\n  of Hornet drone aircraft.
+		Description: Carrier that launches a squadron of Hornet drone aircraft.
 	TooltipExtras:
 		Strengths: • Strong vs Ground Units, Buildings
 		Weaknesses: • Cannot attack Aircraft
@@ -796,6 +816,8 @@ CV:
 	ProductionCostMultiplier@arcBonus:
 		Multiplier: 90
 		Prerequisites: player.arc
+	Encyclopedia:
+		Category: GDI/Naval
 
 SB:
 	Inherits: ^Ship
@@ -852,6 +874,8 @@ SB:
 		BorderColor: 00000020
 	Selectable:
 		DecorationBounds: 1536, 1536
+	Encyclopedia:
+		Category: Nod/Naval
 
 SEAS:
 	Inherits: ^Ship
@@ -908,3 +932,5 @@ SEAS:
 		BorderColor: 00000020
 	Selectable:
 		DecorationBounds: 1536, 1536
+	Encyclopedia:
+		Category: Soviets/Naval

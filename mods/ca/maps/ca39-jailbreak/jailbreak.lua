@@ -215,6 +215,7 @@ WorldLoaded = function()
 
 	Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
 		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = Greece })
+		Actor.Create("ai.superweapons.enabled", true, { Owner = Greece })
 	end)
 end
 

@@ -21,8 +21,8 @@ Container@PLAYER_WIDGETS:
 					IconSize: 62, 46
 					IconSpriteOffset: -1, -1
 					TooltipContainer: TOOLTIP_CONTAINER
-					ReadyText: READY
-					HoldText: ON HOLD
+					ReadyText: supportpowers-support-powers-palette.ready
+					HoldText: supportpowers-support-powers-palette.hold
 					HotkeyPrefix: SupportPower
 					HotkeyCount: 10
 				Container@PALETTE_FOREGROUND:
@@ -39,8 +39,8 @@ Container@PLAYER_WIDGETS:
 		Background@SELECTION_TOOLTIP:
 			Logic: SelectionTooltipLogic
 			Background: dialog4
-			X: WINDOW_RIGHT
-			Y: WINDOW_BOTTOM
+			X: WINDOW_WIDTH
+			Y: WINDOW_HEIGHT
 			Width: 200
 			Height: 65
 			Children:
@@ -101,19 +101,19 @@ Container@PLAYER_WIDGETS:
 			X: 80
 			Y: 10
 			Order: Descending
-			Format: {1}: {2}
 		Image@COMMAND_BAR_BACKGROUND:
 			Logic: AddFactionSuffixLogic
 			X: 5
-			Y: WINDOW_BOTTOM - HEIGHT
+			Y: WINDOW_HEIGHT - HEIGHT
 			Width: 467
 			Height: 47
 			ImageCollection: player-ui-bits
 			ImageName: background-command-bar
+			ClickThrough: False
 		Container@COMMAND_BAR:
 			Logic: CommandBarLogic
 			X: 27
-			Y: WINDOW_BOTTOM - HEIGHT - 4
+			Y: WINDOW_HEIGHT - HEIGHT - 4
 			Width: 275
 			Height: 26
 			Children:
@@ -126,8 +126,8 @@ Container@PLAYER_WIDGETS:
 					Background: commandbar-button
 					Key: AttackMove
 					DisableKeySound: true
-					TooltipText: Attack Move
-					TooltipDesc: Selected units will move to the desired location\nand attack any enemies they encounter en route.\n\nHold {(Ctrl)} while targeting to order an Assault Move\nthat attacks any units or structures encountered en route.\n\nLeft-click icon then right-click on target location.
+					TooltipText: button-command-bar-attack-move.tooltip
+					TooltipDesc: button-command-bar-attack-move.tooltipdesc
 					TooltipContainer: TOOLTIP_CONTAINER
 					TooltipTemplate: BUTTON_WITH_DESC_HIGHLIGHT_TOOLTIP
 					Children:
@@ -144,8 +144,8 @@ Container@PLAYER_WIDGETS:
 					VisualHeight: 0
 					Background: commandbar-button
 					DisableKeySound: true
-					TooltipText: Force Move
-					TooltipDesc: Selected units will move to the desired location\n - Default activity for the target is suppressed\n - Vehicles will attempt to crush enemies at the target location\n - Helicopters will land at the target location\n - Chrono Tanks will teleport towards the target location\n\nLeft-click icon then right-click on target.\nHold {(Alt)} to activate temporarily while commanding units.
+					TooltipText: button-command-bar-force-move.tooltip
+					TooltipDesc: button-command-bar-force-move.tooltipdesc
 					TooltipContainer: TOOLTIP_CONTAINER
 					TooltipTemplate: BUTTON_WITH_DESC_HIGHLIGHT_TOOLTIP
 					Children:
@@ -162,8 +162,8 @@ Container@PLAYER_WIDGETS:
 					VisualHeight: 0
 					Background: commandbar-button
 					DisableKeySound: true
-					TooltipText: Force Attack
-					TooltipDesc: Selected units will attack the targeted unit or location\n - Default activity for the target is suppressed\n - Allows targeting of own or ally forces\n - Long-range artillery units will always target the\n   location, ignoring units and buildings\n\nLeft-click icon then right-click on target.\nHold {(Ctrl)} to activate temporarily while commanding units.
+					TooltipText: button-command-bar-force-attack.tooltip
+					TooltipDesc: button-command-bar-force-attack.tooltipdesc
 					TooltipContainer: TOOLTIP_CONTAINER
 					TooltipTemplate: BUTTON_WITH_DESC_HIGHLIGHT_TOOLTIP
 					Children:
@@ -181,8 +181,8 @@ Container@PLAYER_WIDGETS:
 					Background: commandbar-button
 					Key: Guard
 					DisableKeySound: true
-					TooltipText: Guard
-					TooltipDesc: Selected units will follow the targeted unit.\n\nLeft-click icon then right-click on target unit.
+					TooltipText: button-command-bar-guard.tooltip
+					TooltipDesc: button-command-bar-guard.tooltipdesc
 					TooltipContainer: TOOLTIP_CONTAINER
 					Children:
 						Image@ICON:
@@ -200,8 +200,8 @@ Container@PLAYER_WIDGETS:
 					Key: Deploy
 					DisableKeyRepeat: true
 					DisableKeySound: true
-					TooltipText: Deploy
-					TooltipDesc: Selected units will perform their default deploy activity\n - MCVs will unpack into a Construction Yard\n - Construction Yards will re-pack into a MCV\n - Transports will unload their passengers\n - Demolition Trucks and MAD Tanks will self-destruct\n - Minelayers will deploy a mine\n - Aircraft will return to base\n\nActs immediately on selected units.
+					TooltipText: button-command-bar-deploy.tooltip
+					TooltipDesc: button-command-bar-deploy.tooltipdesc
 					TooltipContainer: TOOLTIP_CONTAINER
 					Children:
 						Image@ICON:
@@ -219,8 +219,8 @@ Container@PLAYER_WIDGETS:
 					Key: Scatter
 					DisableKeyRepeat: true
 					DisableKeySound: true
-					TooltipText: Scatter
-					TooltipDesc: Selected units will stop their current activity\nand move to a nearby location.\n\nActs immediately on selected units.
+					TooltipText: button-command-bar-scatter.tooltip
+					TooltipDesc: button-command-bar-scatter.tooltipdesc
 					TooltipContainer: TOOLTIP_CONTAINER
 					Children:
 						Image@ICON:
@@ -238,8 +238,8 @@ Container@PLAYER_WIDGETS:
 					Key: Stop
 					DisableKeyRepeat: true
 					DisableKeySound: true
-					TooltipText: Stop
-					TooltipDesc: Selected units will stop their current activity.\n\nActs immediately on selected units.
+					TooltipText: button-command-bar-stop.tooltip
+					TooltipDesc: button-command-bar-stop.tooltipdesc
 					TooltipContainer: TOOLTIP_CONTAINER
 					Children:
 						Image@ICON:
@@ -255,8 +255,8 @@ Container@PLAYER_WIDGETS:
 					VisualHeight: 0
 					Background: commandbar-button
 					DisableKeySound: true
-					TooltipText: Waypoint Mode
-					TooltipDesc: Use Waypoint Mode to give multiple linking commands\nto the selected units. Units will execute the commands\nimmediately upon receiving them.\n\nLeft-click icon then give commands in the game world.\nHold {(Shift)} to activate temporarily while commanding units.
+					TooltipText: button-command-bar-queue-orders.tooltip
+					TooltipDesc: button-command-bar-queue-orders.tooltipdesc
 					TooltipContainer: TOOLTIP_CONTAINER
 					TooltipTemplate: BUTTON_WITH_DESC_HIGHLIGHT_TOOLTIP
 					Children:
@@ -268,7 +268,7 @@ Container@PLAYER_WIDGETS:
 		Container@STANCE_BAR:
 			Logic: StanceSelectorLogic
 			X: 315
-			Y: WINDOW_BOTTOM - HEIGHT - 4
+			Y: WINDOW_HEIGHT - HEIGHT - 4
 			Width: 138
 			Height: 26
 			Children:
@@ -281,8 +281,8 @@ Container@PLAYER_WIDGETS:
 					Key: StanceAttackAnything
 					DisableKeyRepeat: true
 					DisableKeySound: true
-					TooltipText: Attack Anything Stance
-					TooltipDesc: Set the selected units to Attack Anything stance:\n - Units will attack enemy units and structures in weapon range\n - Units will pursue attackers across the battlefield
+					TooltipText: button-stance-bar-attackanything.tooltip
+					TooltipDesc: button-stance-bar-attackanything.tooltipdesc
 					TooltipContainer: TOOLTIP_CONTAINER
 					Children:
 						Image@ICON:
@@ -300,8 +300,8 @@ Container@PLAYER_WIDGETS:
 					Key: StanceDefend
 					DisableKeyRepeat: true
 					DisableKeySound: true
-					TooltipText: Defend Stance
-					TooltipDesc: Set the selected units to Defend stance:\n - Units will attack enemy units in weapon range\n - Units will not move or pursue enemies
+					TooltipText: button-stance-bar-defend.tooltip
+					TooltipDesc: button-stance-bar-defend.tooltipdesc
 					TooltipContainer: TOOLTIP_CONTAINER
 					Children:
 						Image@ICON:
@@ -319,8 +319,8 @@ Container@PLAYER_WIDGETS:
 					Key: StanceReturnFire
 					DisableKeyRepeat: true
 					DisableKeySound: true
-					TooltipText: Return Fire Stance
-					TooltipDesc: Set the selected units to Return Fire stance:\n - Units will retaliate against enemies that attack them\n - Units will not move or pursue enemies
+					TooltipText: button-stance-bar-returnfire.tooltip
+					TooltipDesc: button-stance-bar-returnfire.tooltipdesc
 					TooltipContainer: TOOLTIP_CONTAINER
 					Children:
 						Image@ICON:
@@ -338,8 +338,8 @@ Container@PLAYER_WIDGETS:
 					Key: StanceHoldFire
 					DisableKeyRepeat: true
 					DisableKeySound: true
-					TooltipText: Hold Fire Stance
-					TooltipDesc: Set the selected units to Hold Fire stance:\n - Units will not fire upon enemies\n - Units will not move or pursue enemies
+					TooltipText: button-stance-bar-holdfire.tooltip
+					TooltipDesc: button-stance-bar-holdfire.tooltipdesc
 					TooltipContainer: TOOLTIP_CONTAINER
 					Children:
 						Image@ICON:
@@ -349,27 +349,27 @@ Container@PLAYER_WIDGETS:
 							ImageName: hold-fire
 		Container@MUTE_INDICATOR:
 			Logic: MuteIndicatorLogic
-			X: WINDOW_RIGHT - WIDTH - 260
+			X: WINDOW_WIDTH - WIDTH - 260
 			Y: 10
 			Width: 200
 			Height: 25
 			Children:
 				Image@ICON:
-					X: PARENT_RIGHT - WIDTH
+					X: PARENT_WIDTH - WIDTH
 					Y: 1
 					Width: 24
 					Height: 24
 					ImageCollection: sidebar-bits
 					ImageName: indicator-muted
 				Label@LABEL:
-					Width: PARENT_RIGHT - 30
+					Width: PARENT_WIDTH - 30
 					Height: 25
 					Align: Right
 					Text: Audio Muted
 					Contrast: true
 		Image@SIDEBAR_BACKGROUND:
 			Logic: AddFactionSuffixLogic
-			X: WINDOW_RIGHT - WIDTH - 5
+			X: WINDOW_WIDTH - WIDTH - 5
 			Y: 5
 			Width: 258
 			Height: 597
@@ -527,7 +527,7 @@ Container@PLAYER_WIDGETS:
 							Logic: GameTimerLogic
 							X: 3
 							Y: 1
-							Width: PARENT_RIGHT
+							Width: PARENT_WIDTH
 							Height: 23
 							Align: Center
 							Font: TinyBold
@@ -549,7 +549,7 @@ Container@PLAYER_WIDGETS:
 									ImageName: cash-normal
 						LabelWithTooltip@POWER:
 							Logic: IngamePowerCounterLogic
-							X: PARENT_RIGHT - WIDTH - 20
+							X: PARENT_WIDTH - WIDTH - 20
 							Y: 1
 							Width: 50
 							Height: 23
@@ -560,7 +560,7 @@ Container@PLAYER_WIDGETS:
 							TooltipTemplate: SIMPLE_TOOLTIP
 							Children:
 								Image@POWER_ICON:
-									X: PARENT_RIGHT + 4
+									X: PARENT_WIDTH + 4
 									Y: 4
 									ImageCollection: power-icons
 									ImageName: power-normal
@@ -838,20 +838,19 @@ Container@PLAYER_WIDGETS:
 							ImageName: ref-added
 		Container@HPF_OVERLAY:
 			Logic: HierarchicalPathFinderOverlayLogic
-			X: WINDOW_RIGHT - WIDTH - 260
+			X: WINDOW_WIDTH - WIDTH - 260
 			Y: 40
 			Width: 175
 			Height: 60
 			Children:
 				DropDownButton@HPF_OVERLAY_LOCOMOTOR:
-					Y: PARENT_TOP
-					Width: PARENT_RIGHT
+					Width: PARENT_WIDTH
 					Height: 25
 					Text: Select Locomotor
 					Font: Regular
 				DropDownButton@HPF_OVERLAY_CHECK:
-					Y: PARENT_TOP + 35
-					Width: PARENT_RIGHT
+					Y: 0 + 35
+					Width: PARENT_WIDTH
 					Height: 25
 					Text: Select BlockedByActor
 					Font: Regular

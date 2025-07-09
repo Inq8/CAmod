@@ -9,6 +9,7 @@
 #endregion
 
 using System;
+using System.Globalization;
 using System.Linq;
 using OpenRA.Mods.CA.Traits;
 using OpenRA.Mods.Common.Traits;
@@ -20,7 +21,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 {
 	public class ProductionTooltipLogicCA : ChromeLogic
 	{
-		[TranslationReference("prequisites")]
+		[FluentReference("prequisites")]
 		const string Requires = "label-requires";
 
 		[ObjectCreator.UseCtor]
@@ -77,7 +78,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 					return;
 
 				var tooltip = actor.TraitInfos<TooltipInfo>().FirstOrDefault(info => info.EnabledByDefault);
-				var name = tooltip != null ? tooltip.Name : actor.Name;
+				var name = tooltip != null ? FluentProvider.GetMessage(tooltip.Name) : actor.Name;
 				var buildable = actor.TraitInfo<BuildableInfo>();
 
 				var cost = 0;
@@ -90,45 +91,34 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 						cost = valued.Cost;
 				}
 
-				nameLabel.Text = name;
+				var maxLeftWidth = 300;
+
+				nameLabel.GetText = () => name;
 
 				var nameSize = font.Measure(name);
 				var hotkeyWidth = 0;
 				hotkeyLabel.Visible = hotkey.IsValid();
-
-				armorTypeLabel = GetArmorTypeLabel(armorTypeLabel, actor);
-				var tooltipExtras = actor.TraitInfos<TooltipExtrasInfo>().FirstOrDefault(info => info.IsStandard);
-
-				if (tooltipExtras != null)
-				{
-					strengthsLabel.Text = tooltipExtras.Strengths.Replace("\\n", "\n");
-					weaknessesLabel.Text = tooltipExtras.Weaknesses.Replace("\\n", "\n");
-					attributesLabel.Text = tooltipExtras.Attributes.Replace("\\n", "\n");
-				}
-				else
-				{
-					strengthsLabel.Text = "";
-					weaknessesLabel.Text = "";
-					attributesLabel.Text = "";
-				}
 
 				if (hotkeyLabel.Visible)
 				{
 					var hotkeyText = $"({hotkey.DisplayString()})";
 
 					hotkeyWidth = font.Measure(hotkeyText).X + 2 * nameLabel.Bounds.X;
-					hotkeyLabel.Text = hotkeyText;
+					hotkeyLabel.GetText = () => hotkeyText;
 					hotkeyLabel.Bounds.X = nameSize.X + 2 * nameLabel.Bounds.X;
 				}
 
-				var prereqs = buildable.Prerequisites.Select(a => ActorName(mapRules, a))
-					.Where(s => !s.StartsWith("~", StringComparison.Ordinal) && !s.StartsWith("!", StringComparison.Ordinal));
+				var prereqs = buildable.Prerequisites
+					.Select(a => ActorName(mapRules, a))
+					.Where(s => !s.StartsWith('~') && !s.StartsWith('!'))
+					.ToList();
 
 				var requiresSize = int2.Zero;
-				if (prereqs.Any())
+				if (prereqs.Count > 0)
 				{
-					requiresLabel.Text = TranslationProvider.GetString(Requires, Translation.Arguments("prequisites", prereqs.JoinWith(", ")));
-					requiresSize = requiresFont.Measure(requiresLabel.Text);
+					var requiresText = FluentProvider.GetMessage(Requires, "prerequisites", prereqs.JoinWith(", "));
+					requiresLabel.GetText = () => requiresText;
+					requiresSize = requiresFont.Measure(requiresText);
 					requiresLabel.Visible = true;
 					descLabel.Bounds.Y = descLabelY + requiresLabel.Bounds.Height + (descLabel.Bounds.X / 2);
 				}
@@ -141,29 +131,37 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				var buildTime = tooltipIcon.ProductionQueue == null ? 0 : tooltipIcon.ProductionQueue.GetBuildTime(actor, buildable);
 				var timeModifier = pm != null && pm.PowerState != PowerState.Normal ? tooltipIcon.ProductionQueue.Info.LowPowerModifier : 100;
 
-				timeLabel.Text = formatBuildTime.Update((buildTime * timeModifier) / 100);
-				timeLabel.TextColor = (pm != null && pm.PowerState != PowerState.Normal && tooltipIcon.ProductionQueue.Info.LowPowerModifier > 100) ? Color.Red : Color.White;
-				var timeSize = font.Measure(timeLabel.Text);
+				var timeText = formatBuildTime.Update(buildTime * timeModifier / 100);
+				timeLabel.GetText = () => timeText;
+				timeLabel.TextColor =
+					(pm != null && pm.PowerState != PowerState.Normal && tooltipIcon.ProductionQueue.Info.LowPowerModifier > 100)
+						? Color.Red
+						: Color.White;
+				var timeSize = font.Measure(timeText);
 
-				costLabel.Text = cost.ToString();
-				costLabel.GetColor = () => pr.Cash + pr.Resources >= cost ? Color.White : Color.Red;
-				var costSize = font.Measure(costLabel.Text);
+				var costText = cost.ToString(NumberFormatInfo.CurrentInfo);
+				costLabel.GetText = () => costText;
+				costLabel.GetColor = () => pr.GetCashAndResources() >= cost ? Color.White : Color.Red;
+				var costSize = font.Measure(costText);
 
 				var powerSize = new int2(0, 0);
 				var power = 0;
-				var armorTypeSize = armorTypeLabel.Text != "" ? font.Measure(armorTypeLabel.Text) : new int2(0, 0);
-				armorTypeIcon.Visible = armorTypeSize.Y > 0;
 
 				if (pm != null)
 				{
 					power = actor.TraitInfos<PowerInfo>().Where(i => i.EnabledByDefault).Sum(i => i.Amount);
-					powerLabel.Text = power.ToString();
-					powerLabel.GetColor = () => ((pm.PowerProvided - pm.PowerDrained) >= -power || power > 0)
+					var powerText = power.ToString(NumberFormatInfo.CurrentInfo);
+					powerLabel.GetText = () => powerText;
+					powerLabel.GetColor = () => (pm.PowerProvided - pm.PowerDrained >= -power || power > 0)
 						? Color.White : Color.Red;
 					powerLabel.Visible = power != 0;
 					powerIcon.Visible = power != 0;
-					powerSize = font.Measure(powerLabel.Text);
+					powerSize = font.Measure(powerText);
 				}
+
+				armorTypeLabel = SelectionTooltipLogic.GetArmorTypeLabel(armorTypeLabel, actor);
+				var armorTypeSize = armorTypeLabel.GetText() != "" ? font.Measure(armorTypeLabel.GetText()) : new int2(0, 0);
+				armorTypeIcon.Visible = armorTypeSize.Y > 0;
 
 				if (armorTypeLabel.Text != "" && power != 0)
 					armorTypeIcon.Bounds.Y = armorTypeLabel.Bounds.Y = powerLabel.Bounds.Bottom;
@@ -172,14 +170,33 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 				var extrasSpacing = descLabel.Bounds.X / 2;
 
-				descLabel.Text = buildable.Description.Replace("\\n", "\n");
-				var descSize = descFont.Measure(descLabel.Text);
+				var desc = string.IsNullOrEmpty(buildable.Description) ? "" : FluentProvider.GetMessage(buildable.Description);
+				desc = WidgetUtilsCA.WrapTextWithIndent(desc.Replace("\\n", "\n"), maxLeftWidth, descFont);
+				descLabel.GetText = () => desc;
+
+				var descSize = descFont.Measure(desc);
 				descLabel.Bounds.Width = descSize.X;
 				descLabel.Bounds.Height = descSize.Y;
 
-				var strengthsSize = strengthsLabel.Text != "" ? descFont.Measure(strengthsLabel.Text) : new int2(0, 0);
-				var weaknessesSize = weaknessesLabel.Text != "" ? descFont.Measure(weaknessesLabel.Text) : new int2(0, 0);
-				var attributesSize = attributesLabel.Text != "" ? descFont.Measure(attributesLabel.Text) : new int2(0, 0);
+				var tooltipExtras = actor.TraitInfos<TooltipExtrasInfo>().FirstOrDefault(info => info.IsStandard);
+
+				var strengthsLabelText = "";
+				var weaknessesLabelText = "";
+				var attributesLabelText = "";
+
+				if (tooltipExtras != null)
+				{
+					strengthsLabelText = WidgetUtilsCA.WrapTextWithIndent(tooltipExtras.Strengths.Replace("\\n", "\n"), maxLeftWidth, descFont, 6);
+					weaknessesLabelText = WidgetUtilsCA.WrapTextWithIndent(tooltipExtras.Weaknesses.Replace("\\n", "\n"), maxLeftWidth, descFont, 6);
+					attributesLabelText = WidgetUtilsCA.WrapTextWithIndent(tooltipExtras.Attributes.Replace("\\n", "\n"), maxLeftWidth, descFont, 6);
+				}
+
+				strengthsLabel.GetText = () => strengthsLabelText;
+				weaknessesLabel.GetText = () => weaknessesLabelText;
+				attributesLabel.GetText = () => attributesLabelText;
+				var strengthsSize = strengthsLabelText != "" ? descFont.Measure(strengthsLabelText) : new int2(0, 0);
+				var weaknessesSize = weaknessesLabelText != "" ? descFont.Measure(weaknessesLabelText) : new int2(0, 0);
+				var attributesSize = attributesLabelText != "" ? descFont.Measure(attributesLabelText) : new int2(0, 0);
 
 				strengthsLabel.Bounds.Y = descLabel.Bounds.Bottom + extrasSpacing;
 				weaknessesLabel.Bounds.Y = descLabel.Bounds.Bottom + strengthsSize.Y + extrasSpacing;
@@ -215,58 +232,10 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			{
 				var actorTooltip = ai.TraitInfos<TooltipInfo>().FirstOrDefault(info => info.EnabledByDefault);
 				if (actorTooltip != null)
-					return actorTooltip.Name;
+					return FluentProvider.GetMessage(actorTooltip.Name);
 			}
 
 			return a;
-		}
-
-		LabelWidget GetArmorTypeLabel(LabelWidget armorTypeLabel, ActorInfo actor)
-		{
-			var armor = actor.TraitInfos<ArmorInfo>().FirstOrDefault();
-			armorTypeLabel.Text = armor != null ? armor.Type : "";
-
-			// hard coded, specific to CA - find a better way to set user-friendly names and colors for armor types
-			switch (armorTypeLabel.Text)
-			{
-				case "None":
-					armorTypeLabel.Text = "Infantry";
-					armorTypeLabel.TextColor = Color.ForestGreen;
-					break;
-
-				case "Light":
-					armorTypeLabel.TextColor = Color.MediumPurple;
-					break;
-
-				case "Heavy":
-					armorTypeLabel.TextColor = Color.Firebrick;
-					break;
-
-				case "Concrete":
-					armorTypeLabel.Text = "Defense";
-					armorTypeLabel.TextColor = Color.RoyalBlue;
-					break;
-
-				case "Wood":
-					armorTypeLabel.Text = "Building";
-					armorTypeLabel.TextColor = Color.Peru;
-					break;
-
-				case "Brick":
-					armorTypeLabel.Text = "Wall";
-					armorTypeLabel.TextColor = Color.RosyBrown;
-					break;
-
-				case "Aircraft":
-					armorTypeLabel.TextColor = Color.SkyBlue;
-					break;
-
-				default:
-					armorTypeLabel.Text = "";
-					break;
-			}
-
-			return armorTypeLabel;
 		}
 	}
 }

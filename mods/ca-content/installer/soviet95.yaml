@@ -6,15 +6,15 @@ soviet: Red Alert 95 (Soviet Disc, English)
 		INSTALL/REDALERT.MIX: 0e58f4b54f44f6cd29fecf8cf379d33cf2d4caef
 	Install:
 		# Base game files:
-		ContentPackage:
+		ContentPackage@base:
 			Name: base
 			Actions:
-				ExtractMix: INSTALL/REDALERT.MIX
+				ExtractMix@1: INSTALL/REDALERT.MIX
 					^SupportDir|Content/ca/hires.mix: hires.mix
 					^SupportDir|Content/ca/local.mix: local.mix
 					^SupportDir|Content/ca/lores.mix: lores.mix
 					^SupportDir|Content/ca/speech.mix: speech.mix
-				ExtractMix: MAIN.MIX
+				ExtractMix@2: MAIN.MIX
 					^SupportDir|Content/ca/conquer.mix: conquer.mix
 					^SupportDir|Content/ca/general.mix: general.mix # Is this one used? The FirstDecade and TUC installers are missing this!
 					^SupportDir|Content/ca/interior.mix: interior.mix
@@ -24,18 +24,18 @@ soviet: Red Alert 95 (Soviet Disc, English)
 					^SupportDir|Content/ca/allies.mix: allies.mix
 					^SupportDir|Content/ca/temperat.mix: temperat.mix
 		# Base game music (optional):
-		ContentPackage:
+		ContentPackage@music-ra:
 			Name: music-ra
 			Actions:
 				ExtractMix: MAIN.MIX
 					^SupportDir|Content/ca/ra/scores.mix: scores.mix
 		# Soviet campaign briefings (optional):
-		ContentPackage:
+		ContentPackage@movies-soviet:
 			Name: movies-soviet
 			Actions:
-				ExtractMix: MAIN.MIX
+				ExtractMix@1: MAIN.MIX
 					^SupportDir|Content/ca/movies2.mix: movies2.mix
-				ExtractMix: ^SupportDir|Content/ca/movies2.mix
+				ExtractMix@2: ^SupportDir|Content/ca/movies2.mix
 					^SupportDir|Content/ca/movies/aagun.vqa: aagun.vqa
 					^SupportDir|Content/ca/movies/cronfail.vqa: cronfail.vqa
 					^SupportDir|Content/ca/movies/airfield.vqa: airfield.vqa

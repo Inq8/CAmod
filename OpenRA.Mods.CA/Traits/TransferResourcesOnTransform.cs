@@ -9,6 +9,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Linq;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
 
@@ -21,13 +22,13 @@ namespace OpenRA.Mods.CA.Traits
 
 	public class TransferResourcesOnTransform : ConditionalTrait<TransferResourcesOnTransformInfo>, INotifyTransform
 	{
-		readonly Harvester harvester;
+		readonly IStoresResources storesResources;
 		IReadOnlyDictionary<string, int> contents;
 
 		public TransferResourcesOnTransform(ActorInitializer init, TransferResourcesOnTransformInfo info)
 			: base(info)
 		{
-			harvester = init.Self.Trait<Harvester>();
+			storesResources = init.Self.TraitsImplementing<IStoresResources>().First();
 		}
 
 		void INotifyTransform.AfterTransform(Actor toActor)
@@ -41,7 +42,7 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				var amt = resource.Value;
 				while (!newHarvester.IsFull && amt-- > 0)
-					newHarvester.AcceptResource(toActor, resource.Key);
+					newHarvester.AddResource(toActor, resource.Key);
 			}
 		}
 
@@ -50,7 +51,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled)
 				return;
 
-			contents = harvester.Contents;
+			contents = storesResources.Contents;
 		}
 
 		void INotifyTransform.OnTransform(Actor self) {}

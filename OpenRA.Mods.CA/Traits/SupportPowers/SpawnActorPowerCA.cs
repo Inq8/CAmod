@@ -83,6 +83,9 @@ namespace OpenRA.Mods.CA.Traits
 			Game.Sound.PlayToPlayer(SoundType.UI, manager.Self.Owner, Info.SelectTargetSound);
 			Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech",
 				Info.SelectTargetSpeechNotification, self.Owner.Faction.InternalName);
+
+			TextNotificationsManager.AddTransientLine(manager.Self.Owner, Info.SelectTargetTextNotification);
+
 			self.World.OrderGenerator = new SelectSpawnActorPowerCATarget(order, manager, this, MouseButton.Left);
 		}
 	}
@@ -111,7 +114,7 @@ namespace OpenRA.Mods.CA.Traits
 					world.Map.CenterOfCell(xy),
 					power.Info.TargetCircleRange,
 					0,
-					power.Info.TargetCircleUsePlayerColor ? power.Self.Owner.Color : power.Info.TargetCircleColor,
+					power.Info.TargetCircleUsePlayerColor ? power.Self.OwnerColor() : power.Info.TargetCircleColor,
 					1,
 					Color.FromArgb(96, Color.Black),
 					3);

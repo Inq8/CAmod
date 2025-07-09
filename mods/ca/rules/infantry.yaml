@@ -96,6 +96,8 @@ DOG:
 	GuardsSelection:
 		ValidOrders: AttackMove, AssaultMove, ForceAttack, KeepDistance
 		ValidTargets: Infantry, Vehicle
+	Encyclopedia:
+		Category: Soviets/Infantry
 
 TDOG:
 	Inherits: DOG
@@ -116,7 +118,7 @@ TDOG:
 		RequiresCondition: eating
 	Armament:
 		Weapon: TerrorDogJaw
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: DogExplode
 		EmptyWeapon: DogExplode
 		RequiresCondition: !being-warped
@@ -175,6 +177,8 @@ E1:
 		Prerequisites: barracks.upgraded
 	Convertible:
 		SpawnActors: N1C
+	Encyclopedia:
+		Category: Allies/Infantry; Soviets/Infantry
 
 E1R1:
 	Inherits: E1
@@ -184,6 +188,7 @@ E1R1:
 		-Prerequisites:
 		InitialLevels: 1
 	-Buildable:
+	-Encyclopedia:
 
 E2:
 	Inherits: ^Soldier
@@ -226,7 +231,7 @@ E2:
 	WithInfantryBody:
 		StandSequences: stand
 		DefaultAttackSequence: throw
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: UnitExplodeGrenade
 		EmptyWeapon: UnitExplodeGrenade
 		Chance: 100
@@ -237,6 +242,8 @@ E2:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
+	Encyclopedia:
+		Category: Soviets/Infantry
 
 E3:
 	Inherits: ^Soldier
@@ -348,6 +355,8 @@ E3:
 		CrushedSequence: die-crushed
 	Convertible:
 		SpawnActors: N3C
+	Encyclopedia:
+		Category: Allies/Infantry; Soviets/Infantry; GDI/Infantry; Nod/Infantry
 
 U3:
 	Inherits: ^Soldier
@@ -531,6 +540,10 @@ U3:
 		DeployTrigger: Attack
 		DeployTicks: 5
 		UndeployTicks: 50
+	Encyclopedia:
+		Category: Allies/Infantry
+	EncyclopediaExtras:
+		Subfaction: USA
 
 U3R2:
 	Inherits: U3
@@ -541,6 +554,8 @@ U3R2:
 		InitialLevels: 2
 	Selectable:
 		Class: u3
+	-Encyclopedia:
+	-EncyclopediaExtras:
 
 U3.squad:
 	AlwaysVisible:
@@ -583,6 +598,7 @@ E3R1:
 		-Prerequisites:
 		InitialLevels: 1
 	-Buildable:
+	-Encyclopedia:
 
 E4:
 	Inherits: ^Soldier
@@ -623,7 +639,7 @@ E4:
 		FacingTolerance: 0
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: UnitExplodeFlameSmall
 		EmptyWeapon: UnitExplodeFlameSmall
 		Chance: 100
@@ -636,6 +652,8 @@ E4:
 		Prerequisites: barracks.upgraded
 	Convertible:
 		SpawnActors: N5
+	Encyclopedia:
+		Category: Soviets/Infantry
 
 E6:
 	Inherits: ^Soldier
@@ -703,6 +721,19 @@ E6:
 		RequiresCondition: entrench-upgrade
 	-ReloadAmmoDelayMultiplier@Inspiration1:
 	-ReloadAmmoDelayMultiplier@Inspiration2:
+	Encyclopedia:
+		Category: Allies/Infantry; Soviets/Infantry
+	EncyclopediaExtras:
+		RenderPreviewActor: e6.preview
+
+E6.Preview:
+	Inherits: ^PreviewDummy
+	Inherits@TDPalette: ^TDPalette
+	RenderSprites:
+		Image: e6
+	WithInfantryBody:
+	QuantizeFacingsFromSequence:
+		Sequence: stand
 
 SPY:
 	Inherits: ^Soldier
@@ -712,7 +743,7 @@ SPY:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 82
 		Prerequisites: ~tent, anyradar, ~techlevel.medium
-		Description: Infiltrates enemy structures for intel or sabotage\n  Effects depend on the building infiltrated.
+		Description: Infiltrates enemy structures for intel or sabotage. Effects depend on the building infiltrated.
 	TooltipExtras:
 		Weaknesses: • Unarmed
 		Attributes: • Disguise as enemy infantry by right-clicking them\n • Infiltration effects:\n    • Power Plants: Power outage\n    • Barracks/Factory: Infantry/vehicles produced as veteran\n    • Superweapons: Reset timer\n    • Radar: Reset shroud\n    • Helipad: Single-use paratroopers\n    • Airfield: Single-use airstrike
@@ -806,6 +837,8 @@ SPY:
 	WithColoredSelectionBox@Disguised:
 		RequiresCondition: disguise
 		ColorSource: Player
+	Encyclopedia:
+		Category: Allies/Infantry
 
 E7:
 	Inherits: ^Soldier
@@ -904,6 +937,8 @@ E7:
 			Structure: Demolish
 	ChangesHealth@ELITE:
 		Delay: 50
+	Encyclopedia:
+		Category: Allies/Infantry
 
 MEDI:
 	Inherits: ^Soldier
@@ -964,6 +999,8 @@ MEDI:
 	GuardsSelection:
 		ValidTargets: Infantry
 	KeepsDistance:
+	Encyclopedia:
+		Category: Allies/Infantry; GDI/Infantry
 
 MECH:
 	Inherits: ^Soldier
@@ -1024,6 +1061,7 @@ MECH:
 		PlayerExperience: 5
 		ConsumedByCapture: False
 		CaptureDelay: 75
+		ValidRelationships: Ally, Enemy, Neutral
 		PlayerExperienceRelationships: Neutral, Enemy
 		EnterCursor: sell2
 		EnterBlockedCursor: move-blocked
@@ -1055,6 +1093,8 @@ MECH:
 	ReplacedInQueue:
 		Actors: cmec
 	KeepsDistance:
+	Encyclopedia:
+		Category: Allies/Infantry; Nod/Infantry
 
 CMEC:
 	Inherits: ^Cyborg
@@ -1115,6 +1155,7 @@ CMEC:
 		PlayerExperience: 5
 		ConsumedByCapture: False
 		CaptureDelay: 75
+		ValidRelationships: Ally, Enemy, Neutral
 		PlayerExperienceRelationships: Neutral, Enemy
 		EnterCursor: sell2
 		EnterBlockedCursor: move-blocked
@@ -1141,6 +1182,8 @@ CMEC:
 		ValidTargets: Vehicle
 	-TakeCover:
 	KeepsDistance:
+	Encyclopedia:
+		Category: Nod/Infantry
 
 HACK:
 	Inherits: ^Soldier
@@ -1260,6 +1303,20 @@ HACK:
 	GrantConditionOnBotOwner@AIHACKER:
 		Condition: botowner
 		Bots: brutal, vhard, hard, normal, easy, naval
+	Encyclopedia:
+		Category: Nod/Infantry
+	EncyclopediaExtras:
+		RenderPreviewActor: hack.preview
+		AdditionalInfo: Requires Unity Covenant.
+
+HACK.Preview:
+	Inherits: ^PreviewDummy
+	Inherits@TDPalette: ^TDPalette
+	RenderSprites:
+		Image: hack
+	WithInfantryBody:
+	QuantizeFacingsFromSequence:
+		Sequence: stand
 
 EINSTEIN:
 	Inherits: ^CivInfantry
@@ -1380,6 +1437,8 @@ THF:
 		UncloakSound: gstealof.aud
 		DetectionTypes: Cloak
 		IsPlayerPalette: false
+		CloakStyle: Palette
+		CloakedPalette: cloak
 		CloakedCondition: hidden
 		RequiresCondition: !cloak-force-disabled && !being-warped
 		PauseOnCondition: invisibility
@@ -1406,6 +1465,8 @@ THF:
 		TargetTypeVoices:
 			Vehicle: Hijack
 			Building: Steal
+	Encyclopedia:
+		Category: Soviets/Infantry
 
 SHOK:
 	Inherits: ^Soldier
@@ -1496,6 +1557,8 @@ SHOK:
 		Prerequisites: player.russia
 	ReplacedInQueue:
 		Actors: ttrp
+	Encyclopedia:
+		Category: Soviets/Infantry
 
 TTRP:
 	Inherits: SHOK
@@ -1571,6 +1634,8 @@ N1:
 		SpawnActors: N1C
 	ReplacedInQueue:
 		Actors: n1c
+	Encyclopedia:
+		Category: GDI/Infantry; Nod/Infantry
 
 N1R1:
 	Inherits: N1
@@ -1582,6 +1647,7 @@ N1R1:
 	-Buildable:
 	UpdatesPlayerStatistics:
 		OverrideActor: n1
+	-Encyclopedia:
 
 N2:
 	Inherits: ^Soldier
@@ -1629,7 +1695,7 @@ N2:
 	WithInfantryBody:
 		StandSequences: stand
 		DefaultAttackSequence: throw
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: UnitExplodeGrenadeTD
 		EmptyWeapon: UnitExplodeGrenadeTD
 		Chance: 100
@@ -1647,6 +1713,8 @@ N2:
 		Prerequisites: empgren.upgrade
 	RangeMultiplier@HeroOfTheUnion:
 		RequiresCondition: herooftheunion && !empgren-upgrade
+	Encyclopedia:
+		Category: GDI/Infantry
 
 N2R1:
 	Inherits: N2
@@ -1658,6 +1726,7 @@ N2R1:
 	-Buildable:
 	UpdatesPlayerStatistics:
 		OverrideActor: n2
+	-Encyclopedia:
 
 N3:
 	Inherits: ^Soldier
@@ -1747,6 +1816,8 @@ N3:
 		SpawnActors: N3C
 	ReplacedInQueue:
 		Actors: n3c
+	Encyclopedia:
+		Category: GDI/Infantry; Nod/Infantry
 
 N3R1:
 	Inherits: N3
@@ -1758,6 +1829,7 @@ N3R1:
 	-Buildable:
 	UpdatesPlayerStatistics:
 		OverrideActor: n3
+	-Encyclopedia:
 
 N4:
 	Inherits: ^Soldier
@@ -1804,7 +1876,7 @@ N4:
 		PauseOnCondition: being-warped || blinded || reapersnare
 		FacingTolerance: 0
 	WithMuzzleOverlay:
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: UnitExplodeFlameSmall
 		EmptyWeapon: UnitExplodeFlameSmall
 		Chance: 100
@@ -1823,6 +1895,8 @@ N4:
 	FirepowerMultiplier@HeroOfTheUnion:
 		RequiresCondition: herooftheunion
 		Modifier: 120
+	Encyclopedia:
+		Category: Nod/Infantry
 
 N5:
 	Inherits: ^Cyborg
@@ -1882,7 +1956,7 @@ N5:
 	Crushable:
 		CrushClasses: heavyinfantry
 	WithMuzzleOverlay:
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: UnitExplodeChemSmall
 		EmptyWeapon: UnitExplodeChemSmall
 		Chance: 33
@@ -1924,6 +1998,8 @@ N5:
 		DeploySound: tibsurge.aud
 	Targetable@ChemWarrior:
 		TargetTypes: ChemWarrior
+	Encyclopedia:
+		Category: Nod/Infantry
 
 N5R1:
 	Inherits: N5
@@ -1935,6 +2011,7 @@ N5R1:
 	-Buildable:
 	UpdatesPlayerStatistics:
 		OverrideActor: n5
+	-Encyclopedia:
 
 RMBO:
 	Inherits: ^Soldier
@@ -2034,6 +2111,8 @@ RMBO:
 			Structure: Demolish
 	ChangesHealth@ELITE:
 		Delay: 50
+	Encyclopedia:
+		Category: GDI/Infantry; Nod/Infantry
 
 N6:
 	Inherits: ^Soldier
@@ -2051,6 +2130,8 @@ N6:
 		StandSequences: stand
 	-ReloadAmmoDelayMultiplier@Inspiration1:
 	-ReloadAmmoDelayMultiplier@Inspiration2:
+	Encyclopedia:
+		Category: GDI/Infantry; Nod/Infantry
 
 VICE:
 	Inherits: ^Viceroid
@@ -2058,7 +2139,7 @@ VICE:
 		Locomotor: foot
 	Tooltip:
 	ActorLostNotification:
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: UnitExplodeVice
 		EmptyWeapon: UnitExplodeVice
 		Chance: 100
@@ -2081,7 +2162,7 @@ SNIP:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 83
 		Prerequisites: ~infantry.england, anyradar, ~techlevel.medium
-		Description: Elite marksman infantry armed with\n  a powerful sniper rifle.
+		Description: Elite marksman infantry armed with a powerful sniper rifle.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Vehicles (with upgrade)
 		Weaknesses: • Weak vs Buildings, Defenses\n• Cannot attack aircraft
@@ -2138,10 +2219,8 @@ SNIP:
 		InitialDelay: 200
 		CloakDelay: 200
 		CloakedCondition: hidden
-		Palette: cloaktd
 		CloakSound: gstealon.aud
 		UncloakSound: gstealof.aud
-		IsPlayerPalette: true
 		DetectionTypes: Cloak
 		RequiresCondition: !cloak-force-disabled && !being-warped
 		PauseOnCondition: invisibility
@@ -2188,6 +2267,10 @@ SNIP:
 	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || hidden
 		ColorSource: Player
+	Encyclopedia:
+		Category: Allies/Infantry
+	EncyclopediaExtras:
+		Subfaction: England
 
 BORI:
 	Inherits: ^Soldier
@@ -2203,7 +2286,7 @@ BORI:
 		BuildPaletteOrder: 205
 		Prerequisites: ~barr, stek, ~infantry.boris, ~techlevel.high
 		BuildLimit: 1
-		Description: Elite commando infantry armed with a\n  high-powered assault rifle.
+		Description: Elite commando infantry armed with a high-powered assault rifle.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Buildings, Defenses
 		Weaknesses: • Cannot attack Aircraft
@@ -2296,6 +2379,8 @@ BORI:
 		ValidTargets: Infantry, Vehicle, Water, Underwater
 	ChangesHealth@ELITE:
 		Delay: 50
+	Encyclopedia:
+		Category: Soviets/Infantry
 
 SAB:
 	Inherits: ^Soldier
@@ -2307,7 +2392,7 @@ SAB:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 113
 		Prerequisites: anyradar, ~hand, ~techlevel.medium
-		Description: Covert infantry that infiltrates enemy structures\n  to steal or lock technology.
+		Description: Covert infantry that infiltrates enemy structures to steal or lock technology.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry
 		Weaknesses: • Can only attack Infantry
@@ -2359,7 +2444,6 @@ SAB:
 		InitialDelay: 0
 		CloakDelay: 25
 		CloakedCondition: hidden
-		Palette: cloaktd
 		IsPlayerPalette: true
 		DetectionTypes: Cloak
 		RequiresCondition: can-cloak && !cloak-force-disabled && !being-warped
@@ -2398,6 +2482,8 @@ SAB:
 	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || hidden
 		ColorSource: Player
+	Encyclopedia:
+		Category: Nod/Infantry
 
 ASSA:
 	Inherits: ^Soldier
@@ -2500,6 +2586,10 @@ ASSA:
 		Prerequisites: barracks.upgraded
 	Targetable@MindControlResistant:
 		TargetTypes: MindControlResistant
+	Encyclopedia:
+		Category: Nod/Infantry
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Wrath Covenant.
 
 CONF:
 	Inherits: ^Soldier
@@ -2510,7 +2600,7 @@ CONF:
 		Attributes: • Special Ability: Idol of Kane (max 1 per Confessor)\n• Immune to mind control
 	Buildable:
 		Queue: ConfessorCabal
-		Description: Fanatical elite infantry that can deploy Idols of Kane\n  to inspire allies and demoralize enemies.
+		Description: Fanatical elite infantry that can deploy Idols of Kane to inspire allies and demoralize enemies.
 		IconPalette: chrometd
 	Valued:
 		Cost: 500
@@ -2576,6 +2666,10 @@ CONF:
 		TargetTypes: MindControlImmune
 	Targetable@ChaosImmune:
 		TargetTypes: ChaosImmune
+	Encyclopedia:
+		Category: Nod/Infantry
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Zeal Covenant.
 
 ACOL:
 	Inherits: ^Cyborg
@@ -2639,6 +2733,10 @@ ACOL:
 		SpawnActors: TPLR
 	ReplacedInQueue:
 		Actors: tplr
+	Encyclopedia:
+		Category: Nod/Infantry
+	EncyclopediaExtras:
+		Subfaction: Marked
 
 TPLR:
 	Inherits: ACOL
@@ -2859,6 +2957,8 @@ JJET:
 	Targetable@MindControlImmune:
 		TargetTypes: MindControlImmune
 		RequiresCondition: airborne
+	Encyclopedia:
+		Category: GDI/Infantry
 
 BJET:
 	Inherits: JJET
@@ -3018,6 +3118,10 @@ E8:
 		-BlinkPatterns:
 	ReplacedInQueue:
 		Actors: deso
+	Encyclopedia:
+		Category: Soviets/Infantry
+	EncyclopediaExtras:
+		Subfaction: Iraq
 
 DESO:
 	Inherits: E8
@@ -3028,7 +3132,7 @@ DESO:
 	Tooltip:
 		Name: Desolator
 	TooltipExtras:
-		Attributes: • Irradiates vehicles causing them to take more damage,\n     deal less damage, and damage nearby units\n• Special Ability: Desolate Ground
+		Attributes: • Irradiates vehicles causing them to take more damage, deal less damage, and damage nearby units\n• Special Ability: Desolate Ground
 	Valued:
 		Cost: 600
 	Health:
@@ -3093,6 +3197,17 @@ DESO:
 	GrantConditionOnBotOwner@IAMBOT:
 		Condition: botowner
 		Bots: brutal, vhard, hard, normal, easy, naval
+	EncyclopediaExtras:
+		RenderPreviewActor: deso.preview
+
+DESO.Preview:
+	Inherits: ^PreviewDummy
+	Inherits@TDPalette: ^TDPalette
+	RenderSprites:
+		Image: deso
+	WithInfantryBody:
+	QuantizeFacingsFromSequence:
+		Sequence: stand
 
 N1C:
 	Inherits: ^Cyborg
@@ -3147,6 +3262,8 @@ N1C:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
+	Encyclopedia:
+		Category: Nod/Infantry
 
 N3C:
 	Inherits: ^Cyborg
@@ -3239,6 +3356,8 @@ N3C:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
+	Encyclopedia:
+		Category: Nod/Infantry
 
 RMBC:
 	Inherits: ^Cyborg
@@ -3252,7 +3371,7 @@ RMBC:
 		BuildPaletteOrder: 232
 		IconPalette: chrometd
 		Prerequisites: ~infantry.nod, tmpp, advcyber.upgrade, ~techlevel.high
-		Description: Elite cyborg infantry unit armed with\n  a plasma cannon.
+		Description: Elite cyborg infantry unit armed with a plasma cannon.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
 		Weaknesses: • Cannot attack Aircraft
@@ -3291,7 +3410,7 @@ RMBC:
 	Armament@BATF:
 		Name: batf
 		Weapon: CyCannon
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: UnitExplodeSmall
 		EmptyWeapon: UnitExplodeSmall
 		Chance: 100
@@ -3330,6 +3449,8 @@ RMBC:
 		MinimumHealing: 2500
 		DamageTypes: DirectRepair
 		ShowSelectionBar: true
+	Encyclopedia:
+		Category: Nod/Infantry
 
 IVAN:
 	Inherits: ^Soldier
@@ -3380,7 +3501,7 @@ IVAN:
 	WithInfantryBody:
 		StandSequences: stand
 		DefaultAttackSequence: throw
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: ArtilleryExplode
 		EmptyWeapon: ArtilleryExplode
 		Chance: 100
@@ -3393,6 +3514,10 @@ IVAN:
 		Prerequisites: barracks.upgraded
 	Voiced:
 		VoiceSet: CrazyIvanVoice
+	Encyclopedia:
+		Category: Soviets/Infantry
+	EncyclopediaExtras:
+		Subfaction: Ukraine
 
 BRUT:
 	Inherits: ^Soldier
@@ -3496,6 +3621,10 @@ BRUT:
 	-SpawnActorOnDeath@GMUT:
 	-Targetable@GMUT:
 	-Targetable@SpyDisguise:
+	Encyclopedia:
+		Category: Soviets/Infantry
+	EncyclopediaExtras:
+		Subfaction: Psi-Corps
 
 BRUT.Mutating:
 	Inherits: BRUT
@@ -3531,6 +3660,7 @@ BRUT.Mutating:
 	-WithInfantryBody@Warped:
 	-WithDeathAnimation:
 	-MapEditorData:
+	-Encyclopedia:
 
 SHAD:
 	Inherits: ^Soldier
@@ -3604,7 +3734,6 @@ SHAD:
 		InitialDelay: 1
 		CloakDelay: 70
 		CloakedCondition: hidden
-		Palette: cloaktd
 		IsPlayerPalette: true
 		DetectionTypes: Cloak
 		UncloakOn: Unload, Demolish, Dock, Attack, Damage
@@ -3643,6 +3772,10 @@ SHAD:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
+	Encyclopedia:
+		Category: Nod/Infantry
+	EncyclopediaExtras:
+		Subfaction: Shadow
 
 SGLI:
 	Inherits: ^Plane
@@ -3688,7 +3821,6 @@ SGLI:
 	Cloak:
 		InitialDelay: 1
 		CloakDelay: 125
-		Palette: cloakra
 		IsPlayerPalette: true
 		DetectionTypes: AirCloak
 		UncloakOn: Attack, Damage
@@ -3722,7 +3854,7 @@ SGLI:
 	RejectsOrders:
 		RequiresCondition: !gliding
 	-EjectOnDeath:
-	-Explodes:
+	-FireWarheadsOnDeath:
 	-Contrail@1:
 	-Contrail@2:
 	-ActorLostNotification:
@@ -3857,7 +3989,7 @@ BH:
 		FacingTolerance: 0
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: UnitExplodeFlameSmall
 		EmptyWeapon: UnitExplodeFlameSmall
 		Chance: 33
@@ -3881,6 +4013,10 @@ BH:
 		VoiceSet: BlackHandVoice
 	Targetable@STEALTHBUBBLEIMMUNE:
 		TargetTypes: StealthBubbleImmune
+	Encyclopedia:
+		Category: Nod/Infantry
+	EncyclopediaExtras:
+		Subfaction: Black Hand
 
 YURI:
 	Inherits: ^Soldier
@@ -3896,7 +4032,7 @@ YURI:
 		BuildPaletteOrder: 206
 		Prerequisites: ~barr, stek, ~infantry.yuri, ~techlevel.high
 		BuildLimit: 1
-		Description: Elite specialist infantry able to mind-control\n  enemy units (up to 3, increases with veterancy).
+		Description: Elite specialist infantry able to mind-control enemy units (up to 3, increases with veterancy).
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Vehicles, Defenses, Buildings
 		Weaknesses: • Cannot attack Aircraft
@@ -4080,6 +4216,10 @@ YURI:
 	KeepsDistance:
 	ChangesHealth@ELITE:
 		Delay: 50
+	Encyclopedia:
+		Category: Soviets/Infantry
+	EncyclopediaExtras:
+		Subfaction: Psi-Corps
 
 YURI.Clone:
 	Inherits: YURI
@@ -4095,6 +4235,8 @@ YURI.Clone:
 		HP: 14000
 	RangeMultiplier@Clone:
 		Modifier: 80
+	-Encyclopedia:
+	-EncyclopediaExtras:
 
 SEAL:
 	Inherits: ^Soldier
@@ -4215,9 +4357,7 @@ SEAL:
 			tertiary: plant
 		RequiresCondition: !onwater && !parachute &&  !being-warped && !reapersnare
 	WithInfantryBody@Swim:
-		-IdleSequences:
 		StandSequences: swimidle
-		-AttackSequences:
 		DefaultAttackSequence: swim
 		MoveSequence: swim
 		RequiresCondition: !being-warped && onwater
@@ -4231,6 +4371,10 @@ SEAL:
 		DeathSequence: splash
 	WithDecoration@COMMANDOSKULL:
 		Sequence: pip-seal
+	Encyclopedia:
+		Category: Allies/Infantry
+	EncyclopediaExtras:
+		Subfaction: USA
 
 ENLI:
 	Inherits: ^Cyborg
@@ -4338,6 +4482,10 @@ ENLI:
 		Count: 1
 		ShowSelectionBar: true
 		SelectionBarColor: b8afff
+	Encyclopedia:
+		Category: Nod/Infantry
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Zeal Covenant.
 
 ^MortarInfantryBase:
 	Inherits: ^Soldier
@@ -4374,6 +4522,8 @@ ENLI:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
+	Encyclopedia:
+		Category: Nod/Infantry
 
 MORT.Cryo:
 	Inherits: ^MortarInfantryBase
@@ -4392,6 +4542,8 @@ MORT.Cryo:
 		Weapon: CryoMortar
 	Armament@BATF:
 		Weapon: CryoMortar
+	EncyclopediaExtras:
+		AdditionalInfo: Stolen from Allied Barracks.
 
 CDOG:
 	Inherits: DOG
@@ -4419,6 +4571,10 @@ CDOG:
 		Weapon: CyberdogJaw
 	GrantConditionOnAttack:
 		RevokeDelay: 25
+	Encyclopedia:
+		Category: Nod/Infantry
+	EncyclopediaExtras:
+		AdditionalInfo: Stolen from Soviet Barracks.
 
 MORT.Sonic:
 	Inherits: ^MortarInfantryBase
@@ -4438,6 +4594,8 @@ MORT.Sonic:
 		Weapon: SonicMortar
 	Armament@BATF:
 		Weapon: SonicMortar
+	EncyclopediaExtras:
+		AdditionalInfo: Stolen from GDI Barracks.
 
 MORT.Chem:
 	Inherits: ^MortarInfantryBase
@@ -4447,14 +4605,16 @@ MORT.Chem:
 	Buildable:
 		BuildPaletteOrder: 253
 		Prerequisites: ~stolentech.hand
-		Description: Infantry armed with a Chemical Mortar, delivering a corrosive payload\n  which is particularly effective against cyborgs.
+		Description: Infantry armed with a Chemical Mortar, delivering a corrosive payload which is particularly effective against cyborgs.
 	Tooltip:
 		Name: Chemical Mortar
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: UnitExplodeChemSmall
 		EmptyWeapon: UnitExplodeChemSmall
 		Chance: 33
 		RequiresCondition: !being-warped
+	EncyclopediaExtras:
+		AdditionalInfo: Stolen from Hand of Nod.
 
 CSCR:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -4532,6 +4692,10 @@ CSCR:
 	WithDecoration@RANK-ELITE:
 		BlinkPatterns:
 			on-tib || (damaged && hospitalheal): On, Off
+	Encyclopedia:
+		Category: Nod/Infantry
+	EncyclopediaExtras:
+		AdditionalInfo: Stolen from Scrin Portal.
 
 CMSR:
 	Inherits: ^Soldier
@@ -4543,7 +4707,7 @@ CMSR:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 140
 		Prerequisites: stek, ~barr, ~techlevel.high
-		Description: Leads regular infantry into battle, motivating them\n  to move faster and fight harder.
+		Description: Leads regular infantry into battle, motivating them to move faster and fight harder.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry
 		Weaknesses: • Weak vs Light Armor, Heavy Armor, Defenses, Buildings\n• Cannot attack Aircraft
@@ -4608,6 +4772,8 @@ CMSR:
 	DetectCloaked:
 		DetectionTypes: Cloak, AirCloak, Thief
 		Range: 7c0
+	Encyclopedia:
+		Category: Soviets/Infantry
 
 ZTRP:
 	Inherits: ^Soldier
@@ -4619,7 +4785,7 @@ ZTRP:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 150
 		Prerequisites: ~pyle, gtek, ~bombard.strat, ~techlevel.high
-		Description: Elite infantry armed with a railgun and equipped\n  with a jump-pack.
+		Description: Elite infantry armed with a railgun and equipped with a jump-pack.
 		IconPalette: chrometd
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses
@@ -4709,12 +4875,16 @@ ZTRP:
 	DamageMultiplier@Jumping:
 		Modifier: 50
 		RequiresCondition: jumping
+	Encyclopedia:
+		Category: GDI/Infantry
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Bombardment Strategy.
 
 ZRAI:
 	Inherits: ZTRP
 	Buildable:
 		Prerequisites: ~pyle, gtek, ~seek.strat, ~techlevel.high
-		Description: Elite infantry armed with a sonic grenade launcher\n  and equipped with a jump-pack.
+		Description: Elite infantry armed with a sonic grenade launcher and equipped with a jump-pack.
 		BuildPaletteOrder: 151
 	Tooltip:
 		Name: Zone Raider
@@ -4736,12 +4906,14 @@ ZRAI:
 	TargetedLeapAbility:
 		MaxDistance: 10
 		Speed: 200
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Seek & Destroy Strategy.
 
 ZDEF:
 	Inherits: ZTRP
 	Buildable:
 		Prerequisites: ~pyle, gtek, ~hold.strat, ~techlevel.high
-		Description: Elite infantry armed with an ion rifle\n  and an ability which shields nearby infantry.
+		Description: Elite infantry armed with an ion rifle and an ability which shields nearby infantry.
 		BuildPaletteOrder: 152
 	Tooltip:
 		Name: Zone Defender
@@ -4796,6 +4968,8 @@ ZDEF:
 		ValidRelationships: Ally
 		RequiresCondition: shield-active && !passenger
 		AffectsParent: true
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Hold the Line Strategy.
 
 ENFO:
 	Inherits: ^Soldier
@@ -4864,6 +5038,8 @@ ENFO:
 		Actors: hopl
 	GrantConditionOnHealingReceived@HEALINGCOOLDOWN:
 		RequiredHealing: 20000
+	Encyclopedia:
+		Category: Allies/Infantry
 
 HOPL:
 	Inherits: ^Soldier
@@ -4875,7 +5051,7 @@ HOPL:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 132
 		Prerequisites: ~tent, alhq, ~greece.coalition, ~techlevel.high
-		Description: Elite infantry armed with a prism rifle\n  which periodically fires charged shots to blind enemies.
+		Description: Elite infantry armed with a prism rifle which periodically fires charged shots to blind enemies.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
@@ -4952,6 +5128,10 @@ HOPL:
 		Condition: charged-fired
 		ArmamentNames: primary
 		RevokeDelay: 1
+	Encyclopedia:
+		Category: Allies/Infantry
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Greece Coalition.
 
 TIGR:
 	Inherits: ^Soldier
@@ -5017,6 +5197,10 @@ TIGR:
 		IdleSequences: idle, idle2
 		StandSequences: stand, stand2
 		DefaultAttackSequence: shoot
+	Encyclopedia:
+		Category: Allies/Infantry
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Korea Coalition.
 
 CRYT:
 	Inherits: ^Soldier
@@ -5089,6 +5273,10 @@ CRYT:
 	GrantConditionOnAttackCA:
 		Condition: attacking
 		RevokeDelay: 6
+	Encyclopedia:
+		Category: Allies/Infantry
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Sweden Coalition.
 
 REAP:
 	Inherits: ^Cyborg
@@ -5103,7 +5291,7 @@ REAP:
 		BuildPaletteOrder: 231
 		IconPalette: chrometd
 		Prerequisites: ~infantry.nod, tmpp, advcyber.upgrade, ~unity.covenant, ~techlevel.high
-		Description: Heavy cyborg with dual missile launchers\n  and an infantry incapacitating grenade launcher.
+		Description: Heavy cyborg with dual missile launchers and an infantry incapacitating grenade launcher.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor, Buildings
 		Weaknesses: • Weak vs Heavy Armor
@@ -5182,7 +5370,7 @@ REAP:
 		MinimumHealing: 2500
 		DamageTypes: DirectRepair
 		ShowSelectionBar: true
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: UnitExplodeSmall
 		EmptyWeapon: UnitExplodeSmall
 		RequiresCondition: !being-warped
@@ -5204,3 +5392,7 @@ REAP:
 		Count: 1
 		ShowSelectionBar: true
 		SelectionBarColor: 00cc00
+	Encyclopedia:
+		Category: Nod/Infantry
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Unity Covenant.

@@ -44,7 +44,7 @@ namespace OpenRA.Mods.CA.Traits
 				});
 				var driverMobile = driver.TraitOrDefault<Mobile>();
 				if (driverMobile != null)
-					driverMobile.Nudge(driver);
+					self.QueueActivity(false, new Nudge(self));
 			});
 		}
 

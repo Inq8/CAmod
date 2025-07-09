@@ -11,6 +11,8 @@
 	-SpawnRandomActorOnDeath:
 	Building:
 		BuildSounds: scrinbuild.aud
+	Encyclopedia:
+		Category: Scrin/Buildings
 
 INFANTRY.SCRIN:
 	AlwaysVisible:
@@ -368,7 +370,7 @@ VEHICLES.SCRIN:
 		TargetTypes: AnathemaTargetable
 	KillsSelf@Anathema:
 		RequiresCondition: anathema && !anathema-alive
-	Explodes@Anathema:
+	FireWarheadsOnDeath@Anathema:
 		Weapon: KirovExplode
 		EmptyWeapon: KirovExplode
 		RequiresCondition: anathema && !anathema-alive
@@ -445,6 +447,8 @@ VEHICLES.SCRIN:
 	GrantConditionOnPrerequisite@CARAPACE:
 		Condition: carapace-upgrade
 		Prerequisites: carapace.upgrade
+	Encyclopedia:
+		Category: Scrin/Infantry
 
 S1:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -707,6 +711,8 @@ MRDR:
 		RequiresCondition: blink
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
+	EncyclopediaExtras:
+		Subfaction: Harbinger-31
 
 S6:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -764,6 +770,8 @@ WCHR:
 		CloakSound: gstealon.aud
 		UncloakSound: gstealof.aud
 		DetectionTypes: Cloak
+		CloakStyle: Palette
+		CloakedPalette: cloak
 		IsPlayerPalette: false
 		RequiresCondition: !cloak-force-disabled && !being-warped
 		PauseOnCondition: invisibility
@@ -816,7 +824,7 @@ BRST:
 		Speed: 92
 	RevealsShroud:
 		Range: 7c0
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: BursterExplode
 		EmptyWeapon: BursterExplode
 	AttackFrontal:
@@ -910,6 +918,8 @@ EVIS:
 		Sequence: redsm
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Loyalist Allegiance.
 
 IMPL:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -921,7 +931,7 @@ IMPL:
 		BuildPaletteOrder: 122
 		Prerequisites: anyradar, ~infantry.scrin, ~impl.upgrade, ~techlevel.medium
 		IconPalette: chromes
-		Description: Assault infantry with high burst damage.\n  Impales targets, slowing their movement.
+		Description: Assault infantry with high burst damage. Impales targets, slowing their movement.
 	Selectable:
 		DecorationBounds: 640, 896, -32, -256
 	Valued:
@@ -951,6 +961,8 @@ IMPL:
 		Weapon: ImpalerSpike
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Rebel Allegiance.
 
 STLK:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -1010,7 +1022,8 @@ STLK:
 		CloakSound: stlk-cloak.aud
 		UncloakSound: stlk-uncloak.aud
 		CloakedCondition: hidden
-		Palette: cloak
+		CloakStyle: Palette
+		CloakedPalette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
 		RequiresCondition: !cloak-force-disabled && !being-warped && !parachute && cloak
@@ -1033,14 +1046,14 @@ STLK:
 	WithColoredOverlay@UncloakShield:
 		Color: 15091f77
 		RequiresCondition: phaseshield
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Malefic Allegiance.
 
 SMEDI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Buildable:
-		Queue: InfantrySQ, InfantryMQ
-		BuildAtProductionType: Soldier
+		Queue: Hospital
 		BuildPaletteOrder: 240
-		Prerequisites: ~disabled, ~infantry.scrin
 		IconPalette: chromes
 		Description: Heals nearby life-forms.
 	TooltipExtras:
@@ -1082,14 +1095,14 @@ SMEDI:
 	GuardsSelection:
 		ValidTargets: Infantry
 	KeepsDistance:
+	EncyclopediaExtras:
+		AdditionalInfo: Acquired from captured Hospitals.
 
 ARTI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Buildable:
-		Queue: InfantrySQ, InfantryMQ
-		BuildAtProductionType: Soldier
+		Queue: Hospital
 		BuildPaletteOrder: 240
-		Prerequisites: ~disabled, ~infantry.scrin
 		IconPalette: chromes
 		Description: Repairs nearby vehicles.
 	TooltipExtras:
@@ -1140,6 +1153,7 @@ ARTI:
 		PlayerExperience: 5
 		ConsumedByCapture: False
 		CaptureDelay: 75
+		ValidRelationships: Ally, Enemy, Neutral
 		PlayerExperienceRelationships: Neutral, Enemy
 		EnterCursor: sell2
 		EnterBlockedCursor: move-blocked
@@ -1164,6 +1178,8 @@ ARTI:
 	GuardsSelection:
 		ValidTargets: Vehicle
 	KeepsDistance:
+	EncyclopediaExtras:
+		AdditionalInfo: Acquired from captured Machine Shops.
 
 GSCR:
 	Inherits: BRUT
@@ -1189,6 +1205,8 @@ GSCR:
 		Sounds: gscr-attack1.aud, gscr-attack2.aud
 	Selectable:
 		DecorationBounds: 640, 896, -32, -256
+	EncyclopediaExtras:
+		AdditionalInfo: Result of Genetic Mutation Bomb on Scrin infantry.
 
 GSCR.Mutating:
 	Inherits: BRUT.Mutating
@@ -1217,7 +1235,7 @@ MAST:
 		Prerequisites: scrt, ~infantry.scrin, ~techlevel.high
 		BuildLimit: 1
 		IconPalette: chrome
-		Description: Elite specialist infantry able to mind-control\n  enemy units (up to 3, increases with veterancy).
+		Description: Elite specialist infantry able to mind-control enemy units (up to 3, increases with veterancy).
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Vehicles, Defenses, Buildings
 		Weaknesses: • Cannot attack Aircraft
@@ -1432,6 +1450,7 @@ MAST.Clone:
 		HP: 14000
 	RangeMultiplier@Clone:
 		Modifier: 80
+	-Encyclopedia:
 
 #
 # ---- Vehicles
@@ -1468,6 +1487,8 @@ HARV.Scrin:
 	-RejectsOrders@Transforming:
 	-TransferResourcesOnTransform:
 	-ReplacedInQueue:
+	Encyclopedia:
+		Category: Scrin/Vehicles
 
 GUNW:
 	Inherits: ^Tank
@@ -1549,6 +1570,8 @@ GUNW:
 		Actor: shrw
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
+	Encyclopedia:
+		Category: Scrin/Vehicles
 
 SHRW:
 	Inherits: GUNW
@@ -1576,6 +1599,8 @@ SHRW:
 	-SpeedMultiplier@TRAVELERSPEED:
 	-ReplacedInQueue:
 	-Upgradeable@SHRW:
+	EncyclopediaExtras:
+		Subfaction: Reaper-17
 
 SEEK:
 	Inherits: ^Vehicle
@@ -1656,6 +1681,8 @@ SEEK:
 	Targetable@ONWATER:
 		TargetTypes: Water, Ship
 		RequiresCondition: onwater
+	Encyclopedia:
+		Category: Scrin/Vehicles
 
 LACE:
 	Inherits: ^Vehicle
@@ -1740,6 +1767,10 @@ LACE:
 	Targetable@ONWATER:
 		TargetTypes: Water, Ship
 		RequiresCondition: onwater
+	Encyclopedia:
+		Category: Scrin/Vehicles
+	EncyclopediaExtras:
+		Subfaction: Traveler-59
 
 INTL:
 	Inherits: ^Vehicle
@@ -1870,6 +1901,8 @@ INTL:
 		RequiresCondition: shields-upgrade
 	Shielded:
 		MaxStrength: 6000
+	Encyclopedia:
+		Category: Scrin/Vehicles
 
 INTL.AI:
 	Inherits: INTL
@@ -1879,6 +1912,7 @@ INTL.AI:
 		Prerequisites: ~botplayer, ~vehicles.scrin, ~!scrt, ~techlevel.low
 	WithCargoSounds:
 		-EnterSounds:
+	-Encyclopedia:
 
 INTL.AI2:
 	Inherits: INTL.AI
@@ -1934,7 +1968,7 @@ CORR:
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped || blinded
 		FacingTolerance: 0
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: CorrupterExplode
 		EmptyWeapon: CorrupterExplode
 	ProducibleWithLevel:
@@ -1950,6 +1984,8 @@ CORR:
 	SpeedMultiplier@TRAVELERSPEED:
 		RequiresCondition: travelerspeed
 		Modifier: 115
+	Encyclopedia:
+		Category: Scrin/Vehicles
 
 LCHR:
 	Inherits: ^Tank
@@ -2010,11 +2046,11 @@ LCHR:
 		DamagePercentConverted: 30
 		RequiresCondition: !coalescence-upgrade
 		InvalidTargetTypes: Husk
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: LeecherExplode
 		EmptyWeapon: LeecherExplode
 		RequiresCondition: !coalescence-upgrade && !being-warped
-	Explodes@COALESCENCE:
+	FireWarheadsOnDeath@COALESCENCE:
 		Weapon: LeecherCoalesce
 		EmptyWeapon: LeecherCoalesce
 		RequiresCondition: coalescence-upgrade && !being-warped
@@ -2037,6 +2073,10 @@ LCHR:
 		RequiresCondition: coalescence-upgrade && !being-warped
 	GivesBountyCA:
 		RequiresCondition: global-bounty && !coalescence-upgrade
+	Encyclopedia:
+		Category: Scrin/Vehicles
+	EncyclopediaExtras:
+		Subfaction: Collector-73
 
 LCHR.Orb:
 	Inherits@1: ^1x1Shape
@@ -2083,11 +2123,11 @@ LCHR.Orb:
 	KillsSelf:
 		Delay: 0
 		RequiresCondition: resurrect
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: LeecherExplode
 		EmptyWeapon: LeecherExplode
 		RequiresCondition: !resurrect
-	Explodes@COALESCENCE:
+	FireWarheadsOnDeath@COALESCENCE:
 		Weapon: LeecherCoalesce
 		EmptyWeapon: LeecherCoalesce
 		RequiresCondition: resurrect
@@ -2199,6 +2239,10 @@ STCR:
 		Modifier: 130
 	Shielded:
 		MaxStrength: 10000
+	Encyclopedia:
+		Category: Scrin/Vehicles
+	EncyclopediaExtras:
+		Subfaction: Reaper-17
 
 DEVO:
 	Inherits: ^Vehicle
@@ -2289,6 +2333,8 @@ DEVO:
 		Condition: charged-fire
 		RevokeDelay: 40
 		RequiresCondition: anathema
+	Encyclopedia:
+		Category: Scrin/Vehicles
 
 DARK:
 	Inherits: ^Vehicle
@@ -2365,6 +2411,10 @@ DARK:
 	Targetable@ONWATER:
 		TargetTypes: Water, Ship
 		RequiresCondition: onwater
+	Encyclopedia:
+		Category: Scrin/Vehicles
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Malefic Allegiance.
 
 RUIN:
 	Inherits: ^Vehicle
@@ -2421,7 +2471,7 @@ RUIN:
 		MuzzlePalette: scrin
 		PauseOnCondition: !ammo || uncharged-fire
 	WithMuzzleOverlay:
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: ArtilleryExplode
 		LoadedChance: 75
 	ProducibleWithLevel:
@@ -2466,6 +2516,10 @@ RUIN:
 	Targetable@ONWATER:
 		TargetTypes: Water, Ship
 		RequiresCondition: onwater
+	Encyclopedia:
+		Category: Scrin/Vehicles
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Loyalist Allegiance.
 
 ATMZ:
 	Inherits: ^Vehicle
@@ -2487,7 +2541,7 @@ ATMZ:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 285
 		Prerequisites: scrt, ~vehicles.collector, ~techlevel.high
-		Description: Lightly armored long-range anti-tank unit\n  that atomizes vehicles and defenses.
+		Description: Lightly armored long-range anti-tank unit that atomizes vehicles and defenses.
 		IconPalette: chrome
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses
@@ -2535,6 +2589,10 @@ ATMZ:
 	Targetable@ONWATER:
 		TargetTypes: Water, Ship
 		RequiresCondition: onwater
+	Encyclopedia:
+		Category: Scrin/Vehicles
+	EncyclopediaExtras:
+		Subfaction: Collector-73
 
 TPOD:
 	Inherits: ^Tank
@@ -2635,6 +2693,8 @@ TPOD:
 		RequiresCondition: on-resource && damaged
 		BlinkInterval: 15
 		BlinkPattern: on, off
+	Encyclopedia:
+		Category: Scrin/Vehicles
 
 RTPD:
 	Inherits: TPOD
@@ -2721,6 +2781,8 @@ RTPD:
 		Offset: 0,0,200
 	WithIdleOverlay@RESCONVGEMS:
 		Offset: 0,0,200
+	EncyclopediaExtras:
+		Subfaction: Reaper-17
 
 OBLT:
 	Inherits: ^Vehicle
@@ -2732,9 +2794,9 @@ OBLT:
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 281
+		BuildPaletteOrder: 283
 		Prerequisites: scrt, ~vehicles.harbinger, ~techlevel.high
-		Description: Heavy artillery that creates a charged particle stream through which\n  it projects a powerful energy pulse, damaging everything it passes through.
+		Description: Heavy artillery that creates a charged particle stream through which it projects a powerful energy pulse, damaging everything it passes through.
 		IconPalette: chromes
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Light Armor, Infantry
@@ -2838,6 +2900,10 @@ OBLT:
 		RequiresCondition: !being-warped
 	Targetable@Obliterator:
 		TargetTypes: Obliterator
+	Encyclopedia:
+		Category: Scrin/Vehicles
+	EncyclopediaExtras:
+		Subfaction: Harbinger-31
 
 NULL:
 	Inherits: ^Vehicle
@@ -2910,6 +2976,10 @@ NULL:
 	SpawnActorOnDeath:
 		Actor: NULL.Husk
 		RequiresCondition: !being-warped
+	Encyclopedia:
+		Category: Scrin/Vehicles
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Rebel Allegiance.
 
 SMCV:
 	Inherits: ^Vehicle-NOUPG
@@ -3027,6 +3097,8 @@ SMCV:
 		RequiresCondition: global-multiqueuefull && rebel-allegiance
 	ProductionBar@MQDEF:
 		RequiresCondition: global-multiqueuefull && rebel-allegiance
+	Encyclopedia:
+		Category: Scrin/Vehicles
 
 #
 # ---- Aircraft
@@ -3169,6 +3241,8 @@ STMR:
 	GpsRadarDot:
 		Sequence: Plane
 	-SoundOnDamageTransitionCA:
+	Encyclopedia:
+		Category: Scrin/Aircraft
 
 TORM:
 	Inherits: ^Helicopter
@@ -3310,6 +3384,8 @@ TORM:
 	ReloadAmmoPool@MothershipRearmable:
 		Count: 4
 	-SoundOnDamageTransitionCA:
+	Encyclopedia:
+		Category: Scrin/Aircraft
 
 ENRV:
 	Inherits: ^Helicopter
@@ -3444,6 +3520,10 @@ ENRV:
 	ReloadAmmoPool@MothershipRearmable:
 		Count: 1
 	-SoundOnDamageTransitionCA:
+	Encyclopedia:
+		Category: Scrin/Aircraft
+	EncyclopediaExtras:
+		Subfaction: Traveler-59
 
 DEVA:
 	Inherits: ^Helicopter
@@ -3550,7 +3630,7 @@ DEVA:
 	Selectable:
 		Bounds: 1536, 1194, 0, 85
 		DecorationBounds: 1706, 1706, 0, 42
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: KirovExplode
 		RequiresCondition: !airborne
 	SpawnActorOnDeath:
@@ -3583,6 +3663,9 @@ DEVA:
 	-SoundOnDamageTransitionCA:
 	Targetable@AirHighValue:
 		TargetTypes: AirHighValue
+	Encyclopedia:
+		Category: Scrin/Aircraft
+		Scale: 1.5
 
 PAC:
 	Inherits: ^Helicopter
@@ -3595,7 +3678,7 @@ PAC:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 112
 		Prerequisites: sign, scrt, ~aircraft.scrin, ~techlevel.high
-		Description: Warship that launches a squadron\n  of Invader assault craft.
+		Description: Warship that launches a squadron of Invader assault craft.
 		IconPalette: chrome
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
@@ -3639,7 +3722,7 @@ PAC:
 	Selectable:
 		Bounds: 1536, 1194, 0, 85
 		DecorationBounds: 1706, 1706, 0, 42
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: KirovExplode
 		RequiresCondition: !airborne
 	SpawnActorOnDeath:
@@ -3721,12 +3804,15 @@ PAC:
 	-SoundOnDamageTransitionCA:
 	Targetable@AirHighValue:
 		TargetTypes: AirHighValue
+	Encyclopedia:
+		Category: Scrin/Aircraft
+		Scale: 1.5
 
 INVA:
 	Inherits: ^NeutralPlane
 	Inherits@3: ^Cloakable
 	Inherits@4: ^EmpDisable
-	Inherits@5: ^GDIUpgradeAircraft
+	Inherits@5: ^GDIStrategyBuffsAircraft
 	Inherits@ionsurge: ^IonSurgable
 	Inherits@FleetRecallable: ^FleetRecallable
 	Valued:
@@ -3771,7 +3857,7 @@ INVA:
 		LandingSounds: invader-dock.aud
 	RejectsOrders:
 	-SpawnActorOnDeath:
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: VisualExplodeInvader
 		-RequiresCondition:
 	-Selectable:
@@ -3820,7 +3906,7 @@ MSHP:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 113
 		Prerequisites: sign, scrt, ~aircraft.scrin, ~techlevel.high
-		Description: Huge craft with powerful anti-structure beam weapon\n  and secondary plasma weapons.
+		Description: Huge craft with powerful anti-structure beam weapon and secondary plasma weapons.
 		IconPalette: chromes
 		BuildLimit: 1
 	TooltipExtras:
@@ -3893,7 +3979,7 @@ MSHP:
 	Selectable:
 		Bounds: 1792, 1792, 0, 85
 		DecorationBounds: 2048, 2218, 0, 42
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: KirovExplode
 		RequiresCondition: !airborne
 	SpawnActorOnDeath:
@@ -4010,6 +4096,9 @@ MSHP:
 	ProductionCostMultiplier@HarbingerBonus:
 		Multiplier: 90
 		Prerequisites: player.harbinger
+	Encyclopedia:
+		Category: Scrin/Aircraft
+		Scale: 1
 
 #
 # ---- Husks
@@ -4290,7 +4379,7 @@ DEVA.Husk.Ground:
 	KillsSelf:
 		Delay: 1
 		-RequiresCondition:
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: KirovExplode
 	-OwnerLostAction:
 	-CaptureManager:
@@ -4345,7 +4434,7 @@ PAC.Husk.Ground:
 	KillsSelf:
 		Delay: 1
 		-RequiresCondition:
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: KirovExplode
 	-OwnerLostAction:
 	-CaptureManager:
@@ -4406,7 +4495,7 @@ MSHP.Husk.Ground:
 	KillsSelf:
 		Delay: 1
 		-RequiresCondition:
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: MothershipExplode
 	WithIdleOverlay@RING:
 		Image: mshp
@@ -4470,6 +4559,8 @@ SWAL:
 		Types: scrinwall
 	WithWallSpriteBody:
 		Type: scrinwall
+	Encyclopedia:
+		Category: Scrin/Defenses
 
 SFAC:
 	Inherits: ^ScrinBuilding
@@ -4638,7 +4729,7 @@ REA2:
 		BuildPaletteOrder: 110
 		Prerequisites: anyradar, ~structures.scrin, ~techlevel.medium
 		IconPalette: chrome
-		Description: Provides double the power of\n  a standard Reactor.
+		Description: Provides double the power of a standard Reactor.
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -4688,7 +4779,7 @@ PROC.SCRIN:
 		Prerequisites: anypower, ~structures.scrin
 		Queue: BuildingSQ, BuildingMQ
 		IconPalette: chromes
-		Description: Processes raw Tiberium, Ore\n  and Gems into credits.
+		Description: Processes raw Tiberium, Ore and Gems into credits.
 		BuildDuration: 1400
 	Building:
 		Footprint: _x_ xxx +++ ===
@@ -4709,12 +4800,14 @@ PROC.SCRIN:
 		RequiresCondition: !being-warped
 		TargetTypes: StealCreditsInfiltrate
 	Refinery:
+		TickRate: 15
+	DockHost:
+		Type: Unload
 		DockAngle: 448
-		DockOffset: 0,2
+		DockOffset: -1c0, 1c0, 0
 		IsDragRequired: True
 		DragOffset: -554,512,0
 		DragLength: 12
-		TickRate: 15
 	StoresPlayerResourcesCA:
 		Capacity: 2000
 	WithResourceStoragePipsDecoration:
@@ -5235,7 +5328,7 @@ SIGN:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.scrin, scrt, ~techlevel.high
-		Description: Provides access to the most powerful\n  Scrin units and technology.
+		Description: Provides access to the most powerful Scrin units and technology.
 		BuildLimit: 1
 		IconPalette: chromes
 	TooltipExtras:
@@ -5377,7 +5470,7 @@ SILO.SCRIN:
 		Amount: -10
 	Selectable:
 		Bounds: 1024, 1024
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: SmallBuildingExplode
 		EmptyWeapon: SmallBuildingExplode
 	-UpdatesBuildOrder:
@@ -5562,6 +5655,8 @@ PTUR:
 	-SpawnRandomActorOnDeath:
 	DetectCloaked:
 		Range: 5c0
+	Encyclopedia:
+		Category: Scrin/Defenses
 
 SHAR:
 	Inherits: ^Defense
@@ -5627,6 +5722,8 @@ SHAR:
 	SpawnActorOnDeath:
 		Actor: s1
 	-SpawnRandomActorOnDeath:
+	Encyclopedia:
+		Category: Scrin/Defenses
 
 SCOL:
 	Inherits: ^Defense
@@ -5682,6 +5779,8 @@ SCOL:
 		RequiresCondition: ioncon-upgrade && !(disabled || empdisable || being-warped)
 	GrantConditionOnDamage@IONSTORM:
 		RequiresCondition: ioncon-upgrade && !(disabled || empdisable || being-warped)
+	Encyclopedia:
+		Category: Scrin/Defenses
 
 STRM:
 	Inherits@1: ^ExistsInWorld
@@ -5841,10 +5940,9 @@ SCOL.Temp:
 	GrantConditionOnDamage@IONSTORM:
 		RequiresCondition: ioncon-upgrade && !(empdisable || being-warped)
 	-MapEditorData:
-	RepairableBuilding:
-		-RepairCondition:
 	-ChangesHealth@DefensePolicy2:
 	-UpdatesKillCount@BuildingsOrHarvesters:
+	-Encyclopedia:
 
 VSPK:
 	Inherits: ^BasicBuilding
@@ -5853,7 +5951,7 @@ VSPK:
 		Action: Kill
 	RenderSprites:
 		PlayerPalette: playerscrin
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: SmallBuildingExplode
 		EmptyWeapon: SmallBuildingExplode
 	Selectable:
@@ -5865,7 +5963,7 @@ VSPK:
 		Name: Voidspike
 	TooltipExtras:
 		Attributes: • Corrupts resources\n• Damages nearby enemies over time\n• Direct damage is reflected back to the attacker
-		Description: Gradually transforms nearby resources into Black Tiberium,\n  which is devoid of most of its useful properties.
+		Description: Gradually transforms nearby resources into Black Tiberium, which is devoid of most of its useful properties.
 	Armor:
 		Type: Concrete
 	Targetable:
@@ -6092,7 +6190,7 @@ GRCL:
 	WithColoredSelectionBox@PLAYERBOX:
 		ColorSource: Player
 		ValidRelationships: Ally, Enemy
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: LeecherExplode
 		EmptyWeapon: LeecherExplode
 	ConvertsDamageToHealth:
@@ -6137,7 +6235,7 @@ TBCL:
 		-Attributes:
 	PeriodicExplosion:
 		Weapon: TiberiumCoalescence
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: CorrupterExplode
 		EmptyWeapon: CorrupterExplode
 	-GrantConditionOnHealingReceived:

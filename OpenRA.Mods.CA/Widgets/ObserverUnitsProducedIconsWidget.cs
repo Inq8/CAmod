@@ -37,7 +37,7 @@ namespace OpenRA.Mods.Common.Widgets
 		public string TooltipDesc { get; private set; }
 		public Func<string> GetTooltipDesc;
 
-		public readonly string TooltipTemplate = "ARMY_TOOLTIP_CA";
+		public readonly string TooltipTemplate = "ARMY_VALUE_TOOLTIP";
 		public readonly string TooltipContainer;
 
 		readonly Lazy<TooltipContainerWidget> tooltipContainer;

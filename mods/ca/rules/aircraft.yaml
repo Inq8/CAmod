@@ -204,8 +204,6 @@ B2B:
 		CloakDelay: 200
 		UncloakSound: appear1.aud
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
-		IsPlayerPalette: true
-		Palette: cloakra
 		RequiresCondition: !cloak-force-disabled && airborne
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
@@ -329,6 +327,8 @@ MIG:
 		Condition: enable-smoke
 	EjectOnDeath:
 		ChuteSound: gejecta.aud
+	Encyclopedia:
+		Category: Soviets/Aircraft
 
 SUK:
 	Inherits: ^Plane
@@ -338,13 +338,13 @@ SUK:
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 80
 		Prerequisites: afld, stek, ~aircraft.soviet, ~!seismic.upgrade, ~techlevel.high
-		Description: Fast ground attack aircraft armed\n  with powerful armor-piercing munitions.
+		Description: Fast ground attack aircraft armed with powerful armor-piercing munitions.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Defenses, Light Armor
 		Weaknesses: • Weak vs Infantry, Buildings\n• Cannot attack Aircraft
 		RequiresCondition: !seismic-upgrade
 	TooltipExtras@SEISMIC:
-		Description: Fast ground attack aircraft armed\n  with powerful explosive munitions.
+		Description: Fast ground attack aircraft armed with powerful explosive munitions.
 		Strengths: • Strong vs Buildings, Heavy Armor, Defenses, Light Armor
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets
 		RequiresCondition: seismic-upgrade
@@ -461,6 +461,8 @@ SUK:
 		VoiceSet: SukVoice
 	EjectOnDeath:
 		ChuteSound: gejecta.aud
+	Encyclopedia:
+		Category: Soviets/Aircraft
 
 SUK.UPG:
 	Inherits: SUK
@@ -468,7 +470,7 @@ SUK.UPG:
 		Image: suk
 	Buildable:
 		Prerequisites: afld, stek, ~aircraft.soviet, ~seismic.upgrade, ~techlevel.high
-		Description: Fast ground attack aircraft armed\n  with powerful explosive munitions.
+		Description: Fast ground attack aircraft armed with powerful explosive munitions.
 		BuildPaletteOrder: 81
 	-TooltipExtras:
 	TooltipExtras@SEISMIC:
@@ -480,6 +482,7 @@ SUK.UPG:
 	Selectable:
 		Class: suk
 	-ReplacedInQueue:
+	-Encyclopedia:
 
 YAK:
 	Inherits: ^Plane
@@ -489,7 +492,7 @@ YAK:
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 30
 		Prerequisites: afld, ~aircraft.soviet, ~techlevel.medium
-		Description: Fighter plane armed with\n  dual machine guns
+		Description: Fighter plane armed with dual machine guns
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor, Buildings, Aircraft
 		Weaknesses: • Weak vs Heavy Armor, Defenses
@@ -586,6 +589,8 @@ YAK:
 		Offset: 0,683,-30
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
+	Encyclopedia:
+		Category: Soviets/Aircraft
 
 P51:
 	Inherits: ^NeutralPlane
@@ -757,6 +762,8 @@ TRAN:
 	GrantConditionOnAttack:
 		Condition: dropcargo
 		RevokeDelay: 15
+	Encyclopedia:
+		Category: Allies/Aircraft; GDI/Aircraft; Nod/Aircraft
 
 TRAN.paradrop:
 	Inherits: TRAN
@@ -787,6 +794,7 @@ TRAN.paradrop:
 	-Armament:
 	-ParachuteCargoOnCondition:
 	-GrantConditionOnAttack:
+	-Encyclopedia:
 
 HALO:
 	Inherits: TRAN
@@ -829,6 +837,8 @@ HALO:
 	SoundOnDamageTransitionCA:
 		DestroyedSounds: vhalodiea.aud
 		RequiresCondition: airborne
+	Encyclopedia:
+		Category: Soviets/Aircraft
 
 HALO.paradrop:
 	Inherits: HALO
@@ -853,6 +863,7 @@ HALO.paradrop:
 	-Armament:
 	-ParachuteCargoOnCondition:
 	-GrantConditionOnAttack:
+	-Encyclopedia:
 
 NHAW:
 	Inherits: ^Helicopter
@@ -865,7 +876,7 @@ NHAW:
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 10
 		Prerequisites: ~aircraft.nhaw, ~techlevel.medium
-		Description: Fast infantry transport helicopter armed with\n  a light machine gun.
+		Description: Fast infantry transport helicopter armed with a light machine gun.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry
 		Weaknesses: • Weak vs Heavy Armor, Defenses, Buildings\n• Cannot attack Aircraft
@@ -1004,6 +1015,10 @@ NHAW:
 	GrantConditionOnAttack:
 		Condition: dropcargo
 		ArmamentNames: drop
+	Encyclopedia:
+		Category: Allies/Aircraft
+	EncyclopediaExtras:
+		Subfaction: USA
 
 NHAW.paradrop:
 	Inherits: NHAW
@@ -1048,6 +1063,8 @@ NHAW.paradrop:
 	-WithMuzzleOverlay:
 	-ParachuteCargoOnCondition:
 	-GrantConditionOnAttack:
+	-Encyclopedia:
+	-EncyclopediaExtras:
 
 HELI:
 	Inherits: ^Helicopter
@@ -1057,7 +1074,7 @@ HELI:
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 20
 		Prerequisites: ~aircraft.allies, ~techlevel.medium
-		Description: Helicopter gunship armed with\n  multi-purpose missiles.
+		Description: Helicopter gunship armed with multi-purpose missiles.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Defenses, Aircraft
 		Weaknesses: • Weak vs Infantry
@@ -1168,6 +1185,8 @@ HELI:
 		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
+	Encyclopedia:
+		Category: Allies/Aircraft
 
 HIND:
 	Inherits: ^Helicopter
@@ -1177,7 +1196,7 @@ HIND:
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 32
 		Prerequisites: afld, ~aircraft.soviet, ~techlevel.medium
-		Description: Durable helicopter gunship armed with\n  a chaingun and anti-tank rockets.
+		Description: Durable helicopter gunship armed with a chaingun and anti-tank rockets.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Heavy Armor, Light Armor
 		Weaknesses: • Weak vs Defenses\n• Cannot attack Aircraft
@@ -1305,6 +1324,8 @@ HIND:
 	GrantConditionOnPrerequisite@RocketPods:
 		Prerequisites: rocketpods.upgrade
 		Condition: rocketpods-upgrade
+	Encyclopedia:
+		Category: Soviets/Aircraft
 
 U2:
 	Inherits: ^NeutralPlane
@@ -1613,6 +1634,8 @@ A10:
 	DamageMultiplier@Ceramic:
 		Modifier: 85
 		RequiresCondition: ceramic-upgrade
+	Encyclopedia:
+		Category: GDI/Aircraft
 
 A10.SW:
 	Inherits: A10
@@ -1630,7 +1653,7 @@ A10.SW:
 		Image: a10
 	Buildable:
 		Prerequisites: afld.gdi, ~aircraft.gdi, ~sidewinders.upgrade, ~techlevel.medium
-		Description: Attack aircraft armed with incendiary bombs\n  and air-to-air missiles.
+		Description: Attack aircraft armed with incendiary bombs and air-to-air missiles.
 		BuildPaletteOrder: 42
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Infantry, Light Armor, Aircraft
@@ -1675,6 +1698,7 @@ A10.SW:
 		RequiresCondition: !ammo && ammo2
 		ValidTargets: Air, AirSmall
 		InvalidTargets: NoAutoTarget
+	-Encyclopedia:
 
 A10.GAU:
 	Inherits: A10
@@ -1751,6 +1775,7 @@ A10.GAU:
 		AmmoPools: secondary
 		FullSequence: pip-red
 	WithMuzzleOverlay:
+	-Encyclopedia:
 
 A10.bomber:
 	Inherits: ^NeutralPlane
@@ -2132,6 +2157,8 @@ APCH:
 		Prerequisites: aircraft.upgraded
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
+	Encyclopedia:
+		Category: Nod/Aircraft
 
 ORCA:
 	Inherits: ^HelicopterTD
@@ -2148,7 +2175,7 @@ ORCA:
 		BuildPaletteOrder: 40
 		Prerequisites: afld.gdi, ~aircraft.gdi, ~techlevel.medium
 		IconPalette: chrometd
-		Description: VTOL gunship armed with\n  multi-purpose missiles.
+		Description: VTOL gunship armed with multi-purpose missiles.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Defenses, Aircraft
 		Weaknesses: • Weak vs Infantry
@@ -2279,6 +2306,8 @@ ORCA:
 		DestroyedSounds: vcomdi1a.aud, vcomdi2a.aud
 	EjectOnDeath:
 		ChuteSound: gejecta.aud
+	Encyclopedia:
+		Category: GDI/Aircraft
 
 ORCB:
 	Inherits: ^HelicopterTD
@@ -2444,6 +2473,8 @@ ORCB:
 		DestroyedSounds: vcomdi1a.aud, vcomdi2a.aud
 	EjectOnDeath:
 		ChuteSound: gejecta.aud
+	Encyclopedia:
+		Category: GDI/Aircraft
 
 UAV:
 	Inherits: ^NeutralPlane
@@ -2508,7 +2539,7 @@ RAH:
 		BuildPaletteOrder: 52
 		IconPalette: chrometd
 		Prerequisites: tmpl, ~aircraft.nod, ~techlevel.high
-		Description: Stealth attack helicopter with powerful\n  anti-personnel rockets.
+		Description: Stealth attack helicopter with powerful anti-personnel rockets.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor, Buildings
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
@@ -2558,7 +2589,8 @@ RAH:
 		CloakDelay: 200
 		CloakSound: trans1.aud
 		UncloakSound: appear1md.aud
-		Palette: cloak
+		CloakStyle: Palette
+		CloakedPalette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Damage, Heal
 		CloakedCondition: hidden
@@ -2644,6 +2676,8 @@ RAH:
 	ProductionCostMultiplier@ShadowBonus:
 		Multiplier: 90
 		Prerequisites: player.shadow
+	Encyclopedia:
+		Category: Nod/Aircraft
 
 KIRO:
 	Inherits: ^Helicopter
@@ -2797,7 +2831,7 @@ KIRO:
 		RequiresCondition: produced
 		Voice: Build
 		ValidRelationships: Neutral, Ally
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: KirovExplode
 		RequiresCondition: !airborne
 	DamageMultiplier@doorsopen:
@@ -2845,6 +2879,9 @@ KIRO:
 	SpeedMultiplier@EMPDISABLE:
 		Modifier: 0
 		RequiresCondition: empdisable
+	Encyclopedia:
+		Category: Soviets/Aircraft
+		Scale: 1.8
 
 OCAR:
 	Inherits: ^HelicopterTD
@@ -2953,6 +2990,8 @@ OCAR:
 		DestroyedSounds: vcomdi1a.aud, vcomdi2a.aud
 	EjectOnDeath:
 		ChuteSound: gejecta.aud
+	Encyclopedia:
+		Category: GDI/Aircraft
 
 OCAR.Reinforce:
 	Inherits: OCAR
@@ -2970,6 +3009,7 @@ OCAR.Reinforce:
 	RejectsOrders:
 	Interactable:
 	-Targetable@TEMPORAL:
+	-Encyclopedia:
 
 OCAR.XO:
 	Inherits: C17
@@ -3076,7 +3116,7 @@ HARR:
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 70
 		Prerequisites: atek, ~aircraft.allies, ~techlevel.high
-		Description: Fast VTOL ground attack aircraft armed\n  with powerful explosive missiles.
+		Description: Fast VTOL ground attack aircraft armed with powerful explosive missiles.
 	TooltipExtras:
 		Strengths: • Strong vs Aircraft, Buildings, Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Defenses
@@ -3187,6 +3227,8 @@ HARR:
 		Sequence: Plane
 	EjectOnDeath:
 		ChuteSound: gejecta.aud
+	Encyclopedia:
+		Category: Allies/Aircraft
 
 SCRN:
 	Inherits: ^HelicopterTD
@@ -3199,7 +3241,7 @@ SCRN:
 		BuildPaletteOrder: 100
 		IconPalette: chrometd
 		Prerequisites: tmpl, ~aircraft.nod, ~techlevel.high
-		Description: Fast VTOL attack craft armed\n  with powerful plasma cannons.
+		Description: Fast VTOL attack craft armed with powerful plasma cannons.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Defenses, Aircraft
 		Weaknesses: • Weak vs Infantry
@@ -3341,12 +3383,14 @@ SCRN:
 	GrantConditionOnPrerequisite@Wrath:
 		Condition: wrath-covenant
 		Prerequisites: wrath.covenant
+	Encyclopedia:
+		Category: Nod/Aircraft
 
 HORN:
 	Inherits: ^NeutralPlane
 	Inherits@3: ^Cloakable
 	Inherits@4: ^EmpDisable
-	Inherits@5: ^GDIUpgradeAircraft
+	Inherits@5: ^GDIStrategyBuffsAircraft
 	Inherits@ionsurge: ^IonSurgable
 	RenderSprites:
 		PlayerPalette: playertd
@@ -3392,7 +3436,7 @@ HORN:
 		AmmoCondition: ammo
 	RejectsOrders:
 	-SpawnActorOnDeath:
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: VisualExplodeAirborne
 		-RequiresCondition:
 	-Selectable:
@@ -3696,6 +3740,10 @@ VENM:
 		DestroyedSounds: vcomdi1a.aud, vcomdi2a.aud
 	EjectOnDeath:
 		ChuteSound: gejecta.aud
+	Encyclopedia:
+		Category: Nod/Aircraft
+	EncyclopediaExtras:
+		Subfaction: Marked
 
 AURO:
 	Inherits: ^PlaneTD
@@ -3864,6 +3912,10 @@ AURO:
 		Condition: enable-smoke
 	EjectOnDeath:
 		ChuteSound: gejecta.aud
+	Encyclopedia:
+		Category: GDI/Aircraft
+	EncyclopediaExtras:
+		Subfaction: Eagle
 
 PMAK:
 	Inherits: ^Helicopter
@@ -4009,6 +4061,8 @@ PMAK:
 		DestroyedSounds: vcomdi1a.aud, vcomdi2a.aud
 	EjectOnDeath:
 		ChuteSound: gejecta.aud
+	Encyclopedia:
+		Category: Allies/Aircraft
 
 BEAG:
 	Inherits: ^Helicopter
@@ -4131,6 +4185,10 @@ BEAG:
 		ChuteSound: gejecta.aud
 	Voiced:
 		VoiceSet: BlackEagleVoice
+	Encyclopedia:
+		Category: Allies/Aircraft
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Korea Coalition.
 
 PHAN:
 	Inherits: ^Helicopter
@@ -4263,6 +4321,10 @@ PHAN:
 		Sequence: Plane
 	EjectOnDeath:
 		ChuteSound: gejecta.aud
+	Encyclopedia:
+		Category: Nod/Aircraft
+	EncyclopediaExtras:
+		AdditionalInfo: Stolen from Allied Helipad.
 
 KAMV:
 	Inherits: ^Helicopter
@@ -4273,7 +4335,7 @@ KAMV:
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 201
 		Prerequisites: ~aircraft.kamv
-		Description: Durable helicopter gunship armed with long range\n  anti-tank rockets with concussive warheads.
+		Description: Durable helicopter gunship armed with long range anti-tank rockets with concussive warheads.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
 		Weaknesses: • Weak vs Infantry, Buildings\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets
@@ -4382,6 +4444,10 @@ KAMV:
 		Condition: enable-smoke
 	EjectOnDeath:
 		ChuteSound: gejecta.aud
+	Encyclopedia:
+		Category: Nod/Aircraft
+	EncyclopediaExtras:
+		AdditionalInfo: Stolen from Soviet Airfield.
 
 SHDE:
 	Inherits: ^HelicopterTD
@@ -4393,7 +4459,7 @@ SHDE:
 		BuildPaletteOrder: 202
 		IconPalette: chrometd
 		Prerequisites: anyradar, ~aircraft.shde
-		Description: Fast VTOL ground attack aircraft armed\n  with EMP weaponry.
+		Description: Fast VTOL ground attack aircraft armed with EMP weaponry.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses
 		Weaknesses: • Weak vs Infantry, Buildings\n• Cannot attack Aircraft
@@ -4509,6 +4575,10 @@ SHDE:
 		DestroyedSounds: vcomdi1a.aud, vcomdi2a.aud
 	EjectOnDeath:
 		ChuteSound: gejecta.aud
+	Encyclopedia:
+		Category: Nod/Aircraft
+	EncyclopediaExtras:
+		AdditionalInfo: Stolen from GDI Helipad.
 
 VERT:
 	Inherits: ^HelicopterTD
@@ -4638,7 +4708,8 @@ VERT:
 		CloakDelay: 200
 		CloakSound: trans1.aud
 		UncloakSound: appear1md.aud
-		Palette: cloak
+		CloakStyle: Palette
+		CloakedPalette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Dock, Damage, Heal
 		CloakedCondition: hidden
@@ -4657,6 +4728,10 @@ VERT:
 		DestroyedSounds: vcomdi1a.aud, vcomdi2a.aud
 	EjectOnDeath:
 		ChuteSound: gejecta.aud
+	Encyclopedia:
+		Category: Nod/Aircraft
+	EncyclopediaExtras:
+		AdditionalInfo: Stolen from Nod Helipad.
 
 MCOR:
 	Inherits: ^HelicopterTD
@@ -4735,6 +4810,10 @@ MCOR:
 		DestroyedSounds: vcomdi1a.aud, vcomdi2a.aud
 	EjectOnDeath:
 		ChuteSound: gejecta.aud
+	Encyclopedia:
+		Category: Nod/Aircraft
+	EncyclopediaExtras:
+		AdditionalInfo: Stolen from Scrin Gravity Stabilizer.
 
 DISC:
 	Inherits: ^Helicopter
@@ -4889,6 +4968,10 @@ DISC:
 		CircleWidth: 0
 		Type: Drain
 		ActiveUntilCancelled: true
+	Encyclopedia:
+		Category: Soviets/Aircraft
+	EncyclopediaExtras:
+		Subfaction: Psi-Corps
 
 JACK:
 	Inherits: ^PlaneTD
@@ -4929,8 +5012,8 @@ JACK:
 		Type: GroundPosition
 	Armament@PRIMARY:
 		Weapon: JackknifeTargeter
-		PauseOnCondition:  blinded
-	Explodes:
+		PauseOnCondition: blinded
+	FireWarheadsOnDeath:
 		Weapon: JackknifeExplosion
 		EmptyWeapon: JackknifeExplosion
 		-RequiresCondition:
@@ -4981,3 +5064,7 @@ JACK:
 	-AttackMove:
 	AutoTargetPriority@ATTACKANYTHING:
 		RequiresCondition: stance-attackanything
+	Encyclopedia:
+		Category: GDI/Aircraft
+	EncyclopediaExtras:
+		Subfaction: ARC

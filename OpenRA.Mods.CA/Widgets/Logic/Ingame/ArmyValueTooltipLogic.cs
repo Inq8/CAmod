@@ -15,10 +15,11 @@ using OpenRA.Widgets;
 
 namespace OpenRA.Mods.Common.Widgets.Logic
 {
-	public class ArmyTooltipLogicCA : ChromeLogic
+	// Very similar to ArmyTooltipLogic
+	public class ArmyValueTooltipLogic : ChromeLogic
 	{
 		[ObjectCreator.UseCtor]
-		public ArmyTooltipLogicCA(Widget widget, TooltipContainerWidget tooltipContainer, Func<ArmyUnit> getTooltipUnit, Func<string> getDesc = null)
+		public ArmyValueTooltipLogic(Widget widget, TooltipContainerWidget tooltipContainer, Func<ArmyUnit> getTooltipUnit, Func<string> getDesc = null)
 		{
 			widget.IsVisible = () => getTooltipUnit() != null;
 			var nameLabel = widget.Get<LabelWidget>("NAME");

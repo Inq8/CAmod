@@ -11,10 +11,10 @@ MINV:
 	GrantConditionOnFaction@Soviets:
 		Factions: soviet, russia, ukraine, iraq, yuri
 		Condition: soviet
-	Explodes@Allies:
+	FireWarheadsOnDeath@Allies:
 		Weapon: ATMine
 		RequiresCondition: !soviet && !defused
-	Explodes@Soviet:
+	FireWarheadsOnDeath@Soviet:
 		Weapon: APMine
 		RequiresCondition: soviet && !defused
 	ExternalCondition@DEFUSED:
@@ -32,12 +32,12 @@ MINVS:
 # Only kept for backwards-compatibility with existing and imported maps, use MINV instead
 MINP:
 	Inherits: MINV
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: APMine
 
 MINS:
 	Inherits: ^Mine
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: ATMine
 
 PROXYMINESPAWN:
@@ -529,7 +529,7 @@ FLARE:
 		Type: CenterPosition
 	RenderSprites:
 		Image: smokland
-		PlayerPalette : player
+		PlayerPalette: player
 	WithSpriteBody:
 		StartSequence: open
 	BodyOrientation:
@@ -717,6 +717,7 @@ powerproxy.sonarpulse:
 		EffectImage: moveflsh
 		EffectPalette: moveflash
 		SupportPowerPaletteOrder: 70
+		BlockedCursor: move-blocked
 
 powerproxy.paratroopers:
 	Inherits@DUMMY: ^InvisibleDummy
@@ -840,11 +841,13 @@ powerproxy.airstrike:
 	Inherits@DUMMY: ^InvisibleDummy
 	ClassicAirstrikePower:
 		Squad:
-			a10.bomber:
+			1:
+				UnitType: a10.bomber
 				SpawnDelay: 20
 				SpawnOffset: -1536,1024,0
 				TargetOffset: -536,0,0
-			a10.bomber:
+			2:
+				UnitType: a10.bomber
 				SpawnDelay: 0
 				SpawnOffset: 0,0,0
 				TargetOffset: 0,0,0
@@ -1064,6 +1067,7 @@ fact.colorpicker:
 	RenderSprites:
 		Image: fact
 		Palette: colorpicker
+	-Encyclopedia:
 
 afac.colorpicker:
 	Inherits: AFAC
@@ -1072,6 +1076,7 @@ afac.colorpicker:
 	RenderSprites:
 		Image: afac
 		Palette: colorpickertd
+	-Encyclopedia:
 
 sfac.colorpicker:
 	Inherits: SFAC
@@ -1080,6 +1085,7 @@ sfac.colorpicker:
 	RenderSprites:
 		Image: sfac
 		Palette: colorpickerscrin
+	-Encyclopedia:
 
 CTFLAG:
 	Inherits: ^TechBuilding
@@ -1089,13 +1095,14 @@ CTFLAG:
 		HasMinibib: true
 	-HitShape:
 	-Health:
-	-Explodes:
+	-FireWarheadsOnDeath:
 	-Selectable:
 	-SelectionDecorations:
 	-Targetable:
 	MapEditorData:
 		Categories: Decoration
 	Interactable:
+	-Encyclopedia:
 
 SPLIT2:
 	Inherits: ^TibTree
@@ -1420,12 +1427,13 @@ SHAB:
 		DetectionTypes: Mine
 		InitialDelay: 1
 		CloakSound: shad-beaconplace1.aud
+		CloakedAlpha: 1
 	RevealsShroud:
 		Range: 8c0
 	WithIdleAnimation:
 		Sequences: idle
 		Interval: 25
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: AttachShadowBeacon
 	GrantTimedCondition@active:
 		Condition: active

@@ -42,6 +42,12 @@ ParatroopersEnabledDelay = {
 	hard = DateTime.Minutes(2)
 }
 
+IronCurtainEnabledDelay = {
+	easy = DateTime.Minutes(25),
+	normal = DateTime.Minutes(15),
+	hard = DateTime.Minutes(5)
+}
+
 AdjustedSovietCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Soviet)
 
 Squads = {
@@ -336,6 +342,10 @@ InitUSSR = function()
 	if Difficulty ~= "easy" then
 		InitAirAttackSquad(Squads.TripodKillers, USSR, Scrin, { "tpod", "rtpd" })
 	end
+
+	Trigger.AfterDelay(IronCurtainEnabledDelay[Difficulty], function()
+		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = USSR })
+	end)
 
 	Trigger.AfterDelay(ParabombsEnabledDelay[Difficulty], function()
 		if not MainAirfield.IsDead then

@@ -66,6 +66,18 @@
 	Interactable:
 	ScriptTriggers:
 
+^PreviewDummy:
+	Inherits: ^SpriteActor
+	AlwaysVisible:
+	Interactable:
+	Mobile:
+		Locomotor: foot
+	Tooltip:
+		Name: Preview
+	Armament:
+		Weapon: DummyWeapon
+	AttackFrontal:
+
 ^PrimaryBuilding:
 	PrimaryBuilding:
 		PrimaryCondition: primary
@@ -582,7 +594,7 @@
 		Sequence: chrono-overlay
 		RequiresCondition: being-warped
 		IsDecoration: True
-	Explodes@TEMPORAL:
+	FireWarheadsOnDeath@TEMPORAL:
 		Weapon: TemporalExplode
 		EmptyWeapon: TemporalExplode
 		DeathTypes: ChronoDeath
@@ -607,7 +619,7 @@
 	KillsSelf@TEMPINC:
 		GrantsCondition: warpout
 		RequiresCondition: !warpin
-	Explodes@TEMPINC:
+	FireWarheadsOnDeath@TEMPINC:
 		Weapon: UnitExplodeWarpOut
 		EmptyWeapon: UnitExplodeWarpOut
 		RequiresCondition: warpout
@@ -747,7 +759,7 @@
 		BlinkPattern: on
 		ValidRelationships: Ally, Neutral
 
-^GDIUpgrade:
+^GDIStrategyBuffs:
 	GrantConditionOnPrerequisite@HOLD:
 		Condition: hold
 		Prerequisites: hold.strat
@@ -920,8 +932,8 @@
 			seek3 && bino: Off, On
 		RequiresSelection: True
 
-^GDIUpgradeAircraft:
-	Inherits: ^GDIUpgrade
+^GDIStrategyBuffsAircraft:
+	Inherits: ^GDIStrategyBuffs
 	WithDecoration@HOLD:
 		-BlinkPatterns:
 		BlinkPatterns:
@@ -1372,7 +1384,6 @@
 	Capturable@DRIVER_DEAD:
 		Types: driverless_vehicle
 		RequiresCondition: driver-dead
-		ValidRelationships: Neutral
 		CancelActivity: true
 	ChangesHealth@DRIVER_DEAD:
 		PercentageStep: -1
@@ -1400,6 +1411,7 @@
 ^CanCaptureDriverlessVehicles:
 	Captures@DRIVER_KILL:
 		CaptureTypes: driverless_vehicle
+		ValidRelationships: Neutral
 	CaptureManager:
 
 ^Cloakable:
@@ -1416,7 +1428,8 @@
 		InitialDelay: 0
 		CloakDelay: 25
 		IsPlayerPalette: false
-		Palette: cloakgreen
+		CloakStyle: Palette
+		CloakedPalette: cloakgreen
 		CloakSound: cloak5md.aud
 		UncloakSound: appear1md.aud
 		UncloakOn: Attack, Unload, Infiltrate, Demolish
@@ -1431,7 +1444,8 @@
 		InitialDelay: 0
 		CloakDelay: 150
 		IsPlayerPalette: false
-		Palette: cloak
+		CloakStyle: Palette
+		CloakedPalette: cloak
 		CloakSound: cloak5md.aud
 		UncloakSound: appear1md.aud
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Damage, Heal
@@ -1449,7 +1463,8 @@
 		CloakDelay: 90
 		CloakSound: trans1.aud
 		UncloakSound: appear1md.aud
-		Palette: cloak
+		CloakStyle: Palette
+		CloakedPalette: cloak
 		IsPlayerPalette: false
 		RequiresCondition: (crate-cloak) && !(cloak-force-disabled || invisibility)
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Damage, Heal
@@ -2285,7 +2300,7 @@
 		FallRate: 26
 		KilledOnImpassableTerrain: true
 		ParachutingCondition: parachute
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: UnitExplodeSmall
 		EmptyWeapon: UnitExplodeSmall
 		RequiresCondition: !being-warped
@@ -2355,10 +2370,12 @@
 		Notification: UnitSold
 		TextNotification: Unit sold.
 		Cursor: sell2
+	Encyclopedia:
+		Scale: 2
 
 ^Vehicle:
 	Inherits@1: ^Vehicle-NOUPG
-	Inherits@GDIUPG: ^GDIUpgrade
+	Inherits@GDIUPG: ^GDIStrategyBuffs
 	Inherits@GDIBINO: ^BinoUpgrade
 
 ^VehicleTD-NOUPG:
@@ -2367,11 +2384,11 @@
 	WithDamageOverlay:
 		Image: smoke_mtd
 	Cloak@CRATE-CLOAK:
-		Palette: cloak
+		CloakedPalette: cloak
 
 ^VehicleTD:
 	Inherits@1: ^VehicleTD-NOUPG
-	Inherits@GDIUPG: ^GDIUpgrade
+	Inherits@GDIUPG: ^GDIStrategyBuffs
 	Inherits@GDIBINO: ^BinoUpgrade
 
 ^Tank:
@@ -2657,6 +2674,8 @@
 	Cloak@SGENCLOAK:
 		CloakSound: cloak5sm.aud
 		UncloakSound: appear1sm.aud
+	Encyclopedia:
+		Scale: 2
 
 ^Soldier:
 	Inherits: ^Infantry
@@ -2820,7 +2839,7 @@
 	Inherits@4: ^SpriteActor
 	Inherits@5: ^EmpDisable
 	Inherits@6: ^Cloakable
-	Inherits@7: ^GDIUpgrade
+	Inherits@7: ^GDIStrategyBuffs
 	Inherits@8: ^BinoUpgrade
 	Inherits@10: ^Warpable
 	Inherits@11: ^Frenzy
@@ -2883,7 +2902,7 @@
 	RepairableNear:
 		RepairActors: syrd, spen, syrd.gdi, spen.nod
 	WithDamageOverlay:
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: UnitExplodeShip
 		EmptyWeapon: UnitExplodeShip
 		RequiresCondition: !being-warped
@@ -2926,7 +2945,8 @@
 		UncloakOn: Unload
 		InitialDelay: 0
 		CloakDelay: 0
-		Palette: submerged
+		CloakStyle: Palette
+		CloakedPalette: submerged
 		RequiresCondition: under-bridge
 	DamageMultiplier@UNDERBRIDGE:
 		RequiresCondition: under-bridge
@@ -2945,6 +2965,8 @@
 		RequiresCondition: (botowner && under-bridge)
 	GpsRadarDot:
 		Sequence: Ship
+	Encyclopedia:
+		Scale: 2
 
 ^Submarine:
 	Inherits@1: ^Ship
@@ -2965,7 +2987,6 @@
 		CloakSound: subshow1.aud
 		UncloakSound: subshow1.aud
 		CloakedCondition: underwater
-		Palette: submerged
 		PauseOnCondition: cloak-force-disabled || invisibility || being-warped || crossing-ford
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
@@ -2976,7 +2997,7 @@
 	RenderDetectionCircle:
 		Color: 00ff0020
 		BorderColor: 00000020
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: UnitExplodeSubmarine
 		EmptyWeapon: UnitExplodeSubmarine
 		RequiresCondition: !under-bridge && !being-warped
@@ -3045,7 +3066,7 @@
 		Categories: Aircraft
 	SpawnActorOnDeath:
 		RequiresCondition: airborne
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: UnitExplode
 		RequiresCondition: !airborne
 	RevealOnFireCA:
@@ -3076,7 +3097,7 @@
 	Inherits@2: ^GainsExperience
 	Inherits@3: ^Cloakable
 	Inherits@4: ^EmpDisable
-	Inherits@5: ^GDIUpgradeAircraft
+	Inherits@5: ^GDIStrategyBuffsAircraft
 	Inherits@8: ^Warpable
 	Inherits@9: ^BotAirProductionBonus
 	Inherits@10: ^Chillable
@@ -3130,7 +3151,7 @@
 	ProductionCostMultiplier@EagleBonus:
 		Multiplier: 90
 		Prerequisites: player.eagle
-	Explodes:
+	FireWarheadsOnDeath:
 		RequiresCondition: !airborne && !being-warped
 	Targetable@TEMPORAL:
 		TargetTypes: TemporalAir
@@ -3156,6 +3177,8 @@
 		Notification: UnitSold
 		TextNotification: Unit sold.
 		Cursor: sell2
+	Encyclopedia:
+		Scale: 2
 
 ^PlaneTD:
 	Inherits@1: ^Plane
@@ -3201,7 +3224,7 @@
 		Bounds: 1024, 1024
 	Health:
 		HP: 1000
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: BarrelExplode
 		Type: Footprint
 	Tooltip:
@@ -3249,7 +3272,7 @@
 		DamagedSounds: kaboom1.aud, xplobig4.aud
 		DestroyedSounds: kaboom22.aud, crumble.aud, xplobig4.aud
 	WithSpriteBody:
-	Explodes:
+	FireWarheadsOnDeath:
 		Type: Footprint
 		Weapon: BuildingExplode
 		EmptyWeapon: BuildingExplode
@@ -3351,9 +3374,9 @@
 	Targetable@HACKCAPTURABLE:
 		TargetTypes: HackCapturable
 		RequiresCondition: !build-incomplete && !being-warped
-	Explodes:
+	FireWarheadsOnDeath:
 		RequiresCondition: !being-warped
-	Explodes@TEMPORAL:
+	FireWarheadsOnDeath@TEMPORAL:
 		Weapon: TemporalExplodeLarge
 		EmptyWeapon: TemporalExplodeLarge
 	GpsRadarDot:
@@ -3393,6 +3416,8 @@
 		ValuePercentage: 1
 		PlayerExperienceRelationships: Enemy, Neutral
 		SubsequentCaptureModifier: 50
+	Encyclopedia:
+		Scale: 2
 
 ^BuildingTD:
 	Inherits@1: ^Building
@@ -3456,7 +3481,7 @@
 	RenderRangeCircle:
 		RangeCircleType: DefenseRange
 		Color: C12900
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: SmallBuildingExplode
 		EmptyWeapon: SmallBuildingExplode
 	MapEditorData:
@@ -3473,7 +3498,7 @@
 	ProductionCostMultiplier@FranceBonus:
 		Multiplier: 90
 		Prerequisites: player.france
-	Explodes@TEMPORAL:
+	FireWarheadsOnDeath@TEMPORAL:
 		Weapon: TemporalExplode
 		EmptyWeapon: TemporalExplode
 	DetectCloaked@UNDERBRIDGE:
@@ -3595,6 +3620,9 @@
 		PlayerExperience: 10
 		PlayerExperienceRelationships: Enemy, Neutral
 		SubsequentCaptureModifier: 50
+	Encyclopedia:
+		Category: Other/Tech Buildings
+		Scale: 2
 
 ^CommandoSkull:
 	WithDecoration@COMMANDOSKULL:
@@ -3639,7 +3667,7 @@
 		Categories: Fake
 	TooltipExtras:
 		Attributes: • Can be detonated remotely
-	Explodes@FAKE:
+	FireWarheadsOnDeath@FAKE:
 		Weapon: FakeBuildingExplode
 		DamageThreshold: 70
 		Type: CenterPosition
@@ -3661,6 +3689,10 @@
 	-UpdatesKillCount@BuildingsOrHarvesters:
 	-InfiltrateToCreateProxyActor@InfiltratorVision:
 	-Targetable@InfiltratorVision:
+	Encyclopedia:
+		Category: Allies/Defenses
+	EncyclopediaExtras:
+		Subfaction: England
 
 ^InfiltratableFake:
 	Targetable@Infiltration:
@@ -3680,7 +3712,7 @@
 	Huntable:
 	Health:
 		HP: 1000
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: UnitExplode
 	Tooltip:
 		Name: Ammo Box
@@ -3718,17 +3750,17 @@
 	SpawnRandomActorOnDeath@3:
 		Actors: c5,c7,c8,c9
 		Probability: 15
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: SmallBuildingExplode
-	Explodes@CIVPANIC:
+	FireWarheadsOnDeath@CIVPANIC:
 		Weapon: CivPanicExplosion
 
 ^CivField:
 	Inherits: ^CivBuilding
 	-HitShape:
 	-Health:
-	-Explodes:
-	-Explodes@CIVPANIC:
+	-FireWarheadsOnDeath:
+	-FireWarheadsOnDeath@CIVPANIC:
 	-Selectable:
 	-SelectionDecorations:
 	Tooltip:
@@ -3915,7 +3947,6 @@
 		BeingCapturedCondition: being-captured
 	Capturable:
 		Types: husk
-		ValidRelationships: Ally, Enemy, Neutral
 	CapturableProgressBar:
 	CapturableProgressBlink:
 	GivesCashOnCaptureCA:
@@ -3934,7 +3965,7 @@
 		RequiresForceFire: true
 	Tooltip:
 		GenericName: Destroyed Vehicle
-	Explodes:
+	FireWarheadsOnDeath:
 		Weapon: VisualExplodeHusk
 		EmptyWeapon: VisualExplodeHusk
 		DamageSource: Killer
@@ -4035,14 +4066,13 @@
 	CaptureManager:
 	Capturable:
 		Types: building
-		ValidRelationships: Enemy, Neutral, Ally
 	CapturableProgressBar:
 	CapturableProgressBlink:
 	TransformOnCapture:
 		ForceHealthPercentage: 25
 	Tooltip:
 		GenericName: Destroyed Building
-	Explodes@NORMAL:
+	FireWarheadsOnDeath@NORMAL:
 		Type: Footprint
 		Weapon: BuildingExplode
 		EmptyWeapon: BuildingExplode
@@ -4157,7 +4187,6 @@
 	Cloak:
 		CloakSound:
 		UncloakSound:
-		Palette:
 		DetectionTypes: Mine
 		InitialDelay: 0
 	Tooltip:
@@ -4508,14 +4537,14 @@
 	WithShadow:
 
 ^ThrowsShrapnel:
-	ThrowsShrapnel@small:
+	FireProjectilesOnDeath@small:
 		Weapons: SmallDebris
 		Pieces: 3, 7
 		Range: 1c511, 3c0
 
 ^ThrowsShrapnelBig:
 	Inherits: ^ThrowsShrapnel
-	ThrowsShrapnel@fire:
+	FireProjectilesOnDeath@fire:
 		Weapons: FireDebris
 		Pieces: 3, 7
 		Range: 1c511, 3c0

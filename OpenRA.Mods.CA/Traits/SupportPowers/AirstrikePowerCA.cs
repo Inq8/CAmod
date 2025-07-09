@@ -22,7 +22,7 @@ using OpenRA.Traits;
 namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("Copy of AirstrikePowerCA but has MinDistance instead of Cordon.")]
-	public class AirstrikePowerCAInfo : SupportPowerInfo
+	public class AirstrikePowerCAInfo : DirectionalSupportPowerInfo
 	{
 		[ActorReference(typeof(AircraftInfo))]
 		public readonly string UnitType = "badr.bomber";
@@ -41,15 +41,6 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Amount of time to keep the camera alive after the aircraft have finished attacking")]
 		public readonly int CameraRemoveDelay = 25;
 
-		[Desc("Enables the player directional targeting")]
-		public readonly bool UseDirectionalTarget = false;
-
-		[Desc("Animation used to render the direction arrows.")]
-		public readonly string DirectionArrowAnimation = null;
-
-		[Desc("Palette for direction cursor animation.")]
-		public readonly string DirectionArrowPalette = "chrome";
-
 		[Desc("Weapon range offset to apply during the beacon clock calculation")]
 		public readonly WDist BeaconDistanceOffset = WDist.FromCells(6);
 
@@ -60,7 +51,7 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new AirstrikePowerCA(init.Self, this); }
 	}
 
-	public class AirstrikePowerCA : SupportPower
+	public class AirstrikePowerCA : DirectionalSupportPower
 	{
 		readonly AirstrikePowerCAInfo info;
 
@@ -73,7 +64,7 @@ namespace OpenRA.Mods.CA.Traits
 		public override void SelectTarget(Actor self, string order, SupportPowerManager manager)
 		{
 			if (info.UseDirectionalTarget)
-				self.World.OrderGenerator = new SelectDirectionalTargetWithCircle(self.World, order, manager, Info.Cursor, info.DirectionArrowAnimation, info.DirectionArrowPalette,
+				self.World.OrderGenerator = new SelectDirectionalTargetWithCircle(self.World, order, manager, info,
 					info.TargetCircleRange, info.TargetCircleColor, info.TargetCircleUsePlayerColor);
 			else
 				base.SelectTarget(self, order, manager);

@@ -11,7 +11,7 @@
 		ExplosionDelay: 5
 		AllowMultiple: false
 		Name: Force Shield
-		Description: \nMakes selected friendly structures temporarily invulnerable.\n\nWarning: Causes power failure.
+		Description: Makes selected friendly structures temporarily invulnerable.\n\nWarning: Causes power failure.
 		OnFireSound: forceon.aud
 		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
@@ -39,7 +39,7 @@
 		ChargeInterval: 50
 		StartFullyCharged: true
 		Name: Time Skip
-		Description: Allocate funding for precise temporal manipulation to progress\n    Allied technological and organizational advancement.\n\nAdvances influence progress by 1:00.
+		Description: Allocate funding for precise temporal manipulation to progress Allied technological and organizational advancement.\n\nAdvances influence progress by 1:00.
 		Actors: timeskip
 		SupportPowerPaletteOrder: 0
 		SelectProducer: false
@@ -56,7 +56,7 @@
 		ChargeInterval: 7500
 		LifeTime: -1
 		Name: Veil of War
-		Description: \nCreates an expanding area of shroud, reducing the vision\n    and weapon range of enemy units and defenses.
+		Description: Creates an expanding area of shroud, reducing the vision and weapon range of enemy units and defenses.
 		LaunchSound: sscrambl.aud
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
@@ -79,7 +79,7 @@
 		ChargeInterval: 6750
 		Prerequisites: ~radar.france
 		Name: Cluster Mines
-		Description: \nSends a cargo plane to drop a minefield\n    at the target location.
+		Description: Sends a cargo plane to drop a minefield at the target location.
 		OrderName: clustermine
 		UnitType: c17.clustermines
 		CameraActor: camera.paradrop
@@ -110,7 +110,7 @@
 		ChargeInterval: 7500
 		Name: Temporal Incursion
 		ActivationDelay: 25
-		Description: \nSummons reinforcements from the future.\n    Units return to their origin time after a short time.
+		Description: Summons reinforcements from the future. Units return to their origin time after a short time.
 		Weapon: TemporalIncursion
 		AirburstAltitude: 0c0
 		AllowMultiple: false
@@ -132,15 +132,18 @@
 	ClassicAirstrikePower@Strafe:
 		OrderName: strafe
 		Squad:
-			p51:
+			1:
+				UnitType: p51
 				SpawnDelay: 20
 				SpawnOffset: -1536,1024,0
 				TargetOffset: -536,0,0
-			p51:
+			2:
+				UnitType: p51
 				SpawnDelay: 0
 				SpawnOffset: 0,0,0
 				TargetOffset: 0,0,0
-			p51:
+			3:
+				UnitType: p51
 				SpawnDelay: 20
 				SpawnOffset: -1536,-1024,0
 				TargetOffset: 536,0,0
@@ -148,7 +151,7 @@
 		Icon: strafe
 		ChargeInterval: 7500
 		Name: Strafing Run
-		Description: \nCalls in P51 ground attack planes to perform\n    strafing runs on the target.
+		Description: Calls in P51 ground attack planes to perform strafing runs on the target.
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		EndChargeSpeechNotification: StrafingRunReady
@@ -195,7 +198,7 @@
 		PauseOnCondition: disabled || empdisable || being-warped
 		Prerequisites: anyradar, ~!gps.satellite.firstscan, ~fogenabled
 		Name: Spy Satellite
-		Description: \nPeriodically reveals the entire map\n    for a short time (activated automatically).
+		Description: Periodically reveals the entire map for a short time (activated automatically).
 		Icon: gps
 		Actors: camera.satscan, gps.satellite.firstscan
 		Type: SpySatellite
@@ -209,7 +212,7 @@
 		PauseOnCondition: disabled || empdisable || being-warped
 		Prerequisites: anyradar, ~gps.satellite, ~gps.satellite.firstscan, ~fogenabled
 		Name: Spy Satellite
-		Description: \nPeriodically reveals the entire map\n    for a short time (activated automatically).
+		Description: Periodically reveals the entire map for a short time (activated automatically).
 		Icon: gps
 		Actors: camera.satscan
 		Type: SpySatellite
@@ -222,7 +225,7 @@
 		PauseOnCondition: disabled || empdisable || being-warped
 		Prerequisites: anyradar, ~!fogenabled
 		Name: Spy Satellite
-		Description: \nPermanently reveals the entire map (activated automatically).
+		Description: Permanently reveals the entire map (activated automatically).
 		Icon: gps
 		Actors: camera.satscan.oneshot
 		Type: SpySatellite
@@ -241,7 +244,7 @@
 		Cursor: ability
 		ChargeInterval: 4500
 		Name: Time Warp
-		Description: \nDisrupts time and space at the target location.\n    Affected units & structures are frozen in time,\n    unable to act, but immune to damage.
+		Description: Disrupts time and space at the target location. Affected units & structures are frozen in time, unable to act, but immune to damage.
 		ExplosionWeapon: TimeWarp
 		Condition: being-warped
 		Duration: 375
@@ -278,7 +281,7 @@
 		ChargeInterval: 8250
 		LifeTime: -1
 		Name: Cryostorm
-		Description: \nCreates a turbulent area of extreme cold,\n    reducing movement speed and increasing damage taken.
+		Description: Creates a turbulent area of extreme cold, reducing movement speed and increasing damage taken.
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -312,7 +315,7 @@
 		IconPalette: caneon
 		ChargeInterval: 10500
 		Name: Helios Bomb
-		Description: \nCalls in a bomber which drops a\n    Helios bomb, blinding units in a large area.
+		Description: Calls in a bomber which drops a Helios bomb, blinding units in a large area.
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		EndChargeSpeechNotification: HeliosBombReady
@@ -346,7 +349,7 @@
 		IconPalette: chrome
 		ChargeInterval: 9000
 		Name: Black Sky Strike
-		Description: \nFires long range guided missiles at multiple ground targets prioritized by value.\n    Tracking can be lost if targets move far enough from their initial location.
+		Description: Fires long range guided missiles at multiple ground targets prioritized by value. Tracking can be lost if targets move far enough from their initial location.
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		EndChargeSpeechNotification: BlackSkyStrikeReady
@@ -381,7 +384,7 @@
 		Icon: chrono
 		ChargeInterval: 4500
 		Name: Chronoshift
-		Description: \nTeleports up to 9 selected vehicles to a targeted location,\n    returning them to their original location after a short time.\n\n• If killed, units are returned with 20% health\n• Units with larger health pools take additional damage\n• Passengers cannot be unloaded\n• Enemy units are teleported for reduced duration
+		Description: Teleports up to 9 selected vehicles to a targeted location, returning them to their original location after a short time.\n\n• If killed, units are returned with 20% health\n• Units with larger health pools take additional damage\n• Passengers cannot be unloaded\n• Enemy units are teleported for reduced duration
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -416,7 +419,7 @@
 		ChargeInterval: 7000
 		Name: Chronoshift
 		ActivationDelay: 25
-		Description: \nTeleports up to 9 selected vehicles to a targeted location,\n    returning them to their original location after a short time.\n\n• If killed, units are returned with 20% health\n• Units with larger health pools take additional damage\n• Passengers cannot be unloaded\n• Enemy units are teleported for reduced duration
+		Description: Teleports up to 9 selected vehicles to a targeted location, returning them to their original location after a short time.\n\n• If killed, units are returned with 20% health\n• Units with larger health pools take additional damage\n• Passengers cannot be unloaded\n• Enemy units are teleported for reduced duration
 		Weapon: ChronoAI
 		AirburstAltitude: 0c0
 		AllowMultiple: false
@@ -443,7 +446,7 @@
 		ChargeInterval: 13500
 		Name: Lightning Storm
 		ActivationDelay: 50
-		Description: \nInitiate a Lightning Storm which deals\n    heavy damage over a large area.
+		Description: Initiate a Lightning Storm which deals heavy damage over a large area.
 		Weapon: WeatherStormInit
 		AirburstAltitude: 5c768
 		AllowMultiple: false
@@ -480,7 +483,7 @@
 		PauseOnCondition: disabled || empdisable || being-warped
 		ChargeInterval: 3000
 		Name: Spy Plane
-		Description: \nDispatches a spy plane that reveals the target location\n    for a limited time.
+		Description: Dispatches a spy plane that reveals the target location for a limited time.
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		EndChargeSpeechNotification: SpyPlaneReady
@@ -510,7 +513,7 @@
 		Icon: paratroopers
 		ChargeInterval: 7500
 		Name: Paratroopers
-		Description: \nDispatches a Halo transport to drop a squad of infantry\n    anywhere on the map.
+		Description: Dispatches a Halo transport to drop a squad of infantry anywhere on the map.
 		SquadSize: 1
 		SquadOffset: 0,1792,0
 		DropItems: E1,E1,E2,E3,E3,E1,E1,E1
@@ -544,7 +547,7 @@
 		Icon: stormtroopers
 		ChargeInterval: 9000
 		Name: Storm-troopers
-		Description: \nDispatches a Halo transport to drop a squad of Shock Troopers\n    anywhere on the map.
+		Description: Dispatches a Halo transport to drop a squad of Shock Troopers anywhere on the map.
 		SquadSize: 1
 		SquadOffset: 0,1792,0
 		DropItems: SHOK,SHOK,SHOK,SHOK,SHOK
@@ -582,7 +585,7 @@
 		Icon: parabombs
 		ChargeInterval: 7500
 		Name: Parabombs
-		Description: \nCalls in a Badger bomber which drops parachuted\n    bombs on your target.
+		Description: Calls in a Badger bomber which drops parachuted bombs on your target.
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		EndChargeSpeechNotification: ParabombsReady
@@ -610,7 +613,7 @@
 		Icon: carpetbomb
 		ChargeInterval: 10500
 		Name: Carpet Bomb
-		Description: \nCalls in a squad of Badgers which drop\n    bombs on your target.
+		Description: Calls in a squad of Badgers which drop bombs on your target.
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		EndChargeSpeechNotification: CarpetBombReady
@@ -638,7 +641,7 @@
 		Icon: abombair
 		ChargeInterval: 10500
 		Name: Atomic Bomb
-		Description: \nCalls in a Badger bomber which drops an\n    atom bomb on your target.
+		Description: Calls in a Badger bomber which drops an atom bomb on your target.
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		EndChargeSpeechNotification: AtomicBombReady
@@ -667,7 +670,7 @@
 		IconPalette: chromes
 		ChargeInterval: 6750
 		Name: Genetic Mutation Bomb
-		Description: \nCalls in a Badger bomber which drops a genetic\n    mutation bomb on your target, transforming\n    infantry into Brutes under your control.
+		Description: Calls in a Badger bomber which drops a genetic mutation bomb on your target, transforming infantry into Brutes under your control.
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		EndChargeSpeechNotification: GeneticMutationBombReady
@@ -696,7 +699,7 @@
 		Icon: chaosbombs
 		ChargeInterval: 8250
 		Name: Chaos Bombs
-		Description: \nCalls in a Badger bomber which drops parachuted\n    chaos bombs on your target.
+		Description: Calls in a Badger bomber which drops parachuted chaos bombs on your target.
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		EndChargeSpeechNotification: ChaosBombsReady
@@ -748,7 +751,7 @@
 		ValidTargets: Vehicle
 		Duration: 1
 		AllowMultiple: false
-		Description: \nGrants tanks a limited supply of atomic shells (also for a limited duration).\n\nAffects Soviet tanks only (Heavy/Rhino Tank, Lasher/Thrasher Tank, Siege Tank,\n    Mammoth Tank, Overlord Tank, Apocalypse Tank, Nuke Cannon)\n\nNuke Cannon gains a neutron shell that kills vehicle crews.
+		Description: Grants tanks a limited supply of atomic shells (also for a limited duration).\n\nAffects Soviet tanks only (Heavy/Rhino Tank, Lasher/Thrasher Tank, Siege Tank, Mammoth Tank, Overlord Tank, Apocalypse Tank, Nuke Cannon)\n\nNuke Cannon gains a neutron shell that kills vehicle crews.
 		OnFireSound: atomshell.aud
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
@@ -779,7 +782,7 @@
 		ValidTargets: Vehicle
 		Duration: 1
 		AllowMultiple: false
-		Description: \nGrants tanks a limited supply of atomic shells (also for a limited duration).\n\nAffects Soviet tanks only (Heavy/Rhino Tank, Lasher/Thrasher Tank, Siege Tank,\n    Mammoth Tank, Overlord Tank, Apocalypse Tank, Nuke Cannon)\n\nNuke Cannon gains a neutron shell that kills vehicle crews.
+		Description: Grants tanks a limited supply of atomic shells (also for a limited duration).\n\nAffects Soviet tanks only (Heavy/Rhino Tank, Lasher/Thrasher Tank, Siege Tank, Mammoth Tank, Overlord Tank, Apocalypse Tank, Nuke Cannon)\n\nNuke Cannon gains a neutron shell that kills vehicle crews.
 		OnFireSound: atomshell.aud
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
@@ -811,7 +814,7 @@
 		ValidTargets: HeroOfUnionTargetable
 		Duration: 0
 		AllowMultiple: false
-		Description: \nTargeted basic infantry units become Heroes of the Union,\n    significantly increasing their damage, speed, range and resilience.\n\nCan affect Rifle Infantry, Rocket Soldiers, Grenadiers and Flamethrowers.
+		Description: Targeted basic infantry units become Heroes of the Union, significantly increasing their damage, speed, range and resilience.\n\nCan affect Rifle Infantry, Rocket Soldiers, Grenadiers and Flamethrowers.
 		Prerequisites: ~infantry.doctrine, playerxp.level2
 		OnFireSound: heroes.aud
 		SelectTargetSpeechNotification: SelectTarget
@@ -837,7 +840,7 @@
 		Icon: tankdrop
 		ChargeInterval: 13500
 		Name: Tank Drop
-		Description: \nDispatches cargo planes to air drop tanks\n    at the target location.
+		Description: Dispatches cargo planes to air drop tanks at the target location.
 		DropItems: 3tnk, 3tnk, 3tnk
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
@@ -881,7 +884,7 @@
 		Icon: killzone
 		ChargeInterval: 4500
 		Name: Kill Zone
-		Description: \nCalls in a Spy Plane which marks a target area. Any enemy units\n    within it take increased damage.
+		Description: Calls in a Spy Plane which marks a target area. Any enemy units within it take increased damage.
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		EndChargeSpeechNotification: KillZoneReady
@@ -909,7 +912,7 @@
 		Icon: invuln
 		ChargeInterval: 4500
 		ExplosionWeapon: IronCurtain
-		Name: Iron Curtain
+		Name: supportpower-ironcurtain.name
 		Condition: invulnerability
 		Range: 4c0
 		MaxTargets: 5
@@ -919,7 +922,7 @@
 		InvalidTargets: IronCurtainImmune
 		Duration: 600
 		AllowMultiple: false
-		Description: \nMakes up to 5 selected vehicles or structures\n    temporarily immune to damage.\n\nAffected units have limited movement speed.\n\nWarning: Harmful to infantry.
+		Description: supportpower-ironcurtain.desc
 		OnFireSound: ironcur9.aud
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
@@ -943,7 +946,7 @@
 		Icon: abomb
 		ChargeInterval: 13500
 		Name: Atom Bomb
-		Description: \nLaunches a devastating atomic bomb at the target location,\n    dealing heavy damage over a large area.
+		Description: Launches a devastating atomic bomb at the target location, dealing heavy damage over a large area.
 		BeginChargeSpeechNotification: AbombPrepping
 		EndChargeSpeechNotification: AbombReady
 		EndChargeTextNotification: A-bomb ready.
@@ -983,7 +986,7 @@
 		Icon: uavicon
 		ChargeInterval: 3750
 		Name: Recon Drone
-		Description: \nA drone flies across the map, revealing the area as it passes.\n\nDetects cloaked units.
+		Description: A drone flies across the map, revealing the area as it passes.\n\nDetects cloaked units.
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		EndChargeSpeechNotification: ReconDroneReady
@@ -1007,7 +1010,7 @@
 		Icon: uavicon
 		ChargeInterval: 3000
 		Name: Recon Drone
-		Description: \nA drone flies across the map, revealing the area as it passes.\n\nDetects cloaked units.
+		Description: A drone flies across the map, revealing the area as it passes.\n\nDetects cloaked units.
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		EndChargeSpeechNotification: ReconDroneReady
@@ -1034,7 +1037,7 @@
 		ChargeInterval: 9750
 		Name: X-O Drop
 		UnitType: ocar.xo
-		Description: \nAn Orca transport drops a squad of X-O Powersuits\n    at the target location.
+		Description: An Orca transport drops a squad of X-O Powersuits at the target location.
 		SquadSize: 1
 		SquadOffset: 0,1792,0
 		DropItems: XO,XO,XO
@@ -1064,7 +1067,7 @@
 		Icon: droppods
 		IconPalette: chrometd
 		Name: Drop Pods
-		Description: \nInstantly deploys a small team of elite soldiers\n    at the target location via orbital drop pods.
+		Description: Instantly deploys a small team of elite soldiers at the target location via orbital drop pods.
 		EndChargeSpeechNotification: DropPodsAvailable
 		EndChargeTextNotification: Drop Pods ready.
 		SelectTargetSpeechNotification: SelectTarget
@@ -1091,7 +1094,7 @@
 		IconPalette: chrometd
 		ChargeInterval: 6000
 		Name: Reinforcements
-		Description: \nAn Orca Carryall drops an APC containing\n    an infantry squad at the target location.
+		Description: An Orca Carryall drops an APC containing an infantry squad at the target location.
 		EndChargeSpeechNotification: Reinforce
 		EndChargeTextNotification: Reinforcements ready.
 		LaunchSpeechNotification: ReinforcementsArrived
@@ -1101,6 +1104,7 @@
 		EffectSequence: idle
 		EffectPalette: effect
 		SupportPowerPaletteOrder: 50
+		BlockedCursor: move-blocked
 
 ^GDIRadarPowers:
 	Inherits@RECONDRONEPOWER: ^ReconDronePower
@@ -1116,7 +1120,7 @@
 		Icon: airsupport
 		ChargeInterval: 10500
 		Name: Interceptors
-		Description: \nA squadron of Interceptors provides\n    air cover over the target area,\n    engaging any enemy aircraft within range.
+		Description: A squadron of Interceptors provides air cover over the target area, engaging any enemy aircraft within range.
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		EndChargeSpeechNotification: InterceptorsReady
@@ -1154,7 +1158,7 @@
 		ExplosionDelay: 5
 		AllowMultiple: false
 		Name: Nanite Repair
-		Description: \nRepairs selected damaged vehicles over time.
+		Description: Repairs selected damaged vehicles over time.
 		OnFireSound: srepaira.aud
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
@@ -1180,7 +1184,7 @@
 		IconPalette: chrometd
 		ChargeInterval: 7500
 		Name: Firestorm
-		Description: \nFires a barrage of rockets at the target area.
+		Description: Fires a barrage of rockets at the target area.
 		BeginChargeSpeechNotification: FireStormOffline
 		EndChargeSpeechNotification: FireStormReady
 		EndChargeTextNotification: Firestorm Missiles ready.
@@ -1214,7 +1218,7 @@
 		Icon: arscan
 		IconPalette: chrometd
 		Name: Advanced Radar Scan
-		Description: \nReveals the location of enemy structures & units\n    through the fog of war.
+		Description: Reveals the location of enemy structures & units through the fog of war.
 		RequiresCondition: tower.radar
 		PauseOnCondition: !radar-active || disabled || being-warped
 		LaunchSound: gradarup.aud
@@ -1236,7 +1240,7 @@
 		ChargeInterval: 6000
 		LifeTime: 375
 		Name: Nanite Shield
-		Description: \nReduces the damage taken by all vehicles in the target area.
+		Description: Reduces the damage taken by all vehicles in the target area.
 		LaunchSound: srepaira.aud
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
@@ -1264,7 +1268,7 @@
 		Icon: empmissile
 		ChargeInterval: 4500
 		Name: E.M. Missile
-		Description: \nFires a Tomahawk missile which disables all mechanical units\n    and structures on impact.
+		Description: Fires a Tomahawk missile which disables all mechanical units and structures on impact.
 		BeginChargeSpeechNotification: EMMissilePrepping
 		EndChargeSpeechNotification: EMMissileReady
 		EndChargeTextNotification: E.M. Missile ready.
@@ -1297,7 +1301,7 @@
 		WeaponDelay: 3
 		Name: Surgical Strike
 		EffectPalette: tdeffect-ignore-lighting-alpha85
-		Description: \nInitiate an precision Ion Cannon strike which deals\n    instant damage to a small area.
+		Description: Initiate an precision Ion Cannon strike which deals instant damage to a small area.
 		EndChargeSpeechNotification: SurgicalStrikeReady
 		EndChargeTextNotification: Surgical Strike ready.
 		IncomingSound: ion2.aud
@@ -1324,7 +1328,7 @@
 		ChargeInterval: 13500
 		Name: Ion Cannon
 		ActivationDelay: 50
-		Description: \nInitiate an Ion Cannon strike which deals\n    heavy damage over a large area.
+		Description: Initiate an Ion Cannon strike which deals heavy damage over a large area.
 		Weapon: IonStormInit
 		AirburstAltitude: 4c512
 		AllowMultiple: false
@@ -1361,7 +1365,7 @@
 		Icon: airdropicon
 		ChargeInterval: 13500
 		Name: Air Drop
-		Description: \nDispatches cargo planes to air drop tanks\n    at the target location.
+		Description: Dispatches cargo planes to air drop tanks at the target location.
 		DropItems: ltnk, ftnk, ltnk
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
@@ -1389,7 +1393,7 @@
 		Icon: airdropicon
 		ChargeInterval: 13500
 		Name: Air Drop
-		Description: \nDispatches cargo planes to air drop flame tanks\n    at the target location.
+		Description: Dispatches cargo planes to air drop flame tanks at the target location.
 		DropItems: hftk, hftk
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
@@ -1418,7 +1422,7 @@
 		ChargeInterval: 13500
 		Name: Subterranean Strike
 		ActivationDelay: 250
-		Description: \nDeploys a squad of Acolytes/Templar via\n    Subterranean APC.
+		Description: Deploys a squad of Acolytes/Templar via Subterranean APC.
 		LaunchSound: subrumble.aud
 		Weapon: SubterraneanStrikeSpawner
 		AirburstAltitude: 0c0
@@ -1446,7 +1450,7 @@
 		Icon: airdropicon
 		ChargeInterval: 13500
 		Name: Air Drop
-		Description: \nDispatches cargo planes to air drop stealth tanks\n    at the target location.
+		Description: Dispatches cargo planes to air drop stealth tanks at the target location.
 		DropItems: stnk.nod, stnk.nod
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
@@ -1479,7 +1483,7 @@
 		Icon: hacksat
 		ChargeInterval: 4500
 		Name: Hack Satellite Uplink
-		Description: \nReveals the targeted area for a short time.
+		Description: Reveals the targeted area for a short time.
 		LaunchSound: hacksat.aud
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
@@ -1500,7 +1504,7 @@
 		Icon: hacksat
 		ChargeInterval: 3000
 		Name: Hack Satellite Uplink
-		Description: \nReveals the targeted area for a short time.
+		Description: Reveals the targeted area for a short time.
 		LaunchSound: hacksat.aud
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
@@ -1522,7 +1526,7 @@
 		IconPalette: chrometd
 		ChargeInterval: 9750
 		Name: Inferno Bomb
-		Description: \nA B2 Stealth Bomber drops inferno bombs on your target.
+		Description: A B2 Stealth Bomber drops inferno bombs on your target.
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		EndChargeSpeechNotification: InfernoBombReady
@@ -1554,7 +1558,7 @@
 		Prerequisites: ~radar.legion
 		AllowMultiple: false
 		Name: Cash Hack
-		Description: \nSteal up to $2000 credits from a targeted enemy Refinery.
+		Description: Steal up to $2000 credits from a targeted enemy Refinery.
 		OnFireSound: scashhac.aud
 		Notification: CreditsStolen
 		SelectTargetSpeechNotification: SelectTarget
@@ -1574,7 +1578,7 @@
 		Icon: shadteam
 		ChargeInterval: 6750
 		Name: Shadow Team
-		Description: \nCalls for a Shadow Team; three stealth infantry\n    that arrive via glider armed with grenades\n    and a machine pistol.\n\nOperatives can be ordered to land\n    via the deploy command.
+		Description: Calls for a Shadow Team; three stealth infantry that arrive via glider armed with grenades and a machine pistol.\n\nOperatives can be ordered to land via the deploy command.
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		LaunchSpeechNotification: ReinforcementsArrived
@@ -1599,7 +1603,7 @@
 		Cursor: ability
 		ChargeInterval: 10500
 		Name: Cluster Missile
-		Description: \nLaunches a Cluster Missile which deals heavy\n    damage at the target location.
+		Description: Launches a Cluster Missile which deals heavy damage at the target location.
 		EndChargeSpeechNotification: ClusMissileReady
 		EndChargeTextNotification: Cluster Missile ready.
 		SelectTargetSpeechNotification: SelectTarget
@@ -1650,7 +1654,7 @@
 		Duration: 750
 		ActiveSequence: false-active
 		AllowMultiple: false
-		Description: \nIncreases the movement speed and rate of fire of\n    targeted units for a limited time.\n\nWarning: Units are weakened for a short time\n    after frenzy wears off.
+		Description: Increases the movement speed and rate of fire of targeted units for a limited time.\n\nWarning: Units are weakened for a short time after frenzy wears off.
 		OnFireSound: nodfrenzy.aud
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
@@ -1672,7 +1676,7 @@
 		Icon: techhack
 		ChargeInterval: 18000
 		Name: Technology Hack
-		Description: \nHack the targeted enemy production structure, providing access to a unit developed using enemy technology.\n\nFor infantry, vehicle and air production respectively: \n\n• Allies: Cryo Mortar, Reckoner, Phantom\n• Soviets: Cyberdog, Cyclops, Kamov\n• GDI: Sonic Mortar, Basilisk, Shade\n• Nod: Chem Mortar, Mantis, Vertigo\n• Scrin: Cyberscrin, Viper, Manticore
+		Description: Hack the targeted enemy production structure, providing access to a unit developed using enemy technology.\n\nFor infantry, vehicle and air production respectively: \n\n• Allies: Cryo Mortar, Reckoner, Phantom\n• Soviets: Cyberdog, Cyclops, Kamov\n• GDI: Sonic Mortar, Basilisk, Shade\n• Nod: Chem Mortar, Mantis, Vertigo\n• Scrin: Cyberscrin, Viper, Manticore
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -1694,7 +1698,7 @@
 		SelectTargetTextNotification: Select target.
 		ChargeInterval: 6000
 		Name: Assassin Squad
-		Description: \nDeploy a squad of Assassins that can snipe infantry from long range\n    and destroy buildings with C4.\n\nTarget infantry production structure to deploy.
+		Description: Deploy a squad of Assassins that can snipe infantry from long range and destroy buildings with C4.\n\nTarget infantry production structure to deploy.
 		Actors: assa, assa, assa
 		LaunchSpeechNotification: ReinforcementsArrived
 		EndChargeSpeechNotification: AssassinSquadReady
@@ -1708,7 +1712,7 @@
 		Type: ParadropInfantry
 		ChargeInterval: 6000
 		Name: Assassin Squad (AI)
-		Description: \nDeploy a squad of Assassins that can\n    destroy buildings and salvage technology.
+		Description: Deploy a squad of Assassins that can destroy buildings and salvage technology.
 		Actors: assa, assa, assa
 		SupportPowerPaletteOrder: 50
 
@@ -1722,7 +1726,7 @@
 		SelectTargetTextNotification: Select target.
 		ChargeInterval: 6000
 		Name: Hacker Cell
-		Description: \nDeploy a squad of Hackers that can remotely\n    capture buildings and take control of defenses.\n\nTarget infantry production structure to deploy.
+		Description: Deploy a squad of Hackers that can remotely capture buildings and take control of defenses.\n\nTarget infantry production structure to deploy.
 		Actors: hack, hack, hack
 		LaunchSpeechNotification: ReinforcementsArrived
 		EndChargeSpeechNotification: HackerCellReady
@@ -1735,7 +1739,7 @@
 		Type: ParadropInfantry
 		ChargeInterval: 6000
 		Name: Hacker Cell (AI)
-		Description: \nDeploy a squad of Hackers that can remotely\n    capture buildings and take control of defenses.
+		Description: Deploy a squad of Hackers that can remotely capture buildings and take control of defenses.
 		Actors: hack, hack, hack
 		SupportPowerPaletteOrder: 50
 		SelectProducer: false
@@ -1751,7 +1755,7 @@
 		SelectTargetTextNotification: Select target.
 		ChargeInterval: 6000
 		Name: Confessor Cabal
-		Description: \nDeploy a Confessor Cabal which is able to construct\n    Idols of Kane that buffs allies and debuffs enemies.\n\nTarget infantry production structure to deploy.
+		Description: Deploy a Confessor Cabal which is able to construct Idols of Kane that buffs allies and debuffs enemies.\n\nTarget infantry production structure to deploy.
 		Actors: conf, conf, conf
 		LaunchSound: conf-create.aud
 		EndChargeSpeechNotification: ConfessorCabalReady
@@ -1765,7 +1769,7 @@
 		Type: ParadropInfantry
 		ChargeInterval: 6000
 		Name: Confessor Cabal (AI)
-		Description: \nDeploy a Confessor Cabal which is able to construct\n    Idols of Kane that buffs allies and debuffs enemies.
+		Description: Deploy a Confessor Cabal which is able to construct Idols of Kane that buffs allies and debuffs enemies.
 		Actors: conf, conf, conf
 		SupportPowerPaletteOrder: 50
 		SelectProducer: false
@@ -1783,7 +1787,7 @@
 		Range: 3c512
 		Duration: 600
 		AllowMultiple: false
-		Description: \nMakes selected vehicles and structures temporarily invisible.\n\nWarning: Harmful to non-cyborg infantry.\n\nHazmat Suits upgrade makes allies immune to damage\n    and enemies take 50% damage.
+		Description: Makes selected vehicles and structures temporarily invisible.\n\nWarning: Harmful to non-cyborg infantry.\n\nHazmat Suits upgrade makes allies immune to damage and enemies take 50% damage.
 		OnFireSound: cloak6.aud
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
@@ -1809,7 +1813,7 @@
 		Cursor: chemmissile
 		ChargeInterval: 13500
 		Name: Chemical Missile
-		Description: \nLaunches an deadly Chemical Missile. Deals heavy damage\n    and creates toxic clouds which are extremely harmful to infantry.\n
+		Description: Launches an deadly Chemical Missile. Deals heavy damage and creates toxic clouds which are extremely harmful to infantry.\n
 		EndChargeSpeechNotification: ChemMissileReady
 		EndChargeTextNotification: Chemical Missile ready.
 		SelectTargetSpeechNotification: SelectTarget
@@ -1853,7 +1857,7 @@
 		ChargeInterval: 6000
 		Name: Voidspike
 		ActivationDelay: 1
-		Description: \nCreates an void spike at the target location.\n    Gradually transforms nearby resources into Black Tiberium\n    which is devoid of most of its useful properties.\n\nDamages nearby enemy units.
+		Description: Creates an void spike at the target location. Gradually transforms nearby resources into Black Tiberium which is devoid of most of its useful properties.\n\nDamages nearby enemy units.
 		LaunchSound: scrinbuild.aud
 		Weapon: VoidSpikeSpawner
 		AirburstAltitude: 0c0
@@ -1877,7 +1881,7 @@
 		Icon: rescanpower
 		ChargeInterval: 7500
 		Name: Resource Scan
-		Description: \nReveals the area surrounding all resources\n    on the map.
+		Description: Reveals the area surrounding all resources on the map.
 		LaunchSound: tibscan.aud
 		PauseOnCondition: disabled || empdisable || being-warped
 		EffectImage: empty
@@ -1897,7 +1901,7 @@
 		ChargeInterval: 7500
 		Name: Storm Spike
 		ActivationDelay: 1
-		Description: \nCreates a temporary Storm Column defensive structure\n    at the target location.
+		Description: Creates a temporary Storm Column defensive structure at the target location.
 		LaunchSound: scrinbuild.aud
 		Weapon: StormSpikeSpawner
 		AirburstAltitude: 0c0
@@ -1923,7 +1927,7 @@
 		ChargeInterval: 7500
 		Name: Buzzer Swarm
 		ActivationDelay: 1
-		Description: \nSpawns a controllable swarm which blinds and damages anything nearby;\n    particularly harmful to infantry.
+		Description: Spawns a controllable swarm which blinds and damages anything nearby; particularly harmful to infantry.
 		LaunchSound: buzzers-create.aud
 		Weapon: BuzzerSpawner
 		AirburstAltitude: 0c0
@@ -1945,7 +1949,7 @@
 		ChargeInterval: 7500
 		Name: Buzzer Swarm (AI)
 		ActivationDelay: 1
-		Description: \nSpawns a controllable swarm which damages anything nearby;\n    particularly harmful to infantry.
+		Description: Spawns a controllable swarm which damages anything nearby; particularly harmful to infantry.
 		LaunchSound: buzzers-create.aud
 		Weapon: BuzzerSpawnerAI
 		AirburstAltitude: 0c0
@@ -1969,7 +1973,7 @@
 		ChargeInterval: 6750
 		Name: Ion Surge
 		ActivationDelay: 1
-		Description: \nIncreases the movement speed of all friendly units\n    passing through the target area.
+		Description: Increases the movement speed of all friendly units passing through the target area.
 		LaunchSound: ionsurge.aud
 		Weapon: IonSurgeSpawner
 		AirburstAltitude: 0c0
@@ -1995,7 +1999,7 @@
 		Name: Ichor Seed
 		LifeTime: -1
 		AllowMultiple: false
-		Description: \nGrows Tiberium at selected location.
+		Description: Grows Tiberium at selected location.
 		LaunchSound: ichorseed.aud
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
@@ -2007,6 +2011,7 @@
 		EffectSequence: idle
 		EffectPalette: tseffect-ignore-lighting-alpha75
 		SupportPowerPaletteOrder: 40
+		BlockedCursor: move-blocked
 	SpawnActorPower@ICHORSEEDREAPER:
 		OrderName: ichorseedreaper
 		Icon: ichorpower
@@ -2016,7 +2021,7 @@
 		Name: Ichor Seed
 		LifeTime: -1
 		AllowMultiple: false
-		Description: \nGrows Tiberium at selected location.
+		Description: Grows Tiberium at selected location.
 		LaunchSound: ichorseed.aud
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
@@ -2028,6 +2033,7 @@
 		EffectSequence: idle
 		EffectPalette: tseffect-ignore-lighting-alpha75
 		SupportPowerPaletteOrder: 40
+		BlockedCursor: move-blocked
 
 ^GreaterCoalescencePower:
 	DetonateWeaponPower@GREATERCOALESCENCE:
@@ -2039,7 +2045,7 @@
 		ChargeInterval: 6000
 		Name: Greater Coalescence
 		ActivationDelay: 1
-		Description: \nSpawns a controllable biomass which heals nearby allies\n    and sustains itself by feeding off enemies.\n\nFeeding from power plants will shut them down temporarily.
+		Description: Spawns a controllable biomass which heals nearby allies and sustains itself by feeding off enemies.\n\nFeeding from power plants will shut them down temporarily.
 		LaunchSound: grcl-spawn.aud
 		Weapon: GreaterCoalescenceSpawner
 		AirburstAltitude: 0c0
@@ -2064,7 +2070,7 @@
 		Cursor: ability
 		ChargeInterval: 10500
 		Name: Overlord's Wrath
-		Description: \nA Tiberium meteor strikes the target location\n    dealing heavy damage and creating a patch of Tiberium.
+		Description: A Tiberium meteor strikes the target location dealing heavy damage and creating a patch of Tiberium.
 		EndChargeSpeechNotification: OverlordsWrathReady
 		EndChargeTextNotification: Overlord's Wrath ready.
 		SelectTargetSpeechNotification: SelectTarget
@@ -2104,7 +2110,7 @@
 		ChargeInterval: 4500
 		Name: Gateway
 		ActivationDelay: 1
-		Description: \nCreates a Gateway at the target location. Acts as the exit for any\n   targeted infantry or vehicle production structure.\n\nRequires target location to be within vision.
+		Description: Creates a Gateway at the target location. Acts as the exit for any\n   targeted infantry or vehicle production structure.\n\nRequires target location to be within vision.
 		LaunchSound: wormhole-open.aud
 		IncomingSound: wormhole-open.aud
 		Weapon: GatewaySpawner
@@ -2133,7 +2139,7 @@
 		ValidTargets: AnathemaTargetable
 		Duration: 0
 		AllowMultiple: false
-		Description: \nTargeted vehicle greatly increases in power over time.\n    After 30 seconds the unit explodes.
+		Description: Targeted vehicle greatly increases in power over time. After 30 seconds the unit explodes.
 		Prerequisites: ~malefic.allegiance, ~techlevel.high
 		OnFireSound: anathema.aud
 		SelectTargetSpeechNotification: SelectTarget
@@ -2156,7 +2162,7 @@
 		Icon: spresspower
 		ChargeInterval: 4500
 		Name: Suppression Field
-		Description: \nApplies a suppression field to the target area,\n    slowing unit movement and rate of fire.
+		Description: Applies a suppression field to the target area, slowing unit movement and rate of fire.
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -2187,7 +2193,7 @@
 		Icon: spresspower
 		ChargeInterval: 3750
 		Name: Suppression Field
-		Description: \nApplies a suppression field to the target area,\n    slowing unit movement and rate of fire.
+		Description: Applies a suppression field to the target area, slowing unit movement and rate of fire.
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -2221,7 +2227,7 @@
 		ChargeInterval: 13500
 		Name: Rift
 		ActivationDelay: 75
-		Description: \nInitiate a Rift which deals heavy damage\n    over time to a large area.
+		Description: Initiate a Rift which deals heavy damage over time to a large area.
 		Weapon: RiftInit
 		AllowMultiple: false
 		CameraActor: camera.dummy
@@ -2258,7 +2264,7 @@
 		ChargeInterval: 5250
 		Name: Fleet Recall
 		KeepFormation: true
-		Description: \nRecalls all selected Scrin fleet vessels back\n    to the Signal Transmitter.\n\nApplies to: Mothership, Planetary Assault Carrier, Devastator
+		Description: Recalls all selected Scrin fleet vessels back to the Signal Transmitter.\n\nApplies to: Mothership, Planetary Assault Carrier, Devastator
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower

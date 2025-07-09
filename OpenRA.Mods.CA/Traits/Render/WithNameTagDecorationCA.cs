@@ -92,7 +92,7 @@ namespace OpenRA.Mods.CA.Traits.Render
 			contrastColorLight = Info.ContrastColorLight ?? ChromeMetrics.Get<Color>("TextContrastColorLight");
 			Update(self);
 
-			name = self.Owner.PlayerName;
+			name = self.Owner.ResolvedPlayerName;
 			if (name.Length > info.MaxLength)
 				name = name.Substring(0, info.MaxLength);
 		}
@@ -113,7 +113,7 @@ namespace OpenRA.Mods.CA.Traits.Render
 		{
 			Update(self);
 
-			name = self.Owner.PlayerName;
+			name = self.Owner.ResolvedPlayerName;
 			if (name.Length > Info.MaxLength)
 				name = name.Substring(0, Info.MaxLength);
 		}
@@ -154,7 +154,7 @@ namespace OpenRA.Mods.CA.Traits.Render
 			}
 			else if (Info.ColorSource == ColorSource.Player)
 			{
-				color = self.Owner.Color;
+				color = self.OwnerColor();
 			}
 			else
 			{

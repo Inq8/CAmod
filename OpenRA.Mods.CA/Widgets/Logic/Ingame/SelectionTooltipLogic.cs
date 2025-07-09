@@ -145,40 +145,41 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			costLabel.GetColor = () => Color.White;
 			var costSize = font.Measure(costLabel.Text);
 
+			var maxLeftWidth = 300;
+
+			// Description
+			var descText = "";
+			var buildable = actorInfo.TraitInfoOrDefault<BuildableInfo>();
+
+			if (buildable != null && buildable.Description != null)
+			{
+				descText = WidgetUtilsCA.WrapTextWithIndent(buildable.Description.Replace("\\n", "\n"), maxLeftWidth, descFont);
+			}
+
+			var descSize = descText != "" ? descFont.Measure(descText) : new int2(0, 0);
+
+			descLabel.Bounds.Width = descSize.X;
+			descLabel.Bounds.Height = descSize.Y;
+
 			// Strengths, weaknesses & attributes
 			if (tooltipExtrasInfo != null)
 			{
-				strengthsLabel.Text = tooltipExtrasInfo.Strengths.Replace("\\n", "\n");
-				weaknessesLabel.Text = tooltipExtrasInfo.Weaknesses.Replace("\\n", "\n");
-				attributesLabel.Text = tooltipExtrasInfo.Attributes.Replace("\\n", "\n");
-				descLabel.Text = tooltipExtrasInfo.Description.Replace("\\n", "\n");
+				strengthsLabel.Text = WidgetUtilsCA.WrapTextWithIndent(tooltipExtrasInfo.Strengths.Replace("\\n", "\n"), maxLeftWidth, descFont, 6);
+				weaknessesLabel.Text = WidgetUtilsCA.WrapTextWithIndent(tooltipExtrasInfo.Weaknesses.Replace("\\n", "\n"), maxLeftWidth, descFont, 6);
+				attributesLabel.Text = WidgetUtilsCA.WrapTextWithIndent(tooltipExtrasInfo.Attributes.Replace("\\n", "\n"), maxLeftWidth, descFont, 6);
+				descText = tooltipExtrasInfo.Description != "" ? WidgetUtilsCA.WrapTextWithIndent(tooltipExtrasInfo.Description.Replace("\\n", "\n"), maxLeftWidth, descFont, 6) : descText;
 			}
 			else
 			{
 				strengthsLabel.Text = "";
 				weaknessesLabel.Text = "";
 				attributesLabel.Text = "";
-				descLabel.Text = "";
+				descText = "";
 			}
+
+			descLabel.Text = descText;
 
 			var extrasSpacing = descLabel.Bounds.X / 2;
-
-			// Description
-			if (descLabel.Text == "")
-			{
-				var buildable = actorInfo.TraitInfoOrDefault<BuildableInfo>();
-
-				if (buildable != null)
-				{
-					descLabel.Text = buildable.Description.Replace("\\n", "\n");
-				}
-			}
-
-			var descSize = descLabel.Text != "" ? descFont.Measure(descLabel.Text) : new int2(0, 0);
-
-			descLabel.Bounds.Width = descSize.X;
-			descLabel.Bounds.Height = descSize.Y;
-
 			var strengthsSize = strengthsLabel.Text != "" ? descFont.Measure(strengthsLabel.Text) : new int2(0, 0);
 			var weaknessesSize = weaknessesLabel.Text != "" ? descFont.Measure(weaknessesLabel.Text) : new int2(0, 0);
 			var attributesSize = attributesLabel.Text != "" ? descFont.Measure(attributesLabel.Text) : new int2(0, 0);
@@ -206,7 +207,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			widget.Bounds.Y = Game.Renderer.Resolution.Height - widget.Bounds.Height - 12;
 		}
 
-		LabelWidget GetArmorTypeLabel(LabelWidget armorTypeLabel, ActorInfo actor)
+		public static LabelWidget GetArmorTypeLabel(LabelWidget armorTypeLabel, ActorInfo actor)
 		{
 			var armor = actor.TraitInfos<ArmorInfo>().FirstOrDefault();
 			armorTypeLabel.Text = armor != null ? armor.Type : "";

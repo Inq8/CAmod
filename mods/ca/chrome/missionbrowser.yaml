@@ -1,13 +1,13 @@
 Background@MISSIONBROWSER_PANEL:
 	Logic: MissionBrowserLogicCA
-	X: (WINDOW_RIGHT - WIDTH) / 2
-	Y: (WINDOW_BOTTOM - HEIGHT) / 2
+	X: (WINDOW_WIDTH - WIDTH) / 2
+	Y: (WINDOW_HEIGHT - HEIGHT) / 2
 	Width: 700
 	Height: 530
 	Children:
 		Label@MISSIONBROWSER_TITLE:
 			Y: 21
-			Width: PARENT_RIGHT
+			Width: PARENT_WIDTH
 			Height: 25
 			Text: Missions
 			Align: Center
@@ -16,40 +16,40 @@ Background@MISSIONBROWSER_PANEL:
 			X: 22
 			Y: 50
 			Width: 288
-			Height: PARENT_BOTTOM - 107
+			Height: PARENT_HEIGHT - 107
 			Children:
 				ScrollItem@HEADER:
 					Background: scrollheader
-					Width: PARENT_RIGHT - 27
+					Width: PARENT_WIDTH - 27
 					Height: 22
 					X: 2
 					Visible: false
 					Children:
 						Label@LABEL:
 							Font: Regular
-							Width: PARENT_RIGHT
+							Width: PARENT_WIDTH
 							Height: 20
 							Align: Center
 				ScrollItem@TEMPLATE:
-					Width: PARENT_RIGHT - 27
-					Height: 25
+					Width: PARENT_WIDTH - 27
+					Height: 26
 					X: 2
 					TooltipContainer: TOOLTIP_CONTAINER
 					TooltipTemplate: BUTTON_TOOLTIP
 					Children:
 						Image@COMPLETION_ICON:
 							X: 4
-							Y: 4
+							Y: 5
 							Width: 16
 							Height: 16
 							ImageCollection: mission-completion-tick
 							ImageName: incomplete
 						LabelWithTooltip@TITLE:
 							X: 26
-							Width: PARENT_RIGHT - 20
-							Height: 25
+							Width: PARENT_WIDTH - 20
+							Height: 26
 						Image@COMPLETION_DIFFICULTY:
-							X: PARENT_RIGHT - WIDTH - 2
+							X: PARENT_WIDTH - WIDTH - 2
 							Y: 4
 							Width: 52
 							Height: 16
@@ -60,142 +60,142 @@ Background@MISSIONBROWSER_PANEL:
 			X: 318
 			Y: 50
 			Width: 362
-			Height: PARENT_BOTTOM - 110
+			Height: PARENT_HEIGHT - 110
 			Children:
 				Background@MISSION_BG:
-					Width: PARENT_RIGHT
+					Width: PARENT_WIDTH
 					Height: 202
 					Background: dialog3
 					Children:
 						MapPreview@MISSION_PREVIEW:
 							X: 1
 							Y: 1
-							Width: PARENT_RIGHT - 2
-							Height: PARENT_BOTTOM - 2
+							Width: PARENT_WIDTH - 2
+							Height: PARENT_HEIGHT - 2
 							IgnoreMouseOver: True
 							IgnoreMouseInput: True
 							ShowSpawnPoints: False
 				Container@MISSION_DETAIL:
 					Y: 212
-					Width: PARENT_RIGHT
+					Width: PARENT_WIDTH
 					Height: 180
 					Children:
 						ScrollPanel@MISSION_DESCRIPTION_PANEL:
-							Height: PARENT_BOTTOM
-							Width: PARENT_RIGHT
+							Height: PARENT_HEIGHT
+							Width: PARENT_WIDTH
 							TopBottomSpacing: 5
 							Children:
 								Label@MISSION_DESCRIPTION:
 									X: 4
-									Width: PARENT_RIGHT - 32
+									Width: PARENT_WIDTH - 32
 									VAlign: Top
 									Font: Small
 						ScrollPanel@MISSION_OPTIONS:
-							Height: PARENT_BOTTOM
-							Width: PARENT_RIGHT
+							Height: PARENT_HEIGHT
+							Width: PARENT_WIDTH
 							TopBottomSpacing: 5
 							Children:
 								Container@CHECKBOX_ROW_TEMPLATE:
-									Width: PARENT_RIGHT
+									Width: PARENT_WIDTH
 									Height: 30
 									Children:
 										Checkbox@A:
 											X: 10
-											Width: PARENT_RIGHT / 2 - 25
+											Width: PARENT_WIDTH / 2 - 25
 											Height: 20
 											Visible: False
 											TooltipContainer: TOOLTIP_CONTAINER
 										Checkbox@B:
-											X: PARENT_RIGHT / 2 + 5
-											Width: PARENT_RIGHT / 2 - 25
+											X: PARENT_WIDTH / 2 + 5
+											Width: PARENT_WIDTH / 2 - 25
 											Height: 20
 											Visible: False
 											TooltipContainer: TOOLTIP_CONTAINER
 								Container@DROPDOWN_ROW_TEMPLATE:
 									Height: 60
-									Width: PARENT_RIGHT
+									Width: PARENT_WIDTH
 									Children:
 										LabelForInput@A_DESC:
 											X: 10
-											Width: PARENT_RIGHT / 2 - 35
+											Width: PARENT_WIDTH / 2 - 35
 											Height: 20
 											Visible: False
 											For: A
 										DropDownButton@A:
 											X: 10
-											Width: PARENT_RIGHT / 2 - 35
+											Width: PARENT_WIDTH / 2 - 35
 											Y: 25
 											Height: 25
 											Visible: False
 											TooltipContainer: TOOLTIP_CONTAINER
 										LabelForInput@B_DESC:
-											X: PARENT_RIGHT / 2 + 5
-											Width: PARENT_RIGHT / 2 - 35
+											X: PARENT_WIDTH / 2 + 5
+											Width: PARENT_WIDTH / 2 - 35
 											Height: 20
 											Visible: False
 											For: B
 										DropDownButton@B:
-											X: PARENT_RIGHT / 2 + 5
-											Width: PARENT_RIGHT / 2 - 35
+											X: PARENT_WIDTH / 2 + 5
+											Width: PARENT_WIDTH / 2 - 35
 											Y: 25
 											Height: 25
 											Visible: False
 											TooltipContainer: TOOLTIP_CONTAINER
 				Container@MISSION_TABS:
-					Width: PARENT_RIGHT
-					Y: PARENT_BOTTOM - 50
+					Width: PARENT_WIDTH
+					Y: PARENT_HEIGHT - 50
 					Children:
 						Button@MISSIONINFO_TAB:
-							Width: PARENT_RIGHT / 2
+							Width: PARENT_WIDTH / 2
 							Y: 25
 							Height: 28
 							Font: Bold
 							Text: Briefing
 						Button@OPTIONS_TAB:
-							X: PARENT_RIGHT / 2
-							Width: PARENT_RIGHT / 2
+							X: PARENT_WIDTH / 2
+							Width: PARENT_WIDTH / 2
 							Y: 25
 							Height: 28
 							Font: Bold
 							Text: Options
 		Button@START_BRIEFING_VIDEO_BUTTON:
 			X: 20
-			Y: PARENT_BOTTOM - 45
+			Y: PARENT_HEIGHT - 45
 			Width: 130
 			Height: 25
 			Text: Watch Briefing
 			Font: Bold
 		Button@STOP_BRIEFING_VIDEO_BUTTON:
 			X: 20
-			Y: PARENT_BOTTOM - 45
+			Y: PARENT_HEIGHT - 45
 			Width: 130
 			Height: 25
 			Text: Stop Briefing
 			Font: Bold
 		Button@START_INFO_VIDEO_BUTTON:
 			X: 160
-			Y: PARENT_BOTTOM - 45
+			Y: PARENT_HEIGHT - 45
 			Width: 130
 			Height: 25
 			Text: Watch Info Video
 			Font: Bold
 		Button@STOP_INFO_VIDEO_BUTTON:
 			X: 160
-			Y: PARENT_BOTTOM - 45
+			Y: PARENT_HEIGHT - 45
 			Width: 130
 			Height: 25
 			Text: Stop Info Video
 			Font: Bold
 		Button@STARTGAME_BUTTON:
-			X: PARENT_RIGHT - 140 - 130
-			Y: PARENT_BOTTOM - 45
+			X: PARENT_WIDTH - 140 - 130
+			Y: PARENT_HEIGHT - 45
 			Width: 120
 			Height: 25
 			Text: Play
 			Font: Bold
 		Button@BACK_BUTTON:
-			X: PARENT_RIGHT - 140
-			Y: PARENT_BOTTOM - 45
+			X: PARENT_WIDTH - 140
+			Y: PARENT_HEIGHT - 45
 			Width: 120
 			Height: 25
 			Text: Back
@@ -204,25 +204,25 @@ Background@MISSIONBROWSER_PANEL:
 		Background@MISSION_BIN:
 			X: 20
 			Y: 50
-			Width: PARENT_RIGHT - 40
-			Height: PARENT_BOTTOM - 110
+			Width: PARENT_WIDTH - 40
+			Height: PARENT_HEIGHT - 110
 			Background: dialog3
 			Children:
 				VideoPlayer@MISSION_VIDEO:
 					X: 1
 					Y: 1
-					Width: PARENT_RIGHT - 2
-					Height: PARENT_BOTTOM - 2
+					Width: PARENT_WIDTH - 2
+					Height: PARENT_HEIGHT - 2
 		TooltipContainer@TOOLTIP_CONTAINER:
 
 Background@FULLSCREEN_PLAYER:
-	Width: WINDOW_RIGHT
-	Height: WINDOW_BOTTOM
+	Width: WINDOW_WIDTH
+	Height: WINDOW_HEIGHT
 	Background: dialog5
 	Visible: False
 	Children:
 		VideoPlayer@PLAYER:
 			X: 0
 			Y: 0
-			Width: WINDOW_RIGHT
-			Height: WINDOW_BOTTOM
+			Width: WINDOW_WIDTH
+			Height: WINDOW_HEIGHT

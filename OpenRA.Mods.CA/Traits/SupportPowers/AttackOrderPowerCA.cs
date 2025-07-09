@@ -255,7 +255,7 @@ namespace OpenRA.Mods.CA.Traits
 					world.Map.CenterOfCell(xy),
 					info.TargetCircleRadius,
 					0,
-					info.TargetCircleUsePlayerColor ? power.Self.Owner.Color : info.TargetCircleColor, 1,
+					info.TargetCircleUsePlayerColor ? power.Self.OwnerColor() : info.TargetCircleColor, 1,
 					Color.FromArgb(96, Color.Black), 3);
 			}
 		}

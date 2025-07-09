@@ -254,6 +254,10 @@ InitScrinRebels = function()
 	AutoRepairAndRebuildBuildings(SignalTransmittersPlayer)
 	Actor.Create("ai.unlimited.power", true, { Owner = SignalTransmittersPlayer })
 
+	if Difficulty ~= "easy" then
+		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = ScribRebels1 })
+	end
+
 	local scrinRebelPlayers = { ScrinRebels1, ScrinRebels2, ScrinRebels3 }
 
 	Utils.Do(scrinRebelPlayers, function(p)

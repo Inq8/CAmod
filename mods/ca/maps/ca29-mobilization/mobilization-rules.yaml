@@ -2,14 +2,13 @@
 ^Palettes:
 	PaletteFromFile@terrain-temperat:
 		Filename: dark.pal
-	GlobalLightingPaletteEffect:
+	TintPostProcessEffect:
 		Red: 0.80
 		Green: 0.90
 		Blue: 1.05
 		Ambient: 0.80
-	FlashPaletteEffect@LIGHTNINGSTRIKE:
+	FlashPostProcessEffect@LIGHTNINGSTRIKE:
 		Type: LightningStrike
-		ExcludePalettes: cursor, chrome, colorpicker, colorpickertd, colorpickerscrin, fog, shroud
 	WeatherOverlay@RAIN:
 		WindTick: 150, 550
 		UseSquares: false
@@ -83,7 +82,7 @@ MISS:
 		RepairingNotification: Repairing
 	-SpawnActorOnDeath:
 	-OwnerLostAction:
-	Explodes:
+	FireWarheadsOnDeath:
 		Type: Footprint
 		Weapon: BuildingExplode
 		EmptyWeapon: BuildingExplode

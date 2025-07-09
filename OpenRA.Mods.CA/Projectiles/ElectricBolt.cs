@@ -41,7 +41,10 @@ namespace OpenRA.Mods.CA.Projectiles
 		[Desc("The maximum/constant/incremental inaccuracy used in conjunction with the InaccuracyType property.")]
 		public readonly WDist Inaccuracy = WDist.Zero;
 
-		[Desc("Controls the way inaccuracy is calculated. Possible values are 'Maximum' - scale from 0 to max with range, 'PerCellIncrement' - scale from 0 with range and 'Absolute' - use set value regardless of range.")]
+		[Desc("Controls the way inaccuracy is calculated. Possible values are " +
+			"'Maximum' - scale from 0 to max with range, " +
+			"'PerCellIncrement' - scale from 0 with range, " +
+			"'Absolute' - use set value regardless of range.")]
 		public readonly InaccuracyType InaccuracyType = InaccuracyType.Maximum;
 
 		[Desc("Colors of the zaps. The amount of zaps are the amount of colors listed here and PlayerColorZaps.")]
@@ -112,7 +115,7 @@ namespace OpenRA.Mods.CA.Projectiles
 			this.args = args;
 			this.info = info;
 
-			var playerColor = args.SourceActor.Owner.Color;
+			var playerColor = args.SourceActor.OwnerColor();
 			var colors = info.Colors.ToList();
 
 			for (int i = 0; i < info.PlayerColorZaps; i++)
@@ -203,7 +206,7 @@ namespace OpenRA.Mods.CA.Projectiles
 			if (!args.GuidedTarget.IsValidFor(args.SourceActor))
 				return;
 
-			var guidedTargetPos = args.Weapon.TargetActorCenter ? args.GuidedTarget.CenterPosition : args.GuidedTarget.Positions.PositionClosestTo(args.Source);
+			var guidedTargetPos = args.Weapon.TargetActorCenter ? args.GuidedTarget.CenterPosition : args.GuidedTarget.Positions.ClosestToIgnoringPath(args.Source);
 			target = guidedTargetPos + inaccuracyOffset;
 		}
 

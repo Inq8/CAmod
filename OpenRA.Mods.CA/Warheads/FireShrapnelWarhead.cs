@@ -167,7 +167,7 @@ namespace OpenRA.Mods.CA.Warheads
 					CurrentSource = () => centerPosition,
 					SourceActor = firedBy,
 					GuidedTarget = shrapnelTarget,
-					PassiveTarget = TargetActorCenter ? shrapnelTarget.CenterPosition : shrapnelTarget.Positions.PositionClosestTo(epicenter)
+					PassiveTarget = TargetActorCenter ? shrapnelTarget.CenterPosition : shrapnelTarget.Positions.ClosestToIgnoringPath(epicenter)
 				};
 
 				if (projectileArgs.Weapon.Projectile != null)

@@ -334,19 +334,19 @@ namespace OpenRA.Mods.CA.Traits
 			};
 		}
 
-		void IGameSaveTraitData.ResolveTraitData(Actor self, List<MiniYamlNode> data)
+		void IGameSaveTraitData.ResolveTraitData(Actor self, MiniYaml data)
 		{
 			if (self.World.IsReplay)
 				return;
 
-			var queuedBuildRequestsNode = data.FirstOrDefault(n => n.Key == "QueuedBuildRequests");
+			var queuedBuildRequestsNode = data.NodeWithKeyOrDefault("QueuedBuildRequests");
 			if (queuedBuildRequestsNode != null)
 			{
 				queuedBuildRequests.Clear();
 				queuedBuildRequests.AddRange(FieldLoader.GetValue<string[]>("QueuedBuildRequests", queuedBuildRequestsNode.Value.Value));
 			}
 
-			var idleUnitCountNode = data.FirstOrDefault(n => n.Key == "IdleUnitCount");
+			var idleUnitCountNode = data.NodeWithKeyOrDefault("IdleUnitCount");
 			if (idleUnitCountNode != null)
 				idleUnitCount = FieldLoader.GetValue<int>("IdleUnitCount", idleUnitCountNode.Value.Value);
 		}

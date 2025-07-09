@@ -44,7 +44,10 @@ namespace OpenRA.Mods.CA.Graphics
 		readonly WVec cachedLength;
 		IEnumerable<IFinalizedRenderable> cache;
 
-		public TeslaZapRenderableCA(WPos pos, int zOffset, in WVec length, string image, string brightSequence, int brightZaps, string dimSequence, int dimZaps, string palette)
+		public TeslaZapRenderableCA(WPos pos, int zOffset, in WVec length, string image,
+			string brightSequence, int brightZaps,
+			string dimSequence, int dimZaps,
+			string palette)
 		{
 			this.pos = pos;
 			this.zOffset = zOffset;
@@ -71,8 +74,10 @@ namespace OpenRA.Mods.CA.Graphics
 			return new TeslaZapRenderableCA(pos, zOffset, length, image, brightSequence, brightZaps, dimSequence, dimZaps, palette);
 		}
 
-		public IRenderable WithZOffset(int newOffset) { return new TeslaZapRenderableCA(pos, zOffset, length, image, brightSequence, brightZaps, dimSequence, dimZaps, palette); }
-		public IRenderable OffsetBy(in WVec vec) { return new TeslaZapRenderableCA(pos + vec, zOffset, length, image, brightSequence, brightZaps, dimSequence, dimZaps, palette); }
+		public IRenderable WithZOffset(int newOffset) =>
+			new TeslaZapRenderableCA(Pos, ZOffset, length, image, brightSequence, brightZaps, dimSequence, dimZaps, palette);
+		public IRenderable OffsetBy(in WVec vec) =>
+			new TeslaZapRenderableCA(Pos + vec, ZOffset, length, image, brightSequence, brightZaps, dimSequence, dimZaps, palette);
 		public IRenderable AsDecoration() { return this; }
 
 		public IFinalizedRenderable PrepareRender(WorldRenderer wr) { return this; }

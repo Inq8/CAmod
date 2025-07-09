@@ -105,7 +105,7 @@ namespace OpenRA.Mods.CA.Traits.Render
 					self.CenterPosition,
 					Info.Range,
 					0,
-					Info.UsePlayerColor ? Color.FromArgb(Info.PlayerColorAlpha, self.Owner.Color) : Info.Color,
+					Info.UsePlayerColor ? Color.FromArgb(Info.PlayerColorAlpha, self.OwnerColor()) : Info.Color,
 					Info.Width,
 					Info.BorderColor,
 					Info.BorderWidth);
