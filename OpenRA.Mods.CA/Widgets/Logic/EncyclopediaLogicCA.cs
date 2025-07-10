@@ -20,6 +20,7 @@ using OpenRA.Mods.Common.Traits;
 using OpenRA.Mods.Common.Traits.Render;
 using OpenRA.Mods.Common.Widgets;
 using OpenRA.Primitives;
+using OpenRA.Traits;
 using OpenRA.Widgets;
 
 namespace OpenRA.Mods.CA.Widgets.Logic
@@ -71,7 +72,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 		// Subfaction widgets
 		readonly LabelWidget subfactionLabel;
-		readonly ImageWidget subfactionFlag;
+		readonly ImageWidget subfactionFlagImage;
 
 		// Additional info widget
 		readonly LabelWidget additionalInfoLabel;
@@ -92,6 +93,8 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 		string currentCategoryPath;
 		string selectedTopLevelCategory;
 		ScrollItemWidget firstItem;
+
+		Dictionary<string, FactionInfo> factions = new();
 
 		// Helper class to represent folder hierarchy
 		class FolderNode
@@ -161,7 +164,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			encyclopediaDescriptionLabel = actorDetailsContainer.Get<LabelWidget>("ENCYCLOPEDIA_DESCRIPTION");
 
 			subfactionLabel = actorDetailsContainer.GetOrNull<LabelWidget>("SUBFACTION");
-			subfactionFlag = actorDetailsContainer.GetOrNull<ImageWidget>("SUBFACTION_FLAG");
+			subfactionFlagImage = actorDetailsContainer.GetOrNull<ImageWidget>("SUBFACTION_FLAG");
 
 			additionalInfoLabel = actorDetailsContainer.GetOrNull<LabelWidget>("ADDITIONAL_INFO");
 
@@ -179,6 +182,9 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 				info.Add(actor, encyclopedia);
 			}
+
+			foreach (var faction in world.Map.Rules.Actors[SystemActors.World].TraitInfos<FactionInfo>().Where(f => f.Selectable))
+				factions.Add(faction.InternalName, faction);
 
 			// Build folder hierarchy
 			BuildFolderHierarchy();
@@ -332,7 +338,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 					var name = actor.TraitInfos<TooltipInfo>().FirstOrDefault(info => info.EnabledByDefault)?.Name;
 					if (!string.IsNullOrEmpty(name))
 					{
-						var displayName = FluentProvider.GetMessage(name).Replace("Research: ", "").Replace("Upgrade: ", "");
+						var displayName = FluentProvider.GetMessage(name).Replace("Upgrade: ", "").Replace("Research: ", "");
 						label.GetText = () => $"{displayName}";
 						WidgetUtils.TruncateLabelToTooltip(label, displayName);
 					}
@@ -398,7 +404,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 					var name = actor.TraitInfos<TooltipInfo>().FirstOrDefault(info => info.EnabledByDefault)?.Name;
 					if (!string.IsNullOrEmpty(name))
 					{
-						var displayName = FluentProvider.GetMessage(name);
+						var displayName = FluentProvider.GetMessage(name).Replace("Upgrade: ", "").Replace("Research: ", "");
 						actorLabel.GetText = () => $"{displayName}";
 						WidgetUtils.TruncateLabelToTooltip(actorLabel, displayName);
 					}
@@ -566,47 +572,43 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			}
 
 			if (portraitWidget != null)
+			{
+				// PERF: Load individual portrait images directly, bypassing ChromeProvider,
+				// to avoid stalls when loading a single large sheet.
+				// Portrait images are required to all be the same size as the "default.png" image.
+				var portrait = defaultPortrait;
+				if (modData.DefaultFileSystem.TryOpen($"encyclopedia/{actor.Name}.png", out var s))
 				{
-					// PERF: Load individual portrait images directly, bypassing ChromeProvider,
-					// to avoid stalls when loading a single large sheet.
-					// Portrait images are required to all be the same size as the "default.png" image.
-					var portrait = defaultPortrait;
-					if (modData.DefaultFileSystem.TryOpen($"encyclopedia/{actor.Name}.png", out var s))
+					var p = new Png(s);
+					if (p.Width == defaultPortrait.Width && p.Height == defaultPortrait.Height)
+						portrait = p;
+					else
 					{
-						var p = new Png(s);
-						if (p.Width == defaultPortrait.Width && p.Height == defaultPortrait.Height)
-							portrait = p;
-						else
-						{
-							Log.Write("debug", $"Failed to parse load portrait image for {actor.Name}.");
-							Log.Write("debug", $"Expected size {defaultPortrait.Width}, {defaultPortrait.Height}, but found {p.Width}, {p.Height}.");
-						}
+						Log.Write("debug", $"Failed to parse load portrait image for {actor.Name}.");
+						Log.Write("debug", $"Expected size {defaultPortrait.Width}, {defaultPortrait.Height}, but found {p.Width}, {p.Height}.");
 					}
-
-					OpenRA.Graphics.Util.FastCopyIntoSprite(portraitSprite, portrait);
-					portraitSprite.Sheet.CommitBufferedData();
 				}
+
+				OpenRA.Graphics.Util.FastCopyIntoSprite(portraitSprite, portrait);
+				portraitSprite.Sheet.CommitBufferedData();
+			}
 
 			if (titleLabel != null)
 				titleLabel.Text = ActorName(modData.DefaultRules, actor.Name);
 
 			var bi = actor.TraitInfoOrDefault<BuildableInfo>();
 
-			// Handle build icon display
 			if (buildIconWidget != null)
 			{
 				if (bi != null && !string.IsNullOrEmpty(bi.Icon))
 				{
 					try
 					{
-						// Get the icon sprite from the actor's RenderSprites trait
 						var renderSprites = actor.TraitInfos<RenderSpritesInfo>().FirstOrDefault();
 						if (renderSprites != null)
 						{
 							var iconSequence = world.Map.Sequences.GetSequence(renderSprites.Image ?? actor.Name, bi.Icon);
 							var iconSprite = iconSequence.GetSprite(0);
-
-							// Set up the build icon sprite and palette
 							buildIconWidget.GetSprite = () => iconSprite;
 							buildIconWidget.GetPalette = () => bi.IconPalette ?? "chrome";
 							buildIconWidget.Visible = true;
@@ -618,7 +620,6 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 					}
 					catch
 					{
-						// If the icon can't be loaded, hide the widget
 						buildIconWidget.Visible = false;
 					}
 				}
@@ -628,18 +629,60 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				}
 			}
 
-			var currentY = 0;
-
-			if (productionContainer != null && bi != null && !selectedInfo.HideBuildable)
+			if (productionContainer != null)
 			{
-				productionContainer.Visible = true;
-				var cost = actor.TraitInfoOrDefault<ValuedInfo>()?.Cost ?? 0;
+				var hasProductionInfo = false;
+				var currentX = 0;
+				const int IconWidth = 16;
+				const int LabelSpacing = 4;
+				const int GroupSpacing = 20;
 
-				var time = BuildTime(selectedActor, selectedInfo.BuildableQueue);
-				productionTime.Text = WidgetUtils.FormatTime(time, world.Timestep);
+				var costIcon = productionContainer.GetOrNull("COST_ICON");
+				var timeIcon = productionContainer.GetOrNull("TIME_ICON");
+				var notProducibleLabel = productionContainer.GetOrNull<LabelWidget>("NOT_PRODUCIBLE");
 
-				var costText = cost.ToString(NumberFormatInfo.CurrentInfo);
-				productionCost.Text = costText;
+				if (costIcon != null) costIcon.Visible = false;
+				if (timeIcon != null) timeIcon.Visible = false;
+				if (productionCost != null) productionCost.Visible = false;
+				if (productionTime != null) productionTime.Visible = false;
+				if (armorTypeIcon != null) armorTypeIcon.Visible = false;
+				if (armorTypeLabel != null) armorTypeLabel.Visible = false;
+				if (productionPowerIcon != null) productionPowerIcon.Visible = false;
+				if (productionPower != null) productionPower.Visible = false;
+				if (notProducibleLabel != null) notProducibleLabel.Visible = false;
+
+				if (bi != null && !selectedInfo.HideBuildable)
+				{
+					var cost = actor.TraitInfoOrDefault<ValuedInfo>()?.Cost ?? 0;
+					if (cost > 0 && productionCost != null && costIcon != null)
+					{
+						var costText = cost.ToString(NumberFormatInfo.CurrentInfo);
+						productionCost.Text = costText;
+						costIcon.Bounds.X = currentX;
+						productionCost.Bounds.X = currentX + IconWidth + LabelSpacing;
+						var costWidth = Game.Renderer.Fonts[productionCost.Font].Measure(costText).X;
+						currentX += IconWidth + LabelSpacing + costWidth + GroupSpacing;
+
+						costIcon.Visible = true;
+						productionCost.Visible = true;
+						hasProductionInfo = true;
+					}
+
+					var time = BuildTime(selectedActor, selectedInfo.BuildableQueue);
+					if (time > 0 && productionTime != null && timeIcon != null)
+					{
+						var timeText = WidgetUtils.FormatTime(time, world.Timestep);
+						productionTime.Text = timeText;
+						timeIcon.Bounds.X = currentX;
+						productionTime.Bounds.X = currentX + IconWidth + LabelSpacing;
+						var timeWidth = Game.Renderer.Fonts[productionTime.Font].Measure(timeText).X;
+						currentX += IconWidth + LabelSpacing + timeWidth + GroupSpacing;
+
+						timeIcon.Visible = true;
+						productionTime.Visible = true;
+						hasProductionInfo = true;
+					}
+				}
 
 				if (armorTypeLabel != null && armorTypeIcon != null)
 				{
@@ -648,59 +691,55 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 					{
 						SelectionTooltipLogic.GetArmorTypeLabel(armorTypeLabel, actor);
 						var hasArmorType = !string.IsNullOrEmpty(armorTypeLabel.Text);
-						armorTypeIcon.Visible = hasArmorType;
-						armorTypeLabel.Visible = hasArmorType;
-					}
-					else
-					{
-						armorTypeIcon.Visible = false;
-						armorTypeLabel.Visible = false;
+						if (hasArmorType)
+						{
+							armorTypeIcon.Bounds.X = currentX;
+							armorTypeLabel.Bounds.X = currentX + IconWidth + LabelSpacing;
+							var armorWidth = Game.Renderer.Fonts[armorTypeLabel.Font].Measure(armorTypeLabel.Text).X;
+							currentX += IconWidth + LabelSpacing + armorWidth + GroupSpacing;
+
+							armorTypeIcon.Visible = true;
+							armorTypeLabel.Visible = true;
+							hasProductionInfo = true;
+						}
 					}
 				}
 
 				var power = actor.TraitInfos<PowerInfo>().Where(i => i.EnabledByDefault).Sum(i => i.Amount);
-				if (power != 0)
+				if (power != 0 && productionPower != null && productionPowerIcon != null)
 				{
+					var powerText = power.ToString(NumberFormatInfo.CurrentInfo);
+					productionPower.Text = powerText;
+					productionPowerIcon.Bounds.X = currentX;
+					productionPower.Bounds.X = currentX + IconWidth + LabelSpacing;
+					var powerWidth = Game.Renderer.Fonts[productionPower.Font].Measure(powerText).X;
+					currentX += IconWidth + LabelSpacing + powerWidth + GroupSpacing;
+
 					productionPowerIcon.Visible = true;
 					productionPower.Visible = true;
-					productionPower.Text = power.ToString(NumberFormatInfo.CurrentInfo);
+					hasProductionInfo = true;
+				}
 
-					// Adjust power position if no armor type is shown
-					var hasArmorType = armorTypeIcon != null && armorTypeIcon.Visible;
-					if (!hasArmorType)
-					{
-						// Move power to armor type position when no armor type
-						productionPowerIcon.Bounds.X = 160;
-						productionPower.Bounds.X = 177;
-					}
-				}
-				else
+				if (!hasProductionInfo && notProducibleLabel != null)
 				{
-					productionPowerIcon.Visible = false;
-					productionPower.Visible = false;
+					notProducibleLabel.Visible = true;
 				}
-			}
-			else
-			{
-				currentY -= productionContainer.Bounds.Height;
 
-				if (productionContainer != null)
-				{
-					productionContainer.Visible = false;
-				}
+				productionContainer.Visible = true;
 			}
 
-			// Handle subfaction display
+			var currentY = 0;
+			FactionInfo subfaction = null;
 			var subfactionText = "";
 			var subfactionHeight = 0;
-			if (encyclopediaExtrasInfo != null && encyclopediaExtrasInfo.Subfaction != null && subfactionLabel != null)
+			if (encyclopediaExtrasInfo != null && !string.IsNullOrEmpty(encyclopediaExtrasInfo.Subfaction) && subfactionLabel != null)
 			{
-				// Get the subfaction name from the category path
-				subfactionText = $"{encyclopediaExtrasInfo.Subfaction} only";
+				subfaction = factions[encyclopediaExtrasInfo.Subfaction];
+				subfactionText = $"{FluentProvider.GetMessage(subfaction.Name)} only";
+				// var subfactionText = FluentProvider.GetMessage(SubfactionOnly, "factionName", FluentProvider.GetMessage(subfaction.Name));
 				subfactionHeight = descriptionFont.Measure(subfactionText).Y;
 			}
 
-			// Set subfaction text and visibility
 			if (subfactionLabel != null)
 			{
 				subfactionLabel.GetText = () => subfactionText;
@@ -708,29 +747,27 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				subfactionLabel.Visible = !string.IsNullOrEmpty(subfactionText);
 			}
 
-			// Set subfaction flag
-			if (subfactionFlag != null)
+			if (subfactionFlagImage != null)
 			{
 				if (!string.IsNullOrEmpty(subfactionText))
 				{
-					var flagName = GetSubfactionFlagName(encyclopediaExtrasInfo.Subfaction);
+					var flagName = subfaction.InternalName;
 					if (!string.IsNullOrEmpty(flagName))
 					{
-						subfactionFlag.GetImageName = () => flagName;
-						subfactionFlag.Visible = true;
+						subfactionFlagImage.GetImageName = () => flagName;
+						subfactionFlagImage.Visible = true;
 					}
 					else
 					{
-						subfactionFlag.Visible = false;
+						subfactionFlagImage.Visible = false;
 					}
 				}
 				else
 				{
-					subfactionFlag.Visible = false;
+					subfactionFlagImage.Visible = false;
 				}
 			}
 
-			// Position subfaction display first
 			if (!string.IsNullOrEmpty(subfactionText))
 			{
 				if (subfactionLabel != null)
@@ -739,23 +776,24 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 					currentY += subfactionHeight + 8;
 				}
 
-				if (subfactionFlag != null && subfactionLabel != null)
+				if (subfactionFlagImage != null && subfactionLabel != null)
 				{
-					subfactionFlag.Bounds.Y = currentY - subfactionHeight - 9;
+					subfactionFlagImage.Bounds.Y = currentY - subfactionHeight - 9;
 					var textWidth = descriptionFont.Measure(subfactionText).X;
 				}
 			}
 
-			// Handle AdditionalInfo display
 			var additionalInfoText = "";
 			var additionalInfoHeight = 0;
 			if (encyclopediaExtrasInfo != null && !string.IsNullOrEmpty(encyclopediaExtrasInfo.AdditionalInfo) && additionalInfoLabel != null)
 			{
-				additionalInfoText = WidgetUtilsCA.WrapTextWithIndent(encyclopediaExtrasInfo.AdditionalInfo.Replace("\\n", "\n"), additionalInfoLabel.Bounds.Width, descriptionFont);
+				additionalInfoText = WidgetUtilsCA.WrapTextWithIndent(
+					encyclopediaExtrasInfo.AdditionalInfo.Replace("\\n", "\n"),
+					additionalInfoLabel.Bounds.Width,
+					descriptionFont);
 				additionalInfoHeight = descriptionFont.Measure(additionalInfoText).Y;
 			}
 
-			// Set AdditionalInfo text and visibility
 			if (additionalInfoLabel != null)
 			{
 				additionalInfoLabel.GetText = () => additionalInfoText;
@@ -763,7 +801,6 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				additionalInfoLabel.Visible = !string.IsNullOrEmpty(additionalInfoText);
 			}
 
-			// Position AdditionalInfo after subfaction
 			if (!string.IsNullOrEmpty(additionalInfoText) && additionalInfoLabel != null)
 			{
 				additionalInfoLabel.Bounds.Y = currentY;
@@ -781,21 +818,27 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 					.ToList();
 
 				if (prereqs.Count != 0)
-					prerequisitesText = WidgetUtilsCA.WrapTextWithIndent(FluentProvider.GetMessage(Requires, "prerequisites", prereqs.JoinWith(", ")), descriptionLabel.Bounds.Width, descriptionFont);
+				{
+					prerequisitesText = WidgetUtilsCA.WrapTextWithIndent(
+						FluentProvider.GetMessage(Requires, "prerequisites", prereqs.JoinWith(", ")),
+						descriptionLabel.Bounds.Width,
+						descriptionFont);
+				}
 
 				if (!string.IsNullOrEmpty(bi.Description))
 				{
-					descriptionText = WidgetUtilsCA.WrapTextWithIndent(FluentProvider.GetMessage(bi.Description.Replace("\\n", "\n")), descriptionLabel.Bounds.Width, descriptionFont);
+					descriptionText = WidgetUtilsCA.WrapTextWithIndent(
+						FluentProvider.GetMessage(bi.Description.Replace("\\n", "\n")),
+						descriptionLabel.Bounds.Width,
+						descriptionFont);
 				}
 			}
 
-			// Set prerequisites text and height
 			var prerequisitesHeight = string.IsNullOrEmpty(prerequisitesText) ? 0 : descriptionFont.Measure(prerequisitesText).Y;
 			prerequisitesLabel.GetText = () => prerequisitesText;
 			prerequisitesLabel.Bounds.Height = prerequisitesHeight;
 			prerequisitesLabel.Visible = !string.IsNullOrEmpty(prerequisitesText);
 
-			// Set description text and height
 			var descriptionHeight = string.IsNullOrEmpty(descriptionText) ? 0 : descriptionFont.Measure(descriptionText).Y;
 			descriptionLabel.GetText = () => descriptionText;
 			descriptionLabel.Bounds.Height = descriptionHeight;
@@ -826,62 +869,52 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				attributesText = WidgetUtilsCA.WrapTextWithIndent(tooltipExtras.Attributes.Replace("\\n", "\n"), attributesLabel.Bounds.Width, descriptionFont, 6);
 			}
 
-			if (strengthsText != null && weaknessesText != null && attributesText != null)
+			if (!string.IsNullOrEmpty(strengthsText) && strengthsLabel != null)
 			{
-				// Position and configure strengths
-				if (!string.IsNullOrEmpty(strengthsText) && strengthsLabel != null)
-				{
-					strengthsLabel.Bounds.Y = currentY;
-					strengthsLabel.Visible = true;
-					strengthsLabel.GetText = () => strengthsText;
-					var strengthsHeight = descriptionFont.Measure(strengthsText).Y;
-					strengthsLabel.Bounds.Height = strengthsHeight;
-					currentY += strengthsHeight;
-				}
-				else if (strengthsLabel != null)
-				{
-					strengthsLabel.Visible = false;
-				}
-
-				// Position and configure weaknesses
-				if (!string.IsNullOrEmpty(weaknessesText) && weaknessesLabel != null)
-				{
-					weaknessesLabel.Bounds.Y = currentY;
-					weaknessesLabel.Visible = true;
-					weaknessesLabel.GetText = () => weaknessesText;
-					var weaknessesHeight = descriptionFont.Measure(weaknessesText).Y;
-					weaknessesLabel.Bounds.Height = weaknessesHeight;
-					currentY += weaknessesHeight;
-				}
-				else if (weaknessesLabel != null)
-				{
-					weaknessesLabel.Visible = false;
-				}
-
-				// Position and configure attributes
-				if (!string.IsNullOrEmpty(attributesText) && attributesLabel != null)
-				{
-					attributesLabel.Bounds.Y = currentY;
-					attributesLabel.Visible = true;
-					attributesLabel.GetText = () => attributesText;
-					var attributesHeight = descriptionFont.Measure(attributesText).Y;
-					attributesLabel.Bounds.Height = attributesHeight;
-					currentY += attributesHeight;
-				}
-				else if (attributesLabel != null)
-				{
-					attributesLabel.Visible = false;
-				}
-
-				currentY += 8;
+				strengthsLabel.Bounds.Y = currentY;
+				strengthsLabel.Visible = true;
+				strengthsLabel.GetText = () => strengthsText;
+				var strengthsHeight = descriptionFont.Measure(strengthsText).Y;
+				strengthsLabel.Bounds.Height = strengthsHeight;
+				currentY += strengthsHeight;
+			}
+			else if (strengthsLabel != null)
+			{
+				strengthsLabel.Visible = false;
 			}
 
-			// Handle encyclopedia description (shown after extras)
+			if (!string.IsNullOrEmpty(weaknessesText) && weaknessesLabel != null)
+			{
+				weaknessesLabel.Bounds.Y = currentY;
+				weaknessesLabel.Visible = true;
+				weaknessesLabel.GetText = () => weaknessesText;
+				var weaknessesHeight = descriptionFont.Measure(weaknessesText).Y;
+				weaknessesLabel.Bounds.Height = weaknessesHeight;
+				currentY += weaknessesHeight;
+			}
+			else if (weaknessesLabel != null)
+			{
+				weaknessesLabel.Visible = false;
+			}
+
+			if (!string.IsNullOrEmpty(attributesText) && attributesLabel != null)
+			{
+				attributesLabel.Bounds.Y = currentY;
+				attributesLabel.Visible = true;
+				attributesLabel.GetText = () => attributesText;
+				var attributesHeight = descriptionFont.Measure(attributesText).Y;
+				attributesLabel.Bounds.Height = attributesHeight;
+				currentY += attributesHeight + 8;
+			}
+			else if (attributesLabel != null)
+			{
+				attributesLabel.Visible = false;
+			}
+
 			var encyclopediaText = "";
 			if (selectedInfo != null && !string.IsNullOrEmpty(selectedInfo.Description))
 				encyclopediaText = WidgetUtils.WrapText(FluentProvider.GetMessage(selectedInfo.Description), descriptionLabel.Bounds.Width, descriptionFont);
 
-			// Position and configure encyclopedia description
 			if (!string.IsNullOrEmpty(encyclopediaText) && encyclopediaDescriptionLabel != null)
 			{
 				encyclopediaDescriptionLabel.Bounds.Y = currentY;
@@ -896,7 +929,6 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				encyclopediaDescriptionLabel.Visible = false;
 			}
 
-			// Update the container height to fit all content
 			actorDetailsContainer.Bounds.Height = currentY;
 
 			descriptionPanel.Layout.AdjustChildren();
@@ -917,7 +949,6 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				previewOwner = world.Players.FirstOrDefault(p => p.InternalName == selectedInfo.PreviewOwner);
 			else
 			{
-				// Try to infer PreviewOwner from category
 				var inferredOwner = InferPreviewOwnerFromCategory(currentCategoryPath);
 				if (!string.IsNullOrEmpty(inferredOwner))
 					previewOwner = world.Players.FirstOrDefault(p => p.InternalName == inferredOwner);
@@ -1008,24 +1039,25 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			base.Dispose(disposing);
 		}
 
-		static string InferPreviewOwnerFromCategory(string categoryPath)
+		string InferPreviewOwnerFromCategory(string categoryPath)
 		{
 			if (string.IsNullOrEmpty(categoryPath))
 				return null;
 
-			// Extract the top-level category name from the path
 			var topLevelCategory = categoryPath.Split('/')[0];
 
-			// Map category names to faction names
 			if (topLevelCategory == "Nod")
 			{
+				var redUnits = new[] { "amcv", "harv.td", "enli", "rmbc", "reap", "tplr", "shad", "scrn" };
 				var parts = categoryPath.Split('/');
 				if (parts.Length > 1)
 				{
+					// Nod units use no preview owner so they appear white.
 					var secondLevel = parts[1];
-					if (secondLevel == "Vehicles" || secondLevel == "Aircraft" || secondLevel == "Infantry")
+					if (!redUnits.Contains(selectedActor.Name) && (secondLevel == "Vehicles" || secondLevel == "Aircraft" || secondLevel == "Infantry"))
 						return null;
 				}
+
 				return "Nod";
 			}
 
@@ -1114,35 +1146,6 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				"Naval" => 5,
 				_ => 1000 // All other categories come after the specified ones
 			};
-		}
-
-		static string GetSubfactionFlagName(string subfactionName)
-		{
-			switch (subfactionName)
-			{
-				case "Black Hand":
-					return "blackh";
-
-				case "Psi-Corps":
-					return "yuri";
-			}
-
-			var flagName = subfactionName.ToLowerInvariant();
-			var spaceIndex = flagName.IndexOf(' ');
-			var hyphenIndex = flagName.IndexOf('-');
-
-			var cutIndex = -1;
-			if (spaceIndex >= 0 && hyphenIndex >= 0)
-				cutIndex = Math.Min(spaceIndex, hyphenIndex);
-			else if (spaceIndex >= 0)
-				cutIndex = spaceIndex;
-			else if (hyphenIndex >= 0)
-				cutIndex = hyphenIndex;
-
-			if (cutIndex >= 0)
-				flagName = flagName[..cutIndex];
-
-			return flagName;
 		}
 
 		void LoadExtras(ActorInfo actor)
