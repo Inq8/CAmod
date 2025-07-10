@@ -102,7 +102,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 		readonly ContainerWidget incomeGraphContainer;
 		readonly ContainerWidget armyValueGraphContainer;
 		readonly ContainerWidget teamArmyValueGraphContainer;
-		readonly LineGraphWidget incomeGraph;
+		readonly ScrollableLineGraphWidget incomeGraph;
 		readonly LineGraphWidget armyValueGraph;
 		readonly LineGraphWidget teamArmyValueGraph;
 		readonly ScrollItemWidget teamTemplate;
@@ -174,7 +174,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			combatPlayerTemplate = playerStatsPanel.Get<ScrollItemWidget>("COMBAT_PLAYER_TEMPLATE");
 
 			incomeGraphContainer = widget.Get<ContainerWidget>("INCOME_GRAPH_CONTAINER");
-			incomeGraph = incomeGraphContainer.Get<LineGraphWidget>("INCOME_GRAPH");
+			incomeGraph = incomeGraphContainer.Get<ScrollableLineGraphWidget>("INCOME_GRAPH");
 
 			armyValueGraphContainer = widget.Get<ContainerWidget>("ARMY_VALUE_GRAPH_CONTAINER");
 			armyValueGraph = armyValueGraphContainer.Get<LineGraphWidget>("ARMY_VALUE_GRAPH");
@@ -299,7 +299,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			incomeGraphContainer.Visible = true;
 
 			incomeGraph.GetSeries = () =>
-				players.Select(p => new LineGraphSeries(
+				players.Select(p => new ScrollableLineGraphSeries(
 					p.ResolvedPlayerName,
 					p.Color,
 					(p.PlayerActor.TraitOrDefault<PlayerStatistics>() ?? new PlayerStatistics(p.PlayerActor)).IncomeSamples.Select(s => (float)s)));
