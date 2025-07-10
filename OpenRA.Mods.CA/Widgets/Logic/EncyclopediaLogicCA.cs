@@ -631,7 +631,6 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			if (productionContainer != null)
 			{
-				var hasProductionInfo = false;
 				var currentX = 0;
 				const int IconWidth = 16;
 				const int LabelSpacing = 4;
@@ -639,6 +638,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 				var costIcon = productionContainer.GetOrNull("COST_ICON");
 				var timeIcon = productionContainer.GetOrNull("TIME_ICON");
+				var notProducibleIcon = productionContainer.GetOrNull<ImageWidget>("NOT_PRODUCIBLE_ICON");
 				var notProducibleLabel = productionContainer.GetOrNull<LabelWidget>("NOT_PRODUCIBLE");
 
 				if (costIcon != null) costIcon.Visible = false;
@@ -649,6 +649,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				if (armorTypeLabel != null) armorTypeLabel.Visible = false;
 				if (productionPowerIcon != null) productionPowerIcon.Visible = false;
 				if (productionPower != null) productionPower.Visible = false;
+				if (notProducibleIcon != null) notProducibleIcon.Visible = false;
 				if (notProducibleLabel != null) notProducibleLabel.Visible = false;
 
 				if (bi != null && !selectedInfo.HideBuildable)
@@ -665,7 +666,6 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 						costIcon.Visible = true;
 						productionCost.Visible = true;
-						hasProductionInfo = true;
 					}
 
 					var time = BuildTime(selectedActor, selectedInfo.BuildableQueue);
@@ -680,8 +680,16 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 						timeIcon.Visible = true;
 						productionTime.Visible = true;
-						hasProductionInfo = true;
 					}
+				}
+				else
+				{
+					notProducibleIcon.Visible = true;
+					notProducibleIcon.Bounds.X = currentX;
+					notProducibleLabel.Visible = true;
+					notProducibleLabel.Bounds.X = currentX + IconWidth + LabelSpacing;
+					var notProducibleLabelWidth = Game.Renderer.Fonts[notProducibleLabel.Font].Measure(notProducibleLabel.Text).X;
+					currentX += IconWidth + LabelSpacing + notProducibleLabelWidth + GroupSpacing;
 				}
 
 				if (armorTypeLabel != null && armorTypeIcon != null)
@@ -700,7 +708,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 							armorTypeIcon.Visible = true;
 							armorTypeLabel.Visible = true;
-							hasProductionInfo = true;
+
 						}
 					}
 				}
@@ -717,12 +725,6 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 					productionPowerIcon.Visible = true;
 					productionPower.Visible = true;
-					hasProductionInfo = true;
-				}
-
-				if (!hasProductionInfo && notProducibleLabel != null)
-				{
-					notProducibleLabel.Visible = true;
 				}
 
 				productionContainer.Visible = true;
@@ -1048,7 +1050,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			if (topLevelCategory == "Nod")
 			{
-				var redUnits = new[] { "amcv", "harv.td", "enli", "rmbc", "reap", "tplr", "shad", "scrn" };
+				var redUnits = new[] { "amcv", "harv.td", "harv.td.upg", "enli", "rmbc", "reap", "tplr", "shad", "scrn" };
 				var parts = categoryPath.Split('/');
 				if (parts.Length > 1)
 				{

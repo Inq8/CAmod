@@ -447,6 +447,8 @@ VEHICLES.SCRIN:
 	GrantConditionOnPrerequisite@CARAPACE:
 		Condition: carapace-upgrade
 		Prerequisites: carapace.upgrade
+	SpawnActorOnDeath@GMUT:
+		Actor: gscr.mutating
 	Encyclopedia:
 		Category: Scrin/Infantry
 
@@ -1097,6 +1099,7 @@ SMEDI:
 	KeepsDistance:
 	EncyclopediaExtras:
 		AdditionalInfo: Acquired from captured Hospitals.
+		HideBuildable: True
 
 ARTI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -1180,6 +1183,7 @@ ARTI:
 	KeepsDistance:
 	EncyclopediaExtras:
 		AdditionalInfo: Acquired from captured Machine Shops.
+		HideBuildable: True
 
 GSCR:
 	Inherits: BRUT
@@ -1205,6 +1209,8 @@ GSCR:
 		Sounds: gscr-attack1.aud, gscr-attack2.aud
 	Selectable:
 		DecorationBounds: 640, 896, -32, -256
+	Encyclopedia:
+		HideBuildable: True
 	EncyclopediaExtras:
 		AdditionalInfo: Result of Genetic Mutation Bomb on Scrin infantry.
 
