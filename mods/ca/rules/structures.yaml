@@ -832,7 +832,7 @@ HBOX:
 	Encyclopedia:
 		Category: Allies/Defenses
 	EncyclopediaExtras:
-		Subfaction: England
+		Subfaction: england
 
 GUN:
 	Inherits: ^Defense
@@ -2007,7 +2007,7 @@ TPWR:
 	Encyclopedia:
 		Category: Soviets/Buildings
 	EncyclopediaExtras:
-		Subfaction: Russia
+		Subfaction: russia
 
 STEK:
 	Inherits: ^Building
@@ -3670,7 +3670,7 @@ STWR:
 	Encyclopedia:
 		Category: GDI/Defenses
 	EncyclopediaExtras:
-		Subfaction: ZOCOM
+		Subfaction: zocom
 
 OBLI:
 	Inherits: ^DefenseTD
@@ -4998,7 +4998,7 @@ HTUR:
 	Encyclopedia:
 		Category: Allies/Defenses
 	EncyclopediaExtras:
-		Subfaction: France
+		Subfaction: france
 
 GUN.Nod:
 	Inherits: GUN
@@ -5116,7 +5116,7 @@ TTUR:
 	Encyclopedia:
 		Category: Soviets/Defenses
 	EncyclopediaExtras:
-		Subfaction: Iraq
+		Subfaction: iraq
 
 SGEN:
 	Inherits: ^Building
@@ -6079,7 +6079,7 @@ UPGC.BOMB:
 	Buildable:
 		Queue: Upgrade
 		BuildPaletteOrder: 8
-		Prerequisites: ~player.gdi, upgc, !upgc.plugged, bombard2.strat, ~bombard.strat, ~!seek.strat, ~!hold.strat, ~techlevel.high
+		Prerequisites: ~player.gdi, upgc, !upgc.plugged, ~bombard2.strat, ~bombard.strat, ~!seek.strat, ~!hold.strat, ~techlevel.high
 		Description: Provides an napalm rocket barrage.
 		IconPalette: chrometd
 	TooltipExtras:
@@ -6099,6 +6099,8 @@ UPGC.BOMB:
 		Prerequisites: upgc.bomb.previous
 	Encyclopedia:
 		Category: GDI/Upgrades
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Bombardment Strategy.
 
 UPGC.SEEK:
 	Inherits: ^BuildingPlug
@@ -6109,7 +6111,7 @@ UPGC.SEEK:
 	Buildable:
 		Queue: Upgrade
 		BuildPaletteOrder: 10
-		Prerequisites: ~player.gdi, upgc, !upgc.plugged, seek2.strat, ~seek.strat, ~!bombard.strat, ~!hold.strat, ~techlevel.high
+		Prerequisites: ~player.gdi, upgc, !upgc.plugged, ~seek2.strat, ~seek.strat, ~!bombard.strat, ~!hold.strat, ~techlevel.high
 		Description: Provides detailed information on enemy locations.
 		IconPalette: chrometd
 	TooltipExtras:
@@ -6129,6 +6131,8 @@ UPGC.SEEK:
 		Prerequisites: upgc.seek.previous
 	Encyclopedia:
 		Category: GDI/Upgrades
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Seek & Destroy Strategy.
 
 UPGC.HOLD:
 	Inherits: ^BuildingPlug
@@ -6139,7 +6143,7 @@ UPGC.HOLD:
 	Buildable:
 		Queue: Upgrade
 		BuildPaletteOrder: 12
-		Prerequisites: ~player.gdi, upgc, !upgc.plugged, hold2.strat, ~hold.strat, ~!bombard.strat, ~!seek.strat, ~techlevel.high
+		Prerequisites: ~player.gdi, upgc, !upgc.plugged, ~hold2.strat, ~hold.strat, ~!bombard.strat, ~!seek.strat, ~techlevel.high
 		Description: Provides the ability to shield units in an area
 		IconPalette: chrometd
 	TooltipExtras:
@@ -6159,6 +6163,8 @@ UPGC.HOLD:
 		Prerequisites: upgc.hold.previous
 	Encyclopedia:
 		Category: GDI/Upgrades
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Hold the Line Strategy.
 
 UPGC.DROP:
 	Inherits: ^BuildingPlug

@@ -102,9 +102,9 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 		readonly ContainerWidget incomeGraphContainer;
 		readonly ContainerWidget armyValueGraphContainer;
 		readonly ContainerWidget teamArmyValueGraphContainer;
-		readonly LineGraphWidget incomeGraph;
-		readonly LineGraphWidget armyValueGraph;
-		readonly LineGraphWidget teamArmyValueGraph;
+		readonly ScrollableLineGraphWidget incomeGraph;
+		readonly ScrollableLineGraphWidget armyValueGraph;
+		readonly ScrollableLineGraphWidget teamArmyValueGraph;
 		readonly ScrollItemWidget teamTemplate;
 		readonly Player[] players;
 		readonly IGrouping<int, Player>[] teams;
@@ -174,13 +174,13 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			combatPlayerTemplate = playerStatsPanel.Get<ScrollItemWidget>("COMBAT_PLAYER_TEMPLATE");
 
 			incomeGraphContainer = widget.Get<ContainerWidget>("INCOME_GRAPH_CONTAINER");
-			incomeGraph = incomeGraphContainer.Get<LineGraphWidget>("INCOME_GRAPH");
+			incomeGraph = incomeGraphContainer.Get<ScrollableLineGraphWidget>("INCOME_GRAPH");
 
 			armyValueGraphContainer = widget.Get<ContainerWidget>("ARMY_VALUE_GRAPH_CONTAINER");
-			armyValueGraph = armyValueGraphContainer.Get<LineGraphWidget>("ARMY_VALUE_GRAPH");
+			armyValueGraph = armyValueGraphContainer.Get<ScrollableLineGraphWidget>("ARMY_VALUE_GRAPH");
 
 			teamArmyValueGraphContainer = widget.Get<ContainerWidget>("TEAM_ARMY_VALUE_GRAPH_CONTAINER");
-			teamArmyValueGraph = teamArmyValueGraphContainer.Get<LineGraphWidget>("TEAM_ARMY_VALUE_GRAPH");
+			teamArmyValueGraph = teamArmyValueGraphContainer.Get<ScrollableLineGraphWidget>("TEAM_ARMY_VALUE_GRAPH");
 
 			teamTemplate = playerStatsPanel.Get<ScrollItemWidget>("TEAM_TEMPLATE");
 
@@ -299,7 +299,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			incomeGraphContainer.Visible = true;
 
 			incomeGraph.GetSeries = () =>
-				players.Select(p => new LineGraphSeries(
+				players.Select(p => new ScrollableLineGraphSeries(
 					p.ResolvedPlayerName,
 					p.Color,
 					(p.PlayerActor.TraitOrDefault<PlayerStatistics>() ?? new PlayerStatistics(p.PlayerActor)).IncomeSamples.Select(s => (float)s)));
@@ -311,7 +311,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			armyValueGraphContainer.Visible = true;
 
 			armyValueGraph.GetSeries = () =>
-				players.Select(p => new LineGraphSeries(
+				players.Select(p => new ScrollableLineGraphSeries(
 					p.ResolvedPlayerName,
 					p.Color,
 					(p.PlayerActor.TraitOrDefault<PlayerStatistics>() ?? new PlayerStatistics(p.PlayerActor)).ArmySamples.Select(s => (float)s)));
@@ -323,7 +323,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			teamArmyValueGraphContainer.Visible = true;
 
 			teamArmyValueGraph.GetSeries = () =>
-				teams.Select(t => new LineGraphSeries(
+				teams.Select(t => new ScrollableLineGraphSeries(
 					t.Key > 0 ? FluentProvider.GetMessage(TeamNumber, "team", $"{t.Key} ({t.First().ResolvedPlayerName})") : FluentProvider.GetMessage(NoTeam),
 					t.First().Color,
 					t.Select(p => (p.PlayerActor.TraitOrDefault<PlayerStatistics>() ?? new PlayerStatistics(p.PlayerActor)).ArmySamples.Select(s => (float)s)).Aggregate((a, b) => a.Zip(b, (x, y) => x + y))));

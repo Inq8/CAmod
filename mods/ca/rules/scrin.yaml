@@ -447,6 +447,8 @@ VEHICLES.SCRIN:
 	GrantConditionOnPrerequisite@CARAPACE:
 		Condition: carapace-upgrade
 		Prerequisites: carapace.upgrade
+	SpawnActorOnDeath@GMUT:
+		Actor: gscr.mutating
 	Encyclopedia:
 		Category: Scrin/Infantry
 
@@ -712,7 +714,7 @@ MRDR:
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 	EncyclopediaExtras:
-		Subfaction: Harbinger-31
+		Subfaction: harbinger
 
 S6:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -1097,6 +1099,7 @@ SMEDI:
 	KeepsDistance:
 	EncyclopediaExtras:
 		AdditionalInfo: Acquired from captured Hospitals.
+		HideBuildable: True
 
 ARTI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -1180,6 +1183,7 @@ ARTI:
 	KeepsDistance:
 	EncyclopediaExtras:
 		AdditionalInfo: Acquired from captured Machine Shops.
+		HideBuildable: True
 
 GSCR:
 	Inherits: BRUT
@@ -1205,6 +1209,8 @@ GSCR:
 		Sounds: gscr-attack1.aud, gscr-attack2.aud
 	Selectable:
 		DecorationBounds: 640, 896, -32, -256
+	Encyclopedia:
+		HideBuildable: True
 	EncyclopediaExtras:
 		AdditionalInfo: Result of Genetic Mutation Bomb on Scrin infantry.
 
@@ -1600,7 +1606,7 @@ SHRW:
 	-ReplacedInQueue:
 	-Upgradeable@SHRW:
 	EncyclopediaExtras:
-		Subfaction: Reaper-17
+		Subfaction: reaper
 
 SEEK:
 	Inherits: ^Vehicle
@@ -1770,7 +1776,7 @@ LACE:
 	Encyclopedia:
 		Category: Scrin/Vehicles
 	EncyclopediaExtras:
-		Subfaction: Traveler-59
+		Subfaction: traveler
 
 INTL:
 	Inherits: ^Vehicle
@@ -2076,7 +2082,7 @@ LCHR:
 	Encyclopedia:
 		Category: Scrin/Vehicles
 	EncyclopediaExtras:
-		Subfaction: Collector-73
+		Subfaction: collector
 
 LCHR.Orb:
 	Inherits@1: ^1x1Shape
@@ -2242,7 +2248,7 @@ STCR:
 	Encyclopedia:
 		Category: Scrin/Vehicles
 	EncyclopediaExtras:
-		Subfaction: Reaper-17
+		Subfaction: reaper
 
 DEVO:
 	Inherits: ^Vehicle
@@ -2592,7 +2598,7 @@ ATMZ:
 	Encyclopedia:
 		Category: Scrin/Vehicles
 	EncyclopediaExtras:
-		Subfaction: Collector-73
+		Subfaction: collector
 
 TPOD:
 	Inherits: ^Tank
@@ -2782,7 +2788,7 @@ RTPD:
 	WithIdleOverlay@RESCONVGEMS:
 		Offset: 0,0,200
 	EncyclopediaExtras:
-		Subfaction: Reaper-17
+		Subfaction: reaper
 
 OBLT:
 	Inherits: ^Vehicle
@@ -2903,7 +2909,7 @@ OBLT:
 	Encyclopedia:
 		Category: Scrin/Vehicles
 	EncyclopediaExtras:
-		Subfaction: Harbinger-31
+		Subfaction: harbinger
 
 NULL:
 	Inherits: ^Vehicle
@@ -3523,7 +3529,7 @@ ENRV:
 	Encyclopedia:
 		Category: Scrin/Aircraft
 	EncyclopediaExtras:
-		Subfaction: Traveler-59
+		Subfaction: traveler
 
 DEVA:
 	Inherits: ^Helicopter
