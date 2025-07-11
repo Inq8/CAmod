@@ -14,42 +14,40 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("Simple counter for actors.")]
+	[TraitLocation(SystemActors.Player)]
+	[Desc("Allows arbitrary counts.")]
 	public class CountManagerInfo : TraitInfo
 	{
 		public override object Create(ActorInitializer init) { return new CountManager(); }
 	}
 
-	public class CountManager : INotifyCountChanged
+	public class CountManager
 	{
-		readonly Dictionary<string, int> counts;
-
-		public Dictionary<string, int> Counts => counts;
-
-		public event Action Incremented;
-		public event Action Decremented;
+		public Dictionary<string, int> Counts { get; }
+		public event Action<string, int> Incremented;
+		public event Action<string, int> Decremented;
 
 		public CountManager()
 		{
-			counts = new Dictionary<string, int>();
+			Counts = new Dictionary<string, int>();
 		}
 
-		void INotifyCountChanged.Incremented(string type)
+		public void Increment(string type)
 		{
-			if (!counts.ContainsKey(type))
-				counts[type] = 0;
+			if (!Counts.ContainsKey(type))
+				Counts[type] = 0;
 
-			counts[type]++;
-			Incremented?.Invoke();
+			Counts[type]++;
+			Incremented?.Invoke(type, Counts[type]);
 		}
 
-		void INotifyCountChanged.Decremented(string type)
+		public void Decrement(string type)
 		{
-			if (!counts.ContainsKey(type))
+			if (!Counts.TryGetValue(type, out var value))
 				return;
 
-			counts[type]--;
-			Decremented?.Invoke();
+			Counts[type] = --value;
+			Decremented?.Invoke(type, value);
 		}
 	}
 }

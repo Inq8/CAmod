@@ -13,6 +13,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
+	[TraitLocation(SystemActors.Player)]
 	[Desc("This must be attached to player in order for TeleportNetwork to work.")]
 	public class TeleportNetworkManagerInfo : TraitInfo, IRulesetLoaded
 	{

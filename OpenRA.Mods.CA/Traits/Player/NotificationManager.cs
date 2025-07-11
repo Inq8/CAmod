@@ -13,8 +13,8 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.Common.Traits
 {
-	[Desc("Tracks last notification times.")]
 	[TraitLocation(SystemActors.Player)]
+	[Desc("Tracks last notification times.")]
 	public class NotificationManagerInfo : TraitInfo
 	{
 		public override object Create(ActorInitializer init) { return new NotificationManager(); }

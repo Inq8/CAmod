@@ -17,6 +17,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
+	[TraitLocation(SystemActors.Player)]
 	[Desc("Manages unit upgrades.")]
 	public class UpgradesManagerInfo : TraitInfo
 	{

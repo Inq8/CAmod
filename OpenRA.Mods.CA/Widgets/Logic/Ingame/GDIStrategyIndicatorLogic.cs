@@ -9,7 +9,6 @@
 #endregion
 
 using System;
-using System.Linq;
 using OpenRA.Mods.CA.Traits;
 using OpenRA.Mods.Common.Widgets;
 using OpenRA.Widgets;
@@ -18,10 +17,9 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 {
 	class GDIStrategyIndicatorLogic : ChromeLogic
 	{
+		const string CountType = "StrategyLevel";
 		const string DisabledImage = "disabled";
-
-		readonly CountManager counter;
-
+		readonly CountManager countManager;
 		private string levelImageName;
 
 		[ObjectCreator.UseCtor]
@@ -37,38 +35,35 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				return;
 			}
 
-			counter = world.LocalPlayer.PlayerActor.TraitsImplementing<CountManager>()
-				.FirstOrDefault();
+			countManager = world.LocalPlayer.PlayerActor.Trait<CountManager>();
+			UpdateLevelImageName(0);
 
-			if (counter == null)
-			{
-				levelImage.GetImageName = () => DisabledImage;
-				levelImage.IsVisible = () => true;
-				return;
-			}
-
-			UpdateLevelImageName();
-
-			counter.Incremented += HandleIncremented;
-			counter.Decremented += HandleDecremented;
+			countManager.Incremented += HandleIncremented;
+			countManager.Decremented += HandleDecremented;
 
 			levelImage.GetImageName = () => levelImageName;
 			levelImage.IsVisible = () => true;
 		}
 
-		private void HandleIncremented()
+		private void HandleIncremented(string type, int newCount)
 		{
-			UpdateLevelImageName();
+			if (type != CountType)
+				return;
+
+			UpdateLevelImageName(newCount);
 		}
 
-		private void HandleDecremented()
+		private void HandleDecremented(string type, int newCount)
 		{
-			UpdateLevelImageName();
+			if (type != CountType)
+				return;
+
+			UpdateLevelImageName(newCount);
 		}
 
-		private void UpdateLevelImageName()
+		private void UpdateLevelImageName(int newCount)
 		{
-			var count = counter.Counts.ContainsKey("StrategyLevel") ? Math.Min(counter.Counts["StrategyLevel"], 3) : 0;
+			var count = Math.Min(newCount, 3);
 			levelImageName = $"level{count}";
 		}
 	}

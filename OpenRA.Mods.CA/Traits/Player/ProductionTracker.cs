@@ -14,6 +14,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
+	[TraitLocation(SystemActors.Player)]
 	[Desc("Keeps track of player's initial build order and units produced for observer stats.")]
 	public class ProductionTrackerInfo : TraitInfo
 	{

@@ -20,6 +20,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
+	[TraitLocation(SystemActors.Player)]
 	[Desc("Stores campaign progress.")]
 	public class CampaignProgressTrackerInfo : TraitInfo
 	{
@@ -31,8 +32,6 @@ namespace OpenRA.Mods.CA.Traits
 		private const string encryptionKey = "b14ca5898a4e4133bbce2ea2315a1916";
 		private static string campaignProgressFilePath = Path.Combine(Platform.SupportDir + "Logs", "ca-campaign.log");
 		private bool developerCommandUsed = false;
-
-		public CampaignProgressTracker() {}
 
 		void INotifyWinStateChanged.OnPlayerWon(Player player)
 		{

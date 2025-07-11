@@ -13,6 +13,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
+	[TraitLocation(SystemActors.Player)]
 	[Desc("For storing global support power properties e.g. to limit the number of times timers are modified.")]
 	public class SupportPowerInstanceManagerInfo : TraitInfo
 	{
@@ -22,10 +23,5 @@ namespace OpenRA.Mods.CA.Traits
 	public class SupportPowerInstanceManager
 	{
 		public readonly HashSet<string> InitiallyFullyChargedPowers = new HashSet<string>();
-
-		public SupportPowerInstanceManager()
-		{
-
-		}
 	}
 }

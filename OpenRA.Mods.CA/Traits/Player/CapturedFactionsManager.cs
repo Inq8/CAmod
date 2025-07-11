@@ -13,6 +13,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
+	[TraitLocation(SystemActors.Player)]
 	[Desc("Attached to player to track what factions conyards or factories have been captured.")]
 	public class CapturedFactionsManagerInfo : TraitInfo
 	{

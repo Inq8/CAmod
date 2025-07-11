@@ -8,12 +8,20 @@
  */
 #endregion
 
-using System.Linq;
+using System;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
+	[Flags]
+	public enum UpdateOnType
+	{
+		Created = 1,
+		Disposed = 2,
+		Killed = 4,
+	}
+
 	[Desc("Updates a counter when the actor is created/disposed or changes owner.")]
 	public class UpdatesCountInfo : ConditionalTraitInfo
 	{
@@ -21,13 +29,16 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Name of the counter to update.")]
 		public readonly string Type = null;
 
+		[Desc("What triggers an update.")]
+		public readonly UpdateOnType UpdateOn = UpdateOnType.Created | UpdateOnType.Disposed;
+
 		public override object Create(ActorInitializer init) { return new UpdatesCount(this); }
 	}
 
-	public class UpdatesCount : ConditionalTrait<UpdatesCountInfo>, INotifyCreated, INotifyActorDisposing, INotifyOwnerChanged
+	public class UpdatesCount : ConditionalTrait<UpdatesCountInfo>, INotifyCreated, INotifyActorDisposing, INotifyOwnerChanged, INotifyKilled
 	{
 		public readonly UpdatesCountInfo info;
-		INotifyCountChanged[] counters;
+		CountManager countManager;
 
 		public UpdatesCount(UpdatesCountInfo info)
 			: base(info)
@@ -37,47 +48,68 @@ namespace OpenRA.Mods.CA.Traits
 
 		void INotifyCreated.Created(Actor self)
 		{
-			UpdateCounters(self.Owner);
+			UpdateCounter(self.Owner);
+
+			if (!info.UpdateOn.HasFlag(UpdateOnType.Created))
+				return;
 
 			if (IsTraitDisabled)
 				return;
 
-			foreach (var c in counters)
-				c.Incremented(info.Type);
+			countManager.Increment(info.Type);
 		}
 
-		void UpdateCounters(Player owner)
+		void UpdateCounter(Player owner)
 		{
-			counters = owner.PlayerActor.TraitsImplementing<INotifyCountChanged>().ToArray();
+			countManager = owner.PlayerActor.Trait<CountManager>();
 		}
 
 		void INotifyOwnerChanged.OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)
 		{
-			foreach (var c in counters)
-				c.Decremented(info.Type);
-
-			UpdateCounters(newOwner);
-
-			foreach (var c in counters)
-				c.Incremented(info.Type);
+			countManager.Decrement(info.Type);
+			UpdateCounter(newOwner);
+			countManager.Increment(info.Type);
 		}
 
 		void INotifyActorDisposing.Disposing(Actor self)
 		{
-			foreach (var c in counters)
-				c.Decremented(info.Type);
+			if (!info.UpdateOn.HasFlag(UpdateOnType.Disposed))
+				return;
+
+			countManager.Decrement(info.Type);
 		}
 
 		protected override void TraitEnabled(Actor self)
 		{
-			foreach (var c in counters)
-				c.Incremented(info.Type);
+			if (!info.UpdateOn.HasFlag(UpdateOnType.Created))
+				return;
+
+			countManager.Increment(info.Type);
 		}
 
 		protected override void TraitDisabled(Actor self)
 		{
-			foreach (var c in counters)
-				c.Decremented(info.Type);
+			if (!info.UpdateOn.HasFlag(UpdateOnType.Created))
+				return;
+
+			countManager.Decrement(info.Type);
+		}
+
+		void INotifyKilled.Killed(Actor self, AttackInfo e)
+		{
+			if (!info.UpdateOn.HasFlag(UpdateOnType.Killed))
+				return;
+
+			if (self.Owner.WinState != WinState.Undefined)
+				return;
+
+			var attackingPlayer = e.Attacker.Owner;
+
+			if (attackingPlayer.RelationshipWith(self.Owner) != PlayerRelationship.Enemy)
+				return;
+
+			var attackerCounter = attackingPlayer.PlayerActor.Trait<CountManager>();
+			attackerCounter.Increment(info.Type);
 		}
 	}
 }

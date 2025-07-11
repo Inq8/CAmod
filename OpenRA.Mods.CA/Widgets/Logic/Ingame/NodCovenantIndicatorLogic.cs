@@ -18,9 +18,10 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 {
 	class NodCovenantIndicatorLogic : ChromeLogic
 	{
+		const string CountType = "NodCovenant";
 		const string DisabledImage = "disabled";
 
-		readonly ProvidesPrerequisiteOnKillCount counter;
+		readonly ProvidesPrerequisiteOnCount counter;
 
 		private string levelImageName;
 
@@ -37,8 +38,8 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				return;
 			}
 
-			counter = world.LocalPlayer.PlayerActor.TraitsImplementing<ProvidesPrerequisiteOnKillCount>()
-				.FirstOrDefault(c => c.Info.Type == "NodCovenant");
+			counter = world.LocalPlayer.PlayerActor.TraitsImplementing<ProvidesPrerequisiteOnCount>()
+				.FirstOrDefault(c => c.Info.Type == CountType);
 
 			if (counter == null)
 			{
@@ -62,7 +63,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 		private void UpdateLevelImageName()
 		{
-			var count = counter.Counts.ContainsKey("BuildingsOrHarvesters") ? Math.Min(counter.Counts["BuildingsOrHarvesters"], 3) : 0;
+			var count = Math.Min(counter.CurrentCount, 3);
 			levelImageName = $"level{count}";
 		}
 	}

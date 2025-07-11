@@ -12,6 +12,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
+	[TraitLocation(SystemActors.Player)]
 	[Desc("Tracks and provides access to player bounty pool.")]
 	public class PlayerBountyPoolInfo : TraitInfo
 	{
