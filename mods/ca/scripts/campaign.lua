@@ -274,15 +274,21 @@ IdleHunt = function(actor)
 	end
 end
 
-AssaultPlayerBaseOrHunt = function(actor, targetPlayer, waypoints, fromIdle)
+AssaultPlayerBaseOrHunt = function(actor, targetPlayers, waypoints, fromIdle)
 
 	if not actor.HasProperty("AttackMove") or IsMissionPlayer(actor.Owner) then
 		return
 	end
 
-	if targetPlayer == nil and #MissionPlayers > 0 then
-		targetPlayer = MissionPlayers[1]
+	if targetPlayers == nil and #MissionPlayers > 0 then
+		targetPlayers = MissionPlayers
 	end
+
+	if type(targetPlayers) ~= "table" then
+		targetPlayers = { targetPlayers }
+	end
+
+	local targetPlayer = Utils.Random(targetPlayers)
 
 	Trigger.AfterDelay(1, function()
 		if not actor.IsDead then
@@ -771,7 +777,7 @@ CallForHelp = function(self, range, filter)
 end
 
 --- attack squad functionality, requires Squads object to be defined properly in the mission script file
-InitAttackSquad = function(squad, player, targetPlayer)
+InitAttackSquad = function(squad, player, targetPlayers)
 	squad.Player = player
 	squad.WaveTotalCost = 0
 	squad.WaveStartTime = DateTime.GameTime
@@ -796,13 +802,20 @@ InitAttackSquad = function(squad, player, targetPlayer)
 		squad.InitTime = squad.InitTime + squad.InitTimeAdjustment
 	end
 
-	if targetPlayer ~= nil then
-		squad.TargetPlayer = targetPlayer
+	if targetPlayers ~= nil then
+		if type(targetPlayers) == "table" then
+			squad.TargetPlayers = targetPlayers
+		else
+			squad.TargetPlayers = { targetPlayers }
+		end
 	elseif #MissionPlayers > 0 then
-		squad.TargetPlayer = MissionPlayers[1]
+		squad.TargetPlayers = MissionPlayers
 	else
 		return
 	end
+
+	-- randomly select target for the current wave
+	squad.TargetPlayer = Utils.Random(squad.TargetPlayers)
 
 	if squad.QueueProductionStatuses == nil then
 		squad.QueueProductionStatuses = { }
@@ -881,12 +894,12 @@ InitAttackSquad = function(squad, player, targetPlayer)
 			end)
 		else
 			Trigger.AfterDelay(DateTime.Seconds(15), function()
-				InitAttackSquad(squad, squad.Player, squad.TargetPlayer)
+				InitAttackSquad(squad, squad.Player, squad.TargetPlayers)
 			end)
 		end
 	else
 		Trigger.AfterDelay(DateTime.Seconds(15), function()
-			InitAttackSquad(squad, squad.Player, squad.TargetPlayer)
+			InitAttackSquad(squad, squad.Player, squad.TargetPlayers)
 		end)
 	end
 end
@@ -970,7 +983,7 @@ ProduceNextAttackSquadUnit = function(squad, queue, unitIndex)
 			end
 
 			Trigger.AfterDelay(ticksUntilNext, function()
-				InitAttackSquad(squad, squad.Player, squad.TargetPlayer)
+				InitAttackSquad(squad, squad.Player, squad.TargetPlayers)
 			end)
 		end
 	-- if more units to build, set them to produce after delay equal to their build time (with difficulty multiplier applied)

@@ -302,7 +302,7 @@ InitNod = function()
 
 	Trigger.AfterDelay(DateTime.Minutes(2), function()
 		Utils.Do(nodGroundAttackers, function(a)
-			AssaultPlayerBaseOrHunt(a, USSR)
+			AssaultPlayerBaseOrHunt(a)
 		end)
 	end)
 end

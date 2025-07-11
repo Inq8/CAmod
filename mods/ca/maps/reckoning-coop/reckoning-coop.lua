@@ -510,7 +510,7 @@ SendNextExterminator = function()
 						end)
 					else
 						if exterminator.TargetPlayer == nil then
-							exterminator.TargetPlayer = MissionPlayers[1]
+							exterminator.TargetPlayer = MissionPlayers[Utils.RandomInteger(1, #MissionPlayers)]
 						end
 						AssaultPlayerBaseOrHunt(a, exterminator.TargetPlayer)
 					end

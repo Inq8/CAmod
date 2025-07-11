@@ -490,7 +490,7 @@ SendNextExterminator = function()
 						self.Patrol(path)
 					end)
 				else
-					AssaultPlayerBaseOrHunt(a, Nod)
+					AssaultPlayerBaseOrHunt(a)
 				end
 
 				if Difficulty ~= "hard" then
@@ -527,7 +527,7 @@ AggroExterminator = function(a)
 		a.Stop()
 		Trigger.AfterDelay(1, function()
 			if not a.IsDead then
-				AssaultPlayerBaseOrHunt(a, Nod)
+				AssaultPlayerBaseOrHunt(a)
 			end
 		end)
 	end
