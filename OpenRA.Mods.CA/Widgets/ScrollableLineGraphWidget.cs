@@ -207,21 +207,22 @@ namespace OpenRA.Mods.Common.Widgets
 			var xAxisPointLabelHeight = labelFont.Measure("0").Y;
 
 			var graphBottomOffset = Padding * 2 + xAxisLabelSize.Y + xAxisPointLabelHeight + ScrollbarHeight;
-			var height = rect.Height - (graphBottomOffset + Padding);
+			var height = rect.Height - (graphBottomOffset + Padding * 4); // Added extra padding for top headroom
 
 			var maxValue = series.Select(p => p.Points).SelectMany(d => d).Concat(new[] { 0f }).Max();
 			var longestName = series.Select(s => s.Key).OrderByDescending(s => s.Length).FirstOrDefault() ?? "";
 
-			var scale = 200 / Math.Max(5000, (float)Math.Ceiling(maxValue / 1000) * 1000);
+			var scaledMaxValue = Math.Max((float)Math.Ceiling(maxValue / 1000) * 1000, 5000f);
+			var scale = height / scaledMaxValue;
 
-			var widthMaxValue = labelFont.Measure(GetYAxisValueFormat().FormatCurrent(height / scale)).X;
+			var widthMaxValue = labelFont.Measure(GetYAxisValueFormat().FormatCurrent(scaledMaxValue)).X;
 			var widthLongestName = labelFont.Measure(longestName).X;
 
 			// y axis label
 			var yAxisLabel = GetYAxisLabel();
 			var yAxisLabelSize = axisFont.Measure(yAxisLabel);
 
-			var width = rect.Width - (Padding * 4 + widthMaxValue + widthLongestName + yAxisLabelSize.Y);
+			var width = rect.Width - (Padding * 10 + widthMaxValue + widthLongestName + yAxisLabelSize.Y);
 
 			var pointCount = series.Max(s => s.Points.Count());
 			var totalDataWidth = pointCount * (width / xAxisSize);
@@ -237,7 +238,7 @@ namespace OpenRA.Mods.Common.Widgets
 			var visibleStart = Math.Max(0, (int)Math.Floor(-horizontalOffset / xStep));
 			var visibleEnd = Math.Min(pointCount, visibleStart + xAxisSize + 1);
 
-			var graphOrigin = new float2(rect.Left, rect.Bottom) + new float2(Padding * 2 + widthMaxValue + yAxisLabelSize.Y, -graphBottomOffset);
+			var graphOrigin = new float2(rect.Left, rect.Bottom) + new float2(Padding * 3 + widthMaxValue + yAxisLabelSize.Y, -graphBottomOffset);
 
 			var origin = new float2(rect.Left, rect.Bottom);
 
@@ -246,7 +247,8 @@ namespace OpenRA.Mods.Common.Widgets
 			// added sorting so that names appear in order of highest value to lowest value
 			series = series.OrderByDescending(s => s.Points.LastOrDefault()).ToList();
 
-			// Enable clipping to prevent graph lines from bleeding into Y axis labels
+			// Enable clipping to prevent graph lines from bleeding into Y axis labels and extending beyond bounds
+			// Clip both left and right sides to contain the graph within proper bounds
 			var graphClipRect = new Rectangle((int)graphOrigin.X, (int)(graphOrigin.Y - height), width, height);
 			Game.Renderer.EnableScissor(graphClipRect);
 
@@ -269,17 +271,48 @@ namespace OpenRA.Mods.Common.Widgets
 					{
 						cr.DrawLine(visiblePoints, 1, color);
 					}
+				}
+			}
 
-					// Draw value label for the last visible point
+			// Disable clipping before drawing labels and other elements
+			Game.Renderer.DisableScissor();
+
+			// Draw value labels and key labels (these should not be clipped)
+			foreach (var s in series)
+			{
+				var key = s.Key;
+				var color = s.Color;
+				var points = s.Points.ToArray();
+				if (points.Length > 0)
+				{
+					var visiblePoints = new List<float3>();
+					for (var i = visibleStart; i < Math.Min(visibleEnd, points.Length); i++)
+					{
+						var screenX = i * xStep + horizontalOffset;
+						var screenY = -points[i] * scale;
+
+						// Only add points that are within the visible bounds
+						if (screenX >= -xStep && screenX <= width + xStep)
+						{
+							visiblePoints.Add(graphOrigin + new float3(screenX, screenY, 0));
+						}
+					}
+
+					// Draw value label for the last visible point that's actually within bounds
 					if (visiblePoints.Count > 0)
 					{
 						var lastPoint = visiblePoints.Last();
-						var lastValue = points[Math.Min(visibleEnd - 1, points.Length - 1)];
-						if (lastValue != 0f)
+						// Make sure the label position is within the graph area
+						if (lastPoint.X >= graphOrigin.X && lastPoint.X <= graphOrigin.X + width)
 						{
-							labelFont.DrawTextWithShadow(GetValueFormat().FormatCurrent(lastValue),
-								new float2(lastPoint.X, lastPoint.Y - 2),
-								color, BackgroundColorDark, BackgroundColorLight, 1);
+							var lastIndex = visibleStart + visiblePoints.Count - 1;
+							var lastValue = points[Math.Min(lastIndex, points.Length - 1)];
+							if (lastValue != 0f)
+							{
+								labelFont.DrawTextWithShadow(GetValueFormat().FormatCurrent(lastValue),
+									new float2(lastPoint.X, lastPoint.Y - 2),
+									color, BackgroundColorDark, BackgroundColorLight, 1);
+							}
 						}
 					}
 				}
@@ -288,9 +321,6 @@ namespace OpenRA.Mods.Common.Widgets
 					color, BackgroundColorDark, BackgroundColorLight, 1);
 				keyOffset++;
 			}
-
-			// Disable clipping
-			Game.Renderer.DisableScissor();
 
 			// Draw scrollbar
 			var scrollbarY = rect.Bottom - ScrollbarHeight;
@@ -318,7 +348,9 @@ namespace OpenRA.Mods.Common.Widgets
 			thumbRect = new Rectangle((int)scrollbarX + thumbPosition, scrollbarY, actualThumbSize, ScrollbarHeight);
 
 			// Auto-scroll to keep latest data visible if not manually scrolled
-			if (autoScrollEnabled && maxHorizontalOffset > 0)
+			// Disable auto-scroll when mouse button is held down to allow proper dragging
+			var mouseButtonDown = leftPressed || rightPressed || thumbPressed;
+			if (autoScrollEnabled && maxHorizontalOffset > 0 && !mouseButtonDown)
 			{
 				SetHorizontalOffset(-maxHorizontalOffset, false); // Use immediate scrolling to avoid delay
 			}
@@ -496,6 +528,24 @@ namespace OpenRA.Mods.Common.Widgets
 				{
 					thumbPressed = true;
 					lastMousePos = mi.Location;
+					return true;
+				}
+				else if (scrollbarRect.Contains(mi.Location))
+				{
+					// Click on scrollbar track - scroll toward the click position
+					var clickX = mi.Location.X;
+					var thumbCenterX = thumbRect.Left + thumbRect.Width / 2;
+
+					if (clickX < thumbCenterX)
+					{
+						// Clicked to the left of thumb - scroll left
+						Scroll(100, true);
+					}
+					else
+					{
+						// Clicked to the right of thumb - scroll right
+						Scroll(-100, true);
+					}
 					return true;
 				}
 			}
