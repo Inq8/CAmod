@@ -19,6 +19,7 @@ namespace OpenRA.Mods.Common.Widgets
 {
 	public class ScrollableLineGraphWidget : Widget
 	{
+		readonly Ruleset modRules;
 		public Func<IEnumerable<ScrollableLineGraphSeries>> GetSeries;
 		public Func<string> GetValueFormat;
 		public Func<string> GetXAxisValueFormat;
@@ -43,6 +44,8 @@ namespace OpenRA.Mods.Common.Widgets
 		public string AxisFont;
 		public Color BackgroundColorDark = ChromeMetrics.Get<Color>("TextContrastColorDark");
 		public Color BackgroundColorLight = ChromeMetrics.Get<Color>("TextContrastColorLight");
+		public string ClickSound = ChromeMetrics.Get<string>("ClickSound");
+		public string ClickDisabledSound = ChromeMetrics.Get<string>("ClickDisabledSound");
 		public int Padding = 5;
 
 		// Horizontal scrolling properties
@@ -74,8 +77,10 @@ namespace OpenRA.Mods.Common.Widgets
 		Rectangle thumbRect;
 		long lastSmoothScrollTime = 0;
 
-		public ScrollableLineGraphWidget()
+		[ObjectCreator.UseCtor]
+		public ScrollableLineGraphWidget(ModData modData)
 		{
+			modRules = modData.DefaultRules;
 			GetValueFormat = () => ValueFormat;
 			GetXAxisValueFormat = () => XAxisValueFormat;
 			GetYAxisValueFormat = () => YAxisValueFormat;
@@ -301,8 +306,8 @@ namespace OpenRA.Mods.Common.Widgets
 					// Draw value label for the last visible point that's actually within bounds
 					if (visiblePoints.Count > 0)
 					{
-						var lastPoint = visiblePoints.Last();
-						// Make sure the label position is within the graph area
+						var lastPoint = visiblePoints[^1];
+
 						if (lastPoint.X >= graphOrigin.X && lastPoint.X <= graphOrigin.X + width)
 						{
 							var lastIndex = visibleStart + visiblePoints.Count - 1;
@@ -497,8 +502,7 @@ namespace OpenRA.Mods.Common.Widgets
 							SetHorizontalOffset(targetHorizontalOffset - scrollAmount, false);
 							autoScrollEnabled = false;
 
-							// Check if scrolled to the rightmost position
-							if (targetHorizontalOffset <= -maxHorizontalOffset + 5) // Small tolerance
+							if (targetHorizontalOffset <= -maxHorizontalOffset + 5)
 							{
 								autoScrollEnabled = true;
 							}
@@ -516,41 +520,46 @@ namespace OpenRA.Mods.Common.Widgets
 				{
 					leftPressed = true;
 					Scroll(50, true);
+					PlayClickSound();
 					return true;
 				}
 				else if (rightButtonRect.Contains(mi.Location) && !rightDisabled)
 				{
 					rightPressed = true;
 					Scroll(-50, true);
+					PlayClickSound();
 					return true;
 				}
 				else if (thumbRect.Contains(mi.Location))
 				{
 					thumbPressed = true;
 					lastMousePos = mi.Location;
+					PlayClickSound();
 					return true;
 				}
 				else if (scrollbarRect.Contains(mi.Location))
 				{
-					// Click on scrollbar track - scroll toward the click position
 					var clickX = mi.Location.X;
 					var thumbCenterX = thumbRect.Left + thumbRect.Width / 2;
 
 					if (clickX < thumbCenterX)
-					{
-						// Clicked to the left of thumb - scroll left
 						Scroll(100, true);
-					}
 					else
-					{
-						// Clicked to the right of thumb - scroll right
 						Scroll(-100, true);
-					}
+
 					return true;
 				}
 			}
 
 			return false;
+		}
+
+		void PlayClickSound()
+		{
+			if (thumbPressed || (rightPressed && !rightDisabled) || (leftPressed && !leftDisabled))
+				Game.Sound.PlayNotification(modRules, null, "Sounds", ClickSound, null);
+			else if ((rightPressed && rightDisabled) || (leftPressed && leftDisabled))
+				Game.Sound.PlayNotification(modRules, null, "Sounds", ClickDisabledSound, null);
 		}
 
 		public override void Tick()
