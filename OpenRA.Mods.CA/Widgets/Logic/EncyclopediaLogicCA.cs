@@ -362,6 +362,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			var displayDepth = node.Depth - 1;
 
 			var folderHeader = ScrollItemWidget.Setup(headerTemplate, () => false, () => ToggleFolder(node.FullPath));
+			folderHeader.IsHighlighted = () => folderHeader.EventBounds.Contains(Viewport.LastMousePos) && Ui.MouseOverWidget == folderHeader;
 			var label = folderHeader.Get<LabelWidget>("LABEL");
 			var arrowImage = folderHeader.GetOrNull<ImageWidget>("ICON");
 
