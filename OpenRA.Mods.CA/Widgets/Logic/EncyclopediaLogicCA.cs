@@ -738,7 +738,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			if (encyclopediaExtrasInfo != null && !string.IsNullOrEmpty(encyclopediaExtrasInfo.Subfaction) && subfactionLabel != null)
 			{
 				subfaction = factions[encyclopediaExtrasInfo.Subfaction];
-				subfactionText = $"{FluentProvider.GetMessage(subfaction.Name)} only";
+				subfactionText = $"{FluentProvider.GetMessage(subfaction.Name)} only.";
 				// var subfactionText = FluentProvider.GetMessage(SubfactionOnly, "factionName", FluentProvider.GetMessage(subfaction.Name));
 				subfactionHeight = descriptionFont.Measure(subfactionText).Y;
 			}
@@ -1086,12 +1086,18 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			if (selectedTopLevelCategory == null && topLevelCategories.Count > 0)
 				selectedTopLevelCategory = topLevelCategories[0].FullPath;
 
+			// Calculate tab width to fill available space
+			var availableWidth = tabContainer.Bounds.Width;
+			var tabCount = topLevelCategories.Count;
+			var tabWidth = tabCount > 0 ? availableWidth / tabCount : 0;
+
 			// Create tab buttons
 			var tabX = 0;
 			foreach (var category in topLevelCategories)
 			{
 				var tabButton = (ButtonWidget)tabTemplate.Clone();
 				tabButton.Bounds.X = tabX;
+				tabButton.Bounds.Width = tabWidth;
 				tabButton.GetText = () => category.Name;
 				tabButton.IsHighlighted = () => selectedTopLevelCategory == category.FullPath;
 				tabButton.OnClick = () => SelectTopLevelCategory(category.FullPath);
@@ -1100,7 +1106,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				tabContainer.AddChild(tabButton);
 				categoryTabs.Add(tabButton);
 
-				tabX += tabButton.Bounds.Width;
+				tabX += tabWidth;
 			}
 		}
 
