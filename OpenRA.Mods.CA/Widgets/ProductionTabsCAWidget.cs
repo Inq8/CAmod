@@ -282,27 +282,36 @@ namespace OpenRA.Mods.CA.Widgets
 		// Is added to world.ActorAdded by the SidebarLogic handler
 		public void ActorChanged(Actor a)
 		{
-			if (a.World.Disposing)
+			// Ignore non-production actors and actors owned by non-local player
+			if (!a.Info.HasTraitInfo<ProductionQueueInfo>() || a.Owner != a.World.LocalPlayer)
 				return;
 
-			if (a.Info.HasTraitInfo<ProductionQueueInfo>())
-			{
-				UpdateQueues(a);
+			var queues = a.World.ActorsWithTrait<ProductionQueue>()
+				.Where(p => p.Actor.Owner == p.Actor.World.LocalPlayer && p.Actor.IsInWorld)
+				.Select(p => p.Trait)
+				.ToList();
 
-				if (queueGroup == null)
-					return;
+			cachedProductionQueueEnabledStates.Clear();
+			foreach (var queue in queues)
+				cachedProductionQueueEnabledStates.Add((queue, queue.Enabled));
 
-				// Queue destroyed, was last of type: switch to a new group
-				if (Groups[queueGroup].Tabs.Count == 0)
-					QueueGroup = Groups.Where(g => g.Value.Tabs.Count > 0)
-						.Select(g => g.Key).FirstOrDefault();
+			foreach (var g in Groups.Values)
+				g.Update(cachedProductionQueueEnabledStates.Select(t => t.Queue));
 
-				// Queue destroyed, others of same type: switch to another tab
-				else if (!Groups[queueGroup].Tabs.Select(t => t.Queue).Contains(CurrentQueue))
-					SelectNextTab(false);
-			}
-			else if (a.Info.HasTraitInfo<ProvidesPrerequisiteInfo>())
-				UpdateQueues(a);
+			if (queues.Count > 0 && CurrentQueue == null)
+				CurrentQueue = queues.First();
+
+			if (queueGroup == null)
+				return;
+
+			// Queue destroyed, was last of type: switch to a new group
+			if (Groups[queueGroup].Tabs.Count == 0)
+				QueueGroup = Groups.Where(g => g.Value.Tabs.Count > 0)
+					.Select(g => g.Key).FirstOrDefault();
+
+			// Queue destroyed, others of same type: switch to another tab
+			else if (!Groups[queueGroup].Tabs.Select(t => t.Queue).Contains(CurrentQueue))
+				SelectNextTab(false);
 		}
 
 		public override void Tick()
@@ -310,35 +319,22 @@ namespace OpenRA.Mods.CA.Widgets
 			// It is possible that production queues get enabled/disabled during their lifetime.
 			// This makes sure every enabled production queue always has its tab associated with it.
 			var shouldUpdateQueues = false;
-			foreach (var (queue, enabled) in cachedProductionQueueEnabledStates)
+			for (var i = 0; i < cachedProductionQueueEnabledStates.Count; i++)
 			{
+				var (queue, enabled) = cachedProductionQueueEnabledStates[i];
+
 				if (queue.Enabled != enabled)
 				{
 					shouldUpdateQueues = true;
-					break;
+
+					// Refresh queue.Enabled value in cache
+					cachedProductionQueueEnabledStates[i] = (queue, queue.Enabled);
 				}
 			}
 
 			if (shouldUpdateQueues)
 				foreach (var g in Groups.Values)
 					g.Update(cachedProductionQueueEnabledStates.Select(t => t.Queue));
-		}
-
-		void UpdateQueues(Actor a)
-		{
-			var allQueues = a.World.ActorsWithTrait<ProductionQueue>()
-				.Where(p => p.Actor.Owner == p.Actor.World.LocalPlayer && p.Actor.IsInWorld && p.Trait.Enabled)
-				.Select(p => p.Trait).ToList();
-
-			cachedProductionQueueEnabledStates.Clear();
-			foreach (var queue in allQueues)
-				cachedProductionQueueEnabledStates.Add((queue, queue.Enabled));
-
-			foreach (var g in Groups.Values)
-				g.Update(cachedProductionQueueEnabledStates.Select(t => t.Queue));
-
-			if (allQueues.Count > 0 && CurrentQueue == null)
-				CurrentQueue = allQueues.First();
 		}
 
 		public override bool YieldMouseFocus(MouseInput mi)

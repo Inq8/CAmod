@@ -19,7 +19,7 @@ namespace OpenRA.Mods.Common.Widgets
 {
 	public class ScrollableLineGraphWidget : Widget
 	{
-		readonly Ruleset modRules;
+		protected readonly Ruleset ModRules;
 		public Func<IEnumerable<ScrollableLineGraphSeries>> GetSeries;
 		public Func<string> GetValueFormat;
 		public Func<string> GetXAxisValueFormat;
@@ -55,7 +55,7 @@ namespace OpenRA.Mods.Common.Widgets
 		public string ScrollbarDecorations = "scrollpanel-decorations";
 		public readonly string DecorationScrollLeft = "left";
 		public readonly string DecorationScrollRight = "right";
-		public int MinimumThumbSize = 20;
+		public int MinimumThumbWidth = 20;
 		public float SmoothScrollSpeed = 0.333f;
 
 		readonly CachedTransform<(bool Disabled, bool Pressed, bool Hover, bool Focused, bool Highlighted), Sprite> getLeftArrowImage;
@@ -70,6 +70,7 @@ namespace OpenRA.Mods.Common.Widgets
 		bool leftDisabled = false;
 		bool rightDisabled = false;
 		bool autoScrollEnabled = true;
+		bool manuallyScrolled = true;
 		int2 lastMousePos;
 		Rectangle leftButtonRect;
 		Rectangle rightButtonRect;
@@ -80,7 +81,7 @@ namespace OpenRA.Mods.Common.Widgets
 		[ObjectCreator.UseCtor]
 		public ScrollableLineGraphWidget(ModData modData)
 		{
-			modRules = modData.DefaultRules;
+			ModRules = modData.DefaultRules;
 			GetValueFormat = () => ValueFormat;
 			GetXAxisValueFormat = () => XAxisValueFormat;
 			GetYAxisValueFormat = () => YAxisValueFormat;
@@ -99,6 +100,7 @@ namespace OpenRA.Mods.Common.Widgets
 		protected ScrollableLineGraphWidget(ScrollableLineGraphWidget other)
 			: base(other)
 		{
+			ModRules = other.ModRules;
 			GetSeries = other.GetSeries;
 			GetValueFormat = other.GetValueFormat;
 			GetXAxisValueFormat = other.GetXAxisValueFormat;
@@ -130,7 +132,7 @@ namespace OpenRA.Mods.Common.Widgets
 			ScrollbarDecorations = other.ScrollbarDecorations;
 			DecorationScrollLeft = other.DecorationScrollLeft;
 			DecorationScrollRight = other.DecorationScrollRight;
-			MinimumThumbSize = other.MinimumThumbSize;
+			MinimumThumbWidth = other.MinimumThumbWidth;
 			SmoothScrollSpeed = other.SmoothScrollSpeed;
 
 			getLeftArrowImage = WidgetUtils.GetCachedStatefulImage(ScrollbarDecorations, DecorationScrollLeft);
@@ -143,8 +145,6 @@ namespace OpenRA.Mods.Common.Widgets
 			if (!smooth)
 			{
 				horizontalOffset = value;
-
-				// Update mouseover
 				Ui.ResetTooltips();
 			}
 		}
@@ -175,11 +175,10 @@ namespace OpenRA.Mods.Common.Widgets
 
 		void Scroll(float amount, bool smooth = true)
 		{
-			var newTarget = targetHorizontalOffset + amount;
+			var newTarget = targetHorizontalOffset + amount * Game.Settings.Game.UIScrollSpeed;
 			SetHorizontalOffset(newTarget, smooth);
-
-			// Disable auto-scroll when manually scrolling
 			autoScrollEnabled = false;
+			manuallyScrolled = true;
 		}
 
 		public override void Draw()
@@ -212,7 +211,7 @@ namespace OpenRA.Mods.Common.Widgets
 			var xAxisPointLabelHeight = labelFont.Measure("0").Y;
 
 			var graphBottomOffset = Padding * 2 + xAxisLabelSize.Y + xAxisPointLabelHeight + ScrollbarHeight;
-			var height = rect.Height - (graphBottomOffset + Padding * 4); // Added extra padding for top headroom
+			var height = rect.Height - (graphBottomOffset + Padding * 4);
 
 			var maxValue = series.Select(p => p.Points).SelectMany(d => d).Concat(new[] { 0f }).Max();
 			var longestName = series.Select(s => s.Key).OrderByDescending(s => s.Length).FirstOrDefault() ?? "";
@@ -233,7 +232,6 @@ namespace OpenRA.Mods.Common.Widgets
 			var totalDataWidth = pointCount * (width / xAxisSize);
 			var maxHorizontalOffset = Math.Max(0, totalDataWidth - width);
 
-			// Clamp horizontal offset
 			targetHorizontalOffset = Math.Max(-maxHorizontalOffset, Math.Min(0, targetHorizontalOffset));
 			horizontalOffset = Math.Max(-maxHorizontalOffset, Math.Min(0, horizontalOffset));
 
@@ -282,7 +280,6 @@ namespace OpenRA.Mods.Common.Widgets
 			// Disable clipping before drawing labels and other elements
 			Game.Renderer.DisableScissor();
 
-			// Draw value labels and key labels (these should not be clipped)
 			foreach (var s in series)
 			{
 				var key = s.Key;
@@ -296,14 +293,12 @@ namespace OpenRA.Mods.Common.Widgets
 						var screenX = i * xStep + horizontalOffset;
 						var screenY = -points[i] * scale;
 
-						// Only add points that are within the visible bounds
 						if (screenX >= -xStep && screenX <= width + xStep)
 						{
 							visiblePoints.Add(graphOrigin + new float3(screenX, screenY, 0));
 						}
 					}
 
-					// Draw value label for the last visible point that's actually within bounds
 					if (visiblePoints.Count > 0)
 					{
 						var lastPoint = visiblePoints[^1];
@@ -327,7 +322,6 @@ namespace OpenRA.Mods.Common.Widgets
 				keyOffset++;
 			}
 
-			// Draw scrollbar
 			var scrollbarY = rect.Bottom - ScrollbarHeight;
 			var scrollbarWidth = width;
 			var scrollbarX = graphOrigin.X;
@@ -336,38 +330,38 @@ namespace OpenRA.Mods.Common.Widgets
 			leftButtonRect = new Rectangle((int)scrollbarX, scrollbarY, ScrollbarHeight, ScrollbarHeight);
 			rightButtonRect = new Rectangle((int)(scrollbarX + scrollbarWidth - ScrollbarHeight), scrollbarY, ScrollbarHeight, ScrollbarHeight);
 
-			// Draw scrollbar background
 			WidgetUtils.DrawPanel(ScrollbarBackground, scrollbarRect);
 
-			// Calculate thumb position and size
-			var thumbSize = maxHorizontalOffset > 0 ? Math.Max(MinimumThumbSize, scrollbarWidth * width / totalDataWidth) : scrollbarWidth;
-			var availableThumbSpace = scrollbarWidth - 2 * ScrollbarHeight; // Space between left and right buttons
-			var actualThumbSize = Math.Min(thumbSize, availableThumbSpace);
+			var availableThumbSpace = scrollbarWidth - 2 * ScrollbarHeight;
+			var thumbWidth = maxHorizontalOffset > 0 ?
+				Math.Max(MinimumThumbWidth, Math.Min(availableThumbSpace - MinimumThumbWidth * 2, availableThumbSpace * width / totalDataWidth)) :
+				availableThumbSpace;
+			var actualthumbWidth = Math.Min(thumbWidth, availableThumbSpace);
 
-			// Use effective offset for thumb position when auto-scrolling
 			var thumbCalculationOffset = autoScrollEnabled && maxHorizontalOffset > 0 ? -maxHorizontalOffset : horizontalOffset;
 			var thumbPosition = maxHorizontalOffset > 0 ?
-				ScrollbarHeight + (int)((availableThumbSpace - actualThumbSize) * (-thumbCalculationOffset / maxHorizontalOffset)) :
+				ScrollbarHeight + (int)((availableThumbSpace - actualthumbWidth) * (-thumbCalculationOffset / maxHorizontalOffset)) :
 				ScrollbarHeight;
 
-			thumbRect = new Rectangle((int)scrollbarX + thumbPosition, scrollbarY, actualThumbSize, ScrollbarHeight);
+			thumbRect = new Rectangle((int)scrollbarX + thumbPosition, scrollbarY, actualthumbWidth, ScrollbarHeight);
 
-			// Auto-scroll to keep latest data visible if not manually scrolled
-			// Disable auto-scroll when mouse button is held down to allow proper dragging
-			var mouseButtonDown = leftPressed || rightPressed || thumbPressed;
+			var mouseButtonDown = leftPressed || thumbPressed || (rightPressed && !rightDisabled);
 			if (autoScrollEnabled && maxHorizontalOffset > 0 && !mouseButtonDown)
 			{
-				SetHorizontalOffset(-maxHorizontalOffset, false); // Use immediate scrolling to avoid delay
+				SetHorizontalOffset(-maxHorizontalOffset, false);
 			}
 
-			// Check if we're at the rightmost position to re-enable auto-scroll
-			if (!autoScrollEnabled && maxHorizontalOffset > 0 && Math.Abs(targetHorizontalOffset + maxHorizontalOffset) < 5)
+			if (!autoScrollEnabled && maxHorizontalOffset > 0 && !mouseButtonDown && rightDisabled && manuallyScrolled)
 			{
-				autoScrollEnabled = true;
+				if (rightPressed || Math.Abs(targetHorizontalOffset + maxHorizontalOffset) < 1)
+				{
+					autoScrollEnabled = true;
+					manuallyScrolled = false;
+				}
 			}
 
 			// Draw scrollbar elements
-			// When auto-scrolling is enabled, force the scrollbar to reflect the rightmost position
+			// When auto-scrolling is enabled, force the scrollbar to move to the rightmost position
 			var effectiveHorizontalOffset = autoScrollEnabled && maxHorizontalOffset > 0 ? -maxHorizontalOffset : horizontalOffset;
 
 			leftDisabled = effectiveHorizontalOffset >= 0;
@@ -400,11 +394,19 @@ namespace OpenRA.Mods.Common.Widgets
 				new float2(graphOrigin.X, origin.Y) + new float2(width / 2 - xAxisLabelSize.X / 2, -(xAxisLabelSize.Y + Padding + ScrollbarHeight)),
 				Color.White, BackgroundColorDark, BackgroundColorLight, 1);
 
+			// Enable clipping for x-axis labels to prevent them from extending beyond the right graph bound
+			var xAxisClipRect = new Rectangle((int)graphOrigin.X - 100, (int)(graphOrigin.Y - height), width + 100, height + xAxisPointLabelHeight + 10);
+			Game.Renderer.EnableScissor(xAxisClipRect);
+
 			// Draw x axis ticks and labels
-			for (var i = visibleStart; i < visibleEnd; i++)
+			var maxDataPoints = pointCount;
+			var labelsToShow = Math.Max(xAxisSize + 2, maxDataPoints);
+
+			for (var i = 0; i < labelsToShow; i++)
 			{
 				var screenX = i * xStep + horizontalOffset;
-				if (screenX >= 0 && screenX <= width)
+
+				if (screenX >= 0)
 				{
 					cr.DrawLine(graphOrigin + new float2(screenX, 0), graphOrigin + new float2(screenX, -5), 1, Color.White);
 					if (i % XAxisTicksPerLabel == 0)
@@ -418,6 +420,9 @@ namespace OpenRA.Mods.Common.Widgets
 					}
 				}
 			}
+
+			// Disable clipping after drawing x-axis labels
+			Game.Renderer.DisableScissor();
 
 			// Draw y axis
 			axisFont.DrawTextWithShadow(yAxisLabel,
@@ -446,7 +451,7 @@ namespace OpenRA.Mods.Common.Widgets
 			cr.DrawLine(graphOrigin, graphOrigin + new float2(0, -height), 1, Color.White);
 		}
 
-		public override Widget Clone()
+		public override ScrollableLineGraphWidget Clone()
 		{
 			return new ScrollableLineGraphWidget(this);
 		}
@@ -461,7 +466,7 @@ namespace OpenRA.Mods.Common.Widgets
 		{
 			if (mi.Event == MouseInputEvent.Scroll && EventBounds.Contains(mi.Location))
 			{
-				Scroll(mi.Delta.Y * 50, true);
+				Scroll(mi.Delta.Y, true);
 				return true;
 			}
 
@@ -483,29 +488,47 @@ namespace OpenRA.Mods.Common.Widgets
 
 			if (mi.Event == MouseInputEvent.Move && thumbPressed)
 			{
-				var thumbRange = scrollbarRect.Width - 2 * ScrollbarHeight - thumbRect.Width;
-				if (thumbRange > 0)
+				var deltaX = mi.Location.X - lastMousePos.X;
+				var series = GetSeries();
+				if (series.Any())
 				{
-					var deltaX = mi.Location.X - lastMousePos.X;
-					var series = GetSeries();
-					if (series.Any())
-					{
-						var pointCount = series.Max(s => s.Points.Count());
-						var rect = RenderBounds;
-						var width = rect.Width - (Padding * 4 + 100);
-						var totalDataWidth = pointCount * (width / GetXAxisSize());
-						var maxHorizontalOffset = Math.Max(0, totalDataWidth - width);
+					var pointCount = series.Max(s => s.Points.Count());
+					var rect = RenderBounds;
 
-						if (maxHorizontalOffset > 0)
+					var font = GetLabelFont();
+					if (font == null)
+						return false;
+
+					var labelFont = Game.Renderer.Fonts[font];
+					var axisFont = Game.Renderer.Fonts[GetAxisFont()];
+
+					var maxValue = series.Select(p => p.Points).SelectMany(d => d).Concat(new[] { 0f }).Max();
+					var longestName = series.Select(s => s.Key).OrderByDescending(s => s.Length).FirstOrDefault() ?? "";
+					var scaledMaxValue = Math.Max((float)Math.Ceiling(maxValue / 1000) * 1000, 5000f);
+
+					var widthMaxValue = labelFont.Measure(GetYAxisValueFormat().FormatCurrent(scaledMaxValue)).X;
+					var widthLongestName = labelFont.Measure(longestName).X;
+					var yAxisLabel = GetYAxisLabel();
+					var yAxisLabelSize = axisFont.Measure(yAxisLabel);
+
+					var width = rect.Width - (Padding * 10 + widthMaxValue + widthLongestName + yAxisLabelSize.Y);
+
+					var totalDataWidth = pointCount * (width / GetXAxisSize());
+					var maxHorizontalOffset = Math.Max(0, totalDataWidth - width);
+
+					if (maxHorizontalOffset > 0)
+					{
+						var availableThumbSpace = scrollbarRect.Width - 2 * ScrollbarHeight;
+						var proportionalThumbSize = availableThumbSpace * width / totalDataWidth;
+						var actualThumbSize = Math.Max(MinimumThumbWidth, Math.Min(proportionalThumbSize, availableThumbSpace - MinimumThumbWidth * 2));
+						var thumbRange = availableThumbSpace - actualThumbSize;
+
+						if (thumbRange > 0)
 						{
 							var scrollAmount = deltaX / (float)thumbRange * maxHorizontalOffset;
 							SetHorizontalOffset(targetHorizontalOffset - scrollAmount, false);
 							autoScrollEnabled = false;
-
-							if (targetHorizontalOffset <= -maxHorizontalOffset + 5)
-							{
-								autoScrollEnabled = true;
-							}
+							manuallyScrolled = true;
 						}
 					}
 				}
@@ -519,14 +542,14 @@ namespace OpenRA.Mods.Common.Widgets
 				if (leftButtonRect.Contains(mi.Location) && !leftDisabled)
 				{
 					leftPressed = true;
-					Scroll(50, true);
+					Scroll(1, true);
 					PlayClickSound();
 					return true;
 				}
 				else if (rightButtonRect.Contains(mi.Location) && !rightDisabled)
 				{
 					rightPressed = true;
-					Scroll(-50, true);
+					Scroll(-1, true);
 					PlayClickSound();
 					return true;
 				}
@@ -534,6 +557,8 @@ namespace OpenRA.Mods.Common.Widgets
 				{
 					thumbPressed = true;
 					lastMousePos = mi.Location;
+					autoScrollEnabled = false;
+					manuallyScrolled = true;
 					PlayClickSound();
 					return true;
 				}
@@ -543,9 +568,9 @@ namespace OpenRA.Mods.Common.Widgets
 					var thumbCenterX = thumbRect.Left + thumbRect.Width / 2;
 
 					if (clickX < thumbCenterX)
-						Scroll(100, true);
+						Scroll(2, true);
 					else
-						Scroll(-100, true);
+						Scroll(-2, true);
 
 					return true;
 				}
@@ -556,33 +581,21 @@ namespace OpenRA.Mods.Common.Widgets
 
 		void PlayClickSound()
 		{
-			if (thumbPressed || (rightPressed && !rightDisabled) || (leftPressed && !leftDisabled))
-				Game.Sound.PlayNotification(modRules, null, "Sounds", ClickSound, null);
+			if ((thumbPressed && (!rightDisabled || !leftDisabled)) || (rightPressed && !rightDisabled) || (leftPressed && !leftDisabled))
+				Game.Sound.PlayNotification(ModRules, null, "Sounds", ClickSound, null);
 			else if ((rightPressed && rightDisabled) || (leftPressed && leftDisabled))
-				Game.Sound.PlayNotification(modRules, null, "Sounds", ClickDisabledSound, null);
+				Game.Sound.PlayNotification(ModRules, null, "Sounds", ClickDisabledSound, null);
 		}
 
 		public override void Tick()
 		{
 			if (leftPressed && !leftDisabled)
-				Scroll(50, true);
+				Scroll(1, true);
 
 			if (rightPressed && !rightDisabled)
-				Scroll(-50, true);
+				Scroll(-1, true);
 		}
 	}
 
-	public class ScrollableLineGraphSeries
-	{
-		public string Key;
-		public Color Color;
-		public IEnumerable<float> Points;
-
-		public ScrollableLineGraphSeries(string key, Color color, IEnumerable<float> points)
-		{
-			Key = key;
-			Color = color;
-			Points = points;
-		}
-	}
+	public record ScrollableLineGraphSeries(string Key, Color Color, IEnumerable<float> Points);
 }
