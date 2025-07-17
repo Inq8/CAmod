@@ -3092,19 +3092,19 @@ SMCV:
 	-GrantConditionOnPrerequisite@MQS:
 	GrantDelayedCondition@QUEUEUPDATER:
 		RequiresCondition: rebel-allegiance
+	-ProductionQueue@MQDEF:
+	-ProductionBar@MQDEF:
 	Production@SQBLD:
+		Produces: BuildingSQ
 		RequiresCondition: !global-multiqueuefull && rebel-allegiance
 		PauseOnCondition: being-warped
 	Production@MQBLD:
+		Produces: BuildingMQ
 		RequiresCondition: global-multiqueuefull && rebel-allegiance
 		PauseOnCondition: being-warped
 	ProductionBar@SQBLD:
 		RequiresCondition: !global-multiqueuefull && rebel-allegiance
-	ProductionBar@SQDEF:
-		RequiresCondition: !global-multiqueuefull && rebel-allegiance
 	ProductionBar@MQBLD:
-		RequiresCondition: global-multiqueuefull && rebel-allegiance
-	ProductionBar@MQDEF:
 		RequiresCondition: global-multiqueuefull && rebel-allegiance
 	Encyclopedia:
 		Category: Scrin/Vehicles
