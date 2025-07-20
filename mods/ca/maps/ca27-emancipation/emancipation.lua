@@ -19,97 +19,49 @@ MastermindsLocated = {}
 
 MaxEnslavedUnitsKilled = {
 	normal = 20,
-	hard = 10
+	hard = 10,
+	vhard = 5,
+	brutal = 2
 }
 
 Squads = {
 	ScrinMain = {
-		AttackValuePerSecond = {
-			easy = { Min = 35, Max = 35 },
-			normal = { Min = 68, Max = 68 },
-			hard = { Min = 105, Max = 105 },
-		},
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 54, Max = 54 }),
 		ActiveCondition = function()
 			return Mastermind3.IsDead or Mastermind4.IsDead or DateTime.GameTime > DateTime.Minutes(6)
 		end,
 		FollowLeader = true,
-		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
-		Units = AdjustCompositionsForDifficulty(UnitCompositions.Scrin),
+		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Scrin),
 		AttackPaths = ScrinGroundAttackPaths,
 	},
 	ScrinWater = {
-		Delay = {
-			easy = DateTime.Seconds(140),
-			normal = DateTime.Seconds(120),
-			hard = DateTime.Seconds(100)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 10, Max = 20, RampDuration = DateTime.Minutes(13) },
-			normal = { Min = 16, Max = 32, RampDuration = DateTime.Minutes(11) },
-			hard = { Min = 28, Max = 55, RampDuration = DateTime.Minutes(9) },
-		},
-		ProducerTypes = { Vehicles = { "wsph" } },
-		Units = {
-			easy = {
-				{ Vehicles = { "intl", "seek" }, },
-				{ Vehicles = { "seek", "seek" }, },
-				{ Vehicles = { "lace", "lace" }, }
-			},
-			normal = {
-				{ Vehicles = { "seek", "intl.ai2" }, },
-				{ Vehicles = { "seek", "seek", "seek" }, },
-				{ Vehicles = { "lace", "lace", "lace" }, },
-			},
-			hard = {
-				{ Vehicles = { "intl", "intl.ai2", "seek" }, },
-				{ Vehicles = { "seek", "seek", "seek" }, },
-				{ Vehicles = { "lace", "lace", "seek", "seek" }, },
-				{ Vehicles = { "devo", "intl.ai2", "ruin" }, MinTime = DateTime.Minutes(7) },
-			}
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Seconds(120)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 25, RampDuration = DateTime.Minutes(12) }),
+		Compositions = ScrinWaterCompositions,
 		AttackPaths = ScrinWaterAttackPaths,
 	},
 	ScrinAir = {
-		Delay = {
-			easy = DateTime.Minutes(10),
-			normal = DateTime.Minutes(8),
-			hard = DateTime.Minutes(6)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 7, Max = 7 },
-			normal = { Min = 14, Max = 14 },
-			hard = { Min = 21, Max = 21 },
-		},
-		ProducerTypes = { Aircraft = { "grav" } },
-		Units = {
-			easy = {
-				{ Aircraft = { "stmr" } }
-			},
-			normal = {
-				{ Aircraft = { "stmr", "stmr" } },
-				{ Aircraft = { "enrv" } },
-			},
-			hard = {
-				{ Aircraft = { "stmr", "stmr", "stmr" } },
-				{ Aircraft = { "enrv", "enrv" } },
-			}
-		}
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(8)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		Compositions = AirCompositions.Scrin
 	},
 	ScrinBigAir = {
-		AttackValuePerSecond = {
-			normal = { Min = 15, Max = 15 },
-			hard = { Min = 35, Max = 35 },
-		},
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 24, Max = 24 }),
 		ActiveCondition = function()
 			return Mastermind4.IsDead
 		end,
-		ProducerTypes = { Aircraft = { "grav" } },
-		Units = {
+		Compositions = {
 			normal = {
 				{ Aircraft = { PacOrDevastator, PacOrDevastator } },
 			},
 			hard = {
 				{ Aircraft = { PacOrDevastator, PacOrDevastator, PacOrDevastator } },
+			},
+			vhard = {
+				{ Aircraft = { PacOrDevastator, PacOrDevastator, PacOrDevastator } },
+			},
+			brutal = {
+				{ Aircraft = { PacOrDevastator, PacOrDevastator, PacOrDevastator, PacOrDevastator } },
 			}
 		},
 		AttackPaths = ScrinWaterAttackPaths,
@@ -361,26 +313,19 @@ InitScrin = function()
 	AutoReplaceHarvesters(Scrin)
 	AutoRebuildConyards(Scrin)
 	InitAiUpgrades(Scrin)
+	InitAttackSquad(Squads.ScrinMain, Scrin)
+	InitAttackSquad(Squads.ScrinWater, Scrin)
+	InitAirAttackSquad(Squads.ScrinAir, Scrin)
+
+	if IsNormalOrAbove() then
+		InitAttackSquad(Squads.ScrinBigAir, Scrin)
+	end
 
 	local scrinGroundAttackers = Scrin.GetGroundAttackers()
 
 	Utils.Do(scrinGroundAttackers, function(a)
 		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
-	end)
-
-	InitAttackSquad(Squads.ScrinMain, Scrin)
-
-	if Difficulty ~= "easy" then
-		InitAttackSquad(Squads.ScrinBigAir, Scrin)
-	end
-
-	Trigger.AfterDelay(Squads.ScrinWater.Delay[Difficulty], function()
-		InitAttackSquad(Squads.ScrinWater, Scrin)
-	end)
-
-	Trigger.AfterDelay(Squads.ScrinAir.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.ScrinAir, Scrin)
 	end)
 end
 
@@ -390,7 +335,7 @@ UpdateObjectiveText = function()
 		local objectiveText = "      Masterminds remaining: " .. #activeMasterminds
 		local objectiveTextColor = HSLColor.Yellow
 
-		if Difficulty ~= "easy" then
+		if IsNormalOrAbove() then
 			if MaxEnslavedUnitsKilled[Difficulty] - EnslavedUnitsKilled < 2 then
 				objectiveTextColor = HSLColor.Red
 			end

@@ -7,167 +7,89 @@ AdjustedScrinCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Scr
 
 Squads = {
 	ScrinWest = {
-		AttackValuePerSecond = {
-			easy = { Min = 30, Max = 30 },
-			normal = { Min = 50, Max = 50 },
-			hard = { Min = 70, Max = 70 },
-		},
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 40, Max = 40 }),
 		InitTime = DateTime.Minutes(2),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { WestPortal }, Vehicles = { WestWarpSphere } },
-		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
-		Units = AdjustedScrinCompositions,
+		Compositions = AdjustedScrinCompositions,
 		AttackPaths = {
 			{ WestAttackNode1.Location, WestAttackNode2.Location, WestAttackNode5.Location },
 			{ WestAttackNode1.Location, WestAttackNode2.Location, WestAttackNode3.Location, WestAttackNode4.Location, WestAttackNode5.Location },
 		},
 	},
 	ScrinEast = {
-		AttackValuePerSecond = {
-			easy = { Min = 30, Max = 30 },
-			normal = { Min = 50, Max = 50 },
-			hard = { Min = 70, Max = 70 },
-		},
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 40, Max = 40 }),
 		InitTime = DateTime.Minutes(4),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { EastPortal }, Vehicles = { EastWarpSphere } },
-		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
-		Units = AdjustedScrinCompositions,
+		Compositions = AdjustedScrinCompositions,
 		AttackPaths = {
 			{ EastAttackNode1.Location, EastAttackNode2.Location, EastAttackNode3.Location, EastAttackNode4.Location, EastAttackNode5.Location },
 			{ EastAttackNode1.Location, EastAttackNode5.Location },
 		},
 	},
 	ScrinCenter = {
-		AttackValuePerSecond = {
-			easy = { Min = 30, Max = 30 },
-			normal = { Min = 50, Max = 50 },
-			hard = { Min = 70, Max = 70 },
-		},
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 40, Max = 40 }),
 		InitTime = 0,
 		FollowLeader = true,
 		ProducerActors = { Infantry = { CenterPortal }, Vehicles = { CenterWarpSphere } },
-		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
-		Units = AdjustedScrinCompositions,
+		Compositions = AdjustedScrinCompositions,
 		AttackPaths = { { CenterAttackNode1.Location, CenterAttackNode2.Location, CenterAttackNode3.Location } },
 	},
 	SovietSlaves = {
-		Delay = {
-			easy = DateTime.Seconds(210),
-			normal = DateTime.Seconds(150),
-			hard = DateTime.Seconds(90)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 10, Max = 15, RampDuration = DateTime.Minutes(15) },
-			normal = { Min = 20, Max = 33, RampDuration = DateTime.Minutes(13) },
-			hard = { Min = 30, Max = 50, RampDuration = DateTime.Minutes(11) },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Seconds(150)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 16, Max = 26, RampDuration = DateTime.Minutes(14) }),
 		ActiveCondition = function()
 			return not SovietsFreed
 		end,
 		FollowLeader = true,
-		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
-		Units = AdjustCompositionsForDifficulty(UnitCompositions.Soviet),
+		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Soviet),
 		AttackPaths = { { WestAttackNode4.Location, WestAttackNode5.Location } },
 	},
 	NodSlaves = {
-		Delay = {
-			easy = DateTime.Seconds(210),
-			normal = DateTime.Seconds(150),
-			hard = DateTime.Seconds(90)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 10, Max = 15, RampDuration = DateTime.Minutes(15) },
-			normal = { Min = 20, Max = 33, RampDuration = DateTime.Minutes(13) },
-			hard = { Min = 30, Max = 50, RampDuration = DateTime.Minutes(11) },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Seconds(150)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 16, Max = 26, RampDuration = DateTime.Minutes(14) }),
 		ActiveCondition = function()
 			return not NodFreed
 		end,
 		DispatchDelay = DateTime.Seconds(15),
 		FollowLeader = true,
-		ProducerTypes = { Infantry = { "hand" }, Vehicles = { "airs" } },
-		Units = AdjustCompositionsForDifficulty(UnitCompositions.Nod),
+		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Nod),
 		AttackPaths = { { EastAttackNode4.Location, EastAttackNode5.Location } },
 	},
 	AlliedSlaves = {
-		Delay = {
-			easy = DateTime.Seconds(210),
-			normal = DateTime.Seconds(150),
-			hard = DateTime.Seconds(90)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 10, Max = 15, RampDuration = DateTime.Minutes(15) },
-			normal = { Min = 20, Max = 33, RampDuration = DateTime.Minutes(13) },
-			hard = { Min = 30, Max = 50, RampDuration = DateTime.Minutes(11) },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Seconds(150)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 16, Max = 26, RampDuration = DateTime.Minutes(14) }),
 		ActiveCondition = function()
 			return not AlliesFreed
 		end,
 		FollowLeader = true,
-		ProducerTypes = { Infantry = { "tent" }, Vehicles = { "weap" } },
-		Units = AdjustCompositionsForDifficulty(UnitCompositions.Allied),
+		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Allied),
 		AttackPaths = { { CenterAttackNode3.Location } },
 	},
 	USSR = {
-		AttackValuePerSecond = {
-			easy = { Min = 25, Max = 25 },
-			normal = { Min = 25, Max = 25 },
-			hard = { Min = 25, Max = 25 },
-		},
+		AttackValuePerSecond = { Min = 25, Max = 25 },
 		FollowLeader = true,
-		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
-		Units = AdjustCompositionsForDifficulty(UnitCompositions.Soviet, "normal"),
+		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Soviet, "normal"),
 		AttackPaths = { { WestAttackNode2.Location, WestAttackNode1.Location, WormholeWP.Location } },
 	},
 	Nod = {
-		AttackValuePerSecond = {
-			easy = { Min = 25, Max = 25 },
-			normal = { Min = 25, Max = 25 },
-			hard = { Min = 25, Max = 25 },
-		},
+		AttackValuePerSecond = { Min = 25, Max = 25 },
 		DispatchDelay = DateTime.Seconds(15),
 		FollowLeader = true,
-		ProducerTypes = { Infantry = { "hand" }, Vehicles = { "airs" } },
-		Units = AdjustCompositionsForDifficulty(UnitCompositions.Nod, "normal"),
+		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Nod, "normal"),
 		AttackPaths = { { EastAttackNode2.Location, EastAttackNode1.Location, WormholeWP.Location } },
 	},
 	Greece = {
-		AttackValuePerSecond = {
-			easy = { Min = 25, Max = 25 },
-			normal = { Min = 25, Max = 25 },
-			hard = { Min = 25, Max = 25 },
-		},
+		AttackValuePerSecond = { Min = 25, Max = 25 },
 		FollowLeader = true,
-		ProducerTypes = { Infantry = { "tent" }, Vehicles = { "weap" } },
-		Units = AdjustCompositionsForDifficulty(UnitCompositions.Allied, "normal"),
+		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Allied, "normal"),
 		AttackPaths = { { CenterAttackNode2.Location, CenterAttackNode1.Location, WormholeWP.Location } },
 	},
 	ScrinAir = {
-		Delay = {
-			easy = DateTime.Minutes(6),
-			normal = DateTime.Minutes(5),
-			hard = DateTime.Minutes(4)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 7, Max = 7 },
-			normal = { Min = 14, Max = 14 },
-			hard = { Min = 21, Max = 21 },
-		},
-		ProducerTypes = { Aircraft = { "grav" } },
-		Units = {
-			easy = {
-				{ Aircraft = { "stmr" } }
-			},
-			normal = {
-				{ Aircraft = { "stmr", "stmr" } },
-				{ Aircraft = { "enrv" } },
-			},
-			hard = {
-				{ Aircraft = { "stmr", "stmr", "stmr" } },
-				{ Aircraft = { "enrv", "enrv" } },
-			}
-		}
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(5)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		Compositions = AirCompositions.Scrin
 	},
 }
 
@@ -175,24 +97,26 @@ RiftEnabledTime = {
 	easy = DateTime.Seconds((60 * 45) + 17),
 	normal = DateTime.Seconds((60 * 30) + 17),
 	hard = DateTime.Seconds((60 * 15) + 17),
+	vhard = DateTime.Seconds((60 * 15) + 17),
+	brutal = DateTime.Seconds((60 * 10) + 17)
 }
 
-MADTankAttackDelay = {
-	easy = DateTime.Minutes(3),
-	normal = DateTime.Minutes(3),
-	hard = DateTime.Minutes(3),
-}
+MADTankAttackDelay = DateTime.Minutes(3)
 
 ChronoTanksDelay = {
 	easy = DateTime.Minutes(3),
 	normal = DateTime.Minutes(3),
 	hard = DateTime.Minutes(3),
+	vhard = DateTime.Minutes(3),
+	brutal = DateTime.Minutes(3)
 }
 
 HackersDelay = {
 	easy = DateTime.Minutes(2),
 	normal = DateTime.Minutes(2),
 	hard = DateTime.Minutes(2),
+	vhard = DateTime.Minutes(2),
+	brutal = DateTime.Minutes(2)
 }
 
 WorldLoaded = function()
@@ -488,6 +412,7 @@ InitScrin = function()
 	AutoReplaceHarvesters(Scrin)
 	AutoRebuildConyards(Scrin)
 	InitAiUpgrades(Scrin)
+	InitAirAttackSquad(Squads.ScrinAir, Scrin)
 
 	local scrinGroundAttackers = Scrin.GetGroundAttackers()
 
@@ -509,10 +434,6 @@ InitScrin = function()
 		Actor.Create("ai.superweapons.enabled", true, { Owner = Scrin })
 	end)
 
-	Trigger.AfterDelay(Squads.ScrinAir.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.ScrinAir, Scrin)
-	end)
-
 	local scrinPower = Scrin.GetActorsByTypes({ "reac", "rea2" })
 	Trigger.OnAllKilledOrCaptured(scrinPower, function()
 		local scrinDefenses = Scrin.GetActorsByTypes({ "scol", "shar" })
@@ -528,15 +449,12 @@ InitNodSlaves = function()
 	AutoRepairAndRebuildBuildings(NodSlaves, 15)
 	SetupRefAndSilosCaptureCredits(NodSlaves)
 	AutoReplaceHarvesters(NodSlaves)
+	InitAttackSquad(Squads.NodSlaves, NodSlaves)
 
 	local nodGroundAttackers = NodSlaves.GetGroundAttackers()
 
 	Utils.Do(nodGroundAttackers, function(a)
 		TargetSwapChance(a, 10)
-	end)
-
-	Trigger.AfterDelay(Squads.NodSlaves.Delay[Difficulty], function()
-		InitAttackSquad(Squads.NodSlaves, NodSlaves)
 	end)
 end
 
@@ -544,15 +462,12 @@ InitSovietSlaves = function()
 	AutoRepairAndRebuildBuildings(SovietSlaves, 15)
 	SetupRefAndSilosCaptureCredits(SovietSlaves)
 	AutoReplaceHarvesters(SovietSlaves)
+	InitAttackSquad(Squads.SovietSlaves, SovietSlaves)
 
 	local sovietGroundAttackers = SovietSlaves.GetGroundAttackers()
 
 	Utils.Do(sovietGroundAttackers, function(a)
 		TargetSwapChance(a, 10)
-	end)
-
-	Trigger.AfterDelay(Squads.SovietSlaves.Delay[Difficulty], function()
-		InitAttackSquad(Squads.SovietSlaves, SovietSlaves)
 	end)
 end
 
@@ -560,15 +475,12 @@ InitAlliedSlaves = function()
 	AutoRepairAndRebuildBuildings(AlliedSlaves, 15)
 	SetupRefAndSilosCaptureCredits(AlliedSlaves)
 	AutoReplaceHarvesters(AlliedSlaves)
+	InitAttackSquad(Squads.AlliedSlaves, AlliedSlaves)
 
 	local alliedGroundAttackers = AlliedSlaves.GetGroundAttackers()
 
 	Utils.Do(alliedGroundAttackers, function(a)
 		TargetSwapChance(a, 10)
-	end)
-
-	Trigger.AfterDelay(Squads.AlliedSlaves.Delay[Difficulty], function()
-		InitAttackSquad(Squads.AlliedSlaves, AlliedSlaves)
 	end)
 end
 
@@ -681,7 +593,7 @@ InitChronoTanks = function()
 end
 
 InitMADTankAttack = function()
-	Trigger.AfterDelay(MADTankAttackDelay[Difficulty] - DateTime.Seconds(20), function()
+	Trigger.AfterDelay(MADTankAttackDelay - DateTime.Seconds(20), function()
 		if ScrinDefenseBuff1.IsDead then
 			return
 		end
@@ -699,7 +611,7 @@ InitMADTankAttack = function()
 		Beacon.New(GDI, MADTankPath1.CenterPosition)
 	end)
 
-	Trigger.AfterDelay(MADTankAttackDelay[Difficulty], function()
+	Trigger.AfterDelay(MADTankAttackDelay, function()
 		if ScrinDefenseBuff1.IsDead then
 			return
 		end

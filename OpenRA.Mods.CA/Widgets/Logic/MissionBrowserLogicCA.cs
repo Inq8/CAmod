@@ -301,6 +301,9 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 					if (difficultyCompleted != null)
 						details += $"\n• Difficulty: {difficultyCompleted}";
 
+					if (missionProgress.RespawnEnabled.HasValue)
+						details += $"\n• Respawns: {(missionProgress.RespawnEnabled.Value ? "Enabled" : "Disabled")}";
+
 					item.GetTooltipText = () => "Completed";
 					item.GetTooltipDesc = () => details;
 

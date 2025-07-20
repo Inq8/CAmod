@@ -42,30 +42,42 @@ WorldLoaded = function()
 
 	NodBaseCamera.Destroy()
 
-	if Difficulty ~= "easy" then
+	if IsNormalOrAbove() then
 		Medic2.Destroy()
 		Mechanic.Destroy()
 
-		if Difficulty == "hard" then
+		if IsHardOrAbove() then
 			Medic1.Destroy()
 			Ranger2.Destroy()
 			NonHardSniper1.Destroy()
-			NonHardSniper2.Destroy()
 			NonHardMirage1.Destroy()
+
+			if IsVeryHardOrAbove() then
+				NonHardSniper2.Destroy()
+			end
 		end
 	end
 
-	if Difficulty ~= "hard" then
-		HardOnlySSM.Destroy()
-		HardOnlyFlameTank1.Destroy()
-		HardOnlyFlameTank2.Destroy()
-		HardOnlyFlameTank3.Destroy()
-		HardOnlyFlameTank4.Destroy()
-		HardOnlyFlameTank5.Destroy()
-		HardOnlyBlackHand1.Destroy()
-		HardOnlyBlackHand2.Destroy()
-		HardOnlyBlackHand3.Destroy()
-		HardOnlyBlackHand4.Destroy()
+	if IsVeryHardOrBelow() then
+		local brutalOnlyUnits = Map.GetActorsByTypes({ "shad", "hftk" })
+		Utils.Do(brutalOnlyUnits, function(a) a.Destroy() end)
+
+		if IsHardOrBelow() then
+			local blackHand = Map.GetActorsByType("bh")
+			Utils.Do(blackHand, function(a) a.Destroy() end)
+
+			VeryHardOnlyFlameTank1.Destroy()
+			VeryHardOnlyFlameTank2.Destroy()
+
+			if IsNormalOrBelow() then
+				HardOnlySSM.Destroy()
+				HardOnlyFlameTank1.Destroy()
+				HardOnlyFlameTank2.Destroy()
+				HardOnlyFlameTank3.Destroy()
+				HardOnlyFlameTank4.Destroy()
+				HardOnlyFlameTank5.Destroy()
+			end
+		end
 	end
 
 	Utils.Do(SAMs, function(s)
@@ -76,7 +88,7 @@ WorldLoaded = function()
 				if a.Owner == Nod and a.HasProperty("AttackMove") then
 					a.AttackMove(s.Rally, 4)
 					a.AttackMove(s.SAMSite.Location, 4)
-					if Difficulty ~= "easy" then
+					if IsHardOrAbove() then
 						IdleHunt(a)
 					end
 				end
@@ -112,7 +124,7 @@ WorldLoaded = function()
 
 	Trigger.AfterDelay(DateTime.Seconds(5), function()
 		local rangersDesc
-		if Difficulty == "hard" then
+		if IsHardOrAbove() then
 			rangersDesc = "Rangers are"
 		else
 			rangersDesc = "Ranger is"

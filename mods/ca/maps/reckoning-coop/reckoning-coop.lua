@@ -1,20 +1,25 @@
-
 ExterminatorsStartTime = {
 	easy = DateTime.Minutes(10),
 	normal = DateTime.Minutes(8),
 	hard = DateTime.Minutes(6),
+	vhard = DateTime.Minutes(6),
+	brutal = DateTime.Minutes(6)
 }
 
 ExterminatorsInterval = {
 	easy = DateTime.Minutes(7),
 	normal = DateTime.Minutes(5) + DateTime.Seconds(30),
 	hard = DateTime.Minutes(4),
+	vhard = DateTime.Minutes(4),
+	brutal = DateTime.Minutes(4)
 }
 
 ExterminatorAttackCount = {
 	easy = 4,
 	normal = 4,
-	hard = 50
+	hard = 50,
+	vhard = 50,
+	brutal = 50
 }
 
 Exterminators = {
@@ -26,10 +31,12 @@ Exterminators = {
 SuperweaponsEnabledTime = {
 	easy = DateTime.Seconds((60 * 50) + 17),
 	normal = DateTime.Seconds((60 * 35) + 17),
-	hard = DateTime.Seconds((60 * 20) + 17),
+	hard = DateTime.Seconds((60 * 25) + 17),
+	vhard = DateTime.Seconds((60 * 20) + 17),
+	brutal = DateTime.Seconds((60 * 15) + 17)
 }
 
-if Difficulty == "hard" then
+if IsHardOrAbove() then
 	table.insert(UnitCompositions.Scrin, {
 		Infantry = { "s3", "s4", "evis", "evis", "evis", "evis", "s1", "s1", "s4", "s1", "s4", "s1", "s4", "s1", "mast" },
 		Vehicles = { "shrw", TripodVariant, TripodVariant, "shrw", CorrupterOrDevourer, "oblt", "shrw" },
@@ -45,20 +52,11 @@ Squads = {
 		ActiveCondition = function()
 			return not IsNodDead
 		end,
-		Delay = {
-			easy = DateTime.Minutes(6),
-			normal = DateTime.Minutes(4),
-			hard = DateTime.Minutes(2)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 20, Max = 50 },
-			normal = { Min = 50, Max = 100 },
-			hard = { Min = 80, Max = 160 },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(4)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 40, Max = 80 }),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { Portal1 }, Vehicles = { WarpSphere1 }, Aircraft = { GravityStabilizer1, GravityStabilizer2 } },
-		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
-		Units = AdjustedScrinCompositions,
+		Compositions = AdjustedScrinCompositions,
 		AttackPaths = {
 			{ L1.Location, L2.Location, L3.Location, L4.Location },
 			{ L1.Location, L2.Location, M3.Location, M4.Location },
@@ -70,50 +68,31 @@ Squads = {
 		ActiveCondition = function()
 			return not IsGDIDead
 		end,
-		Delay = {
-			easy = DateTime.Minutes(6),
-			normal = DateTime.Minutes(4),
-			hard = DateTime.Minutes(2)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 20, Max = 50 },
-			normal = { Min = 50, Max = 100 },
-			hard = { Min = 80, Max = 160 },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(4)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 40, Max = 80 }),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { Portal3 }, Vehicles = { WarpSphere4 }, Aircraft = { GravityStabilizer3 } },
-		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
-		Units = AdjustedScrinCompositions,
+		Compositions = AdjustedScrinCompositions,
 		AttackPaths = {
 			{ R7.Location, R6.Location, GDIBase.Location },
 			{ R10.Location, R6.Location, GDIBase.Location },
 		},
 	},
 	ScrinRebelKiller = {
-		AttackValuePerSecond = {
-			easy = { Min = 20, Max = 20 },
-			normal = { Min = 40, Max = 40 },
-			hard = { Min = 60, Max = 80 },
-		},
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 32, Max = 32 }),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { Portal2 }, Vehicles = { WarpSphere2 }, Aircraft = { GravityStabilizer1, GravityStabilizer2, GravityStabilizer3 } },
-		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
-		Units = AdjustedScrinCompositions,
+		Compositions = AdjustedScrinCompositions,
 		AttackPaths = {
 			{ M1.Location, M2.Location, R4.Location, M5.Location },
 			{ R1.Location, R2.Location, R3.Location, R4.Location, R5.Location }
 		},
 	},
 	ScrinRebelsMain = {
-		AttackValuePerSecond = {
-			easy = { Min = 35, Max = 35 },
-			normal = { Min = 35, Max = 35 },
-			hard = { Min = 35, Max = 55, RampDuration = DateTime.Minutes(22) },
-		},
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 28, Max = 28 }),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { RebelPortal1 }, Vehicles = { RebelWarpSphere1 }, Aircraft = { RebelGravityStabilizer1 } },
-		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
-		Units = AdjustedScrinCompositions,
+		Compositions = AdjustedScrinCompositions,
 		AttackPaths = {
 			{ M5.Location, M2.Location, M1.Location },
 			{ M5.Location, R4.Location, M2.Location },
@@ -124,66 +103,22 @@ Squads = {
 		ActiveCondition = function()
 			return not IsNodDead
 		end,
-		Delay = {
-			easy = DateTime.Minutes(6),
-			normal = DateTime.Minutes(5),
-			hard = DateTime.Minutes(4)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 7, Max = 7 },
-			normal = { Min = 14, Max = 14 },
-			hard = { Min = 21, Max = 21 },
-		},
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(5)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
 		ProducerActors = { Aircraft = { GravityStabilizer1, GravityStabilizer2 } },
-		ProducerTypes = { Aircraft = { "grav" } },
-		Units = {
-			easy = {
-				{ Aircraft = { "stmr" } }
-			},
-			normal = {
-				{ Aircraft = { "stmr", "stmr" } },
-				{ Aircraft = { "enrv" } },
-			},
-			hard = {
-				{ Aircraft = { "stmr", "stmr", "stmr" } },
-				{ Aircraft = { "enrv", "enrv" } },
-			}
-		},
+		Compositions = AirCompositions.Scrin,
 	},
 	ScrinAirVsGDI = {
 		ActiveCondition = function()
 			return not IsGDIDead
 		end,
-		Delay = {
-			easy = DateTime.Minutes(6),
-			normal = DateTime.Minutes(5),
-			hard = DateTime.Minutes(4)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 7, Max = 7 },
-			normal = { Min = 14, Max = 14 },
-			hard = { Min = 21, Max = 21 },
-		},
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(5)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
 		ProducerActors = { Aircraft = { GravityStabilizer3, GravityStabilizer4 } },
-		ProducerTypes = { Aircraft = { "grav" } },
-		Units = {
-			easy = {
-				{ Aircraft = { "stmr" } }
-			},
-			normal = {
-				{ Aircraft = { "stmr", "stmr" } },
-				{ Aircraft = { "enrv" } },
-			},
-			hard = {
-				{ Aircraft = { "stmr", "stmr", "stmr" } },
-				{ Aircraft = { "enrv", "enrv" } },
-			}
-		},
+		Compositions = AirCompositions.Scrin,
 	},
 	ScrinAirToAirVsNod = {
-		Interval = {
-			hard = DateTime.Seconds(90)
-		},
+		Interval = DateTime.Seconds(90),
 		ActiveCondition = function()
 			return NodHasMassAir()
 		end,
@@ -191,17 +126,12 @@ Squads = {
 			a.Patrol({ A2APatrol1.Location, A2APatrol2.Location, A2APatrol3.Location, A2APatrol4.Location, A2APatrol5.Location, A2APatrol6.Location, A2APatrol7.Location, A2APatrol8.Location })
 		end,
 		ProducerActors = { Aircraft = { GravityStabilizer1, GravityStabilizer2 } },
-		ProducerTypes = { Aircraft = { "grav" } },
-		Units = {
-			hard = {
-				{ Aircraft = { { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" } } },
-			}
+		Compositions = {
+			{ Aircraft = { { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" } } },
 		},
 	},
 	ScrinAirToAirVsGDI = {
-		Interval = {
-			hard = DateTime.Seconds(90)
-		},
+		Interval = DateTime.Seconds(90),
 		ActiveCondition = function()
 			return GDIHasMassAir()
 		end,
@@ -209,38 +139,16 @@ Squads = {
 			a.Patrol({ A2ABPatrol1.Location, A2ABPatrol2.Location, A2ABPatrol3.Location, A2ABPatrol4.Location, A2ABPatrol5.Location })
 		end,
 		ProducerActors = { Aircraft = { GravityStabilizer3, GravityStabilizer4 } },
-		ProducerTypes = { Aircraft = { "grav" } },
-		Units = {
-			hard = {
-				{ Aircraft = { { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" } } },
-			}
+		Compositions = {
+			{ Aircraft = { { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" } } },
 		},
 	},
 	ScrinRebelsAir = {
-		Delay = {
-			easy = DateTime.Minutes(5),
-			normal = DateTime.Minutes(5),
-			hard = DateTime.Minutes(5)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 14, Max = 14 },
-			normal = { Min = 14, Max = 14 },
-			hard = { Min = 14, Max = 14 },
-		},
-		ProducerTypes = { Aircraft = { "grav" } },
-		Units = {
-			easy = {
-				{ Aircraft = { "stmr", "stmr" } },
-				{ Aircraft = { "enrv" } },
-			},
-			normal = {
-				{ Aircraft = { "stmr", "stmr" } },
-				{ Aircraft = { "enrv" } },
-			},
-			hard = {
-				{ Aircraft = { "stmr", "stmr" } },
-				{ Aircraft = { "enrv" } },
-			}
+		Delay = DateTime.Minutes(5),
+		AttackValuePerSecond = { Min = 14, Max = 14 },
+		Compositions = {
+			{ Aircraft = { "stmr", "stmr" } },
+			{ Aircraft = { "enrv" } },
 		}
 	}
 }
@@ -362,37 +270,26 @@ InitScrin = function()
 	AutoRebuildConyards(Scrin)
 	InitAiUpgrades(Scrin)
 
+	Trigger.AfterDelay(DateTime.Minutes(1), function()
+		InitAttackSquad(Squads.ScrinRebelKiller, Scrin, ScrinRebels)
+	end)
+
+	InitAttackSquad(Squads.ScrinVsNod, Scrin, Nod)
+	InitAttackSquad(Squads.ScrinVsGDI, Scrin, GDI)
+	InitAirAttackSquad(Squads.ScrinAirVsNod, Scrin, Nod)
+	InitAirAttackSquad(Squads.ScrinAirVsGDI, Scrin, GDI)
+
+	if IsHardOrAbove() then
+		InitAirAttackSquad(Squads.ScrinAirToAirVsNod, Scrin, Nod, { "scrn", "apch", "venm" })
+		InitAirAttackSquad(Squads.ScrinAirToAirVsGDI, Scrin, GDI, { "orca", "orcb", "a10", "a10.gau", "a10.sw", "auro" })
+	end
+
 	local scrinGroundAttackers = Scrin.GetGroundAttackers()
 
 	Utils.Do(scrinGroundAttackers, function(a)
 		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnitExcludingExterminators, function(p) return p == Nod or p == ScrinRebels or p == GDI end)
 	end)
-
-	Trigger.AfterDelay(DateTime.Minutes(1), function()
-		InitAttackSquad(Squads.ScrinRebelKiller, Scrin, ScrinRebels)
-	end)
-
-	Trigger.AfterDelay(Squads.ScrinVsNod.Delay[Difficulty], function()
-		InitAttackSquad(Squads.ScrinVsNod, Scrin, Nod)
-	end)
-
-	Trigger.AfterDelay(Squads.ScrinVsGDI.Delay[Difficulty], function()
-		InitAttackSquad(Squads.ScrinVsGDI, Scrin, GDI)
-	end)
-
-	Trigger.AfterDelay(Squads.ScrinAirVsNod.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.ScrinAirVsNod, Scrin, Nod)
-	end)
-
-	Trigger.AfterDelay(Squads.ScrinAirVsGDI.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.ScrinAirVsGDI, Scrin, GDI)
-	end)
-
-	if Difficulty == "hard" then
-		InitAirAttackSquad(Squads.ScrinAirToAirVsNod, Scrin, Nod, { "scrn", "apch", "venm" })
-		InitAirAttackSquad(Squads.ScrinAirToAirVsGDI, Scrin, GDI, { "orca", "orcb", "a10", "a10.gau", "a10.sw", "auro" })
-	end
 
 	Trigger.AfterDelay(ExterminatorsStartTime[Difficulty], function()
 		SendNextExterminator()
@@ -423,9 +320,7 @@ InitScrin = function()
 	end)
 
 	Utils.Do({ Exterminator1, Exterminator2, Exterminator3, Exterminator4, Exterminator5, Exterminator6, Exterminator7, Exterminator8 }, function(a)
-		if Difficulty ~= "hard" then
-			a.GrantCondition("difficulty-" .. Difficulty)
-		end
+		a.GrantCondition("difficulty-" .. Difficulty)
 		Trigger.OnDamaged(a, function(self, attacker, damage)
 			if damage > 500 then
 				AggroExterminator(self, Utils.Random(MissionPlayers))
@@ -446,19 +341,17 @@ InitScrinRebels = function()
 	AutoReplaceHarvesters(ScrinRebels)
 	AutoRebuildConyards(ScrinRebels, true)
 
+	Trigger.AfterDelay(DateTime.Minutes(1), function()
+		InitAttackSquad(Squads.ScrinRebelsMain, ScrinRebels, Scrin)
+	end)
+
+	InitAirAttackSquad(Squads.ScrinRebelsAir, ScrinRebels, Scrin, { "harv.scrin", "scol", "tpod", "rtpd", "ptur", "devo", "corr", "ruin" })
+
 	local scrinRebelGroundAttackers = ScrinRebels.GetGroundAttackers()
 
 	Utils.Do(scrinRebelGroundAttackers, function(a)
 		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinRebelGroundHunterUnit, function(p) return p == Scrin end)
-	end)
-
-	Trigger.AfterDelay(DateTime.Minutes(1), function()
-		InitAttackSquad(Squads.ScrinRebelsMain, ScrinRebels, Scrin)
-	end)
-
-	Trigger.AfterDelay(Squads.ScrinRebelsAir.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.ScrinRebelsAir, ScrinRebels, Scrin, { "harv.scrin", "scol", "tpod", "rtpd", "ptur", "devo", "corr", "ruin" })
 	end)
 end
 
@@ -515,9 +408,7 @@ SendNextExterminator = function()
 						AssaultPlayerBaseOrHunt(a, exterminator.TargetPlayer)
 					end
 
-					if Difficulty ~= "hard" then
-						a.GrantCondition("difficulty-" .. Difficulty)
-					end
+					a.GrantCondition("difficulty-" .. Difficulty)
 
 					Trigger.AfterDelay(ExterminatorsInterval[Difficulty] * 5, function()
 						AggroExterminator(a, exterminator.TargetPlayer)

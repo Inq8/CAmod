@@ -8,89 +8,71 @@ PowerGrids = {
 	},
 }
 
+SpawnedBlobPatrolPaths = {
+	{
+		BlobPatrol8.Location, BlobPatrol7.Location, BlobPatrol6.Location, BlobPatrol5.Location, BlobPatrol4.Location, BlobPatrol3.Location, BlobPatrol2.Location, BlobPatrol1.Location,
+		BlobExtraPatrol1.Location, BlobExtraPatrol2.Location, BlobExtraPatrol3.Location, BlobExtraPatrol4.Location, BlobExtraPatrol5.Location, BlobExtraPatrol1.Location,
+		BlobPatrol11.Location, BlobPatrol10.Location, BlobPatrol9.Location
+	},
+	{
+		BlobPatrol9.Location, BlobPatrol10.Location, BlobPatrol11.Location, BlobPatrol1.Location,
+		BlobExtraPatrol1.Location, BlobExtraPatrol5.Location, BlobExtraPatrol4.Location, BlobExtraPatrol3.Location, BlobExtraPatrol2.Location, BlobExtraPatrol1.Location,
+		BlobPatrol2.Location, BlobPatrol3.Location, BlobPatrol4.Location, BlobPatrol5.Location, BlobPatrol6.Location, BlobPatrol7.Location, BlobPatrol8.Location
+	},
+}
+
+SpawnLifeformsDelay = {
+	vhard = DateTime.Minutes(10),
+	brutal = DateTime.Minutes(8)
+}
+
+SpawnLifeformsInterval = {
+	vhard = DateTime.Minutes(2),
+	brutal = DateTime.Minutes(1)
+}
+
 ReinforcementsInterval = {
 	easy = DateTime.Minutes(3),
 	normal = DateTime.Minutes(4),
-	hard = DateTime.Minutes(5)
+	hard = DateTime.Minutes(5),
+	vhard = DateTime.Minutes(5),
+	brutal = DateTime.Minutes(5)
 }
 
 HarvesterDeathDelayTime = {
 	easy = DateTime.Seconds(30),
 	normal = DateTime.Seconds(25),
 	hard = DateTime.Seconds(20),
+	vhard = DateTime.Seconds(20),
+	brutal = DateTime.Seconds(20)
 }
 
 Squads = {
 	ScrinMain = {
-		Delay = {
-			easy = DateTime.Minutes(7),
-			normal = DateTime.Minutes(5),
-			hard = DateTime.Minutes(3)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 20, Max = 50, RampDuration = DateTime.Minutes(13) },
-			normal = { Min = 50, Max = 100, RampDuration = DateTime.Minutes(11) },
-			hard = { Min = 80, Max = 160, RampDuration = DateTime.Minutes(9) },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(5)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 40, Max = 80, RampDuration = DateTime.Minutes(12) }),
 		FollowLeader = true,
-		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
-		Units = AdjustCompositionsForDifficulty(UnitCompositions.Scrin),
+		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Scrin),
 		AttackPaths = {
 			{ ScrinAttack1.Location, ScrinAttack2.Location, ScrinAttack3.Location, ScrinAttack4.Location }
 		},
 	},
 	ScrinWater = {
-		Delay = {
-			normal = DateTime.Minutes(7),
-			hard = DateTime.Minutes(6)
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(7)),
 		AttackValuePerSecond = {
 			normal = { Min = 20, Max = 20,  },
 			hard = { Min = 28, Max = 55, RampDuration = DateTime.Minutes(11) },
 		},
 		FollowLeader = true,
-		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" } },
-		Units = {
-			normal = {
-				{ Vehicles = { "intl.ai2", { "seek", "lace" } }, },
-				{ Vehicles = { { "seek", "lace" }, { "seek", "lace" }, { "seek", "lace" } }, },
-			},
-			hard = {
-				{ Vehicles = { "intl", "intl.ai2", "seek" }, },
-				{ Vehicles = { "seek", "seek", "seek" }, },
-				{ Vehicles = { "lace", "lace", "seek", "seek" }, },
-				{ Vehicles = { "devo", "intl.ai2", "ruin" }, MinTime = DateTime.Minutes(7) },
-			}
-		},
+		Compositions = ScrinWaterCompositions,
 		AttackPaths = {
 			{ ScrinAttack1.Location, ScrinAttack2b.Location, ScrinAttack4.Location }
 		},
 	},
 	ScrinAir = {
-		Delay = {
-			easy = DateTime.Minutes(10),
-			normal = DateTime.Minutes(8),
-			hard = DateTime.Minutes(6)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 7, Max = 7 },
-			normal = { Min = 14, Max = 14 },
-			hard = { Min = 21, Max = 21 },
-		},
-		ProducerTypes = { Aircraft = { "grav" } },
-		Units = {
-			easy = {
-				{ Aircraft = { "stmr" } }
-			},
-			normal = {
-				{ Aircraft = { "stmr", "stmr" } },
-				{ Aircraft = { "enrv" } },
-			},
-			hard = {
-				{ Aircraft = { "stmr", "stmr", "stmr" } },
-				{ Aircraft = { "enrv", "enrv" } },
-			}
-		}
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(8)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		Compositions = AirCompositions.Scrin
 	},
 }
 
@@ -121,7 +103,7 @@ WorldLoaded = function()
 		end)
 	end
 
-	if Difficulty ~= "hard" then
+	if IsNormalOrBelow() then
 		HardOnlyUnit1.Destroy()
 		HardOnlyUnit2.Destroy()
 		HardOnlyUnit3.Destroy()
@@ -129,7 +111,7 @@ WorldLoaded = function()
 		HardOnlyUnit5.Destroy()
 	end
 
-	if Difficulty == "hard" then
+	if IsHardOrAbove() then
 		NormalEasyOnlyUnit1.Destroy()
 		NormalEasyOnlyUnit2.Destroy()
 		NormalEasyOnlyUnit3.Destroy()
@@ -328,24 +310,16 @@ InitScrin = function()
 end
 
 BeginScrinAttacks = function()
-	Trigger.AfterDelay(Squads.ScrinMain.Delay[Difficulty], function()
-		InitAttackSquad(Squads.ScrinMain, Scrin)
-	end)
+	InitAttackSquad(Squads.ScrinMain, Scrin)
+	InitAirAttackSquad(Squads.ScrinAir, Scrin)
 
-	Trigger.AfterDelay(Squads.ScrinAir.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.ScrinAir, Scrin)
-	end)
-
-	if Difficulty ~= "easy" then
-		Trigger.AfterDelay(Squads.ScrinWater.Delay[Difficulty], function()
-			InitAttackSquad(Squads.ScrinWater, Scrin)
-		end)
+	if IsNormalOrAbove() then
+		InitAttackSquad(Squads.ScrinWater, Scrin)
 	end
 end
 
 InitTibLifeforms = function()
-
-	if Difficulty ~= "hard" then
+	if IsNormalOrBelow() then
 		Blob1.Destroy()
 	end
 
@@ -363,9 +337,15 @@ InitTibLifeforms = function()
 	Blob2.Patrol(patrolPath2, true)
 	Blob3.Patrol(patrolPath3, true)
 
-	if Difficulty == "hard" then
+	if IsHardOrAbove() then
 		local patrolPath1 = { BlobPatrol1.Location, BlobPatrol2.Location, BlobPatrol3.Location, BlobPatrol4.Location, BlobPatrol5.Location, BlobPatrol6.Location, BlobPatrol7.Location, BlobPatrol8.Location, BlobPatrol9.Location, BlobPatrol10.Location, BlobPatrol11.Location }
 		Blob1.Patrol(patrolPath1, true)
+
+		if IsVeryHardOrAbove() then
+			Trigger.AfterDelay(SpawnLifeformsDelay[Difficulty], function()
+				SpawnTibLifeform()
+			end)
+		end
 	end
 end
 
@@ -403,4 +383,13 @@ NerveCenterLost = function()
 	if ObjectiveProtectNerveCenter ~= nil and not GDI.IsObjectiveCompleted(ObjectiveProtectNerveCenter) then
 		GDI.MarkFailedObjective(ObjectiveProtectNerveCenter)
 	end
+end
+
+SpawnTibLifeform = function()
+	local lifeform = Actor.Create("tbcl", true, { Owner = TibLifeforms, Location = Utils.Random({ TibSpawn1.Location, TibSpawn2.Location }) })
+	lifeform.Patrol(Utils.Random(SpawnedBlobPatrolPaths), true)
+
+	Trigger.AfterDelay(SpawnLifeformsInterval[Difficulty], function()
+		SpawnTibLifeform()
+	end)
 end

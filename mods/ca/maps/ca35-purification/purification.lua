@@ -2,7 +2,9 @@
 UnitBuildTimeMultipliers = {
 	easy = 0.8,
 	normal = 0.5,
-	hard = 0.25,
+	hard = 0.33,
+	vhard = 0.25,
+	brutal = 0.2
 }
 
 LiquidTibCooldown = DateTime.Minutes(5)
@@ -11,6 +13,8 @@ RiftEnabledTime = {
 	easy = DateTime.Seconds((60 * 45) + 17),
 	normal = DateTime.Seconds((60 * 30) + 17),
 	hard = DateTime.Seconds((60 * 15) + 17),
+	vhard = DateTime.Seconds((60 * 15) + 17),
+	brutal = DateTime.Seconds((60 * 15) + 17)
 }
 
 ScrinReinforcementSpawns = {
@@ -21,20 +25,12 @@ AdjustedScrinCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Scr
 
 Squads = {
 	ScrinMain = {
-		Delay = {
-			easy = DateTime.Seconds(240),
-			normal = DateTime.Seconds(150),
-			hard = DateTime.Seconds(60)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 20, Max = 50, RampDuration = DateTime.Minutes(12) },
-			normal = { Min = 50, Max = 100, RampDuration = DateTime.Minutes(10) },
-			hard = { Min = 80, Max = 160, RampDuration = DateTime.Minutes(8) },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Seconds(150)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 40, Max = 80, RampDuration = DateTime.Minutes(11) }),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { Portal1, Portal2 }, Vehicles = { WarpSphere1, WarpSphere2 }, Aircraft = { GravityStabilizer1, GravityStabilizer2 } },
 		ProducerTypes = { Infantry = { "port", "wormhole" }, Vehicles = { "wsph", "wormhole" }, Aircraft = { "grav", "hiddenspawner" } },
-		Units = AdjustedScrinCompositions,
+		Compositions = AdjustedScrinCompositions,
 		AttackPaths = {
 			{ ScrinAttack1a.Location, ScrinAttack1b.Location, ScrinAttack1c.Location, ScrinAttack1d.Location },
 			{ ScrinAttack1a.Location, ScrinAttack2.Location },
@@ -43,40 +39,15 @@ Squads = {
 		},
 	},
 	ScrinAir = {
-		Delay = {
-			easy = DateTime.Minutes(6),
-			normal = DateTime.Minutes(5),
-			hard = DateTime.Minutes(4)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 7, Max = 7 },
-			normal = { Min = 14, Max = 14 },
-			hard = { Min = 21, Max = 21 },
-		},
-		ProducerTypes = { Aircraft = { "grav" } },
-		Units = {
-			easy = {
-				{ Aircraft = { "stmr" } }
-			},
-			normal = {
-				{ Aircraft = { "stmr", "stmr" } },
-				{ Aircraft = { "enrv" } },
-			},
-			hard = {
-				{ Aircraft = { "stmr", "stmr", "stmr" } },
-				{ Aircraft = { "enrv", "enrv" } },
-			}
-		}
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(5)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		Compositions = AirCompositions.Scrin
 	},
 	ScrinRebelsMain = {
-		AttackValuePerSecond = {
-			easy = { Min = 70, Max = 70 },
-			normal = { Min = 70, Max = 70 },
-			hard = { Min = 70, Max = 70 },
-		},
+		AttackValuePerSecond = { Min = 70, Max = 70 },
 		FollowLeader = true,
 		ProducerTypes = { Infantry = { "wormhole" }, Vehicles = { "wormhole" }, Aircraft = { "grav" } },
-		Units = AdjustedScrinCompositions,
+		Compositions = AdjustedScrinCompositions,
 		AttackPaths = {
 			{ ScrinBaseCenter.Location },
 		},
@@ -107,7 +78,7 @@ WorldLoaded = function()
 		NormalHardOnlyCarrier2.Destroy()
 	end
 
-	if Difficulty ~= "hard" then
+	if IsNormalOrBelow() then
 		HardOnlyCarrier1.Destroy()
 	end
 
@@ -257,13 +228,8 @@ InitScrin = function()
 end
 
 BeginScrinAttacks = function()
-	Trigger.AfterDelay(Squads.ScrinMain.Delay[Difficulty], function()
-		InitAttackSquad(Squads.ScrinMain, Scrin)
-	end)
-
-	Trigger.AfterDelay(Squads.ScrinAir.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.ScrinAir, Scrin)
-	end)
+	InitAttackSquad(Squads.ScrinMain, Scrin)
+	InitAirAttackSquad(Squads.ScrinAir, Scrin)
 end
 
 UpdateMissionText = function()

@@ -6,6 +6,8 @@ SuperweaponsEnabledTime = {
 	easy = DateTime.Seconds((60 * 45) + 17),
 	normal = DateTime.Seconds((60 * 30) + 17),
 	hard = DateTime.Seconds((60 * 15) + 17),
+	vhard = DateTime.Seconds((60 * 15) + 17),
+	brutal = DateTime.Seconds((60 * 15) + 17)
 }
 
 AdjustedGDICompositions = AdjustCompositionsForDifficulty(UnitCompositions.GDI)
@@ -13,19 +15,10 @@ AdjustedGDICompositions = AdjustCompositionsForDifficulty(UnitCompositions.GDI)
 Squads = {
 	GDIMain1 = {
 		InitTimeAdjustment = -DateTime.Minutes(1),
-		Delay = {
-			easy = DateTime.Minutes(5),
-			normal = DateTime.Minutes(3),
-			hard = DateTime.Minutes(1)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 10, Max = 25 },
-			normal = { Min = 25, Max = 50 },
-			hard = { Min = 40, Max = 80 },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(3)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 }),
 		FollowLeader = true,
-		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
-		Units = AdjustedGDICompositions,
+		Compositions = AdjustedGDICompositions,
 		AttackPaths = {
 			{ Path1_1.Location, Path1_2.Location },
 			{ Path2_1.Location, Path2_2.Location },
@@ -33,19 +26,10 @@ Squads = {
 		},
 	},
 	GDIMain2 = {
-		Delay = {
-			easy = DateTime.Minutes(6),
-			normal = DateTime.Minutes(4),
-			hard = DateTime.Minutes(2)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 10, Max = 25 },
-			normal = { Min = 25, Max = 50 },
-			hard = { Min = 40, Max = 80 },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(4)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 }),
 		FollowLeader = true,
-		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
-		Units = AdjustedGDICompositions,
+		Compositions = AdjustedGDICompositions,
 		AttackPaths = {
 			{ Path1_1.Location, Path1_2.Location },
 			{ Path2_1.Location, Path2_2.Location },
@@ -53,53 +37,18 @@ Squads = {
 		},
 	},
 	GDIAir = {
-		Delay = {
-			easy = DateTime.Minutes(13),
-			normal = DateTime.Minutes(12),
-			hard = DateTime.Minutes(11)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 7, Max = 7 },
-			normal = { Min = 14, Max = 14 },
-			hard = { Min = 21, Max = 21 },
-		},
-		ProducerTypes = { Aircraft = { "afld.gdi" } },
-		Units = {
-			easy = {
-				{ Aircraft = { "orca" } },
-				{ Aircraft = { "orcb" } },
-			},
-			normal = {
-				{ Aircraft = { "orca", "orca" } },
-				{ Aircraft = { "a10" } },
-				{ Aircraft = { "a10.gau" } },
-				{ Aircraft = { "orcb" } },
-				{ Aircraft = { "auro" } },
-			},
-			hard = {
-				{ Aircraft = { "orca", "orca", "orca" } },
-				{ Aircraft = { "a10", "a10" } },
-				{ Aircraft = { "a10.gau", "a10.gau" } },
-				{ Aircraft = { "orcb", "orcb" } },
-				{ Aircraft = { "auro", "auro" } },
-			}
-		},
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(13)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		Compositions = AirCompositions.GDI,
 	},
 	AntiTankAir = {
-		Delay = {
-			hard = DateTime.Minutes(15)
-		},
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(16)),
 		ActiveCondition = function()
 			return #USSR.GetActorsByTypes({ "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" }) > 8
 		end,
-		AttackValuePerSecond = {
-			hard = { Min = 35, Max = 35 },
-		},
-		ProducerTypes = { Aircraft = { "afld.gdi" } },
-		Units = {
-			hard = {
-				{ Aircraft = { "orcb", "orcb", "orcb", "orcb", "orcb", "orcb" } },
-			}
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 24, Max = 24 }),
+		Compositions = {
+			{ Aircraft = { "orcb", "orcb", "orcb", "orcb", "orcb", "orcb" } },
 		},
 	}
 }
@@ -123,7 +72,7 @@ WorldLoaded = function()
 	ObjectiveExpelGDI = USSR.AddObjective("Remove the GDI presence.")
 	ObjectiveDestroyOutpost = USSR.AddSecondaryObjective("Destroy GDI outpost to receive reinforcements.")
 
-	if Difficulty == "hard" then
+	if IsHardOrAbove() then
 		NonHardTroopCrawler.Destroy()
 		NonHardOverlord.Destroy()
 		NonHardNukeCannon.Destroy()
@@ -235,8 +184,13 @@ InitGDI = function()
 		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = GDI })
 	end)
 
-	if Difficulty ~= "easy" then
+	if IsNormalOrAbove() then
+		Trigger.AfterDelay(DateTime.Minutes(16), function()
+			DoDisruptorDrop()
+		end)
+	end
 
+	if IsHardOrAbove() then
 		Trigger.AfterDelay(DateTime.Minutes(13), function()
 			if not Carrier1.IsDead then
 				Carrier1.Patrol({ CarrierPatrol1.Location, CarrierPatrol2.Location, CarrierPatrol3.Location, CarrierPatrol2.Location })
@@ -261,32 +215,17 @@ InitGDI = function()
 				produced.Patrol({ CarrierPatrol1.Location, CarrierPatrol2.Location, CarrierPatrol3.Location, CarrierPatrol2.Location })
 			end
 		end)
-
-		Trigger.AfterDelay(DateTime.Minutes(16), function()
-			DoDisruptorDrop()
-		end)
 	end
 end
 
 InitGDIAttacks = function()
 	if not GDIAttacksStarted then
 		GDIAttacksStarted = true
-		Trigger.AfterDelay(Squads.GDIMain1.Delay[Difficulty], function()
-			InitAttackSquad(Squads.GDIMain1, GDI)
-		end)
-
-		Trigger.AfterDelay(Squads.GDIMain2.Delay[Difficulty], function()
-			InitAttackSquad(Squads.GDIMain2, GDI)
-		end)
-
-		Trigger.AfterDelay(Squads.GDIAir.Delay[Difficulty], function()
-			InitAirAttackSquad(Squads.GDIAir, GDI)
-		end)
-
-		if Difficulty == "hard" then
-			Trigger.AfterDelay(Squads.AntiTankAir.Delay[Difficulty], function()
-				InitAirAttackSquad(Squads.AntiTankAir, GDI, USSR, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" })
-			end)
+		InitAttackSquad(Squads.GDIMain1, GDI)
+		InitAttackSquad(Squads.GDIMain2, GDI)
+		InitAirAttackSquad(Squads.GDIAir, GDI)
+		if IsHardOrAbove() then
+			InitAirAttackSquad(Squads.AntiTankAir, GDI, USSR, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" })
 		end
 	end
 end
@@ -408,7 +347,7 @@ end
 DoDisruptorDrop = function()
 	local dropPoints = { DisruptorDropDest1.Location, DisruptorDropDest2.Location }
 
-	if Difficulty == "hard" then
+	if IsVeryHardOrAbove() then
 		table.insert(dropPoints, DisruptorDropDest3.Location)
 		table.insert(dropPoints, DisruptorDropDest4.Location)
 	end

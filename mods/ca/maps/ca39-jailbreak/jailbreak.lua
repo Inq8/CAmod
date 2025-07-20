@@ -2,110 +2,60 @@ CruisersEnabledTime = {
 	easy = DateTime.Minutes(25),
 	normal = DateTime.Minutes(20),
 	hard = DateTime.Minutes(15),
+	vhard = DateTime.Minutes(15),
+	brutal = DateTime.Minutes(15)
 }
 
 CruiserInterval = {
 	easy = DateTime.Minutes(11),
 	normal = DateTime.Minutes(8),
-	hard = DateTime.Minutes(5),
+	hard = DateTime.Minutes(6),
+	vhard = DateTime.Minutes(5),
+	brutal = DateTime.Minutes(4)
 }
 
 ChronoTankInterval = {
 	easy = DateTime.Minutes(7),
 	normal = DateTime.Minutes(6),
 	hard = DateTime.Minutes(3),
+	vhard = DateTime.Minutes(3),
+	brutal = DateTime.Minutes(3)
 }
 
 SuperweaponsEnabledTime = {
 	easy = DateTime.Seconds((60 * 45) + 17),
 	normal = DateTime.Seconds((60 * 30) + 17),
 	hard = DateTime.Seconds((60 * 15) + 17),
+	vhard = DateTime.Seconds((60 * 15) + 17),
+	brutal = DateTime.Seconds((60 * 15) + 17)
 }
 
 Squads = {
 	Main = {
-		Delay = {
-            easy = DateTime.Minutes(6),
-			normal = DateTime.Minutes(4),
-            hard = DateTime.Minutes(2),
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 20, Max = 50, RampDuration = DateTime.Minutes(11) },
-			normal = { Min = 50, Max = 100, RampDuration = DateTime.Minutes(8) },
-			hard = { Min = 80, Max = 160, RampDuration = DateTime.Minutes(5) },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(4)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 40, Max = 80, RampDuration = DateTime.Minutes(9) }),
 		ActiveCondition = function()
 			return HasConyardAcrossRiver()
 		end,
 		FollowLeader = true,
-		ProducerTypes = { Infantry = { "tent" }, Vehicles = { "weap" } },
-		Units = AdjustCompositionsForDifficulty(UnitCompositions.Allied),
+		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Allied),
 		AttackPaths = {
 			{ Path1_1.Location, Path1_2.Location },
 			{ Path2_1.Location, Path2_2.Location },
         },
 	},
 	Air = {
-		Delay = {
-			easy = DateTime.Minutes(11),
-			normal = DateTime.Minutes(8),
-			hard = DateTime.Minutes(5)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 7, Max = 7 },
-			normal = { Min = 21, Max = 21 },
-			hard = { Min = 35, Max = 35 },
-		},
-		ProducerTypes = { Aircraft = { "hpad" } },
-		Units = {
-			easy = {
-				{ Aircraft = { "heli", "heli" } },
-				{ Aircraft = { "pmak" } },
-			},
-			normal = {
-				{ Aircraft = { "heli", "heli", "heli" } },
-				{ Aircraft = { "harr", "harr" } },
-				{ Aircraft = { "pmak", "pmak" } }
-			},
-			hard = {
-				{ Aircraft = { "heli", "heli", "heli", "heli" } },
-				{ Aircraft = { "harr", "harr", "harr" } },
-				{ Aircraft = { "pmak", "pmak", "pmak" } }
-			}
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(8)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		Compositions = AirCompositions.Allied,
 	},
 	Air2 = {
-		Delay = {
-			easy = DateTime.Minutes(13),
-			normal = DateTime.Minutes(10),
-			hard = DateTime.Minutes(7)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 7, Max = 7 },
-			normal = { Min = 14, Max = 14 },
-			hard = { Min = 21, Max = 21 },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(10)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
 		ActiveCondition = function()
 			return not HasConyardAcrossRiver()
 		end,
-		ProducerTypes = { Aircraft = { "hpad" } },
-		Units = {
-			easy = {
-				{ Aircraft = { "heli", "heli" } },
-				{ Aircraft = { "harr" } },
-				{ Aircraft = { "pmak" } },
-			},
-			normal = {
-				{ Aircraft = { "heli", "heli", "heli", "heli" } },
-				{ Aircraft = { "harr", "harr", "harr" } },
-				{ Aircraft = { "pmak", "pmak" } }
-			},
-			hard = {
-				{ Aircraft = { "heli", "heli", "heli", "heli", "heli", "heli" } },
-				{ Aircraft = { "harr", "harr", "harr", "harr", "harr", "harr" } },
-				{ Aircraft = { "pmak", "pmak", "pmak", "pmak" } }
-			}
-		},
+		Compositions = AirCompositions.Allied,
 	}
 }
 
@@ -255,18 +205,16 @@ OncePerFiveSecondChecks = function()
 
 		if not AlliedGroundAttacksStarted and HasConyardAcrossRiver() then
 			AlliedGroundAttacksStarted = true
-			Trigger.AfterDelay(Squads.Main.Delay[Difficulty], function()
 
-				if Difficulty == "hard" then
-					Squads.Main.InitTime = math.max(DateTime.GameTime - DateTime.Minutes(7), 0)
-				elseif Difficulty == "normal" then
-					Squads.Main.InitTime = math.max(DateTime.GameTime - DateTime.Minutes(4), 0)
-				else
-					Squads.Main.InitTime = math.max(DateTime.GameTime - DateTime.Minutes(1), 0)
-				end
+			if IsHardOrAbove() then
+				Squads.Main.InitTimeAdjustment = -DateTime.Minutes(7)
+			elseif Difficulty == "normal" then
+				Squads.Main.InitTimeAdjustment =-DateTime.Minutes(4)
+			else
+				Squads.Main.InitTimeAdjustment = -DateTime.Minutes(1)
+			end
 
-				InitAttackSquad(Squads.Main, Greece)
-			end)
+			InitAttackSquad(Squads.Main, Greece)
 		end
 	end
 end
@@ -288,6 +236,8 @@ InitGreece = function()
 	AutoReplaceHarvesters(Greece)
 	AutoRebuildConyards(Greece)
 	InitAiUpgrades(Greece)
+	InitAirAttackSquad(Squads.Air, Greece)
+	InitAirAttackSquad(Squads.Air2, Greece)
 
 	Utils.Do({ Greece, GreeceNorth }, function(p)
 		local greeceGroundAttackers = p.GetGroundAttackers()
@@ -312,14 +262,6 @@ InitGreece = function()
 
 	Trigger.AfterDelay(CruisersEnabledTime[Difficulty], function()
 		InitCruisers()
-	end)
-
-	Trigger.AfterDelay(Squads.Air.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.Air, Greece)
-	end)
-
-	Trigger.AfterDelay(Squads.Air2.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.Air2, Greece)
 	end)
 end
 
@@ -382,7 +324,7 @@ InitCruisers = function()
 			cruiserCount = 1
 		elseif Difficulty == "normal" then
 			cruiserCount = 2
-		elseif Difficulty == "hard" then
+		elseif IsHardOrAbove() then
 			cruiserCount = 3
 		end
 
@@ -412,9 +354,16 @@ InitChronoTankAttack = function()
 		table.insert(chronoTanksSquad, "ctnk")
 	end
 
-	if Difficulty == "hard" then
+	if IsHardOrAbove() then
 		table.insert(chronoTanksSquad, "ctnk")
-		table.insert(chronoTanksSquad, "ctnk")
+
+		if IsVeryHardOrAbove() then
+			table.insert(chronoTanksSquad, "ctnk")
+
+			if Difficulty == "brutal" then
+				table.insert(chronoTanksSquad, "ctnk")
+			end
+		end
 	end
 
 	local chronoTanks = Reinforcements.Reinforce(Greece, chronoTanksSquad, { ChronoTankSpawn.Location, ChronoTankRally.Location })

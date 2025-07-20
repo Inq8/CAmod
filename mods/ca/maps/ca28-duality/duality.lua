@@ -7,6 +7,13 @@ ScrinReinforcementInterval = {
 	easy = DateTime.Seconds(40),
 	normal = DateTime.Seconds(30),
 	hard = DateTime.Seconds(20),
+	vhard = DateTime.Seconds(20),
+	brutal = DateTime.Seconds(20)
+}
+
+ScrinWaveInterval = {
+	vhard = DateTime.Seconds(80),
+	brutal = DateTime.Seconds(40)
 }
 
 WorldLoaded = function()
@@ -57,9 +64,15 @@ WorldLoaded = function()
 
 	UpdateObjectiveText()
 
-	if Difficulty == "hard" then
+	if IsHardOrAbove() then
 		HealCrate2.Destroy()
 		HealCrate3.Destroy()
+
+		if IsVeryHardOrAbove() then
+			Trigger.AfterDelay(DateTime.Seconds(30), function()
+				InitWormholes()
+			end)
+		end
 	end
 
 	if Difficulty == "easy" then
@@ -159,7 +172,7 @@ ActivateProdigy = function()
 		Prodigy.GrantCondition("activated")
 		Beacon.New(GDI, Prodigy.CenterPosition)
 
-		if Difficulty == "hard" then
+		if IsHardOrAbove() then
 			UpdateProdigyTarget()
 		else
 			Prodigy.Patrol(ProdigyPatrolPath)
@@ -242,6 +255,10 @@ TanyaDeathTrigger = function(tanya)
 end
 
 InitWormholes = function()
+	if WormholesActive then
+		return
+	end
+	WormholesActive = true
 	Actor.Create("wormhole", true, { Owner = Scrin, Location = WormholeSpawn1.Location })
 	Actor.Create("wormhole", true, { Owner = Scrin, Location = WormholeSpawn2.Location })
 	Actor.Create("wormhole", true, { Owner = Scrin, Location = WormholeSpawn3.Location })
@@ -271,5 +288,11 @@ ScrinReinforcements = function()
 		end)
 	end)
 
-	Trigger.AfterDelay(ScrinReinforcementInterval[Difficulty], ScrinReinforcements)
+	local timeUntilNext = ScrinReinforcementInterval[Difficulty]
+
+	if IsVeryHardOrAbove() and not GDI.IsObjectiveCompleted(ObjectiveDestroyTiberiumStores) then
+		timeUntilNext = ScrinWaveInterval[Difficulty]
+	end
+
+	Trigger.AfterDelay(timeUntilNext, ScrinReinforcements)
 end

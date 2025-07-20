@@ -7,7 +7,7 @@ GreeceMainAttackPaths = {
 
 CruiserPatrolPath = { CruiserPatrol1.Location, CruiserPatrol2.Location, CruiserPatrol3.Location, CruiserPatrol4.Location, CruiserPatrol5.Location, CruiserPatrol6.Location, CruiserPatrol7.Location, CruiserPatrol8.Location, CruiserPatrol7.Location, CruiserPatrol6.Location, CruiserPatrol5.Location, CruiserPatrol4.Location, CruiserPatrol3.Location, CruiserPatrol2.Location }
 
-TraitorUnits = {
+TraitorCompositions = {
 	easy = {
 		{ Infantry = { "e3", "e1", "e1", "e1", "e3", "e1" }, Vehicles = { "btr" }, MaxTime = DateTime.Minutes(14) },
 		{ Infantry = { "e3", "e1", "e1", "e1", "e3", "e1", "shok" }, Vehicles = { "btr", "katy" }, MinTime = DateTime.Minutes(14) },
@@ -20,72 +20,45 @@ TraitorUnits = {
 		{ Infantry = { "e3", "e1", "e1", "e1", "e3", "e1" }, Vehicles = { "3tnk", "btr" }, MaxTime = DateTime.Minutes(10) },
 		{ Infantry = { "e3", "e1", "e1", "e1", "e3", "e1", "shok" }, Vehicles = { "3tnk", "v2rl", "ttra" }, MinTime = DateTime.Minutes(10) },
 	},
+	vhard = {
+		{ Infantry = { "e3", "e1", "e1", "e1", "e3", "e1" }, Vehicles = { "4tnk", "btr" }, MaxTime = DateTime.Minutes(9) },
+		{ Infantry = { "e3", "e1", "e1", "e1", "e3", "e1", "shok" }, Vehicles = { "4tnk", "v2rl", "ttra" }, MinTime = DateTime.Minutes(9) },
+	},
+	brutal = {
+		{ Infantry = { "e3", "e1", "e1", "e1", "e3", "e1" }, Vehicles = { "4tnk", "btr" }, MaxTime = DateTime.Minutes(8) },
+		{ Infantry = { "e3", "e1", "e1", "e1", "e3", "e1", "ttrp" }, Vehicles = { "4tnk", "v3rl", "ttra" }, MinTime = DateTime.Minutes(8) },
+	}
 }
 
 ReinforcementsDelay = {
 	easy = DateTime.Minutes(3),
 	normal = DateTime.Minutes(7),
-	hard = DateTime.Minutes(11),
+	hard = DateTime.Minutes(10),
+	vhard = DateTime.Minutes(11),
+	brutal = DateTime.Minutes(12)
 }
 
 Squads = {
 	Main = {
-		Delay = {
-			easy = DateTime.Seconds(270),
-			normal = DateTime.Seconds(210),
-			hard = DateTime.Seconds(150)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 15, Max = 35, RampDuration = DateTime.Minutes(16) },
-			normal = { Min = 34, Max = 68, RampDuration = DateTime.Minutes(14) },
-			hard = { Min = 52, Max = 105, RampDuration = DateTime.Minutes(12) },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Seconds(210)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 28, Max = 55, RampDuration = DateTime.Minutes(15) }),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { AlliedSouthBarracks }, Vehicles = { AlliedSouthFactory } },
-		Units = AdjustCompositionsForDifficulty(UnitCompositions.Allied),
+		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Allied),
 		AttackPaths = GreeceMainAttackPaths,
 	},
 	Traitor = {
-		Delay = {
-			easy = DateTime.Minutes(5),
-			normal = DateTime.Minutes(4),
-			hard = DateTime.Minutes(3)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 5, Max = 15, RampDuration = DateTime.Minutes(16) },
-			normal = { Min = 16, Max = 32, RampDuration = DateTime.Minutes(14) },
-			hard = { Min = 28, Max = 55, RampDuration = DateTime.Minutes(12) },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(4)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 25, RampDuration = DateTime.Minutes(15) }),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { TraitorBarracks }, Vehicles = { TraitorFactory } },
-		Units = TraitorUnits,
+		Compositions = TraitorCompositions,
 		AttackPaths = GreeceMainAttackPaths,
 	},
 	Air = {
-		Delay = {
-			easy = DateTime.Minutes(13),
-			normal = DateTime.Minutes(12),
-			hard = DateTime.Minutes(11)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 7, Max = 7 },
-			normal = { Min = 14, Max = 14 },
-			hard = { Min = 21, Max = 21 },
-		},
-		ProducerTypes = { Aircraft = { "hpad" } },
-		Units = {
-			easy = {
-				{ Aircraft = { "heli" } }
-			},
-			normal = {
-				{ Aircraft = { "heli", "heli" } },
-				{ Aircraft = { "harr" } }
-			},
-			hard = {
-				{ Aircraft = { "heli", "heli", "heli" } },
-				{ Aircraft = { "harr", "harr" } }
-			}
-		},
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(13)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		Compositions = AirCompositions.Allied,
 	}
 }
 
@@ -112,12 +85,9 @@ WorldLoaded = function()
 	AbandonedHalo.ReturnToBase(AbandonedHelipad)
 	SetupRefAndSilosCaptureCredits(Traitor)
 
-	if Difficulty == "hard" then
+	if IsHardOrAbove() then
 		Cruiser.Patrol(CruiserPatrolPath)
 		AbandonedAirfield.Destroy()
-		--local traitorConyardLocation = TraitorConyard.Location
-		--TraitorConyard.Destroy()
-		--Actor.Create("weap", true, { Owner = Traitor, Location = traitorConyardLocation })
 	else
 		Cruiser.Destroy()
 		HardOnlyMGG.Destroy()
@@ -135,7 +105,7 @@ WorldLoaded = function()
 		if newOwner == USSR then
 			AbandonedHalo.Owner = USSR
 
-			if Difficulty ~= "hard" then
+			if IsNormalOrBelow() then
 				Trigger.AfterDelay(DateTime.Seconds(5), function()
 					local islandFlare = Actor.Create("flare", true, { Owner = USSR, Location = ReinforcementsDestination.Location })
 					Trigger.AfterDelay(DateTime.Seconds(10), islandFlare.Destroy)
@@ -360,7 +330,7 @@ AbandonedBaseDiscovered = function()
 		Media.PlaySpeechNotification(USSR, "ReinforcementsArrived")
 		Beacon.New(USSR, ReinforcementsDestination.CenterPosition)
 		local reinforcements = { "4tnk", "4tnk", "v3rl", "v3rl", "btr" }
-		if Difficulty == "hard" then
+		if IsHardOrAbove() then
 			reinforcements = { "4tnk", "4tnk", "v2rl", "btr" }
 		end
 		Reinforcements.Reinforce(USSR, reinforcements, { ReinforcementsSpawn.Location, ReinforcementsDestination.Location }, 75)
@@ -389,16 +359,8 @@ end
 InitAlliedAttacks = function()
 	if not AttacksStarted then
 		AttacksStarted = true
-		Trigger.AfterDelay(Squads.Main.Delay[Difficulty], function()
-			InitAttackSquad(Squads.Main, Greece)
-		end)
-
-		Trigger.AfterDelay(Squads.Traitor.Delay[Difficulty], function()
-			InitAttackSquad(Squads.Traitor, Traitor)
-		end)
-
-		Trigger.AfterDelay(Squads.Air.Delay[Difficulty], function()
-			InitAirAttackSquad(Squads.Air, Greece)
-		end)
+		InitAttackSquad(Squads.Main, Greece)
+		InitAttackSquad(Squads.Traitor, Traitor)
+		InitAirAttackSquad(Squads.Air, Greece)
 	end
 end

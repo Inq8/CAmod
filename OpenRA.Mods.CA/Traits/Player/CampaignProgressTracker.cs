@@ -48,6 +48,11 @@ namespace OpenRA.Mods.CA.Traits
 			var difficulty = player.World.WorldActor.TraitsImplementing<ScriptLobbyDropdown>()
 				.FirstOrDefault(sld => sld.Info.ID == "difficulty");
 
+			var respawnDropdown = player.World.WorldActor.TraitsImplementing<ScriptLobbyDropdown>()
+				.FirstOrDefault(sld => sld.Info.ID == "respawn");
+
+			bool? respawnEnabled = respawnDropdown != null ? respawnDropdown.Value == "enabled" : null;
+
 			var campaignProgress = GetCampaignProgress();
 			campaignProgress.TryGetValue(missionTitle, out var existingMissionResult);
 
@@ -74,7 +79,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			var speed = FluentProvider.GetMessage(player.World.GameSpeed.Name);
 
-			var result = new MissionVictoryResult()
+			campaignProgress[missionTitle] = new MissionVictoryResult()
 			{
 				Uid = player.World.Map.Uid,
 				Version = Game.ModData.Manifest.Metadata.Version,
@@ -83,14 +88,14 @@ namespace OpenRA.Mods.CA.Traits
 				Time = WidgetUtils.FormatTime(player.World.WorldTick, player.World.Timestep),
 				Ticks = player.World.WorldTick,
 				DateCompleted = DateTime.Now,
-				Speed = speed
+				Speed = speed,
+				RespawnEnabled = respawnEnabled
 			};
 
-			campaignProgress[missionTitle] = result;
 			SaveCampaignProgress(campaignProgress);
 		}
 
-		void INotifyWinStateChanged.OnPlayerLost(Player player)	{ }
+		void INotifyWinStateChanged.OnPlayerLost(Player player) { }
 
 		void IResolveOrder.ResolveOrder(Actor self, Order order)
 		{
@@ -209,5 +214,6 @@ namespace OpenRA.Mods.CA.Traits
 		public int Ticks;
 		public DateTime DateCompleted;
 		public string Speed;
+		public bool? RespawnEnabled;
 	}
 }

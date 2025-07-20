@@ -26,6 +26,8 @@ TibTrucks = {
 			easy = DateTime.Minutes(6),
 			normal = DateTime.Minutes(5),
 			hard = DateTime.Minutes(4),
+			vhard = DateTime.Minutes(4),
+			brutal = DateTime.Minutes(4),
 		},
 		Path = { ETibTruckPath1.Location, ETibTruckPath2.Location, ETibTruckPath3.Location, ETibTruckPath4.Location },
 		ObjectiveText = "Prevent first enriched Tiberium delivery\nfrom reaching Yuri.",
@@ -37,6 +39,8 @@ TibTrucks = {
 			easy = DateTime.Minutes(15),
 			normal = DateTime.Minutes(12),
 			hard = DateTime.Minutes(10),
+			vhard = DateTime.Minutes(10),
+			brutal = DateTime.Minutes(10),
 		},
 		Path = { NTibTruckPath1.Location, NTibTruckPath2.Location, NTibTruckPath3.Location, NTibTruckPath4.Location, NTibTruckPath5.Location, NTibTruckPath6.Location, NTibTruckPath7.Location, NTibTruckPath8.Location, NTibTruckPath9.Location, NTibTruckPath10.Location },
 		ObjectiveText = "Prevent second enriched Tiberium delivery\nfrom reaching Yuri.",
@@ -48,6 +52,8 @@ TibTrucks = {
 			easy = DateTime.Minutes(25),
 			normal = DateTime.Minutes(20),
 			hard = DateTime.Minutes(16),
+			vhard = DateTime.Minutes(16),
+			brutal = DateTime.Minutes(16),
 		},
 		Path = { STibTruckPath1.Location, STibTruckPath2.Location, STibTruckPath3.Location, STibTruckPath4.Location, STibTruckPath5.Location, STibTruckPath6.Location },
 		ObjectiveText = "Prevent third enriched Tiberium delivery\nfrom reaching Yuri.",
@@ -58,6 +64,29 @@ TibTrucks = {
 TibFacilities = { NTibFacility, STibFacility, ETibFacility }
 
 HindPatrolPath = { HindPatrol1.Location, HindPatrol2.Location, HindPatrol3.Location, HindPatrol4.Location, HindPatrol5.Location, HindPatrol6.Location, HindPatrol7.Location, HindPatrol8.Location, HindPatrol9.Location }
+
+BombsEnabledTime = {
+	vhard = DateTime.Minutes(20),
+	brutal = DateTime.Minutes(10),
+}
+
+Squads = {
+	Main = {
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(6)),
+		AttackValuePerSecond = {
+			vhard = { Min = 5, Max = 15 },
+			brutal = { Min = 10, Max = 20 },
+		},
+		FollowLeader = true,
+		ProducerActors = { Infantry = { NorthEastBarracks, NorthWestBarracks, SouthEastBarracks, SouthWestBarracks, CentralBarracks } },
+		Compositions = AdjustCompositionsForDifficulty({
+			{ Infantry = { "e3", "e1", "e1", "e1", "e1", "e2", "brut" } },
+			{ Infantry = { "e3", "e2", "tplr", "e1", "e1", "e1", "e1" } },
+			{ Infantry = { "e3", "e2", "enli", "e1", "e1", "e1", "e1" }, MinTime = DateTime.Minutes(16) },
+			{ Infantry = { "e3", "e2", "rmbc", "e1", "e1", "e1", "e1" }, MinTime = DateTime.Minutes(20) },
+		}),
+	},
+}
 
 WorldLoaded = function()
 	Scrin = Player.GetPlayer("Scrin")
@@ -76,11 +105,9 @@ WorldLoaded = function()
 		ObjectiveMastermindSurvives = Scrin.AddObjective("Mastermind must survive.")
 	end
 
-	if Difficulty ~= "hard" then
-		Mastermind.GrantCondition("difficulty-" .. Difficulty)
-	end
+	Mastermind.GrantCondition("difficulty-" .. Difficulty)
 
-	if Difficulty == "hard" then
+	if IsHardOrAbove() then
 		CapturedCreditsAmount = 1000
 	elseif Difficulty == "normal" then
 		CapturedCreditsAmount = 1250
@@ -276,6 +303,10 @@ InitUSSR = function()
 	SetupRefAndSilosCaptureCredits(USSR)
 	InitAiUpgrades(USSR, 0)
 
+	if IsVeryHardOrAbove() then
+		InitAttackSquad(Squads.Main, USSR)
+	end
+
 	Actor.Create("ai.unlimited.power", true, { Owner = USSR })
 	Actor.Create("cyborgspeed.upgrade", true, { Owner = USSR })
 	Actor.Create("cyborgarmor.upgrade", true, { Owner = USSR })
@@ -303,6 +334,14 @@ InitUSSR = function()
 			end
 		end)
 	end)
+
+	if IsVeryHardOrAbove() then
+		Trigger.AfterDelay(BombsEnabledTime[Difficulty], function()
+			if not YuriHQ.IsDead then
+				YuriHQ.GrantCondition("bombs-enabled")
+			end
+		end)
+	end
 end
 
 RespawnMastermind = function()
@@ -323,7 +362,7 @@ RespawnMastermind = function()
 			Mastermind = Reinforcements.Reinforce(Scrin, { "mast" }, { PlayerStart.Location }, 1)[1]
 			Mastermind.Scatter()
 
-			if Difficulty ~= "hard" then
+			if IsNormalOrBelow() then
 				Mastermind.GrantCondition("difficulty-" .. Difficulty)
 			end
 

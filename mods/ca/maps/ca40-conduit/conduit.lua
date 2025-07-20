@@ -1,36 +1,37 @@
 TimeLimit = {
 	normal = DateTime.Minutes(75),
 	hard = DateTime.Minutes(45),
+	vhard = DateTime.Minutes(45),
+	brutal = DateTime.Minutes(45)
 }
 
 CyborgSquad = { "rmbc", "rmbc", "enli", "tplr", "tplr", "tplr", "reap", "n1c", "n1c", "n1c", "n1c", "n1c", "n3c", "n3c" }
 CyborgSquadInterval = {
 	normal = DateTime.Minutes(2),
 	hard = DateTime.Minutes(1),
+	vhard = DateTime.Minutes(1),
+	brutal = DateTime.Minutes(1)
 }
 
 ClusterMissileEnabledTime = {
 	easy = DateTime.Seconds((60 * 16) + 37),
 	normal = DateTime.Seconds((60 * 12) + 37),
-	hard = DateTime.Seconds((60 * 8) + 37),
+	hard = DateTime.Seconds((60 * 10) + 37),
+	vhard = DateTime.Seconds((60 * 8) + 37),
+	brutal = DateTime.Seconds((60 * 8) + 37)
 }
 
 AdjustedNodCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Nod)
 
 Squads = {
 	Main1 = {
-		AttackValuePerSecond = {
-			easy = { Min = 10, Max = 25 },
-			normal = { Min = 25, Max = 50 },
-			hard = { Min = 40, Max = 80 },
-		},
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 }),
 		ActiveCondition = function()
 			return NodEastOrWestNeutralized()
 		end,
 		FollowLeader = true,
 		DispatchDelay = DateTime.Seconds(15),
-		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
-		Units = AdjustedNodCompositions,
+		Compositions = AdjustedNodCompositions,
 		AttackPaths = {
 			{ NodRally1.Location },
 			{ NodRally2.Location },
@@ -41,20 +42,11 @@ Squads = {
 		},
 	},
 	Main2 = {
-		Delay = {
-			easy = DateTime.Minutes(5),
-			normal = DateTime.Minutes(4),
-			hard = DateTime.Minutes(3),
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 10, Max = 25 },
-			normal = { Min = 25, Max = 50 },
-			hard = { Min = 40, Max = 80 },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(4)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 }),
 		FollowLeader = true,
 		DispatchDelay = DateTime.Seconds(15),
-		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
-		Units = AdjustedNodCompositions,
+		Compositions = AdjustedNodCompositions,
 		AttackPaths = {
 			{ NodRally4.Location },
 			{ NodRally5.Location },
@@ -62,20 +54,11 @@ Squads = {
 		},
 	},
 	Main3 = {
-		Delay = {
-			easy = DateTime.Minutes(8),
-			normal = DateTime.Minutes(6),
-			hard = DateTime.Minutes(4),
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 10, Max = 25 },
-			normal = { Min = 25, Max = 50 },
-			hard = { Min = 40, Max = 80 },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(6)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 }),
 		FollowLeader = true,
 		DispatchDelay = DateTime.Seconds(15),
-		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
-		Units = AdjustedNodCompositions,
+		Compositions = AdjustedNodCompositions,
 		AttackPaths = {
 			{ NodRally1.Location },
 			{ NodRally2.Location },
@@ -84,50 +67,18 @@ Squads = {
 		},
 	},
 	Air = {
-		Delay = {
-			easy = DateTime.Minutes(13),
-			normal = DateTime.Minutes(12),
-			hard = DateTime.Minutes(11)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 7, Max = 7 },
-			normal = { Min = 14, Max = 14 },
-			hard = { Min = 21, Max = 21 },
-		},
-		ProducerTypes = { Aircraft = { "hpad.td" } },
-		Units = {
-			easy = {
-				{ Aircraft = { "apch" } }
-			},
-			normal = {
-				{ Aircraft = { "apch", "apch" } },
-				{ Aircraft = { "venm", "venm" } },
-				{ Aircraft = { "scrn" } },
-				{ Aircraft = { "rah" } }
-			},
-			hard = {
-				{ Aircraft = { "apch", "apch", "apch" } },
-				{ Aircraft = { "venm", "venm", "venm" } },
-				{ Aircraft = { "scrn", "scrn" } },
-				{ Aircraft = { "rah", "rah" } }
-			}
-		},
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(13)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		Compositions = AirCompositions.Nod,
 	},
 	AntiTankAir = {
-		Delay = {
-			hard = DateTime.Minutes(15)
-		},
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(15)),
 		ActiveCondition = function()
 			return #USSR.GetActorsByTypes({ "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" }) > 8
 		end,
-		AttackValuePerSecond = {
-			hard = { Min = 35, Max = 35 },
-		},
-		ProducerTypes = { Aircraft = { "hpad.td" } },
-		Units = {
-			hard = {
-				{ Aircraft = { "scrn", "scrn", "scrn", "scrn", "scrn", "scrn" } },
-			}
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 24, Max = 24 }),
+		Compositions = {
+			{ Aircraft = { "scrn", "scrn", "scrn", "scrn", "scrn", "scrn" } },
 		},
 	}
 }
@@ -146,7 +97,7 @@ WorldLoaded = function()
 		TimerTicks = TimeLimit[Difficulty]
 	end
 
-	if Difficulty ~= "hard" then
+	if IsNormalOrBelow() then
 		ICBMSub1.Destroy()
 
 		if Difficulty == "easy" then
@@ -248,22 +199,12 @@ InitNod = function()
 		end)
 	end)
 
-	Trigger.AfterDelay(Squads.Main2.Delay[Difficulty], function()
-		InitAttackSquad(Squads.Main2, Nod2)
-	end)
+	InitAttackSquad(Squads.Main2, Nod2)
+	InitAttackSquad(Squads.Main3, Nod3)
+	InitAirAttackSquad(Squads.Air, Nod1)
 
-	Trigger.AfterDelay(Squads.Main3.Delay[Difficulty], function()
-		InitAttackSquad(Squads.Main3, Nod3)
-	end)
-
-	Trigger.AfterDelay(Squads.Air.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.Air, Nod1)
-	end)
-
-	if Difficulty == "hard" then
-		Trigger.AfterDelay(Squads.AntiTankAir.Delay[Difficulty], function()
-			InitAirAttackSquad(Squads.AntiTankAir, Nod1, USSR, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" })
-		end)
+	if IsHardOrAbove() then
+		InitAirAttackSquad(Squads.AntiTankAir, Nod1, USSR, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" })
 	end
 
 	Trigger.AfterDelay(ClusterMissileEnabledTime[Difficulty], function()
@@ -309,7 +250,7 @@ SetupSubterraneanStrikes = function()
 	if Difficulty ~= "easy" then
 		table.insert(subStrike1Spawns, SubStrike1_3.Location)
 
-		if Difficulty == "hard" then
+		if IsHardOrAbove() then
 			subStrike1Spawns = Utils.Concat(subStrike1Spawns, { SubStrike1_2.Location, SubStrike1_4.Location })
 		end
 	end
@@ -319,7 +260,7 @@ SetupSubterraneanStrikes = function()
 	if Difficulty ~= "easy" then
 		table.insert(subStrike2Spawns, SubStrike2_3.Location)
 
-		if Difficulty == "hard" then
+		if IsHardOrAbove() then
 			subStrike2Spawns = Utils.Concat(subStrike2Spawns, { SubStrike2_2.Location, SubStrike2_4.Location })
 		end
 	end
@@ -329,7 +270,7 @@ SetupSubterraneanStrikes = function()
 	if Difficulty ~= "easy" then
 		subStrike3Spawns = Utils.Concat(subStrike3Spawns, { SubStrike3_5.Location, SubStrike3_8.Location })
 
-		if Difficulty == "hard" then
+		if IsHardOrAbove() then
 			subStrike3Spawns = Utils.Concat(subStrike3Spawns, { SubStrike3_1.Location, SubStrike3_3.Location, SubStrike3_4.Location, SubStrike3_6.Location, SubStrike3_7.Location, SubStrike3_9.Location })
 		end
 	end

@@ -1,7 +1,9 @@
 IonCannonEnabledTime = {
 	easy = DateTime.Seconds((60 * 40) + 48),
 	normal = DateTime.Seconds((60 * 25) + 48),
-	hard = DateTime.Seconds((60 * 10) + 48),
+	hard = DateTime.Seconds((60 * 15) + 48),
+	vhard = DateTime.Seconds((60 * 10) + 48),
+	brutal = DateTime.Seconds((60 * 10) + 48)
 }
 
 AdjustedGDICompositions = AdjustCompositionsForDifficulty(UnitCompositions.GDI)
@@ -9,89 +11,38 @@ AdjustedGDICompositions = AdjustCompositionsForDifficulty(UnitCompositions.GDI)
 Squads = {
 	Main = {
 		InitTimeAdjustment = -DateTime.Minutes(3),
-		Delay = {
-			easy = DateTime.Minutes(7),
-			normal = DateTime.Minutes(5),
-			hard = DateTime.Minutes(3),
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 12, Max = 25 },
-			normal = { Min = 25, Max = 50 },
-			hard = { Min = 40, Max = 80 },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(5)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 }),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { GDIBarracks1 }, Vehicles = { GDIFactory1 } },
-		ProducerTypes = { Infantry = { "tent" }, Vehicles = { "weap" } },
-		Units = AdjustedGDICompositions,
+		Compositions = AdjustedGDICompositions,
 		AttackPaths = {
 			-- set on init
 		},
 	},
 	Forward = {
 		InitTimeAdjustment = -DateTime.Minutes(2),
-		Delay = {
-			easy = DateTime.Minutes(4),
-			normal = DateTime.Minutes(3),
-			hard = DateTime.Minutes(2),
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 12, Max = 25 },
-			normal = { Min = 25, Max = 50 },
-			hard = { Min = 40, Max = 80 },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(3)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 }),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { GDIBarracks2 }, Vehicles = { GDIFactory2 } },
-		ProducerTypes = { Infantry = { "tent" }, Vehicles = { "weap" } },
-		Units = AdjustedGDICompositions,
+		Compositions = AdjustedGDICompositions,
 		AttackPaths = {
 			-- set on init
 		},
 	},
 	GDIAir = {
-		Delay = {
-			easy = DateTime.Minutes(13),
-			normal = DateTime.Minutes(12),
-			hard = DateTime.Minutes(11)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 7, Max = 7 },
-			normal = { Min = 14, Max = 14 },
-			hard = { Min = 21, Max = 21 },
-		},
-		ProducerTypes = { Aircraft = { "afld.gdi", "hpad.td" } },
-		Units = {
-			easy = {
-				{ Aircraft = { "orca" } },
-				{ Aircraft = { "orcb" } },
-			},
-			normal = {
-				{ Aircraft = { "orca", "orca" } },
-				{ Aircraft = { "a10" } },
-				{ Aircraft = { "a10.gau" } },
-				{ Aircraft = { "orcb" } },
-				{ Aircraft = { "auro" } },
-			},
-			hard = {
-				{ Aircraft = { "orca", "orca", "orca" } },
-				{ Aircraft = { "a10", "a10" } },
-				{ Aircraft = { "a10.gau", "a10.gau" } },
-				{ Aircraft = { "orcb", "orcb" } },
-				{ Aircraft = { "auro", "auro" } },
-			}
-		},
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(13)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		Compositions = AirCompositions.GDI,
 	},
 	AntiCyborgAir = {
-		Delay = {
-			hard = DateTime.Minutes(7)
-		},
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(8)),
 		ActiveCondition = function()
 			return #Nod.GetActorsByTypes({ "rmbc", "enli", "reap", "avtr" }) > 16
 		end,
-		AttackValuePerSecond = {
-			hard = { Min = 35, Max = 35 },
-		},
-		ProducerTypes = { Aircraft = { "afld.gdi", "hpad.td" } },
-		Units = {
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 24, Max = 24 }),
+		Compositions = {
 			hard = {
 				{ Aircraft = { "orcb", "orcb", "orcb", "orcb", "orcb", "orcb" } },
 			}
@@ -285,7 +236,7 @@ InitWestAttackers = function()
 					Trigger.AfterDelay(DateTime.Minutes(1), function()
 						if not a.IsDead then
 							a.AttackMove(EastRally4.Location)
-							if Difficulty == "hard" then
+							if IsHardOrAbove() then
 								Trigger.AfterDelay(DateTime.Minutes(1), function()
 									if not a.IsDead then
 										a.Hunt()
@@ -350,7 +301,7 @@ InitEastAttackers = function()
 					Trigger.AfterDelay(DateTime.Minutes(1), function()
 						if not a.IsDead then
 							a.AttackMove(WestRally1.Location)
-							if Difficulty == "hard" then
+							if IsHardOrAbove() then
 								Trigger.AfterDelay(DateTime.Minutes(1), function()
 									if not a.IsDead then
 										a.Hunt()
@@ -386,7 +337,7 @@ FlipEastBase = function()
 			end
 		end)
 
-		if Difficulty ~= "easy" then
+		if IsNormalOrAbove() then
 			Trigger.AfterDelay(DateTime.Seconds(15), function()
 				InitEastAttackers()
 			end)
@@ -408,7 +359,7 @@ FlipWestBase = function()
 			end
 		end)
 
-		if Difficulty ~= "easy" then
+		if IsNormalOrAbove() then
 			Trigger.AfterDelay(DateTime.Seconds(15), function()
 				InitWestAttackers()
 			end)
@@ -417,21 +368,11 @@ FlipWestBase = function()
 end
 
 InitGDIAttacks = function()
-	Trigger.AfterDelay(Squads.Main.Delay[Difficulty], function()
-		InitAttackSquad(Squads.Main, GDI)
-	end)
+	InitAttackSquad(Squads.Main, GDI)
+	InitAttackSquad(Squads.Forward, GDI)
+	InitAirAttackSquad(Squads.GDIAir, GDI)
 
-	Trigger.AfterDelay(Squads.Forward.Delay[Difficulty], function()
-		InitAttackSquad(Squads.Forward, GDI)
-	end)
-
-	Trigger.AfterDelay(Squads.GDIAir.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.GDIAir, GDI)
-	end)
-
-	if Difficulty == "hard" then
-		Trigger.AfterDelay(Squads.AntiCyborgAir.Delay[Difficulty], function()
-			InitAirAttackSquad(Squads.AntiCyborgAir, GDI, Nod, { "rmbc", "enli", "reap", "avtr" })
-		end)
+	if IsHardOrAbove() then
+		InitAirAttackSquad(Squads.AntiCyborgAir, GDI, Nod, { "rmbc", "enli", "reap", "avtr" })
 	end
 end

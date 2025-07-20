@@ -22,15 +22,6 @@ World:
 		Briefing: We have located the one known as Yuri. Cloistered and protected by his cybernetic and genetically engineered slaves, he has been using an enriched form of ichor to empower his already considerable psionic powers.\n\nHe must be stopped, but kept alive so that we may learn more of his experiments.\n\nWe believe the enriched ichor will be similarly effective at increasing the power of our Masterminds. To test this theory, capture Yuri's enrichment facilities. The enriched ichor will be consumed by the Mastermind who will then be capable of protecting your other units against Yuri's influence.\n\nOnce all of the available enriched ichor has been consumed, use whatever forces you have remaining, along with any you have enslaved, to assault and capture Yuri's command center.
 	MapOptions:
 		ShortGameCheckboxEnabled: False
-	ScriptLobbyDropdown@DIFFICULTY:
-		ID: difficulty
-		Label: dropdown-difficulty.label
-		Description: dropdown-difficulty.description
-		Values:
-			easy: options-difficulty.easy
-			normal: options-difficulty.normal
-			hard: options-difficulty.hard
-		Default: normal
 	ScriptLobbyDropdown@RESPAWN:
 		ID: respawn
 		Label: Respawns
@@ -62,10 +53,7 @@ Player:
 		TargetTypes: YuriMindControlImmune
 
 ^DifficultyModifiers:
-	ExternalCondition@NORMAL:
-		Condition: difficulty-normal
-	ExternalCondition@EASY:
-		Condition: difficulty-easy
+	Inherits@ActorDifficultyConditions: ^ActorDifficultyConditions
 	DamageMultiplier@EASY:
 		Modifier: 60
 		RequiresCondition: difficulty-easy
@@ -141,6 +129,18 @@ camera.resourcescan:
 
 MISS:
 	Inherits@AUTOTARGET: ^AutoTargetAll
+	Inherits@ChaosBombsPower: ^ChaosBombsPower
+	Inherits@MutaBombPower: ^MutaBombPower
+	AirstrikePowerCA@MutaBomb:
+		-Prerequisites:
+		-PauseOnCondition:
+		RequiresCondition: bombs-enabled
+	AirstrikePowerCA@ChaosBombs:
+		-Prerequisites:
+		-PauseOnCondition:
+		RequiresCondition: bombs-enabled
+	ExternalCondition@BombsEnabled:
+		Condition: bombs-enabled
 	Tooltip:
 		Name: Yuri's Command Center
 	WithRangeCircle@0:

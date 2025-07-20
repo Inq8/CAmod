@@ -8,15 +8,6 @@ World:
 		Briefing: The Allies are now gripped by fear and suspicion. We must seize this opportunity to further destabilize their uneasy alliance with GDI.\n\nVery recently GDI launched one of their orbital weapons platforms. Both groups are being cautious about what information they give each other. The Allies were only partially informed and are predictably concerned, given recent events.\n\nLet us turn their fear into anger. Take control of GDI's Ion Cannon control systems and use the weapon against the Allies.
 	MapOptions:
 		ShortGameCheckboxEnabled: False
-	ScriptLobbyDropdown@DIFFICULTY:
-		ID: difficulty
-		Label: dropdown-difficulty.label
-		Description: dropdown-difficulty.description
-		Values:
-			easy: options-difficulty.easy
-			normal: options-difficulty.normal
-			hard: options-difficulty.hard
-		Default: normal
 	ScriptLobbyDropdown@RESPAWN:
 		ID: respawn
 		Label: Respawns
@@ -119,10 +110,7 @@ GDRN:
 # Difficulty adjustments for Stealth Tank / Commando / Hackers
 
 ^DifficultyModifiers:
-	ExternalCondition@NORMAL:
-		Condition: difficulty-normal
-	ExternalCondition@EASY:
-		Condition: difficulty-easy
+	Inherits@ActorDifficultyConditions: ^ActorDifficultyConditions
 	DamageMultiplier@NORMAL:
 		Modifier: 80
 		RequiresCondition: difficulty-normal

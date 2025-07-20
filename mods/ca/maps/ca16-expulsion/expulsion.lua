@@ -17,91 +17,52 @@ GDINorthEastAttackPaths = {
 
 EmpMissileEnabledTime = {
 	normal = DateTime.Minutes(20),
-	hard = DateTime.Minutes(10)
+	hard = DateTime.Minutes(10),
+	vhard = DateTime.Minutes(10),
+	brutal = DateTime.Minutes(10)
 }
 
 Squads = {
 	GDIMain = {
-		Delay = {
-			easy = DateTime.Seconds(330),
-			normal = DateTime.Seconds(210),
-			hard = DateTime.Seconds(90)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 8, Max = 35, RampDuration = DateTime.Minutes(20) },
-			normal = { Min = 20, Max = 60, RampDuration = DateTime.Minutes(20) },
-			hard = { Min = 30, Max = 100, RampDuration = DateTime.Minutes(20) },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Seconds(210)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 24, Max = 48 }),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { GDIMainBarracks }, Vehicles = { GDIFactory } },
-		Units = AdjustCompositionsForDifficulty(UnitCompositions.GDI),
+		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.GDI),
 		AttackPaths = GDIMainAttackPaths,
 	},
 	GDISouth = {
-		Delay = {
-			easy = DateTime.Minutes(10),
-			normal = DateTime.Minutes(8),
-			hard = DateTime.Minutes(6)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 6, Max = 12, RampDuration = DateTime.Minutes(20) },
-			normal = { Min = 10, Max = 20, RampDuration = DateTime.Minutes(20) },
-			hard = { Min = 16, Max = 32, RampDuration = DateTime.Minutes(20) },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(8)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 8, Max = 16 }),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { GDISouthBarracks } },
-		Units = {
+		Compositions = {
 			easy = { { Infantry = { "n3", "n1", "n1", "n1", "n2" } } } ,
 			normal = { { Infantry = { "n3", "n1", "n1", "n1", "n3", "n2" } } },
 			hard = { { Infantry = { "n3", "n1", "n1", "n1", "n3", "n2", "n1", "n1" } } },
+			vhard = { { Infantry = { "n3", "n1", "n1", "n1", "n3", "n2", ZoneTrooperVariant } } },
+			brutal = { { Infantry = { "n3", "n1", "n1", "n1", "n3", "n2", "n1", ZoneTrooperVariant, ZoneTrooperVariant } } },
 		},
 		AttackPaths = GDISouthAttackPaths,
 	},
 	GDINorthEast = {
-		Delay = {
-			easy = DateTime.Minutes(10),
-			normal = DateTime.Minutes(8),
-			hard = DateTime.Minutes(6)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 6, Max = 12, RampDuration = DateTime.Minutes(15) },
-			normal = { Min = 10, Max = 20, RampDuration = DateTime.Minutes(13) },
-			hard = { Min = 16, Max = 32, RampDuration = DateTime.Minutes(11) },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(8)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 8, Max = 16 }),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { GDINorthEastBarracks } },
-		Units = {
+		Compositions = {
 			easy = { { Infantry = { "n3", "n1", "n1", "n1", "n2" } } },
 			normal = { { Infantry = { "n3", "n1", "n1", "n1", "n3", "n2" } } },
 			hard = { { Infantry = { "n3", "n1", "n1", "n1", "n3", "n2", "n1", "n1" } } },
+			vhard = { { Infantry = { "n3", "n1", "n1", "n1", "n3", "n2", ZoneTrooperVariant } } },
+			brutal = { { Infantry = { "n3", "n1", "n1", "n1", "n3", "n2", "n1", ZoneTrooperVariant, ZoneTrooperVariant } } },
 		},
 		AttackPaths = GDINorthEastAttackPaths,
 	},
 	GDIAir = {
-		Delay = {
-			easy = DateTime.Minutes(15),
-			normal = DateTime.Minutes(13),
-			hard = DateTime.Minutes(11)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 6, Max = 6 },
-			normal = { Min = 11, Max = 11 },
-			hard = { Min = 18, Max = 18 },
-		},
-		ProducerTypes = { Aircraft = { "afld.gdi" } },
-		Units = {
-			easy = {
-				{ Aircraft = { "orca" } }
-			},
-			normal = {
-				{ Aircraft = { "orca", "orca" } },
-				{ Aircraft = { "a10" } }
-			},
-			hard = {
-				{ Aircraft = { "orca", "orca", "orca" } },
-				{ Aircraft = { "a10", "a10" } }
-			}
-		},
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(13)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 10, Max = 10 }),
+		Compositions = AirCompositions.GDI,
 	}
 }
 
@@ -187,6 +148,10 @@ InitGDI = function()
 	AutoReplaceHarvesters(GDI)
 	AutoRebuildConyards(GDI)
 	InitAiUpgrades(GDI)
+	InitAttackSquad(Squads.GDIMain, GDI)
+	InitAttackSquad(Squads.GDISouth, GDI)
+	InitAttackSquad(Squads.GDINorthEast, GDI)
+	InitAirAttackSquad(Squads.GDIAir, GDI)
 
 	local gdiGroundAttackers = GDI.GetGroundAttackers()
 
@@ -200,20 +165,4 @@ InitGDI = function()
 			Actor.Create("ai.minor.superweapons.enabled", true, { Owner = GDI })
 		end)
 	end
-
-	Trigger.AfterDelay(Squads.GDIMain.Delay[Difficulty], function()
-		InitAttackSquad(Squads.GDIMain, GDI)
-	end)
-
-	Trigger.AfterDelay(Squads.GDISouth.Delay[Difficulty], function()
-		InitAttackSquad(Squads.GDISouth, GDI)
-	end)
-
-	Trigger.AfterDelay(Squads.GDINorthEast.Delay[Difficulty], function()
-		InitAttackSquad(Squads.GDINorthEast, GDI)
-	end)
-
-	Trigger.AfterDelay(Squads.GDIAir.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.GDIAir, GDI)
-	end)
 end

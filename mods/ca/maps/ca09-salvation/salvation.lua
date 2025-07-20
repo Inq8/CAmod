@@ -11,33 +11,43 @@ Wormholes = {
 }
 
 WormholeDelay = {
-	easy = DateTime.Minutes(7),
-	normal = DateTime.Seconds(330),
-	hard = DateTime.Seconds(270),
+	easy = DateTime.Minutes(6),
+	normal = DateTime.Minutes(5) + DateTime.Seconds(30),
+	hard = DateTime.Minutes(5),
+	vhard = DateTime.Minutes(4) + DateTime.Seconds(30),
+	brutal = DateTime.Minutes(4)
 }
 
 WormholeInterval = {
-	easy = DateTime.Seconds(110),
-	normal = DateTime.Seconds(90),
-	hard = DateTime.Seconds(70)
+	easy = DateTime.Minutes(1) + DateTime.Seconds(40),
+	normal = DateTime.Minutes(1) + DateTime.Seconds(30),
+	hard = DateTime.Minutes(1) + DateTime.Seconds(20),
+	vhard = DateTime.Minutes(1) + DateTime.Seconds(10),
+	brutal = DateTime.Minutes(1),
 }
 
 WormholeUnitsDelay = {
 	easy = DateTime.Seconds(70),
 	normal = DateTime.Seconds(50),
-	hard = DateTime.Seconds(30)
+	hard = DateTime.Seconds(35),
+	vhard = DateTime.Seconds(28),
+	brutal = DateTime.Seconds(20)
 }
 
 WormholeUnitsInterval = {
 	easy = DateTime.Seconds(160),
-	normal = DateTime.Seconds(120),
-	hard = DateTime.Seconds(80)
+	normal = DateTime.Seconds(130),
+	hard = DateTime.Seconds(100),
+	vhard = DateTime.Seconds(80),
+	brutal = DateTime.Seconds(70)
 }
 
 LateWormholesStart = {
 	easy = DateTime.Minutes(13),
-	normal = DateTime.Minutes(11),
-	hard = DateTime.Minutes(9)
+	normal = DateTime.Minutes(11) + DateTime.Seconds(30),
+	hard = DateTime.Minutes(10),
+	vhard = DateTime.Minutes(8) + DateTime.Seconds(30),
+	brutal = DateTime.Minutes(7)
 }
 
 WormholeUnitGroups = {

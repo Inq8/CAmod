@@ -8,15 +8,6 @@ World:
 		Briefing: There is no time to lose! The Allied mercenary Tanya was sent to infiltrate a facility that is being used by the Scrin for stockpiling Tiberium.\n\nHer mission was to use explosives to destroy the Scrin stockpiles, however the facility was more heavily guarded than expected. She was injured and is now hiding from the Scrin, unable to reach an exit.\n\nUse one of our own commandos to find Tanya. Working together they should have no problems completing the original mission.\n\nPrior to radio silence, her position was known to be somewhere on the east side of the facility.
 	MapOptions:
 		ShortGameCheckboxEnabled: False
-	ScriptLobbyDropdown@DIFFICULTY:
-		ID: difficulty
-		Label: dropdown-difficulty.label
-		Description: dropdown-difficulty.description
-		Values:
-			easy: options-difficulty.easy
-			normal: options-difficulty.normal
-			hard: options-difficulty.hard
-		Default: normal
 	ScriptLobbyDropdown@RESPAWN:
 		ID: respawn
 		Label: Respawns
@@ -40,12 +31,7 @@ SILO.SCRINBLUE:
 	Inherits: SILO.SCRIN
 
 ^DifficultyModifiers:
-	ExternalCondition@EASY:
-		Condition: difficulty-easy
-	ExternalCondition@NORMAL:
-		Condition: difficulty-normal
-	ExternalCondition@HARD:
-		Condition: difficulty-hard
+	Inherits@ActorDifficultyConditions: ^ActorDifficultyConditions
 	DamageMultiplier@EASY:
 		Modifier: 75
 		RequiresCondition: difficulty-easy

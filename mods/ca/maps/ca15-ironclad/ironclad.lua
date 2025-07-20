@@ -13,74 +13,49 @@ GDIAttackPaths = {
 
 Squads = {
 	GreeceMain = {
-		AttackValuePerSecond = {
-			easy = { Min = 10, Max = 25 },
-			normal = { Min = 25, Max = 45 },
-			hard = { Min = 35, Max = 75 },
-		},
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 36 }),
 		FollowLeader = true,
-		ProducerTypes = { Infantry = { "tent" }, Vehicles = { "weap" } },
-		Units = AdjustCompositionsForDifficulty(UnitCompositions.Allied),
+		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Allied),
 		AttackPaths = GreeceAttackPaths,
 	},
 	GDIMain = {
-		AttackValuePerSecond = {
-			easy = { Min = 10, Max = 25 },
-			normal = { Min = 25, Max = 45 },
-			hard = { Min = 35, Max = 75 },
-		},
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 36 }),
 		FollowLeader = true,
-		ProducerTypes = { Infantry = { "pyle" }, Vehicles = { "weap.td" } },
-		Units = AdjustCompositionsForDifficulty(UnitCompositions.GDI),
+		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.GDI),
 		AttackPaths = GDIAttackPaths,
 	},
 	GDIAir = {
-		Delay = {
-			easy = DateTime.Minutes(13),
-			normal = DateTime.Minutes(12),
-			hard = DateTime.Minutes(11)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 7, Max = 7 },
-			normal = { Min = 14, Max = 14 },
-			hard = { Min = 21, Max = 21 },
-		},
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(13)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
 		ActiveCondition = function()
 			return not GDIHelipad1.IsDead or not GDIHelipad2.IsDead or not GDIHelipad3.IsDead or not GDIHelipad4.IsDead
 		end,
-		ProducerTypes = { Aircraft = { "afld.gdi" } },
-		Units = {
-			easy = {
-				{ Aircraft = { "orca" } }
-			},
-			normal = {
-				{ Aircraft = { "orca", "orca" } },
-				{ Aircraft = { "a10" } }
-			},
-			hard = {
-				{ Aircraft = { "orca", "orca", "orca" } },
-				{ Aircraft = { "a10", "a10" } }
-			}
-		},
+		Compositions = AirCompositions.GDI,
 	}
 }
 
 SiegeBreakThreshold = {
 	easy = 90,
 	normal = 75,
-	hard = 60
+	hard = 65,
+	vhard = 60,
+	brutal = 55
 }
 
 AutoSiegeBreakTime = {
 	easy = DateTime.Minutes(30),
 	normal = DateTime.Minutes(20),
-	hard = DateTime.Minutes(10)
+	hard = DateTime.Minutes(10),
+	vhard = DateTime.Minutes(10),
+	brutal = DateTime.Minutes(10)
 }
 
 AutoAttackStartTime = {
 	easy = DateTime.Minutes(16),
 	normal = DateTime.Minutes(12),
-	hard = DateTime.Minutes(8)
+	hard = DateTime.Minutes(8),
+	vhard = DateTime.Minutes(8),
+	brutal = DateTime.Minutes(8)
 }
 
 WorldLoaded = function()
@@ -242,9 +217,6 @@ StartAttacks = function()
 		AttacksStarted = true
 		InitAttackSquad(Squads.GreeceMain, Greece)
 		InitAttackSquad(Squads.GDIMain, GDI)
-
-		Trigger.AfterDelay(Squads.GDIAir.Delay[Difficulty], function()
-			InitAirAttackSquad(Squads.GDIAir, GDI)
-		end)
+		InitAirAttackSquad(Squads.GDIAir, GDI)
 	end
 end

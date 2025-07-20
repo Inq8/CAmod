@@ -18,16 +18,15 @@ Objectives = {
 	},
 }
 
-TimeLimit = {
-	easy = DateTime.Minutes(30),
-	normal = DateTime.Minutes(30),
-	hard = DateTime.Minutes(30),
-}
-
 ScrinReinforcementInterval = {
 	easy = DateTime.Seconds(45),
 	normal = DateTime.Seconds(30),
 	hard = DateTime.Seconds(15),
+}
+
+ScrinWaveInterval = {
+	vhard = DateTime.Seconds(120),
+	brutal = DateTime.Seconds(60)
 }
 
 WorldLoaded = function()
@@ -35,7 +34,7 @@ WorldLoaded = function()
 	Greece = Player.GetPlayer("Greece")
 	Scrin = Player.GetPlayer("Scrin")
 	MissionPlayers = { GDI, Greece }
-	TimerTicks = TimeLimit[Difficulty]
+	TimerTicks = 0
 
 	Camera.Position = Commando.CenterPosition
 
@@ -75,9 +74,15 @@ WorldLoaded = function()
 
 	UpdateObjectiveText()
 
-	if Difficulty == "hard" then
+	if IsHardOrAbove() then
 		HealCrate2.Destroy()
 		HealCrate3.Destroy()
+
+		if IsVeryHardOrAbove() then
+			Trigger.AfterDelay(DateTime.Seconds(30), function()
+				InitWormholes()
+			end)
+		end
 	end
 
 	if Difficulty == "easy" then
@@ -101,20 +106,6 @@ OncePerSecondChecks = function()
 				TimerTicks = TimerTicks - 25
 			else
 				TimerTicks = 0
-
-				if NumSilosRemaining > 0 then
-					Utils.Do(MissionPlayers, function(p)
-						if not p.IsObjectiveCompleted(Objectives.DestroyTiberiumStores[p.InternalName]) then
-							p.MarkFailedObjective(Objectives.DestroyTiberiumStores[p.InternalName])
-						end
-					end)
-				elseif IsExitActive then
-					Utils.Do(MissionPlayers, function(p)
-						if not p.IsObjectiveCompleted(Objectives.Escape[p.InternalName]) then
-							p.MarkFailedObjective(Objectives.Escape[p.InternalName])
-						end
-					end)
-				end
 			end
 		end
 
@@ -223,7 +214,7 @@ ActivateProdigy = function()
 		Prodigy.GrantCondition("activated")
 		Beacon.New(GDI, Prodigy.CenterPosition)
 
-		if Difficulty == "hard" then
+		if IsHardOrAbove() then
 			UpdateProdigyTarget()
 		else
 			Prodigy.Patrol(ProdigyPatrolPath)
@@ -310,6 +301,10 @@ TanyaDeathTrigger = function(tanya)
 end
 
 InitWormholes = function()
+	if WormholesActive then
+		return
+	end
+	WormholesActive = true
 	Actor.Create("wormhole", true, { Owner = Scrin, Location = WormholeSpawn1.Location })
 	Actor.Create("wormhole", true, { Owner = Scrin, Location = WormholeSpawn2.Location })
 	Actor.Create("wormhole", true, { Owner = Scrin, Location = WormholeSpawn3.Location })
@@ -339,5 +334,11 @@ ScrinReinforcements = function()
 		end)
 	end)
 
-	Trigger.AfterDelay(ScrinReinforcementInterval[Difficulty], ScrinReinforcements)
+	local timeUntilNext = ScrinReinforcementInterval[Difficulty]
+
+	if IsVeryHardOrAbove() and not GDI.IsObjectiveCompleted(Objectives.DestroyTiberiumStores.GDI) then
+		timeUntilNext = ScrinWaveInterval[Difficulty]
+	end
+
+	Trigger.AfterDelay(timeUntilNext, ScrinReinforcements)
 end

@@ -12,31 +12,83 @@ GameSpeed = UtilsCA.GameSpeed()
 StructureBuildTimeMultipliers = {
 	easy = 3,
 	normal = 2,
-	hard = 1,
+	hard = 1.1,
+	vhard = 0.9,
+	brutal = 0.8
 }
 
 UnitBuildTimeMultipliers = {
-	easy = 1,
-	normal = 0.67,
-	hard = 0.5,
+	easy = 1.25, -- 2000 value/min per queue (33/s)
+	normal = 0.81, -- 3062 value/min per queue (51/s)
+	hard = 0.6, -- 4125 value/min per queue (68/s)
+	vhard = 0.48, -- 5187 value/min per queue (86/s)
+	brutal = 0.4 -- 6250 value/min per queue (104/s)
+}
+
+AttackValueMultipliers = {
+	easy = 0.5,
+	normal = 1, -- standard min 40/s, max 80/s
+	hard = 1.5,
+	vhard = 2,
+	brutal = 2.5
+}
+
+NormalRampDuration = DateTime.Minutes(17)
+
+RampDurationMultipliers = {
+	easy = 1.06,
+	normal = 1,
+	hard = 0.94,
+	vhard = 0.88,
+	brutal = 0.82
+}
+
+AttackDelayMultipliers = {
+	easy = 1.5,
+	normal = 1,
+	hard = 0.83,
+	vhard = 0.66,
+	brutal = 0.5
+}
+
+AirAttackDelayMultipliers = {
+	easy = 1.11,
+	normal = 1,
+	hard = 0.88,
+	vhard = 0.77,
+	brutal = 0.66
 }
 
 CompositionValueMultiplier = {
 	easy = 0.5,
 	normal = 0.67,
-	hard = 1,
+	hard = 0.83,
+	vhard = 1,
+	brutal = 1.2
 }
 
 HarvesterDeathDelayTime = {
 	easy = DateTime.Seconds(60),
 	normal = DateTime.Seconds(40),
 	hard = DateTime.Seconds(20),
+	vhard = DateTime.Seconds(20),
+	brutal = DateTime.Seconds(20)
+}
+
+AiAdvancedUpgradeDelay = {
+	easy = DateTime.Minutes(15),
+	normal = DateTime.Minutes(15),
+	hard = DateTime.Minutes(15),
+	vhard = DateTime.Minutes(14),
+	brutal = DateTime.Minutes(13)
 }
 
 CashAdjustments = {
 	easy = 4000,
 	normal = 0,
-	hard = -1000
+	hard = -1000,
+	vhard = -1000,
+	brutal = -1000
 }
 
 CapturedCreditsAmount = 1250
@@ -64,6 +116,13 @@ CashRewardOnCaptureTypes = { "proc", "proc.td", "proc.scrin", "silo", "silo.td",
 WallTypes = { "sbag", "fenc", "brik", "cycl", "barb" }
 
 KeyStructures = { "fact", "afac", "sfac", "proc", "proc.td", "proc.scrin", "weap", "weap.td", "airs", "wsph", "dome", "hq", "nerv", "atek", "stek", "gtek", "tmpl", "scrt", "mcv", "amcv", "smcv" }
+
+DefaultQueueProducers = {
+	Infantry = BarracksTypes,
+	Vehicles = FactoryTypes,
+	Aircraft = AirProductionTypes,
+	Ships = NavalProductionTypes
+}
 
 -- used to define actors and/or types of actors that the AI should not rebuild
 RebuildExcludes = {
@@ -179,6 +238,30 @@ end
 
 Tip = function(text)
 	Media.DisplayMessage(text, "Tip", HSLColor.FromHex("29F3CF"))
+end
+
+IsNormalOrAbove = function()
+	return Difficulty == "normal" or IsHardOrAbove()
+end
+
+IsNormalOrBelow = function()
+	return Difficulty == "easy" or Difficulty == "normal"
+end
+
+IsHardOrAbove = function()
+	return Difficulty == "hard" or IsVeryHardOrAbove()
+end
+
+IsHardOrBelow = function()
+	return IsNormalOrBelow() or Difficulty == "hard"
+end
+
+IsVeryHardOrAbove = function()
+	return Difficulty == "vhard" or Difficulty == "brutal"
+end
+
+IsVeryHardOrBelow = function()
+	return IsHardOrBelow() or Difficulty == "vhard"
 end
 
 AttackAircraftTargets = { }
@@ -358,6 +441,25 @@ UpdatePlayerBaseLocations = function()
 			PlayerBaseLocations[p.InternalName] = nil
 		end
 	end
+end
+
+RemoveActorsBasedOnDifficulty = function()
+	local easyOnlyActors = Map.ActorsWithTag("EasyOnly")
+	local normalAndBelowActors = Map.ActorsWithTag("NormalAndBelow")
+	local normalAndAboveActors = Map.ActorsWithTag("NormalAndAbove")
+	local hardAndAboveActors = Map.ActorsWithTag("HardAndAbove")
+	local veryHardAndAboveActors = Map.ActorsWithTag("VeryHardAndAbove")
+	local brutalOnlyActors = Map.ActorsWithTag("BrutalOnly")
+
+	local actorsToRemove = {
+		easy = normalAndAboveActors.Concat(hardAndAboveActors).Concat(veryHardAndAboveActors).Concat(brutalOnlyActors),
+		normal = easyOnlyActors.Concat(hardAndAboveActors).Concat(veryHardAndAboveActors).Concat(brutalOnlyActors),
+		hard = easyOnlyActors.Concat(normalAndBelowActors).Concat(veryHardAndAboveActors).Concat(brutalOnlyActors),
+		vhard = easyOnlyActors.Concat(normalAndBelowActors).Concat(brutalOnlyActors),
+		brutal = easyOnlyActors.Concat(normalAndBelowActors)
+	}
+
+	Utils.Do(actorsToRemove[Difficulty], function(a) a.Destroy() end)
 end
 
 AutoRepairBuildings = function(player)
@@ -547,7 +649,7 @@ HasOwnedBuildingsNearby = function(player, pos, noEnemyBuildings)
 end
 
 AutoRebuildConyards = function(player, allDifficulties)
-	if Difficulty ~= "hard" and not allDifficulties then
+	if IsHardOrAbove() and not allDifficulties then
 		return
 	end
 	local conyards = player.GetActorsByTypes(ConyardTypes)
@@ -779,8 +881,6 @@ end
 --- attack squad functionality, requires Squads object to be defined properly in the mission script file
 InitAttackSquad = function(squad, player, targetPlayers)
 	squad.Player = player
-	squad.WaveTotalCost = 0
-	squad.WaveStartTime = DateTime.GameTime
 
 	-- set the squad's name based on the key if it hasn't been set manually
 	if squad.Name == nil then
@@ -814,9 +914,6 @@ InitAttackSquad = function(squad, player, targetPlayers)
 		return
 	end
 
-	-- randomly select target for the current wave
-	squad.TargetPlayer = Utils.Random(squad.TargetPlayers)
-
 	if squad.QueueProductionStatuses == nil then
 		squad.QueueProductionStatuses = { }
 	end
@@ -825,20 +922,55 @@ InitAttackSquad = function(squad, player, targetPlayers)
 		squad.IdleUnits = { }
 	end
 
+	if squad.Delay ~= nil then
+		local delay
+		if type(squad.Delay) == "table" and squad.Delay[Difficulty] ~= nil then
+			delay = squad.Delay[Difficulty]
+		else
+			delay = squad.Delay
+		end
+		Trigger.AfterDelay(delay, function()
+			InitAttackWave(squad, player, targetPlayers)
+		end)
+	else
+		InitAttackWave(squad, player, targetPlayers)
+	end
+end
+
+InitAirAttackSquad = function(squad, player, targetPlayer, targetList, targetType)
+	squad.IsAirSquad = true
+	squad.AirTargetList = targetList
+	squad.AirTargetType = targetType
+	InitAttackSquad(squad, player, targetPlayer)
+end
+
+InitNavalAttackSquad = function(squad, player, targetPlayer)
+	squad.IsNaval = true
+	InitAttackSquad(squad, player, targetPlayer)
+end
+
+InitAttackWave = function(squad, player, targetPlayers)
+
 	if IsSquadInProduction(squad) then
 		return
 	end
 
+	squad.WaveTotalCost = 0
+	squad.WaveStartTime = DateTime.GameTime
+
+	-- randomly select target for the current wave
+	squad.TargetPlayer = Utils.Random(squad.TargetPlayers)
+
 	-- make sure ActiveCondition function returns true (if it exists)
-	local isActive = squad.ActiveCondition == nil or squad.ActiveCondition()
+	local isActive = squad.ActiveCondition == nil or squad.ActiveCondition(squad)
 
 	if isActive then
 
 		local allCompositions
-		if squad.Units[Difficulty] ~= nil then
-			allCompositions = squad.Units[Difficulty]
+		if squad.Compositions[Difficulty] ~= nil then
+			allCompositions = squad.Compositions[Difficulty]
 		else
-			allCompositions = squad.Units
+			allCompositions = squad.Compositions
 		end
 
 		-- filter possible compositions based on game time and other requirements
@@ -846,7 +978,7 @@ InitAttackSquad = function(squad, player, targetPlayers)
 			return (composition.MinTime == nil or DateTime.GameTime >= composition.MinTime + squad.InitTime) -- after min time
 				and (composition.MaxTime == nil or DateTime.GameTime < composition.MaxTime + squad.InitTime) -- before max time
 				and (composition.RequiredTargetCharacteristics == nil or Utils.All(composition.RequiredTargetCharacteristics, function(characteristic)
-					return PlayerCharacteristics[squad.TargetPlayer.InternalName] ~= nil and PlayerCharacteristics[squad.TargetPlayer.InternalName][characteristic] ~= nil and PlayerCharacteristics[squad.TargetPlayer.InternalName][characteristic]
+					return PlayerHasCharacteristic(squad.TargetPlayer, characteristic)
 				end)) -- target player has all required characteristics
 				and (composition.Prerequisites == nil or squad.Player.HasPrerequisites(composition.Prerequisites)) -- player has prerequisites
 		end)
@@ -894,12 +1026,12 @@ InitAttackSquad = function(squad, player, targetPlayers)
 			end)
 		else
 			Trigger.AfterDelay(DateTime.Seconds(15), function()
-				InitAttackSquad(squad, squad.Player, squad.TargetPlayers)
+				InitAttackWave(squad, squad.Player, squad.TargetPlayers)
 			end)
 		end
 	else
 		Trigger.AfterDelay(DateTime.Seconds(15), function()
-			InitAttackSquad(squad, squad.Player, squad.TargetPlayers)
+			InitAttackWave(squad, squad.Player, squad.TargetPlayers)
 		end)
 	end
 end
@@ -908,7 +1040,7 @@ GetQueuesForComposition = function(composition)
 	local queues = { }
 
 	for k,v in pairs(composition) do
-		if not IsCompositionSetting(k) then
+		if IsQueue(k) then
 			table.insert(queues, k)
 		end
 	end
@@ -929,16 +1061,18 @@ IsCompositionSetting = function(key)
 	return settings[key] or false
 end
 
-InitAirAttackSquad = function(squad, player, targetPlayer, targetList, targetType)
-	squad.IsAirSquad = true
-	squad.AirTargetList = targetList
-	squad.AirTargetType = targetType
-	InitAttackSquad(squad, player, targetPlayer)
+IsQueue = function(key)
+	local queues = {
+		Infantry = true,
+		Vehicles = true,
+		Aircraft = true,
+		Ships = true
+	}
+	return queues[key] or false
 end
 
-InitNavalAttackSquad = function(squad, player, targetPlayer)
-	squad.IsNaval = true
-	InitAttackSquad(squad, player, targetPlayer)
+PlayerHasCharacteristic = function(player, characteristic)
+	return PlayerCharacteristics[player.InternalName] ~= nil and PlayerCharacteristics[player.InternalName][characteristic] ~= nil and PlayerCharacteristics[player.InternalName][characteristic]
 end
 
 ProduceNextAttackSquadUnit = function(squad, queue, unitIndex)
@@ -970,10 +1104,14 @@ ProduceNextAttackSquadUnit = function(squad, queue, unitIndex)
 
 			local ticksUntilNext
 
-			if squad.Interval ~= nil and squad.Interval[Difficulty] ~= nil then
-				ticksUntilNext = squad.Interval[Difficulty]
+			if squad.Interval ~= nil then
+				if type(squad.Interval) == "table" and squad.Interval[Difficulty] ~= nil then
+					ticksUntilNext = squad.Interval[Difficulty]
+				else
+					ticksUntilNext = squad.Interval
+				end
 			else
-				ticksUntilNext = CalculateInterval(squad)
+				ticksUntilNext = CalculateIntervalForSquad(squad)
 			end
 
 			-- every harvester killed delays the next wave
@@ -1016,8 +1154,13 @@ ProduceNextAttackSquadUnit = function(squad, queue, unitIndex)
 				end
 			end
 
-			if producer == nil and squad.ProducerTypes ~= nil and squad.ProducerTypes[queue] ~= nil then
-				local producers = squad.Player.GetActorsByTypes(squad.ProducerTypes[queue])
+			if producer == nil then
+				local producers = {}
+				if squad.ProducerTypes ~= nil and squad.ProducerTypes[queue] ~= nil then
+					producers = squad.Player.GetActorsByTypes(squad.ProducerTypes[queue])
+				else
+					producers = squad.Player.GetActorsByTypes(DefaultQueueProducers[queue])
+				end
 				if #producers > 0 then
 					producer = Utils.Random(producers)
 				end
@@ -1119,15 +1262,29 @@ InitSquadAssignmentQueueForProducer = function(producerId, player)
 end
 
 -- on finishing production of a squad of units for an attack, calculate how long to wait to produce the next squad based on desired value per second
-CalculateInterval = function(squad)
+CalculateIntervalForSquad = function(squad)
 	local ticksSpentProducing = DateTime.GameTime - squad.WaveStartTime
+	local attackValues
 
-	if squad.AttackValuePerSecond ~= nil and squad.AttackValuePerSecond[Difficulty] ~= nil then
-		local desiredValue = 0
-		local attackValues = squad.AttackValuePerSecond[Difficulty]
-		local ticksSinceInit = DateTime.GameTime - squad.InitTime
-		desiredValue = CalculateValuePerSecond(ticksSinceInit, attackValues)
-		local ticks = ((25 * squad.WaveTotalCost) - (desiredValue * ticksSpentProducing)) / desiredValue
+	if squad.AttackValuePerSecond ~= nil then
+		if squad.AttackValuePerSecond[Difficulty] ~= nil then
+			attackValues = squad.AttackValuePerSecond[Difficulty]
+		else
+			attackValues = squad.AttackValuePerSecond
+		end
+	end
+
+	return CalculateInterval(squad.WaveTotalCost, attackValues, squad.InitTime, ticksSpentProducing)
+end
+
+function CalculateInterval(cost, attackValues, initTime, ticksSpentProducing)
+	if ticksSpentProducing == nil then
+		ticksSpentProducing = 0
+	end
+	if attackValues ~= nil then
+		local ticksSinceInit = DateTime.GameTime - initTime
+		local desiredValue = CalculateValuePerSecond(ticksSinceInit, attackValues)
+		local ticks = ((25 * cost) - (desiredValue * ticksSpentProducing)) / desiredValue
 		return math.max(math.floor(ticks), 0)
 	else
 		return ticksSpentProducing
@@ -1139,23 +1296,12 @@ function CalculateValuePerSecond(currentTick, attackValues)
 	local minValue = attackValues.Min
 	local maxValue = attackValues.Max
 	local rampDuration
-	local growthFactor
 	if attackValues.RampDuration ~= nil then
 		rampDuration = attackValues.RampDuration
 	else
-		if Difficulty == "hard" then
-			rampDuration = DateTime.Minutes(15)
-		elseif Difficulty == "normal" then
-			rampDuration = DateTime.Minutes(17)
-		else
-			rampDuration = DateTime.Minutes(19)
-		end
+		rampDuration = NormalRampDuration * RampDurationMultipliers[Difficulty]
 	end
-	if attackValues.GrowthFactor ~= nil then
-		growthFactor = attackValues.GrowthFactor
-	else
-		growthFactor = 2.06
-	end
+	local growthFactor = 2.06
     local progress = currentTick / rampDuration
     local scaledProgress = progress ^ growthFactor
     local value = minValue + (maxValue - minValue) * scaledProgress
@@ -1539,7 +1685,7 @@ end
 
 InitAiUpgrades = function(player, advancedDelay)
 	if advancedDelay == nil then
-		advancedDelay = DateTime.Minutes(15)
+		advancedDelay = AiAdvancedUpgradeDelay[Difficulty]
 	end
 
 	if player.Faction == "soviet" then
@@ -1548,7 +1694,7 @@ InitAiUpgrades = function(player, advancedDelay)
 		Actor.Create("hazmat.upgrade", true, { Owner = player })
 	end
 
-	if Difficulty == "hard" then
+	if IsHardOrAbove() then
 		Trigger.AfterDelay(advancedDelay, function()
 			if player.Faction == "scrin" then
 				Actor.Create("carapace.upgrade", true, { Owner = player })
@@ -1560,13 +1706,13 @@ InitAiUpgrades = function(player, advancedDelay)
 
 	if (player.Faction == "allies") then
 
-		if Difficulty == "hard" then
+		if IsHardOrAbove() then
 			Actor.Create("cryw.upgrade", true, { Owner = Greece })
 		end
 
 	elseif (player.Faction == "soviet") then
 
-		if Difficulty == "hard" then
+		if IsHardOrAbove() then
 			Trigger.AfterDelay(advancedDelay, function()
 				Actor.Create("tarc.upgrade", true, { Owner = player })
 
@@ -1578,7 +1724,7 @@ InitAiUpgrades = function(player, advancedDelay)
 
 	elseif (player.Faction == "nod") then
 
-		if Difficulty == "hard" then
+		if IsHardOrAbove() then
 			Trigger.AfterDelay(advancedDelay, function()
 				Actor.Create("blacknapalm.upgrade", true, { Owner = player })
 				Actor.Create("tibcore.upgrade", true, { Owner = player })
@@ -1590,7 +1736,7 @@ InitAiUpgrades = function(player, advancedDelay)
 
 	elseif (player.Faction == "gdi") then
 
-		if Difficulty == "hard" then
+		if IsHardOrAbove() then
 			Actor.Create("sonic.upgrade", true, { Owner = player, })
 			Actor.Create("empgren.upgrade", true, { Owner = player, })
 
@@ -1610,7 +1756,7 @@ InitAiUpgrades = function(player, advancedDelay)
 
 	elseif (player.Faction == "scrin") then
 
-		if Difficulty == "hard" then
+		if IsHardOrAbove() then
 			Actor.Create("ioncon.upgrade", true, { Owner = player })
 
 			Trigger.AfterDelay(advancedDelay, function()
@@ -1624,13 +1770,44 @@ end
 
 -- Units & compositions
 
-AdjustCompositionsForDifficulty = function(compositions, difficulty)
+AdjustDelayForDifficulty = function(delay, difficulty)
+	if difficulty == nil then
+		difficulty = Difficulty
+	end
+	return delay * AttackDelayMultipliers[Difficulty]
+end
 
+AdjustAirDelayForDifficulty = function(delay, difficulty)
+	if difficulty == nil then
+		difficulty = Difficulty
+	end
+	return delay * AirAttackDelayMultipliers[Difficulty]
+end
+
+AdjustAttackValuesForDifficulty = function(attackValues, difficulty)
 	if difficulty == nil then
 		difficulty = Difficulty
 	end
 
-	if Difficulty == "hard" then
+	if attackValues.Min ~= nil then
+		attackValues.Min = attackValues.Min * AttackValueMultipliers[difficulty]
+	end
+	if attackValues.Max ~= nil then
+		attackValues.Max = attackValues.Max * AttackValueMultipliers[difficulty]
+	end
+	if attackValues.RampDuration ~= nil then
+		attackValues.RampDuration = attackValues.RampDuration * RampDurationMultipliers[difficulty]
+	end
+
+	return attackValues
+end
+
+AdjustCompositionsForDifficulty = function(compositions, difficulty)
+	if difficulty == nil then
+		difficulty = Difficulty
+	end
+
+	if IsHardOrAbove() then
 		return compositions
 	end
 
@@ -1645,12 +1822,11 @@ AdjustCompositionsForDifficulty = function(compositions, difficulty)
 end
 
 AdjustCompositionForDifficulty = function(composition, difficulty)
-
 	if difficulty == nil then
 		difficulty = Difficulty
 	end
 
-	if difficulty == "hard" then
+	if difficulty == "vhard" then
 		return composition
 	end
 
@@ -1665,7 +1841,7 @@ AdjustCompositionForDifficulty = function(composition, difficulty)
 
 	for k,v in pairs(composition) do
 
-		if not IsCompositionSetting(k) then
+		if IsQueue(k) then
 			local queueName = k
 			local queueUnits = v
 			queueTotalUnitCost[queueName] = 0
@@ -1675,15 +1851,14 @@ AdjustCompositionForDifficulty = function(composition, difficulty)
 			for i,unit in pairs(queueUnits) do
 				local chosenUnit
 
-				-- if the unit is a table of possible units, select one randomly
+				-- if the unit is a table of possible units, use the one with the highest cost for calculation purposes
 				if type(unit) == "table" then
-					chosenUnit = Utils.Random(unit)
+					chosenUnit = GetHighestCostUnit(unit)
 				else
 					chosenUnit = unit
-				end
-
-				if UnitCosts[chosenUnit] == nil then
-					UnitCosts[chosenUnit] = ActorCA.CostOrDefault(chosenUnit)
+					if UnitCosts[chosenUnit] == nil then
+						UnitCosts[chosenUnit] = ActorCA.CostOrDefault(chosenUnit)
+					end
 				end
 
 				-- add the cost to the total cost for the queue
@@ -1693,31 +1868,32 @@ AdjustCompositionForDifficulty = function(composition, difficulty)
 			local adjustedDesiredTotalUnitCostForQueue = queueTotalUnitCost[queueName] * CompositionValueMultiplier[difficulty]
 
 			-- allocate units until the adjusted cost is reached
-			for i,unit in pairs(queueUnits) do
+			while queueAllocatedTotalUnitCost[queueName] < adjustedDesiredTotalUnitCostForQueue do
+				for i,unit in pairs(queueUnits) do
+					if queueAllocatedTotalUnitCost[queueName] >= adjustedDesiredTotalUnitCostForQueue then
+						break
+					end
 
-				if queueAllocatedTotalUnitCost[queueName] >= adjustedDesiredTotalUnitCostForQueue then
-					break
+					local chosenUnit
+
+					if type(unit) == "table" then
+						chosenUnit = GetHighestCostUnit(unit)
+					else
+						chosenUnit = unit
+					end
+
+					if updatedComposition[queueName] == nil then
+						updatedComposition[queueName] = { }
+					end
+
+					table.insert(updatedComposition[queueName], unit)
+
+					if UnitCosts[chosenUnit] == nil then
+						UnitCosts[chosenUnit] = ActorCA.CostOrDefault(chosenUnit)
+					end
+
+					queueAllocatedTotalUnitCost[queueName] = queueAllocatedTotalUnitCost[queueName] + UnitCosts[chosenUnit]
 				end
-
-				local chosenUnit
-
-				if type(unit) == "table" then
-					chosenUnit = unit[1]
-				else
-					chosenUnit = unit
-				end
-
-				if updatedComposition[queueName] == nil then
-					updatedComposition[queueName] = { }
-				end
-
-				table.insert(updatedComposition[queueName], unit)
-
-				if UnitCosts[chosenUnit] == nil then
-					UnitCosts[chosenUnit] = ActorCA.CostOrDefault(chosenUnit)
-				end
-
-				queueAllocatedTotalUnitCost[queueName] = queueAllocatedTotalUnitCost[queueName] + UnitCosts[chosenUnit]
 			end
 		else
 			if k == "MinTime" or k == "MaxTime" then
@@ -1735,6 +1911,30 @@ AdjustCompositionForDifficulty = function(composition, difficulty)
 	end
 
 	return updatedComposition
+end
+
+GetHighestCostUnit = function(units)
+	local chosenUnit
+	for _, u in pairs(units) do
+		if UnitCosts[u] == nil then
+			UnitCosts[u] = ActorCA.CostOrDefault(u)
+		end
+		if chosenUnit == nil or UnitCosts[u] > UnitCosts[chosenUnit] then
+			chosenUnit = u
+		end
+	end
+	return chosenUnit
+end
+
+GetTotalCostOfUnits = function(units)
+	local totalCost = 0
+	for _, u in pairs(units) do
+		if UnitCosts[u] == nil then
+			UnitCosts[u] = ActorCA.CostOrDefault(u)
+		end
+		totalCost = totalCost + UnitCosts[u]
+	end
+	return totalCost
 end
 
 CalculatePlayerCharacteristics = function()
@@ -1803,6 +2003,11 @@ AircraftTargets = {
 	venm = { TargetList = { "None", "Light", "Aircraft" }, TargetType = "ArmorType" },
 	rah = { TargetList = { "None", "Light", "Wood" }, TargetType = "ArmorType" },
 	scrn = { TargetList = { "Heavy", "Concrete", "Aircraft" }, TargetType = "ArmorType" },
+	phan = { TargetList = { "Heavy", "Light", "Aircraft" }, TargetType = "ArmorType" },
+	kamv = { TargetList = { "Heavy", "Light", "Concrete" }, TargetType = "ArmorType" },
+	shde = { TargetList = { "Heavy", "Light", "Concrete" }, TargetType = "ArmorType" },
+	vert = { TargetList = { "Heavy", "Concrete", "Wood" }, TargetType = "ArmorType" },
+	mcor = { TargetList = { "Aircraft" }, TargetType = "ArmorType" },
 	stmr = { TargetList = { "None", "Light", "Aircraft" }, TargetType = "ArmorType" },
 	torm = { TargetList = { "Heavy", "Concrete", "Aircraft" }, TargetType = "ArmorType" },
 	enrv = { TargetList = { "Heavy", "Concrete", "Aircraft" }, TargetType = "ArmorType" },
@@ -1820,6 +2025,8 @@ SovietAdvancedArty = { "v3rl", "v3rl", "isu" }
 TeslaVariant = { "ttnk", "ttra" }
 MigOrSukhoi = { "mig", "mig", "suk", "suk.upg" }
 HindOrYak = { "hind", "yak" }
+MigOrHindOrYak = { "mig", "hind", "yak" }
+SukhoiVariant = { "suk", "suk.upg" }
 
 HumveeOrGuardianDrone = { "hmmv", "gdrn" }
 TOWHumveeOrGuardianDrone = { "hmmv.tow", "gdrn.tow" }
@@ -1830,6 +2037,7 @@ WolverineOrXO = { "wolv", "xo" }
 BasicCyborg = { "n1c", "n3c", "n5", "acol" }
 AdvancedCyborg = { "rmbc", "enli", "tplr" }
 FlameTankHeavyFlameTankOrHowitzer = { "ftnk", "hftk", "howi" }
+ApacheOrVenom = { "apch", "venm" }
 
 GunWalkerSeekerOrLacerator = { "gunw", "seek", "lace", "shrw" }
 CorrupterOrDevourer = { "corr", "devo" }
@@ -1978,5 +2186,179 @@ UnitCompositions = {
 		{ Infantry = { "brst", "brst", "brst", "brst", "brst", "brst", "brst" }, MinTime = DateTime.Minutes(18), IsSpecial = true },
 		{ Infantry = { "s3", "s3", "s2", "s2", "s2", "s2", "s2", "s2", "s2", "s2" }, Vehicles = { "tpod", "tpod", "tpod", "tpod", "tpod", "tpod" }, MinTime = DateTime.Minutes(18), IsSpecial = true },
 		{ Infantry = { "s3", "s1", "s1", "s1", "s1", "s3", "s1", "s1", "s1", "s1", "s3", "s1", "s1", "s1", "s1", "s3", "s1", "s1", "s1", "s1", "s3", "s1", "s1", "s1" }, Vehicles = { "stcr", "gunw", "stcr", "gunw", "stcr", "gunw", "stcr" }, MinTime = DateTime.Minutes(18), IsSpecial = true }
+	}
+}
+
+ScrinWaterCompositions = {
+	easy = {
+		{ Vehicles = { "intl", "seek" }, },
+		{ Vehicles = { "seek", "seek" }, },
+		{ Vehicles = { "lace", "lace" }, }
+	},
+	normal = {
+		{ Vehicles = { "seek", "intl.ai2" }, },
+		{ Vehicles = { "seek", "seek", "seek" }, },
+		{ Vehicles = { "lace", "lace", "lace" }, },
+	},
+	hard = {
+		{ Vehicles = { "intl", "intl.ai2", "seek" }, },
+		{ Vehicles = { "seek", "seek", "seek" }, },
+		{ Vehicles = { "lace", "lace", "seek", "seek" }, },
+		{ Vehicles = { "devo", "intl.ai2", "ruin" }, MinTime = DateTime.Minutes(7) },
+		{ Vehicles = { "intl", "intl.ai2", { "seek", "lace" }, { "devo", "devo", "ruin" }, { "devo", "atmz", "ruin" }  }, MinTime = DateTime.Minutes(12) }
+	},
+	vhard = {
+		{ Vehicles = { "intl", "intl.ai2", "seek" }, },
+		{ Vehicles = { "seek", "seek", "seek" }, },
+		{ Vehicles = { "lace", "lace", "lace" }, },
+		{ Vehicles = { "devo", "intl.ai2", "ruin" }, MinTime = DateTime.Minutes(7) },
+		{ Vehicles = { "intl", "intl.ai2", { "seek", "lace" }, { "devo", "devo", "ruin" }, { "devo", "atmz", "ruin" }  }, MinTime = DateTime.Minutes(12) }
+	},
+	brutal = {
+		{ Vehicles = { "intl", "intl.ai2", "seek", "atmz" }, },
+		{ Vehicles = { "seek", "seek", "seek", "seek" }, },
+		{ Vehicles = { "lace", "lace", "lace", "lace" }, },
+		{ Vehicles = { "devo", "intl.ai2", "ruin", "ruin" }, MinTime = DateTime.Minutes(7) },
+		{ Vehicles = { "intl", "intl.ai2", { "seek", "lace" }, { "seek", "lace" }, { "devo", "devo", "ruin" }, { "devo", "atmz", "ruin" }  }, MinTime = DateTime.Minutes(12) }
+	}
+}
+
+AirCompositions = {
+	Allied = {
+		easy = {
+			{ Aircraft = { "heli" } }
+		},
+		normal = {
+			{ Aircraft = { "heli", "heli" } },
+			{ Aircraft = { "harr" } }
+		},
+		hard = {
+			{ Aircraft = { "heli", "heli", "heli" } },
+			{ Aircraft = { "harr", "harr" } },
+			{ Aircraft = { "pmak" } }
+		},
+		vhard = {
+			{ Aircraft = { "heli", "heli", "heli" } },
+			{ Aircraft = { "harr", "harr", "harr" } },
+			{ Aircraft = { "pmak", "pmak" } }
+		},
+		brutal = {
+			{ Aircraft = { "heli", "heli", "heli", "heli" } },
+			{ Aircraft = { "harr", "harr", "harr" } },
+			{ Aircraft = { "pmak", "pmak", "pmak" } }
+		}
+	},
+	Soviet = {
+		easy = {
+			{ Aircraft = { MigOrHindOrYak } },
+		},
+		normal = {
+			{ Aircraft = { MigOrHindOrYak, MigOrHindOrYak } },
+			{ Aircraft = { "mig", "mig" } },
+		},
+		hard = {
+			{ Aircraft = { MigOrHindOrYak, MigOrHindOrYak, MigOrHindOrYak } },
+			{ Aircraft = { "mig", "mig", "mig" } },
+			{ Aircraft = { "suk", "suk" } },
+			{ Aircraft = { "kiro" } },
+		},
+		vhard = {
+			{ Aircraft = { MigOrHindOrYak, MigOrHindOrYak, MigOrHindOrYak } },
+			{ Aircraft = { "mig", "mig", "mig", "mig" } },
+			{ Aircraft = { SukhoiVariant, SukhoiVariant } },
+			{ Aircraft = { "kiro", "kiro" } },
+		},
+		brutal = {
+			{ Aircraft = { MigOrHindOrYak, MigOrHindOrYak, MigOrHindOrYak, MigOrHindOrYak } },
+			{ Aircraft = { "mig", "mig", "mig", "mig" } },
+			{ Aircraft = { SukhoiVariant, SukhoiVariant, SukhoiVariant } },
+			{ Aircraft = { "kiro", "kiro", "kiro" } },
+		}
+	},
+	GDI = {
+		easy = {
+			{ Aircraft = { "orca" } },
+			{ Aircraft = { "orcb" } },
+		},
+		normal = {
+			{ Aircraft = { "orca", "orca" } },
+			{ Aircraft = { "a10" } },
+			{ Aircraft = { "a10.gau" } },
+			{ Aircraft = { "orcb" } },
+			{ Aircraft = { "auro" } },
+		},
+		hard = {
+			{ Aircraft = { "orca", "orca", "orca" } },
+			{ Aircraft = { "a10", "a10" } },
+			{ Aircraft = { "a10.gau", "a10.gau" } },
+			{ Aircraft = { "orcb", "orcb" } },
+			{ Aircraft = { "auro", "auro" } },
+		},
+		vhard = {
+			{ Aircraft = { "orca", "orca", "orca", "orca" } },
+			{ Aircraft = { "a10", "a10", "a10" } },
+			{ Aircraft = { "a10.gau", "a10.gau" } },
+			{ Aircraft = { "orcb", "orcb" } },
+			{ Aircraft = { "auro", "auro" } },
+		},
+		brutal = {
+			{ Aircraft = { "orca", "orca", "orca", "orca" } },
+			{ Aircraft = { "a10", "a10", "a10", "a10" } },
+			{ Aircraft = { "a10.gau", "a10.gau", "a10.gau" } },
+			{ Aircraft = { "orcb", "orcb", "orcb" } },
+			{ Aircraft = { "auro", "auro", "auro" } }
+		}
+	},
+	Nod = {
+		easy = {
+			{ Aircraft = { "apch" } }
+		},
+		normal = {
+			{ Aircraft = { "apch", "apch" } },
+			{ Aircraft = { "scrn" } },
+			{ Aircraft = { "rah" } }
+		},
+		hard = {
+			{ Aircraft = { "apch", "apch", "apch" } },
+			{ Aircraft = { "scrn", "scrn" } },
+			{ Aircraft = { "rah", "rah" } }
+		},
+		vhard = {
+			{ Aircraft = { "apch", "apch", ApacheOrVenom } },
+			{ Aircraft = { "scrn", "scrn", "scrn" } },
+			{ Aircraft = { "rah", "rah", "rah" } },
+		},
+		brutal = {
+			{ Aircraft = { "apch", "apch", ApacheOrVenom, ApacheOrVenom } },
+			{ Aircraft = { "scrn", "scrn", "scrn", "scrn" } },
+			{ Aircraft = { "rah", "rah", "rah" } },
+			{ Aircraft = { "vert", "vert", "vert" } }
+		}
+	},
+	Scrin = {
+		easy = {
+			{ Aircraft = { "stmr" } },
+			{ Aircraft = { "torm" } },
+		},
+		normal = {
+			{ Aircraft = { "stmr", "stmr" } },
+			{ Aircraft = { "torm", "torm" } },
+			{ Aircraft = { "enrv" } },
+		},
+		hard = {
+			{ Aircraft = { "stmr", "stmr", "stmr" } },
+			{ Aircraft = { "torm", "torm", "torm" } },
+			{ Aircraft = { "enrv", "enrv" } },
+		},
+		vhard = {
+			{ Aircraft = { "stmr", "stmr", "stmr" } },
+			{ Aircraft = { "torm", "torm", "torm", "torm" } },
+			{ Aircraft = { "enrv", "enrv", "enrv" } },
+		},
+		brutal = {
+			{ Aircraft = { "stmr", "stmr", "stmr", "stmr" } },
+			{ Aircraft = { "torm", "torm", "torm", "torm" } },
+			{ Aircraft = { "enrv", "enrv", "enrv" } },
+		}
 	}
 }

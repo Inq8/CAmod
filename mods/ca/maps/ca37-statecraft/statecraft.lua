@@ -1,4 +1,15 @@
-MarineskoUnits = {
+MarineskoHardAndAboveCompositions = {
+	-- 0 to 10 minutes
+	{ Infantry = { "e3", "e1", "e1", "e1", "e1", "e1", "e2", "e3", "e4", "e1", "e1", "e1", "e3", "e1", "e1", "e1", "e1" }, Vehicles = { "btr.ai", "btr.ai" }, MaxTime = DateTime.Minutes(10), },
+
+	-- 10 to 16 minutes
+	{ Infantry = { "e3", "e1", "e1", "e1", "e1", "e1", "e2", "e3", "e4", "e1", "e1", "e1", "e3", "e1", "e1", "e1", "e1", "cmsr", "shok", "shok", "e1", "e1", "e1" }, Vehicles = { "3tnk", "btr.ai", "btr.ai", "btr.ai" }, MinTime = DateTime.Minutes(10), MaxTime = DateTime.Minutes(16), },
+
+	-- 16 minutes onwards
+	{ Infantry = { "e3", "e1", "e1", "e1", "e1", "e1", "e2", "e3", "e4", "e1", "e1", "e1", "e3", "e1", "e1", "e1", "e1", "cmsr", "shok", "shok", "ttrp", "ttrp", "e1", "e1", "e1", "e1", "e1" }, Vehicles = { SovietMammothVariant, "btr.ai", "btr.ai", "btr.ai", "btr.ai" }, MinTime = DateTime.Minutes(16), },
+}
+
+MarineskoCompositions = {
 	easy = {
 		-- 0 to 14 minutes
 		{ Infantry = { "e3", "e1", "e1", "e1", "e2", "e4", "e1", "e1",  }, Vehicles = { "btr" }, MaxTime = DateTime.Minutes(14), },
@@ -16,19 +27,23 @@ MarineskoUnits = {
 		-- 16 minutes onwards
 		{ Infantry = { "e3", "e1", "e1", "e1", "e1", "e1", "e2", "e3", "e4", "e1", "e1", "e1", "e3", "e1", "e1", "e1", "e1", "cmsr", "shok", "ttrp", "e1", "e1", "e1" }, Vehicles = { "3tnk", "btr.ai", "btr.ai", "btr.ai"  }, MinTime = DateTime.Minutes(16), },
 	},
-	hard = {
-		-- 0 to 10 minutes
-		{ Infantry = { "e3", "e1", "e1", "e1", "e1", "e1", "e2", "e3", "e4", "e1", "e1", "e1", "e3", "e1", "e1", "e1", "e1" }, Vehicles = { "btr.ai", "btr.ai" }, MaxTime = DateTime.Minutes(10), },
-
-		-- 10 to 16 minutes
-		{ Infantry = { "e3", "e1", "e1", "e1", "e1", "e1", "e2", "e3", "e4", "e1", "e1", "e1", "e3", "e1", "e1", "e1", "e1", "cmsr", "shok", "shok", "e1", "e1", "e1" }, Vehicles = { "3tnk", "btr.ai", "btr.ai", "btr.ai" }, MinTime = DateTime.Minutes(10), MaxTime = DateTime.Minutes(16), },
-
-		-- 16 minutes onwards
-		{ Infantry = { "e3", "e1", "e1", "e1", "e1", "e1", "e2", "e3", "e4", "e1", "e1", "e1", "e3", "e1", "e1", "e1", "e1", "cmsr", "shok", "shok", "ttrp", "ttrp", "e1", "e1", "e1", "e1", "e1" }, Vehicles = { SovietMammothVariant, "btr.ai", "btr.ai", "btr.ai", "btr.ai" }, MinTime = DateTime.Minutes(16), },
-	}
+	hard = MarineskoHardAndAboveCompositions,
+	vhard = MarineskoHardAndAboveCompositions,
+	brutal = MarineskoHardAndAboveCompositions
 }
 
-RomanovUnits = {
+RomanovHardAndAboveCompositions = {
+	-- 0 to 10 minutes
+	{ Infantry = { }, Vehicles = { "3tnk.rhino", "btr.ai", "3tnk.rhino", "btr.ai" }, MaxTime = DateTime.Minutes(10), },
+
+	-- 10 to 16 minutes
+	{ Infantry = { }, Vehicles = { SovietMammothVariant, "btr.ai", SovietMammothVariant, "3tnk.rhino", "btr.ai", "3tnk.rhino" }, MinTime = DateTime.Minutes(10), MaxTime = DateTime.Minutes(16) },
+
+	-- 16 minutes onwards
+	{ Infantry = { }, Vehicles = { "apoc", SovietMammothVariant, SovietMammothVariant, SovietMammothVariant, "3tnk.rhino", "btr.ai", "btr.ai" }, MinTime = DateTime.Minutes(16) },
+}
+
+RomanovCompositions = {
 	easy = {
 		-- 0 to 14 minutes
 		{ Infantry = { }, Vehicles = { "3tnk.rhino", "3tnk.rhino" }, MaxTime = DateTime.Minutes(14), },
@@ -46,19 +61,23 @@ RomanovUnits = {
 		-- 15 minutes onwards
 		{ Infantry = { }, Vehicles = { SovietMammothVariant, SovietMammothVariant, "3tnk.rhino", "3tnk.rhino"  }, MinTime = DateTime.Minutes(16) },
 	},
-	hard = {
-		-- 0 to 10 minutes
-		{ Infantry = { }, Vehicles = { "3tnk.rhino", "btr.ai", "3tnk.rhino", "btr.ai" }, MaxTime = DateTime.Minutes(10), },
-
-		-- 10 to 16 minutes
-		{ Infantry = { }, Vehicles = { SovietMammothVariant, "btr.ai", SovietMammothVariant, "3tnk.rhino", "btr.ai", "3tnk.rhino" }, MinTime = DateTime.Minutes(10), MaxTime = DateTime.Minutes(16) },
-
-		-- 16 minutes onwards
-		{ Infantry = { }, Vehicles = { "apoc", SovietMammothVariant, SovietMammothVariant, SovietMammothVariant, "3tnk.rhino", "btr.ai", "btr.ai" }, MinTime = DateTime.Minutes(16) },
-	}
+	hard = RomanovHardAndAboveCompositions,
+	vhard = RomanovHardAndAboveCompositions,
+	brutal = RomanovHardAndAboveCompositions
 }
 
-KrukovUnits = {
+KrukovHardAndAboveCompositions = {
+	-- 0 to 10 minutes
+	{ Infantry = { "e3", "e1", "e1", "e1", "e1", "e2", "e4" }, Vehicles = { "grad", "grad" }, MaxTime = DateTime.Minutes(10), },
+
+	-- 10 to 16 minutes
+	{ Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e4", "e1", "e1" }, Vehicles = { SovietMammothVariant, "grad", "grad", SovietAdvancedArty }, MinTime = DateTime.Minutes(10), MaxTime = DateTime.Minutes(16), },
+
+	-- 16 minutes onwards
+	{ Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e4", "e1", "e1" }, Vehicles = { SovietMammothVariant, "grad", "grad", SovietAdvancedArty, SovietAdvancedArty, SovietAdvancedArty }, MinTime = DateTime.Minutes(16), },
+}
+
+KrukovCompositions = {
 	easy = {
 		-- 0 to 14 minutes
 		{ Infantry = { "e3", "e1", "e1", "e1", "e2", "e4" }, Vehicles = { "katy", "katy" }, MaxTime = DateTime.Minutes(14), },
@@ -76,198 +95,124 @@ KrukovUnits = {
 		-- 15 minutes onwards
 		{ Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e4", "e1", "e1" }, Vehicles = { "grad", "grad", "v2rl", SovietAdvancedArty }, MinTime = DateTime.Minutes(16), },
 	},
-	hard = {
-		-- 0 to 10 minutes
-		{ Infantry = { "e3", "e1", "e1", "e1", "e1", "e2", "e4" }, Vehicles = { "grad", "grad" }, MaxTime = DateTime.Minutes(10), },
-
-		-- 10 to 16 minutes
-		{ Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e4", "e1", "e1" }, Vehicles = { SovietMammothVariant, "grad", "grad", SovietAdvancedArty }, MinTime = DateTime.Minutes(10), MaxTime = DateTime.Minutes(16), },
-
-		-- 16 minutes onwards
-		{ Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e4", "e1", "e1" }, Vehicles = { SovietMammothVariant, "grad", "grad", SovietAdvancedArty, SovietAdvancedArty, SovietAdvancedArty }, MinTime = DateTime.Minutes(16), },
-	}
+	hard = KrukovHardAndAboveCompositions,
+	vhard = KrukovHardAndAboveCompositions,
+	brutal = KrukovHardAndAboveCompositions
 }
 
 MainAttackValues = {
 	easy = { Min = 5, Max = 15 },
 	normal = { Min = 15, Max = 33 },
 	hard = { Min = 25, Max = 55 },
+	vhard = { Min = 25, Max = 55 },
+	brutal = { Min = 25, Max = 55 }
 }
 
 SecondaryAttackValues = {
 	easy = { Min = 2, Max = 7 },
 	normal = { Min = 8, Max = 16 },
 	hard = { Min = 12, Max = 28 },
+	vhard = { Min = 12, Max = 28 },
+	brutal = { Min = 12, Max = 28 }
 }
 
 Squads = {
 	MarineskoMain = {
-		Delay = {
-			easy = DateTime.Minutes(7),
-			normal = DateTime.Minutes(5),
-			hard = DateTime.Minutes(3)
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(5)),
 		AttackValuePerSecond = MainAttackValues,
 		FollowLeader = true,
-		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
-		Units = MarineskoUnits,
+		Compositions = MarineskoCompositions,
 		AttackPaths = {
 			{ MarineskoRally1.Location },
 			{ MarineskoRally2.Location },
 		},
 	},
 	MarineskoVsRomanov = {
-		Delay = {
-			easy = DateTime.Minutes(8),
-			normal = DateTime.Minutes(6),
-			hard = DateTime.Minutes(4)
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(6)),
 		AttackValuePerSecond = SecondaryAttackValues,
 		FollowLeader = true,
-		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
-		Units = MarineskoUnits,
+		Compositions = MarineskoCompositions,
 		AttackPaths = {
 			{ Middle.Location, RomanovBase.Location },
 		},
 	},
 	MarineskoVsKrukov = {
-		Delay = {
-			easy = DateTime.Minutes(8),
-			normal = DateTime.Minutes(6),
-			hard = DateTime.Minutes(4)
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(6)),
 		AttackValuePerSecond = SecondaryAttackValues,
 		FollowLeader = true,
-		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
-		Units = MarineskoUnits,
+		Compositions = MarineskoCompositions,
 		AttackPaths = {
 			{ MarineskoRally4.Location, KrukovBase.Location },
 		},
 	},
 	RomanovMain = {
-		Delay = {
-			easy = DateTime.Minutes(7),
-			normal = DateTime.Minutes(5),
-			hard = DateTime.Minutes(3)
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(5)),
 		AttackValuePerSecond = MainAttackValues,
 		FollowLeader = true,
-		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
-		Units = RomanovUnits,
+		Compositions = RomanovCompositions,
 		AttackPaths = {
 			{ RomanovRally1.Location },
 			{ RomanovRally2.Location },
 		},
 	},
 	RomanovVsMarinesko = {
-		Delay = {
-			easy = DateTime.Minutes(8),
-			normal = DateTime.Minutes(6),
-			hard = DateTime.Minutes(4)
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(6)),
 		AttackValuePerSecond = SecondaryAttackValues,
 		FollowLeader = true,
-		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
-		Units = RomanovUnits,
+		Compositions = RomanovCompositions,
 		AttackPaths = {
 			{ Middle.Location, MarineskoBase.Location },
 		},
 	},
 	RomanovVsKrukov = {
-		Delay = {
-			easy = DateTime.Minutes(8),
-			normal = DateTime.Minutes(6),
-			hard = DateTime.Minutes(4)
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(6)),
 		AttackValuePerSecond = SecondaryAttackValues,
 		FollowLeader = true,
-		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
-		Units = RomanovUnits,
+		Compositions = RomanovCompositions,
 		AttackPaths = {
 			{ RomanovRally4.Location, KrukovBase.Location },
 		},
 	},
 	KrukovMain = {
-		Delay = {
-			easy = DateTime.Minutes(8),
-			normal = DateTime.Minutes(6),
-			hard = DateTime.Minutes(4)
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(6)),
 		AttackValuePerSecond = MainAttackValues,
 		FollowLeader = true,
-		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
-		Units = KrukovUnits,
+		Compositions = KrukovCompositions,
 		AttackPaths = {
 			{ KrukovRally1.Location },
 		},
 	},
 	KrukovVsMarinesko = {
-		Delay = {
-			easy = DateTime.Minutes(8),
-			normal = DateTime.Minutes(6),
-			hard = DateTime.Minutes(4)
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(6)),
 		AttackValuePerSecond = SecondaryAttackValues,
 		FollowLeader = true,
-		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
-		Units = KrukovUnits,
+		Compositions = KrukovCompositions,
 		AttackPaths = {
 			{ KrukovRally2.Location, MarineskoBase.Location },
 		},
 	},
 	KrukovVsRomanov = {
-		Delay = {
-			easy = DateTime.Minutes(8),
-			normal = DateTime.Minutes(6),
-			hard = DateTime.Minutes(4)
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(6)),
 		AttackValuePerSecond = SecondaryAttackValues,
 		FollowLeader = true,
-		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
-		Units = KrukovUnits,
+		Compositions = KrukovCompositions,
 		AttackPaths = {
 			{ KrukovRally3.Location, RomanovBase.Location },
 		},
 	},
 	KrukovAir = {
-		Delay = {
-			easy = DateTime.Minutes(14),
-			normal = DateTime.Minutes(12),
-			hard = DateTime.Minutes(10)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 7, Max = 7 },
-			normal = { Min = 14, Max = 14 },
-			hard = { Min = 21, Max = 21 },
-		},
-		ProducerTypes = { Aircraft = { "afld" } },
-		Units = {
-			easy = {
-				{ Aircraft = { "mig" }, { "hind" } }
-			},
-			normal = {
-				{ Aircraft = { "mig", "mig" }, { "hind", "hind" } }
-			},
-			hard = {
-				{ Aircraft = { "mig", "mig", "mig" }, { "hind", "hind", "hind" } }
-			}
-		},
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(13)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		Compositions = AirCompositions.Soviet,
 	},
 	KrukovAntiTankAir = {
-		Delay = {
-			hard = DateTime.Minutes(10)
-		},
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(12)),
 		ActiveCondition = function()
 			return #USSR.GetActorsByTypes({ "4tnk", "4tnk.atomic", "apoc", "apoc.atomic" }) > 8
 		end,
-		AttackValuePerSecond = {
-			hard = { Min = 35, Max = 35 },
-		},
-		ProducerTypes = { Aircraft = { "afld" } },
-		Units = {
-			hard = {
-				{ Aircraft = { "suk", "suk", "suk", "suk", "suk" } },
-			}
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 24, Max = 24 }),
+		Compositions = {
+			{ Aircraft = { "suk", "suk", "suk", "suk", "suk" } },
 		},
 	},
 }
@@ -376,38 +321,27 @@ InitGenerals = function()
 		end)
 	end)
 
-	Trigger.AfterDelay(Squads.MarineskoMain.Delay[Difficulty], function()
-		InitAttackSquad(Squads.MarineskoMain, Marinesko)
-		InitAttackSquad(Squads.MarineskoVsRomanov, Marinesko, Romanov)
-		InitAttackSquad(Squads.MarineskoVsKrukov, Marinesko, Krukov)
-	end)
+	InitAttackSquad(Squads.MarineskoMain, Marinesko)
+	InitAttackSquad(Squads.MarineskoVsRomanov, Marinesko, Romanov)
+	InitAttackSquad(Squads.MarineskoVsKrukov, Marinesko, Krukov)
 
-	Trigger.AfterDelay(Squads.RomanovMain.Delay[Difficulty], function()
-		InitAttackSquad(Squads.RomanovMain, Romanov)
-		InitAttackSquad(Squads.RomanovVsMarinesko, Romanov, Marinesko)
-		InitAttackSquad(Squads.RomanovVsKrukov, Romanov, Krukov)
-	end)
+	InitAttackSquad(Squads.RomanovMain, Romanov)
+	InitAttackSquad(Squads.RomanovVsMarinesko, Romanov, Marinesko)
+	InitAttackSquad(Squads.RomanovVsKrukov, Romanov, Krukov)
 
-	Trigger.AfterDelay(Squads.KrukovMain.Delay[Difficulty], function()
-		InitAttackSquad(Squads.KrukovMain, Krukov)
-		InitAttackSquad(Squads.KrukovVsMarinesko, Krukov, Marinesko)
-		InitAttackSquad(Squads.KrukovVsRomanov, Krukov, Romanov)
-	end)
+	InitAttackSquad(Squads.KrukovMain, Krukov)
+	InitAttackSquad(Squads.KrukovVsMarinesko, Krukov, Marinesko)
+	InitAttackSquad(Squads.KrukovVsRomanov, Krukov, Romanov)
+	InitAirAttackSquad(Squads.KrukovAir, Krukov)
 
-	Trigger.AfterDelay(Squads.KrukovAir.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.KrukovAir, Krukov)
-	end)
-
-	if Difficulty == "hard" then
+	if IsHardOrAbove() then
 		Trigger.AfterDelay(DateTime.Minutes(15), function()
 			Actor.Create("imppara.upgrade", true, { Owner = Marinesko })
 			Actor.Create("rocketpods.upgrade", true, { Owner = Krukov })
 			Actor.Create("reactive.upgrade", true, { Owner = Romanov })
 		end)
 
-		Trigger.AfterDelay(Squads.KrukovAntiTankAir.Delay[Difficulty], function()
-			InitAirAttackSquad(Squads.KrukovAntiTankAir, Krukov, USSR, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic" })
-		end)
+		InitAirAttackSquad(Squads.KrukovAntiTankAir, Krukov, USSR, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic" })
 	end
 end
 
@@ -484,8 +418,7 @@ Unification = function()
 					InitTime = squad.InitTime,
 					AttackValuePerSecond = squad.AttackValuePerSecond,
 					FollowLeader = squad.FollowLeader,
-					ProducerTypes = squad.ProducerTypes,
-					Units = squad.Units,
+					Compositions = squad.Compositions,
 					AttackPaths = squad.AttackPaths,
 				}
 

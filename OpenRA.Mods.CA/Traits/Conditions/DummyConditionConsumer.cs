@@ -13,16 +13,16 @@ using OpenRA.Traits;
 namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("Just to prevent YAML errors when a condition isn't used (sometimes cleaner than removing a large number of traits/properties).")]
-	public class UnusedConditionInfo : TraitInfo
+	public class DummyConditionConsumerInfo : TraitInfo
 	{
 		[ConsumedConditionReference]
 		[FieldLoader.Require]
 		public readonly string Condition = null;
 
-		public override object Create(ActorInitializer init) { return new UnusedCondition(); }
+		public override object Create(ActorInitializer init) { return new DummyConditionConsumer(); }
 	}
 
-	public class UnusedCondition
+	public class DummyConditionConsumer
 	{
 
 	}

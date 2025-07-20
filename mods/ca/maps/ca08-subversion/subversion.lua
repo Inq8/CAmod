@@ -10,12 +10,37 @@ DroneTipLocations = { DroneTip1.Location, DroneTip2.Location, DroneTip3.Location
 
 EmpTipLocations = { EmpTip1.Location, EmpTip2.Location, EmpTip3.Location, EmpTip4.Location, EmpTip5.Location, EmpTip6.Location }
 
+VeryHardAndAboveCompositions = {
+	{ Infantry = { "n1", "n1", "n2", "n1", "n1", "n2", "n1" }, MaxTime = DateTime.Minutes(16) },
+	{ Infantry = { "n1", "n1", "n2", "n1", "n1", "n2", "ztrp", "n1" }, MinTime = DateTime.Minutes(16) },
+}
+
+if Difficulty == "brutal" then
+	table.insert(VeryHardAndAboveCompositions, {
+		{ Infantry = { "zrai", "zrai", "zrai" }, MinTime = DateTime.Minutes(26) },
+	})
+end
+
+Squads = {
+	Main = {
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(6)),
+		AttackValuePerSecond = {
+			vhard = { Min = 5, Max = 15 },
+			brutal = { Min = 10, Max = 20 },
+		},
+		FollowLeader = true,
+		ProducerActors = { Infantry = { WestBarracks, SouthBarracks, NorthBarracks } },
+		Compositions = AdjustCompositionsForDifficulty(VeryHardAndAboveCompositions),
+	},
+}
+
 -- Setup and Tick
 
 WorldLoaded = function()
 	Nod = Player.GetPlayer("Nod")
 	Greece = Player.GetPlayer("Greece")
 	GDI = Player.GetPlayer("GDI")
+	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { Nod }
 	TimerTicks = 0
 
@@ -25,10 +50,14 @@ WorldLoaded = function()
 	InitGDI()
 	InitGreece()
 
-	if Difficulty == "hard" then
+	if IsVeryHardOrBelow() then
+		VeryHardOnlyTank1.Destroy()
+	end
+
+	if IsHardOrAbove() then
+		local hospitalLocation = Hospital.Location
 		Hospital.Destroy()
-		Actor.Create("nuke", true, { Owner = GDI, Location = Power1Spawn.Location })
-		Actor.Create("nuke", true, { Owner = GDI, Location = Power2Spawn.Location })
+		Actor.Create("hosp.husk", true, { Owner = Neutral, Location = hospitalLocation })
 	else
 
 		if Difficulty == "normal" then
@@ -89,7 +118,7 @@ WorldLoaded = function()
 		end
 	end)
 
-	if Difficulty ~= "hard" then
+	if IsNormalOrBelow() then
 		Trigger.OnEnteredFootprint(DroneTipLocations, function(a, id)
 			if a.Owner == Nod and not DroneTipShown then
 				DroneTipShown = true
@@ -110,7 +139,7 @@ WorldLoaded = function()
 					BridgeTipShown = true
 					Tip("Too many guards up ahead. Find a way to neutralise them.")
 				end
-				if Difficulty ~= "hard" and p == EmpDroneReveal and not EmpDroneTipShown then
+				if IsNormalOrBelow() and p == EmpDroneReveal and not EmpDroneTipShown then
 					EmpDroneTipShown = true
 					Media.DisplayMessage("That E.M.P Drone could come in handy.", "Hacker", HSLColor.FromHex("00FF00"))
 				end
@@ -178,6 +207,9 @@ InitGDI = function()
 	AutoReplaceHarvesters(GDI)
 	InitAiUpgrades(GDI)
 	InitGDIPatrols()
+	if IsVeryHardOrAbove() then
+		InitAttackSquad(Squads.Main, GDI)
+	end
 	local gdiGroundAttackers = GDI.GetGroundAttackers()
 
 	Utils.Do(gdiGroundAttackers, function(a)
@@ -233,7 +265,7 @@ CommandoDeathTrigger = function(commando)
 				Commando = Reinforcements.Reinforce(Nod, { "rmbo" }, { Respawn.Location, RespawnRally.Location })[1]
 				Beacon.New(Nod, RespawnRally.CenterPosition)
 				Media.PlaySpeechNotification(Nod, "ReinforcementsArrived")
-				if Difficulty ~= "hard" then
+				if IsNormalOrBelow() then
 					Commando.GrantCondition("difficulty-" .. Difficulty)
 				end
 				CommandoDeathTrigger(Commando)
@@ -251,7 +283,7 @@ HackerDeathTrigger = function(hacker)
 					Hacker = Reinforcements.Reinforce(Nod, { "hack" }, { Respawn.Location, RespawnRally.Location })[1]
 					Beacon.New(Nod, RespawnRally.CenterPosition)
 					Media.PlaySpeechNotification(Nod, "ReinforcementsArrived")
-					if Difficulty ~= "hard" then
+					if IsNormalOrBelow() then
 						Hacker.GrantCondition("difficulty-" .. Difficulty)
 					end
 					HackerDeathTrigger(Hacker)
@@ -272,7 +304,7 @@ StealthTankDeathTrigger = function(stealthTank)
 					StealthTank = Reinforcements.Reinforce(Nod, { "stnk.nod" }, { Respawn.Location, RespawnRally.Location })[1]
 					Beacon.New(Nod, RespawnRally.CenterPosition)
 					Media.PlaySpeechNotification(Nod, "ReinforcementsArrived")
-					if Difficulty ~= "hard" then
+					if IsNormalOrBelow() then
 						StealthTank.GrantCondition("difficulty-" .. Difficulty)
 					end
 					StealthTankDeathTrigger(StealthTank)

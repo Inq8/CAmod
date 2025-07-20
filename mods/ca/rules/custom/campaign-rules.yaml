@@ -1,6 +1,7 @@
 ^ExistsInWorld:
 	GivesExperienceCA:
 		ActorExperienceOnDamage: false
+	ScriptTags:
 
 ^Palettes:
 	TintPostProcessEffect:
@@ -73,6 +74,17 @@ World:
 		CheckboxVisible: False
 	-SpawnStartingUnits:
 	-MapStartingLocations:
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: dropdown-difficulty.label
+		Description: dropdown-difficulty.description
+		Values:
+			easy: options-difficulty.easy
+			normal: options-difficulty.normal
+			hard: options-difficulty.hard
+			vhard: options-difficulty.vhard
+			brutal: options-difficulty.brutal
+		Default: normal
 	ObjectivesPanel:
 		PanelName: MISSION_OBJECTIVES
 	MapBuildRadius:
@@ -102,6 +114,31 @@ World:
 ^Disabled:
 	Buildable:
 		Prerequisites: ~disabled
+
+# Assigned to actors in missions, assigned in lua dynamically
+# (so we use DummyConditionConsumer to prevent yaml warnings)
+
+^ActorDifficultyConditions:
+	ExternalCondition@EASY:
+		Condition: difficulty-easy
+	ExternalCondition@NORMAL:
+		Condition: difficulty-normal
+	ExternalCondition@HARD:
+		Condition: difficulty-hard
+	ExternalCondition@VHARD:
+		Condition: difficulty-vhard
+	ExternalCondition@BRUTAL:
+		Condition: difficulty-brutal
+	DummyConditionConsumer@EASY:
+		Condition: difficulty-easy
+	DummyConditionConsumer@NORMAL:
+		Condition: difficulty-normal
+	DummyConditionConsumer@HARD:
+		Condition: difficulty-hard
+	DummyConditionConsumer@VHARD:
+		Condition: difficulty-vhard
+	DummyConditionConsumer@BRUTAL:
+		Condition: difficulty-brutal
 
 # Prevent neutralised units decaying
 
@@ -543,6 +580,7 @@ PDGY:
 
 ETPD:
 	Inherits: TPOD
+	Inherits@ActorDifficultyConditions: ^ActorDifficultyConditions
 	Inherits@SHIELDS: ^ScrinShields
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Inherits@SHRAPNEL: ^ThrowsShrapnelBig
@@ -599,22 +637,6 @@ ETPD:
 		InitialStanceAI: AttackAnything
 	SpawnActorOnDeath:
 		Actor: ETPD.Husk
-	ExternalCondition@NORMAL:
-		Condition: difficulty-normal
-	ExternalCondition@EASY:
-		Condition: difficulty-easy
-	FirepowerMultiplier@NORMAL:
-		Modifier: 75
-		RequiresCondition: difficulty-normal
-	FirepowerMultiplier@EASY:
-		Modifier: 50
-		RequiresCondition: difficulty-easy
-	DamageMultiplier@NORMAL:
-		Modifier: 125
-		RequiresCondition: difficulty-normal
-	DamageMultiplier@EASY:
-		Modifier: 150
-		RequiresCondition: difficulty-easy
 	Targetable@ETPD:
 		TargetTypes: ExterminatorTripod
 	Targetable@SHIELDED:
@@ -632,9 +654,6 @@ ETPD:
 		TargetTypes: DriverKillImmune
 	CaptureManager:
 		-BeingCapturedCondition:
-	DamageTypeDamageMultiplier@A2GPROTECTION:
-		Modifier: 75
-		RequiresCondition: !difficulty-easy
 	-ExternalCondition@UNITSELL:
 	-Sellable:
 	ChangesHealth@THEAL:

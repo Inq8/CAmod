@@ -1,4 +1,4 @@
-Difficulty = "normal"
+Difficulty = "easy"
 
 -- Setup and Tick
 

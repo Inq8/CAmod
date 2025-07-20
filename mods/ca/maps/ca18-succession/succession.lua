@@ -2,6 +2,8 @@ SuperweaponsEnabledTime = {
 	easy = DateTime.Seconds((60 * 25) + 41),
 	normal = DateTime.Seconds((60 * 20) + 41),
 	hard = DateTime.Seconds((60 * 15) + 41),
+	vhard = DateTime.Seconds((60 * 12) + 41),
+	brutal = DateTime.Seconds((60 * 10) + 41)
 }
 
 table.insert(UnitCompositions.Nod, {
@@ -16,20 +18,11 @@ AdjustedNodCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Nod)
 Squads = {
 	Main1 = {
 		InitTimeAdjustment = -DateTime.Minutes(10),
-		Delay = {
-			easy = DateTime.Minutes(3),
-			normal = DateTime.Minutes(1) + DateTime.Seconds(30),
-			hard = DateTime.Seconds(1),
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 12, Max = 25, RampDuration = DateTime.Minutes(16) },
-			normal = { Min = 25, Max = 50, RampDuration = DateTime.Minutes(14) },
-			hard = { Min = 40, Max = 80, RampDuration = DateTime.Minutes(12) },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(1) + DateTime.Seconds(30)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40, RampDuration = DateTime.Minutes(15) }),
 		FollowLeader = true,
 		DispatchDelay = DateTime.Seconds(15),
-		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
-		Units = AdjustedNodCompositions,
+		Compositions = AdjustedNodCompositions,
 		AttackPaths = {
 			{ NodRally1.Location },
 			{ NodRally2.Location },
@@ -40,20 +33,11 @@ Squads = {
 	},
 	Main2 = {
 		InitTimeAdjustment = -DateTime.Minutes(10),
-		Delay = {
-			easy = DateTime.Minutes(6),
-			normal = DateTime.Minutes(4),
-			hard = DateTime.Minutes(2),
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 12, Max = 25, RampDuration = DateTime.Minutes(16) },
-			normal = { Min = 25, Max = 50, RampDuration = DateTime.Minutes(14) },
-			hard = { Min = 40, Max = 80, RampDuration = DateTime.Minutes(12) },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(4)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40, RampDuration = DateTime.Minutes(15) }),
 		FollowLeader = true,
 		DispatchDelay = DateTime.Seconds(15),
-		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
-		Units = AdjustedNodCompositions,
+		Compositions = AdjustedNodCompositions,
 		AttackPaths = {
 			{ NodRally1.Location },
 			{ NodRally2.Location },
@@ -63,48 +47,18 @@ Squads = {
 		},
 	},
 	Air = {
-		Delay = {
-			easy = DateTime.Minutes(13),
-			normal = DateTime.Minutes(11),
-			hard = DateTime.Minutes(9)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 7, Max = 7 },
-			normal = { Min = 14, Max = 14 },
-			hard = { Min = 21, Max = 21 },
-		},
-		ProducerTypes = { Aircraft = { "hpad.td" } },
-		Units = {
-			easy = {
-				{ Aircraft = { "apch" } }
-			},
-			normal = {
-				{ Aircraft = { "apch", "apch" } },
-				{ Aircraft = { "scrn" } },
-				{ Aircraft = { "rah" } }
-			},
-			hard = {
-				{ Aircraft = { "apch", "apch", "apch" } },
-				{ Aircraft = { "scrn", "scrn" } },
-				{ Aircraft = { "rah", "rah" } }
-			}
-		},
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(11)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		Compositions = AirCompositions.Nod,
 	},
 	AntiTankAir = {
-		Delay = {
-			hard = DateTime.Minutes(10)
-		},
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(10)),
 		ActiveCondition = function()
 			return #USSR.GetActorsByTypes({ "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" }) > 8
 		end,
-		AttackValuePerSecond = {
-			hard = { Min = 35, Max = 35 },
-		},
-		ProducerTypes = { Aircraft = { "hpad.td" } },
-		Units = {
-			hard = {
-				{ Aircraft = { "scrn", "scrn", "scrn", "scrn", "scrn", "scrn", "scrn", "scrn" } },
-			}
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 24, Max = 24 }),
+		Compositions = {
+			{ Aircraft = { "scrn", "scrn", "scrn", "scrn", "scrn", "scrn", "scrn", "scrn" } },
 		},
 	}
 }
@@ -259,6 +213,13 @@ InitNod = function()
 	AutoReplaceHarvesters(Nod)
 	AutoRebuildConyards(Nod)
     InitAiUpgrades(Nod)
+	InitAttackSquad(Squads.Main1, Nod)
+	InitAttackSquad(Squads.Main2, Nod)
+	InitAirAttackSquad(Squads.Air, Nod)
+
+	if IsHardOrAbove() then
+		InitAirAttackSquad(Squads.AntiTankAir, Nod, USSR, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" })
+	end
 
 	local nodGroundAttackers = Nod.GetGroundAttackers()
 
@@ -271,22 +232,4 @@ InitNod = function()
 		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = Nod })
 		Actor.Create("ai.superweapons.enabled", true, { Owner = Nod })
 	end)
-
-    Trigger.AfterDelay(Squads.Main1.Delay[Difficulty], function()
-        InitAttackSquad(Squads.Main1, Nod)
-    end)
-
-    Trigger.AfterDelay(Squads.Main2.Delay[Difficulty], function()
-        InitAttackSquad(Squads.Main2, Nod)
-    end)
-
-    Trigger.AfterDelay(Squads.Air.Delay[Difficulty], function()
-        InitAirAttackSquad(Squads.Air, Nod)
-    end)
-
-	if Difficulty == "hard" then
-		Trigger.AfterDelay(Squads.AntiTankAir.Delay[Difficulty], function()
-			InitAirAttackSquad(Squads.AntiTankAir, Nod, USSR, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" })
-		end)
-	end
 end

@@ -143,6 +143,9 @@ button-top-buttons-sell-tooltip = Sell
 button-top-buttons-power-tooltip = Power Down
 button-top-buttons-repair-tooltip = Repair
 
+## SupportPowerTimerWidget
+support-power-timer = { $player }'s { $support-power }: { $time }
+
 supportpowers-support-powers-palette =
     .ready = READY
     .hold = ON HOLD

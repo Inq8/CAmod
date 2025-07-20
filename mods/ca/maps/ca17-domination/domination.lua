@@ -1,5 +1,11 @@
 RespawnEnabled = Map.LobbyOption("respawn") == "enabled"
 
+CommandoRespawnDelay = {
+	hard = DateTime.Minutes(3) + DateTime.Seconds(30),
+	vhard = DateTime.Minutes(2) + DateTime.Seconds(30),
+	brutal = DateTime.Minutes(1) + DateTime.Seconds(30)
+}
+
 Patrols = {
 	{
 		Units = { NodPatroller1a, NodPatroller1b, NodPatroller1c },
@@ -24,12 +30,34 @@ SouthWestPowerPlants = { SouthWestPower1, SouthWestPower2, SouthWestPower3, Sout
 SouthEastPowerPlants = { SouthEastPower1, SouthEastPower2, SouthEastPower3, SouthEastPower4 }
 NorthPowerPlants = { NorthPower1, NorthPower2, NorthPower3, NorthPower4 }
 
+VeryHardAndAboveCompositions = {
+	Infantry = { "n3", "n1", "n1", "n4", "n3", "n1", "n1", "n1" },
+	Infantry = { "n4", "n4", "n4", "n4", "n4" },
+}
+
+Squads = {
+	Main = {
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(3)),
+		ActiveCondition = function()
+			return LaserFencesDown
+		end,
+		AttackValuePerSecond = {
+			vhard = { Min = 10, Max = 15 },
+			brutal = { Min = 15, Max = 20 },
+		},
+		FollowLeader = true,
+		RandomProducerActor = true,
+		Compositions = AdjustCompositionsForDifficulty(VeryHardAndAboveCompositions),
+	},
+}
+
 WorldLoaded = function()
 	USSR = Player.GetPlayer("USSR")
 	Nod = Player.GetPlayer("Nod")
 	MissionPlayers = { USSR }
 	TimerTicks = 0
 	TempleOfNodLocation = TempleOfNod.Location
+	LaserFencesDown = false
 
 	Camera.Position = PlayerStart.CenterPosition
 
@@ -50,21 +78,24 @@ WorldLoaded = function()
 		EasyGren2.Destroy()
 	end
 
-	if Difficulty == "hard" then
+	if IsHardOrAbove() then
 		HealCrate1.Destroy()
 		HealCrate2.Destroy()
 	end
 
-	if Difficulty ~= "hard" then
-		HardOnlyAcolyte1.Destroy()
-		HardOnlyAcolyte2.Destroy()
-		HardOnlyAcolyte3.Destroy()
-		HardOnlyChemWarrior1.Destroy()
-		HardOnlyChemWarrior2.Destroy()
-		SouthStealthTank.Destroy()
-		HardOnlyTurret1.Destroy()
+	if IsVeryHardOrBelow() then
 		NodAssassin1.Destroy()
 		NodAssassin2.Destroy()
+		SouthStealthTank.Destroy()
+
+		if IsNormalOrBelow() then
+			HardOnlyAcolyte1.Destroy()
+			HardOnlyAcolyte2.Destroy()
+			HardOnlyAcolyte3.Destroy()
+			HardOnlyChemWarrior1.Destroy()
+			HardOnlyChemWarrior2.Destroy()
+			HardOnlyTurret1.Destroy()
+		end
 	end
 
 	if RespawnEnabled then
@@ -177,13 +208,13 @@ WorldLoaded = function()
 		end
 	end)
 
-	if Difficulty == "hard" then
+	if IsHardOrAbove() then
 		Trigger.OnProduction(NorthHand1, function(p, produced)
 			if produced.Type == "rmbo" and not produced.IsDead then
 				produced.Hunt()
 
 				Trigger.OnKilled(produced, function(self, killer)
-					Trigger.AfterDelay(DateTime.Minutes(2), function()
+					Trigger.AfterDelay(CommandoRespawnDelay[Difficulty], function()
 						SpawnCommando()
 					end)
 				end)
@@ -238,6 +269,7 @@ InitNod = function()
 	SetupRefAndSilosCaptureCredits(Nod)
 	AutoReplaceHarvesters(Nod)
 	InitAiUpgrades(Nod)
+	InitAttackSquad(Squads.Main, Nod)
 
 	Actor.Create("ai.unlimited.power", true, { Owner = Nod })
 
@@ -248,11 +280,13 @@ InitNod = function()
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsNodGroundHunterUnit)
 	end)
 
-	Utils.Do(Patrols, function(p)
-		Utils.Do(p.Units, function(unit)
-			if not unit.IsDead then
-				unit.Patrol(p.Path, true, 10)
-			end
+	Trigger.AfterDelay(1, function()
+		Utils.Do(Patrols, function(p)
+			Utils.Do(p.Units, function(unit)
+				if not unit.IsDead then
+					unit.Patrol(p.Path, true, 10)
+				end
+			end)
 		end)
 	end)
 end
@@ -264,6 +298,7 @@ SpawnCommando = function()
 end
 
 DisableLaserFences = function()
+	LaserFencesDown = true
 	local fences = Nod.GetActorsByType("lasw")
 
 	Utils.Do(fences, function(a)

@@ -1,4 +1,4 @@
-Difficulty = "normal"
+Difficulty = "easy"
 
 AlliedAttackPaths = {
 	{ WestAttackRally.Location, SovietBase.Location },
@@ -12,15 +12,10 @@ TeslaTriggerWest = { TeslaTriggerWest1.Location, TeslaTriggerWest2.Location, Tes
 
 Squads = {
 	Main = {
-		Delay = {
-			normal = DateTime.Minutes(6),
-		},
-		AttackValuePerSecond = {
-			normal = { Min = 10, Max = 10 },
-		},
+		Delay = DateTime.Minutes(6),
+		AttackValuePerSecond = { Min = 10, Max = 10 },
 		FollowLeader = true,
-		ProducerTypes = { Infantry = { "tent" }, Vehicles = { "weap" } },
-		Units = {
+		Compositions = {
 			{
 				Infantry = { "e3", "e1", "e1", "e1" },
 				Vehicles = { "jeep" },
@@ -126,11 +121,7 @@ InitGreece = function()
 	AutoRepairBuildings(Greece)
 	SetupRefAndSilosCaptureCredits(Greece)
 	AutoReplaceHarvesters(Greece)
-
-	-- Begin main attacks after difficulty based delay
-	Trigger.AfterDelay(Squads.Main.Delay[Difficulty], function()
-		InitAttackSquad(Squads.Main, Greece)
-	end)
+	InitAttackSquad(Squads.Main, Greece)
 
 	local greeceGroundAttackers = Greece.GetGroundAttackers()
 

@@ -16,148 +16,57 @@ SovietBaseCameras = { SovietBaseCam1, SovietBaseCam2, SovietBaseCam3 }
 SuperweaponsEnabledTime = {
 	easy = DateTime.Seconds((60 * 30) + 17),
 	normal = DateTime.Seconds((60 * 20) + 17),
-	hard = DateTime.Seconds((60 * 10) + 17),
+	hard = DateTime.Seconds((60 * 12) + 17),
+	vhard = DateTime.Seconds((60 * 10) + 17),
+	brutal = DateTime.Seconds((60 * 10) + 17)
 }
 
 Squads = {
 	Allies = {
 		InitTimeAdjustment = -DateTime.Minutes(10),
-		Delay = {
-			easy = DateTime.Minutes(3),
-			normal = DateTime.Minutes(2),
-			hard = DateTime.Seconds(10),
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 12, Max = 25, RampDuration = DateTime.Minutes(16) },
-			normal = { Min = 25, Max = 50, RampDuration = DateTime.Minutes(14) },
-			hard = { Min = 40, Max = 80, RampDuration = DateTime.Minutes(12) },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(2)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40, RampDuration = DateTime.Minutes(15) }),
 		FollowLeader = true,
-		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
-		Units = AdjustCompositionsForDifficulty(UnitCompositions.Allied),
+		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Allied),
 		AttackPaths = {
 			-- set on init
 		},
 	},
 	Nod = {
 		InitTimeAdjustment = -DateTime.Minutes(10),
-		Delay = {
-			easy = DateTime.Minutes(3),
-			normal = DateTime.Minutes(2),
-			hard = DateTime.Seconds(10),
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 12, Max = 25, RampDuration = DateTime.Minutes(16) },
-			normal = { Min = 25, Max = 50, RampDuration = DateTime.Minutes(14) },
-			hard = { Min = 40, Max = 80, RampDuration = DateTime.Minutes(12) },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(2)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40, RampDuration = DateTime.Minutes(15) }),
 		DispatchDelay = DateTime.Seconds(15),
 		FollowLeader = true,
-		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
-		Units = AdjustCompositionsForDifficulty(UnitCompositions.Nod),
+		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Nod),
 		AttackPaths = {
 			-- set on init
 		},
 	},
 	Soviets = {
 		InitTimeAdjustment = -DateTime.Minutes(10),
-		Delay = {
-			easy = DateTime.Minutes(3),
-			normal = DateTime.Minutes(2),
-			hard = DateTime.Seconds(10),
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 12, Max = 25, RampDuration = DateTime.Minutes(16) },
-			normal = { Min = 25, Max = 50, RampDuration = DateTime.Minutes(14) },
-			hard = { Min = 40, Max = 80, RampDuration = DateTime.Minutes(12) },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(2)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40, RampDuration = DateTime.Minutes(15) }),
 		FollowLeader = true,
-		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
-		Units = AdjustCompositionsForDifficulty(UnitCompositions.Soviet),
+		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Soviet),
 		AttackPaths = {
 			-- set on init
 		},
 	},
 	AlliedAir = {
-		Delay = {
-			easy = DateTime.Minutes(8),
-			normal = DateTime.Minutes(5),
-			hard = DateTime.Minutes(2)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 7, Max = 7 },
-			normal = { Min = 14, Max = 14 },
-			hard = { Min = 21, Max = 21 },
-		},
-		ProducerTypes = { Aircraft = { "hpad" } },
-		Units = {
-			easy = {
-				{ Aircraft = { "heli", "heli" } },
-				{ Aircraft = { "pmak" } },
-			},
-			normal = {
-				{ Aircraft = { "heli", "heli", "heli" } },
-				{ Aircraft = { "harr", "harr" } },
-				{ Aircraft = { "pmak", "pmak" } }
-			},
-			hard = {
-				{ Aircraft = { "heli", "heli", "heli", "heli" } },
-				{ Aircraft = { "harr", "harr", "harr" } },
-				{ Aircraft = { "pmak", "pmak", "pmak" } }
-			}
-		},
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(5)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		Compositions = AirCompositions.Allied,
 	},
 	NodAir = {
-		Delay = {
-			easy = DateTime.Minutes(8),
-			normal = DateTime.Minutes(5),
-			hard = DateTime.Minutes(2)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 7, Max = 7 },
-			normal = { Min = 14, Max = 14 },
-			hard = { Min = 21, Max = 21 },
-		},
-		ProducerTypes = { Aircraft = { "hpad.td" } },
-		Units = {
-			easy = {
-				{ Aircraft = { "apch" } }
-			},
-			normal = {
-				{ Aircraft = { "apch", "apch" } },
-				{ Aircraft = { "scrn" } },
-				{ Aircraft = { "rah" } }
-			},
-			hard = {
-				{ Aircraft = { "apch", "apch", "apch" } },
-				{ Aircraft = { "scrn", "scrn" } },
-				{ Aircraft = { "rah", "rah" } }
-			}
-		},
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(5)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		Compositions = AirCompositions.Nod,
 	},
 	SovietAir = {
-		Delay = {
-			easy = DateTime.Minutes(8),
-			normal = DateTime.Minutes(5),
-			hard = DateTime.Minutes(2)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 7, Max = 7 },
-			normal = { Min = 14, Max = 14 },
-			hard = { Min = 21, Max = 21 },
-		},
-		ProducerTypes = { Aircraft = { "afld" } },
-		Units = {
-			easy = {
-				{ Aircraft = { "mig" }, { HindOrYak } }
-			},
-			normal = {
-				{ Aircraft = { MigOrSukhoi, "mig" }, { HindOrYak, HindOrYak } }
-			},
-			hard = {
-				{ Aircraft = { MigOrSukhoi, MigOrSukhoi, MigOrSukhoi }, { HindOrYak, HindOrYak, HindOrYak } }
-			}
-		},
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(5)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		Compositions = AirCompositions.Soviet,
 	},
 }
 
@@ -225,7 +134,7 @@ WorldLoaded = function()
 					Actor.Create("QueueUpdaterDummy", true, { Owner = Scrin })
 				end)
 				SetupMainObjectives({ NodConyard, SovietConyard })
-				if Difficulty == "hard" then
+				if IsHardOrAbove() then
 					Trigger.AfterDelay(DateTime.Minutes(1), function()
 						local alliedGroundAttackers = Utils.Where(Greece.GetGroundAttackers(), IsGreeceGroundHunterUnit)
 						Utils.Do(alliedGroundAttackers, IdleHunt)
@@ -249,7 +158,7 @@ WorldLoaded = function()
 					Actor.Create("QueueUpdaterDummy", true, { Owner = Scrin })
 				end)
 				SetupMainObjectives({ NodConyard, AlliedConyard })
-				if Difficulty == "hard" then
+				if IsHardOrAbove() then
 					Trigger.AfterDelay(DateTime.Minutes(1), function()
 						local ussrGroundAttackers = Utils.Where(USSR.GetGroundAttackers(), IsUSSRGroundHunterUnit)
 						Utils.Do(ussrGroundAttackers, IdleHunt)
@@ -273,7 +182,7 @@ WorldLoaded = function()
 					Actor.Create("QueueUpdaterDummy", true, { Owner = Scrin })
 				end)
 				SetupMainObjectives({ SovietConyard, AlliedConyard })
-				if Difficulty == "hard" then
+				if IsHardOrAbove() then
 					Trigger.AfterDelay(DateTime.Minutes(1), function()
 						local nodGroundAttackers = Utils.Where(Nod.GetGroundAttackers(), IsNodGroundHunterUnit)
 						Utils.Do(nodGroundAttackers, IdleHunt)
@@ -356,6 +265,9 @@ end
 InitUSSR = function(paths, cameras)
 	Squads.Soviets.AttackPaths = paths
 
+	InitAttackSquad(Squads.Soviets, USSR)
+	InitAirAttackSquad(Squads.SovietAir, USSR)
+
 	local ussrGroundAttackers = USSR.GetGroundAttackers()
 
 	Utils.Do(ussrGroundAttackers, function(a)
@@ -377,14 +289,6 @@ InitUSSR = function(paths, cameras)
 		end)
 	end)
 
-	Trigger.AfterDelay(Squads.Soviets.Delay[Difficulty], function()
-		InitAttackSquad(Squads.Soviets, USSR)
-	end)
-
-	Trigger.AfterDelay(Squads.SovietAir.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.SovietAir, USSR)
-	end)
-
 	Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
 		Actor.Create("ai.superweapons.enabled", true, { Owner = USSR })
 		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = USSR })
@@ -397,6 +301,9 @@ end
 
 InitGreece = function(paths, cameras)
 	Squads.Allies.AttackPaths = paths
+
+	InitAttackSquad(Squads.Allies, Greece)
+	InitAirAttackSquad(Squads.AlliedAir, Greece)
 
 	local greeceGroundAttackers = Greece.GetGroundAttackers()
 
@@ -419,14 +326,6 @@ InitGreece = function(paths, cameras)
 		end)
 	end)
 
-	Trigger.AfterDelay(Squads.Allies.Delay[Difficulty], function()
-		InitAttackSquad(Squads.Allies, Greece)
-	end)
-
-    Trigger.AfterDelay(Squads.AlliedAir.Delay[Difficulty], function()
-        InitAirAttackSquad(Squads.AlliedAir, Greece)
-    end)
-
 	Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
 		Actor.Create("ai.superweapons.enabled", true, { Owner = Greece })
 		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = Greece })
@@ -439,6 +338,9 @@ end
 
 InitNod = function(paths, cameras)
 	Squads.Nod.AttackPaths = paths
+
+	InitAttackSquad(Squads.Nod, Nod)
+	InitAirAttackSquad(Squads.NodAir, Nod)
 
 	local nodGroundAttackers = Nod.GetGroundAttackers()
 
@@ -460,14 +362,6 @@ InitNod = function(paths, cameras)
 			InitAiUpgrades(Nod)
 		end)
 	end)
-
-	Trigger.AfterDelay(Squads.Nod.Delay[Difficulty], function()
-		InitAttackSquad(Squads.Nod, Nod)
-	end)
-
-    Trigger.AfterDelay(Squads.NodAir.Delay[Difficulty], function()
-        InitAirAttackSquad(Squads.NodAir, Nod)
-    end)
 
 	Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
 		Actor.Create("ai.superweapons.enabled", true, { Owner = Nod })
