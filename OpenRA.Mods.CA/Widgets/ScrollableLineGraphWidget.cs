@@ -451,7 +451,7 @@ namespace OpenRA.Mods.Common.Widgets
 			cr.DrawLine(graphOrigin, graphOrigin + new float2(0, -height), 1, Color.White);
 		}
 
-		public override ScrollableLineGraphWidget Clone()
+		public override Widget Clone()
 		{
 			return new ScrollableLineGraphWidget(this);
 		}
@@ -597,5 +597,17 @@ namespace OpenRA.Mods.Common.Widgets
 		}
 	}
 
-	public record ScrollableLineGraphSeries(string Key, Color Color, IEnumerable<float> Points);
+	public class ScrollableLineGraphSeries
+	{
+		public string Key;
+		public Color Color;
+		public IEnumerable<float> Points;
+
+		public ScrollableLineGraphSeries(string key, Color color, IEnumerable<float> points)
+		{
+			Key = key;
+			Color = color;
+			Points = points;
+		}
+	}
 }

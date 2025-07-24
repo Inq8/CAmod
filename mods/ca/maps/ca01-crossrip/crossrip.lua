@@ -257,10 +257,6 @@ Tick = function()
 				Tip("Build a barracks for access to static defenses which should allow you to hold off any early attacks. Use Pillboxes against infantry and Turrets against vehicles.")
 			end)
 
-			Trigger.AfterDelay(DateTime.Minutes(1), function()
-				Tip("Information is displayed in the bottom right of the screen if any single unit or structure is selected, listing its strengths and weaknesses (as long as Selected Unit Tooltip is enabled in settings).")
-			end)
-
 			Trigger.AfterDelay(DateTime.Minutes(2), function()
 				Tip("Mechanics can repair your vehicles in the field. Putting a Mechanic inside an IFV turns it into a repair vehicle. Build a Supply Depot for access to Mechanics.")
 			end)

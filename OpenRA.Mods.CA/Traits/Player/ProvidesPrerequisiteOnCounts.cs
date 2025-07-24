@@ -76,7 +76,16 @@ namespace OpenRA.Mods.CA.Traits
 		CountManager countManager;
 		UpgradesManager upgradesManager;
 
-		public int CurrentCount => countManager?.Counts.TryGetValue(Info.Type, out var count) == true ? count : 0;
+		public int CurrentCount
+		{
+			get
+			{
+				if (countManager != null && countManager.Counts.TryGetValue(Info.Type, out var count))
+					return count;
+				return 0;
+			}
+		}
+
 		bool requiredCountReached => CurrentCount >= Info.RequiredCount;
 		bool countLocked;
 
