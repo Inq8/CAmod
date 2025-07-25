@@ -21,7 +21,9 @@ Objectives = {
 ScrinReinforcementInterval = {
 	easy = DateTime.Seconds(45),
 	normal = DateTime.Seconds(30),
-	hard = DateTime.Seconds(15),
+	hard = DateTime.Seconds(20),
+	vhard = DateTime.Seconds(20),
+	brutal = DateTime.Seconds(20)
 }
 
 ScrinWaveInterval = {
@@ -323,7 +325,7 @@ ScrinReinforcements = function()
 			table.insert(units, Utils.Random(possibleUnits))
 		end
 
-		local units = Reinforcements.Reinforce(Scrin, units, { wormhole.Location }, 5, function(a)
+		Reinforcements.Reinforce(Scrin, units, { wormhole.Location }, 5, function(a)
 			a.Scatter()
 			Trigger.AfterDelay(5, function()
 				if not a.IsDead then

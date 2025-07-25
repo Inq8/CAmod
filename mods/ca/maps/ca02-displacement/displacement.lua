@@ -23,10 +23,11 @@ Convoys = {
 	}
 }
 
-ConvoyExits = {
-	{ FirstConvoyPath18.Location, CPos.New(FirstConvoyPath18.Location.X - 1, FirstConvoyPath18.Location.Y), CPos.New(FirstConvoyPath18.Location.X + 1, FirstConvoyPath18.Location.Y) },
-	{ SecondConvoyPath9.Location, CPos.New(SecondConvoyPath9.Location.X - 1, SecondConvoyPath9.Location.Y), CPos.New(SecondConvoyPath9.Location.X + 1, SecondConvoyPath9.Location.Y) }
-}
+ExitCells = {}
+
+for x = 13, 53 do
+	table.insert(ExitCells, CPos.New(x, 64))
+end
 
 ScrinAttackPaths = {
 	{ ScrinAttackAssembly1.Location, PlayerRefinery.Location },
@@ -164,12 +165,10 @@ WorldLoaded = function()
 	end)
 
 	-- When convoy units reach destination, remove them
-	Utils.Do(ConvoyExits, function(exitCells)
-		Trigger.OnEnteredFootprint(exitCells, function(a, id)
-			if a.Owner == England then
-				a.Destroy()
-			end
-		end)
+	Trigger.OnEnteredFootprint(ExitCells, function(a, id)
+		if a.Owner == England then
+			a.Destroy()
+		end
 	end)
 
 	-- Easter egg
@@ -289,6 +288,11 @@ InitConvoy = function()
 		local trucks = Reinforcements.Reinforce(England, ConvoyUnits, nextConvoy.Spawn, 50, function(truck)
 			Utils.Do(nextConvoy.Path, function(waypoint)
 				truck.Move(waypoint)
+			end)
+			Trigger.OnIdle(truck, function(self)
+				if not self.IsDead then
+					self.Move(Utils.Random(ExitCells))
+				end
 			end)
 		end)
 

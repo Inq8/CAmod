@@ -17,6 +17,12 @@ StructureBuildTimeMultipliers = {
 	brutal = 0.8
 }
 
+McvRebuildDelay = {
+	hard = DateTime.Minutes(8),
+	vhard = DateTime.Minutes(5),
+	brutal = DateTime.Minutes(3),
+}
+
 UnitBuildTimeMultipliers = {
 	easy = 1.25, -- 2000 value/min per queue (33/s)
 	normal = 0.81, -- 3062 value/min per queue (51/s)
@@ -720,7 +726,7 @@ McvRequestTrigger = function(a, conyard)
 end
 
 QueueMcv = function(player, mcvType)
-	Trigger.AfterDelay(DateTime.Minutes(8), function()
+	Trigger.AfterDelay(McvRebuildDelay[Difficulty], function()
 		local producers = player.GetActorsByTypes(FactoryTypes)
 
 		if #producers > 0 then

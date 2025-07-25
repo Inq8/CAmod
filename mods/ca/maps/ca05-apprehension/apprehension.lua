@@ -59,11 +59,11 @@ WorldLoaded = function()
 	end
 
 	if IsVeryHardOrBelow() then
-		local brutalOnlyUnits = Map.GetActorsByTypes({ "shad", "hftk" })
+		local brutalOnlyUnits = Nod.GetActorsByTypes({ "shad", "hftk" })
 		Utils.Do(brutalOnlyUnits, function(a) a.Destroy() end)
 
 		if IsHardOrBelow() then
-			local blackHand = Map.GetActorsByType("bh")
+			local blackHand = Nod.GetActorsByType("bh")
 			Utils.Do(blackHand, function(a) a.Destroy() end)
 
 			VeryHardOnlyFlameTank1.Destroy()

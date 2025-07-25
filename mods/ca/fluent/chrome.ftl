@@ -144,7 +144,7 @@ button-top-buttons-power-tooltip = Power Down
 button-top-buttons-repair-tooltip = Repair
 
 ## SupportPowerTimerWidget
-support-power-timer = { $player }'s { $support-power }: { $time }
+support-power-timer = { $support-power }: { $time }
 
 supportpowers-support-powers-palette =
     .ready = READY

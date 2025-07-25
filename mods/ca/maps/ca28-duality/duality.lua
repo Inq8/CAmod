@@ -33,6 +33,9 @@ WorldLoaded = function()
 	if not RespawnEnabled then
 		ObjectiveCommandoSurvive = GDI.AddObjective("Commando must survive.")
 		ObjectiveTanyaSurvive = GDI.AddObjective("Tanya must survive.")
+	else
+		ObjectiveCommandoSurvive = GDI.AddSecondaryObjective("Keep Commando alive.")
+		ObjectiveTanyaSurvive = GDI.AddSecondaryObjective("Keep Tanya alive.")
 	end
 
 	Scrin.Resources = Scrin.ResourceCapacity
@@ -123,12 +126,16 @@ OncePerSecondChecks = function()
 					if a.Type == "rmbo" then
 						if GDI.IsObjectiveCompleted(ObjectiveFindTanya) then
 							CommandoEscaped = true
-							GDI.MarkCompletedObjective(ObjectiveCommandoSurvive)
+							if ObjectiveCommandoSurvive ~= nil then
+								GDI.MarkCompletedObjective(ObjectiveKeepYuriAlive)
+							end
 							a.Destroy()
 						end
 					elseif a.Type == "e7" then
 						TanyaEscaped = true
-						GDI.MarkCompletedObjective(ObjectiveTanyaSurvive)
+						if ObjectiveTanyaSurvive ~= nil then
+							GDI.MarkCompletedObjective(ObjectiveTanyaSurvive)
+						end
 						a.Destroy()
 					end
 				end
@@ -214,9 +221,8 @@ end
 
 CommandoDeathTrigger = function(commando)
 	Trigger.OnKilled(commando, function(self, killer)
-		if not RespawnEnabled and not CommandoEscaped then
-			GDI.MarkFailedObjective(ObjectiveCommandoSurvive)
-		elseif RespawnEnabled then
+		GDI.MarkFailedObjective(ObjectiveCommandoSurvive)
+		if RespawnEnabled then
 			Notification("Commando respawns in 30 seconds.")
 			Trigger.AfterDelay(DateTime.Seconds(30), function()
 				local respawnWaypoint = Exit
@@ -235,9 +241,8 @@ end
 
 TanyaDeathTrigger = function(tanya)
 	Trigger.OnKilled(tanya, function(self, killer)
-		if not RespawnEnabled and not TanyaEscaped then
-			GDI.MarkFailedObjective(ObjectiveTanyaSurvive)
-		elseif RespawnEnabled then
+		GDI.MarkFailedObjective(ObjectiveTanyaSurvive)
+		if RespawnEnabled then
 			Notification("Tanya respawns in 30 seconds.")
 			Trigger.AfterDelay(DateTime.Seconds(30), function()
 				local respawnWaypoint = Exit
@@ -277,7 +282,7 @@ ScrinReinforcements = function()
 			table.insert(units, Utils.Random(possibleUnits))
 		end
 
-		local units = Reinforcements.Reinforce(Scrin, units, { wormhole.Location }, 5, function(a)
+		Reinforcements.Reinforce(Scrin, units, { wormhole.Location }, 5, function(a)
 			a.Scatter()
 			Trigger.AfterDelay(5, function()
 				if not a.IsDead then

@@ -99,11 +99,11 @@ WorldLoaded = function()
 	end
 
 	if RespawnEnabled then
+		ObjectiveKeepYuriAlive = USSR.AddSecondaryObjective("Keep Yuri alive.")
 		RespawnTrigger(Yuri)
 		RespawnTrigger(Thief)
 	else
 		ObjectiveKeepYuriAlive = USSR.AddObjective("Yuri must survive.")
-
 		Trigger.OnKilled(Thief, function(self, killer)
 			if not USSR.IsObjectiveCompleted(ObjectiveStealCodes) then
 				USSR.MarkFailedObjective(ObjectiveStealCodes)
@@ -112,7 +112,6 @@ WorldLoaded = function()
 
 		Trigger.OnKilled(Yuri, function(self, killer)
 			USSR.MarkFailedObjective(ObjectiveKeepYuriAlive)
-
 			if ObjectiveEscape ~= nil and not USSR.IsObjectiveCompleted(ObjectiveEscape) then
 				USSR.MarkFailedObjective(ObjectiveEscape)
 			end
@@ -380,6 +379,7 @@ RespawnTrigger = function(a)
 	Trigger.OnKilled(a, function(self, killer)
 		if a.Type == "yuri" then
 			message = "Yuri has used his tremendous psionic power to cheat death. He will return in 30 seconds."
+			USSR.MarkFailedObjective(ObjectiveKeepYuriAlive)
 		else
 			message = "Yuri has used his tremendous psionic power to save the Thief from death. He will return in 30 seconds."
 		end

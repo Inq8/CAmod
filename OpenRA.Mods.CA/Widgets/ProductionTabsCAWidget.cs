@@ -104,7 +104,7 @@ namespace OpenRA.Mods.CA.Widgets
 		SpriteFont font;
 		Rectangle leftButtonRect;
 		Rectangle rightButtonRect;
-		readonly Lazy<ProductionPaletteWidget> paletteWidget;
+		readonly Lazy<ProductionPaletteCAWidget> paletteWidget;
 		string queueGroup;
 
 		readonly List<(ProductionQueue Queue, bool Enabled)> cachedProductionQueueEnabledStates = new();
@@ -123,7 +123,7 @@ namespace OpenRA.Mods.CA.Widgets
 			// Only visible if the production palette has icons to display
 			IsVisible = () => queueGroup != null && Groups[queueGroup].Tabs.Count > 0;
 
-			paletteWidget = Exts.Lazy(() => Ui.Root.Get<ProductionPaletteWidget>(PaletteWidget));
+			paletteWidget = Exts.Lazy(() => Ui.Root.Get<ProductionPaletteCAWidget>(PaletteWidget));
 		}
 
 		public override void Initialize(WidgetArgs args)
@@ -282,8 +282,10 @@ namespace OpenRA.Mods.CA.Widgets
 		// Is added to world.ActorAdded by the SidebarLogic handler
 		public void ActorChanged(Actor a)
 		{
-			// Ignore non-production actors and actors owned by non-local player
-			if (!a.Info.HasTraitInfo<ProductionQueueInfo>() || a.Owner != a.World.LocalPlayer)
+			if (a.Owner != a.World.LocalPlayer)
+				return;
+
+			if (!a.Info.HasTraitInfo<ProductionQueueInfo>() && !a.Info.HasTraitInfo<ProvidesPrerequisiteInfo>())
 				return;
 
 			var queues = a.World.ActorsWithTrait<ProductionQueue>()
