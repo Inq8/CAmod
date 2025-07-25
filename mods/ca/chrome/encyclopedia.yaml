@@ -28,10 +28,11 @@ Background@ENCYCLOPEDIA_PANEL:
 							Height: 30
 							Font: Bold
 							Visible: false
+							Background: tab-button
 				ScrollPanel@ACTOR_LIST:
 					Y: 65
 					Width: 250
-					Height: PARENT_HEIGHT - 25 - 65 - 10
+					Height: PARENT_HEIGHT - 65
 					Children:
 						ScrollItem@HEADER:
 							Background: scrollheader
@@ -76,7 +77,7 @@ Background@ENCYCLOPEDIA_PANEL:
 					X: PARENT_WIDTH - WIDTH
 					Y: 65
 					Width: PARENT_WIDTH - 250 - 10
-					Height: PARENT_HEIGHT - 25 - 65 - 10
+					Height: PARENT_HEIGHT - 65
 					Children:
 						ScrollPanel@ACTOR_DESCRIPTION_PANEL:
 							Width: PARENT_WIDTH - 148 - 10
@@ -220,9 +221,11 @@ Background@ENCYCLOPEDIA_PANEL:
 							Width: 64
 							Height: 48
 				Button@BACK_BUTTON:
-					Y: PARENT_HEIGHT - 30
-					Width: 140
-					Height: 30
+					Y: PARENT_HEIGHT - 25
+					X: PARENT_WIDTH - 148
+					Font: Bold
+					Width: 148
+					Height: 25
 					Text: button-back
 					Key: escape
 

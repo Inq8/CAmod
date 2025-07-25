@@ -195,12 +195,67 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			// Create the UI from the hierarchy
 			CreateFolderStructure();
 
+			// Select the first item in the first category on initial load
+			SelectFirstItem();
+
 			widget.Get<ButtonWidget>("BACK_BUTTON").OnClick = () =>
 			{
 				Game.Disconnect();
 				Ui.CloseWindow();
 				onExit();
 			};
+		}
+
+		void SelectFirstItem()
+		{
+			// Find the first available actor in the first top-level category
+			var firstCategory = folderNodes.Values
+				.Where(n => n.Parent == null && !string.IsNullOrEmpty(n.Name))
+				.OrderBy(n => GetTopLevelCategorySortOrder(n.Name))
+				.FirstOrDefault();
+
+			if (firstCategory != null)
+			{
+				// Look for actors directly in the top-level category first
+				if (firstCategory.Actors.Count > 0)
+				{
+					SelectActor(firstCategory.Actors[0], firstCategory.FullPath);
+					return;
+				}
+
+				// Then look in child categories (ordered by sort order)
+				foreach (var childCategory in firstCategory.Children.OrderBy(n => GetSecondLevelCategorySortOrder(n.Name)))
+				{
+					if (childCategory.Actors.Count > 0)
+					{
+						SelectActor(childCategory.Actors[0], childCategory.FullPath);
+						return;
+					}
+
+					// Check deeper levels recursively
+					var firstActorInSubcategory = GetFirstActorFromAnyNode(childCategory);
+					if (firstActorInSubcategory.actor != null)
+					{
+						SelectActor(firstActorInSubcategory.actor, firstActorInSubcategory.categoryPath);
+						return;
+					}
+				}
+			}
+		}
+
+		(ActorInfo actor, string categoryPath) GetFirstActorFromAnyNode(FolderNode node)
+		{
+			if (node.Actors.Count > 0)
+				return (node.Actors[0], node.FullPath);
+
+			foreach (var child in node.Children)
+			{
+				var (actor, categoryPath) = GetFirstActorFromAnyNode(child);
+				if (actor != null)
+					return (actor, categoryPath);
+			}
+
+			return (null, null);
 		}
 
 		void BuildFolderHierarchy()
@@ -328,6 +383,9 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 						() => selectedActor != null && selectedActor.Name == actor.Name,
 						() => SelectActor(actor, selectedRootNode.FullPath));
 
+					// Make selected items highlighted for better visibility
+					item.IsHighlighted = () => selectedActor != null && selectedActor.Name == actor.Name;
+
 					var bullet = item.GetOrNull<ImageWidget>("ICON");
 					if (bullet != null)
 						bullet.Bounds.X = 4; // No indentation for top-level actors
@@ -395,6 +453,9 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 						() => selectedActor != null && selectedActor.Name == actor.Name,
 						() => SelectActor(actor, node.FullPath));
 
+					// Make selected items highlighted for better visibility
+					item.IsHighlighted = () => selectedActor != null && selectedActor.Name == actor.Name;
+
 					var bullet = item.GetOrNull<ImageWidget>("ICON");
 					if (bullet != null)
 						bullet.Bounds.X = 4 + displayDepth * 15;
@@ -425,6 +486,9 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 		void CollapseNonAncestorCategories(string targetPath)
 		{
+			// Get the top-level category of the target path
+			var targetTopLevelCategory = targetPath.Split('/')[0];
+
 			// Get all ancestor paths of the target
 			var ancestorPaths = new HashSet<string>();
 			var currentPath = targetPath;
@@ -441,13 +505,18 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 					break;
 			}
 
-			// Collapse all expanded folders that are not ancestors of the target
+			// Collapse all expanded folders in the same top-level category that are not ancestors of the target
 			var foldersToCollapse = new List<string>();
 			foreach (var kvp in folderExpanded)
 			{
 				if (kvp.Value && !ancestorPaths.Contains(kvp.Key))
 				{
-					foldersToCollapse.Add(kvp.Key);
+					// Only collapse if it's in the same top-level category
+					var folderTopLevelCategory = kvp.Key.Split('/')[0];
+					if (folderTopLevelCategory == targetTopLevelCategory)
+					{
+						foldersToCollapse.Add(kvp.Key);
+					}
 				}
 			}
 
@@ -463,7 +532,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			if (!isCurrentlyExpanded)
 			{
-				// Expanding: collapse all other categories that are not ancestors of this one
+				// Expanding: collapse all other categories in the same top-level category that are not ancestors of this one
 				CollapseNonAncestorCategories(folderPath);
 			}
 
@@ -474,54 +543,6 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			actorList.RemoveChildren();
 			firstItem = null;
 			CreateFolderStructure();
-
-			// Always preserve the previously selected actor without any changes
-			if (selectedActor == null)
-			{
-				var (firstActor, firstCategoryPath) = GetFirstVisibleActorWithCategory();
-				if (firstActor != null)
-					SelectActor(firstActor, firstCategoryPath);
-			}
-		}
-
-		(ActorInfo actor, string categoryPath) GetFirstVisibleActorWithCategory()
-		{
-			// Look for actors in the selected top-level category
-			var selectedRootNode = folderNodes.Values.FirstOrDefault(n => n.FullPath == selectedTopLevelCategory);
-			if (selectedRootNode != null)
-			{
-				// First check actors directly in the selected category
-				if (selectedRootNode.Actors.Count > 0)
-					return (selectedRootNode.Actors[0], selectedRootNode.FullPath);
-
-				// Then check child nodes
-				foreach (var child in selectedRootNode.Children)
-				{
-					var (actor, categoryPath) = GetFirstActorFromNode(child);
-					if (actor != null)
-						return (actor, categoryPath);
-				}
-			}
-
-			return (null, null);
-		}
-
-		(ActorInfo actor, string categoryPath) GetFirstActorFromNode(FolderNode node)
-		{
-			if (folderExpanded.GetValueOrDefault(node.FullPath, false))
-			{
-				if (node.Actors.Count > 0)
-					return (node.Actors[0], node.FullPath);
-
-				foreach (var child in node.Children)
-				{
-					var (actor, categoryPath) = GetFirstActorFromNode(child);
-					if (actor != null)
-						return (actor, categoryPath);
-				}
-			}
-
-			return (null, null);
 		}
 
 		void SelectActor(ActorInfo actor, string categoryPath = null)
@@ -1119,14 +1140,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			firstItem = null;
 			CreateFolderStructure();
 
-			// Always preserve the previously selected actor without any changes
-			if (selectedActor == null)
-			{
-				// Only select first actor if no actor was previously selected
-				var (firstActor, firstCategoryPath) = GetFirstVisibleActorWithCategory();
-				if (firstActor != null)
-					SelectActor(firstActor, firstCategoryPath);
-			}
+			// Don't change the selected actor when switching categories
 		}
 
 		// Helper methods for category sorting

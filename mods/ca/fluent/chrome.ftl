@@ -149,3 +149,19 @@ support-power-timer = { $support-power }: { $time }
 supportpowers-support-powers-palette =
     .ready = READY
     .hold = ON HOLD
+
+## IngameMenuLogic
+menu-ingame =
+    .leave = Leave
+    .abort = Abort Mission
+    .restart = Restart
+    .surrender = Surrender
+    .load-game = Load Game
+    .save-game = Save Game
+    .music = Music
+    .settings = Settings
+    .return-to-map = Return to map
+    .resume = Resume
+    .save-map = Save Map
+    .exit-map = Exit Map Editor
+    .encyclopedia = Encyclopedia

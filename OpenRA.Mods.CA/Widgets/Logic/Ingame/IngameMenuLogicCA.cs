@@ -84,6 +84,9 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 		const string SettingsButton = "menu-ingame.settings";
 
 		[FluentReference]
+		const string EncyclopediaButton = "menu-ingame.encyclopedia";
+
+		[FluentReference]
 		const string ReturnToMap = "menu-ingame.return-to-map";
 
 		[FluentReference]
@@ -180,7 +183,8 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				{ "RESUME", CreateResumeButton },
 				{ "SAVE_MAP", CreateSaveMapButton },
 				{ "PLAY_MAP", CreatePlayMapButton },
-				{ "EXIT_EDITOR", CreateExitEditorButton }
+				{ "EXIT_EDITOR", CreateExitEditorButton },
+				{ "ENCYCLOPEDIA", CreateEncyclopediaButton },
 			};
 
 			isSinglePlayer = !world.LobbyInfo.GlobalSettings.Dedicated && world.LobbyInfo.NonBotClients.Count() == 1;
@@ -461,6 +465,24 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			{
 				hideMenu = true;
 				Ui.OpenWindow("SETTINGS_PANEL", new WidgetArgs()
+				{
+					{ "world", world },
+					{ "worldRenderer", worldRenderer },
+					{ "onExit", () => hideMenu = false },
+				});
+			};
+		}
+
+		void CreateEncyclopediaButton()
+		{
+			if (world.Type != WorldType.Regular)
+				return;
+
+			var button = AddButton("ENCYCLOPEDIA", EncyclopediaButton);
+			button.OnClick = () =>
+			{
+				hideMenu = true;
+				Ui.OpenWindow("ENCYCLOPEDIA_PANEL", new WidgetArgs()
 				{
 					{ "world", world },
 					{ "worldRenderer", worldRenderer },

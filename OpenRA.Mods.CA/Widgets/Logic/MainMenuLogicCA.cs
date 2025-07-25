@@ -134,7 +134,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			loadButton.IsDisabled = () => !GameSaveBrowserLogic.IsLoadPanelEnabled(modData.Manifest);
 			loadButton.OnClick = OpenGameSaveBrowserPanel;
 
-			var encyclopediaButton = singleplayerMenu.GetOrNull<ButtonWidget>("ENCYCLOPEDIA_BUTTON");
+			var encyclopediaButton = widget.GetOrNull<ButtonWidget>("ENCYCLOPEDIA_BUTTON");
 			if (encyclopediaButton != null)
 				encyclopediaButton.OnClick = OpenEncyclopediaPanel;
 
@@ -482,7 +482,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			SwitchMenu(MenuType.None);
 			Game.OpenWindow("ENCYCLOPEDIA_PANEL", new WidgetArgs
 			{
-				{ "onExit", () => SwitchMenu(MenuType.Singleplayer) }
+				{ "onExit", () => SwitchMenu(MenuType.Main) }
 			});
 		}
 
