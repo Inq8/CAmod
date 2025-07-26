@@ -63,7 +63,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			var background = Ui.Root.GetOrNull(tabs.BackgroundContainer);
 			if (background != null)
 			{
-				var palette = tabs.Parent.Get<ProductionPaletteWidget>(tabs.PaletteWidget);
+				var palette = tabs.Parent.Get<ProductionPaletteCAWidget>(tabs.PaletteWidget);
 				var icontemplate = background.Get("ICON_TEMPLATE");
 
 				Action<int, int> updateBackground = (oldCount, newCount) =>

@@ -148,8 +148,13 @@ namespace OpenRA.Mods.CA.Widgets
 
 			if (reverse) queues.Reverse();
 
-			CurrentQueue = queues.SkipWhile(q => q != CurrentQueue)
+			var newQueue = queues.SkipWhile(q => q != CurrentQueue)
 				.Skip(1).FirstOrDefault() ?? queues.FirstOrDefault();
+
+			if (newQueue == null)
+				return false;
+
+			CurrentQueue = newQueue;
 
 			return true;
 		}
