@@ -987,6 +987,7 @@ InitAttackWave = function(squad, player, targetPlayers)
 					return PlayerHasCharacteristic(squad.TargetPlayer, characteristic)
 				end)) -- target player has all required characteristics
 				and (composition.Prerequisites == nil or squad.Player.HasPrerequisites(composition.Prerequisites)) -- player has prerequisites
+				and (composition.EnabledFunc == nil or composition.EnabledFunc()) -- custom function for whether the composition is enabled
 		end)
 
 		-- determine whether to choose a special composition (33% chance if enough time has elapsed since last used)
@@ -2167,7 +2168,8 @@ UnitCompositions = {
 		{ Infantry = { "bh", "bh", "bh", "bh", "bh", "bh", "bh", "bh", "bh" }, Vehicles = { "hftk", "hftk", "hftk", "hftk", "hftk", "hftk" }, MinTime = DateTime.Minutes(18), IsSpecial = true },
 		{ Infantry = { "n3", "n1", "n1", "n1", "n4", "n1", "n3", "n1", "n1", "n1", "n1", "n1", "n1", "n3", "n1", "n1" }, Vehicles = { "wtnk", "wtnk", "wtnk", "wtnk", "wtnk" }, MinTime = DateTime.Minutes(18), IsSpecial = true },
 		{ Infantry = { }, Vehicles = { "bike", "bike", "bike", "bike", "bike", "bike", "bike", "bike", "bike", "bike", "bike", "bike", "bike", "bike" }, MinTime = DateTime.Minutes(18), IsSpecial = true },
-		{ Infantry = { "rmbc", "rmbc", "rmbc", "rmbc", "rmbc", "enli", "rmbc", "rmbc", "enli" }, MinTime = DateTime.Minutes(18), IsSpecial = true },
+		{ Infantry = { "rmbc", "rmbc", "rmbc", "rmbc", "rmbc", "enli", "rmbc", "rmbc", "enli" }, MinTime = DateTime.Minutes(18), IsSpecial = true, EnabledFunc = function() return IsHardOrAbove() end },
+		{ Infantry = { "reap", "reap", "reap", "reap", "reap", "reap", "reap", "reap", "reap" }, Vehicles = { "ltnk", "bike", "bike", "ltnk" }, MinTime = DateTime.Minutes(18), IsSpecial = true },
 	},
 	Scrin = {
 		-- 0 to 10 minutes

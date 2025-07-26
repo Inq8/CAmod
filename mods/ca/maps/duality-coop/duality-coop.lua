@@ -22,8 +22,8 @@ ScrinReinforcementInterval = {
 	easy = DateTime.Seconds(45),
 	normal = DateTime.Seconds(30),
 	hard = DateTime.Seconds(20),
-	vhard = DateTime.Seconds(20),
-	brutal = DateTime.Seconds(20)
+	vhard = DateTime.Seconds(15),
+	brutal = DateTime.Seconds(15)
 }
 
 ScrinWaveInterval = {

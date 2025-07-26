@@ -163,34 +163,38 @@ WorldLoaded = function()
 	AdjustPlayerStartingCashForDifficulty()
 	InitUSSR()
 
-	if IsNormalOrBelow() then
-		SovietMammoth1.Destroy()
-		SovietV22.Destroy()
+	if IsVeryHardOrBelow() then
+		MissileSilo.Destroy()
 
-		SovietV23.Destroy()
-		SovietV24.Destroy()
-		SovietMammoth3.Destroy()
+		if IsNormalOrBelow() then
+			SovietMammoth1.Destroy()
+			SovietV22.Destroy()
 
-		HardOnlySub1.Destroy()
-		HardOnlySub2.Destroy()
-		HardOnlySub3.Destroy()
-		HardOnlySub4.Destroy()
-		HardOnlySub5.Destroy()
+			SovietV23.Destroy()
+			SovietV24.Destroy()
+			SovietMammoth3.Destroy()
 
-		HardOnlyTeslaCoil1.Destroy()
-		HardOnlyTeslaCoil2.Destroy()
-		HardOnlyTeslaCoil3.Destroy()
+			HardOnlySub1.Destroy()
+			HardOnlySub2.Destroy()
+			HardOnlySub3.Destroy()
+			HardOnlySub4.Destroy()
+			HardOnlySub5.Destroy()
 
-		HardOnlyKatyusha1.Destroy()
-		HardOnlyKatyusha2.Destroy()
+			HardOnlyTeslaCoil1.Destroy()
+			HardOnlyTeslaCoil2.Destroy()
+			HardOnlyTeslaCoil3.Destroy()
 
-		Trigger.AfterDelay(DateTime.Seconds(3), function()
-			Tip("If you put a Mechanic inside an IFV it becomes a repair vehicle.")
-		end)
+			HardOnlyKatyusha1.Destroy()
+			HardOnlyKatyusha2.Destroy()
 
-		if Difficulty == "easy" then
-			SovietMammoth2.Destroy()
-			SovietV21.Destroy()
+			Trigger.AfterDelay(DateTime.Seconds(3), function()
+				Tip("If you put a Mechanic inside an IFV it becomes a repair vehicle.")
+			end)
+
+			if Difficulty == "easy" then
+				SovietMammoth2.Destroy()
+				SovietV21.Destroy()
+			end
 		end
 	end
 
@@ -406,6 +410,12 @@ HoldOutComplete = function()
 				Notification("Reinforcements have arrived.")
 				Reinforcements.Reinforce(Greece, { "2tnk", "mcv", "2tnk" }, { McvEntry.Location, McvRally.Location }, 75)
 				Beacon.New(Greece, McvRally.CenterPosition)
+			end)
+		end
+
+		if Difficulty == "brutal" then
+			Trigger.AfterDelay(DateTime.Minutes(10), function()
+				Actor.Create("ai.superweapons.enabled", true, { Owner = USSR })
 			end)
 		end
 	end

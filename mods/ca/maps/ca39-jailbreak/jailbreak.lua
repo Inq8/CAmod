@@ -15,11 +15,11 @@ CruiserInterval = {
 }
 
 ChronoTankInterval = {
-	easy = DateTime.Minutes(7),
-	normal = DateTime.Minutes(6),
-	hard = DateTime.Minutes(3),
+	easy = DateTime.Minutes(6),
+	normal = DateTime.Minutes(5),
+	hard = DateTime.Minutes(4),
 	vhard = DateTime.Minutes(3),
-	brutal = DateTime.Minutes(3)
+	brutal = DateTime.Minutes(2) + DateTime.Seconds(30)
 }
 
 SuperweaponsEnabledTime = {
@@ -320,12 +320,17 @@ InitCruisers = function()
 
 	if #currentCruisers == 0 then
 		local cruiserCount
-		if Difficulty == "easy" then
-			cruiserCount = 1
+
+		if Difficulty == "brutal" then
+			cruiserCount = 5
+		elseif Difficult == "vhard" then
+			cruiserCount = 4
+		elseif Difficulty == "hard" then
+			cruiserCount = 3
 		elseif Difficulty == "normal" then
 			cruiserCount = 2
-		elseif IsHardOrAbove() then
-			cruiserCount = 3
+		else
+			cruiserCount = 1
 		end
 
 		for i = 1, cruiserCount do

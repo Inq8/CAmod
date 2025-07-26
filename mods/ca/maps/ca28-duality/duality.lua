@@ -7,13 +7,13 @@ ScrinReinforcementInterval = {
 	easy = DateTime.Seconds(40),
 	normal = DateTime.Seconds(30),
 	hard = DateTime.Seconds(20),
-	vhard = DateTime.Seconds(20),
-	brutal = DateTime.Seconds(20)
+	vhard = DateTime.Seconds(15),
+	brutal = DateTime.Seconds(15)
 }
 
 ScrinWaveInterval = {
-	vhard = DateTime.Seconds(80),
-	brutal = DateTime.Seconds(40)
+	vhard = DateTime.Seconds(120),
+	brutal = DateTime.Seconds(60)
 }
 
 WorldLoaded = function()
@@ -127,7 +127,7 @@ OncePerSecondChecks = function()
 						if GDI.IsObjectiveCompleted(ObjectiveFindTanya) then
 							CommandoEscaped = true
 							if ObjectiveCommandoSurvive ~= nil then
-								GDI.MarkCompletedObjective(ObjectiveKeepYuriAlive)
+								GDI.MarkCompletedObjective(ObjectiveCommandoSurvive)
 							end
 							a.Destroy()
 						end

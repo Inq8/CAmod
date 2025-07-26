@@ -84,6 +84,9 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 		readonly Dictionary<string, FolderNode> folderNodes = new();
 		readonly Dictionary<string, bool> folderExpanded = new();
 
+		// Remember last selected actor for each top-level category
+		readonly Dictionary<string, ActorInfo> lastSelectedActorByCategory = new();
+
 		WAngle currentFacing = new WAngle(384);
 
 		ActorInfo selectedActor;
@@ -270,9 +273,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				var categories = encyclopedia.Category ?? "";
 
 				// Split by semicolon to allow multiple categories per actor
-				var categoryPaths = categories.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
-					.Select(c => c.Trim())
-					.ToArray();
+				var categoryPaths = ParseCategoryPaths(categories);
 
 				// Skip actors without categories - they should not be shown
 				if (categoryPaths.Length == 0)
@@ -379,27 +380,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				// Also show actors directly under the selected category
 				foreach (var actor in selectedRootNode.Actors)
 				{
-					var item = ScrollItemWidget.Setup(template,
-						() => selectedActor != null && selectedActor.Name == actor.Name,
-						() => SelectActor(actor, selectedRootNode.FullPath));
-
-					// Make selected items highlighted for better visibility
-					item.IsHighlighted = () => selectedActor != null && selectedActor.Name == actor.Name;
-
-					var bullet = item.GetOrNull<ImageWidget>("ICON");
-					if (bullet != null)
-						bullet.Bounds.X = 4; // No indentation for top-level actors
-
-					var label = item.Get<LabelWithTooltipWidget>("TITLE");
-					label.Bounds.X = 26; // Standard position for top-level actors
-
-					var name = actor.TraitInfos<TooltipInfo>().FirstOrDefault(info => info.EnabledByDefault)?.Name;
-					if (!string.IsNullOrEmpty(name))
-					{
-						var displayName = FluentProvider.GetMessage(name).Replace("Upgrade: ", "").Replace("Research: ", "");
-						label.GetText = () => $"{displayName}";
-						WidgetUtils.TruncateLabelToTooltip(label, displayName);
-					}
+					var item = CreateActorListItem(actor, selectedRootNode.FullPath, 0);
 
 					// Only set firstItem and select actor if no actor is currently selected
 					if (firstItem == null)
@@ -449,27 +430,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				// Then add actors
 				foreach (var actor in node.Actors)
 				{
-					var item = ScrollItemWidget.Setup(template,
-						() => selectedActor != null && selectedActor.Name == actor.Name,
-						() => SelectActor(actor, node.FullPath));
-
-					// Make selected items highlighted for better visibility
-					item.IsHighlighted = () => selectedActor != null && selectedActor.Name == actor.Name;
-
-					var bullet = item.GetOrNull<ImageWidget>("ICON");
-					if (bullet != null)
-						bullet.Bounds.X = 4 + displayDepth * 15;
-
-					var actorLabel = item.Get<LabelWithTooltipWidget>("TITLE");
-					actorLabel.Bounds.X = 26 + displayDepth * 15;
-
-					var name = actor.TraitInfos<TooltipInfo>().FirstOrDefault(info => info.EnabledByDefault)?.Name;
-					if (!string.IsNullOrEmpty(name))
-					{
-						var displayName = FluentProvider.GetMessage(name).Replace("Upgrade: ", "").Replace("Research: ", "");
-						actorLabel.GetText = () => $"{displayName}";
-						WidgetUtils.TruncateLabelToTooltip(actorLabel, displayName);
-					}
+					var item = CreateActorListItem(actor, node.FullPath, displayDepth);
 
 					// Only set firstItem and select actor if no actor is currently selected
 					if (firstItem == null)
@@ -552,6 +513,12 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			selectedActor = actor;
 			currentCategoryPath = categoryPath;
 
+			// Remember this actor for the current top-level category
+			if (!string.IsNullOrEmpty(selectedTopLevelCategory))
+			{
+				lastSelectedActorByCategory[selectedTopLevelCategory] = actor;
+			}
+
 			Player previewOwner = null;
 			if (!string.IsNullOrEmpty(selectedInfo.PreviewOwner))
 				previewOwner = world.Players.FirstOrDefault(p => p.InternalName == selectedInfo.PreviewOwner);
@@ -563,24 +530,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 					previewOwner = world.Players.FirstOrDefault(p => p.InternalName == inferredOwner);
 			}
 
-			var typeDictionary = new TypeDictionary()
-			{
-				new OwnerInit(previewOwner ?? world.WorldActor.Owner),
-				new FactionInit(world.WorldActor.Owner.PlayerReference.Faction),
-			};
-
-			foreach (var actorPreviewInit in renderActor.TraitInfos<IActorPreviewInitInfo>())
-				foreach (var init in actorPreviewInit.ActorPreviewInits(renderActor, ActorPreviewType.ColorPicker))
-				{
-					if (init is FacingInit)
-					{
-						typeDictionary.Add(new FacingInit(currentFacing));
-					}
-					else
-					{
-						typeDictionary.Add(init);
-					}
-				}
+			var typeDictionary = CreatePreviewTypeDictionary(previewOwner);
 
 			if (previewBackground.IsVisible())
 			{
@@ -895,12 +845,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			if (!string.IsNullOrEmpty(strengthsText) && strengthsLabel != null)
 			{
-				strengthsLabel.Bounds.Y = currentY;
-				strengthsLabel.Visible = true;
-				strengthsLabel.GetText = () => strengthsText;
-				var strengthsHeight = descriptionFont.Measure(strengthsText).Y;
-				strengthsLabel.Bounds.Height = strengthsHeight;
-				currentY += strengthsHeight;
+				SetupTextLabel(strengthsLabel, strengthsText, ref currentY, 0);
 			}
 			else if (strengthsLabel != null)
 			{
@@ -909,12 +854,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			if (!string.IsNullOrEmpty(weaknessesText) && weaknessesLabel != null)
 			{
-				weaknessesLabel.Bounds.Y = currentY;
-				weaknessesLabel.Visible = true;
-				weaknessesLabel.GetText = () => weaknessesText;
-				var weaknessesHeight = descriptionFont.Measure(weaknessesText).Y;
-				weaknessesLabel.Bounds.Height = weaknessesHeight;
-				currentY += weaknessesHeight;
+				SetupTextLabel(weaknessesLabel, weaknessesText, ref currentY, 0);
 			}
 			else if (weaknessesLabel != null)
 			{
@@ -923,12 +863,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			if (!string.IsNullOrEmpty(attributesText) && attributesLabel != null)
 			{
-				attributesLabel.Bounds.Y = currentY;
-				attributesLabel.Visible = true;
-				attributesLabel.GetText = () => attributesText;
-				var attributesHeight = descriptionFont.Measure(attributesText).Y;
-				attributesLabel.Bounds.Height = attributesHeight;
-				currentY += attributesHeight + 8;
+				SetupTextLabel(attributesLabel, attributesText, ref currentY, 8);
 			}
 			else if (attributesLabel != null)
 			{
@@ -941,12 +876,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			if (!string.IsNullOrEmpty(encyclopediaText) && encyclopediaDescriptionLabel != null)
 			{
-				encyclopediaDescriptionLabel.Bounds.Y = currentY;
-				encyclopediaDescriptionLabel.Visible = true;
-				encyclopediaDescriptionLabel.GetText = () => encyclopediaText;
-				var encyclopediaHeight = descriptionFont.Measure(encyclopediaText).Y;
-				encyclopediaDescriptionLabel.Bounds.Height = encyclopediaHeight;
-				currentY += encyclopediaHeight;
+				SetupTextLabel(encyclopediaDescriptionLabel, encyclopediaText, ref currentY, 0);
 			}
 			else if (encyclopediaDescriptionLabel != null)
 			{
@@ -978,24 +908,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 					previewOwner = world.Players.FirstOrDefault(p => p.InternalName == inferredOwner);
 			}
 
-			var typeDictionary = new TypeDictionary()
-			{
-				new OwnerInit(previewOwner ?? world.WorldActor.Owner),
-				new FactionInit(world.WorldActor.Owner.PlayerReference.Faction),
-			};
-
-			foreach (var actorPreviewInit in renderActor.TraitInfos<IActorPreviewInitInfo>())
-				foreach (var init in actorPreviewInit.ActorPreviewInits(renderActor, ActorPreviewType.ColorPicker))
-				{
-					if (init is FacingInit)
-					{
-						typeDictionary.Add(new FacingInit(currentFacing));
-					}
-					else
-					{
-						typeDictionary.Add(init);
-					}
-				}
+			var typeDictionary = CreatePreviewTypeDictionary(previewOwner);
 
 			if (previewBackground.IsVisible())
 				previewWidget.SetPreview(renderActor, typeDictionary);
@@ -1140,7 +1053,28 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			firstItem = null;
 			CreateFolderStructure();
 
-			// Don't change the selected actor when switching categories
+			// Try to restore the previously selected actor for this category
+			if (lastSelectedActorByCategory.TryGetValue(categoryPath, out var rememberedActor))
+			{
+				// Verify the actor still exists and is in the current category
+				if (info.ContainsKey(rememberedActor))
+				{
+					var encyclopedia = info[rememberedActor];
+					var categories = encyclopedia.Category ?? "";
+					var categoryPaths = ParseCategoryPaths(categories);
+
+					// Check if the remembered actor belongs to the current top-level category
+					// and find the appropriate category path for this actor in the current context
+					foreach (var actorCategoryPath in categoryPaths)
+					{
+						if (actorCategoryPath.Split('/')[0] == categoryPath)
+						{
+							SelectActor(rememberedActor, actorCategoryPath);
+							return;
+						}
+					}
+				}
+			}
 		}
 
 		// Helper methods for category sorting
@@ -1153,7 +1087,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				"GDI" => 2,
 				"Nod" => 3,
 				"Scrin" => 4,
-				_ => 1000 // All other categories come after the specified ones
+				_ => 1000
 			};
 		}
 
@@ -1167,7 +1101,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				"Buildings" => 3,
 				"Defenses" => 4,
 				"Naval" => 5,
-				_ => 1000 // All other categories come after the specified ones
+				_ => 1000
 			};
 		}
 
@@ -1177,6 +1111,90 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			renderActor = encyclopediaExtrasInfo != null && !string.IsNullOrEmpty(encyclopediaExtrasInfo.RenderPreviewActor) ?
 				modData.DefaultRules.Actors.GetValueOrDefault(encyclopediaExtrasInfo.RenderPreviewActor) ?? actor : actor;
+		}
+
+		static string GetActorDisplayName(ActorInfo actor)
+		{
+			var name = actor.TraitInfos<TooltipInfo>().FirstOrDefault(info => info.EnabledByDefault)?.Name;
+			if (!string.IsNullOrEmpty(name))
+			{
+				return FluentProvider.GetMessage(name).Replace("Upgrade: ", "").Replace("Research: ", "");
+			}
+
+			return "";
+		}
+
+		ScrollItemWidget CreateActorListItem(ActorInfo actor, string categoryPath, int indentLevel = 0)
+		{
+			var item = ScrollItemWidget.Setup(template,
+				() => selectedActor != null && selectedActor.Name == actor.Name,
+				() => SelectActor(actor, categoryPath));
+
+			item.IsHighlighted = () => selectedActor != null && selectedActor.Name == actor.Name;
+
+			var bullet = item.GetOrNull<ImageWidget>("ICON");
+			if (bullet != null)
+				bullet.Bounds.X = 4 + indentLevel * 15;
+
+			var label = item.Get<LabelWithTooltipWidget>("TITLE");
+			label.Bounds.X = 26 + indentLevel * 15;
+
+			var displayName = GetActorDisplayName(actor);
+			if (!string.IsNullOrEmpty(displayName))
+			{
+				label.GetText = () => displayName;
+				WidgetUtils.TruncateLabelToTooltip(label, displayName);
+			}
+
+			return item;
+		}
+
+		TypeDictionary CreatePreviewTypeDictionary(Player previewOwner)
+		{
+			var typeDictionary = new TypeDictionary()
+			{
+				new OwnerInit(previewOwner ?? world.WorldActor.Owner),
+				new FactionInit(world.WorldActor.Owner.PlayerReference.Faction),
+			};
+
+			foreach (var actorPreviewInit in renderActor.TraitInfos<IActorPreviewInitInfo>())
+				foreach (var init in actorPreviewInit.ActorPreviewInits(renderActor, ActorPreviewType.ColorPicker))
+				{
+					if (init is FacingInit)
+					{
+						typeDictionary.Add(new FacingInit(currentFacing));
+					}
+					else
+					{
+						typeDictionary.Add(init);
+					}
+				}
+
+			return typeDictionary;
+		}
+
+		void SetupTextLabel(LabelWidget label, string text, ref int currentY, int additionalSpacing = 8)
+		{
+			if (!string.IsNullOrEmpty(text) && label != null)
+			{
+				label.Bounds.Y = currentY;
+				label.Visible = true;
+				label.GetText = () => text;
+				var textHeight = descriptionFont.Measure(text).Y;
+				label.Bounds.Height = textHeight;
+				currentY += textHeight + additionalSpacing;
+			}
+			else if (label != null)
+			{
+				label.Visible = false;
+			}
+		}
+
+		static string[] ParseCategoryPaths(string categories)
+		{
+			return categories?.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
+				.Select(c => c.Trim())
+				.ToArray() ?? Array.Empty<string>();
 		}
 	}
 }

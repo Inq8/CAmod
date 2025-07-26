@@ -45,6 +45,14 @@ SuperweaponsEnabledTime = {
 	brutal = DateTime.Minutes(10)
 }
 
+PreparationTime = {
+	easy = DateTime.Minutes(60),
+	normal = DateTime.Minutes(20),
+	hard = DateTime.Minutes(20),
+	vhard = DateTime.Minutes(15),
+	brutal = DateTime.Minutes(10)
+}
+
 -- Squads
 
 LabDefenseCompositions = {
@@ -58,10 +66,10 @@ LabDefenseCompositions = {
 		{ Infantry = { "n1c", "n1c", "n1c", "n3c", "n5", "n1c", "tplr", "tplr", "rmbc" }, Vehicles = { "ltnk", "mlrs", "stnk.nod", "hftk", "ltnk" } },
 	},
 	vhard = {
-		{ Infantry = { "n1c", "n1c", "n1c", "n3c", "n5", "n1c", "tplr", "tplr", "rmbc", "enli" }, Vehicles = { "ltnk", "mlrs", "stnk.nod", "hftk", "ltnk" } },
+		{ Infantry = { "n1c", "n1c", "n1c", "n3c", "n5", "n1c", "tplr", "tplr", "rmbc", "enli", "n1c", "n3c" }, Vehicles = { "ltnk", "mlrs", "stnk.nod", "hftk", "ltnk" } },
 	},
 	brutal = {
-		{ Infantry = { "n1c", "n1c", "n1c", "n3c", "n5", "n1c", "tplr", "tplr", "rmbc", "enli" }, Vehicles = { "ltnk", "mlrs", "stnk.nod", "hftk", "ltnk" } },
+		{ Infantry = { "n1c", "n1c", "n1c", "n3c", "n5", "n1c", "tplr", "rmbc", "n1c", "n3c", "tplr", "rmbc", "enli", "n1c", "n1c", "n3c" }, Vehicles = { "ltnk", "mlrs", "stnk.nod", "hftk", "avtr" } },
 	}
 }
 
@@ -115,6 +123,16 @@ Squads = {
 		},
 		AttackPaths = NodNavalAttackPath
 	},
+	ICBMSubs = {
+		Delay = DateTime.Minutes(15),
+		AttackValuePerSecond = { Min = 8, Max = 16 },
+		Compositions = {
+			brutal = {
+				{ Ships = { "isub" } }
+			},
+		},
+		AttackPaths = NodNavalAttackPath
+	},
 	LabDefense = {
 		ActiveCondition = function()
 			return CountConyards(Nod) < 2 and DateTime.GameTime >= DateTime.Minutes(15)
@@ -159,11 +177,9 @@ WorldLoaded = function()
 		end
 	end
 
-	if IsNormalOrAbove() then
-		Trigger.AfterDelay(DateTime.Minutes(14), function()
-			InitNodAttacks()
-		end)
-	end
+	Trigger.AfterDelay(PreparationTime[Difficulty], function()
+		InitNodAttacks()
+	end)
 
 	Trigger.OnKilled(Church1, function(self, killer)
 		Actor.Create("moneycrate", true, { Owner = Greece, Location = Church1.Location })
@@ -177,7 +193,7 @@ WorldLoaded = function()
 
 	-- On proximity to lab, reveal it and update objectives.
 	Trigger.OnEnteredProximityTrigger(ResearchLab.CenterPosition, WDist.New(10 * 1024), function(a, id)
-		if a.Owner == Greece then
+		if a.EffectiveOwner == Greece then
 			Trigger.RemoveProximityTrigger(id)
 			RevealLab()
 		end
@@ -288,6 +304,10 @@ InitNodAttacks = function()
 		InitAttackSquad(Squads.South, Nod)
 		InitAttackSquad(Squads.East, Nod)
 		InitAirAttackSquad(Squads.Air, Nod)
+
+		if Difficulty == "brutal" then
+			InitNavalAttackSquad(Squads.ICBMSubs, Nod)
+		end
 
 		Utils.Do(Patrols, function(p)
 			Utils.Do(p.Units, function(unit)
