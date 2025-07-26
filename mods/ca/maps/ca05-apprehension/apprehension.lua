@@ -13,6 +13,20 @@ Patrols = {
 	{ NodPatrol2_1.Location, NodPatrol2_2.Location, NodPatrol2_3.Location },
 }
 
+Squads = {
+	Main = {
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(5)),
+		AttackValuePerSecond = {
+			vhard = { Min = 4, Max = 8 },
+			brutal = { Min = 8, Max = 16 },
+		},
+		FollowLeader = true,
+		Compositions = AdjustCompositionsForDifficulty({
+			{ Infantry = { "e3", "n1", "n1", "n1", "bh", "n1", "n1", "bh" } },
+		}),
+	}
+}
+
 -- Setup and Tick
 
 WorldLoaded = function()
@@ -54,6 +68,11 @@ WorldLoaded = function()
 
 			if IsVeryHardOrAbove() then
 				NonHardSniper2.Destroy()
+
+				if Difficulty == "brutal" then
+					Raider1.Destroy()
+					Raider2.Destroy()
+				end
 			end
 		end
 	end
@@ -200,6 +219,10 @@ InitNod = function()
 	AutoRepairBuildings(Nod)
 	SetupRefAndSilosCaptureCredits(Nod)
 	AutoReplaceHarvesters(Nod)
+
+	if IsVeryHardOrAbove() then
+		InitAttackSquad(Squads.Main, Nod)
+	end
 
 	local nodGroundAttackers = Nod.GetGroundAttackers()
 

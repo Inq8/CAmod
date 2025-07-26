@@ -129,7 +129,8 @@ GDRN:
 
 STNK.Nod:
 	Inherits@DIFFICULTY: ^DifficultyModifiers
-	-ChangesHealth@ELITE:
+	GainsExperienceMultiplier@TenPercentXp:
+		Modifier: 10
 	GrantCondition:
 		Condition: tibcore-upgrade
 	RevealsShroud:
@@ -139,8 +140,6 @@ RMBO:
 	Inherits@DIFFICULTY: ^DifficultyModifiers
 	AutoTarget:
 		InitialStance: HoldFire
-	-ChangesHealth@ELITE:
-	-ChangesHealth@CommandoRegen:
 	RevealsShroud:
 		Range: 8c0
 	ChangesHealth@HOSPITAL:

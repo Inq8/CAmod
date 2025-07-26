@@ -91,6 +91,18 @@ PAC:
 MSHP:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
+S4:
+	Inherits@DIFFICULTY: ^DifficultyModifiers
+	RevealsShroud:
+		Range: 8c0
+	PortableChronoCA:
+		MaxDistance: 8
+		ChargeDelay: 200
+	AutoTarget:
+		InitialStance: HoldFire
+	GainsExperienceMultiplier@TenPercentXp:
+		Modifier: 10
+
 LCHR:
 	Inherits@DIFFICULTY: ^DifficultyModifiers
 	RevealsShroud:
@@ -102,13 +114,8 @@ LCHR:
 		Modifier: 94
 	AutoTarget:
 		InitialStance: HoldFire
-	-GainsExperience:
-	GainsExperience:
-		LevelUpNotification: LevelUp
-		Conditions:
-			2000: rank-veteran
-			4000: rank-veteran
-			8000: rank-veteran
+	GainsExperienceMultiplier@TenPercentXp:
+		Modifier: 10
 	TooltipExtras:
 		Attributes: • Disables power plants and radars\n• Slows vehicles & cyborgs\n• Regenerates and heals allies when in coalescence form\n• Special Ability: Coalescence
 
@@ -117,20 +124,3 @@ LCHR.Orb:
 		HP: 15000
 	ReloadAmmoPoolCA:
 		Delay: 250
-
-S4:
-	Inherits@DIFFICULTY: ^DifficultyModifiers
-	RevealsShroud:
-		Range: 8c0
-	PortableChronoCA:
-		MaxDistance: 8
-		ChargeDelay: 200
-	AutoTarget:
-		InitialStance: HoldFire
-	-GainsExperience:
-	GainsExperience:
-		LevelUpNotification: LevelUp
-		Conditions:
-			2000: rank-veteran
-			4000: rank-veteran
-			8000: rank-veteran

@@ -48,8 +48,8 @@ SuperweaponsEnabledTime = {
 PreparationTime = {
 	easy = DateTime.Minutes(60),
 	normal = DateTime.Minutes(20),
-	hard = DateTime.Minutes(20),
-	vhard = DateTime.Minutes(15),
+	hard = DateTime.Minutes(16),
+	vhard = DateTime.Minutes(14),
 	brutal = DateTime.Minutes(10)
 }
 

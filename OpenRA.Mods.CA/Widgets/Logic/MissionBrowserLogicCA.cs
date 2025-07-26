@@ -292,19 +292,27 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 						}
 					}
 
+					var difficultyCompleted = difficulty != null ? FluentProvider.GetMessage($"options-difficulty.{difficulty}") : null;
+
+					if (difficultyCompleted != null)
+						item.GetTooltipText = () => $"Completed ({difficultyCompleted})";
+					else
+						item.GetTooltipText = () => "Completed";
+
 					var dateCompleted = missionProgress.DateCompleted.ToString("d");
 					var completionTime = missionProgress.Time;
-					var difficultyCompleted = difficulty != null ? FluentProvider.GetMessage($"options-difficulty.{difficulty}") : null;
 
 					var details = $"• Date: {dateCompleted}\n• Version: {missionProgress.Version}\n• Duration: {completionTime}\n• Speed: {missionProgress.Speed}";
 
-					if (difficultyCompleted != null)
-						details += $"\n• Difficulty: {difficultyCompleted}";
+					if (missionProgress.FogEnabled.HasValue)
+						details += $"\n• Fog: {(missionProgress.FogEnabled.Value ? "Enabled" : "Disabled")}";
+
+					if (missionProgress.BuildRadiusEnabled.HasValue)
+						details += $"\n• Build Radius: {(missionProgress.BuildRadiusEnabled.Value ? "Enabled" : "Disabled")}";
 
 					if (missionProgress.RespawnEnabled.HasValue)
 						details += $"\n• Respawns: {(missionProgress.RespawnEnabled.Value ? "Enabled" : "Disabled")}";
 
-					item.GetTooltipText = () => "Completed";
 					item.GetTooltipDesc = () => details;
 
 					var tick = item.Get<ImageWidget>("COMPLETION_ICON");

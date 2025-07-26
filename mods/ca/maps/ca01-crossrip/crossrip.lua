@@ -88,9 +88,20 @@ HardAndAboveMainCompositions = {
 	{
 		Infantry = { "e3", "e1", "e1", "e3", "shok", "e1", { "shok", "e8" }, "e1", "e2", "e3", "e4" },
 		Vehicles = { { "3tnk", "3tnk.atomic" }, "4tnk", "btr.ai", { "katy", "v2rl" }, "ttra" },
-		MinTime = DateTime.Minutes(6)
-	}
+		MinTime = DateTime.Minutes(6),
+		MaxTime = DateTime.Minutes(16)
+	},
 }
+
+if Difficulty == "brutal" then
+	HardAndAboveMainCompositions[2].MaxTime = DateTime.Minutes(16)
+
+	table.insert(HardAndAboveMainCompositions, {
+		Infantry = { "e3", "e1", "e1", "e3", "shok", "e1", { "ttrp", "deso" }, "e1", "e2", "e3", "e4", "e1", "e1", "e1", "e1", "e3", "e1", { "ttrp", "deso" } },
+		Vehicles = { { "3tnk", "3tnk.atomic" }, "4tnk", "btr.ai", "v2rl", "v2rl", "grad", "ttra" },
+		MinTime = DateTime.Minutes(16)
+	})
+end
 
 Squads = {
 	Main = {

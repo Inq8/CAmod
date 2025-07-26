@@ -45,10 +45,17 @@ namespace OpenRA.Mods.CA.Traits
 				return;
 
 			var missionTitle = GetMapTileWithoutNumber(player.World.Map.Title);
-			var difficulty = player.World.WorldActor.TraitsImplementing<ScriptLobbyDropdown>()
+			var worldActor = player.World.WorldActor;
+			var difficulty = worldActor.TraitsImplementing<ScriptLobbyDropdown>()
 				.FirstOrDefault(sld => sld.Info.ID == "difficulty");
 
-			var respawnDropdown = player.World.WorldActor.TraitsImplementing<ScriptLobbyDropdown>()
+			var shroud = player.PlayerActor.TraitOrDefault<Shroud>();
+			bool? fogEnabled = shroud?.FogEnabled;
+
+			var mapBuildRadius = player.World.WorldActor.TraitOrDefault<MapBuildRadius>();
+			bool? buildRadiusEnabled = mapBuildRadius?.BuildRadiusEnabled;
+
+			var respawnDropdown = worldActor.TraitsImplementing<ScriptLobbyDropdown>()
 				.FirstOrDefault(sld => sld.Info.ID == "respawn");
 
 			bool? respawnEnabled = respawnDropdown != null ? respawnDropdown.Value == "enabled" : null;
@@ -89,6 +96,8 @@ namespace OpenRA.Mods.CA.Traits
 				Ticks = player.World.WorldTick,
 				DateCompleted = DateTime.Now,
 				Speed = speed,
+				FogEnabled = fogEnabled,
+				BuildRadiusEnabled = buildRadiusEnabled,
 				RespawnEnabled = respawnEnabled
 			};
 
@@ -214,6 +223,8 @@ namespace OpenRA.Mods.CA.Traits
 		public int Ticks;
 		public DateTime DateCompleted;
 		public string Speed;
+		public bool? FogEnabled;
+		public bool? BuildRadiusEnabled;
 		public bool? RespawnEnabled;
 	}
 }

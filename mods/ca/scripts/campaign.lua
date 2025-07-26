@@ -28,7 +28,7 @@ UnitBuildTimeMultipliers = {
 	normal = 0.81, -- 3062 value/min per queue (51/s)
 	hard = 0.6, -- 4125 value/min per queue (68/s)
 	vhard = 0.48, -- 5187 value/min per queue (86/s)
-	brutal = 0.4 -- 6250 value/min per queue (104/s)
+	brutal = 0.38 -- 6250 value/min per queue (104/s)
 }
 
 AttackValueMultipliers = {
