@@ -45,17 +45,17 @@ SiegeBreakThreshold = {
 AutoSiegeBreakTime = {
 	easy = DateTime.Minutes(30),
 	normal = DateTime.Minutes(20),
-	hard = DateTime.Minutes(10),
+	hard = DateTime.Minutes(11),
 	vhard = DateTime.Minutes(10),
-	brutal = DateTime.Minutes(10)
+	brutal = DateTime.Minutes(9)
 }
 
 AutoAttackStartTime = {
 	easy = DateTime.Minutes(16),
 	normal = DateTime.Minutes(12),
-	hard = DateTime.Minutes(8),
+	hard = DateTime.Minutes(10),
 	vhard = DateTime.Minutes(8),
-	brutal = DateTime.Minutes(8)
+	brutal = DateTime.Minutes(7)
 }
 
 WorldLoaded = function()
@@ -74,6 +74,10 @@ WorldLoaded = function()
 	InitObjectives(USSR)
 	InitGDI()
 	InitGreece()
+
+	if IsVeryHardOrBelow() then
+		EMPMissile.Destroy()
+	end
 
 	ObjectiveDestroyBases = USSR.AddObjective("Break the siege and destroy the enemy bases.")
 	ObjectiveProtectIronCurtain = USSR.AddObjective("Do not lose the Iron Curtain.")
@@ -188,6 +192,10 @@ InitGDI = function()
 		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(6656), IsGDIGroundHunterUnit)
 	end)
+
+	if Difficulty == "brutal" then
+		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = GDI })
+	end
 end
 
 EngineerDrop = function()

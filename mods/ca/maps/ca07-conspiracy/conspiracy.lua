@@ -45,6 +45,12 @@ GDIReinforcementDelay = {
 
 -- Squads
 
+if Difficulty == "brutal" then
+	table.insert(UnitCompositions.Allied, {
+		Infantry = { "hopl", "hopl", "hopl", "hopl", "hopl", "hopl", "hopl", "hopl" }, Vehicles = { "ptnk", "ptnk", "ptnk", "pcan", "pcan", "pcan" }, MinTime = DateTime.Minutes(15), IsSpecial = true
+	})
+end
+
 AdjustedAlliedCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Allied)
 
 Squads = {
@@ -89,26 +95,30 @@ WorldLoaded = function()
 	InitGDI()
 	InitGreece()
 
-	if IsNormalOrBelow() then
-		GDIDefender2.Destroy()
-		NorthGapGenerator.Destroy()
-		HardOnlyPower.Destroy()
-		Cryo1.Destroy()
-		Cryo2.Destroy()
-		Cryo3.Destroy()
-		Cryo4.Destroy()
-		Cryo5.Destroy()
-		Prism1.Destroy()
+	if IsVeryHardOrBelow() then
+		WeatherControl.Destroy()
 
-		if Difficulty == "easy" then
-			GDIDefender1.Destroy()
-			SouthGapGenerator1.Destroy()
-			SouthGapGenerator2.Destroy()
-			SouthGapGenerator3.Destroy()
-			HardAndNormalOnlyPower.Destroy()
-			AGT1.Owner = Legion
-			Prism2.Destroy()
-			Prism3.Destroy()
+		if IsNormalOrBelow() then
+			GDIDefender2.Destroy()
+			NorthGapGenerator.Destroy()
+			HardOnlyPower.Destroy()
+			Cryo1.Destroy()
+			Cryo2.Destroy()
+			Cryo3.Destroy()
+			Cryo4.Destroy()
+			Cryo5.Destroy()
+			Prism1.Destroy()
+
+			if Difficulty == "easy" then
+				GDIDefender1.Destroy()
+				SouthGapGenerator1.Destroy()
+				SouthGapGenerator2.Destroy()
+				SouthGapGenerator3.Destroy()
+				HardAndNormalOnlyPower.Destroy()
+				AGT1.Owner = Legion
+				Prism2.Destroy()
+				Prism3.Destroy()
+			end
 		end
 	end
 
@@ -411,12 +421,21 @@ InitAlliedAttacks = function()
 			local gdiReinforcements = { "mtnk", "mtnk" }
 			if IsHardOrAbove() then
 				gdiReinforcements = { "htnk" , "htnk" }
+				if Difficulty == "brutal" then
+					gdiReinforcements = { "titn" , "titn", "thwk", "thwk" }
+				end
 			end
 
 			Reinforcements.Reinforce(GDI, gdiReinforcements, GDIReinforcementPath, 75, function(a)
 				AssaultPlayerBaseOrHunt(a)
 			end)
 		end)
+
+		if Difficulty == "brutal" then
+			Trigger.AfterDelay(DateTime.Minutes(13), function()
+				Actor.Create("ai.superweapons.enabled", true, { Owner = Greece })
+			end)
+		end
 	end
 end
 

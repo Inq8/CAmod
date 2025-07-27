@@ -25,10 +25,10 @@ McvRebuildDelay = {
 
 UnitBuildTimeMultipliers = {
 	easy = 1.25, -- 2000 value/min per queue (33/s)
-	normal = 0.81, -- 3062 value/min per queue (51/s)
-	hard = 0.6, -- 4125 value/min per queue (68/s)
-	vhard = 0.48, -- 5187 value/min per queue (86/s)
-	brutal = 0.38 -- 6250 value/min per queue (104/s)
+	normal = 0.81, -- 3086 value/min per queue (51/s)
+	hard = 0.6, -- 4166 value/min per queue (69/s)
+	vhard = 0.45, -- 5555 value/min per queue (92/s)
+	brutal = 0.35 -- 7142 value/min per queue (119/s)
 }
 
 AttackValueMultipliers = {
@@ -42,11 +42,11 @@ AttackValueMultipliers = {
 NormalRampDuration = DateTime.Minutes(17)
 
 RampDurationMultipliers = {
-	easy = 1.06,
-	normal = 1,
-	hard = 0.94,
-	vhard = 0.88,
-	brutal = 0.82
+	easy = 1.06, -- 18 min
+	normal = 1, -- 17 min
+	hard = 0.94, -- 16 min
+	vhard = 0.88, -- 15 min
+	brutal = 0.82 -- 14 min
 }
 
 AttackDelayMultipliers = {

@@ -38,8 +38,8 @@ Patrols = {
 }
 
 SuperweaponsEnabledTime = {
-	easy = DateTime.Minutes(30),
-	normal = DateTime.Minutes(20),
+	easy = DateTime.Minutes(40),
+	normal = DateTime.Minutes(25),
 	hard = DateTime.Minutes(15),
 	vhard = DateTime.Minutes(10),
 	brutal = DateTime.Minutes(10)

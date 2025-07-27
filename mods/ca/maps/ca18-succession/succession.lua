@@ -1,6 +1,6 @@
 SuperweaponsEnabledTime = {
-	easy = DateTime.Seconds((60 * 25) + 41),
-	normal = DateTime.Seconds((60 * 20) + 41),
+	easy = DateTime.Seconds((60 * 45) + 41),
+	normal = DateTime.Seconds((60 * 30) + 41),
 	hard = DateTime.Seconds((60 * 15) + 41),
 	vhard = DateTime.Seconds((60 * 12) + 41),
 	brutal = DateTime.Seconds((60 * 10) + 41)

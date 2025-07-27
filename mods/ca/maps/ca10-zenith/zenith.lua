@@ -51,12 +51,7 @@ Squads = {
 		ActiveCondition = function()
 			return PlayerHasICBMSubs()
 		end,
-		Interval = {
-			normal = DateTime.Seconds(60),
-			hard = DateTime.Seconds(45),
-			vhard = DateTime.Seconds(35),
-			brutal = DateTime.Seconds(20)
-		},
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 20 }),
 		Compositions = {
 			{ Ships = { "ss" } }
 		},
@@ -64,6 +59,19 @@ Squads = {
 			{ SubPatrol1.Location, SubPatrol2.Location, SubPatrol3.Location, SubPatrol4.Location, SubPatrol5.Location, SubPatrol6.Location },
 			{ SubPatrol1.Location, SubPatrol6.Location, SubPatrol5.Location, SubPatrol4.Location, SubPatrol3.Location, SubPatrol2.Location },
 		},
+	},
+	MissileSubs = {
+		Delay = DateTime.Minutes(10),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 30 }),
+		Compositions = {
+			brutal = {
+				{ Ships = { "msub", "msub" } }
+			}
+		},
+		AttackPaths = {
+			{ Bombard1.Location },
+			{ Bombard2.Location },
+		}
 	}
 }
 
@@ -74,11 +82,11 @@ NukeTimer = {
 	normal = DateTime.Minutes(45),
 	hard = DateTime.Minutes(35),
 	vhard = DateTime.Minutes(30),
-	brutal = DateTime.Minutes(25),
+	brutal = DateTime.Minutes(30),
 }
 
 HaloDropStart = AdjustDelayForDifficulty(DateTime.Minutes(6))
-HaloDropAttackValue = AdjustAttackValuesForDifficulty({ Min = 12, Max = 24, RampDuration = DateTime.Minutes(5) })
+HaloDropAttackValue = AdjustAttackValuesForDifficulty({ Min = 12, Max = 24, RampDuration = DateTime.Minutes(7) })
 
 TeslaReactors = { TeslaReactor1, TeslaReactor2, TeslaReactor3, TeslaReactor4, TeslaReactor5, TeslaReactor6 }
 AirbaseStructures = { Airfield1, Airfield2, Airfield3, Airfield4, Airfield5, Helipad1, Helipad2, Helipad3 }
@@ -190,6 +198,10 @@ InitUSSR = function()
 
 	if Difficulty ~= "easy" then
 		InitNavalAttackSquad(Squads.Naval, USSR)
+	end
+
+	if Difficulty == "brutal" then
+		InitNavalAttackSquad(Squads.MissileSubs, USSR)
 	end
 
 	Actor.Create("ai.unlimited.power", true, { Owner = USSR })

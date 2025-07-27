@@ -1,10 +1,4 @@
-ScrinAttackValues = {
-	easy = { Min = 6, Max = 16 },
-	normal = { Min = 16, Max = 33 },
-	hard = { Min = 25, Max = 55 },
-	vhard = { Min = 25, Max = 55 },
-	brutal = { Min = 25, Max = 55 }
-}
+ScrinAttackValues = AdjustAttackValuesForDifficulty({ Min = 13, Max = 26 })
 
 NodBuildingsToSell = { NodConyard, NodHand, NodFactory, NodComms }
 

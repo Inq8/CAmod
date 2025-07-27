@@ -93,7 +93,7 @@ if IsVeryHardOrAbove then
 
 	if Difficulty == "brutal" then
 		table.insert(HardAndAboveCompositions, {
-			Units = { "apoc.atomic", "apoc.atomic", "apoc.atomic", "apoc.atomic", "isu", "isu", "3tnk.rhino", "3tnk.rhino" },
+			Units = { "apoc.atomic", "apoc.atomic", "apoc.atomic", "apoc.atomic", "isu", "isu", "isu", "3tnk.rhino", "3tnk.rhino" },
 			MinTime = DateTime.Minutes(15),
 			IsSpecial = true
 		})

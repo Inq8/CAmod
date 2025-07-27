@@ -40,11 +40,11 @@ HoldOutTime = {
 }
 
 SuperweaponsEnabledTime = {
-	easy = DateTime.Seconds((60 * 25) + 41),
-	normal = DateTime.Seconds((60 * 20) + 41),
-	hard = DateTime.Seconds((60 * 15) + 41),
+	easy = DateTime.Seconds((60 * 40) + 41),
+	normal = DateTime.Seconds((60 * 25) + 41),
+	hard = DateTime.Seconds((60 * 18) + 41),
 	vhard = DateTime.Seconds((60 * 15) + 41),
-	brutal = DateTime.Seconds((60 * 15) + 41)
+	brutal = DateTime.Seconds((60 * 13) + 41)
 }
 
 StructuresToSellToAvoidCapture = { SouthHand1, SouthHand2, SouthAirstrip, SouthConyard, WestHand, CenterHand, Helipad1, Helipad2 }

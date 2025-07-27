@@ -25,9 +25,9 @@ ChronoTankInterval = {
 SuperweaponsEnabledTime = {
 	easy = DateTime.Seconds((60 * 45) + 17),
 	normal = DateTime.Seconds((60 * 30) + 17),
-	hard = DateTime.Seconds((60 * 15) + 17),
+	hard = DateTime.Seconds((60 * 18) + 17),
 	vhard = DateTime.Seconds((60 * 15) + 17),
-	brutal = DateTime.Seconds((60 * 15) + 17)
+	brutal = DateTime.Seconds((60 * 12) + 17)
 }
 
 Squads = {
