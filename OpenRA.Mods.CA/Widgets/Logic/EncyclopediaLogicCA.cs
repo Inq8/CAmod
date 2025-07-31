@@ -521,17 +521,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				lastSelectedActorByCategory[selectedTopLevelCategory] = actor;
 			}
 
-			Player previewOwner = null;
-			if (!string.IsNullOrEmpty(selectedInfo.PreviewOwner))
-				previewOwner = world.Players.FirstOrDefault(p => p.InternalName == selectedInfo.PreviewOwner);
-			else
-			{
-				// Try to infer PreviewOwner from category
-				var inferredOwner = InferPreviewOwnerFromCategory(categoryPath);
-				if (!string.IsNullOrEmpty(inferredOwner))
-					previewOwner = world.Players.FirstOrDefault(p => p.InternalName == inferredOwner);
-			}
-
+			var previewOwner = GetPreviewOwner(selectedInfo);
 			var typeDictionary = CreatePreviewTypeDictionary(previewOwner);
 
 			if (previewBackground.IsVisible())
@@ -899,21 +889,31 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			currentFacing -= new WAngle(16);
 			var selectedInfo = info[selectedActor];
-
-			Player previewOwner = null;
-			if (!string.IsNullOrEmpty(selectedInfo.PreviewOwner))
-				previewOwner = world.Players.FirstOrDefault(p => p.InternalName == selectedInfo.PreviewOwner);
-			else
-			{
-				var inferredOwner = InferPreviewOwnerFromCategory(currentCategoryPath);
-				if (!string.IsNullOrEmpty(inferredOwner))
-					previewOwner = world.Players.FirstOrDefault(p => p.InternalName == inferredOwner);
-			}
-
+			var previewOwner = GetPreviewOwner(selectedInfo);
 			var typeDictionary = CreatePreviewTypeDictionary(previewOwner);
 
 			if (previewBackground.IsVisible())
 				previewWidget.SetPreview(renderActor, typeDictionary);
+		}
+
+		Player GetPreviewOwner(EncyclopediaInfo selectedInfo)
+		{
+			if (!string.IsNullOrEmpty(selectedInfo.PreviewOwner))
+			{
+				return world.Players.FirstOrDefault(p => p.InternalName == selectedInfo.PreviewOwner);
+			}
+			else if (world.Type == WorldType.Regular && world.LocalPlayer != null)
+			{
+				return world.LocalPlayer;
+			}
+			else
+			{
+				var inferredOwner = InferPreviewOwnerFromCategory(currentCategoryPath);
+				if (!string.IsNullOrEmpty(inferredOwner))
+					return world.Players.FirstOrDefault(p => p.InternalName == inferredOwner);
+			}
+
+			return null;
 		}
 
 		public override void Tick()
@@ -1160,6 +1160,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			};
 
 			foreach (var actorPreviewInit in renderActor.TraitInfos<IActorPreviewInitInfo>())
+			{
 				foreach (var init in actorPreviewInit.ActorPreviewInits(renderActor, ActorPreviewType.ColorPicker))
 				{
 					if (init is FacingInit)
@@ -1171,6 +1172,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 						typeDictionary.Add(init);
 					}
 				}
+			}
 
 			return typeDictionary;
 		}
