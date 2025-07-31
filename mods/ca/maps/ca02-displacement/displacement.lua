@@ -369,7 +369,7 @@ InitScrin = function()
 	InitAirAttackSquad(Squads.Stormriders, Scrin)
 
 	if IsNormalOrAbove() then
-		InitAirAttackSquad(Squads.Devastators, Scrin, Greece, { "dome", "atek", "apwr", "pris", "fix" })
+		InitAirAttackSquad(Squads.Devastators, Scrin, MissionPlayers, { "dome", "atek", "apwr", "pris", "fix" })
 	end
 
 	StormriderAttacker1.Attack(PlayerRefinery)

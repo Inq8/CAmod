@@ -116,6 +116,12 @@ SecondaryAttackValues = {
 	brutal = { Min = 12, Max = 28 }
 }
 
+MaxAntiTankAir = {
+	hard = 8,
+	vhard = 12,
+	brutal = 16
+}
+
 Squads = {
 	MarineskoMain = {
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(5)),
@@ -207,14 +213,19 @@ Squads = {
 	},
 	KrukovAntiTankAir = {
 		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(12)),
-		ActiveCondition = function()
-			return #USSR.GetActorsByTypes({ "4tnk", "4tnk.atomic", "apoc", "apoc.atomic" }) > 8
+		ActiveCondition = function(squad)
+			return PlayerHasCharacteristic(squad.TargetPlayer, "MassHeavy")
 		end,
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 24, Max = 24 }),
-		Compositions = {
-			{ Aircraft = { "suk", "suk", "suk", "suk", "suk" } },
-		},
-	},
+		Compositions = function(squad)
+			local sukhois = { "suk" }
+			local desiredCount = PlayerCharacteristics[squad.TargetPlayer.InternalName].HeavyValue / 2000
+			for i = 1, math.min(desiredCount, MaxAntiTankAir[Difficulty]) do
+				table.insert(sukhois, "suk")
+			end
+			return { { Aircraft = sukhois } }
+		end
+	}
 }
 
 WorldLoaded = function()
@@ -341,7 +352,7 @@ InitGenerals = function()
 			Actor.Create("reactive.upgrade", true, { Owner = Romanov })
 		end)
 
-		InitAirAttackSquad(Squads.KrukovAntiTankAir, Krukov, USSR, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic" })
+		InitAirAttackSquad(Squads.KrukovAntiTankAir, Krukov, MissionPlayers, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic" })
 	end
 end
 

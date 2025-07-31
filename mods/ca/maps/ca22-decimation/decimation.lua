@@ -27,11 +27,25 @@ AirFleetKillersThreshold = {
 	brutal = 2
 }
 
+MaxFleetKillers = {
+	normal = 3,
+	hard = 5,
+	vhard = 8,
+	brutal = 12
+}
+
 TripodKillersThreshold = {
 	normal = 11,
 	hard = 9,
 	vhard = 7,
 	brutal = 5
+}
+
+MaxTripodKillers = {
+	normal = 3,
+	hard = 5,
+	vhard = 8,
+	brutal = 12
 }
 
 ParabombsEnabledDelay = {
@@ -86,46 +100,34 @@ Squads = {
 		Compositions = AirCompositions.Soviet,
 	},
 	AirFleetKillers = {
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 60, Max = 60 }),
-		ActiveCondition = function()
-			local scrinFleet = Scrin.GetActorsByTypes({ "pac", "deva" })
+		ActiveCondition = function(squad)
+			local scrinFleet = squad.TargetPlayer.GetActorsByTypes({ "pac", "deva" })
 			return #scrinFleet > AirFleetKillersThreshold[Difficulty] and not IslandAirfieldsEliminated
 		end,
-		Compositions = {
-			normal = {
-				{ Aircraft = { "mig", "mig", "mig" } }
-			},
-			hard = {
-				{ Aircraft = { "mig", "mig", "mig", "mig" } }
-			},
-			vhard = {
-				{ Aircraft = { "mig", "mig", "mig", "mig", "mig" } }
-			},
-			brutal = {
-				{ Aircraft = { "mig", "mig", "mig", "mig", "mig", "mig" } }
-			}
-		},
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 50, Max = 50 }),
+		Compositions = function(squad)
+			local migs = { "mig" }
+			local numFleetShips = #squad.TargetPlayer.GetActorsByArmorTypes({ "Aircraft" })
+			for i = 1, math.min(numFleetShips, MaxFleetKillers[Difficulty]) do
+				table.insert(migs, "mig")
+			end
+			return { { Aircraft = migs } }
+		end
 	},
 	TripodKillers = {
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 16, Max = 16 }),
-		ActiveCondition = function()
-			local tripods = Scrin.GetActorsByTypes({ "tpod", "rtpd" })
+		ActiveCondition = function(squad)
+			local tripods = squad.TargetPlayer.GetActorsByTypes({ "tpod", "rtpd" })
 			return #tripods > TripodKillersThreshold[Difficulty] and not IslandAirfieldsEliminated
 		end,
-		Compositions = {
-			normal = {
-				{ Aircraft = { "suk", "suk", "suk" } }
-			},
-			hard = {
-				{ Aircraft = { "suk", "suk", "suk", "suk" } }
-			},
-			vhard = {
-				{ Aircraft = { "suk", "suk", "suk", "suk", "suk" } }
-			},
-			brutal = {
-				{ Aircraft = { "suk", "suk", "suk", "suk", "suk", "suk" } }
-			}
-		},
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 30, Max = 30 }),
+		Compositions = function(squad)
+			local sukhois = { "suk" }
+			local numTripods = #squad.TargetPlayer.GetActorsByTypes({ "tpod", "rtpd" })
+			for i = 1, math.min(numTripods, MaxTripodKillers[Difficulty]) do
+				table.insert(sukhois, "suk")
+			end
+			return { { Aircraft = sukhois } }
+		end
 	}
 }
 
@@ -285,11 +287,11 @@ InitUSSR = function()
 	InitAirAttackSquad(Squads.AirMain, USSR)
 
 	if Difficulty ~= "easy" then
-		InitAirAttackSquad(Squads.AirFleetKillers, USSR, Scrin, { "pac", "deva", "stmr", "enrv", "torm" })
+		InitAirAttackSquad(Squads.AirFleetKillers, USSR, MissionPlayers, { "pac", "deva", "stmr", "enrv", "torm" })
 	end
 
 	if Difficulty ~= "easy" then
-		InitAirAttackSquad(Squads.TripodKillers, USSR, Scrin, { "tpod", "rtpd" })
+		InitAirAttackSquad(Squads.TripodKillers, USSR, MissionPlayers, { "tpod", "rtpd" })
 	end
 
 	Actor.Create("ai.unlimited.power", true, { Owner = USSR })

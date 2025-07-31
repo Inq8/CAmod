@@ -49,7 +49,7 @@ WeatherStormEnabledTime = {
 	normal = DateTime.Seconds((60 * 20) + 17),
 	hard = DateTime.Seconds((60 * 15) + 17),
 	vhard = DateTime.Seconds((60 * 10) + 17),
-	brutal = DateTime.Seconds((60 * 10) + 17)
+	brutal = DateTime.Seconds((60 * 9) + 17)
 }
 
 IonCannonEnabledTime = {
@@ -57,7 +57,7 @@ IonCannonEnabledTime = {
 	normal = DateTime.Seconds((60 * 23) + 48),
 	hard = DateTime.Seconds((60 * 18) + 48),
 	vhard = DateTime.Seconds((60 * 13) + 48),
-	brutal = DateTime.Seconds((60 * 13) + 48)
+	brutal = DateTime.Seconds((60 * 12) + 48)
 }
 
 Squads = {

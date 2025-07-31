@@ -273,6 +273,15 @@ end
 AttackAircraftTargets = { }
 InitAttackAircraft = function(aircraft, targetPlayer, targetList, targetType)
 	if not aircraft.IsDead then
+		local typeKey = string.gsub(aircraft.Type, "%.", "_")
+		local fallbackTargetList = nil
+		local fallbackTargetType = nil
+		if targetList == nil and AircraftTargets[typeKey] ~= nil then
+			fallbackTargetList = AircraftTargets[typeKey].TargetList
+		end
+		if targetType == nil and AircraftTargets[typeKey] ~= nil then
+			fallbackTargetType = AircraftTargets[typeKey].TargetType
+		end
 		Trigger.OnIdle(aircraft, function(self)
 			if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
 				local actorId = tostring(aircraft)
@@ -281,6 +290,9 @@ InitAttackAircraft = function(aircraft, targetPlayer, targetList, targetType)
 				if not target or not target.IsInWorld then
 					if targetList ~= nil and #targetList > 0 and targetType ~= nil then
 						target = ChooseRandomTargetOfTypes(self, targetPlayer, targetList, targetType)
+					end
+					if target == nil and fallbackTargetList ~= nil and #fallbackTargetList > 0 and fallbackTargetType ~= nil then
+						target = ChooseRandomTargetOfTypes(self, targetPlayer, fallbackTargetList, fallbackTargetType)
 					end
 					if target == nil then
 						target = ChooseRandomTarget(self, targetPlayer)
@@ -971,9 +983,11 @@ InitAttackWave = function(squad, player, targetPlayers)
 	local isActive = squad.ActiveCondition == nil or squad.ActiveCondition(squad)
 
 	if isActive then
-
 		local allCompositions
-		if squad.Compositions[Difficulty] ~= nil then
+
+		if type(squad.Compositions) == "function" then
+			allCompositions = squad.Compositions(squad)
+		elseif squad.Compositions[Difficulty] ~= nil then
 			allCompositions = squad.Compositions[Difficulty]
 		else
 			allCompositions = squad.Compositions
@@ -1335,19 +1349,7 @@ SendAttackSquad = function(squad)
 	if squad.IsAirSquad ~= nil and squad.IsAirSquad then
 		Utils.Do(squad.IdleUnits, function(a)
 			if not a.IsDead then
-				local targetList = squad.AirTargetList
-				local targetType = squad.AirTargetType
-				local typeKey = string.gsub(a.Type, "%.", "_")
-
-				if targetList == nil and AircraftTargets[typeKey] ~= nil then
-					targetList = AircraftTargets[typeKey].TargetList
-				end
-
-				if targetType == nil and AircraftTargets[typeKey] ~= nil then
-					targetType = AircraftTargets[typeKey].TargetType
-				end
-
-				InitAttackAircraft(a, squad.TargetPlayer, targetList, targetType)
+				InitAttackAircraft(a, squad.TargetPlayer, squad.AirTargetList, squad.AirTargetType)
 			end
 		end)
 	else
@@ -1909,6 +1911,8 @@ AdjustCompositionForDifficulty = function(composition, difficulty)
 					updatedComposition[k] = v * 1.4
 				elseif difficulty == "normal" then
 					updatedComposition[k] = v * 1.2
+				elseif difficulty == "brutal" then
+					updatedComposition[k] = v * 0.9
 				end
 
 			else
@@ -1923,6 +1927,9 @@ end
 GetHighestCostUnit = function(units)
 	local chosenUnit
 	for _, u in pairs(units) do
+		if type(u) == "table" then
+			u = u.Type
+		end
 		if UnitCosts[u] == nil then
 			UnitCosts[u] = ActorCA.CostOrDefault(u)
 		end
@@ -1936,6 +1943,9 @@ end
 GetTotalCostOfUnits = function(units)
 	local totalCost = 0
 	for _, u in pairs(units) do
+		if type(u) == "table" then
+			u = u.Type
+		end
 		if UnitCosts[u] == nil then
 			UnitCosts[u] = ActorCA.CostOrDefault(u)
 		end
@@ -1949,12 +1959,18 @@ CalculatePlayerCharacteristics = function()
 		PlayerCharacteristics[p.InternalName] = {
 			MassInfantry = false,
 			MassHeavy = false,
+			MassAir = false,
+			InfantryValue = 0,
+			HeavyValue = 0,
+			AirValue = 0,
 		}
 
 		local infantryUnits = p.GetActorsByArmorTypes({ "None" })
 		local heavyUnits = p.GetActorsByArmorTypes({ "Heavy" })
+		local aircraft = p.GetActorsByArmorTypes({ "Aircraft" })
 		local infantryValue = 0
 		local heavyValue = 0
+		local airValue = 0
 
 		Utils.Do(infantryUnits, function(u)
 			if UnitCosts[u.Type] == nil then
@@ -1970,6 +1986,13 @@ CalculatePlayerCharacteristics = function()
 			heavyValue = heavyValue + UnitCosts[u.Type]
 		end)
 
+		Utils.Do(aircraft, function(u)
+			if UnitCosts[u.Type] == nil then
+				UnitCosts[u.Type] = ActorCA.CostOrDefault(u.Type)
+			end
+			airValue = airValue + UnitCosts[u.Type]
+		end)
+
 		if infantryValue > heavyValue * 3 then
 			PlayerCharacteristics[p.InternalName].MassInfantry = true
 		elseif heavyValue > infantryValue * 3 then
@@ -1983,6 +2006,14 @@ CalculatePlayerCharacteristics = function()
 		if heavyValue > 15000 then
 			PlayerCharacteristics[p.InternalName].MassHeavy = true
 		end
+
+		if airValue > 15000 then
+			PlayerCharacteristics[p.InternalName].MassAir = true
+		end
+
+		PlayerCharacteristics[p.InternalName].InfantryValue = infantryValue
+		PlayerCharacteristics[p.InternalName].HeavyValue = heavyValue
+		PlayerCharacteristics[p.InternalName].AirValue = airValue
 	end)
 end
 
@@ -2223,11 +2254,12 @@ ScrinWaterCompositions = {
 		{ Vehicles = { "intl", "intl.ai2", { "seek", "lace" }, { "devo", "devo", "ruin" }, { "devo", "atmz", "ruin" }  }, MinTime = DateTime.Minutes(12) }
 	},
 	brutal = {
-		{ Vehicles = { "intl", "intl.ai2", "seek", "atmz" }, },
-		{ Vehicles = { "seek", "seek", "seek", "seek" }, },
-		{ Vehicles = { "lace", "lace", "lace", "lace" }, },
-		{ Vehicles = { "devo", "intl.ai2", "ruin", "ruin" }, MinTime = DateTime.Minutes(7) },
-		{ Vehicles = { "intl", "intl.ai2", { "seek", "lace" }, { "seek", "lace" }, { "devo", "devo", "ruin" }, { "devo", "atmz", "ruin" }  }, MinTime = DateTime.Minutes(12) }
+		{ Vehicles = { "intl", "intl.ai2", "seek", "atmz" }, MaxTime = DateTime.Minutes(7) },
+		{ Vehicles = { "seek", "seek", "seek", "seek" }, MaxTime = DateTime.Minutes(7) },
+		{ Vehicles = { "lace", "lace", "lace", "lace" }, MaxTime = DateTime.Minutes(8) },
+		{ Vehicles = { "lace", "lace", "lace", "lace", "lace", "lace", "lace", "lace" }, MinTime = DateTime.Minutes(8) },
+		{ Vehicles = { "devo", "intl.ai2", "ruin", "ruin" }, MinTime = DateTime.Minutes(7), MaxTime = DateTime.Minutes(13) },
+		{ Vehicles = { "intl", "intl.ai2", { "seek", "lace" }, { "seek", "lace" }, { "devo", "devo", "ruin" }, { "devo", "atmz", "ruin" }, "ruin", "ruin"  }, MinTime = DateTime.Minutes(13) }
 	}
 }
 

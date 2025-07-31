@@ -64,7 +64,7 @@ ShadowUnitCompositions = AdjustCompositionsForDifficulty({
 
 if IsVeryHardOrAbove() then
 	table.insert(ShadowUnitCompositions, {
-		Vehicles = { "spec", "spec", "spec", "spec", "spec" },
+		Vehicles = { "spec", "spec", "spec", "spec", "spec", "spec" },
 		MinTime = DateTime.Minutes(16),
 		IsSpecial = true
 	})

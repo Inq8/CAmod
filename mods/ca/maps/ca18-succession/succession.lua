@@ -6,6 +6,17 @@ SuperweaponsEnabledTime = {
 	brutal = DateTime.Seconds((60 * 10) + 41)
 }
 
+MaxAntiTankAir = {
+	hard = 8,
+	vhard = 12,
+	brutal = 16
+}
+
+MaxAirToAir = {
+	vhard = 12,
+	brutal = 18
+}
+
 table.insert(UnitCompositions.Nod, {
 	Infantry = { "n3", "n1", "n1", "n1", "n4", "n1", "n3", "n1", "n1", "n1", "n1", "n1", "n1", "n3", "n1", "n1" },
 	Vehicles = { "mlrs", "mlrs", "mlrs", "mlrs", "mlrs", "mlrs", "mlrs" },
@@ -52,14 +63,33 @@ Squads = {
 		Compositions = AirCompositions.Nod,
 	},
 	AntiTankAir = {
-		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(10)),
-		ActiveCondition = function()
-			return #USSR.GetActorsByTypes({ "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" }) > 8
+		ActiveCondition = function(squad)
+			return PlayerHasCharacteristic(squad.TargetPlayer, "MassHeavy")
 		end,
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 24, Max = 24 }),
-		Compositions = {
-			{ Aircraft = { "scrn", "scrn", "scrn", "scrn", "scrn", "scrn", "scrn", "scrn" } },
-		},
+		Compositions = function(squad)
+			local banshees = { "scrn" }
+			local desiredCount = PlayerCharacteristics[squad.TargetPlayer.InternalName].HeavyValue / 2000
+			for i = 1, math.min(desiredCount, MaxAntiTankAir[Difficulty]) do
+				table.insert(banshees, "scrn")
+			end
+			return { { Aircraft = banshees } }
+		end
+	},
+	AirToAir = {
+		ActiveCondition = function(squad)
+			return PlayerHasCharacteristic(squad.TargetPlayer, "MassAir")
+		end,
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 24, Max = 24 }),
+		Compositions = function(squad)
+			local chosenType = Utils.Random({ "scrn", "apch", "venm" })
+			local units = { chosenType }
+			local desiredCount = PlayerCharacteristics[squad.TargetPlayer.InternalName].AirValue / 2000
+			for i = 1, math.min(desiredCount, MaxAirToAir[Difficulty]) do
+				table.insert(units, chosenType)
+			end
+			return { { Aircraft = units } }
+		end
 	}
 }
 
@@ -218,7 +248,11 @@ InitNod = function()
 	InitAirAttackSquad(Squads.Air, Nod)
 
 	if IsHardOrAbove() then
-		InitAirAttackSquad(Squads.AntiTankAir, Nod, USSR, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" })
+		InitAirAttackSquad(Squads.AntiTankAir, Nod, MissionPlayers, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic" })
+	end
+
+	if IsVeryHardOrAbove() then
+		InitAirAttackSquad(Squads.AirToAir, Nod, MissionPlayers, { "Aircraft" }, "ArmorType")
 	end
 
 	local nodGroundAttackers = Nod.GetGroundAttackers()

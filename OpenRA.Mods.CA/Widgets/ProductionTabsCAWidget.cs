@@ -123,7 +123,7 @@ namespace OpenRA.Mods.CA.Widgets
 			// Only visible if the production palette has icons to display
 			IsVisible = () => queueGroup != null && Groups[queueGroup].Tabs.Count > 0;
 
-			paletteWidget = Exts.Lazy(() => Ui.Root.Get<ProductionPaletteCAWidget>(PaletteWidget));
+			paletteWidget = Exts.Lazy(() => Ui.Root.GetOrNull<ProductionPaletteCAWidget>(PaletteWidget));
 		}
 
 		public override void Initialize(WidgetArgs args)
@@ -162,7 +162,8 @@ namespace OpenRA.Mods.CA.Widgets
 		public void PickUpCompletedBuilding()
 		{
 			// This is called from ProductionTabsLogic
-			paletteWidget.Value.PickUpCompletedBuilding();
+			if (paletteWidget.Value?.CurrentQueue != null)
+				paletteWidget.Value.PickUpCompletedBuilding();
 		}
 
 		// Production Type
@@ -174,21 +175,26 @@ namespace OpenRA.Mods.CA.Widgets
 			{
 				queueGroup = value;
 				SelectNextTab(false);
-				paletteWidget.Value.ScrollToTop();
+				if (paletteWidget.Value?.CurrentQueue != null)
+					paletteWidget.Value.ScrollToTop();
 			}
 		}
 
 		// Tab
 		public ProductionQueue CurrentQueue
 		{
-			get => paletteWidget.Value.CurrentQueue;
+			get => paletteWidget.Value?.CurrentQueue;
 
 			set
 			{
-				paletteWidget.Value.CurrentQueue = value;
-				queueGroup = value != null ? value.Info.Group : null;
-				ForceSelectedTabVisible();
-				paletteWidget.Value.ScrollToTop();
+				if (paletteWidget.Value != null)
+				{
+					paletteWidget.Value.CurrentQueue = value;
+					queueGroup = value != null ? value.Info.Group : null;
+					ForceSelectedTabVisible();
+					if (paletteWidget.Value.CurrentQueue != null)
+						paletteWidget.Value.ScrollToTop();
+				}
 			}
 		}
 
@@ -305,7 +311,7 @@ namespace OpenRA.Mods.CA.Widgets
 			foreach (var g in Groups.Values)
 				g.Update(cachedProductionQueueEnabledStates.Select(t => t.Queue));
 
-			if (queues.Count > 0 && CurrentQueue == null)
+			if (queues?.Count > 0 && CurrentQueue == null)
 				CurrentQueue = queues.First();
 
 			if (queueGroup == null)

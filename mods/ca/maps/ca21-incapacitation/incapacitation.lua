@@ -380,8 +380,8 @@ end
 RespawnIntruders = function()
 	if not IntrudersRespawning then
 		IntrudersRespawning = true
-		Notification("Reinforcements will arrive in 30 seconds.")
-		Trigger.AfterDelay(DateTime.Seconds(30), function()
+		Notification("Reinforcements will arrive in 20 seconds.")
+		Trigger.AfterDelay(DateTime.Seconds(20), function()
 			SpawnIntruders()
 		end)
 	end
@@ -389,7 +389,7 @@ end
 
 SpawnLeechers = function()
 	local wormhole = Actor.Create("wormhole", true, { Owner = Scrin, Location = LeecherSpawn.Location })
-	Beacon.New(Scrin, LeecherSpawn.CenterPosition, DateTime.Seconds(30))
+	Beacon.New(Scrin, LeecherSpawn.CenterPosition, DateTime.Seconds(20))
 
 	Trigger.AfterDelay(DateTime.Seconds(2), function()
 		Media.PlaySpeechNotification(Scrin, "ReinforcementsArrived")
@@ -414,7 +414,7 @@ end
 
 SpawnIntruders = function()
 	local wormhole = Actor.Create("wormhole", true, { Owner = Scrin, Location = IntruderSpawn.Location })
-	Beacon.New(Scrin, IntruderSpawn.CenterPosition, DateTime.Seconds(30))
+	Beacon.New(Scrin, IntruderSpawn.CenterPosition, DateTime.Seconds(20))
 
 	Trigger.AfterDelay(DateTime.Seconds(2), function()
 		Media.PlaySpeechNotification(Scrin, "ReinforcementsArrived")

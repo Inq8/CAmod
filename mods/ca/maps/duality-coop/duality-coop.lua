@@ -263,8 +263,8 @@ CommandoDeathTrigger = function(commando)
 				p.MarkFailedObjective(Objectives.CommandoSurvives[p.InternalName])
 			end)
 		elseif RespawnEnabled then
-			Notification("Commando respawns in 30 seconds.")
-			Trigger.AfterDelay(DateTime.Seconds(30), function()
+			Notification("Commando respawns in 20 seconds.")
+			Trigger.AfterDelay(DateTime.Seconds(20), function()
 				local respawnWaypoint = CommandoSpawn
 				if NumSilosRemaining == 0 then
 					respawnWaypoint = EscapeRespawn
@@ -286,8 +286,8 @@ TanyaDeathTrigger = function(tanya)
 				p.MarkFailedObjective(Objectives.TanyaSurvives[p.InternalName])
 			end)
 		elseif RespawnEnabled then
-			Notification("Tanya respawns in 30 seconds.")
-			Trigger.AfterDelay(DateTime.Seconds(30), function()
+			Notification("Tanya respawns in 20 seconds.")
+			Trigger.AfterDelay(DateTime.Seconds(20), function()
 				local respawnWaypoint = CommandoSpawn
 				if NumSilosRemaining == 0 then
 					respawnWaypoint = EscapeRespawn

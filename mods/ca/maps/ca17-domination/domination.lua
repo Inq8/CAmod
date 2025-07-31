@@ -378,10 +378,10 @@ end
 RespawnTrigger = function(a)
 	Trigger.OnKilled(a, function(self, killer)
 		if a.Type == "yuri" then
-			message = "Yuri has used his tremendous psionic power to cheat death. He will return in 30 seconds."
+			message = "Yuri has used his tremendous psionic power to cheat death. He will return in 20 seconds."
 			USSR.MarkFailedObjective(ObjectiveKeepYuriAlive)
 		else
-			message = "Yuri has used his tremendous psionic power to save the Thief from death. He will return in 30 seconds."
+			message = "Yuri has used his tremendous psionic power to save the Thief from death. He will return in 20 seconds."
 		end
 
 		Notification(message)
@@ -399,9 +399,9 @@ RespawnTrigger = function(a)
 			RespawnFlare = Actor.Create("flare", true, { Owner = USSR, Location = respawnLocation })
 		end
 
-		Beacon.New(a.Owner, Map.CenterOfCell(respawnLocation), DateTime.Seconds(30))
+		Beacon.New(a.Owner, Map.CenterOfCell(respawnLocation), DateTime.Seconds(20))
 
-		Trigger.AfterDelay(DateTime.Seconds(30), function()
+		Trigger.AfterDelay(DateTime.Seconds(20), function()
 			local respawnedActor = Actor.Create(a.Type, true, { Owner = a.Owner, Location = respawnLocation })
 			Media.PlaySpeechNotification(a.Owner, "ReinforcementsArrived")
 			Beacon.New(a.Owner, Map.CenterOfCell(respawnLocation))

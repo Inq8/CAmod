@@ -6,13 +6,28 @@ IonCannonEnabledTime = {
 	brutal = DateTime.Seconds((60 * 10) + 48)
 }
 
+MaxAirToAirOrcas = {
+	vhard = 12,
+	brutal = 18
+}
+
+MaxAntiHeavyAir = {
+	hard = 8,
+	vhard = 12,
+	brutal = 16
+}
+
+-- overrides
+RampDurationMultipliers.vhard = 0.82
+RampDurationMultipliers.brutal = 0.76
+
 AdjustedGDICompositions = AdjustCompositionsForDifficulty(UnitCompositions.GDI)
 
 Squads = {
 	Main = {
 		InitTimeAdjustment = -DateTime.Minutes(3),
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(5)),
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 }),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40, RampDuration = DateTime.Minutes(15) }),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { GDIBarracks1 }, Vehicles = { GDIFactory1 } },
 		Compositions = AdjustedGDICompositions,
@@ -23,7 +38,7 @@ Squads = {
 	Forward = {
 		InitTimeAdjustment = -DateTime.Minutes(2),
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(3)),
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 }),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40, RampDuration = DateTime.Minutes(15) }),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { GDIBarracks2 }, Vehicles = { GDIFactory2 } },
 		Compositions = AdjustedGDICompositions,
@@ -36,17 +51,34 @@ Squads = {
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
 		Compositions = AirCompositions.GDI,
 	},
-	AntiCyborgAir = {
+	AntiHeavyAir = {
 		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(8)),
-		ActiveCondition = function()
-			return #Nod.GetActorsByTypes({ "rmbc", "enli", "reap", "avtr" }) > 16
+		ActiveCondition = function(squad)
+			return PlayerHasCharacteristic(squad.TargetPlayer, "MassHeavy")
 		end,
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 24, Max = 24 }),
-		Compositions = {
-			hard = {
-				{ Aircraft = { "orcb", "orcb", "orcb", "orcb", "orcb", "orcb" } },
-			}
-		},
+		Compositions = function(squad)
+			local orcaBombers = { "orcb" }
+			local desiredCount = PlayerCharacteristics[squad.TargetPlayer.InternalName].HeavyValue / 2000
+			for i = 1, math.min(desiredCount, MaxAntiHeavyAir[Difficulty]) do
+				table.insert(orcaBombers, "orcb")
+			end
+			return { { Aircraft = orcaBombers } }
+		end
+	},
+	AirToAir = {
+		ActiveCondition = function(squad)
+			return PlayerHasCharacteristic(squad.TargetPlayer, "MassAir")
+		end,
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 24, Max = 24 }),
+		Compositions = function(squad)
+			local orcas = { "orca" }
+			local desiredCount = PlayerCharacteristics[squad.TargetPlayer.InternalName].AirValue / 2000
+			for i = 1, math.min(desiredCount, MaxAirToAirOrcas[Difficulty]) do
+				table.insert(orcas, "orca")
+			end
+			return { { Aircraft = orcas } }
+		end
 	}
 }
 
@@ -178,6 +210,14 @@ InitGDI = function()
 	SetupRefAndSilosCaptureCredits(GDI)
 	AutoReplaceHarvesters(GDI)
 	AutoRebuildConyards(GDI)
+
+	if IsVeryHardOrAbove() then
+		InitAirAttackSquad(Squads.AirToAir, GDI, MissionPlayers, { "Aircraft" }, "ArmorType")
+	end
+
+	if IsHardOrAbove() then
+		InitAirAttackSquad(Squads.AntiHeavyAir, GDI, MissionPlayers, { "rmbc", "enli", "reap", "avtr" })
+	end
 
 	local gdiGroundAttackers = GDI.GetGroundAttackers()
 
@@ -371,8 +411,4 @@ InitGDIAttacks = function()
 	InitAttackSquad(Squads.Main, GDI)
 	InitAttackSquad(Squads.Forward, GDI)
 	InitAirAttackSquad(Squads.GDIAir, GDI)
-
-	if IsHardOrAbove() then
-		InitAirAttackSquad(Squads.AntiCyborgAir, GDI, Nod, { "rmbc", "enli", "reap", "avtr" })
-	end
 end

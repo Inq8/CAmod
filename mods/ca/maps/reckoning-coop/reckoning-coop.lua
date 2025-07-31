@@ -28,6 +28,12 @@ Exterminators = {
 	{ SpawnLocation = ExterminatorSpawnWest.Location, Path = { Exterminator3Patrol1.Location, Exterminator3Patrol2.Location, Exterminator3Patrol3.Location, Exterminator3Patrol4.Location } },
 }
 
+MaxAirToAirUnits = {
+	hard = 6,
+	vhard = 12,
+	brutal = 16
+}
+
 SuperweaponsEnabledTime = {
 	easy = DateTime.Seconds((60 * 50) + 17),
 	normal = DateTime.Seconds((60 * 35) + 17),
@@ -79,6 +85,7 @@ Squads = {
 		},
 	},
 	ScrinRebelKiller = {
+		Delay = DateTime.Minutes(1),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 32, Max = 32 }),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { Portal2 }, Vehicles = { WarpSphere2 }, Aircraft = { GravityStabilizer1, GravityStabilizer2, GravityStabilizer3 } },
@@ -89,6 +96,7 @@ Squads = {
 		},
 	},
 	ScrinRebelsMain = {
+		Delay = DateTime.Minutes(1),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 28, Max = 28 }),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { RebelPortal1 }, Vehicles = { RebelWarpSphere1 }, Aircraft = { RebelGravityStabilizer1 } },
@@ -118,30 +126,40 @@ Squads = {
 		Compositions = AirCompositions.Scrin,
 	},
 	ScrinAirToAirVsNod = {
-		Interval = DateTime.Seconds(90),
 		ActiveCondition = function()
-			return NodHasMassAir()
+			return PlayerHasCharacteristic(squad.TargetPlayer, "MassAir")
 		end,
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 24, Max = 24 }),
 		OnProducedAction = function(a)
 			a.Patrol({ A2APatrol1.Location, A2APatrol2.Location, A2APatrol3.Location, A2APatrol4.Location, A2APatrol5.Location, A2APatrol6.Location, A2APatrol7.Location, A2APatrol8.Location })
 		end,
 		ProducerActors = { Aircraft = { GravityStabilizer1, GravityStabilizer2 } },
-		Compositions = {
-			{ Aircraft = { { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" } } },
-		},
+		Compositions = function(squad)
+			local units = { "stmr" }
+			local desiredCount = PlayerCharacteristics[squad.TargetPlayer.InternalName].AirValue / 2000
+			for i = 1, math.min(desiredCount, MaxAirToAirUnits[Difficulty]) do
+				table.insert(units, { "stmr", "enrv", "torm" })
+			end
+			return { { Aircraft = units } }
+		end
 	},
 	ScrinAirToAirVsGDI = {
-		Interval = DateTime.Seconds(90),
 		ActiveCondition = function()
-			return GDIHasMassAir()
+			return PlayerHasCharacteristic(squad.TargetPlayer, "MassAir")
 		end,
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 24, Max = 24 }),
 		OnProducedAction = function(a)
 			a.Patrol({ A2ABPatrol1.Location, A2ABPatrol2.Location, A2ABPatrol3.Location, A2ABPatrol4.Location, A2ABPatrol5.Location })
 		end,
 		ProducerActors = { Aircraft = { GravityStabilizer3, GravityStabilizer4 } },
-		Compositions = {
-			{ Aircraft = { { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" } } },
-		},
+		Compositions = function(squad)
+			local units = { "stmr" }
+			local desiredCount = PlayerCharacteristics[squad.TargetPlayer.InternalName].AirValue / 2000
+			for i = 1, math.min(desiredCount, MaxAirToAirUnits[Difficulty]) do
+				table.insert(units, { "stmr", "enrv", "torm" })
+			end
+			return { { Aircraft = units } }
+		end
 	},
 	ScrinRebelsAir = {
 		Delay = DateTime.Minutes(5),
@@ -269,11 +287,7 @@ InitScrin = function()
 	AutoReplaceHarvesters(Scrin)
 	AutoRebuildConyards(Scrin)
 	InitAiUpgrades(Scrin)
-
-	Trigger.AfterDelay(DateTime.Minutes(1), function()
-		InitAttackSquad(Squads.ScrinRebelKiller, Scrin, ScrinRebels)
-	end)
-
+	InitAttackSquad(Squads.ScrinRebelKiller, Scrin, ScrinRebels)
 	InitAttackSquad(Squads.ScrinVsNod, Scrin, Nod)
 	InitAttackSquad(Squads.ScrinVsGDI, Scrin, GDI)
 	InitAirAttackSquad(Squads.ScrinAirVsNod, Scrin, Nod)
@@ -340,11 +354,7 @@ InitScrinRebels = function()
 	AutoRepairAndRebuildBuildings(ScrinRebels, 15)
 	AutoReplaceHarvesters(ScrinRebels)
 	AutoRebuildConyards(ScrinRebels, true)
-
-	Trigger.AfterDelay(DateTime.Minutes(1), function()
-		InitAttackSquad(Squads.ScrinRebelsMain, ScrinRebels, Scrin)
-	end)
-
+	InitAttackSquad(Squads.ScrinRebelsMain, ScrinRebels, Scrin)
 	InitAirAttackSquad(Squads.ScrinRebelsAir, ScrinRebels, Scrin, { "harv.scrin", "scol", "tpod", "rtpd", "ptur", "devo", "corr", "ruin" })
 
 	local scrinRebelGroundAttackers = ScrinRebels.GetGroundAttackers()

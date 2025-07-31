@@ -11,6 +11,15 @@ ScrinGroundAttackPaths = {
 
 SignalTransmitterLocation = SignalTransmitter.Location
 
+MaxAirToAirUnits = {
+	vhard = 12,
+	brutal = 16
+}
+
+if Difficulty == "brutal" then
+	table.insert(ScrinWaterCompositions.brutal, { Aircraft = { "deva", "deva", "deva", "deva", "deva", "deva", "deva", "deva" }, MinTime = DateTime.Minutes(20) })
+end
+
 Squads = {
 	ScrinMain = {
 		Delay = AdjustDelayForDifficulty(DateTime.Seconds(150)),
@@ -30,6 +39,21 @@ Squads = {
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
 		Compositions = AirCompositions.Scrin
 	},
+	ScrinAirToAir = {
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(10)),
+		ActiveCondition = function(squad)
+			return PlayerHasCharacteristic(squad.TargetPlayer, "MassAir")
+		end,
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 24, Max = 24 }),
+		Compositions = function(squad)
+			local units = { "stmr" }
+			local desiredCount = PlayerCharacteristics[squad.TargetPlayer.InternalName].AirValue / 2000
+			for i = 1, math.min(desiredCount, MaxAirToAirUnits[Difficulty]) do
+				table.insert(units, { "stmr", "enrv", "torm" })
+			end
+			return { { Aircraft = units } }
+		end
+	}
 	NodNorth = {
 		AttackValuePerSecond = { Min = 10, Max = 10 },
 		ActiveCondition = function()
@@ -175,6 +199,10 @@ InitScrin = function()
 	InitAttackSquad(Squads.ScrinMain, Scrin)
 	InitAttackSquad(Squads.ScrinWater, Scrin)
 	InitAirAttackSquad(Squads.ScrinAir, Scrin)
+
+	if IsVeryHardOrAbove() then
+		InitAirAttackSquad(Squads.ScrinAirToAir, Scrin, MissionPlayers, { "Aircraft" }, "ArmorType")
+	end
 
 	local scrinGroundAttackers = Scrin.GetGroundAttackers()
 

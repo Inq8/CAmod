@@ -261,7 +261,7 @@ InitNod = function()
 	AutoRepairBuildings(Nod)
 	SetupRefAndSilosCaptureCredits(Nod)
 	InitAiUpgrades(Nod)
-	InitAirAttackSquad(Squads.Air, Nod, Scrin, { "harv", "harv.td", "proc", "proc.scrin" })
+	InitAirAttackSquad(Squads.Air, Nod, MissionPlayers, { "harv", "harv.td", "proc", "proc.scrin" })
 
 	local nodGroundAttackers = Nod.GetGroundAttackers()
 

@@ -284,7 +284,7 @@ InitScrinRebels = function()
 	InitAirAttackSquad(Squads.ScrinRebelsAir, ScrinRebels)
 
 	if IsHardOrAbove() then
-		InitAirAttackSquad(Squads.Enervators, ScrinRebels, USSR, { "etpd" })
+		InitAirAttackSquad(Squads.Enervators, ScrinRebels, MissionPlayers, { "etpd" })
 	end
 
 	local scrinRebelsGroundAttackers = ScrinRebels.GetGroundAttackers()
@@ -305,7 +305,7 @@ InitNod = function()
 	InitAirAttackSquad(Squads.NodAir, Nod)
 
 	if IsNormalOrAbove() then
-		InitAirAttackSquad(Squads.Banshees, Nod, USSR, { "etpd" })
+		InitAirAttackSquad(Squads.Banshees, Nod, MissionPlayers, { "etpd" })
 	end
 
 	local nodGroundAttackers = Nod.GetGroundAttackers()

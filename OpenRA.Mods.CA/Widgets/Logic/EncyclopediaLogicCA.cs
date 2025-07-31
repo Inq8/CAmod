@@ -203,7 +203,9 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			widget.Get<ButtonWidget>("BACK_BUTTON").OnClick = () =>
 			{
-				Game.Disconnect();
+				if (world.Type == WorldType.Shellmap)
+					Game.Disconnect();
+
 				Ui.CloseWindow();
 				onExit();
 			};

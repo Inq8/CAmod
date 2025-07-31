@@ -82,11 +82,10 @@ NukeTimer = {
 	normal = DateTime.Minutes(45),
 	hard = DateTime.Minutes(35),
 	vhard = DateTime.Minutes(30),
-	brutal = DateTime.Minutes(30),
+	brutal = DateTime.Minutes(25),
 }
 
-HaloDropStart = AdjustDelayForDifficulty(DateTime.Minutes(6))
-HaloDropAttackValue = AdjustAttackValuesForDifficulty({ Min = 12, Max = 24, RampDuration = DateTime.Minutes(7) })
+HaloDropAttackValue = AdjustAttackValuesForDifficulty({ Min = 5, Max = 8, RampDuration = DateTime.Minutes(6) })
 
 TeslaReactors = { TeslaReactor1, TeslaReactor2, TeslaReactor3, TeslaReactor4, TeslaReactor5, TeslaReactor6 }
 AirbaseStructures = { Airfield1, Airfield2, Airfield3, Airfield4, Airfield5, Helipad1, Helipad2, Helipad3 }
@@ -147,6 +146,14 @@ WorldLoaded = function()
 					Nod.MarkFailedObjective(ObjectiveKillSilos)
 				end
 			end)
+		end
+	end)
+
+	Trigger.OnEnteredFootprint({ HaloTrigger1.Location, HaloTrigger2.Location, HaloTrigger3.Location, HaloTrigger4.Location }, function(a, id)
+		if IsMissionPlayer(a) and not HaloDropsTriggered then
+			HaloDropsTriggered = true
+			Trigger.RemoveFootprintTrigger(id)
+			DoHaloDrop()
 		end
 	end)
 end
@@ -248,8 +255,6 @@ InitUSSR = function()
 			end)
 		end
 	end)
-
-	Trigger.AfterDelay(HaloDropStart, DoHaloDrop)
 end
 
 DoHaloDrop = function()

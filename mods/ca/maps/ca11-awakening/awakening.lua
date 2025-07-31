@@ -33,7 +33,7 @@ GroundAttackInterval = {
 	normal = DateTime.Seconds(26),
 	hard = DateTime.Seconds(24),
 	vhard = DateTime.Seconds(22),
-	brutal = DateTime.Seconds(20)
+	brutal = DateTime.Seconds(21)
 }
 
 HaloDropStart = AdjustDelayForDifficulty(DateTime.Minutes(7))
@@ -348,7 +348,7 @@ DoGroundAttack = function(isAdditional)
 			Trigger.AfterDelay(GroundAttackInterval[Difficulty], DoGroundAttack)
 
 			if DateTime.GameTime >= DateTime.Minutes(24) then
-				Trigger.AfterDelay(DateTime.Seconds(5), function()
+				Trigger.AfterDelay(DateTime.Seconds(3), function()
 					DoGroundAttack(true)
 				end)
 			end
@@ -358,7 +358,7 @@ DoGroundAttack = function(isAdditional)
 				end)
 			end
 			if DateTime.GameTime >= DateTime.Minutes(22) then
-				Trigger.AfterDelay(DateTime.Seconds(5), function()
+				Trigger.AfterDelay(DateTime.Seconds(7), function()
 					DoGroundAttack(true)
 				end)
 			end

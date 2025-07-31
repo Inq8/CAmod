@@ -21,12 +21,12 @@ TraitorCompositions = {
 		{ Infantry = { "e3", "e1", "e1", "e1", "e3", "e1", "shok" }, Vehicles = { "3tnk", "v2rl", "ttra" }, MinTime = DateTime.Minutes(10) },
 	},
 	vhard = {
-		{ Infantry = { "e3", "e1", "e1", "e1", "e3", "e1" }, Vehicles = { "4tnk", "btr" }, MaxTime = DateTime.Minutes(9) },
-		{ Infantry = { "e3", "e1", "e1", "e1", "e3", "e1", "shok" }, Vehicles = { "4tnk", "v2rl", "ttra" }, MinTime = DateTime.Minutes(9) },
+		{ Infantry = { "e3", "e1", "e1", "e1", "e3", "e1", "e1", "e1" }, Vehicles = { "4tnk", "btr" }, MaxTime = DateTime.Minutes(9) },
+		{ Infantry = { "e3", "e1", "e1", "e1", "e3", "e1", "shok", "e1", "e1" }, Vehicles = { "4tnk", "btr.ai", "v2rl", "ttra" }, MinTime = DateTime.Minutes(9) },
 	},
 	brutal = {
-		{ Infantry = { "e3", "e1", "e1", "e1", "e3", "e1" }, Vehicles = { "4tnk", "btr" }, MaxTime = DateTime.Minutes(8) },
-		{ Infantry = { "e3", "e1", "e1", "e1", "e3", "e1", "ttrp" }, Vehicles = { "4tnk", "v3rl", "ttra" }, MinTime = DateTime.Minutes(8) },
+		{ Infantry = { "e3", "e1", "e1", "e1", "e3", "e1", "e1", "e1" }, Vehicles = { "4tnk", "btr.ai" }, MaxTime = DateTime.Minutes(8) },
+		{ Infantry = { "e3", "e1", "e1", "e1", "e3", "e1", "e1", "e1", "ttrp", "e1", "e1", "e1", "ttrp" }, Vehicles = { "4tnk", "btr.ai", "v3rl", "v2rl", "ttra" }, MinTime = DateTime.Minutes(8) },
 	}
 }
 

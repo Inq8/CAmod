@@ -21,6 +21,12 @@ ClusterMissileEnabledTime = {
 	brutal = DateTime.Seconds((60 * 8) + 37)
 }
 
+MaxAntiTankAir = {
+	hard = 8,
+	vhard = 12,
+	brutal = 16
+}
+
 AdjustedNodCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Nod)
 
 Squads = {
@@ -73,13 +79,18 @@ Squads = {
 	},
 	AntiTankAir = {
 		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(15)),
-		ActiveCondition = function()
-			return #USSR.GetActorsByTypes({ "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" }) > 8
+		ActiveCondition = function(squad)
+			return PlayerHasCharacteristic(squad.TargetPlayer, "MassHeavy")
 		end,
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 24, Max = 24 }),
-		Compositions = {
-			{ Aircraft = { "scrn", "scrn", "scrn", "scrn", "scrn", "scrn" } },
-		},
+		Compositions = function(squad)
+			local banshees = { "scrn" }
+			local desiredCount = PlayerCharacteristics[squad.TargetPlayer.InternalName].HeavyValue / 2000
+			for i = 1, math.min(desiredCount, MaxAntiTankAir[Difficulty]) do
+				table.insert(banshees, "scrn")
+			end
+			return { { Aircraft = banshees } }
+		end
 	}
 }
 
@@ -204,7 +215,7 @@ InitNod = function()
 	InitAirAttackSquad(Squads.Air, Nod1)
 
 	if IsHardOrAbove() then
-		InitAirAttackSquad(Squads.AntiTankAir, Nod1, USSR, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" })
+		InitAirAttackSquad(Squads.AntiTankAir, Nod1, MissionPlayers, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" })
 	end
 
 	Trigger.AfterDelay(ClusterMissileEnabledTime[Difficulty], function()

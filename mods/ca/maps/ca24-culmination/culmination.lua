@@ -25,7 +25,7 @@ Squads = {
 	Allies = {
 		InitTimeAdjustment = -DateTime.Minutes(10),
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(2)),
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40, RampDuration = DateTime.Minutes(15) }),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40, RampDuration = DateTime.Minutes(13) }),
 		FollowLeader = true,
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Allied),
 		AttackPaths = {
@@ -35,7 +35,7 @@ Squads = {
 	Nod = {
 		InitTimeAdjustment = -DateTime.Minutes(10),
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(2)),
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40, RampDuration = DateTime.Minutes(15) }),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40, RampDuration = DateTime.Minutes(13) }),
 		DispatchDelay = DateTime.Seconds(15),
 		FollowLeader = true,
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Nod),
@@ -46,7 +46,7 @@ Squads = {
 	Soviets = {
 		InitTimeAdjustment = -DateTime.Minutes(10),
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(2)),
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40, RampDuration = DateTime.Minutes(15) }),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40, RampDuration = DateTime.Minutes(13) }),
 		FollowLeader = true,
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Soviet),
 		AttackPaths = {
@@ -55,17 +55,17 @@ Squads = {
 	},
 	AlliedAir = {
 		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(5)),
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 20 }),
 		Compositions = AirCompositions.Allied,
 	},
 	NodAir = {
 		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(5)),
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 20 }),
 		Compositions = AirCompositions.Nod,
 	},
 	SovietAir = {
 		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(5)),
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 20 }),
 		Compositions = AirCompositions.Soviet,
 	},
 }
