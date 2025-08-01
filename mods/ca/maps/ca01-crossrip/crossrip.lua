@@ -188,31 +188,8 @@ WorldLoaded = function()
 
 	InitObjectives(Greece)
 	AdjustPlayerStartingCashForDifficulty()
+	RemoveActorsBasedOnDifficultyTags()
 	InitUSSR()
-
-	if IsNormalOrBelow() then
-		HeavyTank1.Destroy()
-		Flamer1.Destroy()
-		TeslaCoil3.Destroy()
-		HardOnlyV2.Destroy()
-		HardOnlyKatyusha.Destroy()
-	else
-		Ranger1.Destroy()
-	end
-
-	if Difficulty == "easy" then
-		Flamer2.Destroy()
-		SovietWestFlameTower2.Destroy()
-		TeslaCoil1.Destroy()
-		TeslaCoil2.Destroy()
-		NonEasyKatyusha.Destroy()
-		NonEasyV2.Destroy()
-		NonEasyHeavyTank1.Destroy()
-		NonEasyHeavyTank2.Destroy()
-		NonEasyHeavyTank3.Destroy()
-		NonEasyHeavyTank4.Destroy()
-		NonEasyMammoth1.Destroy()
-	end
 
 	Trigger.AfterDelay(1, function()
 		ObjectiveEstablishBase = Greece.AddObjective("Establish a base.")

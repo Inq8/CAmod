@@ -461,7 +461,7 @@ UpdatePlayerBaseLocations = function()
 	end
 end
 
-RemoveActorsBasedOnDifficulty = function()
+RemoveActorsBasedOnDifficultyTags = function()
 	local easyOnlyActors = Map.ActorsWithTag("EasyOnly")
 	local normalAndBelowActors = Map.ActorsWithTag("NormalAndBelow")
 	local normalAndAboveActors = Map.ActorsWithTag("NormalAndAbove")
@@ -470,14 +470,18 @@ RemoveActorsBasedOnDifficulty = function()
 	local brutalOnlyActors = Map.ActorsWithTag("BrutalOnly")
 
 	local actorsToRemove = {
-		easy = normalAndAboveActors.Concat(hardAndAboveActors).Concat(veryHardAndAboveActors).Concat(brutalOnlyActors),
-		normal = easyOnlyActors.Concat(hardAndAboveActors).Concat(veryHardAndAboveActors).Concat(brutalOnlyActors),
-		hard = easyOnlyActors.Concat(normalAndBelowActors).Concat(veryHardAndAboveActors).Concat(brutalOnlyActors),
-		vhard = easyOnlyActors.Concat(normalAndBelowActors).Concat(brutalOnlyActors),
-		brutal = easyOnlyActors.Concat(normalAndBelowActors)
+		easy = Utils.Concat(normalAndAboveActors, Utils.Concat(hardAndAboveActors, Utils.Concat(veryHardAndAboveActors, brutalOnlyActors))),
+		normal = Utils.Concat(easyOnlyActors, Utils.Concat(hardAndAboveActors, Utils.Concat(veryHardAndAboveActors, brutalOnlyActors))),
+		hard = Utils.Concat(easyOnlyActors, Utils.Concat(normalAndBelowActors, Utils.Concat(veryHardAndAboveActors, brutalOnlyActors))),
+		vhard = Utils.Concat(easyOnlyActors, Utils.Concat(normalAndBelowActors, brutalOnlyActors)),
+		brutal = Utils.Concat(easyOnlyActors, normalAndBelowActors),
 	}
 
-	Utils.Do(actorsToRemove[Difficulty], function(a) a.Destroy() end)
+	Utils.Do(actorsToRemove[Difficulty], function(a)
+		if not a.IsDead then
+			a.Destroy()
+		end
+	end)
 end
 
 AutoRepairBuildings = function(player)

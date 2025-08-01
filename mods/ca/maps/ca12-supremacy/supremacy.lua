@@ -97,6 +97,7 @@ WorldLoaded = function()
 
 	InitObjectives(Nod)
 	AdjustPlayerStartingCashForDifficulty()
+	RemoveActorsBasedOnDifficultyTags()
 	InitGDI()
 	InitNod()
 
