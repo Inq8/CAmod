@@ -29,48 +29,34 @@ InnerTeslas = { InnerTesla1, InnerTesla2, InnerTesla3, InnerTesla4 }
 ParabombsEnabledDelay = {
 	easy = DateTime.Minutes(9),
 	normal = DateTime.Minutes(7),
-	hard = DateTime.Minutes(5)
+	hard = DateTime.Minutes(5),
+	vhard = DateTime.Minutes(5),
+	brutal = DateTime.Minutes(4)
 }
 
 ParatroopersEnabledDelay = {
 	easy = DateTime.Minutes(8),
 	normal = DateTime.Minutes(6),
-	hard = DateTime.Minutes(4)
+	hard = DateTime.Minutes(4),
+	vhard = DateTime.Minutes(4),
+	brutal = DateTime.Minutes(3)
 }
 
 MaxReactorFuelTime = DateTime.Minutes(10)
 
 Squads = {
 	Main = {
-		Delay = {
-			easy = DateTime.Minutes(5),
-			normal = DateTime.Minutes(4),
-			hard = DateTime.Minutes(3)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 10, Max = 25 },
-			normal = { Min = 25, Max = 50 },
-			hard = { Min = 40, Max = 80 },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(4)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 }),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { MainBarracks1, MainBarracks2 }, Vehicles = { MainFactory } },
-		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
-		Units = AdjustCompositionsForDifficulty(UnitCompositions.Soviet),
+		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Soviet),
 		AttackPaths = AttackPaths,
 	},
 	AirAntiLight = {
-		Delay = {
-			easy = DateTime.Minutes(7),
-			normal = DateTime.Minutes(6),
-			hard = DateTime.Minutes(5)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 5, Max = 10 },
-			normal = { Min = 9, Max = 15 },
-			hard = { Min = 13, Max = 40 },
-		},
-		ProducerTypes = { Aircraft = { "afld" } },
-		Units = {
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(6)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 7, Max = 12 }),
+		Compositions = {
 			easy = {
 				{ Aircraft = { HindOrYak } },
 			},
@@ -79,22 +65,19 @@ Squads = {
 			},
 			hard = {
 				{ Aircraft = { HindOrYak, HindOrYak, HindOrYak } },
+			},
+			vhard = {
+				{ Aircraft = { HindOrYak, HindOrYak, HindOrYak } },
+			},
+			brutal = {
+				{ Aircraft = { HindOrYak, HindOrYak, HindOrYak, HindOrYak } },
 			}
 		},
 	},
 	AirAntiHeavy = {
-		Delay = {
-			easy = DateTime.Minutes(13),
-			normal = DateTime.Minutes(10),
-			hard = DateTime.Minutes(7)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 5, Max = 10 },
-			normal = { Min = 9, Max = 15 },
-			hard = { Min = 13, Max = 40 },
-		},
-		ProducerTypes = { Aircraft = { "afld" } },
-		Units = {
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(10)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 7, Max = 12 }),
+		Compositions = {
 			easy = {
 				{ Aircraft = { MigOrSukhoi } },
 			},
@@ -103,21 +86,24 @@ Squads = {
 			},
 			hard = {
 				{ Aircraft = { MigOrSukhoi, MigOrSukhoi, MigOrSukhoi } },
+			},
+			vhard = {
+				{ Aircraft = { MigOrSukhoi, MigOrSukhoi, MigOrSukhoi } },
+			},
+			brutal = {
+				{ Aircraft = { MigOrSukhoi, MigOrSukhoi, MigOrSukhoi, MigOrSukhoi } },
 			}
 		},
 	},
 	AirAntiAir = {
-		AttackValuePerSecond = {
-			easy = { Min = 10, Max = 10 },
-			normal = { Min = 15, Max = 15 },
-			hard = { Min = 25, Max = 25 },
-		},
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
 		ActiveCondition = function()
-			local gdiAircraft = GDI.GetActorsByTypes({ "orca", "a10", "orcb", "auro" })
+			local gdiAircraft = Utils.Where(GDI.GetActorsByArmorTypes({ "Aircraft" }), function(a)
+				return a.Type ~= "jjet" and a.Type ~= "bjet"
+			end)
 			return #gdiAircraft > 3
 		end,
-		ProducerTypes = { Aircraft = { "afld" } },
-		Units = {
+		Compositions = {
 			easy = {
 				{ Aircraft = { "mig" } },
 			},
@@ -126,22 +112,19 @@ Squads = {
 			},
 			hard = {
 				{ Aircraft = { "mig", "mig", "yak" } },
+			},
+			vhard = {
+				{ Aircraft = { "mig", "mig", "yak", "yak" } },
+			},
+			brutal = {
+				{ Aircraft = { "mig", "mig", "yak", "yak", "mig" } },
 			}
 		},
 	},
 	Kirovs = {
-		Delay = {
-			easy = DateTime.Minutes(15),
-			normal = DateTime.Minutes(13),
-			hard = DateTime.Minutes(11)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 5, Max = 10 },
-			normal = { Min = 9, Max = 25 },
-			hard = { Min = 13, Max = 40 },
-		},
-		ProducerTypes = { Aircraft = { "afld" } },
-		Units = {
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(13)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 7, Max = 20 }),
+		Compositions = {
 			easy = {
 				{ Aircraft = { "kiro" } },
 			},
@@ -154,7 +137,19 @@ Squads = {
 				{ Aircraft = { "kiro", "kiro" }, MinTime = DateTime.Minutes(10), MaxTime = DateTime.Minutes(20) },
 				{ Aircraft = { "kiro", "kiro", "kiro" }, MinTime = DateTime.Minutes(20), MaxTime = DateTime.Minutes(30) },
 				{ Aircraft = { "kiro", "kiro", "kiro", "kiro" }, MinTime = DateTime.Minutes(30) }
-			}
+			},
+			vhard = {
+				{ Aircraft = { "kiro" }, MaxTime = DateTime.Minutes(8) },
+				{ Aircraft = { "kiro", "kiro" }, MinTime = DateTime.Minutes(8), MaxTime = DateTime.Minutes(18) },
+				{ Aircraft = { "kiro", "kiro", "kiro" }, MinTime = DateTime.Minutes(18), MaxTime = DateTime.Minutes(28) },
+				{ Aircraft = { "kiro", "kiro", "kiro", "kiro" }, MinTime = DateTime.Minutes(28) }
+			},
+			brutal = {
+				{ Aircraft = { "kiro" }, MaxTime = DateTime.Minutes(6) },
+				{ Aircraft = { "kiro", "kiro" }, MinTime = DateTime.Minutes(6), MaxTime = DateTime.Minutes(16) },
+				{ Aircraft = { "kiro", "kiro", "kiro" }, MinTime = DateTime.Minutes(16), MaxTime = DateTime.Minutes(26) },
+				{ Aircraft = { "kiro", "kiro", "kiro", "kiro" }, MinTime = DateTime.Minutes(26) }
+			},
 		},
 		AttackPaths = {
 			{ KirovPath1_1.Location, KirovPath1_2.Location, KirovPath1_3.Location, KirovPath1_4.Location },
@@ -282,6 +277,11 @@ InitUSSR = function()
 	AutoReplaceHarvesters(USSR)
 	AutoRebuildConyards(USSR)
 	InitAiUpgrades(USSR)
+	InitAttackSquad(Squads.Main, USSR)
+	InitAirAttackSquad(Squads.AirAntiLight, USSR, MissionPlayers, { "Light" }, "ArmorType")
+	InitAirAttackSquad(Squads.AirAntiHeavy, USSR, MissionPlayers, { "Heavy" }, "ArmorType")
+	InitAirAttackSquad(Squads.AirAntiAir, USSR, MissionPlayers, { "Aircraft" }, "ArmorType")
+	InitAttackSquad(Squads.Kirovs, USSR)
 
 	Actor.Create("ai.unlimited.power", true, { Owner = USSR })
 
@@ -296,24 +296,6 @@ InitUSSR = function()
 		if not a.IsDead then
 			a.GrantCondition("invulnerability")
 		end
-	end)
-
-	Trigger.AfterDelay(Squads.Main.Delay[Difficulty], function()
-		InitAttackSquad(Squads.Main, USSR)
-	end)
-
-	Trigger.AfterDelay(Squads.AirAntiLight.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.AirAntiLight, USSR, GDI, { "Light" }, "ArmorType")
-	end)
-
-	Trigger.AfterDelay(Squads.AirAntiHeavy.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.AirAntiHeavy, USSR, GDI, { "Heavy" }, "ArmorType")
-	end)
-
-	InitAirAttackSquad(Squads.AirAntiAir, USSR, GDI, { "Aircraft" }, "ArmorType")
-
-	Trigger.AfterDelay(Squads.Kirovs.Delay[Difficulty], function()
-		InitAttackSquad(Squads.Kirovs, USSR)
 	end)
 
 	Trigger.AfterDelay(ParabombsEnabledDelay[Difficulty], function()

@@ -23,21 +23,21 @@ namespace OpenRA.Mods.CA.Traits
 	{
 		[Desc("Identifier for the counts.")]
 		[FieldLoader.Require]
-		public readonly string Type = null;
-
-		[Desc("The prerequisite type that this provides.")]
-		[FieldLoader.Require]
-		public readonly string Prerequisite = null;
+		public readonly string Type;
 
 		[Desc("The counts required to enable the prerequisite.")]
 		[FieldLoader.Require]
-		public readonly Dictionary<string, int> RequiredCounts = null;
+		public readonly int RequiredCount;
+
+		[Desc("The prerequisite type that this provides.")]
+		[FieldLoader.Require]
+		public readonly string Prerequisite;
 
 		[Desc("List of factions that can affect this count. Leave blank for any faction.")]
 		public readonly string[] Factions = { };
 
 		[Desc("If true, the prerequisite is permanent once the count is reached.")]
-		public readonly bool Permanent = false;
+		public readonly bool PermanentWhenReached = false;
 
 		[Desc("If true, the prerequisite is permanent if an upgrade is acquired.")]
 		public readonly string[] PermanentAfterUpgrades = null;
@@ -68,15 +68,27 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new ProvidesPrerequisiteOnCount(init, this); }
 	}
 
-	public class ProvidesPrerequisiteOnCount : ITechTreePrerequisite, INotifyCreated, ITick, INotifyCountChanged
+	public class ProvidesPrerequisiteOnCount : ITechTreePrerequisite, INotifyCreated, ITick
 	{
 		public readonly ProvidesPrerequisiteOnCountInfo Info;
 		readonly Actor self;
-		readonly Dictionary<string, int> counts;
-		readonly bool validFaction;
 		TechTree techTree;
+		CountManager countManager;
 		UpgradesManager upgradesManager;
-		bool permanentlyUnlocked;
+
+		public int CurrentCount
+		{
+			get
+			{
+				if (countManager != null && countManager.Counts.TryGetValue(Info.Type, out var count))
+					return count;
+				return 0;
+			}
+		}
+
+		bool requiredCountReached => CurrentCount >= Info.RequiredCount;
+		bool countLocked;
+
 		bool notificationQueued;
 		int ticksUntilNotification;
 		bool dummyActorQueued;
@@ -84,55 +96,21 @@ namespace OpenRA.Mods.CA.Traits
 
 		public event Action Incremented;
 		public event Action Decremented;
-		public event Action Unlocked;
-		public event Action<string> UnlockedPermanently;
+		public event Action RequiredCountReached;
+		public event Action<string> PermanentlyGranted;
 
 		public ProvidesPrerequisiteOnCount(ActorInitializer init, ProvidesPrerequisiteOnCountInfo info)
 		{
 			Info = info;
 			self = init.Self;
-			counts = new Dictionary<string, int>();
-			permanentlyUnlocked = false;
+			countLocked = false;
 			ticksUntilNotification = info.NotificationDelay;
 
 			var player = self.Owner;
-			validFaction = info.Factions.Length == 0 || info.Factions.Contains(player.Faction.InternalName);
-
-			foreach (var count in Info.RequiredCounts)
-				counts[count.Key] = 0;
+			Enabled = info.Factions.Length == 0 || info.Factions.Contains(player.Faction.InternalName);
 		}
 
-		public bool Enabled
-		{
-			get
-			{
-				return validFaction;
-			}
-		}
-
-		bool PrerequisitesGranted
-		{
-			get
-			{
-				return permanentlyUnlocked || AllRequiredCountsReached;
-			}
-		}
-
-		bool AllRequiredCountsReached
-		{
-			get
-			{
-				foreach (var kvp in Info.RequiredCounts)
-				{
-					if (!counts.ContainsKey(kvp.Key) || counts[kvp.Key] < kvp.Value)
-						return false;
-				}
-
-				return true;
-			}
-		}
-
-		public Dictionary<string, int> Counts => counts;
+		public bool Enabled { get; }
 
 		public string[] Factions => Info.Factions;
 
@@ -140,7 +118,7 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			get
 			{
-				if (!PrerequisitesGranted)
+				if (!requiredCountReached)
 					yield break;
 
 				yield return Info.Prerequisite;
@@ -156,7 +134,11 @@ namespace OpenRA.Mods.CA.Traits
 			var playerActor = self.Info.Name == "player" ? self : self.Owner.PlayerActor;
 			techTree = playerActor.Trait<TechTree>();
 			techTree.ActorChanged(self);
-			upgradesManager = playerActor.TraitOrDefault<UpgradesManager>();
+			countManager = playerActor.Trait<CountManager>();
+			upgradesManager = playerActor.Trait<UpgradesManager>();
+			countManager.Incremented += HandleIncremented;
+			countManager.Decremented += HandleDecremented;
+			upgradesManager.UpgradeCompleted += HandleUpgrade;
 		}
 
 		void ITick.Tick(Actor self)
@@ -189,29 +171,15 @@ namespace OpenRA.Mods.CA.Traits
 					});
 				});
 			}
-
-			if (!permanentlyUnlocked && Info.PermanentAfterUpgrades != null)
-			{
-				foreach (var upgrade in Info.PermanentAfterUpgrades)
-				{
-					if (upgradesManager.IsUnlocked(upgrade))
-					{
-						permanentlyUnlocked = true;
-						UnlockedPermanently?.Invoke(upgrade);
-						break;
-					}
-				}
-			}
 		}
 
-		void INotifyCountChanged.Incremented(string type)
+		// Invoked by CountManager when a count is incremented
+		void HandleIncremented(string type, int newCount)
 		{
-			if (!Enabled || permanentlyUnlocked || !counts.ContainsKey(type))
+			if (!Enabled || countLocked || type != Info.Type)
 				return;
 
-			counts[type]++;
-
-			if (counts[type] > Info.RequiredCounts[type])
+			if (newCount > Info.RequiredCount)
 				return;
 
 			techTree.ActorChanged(self);
@@ -221,9 +189,9 @@ namespace OpenRA.Mods.CA.Traits
 			if (Info.IncrementSound != null)
 				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Sounds", Info.IncrementSound, self.Owner.Faction.InternalName);
 
-			if (AllRequiredCountsReached)
+			if (requiredCountReached)
 			{
-				Unlocked?.Invoke();
+				RequiredCountReached?.Invoke();
 				notificationQueued = true;
 
 				if (Info.DummyActor != null)
@@ -232,22 +200,31 @@ namespace OpenRA.Mods.CA.Traits
 					ticksUntilSpawnDummyActor = 1;
 				}
 
-				if (Info.Permanent)
+				if (Info.PermanentWhenReached)
 				{
-					permanentlyUnlocked = true;
-					UnlockedPermanently?.Invoke(null);
+					countLocked = true;
+					PermanentlyGranted?.Invoke(null);
 				}
 			}
 		}
 
-		void INotifyCountChanged.Decremented(string type)
+		// Invoked by CountManager when a count is decremented
+		void HandleDecremented(string type, int newCount)
 		{
-			if (!Enabled || permanentlyUnlocked || !counts.ContainsKey(type))
+			if (!Enabled || countLocked || type != Info.Type)
 				return;
 
-			counts[type]--;
 			techTree.ActorChanged(self);
 			Decremented?.Invoke();
+		}
+
+		void HandleUpgrade(string type)
+		{
+			if (!Enabled || countLocked || Info.PermanentAfterUpgrades == null || !Info.PermanentAfterUpgrades.Contains(type))
+				return;
+
+			countLocked = true;
+			PermanentlyGranted?.Invoke(type);
 		}
 	}
 }

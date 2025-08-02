@@ -18,6 +18,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 {
 	class ScrinAllegianceIndicatorLogic : ChromeLogic
 	{
+		const string CountType = "ScrinAllegiance";
 		const string DisabledImage = "disabled";
 
 		readonly ProvidesPrerequisiteOnCount counter;
@@ -36,7 +37,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 		public ScrinAllegianceIndicatorLogic(Widget widget, World world)
 		{
 			counter = world.LocalPlayer.PlayerActor.TraitsImplementing<ProvidesPrerequisiteOnCount>()
-				.FirstOrDefault(c => c.Info.Type == "ScrinAllegiance");
+				.FirstOrDefault(c => c.Info.Type == CountType);
 
 			var container = widget.Get<ContainerWidget>("SCRIN_ALLEGIANCE");
 			var countImage = container.Get<ImageWidget>("SCRIN_ALLEGIANCE_LEVEL");
@@ -56,7 +57,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			}
 
 			counter.Incremented += HandleIncremented;
-			counter.UnlockedPermanently += HandleUnlockedPermanently;
+			counter.PermanentlyGranted += HandlePermanentlyGranted;
 
 			countImage.GetImageName = () =>  GetCountImageName();
 			countImage.IsVisible = () => counter.Enabled;
@@ -76,7 +77,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			fadeOutTicks = fadeOutMaxTicks;
 		}
 
-		private void HandleUnlockedPermanently(string allegiance)
+		private void HandlePermanentlyGranted(string allegiance)
 		{
 			chosenAllegiance = allegiance.Split('.')[0];
 			fadeInTicks = fadeInMaxTicks;
@@ -92,7 +93,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			}
 			else
 			{
-				var count = counter.Counts.ContainsKey("Refineries") ? Math.Min(counter.Counts["Refineries"], 4) : 0;
+				var count = Math.Min(counter.CurrentCount, 4);
 				return $"level{count}";
 			}
 		}

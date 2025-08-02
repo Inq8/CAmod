@@ -28,15 +28,6 @@ World:
 		Briefing: The device worked perfectly. Scrin for many miles around are no longer dependent on Tiberium to survive, or have had their dependence significantly reduced. With additional uses of the device, all Scrin can be free of their affliction.\n\nFor us, it means that the Earth can be similarly cleansed, and the tremendous power of Tiberium can be leveraged without side-effects.\n\nNews spread quickly amongst the Scrin of the Overlord's deception. Of course, those willing to trust the word of a human remain a minority, and the effects of the device have not yet spread widely enough to aid in persuading the wider Scrin population.\n\nMany Scrin have risen up against the Overlord's armies however, and we are in the midst of a civil war.\n\nThe Overlord's forces are mobilizing across the planet, so we have precious little time to strike a decisive blow. I have been contacted by a leader amongst the rebels who has indicated where the Overlord's most elite forces are amassing, and it has been suggested that defeating him there will weaken his authority enough to tip the scales in the rebels' favor. At least until the device has made the enormity of what is transpiring evident to all Scrin.\n\nThe rebels have engaged these forces already. Our assistance will be unexpected thanks to our brothers fighting on multiple other fronts, so I want you to take a small force, aid the rebels while our forces accumulate, then destroy the Overlord's primary base in the area before his armies from across the planet arrive.
 	MapOptions:
 		ShortGameCheckboxEnabled: False
-	ScriptLobbyDropdown@DIFFICULTY:
-		ID: difficulty
-		Label: dropdown-difficulty.label
-		Description: dropdown-difficulty.description
-		Values:
-			easy: options-difficulty.easy
-			normal: options-difficulty.normal
-			hard: options-difficulty.hard
-		Default: normal
 	MusicPlaylist:
 		StartingMusic: gateway
 
@@ -128,10 +119,6 @@ hstk.upgrade:
 	Buildable:
 		Prerequisites: ~player.nod, tmpl
 
-microwave.upgrade:
-	Buildable:
-		Prerequisites: ~player.nod, tmpl
-
 NERV:
 	DetonateWeaponPower@BUZZERSWARMAI:
 		Prerequisites: nerv
@@ -152,6 +139,23 @@ WORMHOLE:
 	-Targetable:
 	RenderSprites:
 		Image: wormholelg
+
+ETPD:
+	FirepowerMultiplier@NORMAL:
+		Modifier: 75
+		RequiresCondition: difficulty-normal
+	FirepowerMultiplier@EASY:
+		Modifier: 50
+		RequiresCondition: difficulty-easy
+	DamageMultiplier@NORMAL:
+		Modifier: 125
+		RequiresCondition: difficulty-normal
+	DamageMultiplier@EASY:
+		Modifier: 150
+		RequiresCondition: difficulty-easy
+	DamageTypeDamageMultiplier@A2GPROTECTION:
+		Modifier: 75
+		RequiresCondition: !difficulty-easy
 
 # Hunt() requires only 1 AttackBase
 DEVA:

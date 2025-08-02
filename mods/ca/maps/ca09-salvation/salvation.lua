@@ -1,43 +1,64 @@
 Wormholes = {
-	{ Locations = { WormholeSpawn1a.Location, WormholeSpawn1b.Location, WormholeSpawn1c.Location }, Actor = nil, SpawnCount = 0, Early = true },
-	{ Locations = { WormholeSpawn4a.Location, WormholeSpawn4b.Location, WormholeSpawn4c.Location }, Actor = nil, SpawnCount = 0, Early = true },
-	{ Locations = { WormholeSpawn7a.Location, WormholeSpawn7b.Location, WormholeSpawn7c.Location }, Actor = nil, SpawnCount = 0, Early = true },
-	{ Locations = { WormholeSpawn2a.Location, WormholeSpawn2b.Location, WormholeSpawn2c.Location }, Actor = nil, SpawnCount = 0, Early = false },
-	{ Locations = { WormholeSpawn3a.Location, WormholeSpawn3b.Location, WormholeSpawn3c.Location }, Actor = nil, SpawnCount = 0, Early = false },
-	{ Locations = { WormholeSpawn5a.Location, WormholeSpawn5b.Location, WormholeSpawn5c.Location }, Actor = nil, SpawnCount = 0, Early = false },
-	{ Locations = { WormholeSpawn6a.Location, WormholeSpawn6b.Location, WormholeSpawn6c.Location }, Actor = nil, SpawnCount = 0, Early = false },
-	{ Locations = { WormholeSpawn8a.Location, WormholeSpawn8b.Location, WormholeSpawn8c.Location }, Actor = nil, SpawnCount = 0, Early = false },
-	{ Locations = { WormholeSpawn9a.Location, WormholeSpawn9b.Location, WormholeSpawn9c.Location }, Actor = nil, SpawnCount = 0, Early = false },
+	{ Locations = { WormholeSpawn1a.Location, WormholeSpawn1b.Location, WormholeSpawn1c.Location, WormholeSpawn1d.Location }, Actor = nil, SpawnCount = 0, Phase = 1 },
+	{ Locations = { WormholeSpawn4a.Location, WormholeSpawn4b.Location, WormholeSpawn4c.Location, WormholeSpawn4d.Location, WormholeSpawn4e.Location }, Actor = nil, SpawnCount = 0, Phase = 1 },
+	{ Locations = { WormholeSpawn7a.Location, WormholeSpawn7b.Location, WormholeSpawn7c.Location, WormholeSpawn7d.Location, WormholeSpawn7e.Location }, Actor = nil, SpawnCount = 0, Phase = 1 },
+
+	{ Locations = { WormholeSpawn9a.Location, WormholeSpawn9b.Location, WormholeSpawn9c.Location }, Actor = nil, SpawnCount = 0, Phase = 2 }, -- Bottom outer
+	{ Locations = { WormholeSpawn5a.Location, WormholeSpawn5b.Location, WormholeSpawn5c.Location }, Actor = nil, SpawnCount = 0, Phase = 2 }, -- Center main
+
+	{ Locations = { WormholeSpawn2a.Location, WormholeSpawn2b.Location, WormholeSpawn2c.Location, WormholeSpawn2d.Location }, Actor = nil, SpawnCount = 0, Phase = 3 }, -- North-east corner
+	{ Locations = { WormholeSpawn3a.Location, WormholeSpawn3b.Location, WormholeSpawn3c.Location }, Actor = nil, SpawnCount = 0, Phase = 3 }, -- North-east inner
+	{ Locations = { WormholeSpawn6a.Location, WormholeSpawn6b.Location, WormholeSpawn6c.Location }, Actor = nil, SpawnCount = 0, Phase = 3 }, -- Bottom inner
+	{ Locations = { WormholeSpawn8a.Location, WormholeSpawn8b.Location, WormholeSpawn8c.Location }, Actor = nil, SpawnCount = 0, Phase = 3 }, -- Far east
+
 }
 
 WormholeDelay = {
-	easy = DateTime.Minutes(7),
-	normal = DateTime.Seconds(330),
-	hard = DateTime.Seconds(270),
+	easy = DateTime.Minutes(6),
+	normal = DateTime.Minutes(5) + DateTime.Seconds(30),
+	hard = DateTime.Minutes(5),
+	vhard = DateTime.Minutes(4) + DateTime.Seconds(30),
+	brutal = DateTime.Minutes(4)
 }
 
 WormholeInterval = {
-	easy = DateTime.Seconds(110),
-	normal = DateTime.Seconds(90),
-	hard = DateTime.Seconds(70)
+	easy = DateTime.Minutes(1) + DateTime.Seconds(40),
+	normal = DateTime.Minutes(1) + DateTime.Seconds(30),
+	hard = DateTime.Minutes(1) + DateTime.Seconds(20),
+	vhard = DateTime.Minutes(1) + DateTime.Seconds(10),
+	brutal = DateTime.Minutes(1),
 }
 
 WormholeUnitsDelay = {
 	easy = DateTime.Seconds(70),
 	normal = DateTime.Seconds(50),
-	hard = DateTime.Seconds(30)
+	hard = DateTime.Seconds(35),
+	vhard = DateTime.Seconds(30),
+	brutal = DateTime.Seconds(25)
 }
 
 WormholeUnitsInterval = {
 	easy = DateTime.Seconds(160),
-	normal = DateTime.Seconds(120),
-	hard = DateTime.Seconds(80)
+	normal = DateTime.Seconds(130),
+	hard = DateTime.Seconds(100),
+	vhard = DateTime.Seconds(80),
+	brutal = DateTime.Seconds(75)
 }
 
-LateWormholesStart = {
+Phase2Start = {
 	easy = DateTime.Minutes(13),
 	normal = DateTime.Minutes(11),
-	hard = DateTime.Minutes(9)
+	hard = DateTime.Minutes(9),
+	vhard = DateTime.Minutes(8),
+	brutal = DateTime.Minutes(7)
+}
+
+Phase3Start = {
+	easy = DateTime.Minutes(16),
+	normal = DateTime.Minutes(14),
+	hard = DateTime.Minutes(12),
+	vhard = DateTime.Minutes(11),
+	brutal = DateTime.Minutes(10)
 }
 
 WormholeUnitGroups = {
@@ -181,7 +202,7 @@ SpawnWormhole = function()
 	ShuffleInPlace(Wormholes)
 
 	local dormantWormholes = Utils.Where(Wormholes, function(w)
-		return (w.Actor == nil or w.Actor.IsDead) and (w.Early or DateTime.GameTime > LateWormholesStart[Difficulty])
+		return (w.Actor == nil or w.Actor.IsDead) and ((w.Phase == 1) or (w.Phase == 2 and DateTime.GameTime > Phase2Start[Difficulty]) or (w.Phase == 3 and DateTime.GameTime > Phase3Start[Difficulty]))
 	end)
 
 	if #dormantWormholes > 0 then

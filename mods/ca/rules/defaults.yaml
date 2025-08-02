@@ -2541,7 +2541,7 @@
 	Passenger:
 		CargoType: Infantry
 		CargoCondition: passenger
-	UnusedCondition@Passenger:
+	DummyConditionConsumer@Passenger:
 		Condition: passenger
 	MassEntersCargo:
 	PassengerBlocked:
@@ -3394,8 +3394,9 @@
 		CloakSound: cloak5.aud
 		UncloakSound: appear1.aud
 	UpdatesBuildOrder:
-	UpdatesKillCount@BuildingsOrHarvesters:
-		Type: BuildingsOrHarvesters
+	UpdatesCount@NodCovenant:
+		Type: NodCovenant
+		UpdateOn: Killed
 	InfiltrateToCreateProxyActor@InfiltratorVision:
 		Proxy: camera.infiltrator
 		Types: VisionInfiltrate
@@ -3686,7 +3687,7 @@
 	GrantTimedCondition@DETONATEDELAY:
 		Condition: detonate-disabled
 		Duration: 125
-	-UpdatesKillCount@BuildingsOrHarvesters:
+	-UpdatesCount@NodCovenant:
 	-InfiltrateToCreateProxyActor@InfiltratorVision:
 	-Targetable@InfiltratorVision:
 	Encyclopedia:

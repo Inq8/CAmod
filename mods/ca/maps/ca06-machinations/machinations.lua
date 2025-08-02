@@ -1,7 +1,9 @@
 InitialUnits = {
 	easy = { "jeep", "mcv", "2tnk", "e1", "e1", "e1", "e3" },
 	normal = { "jeep", "mcv", "e1", "e1", "e1", "e3"  },
-	hard = { "jeep", "mcv", "e1", "e1", "e3" }
+	hard = { "jeep", "mcv", "e1", "e1", "e3" },
+	vhard = { "jeep", "mcv", "e1", "e1" },
+	brutal = { "jeep", "mcv" }
 }
 
 NodSouthAttackPaths = {
@@ -36,14 +38,24 @@ Patrols = {
 }
 
 SuperweaponsEnabledTime = {
-	easy = DateTime.Minutes(30),
+	easy = DateTime.Minutes(40),
+	normal = DateTime.Minutes(25),
+	hard = DateTime.Minutes(15),
+	vhard = DateTime.Minutes(10),
+	brutal = DateTime.Minutes(10)
+}
+
+PreparationTime = {
+	easy = DateTime.Minutes(60),
 	normal = DateTime.Minutes(20),
-	hard = DateTime.Minutes(10)
+	hard = DateTime.Minutes(16),
+	vhard = DateTime.Minutes(14),
+	brutal = DateTime.Minutes(10)
 }
 
 -- Squads
 
-LabDefenseUnits = {
+LabDefenseCompositions = {
 	easy = {
 		{ Infantry = { "n1c", "n1c", "n1c", "n3c" }, Vehicles = { "ltnk" } },
 	},
@@ -52,6 +64,12 @@ LabDefenseUnits = {
 	},
 	hard = {
 		{ Infantry = { "n1c", "n1c", "n1c", "n3c", "n5", "n1c", "tplr", "tplr", "rmbc" }, Vehicles = { "ltnk", "mlrs", "stnk.nod", "hftk", "ltnk" } },
+	},
+	vhard = {
+		{ Infantry = { "n1c", "n1c", "n1c", "n3c", "n5", "n1c", "tplr", "tplr", "rmbc", "enli", "n1c", "n3c" }, Vehicles = { "ltnk", "mlrs", "stnk.nod", "hftk", "ltnk" } },
+	},
+	brutal = {
+		{ Infantry = { "n1c", "n1c", "n1c", "n3c", "n5", "n1c", "tplr", "rmbc", "n1c", "n3c", "tplr", "rmbc", "enli", "n1c", "n1c", "n3c" }, Vehicles = { "ltnk", "mlrs", "stnk.nod", "hftk", "avtr" } },
 	}
 }
 
@@ -59,78 +77,34 @@ AdjustedNodCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Nod)
 
 Squads = {
 	South = {
-		Delay = {
-			easy = DateTime.Minutes(6),
-			normal = DateTime.Minutes(4),
-			hard = DateTime.Minutes(2)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 10, Max = 25 },
-			normal = { Min = 25, Max = 50 },
-			hard = { Min = 40, Max = 80 },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(4)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 }),
 		DispatchDelay = DateTime.Seconds(15),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { NodSouthHand }, Vehicles = { NodSouthAirstrip } },
-		Units = AdjustedNodCompositions,
+		Compositions = AdjustedNodCompositions,
 		AttackPaths = NodSouthAttackPaths,
 	},
 	East = {
-		Delay = {
-			easy = DateTime.Minutes(3),
-			normal = DateTime.Minutes(2),
-			hard = DateTime.Minutes(1)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 10, Max = 25 },
-			normal = { Min = 25, Max = 50 },
-			hard = { Min = 40, Max = 80 },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(2)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 }),
 		DispatchDelay = DateTime.Seconds(15),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { NodEastHand1, NodEastHand2 }, Vehicles = { NodEastAirstrip } },
-		Units = AdjustedNodCompositions,
+		Compositions = AdjustedNodCompositions,
 		AttackPaths = NodEastAttackPaths,
 	},
 	Air = {
-		Delay = {
-			easy = DateTime.Minutes(13),
-			normal = DateTime.Minutes(12),
-			hard = DateTime.Minutes(11)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 7, Max = 7 },
-			normal = { Min = 14, Max = 14 },
-			hard = { Min = 21, Max = 21 },
-		},
-		ProducerTypes = { Aircraft = { "hpad.td" } },
-		Units = {
-			easy = {
-				{ Aircraft = { "apch" } }
-			},
-			normal = {
-				{ Aircraft = { "apch", "apch" } },
-				{ Aircraft = { "scrn" } },
-				{ Aircraft = { "rah" } }
-			},
-			hard = {
-				{ Aircraft = { "apch", "apch", "apch" } },
-				{ Aircraft = { "scrn", "scrn" } },
-				{ Aircraft = { "rah", "rah" } }
-			}
-		},
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(13)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		Compositions = AirCompositions.Nod,
 	},
 	Naval = {
 		ActiveCondition = function()
 			return PlayerHasNavalProduction(Greece)
 		end,
-		AttackValuePerSecond = {
-			easy = { Min = 10, Max = 10 },
-			normal = { Min = 18, Max = 18 },
-			hard = { Min = 32, Max = 32 },
-		},
-		ProducerTypes = { Ships = { "spen.nod" } },
-		Units = {
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 14, Max = 14 }),
+		Compositions = {
 			easy = {
 				{ Ships = { "sb", "ss2" } }
 			},
@@ -139,7 +113,23 @@ Squads = {
 			},
 			hard = {
 				{ Ships = { "sb", "sb", "ss2", "ss2" } }
+			},
+			vhard = {
+				{ Ships = { "sb", "sb", "ss2", "ss2" } }
+			},
+			brutal = {
+				{ Ships = { "sb", "sb", "ss2", "ss2" } }
 			}
+		},
+		AttackPaths = NodNavalAttackPath
+	},
+	ICBMSubs = {
+		Delay = DateTime.Minutes(15),
+		AttackValuePerSecond = { Min = 8, Max = 16 },
+		Compositions = {
+			brutal = {
+				{ Ships = { "isub" } }
+			},
 		},
 		AttackPaths = NodNavalAttackPath
 	},
@@ -147,16 +137,11 @@ Squads = {
 		ActiveCondition = function()
 			return CountConyards(Nod) < 2 and DateTime.GameTime >= DateTime.Minutes(15)
 		end,
-		AttackValuePerSecond = {
-			easy = { Min = 15, Max = 15 },
-			normal = { Min = 25, Max = 25 },
-			hard = { Min = 40, Max = 40 },
-		},
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 20 }),
 		DispatchDelay = DateTime.Seconds(15),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { NodQuarryHand }, Vehicles = { NodQuarryAirstrip } },
-		ProducerTypes = { Infantry = { "hand" }, Vehicles = { "airs" } },
-		Units = LabDefenseUnits,
+		Compositions = LabDefenseCompositions,
 		AttackPaths = NodSouthAttackPaths
 	}
 }
@@ -176,7 +161,7 @@ WorldLoaded = function()
 	InitNod()
 	DoMcvArrival()
 
-	if Difficulty ~= "hard" then
+	if IsNormalOrBelow() then
 		EastObelisk2.Destroy()
 		EastObelisk4.Destroy()
 		SouthWestObelisk2.Destroy()
@@ -192,11 +177,9 @@ WorldLoaded = function()
 		end
 	end
 
-	if Difficulty ~= "easy" then
-		Trigger.AfterDelay(DateTime.Minutes(14), function()
-			InitNodAttacks()
-		end)
-	end
+	Trigger.AfterDelay(PreparationTime[Difficulty], function()
+		InitNodAttacks()
+	end)
 
 	Trigger.OnKilled(Church1, function(self, killer)
 		Actor.Create("moneycrate", true, { Owner = Greece, Location = Church1.Location })
@@ -210,7 +193,7 @@ WorldLoaded = function()
 
 	-- On proximity to lab, reveal it and update objectives.
 	Trigger.OnEnteredProximityTrigger(ResearchLab.CenterPosition, WDist.New(10 * 1024), function(a, id)
-		if a.Owner == Greece then
+		if a.EffectiveOwner == Greece then
 			Trigger.RemoveProximityTrigger(id)
 			RevealLab()
 		end
@@ -318,24 +301,20 @@ InitNodAttacks = function()
 		Notification("Nod forces have been alerted to your presence, prepare your defenses!")
 		MediaCA.PlaySound("r_nodalerted.aud", 2)
 
+		InitAttackSquad(Squads.South, Nod)
+		InitAttackSquad(Squads.East, Nod)
+		InitAirAttackSquad(Squads.Air, Nod)
+
+		if Difficulty == "brutal" then
+			InitNavalAttackSquad(Squads.ICBMSubs, Nod)
+		end
+
 		Utils.Do(Patrols, function(p)
 			Utils.Do(p.Units, function(unit)
 				if not unit.IsDead then
 					unit.Patrol(p.Path, true)
 				end
 			end)
-		end)
-
-		Trigger.AfterDelay(Squads.South.Delay[Difficulty], function()
-			InitAttackSquad(Squads.South, Nod)
-		end)
-
-		Trigger.AfterDelay(Squads.East.Delay[Difficulty], function()
-			InitAttackSquad(Squads.East, Nod)
-		end)
-
-		Trigger.AfterDelay(Squads.Air.Delay[Difficulty], function()
-			InitAirAttackSquad(Squads.Air, Nod)
 		end)
 	end
 end

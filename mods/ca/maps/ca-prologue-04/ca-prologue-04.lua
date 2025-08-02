@@ -1,4 +1,4 @@
-Difficulty = "normal"
+Difficulty = "easy"
 
 GDIAttackPaths = {
 	{ AttackPath1.Location, AttackPath1.Location, AttackPath3.Location, AttackPath4.Location },
@@ -6,15 +6,10 @@ GDIAttackPaths = {
 
 Squads = {
 	Main = {
-		Delay = {
-			normal = DateTime.Minutes(5),
-		},
-		AttackValuePerSecond = {
-			normal = { Min = 12, Max = 12 },
-		},
+		Delay = DateTime.Minutes(5),
+		AttackValuePerSecond = { Min = 12, Max = 12 },
 		FollowLeader = true,
-		ProducerTypes = { Infantry = { "pyle" }, Vehicles = { "weap.td" } },
-		Units = {
+		Compositions = {
 			{
 				Infantry = { "e1", "e1", "e1", "e2" },
 				Vehicles = { { "hmmv", "mtnk", "apc2" } },
@@ -89,11 +84,7 @@ InitGDI = function()
 	AutoRepairBuildings(GDI)
 	SetupRefAndSilosCaptureCredits(GDI)
 	AutoReplaceHarvesters(GDI)
-
-	-- Begin main attacks after difficulty based delay
-	Trigger.AfterDelay(Squads.Main.Delay[Difficulty], function()
-		InitAttackSquad(Squads.Main, GDI)
-	end)
+	InitAttackSquad(Squads.Main, GDI)
 
 	local gdiGroundAttackers = GDI.GetGroundAttackers()
 

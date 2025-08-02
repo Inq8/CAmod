@@ -2,6 +2,8 @@ UnitBuildTimeMultipliers = {
 	easy = 0.05,
 	normal = 0.05,
 	hard = 0.05,
+	vhard = 0.05,
+	brutal = 0.05
 }
 
 ReinforcementInterval = DateTime.Minutes(4)
@@ -43,46 +45,22 @@ end)
 
 Squads = {
 	ScrinMain = {
-		Delay = {
-			easy = DateTime.Minutes(3),
-			normal = DateTime.Minutes(2),
-			hard = DateTime.Minutes(1)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 20, Max = 50, RampDuration = DateTime.Minutes(14) },
-			normal = { Min = 50, Max = 100, RampDuration = DateTime.Minutes(12) },
-			hard = { Min = 80, Max = 160, RampDuration = DateTime.Minutes(10) },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(2)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 40, Max = 80, RampDuration = DateTime.Minutes(13) }),
 		FollowLeader = true,
 		ProducerActors = nil,
 		ProducerTypes = { Infantry = { "wormhole" }, Vehicles = { "wormhole" }, Aircraft = { "wormhole" } },
-		Units = AdjustCompositionsForDifficulty(UnitCompositions.Scrin),
+		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Scrin),
 		AttackPaths = {
 			{ HQ.Location },
 		},
 	},
 	ScrinAir = {
-		Delay = {
-			easy = DateTime.Minutes(14),
-			normal = DateTime.Minutes(10),
-			hard = DateTime.Minutes(6)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 10, Max = 10 },
-			normal = { Min = 35, Max = 35 },
-			hard = { Min = 60, Max = 60 },
-		},
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(10)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 28, Max = 28 }),
 		ProducerTypes = { Aircraft = { "hiddenspawner" } },
-		Units = {
-			easy = {
-				{ Aircraft = { PacOrDevastator } }
-			},
-			normal = {
-				{ Aircraft = { PacOrDevastator } }
-			},
-			hard = {
-				{ Aircraft = { PacOrDevastator } }
-			}
+		Compositions = {
+			{ Aircraft = { PacOrDevastator } }
 		},
 		AttackPaths = {
 			{ HQ.Location },
@@ -193,20 +171,14 @@ end
 
 InitScrin = function()
 	InitAiUpgrades(Scrin)
+	InitAttackSquad(Squads.ScrinMain, Scrin)
+	InitAttackSquad(Squads.ScrinAir, Scrin)
 
 	local scrinGroundAttackers = Scrin.GetGroundAttackers()
 
 	Utils.Do(scrinGroundAttackers, function(a)
 		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(8192), IsScrinGroundHunterUnit)
-	end)
-
-	Trigger.AfterDelay(Squads.ScrinMain.Delay[Difficulty], function()
-		InitAttackSquad(Squads.ScrinMain, Scrin)
-	end)
-
-	Trigger.AfterDelay(Squads.ScrinAir.Delay[Difficulty], function()
-		InitAttackSquad(Squads.ScrinAir, Scrin)
 	end)
 end
 

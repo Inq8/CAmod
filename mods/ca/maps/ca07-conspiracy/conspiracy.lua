@@ -32,88 +32,49 @@ Patrols = {
 	},
 }
 
+ChinookDropStart = AdjustDelayForDifficulty(DateTime.Minutes(12))
+ChinookDropAttackValue = AdjustAttackValuesForDifficulty({ Min = 12, Max = 24, RampDuration = DateTime.Minutes(10) })
+
+GDIReinforcementDelay = {
+	easy = DateTime.Minutes(17),
+	normal = DateTime.Minutes(15),
+	hard = DateTime.Minutes(13),
+	vhard = DateTime.Minutes(11),
+	brutal = DateTime.Minutes(10)
+}
+
 -- Squads
+
+if Difficulty == "brutal" then
+	table.insert(UnitCompositions.Allied, {
+		Infantry = { "hopl", "hopl", "hopl", "hopl", "hopl", "hopl", "hopl", "hopl" }, Vehicles = { "ptnk", "ptnk", "ptnk", "pcan", "pcan", "pcan" }, MinTime = DateTime.Minutes(15), IsSpecial = true
+	})
+end
 
 AdjustedAlliedCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Allied)
 
 Squads = {
 	South = {
-		Delay = {
-			easy = DateTime.Seconds(390),
-			normal = DateTime.Seconds(270),
-			hard = DateTime.Seconds(150)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 10, Max = 20, RampDuration = DateTime.Minutes(15) },
-			normal = { Min = 25, Max = 46, RampDuration = DateTime.Minutes(13)  },
-			hard = { Min = 45, Max = 55, RampDuration = DateTime.Minutes(11)  },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Seconds(270)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 36, RampDuration = DateTime.Minutes(14) }),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { AlliedSouthBarracks }, Vehicles = { AlliedSouthFactory } },
-		Units = AdjustedAlliedCompositions,
+		Compositions = AdjustedAlliedCompositions,
 		AttackPaths = GreeceSouthAttackPaths,
 	},
 	North = {
-		Delay = {
-			easy = DateTime.Seconds(210),
-			normal = DateTime.Seconds(150),
-			hard = DateTime.Seconds(90)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 10, Max = 20, RampDuration = DateTime.Minutes(15) },
-			normal = { Min = 25, Max = 46, RampDuration = DateTime.Minutes(13) },
-			hard = { Min = 45, Max = 55, RampDuration = DateTime.Minutes(11) },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Seconds(150)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 36, RampDuration = DateTime.Minutes(14) }),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { AlliedNorthBarracks }, Vehicles = { AlliedNorthFactory } },
-		Units = AdjustedAlliedCompositions,
+		Compositions = AdjustedAlliedCompositions,
 		AttackPaths = GreeceNorthAttackPaths,
 	},
 	Air = {
-		Delay = {
-			easy = DateTime.Minutes(13),
-			normal = DateTime.Minutes(12),
-			hard = DateTime.Minutes(11)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 7, Max = 7 },
-			normal = { Min = 14, Max = 14 },
-			hard = { Min = 21, Max = 21 },
-		},
-		ProducerActors = nil,
-		ProducerTypes = { Aircraft = { "hpad" } },
-		Units = {
-			easy = {
-				{ Aircraft = { "heli" } }
-			},
-			normal = {
-				{ Aircraft = { "heli", "heli" } },
-				{ Aircraft = { "harr" } }
-			},
-			hard = {
-				{ Aircraft = { "heli", "heli", "heli" } },
-				{ Aircraft = { "harr", "harr" } }
-			}
-		},
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(13)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		Compositions = AirCompositions.Allied,
 	}
-}
-
-ChinookDropStart = {
-	easy = DateTime.Minutes(12),
-	normal = DateTime.Minutes(10),
-	hard = DateTime.Minutes(8)
-}
-
-ChinookDropInterval = {
-	easy = DateTime.Minutes(3),
-	normal = DateTime.Minutes(2),
-	hard = DateTime.Minutes(1)
-}
-
-GDIReinforcementDelay = {
-	easy = DateTime.Minutes(17),
-	normal = DateTime.Minutes(14),
-	hard = DateTime.Minutes(11)
 }
 
 -- Setup and Tick
@@ -134,26 +95,30 @@ WorldLoaded = function()
 	InitGDI()
 	InitGreece()
 
-	if Difficulty ~= "hard" then
-		GDIDefender2.Destroy()
-		NorthGapGenerator.Destroy()
-		HardOnlyPower.Destroy()
-		Cryo1.Destroy()
-		Cryo2.Destroy()
-		Cryo3.Destroy()
-		Cryo4.Destroy()
-		Cryo5.Destroy()
-		Prism1.Destroy()
+	if IsVeryHardOrBelow() then
+		WeatherControl.Destroy()
 
-		if Difficulty == "easy" then
-			GDIDefender1.Destroy()
-			SouthGapGenerator1.Destroy()
-			SouthGapGenerator2.Destroy()
-			SouthGapGenerator3.Destroy()
-			HardAndNormalOnlyPower.Destroy()
-			AGT1.Owner = Legion
-			Prism2.Destroy()
-			Prism3.Destroy()
+		if IsNormalOrBelow() then
+			GDIDefender2.Destroy()
+			NorthGapGenerator.Destroy()
+			HardOnlyPower.Destroy()
+			Cryo1.Destroy()
+			Cryo2.Destroy()
+			Cryo3.Destroy()
+			Cryo4.Destroy()
+			Cryo5.Destroy()
+			Prism1.Destroy()
+
+			if Difficulty == "easy" then
+				GDIDefender1.Destroy()
+				SouthGapGenerator1.Destroy()
+				SouthGapGenerator2.Destroy()
+				SouthGapGenerator3.Destroy()
+				HardAndNormalOnlyPower.Destroy()
+				AGT1.Owner = Legion
+				Prism2.Destroy()
+				Prism3.Destroy()
+			end
 		end
 	end
 
@@ -178,11 +143,13 @@ WorldLoaded = function()
 		end
 	end)
 
-	Utils.Do(Patrols, function(p)
-		Utils.Do(p.Units, function(unit)
-			if not unit.IsDead then
-				unit.Patrol(p.Path, true)
-			end
+	Trigger.AfterDelay(1, function()
+		Utils.Do(Patrols, function(p)
+			Utils.Do(p.Units, function(unit)
+				if not unit.IsDead then
+					unit.Patrol(p.Path, true)
+				end
+			end)
 		end)
 	end)
 
@@ -444,33 +411,31 @@ end
 InitAlliedAttacks = function()
 	if not AlliedAttacksInitialized then
 		AlliedAttacksInitialized = true
+		InitAttackSquad(Squads.South, Greece)
+		InitAttackSquad(Squads.North, Greece)
+		InitAirAttackSquad(Squads.Air, Greece)
 
-		Trigger.AfterDelay(Squads.South.Delay[Difficulty], function()
-			InitAttackSquad(Squads.South, Greece)
-		end)
-
-		Trigger.AfterDelay(Squads.North.Delay[Difficulty], function()
-			InitAttackSquad(Squads.North, Greece)
-		end)
-
-		Trigger.AfterDelay(Squads.Air.Delay[Difficulty], function()
-			InitAirAttackSquad(Squads.Air, Greece)
-		end)
-
-		Trigger.AfterDelay(ChinookDropStart[Difficulty], function()
-			DoChinookDrop()
-		end)
+		Trigger.AfterDelay(ChinookDropStart, DoChinookDrop)
 
 		Trigger.AfterDelay(GDIReinforcementDelay[Difficulty], function()
 			local gdiReinforcements = { "mtnk", "mtnk" }
-			if Difficulty == "hard" then
+			if IsHardOrAbove() then
 				gdiReinforcements = { "htnk" , "htnk" }
+				if Difficulty == "brutal" then
+					gdiReinforcements = { "titn" , "titn", "thwk", "thwk" }
+				end
 			end
 
 			Reinforcements.Reinforce(GDI, gdiReinforcements, GDIReinforcementPath, 75, function(a)
 				AssaultPlayerBaseOrHunt(a)
 			end)
 		end)
+
+		if Difficulty == "brutal" then
+			Trigger.AfterDelay(DateTime.Minutes(13), function()
+				Actor.Create("ai.superweapons.enabled", true, { Owner = Greece })
+			end)
+		end
 	end
 end
 
@@ -479,7 +444,7 @@ DoChinookDrop = function()
 	entryPath = Utils.Random(ChinookDropPaths)
 	local chinookDropUnits = { "e1", "e1", "e1", "e3", "e3" }
 
-	if Difficulty == "hard" and DateTime.GameTime > DateTime.Minutes(16) then
+	if IsHardOrAbove() and DateTime.GameTime > DateTime.Minutes(16) then
 		chinookDropUnits = { "e1", "e1", "e1", "e1", "e1", "e3", "seal", "seal", "seal" }
 	end
 
@@ -492,5 +457,6 @@ DoChinookDrop = function()
 		end)
 	end)
 
-	Trigger.AfterDelay(ChinookDropInterval[Difficulty], DoChinookDrop)
+	local delayUntilNext = CalculateInterval(GetTotalCostOfUnits(chinookDropUnits), ChinookDropAttackValue, ChinookDropStart)
+	Trigger.AfterDelay(delayUntilNext, DoChinookDrop)
 end

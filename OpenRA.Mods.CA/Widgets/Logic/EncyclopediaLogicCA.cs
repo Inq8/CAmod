@@ -84,6 +84,9 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 		readonly Dictionary<string, FolderNode> folderNodes = new();
 		readonly Dictionary<string, bool> folderExpanded = new();
 
+		// Remember last selected actor for each top-level category
+		readonly Dictionary<string, ActorInfo> lastSelectedActorByCategory = new();
+
 		WAngle currentFacing = new WAngle(384);
 
 		ActorInfo selectedActor;
@@ -195,12 +198,69 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			// Create the UI from the hierarchy
 			CreateFolderStructure();
 
+			// Select the first item in the first category on initial load
+			SelectFirstItem();
+
 			widget.Get<ButtonWidget>("BACK_BUTTON").OnClick = () =>
 			{
-				Game.Disconnect();
+				if (world.Type == WorldType.Shellmap)
+					Game.Disconnect();
+
 				Ui.CloseWindow();
 				onExit();
 			};
+		}
+
+		void SelectFirstItem()
+		{
+			// Find the first available actor in the first top-level category
+			var firstCategory = folderNodes.Values
+				.Where(n => n.Parent == null && !string.IsNullOrEmpty(n.Name))
+				.OrderBy(n => GetTopLevelCategorySortOrder(n.Name))
+				.FirstOrDefault();
+
+			if (firstCategory != null)
+			{
+				// Look for actors directly in the top-level category first
+				if (firstCategory.Actors.Count > 0)
+				{
+					SelectActor(firstCategory.Actors[0], firstCategory.FullPath);
+					return;
+				}
+
+				// Then look in child categories (ordered by sort order)
+				foreach (var childCategory in firstCategory.Children.OrderBy(n => GetSecondLevelCategorySortOrder(n.Name)))
+				{
+					if (childCategory.Actors.Count > 0)
+					{
+						SelectActor(childCategory.Actors[0], childCategory.FullPath);
+						return;
+					}
+
+					// Check deeper levels recursively
+					var firstActorInSubcategory = GetFirstActorFromAnyNode(childCategory);
+					if (firstActorInSubcategory.actor != null)
+					{
+						SelectActor(firstActorInSubcategory.actor, firstActorInSubcategory.categoryPath);
+						return;
+					}
+				}
+			}
+		}
+
+		(ActorInfo actor, string categoryPath) GetFirstActorFromAnyNode(FolderNode node)
+		{
+			if (node.Actors.Count > 0)
+				return (node.Actors[0], node.FullPath);
+
+			foreach (var child in node.Children)
+			{
+				var (actor, categoryPath) = GetFirstActorFromAnyNode(child);
+				if (actor != null)
+					return (actor, categoryPath);
+			}
+
+			return (null, null);
 		}
 
 		void BuildFolderHierarchy()
@@ -215,9 +275,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				var categories = encyclopedia.Category ?? "";
 
 				// Split by semicolon to allow multiple categories per actor
-				var categoryPaths = categories.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
-					.Select(c => c.Trim())
-					.ToArray();
+				var categoryPaths = ParseCategoryPaths(categories);
 
 				// Skip actors without categories - they should not be shown
 				if (categoryPaths.Length == 0)
@@ -324,24 +382,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				// Also show actors directly under the selected category
 				foreach (var actor in selectedRootNode.Actors)
 				{
-					var item = ScrollItemWidget.Setup(template,
-						() => selectedActor != null && selectedActor.Name == actor.Name,
-						() => SelectActor(actor, selectedRootNode.FullPath));
-
-					var bullet = item.GetOrNull<ImageWidget>("ICON");
-					if (bullet != null)
-						bullet.Bounds.X = 4; // No indentation for top-level actors
-
-					var label = item.Get<LabelWithTooltipWidget>("TITLE");
-					label.Bounds.X = 26; // Standard position for top-level actors
-
-					var name = actor.TraitInfos<TooltipInfo>().FirstOrDefault(info => info.EnabledByDefault)?.Name;
-					if (!string.IsNullOrEmpty(name))
-					{
-						var displayName = FluentProvider.GetMessage(name).Replace("Upgrade: ", "").Replace("Research: ", "");
-						label.GetText = () => $"{displayName}";
-						WidgetUtils.TruncateLabelToTooltip(label, displayName);
-					}
+					var item = CreateActorListItem(actor, selectedRootNode.FullPath, 0);
 
 					// Only set firstItem and select actor if no actor is currently selected
 					if (firstItem == null)
@@ -362,6 +403,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			var displayDepth = node.Depth - 1;
 
 			var folderHeader = ScrollItemWidget.Setup(headerTemplate, () => false, () => ToggleFolder(node.FullPath));
+			folderHeader.IsHighlighted = () => folderHeader.EventBounds.Contains(Viewport.LastMousePos) && Ui.MouseOverWidget == folderHeader;
 			var label = folderHeader.Get<LabelWidget>("LABEL");
 			var arrowImage = folderHeader.GetOrNull<ImageWidget>("ICON");
 
@@ -390,24 +432,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				// Then add actors
 				foreach (var actor in node.Actors)
 				{
-					var item = ScrollItemWidget.Setup(template,
-						() => selectedActor != null && selectedActor.Name == actor.Name,
-						() => SelectActor(actor, node.FullPath));
-
-					var bullet = item.GetOrNull<ImageWidget>("ICON");
-					if (bullet != null)
-						bullet.Bounds.X = 4 + displayDepth * 15;
-
-					var actorLabel = item.Get<LabelWithTooltipWidget>("TITLE");
-					actorLabel.Bounds.X = 26 + displayDepth * 15;
-
-					var name = actor.TraitInfos<TooltipInfo>().FirstOrDefault(info => info.EnabledByDefault)?.Name;
-					if (!string.IsNullOrEmpty(name))
-					{
-						var displayName = FluentProvider.GetMessage(name).Replace("Upgrade: ", "").Replace("Research: ", "");
-						actorLabel.GetText = () => $"{displayName}";
-						WidgetUtils.TruncateLabelToTooltip(actorLabel, displayName);
-					}
+					var item = CreateActorListItem(actor, node.FullPath, displayDepth);
 
 					// Only set firstItem and select actor if no actor is currently selected
 					if (firstItem == null)
@@ -424,6 +449,9 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 		void CollapseNonAncestorCategories(string targetPath)
 		{
+			// Get the top-level category of the target path
+			var targetTopLevelCategory = targetPath.Split('/')[0];
+
 			// Get all ancestor paths of the target
 			var ancestorPaths = new HashSet<string>();
 			var currentPath = targetPath;
@@ -440,13 +468,18 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 					break;
 			}
 
-			// Collapse all expanded folders that are not ancestors of the target
+			// Collapse all expanded folders in the same top-level category that are not ancestors of the target
 			var foldersToCollapse = new List<string>();
 			foreach (var kvp in folderExpanded)
 			{
 				if (kvp.Value && !ancestorPaths.Contains(kvp.Key))
 				{
-					foldersToCollapse.Add(kvp.Key);
+					// Only collapse if it's in the same top-level category
+					var folderTopLevelCategory = kvp.Key.Split('/')[0];
+					if (folderTopLevelCategory == targetTopLevelCategory)
+					{
+						foldersToCollapse.Add(kvp.Key);
+					}
 				}
 			}
 
@@ -462,7 +495,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			if (!isCurrentlyExpanded)
 			{
-				// Expanding: collapse all other categories that are not ancestors of this one
+				// Expanding: collapse all other categories in the same top-level category that are not ancestors of this one
 				CollapseNonAncestorCategories(folderPath);
 			}
 
@@ -473,54 +506,6 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			actorList.RemoveChildren();
 			firstItem = null;
 			CreateFolderStructure();
-
-			// Always preserve the previously selected actor without any changes
-			if (selectedActor == null)
-			{
-				var (firstActor, firstCategoryPath) = GetFirstVisibleActorWithCategory();
-				if (firstActor != null)
-					SelectActor(firstActor, firstCategoryPath);
-			}
-		}
-
-		(ActorInfo actor, string categoryPath) GetFirstVisibleActorWithCategory()
-		{
-			// Look for actors in the selected top-level category
-			var selectedRootNode = folderNodes.Values.FirstOrDefault(n => n.FullPath == selectedTopLevelCategory);
-			if (selectedRootNode != null)
-			{
-				// First check actors directly in the selected category
-				if (selectedRootNode.Actors.Count > 0)
-					return (selectedRootNode.Actors[0], selectedRootNode.FullPath);
-
-				// Then check child nodes
-				foreach (var child in selectedRootNode.Children)
-				{
-					var (actor, categoryPath) = GetFirstActorFromNode(child);
-					if (actor != null)
-						return (actor, categoryPath);
-				}
-			}
-
-			return (null, null);
-		}
-
-		(ActorInfo actor, string categoryPath) GetFirstActorFromNode(FolderNode node)
-		{
-			if (folderExpanded.GetValueOrDefault(node.FullPath, false))
-			{
-				if (node.Actors.Count > 0)
-					return (node.Actors[0], node.FullPath);
-
-				foreach (var child in node.Children)
-				{
-					var (actor, categoryPath) = GetFirstActorFromNode(child);
-					if (actor != null)
-						return (actor, categoryPath);
-				}
-			}
-
-			return (null, null);
 		}
 
 		void SelectActor(ActorInfo actor, string categoryPath = null)
@@ -530,35 +515,14 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			selectedActor = actor;
 			currentCategoryPath = categoryPath;
 
-			Player previewOwner = null;
-			if (!string.IsNullOrEmpty(selectedInfo.PreviewOwner))
-				previewOwner = world.Players.FirstOrDefault(p => p.InternalName == selectedInfo.PreviewOwner);
-			else
+			// Remember this actor for the current top-level category
+			if (!string.IsNullOrEmpty(selectedTopLevelCategory))
 			{
-				// Try to infer PreviewOwner from category
-				var inferredOwner = InferPreviewOwnerFromCategory(categoryPath);
-				if (!string.IsNullOrEmpty(inferredOwner))
-					previewOwner = world.Players.FirstOrDefault(p => p.InternalName == inferredOwner);
+				lastSelectedActorByCategory[selectedTopLevelCategory] = actor;
 			}
 
-			var typeDictionary = new TypeDictionary()
-			{
-				new OwnerInit(previewOwner ?? world.WorldActor.Owner),
-				new FactionInit(world.WorldActor.Owner.PlayerReference.Faction),
-			};
-
-			foreach (var actorPreviewInit in renderActor.TraitInfos<IActorPreviewInitInfo>())
-				foreach (var init in actorPreviewInit.ActorPreviewInits(renderActor, ActorPreviewType.ColorPicker))
-				{
-					if (init is FacingInit)
-					{
-						typeDictionary.Add(new FacingInit(currentFacing));
-					}
-					else
-					{
-						typeDictionary.Add(init);
-					}
-				}
+			var previewOwner = GetPreviewOwner(selectedInfo);
+			var typeDictionary = CreatePreviewTypeDictionary(previewOwner);
 
 			if (previewBackground.IsVisible())
 			{
@@ -737,7 +701,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			if (encyclopediaExtrasInfo != null && !string.IsNullOrEmpty(encyclopediaExtrasInfo.Subfaction) && subfactionLabel != null)
 			{
 				subfaction = factions[encyclopediaExtrasInfo.Subfaction];
-				subfactionText = $"{FluentProvider.GetMessage(subfaction.Name)} only";
+				subfactionText = $"{FluentProvider.GetMessage(subfaction.Name)} only.";
 				// var subfactionText = FluentProvider.GetMessage(SubfactionOnly, "factionName", FluentProvider.GetMessage(subfaction.Name));
 				subfactionHeight = descriptionFont.Measure(subfactionText).Y;
 			}
@@ -873,12 +837,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			if (!string.IsNullOrEmpty(strengthsText) && strengthsLabel != null)
 			{
-				strengthsLabel.Bounds.Y = currentY;
-				strengthsLabel.Visible = true;
-				strengthsLabel.GetText = () => strengthsText;
-				var strengthsHeight = descriptionFont.Measure(strengthsText).Y;
-				strengthsLabel.Bounds.Height = strengthsHeight;
-				currentY += strengthsHeight;
+				SetupTextLabel(strengthsLabel, strengthsText, ref currentY, 0);
 			}
 			else if (strengthsLabel != null)
 			{
@@ -887,12 +846,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			if (!string.IsNullOrEmpty(weaknessesText) && weaknessesLabel != null)
 			{
-				weaknessesLabel.Bounds.Y = currentY;
-				weaknessesLabel.Visible = true;
-				weaknessesLabel.GetText = () => weaknessesText;
-				var weaknessesHeight = descriptionFont.Measure(weaknessesText).Y;
-				weaknessesLabel.Bounds.Height = weaknessesHeight;
-				currentY += weaknessesHeight;
+				SetupTextLabel(weaknessesLabel, weaknessesText, ref currentY, 0);
 			}
 			else if (weaknessesLabel != null)
 			{
@@ -901,12 +855,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			if (!string.IsNullOrEmpty(attributesText) && attributesLabel != null)
 			{
-				attributesLabel.Bounds.Y = currentY;
-				attributesLabel.Visible = true;
-				attributesLabel.GetText = () => attributesText;
-				var attributesHeight = descriptionFont.Measure(attributesText).Y;
-				attributesLabel.Bounds.Height = attributesHeight;
-				currentY += attributesHeight + 8;
+				SetupTextLabel(attributesLabel, attributesText, ref currentY, 8);
 			}
 			else if (attributesLabel != null)
 			{
@@ -919,12 +868,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			if (!string.IsNullOrEmpty(encyclopediaText) && encyclopediaDescriptionLabel != null)
 			{
-				encyclopediaDescriptionLabel.Bounds.Y = currentY;
-				encyclopediaDescriptionLabel.Visible = true;
-				encyclopediaDescriptionLabel.GetText = () => encyclopediaText;
-				var encyclopediaHeight = descriptionFont.Measure(encyclopediaText).Y;
-				encyclopediaDescriptionLabel.Bounds.Height = encyclopediaHeight;
-				currentY += encyclopediaHeight;
+				SetupTextLabel(encyclopediaDescriptionLabel, encyclopediaText, ref currentY, 0);
 			}
 			else if (encyclopediaDescriptionLabel != null)
 			{
@@ -945,38 +889,31 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			currentFacing -= new WAngle(16);
 			var selectedInfo = info[selectedActor];
+			var previewOwner = GetPreviewOwner(selectedInfo);
+			var typeDictionary = CreatePreviewTypeDictionary(previewOwner);
 
-			Player previewOwner = null;
+			if (previewBackground.IsVisible())
+				previewWidget.SetPreview(renderActor, typeDictionary);
+		}
+
+		Player GetPreviewOwner(EncyclopediaInfo selectedInfo)
+		{
 			if (!string.IsNullOrEmpty(selectedInfo.PreviewOwner))
-				previewOwner = world.Players.FirstOrDefault(p => p.InternalName == selectedInfo.PreviewOwner);
+			{
+				return world.Players.FirstOrDefault(p => p.InternalName == selectedInfo.PreviewOwner);
+			}
+			else if (world.Type == WorldType.Regular && world.LocalPlayer != null)
+			{
+				return world.LocalPlayer;
+			}
 			else
 			{
 				var inferredOwner = InferPreviewOwnerFromCategory(currentCategoryPath);
 				if (!string.IsNullOrEmpty(inferredOwner))
-					previewOwner = world.Players.FirstOrDefault(p => p.InternalName == inferredOwner);
+					return world.Players.FirstOrDefault(p => p.InternalName == inferredOwner);
 			}
 
-			var typeDictionary = new TypeDictionary()
-			{
-				new OwnerInit(previewOwner ?? world.WorldActor.Owner),
-				new FactionInit(world.WorldActor.Owner.PlayerReference.Faction),
-			};
-
-			foreach (var actorPreviewInit in renderActor.TraitInfos<IActorPreviewInitInfo>())
-				foreach (var init in actorPreviewInit.ActorPreviewInits(renderActor, ActorPreviewType.ColorPicker))
-				{
-					if (init is FacingInit)
-					{
-						typeDictionary.Add(new FacingInit(currentFacing));
-					}
-					else
-					{
-						typeDictionary.Add(init);
-					}
-				}
-
-			if (previewBackground.IsVisible())
-				previewWidget.SetPreview(renderActor, typeDictionary);
+			return null;
 		}
 
 		public override void Tick()
@@ -1085,12 +1022,18 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			if (selectedTopLevelCategory == null && topLevelCategories.Count > 0)
 				selectedTopLevelCategory = topLevelCategories[0].FullPath;
 
+			// Calculate tab width to fill available space
+			var availableWidth = tabContainer.Bounds.Width;
+			var tabCount = topLevelCategories.Count;
+			var tabWidth = tabCount > 0 ? availableWidth / tabCount : 0;
+
 			// Create tab buttons
 			var tabX = 0;
 			foreach (var category in topLevelCategories)
 			{
 				var tabButton = (ButtonWidget)tabTemplate.Clone();
 				tabButton.Bounds.X = tabX;
+				tabButton.Bounds.Width = tabWidth;
 				tabButton.GetText = () => category.Name;
 				tabButton.IsHighlighted = () => selectedTopLevelCategory == category.FullPath;
 				tabButton.OnClick = () => SelectTopLevelCategory(category.FullPath);
@@ -1099,7 +1042,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				tabContainer.AddChild(tabButton);
 				categoryTabs.Add(tabButton);
 
-				tabX += tabButton.Bounds.Width;
+				tabX += tabWidth;
 			}
 		}
 
@@ -1112,13 +1055,27 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			firstItem = null;
 			CreateFolderStructure();
 
-			// Always preserve the previously selected actor without any changes
-			if (selectedActor == null)
+			// Try to restore the previously selected actor for this category
+			if (lastSelectedActorByCategory.TryGetValue(categoryPath, out var rememberedActor))
 			{
-				// Only select first actor if no actor was previously selected
-				var (firstActor, firstCategoryPath) = GetFirstVisibleActorWithCategory();
-				if (firstActor != null)
-					SelectActor(firstActor, firstCategoryPath);
+				// Verify the actor still exists and is in the current category
+				if (info.ContainsKey(rememberedActor))
+				{
+					var encyclopedia = info[rememberedActor];
+					var categories = encyclopedia.Category ?? "";
+					var categoryPaths = ParseCategoryPaths(categories);
+
+					// Check if the remembered actor belongs to the current top-level category
+					// and find the appropriate category path for this actor in the current context
+					foreach (var actorCategoryPath in categoryPaths)
+					{
+						if (actorCategoryPath.Split('/')[0] == categoryPath)
+						{
+							SelectActor(rememberedActor, actorCategoryPath);
+							return;
+						}
+					}
+				}
 			}
 		}
 
@@ -1132,7 +1089,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				"GDI" => 2,
 				"Nod" => 3,
 				"Scrin" => 4,
-				_ => 1000 // All other categories come after the specified ones
+				_ => 1000
 			};
 		}
 
@@ -1146,7 +1103,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				"Buildings" => 3,
 				"Defenses" => 4,
 				"Naval" => 5,
-				_ => 1000 // All other categories come after the specified ones
+				_ => 1000
 			};
 		}
 
@@ -1156,6 +1113,92 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			renderActor = encyclopediaExtrasInfo != null && !string.IsNullOrEmpty(encyclopediaExtrasInfo.RenderPreviewActor) ?
 				modData.DefaultRules.Actors.GetValueOrDefault(encyclopediaExtrasInfo.RenderPreviewActor) ?? actor : actor;
+		}
+
+		static string GetActorDisplayName(ActorInfo actor)
+		{
+			var name = actor.TraitInfos<TooltipInfo>().FirstOrDefault(info => info.EnabledByDefault)?.Name;
+			if (!string.IsNullOrEmpty(name))
+			{
+				return FluentProvider.GetMessage(name).Replace("Upgrade: ", "").Replace("Research: ", "");
+			}
+
+			return "";
+		}
+
+		ScrollItemWidget CreateActorListItem(ActorInfo actor, string categoryPath, int indentLevel = 0)
+		{
+			var item = ScrollItemWidget.Setup(template,
+				() => selectedActor != null && selectedActor.Name == actor.Name,
+				() => SelectActor(actor, categoryPath));
+
+			item.IsHighlighted = () => selectedActor != null && selectedActor.Name == actor.Name;
+
+			var bullet = item.GetOrNull<ImageWidget>("ICON");
+			if (bullet != null)
+				bullet.Bounds.X = 4 + indentLevel * 15;
+
+			var label = item.Get<LabelWithTooltipWidget>("TITLE");
+			label.Bounds.X = 26 + indentLevel * 15;
+
+			var displayName = GetActorDisplayName(actor);
+			if (!string.IsNullOrEmpty(displayName))
+			{
+				label.GetText = () => displayName;
+				WidgetUtils.TruncateLabelToTooltip(label, displayName);
+			}
+
+			return item;
+		}
+
+		TypeDictionary CreatePreviewTypeDictionary(Player previewOwner)
+		{
+			var typeDictionary = new TypeDictionary()
+			{
+				new OwnerInit(previewOwner ?? world.WorldActor.Owner),
+				new FactionInit(world.WorldActor.Owner.PlayerReference.Faction),
+			};
+
+			foreach (var actorPreviewInit in renderActor.TraitInfos<IActorPreviewInitInfo>())
+			{
+				foreach (var init in actorPreviewInit.ActorPreviewInits(renderActor, ActorPreviewType.ColorPicker))
+				{
+					if (init is FacingInit)
+					{
+						typeDictionary.Add(new FacingInit(currentFacing));
+					}
+					else
+					{
+						typeDictionary.Add(init);
+					}
+				}
+			}
+
+			return typeDictionary;
+		}
+
+		void SetupTextLabel(LabelWidget label, string text, ref int currentY, int additionalSpacing = 8)
+		{
+			if (!string.IsNullOrEmpty(text) && label != null)
+			{
+				label.Bounds.Y = currentY;
+				label.Visible = true;
+				label.GetText = () => text;
+				var textHeight = descriptionFont.Measure(text).Y;
+				label.Bounds.Height = textHeight;
+				currentY += textHeight + additionalSpacing;
+			}
+			else if (label != null)
+			{
+				label.Visible = false;
+			}
+		}
+
+		static string[] ParseCategoryPaths(string categories)
+		{
+			return categories?.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
+				.Select(c => c.Trim())
+				.ToArray() ?? Array.Empty<string>();
 		}
 	}
 }

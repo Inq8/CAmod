@@ -52,6 +52,33 @@ GroundedAircraft = {
 	{ Harrier2, HarrierPad2 },
 }
 
+Squads = {
+	Allied = {
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(6)),
+		AttackValuePerSecond = {
+			vhard = { Min = 2, Max = 7 },
+			brutal = { Min = 5, Max = 10 },
+		},
+		FollowLeader = true,
+		ProducerActors = { Infantry = { AlliedSouthBarracks } },
+		Compositions = AdjustCompositionsForDifficulty({
+			{ Infantry = { "e1", "e1", "e1", "e1", "e3", "e1", "e3", "e1" } },
+		}),
+	},
+	GDI = {
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(6) + DateTime.Seconds(30)),
+		AttackValuePerSecond = {
+			vhard = { Min = 2, Max = 7 },
+			brutal = { Min = 5, Max = 10 },
+		},
+		FollowLeader = true,
+		ProducerActors = { Infantry = { GDINorthBarracks } },
+		Compositions = AdjustCompositionsForDifficulty({
+			{ Infantry = { "n2", "n2", "n2", "n2" } },
+		}),
+	}
+}
+
 WorldLoaded = function()
 	Scrin = Player.GetPlayer("Scrin")
 	Greece = Player.GetPlayer("Greece")
@@ -83,7 +110,7 @@ WorldLoaded = function()
 		EasyOnlyIntruder2.Destroy()
 	end
 
-	if Difficulty == "hard" then
+	if IsHardOrAbove() then
 		EasyNormalOnlyIntruder.Destroy()
 	end
 
@@ -239,6 +266,10 @@ InitGreece = function()
 	AutoReplaceHarvesters(Greece)
 	InitAiUpgrades(Greece)
 
+	if IsVeryHardOrAbove() then
+		InitAttackSquad(Squads.Allied, Greece)
+	end
+
 	Actor.Create("ai.unlimited.power", true, { Owner = Greece })
 
 	local alliedGroundAttackers = Greece.GetGroundAttackers()
@@ -256,6 +287,10 @@ InitGDI = function()
 	SetupRefAndSilosCaptureCredits(GDI)
 	AutoReplaceHarvesters(GDI)
 	InitAiUpgrades(GDI)
+
+	if IsVeryHardOrAbove() then
+		InitAttackSquad(Squads.GDI, GDI)
+	end
 
 	Actor.Create("ai.unlimited.power", true, { Owner = GDI })
 
@@ -345,8 +380,8 @@ end
 RespawnIntruders = function()
 	if not IntrudersRespawning then
 		IntrudersRespawning = true
-		Notification("Reinforcements will arrive in 30 seconds.")
-		Trigger.AfterDelay(DateTime.Seconds(30), function()
+		Notification("Reinforcements will arrive in 20 seconds.")
+		Trigger.AfterDelay(DateTime.Seconds(20), function()
 			SpawnIntruders()
 		end)
 	end
@@ -354,13 +389,13 @@ end
 
 SpawnLeechers = function()
 	local wormhole = Actor.Create("wormhole", true, { Owner = Scrin, Location = LeecherSpawn.Location })
-	Beacon.New(Scrin, LeecherSpawn.CenterPosition, DateTime.Seconds(30))
+	Beacon.New(Scrin, LeecherSpawn.CenterPosition, DateTime.Seconds(20))
 
 	Trigger.AfterDelay(DateTime.Seconds(2), function()
 		Media.PlaySpeechNotification(Scrin, "ReinforcementsArrived")
 
 		local leecherSquad = { "lchr", "lchr" }
-		if Difficulty == "hard" then
+		if IsHardOrAbove() then
 			leecherSquad = { "lchr" }
 		end
 
@@ -379,13 +414,13 @@ end
 
 SpawnIntruders = function()
 	local wormhole = Actor.Create("wormhole", true, { Owner = Scrin, Location = IntruderSpawn.Location })
-	Beacon.New(Scrin, IntruderSpawn.CenterPosition, DateTime.Seconds(30))
+	Beacon.New(Scrin, IntruderSpawn.CenterPosition, DateTime.Seconds(20))
 
 	Trigger.AfterDelay(DateTime.Seconds(2), function()
 		Media.PlaySpeechNotification(Scrin, "ReinforcementsArrived")
 		local intruderSquad = { "s4", "s4", "s4", "s4", "s4", "s4" }
 
-		if Difficulty == "hard" then
+		if IsHardOrAbove() then
 			intruderSquad = { "s4", "s4", "s4" }
 		elseif Difficulty == "normal" then
 			intruderSquad = { "s4", "s4", "s4", "s4" }

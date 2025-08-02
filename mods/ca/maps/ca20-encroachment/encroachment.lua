@@ -45,104 +45,50 @@ PowerGrids = {
 }
 
 WeatherStormEnabledTime = {
-	easy = DateTime.Seconds((60 * 20) + 17),
-	normal = DateTime.Seconds((60 * 15) + 17),
-	hard = DateTime.Seconds((60 * 10) + 17),
+	easy = DateTime.Seconds((60 * 25) + 17),
+	normal = DateTime.Seconds((60 * 20) + 17),
+	hard = DateTime.Seconds((60 * 15) + 17),
+	vhard = DateTime.Seconds((60 * 10) + 17),
+	brutal = DateTime.Seconds((60 * 9) + 17)
 }
 
 IonCannonEnabledTime = {
-	easy = DateTime.Seconds((60 * 23) + 48),
-	normal = DateTime.Seconds((60 * 18) + 48),
-	hard = DateTime.Seconds((60 * 13) + 48),
+	easy = DateTime.Seconds((60 * 28) + 48),
+	normal = DateTime.Seconds((60 * 23) + 48),
+	hard = DateTime.Seconds((60 * 18) + 48),
+	vhard = DateTime.Seconds((60 * 13) + 48),
+	brutal = DateTime.Seconds((60 * 12) + 48)
 }
 
 Squads = {
 	AlliedMain = {
-		Delay = {
-			easy = DateTime.Minutes(7),
-			normal = DateTime.Minutes(5),
-			hard = DateTime.Minutes(3)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 10, Max = 25 },
-			normal = { Min = 25, Max = 50 },
-			hard = { Min = 40, Max = 80 },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(5)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 }),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { AlliedSouthBarracks }, Vehicles = { AlliedSouthFactory } },
-		Units = AdjustCompositionsForDifficulty(UnitCompositions.Allied),
+		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Allied),
 		AttackPaths = AlliedAttackPaths,
 	},
 	GDIMain = {
-		Delay = {
-			easy = DateTime.Minutes(7),
-			normal = DateTime.Minutes(5),
-			hard = DateTime.Minutes(3)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 10, Max = 25 },
-			normal = { Min = 25, Max = 50 },
-			hard = { Min = 40, Max = 80 },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(5)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 }),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { GDISouthBarracks }, Vehicles = { GDISouthFactory } },
-		Units = AdjustCompositionsForDifficulty(UnitCompositions.GDI),
+		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.GDI),
 		AttackPaths = GDIAttackPaths,
 	},
 	AlliedAir = {
-		Delay = {
-			easy = DateTime.Minutes(13),
-			normal = DateTime.Minutes(12),
-			hard = DateTime.Minutes(11)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 7, Max = 7 },
-			normal = { Min = 14, Max = 14 },
-			hard = { Min = 21, Max = 21 },
-		},
-		ProducerTypes = { Aircraft = { "hpad" } },
-		Units = {
-			easy = {
-				{ Aircraft = { "heli" } }
-			},
-			normal = {
-				{ Aircraft = { "heli", "heli" } },
-				{ Aircraft = { "harr" } }
-			},
-			hard = {
-				{ Aircraft = { "heli", "heli", "heli" } },
-				{ Aircraft = { "harr", "harr" } }
-			}
-		},
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(13)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		Compositions = AirCompositions.Allied,
 	},
 	GDIAir = {
-		Delay = {
-			easy = DateTime.Minutes(13),
-			normal = DateTime.Minutes(12),
-			hard = DateTime.Minutes(11)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 7, Max = 7 },
-			normal = { Min = 14, Max = 14 },
-			hard = { Min = 21, Max = 21 },
-		},
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(13)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
 		ActiveCondition = function()
 			return (not GDIHelipad1.IsDead and GDIHelipad1.Owner == GDI) or (not GDIHelipad2.IsDead and GDIHelipad2.Owner == GDI) or (not GDIHelipad3.IsDead and GDIHelipad3.Owner == GDI)
 		end,
-		ProducerTypes = { Aircraft = { "afld.gdi" } },
-		Units = {
-			easy = {
-				{ Aircraft = { "orca" } }
-			},
-			normal = {
-				{ Aircraft = { "orca", "orca" } },
-				{ Aircraft = { "a10" } }
-			},
-			hard = {
-				{ Aircraft = { "orca", "orca", "orca" } },
-				{ Aircraft = { "a10", "a10" } }
-			}
-		},
+		Compositions = AirCompositions.GDI,
 	}
 }
 
@@ -249,6 +195,8 @@ InitGreece = function()
 	AutoReplaceHarvesters(Greece)
 	AutoRebuildConyards(Greece)
 	InitAiUpgrades(Greece)
+	InitAttackSquad(Squads.AlliedMain, Greece)
+	InitAirAttackSquad(Squads.AlliedAir, Greece)
 
 	Actor.Create("ai.unlimited.power", true, { Owner = Greece })
 
@@ -261,14 +209,6 @@ InitGreece = function()
 	Utils.Do(alliedGroundAttackers, function(a)
 		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGreeceGroundHunterUnit)
-	end)
-
-	Trigger.AfterDelay(Squads.AlliedMain.Delay[Difficulty], function()
-		InitAttackSquad(Squads.AlliedMain, Greece)
-	end)
-
-	Trigger.AfterDelay(Squads.AlliedAir.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.AlliedAir, Greece)
 	end)
 end
 
@@ -286,6 +226,8 @@ InitGDI = function()
 	AutoReplaceHarvesters(GDI)
 	AutoRebuildConyards(GDI)
 	InitAiUpgrades(GDI)
+	InitAttackSquad(Squads.GDIMain, GDI)
+	InitAirAttackSquad(Squads.GDIAir, GDI)
 
 	local gdiGroundAttackers = GDI.GetGroundAttackers()
 
@@ -296,13 +238,5 @@ InitGDI = function()
 
 	Trigger.AfterDelay(IonCannonEnabledTime[Difficulty], function()
 		Actor.Create("ai.superweapons.enabled", true, { Owner = GDI })
-	end)
-
-	Trigger.AfterDelay(Squads.GDIMain.Delay[Difficulty], function()
-		InitAttackSquad(Squads.GDIMain, GDI)
-	end)
-
-	Trigger.AfterDelay(Squads.GDIAir.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.GDIAir, GDI)
 	end)
 end

@@ -6,46 +6,22 @@ AdjustedNodCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Nod)
 Squads = {
 	Main = {
 		AttackValuePerSecond = {
-			normal = { Min = 15, Max = 15 },
-			hard = { Min = 25, Max = 25 },
+			normal = { Min = 14, Max = 14 },
+			hard = { Min = 20, Max = 20 },
+			vhard = { Min = 26, Max = 26 },
+			brutal = { Min = 32, Max = 32 }
 		},
 		ActiveCondition = function()
-			return HasConyardAcrossRiver()
+			return HasConyardAcrossRiver() or (Difficulty == "brutal" and HasUnitsAcrossRiver())
 		end,
 		DispatchDelay = DateTime.Seconds(15),
 		FollowLeader = true,
-		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
-		Units = AdjustedNodCompositions,
+		Compositions = AdjustedNodCompositions,
 	},
 	NodAir = {
-		Delay = {
-			easy = DateTime.Minutes(11),
-			normal = DateTime.Minutes(8),
-			hard = DateTime.Minutes(5)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 7, Max = 7 },
-			normal = { Min = 21, Max = 21 },
-			hard = { Min = 35, Max = 35 },
-		},
-		ProducerTypes = { Aircraft = { "hpad.td" } },
-		Units = {
-			easy = {
-				{ Aircraft = { "apch" } }
-			},
-			normal = {
-				{ Aircraft = { "apch", "apch" } },
-				{ Aircraft = { "venm", "venm" } },
-				{ Aircraft = { "scrn" } },
-				{ Aircraft = { "rah" } }
-			},
-			hard = {
-				{ Aircraft = { "apch", "apch", "apch" } },
-				{ Aircraft = { "venm", "venm", "venm" } },
-				{ Aircraft = { "scrn", "scrn" } },
-				{ Aircraft = { "rah", "rah" } }
-			}
-		},
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(9)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		Compositions = AirCompositions.Nod,
 	}
 }
 
@@ -65,17 +41,22 @@ WorldLoaded = function()
 	ObjectiveDestroyShardLaunchers = GDI.AddObjective("Destroy Scrin Shard Launchers.")
     ObjectiveCaptureComms = GDI.AddObjective("Locate and capture Nod Communications Center.")
 
-	HardOnlyCyborg1.Destroy()
-	HardOnlyCyborg2.Destroy()
-	HardOnlyCyborg3.Destroy()
-	HardOnlyCyborg4.Destroy()
-	HardOnlyCyborg5.Destroy()
-	HardOnlyCyborg6.Destroy()
-	HardOnlyCyborg7.Destroy()
-	HardOnlyCyborg8.Destroy()
-	HardOnlyTripod.Destroy()
-	HardOnlyAvatar1.Destroy()
-	HardOnlyAvatar2.Destroy()
+	if IsHardOrBelow() then
+		HardOnlyTripod.Destroy()
+		HardOnlyAvatar1.Destroy()
+		HardOnlyAvatar2.Destroy()
+		HardOnlyCyborg1.Destroy()
+		HardOnlyCyborg5.Destroy()
+
+		if IsNormalOrBelow() then
+			HardOnlyCyborg2.Destroy()
+			HardOnlyCyborg3.Destroy()
+			HardOnlyCyborg4.Destroy()
+			HardOnlyCyborg6.Destroy()
+			HardOnlyCyborg7.Destroy()
+			HardOnlyCyborg8.Destroy()
+		end
+	end
 
     Trigger.OnAllKilled(ShardLaunchers, function()
         InitMcv()
@@ -145,16 +126,13 @@ InitNod = function()
 	SetupRefAndSilosCaptureCredits(Nod)
 	AutoReplaceHarvesters(Nod)
 	InitAiUpgrades(Nod)
+	InitAirAttackSquad(Squads.NodAir, Nod)
 
 	local nodGroundAttackers = Nod.GetGroundAttackers()
 
 	Utils.Do(nodGroundAttackers, function(a)
 		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsNodGroundHunterUnit)
-	end)
-
-	Trigger.AfterDelay(Squads.NodAir.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.NodAir, Nod)
 	end)
 end
 
@@ -174,4 +152,12 @@ HasConyardAcrossRiver = function()
 	end)
 
 	return #conyardsAcrossRiver > 0
+end
+
+HasUnitsAcrossRiver = function()
+	local unitsAcrossRiver = Utils.Where(GDI.GetActors(), function(a)
+		return a.HasProperty("Attack")
+	end)
+
+	return #unitsAcrossRiver > 0
 end

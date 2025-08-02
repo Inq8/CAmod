@@ -15,6 +15,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
+	[TraitLocation(SystemActors.Player)]
 	[Desc("Works with PopControlled trait on actors to cull excess instances.")]
 	public class PopControllerInfo : TraitInfo
 	{

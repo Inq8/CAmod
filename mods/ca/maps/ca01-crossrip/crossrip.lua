@@ -37,67 +37,79 @@ WestPatrolUnits = { WestPatrolUnit1, WestPatrolUnit2, WestPatrolUnit3, WestPatro
 ScrinInfantrySquads = {
 	easy = { "s1", "s1", "s1", "s3" },
 	normal = { "s1", "s1", "s1", "s2", "s3" },
-	hard = { "s1", "s1", "s1", "s2", "s3", "s4" }
+	hard = { "s1", "s1", "s1", "s2", "s3", "s4" },
+	vhard = { "s1", "s1", "s1", "s2", "s3", "s4" },
+	brutal = { "s1", "s1", "s1", "s2", "s3", "s4", "s1" }
 }
 
 ScrinVehicleTypes = {
 	easy = { "gunw", "seek", "intl", "gscr" },
 	normal = { "gunw", "seek", "intl", "corr" },
-	hard = { "seek", "corr", "devo", "intl", "tpod" }
+	hard = { "gunw", "seek", "corr", "devo", "intl", "tpod" },
+	vhard = { "gunw", "seek", "corr", "devo", "intl", "tpod" },
+	brutal = { "shrw", "seek", "corr", "devo", "intl", "rtpd" }
 }
 
 ScrinVehiclesIntervalMultiplier = {
 	easy = 4,
 	normal = 4,
-	hard = 3
+	hard = 3,
+	vhard = 3,
+	brutal = 3
 }
 
 EvacuationTime = {
-	easy = DateTime.Seconds(270),
+	easy = DateTime.Minutes(4) + DateTime.Seconds(30),
 	normal = DateTime.Minutes(5),
-	hard = DateTime.Seconds(330)
+	hard = DateTime.Minutes(5) + DateTime.Seconds(30),
+	vhard = DateTime.Minutes(5) + DateTime.Seconds(30),
+	brutal = DateTime.Minutes(5) + DateTime.Seconds(30),
 }
 
-HaloDropStart = {
-	easy = DateTime.Minutes(12),
-	normal = DateTime.Minutes(10),
-	hard = DateTime.Minutes(8)
+HaloDropEntryPaths = {
+	{ HaloSpawn1.Location, HaloLanding1.Location },
+	{ HaloSpawn2.Location, HaloLanding2.Location },
+	{ HaloSpawn3.Location, HaloLanding3.Location }
 }
 
-HaloDropInterval = {
-	easy = DateTime.Minutes(5),
-	normal = DateTime.Minutes(3),
-	hard = DateTime.Minutes(1)
-}
-
-NavalDropStart = {
-	normal = DateTime.Minutes(16),
-	hard = DateTime.Minutes(12)
-}
-
-NavalDropInterval = {
-	normal = DateTime.Minutes(6),
-	hard = DateTime.Minutes(3)
-}
+HaloDropStart = AdjustDelayForDifficulty(DateTime.Minutes(12))
+HaloDropAttackValue = AdjustAttackValuesForDifficulty({ Min = 12, Max = 24, RampDuration = DateTime.Minutes(10) })
+NavalDropStart = AdjustDelayForDifficulty(DateTime.Minutes(18))
+NavalDropAttackValue = AdjustAttackValuesForDifficulty({ Min = 6, Max = 6 })
 
 -- Squads
 
+HardAndAboveMainCompositions = {
+	{
+		Infantry = { "e3", "e1", "e1", "e1", "e1", "e1", "e2", "e3", "e4" },
+		Vehicles = { "3tnk", "btr.ai", "3tnk" },
+		MaxTime = DateTime.Minutes(6)
+	},
+	{
+		Infantry = { "e3", "e1", "e1", "e3", "shok", "e1", { "shok", "e8" }, "e1", "e2", "e3", "e4" },
+		Vehicles = { { "3tnk", "3tnk.atomic" }, "4tnk", "btr.ai", { "katy", "v2rl" }, "ttra" },
+		MinTime = DateTime.Minutes(6),
+		MaxTime = DateTime.Minutes(16)
+	},
+}
+
+if Difficulty == "brutal" then
+	HardAndAboveMainCompositions[2].MaxTime = DateTime.Minutes(16)
+
+	table.insert(HardAndAboveMainCompositions, {
+		Infantry = { "e3", "e1", "e1", "e3", "shok", "e1", { "ttrp", "deso" }, "e1", "e2", "e3", "e4", "e1", "e1", "e1", "e1", "e3", "e1", { "ttrp", "deso" } },
+		Vehicles = { { "3tnk", "3tnk.atomic" }, "4tnk", "btr.ai", "v2rl", "v2rl", "grad", "ttra" },
+		MinTime = DateTime.Minutes(16)
+	})
+end
+
 Squads = {
 	Main = {
-		Delay = {
-			easy = DateTime.Minutes(4),
-			normal = DateTime.Minutes(3),
-			hard = DateTime.Minutes(2)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 15, Max = 30 },
-			normal = { Min = 50, Max = 50 },
-			hard = { Min = 80, Max = 80 },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(3)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 35, Max = 45 }),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { SovietBarracks }, Vehicles = { SovietWarFactory } },
-		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
-		Units = {
+		Compositions = {
 			easy = {
 				{
 					Infantry = { "e3", "e1", "e1", "e1", "e2", "e4" },
@@ -122,51 +134,27 @@ Squads = {
 					MinTime = DateTime.Minutes(9)
 				}
 			},
-			hard = {
-				{
-					Infantry = { "e3", "e1", "e1", "e1", "e1", "e1", "e2", "e3", "e4" },
-					Vehicles = { "3tnk", "btr.ai", "3tnk" },
-					MaxTime = DateTime.Minutes(6)
-				},
-				{
-					Infantry = { "e3", "e1", "e1", "e3", "shok", "e1", { "shok", "e8" }, "e1", "e2", "e3", "e4" },
-					Vehicles = { { "3tnk", "3tnk.atomic" }, "4tnk", "btr.ai", { "katy", "v2rl" }, "ttra" },
-					MinTime = DateTime.Minutes(6)
-				}
-			}
+			hard = HardAndAboveMainCompositions,
+			vhard = HardAndAboveMainCompositions,
+			brutal = HardAndAboveMainCompositions
 		},
 		AttackPaths = SovietAttackPaths,
 	},
 	Western = {
-		AttackValuePerSecond = {
-			easy = { Min = 8, Max = 8 },
-			normal = { Min = 20, Max = 20 },
-			hard = { Min = 40, Max = 40 },
-		},
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 10, Max = 20 }),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { SovietWestBarracks } },
-		Units = {
-			easy = { { Infantry = { "e3", "e1", "e2", "e4" } } },
-			normal = { { Infantry = { "e3", "e1", "e2", "e4" } } },
-			hard = { { Infantry = { "e3", "e1", "e2", "e4", "e4", "shok" } } }
-		},
+		Compositions = AdjustCompositionsForDifficulty({
+			{ Infantry = { "e3", "e1", "e2", "e1", "e4", "e1", "shok", "e1" } }
+		}),
 		AttackPaths = {
 			{ AttackWaypoint4.Location, AttackWaypoint5.Location }
 		}
 	},
 	Migs = {
-		Delay = {
-			easy = DateTime.Minutes(14),
-			normal = DateTime.Minutes(10),
-			hard = DateTime.Minutes(6)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 4, Max = 4 },
-			normal = { Min = 10, Max = 10 },
-			hard = { Min = 25, Max = 25 },
-		},
-		ProducerTypes = { Aircraft = { "afld" } },
-		Units = {
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(11)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 8, Max = 12 }),
+		Compositions = {
 			easy = {
 				{ Aircraft = { "mig" } }
 			},
@@ -175,6 +163,12 @@ Squads = {
 			},
 			hard = {
 				{ Aircraft = { "mig", "mig", "mig" } }
+			},
+			vhard = {
+				{ Aircraft = { "mig", "mig", "mig" } }
+			},
+			brutal = {
+				{ Aircraft = { "mig", "mig", "mig", "mig" } }
 			}
 		}
 	}
@@ -194,31 +188,8 @@ WorldLoaded = function()
 
 	InitObjectives(Greece)
 	AdjustPlayerStartingCashForDifficulty()
+	RemoveActorsBasedOnDifficultyTags()
 	InitUSSR()
-
-	if Difficulty ~= "hard" then
-		HeavyTank1.Destroy()
-		Flamer1.Destroy()
-		TeslaCoil3.Destroy()
-		HardOnlyV2.Destroy()
-		HardOnlyKatyusha.Destroy()
-	else
-		Ranger1.Destroy()
-	end
-
-	if Difficulty == "easy" then
-		Flamer2.Destroy()
-		SovietWestFlameTower2.Destroy()
-		TeslaCoil1.Destroy()
-		TeslaCoil2.Destroy()
-		NonEasyKatyusha.Destroy()
-		NonEasyV2.Destroy()
-		NonEasyHeavyTank1.Destroy()
-		NonEasyHeavyTank2.Destroy()
-		NonEasyHeavyTank3.Destroy()
-		NonEasyHeavyTank4.Destroy()
-		NonEasyMammoth1.Destroy()
-	end
 
 	Trigger.AfterDelay(1, function()
 		ObjectiveEstablishBase = Greece.AddObjective("Establish a base.")
@@ -269,13 +240,9 @@ Tick = function()
 		end
 		Greece.MarkCompletedObjective(ObjectiveEstablishBase)
 
-		if Difficulty ~= "hard" then
+		if IsNormalOrBelow() then
 			Trigger.AfterDelay(DateTime.Seconds(5), function()
 				Tip("Build a barracks for access to static defenses which should allow you to hold off any early attacks. Use Pillboxes against infantry and Turrets against vehicles.")
-			end)
-
-			Trigger.AfterDelay(DateTime.Minutes(1), function()
-				Tip("Information is displayed in the bottom right of the screen if any single unit or structure is selected, listing its strengths and weaknesses (as long as Selected Unit Tooltip is enabled in settings).")
 			end)
 
 			Trigger.AfterDelay(DateTime.Minutes(2), function()
@@ -343,6 +310,8 @@ InitUSSR = function()
 	SetupRefAndSilosCaptureCredits(USSR)
 	AutoReplaceHarvesters(USSR)
 	AutoRebuildConyards(USSR)
+	InitAttackSquad(Squads.Main, USSR)
+	InitAirAttackSquad(Squads.Migs, USSR)
 
 	-- Set western patrol
 	Utils.Do(WestPatrolUnits, function(unit)
@@ -351,37 +320,13 @@ InitUSSR = function()
 		end
 	end)
 
-	-- Begin main attacks after difficulty based delay
-	Trigger.AfterDelay(Squads.Main.Delay[Difficulty], function()
-		InitAttackSquad(Squads.Main, USSR)
-	end)
-
-	-- Eastern Halo drops
-	Trigger.AfterDelay(HaloDropStart[Difficulty], function()
-		local eastHaloDropEntryPaths = {
-			{ HaloSpawn1.Location, HaloLanding1.Location },
-			{ HaloSpawn2.Location, HaloLanding2.Location },
-		}
-		DoHaloDrop(eastHaloDropEntryPaths)
-	end)
-
-	-- Western Halo drops (hard only)
-	if Difficulty == "hard" then
-		Trigger.AfterDelay(HaloDropStart[Difficulty] + DateTime.Seconds(40), function()
-			local westHaloDropEntryPaths = { { HaloSpawn3.Location, HaloLanding3.Location } }
-			DoHaloDrop(westHaloDropEntryPaths)
-		end)
-	end
+	-- Halo drops
+	Trigger.AfterDelay(HaloDropStart, DoHaloDrop)
 
 	-- Beach landings
 	if Difficulty ~= "easy" then
-		Trigger.AfterDelay(NavalDropStart[Difficulty], DoSovietNavalDrop)
+		Trigger.AfterDelay(NavalDropStart, DoSovietNavalDrop)
 	end
-
-	-- MiG attacks
-	Trigger.AfterDelay(Squads.Migs.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.Migs, USSR)
-	end)
 
 	-- On player crossing Soviet border start making infantry at western barracks
 	Trigger.OnEnteredFootprint(SovietBorder, function(a, id)
@@ -414,7 +359,7 @@ ScrinInvasion = function()
 		Utils.Do(units, function(unit)
 			unit.Scatter()
 			Trigger.AfterDelay(5, function()
-				AssaultPlayerBaseOrHunt(unit, Greece, GetScrinAssaultWaypoints())
+				AssaultPlayerBaseOrHunt(unit, MissionPlayers, GetScrinAssaultWaypoints())
 			end)
 		end)
 	end)
@@ -434,7 +379,7 @@ CreateScrinVehicles = function()
 		Utils.Do(units, function(unit)
 			unit.Scatter()
 			Trigger.AfterDelay(5, function()
-				AssaultPlayerBaseOrHunt(unit, Greece, GetScrinAssaultWaypoints())
+				AssaultPlayerBaseOrHunt(unit, MissionPlayers, GetScrinAssaultWaypoints())
 			end)
 		end)
 	end)
@@ -556,15 +501,15 @@ SpawnWormhole = function()
 	end
 end
 
-DoHaloDrop = function(entryPaths)
+DoHaloDrop = function()
 	if SovietWarFactory.IsDead or IsCrossRipped then
 		return
 	end
 
-	local entryPath = Utils.Random(entryPaths)
+	local entryPath = Utils.Random(HaloDropEntryPaths)
 
 	local haloDropUnits = { "e1", "e1", "e1", "e2", "e3", "e4" }
-	if Difficulty == "hard" and DateTime.GameTime > DateTime.Minutes(15) then
+	if IsHardOrAbove() and DateTime.GameTime > DateTime.Minutes(15) then
 		haloDropUnits = { "e1", "e1", "e1", "e1", "e2", "e2", "e3", "e3", "e4", "shok" }
 	end
 
@@ -582,9 +527,8 @@ DoHaloDrop = function(entryPaths)
 		end)
 	end)
 
-	Trigger.AfterDelay(HaloDropInterval[Difficulty], function()
-		DoHaloDrop(entryPaths)
-	end)
+	local delayUntilNext = CalculateInterval(GetTotalCostOfUnits(haloDropUnits), HaloDropAttackValue, HaloDropStart)
+	Trigger.AfterDelay(delayUntilNext, DoHaloDrop)
 end
 
 DoSovietNavalDrop = function()
@@ -596,13 +540,14 @@ DoSovietNavalDrop = function()
 	local navalDropExitPath = { navalDropPath[2], navalDropPath[1] }
 	local navalDropUnits = { "3tnk", "v2rl" }
 
-	if Difficulty == "hard" then
+	if IsHardOrAbove() then
 		navalDropUnits = { "3tnk", "v2rl", "3tnk" }
 	end
 
 	DoNavalTransportDrop(USSR, navalDropPath, navalDropExitPath, "lst", navalDropUnits, AssaultPlayerBaseOrHunt)
 
-	Trigger.AfterDelay(NavalDropInterval[Difficulty], DoSovietNavalDrop)
+	local delayUntilNext = CalculateInterval(GetTotalCostOfUnits(navalDropUnits), NavalDropAttackValue, NavalDropStart)
+	Trigger.AfterDelay(delayUntilNext, DoSovietNavalDrop)
 end
 
 SendDevastators = function()

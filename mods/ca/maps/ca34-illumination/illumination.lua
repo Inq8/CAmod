@@ -12,7 +12,9 @@ Caves = {
 MaxContinuousSpawns = {
 	easy = 1,
 	normal = 1,
-	hard = 2
+	hard = 2,
+	vhard = 2,
+	brutal = 2
 }
 
 ScrinCompositions = {
@@ -23,44 +25,62 @@ ScrinCompositions = {
 		{ "s1", "s1", "s1", "s3", "s2", "s1", "s1", "s3", "gscr", { "gunw", "intl", "shrw" }, "s1", { "devo", "devo", "lchr", "corr" }, "s1", { "tpod", "stcr", "intl" } }
 	},
 	hard = {
-		{ "s1", "s1", "s1", "s3", "s2", "s1", "s1", "s3", "s2", "gscr", "s4", { "gunw", "shrw" }, "s1", { "devo", "devo", "lchr", "corr" }, "gscr", { "tpod", "rtpd" }, "s1", "gscr", { "intl", "stcr" }, "gscr" }
+		{ "s1", "s1", "s1", "s3", "s2", "s1", "s1", "s3", "gscr", "s4", { "gunw", "intl", "shrw" }, "s1", { "devo", "devo", "lchr", "corr" }, "s1", { "tpod", "stcr", "intl" }, "gscr" }
+	},
+	vhard = {
+		{ "s1", "s1", "s1", "s3", "evis", "s1", "s1", "s3", "s2", "gscr", "s4", { "gunw", "shrw" }, "s1", { "devo", "devo", "lchr", "corr" }, "gscr", { "tpod", "rtpd" }, "s1", "gscr", { "intl", "stcr" }, "gscr" }
+	},
+	brutal = {
+		{ "s1", "s1", "s1", "s3", "evis", "s1", "s1", "s3", "evis", "gscr", "s4", { "gunw", "shrw" }, "s1", { "devo", "devo", "lchr", "corr" }, "gscr", { "tpod", "rtpd" }, "s1", "gscr", { "intl", "stcr" }, "gscr" }
 	}
 }
 
 FinalBattleInfantryList = {
 	easy = { "s1", "s1", "s1", "s3", "gscr", "s1" },
 	normal = { "s1", "gscr", "s3", "s4", "s1", "s1", "s2", "s1" },
-	hard = { "gscr", "s1", "s3", "s4", "s1", "gscr", "s3", "s1" }
+	hard = { "gscr", "s1", "s3", "s4", "s1", "gscr", "s3", "s1" },
+	vhard = { "gscr", "s1", "s3", "s4", "s1", "gscr", "s3", "s1" },
+	brutal = { "gscr", "s1", "s3", "s4", "s1", "gscr", "s3", "s1" }
 }
 
 FinalBattleVehiclesList = {
 	easy = { "gunw", "intl", "corr" },
 	normal = { "intl", "devo", "corr", "devo", "tpod" },
-	hard = { "intl", "tpod", "corr", "devo", "rtpd" }
+	hard = { "intl", "tpod", "corr", "devo", "rtpd" },
+	vhard = { "intl", "tpod", "corr", "devo", "rtpd" },
+	brutal = { "intl", "tpod", "corr", "devo", "rtpd" }
 }
 
 FinalBattleInfantryInterval = {
 	easy = { Min = DateTime.Seconds(8), Max = DateTime.Seconds(9) },
 	normal = { Min = DateTime.Seconds(7), Max = DateTime.Seconds(8) },
-	hard = { Min = DateTime.Seconds(6), Max = DateTime.Seconds(7) }
+	hard = { Min = DateTime.Seconds(6), Max = DateTime.Seconds(7) },
+	vhard = { Min = DateTime.Seconds(6), Max = DateTime.Seconds(7) },
+	brutal = { Min = DateTime.Seconds(5), Max = DateTime.Seconds(6) }
 }
 
 FinalBattleVehicleInterval = {
 	easy = DateTime.Seconds(28),
 	normal = DateTime.Seconds(24),
-	hard = DateTime.Seconds(20)
+	hard = DateTime.Seconds(20),
+	vhard = DateTime.Seconds(20),
+	brutal = DateTime.Seconds(20)
 }
 
 WormholeRespawnTime = {
 	easy = DateTime.Minutes(4), -- not used
 	normal = DateTime.Minutes(3),
-	hard = DateTime.Minutes(2)
+	hard = DateTime.Minutes(2),
+	vhard = DateTime.Minutes(2),
+	brutal = DateTime.Minutes(2)
 }
 
 ContinuousSpawnFrequency = {
 	easy = DateTime.Seconds(100), -- not used
 	normal = DateTime.Seconds(70),
-	hard = DateTime.Seconds(40)
+	hard = DateTime.Seconds(45),
+	vhard = DateTime.Seconds(40),
+	brutal = DateTime.Seconds(35)
 }
 
 WorldLoaded = function()

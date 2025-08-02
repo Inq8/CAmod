@@ -1097,9 +1097,10 @@ SMEDI:
 	GuardsSelection:
 		ValidTargets: Infantry
 	KeepsDistance:
+	Encyclopedia:
+		HideBuildable: True
 	EncyclopediaExtras:
 		AdditionalInfo: Acquired from captured Hospitals.
-		HideBuildable: True
 
 ARTI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -1181,9 +1182,10 @@ ARTI:
 	GuardsSelection:
 		ValidTargets: Vehicle
 	KeepsDistance:
+	Encyclopedia:
+		HideBuildable: True
 	EncyclopediaExtras:
 		AdditionalInfo: Acquired from captured Machine Shops.
-		HideBuildable: True
 
 GSCR:
 	Inherits: BRUT
@@ -1439,24 +1441,6 @@ MAST:
 		Count: 1
 		ShowSelectionBar: true
 		SelectionBarColor: ff00ff
-
-MAST.Clone:
-	Inherits: MAST
-	Buildable:
-		Prerequisites: ~disabled
-	RenderSprites:
-		Image: mast
-	Tooltip:
-		Name: Mastermind Clone
-	Tooltip@PRODIGY:
-		Name: Prodigy Clone
-	Valued:
-		Cost: 1000
-	Health:
-		HP: 14000
-	RangeMultiplier@Clone:
-		Modifier: 80
-	-Encyclopedia:
 
 #
 # ---- Vehicles
@@ -3053,8 +3037,9 @@ SMCV:
 		RequiresCondition: !empdisable && !being-warped && !driver-dead
 	DamageTypeDamageMultiplier@A2GPROTECTION:
 		Modifier: 60
-	UpdatesKillCount@BuildingsOrHarvesters:
-		Type: BuildingsOrHarvesters
+	UpdatesCount@NodCovenant:
+		Type: NodCovenant
+		UpdateOn: Killed
 	-PrimaryBuilding:
 	-WithDecoration@primary:
 	GrantConditionOnPrerequisite@Rebel:
@@ -3079,9 +3064,6 @@ SMCV:
 		Factions: collector
 		Prerequisite: structures.collector
 		RequiresCondition: rebel-allegiance
-	ProvidesPrerequisite@anyconyard:
-		Prerequisite: anyconyard
-		RequiresCondition: rebel-allegiance
 	FreeActor@QUEUEUPDATER:
 		RequiresCondition: updatequeue && rebel-allegiance
 	-SpawnActorOnCapture@QUEUEUPDATER:
@@ -3089,19 +3071,19 @@ SMCV:
 	-GrantConditionOnPrerequisite@MQS:
 	GrantDelayedCondition@QUEUEUPDATER:
 		RequiresCondition: rebel-allegiance
+	-ProductionQueue@MQDEF:
+	-ProductionBar@MQDEF:
 	Production@SQBLD:
+		Produces: BuildingSQ
 		RequiresCondition: !global-multiqueuefull && rebel-allegiance
 		PauseOnCondition: being-warped
 	Production@MQBLD:
+		Produces: BuildingMQ
 		RequiresCondition: global-multiqueuefull && rebel-allegiance
 		PauseOnCondition: being-warped
 	ProductionBar@SQBLD:
 		RequiresCondition: !global-multiqueuefull && rebel-allegiance
-	ProductionBar@SQDEF:
-		RequiresCondition: !global-multiqueuefull && rebel-allegiance
 	ProductionBar@MQBLD:
-		RequiresCondition: global-multiqueuefull && rebel-allegiance
-	ProductionBar@MQDEF:
 		RequiresCondition: global-multiqueuefull && rebel-allegiance
 	Encyclopedia:
 		Category: Scrin/Vehicles
@@ -4839,8 +4821,8 @@ PROC.SCRIN:
 	ProvidesPrerequisite@anyrefinery:
 		Prerequisite: anyrefinery
 	CashHackable:
-	UpdatesCount:
-		Type: Refineries
+	UpdatesCount@ScrinAllegiance:
+		Type: ScrinAllegiance
 
 PORT:
 	Inherits: ^ScrinBuilding
@@ -5947,7 +5929,7 @@ SCOL.Temp:
 		RequiresCondition: ioncon-upgrade && !(empdisable || being-warped)
 	-MapEditorData:
 	-ChangesHealth@DefensePolicy2:
-	-UpdatesKillCount@BuildingsOrHarvesters:
+	-UpdatesCount@NodCovenant:
 	-Encyclopedia:
 
 VSPK:

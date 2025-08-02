@@ -1,4 +1,4 @@
-Difficulty = "normal"
+Difficulty = "easy"
 
 AlliedAttackPaths = {
 	{ WestAttackRally.Location, SovietBase.Location },
@@ -12,15 +12,10 @@ TeslaTriggerWest = { TeslaTriggerWest1.Location, TeslaTriggerWest2.Location, Tes
 
 Squads = {
 	Main = {
-		Delay = {
-			normal = DateTime.Minutes(6),
-		},
-		AttackValuePerSecond = {
-			normal = { Min = 10, Max = 10 },
-		},
+		Delay = DateTime.Minutes(6),
+		AttackValuePerSecond = { Min = 10, Max = 10 },
 		FollowLeader = true,
-		ProducerTypes = { Infantry = { "tent" }, Vehicles = { "weap" } },
-		Units = {
+		Compositions = {
 			{
 				Infantry = { "e3", "e1", "e1", "e1" },
 				Vehicles = { "jeep" },
@@ -57,7 +52,7 @@ WorldLoaded = function()
 	Trigger.AfterDelay(DateTime.Minutes(1), function()
 		local villageFlare = Actor.Create("flare", true, { Owner = USSR, Location = VillageCenter.Location })
 		Media.PlaySpeechNotification(USSR, "SignalFlare")
-		Notification("Signal flare detected.")
+		Notification("Signal flare detected. Press [" .. UtilsCA.Hotkey("ToLastEvent") .. "] to center screen on the most revent event.")
 		Beacon.New(USSR, VillageCenter.CenterPosition)
 		Trigger.AfterDelay(DateTime.Minutes(5), villageFlare.Destroy)
 	end)
@@ -126,11 +121,7 @@ InitGreece = function()
 	AutoRepairBuildings(Greece)
 	SetupRefAndSilosCaptureCredits(Greece)
 	AutoReplaceHarvesters(Greece)
-
-	-- Begin main attacks after difficulty based delay
-	Trigger.AfterDelay(Squads.Main.Delay[Difficulty], function()
-		InitAttackSquad(Squads.Main, Greece)
-	end)
+	InitAttackSquad(Squads.Main, Greece)
 
 	local greeceGroundAttackers = Greece.GetGroundAttackers()
 

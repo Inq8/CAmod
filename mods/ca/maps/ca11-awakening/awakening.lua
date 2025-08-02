@@ -28,10 +28,77 @@ HaloDropPaths = {
 	{ HaloDropSpawn4.Location, HaloDropLanding11.Location },
 }
 
+GroundAttackInterval = {
+	easy = DateTime.Seconds(30),
+	normal = DateTime.Seconds(26),
+	hard = DateTime.Seconds(24),
+	vhard = DateTime.Seconds(22),
+	brutal = DateTime.Seconds(21)
+}
+
+HaloDropStart = AdjustDelayForDifficulty(DateTime.Minutes(7))
+HaloDropAttackValue = AdjustAttackValuesForDifficulty({ Min = 12, Max = 24, RampDuration = DateTime.Minutes(10) })
+
+AirAttackStart = {
+	easy = DateTime.Minutes(10),
+	normal = DateTime.Minutes(8),
+	hard = DateTime.Minutes(6),
+	vhard = DateTime.Minutes(5) + DateTime.Seconds(30),
+	brutal = DateTime.Minutes(5)
+}
+
+AirAttackInterval = {
+	easy = DateTime.Minutes(2),
+	normal = DateTime.Minutes(2),
+	hard = DateTime.Minutes(2),
+	vhard = DateTime.Minutes(2),
+	brutal = DateTime.Minutes(2)
+}
+
+HoldOutTime = {
+	easy = DateTime.Minutes(25),
+	normal = DateTime.Minutes(25),
+	hard = DateTime.Minutes(25),
+	vhard = DateTime.Minutes(25),
+	brutal = DateTime.Minutes(25)
+}
+
 CyborgFactories = { CyborgFactory1, CyborgFactory2, CyborgFactory3, CyborgFactory4 }
 CyborgTypes = { "n1c", "n1c", "n3c", "n5", "acol", "tplr", "enli", "rmbc" }
 CyborgRallyPoints = { CyborgRally1.Location, CyborgRally2.Location }
 MaxCyborgWaves = 50
+
+HardAndAboveCompositions = {
+	{ Units = { "e1", "e1", "e1", "e2", "e3", "3tnk", "3tnk", "btr.ai", "e3", "e1", "e2", "e1", "e1" }, MaxTime = DateTime.Minutes(19) },
+	{ Units = { "e1", "e1", "e1", "e2", "e3", "3tnk", "v2rl", "btr.ai", "e3", "e1", "e2", "e1", "e1" }, MinTime = DateTime.Minutes(4), MaxTime = DateTime.Minutes(8) },
+	{ Units = { "e1", "e1", "e1", "e2", "e3", "e1", "btr.ai", "3tnk", "ttra", "e3", "e1", "e2", "e1", "e1" }, MinTime = DateTime.Minutes(4), MaxTime = DateTime.Minutes(17) },
+	{ Units = { "e1", "e1", "e1", "e2", "e3", "4tnk", "btr.ai", "shok", "e8", "katy" }, MinTime = DateTime.Minutes(6), MaxTime = DateTime.Minutes(18) },
+	{ Units = { "shok", "shok", "shok", "shok", "shok", "ttnk", "ttnk", "shok", "e3", "ttra", "shok" }, MinTime = DateTime.Minutes(7) },
+	{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "e3", "3tnk", "3tnk", "btr.ai", "e2", "e3", "e1", "e1" }, MinTime = DateTime.Minutes(8) },
+	{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "4tnk", "v3rl", "v2rl", "e3", "shok", "e3", "e1", "e1", "e2", "btr.ai" }, MinTime = DateTime.Minutes(8) },
+	{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "3tnk", "3tnk", "e3", "3tnk", "btr.ai", "e1", "e1", "e2" }, MinTime = DateTime.Minutes(9) },
+	{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "shok", "apoc", "4tnk", "e3", "btr.ai", "v3rl" }, MinTime = DateTime.Minutes(10) },
+	{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "3tnk", "4tnk", "btr.ai", "btr.ai", "v3rl", "v3rl" }, MinTime = DateTime.Minutes(15) },
+	{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "e8", "e8", "4tnk.erad", "e3", "4tnk", "btr.ai", "btr.ai", "v3rl", "v3rl" }, MinTime = DateTime.Minutes(17) },
+}
+
+if IsVeryHardOrAbove then
+	table.insert(HardAndAboveCompositions, {
+		Units = { "e1", "e1", "e1", "e2", "cmsr", "e1", "e3", "ttrp", "cmsr", "ttrp", "ttrp", "e1", "e1", "e1", "cmsr", "e3", "e3", "e1", "e1", "e1",
+			"e1", "cmsr", "e1", "e2", "e1", "deso", "e1", "ttrp", "e1", "e1", "e1", "e1", "e1", "e1", "e1", "e1", "e1", "cmsr", "e1", "e2", "e3", "e1"
+		},
+		MinTime = DateTime.Minutes(15),
+		IsSpecial = true
+	})
+
+	if Difficulty == "brutal" then
+		table.insert(HardAndAboveCompositions, {
+			Units = { "apoc.atomic", "apoc.atomic", "apoc.atomic", "apoc.atomic", "isu", "isu", "isu", "3tnk.rhino", "3tnk.rhino" },
+			MinTime = DateTime.Minutes(15),
+			IsSpecial = true
+		})
+	end
+end
 
 GroundAttackCompositions = {
 	easy = {
@@ -55,19 +122,9 @@ GroundAttackCompositions = {
 		{ Units = { "e1", "e1", "e1", "e2", "e3", "apoc", "e3", "v3rl", "btr.ai", "e3", "e1", "e1", "e2" }, MinTime = DateTime.Minutes(18) },
 		{ Units = { "e1", "e1", "e1", "e2", "e3", "e8", "4tnk.erad", "e3", "v3rl", "btr.ai", "e3", "e1", "e1", "e2" }, MinTime = DateTime.Minutes(19) },
 	},
-	hard = {
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "3tnk", "3tnk", "btr.ai", "e3", "e1", "e2", "e1", "e1" }, MaxTime = DateTime.Minutes(19) },
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "3tnk", "v2rl", "btr.ai", "e3", "e1", "e2", "e1", "e1" }, MinTime = DateTime.Minutes(4), MaxTime = DateTime.Minutes(8) },
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "e1", "btr.ai", "3tnk", "ttra", "e3", "e1", "e2", "e1", "e1" }, MinTime = DateTime.Minutes(4), MaxTime = DateTime.Minutes(17) },
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "4tnk", "btr.ai", "shok", "e8", "katy" }, MinTime = DateTime.Minutes(6), MaxTime = DateTime.Minutes(18) },
-		{ Units = { "shok", "shok", "shok", "shok", "shok", "ttnk", "ttnk", "shok", "e3", "ttra", "shok" }, MinTime = DateTime.Minutes(7) },
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "e3", "3tnk", "3tnk", "btr.ai", "e2", "e3", "e1", "e1" }, MinTime = DateTime.Minutes(8) },
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "4tnk", "v3rl", "v2rl", "e3", "shok", "e3", "e1", "e1", "e2", "btr.ai" }, MinTime = DateTime.Minutes(8) },
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "3tnk", "3tnk", "e3", "3tnk", "btr.ai", "e1", "e1", "e2" }, MinTime = DateTime.Minutes(9) },
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "shok", "apoc", "4tnk", "e3", "btr.ai", "v3rl" }, MinTime = DateTime.Minutes(10) },
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "3tnk", "4tnk", "btr.ai", "btr.ai", "v3rl", "v3rl" }, MinTime = DateTime.Minutes(15) },
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "e8", "e8", "4tnk.erad", "e3", "4tnk", "btr.ai", "btr.ai", "v3rl", "v3rl" }, MinTime = DateTime.Minutes(17) },
-	},
+	hard = HardAndAboveCompositions,
+	vhard = HardAndAboveCompositions,
+	brutal = HardAndAboveCompositions,
 }
 
 AirAttackCompositions = {
@@ -90,43 +147,21 @@ AirAttackCompositions = {
 		{ "hind", "hind", "hind" },
 		{ "suk", "suk", "hind" },
 		{ "kiro", "kiro", "mig" },
-	}
-}
-
-GroundAttackInterval = {
-	easy = DateTime.Seconds(30),
-	normal = DateTime.Seconds(26),
-	hard = DateTime.Seconds(22)
-}
-
-HaloDropStart = {
-	easy = DateTime.Minutes(9),
-	normal = DateTime.Minutes(7),
-	hard = DateTime.Minutes(5)
-}
-
-HaloDropInterval = {
-	easy = DateTime.Seconds(120),
-	normal = DateTime.Seconds(70),
-	hard = DateTime.Seconds(40)
-}
-
-AirAttackStart = {
-	easy = DateTime.Minutes(10),
-	normal = DateTime.Minutes(8),
-	hard = DateTime.Minutes(6)
-}
-
-AirAttackInterval = {
-	easy = DateTime.Minutes(2),
-	normal = DateTime.Minutes(2),
-	hard = DateTime.Minutes(2)
-}
-
-HoldOutTime = {
-	easy = DateTime.Minutes(25),
-	normal = DateTime.Minutes(25),
-	hard = DateTime.Minutes(25)
+	},
+	vhard = {
+		{ "mig", "mig", "mig" },
+		{ "yak", "yak", "hind" },
+		{ "hind", "hind", "hind" },
+		{ "suk", "suk", "hind" },
+		{ "kiro", "kiro", "mig" },
+	},
+	brutal = {
+		{ "mig", "mig", "mig", "mig" },
+		{ "yak", "yak", "yak", "hind" },
+		{ "hind", "hind", "hind", "hind" },
+		{ "suk", "suk", "suk", "hind" },
+		{ "kiro", "kiro", "kiro", "mig" },
+	},
 }
 
 -- Setup and Tick
@@ -146,7 +181,7 @@ WorldLoaded = function()
 
 	ObjectiveProtectTemple = Nod.AddObjective("Protect Temple Prime.")
 
-	if Difficulty == "hard" then
+	if IsHardOrAbove() then
 		Utils.Do(Nod.GetActorsByType("mlrs"), function(a)
 			a.Destroy()
 		end)
@@ -257,9 +292,7 @@ InitUSSR = function()
 		DoAirAttack()
 	end)
 
-	Trigger.AfterDelay(HaloDropStart[Difficulty], function()
-		DoHaloDrop()
-	end)
+	Trigger.AfterDelay(HaloDropStart, DoHaloDrop)
 
 	BaseAttemptLocations = {
 		{ SpawnLocation = AttackSpawn8.Location, DeployLocation = ConyardPosition1.Location, RefLocation = RefPosition1.Location, TeslaCoilLocation = TeslaCoilPosition1.Location },
@@ -315,7 +348,7 @@ DoGroundAttack = function(isAdditional)
 			Trigger.AfterDelay(GroundAttackInterval[Difficulty], DoGroundAttack)
 
 			if DateTime.GameTime >= DateTime.Minutes(24) then
-				Trigger.AfterDelay(DateTime.Seconds(5), function()
+				Trigger.AfterDelay(DateTime.Seconds(3), function()
 					DoGroundAttack(true)
 				end)
 			end
@@ -325,7 +358,7 @@ DoGroundAttack = function(isAdditional)
 				end)
 			end
 			if DateTime.GameTime >= DateTime.Minutes(22) then
-				Trigger.AfterDelay(DateTime.Seconds(5), function()
+				Trigger.AfterDelay(DateTime.Seconds(7), function()
 					DoGroundAttack(true)
 				end)
 			end
@@ -352,7 +385,7 @@ DoHaloDrop = function()
 	local entryPath = Utils.Random(HaloDropPaths)
 	local haloDropUnits = { "e1", "e1", "e1", "e2", "e3", "e4" }
 
-	if Difficulty == "hard" and DateTime.GameTime > DateTime.Minutes(15) then
+	if IsHardOrAbove() and DateTime.GameTime > DateTime.Minutes(15) then
 		haloDropUnits = { "e1", "e1", "e1", "e1", "e2", "e2", "e3", "e3", "e4", "shok" }
 	end
 
@@ -366,7 +399,8 @@ DoHaloDrop = function()
 	end)
 
 	if CyborgWaves < MaxCyborgWaves then
-		Trigger.AfterDelay(HaloDropInterval[Difficulty], DoHaloDrop)
+		local delayUntilNext = CalculateInterval(GetTotalCostOfUnits(haloDropUnits), HaloDropAttackValue, HaloDropStart)
+		Trigger.AfterDelay(delayUntilNext, DoHaloDrop)
 	end
 end
 

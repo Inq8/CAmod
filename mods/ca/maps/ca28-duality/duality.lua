@@ -7,6 +7,13 @@ ScrinReinforcementInterval = {
 	easy = DateTime.Seconds(40),
 	normal = DateTime.Seconds(30),
 	hard = DateTime.Seconds(20),
+	vhard = DateTime.Seconds(15),
+	brutal = DateTime.Seconds(15)
+}
+
+ScrinWaveInterval = {
+	vhard = DateTime.Seconds(120),
+	brutal = DateTime.Seconds(60)
 }
 
 WorldLoaded = function()
@@ -26,6 +33,9 @@ WorldLoaded = function()
 	if not RespawnEnabled then
 		ObjectiveCommandoSurvive = GDI.AddObjective("Commando must survive.")
 		ObjectiveTanyaSurvive = GDI.AddObjective("Tanya must survive.")
+	else
+		ObjectiveCommandoSurvive = GDI.AddSecondaryObjective("Keep Commando alive.")
+		ObjectiveTanyaSurvive = GDI.AddSecondaryObjective("Keep Tanya alive.")
 	end
 
 	Scrin.Resources = Scrin.ResourceCapacity
@@ -57,9 +67,15 @@ WorldLoaded = function()
 
 	UpdateObjectiveText()
 
-	if Difficulty == "hard" then
+	if IsHardOrAbove() then
 		HealCrate2.Destroy()
 		HealCrate3.Destroy()
+
+		if IsVeryHardOrAbove() then
+			Trigger.AfterDelay(DateTime.Seconds(30), function()
+				InitWormholes()
+			end)
+		end
 	end
 
 	if Difficulty == "easy" then
@@ -110,12 +126,16 @@ OncePerSecondChecks = function()
 					if a.Type == "rmbo" then
 						if GDI.IsObjectiveCompleted(ObjectiveFindTanya) then
 							CommandoEscaped = true
-							GDI.MarkCompletedObjective(ObjectiveCommandoSurvive)
+							if ObjectiveCommandoSurvive ~= nil then
+								GDI.MarkCompletedObjective(ObjectiveCommandoSurvive)
+							end
 							a.Destroy()
 						end
 					elseif a.Type == "e7" then
 						TanyaEscaped = true
-						GDI.MarkCompletedObjective(ObjectiveTanyaSurvive)
+						if ObjectiveTanyaSurvive ~= nil then
+							GDI.MarkCompletedObjective(ObjectiveTanyaSurvive)
+						end
 						a.Destroy()
 					end
 				end
@@ -159,7 +179,7 @@ ActivateProdigy = function()
 		Prodigy.GrantCondition("activated")
 		Beacon.New(GDI, Prodigy.CenterPosition)
 
-		if Difficulty == "hard" then
+		if IsHardOrAbove() then
 			UpdateProdigyTarget()
 		else
 			Prodigy.Patrol(ProdigyPatrolPath)
@@ -201,11 +221,10 @@ end
 
 CommandoDeathTrigger = function(commando)
 	Trigger.OnKilled(commando, function(self, killer)
-		if not RespawnEnabled and not CommandoEscaped then
-			GDI.MarkFailedObjective(ObjectiveCommandoSurvive)
-		elseif RespawnEnabled then
-			Notification("Commando respawns in 30 seconds.")
-			Trigger.AfterDelay(DateTime.Seconds(30), function()
+		GDI.MarkFailedObjective(ObjectiveCommandoSurvive)
+		if RespawnEnabled then
+			Notification("Commando respawns in 20 seconds.")
+			Trigger.AfterDelay(DateTime.Seconds(20), function()
 				local respawnWaypoint = Exit
 				if NumSilosRemaining == 0 then
 					respawnWaypoint = EscapeRespawn
@@ -222,11 +241,10 @@ end
 
 TanyaDeathTrigger = function(tanya)
 	Trigger.OnKilled(tanya, function(self, killer)
-		if not RespawnEnabled and not TanyaEscaped then
-			GDI.MarkFailedObjective(ObjectiveTanyaSurvive)
-		elseif RespawnEnabled then
-			Notification("Tanya respawns in 30 seconds.")
-			Trigger.AfterDelay(DateTime.Seconds(30), function()
+		GDI.MarkFailedObjective(ObjectiveTanyaSurvive)
+		if RespawnEnabled then
+			Notification("Tanya respawns in 20 seconds.")
+			Trigger.AfterDelay(DateTime.Seconds(20), function()
 				local respawnWaypoint = Exit
 				if NumSilosRemaining == 0 then
 					respawnWaypoint = EscapeRespawn
@@ -242,6 +260,10 @@ TanyaDeathTrigger = function(tanya)
 end
 
 InitWormholes = function()
+	if WormholesActive then
+		return
+	end
+	WormholesActive = true
 	Actor.Create("wormhole", true, { Owner = Scrin, Location = WormholeSpawn1.Location })
 	Actor.Create("wormhole", true, { Owner = Scrin, Location = WormholeSpawn2.Location })
 	Actor.Create("wormhole", true, { Owner = Scrin, Location = WormholeSpawn3.Location })
@@ -260,7 +282,7 @@ ScrinReinforcements = function()
 			table.insert(units, Utils.Random(possibleUnits))
 		end
 
-		local units = Reinforcements.Reinforce(Scrin, units, { wormhole.Location }, 5, function(a)
+		Reinforcements.Reinforce(Scrin, units, { wormhole.Location }, 5, function(a)
 			a.Scatter()
 			Trigger.AfterDelay(5, function()
 				if not a.IsDead then
@@ -271,5 +293,11 @@ ScrinReinforcements = function()
 		end)
 	end)
 
-	Trigger.AfterDelay(ScrinReinforcementInterval[Difficulty], ScrinReinforcements)
+	local timeUntilNext = ScrinReinforcementInterval[Difficulty]
+
+	if IsVeryHardOrAbove() and not GDI.IsObjectiveCompleted(ObjectiveDestroyTiberiumStores) then
+		timeUntilNext = ScrinWaveInterval[Difficulty]
+	end
+
+	Trigger.AfterDelay(timeUntilNext, ScrinReinforcements)
 end

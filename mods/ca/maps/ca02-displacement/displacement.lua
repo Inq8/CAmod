@@ -23,10 +23,11 @@ Convoys = {
 	}
 }
 
-ConvoyExits = {
-	{ FirstConvoyPath18.Location, CPos.New(FirstConvoyPath18.Location.X - 1, FirstConvoyPath18.Location.Y), CPos.New(FirstConvoyPath18.Location.X + 1, FirstConvoyPath18.Location.Y) },
-	{ SecondConvoyPath9.Location, CPos.New(SecondConvoyPath9.Location.X - 1, SecondConvoyPath9.Location.Y), CPos.New(SecondConvoyPath9.Location.X + 1, SecondConvoyPath9.Location.Y) }
-}
+ExitCells = {}
+
+for x = 13, 53 do
+	table.insert(ExitCells, CPos.New(x, 64))
+end
 
 ScrinAttackPaths = {
 	{ ScrinAttackAssembly1.Location, PlayerRefinery.Location },
@@ -41,7 +42,9 @@ ConvoyUnits = { "truk", "truk", "truk", "truk", "truk" }
 MaxLosses = {
 	easy = 9,
 	normal = 4,
-	hard = 0
+	hard = 1,
+	vhard = 0,
+	brutal = 0
 }
 
 NavalReinforcementsDelay = {
@@ -52,104 +55,53 @@ NavalReinforcementsDelay = {
 TimeBetweenConvoys = {
 	easy = { DateTime.Minutes(3), DateTime.Minutes(8), DateTime.Minutes(4), DateTime.Minutes(5)  },
 	normal = { DateTime.Minutes(2), DateTime.Minutes(7), DateTime.Minutes(3), DateTime.Minutes(4) + DateTime.Seconds(30) },
-	hard = { DateTime.Minutes(1), DateTime.Minutes(6), DateTime.Minutes(2), DateTime.Minutes(4) }
+	hard = { DateTime.Minutes(1), DateTime.Minutes(6), DateTime.Minutes(2), DateTime.Minutes(4) },
+	vhard = { DateTime.Minutes(1), DateTime.Minutes(6), DateTime.Minutes(2), DateTime.Minutes(4) },
+	brutal = { DateTime.Minutes(1), DateTime.Minutes(6), DateTime.Minutes(2), DateTime.Minutes(4) }
 }
 
 -- Squads
 
 Squads = {
 	Main = {
-		Delay = {
-			easy = DateTime.Seconds(230),
-			normal = DateTime.Seconds(160),
-			hard = DateTime.Seconds(90)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 15, Max = 25, RampDuration = DateTime.Minutes(15) },
-			normal = { Min = 35, Max = 45, RampDuration = DateTime.Minutes(13) },
-			hard = { Min = 60, Max = 70, RampDuration = DateTime.Minutes(11) },
-		},
-		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" } },
-		Units = {
-			easy = {
-				{
-					Infantry = { "s1", "s1", "s1", "s3", "s3" },
-					Vehicles = { "intl.ai2", "intl.ai2", "gunw" },
-					MaxTime = DateTime.Minutes(13),
-				},
-				{
-					Infantry = { "s1", "s1", "s1", "s3", "s3" },
-					Vehicles = { "intl.ai2", "intl.ai2", "gunw", "gunw", "corr" },
-					MinTime = DateTime.Minutes(13),
-				}
+		Delay = AdjustDelayForDifficulty(DateTime.Seconds(160)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 28, Max = 36, RampDuration = DateTime.Minutes(13) }),
+		Compositions = AdjustCompositionsForDifficulty({
+			{
+				Infantry = { "s3", "s1", "s1", "s1", "s1", "s3", "s4" },
+				Vehicles = { "intl.ai2", "gunw", "seek", "intl.ai2" },
+				MaxTime = DateTime.Minutes(9),
 			},
-			normal = {
-				{
-					Infantry = { "s1", "s1", "s1", "s1", "s3", "s3" },
-					Vehicles = { "intl.ai2", "intl.ai2", "gunw" },
-					MaxTime = DateTime.Minutes(11),
-				},
-				{
-					Infantry = { "s1", "s1", "s1", "s1", "s3", "s3", "s4", "s4" },
-					Vehicles = { "intl.ai2", "intl.ai2", "gunw", "corr", "devo", "seek", "seek" },
-					MinTime = DateTime.Minutes(11),
-				}
-			},
-			hard = {
-				{
-					Infantry = { "s1", "s1", "s1", "s1", "s3", "s3", "s4" },
-					Vehicles = { "intl.ai2", "intl.ai2", "gunw", "seek" },
-					MaxTime = DateTime.Minutes(9),
-				},
-				{
-					Infantry = { "s1", "s1", "s1", "s1", "s1", "s1", "s2", "s2", "s3", "s3", "s4" },
-					Vehicles = { "intl.ai2", "intl.ai2", "gunw", "corr", "devo", "seek", "tpod", "seek" },
-					MinTime = DateTime.Minutes(9),
-				}
+			{
+				Infantry = { "s3", "s1", "s1", "s1", "s1", "s3", "s1", "s1", "s2", "s2", "s4", "s1" },
+				Vehicles = { "intl.ai2", "gunw", "seek", "corr", "devo", "seek", "intl.ai2", "tpod", "seek" },
+				MinTime = DateTime.Minutes(9),
 			}
-		},
+		}),
 		AttackPaths = ScrinAttackPaths,
 	},
 	Stormriders = {
-		Delay = {
-			easy = DateTime.Seconds(330),
-			normal = DateTime.Seconds(270),
-			hard = DateTime.Seconds(210)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 8, Max = 8 },
-			normal = { Min = 15, Max = 15 },
-			hard = { Min = 28, Max = 28 },
-		},
-		ProducerTypes = { Aircraft = { "grav" } },
-		Units = {
-			easy = {
-				{ Aircraft = { "stmr", "stmr" } }
-			},
-			normal = {
-				{ Aircraft = { "stmr", "stmr", "stmr" } }
-			},
-			hard = {
-				{ Aircraft = { "stmr", "stmr", "stmr", "stmr" } }
-			}
-		}
+		Delay = AdjustAirDelayForDifficulty(DateTime.Seconds(270)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		Compositions = AdjustCompositionsForDifficulty({
+			{ Aircraft = { "stmr", "stmr", "stmr", "stmr" } }
+		})
 	},
 	Devastators = {
-		Delay = {
-			normal = DateTime.Minutes(15),
-			hard = DateTime.Minutes(10)
-		},
-		AttackValuePerSecond = {
-			normal = { Min = 15, Max = 15 },
-			hard = { Min = 40, Max = 40 },
-		},
-		ProducerTypes = { Aircraft = { "grav" } },
-		Units = {
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(16)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 15 }),
+		Compositions = {
 			normal = {
 				{ Aircraft = { "deva" } }
 			},
 			hard = {
 				{ Aircraft = { "deva", "deva" } }
+			},
+			vhard = {
+				{ Aircraft = { "deva", "deva" } }
+			},
+			brutal = {
+				{ Aircraft = { "deva", "deva", "deva" } }
 			}
 		}
 	}
@@ -179,13 +131,13 @@ WorldLoaded = function()
 
 	ObjectiveClearPath = Greece.AddObjective("Clear a path for inbound convoys.")
 
-	if Difficulty == "hard" then
-		ObjectiveProtectConvoys = Greece.AddObjective("Do not lose any convoy trucks.")
-	else
+	if IsHardOrBelow() then
 		ObjectiveProtectConvoys = Greece.AddObjective("Do not lose more than " .. MaxLosses[Difficulty] .. " convoy trucks.")
+	else
+		ObjectiveProtectConvoys = Greece.AddObjective("Do not lose any convoy trucks.")
 	end
 
-	if Difficulty ~= "hard" then
+	if IsNormalOrBelow() then
 		HardOnlyTripod1.Destroy()
 		HardOnlyShardLauncher1.Destroy()
 		HardOnlyShardLauncher2.Destroy()
@@ -213,12 +165,10 @@ WorldLoaded = function()
 	end)
 
 	-- When convoy units reach destination, remove them
-	Utils.Do(ConvoyExits, function(exitCells)
-		Trigger.OnEnteredFootprint(exitCells, function(a, id)
-			if a.Owner == England then
-				a.Destroy()
-			end
-		end)
+	Trigger.OnEnteredFootprint(ExitCells, function(a, id)
+		if a.Owner == England then
+			a.Destroy()
+		end
 	end)
 
 	-- Easter egg
@@ -289,7 +239,7 @@ end
 
 UpdateConvoyCountdown = function()
 	if TimerTicks == 0 then
-		if Difficulty == "hard" then
+		if MaxLosses[Difficulty] == 0 then
 			UserInterface.SetMissionText("Protect the convoy. All trucks must survive." , HSLColor.Yellow)
 		else
 			if TrucksLost == MaxLosses[Difficulty] then
@@ -338,6 +288,11 @@ InitConvoy = function()
 		local trucks = Reinforcements.Reinforce(England, ConvoyUnits, nextConvoy.Spawn, 50, function(truck)
 			Utils.Do(nextConvoy.Path, function(waypoint)
 				truck.Move(waypoint)
+			end)
+			Trigger.OnIdle(truck, function(self)
+				if not self.IsDead then
+					self.Move(Utils.Random(ExitCells))
+				end
 			end)
 		end)
 
@@ -410,6 +365,12 @@ InitScrin = function()
 	SetupRefAndSilosCaptureCredits(Scrin)
 	AutoReplaceHarvesters(Scrin)
 	AutoRebuildConyards(Scrin)
+	InitAttackSquad(Squads.Main, Scrin)
+	InitAirAttackSquad(Squads.Stormriders, Scrin)
+
+	if IsNormalOrAbove() then
+		InitAirAttackSquad(Squads.Devastators, Scrin, MissionPlayers, { "dome", "atek", "apwr", "pris", "fix" })
+	end
 
 	StormriderAttacker1.Attack(PlayerRefinery)
 	StormriderAttacker2.Attack(PlayerRefinery)
@@ -423,20 +384,6 @@ InitScrin = function()
 	SeekerPatroller1.Patrol({ SeekerPatrol1a.Location, SeekerPatrol1b.Location })
 	SeekerPatroller2.Patrol({ SeekerPatrol1a.Location, SeekerPatrol1b.Location })
 	SeekerPatroller3.Patrol({ SeekerPatrol1a.Location, SeekerPatrol1b.Location })
-
-	Trigger.AfterDelay(Squads.Main.Delay[Difficulty], function()
-		InitAttackSquad(Squads.Main, Scrin)
-	end)
-
-	Trigger.AfterDelay(Squads.Stormriders.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.Stormriders, Scrin)
-	end)
-
-	if Difficulty ~= "easy" then
-		Trigger.AfterDelay(Squads.Devastators.Delay[Difficulty], function()
-			InitAirAttackSquad(Squads.Devastators, Scrin, Greece, { "dome", "atek", "apwr", "pris", "fix" })
-		end)
-	end
 
 	local scrinGroundAttackers = Scrin.GetGroundAttackers()
 

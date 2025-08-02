@@ -2,7 +2,11 @@ RespawnEnabled = Map.LobbyOption("respawn") == "enabled"
 
 Patrols = {
 	{
-		Units = { PatrollerA1, PatrollerA2, PatrollerA3, PatrollerA4, PatrollerA5, PatrollerA6 },
+		Units = { PatrolBoat, PatrolBoat2 },
+		Path = { BoatPatrol1.Location, BoatPatrol2.Location, BoatPatrol3.Location, BoatPatrol2.Location }
+	},
+	{
+		Units = { PatrollerA1, PatrollerA2, PatrollerA3, PatrollerA4, PatrollerA5, PatrollerA6, PatrollerA7 },
 		Path = { PatrolA1.Location, PatrolA2.Location, PatrolA3.Location, PatrolA4.Location, PatrolA5.Location, PatrolA6.Location, PatrolA1.Location, PatrolA7.Location, PatrolA8.Location, PatrolA9.Location, PatrolA8.Location, PatrolA7.Location }
 	},
 	{
@@ -10,7 +14,7 @@ Patrols = {
 		Path = { PatrolB1.Location, PatrolB2.Location, PatrolB3.Location, PatrolB2.Location, PatrolB4.Location, PatrolB5.Location, PatrolB6.Location, PatrolB7.Location, PatrolB8.Location, PatrolB9.Location, PatrolB8.Location, PatrolB7.Location, PatrolB6.Location, PatrolB5.Location, PatrolB4.Location }
 	},
 	{
-		Units = { PatrollerC1, PatrollerC2, PatrollerC3, PatrollerC4, PatrollerC5, PatrollerC6, PatrollerC7, PatrollerC8, PatrollerC9 },
+		Units = { PatrollerC1, PatrollerC2, PatrollerC3, PatrollerC4, PatrollerC5, PatrollerC6, PatrollerC7, PatrollerC8, PatrollerC9, PatrollerC10 },
 		Path = { PatrolC1.Location, PatrolC2.Location, PatrolC3.Location, PatrolC4.Location, PatrolC5.Location, PatrolC4.Location, PatrolC3.Location, PatrolC2.Location }
 	},
 	{
@@ -22,8 +26,8 @@ Patrols = {
 		Path = { PatrolE1.Location, PatrolE2.Location, PatrolE3.Location, PatrolE4.Location, PatrolE5.Location, PatrolE6.Location, PatrolE5.Location, PatrolE7.Location, PatrolE8.Location, PatrolE9.Location, PatrolE10.Location, PatrolE11.Location, PatrolE10.Location, PatrolE9.Location, PatrolE8.Location, PatrolE7.Location, PatrolE5.Location, PatrolE4.Location, PatrolE3.Location, PatrolE2.Location }
 	},
 	{
-		Units = { PatrolBoat },
-		Path = { BoatPatrol1.Location, BoatPatrol2.Location, BoatPatrol3.Location, BoatPatrol2.Location }
+		Units = { PatrollerF1, PatrollerF2, PatrollerF3, PatrollerF4, PatrollerF5, PatrollerF6, PatrollerF7 },
+		Path = { PatrolF1.Location, PatrolF2.Location, PatrolF3.Location, PatrolF4.Location, PatrolF3.Location, PatrolF2.Location }
 	}
 }
 
@@ -194,15 +198,15 @@ WorldLoaded = function()
 		end)
 	end)
 
-	if Difficulty ~= "easy" then
+	if IsNormalOrAbove() then
 		HealCrate1.Destroy()
 		HealCrate3.Destroy()
-		if Difficulty == "hard" then
+		if IsHardOrAbove() then
 			HealCrate2.Destroy()
 		end
 	end
 
-	if Difficulty ~= "hard" then
+	if IsNormalOrBelow() then
 		V22.Destroy()
 
 		Seal1.GrantCondition("difficulty-" .. Difficulty)
@@ -216,6 +220,20 @@ WorldLoaded = function()
 		if Difficulty == "easy" then
 			V21.Destroy()
 		end
+	end
+
+	if IsHardOrBelow() then
+		PatrollerA7.Destroy()
+		PatrollerC10.Destroy()
+		PatrolBoat2.Destroy()
+	end
+
+	if IsVeryHardOrBelow() then
+		BrutalOnlyV2_1.Destroy()
+		BrutalOnlyV2_2.Destroy()
+		Utils.Do(Patrols[7].Units, function(a)
+			a.Destroy()
+		end)
 	end
 
 	Trigger.OnEnteredProximityTrigger(Chronosphere.CenterPosition, WDist.New(8192), function(a, id)
@@ -401,7 +419,7 @@ InitUSSR = function()
 		CallForHelpOnDamagedOrKilled(a, WDist.New(4096), IsUSSRGroundHunterUnit, function(p) return p == USA1 or p == USA2 or p == England end)
 	end)
 
-	if Difficulty == "hard" then
+	if IsHardOrAbove() then
 		NukeDummy = Actor.Create("NukeDummyHard", true, { Owner = USSR, Location = Chronosphere.Location })
 	elseif Difficulty == "easy" then
 		NukeDummy = Actor.Create("NukeDummyEasy", true, { Owner = USSR, Location = Chronosphere.Location })
@@ -409,18 +427,20 @@ InitUSSR = function()
 		NukeDummy = Actor.Create("NukeDummyNormal", true, { Owner = USSR, Location = Chronosphere.Location })
 	end
 
-	if Difficulty ~= "hard" then
-		local e1s = USSR.GetActorsByType("e1")
-		Utils.Do(e1s, function(a)
+	if IsNormalOrBelow() then
+		local sovietInf = USSR.GetActorsByTypes({ "e1", "e2", "e3", "e4", "shok", "dog" })
+		Utils.Do(sovietInf, function(a)
 			a.GrantCondition("difficulty-" .. Difficulty)
 		end)
 	end
 
-	Utils.Do(Patrols, function(p)
-		Utils.Do(p.Units, function(unit)
-			if not unit.IsDead then
-				unit.Patrol(p.Path, true)
-			end
+	Trigger.AfterDelay(1, function()
+		Utils.Do(Patrols, function(p)
+			Utils.Do(p.Units, function(unit)
+				if not unit.IsDead then
+					unit.Patrol(p.Path, true)
+				end
+			end)
 		end)
 	end)
 end
@@ -454,8 +474,11 @@ DropChronoPrison = function()
 				Trigger.RemoveProximityTrigger(id)
 				ChronoPrisonFlare.Destroy()
 
-				local chronoPrisons = ChronoPrisonPlayer.GetActorsByType("chpr")
-				Trigger.OnKilled(chronoPrisons[1], function(self, killer)
+				local chronoPrisons = Greece.GetActorsByType("chpr")
+				local chronoPrison = chronoPrisons[1]
+				chronoPrison.GrantCondition("difficulty-" .. Difficulty)
+
+				Trigger.OnKilled(chronoPrison, function(self, killer)
 					if RespawnEnabled then
 						DropChronoPrison()
 					else
@@ -480,12 +503,12 @@ RespawnTrigger = function(a)
 			else
 				name = "SEAL"
 			end
-			Notification(name .. " respawns in 30 seconds.")
-			Trigger.AfterDelay(DateTime.Seconds(30), function()
+			Notification(name .. " respawns in 20 seconds.")
+			Trigger.AfterDelay(DateTime.Seconds(20), function()
 				local respawnedActor = Actor.Create(a.Type, true, { Owner = a.Owner, Location = PlayerStart.Location })
 				Beacon.New(a.Owner, PlayerStart.CenterPosition)
 				Media.PlaySpeechNotification(a.Owner, "ReinforcementsArrived")
-				if a.Type == "seal" and Difficulty ~= "hard" then
+				if a.Type == "seal" then
 					respawnedActor.GrantCondition("difficulty-" .. Difficulty)
 				end
 				RespawnTrigger(respawnedActor)

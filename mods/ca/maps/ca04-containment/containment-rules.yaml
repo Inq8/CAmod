@@ -21,15 +21,6 @@ World:
 		Briefing: Intel reports that the Soviets are preparing to strike their ruptured Chronosphere with atomic weapons in an attempt to put an end to the damage that it continues to cause. They don't know what they are dealing with. If they succeed, the consequences could be apocalyptic.\n\nThere isn't enough time to launch a full offensive, so our best option is a small, covert operation to take out their missile silos.\n\nThe bulk of the Soviet forces in the region are busy pushing back the alien invaders, so the bases here are vulnerable to such an attack. If all goes to plan, by the time they realize there's a significant threat it will be too late.\n\nWe have been preparing our own means of containing the Chronosphere, and assuming we succeed in stopping the Soviets from launching, this would be as good a time as any to put it to the test.\n\nFirst, you must take out the three atomic reactors that power the Soviet Tesla Coils so that our team can slip by the remaining defenses.\n\nNext, take out the SAM sites along the shoreline to clear a path for our attempt at containment.\n\nThirdly, destroy the two missile silos that are preparing to launch.\n\nThen we will send in our experimental weapon. Escort it to the Chronosphere and neutralize it.
 	MapOptions:
 		ShortGameCheckboxEnabled: False
-	ScriptLobbyDropdown@DIFFICULTY:
-		ID: difficulty
-		Label: dropdown-difficulty.label
-		Description: dropdown-difficulty.description
-		Values:
-			easy: options-difficulty.easy
-			normal: options-difficulty.normal
-			hard: options-difficulty.hard
-		Default: normal
 	ScriptLobbyDropdown@RESPAWN:
 		ID: respawn
 		Label: Respawns
@@ -53,17 +44,14 @@ Player:
 	PlayerResources:
 		DefaultCash: 0
 
-DOG:
-	Mobile:
-		Speed: 46
-	Health:
-		HP: 4500
+^EnemyDifficultyModifiers:
+	Inherits@ActorDifficultyConditions: ^ActorDifficultyConditions
+	SpeedMultiplier@BRUTAL:
+		Modifier: 110
+		RequiresCondition: difficulty-brutal
 
 E1:
-	ExternalCondition@NORMAL:
-		Condition: difficulty-normal
-	ExternalCondition@EASY:
-		Condition: difficulty-easy
+	Inherits@EnemyDifficultyModifiers: ^EnemyDifficultyModifiers
 	RangeMultiplier@EASY:
 		Modifier: 80
 		RequiresCondition: difficulty-easy
@@ -72,16 +60,31 @@ E1:
 		RequiresCondition: difficulty-normal
 
 E2:
+	Inherits@EnemyDifficultyModifiers: ^EnemyDifficultyModifiers
 	Mobile:
 		Speed: 46
 
 E3:
+	Inherits@EnemyDifficultyModifiers: ^EnemyDifficultyModifiers
 	Mobile:
 		Speed: 46
 
 E4:
+	Inherits@EnemyDifficultyModifiers: ^EnemyDifficultyModifiers
 	Mobile:
 		Speed: 46
+
+SHOK:
+	Inherits@EnemyDifficultyModifiers: ^EnemyDifficultyModifiers
+	Mobile:
+		Speed: 46
+
+DOG:
+	Inherits@EnemyDifficultyModifiers: ^EnemyDifficultyModifiers
+	Mobile:
+		Speed: 46
+	Health:
+		HP: 4500
 
 PDOX.CROSSRIP:
 	Inherits: PDOX
@@ -133,34 +136,40 @@ SPY:
 	TooltipExtras:
 		Attributes: • Disguise as enemy infantry by right-clicking them
 
-^DifficultyModifiers:
-	ExternalCondition@NORMAL:
-		Condition: difficulty-normal
-	ExternalCondition@EASY:
-		Condition: difficulty-easy
-	DamageMultiplier@EASY:
-		Modifier: 80
-		RequiresCondition: difficulty-easy
-	RevealsShroudMultiplier@NORMALEASY:
-		Modifier: 115
-		RequiresCondition: difficulty-normal || difficulty-easy
-	RangeMultiplier@EASY:
-		Modifier: 115
-		RequiresCondition: difficulty-easy
-
 SEAL:
-	Inherits@DIFFICULTY: ^DifficultyModifiers
+	Inherits@ActorDifficultyConditions: ^ActorDifficultyConditions
 	Health:
 		HP: 10000
 	RevealsShroud:
 		Range: 7c0
 	AutoTarget:
 		InitialStance: HoldFire
-	-ChangesHealth@ELITE:
-	GainsExperience:
-		ExperienceModifier: 250000
 	Mobile:
 		Speed: 54
+	DamageMultiplier@EASY:
+		Modifier: 60
+		RequiresCondition: difficulty-easy
+	DamageMultiplier@NORMAL:
+		Modifier: 80
+		RequiresCondition: difficulty-normal
+	ReloadDelayMultiplier@BRUTAL:
+		Modifier: 110
+		RequiresCondition: difficulty-brutal
+	RangeMultiplier@EASY:
+		Modifier: 115
+		RequiresCondition: difficulty-easy
+	RevealsShroudMultiplier@NORMALEASY:
+		Modifier: 115
+		RequiresCondition: difficulty-normal || difficulty-easy
+
+CHPR:
+	Inherits@ActorDifficultyConditions: ^ActorDifficultyConditions
+	DamageMultiplier@EASY:
+		Modifier: 60
+		RequiresCondition: difficulty-easy
+	DamageMultiplier@NORMAL:
+		Modifier: 80
+		RequiresCondition: difficulty-normal
 
 LST:
 	RejectsOrders:

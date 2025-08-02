@@ -11,87 +11,51 @@ ScrinGroundAttackPaths = {
 
 SignalTransmitterLocation = SignalTransmitter.Location
 
+MaxAirToAirUnits = {
+	vhard = 12,
+	brutal = 16
+}
+
+if Difficulty == "brutal" then
+	table.insert(ScrinWaterCompositions.brutal, { Aircraft = { "deva", "deva", "deva", "deva", "deva", "deva", "deva", "deva" }, MinTime = DateTime.Minutes(20) })
+end
+
 Squads = {
 	ScrinMain = {
-		Delay = {
-			easy = DateTime.Seconds(210),
-			normal = DateTime.Seconds(150),
-			hard = DateTime.Seconds(90)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 15, Max = 35 },
-			normal = { Min = 34, Max = 68 },
-			hard = { Min = 52, Max = 105 },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Seconds(150)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 28, Max = 55 }),
 		FollowLeader = true,
-		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
-		Units = AdjustCompositionsForDifficulty(UnitCompositions.Scrin),
+		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Scrin),
 		AttackPaths = ScrinGroundAttackPaths,
 	},
 	ScrinWater = {
-		Delay = {
-			easy = DateTime.Seconds(240),
-			normal = DateTime.Seconds(180),
-			hard = DateTime.Seconds(120)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 5, Max = 15 },
-			normal = { Min = 16, Max = 32 },
-			hard = { Min = 28, Max = 55 },
-		},
-		ProducerTypes = { Vehicles = { "wsph" } },
-		Units = {
-			easy = {
-				{ Vehicles = { "intl", "seek" }, },
-				{ Vehicles = { "seek", "seek" }, },
-				{ Vehicles = { "lace", "lace" }, }
-			},
-			normal = {
-				{ Vehicles = { "seek", "intl.ai2" }, },
-				{ Vehicles = { "seek", "seek", "seek" }, },
-				{ Vehicles = { "lace", "lace", "lace" }, },
-			},
-			hard = {
-				{ Vehicles = { "intl", "intl.ai2", "seek" }, },
-				{ Vehicles = { "seek", "seek", "seek" }, },
-				{ Vehicles = { "lace", "lace", "seek", "seek" }, },
-				{ Vehicles = { "devo", "intl.ai2", "ruin" }, MinTime = DateTime.Minutes(7) },
-			}
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Seconds(180)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 25 }),
+		Compositions = ScrinWaterCompositions,
 		AttackPaths = ScrinWaterAttackPaths,
 	},
 	ScrinAir = {
-		Delay = {
-			easy = DateTime.Minutes(6),
-			normal = DateTime.Minutes(5),
-			hard = DateTime.Minutes(4)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 7, Max = 7 },
-			normal = { Min = 14, Max = 14 },
-			hard = { Min = 21, Max = 21 },
-		},
-		ProducerTypes = { Aircraft = { "grav" } },
-		Units = {
-			easy = {
-				{ Aircraft = { "stmr" } }
-			},
-			normal = {
-				{ Aircraft = { "stmr", "stmr" } },
-				{ Aircraft = { "enrv" } },
-			},
-			hard = {
-				{ Aircraft = { "stmr", "stmr", "stmr" } },
-				{ Aircraft = { "enrv", "enrv" } },
-			}
-		}
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(5)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		Compositions = AirCompositions.Scrin
 	},
+	ScrinAirToAir = {
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(10)),
+		ActiveCondition = function(squad)
+			return PlayerHasCharacteristic(squad.TargetPlayer, "MassAir")
+		end,
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 24, Max = 24 }),
+		Compositions = function(squad)
+			local units = { "stmr" }
+			local desiredCount = PlayerCharacteristics[squad.TargetPlayer.InternalName].AirValue / 2000
+			for i = 1, math.min(desiredCount, MaxAirToAirUnits[Difficulty]) do
+				table.insert(units, { "stmr", "enrv", "torm" })
+			end
+			return { { Aircraft = units } }
+		end
+	}
 	NodNorth = {
-		AttackValuePerSecond = {
-			easy = { Min = 15, Max = 15 },
-			normal = { Min = 10, Max = 10 },
-			hard = { Min = 5, Max = 5 },
-		},
+		AttackValuePerSecond = { Min = 10, Max = 10 },
 		ActiveCondition = function()
 			local portals = Scrin.GetActorsByType("port")
 			local warpSpheres = Scrin.GetActorsByType("wsph")
@@ -99,19 +63,11 @@ Squads = {
 		end,
 		FollowLeader = false,
 		ProducerActors = { Infantry = { NorthHand } },
-		Units = {
-			easy = { { Infantry = { "n3", "n1", "n1", "n4", "n3", "n1", "n1" } } },
-			normal = { { Infantry = { "n3", "n1", "n1", "n4", "n3", "n1", "n1" } } },
-			hard = { { Infantry = { "n3", "n1", "n1", "n4", "n3", "n1", "n1" } } }
-		},
+		Compositions = { { Infantry = { "n3", "n1", "n1", "n4", "n3", "n1", "n1" } } },
 		AttackPaths = { { NodRally.Location, ScrinBaseCenter.Location } }
 	},
 	NodSouth = {
-		AttackValuePerSecond = {
-			easy = { Min = 25, Max = 25 },
-			normal = { Min = 20, Max = 20 },
-			hard = { Min = 15, Max = 15 },
-		},
+		AttackValuePerSecond = { Min = 20, Max = 20 },
 		ActiveCondition = function()
 			local portals = Scrin.GetActorsByType("port")
 			local warpSpheres = Scrin.GetActorsByType("wsph")
@@ -120,7 +76,7 @@ Squads = {
 		DispatchDelay = DateTime.Seconds(15),
 		FollowLeader = false,
 		ProducerActors = { Infantry = { SouthHand }, Vehicles = { SouthAirstrip } },
-		Units = {
+		Compositions = {
 			easy = {
 				{ Infantry = { "n3", "n1", "n1", "n4", "n3", "n1", "n1" }, Vehicles = { "ltnk", "ftnk", "arty.nod" } },
 				{ Infantry = {}, Vehicles = { "bike", "bike", "bike", "bike", "bggy" } }
@@ -130,6 +86,14 @@ Squads = {
 				{ Infantry = {}, Vehicles = { "bike", "bike", "bike", "bggy" } }
 			},
 			hard = {
+				{ Infantry = { "n3", "n1", "n1", "n4", "n3", "n1", "n1" }, Vehicles = { "ltnk", "ftnk", "bggy" } },
+				{ Infantry = {}, Vehicles = { "bike", "bike", "bike" } }
+			},
+			vhard = {
+				{ Infantry = { "n3", "n1", "n1", "n4", "n3", "n1", "n1" }, Vehicles = { "ltnk", "ftnk", "bggy" } },
+				{ Infantry = {}, Vehicles = { "bike", "bike", "bike" } }
+			},
+			brutal = {
 				{ Infantry = { "n3", "n1", "n1", "n4", "n3", "n1", "n1" }, Vehicles = { "ltnk", "ftnk", "bggy" } },
 				{ Infantry = {}, Vehicles = { "bike", "bike", "bike" } }
 			}
@@ -232,18 +196,13 @@ InitScrin = function()
 	AutoReplaceHarvesters(Scrin)
 	AutoRebuildConyards(Scrin)
 	InitAiUpgrades(Scrin)
+	InitAttackSquad(Squads.ScrinMain, Scrin)
+	InitAttackSquad(Squads.ScrinWater, Scrin)
+	InitAirAttackSquad(Squads.ScrinAir, Scrin)
 
-	Trigger.AfterDelay(Squads.ScrinMain.Delay[Difficulty], function()
-		InitAttackSquad(Squads.ScrinMain, Scrin)
-	end)
-
-	Trigger.AfterDelay(Squads.ScrinWater.Delay[Difficulty], function()
-		InitAttackSquad(Squads.ScrinWater, Scrin)
-	end)
-
-	Trigger.AfterDelay(Squads.ScrinAir.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.ScrinAir, Scrin)
-	end)
+	if IsVeryHardOrAbove() then
+		InitAirAttackSquad(Squads.ScrinAirToAir, Scrin, MissionPlayers, { "Aircraft" }, "ArmorType")
+	end
 
 	local scrinGroundAttackers = Scrin.GetGroundAttackers()
 

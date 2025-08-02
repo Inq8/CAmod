@@ -15,6 +15,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
+	[TraitLocation(SystemActors.Player)]
 	[Desc("Attach this to the player actor. Exactly the same as standard version just with naming changes.")]
 	public class GrantConditionOnPrerequisiteManagerCAInfo : TraitInfo, Requires<TechTreeInfo>
 	{

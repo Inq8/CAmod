@@ -104,7 +104,7 @@ namespace OpenRA.Mods.CA.Widgets
 		SpriteFont font;
 		Rectangle leftButtonRect;
 		Rectangle rightButtonRect;
-		readonly Lazy<ProductionPaletteWidget> paletteWidget;
+		readonly Lazy<ProductionPaletteCAWidget> paletteWidget;
 		string queueGroup;
 
 		readonly List<(ProductionQueue Queue, bool Enabled)> cachedProductionQueueEnabledStates = new();
@@ -123,7 +123,7 @@ namespace OpenRA.Mods.CA.Widgets
 			// Only visible if the production palette has icons to display
 			IsVisible = () => queueGroup != null && Groups[queueGroup].Tabs.Count > 0;
 
-			paletteWidget = Exts.Lazy(() => Ui.Root.Get<ProductionPaletteWidget>(PaletteWidget));
+			paletteWidget = Exts.Lazy(() => Ui.Root.GetOrNull<ProductionPaletteCAWidget>(PaletteWidget));
 		}
 
 		public override void Initialize(WidgetArgs args)
@@ -148,8 +148,13 @@ namespace OpenRA.Mods.CA.Widgets
 
 			if (reverse) queues.Reverse();
 
-			CurrentQueue = queues.SkipWhile(q => q != CurrentQueue)
+			var newQueue = queues.SkipWhile(q => q != CurrentQueue)
 				.Skip(1).FirstOrDefault() ?? queues.FirstOrDefault();
+
+			if (newQueue == null)
+				return false;
+
+			CurrentQueue = newQueue;
 
 			return true;
 		}
@@ -157,7 +162,8 @@ namespace OpenRA.Mods.CA.Widgets
 		public void PickUpCompletedBuilding()
 		{
 			// This is called from ProductionTabsLogic
-			paletteWidget.Value.PickUpCompletedBuilding();
+			if (paletteWidget.Value?.CurrentQueue != null)
+				paletteWidget.Value.PickUpCompletedBuilding();
 		}
 
 		// Production Type
@@ -169,21 +175,26 @@ namespace OpenRA.Mods.CA.Widgets
 			{
 				queueGroup = value;
 				SelectNextTab(false);
-				paletteWidget.Value.ScrollToTop();
+				if (paletteWidget.Value?.CurrentQueue != null)
+					paletteWidget.Value.ScrollToTop();
 			}
 		}
 
 		// Tab
 		public ProductionQueue CurrentQueue
 		{
-			get => paletteWidget.Value.CurrentQueue;
+			get => paletteWidget.Value?.CurrentQueue;
 
 			set
 			{
-				paletteWidget.Value.CurrentQueue = value;
-				queueGroup = value != null ? value.Info.Group : null;
-				ForceSelectedTabVisible();
-				paletteWidget.Value.ScrollToTop();
+				if (paletteWidget.Value != null)
+				{
+					paletteWidget.Value.CurrentQueue = value;
+					queueGroup = value != null ? value.Info.Group : null;
+					ForceSelectedTabVisible();
+					if (paletteWidget.Value.CurrentQueue != null)
+						paletteWidget.Value.ScrollToTop();
+				}
 			}
 		}
 
@@ -282,27 +293,38 @@ namespace OpenRA.Mods.CA.Widgets
 		// Is added to world.ActorAdded by the SidebarLogic handler
 		public void ActorChanged(Actor a)
 		{
-			if (a.World.Disposing)
+			if (a.Owner != a.World.LocalPlayer)
 				return;
 
-			if (a.Info.HasTraitInfo<ProductionQueueInfo>())
-			{
-				UpdateQueues(a);
+			if (!a.Info.HasTraitInfo<ProductionQueueInfo>() && !a.Info.HasTraitInfo<ProvidesPrerequisiteInfo>())
+				return;
 
-				if (queueGroup == null)
-					return;
+			var queues = a.World.ActorsWithTrait<ProductionQueue>()
+				.Where(p => p.Actor.Owner == p.Actor.World.LocalPlayer && p.Actor.IsInWorld)
+				.Select(p => p.Trait)
+				.ToList();
 
-				// Queue destroyed, was last of type: switch to a new group
-				if (Groups[queueGroup].Tabs.Count == 0)
-					QueueGroup = Groups.Where(g => g.Value.Tabs.Count > 0)
-						.Select(g => g.Key).FirstOrDefault();
+			cachedProductionQueueEnabledStates.Clear();
+			foreach (var queue in queues)
+				cachedProductionQueueEnabledStates.Add((queue, queue.Enabled));
 
-				// Queue destroyed, others of same type: switch to another tab
-				else if (!Groups[queueGroup].Tabs.Select(t => t.Queue).Contains(CurrentQueue))
-					SelectNextTab(false);
-			}
-			else if (a.Info.HasTraitInfo<ProvidesPrerequisiteInfo>())
-				UpdateQueues(a);
+			foreach (var g in Groups.Values)
+				g.Update(cachedProductionQueueEnabledStates.Select(t => t.Queue));
+
+			if (queues?.Count > 0 && CurrentQueue == null)
+				CurrentQueue = queues.First();
+
+			if (queueGroup == null)
+				return;
+
+			// Queue destroyed, was last of type: switch to a new group
+			if (Groups[queueGroup].Tabs.Count == 0)
+				QueueGroup = Groups.Where(g => g.Value.Tabs.Count > 0)
+					.Select(g => g.Key).FirstOrDefault();
+
+			// Queue destroyed, others of same type: switch to another tab
+			else if (!Groups[queueGroup].Tabs.Select(t => t.Queue).Contains(CurrentQueue))
+				SelectNextTab(false);
 		}
 
 		public override void Tick()
@@ -310,35 +332,22 @@ namespace OpenRA.Mods.CA.Widgets
 			// It is possible that production queues get enabled/disabled during their lifetime.
 			// This makes sure every enabled production queue always has its tab associated with it.
 			var shouldUpdateQueues = false;
-			foreach (var (queue, enabled) in cachedProductionQueueEnabledStates)
+			for (var i = 0; i < cachedProductionQueueEnabledStates.Count; i++)
 			{
+				var (queue, enabled) = cachedProductionQueueEnabledStates[i];
+
 				if (queue.Enabled != enabled)
 				{
 					shouldUpdateQueues = true;
-					break;
+
+					// Refresh queue.Enabled value in cache
+					cachedProductionQueueEnabledStates[i] = (queue, queue.Enabled);
 				}
 			}
 
 			if (shouldUpdateQueues)
 				foreach (var g in Groups.Values)
 					g.Update(cachedProductionQueueEnabledStates.Select(t => t.Queue));
-		}
-
-		void UpdateQueues(Actor a)
-		{
-			var allQueues = a.World.ActorsWithTrait<ProductionQueue>()
-				.Where(p => p.Actor.Owner == p.Actor.World.LocalPlayer && p.Actor.IsInWorld && p.Trait.Enabled)
-				.Select(p => p.Trait).ToList();
-
-			cachedProductionQueueEnabledStates.Clear();
-			foreach (var queue in allQueues)
-				cachedProductionQueueEnabledStates.Add((queue, queue.Enabled));
-
-			foreach (var g in Groups.Values)
-				g.Update(cachedProductionQueueEnabledStates.Select(t => t.Queue));
-
-			if (allQueues.Count > 0 && CurrentQueue == null)
-				CurrentQueue = allQueues.First();
 		}
 
 		public override bool YieldMouseFocus(MouseInput mi)

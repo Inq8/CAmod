@@ -21,135 +21,113 @@ WestAttackPaths = {
 }
 
 AirFleetKillersThreshold = {
-	normal = 5,
-	hard = 3
+	normal = 6,
+	hard = 4,
+	vhard = 3,
+	brutal = 2
+}
+
+MaxFleetKillers = {
+	normal = 3,
+	hard = 5,
+	vhard = 8,
+	brutal = 12
 }
 
 TripodKillersThreshold = {
-	normal = 12,
-	hard = 7
+	normal = 11,
+	hard = 9,
+	vhard = 7,
+	brutal = 5
+}
+
+MaxTripodKillers = {
+	normal = 3,
+	hard = 5,
+	vhard = 8,
+	brutal = 12
 }
 
 ParabombsEnabledDelay = {
-	easy = DateTime.Minutes(5),
-	normal = DateTime.Minutes(4),
-	hard = DateTime.Minutes(3)
+	easy = DateTime.Minutes(6),
+	normal = DateTime.Minutes(5),
+	hard = DateTime.Minutes(4),
+	vhard = DateTime.Minutes(3),
+	brutal = DateTime.Minutes(2)
 }
 
 ParatroopersEnabledDelay = {
-	easy = DateTime.Minutes(4),
-	normal = DateTime.Minutes(3),
-	hard = DateTime.Minutes(2)
+	easy = DateTime.Minutes(5) + DateTime.Seconds(30),
+	normal = DateTime.Minutes(4) + DateTime.Seconds(30),
+	hard = DateTime.Minutes(3) + DateTime.Seconds(30),
+	vhard = DateTime.Minutes(2) + DateTime.Seconds(30),
+	brutal = DateTime.Minutes(1) + DateTime.Seconds(30)
 }
 
 IronCurtainEnabledDelay = {
 	easy = DateTime.Minutes(25),
 	normal = DateTime.Minutes(15),
-	hard = DateTime.Minutes(5)
+	hard = DateTime.Minutes(8),
+	vhard = DateTime.Minutes(5),
+	brutal = DateTime.Minutes(5)
 }
 
 AdjustedSovietCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Soviet)
 
 Squads = {
 	East = {
-		Delay = {
-			easy = DateTime.Minutes(8),
-			normal = DateTime.Minutes(6),
-			hard = DateTime.Minutes(4)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 10, Max = 25 },
-			normal = { Min = 25, Max = 50 },
-			hard = { Min = 40, Max = 80 },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(6)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 }),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { MainBarracks }, Vehicles = { MainFactory } },
-		Units = AdjustedSovietCompositions,
+		Compositions = AdjustedSovietCompositions,
 		AttackPaths = EastAttackPaths,
 	},
 	West = {
-		Delay = {
-			easy = DateTime.Minutes(5),
-			normal = DateTime.Minutes(4),
-			hard = DateTime.Minutes(3)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 10, Max = 25 },
-			normal = { Min = 25, Max = 50 },
-			hard = { Min = 40, Max = 80 },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(4)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 }),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { Barracks1, Barracks2 }, Vehicles = { Factory1, Factory2, Factory3, Factory4, Factory5 } },
-		Units = AdjustedSovietCompositions,
+		Compositions = AdjustedSovietCompositions,
 		AttackPaths = WestAttackPaths,
 	},
 	AirMain = {
-		Delay = {
-			easy = DateTime.Minutes(13),
-			normal = DateTime.Minutes(12),
-			hard = DateTime.Minutes(11)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 7, Max = 7 },
-			normal = { Min = 14, Max = 14 },
-			hard = { Min = 21, Max = 21 },
-		},
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(13)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
 		ActiveCondition = function()
 			return not IslandAirfieldsEliminated
 		end,
-		ProducerTypes = { Aircraft = { "afld" } },
-		Units = {
-			easy = {
-				{ Aircraft = { "mig" } },
-				{ Aircraft = { "hind" } },
-			},
-			normal = {
-				{ Aircraft = { "mig", "mig" } },
-				{ Aircraft = { "hind", "hind" } },
-			},
-			hard = {
-				{ Aircraft = { "mig", "mig", "mig" } },
-				{ Aircraft = { "mig", "hind", "hind" } },
-			}
-		},
+		Compositions = AirCompositions.Soviet,
 	},
 	AirFleetKillers = {
-		Interval = {
-			normal = DateTime.Seconds(10),
-			hard = DateTime.Seconds(10)
-		},
-		ActiveCondition = function()
-			local scrinFleet = Scrin.GetActorsByTypes({ "pac", "deva" })
-			return #scrinFleet > AirFleetKillersThreshold[Difficulty]
+		ActiveCondition = function(squad)
+			local scrinFleet = squad.TargetPlayer.GetActorsByTypes({ "pac", "deva" })
+			return #scrinFleet > AirFleetKillersThreshold[Difficulty] and not IslandAirfieldsEliminated
 		end,
-		ProducerTypes = { Aircraft = { "afld" } },
-		Units = {
-			normal = {
-				{ Aircraft = { "mig", "mig", "mig" } }
-			},
-			hard = {
-				{ Aircraft = { "mig", "mig", "mig", "mig" } }
-			}
-		},
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 50, Max = 50 }),
+		Compositions = function(squad)
+			local migs = { "mig" }
+			local numFleetShips = #squad.TargetPlayer.GetActorsByArmorTypes({ "Aircraft" })
+			for i = 1, math.min(numFleetShips, MaxFleetKillers[Difficulty]) do
+				table.insert(migs, "mig")
+			end
+			return { { Aircraft = migs } }
+		end
 	},
 	TripodKillers = {
-		AttackValuePerSecond = {
-			normal = { Min = 20, Max = 20 },
-			hard = { Min = 30, Max = 30 },
-		},
-		ActiveCondition = function()
-			local tripods = Scrin.GetActorsByTypes({ "tpod", "rtpd" })
-			return #tripods > TripodKillersThreshold[Difficulty]
+		ActiveCondition = function(squad)
+			local tripods = squad.TargetPlayer.GetActorsByTypes({ "tpod", "rtpd" })
+			return #tripods > TripodKillersThreshold[Difficulty] and not IslandAirfieldsEliminated
 		end,
-		ProducerTypes = { Aircraft = { "afld" } },
-		Units = {
-			normal = {
-				{ Aircraft = { "suk", "suk", "suk" } }
-			},
-			hard = {
-				{ Aircraft = { "suk", "suk", "suk", "suk" } }
-			}
-		},
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 30, Max = 30 }),
+		Compositions = function(squad)
+			local sukhois = { "suk" }
+			local numTripods = #squad.TargetPlayer.GetActorsByTypes({ "tpod", "rtpd" })
+			for i = 1, math.min(numTripods, MaxTripodKillers[Difficulty]) do
+				table.insert(sukhois, "suk")
+			end
+			return { { Aircraft = sukhois } }
+		end
 	}
 }
 
@@ -304,6 +282,17 @@ InitUSSR = function()
 	AutoReplaceHarvesters(USSR)
 	AutoRebuildConyards(USSR)
 	InitAiUpgrades(USSR)
+	InitAttackSquad(Squads.West, USSR)
+	InitAttackSquad(Squads.East, USSR)
+	InitAirAttackSquad(Squads.AirMain, USSR)
+
+	if Difficulty ~= "easy" then
+		InitAirAttackSquad(Squads.AirFleetKillers, USSR, MissionPlayers, { "pac", "deva", "stmr", "enrv", "torm" })
+	end
+
+	if Difficulty ~= "easy" then
+		InitAirAttackSquad(Squads.TripodKillers, USSR, MissionPlayers, { "tpod", "rtpd" })
+	end
 
 	Actor.Create("ai.unlimited.power", true, { Owner = USSR })
 
@@ -322,26 +311,6 @@ InitUSSR = function()
 			end
 		end)
 	end)
-
-	Trigger.AfterDelay(Squads.West.Delay[Difficulty], function()
-		InitAttackSquad(Squads.West, USSR)
-	end)
-
-	Trigger.AfterDelay(Squads.East.Delay[Difficulty], function()
-		InitAttackSquad(Squads.East, USSR)
-	end)
-
-	Trigger.AfterDelay(Squads.AirMain.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.AirMain, USSR)
-	end)
-
-	if Difficulty ~= "easy" then
-		InitAirAttackSquad(Squads.AirFleetKillers, USSR, Scrin, { "pac", "deva", "stmr", "enrv", "torm" })
-	end
-
-	if Difficulty ~= "easy" then
-		InitAirAttackSquad(Squads.TripodKillers, USSR, Scrin, { "tpod", "rtpd" })
-	end
 
 	Trigger.AfterDelay(IronCurtainEnabledDelay[Difficulty], function()
 		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = USSR })

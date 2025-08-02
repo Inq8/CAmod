@@ -142,7 +142,7 @@ namespace OpenRA.Mods.Common.Traits
 					{
 						var mobile = unit.TraitOrDefault<Mobile>();
 						if (mobile != null)
-							self.QueueActivity(false, new Nudge(self));
+							unit.QueueActivity(false, new Nudge(unit));
 					}
 				});
 			}

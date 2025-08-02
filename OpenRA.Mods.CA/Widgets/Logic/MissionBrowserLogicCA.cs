@@ -265,21 +265,54 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 					var difficulty = missionProgress.Difficulty;
 					if (difficulty != null)
 					{
-						var stars = item.Get<ImageWidget>("COMPLETION_DIFFICULTY");
-						stars.IsVisible = () => true;
-						stars.GetImageName = () => difficulty;
+						var firstStar = item.Get<ImageWidget>("COMPLETION_STAR");
+						firstStar.IsVisible = () => true;
+						firstStar.GetImageName = () =>
+						{
+							return difficulty switch
+							{
+								"easy" => "bronze",
+								"normal" => "silver",
+								_ => "gold"
+							};
+						};
+
+						if (difficulty == "vhard" || difficulty == "brutal")
+						{
+							var secondStar = firstStar.Clone();
+							secondStar.Bounds.X -= firstStar.Bounds.Width;
+							item.AddChild(secondStar);
+						}
+
+						if (difficulty == "brutal")
+						{
+							var thirdStar = firstStar.Clone();
+							thirdStar.Bounds.X -= 2 * firstStar.Bounds.Width;
+							item.AddChild(thirdStar);
+						}
 					}
+
+					var difficultyCompleted = difficulty != null ? FluentProvider.GetMessage($"options-difficulty.{difficulty}") : null;
+
+					if (difficultyCompleted != null)
+						item.GetTooltipText = () => $"Completed ({difficultyCompleted})";
+					else
+						item.GetTooltipText = () => "Completed";
 
 					var dateCompleted = missionProgress.DateCompleted.ToString("d");
 					var completionTime = missionProgress.Time;
-					var difficultyCompleted = missionProgress.Difficulty != null ? char.ToUpper(missionProgress.Difficulty[0]) + missionProgress.Difficulty.Substring(1) : null;
 
 					var details = $"• Date: {dateCompleted}\n• Version: {missionProgress.Version}\n• Duration: {completionTime}\n• Speed: {missionProgress.Speed}";
 
-					if (difficultyCompleted != null)
-						details += $"\n• Difficulty: {difficultyCompleted}";
+					if (missionProgress.FogEnabled.HasValue)
+						details += $"\n• Fog: {(missionProgress.FogEnabled.Value ? "Enabled" : "Disabled")}";
 
-					item.GetTooltipText = () => "Completed";
+					if (missionProgress.BuildRadiusEnabled.HasValue)
+						details += $"\n• Build Radius: {(missionProgress.BuildRadiusEnabled.Value ? "Enabled" : "Disabled")}";
+
+					if (missionProgress.RespawnEnabled.HasValue)
+						details += $"\n• Respawns: {(missionProgress.RespawnEnabled.Value ? "Enabled" : "Disabled")}";
+
 					item.GetTooltipDesc = () => details;
 
 					var tick = item.Get<ImageWidget>("COMPLETION_ICON");

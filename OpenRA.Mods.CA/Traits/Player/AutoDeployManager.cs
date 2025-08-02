@@ -15,6 +15,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
+	[TraitLocation(SystemActors.Player)]
 	[Desc("Allows the player to issue the orders the AutoDeployer traits trigger.")]
 	public class AutoDeployManagerInfo : ConditionalTraitInfo
 	{

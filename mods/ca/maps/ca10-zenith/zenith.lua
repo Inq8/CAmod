@@ -1,18 +1,9 @@
 
 Squads = {
 	Planes = {
-		Delay = {
-			easy = DateTime.Minutes(10),
-			normal = DateTime.Minutes(8),
-			hard = DateTime.Minutes(6)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 7, Max = 7 },
-			normal = { Min = 14, Max = 14 },
-			hard = { Min = 21, Max = 21 },
-		},
-		ProducerTypes = { Aircraft = { "afld" } },
-		Units = {
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(8)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		Compositions = {
 			easy = {
 				{ Aircraft = { "yak" } },
 				{ Aircraft = { "mig" } }
@@ -24,22 +15,21 @@ Squads = {
 			hard = {
 				{ Aircraft = { "mig", "mig", "yak" } },
 				{ Aircraft = { "mig", "yak", "yak" } }
+			},
+			vhard = {
+				{ Aircraft = { "mig", "mig", "mig" } },
+				{ Aircraft = { "yak", "yak", MigOrSukhoi } }
+			},
+			brutal = {
+				{ Aircraft = { "mig", "mig", "yak", MigOrSukhoi } },
+				{ Aircraft = { "mig", "yak", "yak", MigOrSukhoi } }
 			}
 		},
 	},
 	Helicopters = {
-		Delay = {
-			easy = DateTime.Minutes(8),
-			normal = DateTime.Minutes(6),
-			hard = DateTime.Minutes(4)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 7, Max = 7 },
-			normal = { Min = 14, Max = 14 },
-			hard = { Min = 21, Max = 21 },
-		},
-		ProducerTypes = { Aircraft = { "hpad" } },
-		Units = {
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(6)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		Compositions = {
 			easy = {
 				{ Aircraft = { "hind" } }
 			},
@@ -48,6 +38,12 @@ Squads = {
 			},
 			hard = {
 				{ Aircraft = { "hind", "hind", "hind" } }
+			},
+			vhard = {
+				{ Aircraft = { "hind", "hind", "hind" } }
+			},
+			brutal = {
+				{ Aircraft = { "hind", "hind", "hind", "hind" } }
 			}
 		},
 	},
@@ -55,45 +51,41 @@ Squads = {
 		ActiveCondition = function()
 			return PlayerHasICBMSubs()
 		end,
-		Interval = {
-			normal = DateTime.Seconds(60),
-			hard = DateTime.Seconds(30)
-		},
-		ProducerTypes = { Ships = { "spen" } },
-		Units = {
-			normal = {
-				{ Ships = { "ss" } }
-			},
-			hard = {
-				{ Ships = { "ss" } }
-			}
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 20 }),
+		Compositions = {
+			{ Ships = { "ss" } }
 		},
 		AttackPaths = {
 			{ SubPatrol1.Location, SubPatrol2.Location, SubPatrol3.Location, SubPatrol4.Location, SubPatrol5.Location, SubPatrol6.Location },
 			{ SubPatrol1.Location, SubPatrol6.Location, SubPatrol5.Location, SubPatrol4.Location, SubPatrol3.Location, SubPatrol2.Location },
 		},
+	},
+	MissileSubs = {
+		Delay = DateTime.Minutes(10),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 30 }),
+		Compositions = {
+			brutal = {
+				{ Ships = { "msub", "msub" } }
+			}
+		},
+		AttackPaths = {
+			{ Bombard1.Location },
+			{ Bombard2.Location },
+		}
 	}
 }
 
 NukeSilos = { NukeSilo1, NukeSilo2, NukeSilo3, NukeSilo4 }
 
 NukeTimer = {
-	hard = 45000,
-	normal = 60000,
-	easy = 75000
+	easy = DateTime.Minutes(60),
+	normal = DateTime.Minutes(45),
+	hard = DateTime.Minutes(35),
+	vhard = DateTime.Minutes(30),
+	brutal = DateTime.Minutes(25),
 }
 
-HaloDropStart = {
-	easy = DateTime.Minutes(10),
-	normal = DateTime.Minutes(6),
-	hard = DateTime.Minutes(4)
-}
-
-HaloDropInterval = {
-	easy = DateTime.Minutes(4),
-	normal = DateTime.Minutes(3),
-	hard = DateTime.Minutes(2)
-}
+HaloDropAttackValue = AdjustAttackValuesForDifficulty({ Min = 5, Max = 8, RampDuration = DateTime.Minutes(6) })
 
 TeslaReactors = { TeslaReactor1, TeslaReactor2, TeslaReactor3, TeslaReactor4, TeslaReactor5, TeslaReactor6 }
 AirbaseStructures = { Airfield1, Airfield2, Airfield3, Airfield4, Airfield5, Helipad1, Helipad2, Helipad3 }
@@ -118,7 +110,7 @@ WorldLoaded = function()
 	ObjectiveKillReactors = Nod.AddSecondaryObjective("Destroy reactors on north-west of island.")
 	ObjectiveKillAirbase = Nod.AddSecondaryObjective("Destroy airbase on north-east of island.")
 
-	if Difficulty == "hard" then
+	if IsHardOrAbove() then
 		NukeDummy = Actor.Create("NukeDummyHard", true, { Owner = USSR, Location = NukeSilo1.Location })
 	elseif Difficulty == "normal" then
 		NukeDummy = Actor.Create("NukeDummyNormal", true, { Owner = USSR, Location = NukeSilo1.Location })
@@ -154,6 +146,14 @@ WorldLoaded = function()
 					Nod.MarkFailedObjective(ObjectiveKillSilos)
 				end
 			end)
+		end
+	end)
+
+	Trigger.OnEnteredFootprint({ HaloTrigger1.Location, HaloTrigger2.Location, HaloTrigger3.Location, HaloTrigger4.Location }, function(a, id)
+		if IsMissionPlayer(a) and not HaloDropsTriggered then
+			HaloDropsTriggered = true
+			Trigger.RemoveFootprintTrigger(id)
+			DoHaloDrop()
 		end
 	end)
 end
@@ -200,6 +200,16 @@ InitUSSR = function()
 
 	SetupRefAndSilosCaptureCredits(USSR)
 	InitAiUpgrades(USSR)
+	InitAirAttackSquad(Squads.Planes, USSR)
+	InitAirAttackSquad(Squads.Helicopters, USSR)
+
+	if Difficulty ~= "easy" then
+		InitNavalAttackSquad(Squads.Naval, USSR)
+	end
+
+	if Difficulty == "brutal" then
+		InitNavalAttackSquad(Squads.MissileSubs, USSR)
+	end
 
 	Actor.Create("ai.unlimited.power", true, { Owner = USSR })
 
@@ -245,22 +255,6 @@ InitUSSR = function()
 			end)
 		end
 	end)
-
-	if Difficulty ~= "easy" then
-		InitNavalAttackSquad(Squads.Naval, USSR)
-	end
-
-	Trigger.AfterDelay(Squads.Planes.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.Planes, USSR)
-	end)
-
-	Trigger.AfterDelay(Squads.Helicopters.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.Helicopters, USSR)
-	end)
-
-	Trigger.AfterDelay(HaloDropStart[Difficulty], function()
-		DoHaloDrop()
-	end)
 end
 
 DoHaloDrop = function()
@@ -274,7 +268,7 @@ DoHaloDrop = function()
 
 	local haloDropUnits = { "e1", "e1", "e1", "e2", "e3", "e4" }
 
-	if Difficulty == "hard" and DateTime.GameTime > DateTime.Minutes(15) then
+	if IsHardOrAbove() and DateTime.GameTime > DateTime.Minutes(15) then
 		haloDropUnits = { "e1", "e1", "e1", "e1", "e2", "e2", "e3", "e3", "e4", "shok" }
 	end
 
@@ -294,7 +288,8 @@ DoHaloDrop = function()
 		end
 	)
 
-	Trigger.AfterDelay(HaloDropInterval[Difficulty], DoHaloDrop)
+	local delayUntilNext = CalculateInterval(GetTotalCostOfUnits(haloDropUnits), HaloDropAttackValue, HaloDropStart)
+	Trigger.AfterDelay(delayUntilNext, DoHaloDrop)
 end
 
 PlayerHasICBMSubs = function()

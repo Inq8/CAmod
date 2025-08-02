@@ -2962,6 +2962,7 @@ JJET:
 		RequiresCondition: airborne
 	Encyclopedia:
 		Category: GDI/Infantry
+		Scale: 2
 
 BJET:
 	Inherits: JJET
@@ -3469,6 +3470,7 @@ IVAN:
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Light Armor
 		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets
+		Attributes: • Bombs will bounce if they hit the ground
 	Valued:
 		Cost: 600
 	Tooltip:
@@ -3777,9 +3779,9 @@ SHAD:
 		RequiresSelection: true
 	Encyclopedia:
 		Category: Nod/Infantry
+		HideBuildable: True
 	EncyclopediaExtras:
 		Subfaction: shadow
-		HideBuildable: True
 
 SGLI:
 	Inherits: ^Plane
@@ -4224,23 +4226,6 @@ YURI:
 		Category: Soviets/Infantry
 	EncyclopediaExtras:
 		Subfaction: yuri
-
-YURI.Clone:
-	Inherits: YURI
-	Buildable:
-		Prerequisites: ~disabled
-	RenderSprites:
-		Image: yuri
-	Tooltip:
-		Name: Yuri Clone
-	Valued:
-		Cost: 1000
-	Health:
-		HP: 14000
-	RangeMultiplier@Clone:
-		Modifier: 80
-	-Encyclopedia:
-	-EncyclopediaExtras:
 
 SEAL:
 	Inherits: ^Soldier

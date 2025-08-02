@@ -19,15 +19,6 @@ World:
 		Briefing: A concentration of aircraft belonging to the same two human factions has been identified in this area and has been evaluated as the next significant threat to be dealt with.\n\nYou have been allocated a small task force with which you must eliminate these aircraft and their landing areas.\n\nYou must also neutralise all anti-aircraft defensive structures. This will ensure our fleet can be redeployed to the central repository with minimal airborne resistance.\n\nAn ion storm has been created to ensure that all hostile aircraft will be confined to the ground for the duration of this mission. The energy required to maintain the storm is substantial; waste no time.
 	MapOptions:
 		ShortGameCheckboxEnabled: False
-	ScriptLobbyDropdown@DIFFICULTY:
-		ID: difficulty
-		Label: dropdown-difficulty.label
-		Description: dropdown-difficulty.description
-		Values:
-			easy: options-difficulty.easy
-			normal: options-difficulty.normal
-			hard: options-difficulty.hard
-		Default: normal
 	ScriptLobbyDropdown@RESPAWN:
 		ID: respawn
 		Label: Respawns
@@ -83,10 +74,7 @@ GRAV:
 		Amount: 0
 
 ^DifficultyModifiers:
-	ExternalCondition@NORMAL:
-		Condition: difficulty-normal
-	ExternalCondition@EASY:
-		Condition: difficulty-easy
+	Inherits@ActorDifficultyConditions: ^ActorDifficultyConditions
 	RevealsShroudMultiplier@NORMALEASY:
 		Modifier: 115
 		RequiresCondition: difficulty-normal || difficulty-easy
@@ -103,6 +91,18 @@ PAC:
 MSHP:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
+S4:
+	Inherits@DIFFICULTY: ^DifficultyModifiers
+	RevealsShroud:
+		Range: 8c0
+	PortableChronoCA:
+		MaxDistance: 8
+		ChargeDelay: 200
+	AutoTarget:
+		InitialStance: HoldFire
+	GainsExperienceMultiplier@TenPercentXp:
+		Modifier: 10
+
 LCHR:
 	Inherits@DIFFICULTY: ^DifficultyModifiers
 	RevealsShroud:
@@ -114,13 +114,8 @@ LCHR:
 		Modifier: 94
 	AutoTarget:
 		InitialStance: HoldFire
-	-GainsExperience:
-	GainsExperience:
-		LevelUpNotification: LevelUp
-		Conditions:
-			2000: rank-veteran
-			4000: rank-veteran
-			8000: rank-veteran
+	GainsExperienceMultiplier@TenPercentXp:
+		Modifier: 10
 	TooltipExtras:
 		Attributes: • Disables power plants and radars\n• Slows vehicles & cyborgs\n• Regenerates and heals allies when in coalescence form\n• Special Ability: Coalescence
 
@@ -129,20 +124,3 @@ LCHR.Orb:
 		HP: 15000
 	ReloadAmmoPoolCA:
 		Delay: 250
-
-S4:
-	Inherits@DIFFICULTY: ^DifficultyModifiers
-	RevealsShroud:
-		Range: 8c0
-	PortableChronoCA:
-		MaxDistance: 8
-		ChargeDelay: 200
-	AutoTarget:
-		InitialStance: HoldFire
-	-GainsExperience:
-	GainsExperience:
-		LevelUpNotification: LevelUp
-		Conditions:
-			2000: rank-veteran
-			4000: rank-veteran
-			8000: rank-veteran

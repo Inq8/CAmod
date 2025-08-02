@@ -20,6 +20,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
+	[TraitLocation(SystemActors.Player)]
 	[Desc("Stores campaign progress.")]
 	public class CampaignProgressTrackerInfo : TraitInfo
 	{
@@ -31,8 +32,6 @@ namespace OpenRA.Mods.CA.Traits
 		private const string encryptionKey = "b14ca5898a4e4133bbce2ea2315a1916";
 		private static string campaignProgressFilePath = Path.Combine(Platform.SupportDir + "Logs", "ca-campaign.log");
 		private bool developerCommandUsed = false;
-
-		public CampaignProgressTracker() {}
 
 		void INotifyWinStateChanged.OnPlayerWon(Player player)
 		{
@@ -46,8 +45,20 @@ namespace OpenRA.Mods.CA.Traits
 				return;
 
 			var missionTitle = GetMapTileWithoutNumber(player.World.Map.Title);
-			var difficulty = player.World.WorldActor.TraitsImplementing<ScriptLobbyDropdown>()
+			var worldActor = player.World.WorldActor;
+			var difficulty = worldActor.TraitsImplementing<ScriptLobbyDropdown>()
 				.FirstOrDefault(sld => sld.Info.ID == "difficulty");
+
+			var shroud = player.PlayerActor.TraitOrDefault<Shroud>();
+			bool? fogEnabled = shroud?.FogEnabled;
+
+			var mapBuildRadius = player.World.WorldActor.TraitOrDefault<MapBuildRadius>();
+			bool? buildRadiusEnabled = mapBuildRadius?.BuildRadiusEnabled;
+
+			var respawnDropdown = worldActor.TraitsImplementing<ScriptLobbyDropdown>()
+				.FirstOrDefault(sld => sld.Info.ID == "respawn");
+
+			bool? respawnEnabled = respawnDropdown != null ? respawnDropdown.Value == "enabled" : null;
 
 			var campaignProgress = GetCampaignProgress();
 			campaignProgress.TryGetValue(missionTitle, out var existingMissionResult);
@@ -75,7 +86,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			var speed = FluentProvider.GetMessage(player.World.GameSpeed.Name);
 
-			var result = new MissionVictoryResult()
+			campaignProgress[missionTitle] = new MissionVictoryResult()
 			{
 				Uid = player.World.Map.Uid,
 				Version = Game.ModData.Manifest.Metadata.Version,
@@ -84,14 +95,16 @@ namespace OpenRA.Mods.CA.Traits
 				Time = WidgetUtils.FormatTime(player.World.WorldTick, player.World.Timestep),
 				Ticks = player.World.WorldTick,
 				DateCompleted = DateTime.Now,
-				Speed = speed
+				Speed = speed,
+				FogEnabled = fogEnabled,
+				BuildRadiusEnabled = buildRadiusEnabled,
+				RespawnEnabled = respawnEnabled
 			};
 
-			campaignProgress[missionTitle] = result;
 			SaveCampaignProgress(campaignProgress);
 		}
 
-		void INotifyWinStateChanged.OnPlayerLost(Player player)	{ }
+		void INotifyWinStateChanged.OnPlayerLost(Player player) { }
 
 		void IResolveOrder.ResolveOrder(Actor self, Order order)
 		{
@@ -210,5 +223,8 @@ namespace OpenRA.Mods.CA.Traits
 		public int Ticks;
 		public DateTime DateCompleted;
 		public string Speed;
+		public bool? FogEnabled;
+		public bool? BuildRadiusEnabled;
+		public bool? RespawnEnabled;
 	}
 }

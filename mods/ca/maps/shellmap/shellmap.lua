@@ -55,8 +55,7 @@ Squads = {
 		},
 		DispatchDelay = DateTime.Seconds(30),
 		FollowLeader = false,
-		ProducerTypes = { Infantry = { "hand" }, Vehicles = { "airs" } },
-		Units = UnitCompositionsShellmap.Nod,
+		Compositions = UnitCompositionsShellmap.Nod,
 		AttackPaths = { { NodAttack1.Location, GDIBase.Location }, { NodGroup1.Location, GDIBase.Location }, { GDIAttack1.Location, GDIBase.Location } },
 	},
 	NodVsScrin = {
@@ -65,8 +64,7 @@ Squads = {
 		},
 		DispatchDelay = DateTime.Seconds(30),
 		FollowLeader = false,
-		ProducerTypes = { Infantry = { "hand" }, Vehicles = { "airs" } },
-		Units = UnitCompositionsShellmap.Nod,
+		Compositions = UnitCompositionsShellmap.Nod,
 		AttackPaths = { { GDICamp.Location, ScrinBase.Location } },
 	},
 	GDIVsNod = {
@@ -75,8 +73,7 @@ Squads = {
 		},
 		FollowLeader = false,
 		ProducerActors = { Infantry = { GDISouthBarracks }, Vehicles = { GDISouthFactory } },
-		ProducerTypes = { Infantry = { "pyle" }, Vehicles = { "weap.td" } },
-		Units = UnitCompositionsShellmap.GDI,
+		Compositions = UnitCompositionsShellmap.GDI,
 		AttackPaths = { { NodAttack1.Location, NodBase.Location }, { GDIGroup1.Location, NodBase.Location }, { GDIAttack1.Location, NodBase.Location } },
 	},
 	GDIVsScrin = {
@@ -85,8 +82,7 @@ Squads = {
 		},
 		FollowLeader = false,
 		ProducerActors = { Infantry = { GDINorthEastBarracks }, Vehicles = { GDINorthEastFactory } },
-		ProducerTypes = { Infantry = { "pyle" }, Vehicles = { "weap.td" } },
-		Units = UnitCompositionsShellmap.GDI,
+		Compositions = UnitCompositionsShellmap.GDI,
 		AttackPaths = { { SovietAttack3a.Location, SovietBase.Location }, { NodAttack1.Location, NodBase.Location } },
 	},
 	GDIVsSoviets = {
@@ -95,8 +91,7 @@ Squads = {
 		},
 		FollowLeader = false,
 		ProducerActors = { Infantry = { GDINorthWestBarracks }, Vehicles = { GDINorthWestFactory } },
-		ProducerTypes = { Infantry = { "pyle" }, Vehicles = { "weap.td" } },
-		Units = UnitCompositionsShellmap.GDI,
+		Compositions = UnitCompositionsShellmap.GDI,
 		AttackPaths = { { SovietGroup1.Location, SovietBase.Location } },
 	},
 	AlliesVsSoviets = {
@@ -105,8 +100,7 @@ Squads = {
 		},
 		FollowLeader = false,
 		ProducerActors = { Infantry = { AlliesNorthWestBarracks }, Vehicles = { AlliesNorthWestFactory } },
-		ProducerTypes = { Infantry = { "tent" }, Vehicles = { "weap" } },
-		Units = UnitCompositionsShellmap.Allies,
+		Compositions = UnitCompositionsShellmap.Allies,
 		AttackPaths = { { SovietGroup1.Location, SovietBase.Location } },
 	},
 	SovietVsAllies = {
@@ -115,8 +109,7 @@ Squads = {
 		},
 		FollowLeader = false,
 		ProducerActors = { Infantry = { SovietNorthBarracks }, Vehicles = { SovietNorthFactory } },
-		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
-		Units = UnitCompositionsShellmap.Soviet,
+		Compositions = UnitCompositionsShellmap.Soviet,
 		AttackPaths = { { SovietAttack1.Location, SovietAttack2.Location, GDIBase.Location }, { SovietAttack3a.Location, SovietAttack3b.Location, AlliesBase.Location} },
 	},
 	SovietVsGDI = {
@@ -125,8 +118,7 @@ Squads = {
 		},
 		FollowLeader = false,
 		ProducerActors = { Infantry = { SovietSouthBarracks }, Vehicles = { SovietSouthFactory } },
-		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
-		Units = UnitCompositionsShellmap.Soviet,
+		Compositions = UnitCompositionsShellmap.Soviet,
 		AttackPaths = { { SovietAttack1.Location, SovietAttack2.Location, GDIBase.Location }, { SovietAttack3a.Location, SovietAttack3b.Location, GDIBase.Location} },
 	},
 	ScrinVsSoviets = {
@@ -134,8 +126,7 @@ Squads = {
 			normal = { Min = 125, Max = 125 },
 		},
 		FollowLeader = false,
-		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
-		Units = UnitCompositionsShellmap.Scrin,
+		Compositions = UnitCompositionsShellmap.Scrin,
 		AttackPaths = { { ScrinAttack1.Location, AlliedCamp.Location, ScrinAttack2a.Location, SovietBase.Location }, { ScrinAttack1.Location, AlliedCamp.Location, ScrinAttack2b.Location, SovietBase.Location } },
 	},
 	ScrinVsGDI = {
@@ -143,16 +134,14 @@ Squads = {
 			normal = { Min = 90, Max = 90 },
 		},
 		FollowLeader = false,
-		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
-		Units = UnitCompositionsShellmap.Scrin,
+		Compositions = UnitCompositionsShellmap.Scrin,
 		AttackPaths = { { GDICamp.Location, GDIBase.Location } },
 	},
 	GDIAir = {
 		Interval = {
 			normal = DateTime.Minutes(1),
 		},
-		ProducerTypes = { Aircraft = { "afld.gdi" } },
-		Units = {
+		Compositions = {
 			normal = {
 				{ Aircraft = { "orca", "orca" } },
 				{ Aircraft = { "a10" } }
@@ -163,8 +152,7 @@ Squads = {
 		Interval = {
 			normal = DateTime.Minutes(1),
 		},
-		ProducerTypes = { Aircraft = { "hpad.td" } },
-		Units = {
+		Compositions = {
 			normal = {
 				{ Aircraft = { "scrn", "scrn" } },
 				{ Aircraft = { "apch", "apch" } },
@@ -177,8 +165,7 @@ Squads = {
 		Interval = {
 			normal = DateTime.Minutes(1),
 		},
-		ProducerTypes = { Aircraft = { "grav" } },
-		Units = {
+		Compositions = {
 			normal = {
 				{ Aircraft = { "stmr", "stmr" } },
 				{ Aircraft = { "enrv", "enrv" } },
@@ -189,8 +176,7 @@ Squads = {
 		Interval = {
 			normal = DateTime.Minutes(1),
 		},
-		ProducerTypes = { Aircraft = { "afld" } },
-		Units = {
+		Compositions = {
 			normal = {
 				{ Aircraft = { "mig", "mig" } },
 				{ Aircraft = { "suk", "suk" } },

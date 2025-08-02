@@ -13,6 +13,20 @@ Patrols = {
 	{ NodPatrol2_1.Location, NodPatrol2_2.Location, NodPatrol2_3.Location },
 }
 
+Squads = {
+	Main = {
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(5)),
+		AttackValuePerSecond = {
+			vhard = { Min = 4, Max = 8 },
+			brutal = { Min = 8, Max = 16 },
+		},
+		FollowLeader = true,
+		Compositions = AdjustCompositionsForDifficulty({
+			{ Infantry = { "e3", "n1", "n1", "n1", "bh", "n1", "n1", "bh" } },
+		}),
+	}
+}
+
 -- Setup and Tick
 
 WorldLoaded = function()
@@ -42,30 +56,47 @@ WorldLoaded = function()
 
 	NodBaseCamera.Destroy()
 
-	if Difficulty ~= "easy" then
+	if IsNormalOrAbove() then
 		Medic2.Destroy()
 		Mechanic.Destroy()
 
-		if Difficulty == "hard" then
+		if IsHardOrAbove() then
 			Medic1.Destroy()
 			Ranger2.Destroy()
 			NonHardSniper1.Destroy()
-			NonHardSniper2.Destroy()
 			NonHardMirage1.Destroy()
+
+			if IsVeryHardOrAbove() then
+				NonHardSniper2.Destroy()
+
+				if Difficulty == "brutal" then
+					Raider1.Destroy()
+					Raider2.Destroy()
+				end
+			end
 		end
 	end
 
-	if Difficulty ~= "hard" then
-		HardOnlySSM.Destroy()
-		HardOnlyFlameTank1.Destroy()
-		HardOnlyFlameTank2.Destroy()
-		HardOnlyFlameTank3.Destroy()
-		HardOnlyFlameTank4.Destroy()
-		HardOnlyFlameTank5.Destroy()
-		HardOnlyBlackHand1.Destroy()
-		HardOnlyBlackHand2.Destroy()
-		HardOnlyBlackHand3.Destroy()
-		HardOnlyBlackHand4.Destroy()
+	if IsVeryHardOrBelow() then
+		local brutalOnlyUnits = Nod.GetActorsByTypes({ "shad", "hftk" })
+		Utils.Do(brutalOnlyUnits, function(a) a.Destroy() end)
+
+		if IsHardOrBelow() then
+			local blackHand = Nod.GetActorsByType("bh")
+			Utils.Do(blackHand, function(a) a.Destroy() end)
+
+			VeryHardOnlyFlameTank1.Destroy()
+			VeryHardOnlyFlameTank2.Destroy()
+
+			if IsNormalOrBelow() then
+				HardOnlySSM.Destroy()
+				HardOnlyFlameTank1.Destroy()
+				HardOnlyFlameTank2.Destroy()
+				HardOnlyFlameTank3.Destroy()
+				HardOnlyFlameTank4.Destroy()
+				HardOnlyFlameTank5.Destroy()
+			end
+		end
 	end
 
 	Utils.Do(SAMs, function(s)
@@ -76,7 +107,7 @@ WorldLoaded = function()
 				if a.Owner == Nod and a.HasProperty("AttackMove") then
 					a.AttackMove(s.Rally, 4)
 					a.AttackMove(s.SAMSite.Location, 4)
-					if Difficulty ~= "easy" then
+					if IsHardOrAbove() then
 						IdleHunt(a)
 					end
 				end
@@ -112,7 +143,7 @@ WorldLoaded = function()
 
 	Trigger.AfterDelay(DateTime.Seconds(5), function()
 		local rangersDesc
-		if Difficulty == "hard" then
+		if IsHardOrAbove() then
 			rangersDesc = "Rangers are"
 		else
 			rangersDesc = "Ranger is"
@@ -188,6 +219,10 @@ InitNod = function()
 	AutoRepairBuildings(Nod)
 	SetupRefAndSilosCaptureCredits(Nod)
 	AutoReplaceHarvesters(Nod)
+
+	if IsVeryHardOrAbove() then
+		InitAttackSquad(Squads.Main, Nod)
+	end
 
 	local nodGroundAttackers = Nod.GetGroundAttackers()
 

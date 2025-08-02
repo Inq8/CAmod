@@ -1,7 +1,9 @@
 MaxBreakthroughs = {
 	easy = 6,
 	normal = 3,
-	hard = 0
+	hard = 0,
+	vhard = 0,
+	brutal = 0
 }
 
 FleetWaveCompositions = {
@@ -16,6 +18,14 @@ FleetWaveCompositions = {
 	hard = {
 		{ "pac", "pac", "deva", "pac", "deva" },
 		{ "pac", "deva", "pac", "deva", "pac" },
+	},
+	vhard = {
+		{ "pac", "pac", "deva", "pac", "deva" },
+		{ "pac", "deva", "pac", "deva", "pac" },
+	},
+	brutal = {
+		{ "pac", "pac", "deva", "pac", "deva", "pac" },
+		{ "pac", "deva", "pac", "deva", "pac", "deva" },
 	}
 }
 
@@ -23,6 +33,8 @@ TimeBetweenWaves = {
 	easy = DateTime.Minutes(3),
 	normal = DateTime.Minutes(3),
 	hard = DateTime.Minutes(3),
+	vhard = DateTime.Minutes(3),
+	brutal = DateTime.Minutes(3)
 }
 
 FleetSpawns = {
@@ -43,6 +55,8 @@ UnitBuildTimeMultipliers = {
 	easy = 0.3,
 	normal = 0.2,
 	hard = 0.1,
+	vhard = 0.1,
+	brutal = 0.1
 }
 
 LeftScrinSpawners = { ScrinSpawnerL1, ScrinSpawnerL2, ScrinSpawnerL3, ScrinSpawnerL4 }
@@ -50,20 +64,12 @@ MiddleScrinSpawners = { ScrinSpawnerM1, ScrinSpawnerM2 }
 
 Squads = {
 	ScrinMain = {
-		Delay = {
-			easy = DateTime.Minutes(3),
-			normal = DateTime.Seconds(150),
-			hard = DateTime.Minutes(2)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 15, Max = 45 },
-			normal = { Min = 34, Max = 80 },
-			hard = { Min = 52, Max = 120 },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Seconds(150)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 27, Max = 64 }),
 		FollowLeader = true,
 		RandomProducerActor = true,
 		ProducerActors = { Infantry = LeftScrinSpawners, Vehicles = LeftScrinSpawners, Aircraft = LeftScrinSpawners },
-		Units = AdjustCompositionsForDifficulty(UnitCompositions.Scrin),
+		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Scrin),
 		AttackPaths = {
 			{ LAttackRally1a.Location, LAttackRally1b.Location },
 			{ LAttackRally2a.Location, LAttackRally2b.Location },
@@ -71,38 +77,12 @@ Squads = {
 		},
 	},
 	ScrinWater = {
-		Delay = {
-			easy = DateTime.Minutes(5),
-			normal = DateTime.Minutes(4),
-			hard = DateTime.Minutes(3)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 5, Max = 20 },
-			normal = { Min = 16, Max = 45 },
-			hard = { Min = 28, Max = 75 },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(4)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 36 }),
 		FollowLeader = true,
 		RandomProducerActor = true,
 		ProducerActors = { Infantry = MiddleScrinSpawners, Vehicles = MiddleScrinSpawners, Aircraft = MiddleScrinSpawners },
-		Units = {
-			easy = {
-				{ Vehicles = { "intl", "seek" }, },
-				{ Vehicles = { "seek", "seek" }, },
-				{ Vehicles = { "lace", "lace" }, }
-			},
-			normal = {
-				{ Vehicles = { "seek", "intl.ai2" }, },
-				{ Vehicles = { "seek", "seek", "seek" }, },
-				{ Vehicles = { "lace", "lace", "lace" }, }
-			},
-			hard = {
-				{ Vehicles = { "intl", "intl.ai2", "seek" }, MaxTime = DateTime.Minutes(7) },
-				{ Vehicles = { "seek", "seek", "seek" }, MaxTime = DateTime.Minutes(7) },
-				{ Vehicles = { "lace", "lace", "seek", "seek" }, },
-				{ Vehicles = { "devo", "intl.ai2", "ruin", "seek" }, MinTime = DateTime.Minutes(7) },
-				{ Vehicles = { "intl", "intl.ai2", { "seek", "lace" }, { "devo", "devo", "ruin" }, { "devo", "atmz", "ruin" }  }, MinTime = DateTime.Minutes(12) }
-			}
-		},
+		Compositions = ScrinWaterCompositions,
 		AttackPaths = {
 			{ MAttackRally1.Location },
 			{ MAttackRally1.Location },
@@ -134,17 +114,17 @@ WorldLoaded = function()
 	SetupIonStorm()
 	UpdateMissionText()
 
-	if Difficulty == "hard" then
-		Sensor3.Destroy()
-	end
-
-	if Difficulty ~= "easy" then
+	if IsNormalOrAbove() then
 		Sensor1.Destroy()
 		Sensor2.Destroy()
+
+		if IsHardOrAbove() then
+			Sensor3.Destroy()
+		end
 	end
 
 	Trigger.AfterDelay(DateTime.Seconds(10), function()
-		if Difficulty == "hard" then
+		if IsHardOrAbove() then
 			Tip("Scrin fleet vessels will be pinged on the minimap when entering the area.")
 		else
 			Tip("Scrin fleet vessels will be pinged on the minimap when entering the area and their paths will be visible as long as you have an active radar.")
@@ -165,7 +145,7 @@ WorldLoaded = function()
 		end)
 	end)
 
-	if Difficulty == "hard" then
+	if IsHardOrAbove() then
 		ObjectiveStopFleet = GDI.AddObjective("Prevent any Scrin fleet vessels breaking through.")
 	else
 		ObjectiveStopFleet = GDI.AddObjective("Allow no more than " .. MaxBreakthroughs[Difficulty] .. " fleet vessels through.")
@@ -217,6 +197,9 @@ end
 
 InitScrin = function()
 	AutoRepairBuildings(Scrin)
+	InitAttackSquad(Squads.ScrinMain, Scrin)
+	InitAttackSquad(Squads.ScrinWater, Scrin)
+
 	Actor.Create("ioncon.upgrade", true, { Owner = Scrin })
 
 	local scrinGroundAttackers = Scrin.GetGroundAttackers()
@@ -224,14 +207,6 @@ InitScrin = function()
 	Utils.Do(scrinGroundAttackers, function(a)
 		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
-	end)
-
-	Trigger.AfterDelay(Squads.ScrinMain.Delay[Difficulty], function()
-		InitAttackSquad(Squads.ScrinMain, Scrin)
-	end)
-
-	Trigger.AfterDelay(Squads.ScrinWater.Delay[Difficulty], function()
-		InitAttackSquad(Squads.ScrinWater, Scrin)
 	end)
 end
 
@@ -287,7 +262,7 @@ SendFleetWave = function()
 	if currentWave == 5 then
 		Utils.Do(FleetWaveCompositions[Difficulty], function(c)
 			table.insert(c, "pac")
-			if Difficulty == "hard" then
+			if IsHardOrAbove() then
 				table.insert(c, "deva")
 			end
 		end)
@@ -295,7 +270,7 @@ SendFleetWave = function()
 	if currentWave == 8 then
 		Utils.Do(FleetWaveCompositions[Difficulty], function(c)
 			table.insert(c, "deva")
-			if Difficulty == "hard" then
+			if IsHardOrAbove() then
 				table.insert(c, "pac")
 			end
 		end)
@@ -303,7 +278,7 @@ SendFleetWave = function()
 	if currentWave == 10 and Difficulty ~= "easy" then
 		Utils.Do(FleetWaveCompositions[Difficulty], function(c)
 			table.insert(c, "deva")
-			if Difficulty == "hard" then
+			if IsHardOrAbove() then
 				table.insert(c, "pac")
 			end
 		end)
@@ -333,7 +308,7 @@ SendFleetWave = function()
 				Media.PlaySoundNotification(GDI, "AlertBuzzer")
 				Notification("A Scrin fleet vessel has broken through.")
 			end)
-			if Difficulty ~= "hard" then
+			if IsNormalOrBelow() then
 				local pathRenderer = Actor.Create("pathRenderer", true, { Owner = GDI, Location = entry })
 				Trigger.OnRemovedFromWorld(ships[1], function(self)
 					pathRenderer.Destroy()
@@ -342,7 +317,7 @@ SendFleetWave = function()
 			Media.PlaySound("beepslct.aud")
 		end)
 
-		if currentWave >= 8 and Difficulty == "hard" then
+		if currentWave >= 8 and IsHardOrAbove() then
 			interval = interval + DateTime.Seconds(3)
 		elseif currentWave >= 5 then
 			interval = interval + DateTime.Seconds(4)
@@ -370,12 +345,12 @@ end
 UpdateMissionText = function()
 	local missionText = "Waves remaining: " .. WavesRemaining
 
-	if Difficulty ~= "hard" then
+	if IsNormalOrBelow() then
 		missionText = missionText .. " -- Fleet vessels escaped: " .. NumBreakthroughs .. "/" .. MaxBreakthroughs[Difficulty]
 	end
 
 	local color = HSLColor.Yellow
-	if Difficulty ~= "hard" and NumBreakthroughs >= MaxBreakthroughs[Difficulty] then
+	if IsNormalOrBelow() and NumBreakthroughs >= MaxBreakthroughs[Difficulty] then
 		color = HSLColor.Red
 	end
 

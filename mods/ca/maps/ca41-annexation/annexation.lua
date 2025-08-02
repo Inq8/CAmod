@@ -1,15 +1,11 @@
-ScrinAttackValues = {
-	easy = { Min = 6, Max = 16 },
-	normal = { Min = 16, Max = 33 },
-	hard = { Min = 25, Max = 55 },
-}
+ScrinAttackValues = AdjustAttackValuesForDifficulty({ Min = 13, Max = 26 })
 
 NodBuildingsToSell = { NodConyard, NodHand, NodFactory, NodComms }
 
 ScrinReinforcementInitialSquad = { "s3", "s1", "s1", "s1", "s1", "s1", "s2", "s2", "s3", "intl", "rtpd", GunWalkerSeekerOrLacerator, CorrupterOrDevourer, CorrupterOrDevourer, GunWalkerSeekerOrLacerator, GunWalkerSeekerOrLacerator }
 ScrinReinforcementSquad = { "s3", "s1", "s1", "s1", "s1", "s2", "s3", "intl", "rtpd", GunWalkerSeekerOrLacerator, CorrupterOrDevourer }
 
-if Difficulty == "hard" then
+if IsHardOrAbove() then
 	table.insert(UnitCompositions.Scrin, {
 		Infantry = { "impl", "impl", "impl", "impl", "impl", "impl", "impl", "impl", "impl" },
 		Vehicles = { "null", "null", "null", "null", "null", "null" },
@@ -22,45 +18,30 @@ AdjustedScrinCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Scr
 
 Squads = {
 	ScrinRebels1 = {
-		Delay = {
-			easy = DateTime.Minutes(4),
-			normal = DateTime.Minutes(3),
-			hard = DateTime.Minutes(2),
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(4)),
 		AttackValuePerSecond = ScrinAttackValues,
 		FollowLeader = true,
-		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
-		Units = AdjustedScrinCompositions,
+		Compositions = AdjustedScrinCompositions,
 		AttackPaths = {
 			{ RebelRally5.Location },
 			{ RebelRally6.Location },
 		},
 	},
 	ScrinRebels2 = {
-		Delay = {
-			easy = DateTime.Minutes(9),
-			normal = DateTime.Minutes(6),
-			hard = DateTime.Minutes(3),
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(7)),
 		AttackValuePerSecond = ScrinAttackValues,
 		FollowLeader = true,
-		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
-		Units = AdjustedScrinCompositions,
+		Compositions = AdjustedScrinCompositions,
 		AttackPaths = {
 			{ RebelRally1.Location },
 			{ RebelRally2.Location },
 		},
 	},
 	ScrinRebels3 = {
-		Delay = {
-			easy = DateTime.Minutes(10),
-			normal = DateTime.Minutes(7),
-			hard = DateTime.Minutes(4),
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(8)),
 		AttackValuePerSecond = ScrinAttackValues,
 		FollowLeader = true,
-		ProducerTypes = { Infantry = BarracksTypes, Vehicles = FactoryTypes },
-		Units = AdjustedScrinCompositions,
+		Compositions = AdjustedScrinCompositions,
 		AttackPaths = {
 			{ RebelRally2.Location },
 			{ RebelRally3.Location },
@@ -68,30 +49,9 @@ Squads = {
 		},
 	},
 	ScrinRebelsAir = {
-		Delay = {
-			easy = DateTime.Minutes(6),
-			normal = DateTime.Minutes(5),
-			hard = DateTime.Minutes(4)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 7, Max = 7 },
-			normal = { Min = 14, Max = 14 },
-			hard = { Min = 21, Max = 21 },
-		},
-		ProducerTypes = { Aircraft = { "grav" } },
-		Units = {
-			easy = {
-				{ Aircraft = { "stmr" } }
-			},
-			normal = {
-				{ Aircraft = { "stmr", "stmr" } },
-				{ Aircraft = { "enrv" } },
-			},
-			hard = {
-				{ Aircraft = { "stmr", "stmr", "stmr" } },
-				{ Aircraft = { "enrv", "enrv" } },
-			}
-		}
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(6)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		Compositions = AirCompositions.Scrin,
 	},
 }
 
@@ -122,7 +82,7 @@ WorldLoaded = function()
 	ObjectiveCaptureNerveCenter = USSR.AddObjective("Capture rebel Nerve Center.")
 	ObjectiveEliminateRebels = USSR.AddObjective("Eliminate all rebel forces.")
 
-	if Difficulty ~= "hard" then
+	if IsNormalOrBelow() then
 		HardOnlyElite.Destroy()
 		HardOnlyReaper.Destroy()
 	end
@@ -275,18 +235,10 @@ InitScrinRebels = function()
 		end)
 	end)
 
-	Trigger.AfterDelay(Squads.ScrinRebels1.Delay[Difficulty], function()
-		InitAttackSquad(Squads.ScrinRebels1, ScrinRebels1)
-	end)
-	Trigger.AfterDelay(Squads.ScrinRebels2.Delay[Difficulty], function()
-		InitAttackSquad(Squads.ScrinRebels2, ScrinRebels2)
-	end)
-	Trigger.AfterDelay(Squads.ScrinRebels3.Delay[Difficulty], function()
-		InitAttackSquad(Squads.ScrinRebels3, ScrinRebels3)
-	end)
-	Trigger.AfterDelay(Squads.ScrinRebelsAir.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.ScrinRebelsAir, ScrinRebels1)
-	end)
+	InitAttackSquad(Squads.ScrinRebels1, ScrinRebels1)
+	InitAttackSquad(Squads.ScrinRebels2, ScrinRebels2)
+	InitAttackSquad(Squads.ScrinRebels3, ScrinRebels3)
+	InitAirAttackSquad(Squads.ScrinRebelsAir, ScrinRebels1)
 end
 
 InitNod = function()
@@ -302,7 +254,7 @@ InitNod = function()
 
 	Trigger.AfterDelay(DateTime.Minutes(2), function()
 		Utils.Do(nodGroundAttackers, function(a)
-			AssaultPlayerBaseOrHunt(a, USSR)
+			AssaultPlayerBaseOrHunt(a)
 		end)
 	end)
 end

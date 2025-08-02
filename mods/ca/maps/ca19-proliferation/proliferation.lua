@@ -42,33 +42,52 @@ MaintenanceDuration = {
 	easy = DateTime.Minutes(4),
 	normal = DateTime.Minutes(4),
 	hard = DateTime.Minutes(4),
+	vhard = DateTime.Minutes(4),
+	brutal = DateTime.Minutes(4)
 }
 
 RaidStart = {
 	easy = DateTime.Seconds(120),
 	normal = DateTime.Seconds(90),
-	hard = DateTime.Seconds(60),
+	hard = DateTime.Seconds(70),
+	vhard = DateTime.Seconds(60),
+	brutal = DateTime.Seconds(50)
 }
 
 RaidInterval = {
-	easy = DateTime.Seconds(75),
-	normal = DateTime.Seconds(65),
-	hard = DateTime.Seconds(55),
+	easy = DateTime.Seconds(80),
+	normal = DateTime.Seconds(70),
+	hard = DateTime.Seconds(60),
+	vhard = DateTime.Seconds(55),
+	brutal = DateTime.Seconds(50)
 }
 
 ReinforcementInitialThreshold = {
 	easy = 27500,
 	normal = 35000,
 	hard = 42500,
+	vhard = 42500,
+	brutal = 42500
 }
 
 ReinforcementFinalThreshold = {
 	easy = 60000,
-	normal = 75000,
-	hard = 90000,
+	normal = 70000,
+	hard = 80000,
+	vhard = 90000,
+	brutal = 100000
 }
 
 ReinforcementThresholdIncrement = 5000
+
+HardAndAboveCompositions = {
+	{ Units = { "bike", "bike", "bggy" }, MaxTime = DateTime.Minutes(8) },
+
+	{ Units = { "bike", "bike", "bike", "bggy", "bggy", "n1", "n1", "n3" }, MinTime = DateTime.Minutes(8) },
+	{ Units = { "stnk.nod", "stnk.nod", "stnk.nod", "bggy" }, MinTime = DateTime.Minutes(8) },
+	{ Units = { "ltnk", "ltnk", "ftnk", "ftnk", "n3", "n1", "n1", "n4", "n1", "n3" }, MinTime = DateTime.Minutes(8) },
+	{ Units = { "arty.nod", "ltnk", "bggy", "hftk", "n4", "n4", "n1" }, MinTime = DateTime.Minutes(10) },
+}
 
 RaidCompositions = {
 	easy = {
@@ -87,14 +106,7 @@ RaidCompositions = {
 
 		{ Units = { "arty.nod", "ltnk", "bggy", "n4", "n4", "n1" }, MinTime = DateTime.Minutes(10) },
 	},
-	hard = {
-		{ Units = { "bike", "bike", "bggy" }, MaxTime = DateTime.Minutes(7) },
-
-		{ Units = { "bike", "bike", "bike", "bggy", "bggy", "n1", "n1", "n3" }, MinTime = DateTime.Minutes(7) },
-		{ Units = { "stnk.nod", "stnk.nod", "stnk.nod", "bggy" }, MinTime = DateTime.Minutes(7) },
-		{ Units = { "ltnk", "ltnk", "ftnk", "ftnk", "n3", "n1", "n1", "n4", "n1", "n3" }, MinTime = DateTime.Minutes(7) },
-		{ Units = { "arty.nod", "ltnk", "bggy", "hftk", "n4", "n4", "n1" }, MinTime = DateTime.Minutes(9) },
-	},
+	hard = AdjustCompositionsForDifficulty(HardAndAboveCompositions),
 }
 
 RaidEntryPaths = {
@@ -112,18 +124,9 @@ RaidEntryPaths = {
 
 Squads = {
 	Air = {
-		Delay = {
-			easy = DateTime.Minutes(13),
-			normal = DateTime.Minutes(12),
-			hard = DateTime.Minutes(11)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 5, Max = 5 },
-			normal = { Min = 10, Max = 10 },
-			hard = { Min = 15, Max = 15 },
-		},
-		ProducerTypes = { Aircraft = { "hpad.td" } },
-		Units = {
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(13)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 10, Max = 10 }),
+		Compositions = {
 			easy = {
 				{ Aircraft = { "scrn" } }
 			},
@@ -132,7 +135,13 @@ Squads = {
 			},
 			hard = {
 				{ Aircraft = { "scrn", "scrn" } },
-			}
+			},
+			vhard = {
+				{ Aircraft = { "scrn", "scrn" } },
+			},
+			brutal = {
+				{ Aircraft = { "scrn", "scrn", "scrn" } },
+			},
 		},
 	},
 }
@@ -252,6 +261,7 @@ InitNod = function()
 	AutoRepairBuildings(Nod)
 	SetupRefAndSilosCaptureCredits(Nod)
 	InitAiUpgrades(Nod)
+	InitAirAttackSquad(Squads.Air, Nod, MissionPlayers, { "harv", "harv.td", "proc", "proc.scrin" })
 
 	local nodGroundAttackers = Nod.GetGroundAttackers()
 
@@ -262,10 +272,6 @@ InitNod = function()
 
 	Trigger.AfterDelay(RaidStart[Difficulty], function()
 		DoRaid()
-	end)
-
-	Trigger.AfterDelay(Squads.Air.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.Air, Nod, Scrin, { "harv", "harv.td", "proc", "proc.scrin" })
 	end)
 end
 

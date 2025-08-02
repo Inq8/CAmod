@@ -399,23 +399,22 @@ Player:
 			13500: InfluenceLevel2
 		DummyActor: QueueUpdaterDummy
 		PrerequisiteGrantedSound: PlayerRankUp
-	ProvidesPrerequisiteOnKillCount@NodCovenants:
+	ProvidesPrerequisiteOnCount@NodCovenants:
 		Type: NodCovenant
+		RequiredCount: 3
 		Factions: nod, blackh, marked, legion, shadow
 		Prerequisite: nod.covenants.available
-		RequiredKills:
-			BuildingsOrHarvesters: 3
-		IncrementSound: PlayerRankUp
 		RequiredCountReachedNotification: CovenantsAvailable
 		RequiredCountReachedTextNotification: Covenants are now available.
 		DummyActor: QueueUpdaterDummy
+		IncrementSound: PlayerRankUp
+		PermanentWhenReached: true
 		NotificationDelay: 35
 	ProvidesPrerequisiteOnCount@ScrinAllegiances:
 		Type: ScrinAllegiance
+		RequiredCount: 4
 		Factions: scrin, reaper, traveler, harbinger, collector
 		Prerequisite: scrin.allegiances.available
-		RequiredCounts:
-			Refineries: 4
 		RequiredCountReachedNotification: AllegianceDeclarationAvailable
 		RequiredCountReachedTextNotification: Allegiance declaration available.
 		DummyActor: QueueUpdaterDummy

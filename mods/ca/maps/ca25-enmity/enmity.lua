@@ -35,12 +35,16 @@ HoldOutTime = {
 	easy = DateTime.Minutes(2) - DateTime.Seconds(30),
 	normal = DateTime.Minutes(2),
 	hard = DateTime.Minutes(2) + DateTime.Seconds(30),
+	vhard = DateTime.Minutes(2) + DateTime.Seconds(30),
+	brutal = DateTime.Minutes(2) + DateTime.Seconds(30)
 }
 
 SuperweaponsEnabledTime = {
-	easy = DateTime.Seconds((60 * 25) + 41),
-	normal = DateTime.Seconds((60 * 20) + 41),
-	hard = DateTime.Seconds((60 * 15) + 41),
+	easy = DateTime.Seconds((60 * 40) + 41),
+	normal = DateTime.Seconds((60 * 25) + 41),
+	hard = DateTime.Seconds((60 * 18) + 41),
+	vhard = DateTime.Seconds((60 * 15) + 41),
+	brutal = DateTime.Seconds((60 * 13) + 41)
 }
 
 StructuresToSellToAvoidCapture = { SouthHand1, SouthHand2, SouthAirstrip, SouthConyard, WestHand, CenterHand, Helipad1, Helipad2 }
@@ -58,70 +62,37 @@ ShadowUnitCompositions = AdjustCompositionsForDifficulty({
 	{ Infantry = { "n3", "n1", "shad", "n1", "shad", "shad", "n4", "n1" }, Vehicles = { "stnk.nod", "spec", "bike", "bggy" }, MinTime = DateTime.Minutes(13) },
 })
 
+if IsVeryHardOrAbove() then
+	table.insert(ShadowUnitCompositions, {
+		Vehicles = { "spec", "spec", "spec", "spec", "spec", "spec" },
+		MinTime = DateTime.Minutes(16),
+		IsSpecial = true
+	})
+end
+
 Squads = {
 	North = {
-		Delay = {
-			easy = DateTime.Minutes(8),
-			normal = DateTime.Minutes(6),
-			hard = DateTime.Minutes(4)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 10, Max = 25 },
-			normal = { Min = 25, Max = 50 },
-			hard = { Min = 40, Max = 80 },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(6)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 }),
 		DispatchDelay = DateTime.Seconds(15),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { NorthHand1, NorthHand2 }, Vehicles = { NorthAirstrip } },
-		ProducerTypes = { Infantry = { "hand" } },
-		Units = ShadowUnitCompositions,
+		Compositions = ShadowUnitCompositions,
 		AttackPaths = NorthAttackPaths,
 	},
 	South = {
-		Delay = {
-			easy = DateTime.Minutes(5),
-			normal = DateTime.Minutes(4),
-			hard = DateTime.Minutes(3)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 10, Max = 25 },
-			normal = { Min = 25, Max = 50 },
-			hard = { Min = 40, Max = 80 },
-		},
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(4)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 }),
 		DispatchDelay = DateTime.Seconds(15),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { SouthHand1, SouthHand2 }, Vehicles = { SouthAirstrip } },
-		ProducerTypes = { Infantry = { "hand" } },
-		Units = ShadowUnitCompositions,
+		Compositions = ShadowUnitCompositions,
 		AttackPaths = SouthAttackPaths,
 	},
 	Air = {
-		Delay = {
-			easy = DateTime.Minutes(13),
-			normal = DateTime.Minutes(12),
-			hard = DateTime.Minutes(11)
-		},
-		AttackValuePerSecond = {
-			easy = { Min = 7, Max = 7 },
-			normal = { Min = 14, Max = 14 },
-			hard = { Min = 21, Max = 21 },
-		},
-		ProducerTypes = { Aircraft = { "hpad.td" } },
-		Units = {
-			easy = {
-				{ Aircraft = { "apch" } }
-			},
-			normal = {
-				{ Aircraft = { "apch", "apch" } },
-				{ Aircraft = { "scrn" } },
-				{ Aircraft = { "rah" } }
-			},
-			hard = {
-				{ Aircraft = { "apch", "apch", "apch" } },
-				{ Aircraft = { "scrn", "scrn" } },
-				{ Aircraft = { "rah", "rah" } }
-			}
-		},
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(13)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		Compositions = AirCompositions.Nod,
 	},
 }
 
@@ -249,6 +220,9 @@ InitNod = function()
 	AutoReplaceHarvesters(Nod)
 	AutoRebuildConyards(Nod)
 	InitAiUpgrades(Nod)
+	InitAttackSquad(Squads.North, Nod)
+	InitAttackSquad(Squads.South, Nod)
+	InitAirAttackSquad(Squads.Air, Nod)
 
 	local nodGroundAttackers = Nod.GetGroundAttackers()
 
@@ -262,18 +236,6 @@ InitNod = function()
 	Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
 		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = Nod })
 		Actor.Create("ai.superweapons.enabled", true, { Owner = Nod })
-	end)
-
-	Trigger.AfterDelay(Squads.North.Delay[Difficulty], function()
-		InitAttackSquad(Squads.North, Nod)
-	end)
-
-	Trigger.AfterDelay(Squads.South.Delay[Difficulty], function()
-		InitAttackSquad(Squads.South, Nod)
-	end)
-
-	Trigger.AfterDelay(Squads.Air.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.Air, Nod)
 	end)
 
 	Utils.Do(StructuresToSellToAvoidCapture, function(self)
