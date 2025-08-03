@@ -166,7 +166,7 @@ namespace OpenRA.Mods.CA.Activities
 							target = Target.FromActor(target.Actor);
 
 						// Check that we reached the requested position
-						var targetPos = target.Positions.PositionClosestTo(self.CenterPosition);
+						var targetPos = target.Positions.ClosestToIgnoringPath(self.CenterPosition);
 						if (!IsCanceling && self.CenterPosition == targetPos && target.Type == TargetType.Actor)
 							OnEnterComplete(self, target.Actor);
 						else
