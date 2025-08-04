@@ -68,7 +68,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly string UnloadBlockedCursor = "deploy-blocked";
 
 		[GrantedConditionReference]
-		[Desc("The condition to grant to self while waiting for garrisonable to load.")]
+		[Desc("The condition to grant to self while waiting for actors to load.")]
 		public readonly string LoadingCondition = null;
 
 		[GrantedConditionReference]
@@ -94,7 +94,7 @@ namespace OpenRA.Mods.CA.Traits
 		ITransformActorInitModifier, INotifyPassengersDamage
 	{
 		readonly Actor self;
-		readonly List<Actor> garrisonable = new();
+		readonly List<Actor> garrisoners = new();
 		readonly HashSet<Actor> reserves = new();
 		readonly Dictionary<string, Stack<int>> garrisonerTokens = new();
 		readonly Lazy<IFacing> facing;
@@ -108,9 +108,9 @@ namespace OpenRA.Mods.CA.Traits
 		bool takeOffAfterLoad;
 		bool initialised;
 
-		public IEnumerable<Actor> Garrisoners { get { return garrisonable; } }
+		public IEnumerable<Actor> Garrisoners { get { return garrisoners; } }
 
-		public int GarrisonerCount { get { return garrisonable.Count; } }
+		public int GarrisonerCount { get { return garrisoners.Count; } }
 
 		enum State { Free, Locked }
 
@@ -126,8 +126,8 @@ namespace OpenRA.Mods.CA.Traits
 			var garrisonInit = init.GetOrDefault<GarrisonInit>(info);
 			if (runtimeGarrisonInit != null)
 			{
-				garrisonable = runtimeGarrisonInit.Value.ToList();
-				TotalWeight = garrisonable.Sum(c => GetWeight(c));
+				garrisoners = runtimeGarrisonInit.Value.ToList();
+				TotalWeight = garrisoners.Sum(c => GetWeight(c));
 			}
 			else if (garrisonInit != null)
 			{
@@ -136,10 +136,10 @@ namespace OpenRA.Mods.CA.Traits
 					var unit = self.World.CreateActor(false, u.ToLowerInvariant(),
 						new TypeDictionary { new OwnerInit(self.Owner) });
 
-					garrisonable.Add(unit);
+					garrisoners.Add(unit);
 				}
 
-				TotalWeight = garrisonable.Sum(c => GetWeight(c));
+				TotalWeight = garrisoners.Sum(c => GetWeight(c));
 			}
 			else
 			{
@@ -148,10 +148,10 @@ namespace OpenRA.Mods.CA.Traits
 					var unit = self.World.CreateActor(false, u.ToLowerInvariant(),
 						new TypeDictionary { new OwnerInit(self.Owner) });
 
-					garrisonable.Add(unit);
+					garrisoners.Add(unit);
 				}
 
-				TotalWeight = garrisonable.Sum(c => GetWeight(c));
+				TotalWeight = garrisoners.Sum(c => GetWeight(c));
 			}
 
 			facing = Exts.Lazy(self.TraitOrDefault<IFacing>);
@@ -163,9 +163,9 @@ namespace OpenRA.Mods.CA.Traits
 
 			aircraft = self.TraitOrDefault<Aircraft>();
 
-			if (garrisonable.Count > 0)
+			if (garrisoners.Count > 0)
 			{
-				foreach (var c in garrisonable)
+				foreach (var c in garrisoners)
 				{
 					if (Info.GarrisonerConditions.TryGetValue(c.Info.Name, out var garrisonerCondition))
 						garrisonerTokens.GetOrAdd(c.Info.Name).Push(self.GrantCondition(garrisonerCondition));
@@ -178,7 +178,7 @@ namespace OpenRA.Mods.CA.Traits
 			// Defer notifications until we are certain all traits on the transport are initialised
 			self.World.AddFrameEndTask(w =>
 			{
-				foreach (var c in garrisonable)
+				foreach (var c in garrisoners)
 				{
 					c.Trait<Passenger>().Transport = self;
 
@@ -200,7 +200,7 @@ namespace OpenRA.Mods.CA.Traits
 			get
 			{
 				yield return new DeployOrderTargeter("Unload", 10,
-			  () => CanUnload() ? Info.UnloadCursor : Info.UnloadBlockedCursor);
+					() => CanUnload() ? Info.UnloadCursor : Info.UnloadBlockedCursor);
 			}
 		}
 
@@ -226,7 +226,10 @@ namespace OpenRA.Mods.CA.Traits
 				if (!order.Queued && !CanUnload())
 					return;
 
-				self.QueueActivity(new UnloadGarrison(self, Info.LoadRange));
+				if (!order.Queued)
+					self.CancelActivity();
+
+				self.QueueActivity(order.Queued, new UnloadGarrison(self, Info.LoadRange));
 			}
 		}
 
@@ -329,14 +332,14 @@ namespace OpenRA.Mods.CA.Traits
 		}
 
 		public bool HasSpace(int weight) { return TotalWeight + reservedWeight + weight <= Info.MaxWeight; }
-		public bool IsEmpty() { return garrisonable.Count == 0; }
+		public bool IsEmpty() { return garrisoners.Count == 0; }
 
-		public Actor Peek() { return garrisonable.Last(); }
+		public Actor Peek() { return garrisoners.Last(); }
 
 		public Actor Unload(Actor self, Actor passenger = null)
 		{
-			passenger ??= garrisonable.Last();
-			if (!garrisonable.Remove(passenger))
+			passenger ??= garrisoners.Last();
+			if (!garrisoners.Remove(passenger))
 				throw new ArgumentException("Attempted to ungarrison an actor that is not a garrisoner.");
 
 			TotalWeight -= GetWeight(passenger);
@@ -373,7 +376,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		public void Load(Actor self, Actor a)
 		{
-			garrisonable.Add(a);
+			garrisoners.Add(a);
 			var w = GetWeight(a);
 			TotalWeight += w;
 			if (reserves.Contains(a))
@@ -427,24 +430,24 @@ namespace OpenRA.Mods.CA.Traits
 						garrisoner.Kill(e.Attacker);
 				}
 
-			foreach (var c in garrisonable)
+			foreach (var c in garrisoners)
 				c.Kill(e.Attacker);
 
-			garrisonable.Clear();
+			garrisoners.Clear();
 		}
 
 		void INotifyActorDisposing.Disposing(Actor self)
 		{
-			foreach (var c in garrisonable)
+			foreach (var c in garrisoners)
 				c.Dispose();
 
-			garrisonable.Clear();
+			garrisoners.Clear();
 		}
 
 		void INotifySold.Selling(Actor self) { }
 		void INotifySold.Sold(Actor self)
 		{
-			if (!Info.EjectOnSell || garrisonable == null)
+			if (!Info.EjectOnSell || garrisoners == null)
 				return;
 
 			while (!IsEmpty())
@@ -464,7 +467,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		void INotifyOwnerChanged.OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)
 		{
-			if (!Info.OwnerChangedAffectsGarrisoners || garrisonable == null)
+			if (!Info.OwnerChangedAffectsGarrisoners || garrisoners == null)
 				return;
 
 			foreach (var p in Garrisoners)
@@ -501,7 +504,7 @@ namespace OpenRA.Mods.CA.Traits
 		void INotifyPassengersDamage.DamagePassengers(
 			int damage, Actor attacker, int amount, Dictionary<string, int> versus, BitSet<DamageType> damageTypes, IEnumerable<int> damageModifiers)
 		{
-			var passengersToDamage = amount > 0 && amount < garrisonable.Count ? garrisonable.Shuffle(self.World.SharedRandom).Take(amount) : garrisonable;
+			var passengersToDamage = amount > 0 && amount < garrisoners.Count ? garrisoners.Shuffle(self.World.SharedRandom).Take(amount) : garrisoners;
 			foreach (var passenger in passengersToDamage)
 			{
 				var d = Util.ApplyPercentageModifiers(damage, damageModifiers.Append(DamageVersus(passenger, versus)));
