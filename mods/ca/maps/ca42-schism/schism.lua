@@ -381,7 +381,9 @@ MaleficSpawn = function()
 			unit.Scatter()
 			Trigger.AfterDelay(5, function()
 				if not unit.IsDead then
-					unit.AttackMove(Purifier.Location)
+					if not Purifier.IsDead then
+						unit.AttackMove(Purifier.Location)
+					end
 					unit.Hunt()
 				end
 			end)

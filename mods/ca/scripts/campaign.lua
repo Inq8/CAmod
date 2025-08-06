@@ -671,7 +671,7 @@ HasOwnedBuildingsNearby = function(player, pos, noEnemyBuildings)
 end
 
 AutoRebuildConyards = function(player, allDifficulties)
-	if IsHardOrAbove() and not allDifficulties then
+	if not allDifficulties and IsNormalOrBelow() then
 		return
 	end
 	local conyards = player.GetActorsByTypes(ConyardTypes)
