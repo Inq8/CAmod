@@ -28,12 +28,6 @@ Exterminators = {
 	{ SpawnLocation = ExterminatorSpawnWest.Location, Path = { Exterminator3Patrol1.Location, Exterminator3Patrol2.Location, Exterminator3Patrol3.Location, Exterminator3Patrol4.Location } },
 }
 
-MaxAirToAirUnits = {
-	hard = 6,
-	vhard = 12,
-	brutal = 16
-}
-
 SuperweaponsEnabledTime = {
 	easy = DateTime.Seconds((60 * 50) + 17),
 	normal = DateTime.Seconds((60 * 35) + 17),
@@ -125,42 +119,20 @@ Squads = {
 		ProducerActors = { Aircraft = { GravityStabilizer3, GravityStabilizer4 } },
 		Compositions = AirCompositions.Scrin,
 	},
-	ScrinAirToAirVsNod = {
-		ActiveCondition = function()
-			return PlayerHasCharacteristic(squad.TargetPlayer, "MassAir")
-		end,
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 24, Max = 24 }),
-		OnProducedAction = function(a)
+	ScrinAirToAirVsNod = AirToAirSquad(
+		{ "stmr", "enrv", "torm" },
+		AdjustAirDelayForDifficulty(DateTime.Minutes(10)),
+		function(a)
 			a.Patrol({ A2APatrol1.Location, A2APatrol2.Location, A2APatrol3.Location, A2APatrol4.Location, A2APatrol5.Location, A2APatrol6.Location, A2APatrol7.Location, A2APatrol8.Location })
-		end,
-		ProducerActors = { Aircraft = { GravityStabilizer1, GravityStabilizer2 } },
-		Compositions = function(squad)
-			local units = { "stmr" }
-			local desiredCount = PlayerCharacteristics[squad.TargetPlayer.InternalName].AirValue / 2000
-			for i = 1, math.min(desiredCount, MaxAirToAirUnits[Difficulty]) do
-				table.insert(units, { "stmr", "enrv", "torm" })
-			end
-			return { { Aircraft = units } }
 		end
-	},
-	ScrinAirToAirVsGDI = {
-		ActiveCondition = function()
-			return PlayerHasCharacteristic(squad.TargetPlayer, "MassAir")
-		end,
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 24, Max = 24 }),
-		OnProducedAction = function(a)
+	),
+	ScrinAirToAirVsGDI = AirToAirSquad(
+		{ "stmr", "enrv", "torm" },
+		AdjustAirDelayForDifficulty(DateTime.Minutes(10)),
+		function(a)
 			a.Patrol({ A2ABPatrol1.Location, A2ABPatrol2.Location, A2ABPatrol3.Location, A2ABPatrol4.Location, A2ABPatrol5.Location })
-		end,
-		ProducerActors = { Aircraft = { GravityStabilizer3, GravityStabilizer4 } },
-		Compositions = function(squad)
-			local units = { "stmr" }
-			local desiredCount = PlayerCharacteristics[squad.TargetPlayer.InternalName].AirValue / 2000
-			for i = 1, math.min(desiredCount, MaxAirToAirUnits[Difficulty]) do
-				table.insert(units, { "stmr", "enrv", "torm" })
-			end
-			return { { Aircraft = units } }
 		end
-	},
+	),
 	ScrinRebelsAir = {
 		Delay = DateTime.Minutes(5),
 		AttackValuePerSecond = { Min = 14, Max = 14 },

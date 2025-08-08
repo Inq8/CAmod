@@ -56,7 +56,10 @@ Squads = {
 			return not HasConyardAcrossRiver()
 		end,
 		Compositions = AirCompositions.Allied,
-	}
+	},
+	AntiHeavyAir = AntiHeavyAirSquad({ "heli" }, AdjustAirDelayForDifficulty(DateTime.Minutes(10))),
+	AntiInfAir = AntiInfAirSquad({ "harr" }, AdjustAirDelayForDifficulty(DateTime.Minutes(10))),
+	AirToAir = AirToAirSquad({ "harr" }, AdjustAirDelayForDifficulty(DateTime.Minutes(10))),
 }
 
 -- Setup and Tick
@@ -238,6 +241,12 @@ InitGreece = function()
 	InitAiUpgrades(Greece)
 	InitAirAttackSquad(Squads.Air, Greece)
 	InitAirAttackSquad(Squads.Air2, Greece)
+
+	if IsHardOrAbove() then
+		InitAirAttackSquad(Squads.AirToAir, Greece, MissionPlayers, { "Aircraft" }, "ArmorType")
+		InitAirAttackSquad(Squads.AntiInfAir, Greece, MissionPlayers, { "None" }, "ArmorType")
+		InitAirAttackSquad(Squads.AntiHeavyAir, Greece, MissionPlayers, { "Heavy" }, "ArmorType")
+	end
 
 	Utils.Do({ Greece, GreeceNorth }, function(p)
 		local greeceGroundAttackers = p.GetGroundAttackers()

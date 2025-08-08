@@ -6,17 +6,6 @@ IonCannonEnabledTime = {
 	brutal = DateTime.Seconds((60 * 10) + 48)
 }
 
-MaxAirToAirOrcas = {
-	vhard = 12,
-	brutal = 18
-}
-
-MaxAntiHeavyAir = {
-	hard = 8,
-	vhard = 12,
-	brutal = 16
-}
-
 -- overrides
 RampDurationMultipliers.vhard = 0.82
 RampDurationMultipliers.brutal = 0.76
@@ -51,35 +40,8 @@ Squads = {
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
 		Compositions = AirCompositions.GDI,
 	},
-	AntiHeavyAir = {
-		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(8)),
-		ActiveCondition = function(squad)
-			return PlayerHasCharacteristic(squad.TargetPlayer, "MassHeavy")
-		end,
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 24, Max = 24 }),
-		Compositions = function(squad)
-			local orcaBombers = { "orcb" }
-			local desiredCount = PlayerCharacteristics[squad.TargetPlayer.InternalName].HeavyValue / 2000
-			for i = 1, math.min(desiredCount, MaxAntiHeavyAir[Difficulty]) do
-				table.insert(orcaBombers, "orcb")
-			end
-			return { { Aircraft = orcaBombers } }
-		end
-	},
-	AirToAir = {
-		ActiveCondition = function(squad)
-			return PlayerHasCharacteristic(squad.TargetPlayer, "MassAir")
-		end,
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 24, Max = 24 }),
-		Compositions = function(squad)
-			local orcas = { "orca" }
-			local desiredCount = PlayerCharacteristics[squad.TargetPlayer.InternalName].AirValue / 2000
-			for i = 1, math.min(desiredCount, MaxAirToAirOrcas[Difficulty]) do
-				table.insert(orcas, "orca")
-			end
-			return { { Aircraft = orcas } }
-		end
-	}
+	AntiHeavyAir = AntiHeavyAirSquad({ "orcb" }, AdjustAirDelayForDifficulty(DateTime.Minutes(10))),
+	AirToAir = AirToAirSquad({ "orca" }, AdjustAirDelayForDifficulty(DateTime.Minutes(10))),
 }
 
 -- Setup and Tick
@@ -212,12 +174,9 @@ InitGDI = function()
 	AutoReplaceHarvesters(GDI)
 	AutoRebuildConyards(GDI)
 
-	if IsVeryHardOrAbove() then
-		InitAirAttackSquad(Squads.AirToAir, GDI, MissionPlayers, { "Aircraft" }, "ArmorType")
-	end
-
 	if IsHardOrAbove() then
 		InitAirAttackSquad(Squads.AntiHeavyAir, GDI, MissionPlayers, { "rmbc", "enli", "reap", "avtr" })
+		InitAirAttackSquad(Squads.AirToAir, GDI, MissionPlayers, { "Aircraft" }, "ArmorType")
 	end
 
 	local gdiGroundAttackers = GDI.GetGroundAttackers()

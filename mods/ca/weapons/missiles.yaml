@@ -2497,6 +2497,11 @@ TigerGuardMissile:
 			Heavy: 100
 			Concrete: 50
 			Brick: 75
+	Warhead@VeiledCondition: GrantExternalConditionCA
+		Range: 0c341
+		Duration: 100
+		Condition: gapveiled
+		ValidTargets: Infantry, Vehicle, Ship
 
 TigerGuardMissileAA:
 	Inherits: ^AntiAirMissile
@@ -2513,6 +2518,11 @@ TigerGuardMissileAA:
 		Damage: 12000
 	Warhead@3Eff: CreateEffect
 		ValidTargets: Air, AirSmall, ICBM, Ground, Water, Trees
+	Warhead@VeiledCondition: GrantExternalConditionCA
+		Range: 0c341
+		Duration: 100
+		Condition: gapveiled
+		ValidTargets: Air, AirSmall
 
 TigerGuardMissileBATF:
 	Inherits: TigerGuardMissile

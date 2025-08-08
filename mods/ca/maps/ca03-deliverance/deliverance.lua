@@ -161,6 +161,7 @@ WorldLoaded = function()
 
 	InitObjectives(Greece)
 	AdjustPlayerStartingCashForDifficulty()
+	RemoveActorsBasedOnDifficultyTags()
 	InitUSSR()
 
 	if IsVeryHardOrBelow() then

@@ -30,7 +30,7 @@ end
 Squads = {
 	Nod = {
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(3)),
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 24, Max = 40 }),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 30, Max = 40 }),
 		ActiveCondition = function()
 			return not MaleficArrived
 		end,
@@ -41,7 +41,7 @@ Squads = {
 	},
 	ScrinRebels = {
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(3)),
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 24, Max = 40 }),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 30, Max = 40 }),
 		ActiveCondition = function()
 			return not MaleficArrived
 		end,
@@ -103,7 +103,8 @@ Squads = {
 				{ Aircraft = { "enrv", "enrv", "enrv", "enrv", "enrv", "enrv", "enrv" } },
 			}
 		},
-	}
+	},
+	ScrinRebelsAirToAir = AirToAirSquad({ "stmr", "enrv", "torm" }, AdjustAirDelayForDifficulty(DateTime.Minutes(10))),
 }
 
 -- Setup and Tick
@@ -285,6 +286,7 @@ InitScrinRebels = function()
 
 	if IsHardOrAbove() then
 		InitAirAttackSquad(Squads.Enervators, ScrinRebels, MissionPlayers, { "etpd" })
+		InitAirAttackSquad(Squads.ScrinRebelsAirToAir, Scrin, MissionPlayers, { "Aircraft" }, "ArmorType")
 	end
 
 	local scrinRebelsGroundAttackers = ScrinRebels.GetGroundAttackers()
@@ -419,7 +421,10 @@ GetPlayerArmyValue = function()
 	local value = 0
 	Utils.Do(USSR.GetActors(), function(a)
 		if a.HasProperty("Attack") then
-			value = value + ActorCA.CostOrDefault(a.Type)
+			if UnitCosts[a.Type] == nil then
+				UnitCosts[a.Type] = ActorCA.CostOrDefault(a.Type)
+			end
+			value = value + UnitCosts[a.Type]
 		end
 	end)
 	return value

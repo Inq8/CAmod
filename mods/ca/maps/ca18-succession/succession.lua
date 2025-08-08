@@ -62,35 +62,8 @@ Squads = {
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
 		Compositions = AirCompositions.Nod,
 	},
-	AntiTankAir = {
-		ActiveCondition = function(squad)
-			return PlayerHasCharacteristic(squad.TargetPlayer, "MassHeavy")
-		end,
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 24, Max = 24 }),
-		Compositions = function(squad)
-			local banshees = { "scrn" }
-			local desiredCount = PlayerCharacteristics[squad.TargetPlayer.InternalName].HeavyValue / 2000
-			for i = 1, math.min(desiredCount, MaxAntiTankAir[Difficulty]) do
-				table.insert(banshees, "scrn")
-			end
-			return { { Aircraft = banshees } }
-		end
-	},
-	AirToAir = {
-		ActiveCondition = function(squad)
-			return PlayerHasCharacteristic(squad.TargetPlayer, "MassAir")
-		end,
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 24, Max = 24 }),
-		Compositions = function(squad)
-			local chosenType = Utils.Random({ "scrn", "apch", "venm" })
-			local units = { chosenType }
-			local desiredCount = PlayerCharacteristics[squad.TargetPlayer.InternalName].AirValue / 2000
-			for i = 1, math.min(desiredCount, MaxAirToAir[Difficulty]) do
-				table.insert(units, chosenType)
-			end
-			return { { Aircraft = units } }
-		end
-	}
+	AntiHeavyAir = AntiHeavyAirSquad({ "scrn" }, AdjustAirDelayForDifficulty(DateTime.Minutes(10))),
+	AirToAir = AirToAirSquad({ "scrn", "apch", "venm" }, AdjustAirDelayForDifficulty(DateTime.Minutes(10))),
 }
 
 WorldLoaded = function()
@@ -248,10 +221,7 @@ InitNod = function()
 	InitAirAttackSquad(Squads.Air, Nod)
 
 	if IsHardOrAbove() then
-		InitAirAttackSquad(Squads.AntiTankAir, Nod, MissionPlayers, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic" })
-	end
-
-	if IsVeryHardOrAbove() then
+		InitAirAttackSquad(Squads.AntiHeavyAir, Nod, MissionPlayers, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic" })
 		InitAirAttackSquad(Squads.AirToAir, Nod, MissionPlayers, { "Aircraft" }, "ArmorType")
 	end
 

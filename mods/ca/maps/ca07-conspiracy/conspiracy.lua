@@ -432,7 +432,7 @@ InitAlliedAttacks = function()
 		end)
 
 		if Difficulty == "brutal" then
-			Trigger.AfterDelay(DateTime.Minutes(13), function()
+			Trigger.AfterDelay(DateTime.Minutes(10), function()
 				Actor.Create("ai.superweapons.enabled", true, { Owner = Greece })
 			end)
 		end

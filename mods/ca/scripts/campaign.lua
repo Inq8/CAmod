@@ -18,6 +18,8 @@ StructureBuildTimeMultipliers = {
 }
 
 McvRebuildDelay = {
+	easy = DateTime.Minutes(25), -- not used by default
+	normal = DateTime.Minutes(15), -- not used by default
 	hard = DateTime.Minutes(8),
 	vhard = DateTime.Minutes(5),
 	brutal = DateTime.Minutes(3),
@@ -95,6 +97,14 @@ CashAdjustments = {
 	hard = -1000,
 	vhard = -1000,
 	brutal = -1000
+}
+
+MaxSpecialistAir = {
+	easy = 1,
+	normal = 3,
+	hard = 6,
+	vhard = 12,
+	brutal = 18
 }
 
 CapturedCreditsAmount = 1250
@@ -1997,21 +2007,21 @@ CalculatePlayerCharacteristics = function()
 			airValue = airValue + UnitCosts[u.Type]
 		end)
 
-		if infantryValue > heavyValue * 3 then
+		if infantryValue > 8000 and infantryValue > heavyValue * 3 then
 			PlayerCharacteristics[p.InternalName].MassInfantry = true
-		elseif heavyValue > infantryValue * 3 then
+		elseif heavyValue > 8000 and heavyValue > infantryValue * 3 then
 			PlayerCharacteristics[p.InternalName].MassHeavy = true
 		end
 
-		if infantryValue > 15000 then
+		if infantryValue > 18000 then
 			PlayerCharacteristics[p.InternalName].MassInfantry = true
 		end
 
-		if heavyValue > 15000 then
+		if heavyValue > 18000 then
 			PlayerCharacteristics[p.InternalName].MassHeavy = true
 		end
 
-		if airValue > 15000 then
+		if airValue > 16000 then
 			PlayerCharacteristics[p.InternalName].MassAir = true
 		end
 
@@ -2406,3 +2416,39 @@ AirCompositions = {
 		}
 	}
 }
+
+SpecialistAirSquad = function(unitTypes, characteristic, characteristicValue, delay, onProducedAction)
+	local squad = {
+		ActiveCondition = function(squad)
+			return PlayerHasCharacteristic(squad.TargetPlayer, characteristic)
+		end,
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 24, Max = 24 }),
+		Compositions = function(squad)
+			local units = { unitTypes }
+			local desiredCount = PlayerCharacteristics[squad.TargetPlayer.InternalName][characteristicValue] / 2000
+			for i = 1, math.min(desiredCount, MaxSpecialistAir[Difficulty]) do
+				table.insert(units, unitTypes)
+			end
+			return { { Aircraft = units } }
+		end
+	}
+	if delay ~= nil then
+		squad.Delay = delay
+	end
+	if onProducedAction ~= nil then
+		squad.OnProducedAction = onProducedAction
+	end
+	return squad
+end
+
+AirToAirSquad = function(unitTypes, delay)
+	return SpecialistAirSquad(unitTypes, "MassAir", "AirValue", delay, onProducedAction)
+end
+
+AntiHeavyAirSquad = function(unitTypes, delay)
+	return SpecialistAirSquad(unitTypes, "MassHeavy", "HeavyValue", delay, onProducedAction)
+end
+
+AntiInfAirSquad = function(unitTypes, delay)
+	return SpecialistAirSquad(unitTypes, "MassInfantry", "InfantryValue", delay, onProducedAction)
+end

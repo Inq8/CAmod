@@ -10,12 +10,6 @@ SuperweaponsEnabledTime = {
 	brutal = DateTime.Seconds((60 * 14) + 17)
 }
 
-MaxAntiTankAir = {
-	hard = 8,
-	vhard = 12,
-	brutal = 16
-}
-
 AdjustedGDICompositions = AdjustCompositionsForDifficulty(UnitCompositions.GDI)
 
 Squads = {
@@ -47,21 +41,8 @@ Squads = {
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
 		Compositions = AirCompositions.GDI,
 	},
-	AntiTankAir = {
-		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(16)),
-		ActiveCondition = function(squad)
-			return PlayerHasCharacteristic(squad.TargetPlayer, "MassHeavy")
-		end,
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 24, Max = 24 }),
-		Compositions = function(squad)
-			local orcaBombers = { "orcb" }
-			local desiredCount = PlayerCharacteristics[squad.TargetPlayer.InternalName].HeavyValue / 2000
-			for i = 1, math.min(desiredCount, MaxAntiTankAir[Difficulty]) do
-				table.insert(orcaBombers, "orcb")
-			end
-			return { { Aircraft = orcaBombers } }
-		end
-	}
+	AntiHeavyAir = AntiHeavyAirSquad({ "orcb" }, AdjustAirDelayForDifficulty(DateTime.Minutes(10))),
+	AirToAir = AirToAirSquad({ "orca" }, AdjustAirDelayForDifficulty(DateTime.Minutes(10))),
 }
 
 WorldLoaded = function()
@@ -236,7 +217,8 @@ InitGDIAttacks = function()
 		InitAttackSquad(Squads.GDIMain2, GDI)
 		InitAirAttackSquad(Squads.GDIAir, GDI)
 		if IsHardOrAbove() then
-			InitAirAttackSquad(Squads.AntiTankAir, GDI, MissionPlayers, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" })
+			InitAirAttackSquad(Squads.AntiHeavyAir, GDI, MissionPlayers, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" })
+			InitAirAttackSquad(Squads.AirToAir, GDI, MissionPlayers, { "Aircraft" }, "ArmorType")
 		end
 	end
 end

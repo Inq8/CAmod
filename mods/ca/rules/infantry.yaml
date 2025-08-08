@@ -3369,6 +3369,7 @@ RMBC:
 	Inherits@EMP: ^EmpDisable
 	Inherits@chrono: ^Chronoshiftable
 	Inherits@C4Plantable: ^C4Plantable
+	Inherits@HeavyArmor: ^HeavyArmor
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
@@ -3388,8 +3389,6 @@ RMBC:
 		AddToArmyValue: true
 	Health:
 		HP: 40000
-	Armor:
-		Type: Heavy
 	Mobile:
 		Speed: 54
 		Voice: Move
@@ -4371,6 +4370,7 @@ ENLI:
 	Inherits@EMP: ^EmpDisable
 	Inherits@chrono: ^Chronoshiftable
 	Inherits@C4Plantable: ^C4Plantable
+	Inherits@HeavyArmor: ^HeavyArmor
 	RenderSprites:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
@@ -4400,8 +4400,6 @@ ENLI:
 		TargetTypes: Repair
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
-	Armor:
-		Type: Heavy
 	Health:
 		HP: 30000
 	Mobile:
@@ -5136,6 +5134,7 @@ TIGR:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Aircraft
 		Weaknesses: • Weak vs Infantry, Defenses, Buildings\n• Cannot acquire targets at close range
+		Attributes: • Missile reduces enemy weapon range and vision
 	Valued:
 		Cost: 650
 	Tooltip:
@@ -5167,6 +5166,10 @@ TIGR:
 		PauseOnCondition: being-warped || blinded || reapersnare
 	AttackMove:
 		Voice: Move
+	AutoTargetPriority@HeavyPrio:
+		ValidTargets: Heavy
+		InvalidTargets: NoAutoTarget
+		Priority: 10
 	Passenger:
 		Voice: Move
 	Guard:
@@ -5273,6 +5276,7 @@ REAP:
 	Inherits@EMP: ^EmpDisable
 	Inherits@chrono: ^Chronoshiftable
 	Inherits@C4Plantable: ^C4Plantable
+	Inherits@HeavyArmor: ^HeavyArmor
 	RenderSprites:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
@@ -5304,8 +5308,6 @@ REAP:
 		TargetTypes: Repair
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
-	Armor:
-		Type: Heavy
 	Health:
 		HP: 30000
 	Mobile:

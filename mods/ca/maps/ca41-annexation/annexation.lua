@@ -5,6 +5,12 @@ NodBuildingsToSell = { NodConyard, NodHand, NodFactory, NodComms }
 ScrinReinforcementInitialSquad = { "s3", "s1", "s1", "s1", "s1", "s1", "s2", "s2", "s3", "intl", "rtpd", GunWalkerSeekerOrLacerator, CorrupterOrDevourer, CorrupterOrDevourer, GunWalkerSeekerOrLacerator, GunWalkerSeekerOrLacerator }
 ScrinReinforcementSquad = { "s3", "s1", "s1", "s1", "s1", "s2", "s3", "intl", "rtpd", GunWalkerSeekerOrLacerator, CorrupterOrDevourer }
 
+MaxAirToAirUnits = {
+	hard = 6,
+	vhard = 12,
+	brutal = 16
+}
+
 if IsHardOrAbove() then
 	table.insert(UnitCompositions.Scrin, {
 		Infantry = { "impl", "impl", "impl", "impl", "impl", "impl", "impl", "impl", "impl" },
@@ -53,6 +59,7 @@ Squads = {
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
 		Compositions = AirCompositions.Scrin,
 	},
+	ScrinRebelsAirToAir = AirToAirSquad({ "stmr", "enrv", "torm" }, AdjustAirDelayForDifficulty(DateTime.Minutes(10))),
 }
 
 -- Setup and Tick
@@ -239,6 +246,10 @@ InitScrinRebels = function()
 	InitAttackSquad(Squads.ScrinRebels2, ScrinRebels2)
 	InitAttackSquad(Squads.ScrinRebels3, ScrinRebels3)
 	InitAirAttackSquad(Squads.ScrinRebelsAir, ScrinRebels1)
+
+	if IsHardOrAbove() then
+		InitAirAttackSquad(Squads.ScrinRebelsAirToAir, ScrinRebels1, MissionPlayers, { "Aircraft" }, "ArmorType")
+	end
 end
 
 InitNod = function()

@@ -6,6 +6,7 @@ TimeLimit = {
 }
 
 CyborgSquad = { "rmbc", "rmbc", "enli", "tplr", "tplr", "tplr", "reap", "n1c", "n1c", "n1c", "n1c", "n1c", "n3c", "n3c" }
+
 CyborgSquadInterval = {
 	normal = DateTime.Minutes(2),
 	hard = DateTime.Minutes(1),
@@ -19,12 +20,6 @@ ClusterMissileEnabledTime = {
 	hard = DateTime.Seconds((60 * 10) + 37),
 	vhard = DateTime.Seconds((60 * 8) + 37),
 	brutal = DateTime.Seconds((60 * 8) + 37)
-}
-
-MaxAntiTankAir = {
-	hard = 8,
-	vhard = 12,
-	brutal = 16
 }
 
 AdjustedNodCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Nod)
@@ -77,21 +72,8 @@ Squads = {
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
 		Compositions = AirCompositions.Nod,
 	},
-	AntiTankAir = {
-		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(15)),
-		ActiveCondition = function(squad)
-			return PlayerHasCharacteristic(squad.TargetPlayer, "MassHeavy")
-		end,
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 24, Max = 24 }),
-		Compositions = function(squad)
-			local banshees = { "scrn" }
-			local desiredCount = PlayerCharacteristics[squad.TargetPlayer.InternalName].HeavyValue / 2000
-			for i = 1, math.min(desiredCount, MaxAntiTankAir[Difficulty]) do
-				table.insert(banshees, "scrn")
-			end
-			return { { Aircraft = banshees } }
-		end
-	}
+	AntiHeavyAir = AntiHeavyAirSquad({ "scrn" }, AdjustAirDelayForDifficulty(DateTime.Minutes(10))),
+	AirToAir = AirToAirSquad({ "scrn", "apch", "venm" }, AdjustAirDelayForDifficulty(DateTime.Minutes(10))),
 }
 
 -- Setup and Tick
@@ -215,7 +197,8 @@ InitNod = function()
 	InitAirAttackSquad(Squads.Air, Nod1)
 
 	if IsHardOrAbove() then
-		InitAirAttackSquad(Squads.AntiTankAir, Nod1, MissionPlayers, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" })
+		InitAirAttackSquad(Squads.AntiHeavyAir, Nod1, MissionPlayers, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic", "ovld", "ovld.atomic" })
+		InitAirAttackSquad(Squads.AirToAir, Nod1, MissionPlayers, { "Aircraft" }, "ArmorType")
 	end
 
 	Trigger.AfterDelay(ClusterMissileEnabledTime[Difficulty], function()

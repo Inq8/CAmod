@@ -72,7 +72,8 @@ Squads = {
 			{ Bombard1.Location },
 			{ Bombard2.Location },
 		}
-	}
+	},
+	AirToAir = AirToAirSquad({ "mig" }, AdjustAirDelayForDifficulty(DateTime.Minutes(10)))
 }
 
 NukeSilos = { NukeSilo1, NukeSilo2, NukeSilo3, NukeSilo4 }
@@ -203,12 +204,16 @@ InitUSSR = function()
 	InitAirAttackSquad(Squads.Planes, USSR)
 	InitAirAttackSquad(Squads.Helicopters, USSR)
 
-	if Difficulty ~= "easy" then
+	if IsNormalOrAbove() then
 		InitNavalAttackSquad(Squads.Naval, USSR)
-	end
 
-	if Difficulty == "brutal" then
-		InitNavalAttackSquad(Squads.MissileSubs, USSR)
+		if IsHardOrAbove() then
+			InitAirAttackSquad(Squads.AirToAir, USSR, MissionPlayers, { "Aircraft" }, "ArmorType")
+
+			if Difficulty == "brutal" then
+				InitNavalAttackSquad(Squads.MissileSubs, USSR)
+			end
+		end
 	end
 
 	Actor.Create("ai.unlimited.power", true, { Owner = USSR })
