@@ -77,6 +77,10 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 						if (release.draft)
 							continue;
 
+						// For devtest releases, only consider versions that are at least 30 minutes old
+						if (release.ReleaseType == ReleaseType.DevTest && (DateTime.UtcNow - release.created_at).TotalMinutes < 30)
+							continue;
+
 						// If the current release is a full release, ignore pre-releases and dev tests
 						if (currentReleaseType == ReleaseType.Full && (release.ReleaseType == ReleaseType.PreRelease || release.ReleaseType == ReleaseType.DevTest))
 							continue;
