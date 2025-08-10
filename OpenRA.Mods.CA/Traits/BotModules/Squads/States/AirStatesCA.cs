@@ -20,7 +20,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 {
 	abstract class AirStateBaseCA : StateBaseCA
 	{
-		static readonly BitSet<TargetableType> AirTargetTypes = new BitSet<TargetableType>("Air");
+		static readonly BitSet<TargetableType> AirTargetTypes = new("Air");
 
 		protected const int StaticAntiAirMultiplier = 4;
 
@@ -109,7 +109,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			var checkIndices = Exts.MakeArray(columnCount * rowCount, i => i).Shuffle(owner.World.LocalRandom);
 			foreach (var i in checkIndices)
 			{
-				var pos = new MPos((i % columnCount) * dangerRadius + dangerRadius / 2, (i / columnCount) * dangerRadius + dangerRadius / 2).ToCPos(map);
+				var pos = new MPos(i % columnCount * dangerRadius + dangerRadius / 2, i / columnCount * dangerRadius + dangerRadius / 2).ToCPos(map);
 
 				if (NearToPosSafely(owner, map.CenterOfCell(pos), out detectedEnemyTarget))
 				{
@@ -133,9 +133,9 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			detectedEnemyTarget = null;
 			var dangerRadius = owner.SquadManager.Info.DangerScanRadius;
 			var unitsAroundPos = owner.World.FindActorsInCircle(loc, WDist.FromCells(dangerRadius))
-				.Where(a => owner.SquadManager.IsPreferredEnemyUnit(a));
+				.Where(owner.SquadManager.IsPreferredEnemyUnit).ToList();
 
-			if (!unitsAroundPos.Any())
+			if (unitsAroundPos.Count == 0)
 				return true;
 
 			var possibleTargets = unitsAroundPos.Where(a => owner.SquadManager.IsAirSquadTargetArmorType(a, owner)).ToList();
@@ -155,7 +155,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 		// Checks the number of anti air enemies around units
 		protected virtual bool ShouldFlee(SquadCA owner)
 		{
-			return ShouldFlee(owner, enemies => CountStaticAntiAir(enemies, owner) > owner.Units.Count);
+			return ShouldFlee(owner, enemies => CountStaticAntiAir(enemies.ToList(), owner) > owner.Units.Count);
 		}
 	}
 
@@ -196,8 +196,10 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			if (!owner.IsValid)
 				return;
 
+			var leader = owner.CenterUnit();
+
 			// target is no longer valid, find a new target
-			if (!owner.IsTargetValid)
+			if (!owner.IsTargetValid(leader))
 			{
 				var closestEnemy = FindAirTarget(owner);
 				if (closestEnemy == null)
@@ -227,11 +229,11 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 				return;
 			}
 
-			var leader = owner.Units.FirstOrDefault();
-			var buildableInfo = leader.Info.TraitInfoOrDefault<BuildableInfo>();
+			var firstUnit = owner.Units.FirstOrDefault();
+			var buildableInfo = firstUnit.Info.TraitInfoOrDefault<BuildableInfo>();
 			var limitOne = buildableInfo != null && buildableInfo.BuildLimit == 1;
-			var canBuildMoreOfAircraft = leader != null ? !limitOne && owner.SquadManager.CanBuildMoreOfAircraft(leader.Info) : false;
-			var waitingCount = owner.WaitingUnits.Count();
+			var canBuildMoreOfAircraft = firstUnit != null && !limitOne && owner.SquadManager.CanBuildMoreOfAircraft(firstUnit.Info);
+			var waitingCount = owner.WaitingUnits.Count;
 
 			var waitingPatience = 99;
 			if (waitingCount > 7)
@@ -287,10 +289,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 					// target switched or not attacking, attack the target
 					if ((newTarget || activityType != typeof(FlyAttack)) && CanAttackTarget(a, owner.TargetActor))
-					{
 						owner.Bot.QueueOrder(new Order("Attack", a, Target.FromActor(owner.TargetActor), false));
-						continue;
-					}
 					else if (activityType == typeof(FlyIdle))
 					{
 						owner.RearmingUnits.Add(a);

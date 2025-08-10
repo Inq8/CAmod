@@ -36,12 +36,12 @@ namespace OpenRA.Mods.CA.Traits
 		int cachedBases;
 		int cachedBuildings;
 		int minimumExcessPower;
-		int minCashRequirement;
+		int minCashRequirement; // CA: Different cash requirements per category
 
 		bool itemQueuedThisTick = false;
 
 		WaterCheck waterState = WaterCheck.NotChecked;
-		readonly Dictionary<string, int> activeBuildingIntervals = new Dictionary<string, int>();
+		readonly Dictionary<string, int> activeBuildingIntervals = new Dictionary<string, int>(); // CA: Building intervals system
 
 		public BaseBuilderQueueManagerCA(BaseBuilderBotModuleCA baseBuilder, string category, Player p, PowerManager pm,
 			PlayerResources pr, IResourceLayer rl)
@@ -55,13 +55,19 @@ namespace OpenRA.Mods.CA.Traits
 			Category = category;
 			failRetryTicks = baseBuilder.Info.StructureProductionResumeDelay;
 			minimumExcessPower = baseBuilder.Info.MinimumExcessPower;
-			minCashRequirement = baseBuilder.Info.DefenseQueues.Contains(Category) ? baseBuilder.Info.DefenseProductionMinCashRequirement : baseBuilder.Info.BuildingProductionMinCashRequirement;
+
+			// CA: Different minimum cash requirements based on category
+			minCashRequirement = baseBuilder.Info.DefenseQueues.Contains(Category)
+				? baseBuilder.Info.DefenseProductionMinCashRequirement
+				: baseBuilder.Info.BuildingProductionMinCashRequirement;
+
 			if (baseBuilder.Info.NavalProductionTypes.Count == 0)
 				waterState = WaterCheck.DontCheck;
 		}
 
-		public void Tick(IBot bot)
+		public void Tick(IBot bot, ILookup<string, ProductionQueue> queuesByCategory)
 		{
+			// CA: Update building intervals countdown
 			foreach (KeyValuePair<string, int> i in activeBuildingIntervals.ToList())
 			{
 				activeBuildingIntervals[i.Key]--;
@@ -111,13 +117,17 @@ namespace OpenRA.Mods.CA.Traits
 				return;
 
 			playerBuildings = world.ActorsHavingTrait<Building>().Where(a => a.Owner == player).ToArray();
-			var excessPowerBonus = baseBuilder.Info.ExcessPowerIncrement * (playerBuildings.Count() / baseBuilder.Info.ExcessPowerIncreaseThreshold.Clamp(1, int.MaxValue));
-			minimumExcessPower = (baseBuilder.Info.MinimumExcessPower + excessPowerBonus).Clamp(baseBuilder.Info.MinimumExcessPower, baseBuilder.Info.MaximumExcessPower);
+			var excessPowerBonus =
+				baseBuilder.Info.ExcessPowerIncrement *
+				(playerBuildings.Length / baseBuilder.Info.ExcessPowerIncreaseThreshold.Clamp(1, int.MaxValue));
+			minimumExcessPower =
+				(baseBuilder.Info.MinimumExcessPower + excessPowerBonus)
+					.Clamp(baseBuilder.Info.MinimumExcessPower, baseBuilder.Info.MaximumExcessPower);
 
 			// PERF: Queue only one actor at a time per category
 			itemQueuedThisTick = false;
 			var active = false;
-			foreach (var queue in AIUtils.FindQueues(player, Category))
+			foreach (var queue in queuesByCategory[Category])
 			{
 				if (TickQueue(bot, queue))
 					active = true;
@@ -142,12 +152,14 @@ namespace OpenRA.Mods.CA.Traits
 				if (item == null)
 					return false;
 
-				// We shouldn't be queueing new buildings (other than refineries) when we're low on cash
-				if ((playerResources.Cash + playerResources.Resources < minCashRequirement && !baseBuilder.Info.RefineryTypes.Contains(item.Name)) || itemQueuedThisTick)
+				// CA: Modified cash requirement check - excludes refineries from low cash restrictions
+				if ((playerResources.GetCashAndResources() < minCashRequirement && !baseBuilder.Info.RefineryTypes.Contains(item.Name)) || itemQueuedThisTick)
 					return false;
 
 				bot.QueueOrder(Order.StartProduction(queue.Actor, item.Name, 1));
 				itemQueuedThisTick = true;
+
+				// CA: Set building interval for this building type
 				SetBuildingInterval(item.Name);
 			}
 			else if (currentBuilding != null && currentBuilding.Done)
@@ -284,7 +296,7 @@ namespace OpenRA.Mods.CA.Traits
 			}
 
 			// Next is to build up a strong economy
-			if (!baseBuilder.HasAdequateRefineryCount)
+			if (!baseBuilder.HasAdequateRefineryCount())
 			{
 				var refinery = GetProducibleBuilding(baseBuilder.Info.RefineryTypes, buildableThings);
 				if (refinery != null && HasSufficientPowerForActor(refinery))
@@ -300,7 +312,7 @@ namespace OpenRA.Mods.CA.Traits
 				}
 			}
 
-			// Should always have a barracks
+			// CA: Should always have a barracks - not in engine version
 			if (!baseBuilder.HasAdequateBarracksCount)
 			{
 				var barracks = GetProducibleBuilding(baseBuilder.Info.BarracksTypes, buildableThings);
@@ -317,7 +329,7 @@ namespace OpenRA.Mods.CA.Traits
 				}
 			}
 
-			// Should always have a vehicles factory
+			// CA: Should always have a vehicles factory - not in engine version
 			if (!baseBuilder.HasAdequateFactoryCount)
 			{
 				var factory = GetProducibleBuilding(baseBuilder.Info.VehiclesFactoryTypes, buildableThings);
@@ -398,7 +410,7 @@ namespace OpenRA.Mods.CA.Traits
 					baseBuilder.Info.BuildingDelays[name] > world.WorldTick)
 					continue;
 
-				// Does this building have an interval which hasn't elapsed yet?
+				// CA: Does this building have an interval which hasn't elapsed yet?
 				if (baseBuilder.Info.BuildingIntervals != null &&
 					baseBuilder.Info.BuildingIntervals.ContainsKey(name) &&
 					activeBuildingIntervals.ContainsKey(name))
@@ -425,6 +437,7 @@ namespace OpenRA.Mods.CA.Traits
 					continue;
 				}
 
+				// CA: Check max refineries limit
 				if (baseBuilder.Info.RefineryTypes.Contains(name) && baseBuilder.HasMaxRefineries)
 					continue;
 
@@ -536,6 +549,10 @@ namespace OpenRA.Mods.CA.Traits
 			// Can't find a build location
 			return null;
 		}
+
+		// =============================================
+		// === CA-SPECIFIC METHODS ===
+		// =============================================
 
 		void SetBuildingInterval(string name)
 		{

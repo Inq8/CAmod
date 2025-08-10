@@ -48,7 +48,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 					return nearest;
 			}
 
-			return owner.SquadManager.FindClosestEnemy(first.CenterPosition);
+			return owner.SquadManager.FindClosestEnemy(first).Actor;
 		}
 	}
 
@@ -61,7 +61,8 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			if (!owner.IsValid)
 				return;
 
-			if (!owner.IsTargetValid)
+			var leader = owner.CenterUnit();
+			if (!owner.IsTargetValid(leader))
 			{
 				var closestEnemy = FindClosestEnemy(owner);
 				if (closestEnemy == null)
@@ -103,7 +104,8 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			if (!owner.IsValid)
 				return;
 
-			if (!owner.IsTargetValid)
+			var leader = owner.CenterUnit();
+			if (!owner.IsTargetValid(leader))
 			{
 				var closestEnemy = FindClosestEnemy(owner);
 				if (closestEnemy != null)
@@ -115,13 +117,13 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 				}
 			}
 
-			var leader = owner.Units.ClosestTo(owner.TargetActor.CenterPosition);
-			if (leader == null)
+			var attackLeader = owner.Units.ClosestTo(owner.TargetActor.CenterPosition);
+			if (attackLeader == null)
 				return;
 
-			if (leader.Location != lastLeaderLocation)
+			if (attackLeader.Location != lastLeaderLocation)
 			{
-				lastLeaderLocation = leader.Location;
+				lastLeaderLocation = attackLeader.Location;
 				lastUpdatedTick = owner.World.WorldTick;
 			}
 
@@ -174,7 +176,8 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			if (!owner.IsValid)
 				return;
 
-			if (!owner.IsTargetValid)
+			var leader = owner.CenterUnit();
+			if (!owner.IsTargetValid(leader))
 			{
 				var closestEnemy = FindClosestEnemy(owner);
 				if (closestEnemy != null)
@@ -186,10 +189,10 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 				}
 			}
 
-			var leader = owner.Units.ClosestTo(owner.TargetActor.CenterPosition);
-			if (leader.Location != lastLeaderLocation)
+			var attackLeader = owner.Units.ClosestTo(owner.TargetActor.CenterPosition);
+			if (attackLeader.Location != lastLeaderLocation)
 			{
-				lastLeaderLocation = leader.Location;
+				lastLeaderLocation = attackLeader.Location;
 				lastUpdatedTick = owner.World.WorldTick;
 			}
 
