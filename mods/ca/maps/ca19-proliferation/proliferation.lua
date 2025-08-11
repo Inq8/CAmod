@@ -107,6 +107,8 @@ RaidCompositions = {
 		{ Units = { "arty.nod", "ltnk", "bggy", "n4", "n4", "n1" }, MinTime = DateTime.Minutes(10) },
 	},
 	hard = AdjustCompositionsForDifficulty(HardAndAboveCompositions),
+	vhard = AdjustCompositionsForDifficulty(HardAndAboveCompositions),
+	brutal = AdjustCompositionsForDifficulty(HardAndAboveCompositions),
 }
 
 RaidEntryPaths = {
