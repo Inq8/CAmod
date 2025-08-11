@@ -202,7 +202,7 @@ InitNod = function()
 	end
 
 	Trigger.AfterDelay(ClusterMissileEnabledTime[Difficulty], function()
-		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = Nod })
+		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = Nod1 })
 	end)
 end
 

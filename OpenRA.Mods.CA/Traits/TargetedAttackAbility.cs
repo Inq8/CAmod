@@ -128,11 +128,6 @@ namespace OpenRA.Mods.CA.Traits
 			activated = false;
 		}
 
-		protected override void Created(Actor self)
-		{
-			base.Created(self);
-		}
-
 		Order IIssueDeployOrder.IssueDeployOrder(Actor self, bool queued)
 		{
 			// HACK: Switch the global order generator instead of actually issuing an order
@@ -198,7 +193,8 @@ namespace OpenRA.Mods.CA.Traits
 
 		public bool IsAvailable
 		{
-			get {
+			get
+			{
 				return !IsTraitDisabled
 					&& !IsTraitPaused
 					&& ((ammoPool != null && ammoPool.HasAmmo) || (ammoPool == null && Armaments.Any(a => Info.UseDisabledArmaments || (!a.IsTraitDisabled && !a.IsReloading))));
@@ -230,6 +226,16 @@ namespace OpenRA.Mods.CA.Traits
 			if (!Info.ActiveUntilCancelled)
 				Disable(self);
 		}
+
+		protected override void TraitDisabled(Actor self)
+		{
+			Disable(self);
+		}
+
+		protected override void TraitPaused(Actor self)
+		{
+			Disable(self);
+		}
 	}
 
 	class TargetedAttackAbilityOrderGenerator : OrderGenerator
@@ -237,18 +243,29 @@ namespace OpenRA.Mods.CA.Traits
 		readonly Actor self;
 		readonly TargetedAttackAbility ability;
 		readonly TargetedAttackAbilityInfo info;
-		readonly IEnumerable<TraitPair<TargetedAttackAbility>> selectedWithAbility;
+		IEnumerable<TraitPair<TargetedAttackAbility>> currentlySelectedWithAbility;
+		HashSet<Actor> issuedTo;
 
 		public TargetedAttackAbilityOrderGenerator(Actor self, TargetedAttackAbility ability)
 		{
 			this.self = self;
 			this.ability = ability;
 			info = ability.Info;
+			issuedTo = new HashSet<Actor>();
+			UpdateCurrentlySelectedWithAbility();
+		}
 
-			selectedWithAbility = self.World.Selection.Actors
+		void UpdateCurrentlySelectedWithAbility()
+		{
+			currentlySelectedWithAbility = self.World.Selection.Actors
 				.Where(a => a.Info.HasTraitInfo<TargetedAttackAbilityInfo>() && a.Owner == self.Owner && !a.IsDead)
-				.Select(a => new TraitPair<TargetedAttackAbility>(a, a.Trait<TargetedAttackAbility>()))
-				.Where(s => s.Trait.Info.Type == ability.Info.Type);
+				.Select(a => new TraitPair<TargetedAttackAbility>(a, a.TraitOrDefault<TargetedAttackAbility>()))
+				.Where(s => s.Trait != null && s.Trait.Info.Type == ability.Info.Type);
+		}
+
+		bool AvailableAmongSelected()
+		{
+			return currentlySelectedWithAbility.Any(t => t.Trait.IsAvailable);
 		}
 
 		protected override IEnumerable<Order> OrderInner(World world, CPos cell, int2 worldPixel, MouseInput mi)
@@ -259,11 +276,8 @@ namespace OpenRA.Mods.CA.Traits
 				yield break;
 			}
 
-			if (self.IsInWorld && ability.IsAvailable
-				&& (info.CanTargetShroud || self.Owner.Shroud.IsExplored(cell)))
+			if (self.IsInWorld && (info.CanTargetShroud || self.Owner.Shroud.IsExplored(cell)))
 			{
-				world.CancelInputMode();
-
 				var underCursor = world.ScreenMap.ActorsAtMouse(mi)
 					.Select(a => a.Actor)
 					.FirstOrDefault(a => !world.FogObscures(a));
@@ -287,26 +301,45 @@ namespace OpenRA.Mods.CA.Traits
 				if (!ability.Armaments.Any(a => a.Weapon.IsValidAgainst(target, world, self)))
 					yield break;
 
-				var selectedOrderedByDistance = selectedWithAbility
-					.Where(a => !a.Actor.IsDead
-						&& a.Actor.Owner == self.Owner
-						&& a.Actor.IsInWorld
-						&& a.Trait.IsAvailable)
+				UpdateCurrentlySelectedWithAbility();
+
+				var selectedOrderedByDistance = currentlySelectedWithAbility
+					.Where(a => a.Actor.IsInWorld && a.Trait.IsAvailable && !issuedTo.Contains(a.Actor))
 					.OrderBy(a => a.Trait.Activated)
-					.ThenBy(a => (a.Actor.CenterPosition - target.CenterPosition).Length);
+					.ThenBy(a => (a.Actor.CenterPosition - target.CenterPosition).Length)
+					.ToList();
 
 				var closestOnly = (info.DefaultGroupCastBehaviour == DefaultGroupCastBehaviour.ClosestOnly && !mi.Modifiers.HasModifier(Modifiers.Ctrl))
 					|| (info.DefaultGroupCastBehaviour == DefaultGroupCastBehaviour.All && mi.Modifiers.HasModifier(Modifiers.Ctrl));
 
 				if (closestOnly)
 				{
+					if (selectedOrderedByDistance.Count == 0)
+					{
+						world.CancelInputMode();
+						yield break;
+					}
+
 					var closest = selectedOrderedByDistance.First();
+
+					if (closest.Trait.Activated)
+					{
+						world.CancelInputMode();
+						yield break;
+					}
+
 					yield return new Order("TargetedAttackAbilityAttack", closest.Actor, target, mi.Modifiers.HasModifier(Modifiers.Shift));
+					issuedTo.Add(closest.Actor);
+
+					if (selectedOrderedByDistance.Count == 1)
+						world.CancelInputMode();
 				}
 				else
 				{
 					foreach (var s in selectedOrderedByDistance)
 						yield return new Order("TargetedAttackAbilityAttack", s.Actor, target, mi.Modifiers.HasModifier(Modifiers.Shift));
+
+					world.CancelInputMode();
 				}
 			}
 		}
@@ -322,7 +355,6 @@ namespace OpenRA.Mods.CA.Traits
 			if (ability.IsTraitDisabled || ability.IsTraitPaused)
 			{
 				world.CancelInputMode();
-				return;
 			}
 		}
 
@@ -340,7 +372,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			if (info.CircleWidth > 0)
 			{
-				foreach (var other in selectedWithAbility)
+				foreach (var other in currentlySelectedWithAbility)
 				{
 					if (other.Actor.IsInWorld && other.Trait.IsAvailable && self.Owner == self.World.LocalPlayer)
 					{
@@ -374,7 +406,7 @@ namespace OpenRA.Mods.CA.Traits
 		protected override string GetCursor(World world, CPos cell, int2 worldPixel, MouseInput mi)
 		{
 			if (self.IsInWorld && self.Location != cell
-				&& ability.IsAvailable
+				&& AvailableAmongSelected()
 				&& (info.CanTargetShroud || self.Owner.Shroud.IsExplored(cell)))
 				return info.TargetModifiedCursor != null && mi.Modifiers.HasModifier(Modifiers.Ctrl) ? info.TargetModifiedCursor : info.TargetCursor;
 			else
