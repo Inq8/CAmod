@@ -65,20 +65,28 @@ namespace OpenRA.Mods.CA.Traits
 
 			if (existingMissionResult != null)
 			{
-				// If mission has difficulty settings, only store victory if mission is not already completed on same or higher difficulty.
 				if (difficulty != null)
 				{
-					var difficultyOptions = difficulty.Info.Values.Reverse();
-					foreach (var option in difficultyOptions)
-					{
-						// Mission beaten on a higher difficulty, store the new details.
-						if (option.Key == difficulty.Value && option.Key != existingMissionResult.Difficulty)
-							break;
+					var currentDifficultyIndex = -1;
+					var existingDifficultyIndex = -1;
 
-						// Mission beaten on same difficulty, only store the new details if the new time is better.
-						if (option.Key == existingMissionResult.Difficulty && existingMissionResult.Ticks <= player.World.WorldTick)
-							return;
+					var optionsList = difficulty.Info.Values.ToList();
+					for (int i = 0; i < optionsList.Count; i++)
+					{
+						if (optionsList[i].Key == difficulty.Value)
+							currentDifficultyIndex = i;
+
+						if (optionsList[i].Key == existingMissionResult.Difficulty)
+							existingDifficultyIndex = i;
 					}
+
+					// If existing result is on higher difficulty don't overwrite
+					if (existingDifficultyIndex >= 0 && existingDifficultyIndex > currentDifficultyIndex)
+						return;
+
+					// If same difficulty, only store if new time is better
+					if (currentDifficultyIndex == existingDifficultyIndex && existingMissionResult.Ticks <= player.World.WorldTick)
+						return;
 				}
 				else if (existingMissionResult.Ticks <= player.World.WorldTick)
 					return;

@@ -222,7 +222,7 @@ InitScrinRebels = function()
 	Actor.Create("ai.unlimited.power", true, { Owner = SignalTransmittersPlayer })
 
 	if Difficulty ~= "easy" then
-		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = ScribRebels1 })
+		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = ScrinRebels1 })
 	end
 
 	local scrinRebelPlayers = { ScrinRebels1, ScrinRebels2, ScrinRebels3 }

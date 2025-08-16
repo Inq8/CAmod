@@ -3801,8 +3801,6 @@ HQ:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: ResetShroudInfiltrate
-	Targetable@HACKCAPTURABLE:
-		RequiresCondition: !being-warped
 	Health:
 		HP: 110000
 	Armor:
@@ -3940,10 +3938,10 @@ HQ.UPG:
 	Tooltip:
 		Name: Internet Center
 	TooltipExtras:
-		Attributes: • Requires power to operate\n• Detects nearby enemy vehicles, aircraft and structures in fog of war\n• $25 delivered every 60 seconds (normal speed)\n• Income increased by $75 per garrisoned Hacker
+		Attributes: • Requires power to operate\n• Detects nearby enemy vehicles, aircraft and structures in fog of war\n• $25 delivered every 60 seconds (normal speed)\n• Income increased by $75 per garrisoned Hacker\n• Cannot be hacked
 	RenderSprites:
 		PlayerPalette: playertd
-	-Targetable@HACKCAPTURABLE:
+	-Targetable@HACKABLE:
 	-TransformOnCondition@UPG:
 	-GrantConditionOnPrerequisite@UPG:
 	Cargo:

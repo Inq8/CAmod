@@ -3485,14 +3485,12 @@ YF23.Bomber:
 	Armament:
 		Weapon: WidowAA
 		LocalOffset: 0,-256,-43, 0,256,-43
-		PauseOnCondition: !ammo
-	AttackBomberCA:
-		FacingTolerance: 84
+	Interceptor:
 	AttackAircraft:
 		PersistentTargeting: false
 		OpportunityFire: True
 		PauseOnCondition: empdisable || being-warped
-		FacingTolerance: 84
+		FacingTolerance: 128
 	Aircraft:
 		CruiseAltitude: 2560
 		InitialFacing: 192
@@ -3502,13 +3500,6 @@ YF23.Bomber:
 		RepulsionSpeed: 40
 		MaximumPitch: 56
 		MoveIntoShroud: False
-	AmmoPool:
-		Ammo: 10
-		AmmoCondition: ammo
-	ReloadAmmoPool:
-		Delay: 150
-		Count: 2
-		ResetOnFire: true
 	-Huntable:
 	-Selectable:
 	-Voiced:
