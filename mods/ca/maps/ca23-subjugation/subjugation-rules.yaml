@@ -132,18 +132,6 @@ camera.resourcescan:
 
 MISS:
 	Inherits@AUTOTARGET: ^AutoTargetAll
-	Inherits@ChaosBombsPower: ^ChaosBombsPower
-	Inherits@MutaBombPower: ^MutaBombPower
-	AirstrikePowerCA@MutaBomb:
-		-Prerequisites:
-		-PauseOnCondition:
-		RequiresCondition: bombs-enabled
-	AirstrikePowerCA@ChaosBombs:
-		-Prerequisites:
-		-PauseOnCondition:
-		RequiresCondition: bombs-enabled
-	ExternalCondition@BombsEnabled:
-		Condition: bombs-enabled
 	Tooltip:
 		Name: Yuri's Command Center
 	WithRangeCircle@0:
@@ -220,9 +208,21 @@ TTRK:
 DOME:
 	-AirstrikePowerCA@spyplane:
 	-ParatroopersPowerCA@paratroopers:
+	AirstrikePowerCA@MutaBomb:
+		RequiresCondition: bombs-enabled
+		-Prerequisites:
+		-PauseOnCondition:
+	ExternalCondition@BombsEnabled:
+		Condition: bombs-enabled
 
 HPAD:
 	-AirstrikePowerCA@Russianparabombs:
+	AirstrikePowerCA@ChaosBombs:
+		RequiresCondition: bombs-enabled
+		-Prerequisites:
+		-PauseOnCondition:
+	ExternalCondition@BombsEnabled:
+		Condition: bombs-enabled
 
 SILO:
 	Power:

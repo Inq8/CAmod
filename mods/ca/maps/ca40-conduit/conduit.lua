@@ -355,7 +355,7 @@ SetupSubterraneanStrikes = function()
 				Trigger.RemoveProximityTrigger(id)
 				if not a.IsDead then
 					Trigger.OnPassengerExited(a, function(transport, passenger)
-						IdleHunt(passenger)
+						AssaultPlayerBaseOrHunt(passenger)
 					end)
 				end
 			end

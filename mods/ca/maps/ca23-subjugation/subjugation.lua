@@ -305,6 +305,14 @@ InitUSSR = function()
 
 	if IsVeryHardOrAbove() then
 		InitAttackSquad(Squads.Main, USSR)
+		Trigger.AfterDelay(BombsEnabledTime[Difficulty], function()
+			if not CentralDome.IsDead then
+				CentralDome.GrantCondition("bombs-enabled")
+			end
+			if not CentralHelipad.IsDead then
+				CentralHelipad.GrantCondition("bombs-enabled")
+			end
+		end)
 	end
 
 	Actor.Create("ai.unlimited.power", true, { Owner = USSR })
@@ -334,14 +342,6 @@ InitUSSR = function()
 			end
 		end)
 	end)
-
-	if IsVeryHardOrAbove() then
-		Trigger.AfterDelay(BombsEnabledTime[Difficulty], function()
-			if not YuriHQ.IsDead then
-				YuriHQ.GrantCondition("bombs-enabled")
-			end
-		end)
-	end
 end
 
 RespawnMastermind = function()

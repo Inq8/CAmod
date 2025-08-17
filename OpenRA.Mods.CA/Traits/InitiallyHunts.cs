@@ -14,7 +14,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("Eject a ground soldier or a paratrooper while in the air.")]
+	[Desc("Hunts on creation.")]
 	public class InitiallyHuntsInfo : ConditionalTraitInfo
 	{
 		public override object Create(ActorInitializer init) { return new InitiallyHunts(this); }
