@@ -187,6 +187,10 @@ InitGreece = function()
 	if Difficulty == "easy" then
 		RebuildExcludes.Greece = { Types = { "gun", "pbox", "pris", "awpr", "weat" } }
 	else
+		if Difficulty == "normal" then
+			RebuildExcludes.Greece.Actors = { NWPillbox1, NWPillbox2, NWPillbox3, NWPillbox4 }
+		end
+
 		RebuildExcludes.Greece = { Types = { "awpr", "weat" } }
 	end
 
@@ -218,6 +222,10 @@ InitGDI = function()
 	if Difficulty == "easy" then
 		RebuildExcludes.GDI = { Types = { "gtwr", "atwr", "stwr", "nuk2", "eye" } }
 	else
+		if Difficulty == "normal" then
+			RebuildExcludes.GDI.Actors = { NETower1, NETower2, NETower3, NETower4, NEBuilding7, NEBuilding8 }
+		end
+
 		RebuildExcludes.GDI = { Types = { "nuk2", "eye" } }
 	end
 

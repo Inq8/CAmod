@@ -2308,6 +2308,7 @@ JEEP:
 		Weapon: M60mg
 		MuzzleSequence: muzzle
 		LocalOffset: 128,0,43
+	WithEjectedCasings:
 		CasingWeapon: BrassDebris
 		CasingSpawnLocalOffset: 0,-125,200
 		CasingTargetOffset: 0, -500, 0
@@ -2954,7 +2955,7 @@ TTNK:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Cannot attack Aircraft
 	Valued:
-		Cost: 1150
+		Cost: 1200
 	Tooltip:
 		Name: Tesla Tank
 		GenericName: Tank
@@ -3342,6 +3343,7 @@ HMMV:
 		Weapon: M60mgTD
 		LocalOffset: 171,0,85
 		MuzzleSequence: muzzle
+	WithEjectedCasings:
 		CasingWeapon: BrassDebris
 		CasingSpawnLocalOffset: 0,-125,200
 		CasingTargetOffset: 0, -500, 0
@@ -3591,6 +3593,7 @@ BGGY:
 		Weapon: M60mgTD
 		LocalOffset: 171,0,43
 		MuzzleSequence: muzzle
+	WithEjectedCasings:
 		CasingWeapon: BrassDebris
 		CasingSpawnLocalOffset: 0,-125,200
 		CasingTargetOffset: 0, -500, 0
@@ -3953,9 +3956,6 @@ VULC:
 		PauseOnCondition: reload-ground
 		ReloadingCondition: reload-air
 		RequiresCondition: gattling < 12
-		CasingWeapon: BrassDebris
-		CasingSpawnLocalOffset: 0,-225,200
-		CasingTargetOffset: 0, -600, 0
 	Armament@GAT2:
 		Weapon: MGatt
 		LocalOffset: 220,0,350
@@ -3963,9 +3963,6 @@ VULC:
 		PauseOnCondition: reload-ground
 		ReloadingCondition: reload-air
 		RequiresCondition: gattling >= 12
-		CasingWeapon: BrassDebris
-		CasingSpawnLocalOffset: 0,-225,200
-		CasingTargetOffset: 0, -600, 0
 	Armament@GATG:
 		Name: secondary
 		Weapon: MGattG
@@ -3974,9 +3971,6 @@ VULC:
 		PauseOnCondition: reload-air
 		ReloadingCondition: reload-ground
 		RequiresCondition: gattling-ground < 14
-		CasingWeapon: BrassDebris
-		CasingSpawnLocalOffset: 0,-225,200
-		CasingTargetOffset: 0, -600, 0
 	Armament@GATG2:
 		Name: secondary
 		Weapon: MGattG
@@ -3985,6 +3979,7 @@ VULC:
 		PauseOnCondition: reload-air
 		ReloadingCondition: reload-ground
 		RequiresCondition: gattling-ground >= 14
+	WithEjectedCasings:
 		CasingWeapon: BrassDebris
 		CasingSpawnLocalOffset: 0,-225,200
 		CasingTargetOffset: 0, -600, 0
@@ -5823,13 +5818,11 @@ BTR:
 		Weapon: FLAK-23-AG
 		LocalOffset: 592,0,376
 		MuzzleSequence: muzzle
-		CasingWeapon: BrassDebris
-		CasingSpawnLocalOffset: 0,-225,200
-		CasingTargetOffset: 0, -600, 0
 	Armament@AIR:
 		Weapon: FLAK-23-AA
 		LocalOffset: 592,0,376
 		MuzzleSequence: muzzle
+	WithEjectedCasings:
 		CasingWeapon: BrassDebris
 		CasingSpawnLocalOffset: 0,-225,200
 		CasingTargetOffset: 0, -600, 0
@@ -5934,9 +5927,6 @@ BTR.YURI:
 		PauseOnCondition: reload-ground
 		ReloadingCondition: reload-air
 		RequiresCondition: gattling < 12
-		CasingWeapon: BrassDebris
-		CasingSpawnLocalOffset: 0,225,200, 0,-225,200
-		CasingTargetOffset: 0, 600, 0, 0, -600, 0
 	Armament@AIR2:
 		Weapon: MGatt
 		LocalOffset: 320,50,350, 320,-50,350
@@ -5944,9 +5934,6 @@ BTR.YURI:
 		PauseOnCondition: reload-ground
 		ReloadingCondition: reload-air
 		RequiresCondition: gattling >= 12
-		CasingWeapon: BrassDebris
-		CasingSpawnLocalOffset: 0,225,200, 0,-225,200
-		CasingTargetOffset: 0, 600, 0, 0, -600, 0
 	Armament@GROUND:
 		Name: secondary
 		Weapon: MGattG
@@ -5955,9 +5942,6 @@ BTR.YURI:
 		PauseOnCondition: reload-air
 		ReloadingCondition: reload-ground
 		RequiresCondition: gattling-ground < 14
-		CasingWeapon: BrassDebris
-		CasingSpawnLocalOffset: 0,225,200, 0,-225,200
-		CasingTargetOffset: 0, 600, 0, 0, -600, 0
 	Armament@GROUND2:
 		Name: secondary
 		Weapon: MGattG
@@ -5966,6 +5950,7 @@ BTR.YURI:
 		PauseOnCondition: reload-air
 		ReloadingCondition: reload-ground
 		RequiresCondition: gattling-ground >= 14
+	WithEjectedCasings:
 		CasingWeapon: BrassDebris
 		CasingSpawnLocalOffset: 0,225,200, 0,-225,200
 		CasingTargetOffset: 0, 600, 0, 0, -600, 0
@@ -6042,6 +6027,8 @@ BTR.YURI:
 		Voice: Move
 	Voiced:
 		VoiceSet: GattlingTankVoice
+	Selectable:
+		Class: btr
 	-Upgradeable@GATTLING:
 	-WithDecoration@UpgradeOverlay:
 	EncyclopediaExtras:
@@ -6498,9 +6485,6 @@ IFV:
 		MuzzleSequence: muzzle
 		LocalOffset: 250,0,150
 		RequiresCondition: gunturr || shadturr || cmsrturr
-		CasingWeapon: BrassDebris
-		CasingSpawnLocalOffset: 0,-125,200
-		CasingTargetOffset: 0, -500, 0
 	Armament@E2:
 		Weapon: 25mmFRAG
 		MuzzleSequence: muzzle
@@ -6552,17 +6536,11 @@ IFV:
 		MuzzleSequence: muzzle
 		LocalOffset: 560,0,200
 		RequiresCondition: commturr
-		CasingWeapon: BrassDebris
-		CasingSpawnLocalOffset: 0,-225,200
-		CasingTargetOffset: 0, -600, 0
 	Armament@SEAL:
 		Weapon: SealIFVGun
 		MuzzleSequence: muzzle
 		LocalOffset: 560,0,200
 		RequiresCondition: sealturr
-		CasingWeapon: BrassDebris
-		CasingSpawnLocalOffset: 0,-225,200
-		CasingTargetOffset: 0, -600, 0
 	Armament@Sniper:
 		Weapon: SniperIFVGun
 		MuzzleSequence: muzzle
@@ -7212,6 +7190,16 @@ IFV:
 	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || hidden
 		ColorSource: Player
+	WithEjectedCasings@MGCasings:
+		RequiresCondition: gunturr
+		CasingWeapon: BrassDebris3
+		CasingSpawnLocalOffset: 0,-125,200
+		CasingTargetOffset: 0, -500, 0
+	WithEjectedCasings@CommandoCasings:
+		RequiresCondition: sealturr || commturr
+		CasingWeapon: BrassDebris
+		CasingSpawnLocalOffset: 0,-225,200
+		CasingTargetOffset: 0, -600, 0
 	Encyclopedia:
 		Category: Allies/Vehicles
 
@@ -7276,9 +7264,6 @@ IFV.AI:
 		MuzzleSequence: muzzle
 		LocalOffset: 250,0,150
 		RequiresCondition: gunturr
-		CasingWeapon: BrassDebris
-		CasingSpawnLocalOffset: 0,-125,200
-		CasingTargetOffset: 0, -500, 0
 	Armament@E3:
 		Weapon: IFVRocketsE
 		LocalOffset: 192,100,176, 192,-100,176
@@ -7297,6 +7282,11 @@ IFV.AI:
 		Weapon: IFVRocketsAAE.CRYO
 		LocalOffset: 192,100,176, 192,-100,176
 		RequiresCondition: samturr && cryw-upgrade
+	WithEjectedCasings:
+		RequiresCondition: gunturr
+		CasingWeapon: BrassDebris
+		CasingSpawnLocalOffset: 0,-125,200
+		CasingTargetOffset: 0, -500, 0
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped || blinded
 	WithMuzzleOverlay:

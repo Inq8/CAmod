@@ -1227,9 +1227,6 @@ HIND:
 		LocalOffset: 500,0,-250
 		MuzzleSequence: muzzle
 		PauseOnCondition: !ammo
-		CasingWeapon: BrassDebrisAir
-		CasingSpawnLocalOffset: 400,-225,0
-		CasingTargetOffset: 400, -300, 0
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: HindRockets
@@ -1245,6 +1242,11 @@ HIND:
 		PauseOnCondition: !ammo2 || rockets-reloading
 		RequiresCondition: rocketpods-upgrade
 		AmmoUsage: 2
+	WithEjectedCasings:
+		CasingWeapon: BrassDebrisAir
+		CasingSpawnLocalOffset: 400,-225,0
+		CasingTargetOffset: 400, -300, 0
+		ArmamentNames: primary
 	AttackAircraft:
 		FacingTolerance: 80
 		AttackType: Hover
@@ -2091,17 +2093,16 @@ APCH:
 		LocalOffset: 350,0,-150
 		MuzzleSequence: muzzle
 		PauseOnCondition: !ammo
-		CasingWeapon: BrassDebrisAir
-		CasingSpawnLocalOffset: 400,-225,0
-		CasingTargetOffset: 400, -300, 0
 	Armament@SECONDARY:
 		Weapon: HeliGunAA
 		LocalOffset: 350,0,-150
 		MuzzleSequence: muzzle
 		PauseOnCondition: !ammo
+	WithEjectedCasings:
 		CasingWeapon: BrassDebrisAir
 		CasingSpawnLocalOffset: 400,-225,0
 		CasingTargetOffset: 400, -300, 0
+		ArmamentNames: primary
 	AttackAircraft:
 		FacingTolerance: 80
 		AttackType: Hover

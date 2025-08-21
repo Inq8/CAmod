@@ -183,7 +183,7 @@ MGatt:
 			Concrete: 10
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 	Warhead@2Eff: CreateEffect
-		Explosions: piff
+		Explosions: piff, piff2
 		Inaccuracy: 171
 	Warhead@3EffWater: CreateEffect
 		Explosions: water_piff
@@ -543,25 +543,24 @@ M60mgIFV:
 	Range: 5c768
 	-Report:
 	StartBurstReport: ifvmg1.aud, ifvmg2.aud
-	BurstDelays: 2
-	Burst: 3
-	ReloadDelay: 50
+	Burst: 1
+	ReloadDelay: 44
 	Warhead@1Dam: SpreadDamage
-		Damage: 2500
+		Damage: 7600
 		Versus:
-			Wood: 40
-			Light: 90
+			Wood: 30
+			Light: 75
 			None: 100
 		DamageTypes: Prone50Percent, BulletDeath
 	Warhead@PercDam: HealthPercentageDamage
 		Spread: 42
-		Damage: 20
+		Damage: 60
 		Versus:
 			Light: 1
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 		ValidTargets: Infantry
 	Warhead@2Eff: CreateEffect
-		Explosions: piff
+		Explosions: piff, piff2
 	Warhead@3EffWater: CreateEffect
 		Explosions: water_piff
 
