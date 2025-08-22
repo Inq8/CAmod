@@ -1018,6 +1018,7 @@ STLK:
 		ChargingColor: 808080
 		DischargingColor: ffffff
 		Instant: true
+		RequiresCondition: !decloak
 	Cloak@NORMAL:
 		InitialDelay: 0
 		CloakDelay: 50
@@ -1038,12 +1039,15 @@ STLK:
 	SpeedMultiplier@CloakSpeed:
 		Modifier: 150
 		RequiresCondition: hidden
+	GrantConditionOnAttack@Decloak:
+		Condition: decloak
+		RequiresCondition: hidden
 	GrantTimedCondition@Uncloaked:
 		Condition: phaseshield
 		RequiresCondition: !hidden
-		Duration: 25
+		Duration: 30
 	DamageMultiplier@UncloakShield:
-		Modifier: 33
+		Modifier: 0
 		RequiresCondition: phaseshield
 	WithColoredOverlay@UncloakShield:
 		Color: 15091f77
@@ -5976,8 +5980,14 @@ VSPK:
 		ValidRelationships: Ally, Enemy, Neutral
 		UsePlayerColor: true
 		PlayerColorAlpha: 160
-	ConvertsResources:
+	ConvertsResources@Full:
 		Range: 8c0
+		ConvertFrom: Tiberium, BlueTiberium, Ore, Gems
+		ConvertTo: BlackTiberium
+		Interval: 10
+		Amount: 1
+	ConvertsResources@Close:
+		Range: 4c0
 		ConvertFrom: Tiberium, BlueTiberium, Ore, Gems
 		ConvertTo: BlackTiberium
 		Interval: 10

@@ -80,7 +80,7 @@ WorldLoaded = function()
 	AdjustPlayerStartingCashForDifficulty()
 	InitGreece()
 
-	ObjectiveClearPath = USSR.AddObjective("Clear a path for reinforcements.")
+	ObjectiveClearPath = USSR.AddObjective("Clear one of the two paths for reinforcements.")
 	ObjectiveCapturePrison = USSR.AddObjective("Capture Allied prison to free Yuri.")
 
 	Trigger.AfterDelay(1, function()

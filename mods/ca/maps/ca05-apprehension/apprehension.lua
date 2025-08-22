@@ -188,8 +188,15 @@ OncePerFiveSecondChecks = function()
 				Greece.MarkCompletedObjective(ObjectiveClearBase)
 
 				Trigger.AfterDelay(DateTime.Seconds(4), function()
-					Transport1.GrantCondition("cloak-force-disabled")
-					Transport2.GrantCondition("cloak-force-disabled")
+
+					if not Transport1.IsDead then
+						Transport1.GrantCondition("cloak-force-disabled")
+					end
+
+					if not Transport2.IsDead then
+						Transport2.GrantCondition("cloak-force-disabled")
+					end
+
 					Trigger.AfterDelay(DateTime.Seconds(2), function()
 						if not Greece.IsObjectiveCompleted(ObjectiveApprehendTransports) then
 							if Transport1.IsDead or Transport2.IsDead then

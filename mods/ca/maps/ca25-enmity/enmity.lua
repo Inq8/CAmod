@@ -219,6 +219,7 @@ InitNod = function()
 	SetupRefAndSilosCaptureCredits(Nod)
 	AutoReplaceHarvesters(Nod)
 	AutoRebuildConyards(Nod)
+	SellOnCaptureAttempt(StructuresToSellToAvoidCapture)
 	InitAiUpgrades(Nod)
 	InitAttackSquad(Squads.North, Nod)
 	InitAttackSquad(Squads.South, Nod)
@@ -236,16 +237,5 @@ InitNod = function()
 	Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
 		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = Nod })
 		Actor.Create("ai.superweapons.enabled", true, { Owner = Nod })
-	end)
-
-	Utils.Do(StructuresToSellToAvoidCapture, function(self)
-		Trigger.OnEnteredProximityTrigger(self.CenterPosition, WDist.New(3 * 1024), function(a, id)
-			if a.Owner == GDI and a.Type == "n6" then
-				Trigger.RemoveProximityTrigger(id)
-				if not self.IsDead then
-					self.Sell()
-				end
-			end
-		end)
 	end)
 end

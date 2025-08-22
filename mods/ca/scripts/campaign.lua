@@ -935,10 +935,11 @@ InitAttackSquad = function(squad, player, targetPlayers)
 	end
 
 	if targetPlayers ~= nil then
-		if type(targetPlayers) == "table" then
-			squad.TargetPlayers = targetPlayers
-		else
+		-- a single player will be a "userdata" type
+		if type(targetPlayers) ~= "table" then
 			squad.TargetPlayers = { targetPlayers }
+		else
+			squad.TargetPlayers = targetPlayers
 		end
 	elseif #MissionPlayers > 0 then
 		squad.TargetPlayers = MissionPlayers
@@ -1527,6 +1528,22 @@ AutoReplaceHarvester = function(player, harvester)
 		end)
 
 		AddHarvesterDeathStack(player)
+	end)
+end
+
+SellOnCaptureAttempt = function(buildings)
+	if type(buildings) ~= "table" then
+		buildings = { buildings }
+	end
+	Utils.Do(buildings, function(b)
+		Trigger.OnEnteredProximityTrigger(b.CenterPosition, WDist.New(5 * 1024), function(a, id)
+			if IsMissionPlayer(a.Owner) and (a.Type == "e6" or a.Type == "n6" or a.Type == "s6" or a.Type == "mast") then
+				Trigger.RemoveProximityTrigger(id)
+				if not b.IsDead and not IsMissionPlayer(b.Owner) then
+					b.Sell()
+				end
+			end
+		end)
 	end)
 end
 

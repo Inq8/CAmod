@@ -293,6 +293,12 @@ namespace OpenRA.Mods.CA.Traits
 				chargingToken = self.GrantCondition(Info.ChargingCondition);
 		}
 
+		protected override void TraitDisabled(Actor self)
+		{
+			base.TraitDisabled(self);
+			RevokeDeploy();
+		}
+
 		void ITick.Tick(Actor self)
 		{
 			if (IsTraitPaused || IsTraitDisabled)

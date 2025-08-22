@@ -136,15 +136,6 @@ WorldLoaded = function()
 			Gateway.Destroy()
 		end
 	end)
-
-	Utils.Do(NodBuildingsToSell, function(b)
-		Trigger.OnEnteredProximityTrigger(b.CenterPosition, WDist.New(5 * 1024), function(a, id)
-			if a.Owner == USSR and a.Type == "e6" then
-				Trigger.RemoveProximityTrigger(id)
-				NodSellOff()
-			end
-		end)
-	end)
 end
 
 Tick = function()
@@ -255,6 +246,7 @@ end
 InitNod = function()
 	AutoRepairBuildings(Nod)
 	SetupRefAndSilosCaptureCredits(Nod)
+	SellOnCaptureAttempt(NodBuildingsToSell)
 
 	local nodGroundAttackers = Nod.GetGroundAttackers()
 
