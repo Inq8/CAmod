@@ -9,7 +9,7 @@ DOG:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry
 		Weaknesses: • Can only attack Infantry
-		Attributes: • Can detect cloaked units, spies, mines\n• Detects the scent of enemy infantry beyond vision range\n• Immune to mind control
+		Attributes: • Detects cloaked units, spies and mines\n• Detects the scent of enemy infantry beyond vision range\n• Immune to mind control
 	RenderSprites:
 		PlayerPalette: player
 	WithDeathAnimation:
@@ -68,7 +68,7 @@ DOG:
 		RequiresCondition: run
 	IgnoresDisguise:
 	DetectCloaked:
-		DetectionTypes: Cloak, AirCloak, Thief
+		DetectionTypes: Cloak, AirCloak
 		Range: 6c0
 	DetectCloaked@Mine:
 		DetectionTypes: Mine
@@ -110,7 +110,7 @@ TDOG:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor, Heavy Armor
 		Weaknesses: • Cannot attack Aircraft
-		Attributes: • Can detect cloaked units, spies, mines\n• Detects the scent of enemy infantry beyond vision range\n• Immune to mind control\n• Explodes on death or on contact with a target
+		Attributes: • Detects cloaked units, spies and mines\n• Detects the scent of enemy infantry beyond vision range\n• Immune to mind control\n• Explodes on death or on contact with a target
 	Valued:
 		Cost: 300
 	KillsSelf:
@@ -855,7 +855,7 @@ E7:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Buildings
 		Weaknesses: • Cannot attack Aircraft
-		Attributes: • Maximum 1 can be trained\n• Can detect cloaked ground units and spies\n• Immune to mind control\n• Plants C4 to destroy structures and vehicles
+		Attributes: • Maximum 1 can be trained\n• Detects cloaked ground units and spies\n• Immune to mind control\n• Plants C4 to destroy structures and vehicles
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -909,8 +909,7 @@ E7:
 	AnnounceOnKill:
 	IgnoresDisguise:
 	DetectCloaked:
-		DetectionTypes: Cloak, Thief
-		Range: 5c0
+		Range: 2c0
 	Voiced:
 		VoiceSet: TanyaVoice
 	ProducibleWithLevel:
@@ -2035,7 +2034,7 @@ RMBO:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Buildings
 		Weaknesses: • Cannot attack Aircraft
-		Attributes: • Maximum 1 can be trained\n• Can detect cloaked ground units and spies\n• Immune to mind control\n• Plants C4 to destroy structures and vehicles
+		Attributes: • Maximum 1 can be trained\n• Detects cloaked ground units and spies\n• Immune to mind control\n• Plants C4 to destroy structures and vehicles
 	Mobile:
 		Speed: 60
 		Voice: Move
@@ -2091,8 +2090,7 @@ RMBO:
 		Prerequisites: barracks.upgraded
 	IgnoresDisguise:
 	DetectCloaked:
-		DetectionTypes: Cloak, Thief
-		Range: 5c0
+		Range: 2c0
 	Targetable@Hero:
 		TargetTypes: Hero
 	Targetable@MindControlImmune:
@@ -2290,7 +2288,7 @@ BORI:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Buildings, Defenses
 		Weaknesses: • Cannot attack Aircraft
-		Attributes: • Maximum 1 can be trained\n• Can detect cloaked ground units and spies\n• Immune to mind control\n• Calls airstrike on targeted structures
+		Attributes: • Maximum 1 can be trained\n• Detects cloaked ground units and spies\n• Immune to mind control\n• Calls airstrike on targeted structures
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -2356,8 +2354,7 @@ BORI:
 	AnnounceOnKill:
 	IgnoresDisguise:
 	DetectCloaked:
-		DetectionTypes: Cloak, Thief
-		Range: 5c0
+		Range: 2c0
 	Voiced:
 		VoiceSet: BorisVoice
 	ProducibleWithLevel:
@@ -2396,7 +2393,7 @@ SAB:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry
 		Weaknesses: • Can only attack Infantry
-		Attributes: • Can detect cloaked ground units and spies\n• Limited stealth (drains while moving)\n• Infiltrates production buildings to steal technology\n    • Allies: Cryo Mortar, Reckoner, Phantom\n    • Soviets: Cyberdog, Cyclops, Kamov\n    • GDI: Sonic Mortar, Basilisk, Shade\n    • Nod: Chem Mortar, Mantis, Vertigo\n    • Scrin: Cyberscrin, Viper, Manticore\n• Infiltrates radars/tech centers to lock technology\n• Infiltrates any building for vision
+		Attributes: • Detects cloaked ground units and spies\n• Limited stealth (drains while moving)\n• Infiltrates production buildings to steal technology\n    • Allies: Cryo Mortar, Reckoner, Phantom\n    • Soviets: Cyberdog, Cyclops, Kamov\n    • GDI: Sonic Mortar, Basilisk, Shade\n    • Nod: Chem Mortar, Mantis, Vertigo\n    • Scrin: Cyberscrin, Viper, Manticore\n• Infiltrates radars/tech centers to lock technology\n• Infiltrates any building for vision
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -2461,7 +2458,7 @@ SAB:
 		ValidDamageStates: Heavy, Critical
 	IgnoresDisguise:
 	DetectCloaked:
-		DetectionTypes: Cloak, Thief
+		DetectionTypes: Cloak
 		Range: 4c0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
@@ -2846,7 +2843,7 @@ JJET:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Aircraft
 		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses
-		Attributes: • Can detect cloaked ground units
+		Attributes: • Detects cloaked ground units
 	Valued:
 		Cost: 350
 	Tooltip:
@@ -2946,7 +2943,7 @@ JJET:
 	Hovers@CRUISING:
 		RequiresCondition: cruising
 	DetectCloaked:
-		DetectionTypes: Cloak, Thief
+		DetectionTypes: Cloak
 		Range: 3c0
 	Selectable:
 		Bounds: 768, 768, 0, -256
@@ -2977,7 +2974,6 @@ BJET:
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Light Armor
 		Weaknesses: • Weak vs Heavy Armor\n• Has difficulty hitting moving targets\n• Cannot attack Aircraft
-		Attributes: • Can detect cloaked units
 	Tooltip:
 		Name: Bombardier
 	Armament@AIRBORNE:
@@ -3679,7 +3675,7 @@ SHAD:
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft\n• Has difficulty hitting moving vehicles
-		Attributes: • Cloaked when not in combat\n• Shadow beacons provide vision and attach to enemy vehicles that pass over them\n• Can detect cloaked ground units and spies\n• Special Ability: Shadow Beacon
+		Attributes: • Cloaked when not in combat\n• Shadow beacons provide vision and attach to enemy vehicles that pass over them\n• Detects cloaked ground units and spies\n• Special Ability: Shadow Beacon
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	RevealsShroud:
@@ -3748,7 +3744,7 @@ SHAD:
 		ValidDamageStates: Critical
 	IgnoresDisguise:
 	DetectCloaked:
-		DetectionTypes: Cloak, Thief
+		DetectionTypes: Cloak
 		Range: 4c0
 	-WithParachute:
 	Targetable@STEALTHBUBBLEIMMUNE:
@@ -4040,7 +4036,7 @@ YURI:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Vehicles, Defenses, Buildings
 		Weaknesses: • Cannot attack Aircraft
-		Attributes: • Maximum 1 can be trained\n• Can detect cloaked ground units and spies\n• Immune to mind control\n• Shorter range and longer reload against vehicles\n• Psychic detection radius\n• Special Ability: Mind Blast
+		Attributes: • Maximum 1 can be trained\n• Detects cloaked ground units and spies\n• Immune to mind control\n• Shorter range and longer reload against vehicles\n• Psychic detection radius\n• Special Ability: Mind Blast
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -4149,7 +4145,7 @@ YURI:
 	AnnounceOnKill:
 	IgnoresDisguise:
 	DetectCloaked:
-		DetectionTypes: Cloak, Thief
+		DetectionTypes: Cloak
 		Range: 5c0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
@@ -4255,7 +4251,7 @@ SEAL:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor, Buildings
 		Weaknesses: • Cannot attack Aircraft
-		Attributes: • Can detect cloaked units and spies\n• Plants C4 to destroy structures
+		Attributes: • Detects spies\n• Plants C4 to destroy structures
 	Voiced:
 		VoiceSet: SealVoice
 	Mobile:
@@ -4320,9 +4316,6 @@ SEAL:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	IgnoresDisguise:
-	DetectCloaked:
-		DetectionTypes: Cloak, Thief
-		Range: 5c0
 	Crushable:
 		CrushClasses: heavyinfantry
 	TakeCover:
@@ -4696,7 +4689,7 @@ CMSR:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry
 		Weaknesses: • Weak vs Light Armor, Heavy Armor, Defenses, Buildings\n• Cannot attack Aircraft
-		Attributes: • Increases speed and rate of fire of nearby basic infantry\n• Can detect cloaked units and spies
+		Attributes: • Increases speed and rate of fire of nearby basic infantry\n• Detects cloaked units and spies
 	Valued:
 		Cost: 800
 	Tooltip:
@@ -4755,7 +4748,7 @@ CMSR:
 		AlwaysShowMaxRange: true
 	IgnoresDisguise:
 	DetectCloaked:
-		DetectionTypes: Cloak, AirCloak, Thief
+		DetectionTypes: Cloak, AirCloak
 		Range: 7c0
 	Encyclopedia:
 		Category: Soviets/Infantry

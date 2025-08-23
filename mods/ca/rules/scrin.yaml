@@ -1251,7 +1251,7 @@ MAST:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Vehicles, Defenses, Buildings
 		Weaknesses: • Cannot attack Aircraft
-		Attributes: • Maximum 1 can be trained\n• Can detect cloaked ground units and spies\n• Immune to mind control\n• Can capture enemy buildings\n• Shorter range and longer reload against vehicles\n• Special Ability: Mind Spark
+		Attributes: • Maximum 1 can be trained\n• Detects cloaked ground units and spies\n• Immune to mind control\n• Can capture enemy buildings\n• Shorter range and longer reload against vehicles\n• Special Ability: Mind Spark
 	Voiced:
 		VoiceSet: MastermindVoice
 	Valued:
@@ -1272,8 +1272,7 @@ MAST:
 		Range: 7c0
 	IgnoresDisguise:
 	DetectCloaked:
-		DetectionTypes: Cloak, Thief
-		Range: 5c0
+		Range: 2c0
 	Armament@PRIMARY:
 		Weapon: EnslaveInfantry
 		LocalOffset: 150,0,400
@@ -1624,7 +1623,7 @@ SEEK:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Buildings
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
-		Attributes: • Can detect cloaked units, spies and submarines.\n• Can traverse water
+		Attributes: • Detects cloaked units, spies and submarines.\n• Can traverse water
 	Mobile:
 		Speed: 113
 		Locomotor: lighthover
@@ -1662,7 +1661,7 @@ SEEK:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
-		DetectionTypes: Cloak, Thief, AirCloak, Underwater
+		DetectionTypes: Cloak, AirCloak, Underwater
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -1706,7 +1705,7 @@ LACE:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Buildings
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
-		Attributes: • Can detect cloaked units, spies and submarines.\n• Can traverse water
+		Attributes: • Detects cloaked units, spies and submarines.\n• Can traverse water
 	Mobile:
 		TurnSpeed: 40
 		Speed: 144
@@ -1748,7 +1747,7 @@ LACE:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
-		DetectionTypes: Cloak, Thief, AirCloak, Underwater
+		DetectionTypes: Cloak, AirCloak, Underwater
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -5596,7 +5595,7 @@ PTUR:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Cannot attack Aircraft
-		Attributes: • Can detect cloaked units
+		Attributes: • Detects cloaked units
 	Valued:
 		Cost: 725
 	CustomSellValue:
@@ -5662,7 +5661,7 @@ SHAR:
 	TooltipExtras:
 		Strengths: • Strong vs Aircraft
 		Weaknesses: • Cannot attack ground units
-		Attributes: • Requires power to operate\n• Can detect cloaked aircraft
+		Attributes: • Requires power to operate\n• Detects cloaked aircraft
 	Valued:
 		Cost: 800
 	Tooltip:
@@ -5728,7 +5727,7 @@ SCOL:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
 		Weaknesses: • Cannot attack Aircraft
-		Attributes: • Requires power to operate\n• Can detect cloaked units
+		Attributes: • Requires power to operate\n• Detects cloaked units
 	Valued:
 		Cost: 1400
 	Tooltip:

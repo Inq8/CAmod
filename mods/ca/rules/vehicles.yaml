@@ -2279,7 +2279,7 @@ JEEP:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
-		Attributes: • Can detect spies and cloaked units.
+		Attributes: • Detects cloaked units and spies
 	Valued:
 		Cost: 400
 	Tooltip:
@@ -2324,11 +2324,11 @@ JEEP:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
-		DetectionTypes: Cloak, Thief, AirCloak
+		DetectionTypes: Cloak, AirCloak
 		RequiresCondition: !(empdisable || being-warped) && !optics-active
 	DetectCloaked@Optics:
 		Range: 13c0
-		DetectionTypes: Cloak, Thief, AirCloak
+		DetectionTypes: Cloak, AirCloak
 		RequiresCondition: !(empdisable || being-warped) && optics-active
 	RevealsShroud@Optics:
 		Range: 13c0
@@ -2542,7 +2542,7 @@ MNLY:
 		Description: Lays mines to destroy unwary enemy units.
 	TooltipExtras:
 		Weaknesses: • Unarmed
-		Attributes: • Can detect and disarm mines.
+		Attributes: • Detects and disarms mines
 	Valued:
 		Cost: 800
 	Tooltip:
@@ -3316,7 +3316,7 @@ HMMV:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
-		Attributes: • Can detect spies and cloaked units.
+		Attributes: • Detects cloaked units and spies
 	Valued:
 		Cost: 400
 	Tooltip:
@@ -3354,7 +3354,7 @@ HMMV:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
-		DetectionTypes: Cloak, Thief, AirCloak
+		DetectionTypes: Cloak, AirCloak
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -3441,7 +3441,7 @@ GDRN:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Buildings
 		Weaknesses: • Weak vs Infantry, Defenses\n• Cannot attack Aircraft
-		Attributes: • Can detect spies and cloaked units\n• Immune to mind control
+		Attributes: • Detects cloaked units and spies\n• Immune to mind control
 	Valued:
 		Cost: 450
 	Tooltip:
@@ -3485,7 +3485,7 @@ GDRN:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
-		DetectionTypes: Cloak, Thief, AirCloak
+		DetectionTypes: Cloak, AirCloak
 		RequiresCondition: !(empdisable || being-warped)
 	GrantConditionOnPrerequisite@GSHIELD:
 		Condition: pointdef-upgrade
@@ -3566,7 +3566,7 @@ BGGY:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
-		Attributes: • Can detect spies and cloaked units.
+		Attributes: • Detects cloaked units and spies
 	Valued:
 		Cost: 350
 	Tooltip:
@@ -3604,7 +3604,7 @@ BGGY:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
-		DetectionTypes: Cloak, Thief, AirCloak
+		DetectionTypes: Cloak, AirCloak
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -4514,7 +4514,7 @@ MDRN:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
-		Attributes: • Attaches to vehicles to provide support and repairs\n• Immune to mind control
+		Attributes: • Attaches to vehicles to provide support and repairs\n• Immune to mind control\n• Detects cloaked units and spies
 	Valued:
 		Cost: 225
 	UpdatesPlayerStatistics:
@@ -4537,6 +4537,11 @@ MDRN:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
+	IgnoresDisguise:
+	DetectCloaked:
+		Range: 5c0
+		DetectionTypes: Cloak, AirCloak
+		RequiresCondition: !(empdisable || being-warped)
 	Mobile:
 		Speed: 126
 		TurnSpeed: 255
@@ -6164,7 +6169,7 @@ TRPC:
 		PlayerExperienceModifier: 0
 	DetectCloaked:
 		Range: 6c0
-		DetectionTypes: Cloak, Thief, AirCloak
+		DetectionTypes: Cloak, AirCloak
 		RequiresCondition: !(empdisable || being-warped)
 	DetectCloaked@Mines:
 		Range: 4c0
@@ -6378,7 +6383,7 @@ IFV:
 		RequiresCondition: flamturr || chemturr || hoplturr
 	TooltipExtras@spyturr:
 		Weaknesses: • Cannot deal damage
-		Attributes: • Long vision range\n• Can detect cloaked units\n• Marks vehicle/structure targets, revealing them and increasing the damage they take
+		Attributes: • Long vision range\n• Detects cloaked units\n• Marks vehicle/structure targets, revealing them and increasing the damage they take
 		IsStandard: false
 		RequiresCondition: spyturr
 	TooltipExtras@rmbcturr:
@@ -6466,7 +6471,7 @@ IFV:
 		RequiresCondition: spyturr
 	DetectCloaked@SPY:
 		Range: 6c0
-		DetectionTypes: Cloak, Thief, AirCloak
+		DetectionTypes: Cloak, AirCloak
 		RequiresCondition: spyturr && !(empdisable || being-warped)
 	Turreted:
 		TurnSpeed: 40
@@ -8329,7 +8334,7 @@ MSAR:
 		Description: When deployed, detects enemy vehicles, aircraft and structures within a large radius.
 	TooltipExtras:
 		Weaknesses: • Unarmed
-		Attributes: • Can detect cloaked units (when deployed)\n• Increases nearby ground unit vision range (when deployed)\n• Special Ability: Activate Sensor Array
+		Attributes: • Detects cloaked units (when deployed)\n• Increases nearby ground unit vision range (when deployed)\n• Special Ability: Activate Sensor Array
 	Health:
 		HP: 24000
 	Armor:
@@ -8370,7 +8375,7 @@ MSAR:
 		UndeployOnPickup: true
 	DetectCloaked@Deployed:
 		Range: 10c0
-		DetectionTypes: Cloak, Thief, AirCloak
+		DetectionTypes: Cloak, AirCloak
 		RequiresCondition: deployed && !(empdisable || being-warped)
 	ProvidesRadar:
 		RequiresCondition: deployed && !(empdisable || being-warped)
@@ -8639,7 +8644,7 @@ BATF:
 		Range: 4c0
 	DetectCloaked@SPY:
 		Range: 6c0
-		DetectionTypes: Cloak, Thief, AirCloak
+		DetectionTypes: Cloak, AirCloak
 		RequiresCondition: loaded-spy && !(empdisable || being-warped)
 	AttackFrontal:
 		FacingTolerance: 24
@@ -9263,7 +9268,7 @@ PBUL:
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor, Aircraft
 		Weaknesses: • Weak vs Infantry, Buildings, Defenses
-		Attributes: • Can detect spies and cloaked units.\n• Special Ability: Target Painter
+		Attributes: • Detects cloaked units and spies\n• Special Ability: Target Painter
 	Valued:
 		Cost: 850
 	Tooltip:
@@ -9318,7 +9323,7 @@ PBUL:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
-		DetectionTypes: Cloak, Thief, AirCloak
+		DetectionTypes: Cloak, AirCloak
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -9488,7 +9493,7 @@ MANT:
 	TooltipExtras:
 		Strengths: • Strong vs Aircraft
 		Weaknesses: • Cannot attack ground targets
-		Attributes: • Can detect cloaked aircraft
+		Attributes: • Detects cloaked aircraft
 	Valued:
 		Cost: 1000
 	Selectable:
