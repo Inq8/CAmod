@@ -229,7 +229,7 @@ PlasmaDiscs.Hypercharged:
 	Report: seeker-hyperfire1.aud, seeker-hyperfire2.aud
 	Burst: 1
 	ReloadDelay: 4
-	Range: 6c0
+	Range: 7c0
 	Projectile: Missile
 		RangeLimit: 7c0
 	Warhead@1Dam: SpreadDamage
@@ -1414,7 +1414,7 @@ LaceratorShards.Hypercharged:
 	Burst: 1
 	ReloadDelay: 5
 	-StartBurstReport:
-	Range: 6c0
+	Range: 7c0
 	Report: lacerator-hyperfire1.aud, lacerator-hyperfire2.aud
 	Projectile: Missile
 		ContrailStartWidth: 0c48
@@ -1894,8 +1894,8 @@ AtomizerBolts:
 	ReloadDelay: 150
 	Range: 9c0
 	MinRange: 1c512
-	Projectile: Missile
-		Speed: 200
+	Projectile: MissileCA
+		Speed: 250
 		Image: atmzbolt
 		Palette: scrin
 		Jammable: true
@@ -1903,8 +1903,12 @@ AtomizerBolts:
 		CruiseAltitude: 1c512
 		TrailImage: atmzbolttrail
 		TrailPalette: scrin
-		TrailInterval: 1
+		TrailSpacing: 200
 		Blockable: false
+		ContrailLength:8
+		ContrailStartWidth: 0c48
+		ContrailStartColor: ff0000
+		ContrailStartColorAlpha: 170
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
 		Damage: 4000

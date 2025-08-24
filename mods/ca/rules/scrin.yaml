@@ -301,6 +301,9 @@ VEHICLES.SCRIN:
 	WithPalettedOverlay@HYPERCHARGEDEBUFF:
 		Palette: darkened
 		RequiresCondition: hyperchargedebuff
+	DamageMultiplier@HYPERCHARGEDEBUFF:
+		Modifier: 120
+		RequiresCondition: hypercharged
 	SpeedMultiplier@HYPERCHARGEDEBUFF:
 		Modifier: 75
 		RequiresCondition: hyperchargedebuff
@@ -848,6 +851,7 @@ BRST:
 		ArmamentNames: primary
 		CircleWidth: 0
 		Type: BursterAttack
+		DeployCursor: move
 
 EVIS:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -1907,6 +1911,8 @@ INTL.AI:
 	WithCargoSounds:
 		-EnterSounds:
 	-Encyclopedia:
+	Selectable:
+		Class: intl
 
 INTL.AI2:
 	Inherits: INTL.AI

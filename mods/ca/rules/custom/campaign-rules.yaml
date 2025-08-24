@@ -471,7 +471,6 @@ PDOX:
 	Inherits@AiMinorSuperweaponsEnabled: ^AiMinorSuperweaponsEnabled
 	DetonateWeaponPower@ChronoAI:
 		RequiresCondition: ai-minor-superweapons-enabled || !owned-by-ai
-		DisplayTimerRelationships: Ally
 
 MSLO:
 	Inherits@AiSuperweaponsEnabled: ^AiSuperweaponsEnabled
@@ -482,7 +481,6 @@ IRON:
 	Inherits@AiMinorSuperweaponsEnabled: ^AiMinorSuperweaponsEnabled
 	GrantExternalConditionPowerCA@IRONCURTAIN:
 		RequiresCondition: ai-minor-superweapons-enabled || !owned-by-ai
-		DisplayTimerRelationships: Ally
 
 EYE:
 	Inherits@AiSuperweaponsEnabled: ^AiSuperweaponsEnabled
@@ -493,7 +491,6 @@ PATR:
 	Inherits@AiMinorSuperweaponsEnabled: ^AiMinorSuperweaponsEnabled
 	AttackOrderPowerCA@EMPMISSILE:
 		RequiresCondition: ai-minor-superweapons-enabled || !owned-by-ai
-		DisplayTimerRelationships: Ally
 
 MSLO.Nod:
 	Inherits@AiSuperweaponsEnabled: ^AiSuperweaponsEnabled
@@ -515,13 +512,11 @@ MANI:
 	Inherits@AiMinorSuperweaponsEnabled: ^AiMinorSuperweaponsEnabled
 	GrantExternalConditionPowerCA@SUPPRESSION:
 		RequiresCondition: ai-minor-superweapons-enabled || !owned-by-ai
-		DisplayTimerRelationships: Ally
 
 TMPL:
 	Inherits@AiMinorSuperweaponsEnabled: ^AiMinorSuperweaponsEnabled
 	NukePower@Cluster:
 		RequiresCondition: ai-minor-superweapons-enabled || !owned-by-ai
-		DisplayTimerRelationships: Ally
 
 # Disable GPS for AI
 
@@ -741,6 +736,40 @@ ScorchMaker2:
 		Weapon: ScorchMaker2
 	EditorOnlyTooltip:
 		Name: Scorch Maker x2
+
+# Enable Soviet/GDI aircraft from Helipad
+
+YAK:
+	Buildable:
+		Prerequisites: ~aircraft.soviet, ~techlevel.medium
+
+HALO:
+	Buildable:
+		Prerequisites: ~aircraft.soviet, ~techlevel.medium
+
+MIG:
+	Buildable:
+		Prerequisites: ~aircraft.soviet, ~techlevel.medium
+
+SUK:
+	Buildable:
+		Prerequisites: stek, ~aircraft.soviet, ~!seismic.upgrade, ~techlevel.high
+
+KIRO:
+	Buildable:
+		Prerequisites: stek, ~aircraft.kiro, ~techlevel.high
+
+ORCA:
+	Buildable:
+		Prerequisites: ~aircraft.gdi, ~techlevel.medium
+
+A10:
+	Buildable:
+		Prerequisites: ~aircraft.gdi, ~!sidewinders.upgrade, ~!avenger.upgrade, ~techlevel.medium
+
+ORCB:
+	Buildable:
+		Prerequisites: ~aircraft.gdi, gtek, ~techlevel.high
 
 # Enable subfaction specific units/upgrades for all campaign missions
 

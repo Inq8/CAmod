@@ -1523,13 +1523,17 @@ IFVRocketsAAE.TibCore:
 	Report: vaegattb.aud, vaegatta.aud
 	BurstDelays: 6
 	Projectile: MissileCA
-		Speed: 550
-		Inaccuracy: 256
-		LockOnProbability: 100
+	-Projectile:
+	Projectile: Bullet
+		Image: DRAGON
+		TrailImage: smokey
+		Shadow: True
+		ContrailLength: 15
 		ContrailStartColor: 00FFFFE6
-		MinimumLaunchAngle: 100
-		MaximumLaunchAngle: 200
-		AllowSnapping: true
+		Speed: 1200
+		Inaccuracy: 0c128
+		LaunchAngle: 40
+		Blockable: false
 	Warhead@1Dam: SpreadDamage
 		Damage: 880
 
@@ -1539,7 +1543,8 @@ IFVRocketsAAE.TibCore:
 	Report: hammerheadmissile1.aud, hammerheadmissile2.aud
 	Projectile: MissileCA
 		ContrailStartColor: FFCC00E6
-		LockOnProbability: 80
+		LockOnProbability: 100
+		Speed: 250
 	Warhead@1Dam: SpreadDamage
 		Damage: 860
 		Spread: 426
@@ -1553,21 +1558,16 @@ IFVRocketsAAE.TibCore:
 
 227mm.Hailstorm:
 	Inherits: 227mm.upg
-	Range: 10c0
 	Report: hailstormmissile1.aud, hailstormmissile2.aud
 	Burst: 6
 	BurstDelays: 6
-	-Projectile:
-	Projectile: Bullet
-		Image: DRAGON
-		TrailImage: smokey
-		Shadow: True
-		ContrailLength: 15
+	Projectile:
 		ContrailStartColor: FF4400E6
-		Speed: 266
-		Inaccuracy: 1c0
-		LaunchAngle: 62
-		Blockable: false
+		Inaccuracy: 1c256
+		MinimumLaunchAngle: 200
+		MaximumLaunchAngle: 250
+		LockOnProbability: 100
+		CruiseAltitude: 0
 	Warhead@1Dam: SpreadDamage
 		Spread: 426
 		Damage: 370
@@ -1582,7 +1582,7 @@ IFVRocketsAAE.TibCore:
 
 227mmH.Hailstorm:
 	Inherits: 227mm.Hailstorm
-	Range: 9c512
+	Range: 8c512
 
 227mmAA:
 	Inherits: ^AntiAirMissile

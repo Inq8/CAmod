@@ -85,7 +85,7 @@ WorldLoaded = function()
 
 	Trigger.AfterDelay(1, function()
 		local topPathUnits = Map.ActorsInBox(TopPathTopLeft.CenterPosition, TopPathBottomRight.CenterPosition, function(a)
-			return a.Owner == Greece and not a.IsDead and a.HasProperty("Health")
+			return a.Owner == Greece and not a.IsDead and a.HasProperty("Health") and a.Type ~= "minv"
 		end)
 
 		Trigger.OnAllKilled(topPathUnits, function()
@@ -93,7 +93,7 @@ WorldLoaded = function()
 		end)
 
 		local bottomPathUnits = Map.ActorsInBox(BottomPathTopLeft.CenterPosition, BottomPathBottomRight.CenterPosition, function(a)
-			return a.Owner == Greece and not a.IsDead and a.HasProperty("Health")
+			return a.Owner == Greece and not a.IsDead and a.HasProperty("Health") and a.Type ~= "minv"
 		end)
 
 		Trigger.OnAllKilled(bottomPathUnits, function()
