@@ -60,6 +60,11 @@ IonCannonEnabledTime = {
 	brutal = DateTime.Seconds((60 * 12) + 48)
 }
 
+AlliedDropInterval = {
+	vhard = DateTime.Minutes(4),
+	brutal = DateTime.Minutes(2)
+}
+
 Squads = {
 	AlliedMain = {
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(5)),
@@ -105,6 +110,10 @@ WorldLoaded = function()
 	InitGreece()
 	InitGDI()
 
+	if IsVeryHardOrAbove() then
+		SellOnCaptureAttempt({ NWBuilding4, NEBuilding1 })
+	end
+
 	ObjectiveDestroyAdvComms = Scrin.AddObjective("Destroy GDI Advanced Communications Center.")
 	ObjectiveDestroyWeatherControl = Scrin.AddObjective("Destroy Allied Weather Control Device.")
 
@@ -144,6 +153,16 @@ WorldLoaded = function()
 				Trigger.AfterDelay(DateTime.Seconds(10), function()
 					wormhole.Kill()
 				end)
+
+				if group.Waypoint == NEWormhole then
+					DoAlliedSealDrop()
+				elseif group.Waypoint == NWWormhole then
+					DoIonMammothDrop()
+				elseif group.Waypoint == MWormhole then
+					Trigger.AfterDelay(DateTime.Seconds(30), function()
+						InitAlliedDrops()
+					end)
+				end
 			end)
 		end)
 	end)
@@ -246,5 +265,81 @@ InitGDI = function()
 
 	Trigger.AfterDelay(IonCannonEnabledTime[Difficulty], function()
 		Actor.Create("ai.superweapons.enabled", true, { Owner = GDI })
+	end)
+end
+
+DoIonMammothDrop = function()
+	if IsHardOrBelow() then
+		return
+	end
+
+	Trigger.AfterDelay(DateTime.Seconds(40), function()
+		local dropPoints = { GDIDrop1.Location, GDIDrop2.Location }
+
+		if Difficulty == "brutal" then
+			table.insert(dropPoints, GDIDrop3.Location)
+		end
+
+		local delay = 1
+
+		Utils.Do(dropPoints, function(p)
+			Trigger.AfterDelay(delay, function()
+				local entryPath = { GDIDropSpawn.Location, GDIDropRally.Location, p }
+				local exitPath =  { GDIDropExit.Location }
+				ReinforcementsCA.ReinforceWithTransport(GDI, "ocar.htnk.ion", nil, entryPath, exitPath)
+			end)
+			delay = delay + DateTime.Seconds(1)
+			Trigger.OnEnteredFootprint({p}, function(a, id)
+				if a.Owner == GDI and a.Type == "htnk.ion" and not a.IsDead then
+					Trigger.RemoveFootprintTrigger(id)
+					AssaultPlayerBaseOrHunt(a)
+				end
+			end)
+		end)
+	end)
+end
+
+DoAlliedSealDrop = function()
+	if IsHardOrBelow() then
+		return
+	end
+
+	Trigger.AfterDelay(DateTime.Seconds(40), function()
+		local entryPath = { SealDropSpawn.Location, SealDropDest.Location }
+		local units = { "seal", "seal", "seal", "seal" }
+
+		if Difficulty == "brutal" then
+			units = { "seal", "seal", "seal", "seal", "seal", "seal" }
+		end
+
+		DoHelicopterDrop(Greece, entryPath, "tran.paradrop", units, AssaultPlayerBaseOrHunt, function(t)
+			Trigger.AfterDelay(DateTime.Seconds(5), function()
+				if not t.IsDead then
+					t.Move(entryPath[1])
+					t.Destroy()
+				end
+			end)
+		end)
+	end)
+end
+
+InitAlliedDrops = function()
+	if IsHardOrBelow() then
+		return
+	end
+
+	local barracks = Greece.GetActorsByType("tent")
+	local factories = Greece.GetActorsByType("weap")
+
+	if #barracks > 0 then
+		barracks[1].Produce("u3.squad")
+	end
+
+	if #factories > 0 then
+		factories[1].Produce("gtnk.squad")
+	end
+
+	Trigger.AfterDelay(AlliedDropInterval[Difficulty], function()
+		InitAlliedDrops()
 	end)
 end

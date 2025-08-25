@@ -357,7 +357,7 @@ DoDisruptorDrop = function()
 		Trigger.OnEnteredFootprint({p}, function(a, id)
 			if a.Owner == GDI and a.Type == "disr" and not a.IsDead then
 				Trigger.RemoveFootprintTrigger(id)
-				IdleHunt(a)
+				AssaultPlayerBaseOrHunt(a)
 			end
 		end)
 	end)

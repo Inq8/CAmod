@@ -72,6 +72,15 @@ IronCurtainEnabledDelay = {
 	brutal = DateTime.Minutes(5)
 }
 
+if IsVeryHardOrAbove() then
+	table.insert(UnitCompositions.Soviet, {
+		Infantry = { "deso", "deso", "deso", "deso", "deso", "deso", "deso", "deso", "deso" },
+		Vehicles = { "apoc.erad", "apoc.erad", "apoc.erad", "apoc.erad", "4tnk.erad", "4tnk.erad", "4tnk.erad", "4tnk.erad" },
+		MinTime = DateTime.Minutes(18),
+		IsSpecial = true
+	})
+end
+
 AdjustedSovietCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Soviet)
 
 Squads = {
@@ -145,6 +154,14 @@ WorldLoaded = function()
 	InitObjectives(Scrin)
 	AdjustPlayerStartingCashForDifficulty()
 	InitUSSR()
+
+	if Difficulty == "brutal" then
+		Trigger.AfterDelay(DateTime.Minutes(10), function()
+			Actor.Create("ai.superweapons.enabled", true, { Owner = USSR })
+		end)
+	else
+		MissileSilo.Destroy()
+	end
 
 	ObjectiveDestroyBases = Scrin.AddObjective("Eliminate Soviet bases.")
 	ObjectiveDestroyUncrewed = Scrin.AddObjective("Destroy all uncrewed Soviet vehicles.")
@@ -285,6 +302,16 @@ InitUSSR = function()
 	InitAttackSquad(Squads.West, USSR)
 	InitAttackSquad(Squads.East, USSR)
 	InitAirAttackSquad(Squads.AirMain, USSR)
+
+	if IsVeryHardOrAbove() then
+		SellOnCaptureAttempt({ SWBarracks, SEBarracks1, SEBarracks2 })
+
+		if Difficulty == "brutal" then
+			Trigger.AfterDelay(DateTime.Minutes(20), function()
+				CompositionValueMultipliers.brutal = 1.4
+			end)
+		end
+	end
 
 	if Difficulty ~= "easy" then
 		InitAirAttackSquad(Squads.AirFleetKillers, USSR, MissionPlayers, { "pac", "deva", "stmr", "enrv", "torm" })

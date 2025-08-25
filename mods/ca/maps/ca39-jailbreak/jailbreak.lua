@@ -154,17 +154,7 @@ WorldLoaded = function()
 		end
 	end)
 
-	Trigger.OnEnteredProximityTrigger(AlliedOutpost.CenterPosition, WDist.New(6 * 1024), function(a, id)
-		if a.Owner == USSR and a.Type == "e6" then
-			Trigger.RemoveProximityTrigger(id)
-
-			Utils.Do({NorthConyard, NorthFactory, NorthBarracks}, function(b)
-				if not b.IsDead and b.Owner == GreeceNorth then
-					b.Sell()
-				end
-			end)
-		end
-	end)
+	SellOnCaptureAttempt({NorthConyard, NorthFactory, NorthBarracks}, true)
 
 	Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
 		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = Greece })

@@ -67,7 +67,7 @@ AirAttackDelayMultipliers = {
 	brutal = 0.66
 }
 
-CompositionValueMultiplier = {
+CompositionValueMultipliers = {
 	easy = 0.5,
 	normal = 0.67,
 	hard = 0.83,
@@ -1531,16 +1531,24 @@ AutoReplaceHarvester = function(player, harvester)
 	end)
 end
 
-SellOnCaptureAttempt = function(buildings)
+SellOnCaptureAttempt = function(buildings, sellAsGroup)
 	if type(buildings) ~= "table" then
 		buildings = { buildings }
 	end
 	Utils.Do(buildings, function(b)
 		Trigger.OnEnteredProximityTrigger(b.CenterPosition, WDist.New(5 * 1024), function(a, id)
-			if IsMissionPlayer(a.Owner) and (a.Type == "e6" or a.Type == "n6" or a.Type == "s6" or a.Type == "mast") then
+			if IsMissionPlayer(a.Owner) and (a.Type == "e6" or a.Type == "n6" or a.Type == "s6" or a.Type == "mast" or (a.Type == "ifv" and a.HasPassengers and Utils.Any(a.Passengers, function(p) return p.Type == "e6" or p.Type == "n6" or p.Type == "s6" end))) then
 				Trigger.RemoveProximityTrigger(id)
-				if not b.IsDead and not IsMissionPlayer(b.Owner) then
-					b.Sell()
+				if sellAsGroup then
+					Utils.Do(buildings, function(b2)
+						if not b2.IsDead and not IsMissionPlayer(b2.Owner) then
+							b2.Sell()
+						end
+					end)
+				else
+					if not b.IsDead and not IsMissionPlayer(b.Owner) then
+						b.Sell()
+					end
 				end
 			end
 		end)
@@ -1905,7 +1913,7 @@ AdjustCompositionForDifficulty = function(composition, difficulty)
 				queueTotalUnitCost[queueName] = queueTotalUnitCost[queueName] + UnitCosts[chosenUnit]
 			end
 
-			local adjustedDesiredTotalUnitCostForQueue = queueTotalUnitCost[queueName] * CompositionValueMultiplier[difficulty]
+			local adjustedDesiredTotalUnitCostForQueue = queueTotalUnitCost[queueName] * CompositionValueMultipliers[difficulty]
 
 			-- allocate units until the adjusted cost is reached
 			while queueAllocatedTotalUnitCost[queueName] < adjustedDesiredTotalUnitCostForQueue do
