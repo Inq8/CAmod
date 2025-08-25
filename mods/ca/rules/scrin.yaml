@@ -747,7 +747,7 @@ WCHR:
 		Name: Watcher
 	TooltipExtras:
 		Weaknesses: • Cannot deal damage
-		Attributes: • Can attach parasites to enemy vehicles & structures\n• Cloaked when not moving\n• Special Ability: Teleport (with upgrade)
+		Attributes: • Can attach parasites to enemy vehicles & structures\n• Cloaked when not moving\n• Detects cloaked ground units and spies\n• Special Ability: Teleport (with upgrade)
 	Health:
 		HP: 5000
 	UpdatesPlayerStatistics:
@@ -756,6 +756,9 @@ WCHR:
 		Speed: 80
 	RevealsShroud:
 		Range: 6c0
+	IgnoresDisguise:
+	DetectCloaked:
+		Range: 5c0
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 	AttackFrontal:
@@ -2984,6 +2987,7 @@ SMCV:
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Inherits@EconomyPolicyDiscount: ^EconomyPolicyDiscount
+	Inherits@EconomyPolicyMcvSpeedBonus: ^EconomyPolicyMcvSpeedBonus
 	Inherits@BLD: ^ProducesBuildings
 	Inherits@HeavyArmor: ^HeavyArmor
 	Buildable:
@@ -4632,14 +4636,14 @@ SFAC:
 	BaseProvider:
 		Range: 16c0
 		PauseOnCondition: being-captured
-		RequiresCondition: !economy-policy2
-	BaseProvider@EconomyPolicy2:
+		RequiresCondition: !defense-policy
+	BaseProvider@DefensePolicy:
 		Range: 20c0
 		PauseOnCondition: being-captured
-		RequiresCondition: economy-policy2
-	GrantConditionOnPrerequisite@EconomyPolicy2:
-		Condition: economy-policy2
-		Prerequisites: economy.policy, influence.level2
+		RequiresCondition: defense-policy
+	GrantConditionOnPrerequisite@DefensePolicy:
+		Condition: defense-policy
+		Prerequisites: defense.policy
 	WithBuildingPlacedAnimation:
 		RequiresCondition: !build-incomplete && !chrono-vortex
 	Power:

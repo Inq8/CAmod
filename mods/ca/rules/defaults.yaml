@@ -2100,51 +2100,53 @@
 
 ^EconomyPolicyDiscount:
 	ProductionCostMultiplier@EconomyPolicy1:
-		Multiplier: 90
+		Multiplier: 85
 		Prerequisites: economy.policy, influence.level1, !influence.level2
 	ProductionCostMultiplier@EconomyPolicy2:
-		Multiplier: 80
-		Prerequisites: economy.policy, influence.level2, !influence.level3
-	ProductionCostMultiplier@EconomyPolicy3:
 		Multiplier: 70
-		Prerequisites: economy.policy, influence.level3
+		Prerequisites: economy.policy, influence.level2
 
 ^EconomyPolicyTimeReduction:
 	ProductionTimeMultiplier@EconomyPolicy1:
-		Multiplier: 90
+		Multiplier: 85
 		Prerequisites: economy.policy, influence.level1, !influence.level2
 	ProductionTimeMultiplier@EconomyPolicy2:
-		Multiplier: 80
-		Prerequisites: economy.policy, influence.level2, !influence.level3
-	ProductionTimeMultiplier@EconomyPolicy3:
 		Multiplier: 70
-		Prerequisites: economy.policy, influence.level3
+		Prerequisites: economy.policy, influence.level2
+
+^EconomyPolicyMcvSpeedBonus:
+	SpeedMultiplier@EconomyPolicy2:
+		Modifier: 120
+		RequiresCondition: economy-policy2
+	GrantConditionOnPrerequisite@EconomyPolicy2:
+		Condition: economy-policy2
+		Prerequisites: economy.policy, influence.level2
 
 ^DefensePolicyDamageReduction:
 	GrantConditionOnPrerequisite@DefensePolicy1:
 		Condition: defense-policy1
-		Prerequisites: defense.policy, influence.level1, !influence.level2
+		Prerequisites: defense.policy, influence.level1
 	GrantConditionOnPrerequisite@DefensePolicy2:
 		Condition: defense-policy2
-		Prerequisites: defense.policy, influence.level2, !influence.level3
+		Prerequisites: defense.policy, influence.level2
 	GrantConditionOnPrerequisite@DefensePolicy3:
 		Condition: defense-policy3
 		Prerequisites: defense.policy, influence.level3
 	DamageMultiplier@DefensePolicy1:
-		Modifier: 91
-		RequiresCondition: defense-policy1
+		Modifier: 87
+		RequiresCondition: defense-policy1 && !defense-policy2
 	DamageMultiplier@DefensePolicy2:
-		Modifier: 83
-		RequiresCondition: defense-policy2
-	DamageMultiplier@DefensePolicy3:
 		Modifier: 77
-		RequiresCondition: defense-policy3
+		RequiresCondition: defense-policy2
 	ChangesHealth@DefensePolicy2:
 		Step: 200
 		StartIfBelow: 100
 		Delay: 24
 		DamageCooldown: 0
 		RequiresCondition: defense-policy2 && being-repaired
+	RevealsShroudMultiplier@DefensePolicy3:
+		Modifier: 125
+		RequiresCondition: defense-policy3
 
 ^DefensePolicyDamageBonus:
 	GrantConditionOnPrerequisite@DefensePolicy3:
