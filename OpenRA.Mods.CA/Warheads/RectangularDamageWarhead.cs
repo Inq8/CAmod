@@ -14,7 +14,6 @@ using OpenRA.Mods.CA.Traits;
 using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Mods.Common.Warheads;
-using OpenRA.Primitives;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Warheads
@@ -86,14 +85,18 @@ namespace OpenRA.Mods.CA.Warheads
 			{
 				var caDebug = world.WorldActor.TraitOrDefault<WarheadDebugOverlayCA>();
 				if (caDebug != null)
-			caDebug.AddRectangleImpact(start, end, effectiveRange, effectiveRange[^1], DebugOverlayColor);
+				{
+					caDebug.AddRectangleImpact(start, end, effectiveRange, effectiveRange[^1], DebugOverlayColor);
+				}
 				else
+				{
 					world.WorldActor.Trait<WarheadDebugOverlay>().AddImpact(pos, effectiveRange, DebugOverlayColor);
+				}
 			}
 
-		// Find potential victims within a bounding circle: approx half-diagonal + maxRange
-		// Use a conservative bound: sqrt(a^2+b^2) <= a + b; half-width is inferred from max falloff
-		var halfDiag = new WDist(Length.Length / 2 + effectiveRange[^1].Length);
+			// Find potential victims within a bounding circle: approx half-diagonal + maxRange
+			// Use a conservative bound: sqrt(a^2+b^2) <= a + b; half-width is inferred from max falloff
+			var halfDiag = new WDist(Length.Length / 2 + effectiveRange[^1].Length);
 			var searchRadius = halfDiag + effectiveRange[^1];
 
 			foreach (var victim in world.FindActorsOnCircle(pos, searchRadius))
@@ -103,6 +106,7 @@ namespace OpenRA.Mods.CA.Warheads
 
 				// Compute closest point on center line and edge distance
 				var victimCenter = victim.CenterPosition;
+
 				// Reject if projection is outside the center-line segment (enforce hard length bounds)
 				if (!IsProjectionWithinSegment(victimCenter, start, end))
 					continue;
@@ -144,6 +148,7 @@ namespace OpenRA.Mods.CA.Warheads
 						if (d < best)
 							best = d;
 					}
+
 					falloffDistance = best;
 				}
 				else // CenterPosition
@@ -201,11 +206,13 @@ namespace OpenRA.Mods.CA.Warheads
 			var b = new int2(end.X, end.Y);
 			var ab = b - a;
 			var ap = p - a;
-			long dot = (long)ap.X * ab.X + (long)ap.Y * ab.Y;
-			long lenSq = (long)ab.X * ab.X + (long)ab.Y * ab.Y;
+			var dot = (long)ap.X * ab.X + (long)ap.Y * ab.Y;
+			var lenSq = (long)ab.X * ab.X + (long)ab.Y * ab.Y;
 			if (lenSq == 0)
 				return false;
-			return dot >= 0 && dot <= lenSq;
+
+			// Treat the end as open: include start (dot >= 0), exclude end (dot < lenSq)
+			return dot >= 0 && dot < lenSq;
 		}
 
 		static WPos ClosestPointOnSegment(WPos point, WPos start, WPos end)
@@ -233,6 +240,7 @@ namespace OpenRA.Mods.CA.Warheads
 					return int2.Lerp(Falloff[i - 1], Falloff[i], distance - inner, outer - inner);
 				inner = outer;
 			}
+
 			return 0;
 		}
 	}

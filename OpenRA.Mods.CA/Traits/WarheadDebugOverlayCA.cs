@@ -8,6 +8,7 @@
  */
 #endregion
 
+using System;
 using System.Collections.Generic;
 using OpenRA.Graphics;
 using OpenRA.Mods.CA.Graphics;
@@ -70,6 +71,7 @@ namespace OpenRA.Mods.CA.Traits
 		readonly List<WHImpact> impacts = new();
 		readonly List<WHCapsuleImpact> capsuleImpacts = new();
 		readonly List<WHRectangleImpact> rectangleImpacts = new();
+		readonly List<WHConeImpact> coneImpacts = new();
 
 		public WarheadDebugOverlayCA(WarheadDebugOverlayCAInfo info)
 		{
@@ -110,6 +112,42 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			rectangleImpacts.Add(new WHRectangleImpact(start, end, range, halfWidth, info.DisplayDuration, color));
 		}
+
+		sealed class WHConeImpact
+		{
+			public readonly WPos Apex;
+			public readonly WVec Axis; // direction vector
+			public readonly WDist[] Range;
+			public readonly WDist Length; // finite length along axis
+			public readonly int ConeAngle; // degrees
+			public readonly Color Color;
+			public int Time;
+
+			public WDist OuterRange => Range[^1];
+
+			public WHConeImpact(WPos apex, WVec axis, WDist[] range, WDist length, int coneAngle, int time, Color color)
+			{
+				Apex = apex;
+				Axis = axis;
+				Range = range;
+				Length = length;
+				ConeAngle = coneAngle;
+				Time = time;
+				Color = color;
+			}
+		}
+
+		public void AddConeImpact(WPos apex, WVec axis, WDist[] range, int coneAngle, Color color)
+		{
+			// Back-compat overload: assume length equals outer range
+			coneImpacts.Add(new WHConeImpact(apex, axis, range, range[^1], coneAngle, info.DisplayDuration, color));
+		}
+
+		public void AddConeImpact(WPos apex, WVec axis, WDist length, WDist[] range, int coneAngle, Color color)
+		{
+			coneImpacts.Add(new WHConeImpact(apex, axis, range, length, coneAngle, info.DisplayDuration, color));
+		}
+
 		IEnumerable<IRenderable> IRenderAnnotations.RenderAnnotations(Actor self, WorldRenderer wr)
 		{
 			// Render standard circular impacts
@@ -180,6 +218,37 @@ namespace OpenRA.Mods.CA.Traits
 			}
 
 			rectangleImpacts.RemoveAll(r => r.Time == 0);
+
+			// Render cone impacts
+			foreach (var c in coneImpacts)
+			{
+				var alpha = 255.0f * c.Time / info.DisplayDuration;
+				var rangeStep = alpha / c.Range.Length;
+
+				// Draw side rays up to min(length, outer range)
+				var maxR = c.OuterRange.Length < c.Length.Length ? c.OuterRange : c.Length;
+				foreach (var r in ConeSideLines(c.Apex, c.Axis, c.ConeAngle, maxR, 1, Color.FromArgb((int)alpha, c.Color)))
+					yield return r;
+
+				// Draw arc at outer range (clamped by length)
+				foreach (var seg in ConeArcSegments(c.Apex, c.Axis, c.ConeAngle, maxR, 1, Color.FromArgb((int)alpha, c.Color)))
+					yield return seg;
+
+				// Draw falloff rings as arcs (skip bands beyond length)
+				foreach (var r in c.Range)
+				{
+					if (r.Length > c.Length.Length)
+						continue;
+					foreach (var seg in ConeArcSegments(c.Apex, c.Axis, c.ConeAngle, r, 1, Color.FromArgb((int)alpha, c.Color)))
+						yield return seg;
+					alpha -= rangeStep;
+				}
+
+				if (!wr.World.Paused)
+					c.Time--;
+			}
+
+			coneImpacts.RemoveAll(c => c.Time == 0);
 		}
 
 		bool IRenderAnnotations.SpatiallyPartitionable => false;
@@ -200,6 +269,78 @@ namespace OpenRA.Mods.CA.Traits
 
 			var center = new WPos((start.X + end.X) / 2, (start.Y + end.Y) / 2, (start.Z + end.Z) / 2);
 			yield return new PolygonAnnotationRenderable(new[] { a, b, c, d }, center, 1, color);
+		}
+
+		static IEnumerable<IRenderable> ConeSideLines(WPos apex, WVec axis, int coneAngleDeg, WDist radius, int width, Color color)
+		{
+			// Normalize the axis vector
+			if (axis.Length == 0)
+				yield break;
+
+			var axisNorm = axis * 1024 / axis.Length;
+			var halfAngleRad = Math.PI * (coneAngleDeg / 2.0) / 180.0;
+			var cos = Math.Cos(halfAngleRad);
+			var sin = Math.Sin(halfAngleRad);
+
+			// Create a perpendicular vector in the XY plane
+			var perp = new WVec(-axisNorm.Y, axisNorm.X, 0);
+			if (perp.Length == 0)
+				perp = new WVec(1024, 0, 0); // Fallback if axis is vertical
+			else
+				perp = perp * 1024 / perp.Length;
+
+			// Calculate the two edge directions by rotating the axis by +/- half angle
+			// Using 2D rotation in the plane defined by axis and perp
+			var leftVec = new WVec(
+				(int)(axisNorm.X * cos - perp.X * sin),
+				(int)(axisNorm.Y * cos - perp.Y * sin),
+				axisNorm.Z) * radius.Length / 1024;
+
+			var rightVec = new WVec(
+				(int)(axisNorm.X * cos + perp.X * sin),
+				(int)(axisNorm.Y * cos + perp.Y * sin),
+				axisNorm.Z) * radius.Length / 1024;
+
+			yield return new LineAnnotationRenderable(apex, apex + leftVec, width, color);
+			yield return new LineAnnotationRenderable(apex, apex + rightVec, width, color);
+		}
+
+		static IEnumerable<IRenderable> ConeArcSegments(WPos apex, WVec axis, int coneAngleDeg, WDist radius, int width, Color color)
+		{
+			const int Segments = 24;
+
+			// Normalize the axis vector
+			if (axis.Length == 0)
+				yield break;
+
+			var axisNorm = axis * 1024 / axis.Length;
+			var halfAngleRad = Math.PI * (coneAngleDeg / 2.0) / 180.0;
+
+			// Create a perpendicular vector in the XY plane
+			var perp = new WVec(-axisNorm.Y, axisNorm.X, 0);
+			if (perp.Length == 0)
+				perp = new WVec(1024, 0, 0); // Fallback if axis is vertical
+			else
+				perp = perp * 1024 / perp.Length;
+
+			WPos? prev = null;
+			for (var i = 0; i <= Segments; i++)
+			{
+				var t = (double)i / Segments;
+				var angle = -halfAngleRad + t * (2 * halfAngleRad);
+				var cos = Math.Cos(angle);
+				var sin = Math.Sin(angle);
+
+				var vec = new WVec(
+					(int)(axisNorm.X * cos - perp.X * sin),
+					(int)(axisNorm.Y * cos - perp.Y * sin),
+					axisNorm.Z) * radius.Length / 1024;
+
+				var p = apex + vec;
+				if (prev.HasValue)
+					yield return new LineAnnotationRenderable(prev.Value, p, width, color);
+				prev = p;
+			}
 		}
 	}
 }
