@@ -1068,16 +1068,10 @@ Laser:
 		SecondaryBeamZOffset: 511
 		SecondaryBeamColor: FF000040
 	Warhead@1Dam: SpreadDamage
-		Spread: 42
-		Damage: 37500
+		Spread: 1c512
+		Falloff: 100, 0
+		Damage: 10000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
-		Versus:
-			None: 250
-			Light: 101
-			Wood: 60
-			Heavy: 101
-			Concrete: 90
-			Brick: 50
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees, Creep
@@ -2764,95 +2758,102 @@ SonicPulse:
 	Projectile: LinearPulse
 		Speed: 768
 		MinimumImpactDistance: 768
-	Warhead@1Dam: SpreadDamage
+		ImpactType: Rectangle
+		RectangleLength: 768
+		RectangleWidth: 1c512
+		SingleHitPerActor: true
 		Spread: 0c256
-		Falloff: 100, 75, 25, 0
-		Damage: 6600
+		Falloff: 100, 70, 20, 0
+		ImpactAnimation@1:
+			Image: explosion
+			Sequences: sonicblast1, sonicblast2
+			Palette: effect-ignore-lighting-alpha40
+		ImpactAnimation@2:
+			Image: explosion
+			Sequences: sonicpulse1, sonicpulse2
+			Palette: effect-ignore-lighting-alpha40
+	Warhead@1Dam: SpreadDamage
+		Damage: 12500
 		ValidTargets: Ground, Water
 		ValidRelationships: Enemy, Neutral
 		Versus:
-			None: 45
-			Wood: 45
-			Light: 90
+			None: 28
+			Wood: 92
+			Concrete: 80
+			Light: 92
 			Heavy: 100
-			Concrete: 70
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
-	Warhead@2Eff: CreateEffect
-		Explosions: sonicblast1, sonicblast2
-		ExplosionPalette: effect-ignore-lighting-alpha40
-		ValidTargets: Ground, Air, Ship, Trees
-	Warhead@3Eff: CreateEffect
-		Explosions: sonicpulse1, sonicpulse2
-		ExplosionPalette: effect-ignore-lighting-alpha40
-		ValidTargets: Ground, Air, Ship, Trees
 
 SonicPulse.UPG:
 	Inherits: SonicPulse
 	Range: 8c256
+	Projectile: LinearPulse
+		ImpactAnimation@1:
+			Sequences: sonicblastupg1, sonicblastupg2
+		ImpactAnimation@2:
+			Sequences: sonicpulseupg1, sonicpulseupg2
 	Warhead@1Dam: SpreadDamage
-		Damage: 7200
-	Warhead@2Eff: CreateEffect
-		Explosions: sonicblastupg1, sonicblastupg2
-	Warhead@3Eff: CreateEffect
-		Explosions: sonicpulseupg1, sonicpulseupg2
+		Damage: 13500
 	Warhead@ConcussionVehicles: GrantExternalConditionCA
-		Range: 1c0
+		Range: 0c128
 		Duration: 150
 		Condition: concussion
 		ValidTargets: Vehicle, Ship
 		ValidRelationships: Enemy, Neutral
 	Warhead@ConcussionInfantry: GrantExternalConditionCA
-		Range: 1c0
+		Range: 0c128
 		Duration: 25
 		Condition: concussion
 		ValidTargets: Infantry
 		ValidRelationships: Enemy, Neutral
 
 DisruptorPulse:
-	Inherits: SonicPulse
 	ReloadDelay: 80
 	Range: 5c256
-	-Report:
 	StartBurstReport: sonic4.aud
 	Burst: 9
 	BurstDelays: 5
+	TargetActorCenter: true
 	Projectile: LinearPulse
 		Speed: 384
-	Warhead@1Dam: SpreadDamage
-		Spread: 0c384
-		Damage: 750
-		Versus:
-			None: 100
-			Wood: 60
-			Light: 28
-			Heavy: 12
-			Concrete: 35
-	Warhead@friendlyFire: SpreadDamage
+		MinimumImpactDistance: 768
+		ImpactType: Rectangle
+		RectangleLength: 768
+		RectangleWidth: 2c256
+		SingleHitPerActor: true
 		Spread: 0c384
 		Falloff: 100, 75, 25, 0
-		Damage: 150
+		ImpactAnimation@1:
+			Image: explosion
+			Sequences: sonicwave1, sonicwave2
+			Palette: effect
+	Warhead@1Dam: SpreadDamage
+		Damage: 3000
 		Versus:
-			None: 100
-			Wood: 60
-			Light: 28
-			Heavy: 12
-			Concrete: 45
+			None: 75
+			Wood: 100
+			Concrete: 55
+			Light: 30
+			Heavy: 15
+		ValidRelationships: Enemy, Neutral
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+	Warhead@friendlyFire: SpreadDamage
+		Damage: 600
+		Versus:
+			None: 75
+			Wood: 100
+			Concrete: 55
+			Light: 30
+			Heavy: 15
 		ValidRelationships: Ally
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 		InvalidTargets: Disruptor
-		DebugOverlayColor: ffaa00
-	-Warhead@2Eff:
-	Warhead@2Eff: CreateFacingEffect
-		Explosions: sonicwave1, sonicwave2
-		ExplosionPalette: effect
-		ValidTargets: Ground, Air, Ship, Trees
-	-Warhead@3Eff:
 
 DisruptorPulse.Amp:
 	Inherits: DisruptorPulse
 	Range: 6c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 825
+		Damage: 3300
 	Warhead@2Eff: CreateFacingEffect
 		Explosions: sonicwaveupg1, sonicwaveupg2
 		ExplosionPalette: effect

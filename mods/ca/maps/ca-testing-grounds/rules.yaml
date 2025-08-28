@@ -24,6 +24,27 @@ Player:
 	-ModularBot@NormalAI:
 	-ModularBot@EasyAI:
 	-ModularBot@NavalAI:
+	ChronoshiftPowerCA@TestingGroundsChrono:
+		OrderName: testmapchrono
+		Duration: 10000000
+		EnemyDuration: 10000000
+		Icon: chrono
+		ChargeInterval: 1
+		Name: Chronoshift
+		Description: Teleports units.
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		KillCargo: false
+		Range: 4c512
+		MaxTargets: 50
+		InvalidTargetTypes: Husk, ChronoshiftImmune
+		SupportPowerPaletteOrder: 1
+		ShowSelectionBoxes: true
+		HoverSelectionBoxColor: b6f4ff
+		ShowTargetCircle: true
+		TargetCircleColor: b6f4ff
+		TargetTintColor: b6f4ff33
+		ShowDestinationCircle: true
 
 ^Vehicle-NOUPG:
 	GrantConditionOnBotOwner@immobile:
@@ -37,6 +58,7 @@ Player:
 		RequiresCondition: dormant
 
 ^Infantry:
+	Inherits@Chronoshiftable: ^Chronoshiftable
 	GrantConditionOnBotOwner@immobile:
 		Condition: dormant
 		Bots: dormant

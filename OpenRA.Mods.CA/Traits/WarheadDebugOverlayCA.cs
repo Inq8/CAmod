@@ -72,6 +72,7 @@ namespace OpenRA.Mods.CA.Traits
 		readonly List<WHCapsuleImpact> capsuleImpacts = new();
 		readonly List<WHRectangleImpact> rectangleImpacts = new();
 		readonly List<WHConeImpact> coneImpacts = new();
+		readonly List<WHPoylineImpact> polylineImpacts = new();
 
 		public WarheadDebugOverlayCA(WarheadDebugOverlayCAInfo info)
 		{
@@ -86,6 +87,29 @@ namespace OpenRA.Mods.CA.Traits
 		public void AddCapsuleImpact(WPos capsuleStart, WPos capsuleEnd, WDist[] range, Color color)
 		{
 			capsuleImpacts.Add(new WHCapsuleImpact(capsuleStart, capsuleEnd, range, info.DisplayDuration, color));
+		}
+
+		sealed class WHPoylineImpact
+		{
+			public readonly WPos[] Points;
+			public readonly int Width;
+			public readonly Color Color;
+			public int Time;
+
+			public WHPoylineImpact(WPos[] points, int width, int time, Color color)
+			{
+				Points = points;
+				Width = width;
+				Time = time;
+				Color = color;
+			}
+		}
+
+		public void AddPolygonOutline(WPos[] points, Color color, int width = 1)
+		{
+			if (points == null || points.Length < 2)
+				return;
+			polylineImpacts.Add(new WHPoylineImpact(points, width, info.DisplayDuration, color));
 		}
 
 		sealed class WHRectangleImpact
@@ -218,6 +242,25 @@ namespace OpenRA.Mods.CA.Traits
 			}
 
 			rectangleImpacts.RemoveAll(r => r.Time == 0);
+
+			// Render polygon outlines
+			foreach (var p in polylineImpacts)
+			{
+				var alpha = 255.0f * p.Time / info.DisplayDuration;
+				var col = Color.FromArgb((int)alpha, p.Color);
+
+				for (var i = 0; i < p.Points.Length; i++)
+				{
+					var a = p.Points[i];
+					var b = p.Points[(i + 1) % p.Points.Length];
+					yield return new LineAnnotationRenderable(a, b, p.Width, col);
+				}
+
+				if (!wr.World.Paused)
+					p.Time--;
+			}
+
+			polylineImpacts.RemoveAll(p => p.Time == 0);
 
 			// Render cone impacts
 			foreach (var c in coneImpacts)
