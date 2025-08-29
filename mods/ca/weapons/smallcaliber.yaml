@@ -998,11 +998,22 @@ EnforcerShotgun:
 	Range: 4c0
 	Report: enfo-fire1.aud, enfo-fire2.aud
 	ReloadDelay: 55
-	Projectile: InstantHit
+	Projectile: LinearPulse
 		Blockable: true
+		Speed: 2c0
+		ImpactInterval: 2c0
+		ImpactType: Trapezoid
+		TrapezoidStartWidth: 0c768
+		TrapezoidEndWidth: 2c0
+		TrapezoidSegmentLength: 4c0
+		SingleHitPerActor: true
+		Spread: 4c0
+		Falloff: 100, 25
+		FalloffBasis: DistanceFromSource
+		FinalHitAnim: explosion
+		FinalHitAnimSequence: piffs
+		ForceGround: DamageOnly
 	Warhead@1Dam: SpreadDamage
-		Spread: 320
-		Falloff: 100, 26, 10, 4, 0
 		Damage: 7000
 		Versus:
 			None: 100
@@ -1012,37 +1023,9 @@ EnforcerShotgun:
 			Concrete: 15
 			Brick: 30
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
-	Warhead@2Eff: CreateEffect
-		Explosions: piffs
-		ValidTargets: Ground, Ship, Air, AirSmall, Trees
-
-EnforcerShotgunLine:
-	Inherits: EnforcerShotgun
-	-Report:
-	Projectile: RailgunCA
-		Blockable: true
-		Invisible: true
-		PassthroughToMaxRange: true
-		PassthroughParallelToMuzzleOffset: true
-		DamageActorsInLine: true
-		BeamWidth: 256
-	Warhead@1Dam: SpreadDamage
-		Spread: 42
-		Damage: 2000
-		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
-		ValidRelationships: Enemy, Neutral
-	Warhead@2Eff: CreateEffect
-		Explosions: piff, empty
-		ValidTargets: Infantry, Structure, Vehicle, Ship, Trees
-		ValidRelationships: Enemy, Neutral
 
 EnforcerIFVShotgun:
 	Inherits: EnforcerShotgun
-	Burst: 2
-	BurstDelays: 5
-
-EnforcerIFVShotgunLine:
-	Inherits: EnforcerShotgunLine
 	Burst: 2
 	BurstDelays: 5
 

@@ -19,7 +19,7 @@ using OpenRA.Traits;
 namespace OpenRA.Mods.CA.Traits
 {
 	[TraitLocation(SystemActors.World)]
-	[Desc("Enhanced version of WarheadDebugOverlay that supports capsule-shaped warheads. Attach this to the world actor.")]
+	[Desc("Enhanced version of WarheadDebugOverlay that supports custom shapes. Attach this to the world actor.")]
 	public class WarheadDebugOverlayCAInfo : TraitInfo
 	{
 		public readonly int DisplayDuration = 25;
@@ -47,31 +47,10 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
-		sealed class WHCapsuleImpact
-		{
-			public readonly WPos CapsuleStart;
-			public readonly WPos CapsuleEnd;
-			public readonly WDist[] Range;
-			public readonly Color Color;
-			public int Time;
-
-			public WDist OuterRange => Range[^1];
-
-			public WHCapsuleImpact(WPos capsuleStart, WPos capsuleEnd, WDist[] range, int time, Color color)
-			{
-				CapsuleStart = capsuleStart;
-				CapsuleEnd = capsuleEnd;
-				Range = range;
-				Color = color;
-				Time = time;
-			}
-		}
-
 		readonly WarheadDebugOverlayCAInfo info;
 		readonly List<WHImpact> impacts = new();
-		readonly List<WHCapsuleImpact> capsuleImpacts = new();
-		readonly List<WHRectangleImpact> rectangleImpacts = new();
 		readonly List<WHConeImpact> coneImpacts = new();
+		readonly List<WHConeSegmentImpact> coneSegmentImpacts = new();
 		readonly List<WHPoylineImpact> polylineImpacts = new();
 
 		public WarheadDebugOverlayCA(WarheadDebugOverlayCAInfo info)
@@ -82,11 +61,6 @@ namespace OpenRA.Mods.CA.Traits
 		public void AddImpact(WPos pos, WDist[] range, Color color)
 		{
 			impacts.Add(new WHImpact(pos, range, info.DisplayDuration, color));
-		}
-
-		public void AddCapsuleImpact(WPos capsuleStart, WPos capsuleEnd, WDist[] range, Color color)
-		{
-			capsuleImpacts.Add(new WHCapsuleImpact(capsuleStart, capsuleEnd, range, info.DisplayDuration, color));
 		}
 
 		sealed class WHPoylineImpact
@@ -112,38 +86,13 @@ namespace OpenRA.Mods.CA.Traits
 			polylineImpacts.Add(new WHPoylineImpact(points, width, info.DisplayDuration, color));
 		}
 
-		sealed class WHRectangleImpact
-		{
-			public readonly WPos Start; // One end of the rectangle center line
-			public readonly WPos End;   // The other end of the rectangle center line
-			public readonly WDist[] Range; // Falloff distances from the center line
-			public readonly WDist HalfWidth; // Physical half-width cap
-			public readonly Color Color;
-			public int Time;
-
-			public WHRectangleImpact(WPos start, WPos end, WDist[] range, WDist halfWidth, int time, Color color)
-			{
-				Start = start;
-				End = end;
-				Range = range;
-				HalfWidth = halfWidth;
-				Color = color;
-				Time = time;
-			}
-		}
-
-		public void AddRectangleImpact(WPos start, WPos end, WDist[] range, WDist halfWidth, Color color)
-		{
-			rectangleImpacts.Add(new WHRectangleImpact(start, end, range, halfWidth, info.DisplayDuration, color));
-		}
-
 		sealed class WHConeImpact
 		{
 			public readonly WPos Apex;
-			public readonly WVec Axis; // direction vector
+			public readonly WVec Axis;
 			public readonly WDist[] Range;
-			public readonly WDist Length; // finite length along axis
-			public readonly int ConeAngle; // degrees
+			public readonly WDist Length;
+			public readonly int ConeAngle;
 			public readonly Color Color;
 			public int Time;
 
@@ -161,6 +110,32 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
+		sealed class WHConeSegmentImpact
+		{
+			public readonly WPos Apex;
+			public readonly WVec Axis;
+			public readonly int SegmentStart;
+			public readonly int SegmentEnd;
+			public readonly int StartRadius;
+			public readonly int EndRadius;
+			public readonly int ConeAngle;
+			public readonly Color Color;
+			public int Time;
+
+			public WHConeSegmentImpact(WPos apex, WVec axis, int segmentStart, int segmentEnd, int startRadius, int endRadius, int coneAngle, int time, Color color)
+			{
+				Apex = apex;
+				Axis = axis;
+				SegmentStart = segmentStart;
+				SegmentEnd = segmentEnd;
+				StartRadius = startRadius;
+				EndRadius = endRadius;
+				ConeAngle = coneAngle;
+				Time = time;
+				Color = color;
+			}
+		}
+
 		public void AddConeImpact(WPos apex, WVec axis, WDist[] range, int coneAngle, Color color)
 		{
 			// Back-compat overload: assume length equals outer range
@@ -170,6 +145,11 @@ namespace OpenRA.Mods.CA.Traits
 		public void AddConeImpact(WPos apex, WVec axis, WDist length, WDist[] range, int coneAngle, Color color)
 		{
 			coneImpacts.Add(new WHConeImpact(apex, axis, range, length, coneAngle, info.DisplayDuration, color));
+		}
+
+		public void AddConeSegmentImpact(WPos apex, WVec axis, int segmentStart, int segmentEnd, int startRadius, int endRadius, int coneAngle, Color color)
+		{
+			coneSegmentImpacts.Add(new WHConeSegmentImpact(apex, axis, segmentStart, segmentEnd, startRadius, endRadius, coneAngle, info.DisplayDuration, color));
 		}
 
 		IEnumerable<IRenderable> IRenderAnnotations.RenderAnnotations(Actor self, WorldRenderer wr)
@@ -193,55 +173,6 @@ namespace OpenRA.Mods.CA.Traits
 			}
 
 			impacts.RemoveAll(i => i.Time == 0);
-
-			// Render capsule impacts
-			foreach (var c in capsuleImpacts)
-			{
-				var alpha = 255.0f * c.Time / info.DisplayDuration;
-				var rangeStep = alpha / c.Range.Length;
-
-				// Render the outer capsule boundary
-				foreach (var renderable in CapsuleAnnotationRenderable.Create(c.CapsuleStart, c.CapsuleEnd, c.OuterRange, 1, Color.FromArgb((int)alpha, c.Color)))
-					yield return renderable;
-
-				// Render each falloff range as a capsule
-				foreach (var r in c.Range)
-				{
-					foreach (var renderable in CapsuleAnnotationRenderable.Create(c.CapsuleStart, c.CapsuleEnd, r, 1, Color.FromArgb((int)alpha, c.Color)))
-						yield return renderable;
-					alpha -= rangeStep;
-				}
-
-				if (!wr.World.Paused)
-					c.Time--;
-			}
-
-			capsuleImpacts.RemoveAll(c => c.Time == 0);
-
-			// Render rectangle impacts (center-line aligned)
-			foreach (var r in rectangleImpacts)
-			{
-				var alpha = 255.0f * r.Time / info.DisplayDuration;
-				var rangeStep = alpha / r.Range.Length;
-
-				// Outer physical boundary using halfWidth
-				foreach (var poly in RectanglePolygons(r.Start, r.End, r.HalfWidth, Color.FromArgb((int)alpha, r.Color)))
-					yield return poly;
-
-				// Falloff rectangles with widths capped at halfWidth
-				foreach (var band in r.Range)
-				{
-					var hw = band.Length < r.HalfWidth.Length ? band : r.HalfWidth;
-					foreach (var poly in RectanglePolygons(r.Start, r.End, hw, Color.FromArgb((int)alpha, r.Color)))
-						yield return poly;
-					alpha -= rangeStep;
-				}
-
-				if (!wr.World.Paused)
-					r.Time--;
-			}
-
-			rectangleImpacts.RemoveAll(r => r.Time == 0);
 
 			// Render polygon outlines
 			foreach (var p in polylineImpacts)
@@ -292,27 +223,25 @@ namespace OpenRA.Mods.CA.Traits
 			}
 
 			coneImpacts.RemoveAll(c => c.Time == 0);
+
+			// Render cone segment impacts
+			foreach (var cs in coneSegmentImpacts)
+			{
+				var alpha = 255.0f * cs.Time / info.DisplayDuration;
+				var color = Color.FromArgb((int)alpha, cs.Color);
+
+				// Draw cone segment as truncated cone section
+				foreach (var r in ConeSegmentLines(cs.Apex, cs.Axis, cs.SegmentStart, cs.SegmentEnd, cs.StartRadius, cs.EndRadius, cs.ConeAngle, 1, color))
+					yield return r;
+
+				if (!wr.World.Paused)
+					cs.Time--;
+			}
+
+			coneSegmentImpacts.RemoveAll(cs => cs.Time == 0);
 		}
 
 		bool IRenderAnnotations.SpatiallyPartitionable => false;
-
-		static IEnumerable<IRenderable> RectanglePolygons(WPos start, WPos end, WDist halfWidth, Color color)
-		{
-			// Build rectangle corners around the center line from start to end
-			var ab = end - start;
-			var perp = new WVec(-ab.Y, ab.X, 0);
-			if (perp.Length == 0)
-				yield break;
-
-			var rvec = perp * halfWidth.Length / perp.Length;
-			var a = start + rvec;
-			var b = end + rvec;
-			var c = end - rvec;
-			var d = start - rvec;
-
-			var center = new WPos((start.X + end.X) / 2, (start.Y + end.Y) / 2, (start.Z + end.Z) / 2);
-			yield return new PolygonAnnotationRenderable(new[] { a, b, c, d }, center, 1, color);
-		}
 
 		static IEnumerable<IRenderable> ConeSideLines(WPos apex, WVec axis, int coneAngleDeg, WDist radius, int width, Color color)
 		{
@@ -383,6 +312,62 @@ namespace OpenRA.Mods.CA.Traits
 				if (prev.HasValue)
 					yield return new LineAnnotationRenderable(prev.Value, p, width, color);
 				prev = p;
+			}
+		}
+
+		static IEnumerable<IRenderable> ConeSegmentLines(WPos apex, WVec axis, int segmentStart, int segmentEnd,
+			int startRadius, int endRadius, int coneAngleDeg, int width, Color color)
+		{
+			// Normalize the axis vector
+			if (axis.Length == 0)
+				yield break;
+
+			var axisNorm = axis * 1024 / axis.Length;
+			var halfAngleRad = Math.PI * (coneAngleDeg / 2.0) / 180.0;
+
+			// Create a perpendicular vector in the XY plane
+			var perp = new WVec(-axisNorm.Y, axisNorm.X, 0);
+			if (perp.Length == 0)
+				perp = new WVec(1024, 0, 0); // Fallback if axis is vertical
+			else
+				perp = perp * 1024 / perp.Length;
+
+			// Draw the two curved arcs (near and far)
+			const int Segments = 24;
+			WPos? prevStart = null;
+			WPos? prevEnd = null;
+
+			for (var i = 0; i <= Segments; i++)
+			{
+				var t = (double)i / Segments;
+				var angle = -halfAngleRad + t * (2 * halfAngleRad);
+				var cos = Math.Cos(angle);
+				var sin = Math.Sin(angle);
+
+				var dirVec = new WVec(
+					(int)(axisNorm.X * cos - perp.X * sin),
+					(int)(axisNorm.Y * cos - perp.Y * sin),
+					axisNorm.Z);
+
+				// Calculate points on the start and end arcs (centered at apex)
+				var startPoint = apex + dirVec * startRadius / 1024;
+				var endPoint = apex + dirVec * endRadius / 1024;
+
+				// Draw arc segments
+				if (prevStart.HasValue)
+				{
+					yield return new LineAnnotationRenderable(prevStart.Value, startPoint, width, color);
+					yield return new LineAnnotationRenderable(prevEnd.Value, endPoint, width, color);
+				}
+
+				// Draw connecting lines along cone edges (only at the two extremes for clarity)
+				if (i == 0 || i == Segments)
+				{
+					yield return new LineAnnotationRenderable(startPoint, endPoint, width, color);
+				}
+
+				prevStart = startPoint;
+				prevEnd = endPoint;
 			}
 		}
 	}

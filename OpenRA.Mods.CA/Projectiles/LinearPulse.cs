@@ -38,6 +38,13 @@ namespace OpenRA.Mods.CA.Projectiles
 		DistanceFromSource
 	}
 
+	public enum LinearPulseForceGroundType
+	{
+		None,
+		DamageOnly,
+		DamageAndVisual
+	}
+
 	public class ImpactAnimation
 	{
 		[Desc("Impact animation image.")]
@@ -150,7 +157,7 @@ namespace OpenRA.Mods.CA.Projectiles
 		public readonly bool RepeatAnimation = true;
 
 		[Desc("If true, forces pulse position to start at ground level.")]
-		public readonly bool ForceGround = false;
+		public readonly LinearPulseForceGroundType ForceGround = LinearPulseForceGroundType.None;
 
 		[PaletteReference]
 		[Desc("Palette to use for this projectile's shadow if Shadow is true.")]
@@ -168,6 +175,9 @@ namespace OpenRA.Mods.CA.Projectiles
 
 		[Desc("If true (and not using Warhead impact type) then the same actor can only be impacted once.")]
 		public readonly bool SingleHitPerActor = false;
+
+		[Desc("The minimum range at which friendly actors can be impacted (relative to source).")]
+		public readonly WDist MinimumFriendlyFireRange = WDist.Zero;
 
 		[FieldLoader.LoadUsing(nameof(LoadImpactAnimations))]
 		public readonly List<ImpactAnimation> ImpactAnimations = new();
@@ -233,8 +243,13 @@ namespace OpenRA.Mods.CA.Projectiles
 			// projectile starts at the source position
 			pos = visualPos = args.Source;
 
-			if (info.ForceGround)
+			// Apply initial grounding based on ForceGround mode
+			var visualGrounded = info.ForceGround == LinearPulseForceGroundType.DamageAndVisual;
+			if (visualGrounded)
+			{
 				pos = new WPos(pos.X, pos.Y, 0);
+				visualPos = new WPos(visualPos.X, visualPos.Y, 0);
+			}
 
 			// initially no distance has been travelled by the pulse
 			totalDistanceTravelled = 0;
@@ -391,6 +406,11 @@ namespace OpenRA.Mods.CA.Projectiles
 		{
 			// Create hit animations if specified
 			var world = args.SourceActor.World;
+			var damageGrounded = info.ForceGround != LinearPulseForceGroundType.None;
+			var visualGrounded = info.ForceGround == LinearPulseForceGroundType.DamageAndVisual;
+			var impactPosForDamage = damageGrounded ? new WPos(impactPos.X, impactPos.Y, 0) : impactPos;
+			var impactPosForVisual = visualGrounded ? new WPos(impactPos.X, impactPos.Y, 0) : impactPos;
+
 			foreach (var impactAnim in info.ImpactAnimations)
 			{
 				if (!string.IsNullOrEmpty(impactAnim.Image))
@@ -399,7 +419,7 @@ namespace OpenRA.Mods.CA.Projectiles
 					var sequence = impactAnim.Sequences.Random(world.SharedRandom);
 
 					// Create SpriteEffect with facing
-					world.AddFrameEndTask(w => w.Add(new SpriteEffect(impactPos, facing, w, impactAnim.Image, sequence, impactAnim.Palette)));
+					world.AddFrameEndTask(w => w.Add(new SpriteEffect(impactPosForVisual, facing, w, impactAnim.Image, sequence, impactAnim.Palette)));
 				}
 			}
 
@@ -423,6 +443,8 @@ namespace OpenRA.Mods.CA.Projectiles
 		void ExplodeRectangle(WPos impactPos)
 		{
 			var world = args.SourceActor.World;
+			var damageGrounded = info.ForceGround != LinearPulseForceGroundType.None;
+			var impactPosForDamage = damageGrounded ? new WPos(impactPos.X, impactPos.Y, 0) : impactPos;
 
 			// Calculate rectangle dimensions and orientation
 			var halfLength = info.RectangleLength.Length / 2;
@@ -445,21 +467,32 @@ namespace OpenRA.Mods.CA.Projectiles
 			var corner3 = impactPos + lengthOffset + widthOffset;
 			var corner4 = impactPos + lengthOffset - widthOffset;
 
-			// Debug visualization
+			// Debug visualization - use the actual rectangle corners for grounded visualization
 			var debugVis = world.WorldActor.TraitOrDefault<DebugVisualizations>();
 			if (debugVis != null && debugVis.CombatGeometry)
 			{
 				var caDebug = world.WorldActor.TraitOrDefault<WarheadDebugOverlayCA>();
 				if (caDebug != null)
 				{
-					// Create start and end points for the rectangle center line
-					var start = impactPos - lengthOffset;
-					var end = impactPos + lengthOffset;
-					var debugHalfWidth = new WDist(info.RectangleWidth.Length / 2);
+					// Use grounded corners if ForceGround is set for damage
+					WPos[] vizCorners;
+					if (info.ForceGround != LinearPulseForceGroundType.None)
+					{
+						// Ground the corners for visualization to match damage area
+						vizCorners = new WPos[]
+						{
+							new(corner1.X, corner1.Y, 0),
+							new(corner2.X, corner2.Y, 0),
+							new(corner3.X, corner3.Y, 0),
+							new(corner4.X, corner4.Y, 0)
+						};
+					}
+					else
+					{
+						vizCorners = new WPos[] { corner1, corner2, corner3, corner4 };
+					}
 
-					// Use a single range for visualization (could be made configurable)
-					var visualRange = new WDist[] { debugHalfWidth };
-					caDebug.AddRectangleImpact(start, end, visualRange, debugHalfWidth, Color.Yellow);
+					caDebug.AddPolygonOutline(vizCorners, Color.Red);
 				}
 			}
 
@@ -486,7 +519,7 @@ namespace OpenRA.Mods.CA.Projectiles
 						if (targetPos is HitShape h)
 						{
 							// For rectangles, calculate distance from HitShape to the center line or impact point
-							var referencePoint = GetReferencePoint(actor, impactPos);
+							var referencePoint = GetReferencePoint(actor, impactPosForDamage);
 							var distance = h.DistanceFromEdge(actor, referencePoint).Length;
 							if (distance < closestDistance)
 							{
@@ -507,12 +540,12 @@ namespace OpenRA.Mods.CA.Projectiles
 						DamageCalculationType.ClosestTargetablePosition => actor.GetTargetablePositions()
 							.Where(x => IsPointInRectangle(x, corner1, corner2, corner3, corner4))
 							.DefaultIfEmpty(actor.CenterPosition)
-							.Min(x => CalculateFalloffDistance(x, impactPos)),
-						DamageCalculationType.CenterPosition => CalculateFalloffDistance(actor.CenterPosition, impactPos),
-						_ => CalculateFalloffDistance(actor.CenterPosition, impactPos)
+							.Min(x => CalculateFalloffDistance(x, impactPosForDamage)),
+						DamageCalculationType.CenterPosition => CalculateFalloffDistance(actor.CenterPosition, impactPosForDamage),
+						_ => CalculateFalloffDistance(actor.CenterPosition, impactPosForDamage)
 					};
 
-					ApplyDamageToActor(actor, impactPos, falloffDistance);
+					ApplyDamageToActor(actor, impactPosForDamage, falloffDistance);
 
 					if (info.SingleHitPerActor)
 						impactedActors.Add(actor);
@@ -553,27 +586,32 @@ namespace OpenRA.Mods.CA.Projectiles
 		{
 			var world = args.SourceActor.World;
 
-			// Calculate distance from source to impact position
-			var distanceFromSource = (impactPos - source).Length;
+			// Grounded impact position for damage calculations (reflects ForceGround for damage)
+			var damageGrounded = info.ForceGround != LinearPulseForceGroundType.None;
+			var impactPosForDamage = damageGrounded ? new WPos(impactPos.X, impactPos.Y, 0) : impactPos;
+
+			// Calculate distance from source to impact position (respecting damage grounding)
+			var distanceFromSource = (impactPosForDamage - source).Length; // Grounded distance calculation
 
 			// Calculate the radius of the cone at this distance
 			var halfConeAngleRadians = info.ConeAngle * Math.PI / 360.0; // Convert degrees to radians and divide by 2
 
-			// Calculate the cone segment boundaries
-			var segmentStart = Math.Max(0, distanceFromSource - info.ConeSegmentLength.Length / 2);
-			var segmentEnd = distanceFromSource + info.ConeSegmentLength.Length / 2;
+			// Calculate the cone segment boundaries, clamped to [0, range]
+			var segmentHalf = info.ConeSegmentLength.Length / 2;
+			var segmentStart = Math.Max(0, distanceFromSource - segmentHalf);
+			var segmentEnd = Math.Min(range, distanceFromSource + segmentHalf);
 
-			// Calculate cone radii at segment boundaries
-			var startRadius = (int)(segmentStart * Math.Tan(halfConeAngleRadians));
-			var endRadius = (int)(segmentEnd * Math.Tan(halfConeAngleRadians));
+			// In 2D top-down, the cone is a wedge from the apex: arcs are centered at the apex with radius equal to distance from source
+			var startRadius = segmentStart;
+			var endRadius = segmentEnd;
 			var maxRadius = Math.Max(startRadius, endRadius);
 
-			// Direction from source to impact
-			var direction = impactPos - source;
-			if (direction.Length == 0)
+			// Use the fixed projectile direction, not the direction to current impact
+			var forwardDir = directionalSpeed;
+			if (forwardDir.Length == 0)
 				return;
 
-			var forwardDir = direction * 1024 / direction.Length; // Normalized
+			var normalizedForwardDir = forwardDir * 1024 / forwardDir.Length;
 
 			// Debug visualization
 			var debugVis = world.WorldActor.TraitOrDefault<DebugVisualizations>();
@@ -582,24 +620,25 @@ namespace OpenRA.Mods.CA.Projectiles
 				var caDebug = world.WorldActor.TraitOrDefault<WarheadDebugOverlayCA>();
 				if (caDebug != null)
 				{
-					// Visualize the overall cone in yellow (based on maximum range)
-					var maxRange = Math.Max(range, visualRange);
-					var maxConeRadius = (int)(maxRange * Math.Tan(halfConeAngleRadians));
-					var overallConeAxis = forwardDir * maxRange / 1024;
-					var overallRanges = new WDist[] { WDist.Zero, new(maxConeRadius) };
-					caDebug.AddConeImpact(source, overallConeAxis, overallRanges, info.ConeAngle, Color.Yellow);
+					// When ForceGround is true, visualize the cone at ground level
+					var vizSource = info.ForceGround != LinearPulseForceGroundType.None ? new WPos(source.X, source.Y, 0) : source;
+
+					// Visualize the overall cone as a single large segment from 0..range
+					var maxRange = range;
+					var maxConeRadius = maxRange;
+					caDebug.AddConeSegmentImpact(vizSource, normalizedForwardDir, 0, maxRange, 0, maxConeRadius, info.ConeAngle, Color.Yellow);
 
 					// Visualize the individual cone segment in red
-					// Create a cone from source to the end of this segment
-					var segmentEndAxis = forwardDir * segmentEnd / 1024;
-					var segmentRanges = new WDist[] { new(startRadius), new(endRadius) };
-					caDebug.AddConeImpact(source, segmentEndAxis, segmentRanges, info.ConeAngle, Color.Red);
+					// Create a cone segment showing the actual truncated section
+					caDebug.AddConeSegmentImpact(vizSource, normalizedForwardDir, segmentStart, segmentEnd, startRadius, endRadius, info.ConeAngle, Color.Red);
 				}
 			}
 
 			// Find all actors within the cone segment
 			var searchRadius = new WDist(maxRadius + 512); // Add buffer for safety
-			var nearbyActors = world.FindActorsInCircle(impactPos, searchRadius);
+			var segMid = (segmentStart + segmentEnd) / 2;
+			var segCenter = source + normalizedForwardDir * segMid / 1024;
+			var nearbyActors = world.FindActorsInCircle(segCenter, searchRadius);
 
 			foreach (var actor in nearbyActors)
 			{
@@ -607,8 +646,8 @@ namespace OpenRA.Mods.CA.Projectiles
 				if (info.SingleHitPerActor && impactedActors.Contains(actor))
 					continue;
 
-				// Check if actor is within the cone segment
-				if (IsActorInConeSegment(actor, source, forwardDir, segmentStart, segmentEnd, halfConeAngleRadians))
+				// Check if actor is within the cone segment using the fixed forward direction
+				if (IsActorInConeSegment(actor, source, normalizedForwardDir, segmentStart, segmentEnd, halfConeAngleRadians))
 				{
 					// Find the closest HitShape to the reference point (like CapsuleDamageWarhead)
 					HitShape closestActiveShape = null;
@@ -620,7 +659,7 @@ namespace OpenRA.Mods.CA.Projectiles
 						if (targetPos is HitShape h)
 						{
 							// For cones, calculate distance from HitShape to the source (apex of cone)
-							var referencePoint = GetReferencePoint(actor, impactPos);
+							var referencePoint = GetReferencePoint(actor, impactPosForDamage);
 							var distance = h.DistanceFromEdge(actor, referencePoint).Length;
 							if (distance < closestDistance)
 							{
@@ -639,12 +678,11 @@ namespace OpenRA.Mods.CA.Projectiles
 					{
 						DamageCalculationType.HitShape => closestDistance,
 						DamageCalculationType.ClosestTargetablePosition => actor.GetTargetablePositions()
-							.Min(x => CalculateFalloffDistance(x, impactPos)),
-						DamageCalculationType.CenterPosition => CalculateFalloffDistance(actor.CenterPosition, impactPos),
-						_ => CalculateFalloffDistance(actor.CenterPosition, impactPos)
+							.Min(x => CalculateFalloffDistance(x, impactPosForDamage)),
+						DamageCalculationType.CenterPosition => CalculateFalloffDistance(actor.CenterPosition, impactPosForDamage),
+						_ => CalculateFalloffDistance(actor.CenterPosition, impactPosForDamage)
 					};
-
-					ApplyDamageToActor(actor, impactPos, falloffDistance);
+					ApplyDamageToActor(actor, impactPosForDamage, falloffDistance);
 
 					if (info.SingleHitPerActor)
 						impactedActors.Add(actor);
@@ -656,8 +694,12 @@ namespace OpenRA.Mods.CA.Projectiles
 		{
 			var world = args.SourceActor.World;
 
-			// Calculate distance from source to impact position
-			var distanceFromSource = (impactPos - source).Length;
+			// Grounded impact position for damage calculations (reflects ForceGround for damage)
+			var damageGrounded = info.ForceGround != LinearPulseForceGroundType.None;
+			var impactPosForDamage = damageGrounded ? new WPos(impactPos.X, impactPos.Y, 0) : impactPos;
+
+			// Calculate distance from source to impact position (respecting damage grounding)
+			var distanceFromSource = (impactPosForDamage - source).Length;
 
 			// Use the trapezoid segment length to determine how many segments we need
 			var segmentLength = info.TrapezoidSegmentLength.Length;
@@ -677,8 +719,11 @@ namespace OpenRA.Mods.CA.Projectiles
 				var caDebug = world.WorldActor.TraitOrDefault<WarheadDebugOverlayCA>();
 				if (caDebug != null)
 				{
+					// When ForceGround is true, visualize the trapezoid at ground level
+					var vizSource = info.ForceGround != LinearPulseForceGroundType.None ? new WPos(source.X, source.Y, 0) : source;
+
 					// Use exact overall trapezoid from start (0) to full range with configured widths
-					GetTrapezoidCorners(source, forwardDir, 0, range, info.TrapezoidStartWidth.Length, info.TrapezoidEndWidth.Length,
+					GetTrapezoidCorners(vizSource, forwardDir, 0, range, info.TrapezoidStartWidth.Length, info.TrapezoidEndWidth.Length,
 						out var o1, out var o2, out var o3, out var o4);
 					caDebug.AddPolygonOutline(new[] { o1, o2, o3, o4 }, Color.Yellow, 1);
 				}
@@ -701,7 +746,8 @@ namespace OpenRA.Mods.CA.Projectiles
 				var caDebug = world.WorldActor.TraitOrDefault<WarheadDebugOverlayCA>();
 				if (caDebug != null)
 				{
-					GetTrapezoidCorners(source, forwardDir, segStart, segEnd, startWidthAtSeg, endWidthAtSeg,
+					var vizSource = info.ForceGround != LinearPulseForceGroundType.None ? new WPos(source.X, source.Y, 0) : source;
+					GetTrapezoidCorners(vizSource, forwardDir, segStart, segEnd, startWidthAtSeg, endWidthAtSeg,
 						out var corner1, out var corner2, out var corner3, out var corner4);
 					caDebug.AddPolygonOutline(new[] { corner1, corner2, corner3, corner4 }, Color.Red, 1);
 				}
@@ -731,7 +777,7 @@ namespace OpenRA.Mods.CA.Projectiles
 						{
 							if (targetPos is HitShape h && h.IsTraitEnabled())
 							{
-								var referencePoint = GetReferencePoint(actor, impactPos);
+								var referencePoint = GetReferencePoint(actor, impactPosForDamage);
 								var distance = h.DistanceFromEdge(actor, referencePoint).Length;
 								if (distance < closestDistance)
 								{
@@ -752,12 +798,11 @@ namespace OpenRA.Mods.CA.Projectiles
 							DamageCalculationType.ClosestTargetablePosition => actor.GetTargetablePositions()
 								.Where(x => IsPositionInTrapezoidSegment(x, source, forwardDir, segStart, segEnd, startWidthAtSeg, endWidthAtSeg))
 								.DefaultIfEmpty(actor.CenterPosition)
-								.Min(x => CalculateFalloffDistance(x, impactPos)),
-							DamageCalculationType.CenterPosition => CalculateFalloffDistance(actor.CenterPosition, impactPos),
-							_ => CalculateFalloffDistance(actor.CenterPosition, impactPos)
+								.Min(x => CalculateFalloffDistance(x, impactPosForDamage)),
+							DamageCalculationType.CenterPosition => CalculateFalloffDistance(actor.CenterPosition, impactPosForDamage),
+							_ => CalculateFalloffDistance(actor.CenterPosition, impactPosForDamage)
 						};
-
-						ApplyDamageToActor(actor, impactPos, falloffDistance);
+						ApplyDamageToActor(actor, impactPosForDamage, falloffDistance);
 
 						if (info.SingleHitPerActor)
 							impactedActors.Add(actor);
@@ -779,66 +824,49 @@ namespace OpenRA.Mods.CA.Projectiles
 
 		static bool IsActorInConeSegment(Actor actor, WPos source, WVec forwardDir, int segmentStart, int segmentEnd, double halfConeAngleRadians)
 		{
-			// First check if the actor has any HitShapes
-			var hasHitShape = ActorHasHitShape(actor);
-
-			// If no HitShape, fall back to center position check
-			if (!hasHitShape)
+			// Check if cone segment intersects with actor's HitShape
+			if (ActorHasHitShape(actor))
 			{
-				return IsPositionInConeSegment(actor.CenterPosition, source, forwardDir, segmentStart, segmentEnd, halfConeAngleRadians);
-			}
-
-			// For HitShape-enabled actors, check if any part of their shape intersects with the cone
-			// We'll test multiple points around the actor and see if any are within the cone
-			var actorCenter = actor.CenterPosition;
-			var testPoints = new List<WPos> { actorCenter };
-
-			// Add test points around the actor based on a rough estimate of their size
-			// This is a simplified approach - more sophisticated would be to get the actual HitShape bounds
-			const int TestRadius = 512; // Test points in a 1-cell radius around the center
-			for (var angle = 0; angle < 360; angle += 45) // 8 test points around the center
-			{
-				var radians = angle * Math.PI / 180.0;
-				var offset = new WVec((int)(TestRadius * Math.Cos(radians)), (int)(TestRadius * Math.Sin(radians)), 0);
-				testPoints.Add(actorCenter + offset);
-			}
-
-			// Check if any test point is within the cone segment
-			foreach (var testPoint in testPoints)
-			{
-				if (IsPositionInConeSegment(testPoint, source, forwardDir, segmentStart, segmentEnd, halfConeAngleRadians))
-					return true;
-			}
-
-			// Additionally, check distance from HitShape to the cone axis
-			foreach (var targetPos in actor.EnabledTargetablePositions)
-			{
-				if (targetPos is HitShape h)
+				// For HitShape-enabled actors, check both intersection and containment
+				foreach (var targetPos in actor.EnabledTargetablePositions)
 				{
-					// Check distance from HitShape to a point on the cone axis
-					var distanceFromSource = (actorCenter - source).Length;
+					if (targetPos is HitShape h)
+					{
+						// First check: Is the HitShape fully within the segment?
+						// Test if the actor's center is within the segment - if so, the HitShape might be fully contained
+						if (IsPositionInConeSegment(actor.CenterPosition, source, forwardDir, segmentStart, segmentEnd, halfConeAngleRadians))
+						{
+							// Check if all edges of the segment are outside or on the HitShape boundary
+							// If the center is in and no segment edges penetrate the HitShape, then HitShape is fully contained
+							var closestPoint = FindClosestPointOnConeSegmentOutline(actor.CenterPosition, source, forwardDir, segmentStart, segmentEnd, halfConeAngleRadians);
+							var distanceToOutline = h.DistanceFromEdge(actor, closestPoint);
 
-					// Clamp to segment bounds
-					var clampedDistance = Math.Max(segmentStart, Math.Min(segmentEnd, distanceFromSource));
-					var axisPoint = source + forwardDir * clampedDistance / 1024;
+							// If center is in segment and closest outline point is outside HitShape, then HitShape is fully within segment
+							if (distanceToOutline.Length > 0)
+								return true;
+						}
 
-					var distanceToAxis = h.DistanceFromEdge(actor, axisPoint).Length;
+						// Second check: Does the segment outline intersect with the HitShape?
+						var closestPoint2 = FindClosestPointOnConeSegmentOutline(actor.CenterPosition, source, forwardDir, segmentStart, segmentEnd, halfConeAngleRadians);
+						var distance = h.DistanceFromEdge(actor, closestPoint2);
 
-					// Calculate the cone radius at this distance
-					var coneRadius = clampedDistance * Math.Tan(halfConeAngleRadians);
-
-					// If the HitShape is within the cone radius plus a small tolerance, consider it hit
-					if (distanceToAxis <= coneRadius + 256) // Small tolerance for intersection
-						return true;
+						// Check if the closest point is inside the HitShape OR if HitShape is very close (intersecting)
+						if (distance == WDist.Zero || distance.Length <= 128) // Small tolerance for edge intersection
+							return true;
+					}
 				}
+
+				return false;
 			}
 
-			return false;
+			// Fallback: center position only for actors without HitShapes
+			return IsPositionInConeSegment(actor.CenterPosition, source, forwardDir, segmentStart, segmentEnd, halfConeAngleRadians);
 		}
 
 		static bool IsPositionInConeSegment(WPos position, WPos source, WVec forwardDir, int segmentStart, int segmentEnd, double halfConeAngleRadians)
 		{
-			var toPosition = position - source;
+			// Use XY-only vector from source to position
+			var toPosition = new WVec(position.X - source.X, position.Y - source.Y, 0);
 
 			// Check if position is within the distance range of the segment
 			var distanceToPosition = toPosition.Length;
@@ -851,7 +879,7 @@ namespace OpenRA.Mods.CA.Projectiles
 
 			// Calculate the angle between forward direction and direction to position
 			var dotProduct = (long)forwardDir.X * toPosition.X + (long)forwardDir.Y * toPosition.Y; // Use long to prevent overflow
-			var cosAngleToPosition = dotProduct / (1024.0 * toPosition.Length); // forwardDir is normalized to 1024
+			var cosAngleToPosition = dotProduct / (1024.0 * toPosition.Length); // forwardDir is normalized to 1024 and toPosition is XY-only
 
 			// Clamp to avoid floating point errors in acos
 			cosAngleToPosition = Math.Max(-1.0, Math.Min(1.0, cosAngleToPosition));
@@ -872,36 +900,36 @@ namespace OpenRA.Mods.CA.Projectiles
 				return IsPointInRectangle(actorPos, corner1, corner2, corner3, corner4);
 			}
 
-			// For HitShape-enabled actors, check if any part of their shape intersects with the rectangle
-			// We'll do this by checking the distance from the HitShape to several points on the rectangle
-			var rectangleTestPoints = new WPos[]
-			{
-				corner1, corner2, corner3, corner4, // Corners
-				new((corner1.X + corner2.X) / 2, (corner1.Y + corner2.Y) / 2, (corner1.Z + corner2.Z) / 2), // Edge midpoints
-				new((corner2.X + corner3.X) / 2, (corner2.Y + corner3.Y) / 2, (corner2.Z + corner3.Z) / 2),
-				new((corner3.X + corner4.X) / 2, (corner3.Y + corner4.Y) / 2, (corner3.Z + corner4.Z) / 2),
-				new((corner4.X + corner1.X) / 2, (corner4.Y + corner1.Y) / 2, (corner4.Z + corner1.Z) / 2),
-				new((corner1.X + corner3.X) / 2, (corner1.Y + corner3.Y) / 2, (corner1.Z + corner3.Z) / 2) // Center
-			};
-
-			// Check if the HitShape is close to any of these test points
+			// For HitShape-enabled actors, check both intersection and containment
 			foreach (var targetPos in actor.EnabledTargetablePositions)
 			{
 				if (targetPos is HitShape h)
 				{
-					foreach (var testPoint in rectangleTestPoints)
+					// First check: Is the HitShape fully within the rectangle?
+					// Test if the actor's center is within the rectangle - if so, the HitShape might be fully contained
+					if (IsPointInRectangle(actor.CenterPosition, corner1, corner2, corner3, corner4))
 					{
-						var distance = h.DistanceFromEdge(actor, testPoint).Length;
+						// Check if all edges of the rectangle are outside or on the HitShape boundary
+						// If the center is in and no rectangle edges penetrate the HitShape, then HitShape is fully contained
+						var closestPoint = FindClosestPointOnRectangleOutline(actor.CenterPosition, corner1, corner2, corner3, corner4);
+						var distanceToOutline = h.DistanceFromEdge(actor, closestPoint);
 
-						// If the HitShape edge is very close to or overlapping with the rectangle, consider it intersecting
-						if (distance <= 256) // Small tolerance for intersection (roughly 1/4 cell)
+						// If center is in rectangle and closest outline point is outside HitShape, then HitShape is fully within rectangle
+						if (distanceToOutline.Length > 0)
 							return true;
 					}
+
+					// Second check: Does the rectangle outline intersect with the HitShape?
+					var closestPoint2 = FindClosestPointOnRectangleOutline(actor.CenterPosition, corner1, corner2, corner3, corner4);
+					var distance = h.DistanceFromEdge(actor, closestPoint2);
+
+					// Check if closest point is inside the HitShape OR if HitShape is very close (intersecting)
+					if (distance == WDist.Zero || distance.Length <= 128) // Small tolerance for edge intersection
+						return true;
 				}
 			}
 
-			// Also check if the actor's center is inside the rectangle as a fallback
-			return IsPointInRectangle(actor.CenterPosition, corner1, corner2, corner3, corner4);
+			return false;
 		}
 
 		static bool IsPointInRectangle(WPos point, WPos corner1, WPos corner2, WPos corner3, WPos corner4)
@@ -1052,64 +1080,43 @@ namespace OpenRA.Mods.CA.Projectiles
 
 		static bool IsActorInTrapezoidSegment(Actor actor, WPos source, WVec forwardDir, int segmentStart, int segmentEnd, int startWidth, int endWidth)
 		{
-			// First check if the actor has any HitShapes
-			var hasHitShape = ActorHasHitShape(actor);
-
-			// If no HitShape, fall back to center position check
-			if (!hasHitShape)
-				return IsPositionInTrapezoidSegment(actor.CenterPosition, source, forwardDir, segmentStart, segmentEnd, startWidth, endWidth);
-
-			// For HitShape actors, we need to test multiple points
-			var actorCenter = actor.CenterPosition;
-			const int TestRadius = 512; // Test points in a circle around the actor
-
-			var testPoints = new List<WPos> { actorCenter };
-
-			// Add test points around the actor
-			for (var angle = 0; angle < 360; angle += 45)
+			// Check if trapezoid segment intersects with actor's HitShape
+			if (ActorHasHitShape(actor))
 			{
-				var radians = angle * Math.PI / 180.0;
-				var offset = new WVec((int)(TestRadius * Math.Cos(radians)), (int)(TestRadius * Math.Sin(radians)), 0);
-				testPoints.Add(actorCenter + offset);
-			}
-
-			// Check if any test point is within the trapezoid segment
-			foreach (var testPoint in testPoints)
-			{
-				if (IsPositionInTrapezoidSegment(testPoint, source, forwardDir, segmentStart, segmentEnd, startWidth, endWidth))
-					return true;
-			}
-
-			// Additionally, check distance from HitShape to the trapezoid boundary
-			foreach (var targetPos in actor.EnabledTargetablePositions)
-			{
-				if (targetPos is HitShape h)
+				// For HitShape-enabled actors, check both intersection and containment
+				foreach (var targetPos in actor.EnabledTargetablePositions)
 				{
-					// Calculate the four corners of the trapezoid segment
-					GetTrapezoidCorners(source, forwardDir, segmentStart, segmentEnd, startWidth, endWidth,
-						out var corner1, out var corner2, out var corner3, out var corner4);
-
-					// Test distance from HitShape to trapezoid corners and edge midpoints
-					var trapezoidTestPoints = new WPos[]
+					if (targetPos is HitShape h)
 					{
-						corner1, corner2, corner3, corner4, // Corners
-						new((corner1.X + corner2.X) / 2, (corner1.Y + corner2.Y) / 2, (corner1.Z + corner2.Z) / 2), // Edge midpoints
-						new((corner2.X + corner3.X) / 2, (corner2.Y + corner3.Y) / 2, (corner2.Z + corner3.Z) / 2),
-						new((corner3.X + corner4.X) / 2, (corner3.Y + corner4.Y) / 2, (corner3.Z + corner4.Z) / 2),
-						new((corner4.X + corner1.X) / 2, (corner4.Y + corner1.Y) / 2, (corner4.Z + corner1.Z) / 2),
-						new((corner1.X + corner3.X) / 2, (corner1.Y + corner3.Y) / 2, (corner1.Z + corner3.Z) / 2) // Center
-					};
+						// First check: Is the HitShape fully within the trapezoid segment?
+						// Test if the actor's center is within the segment - if so, the HitShape might be fully contained
+						if (IsPositionInTrapezoidSegment(actor.CenterPosition, source, forwardDir, segmentStart, segmentEnd, startWidth, endWidth))
+						{
+							// Check if all edges of the trapezoid are outside or on the HitShape boundary
+							// If the center is in and no trapezoid edges penetrate the HitShape, then HitShape is fully contained
+							var closestPoint = FindClosestPointOnTrapezoidOutline(actor.CenterPosition, source, forwardDir, segmentStart, segmentEnd, startWidth, endWidth);
+							var distanceToOutline = h.DistanceFromEdge(actor, closestPoint);
 
-					foreach (var testPoint in trapezoidTestPoints)
-					{
-						var distance = h.DistanceFromEdge(actor, testPoint).Length;
-						if (distance <= TestRadius) // Small tolerance for intersection
+							// If center is in segment and closest outline point is outside HitShape, then HitShape is fully within segment
+							if (distanceToOutline.Length > 0)
+								return true;
+						}
+
+						// Second check: Does the trapezoid outline intersect with the HitShape?
+						var closestPoint2 = FindClosestPointOnTrapezoidOutline(actor.CenterPosition, source, forwardDir, segmentStart, segmentEnd, startWidth, endWidth);
+						var distance = h.DistanceFromEdge(actor, closestPoint2);
+
+						// Check if closest point is inside the HitShape OR if HitShape is very close (intersecting)
+						if (distance == WDist.Zero || distance.Length <= 128) // Small tolerance for edge intersection
 							return true;
 					}
 				}
+
+				return false;
 			}
 
-			return false;
+			// Fallback: center position only for actors without HitShapes
+			return IsPositionInTrapezoidSegment(actor.CenterPosition, source, forwardDir, segmentStart, segmentEnd, startWidth, endWidth);
 		}
 
 		static bool IsPositionInTrapezoidSegment(WPos position, WPos source, WVec forwardDir, int segmentStart, int segmentEnd, int startWidth, int endWidth)
@@ -1120,6 +1127,187 @@ namespace OpenRA.Mods.CA.Projectiles
 
 			// Use the existing quadrilateral point-in-polygon test
 			return IsPointInsideQuadrilateral(position, corner1, corner2, corner3, corner4);
+		}
+
+		/// <summary>
+		/// Finds the closest point on a rectangle's outline to a given position.
+		/// </summary>
+		static WPos FindClosestPointOnRectangleOutline(WPos position, WPos corner1, WPos corner2, WPos corner3, WPos corner4)
+		{
+			var closestPoint = corner1;
+			var closestDistance = (position - corner1).LengthSquared;
+
+			// Check all four edges of the rectangle
+			var edges = new (WPos Start, WPos End)[]
+			{
+				(corner1, corner2),
+				(corner2, corner3),
+				(corner3, corner4),
+				(corner4, corner1)
+			};
+
+			foreach (var (start, end) in edges)
+			{
+				var pointOnEdge = FindClosestPointOnLineSegment(position, start, end);
+				var distanceSquared = (position - pointOnEdge).LengthSquared;
+
+				if (distanceSquared < closestDistance)
+				{
+					closestDistance = distanceSquared;
+					closestPoint = pointOnEdge;
+				}
+			}
+
+			return closestPoint;
+		}
+
+		/// <summary>
+		/// Finds the closest point on a cone segment's outline to a given position.
+		/// </summary>
+		static WPos FindClosestPointOnConeSegmentOutline(WPos position, WPos source, WVec forwardDir, int segmentStart, int segmentEnd, double halfConeAngleRadians)
+		{
+			var normalizedForwardDir = Normalize1024OrDefault(forwardDir);
+			var perpDir = PerpendicularXY(normalizedForwardDir);
+
+			var closestPoint = source;
+			var closestDistance = (position - source).LengthSquared;
+
+			// Sample points along the cone segment outline (both edges and the arc)
+			const int SampleCount = 8; // Number of samples along each arc
+
+			// Left arc from segmentStart to segmentEnd
+			for (var i = 0; i <= SampleCount; i++)
+			{
+				var t = (double)i / SampleCount;
+				var distance = (int)(segmentStart + t * (segmentEnd - segmentStart));
+				var cos = Math.Cos(-halfConeAngleRadians);
+				var sin = Math.Sin(-halfConeAngleRadians);
+
+				var direction = new WVec(
+					(int)(normalizedForwardDir.X * cos - perpDir.X * sin),
+					(int)(normalizedForwardDir.Y * cos - perpDir.Y * sin),
+					0);
+
+				var samplePoint = source + direction * distance / 1024;
+				var distanceSquared = (position - samplePoint).LengthSquared;
+
+				if (distanceSquared < closestDistance)
+				{
+					closestDistance = distanceSquared;
+					closestPoint = samplePoint;
+				}
+			}
+
+			// Right arc from segmentStart to segmentEnd
+			for (var i = 0; i <= SampleCount; i++)
+			{
+				var t = (double)i / SampleCount;
+				var distance = (int)(segmentStart + t * (segmentEnd - segmentStart));
+				var cos = Math.Cos(halfConeAngleRadians);
+				var sin = Math.Sin(halfConeAngleRadians);
+
+				var direction = new WVec(
+					(int)(normalizedForwardDir.X * cos - perpDir.X * sin),
+					(int)(normalizedForwardDir.Y * cos - perpDir.Y * sin),
+					0);
+
+				var samplePoint = source + direction * distance / 1024;
+				var distanceSquared = (position - samplePoint).LengthSquared;
+
+				if (distanceSquared < closestDistance)
+				{
+					closestDistance = distanceSquared;
+					closestPoint = samplePoint;
+				}
+			}
+
+			// Inner arc at segmentStart (if not at source)
+			if (segmentStart > 0)
+			{
+				for (var i = 0; i <= SampleCount; i++)
+				{
+					var t = (double)i / SampleCount;
+					var angle = -halfConeAngleRadians + t * (2 * halfConeAngleRadians);
+					var cos = Math.Cos(angle);
+					var sin = Math.Sin(angle);
+
+					var direction = new WVec(
+						(int)(normalizedForwardDir.X * cos - perpDir.X * sin),
+						(int)(normalizedForwardDir.Y * cos - perpDir.Y * sin),
+						0);
+
+					var samplePoint = source + direction * segmentStart / 1024;
+					var distanceSquared = (position - samplePoint).LengthSquared;
+
+					if (distanceSquared < closestDistance)
+					{
+						closestDistance = distanceSquared;
+						closestPoint = samplePoint;
+					}
+				}
+			}
+
+			// Outer arc at segmentEnd
+			for (var i = 0; i <= SampleCount; i++)
+			{
+				var t = (double)i / SampleCount;
+				var angle = -halfConeAngleRadians + t * (2 * halfConeAngleRadians);
+				var cos = Math.Cos(angle);
+				var sin = Math.Sin(angle);
+
+				var direction = new WVec(
+					(int)(normalizedForwardDir.X * cos - perpDir.X * sin),
+					(int)(normalizedForwardDir.Y * cos - perpDir.Y * sin),
+					0);
+
+				var samplePoint = source + direction * segmentEnd / 1024;
+				var distanceSquared = (position - samplePoint).LengthSquared;
+
+				if (distanceSquared < closestDistance)
+				{
+					closestDistance = distanceSquared;
+					closestPoint = samplePoint;
+				}
+			}
+
+			return closestPoint;
+		}
+
+		/// <summary>
+		/// Finds the closest point on a trapezoid's outline to a given position.
+		/// </summary>
+		static WPos FindClosestPointOnTrapezoidOutline(WPos position, WPos source, WVec forwardDir, int segmentStart, int segmentEnd, int startWidth, int endWidth)
+		{
+			GetTrapezoidCorners(source, forwardDir, segmentStart, segmentEnd, startWidth, endWidth,
+				out var corner1, out var corner2, out var corner3, out var corner4);
+
+			// Use the same logic as rectangle - find closest point on the trapezoid's edges
+			return FindClosestPointOnRectangleOutline(position, corner1, corner2, corner3, corner4);
+		}
+
+		/// <summary>
+		/// Finds the closest point on a line segment to a given position.
+		/// </summary>
+		static WPos FindClosestPointOnLineSegment(WPos position, WPos lineStart, WPos lineEnd)
+		{
+			var line = lineEnd - lineStart;
+			var lineLength = line.Length;
+
+			if (lineLength == 0)
+				return lineStart; // Degenerate line segment
+
+			var toPosition = position - lineStart;
+			var projectionLength = WVec.Dot(toPosition, line) / lineLength;
+
+			// Clamp to line segment bounds
+			if (projectionLength <= 0)
+				return lineStart;
+			if (projectionLength >= lineLength)
+				return lineEnd;
+
+			// Calculate the point on the line segment
+			var projectionVector = line * projectionLength / lineLength;
+			return lineStart + projectionVector;
 		}
 	}
 }
