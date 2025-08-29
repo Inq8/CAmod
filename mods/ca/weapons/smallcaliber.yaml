@@ -1001,11 +1001,11 @@ EnforcerShotgun:
 	Projectile: LinearPulse
 		Blockable: true
 		Speed: 2c0
-		ImpactInterval: 2c0
+		ImpactInterval: 512
 		ImpactType: Trapezoid
 		TrapezoidStartWidth: 0c768
 		TrapezoidEndWidth: 2c0
-		TrapezoidSegmentLength: 4c0
+		TrapezoidSegmentLength: 512
 		SingleHitPerActor: true
 		Spread: 4c0
 		Falloff: 100, 25
@@ -1013,6 +1013,7 @@ EnforcerShotgun:
 		FinalHitAnim: explosion
 		FinalHitAnimSequence: piffs
 		ForceGround: DamageOnly
+		MinimumFriendlyFireRange: 2c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 7000
 		Versus:

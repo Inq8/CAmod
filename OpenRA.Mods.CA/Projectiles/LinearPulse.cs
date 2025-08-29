@@ -179,6 +179,12 @@ namespace OpenRA.Mods.CA.Projectiles
 		[Desc("The minimum range at which friendly actors can be impacted (relative to source).")]
 		public readonly WDist MinimumFriendlyFireRange = WDist.Zero;
 
+		[Desc("Is this blocked by actors with BlocksProjectiles trait.")]
+		public readonly bool Blockable = false;
+
+		[Desc("Width of projectile (used for finding blocking actors).")]
+		public readonly WDist Width = new(1);
+
 		[FieldLoader.LoadUsing(nameof(LoadImpactAnimations))]
 		public readonly List<ImpactAnimation> ImpactAnimations = new();
 
@@ -218,6 +224,7 @@ namespace OpenRA.Mods.CA.Projectiles
 		int totalVisualDistanceTravelled;
 		bool travelComplete;
 		bool visualTravelComplete;
+		bool blocked;
 		readonly int range;
 		readonly int visualRange;
 		readonly WPos[] impactPositions;
@@ -321,14 +328,28 @@ namespace OpenRA.Mods.CA.Projectiles
 		{
 			anim?.Tick();
 
-			if (!travelComplete)
+			var lastPos = pos;
+
+			if (!travelComplete && !blocked)
 				pos += directionalSpeed;
 
-			if (!visualTravelComplete)
+			if (!visualTravelComplete && !blocked)
 				visualPos += visualDirectionalSpeed;
 
-			totalDistanceTravelled += info.Speed.Length;
-			totalVisualDistanceTravelled += info.VisualSpeed != WDist.Zero && info.VisualSpeed != info.Speed ? info.VisualSpeed.Length : info.Speed.Length;
+			// Check for walls or other blocking obstacles
+			if (info.Blockable && !blocked && BlocksProjectiles.AnyBlockingActorsBetween(world, args.SourceActor.Owner, lastPos, pos, info.Width, out var blockedPos))
+			{
+				pos = blockedPos;
+				visualPos = blockedPos;
+				blocked = true;
+				totalDistanceTravelled = (blockedPos - source).Length;
+				totalVisualDistanceTravelled = (blockedPos - source).Length;
+			}
+			else
+			{
+				totalDistanceTravelled += info.Speed.Length;
+				totalVisualDistanceTravelled += info.VisualSpeed != WDist.Zero && info.VisualSpeed != info.Speed ? info.VisualSpeed.Length : info.Speed.Length;
+			}
 
 			if (!travelComplete)
 			{
@@ -347,8 +368,8 @@ namespace OpenRA.Mods.CA.Projectiles
 				}
 			}
 
-			travelComplete = totalDistanceTravelled >= range;
-			visualTravelComplete = totalVisualDistanceTravelled >= visualRange;
+			travelComplete = totalDistanceTravelled >= range || blocked;
+			visualTravelComplete = totalVisualDistanceTravelled >= visualRange || blocked;
 
 			// Create final hit animation when visual travel completes
 			if (visualTravelComplete && !finalHitCreated && !string.IsNullOrEmpty(info.FinalHitAnim))
@@ -506,6 +527,15 @@ namespace OpenRA.Mods.CA.Projectiles
 				if (info.SingleHitPerActor && impactedActors.Contains(actor))
 					continue;
 
+				// Skip friendly actors if they are too close to the source
+				if (info.MinimumFriendlyFireRange > WDist.Zero)
+				{
+					var actorDistanceFromSource = (actor.CenterPosition - source).Length;
+					if (actorDistanceFromSource < info.MinimumFriendlyFireRange.Length &&
+						args.SourceActor.Owner.RelationshipWith(actor.Owner).HasRelationship(PlayerRelationship.Ally))
+						continue;
+				}
+
 				// Check if actor intersects with the rectangle
 				if (IsActorInRectangle(actor, corner1, corner2, corner3, corner4))
 				{
@@ -646,6 +676,15 @@ namespace OpenRA.Mods.CA.Projectiles
 				if (info.SingleHitPerActor && impactedActors.Contains(actor))
 					continue;
 
+				// Skip friendly actors if they are too close to the source
+				if (info.MinimumFriendlyFireRange > WDist.Zero)
+				{
+					var actorDistanceFromSource = (actor.CenterPosition - source).Length;
+					if (actorDistanceFromSource < info.MinimumFriendlyFireRange.Length &&
+						args.SourceActor.Owner.RelationshipWith(actor.Owner).HasRelationship(PlayerRelationship.Ally))
+						continue;
+				}
+
 				// Check if actor is within the cone segment using the fixed forward direction
 				if (IsActorInConeSegment(actor, source, normalizedForwardDir, segmentStart, segmentEnd, halfConeAngleRadians))
 				{
@@ -766,6 +805,15 @@ namespace OpenRA.Mods.CA.Projectiles
 				{
 					if (info.SingleHitPerActor && impactedActors.Contains(actor))
 						continue;
+
+					// Skip friendly actors if they are too close to the source
+					if (info.MinimumFriendlyFireRange > WDist.Zero)
+					{
+						var actorDistanceFromSource = (actor.CenterPosition - source).Length;
+						if (actorDistanceFromSource < info.MinimumFriendlyFireRange.Length &&
+							args.SourceActor.Owner.RelationshipWith(actor.Owner).HasRelationship(PlayerRelationship.Ally))
+							continue;
+					}
 
 					if (IsActorInTrapezoidSegment(actor, source, forwardDir, segStart, segEnd, startWidthAtSeg, endWidthAtSeg))
 					{
