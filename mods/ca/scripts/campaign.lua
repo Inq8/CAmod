@@ -1851,14 +1851,6 @@ AdjustAttackValuesForDifficulty = function(attackValues, difficulty)
 end
 
 AdjustCompositionsForDifficulty = function(compositions, difficulty)
-	if difficulty == nil then
-		difficulty = Difficulty
-	end
-
-	if IsHardOrAbove() then
-		return compositions
-	end
-
 	local updatedCompositions = { }
 
 	Utils.Do(compositions, function(comp)
@@ -2322,8 +2314,8 @@ AirCompositions = {
 			{ Aircraft = { "pmak", "pmak" } }
 		},
 		brutal = {
-			{ Aircraft = { "heli", "heli", "heli", "heli" } },
-			{ Aircraft = { "harr", "harr", "harr" } },
+			{ Aircraft = { "heli", "heli", "heli", "heli", "heli" } },
+			{ Aircraft = { "harr", "harr", "harr", "harr" } },
 			{ Aircraft = { "pmak", "pmak", "pmak" } }
 		}
 	},
@@ -2349,9 +2341,9 @@ AirCompositions = {
 		},
 		brutal = {
 			{ Aircraft = { MigOrHindOrYak, MigOrHindOrYak, MigOrHindOrYak, MigOrHindOrYak } },
-			{ Aircraft = { "mig", "mig", "mig", "mig" } },
-			{ Aircraft = { SukhoiVariant, SukhoiVariant, SukhoiVariant } },
-			{ Aircraft = { "kiro", "kiro", "kiro" } },
+			{ Aircraft = { "mig", "mig", "mig", "mig", "mig" } },
+			{ Aircraft = { SukhoiVariant, SukhoiVariant, SukhoiVariant, SukhoiVariant } },
+			{ Aircraft = { "kiro", "kiro", "kiro", "kiro" } },
 		}
 	},
 	GDI = {
@@ -2381,7 +2373,7 @@ AirCompositions = {
 			{ Aircraft = { "auro", "auro" } },
 		},
 		brutal = {
-			{ Aircraft = { "orca", "orca", "orca", "orca" } },
+			{ Aircraft = { "orca", "orca", "orca", "orca", "orca" } },
 			{ Aircraft = { "a10", "a10", "a10", "a10" } },
 			{ Aircraft = { "a10.gau", "a10.gau", "a10.gau" } },
 			{ Aircraft = { "orcb", "orcb", "orcb" } },
@@ -2410,7 +2402,7 @@ AirCompositions = {
 		brutal = {
 			{ Aircraft = { "apch", "apch", ApacheOrVenom, ApacheOrVenom } },
 			{ Aircraft = { "scrn", "scrn", "scrn", "scrn" } },
-			{ Aircraft = { "rah", "rah", "rah" } },
+			{ Aircraft = { "rah", "rah", "rah", "rah" } },
 			{ Aircraft = { "vert", "vert", "vert" } }
 		}
 	},
@@ -2436,7 +2428,7 @@ AirCompositions = {
 		},
 		brutal = {
 			{ Aircraft = { "stmr", "stmr", "stmr", "stmr" } },
-			{ Aircraft = { "torm", "torm", "torm", "torm" } },
+			{ Aircraft = { "torm", "torm", "torm", "torm", "torm" } },
 			{ Aircraft = { "enrv", "enrv", "enrv" } },
 		}
 	}

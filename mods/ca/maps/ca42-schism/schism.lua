@@ -1,11 +1,11 @@
 PurificationInterval = DateTime.Minutes(3) + DateTime.Seconds(5)
 
 DefendDuration = {
-	easy = DateTime.Minutes(2) + DateTime.Seconds(30),
-	normal = DateTime.Minutes(3),
-	hard = DateTime.Minutes(3) + DateTime.Seconds(30),
-	vhard = DateTime.Minutes(3) + DateTime.Seconds(30),
-	brutal = DateTime.Minutes(3) + DateTime.Seconds(30),
+	easy = DateTime.Minutes(3),
+	normal = DateTime.Minutes(3) + DateTime.Seconds(30),
+	hard = DateTime.Minutes(4),
+	vhard = DateTime.Minutes(4),
+	brutal = DateTime.Minutes(4),
 }
 
 MaleficSpawns = { MaleficSpawn1.Location, MaleficSpawn2.Location, MaleficSpawn3.Location, MaleficSpawn4.Location, MaleficSpawn5.Location, MaleficSpawn6.Location, MaleficSpawn7.Location }
@@ -361,15 +361,15 @@ MaleficInit = function()
 				Utils.Do(OverlordSpawns, function(loc)
 					Actor.Create("wormhole", true, { Owner = Scrin, Location = loc})
 				end)
-				OverlordSpawn()
+				OverlordSpawn(true)
 			end)
 		end)
 
-		MaleficSpawn()
+		MaleficSpawn(true)
 	end
 end
 
-MaleficSpawn = function()
+MaleficSpawn = function(isInitial)
 	local invasionCompositions = {
 		{ "intl", "s1", "s1", "s1", "s1", "s3", "s3", "s4", "s4", "stlk", "stlk", "stlk" },
 		{ "dark", "s1", "s1", "s1", "s1", "s3", "s4", "stlk", "stlk", "stlk" },
@@ -392,10 +392,15 @@ MaleficSpawn = function()
 		end)
 	end)
 
-	Trigger.AfterDelay(GetInvasionInterval(), MaleficSpawn)
+	local prepTime = 0
+	if isInitial then
+		prepTime = DateTime.Seconds(30)
+	end
+
+	Trigger.AfterDelay(GetInvasionInterval() + prepTime, MaleficSpawn)
 end
 
-OverlordSpawn = function()
+OverlordSpawn = function(isInitial)
 	local overlordCompositions = {
 		{ "devo", "s1", "s1", "s1", "s3", "s4", "evis", "evis", "evis" },
 		{ "tpod", "s1", "s1", "s1", "s3", "evis", "evis" },
@@ -414,7 +419,12 @@ OverlordSpawn = function()
 		end)
 	end)
 
-	Trigger.AfterDelay(DateTime.Seconds(30), OverlordSpawn)
+	local prepTime = 0
+	if isInitial then
+		prepTime = DateTime.Seconds(30)
+	end
+
+	Trigger.AfterDelay(DateTime.Seconds(30) + prepTime, OverlordSpawn)
 end
 
 GetPlayerArmyValue = function()

@@ -67,10 +67,10 @@ Squads = {
 				{ Aircraft = { HindOrYak, HindOrYak, HindOrYak } },
 			},
 			vhard = {
-				{ Aircraft = { HindOrYak, HindOrYak, HindOrYak } },
+				{ Aircraft = { HindOrYak, HindOrYak, HindOrYak, HindOrYak } },
 			},
 			brutal = {
-				{ Aircraft = { HindOrYak, HindOrYak, HindOrYak, HindOrYak } },
+				{ Aircraft = { HindOrYak, HindOrYak, HindOrYak, HindOrYak, HindOrYak } },
 			}
 		},
 	},
@@ -88,10 +88,10 @@ Squads = {
 				{ Aircraft = { MigOrSukhoi, MigOrSukhoi, MigOrSukhoi } },
 			},
 			vhard = {
-				{ Aircraft = { MigOrSukhoi, MigOrSukhoi, MigOrSukhoi } },
+				{ Aircraft = { MigOrSukhoi, MigOrSukhoi, MigOrSukhoi, MigOrSukhoi } },
 			},
 			brutal = {
-				{ Aircraft = { MigOrSukhoi, MigOrSukhoi, MigOrSukhoi, MigOrSukhoi } },
+				{ Aircraft = { MigOrSukhoi, MigOrSukhoi, MigOrSukhoi, MigOrSukhoi, MigOrSukhoi } },
 			}
 		},
 	},
@@ -145,10 +145,10 @@ Squads = {
 				{ Aircraft = { "kiro", "kiro", "kiro", "kiro" }, MinTime = DateTime.Minutes(28) }
 			},
 			brutal = {
-				{ Aircraft = { "kiro" }, MaxTime = DateTime.Minutes(6) },
-				{ Aircraft = { "kiro", "kiro" }, MinTime = DateTime.Minutes(6), MaxTime = DateTime.Minutes(16) },
-				{ Aircraft = { "kiro", "kiro", "kiro" }, MinTime = DateTime.Minutes(16), MaxTime = DateTime.Minutes(26) },
-				{ Aircraft = { "kiro", "kiro", "kiro", "kiro" }, MinTime = DateTime.Minutes(26) }
+				{ Aircraft = { "kiro", "kiro" }, MaxTime = DateTime.Minutes(6) },
+				{ Aircraft = { "kiro", "kiro", "kiro" }, MinTime = DateTime.Minutes(6), MaxTime = DateTime.Minutes(16) },
+				{ Aircraft = { "kiro", "kiro", "kiro", "kiro" }, MinTime = DateTime.Minutes(16), MaxTime = DateTime.Minutes(26) },
+				{ Aircraft = { "kiro", "kiro", "kiro", "kiro", "kiro", "kiro" }, MinTime = DateTime.Minutes(26) }
 			},
 		},
 		AttackPaths = {
@@ -172,6 +172,12 @@ WorldLoaded = function()
 	InitObjectives(GDI)
 	AdjustPlayerStartingCashForDifficulty()
 	InitUSSR()
+
+	if Difficulty == "brutal" then
+		Trigger.AfterDelay(DateTime.Minutes(8), function()
+			Actor.Create("ai.superweapons.enabled", true, { Owner = USSR })
+		end)
+	end
 
 	ObjectiveCaptureOrDestroyBunker = GDI.AddObjective("Capture or destroy Stalin's bunker.")
 	ObjectiveStarveAtomicReactor = GDI.AddSecondaryObjective("Cut supply lines to starve atomic reactor of fuel.")
@@ -278,7 +284,7 @@ InitUSSR = function()
 	AutoRebuildConyards(USSR)
 	InitAiUpgrades(USSR)
 	InitAttackSquad(Squads.Main, USSR)
-	InitAirAttackSquad(Squads.AirAntiLight, USSR, MissionPlayers, { "Light" }, "ArmorType")
+	InitAirAttackSquad(Squads.AirAntiLight, USSR, MissionPlayers, { "Light", "Infantry" }, "ArmorType")
 	InitAirAttackSquad(Squads.AirAntiHeavy, USSR, MissionPlayers, { "Heavy" }, "ArmorType")
 	InitAirAttackSquad(Squads.AirAntiAir, USSR, MissionPlayers, { "Aircraft" }, "ArmorType")
 	InitAttackSquad(Squads.Kirovs, USSR)

@@ -241,6 +241,10 @@ namespace OpenRA.Mods.CA.Projectiles
 
 			return retList;
 		}
+
+		// To suppress errors
+		public readonly ImpactAnimation ImpactAnimation = null;
+		public readonly DamageFalloff DamageFalloff = null;
 	}
 
 	public class LinearPulse : IProjectile, ISync

@@ -311,7 +311,7 @@ SendLandingCraft = function()
 end
 
 InitCruisers = function()
-	if AlliedNavalYard.IsDead then
+	if AlliedNavalYard.IsDead and Difficulty ~= "brutal" then
 		return
 	end
 
@@ -348,7 +348,7 @@ end
 
 InitChronoTankAttack = function()
 	local alliedFactories = Greece.GetActorsByType("weap")
-	if #alliedFactories == 0 then
+	if #alliedFactories == 0 and Difficulty ~= "brutal" then
 		return
 	end
 

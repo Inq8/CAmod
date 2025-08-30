@@ -24,7 +24,7 @@ SuperweaponsEnabledTime = {
 Squads = {
 	Allies = {
 		InitTimeAdjustment = -DateTime.Minutes(10),
-		Delay = AdjustDelayForDifficulty(DateTime.Minutes(2)),
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(1)),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40, RampDuration = DateTime.Minutes(13) }),
 		FollowLeader = true,
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Allied),
@@ -34,7 +34,7 @@ Squads = {
 	},
 	Nod = {
 		InitTimeAdjustment = -DateTime.Minutes(10),
-		Delay = AdjustDelayForDifficulty(DateTime.Minutes(2)),
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(1)),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40, RampDuration = DateTime.Minutes(13) }),
 		DispatchDelay = DateTime.Seconds(15),
 		FollowLeader = true,
@@ -45,7 +45,7 @@ Squads = {
 	},
 	Soviets = {
 		InitTimeAdjustment = -DateTime.Minutes(10),
-		Delay = AdjustDelayForDifficulty(DateTime.Minutes(2)),
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(1)),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40, RampDuration = DateTime.Minutes(13) }),
 		FollowLeader = true,
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Soviet),
@@ -67,7 +67,7 @@ Squads = {
 		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(5)),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 20 }),
 		Compositions = AirCompositions.Soviet,
-	},
+	}
 }
 
 -- Setup and Tick

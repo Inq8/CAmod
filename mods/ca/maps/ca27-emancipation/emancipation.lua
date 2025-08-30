@@ -88,6 +88,10 @@ WorldLoaded = function()
 		ObjectiveMinimiseCasualties = GDI.AddObjective("Avoid killing mind controlled GDI units.")
 	end
 
+	if Difficulty == "brutal" then
+		AdvComms.Destroy()
+	end
+
 	Actor.Create("bdrone.upgrade", true, { Owner = GDI })
 	Actor.Create("mdrone.upgrade", true, { Owner = GDI })
 

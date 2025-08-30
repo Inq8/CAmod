@@ -94,6 +94,23 @@ Squads = {
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
 		Compositions = AirCompositions.Nod,
 	},
+	BrutalComanches = {
+		Delay = DateTime.Minutes(10),
+		ActiveCondition = function(squad)
+			for _, player in pairs(MissionPlayers) do
+				if #player.ActorsByTypes({ "gtek", "upgc", "eye" }) > 0 then
+					return true
+				end
+			end
+			return false
+		end,
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 24, Max = 24 }),
+		Compositions = {
+			brutal = {
+				Aircraft = { "rah", "rah", "rah", "rah", "rah" }
+			}
+		}
+	}
 }
 
 WorldLoaded = function()
@@ -224,6 +241,10 @@ InitNod = function()
 	InitAttackSquad(Squads.North, Nod)
 	InitAttackSquad(Squads.South, Nod)
 	InitAirAttackSquad(Squads.Air, Nod)
+
+	if Difficulty == "brutal" then
+		InitAirAttackSquad(Squads.BrutalComanches, Nod, nil, { "gtek", "rmbo", "medi", "upgc", "eye" })
+	end
 
 	local nodGroundAttackers = Nod.GetGroundAttackers()
 

@@ -159,8 +159,6 @@ WorldLoaded = function()
 		Trigger.AfterDelay(DateTime.Minutes(10), function()
 			Actor.Create("ai.superweapons.enabled", true, { Owner = USSR })
 		end)
-	else
-		MissileSilo.Destroy()
 	end
 
 	ObjectiveDestroyBases = Scrin.AddObjective("Eliminate Soviet bases.")
