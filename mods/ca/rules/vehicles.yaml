@@ -3662,6 +3662,7 @@ BGGY:
 		Category: Nod/Vehicles
 
 ^DecoyUnit:
+	Inherits@selection: ^SelectableSupportUnit
 	GrantTimedCondition@Decoy:
 		Condition: active
 		Duration: 750
@@ -5818,6 +5819,10 @@ BTR:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
+	DetectCloaked:
+		Range: 6c0
+		DetectionTypes: Cloak, AirCloak
+		RequiresCondition: (loaded-cmdo || loaded-cmsr) && !(empdisable || being-warped)
 	Turreted:
 		TurnSpeed: 40
 	Armament@GROUND:
@@ -5856,6 +5861,7 @@ BTR:
 			bori: loaded-cmdo
 			yuri: loaded-cmdo
 			mast: loaded-cmdo
+			cmsr: loaded-cmsr
 	WithCargoSounds:
 		EnterSounds: genter1a.aud
 		ExitSounds: gexit1a.aud
