@@ -993,7 +993,7 @@ STLK:
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor, Infantry
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
-		Attributes: • Special Ability: Cloak\n• Moves faster while cloaked.
+		Attributes: • Special Ability: Cloak\n• Moves faster while cloaked\n• Takes greatly reduced damage for a short time after decloaking
 	Health:
 		HP: 12000
 	UpdatesPlayerStatistics:
@@ -1016,7 +1016,7 @@ STLK:
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 	GrantTimedConditionOnDeploy@Cloak:
-		DeployedCondition: cloak
+		DeployedCondition: cloak-active
 		ShowSelectionBar: true
 		StartsFullyCharged: true
 		DeployedTicks: 250
@@ -1025,10 +1025,10 @@ STLK:
 		ChargingColor: 808080
 		DischargingColor: ffffff
 		Instant: true
-		RequiresCondition: !decloak
+		RequiresCondition: !forced-decloak
 	Cloak@NORMAL:
 		InitialDelay: 0
-		CloakDelay: 50
+		CloakDelay: 0
 		CloakSound: stlk-cloak.aud
 		UncloakSound: stlk-uncloak.aud
 		CloakedCondition: hidden
@@ -1036,7 +1036,7 @@ STLK:
 		CloakedPalette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
-		RequiresCondition: !cloak-force-disabled && !being-warped && !parachute && cloak
+		RequiresCondition: !cloak-force-disabled && !being-warped && !parachute && cloak-active
 		PauseOnCondition: invisibility
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden)
@@ -1045,20 +1045,26 @@ STLK:
 		ColorSource: Player
 	SpeedMultiplier@CloakSpeed:
 		Modifier: 150
+		RequiresCondition: phaseshield || hidden
+	GrantConditionOnAttack@ForcedDecloak:
+		Condition: forced-decloak
 		RequiresCondition: hidden
-	GrantConditionOnAttack@Decloak:
-		Condition: decloak
-		RequiresCondition: hidden
+	GrantConditionOnDamage@ForcedDecloak:
+		Condition: forced-decloak
+		ValidRelationships: Ally, Enemy, Neutral
+		Duration: 1
 	GrantTimedCondition@Uncloaked:
 		Condition: phaseshield
-		RequiresCondition: !hidden
-		Duration: 30
+		RequiresCondition: forced-decloak
+		Duration: 35
+		ForceFullDuration: true
 	DamageMultiplier@UncloakShield:
-		Modifier: 0
-		RequiresCondition: phaseshield
+		Modifier: 10
+		RequiresCondition: phaseshield || hidden
 	WithColoredOverlay@UncloakShield:
-		Color: 15091f77
+		Color: 15091f88
 		RequiresCondition: phaseshield
+	-GrantConditionOnDamageState@UNCLOAK:
 	EncyclopediaExtras:
 		AdditionalInfo: Requires Malefic Allegiance.
 
