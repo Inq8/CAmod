@@ -100,6 +100,8 @@ WorldLoaded = function()
 	StealthTankDeathTrigger(StealthTank1)
 	StealthTankDeathTrigger(StealthTank2)
 
+	Actor.Create("radar.dummy", true, { Owner = Nod })
+
 	Trigger.OnKilled(IonControl, function(self, killer)
 		if ObjectiveHackIonControl ~= nil and not Nod.IsObjectiveCompleted(ObjectiveHackIonControl) then
 			Nod.MarkFailedObjective(ObjectiveHackIonControl)
@@ -150,6 +152,26 @@ WorldLoaded = function()
 			end
 		end)
 	end)
+
+	local bridgeParts = Utils.Where(Map.ActorsInWorld, function(b) return b.Type =="brh1" or b.Type == "brh2" or b.Type == "brh3" end)
+	local northBridgeParts = Utils.Where(bridgeParts, function(b) return b.Location.Y < 50 end)
+	local southBridgeParts = Utils.Where(bridgeParts, function(b) return b.Location.Y > 50 end)
+
+	Trigger.OnAnyKilled(northBridgeParts, function()
+		NorthBridgeDestroyed = true
+		if SouthBridgeDestroyed then
+			InitBridgesObjective()
+			Nod.MarkCompletedObjective(ObjectiveDestroyBridges)
+		end
+	end)
+
+	Trigger.OnAnyKilled(southBridgeParts, function()
+		SouthBridgeDestroyed = true
+		if NorthBridgeDestroyed then
+			InitBridgesObjective()
+			Nod.MarkCompletedObjective(ObjectiveDestroyBridges)
+		end
+	end)
 end
 
 Tick = function()
@@ -172,15 +194,18 @@ OncePerSecondChecks = function()
 
 		if not IonControlHacked and IonControl.Owner == Nod then
 			IonControlHacked = true
+			InitBridgesObjective()
 			ObjectiveDestroyAlliedBase = Nod.AddObjective("Use the Ion Cannon to destroy the Allied base.")
 			Nod.MarkCompletedObjective(ObjectiveHackIonControl)
-			UserInterface.SetMissionText("Use the Ion Cannon to destroy the Allied base.", HSLColor.Yellow)
+			UserInterface.SetMissionText("Destroy bridges then use the Ion Cannon to destroy the Allied base.", HSLColor.Yellow)
 			MediaCA.PlaySound("n_useioncannon.aud", 2)
 			BaseCamera1 = Actor.Create("camera", true, { Owner = Nod, Location = AlliedBase1.Location })
 			BaseCamera2 = Actor.Create("camera", true, { Owner = Nod, Location = AlliedBase2.Location })
 			BaseCamera3 = Actor.Create("camera", true, { Owner = Nod, Location = AlliedBase3.Location })
 			BaseCamera4 = Actor.Create("camera", true, { Owner = Nod, Location = AlliedBase4.Location })
 			BaseCamera5 = Actor.Create("camera", true, { Owner = Nod, Location = AlliedBase5.Location })
+			BridgeCamera1 = Actor.Create("camera", true, { Owner = Nod, Location = AlliedBoundary2.Location })
+			BridgeCamera2 = Actor.Create("camera", true, { Owner = Nod, Location = AlliedBoundary5.Location })
 			Beacon.New(Nod, AlliedBase2.CenterPosition)
 			Trigger.AfterDelay(DateTime.Seconds(6), function()
 				BaseCamera1.Destroy()
@@ -188,6 +213,8 @@ OncePerSecondChecks = function()
 				BaseCamera3.Destroy()
 				BaseCamera4.Destroy()
 				BaseCamera5.Destroy()
+				BridgeCamera1.Destroy()
+				BridgeCamera2.Destroy()
 			end)
 		end
 	end
@@ -236,14 +263,6 @@ InitGreece = function()
 				self.Scatter()
 			end
 		end)
-	end)
-
-	Trigger.OnEnteredFootprint({ AlliedBoundary1.Location, AlliedBoundary2.Location, AlliedBoundary3.Location, AlliedBoundary4.Location, AlliedBoundary5.Location, AlliedBoundary6.Location }, function(a, id)
-		if a.Owner == Greece and not a.IsDead and a.HasProperty("Move") then
-			a.Stop()
-			local randomDest = Utils.Random({ AlliedBase1.Location, AlliedBase2.Location, AlliedBase4.Location, AlliedBase5.Location })
-			a.Move(randomDest)
-		end
 	end)
 end
 
@@ -312,4 +331,10 @@ StealthTankDeathTrigger = function(stealthTank)
 			end
 		end
 	end)
+end
+
+InitBridgesObjective = function()
+	if ObjectiveDestroyBridges == nil then
+		ObjectiveDestroyBridges = Nod.AddObjective("Destroy bridges leading to Allied base.")
+	end
 end
