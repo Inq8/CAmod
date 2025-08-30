@@ -1007,13 +1007,14 @@ EnforcerShotgun:
 		TrapezoidEndWidth: 2c0
 		TrapezoidSegmentLength: 512
 		SingleHitPerActor: true
-		Spread: 4c0
-		Falloff: 100, 25
-		FalloffBasis: DistanceFromSource
 		FinalHitAnim: explosion
 		FinalHitAnimSequence: piffs
 		ForceGround: DamageOnly
 		MinimumFriendlyFireRange: 2c0
+		DamageFalloff@1:
+			Spread: 4c0
+			Falloff: 100, 25
+			FalloffBasis: DistanceFromSource
 	Warhead@1Dam: SpreadDamage
 		Damage: 7000
 		Versus:

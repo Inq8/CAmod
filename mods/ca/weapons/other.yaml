@@ -2762,8 +2762,9 @@ SonicPulse:
 		RectangleLength: 768
 		RectangleWidth: 1c512
 		SingleHitPerActor: true
-		Spread: 0c256
-		Falloff: 100, 70, 20, 0
+		DamageFalloff@1:
+			Spread: 0c256
+			Falloff: 100, 70, 20, 0
 		ImpactAnimation@1:
 			Image: explosion
 			Sequences: sonicblast1, sonicblast2
@@ -2821,9 +2822,10 @@ DisruptorPulse:
 		RectangleLength: 768
 		RectangleWidth: 2c256
 		SingleHitPerActor: true
-		Spread: 0c384
-		Falloff: 100, 75, 25, 0
 		ForceGround: DamageOnly
+		DamageFalloff@1:
+			Spread: 0c384
+			Falloff: 100, 75, 25, 0
 		ImpactAnimation@1:
 			Image: explosion
 			Sequences: sonicwave1, sonicwave2

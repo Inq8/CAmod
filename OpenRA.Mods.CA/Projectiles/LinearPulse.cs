@@ -33,7 +33,7 @@ namespace OpenRA.Mods.CA.Projectiles
 
 	public enum FalloffBasis
 	{
-		DistanceFromImpact,
+		DistanceFromCenter,
 		DistanceFromCenterLine,
 		DistanceFromSource
 	}
@@ -69,10 +69,59 @@ namespace OpenRA.Mods.CA.Projectiles
 		}
 	}
 
+	public class DamageFalloff
+	{
+		[Desc("Damage modifier applied at each range step for Rectangle, Cone, and Trapezoid impact types.")]
+		public readonly int[] Falloff = { 100, 100 };
+
+		[Desc("Range between falloff steps for Rectangle, Cone, and Trapezoid impact types.")]
+		public readonly WDist Spread = new(43);
+
+		[Desc("Ranges at which each Falloff step is defined for Rectangle and Cone impact types. Overrides Spread.")]
+		public readonly WDist[] Range = null;
+
+		[Desc("Determines what distance is used for damage falloff calculation for Rectangle and Cone impact types.")]
+		public readonly FalloffBasis FalloffBasis = FalloffBasis.DistanceFromCenterLine;
+
+		[Desc("Controls the way damage is calculated. Possible values are 'HitShape', 'ClosestTargetablePosition' and 'CenterPosition'.")]
+		public readonly DamageCalculationType DamageCalculationType = DamageCalculationType.HitShape;
+
+		/// <summary>
+		/// This constructor is used solely for documentation generation.
+		/// </summary>
+		public DamageFalloff() { }
+
+		public DamageFalloff(MiniYaml content)
+		{
+			FieldLoader.Load(this, content);
+		}
+	}
+
 	public class LinearPulseInfo : IProjectileInfo
 	{
 		[Desc("Type of impact for the pulse.")]
 		public readonly LinearPulseImpactType ImpactType = LinearPulseImpactType.StandardImpact;
+
+		[Desc("Rectangle impact area length (parallel to the projectile path). Used with Rectangle impact type.")]
+		public readonly WDist RectangleLength = new(1024);
+
+		[Desc("Rectangle impact area width (perpendicular to the projectile path). Used with Rectangle impact type.")]
+		public readonly WDist RectangleWidth = new(1024);
+
+		[Desc("Cone angle in degrees for cone impact type. Used with Cone impact type.")]
+		public readonly int ConeAngle = 90;
+
+		[Desc("Length of each cone segment for cone impact type. Used with Cone impact type.")]
+		public readonly WDist ConeSegmentLength = new(512);
+
+		[Desc("Starting width of trapezoid at source position. Used with Trapezoid impact type.")]
+		public readonly WDist TrapezoidStartWidth = new(512);
+
+		[Desc("Ending width of trapezoid at maximum range. Used with Trapezoid impact type.")]
+		public readonly WDist TrapezoidEndWidth = new(2048);
+
+		[Desc("Length of each trapezoid segment. Used with Trapezoid impact type.")]
+		public readonly WDist TrapezoidSegmentLength = new(512);
 
 		[Desc("Distance between pulse impacts. If zero, defaults to Speed")]
 		public readonly WDist ImpactInterval = WDist.Zero;
@@ -104,42 +153,6 @@ namespace OpenRA.Mods.CA.Projectiles
 			"'Absolute' - use set value regardless of range.")]
 		public readonly InaccuracyType InaccuracyType = InaccuracyType.Maximum;
 
-		[Desc("Rectangle impact area length (parallel to the projectile path). Used with Rectangle impact type.")]
-		public readonly WDist RectangleLength = new(1024);
-
-		[Desc("Rectangle impact area width (perpendicular to the projectile path). Used with Rectangle impact type.")]
-		public readonly WDist RectangleWidth = new(1024);
-
-		[Desc("Cone angle in degrees for cone impact type. Used with Cone impact type.")]
-		public readonly int ConeAngle = 90;
-
-		[Desc("Length of each cone segment for cone impact type. Used with Cone impact type.")]
-		public readonly WDist ConeSegmentLength = new(512);
-
-		[Desc("Starting width of trapezoid at source position. Used with Trapezoid impact type.")]
-		public readonly WDist TrapezoidStartWidth = new(512);
-
-		[Desc("Ending width of trapezoid at maximum range. Used with Trapezoid impact type.")]
-		public readonly WDist TrapezoidEndWidth = new(2048);
-
-		[Desc("Length of each trapezoid segment. Used with Trapezoid impact type.")]
-		public readonly WDist TrapezoidSegmentLength = new(512);
-
-		[Desc("Damage modifier applied at each range step for Rectangle, Cone, and Trapezoid impact types.")]
-		public readonly int[] Falloff = { 100, 100 };
-
-		[Desc("Range between falloff steps for Rectangle, Cone, and Trapezoid impact types.")]
-		public readonly WDist Spread = new(43);
-
-		[Desc("Ranges at which each Falloff step is defined for Rectangle and Cone impact types. Overrides Spread.")]
-		public readonly WDist[] Range = null;
-
-		[Desc("Determines what distance is used for damage falloff calculation for Rectangle and Cone impact types.")]
-		public readonly FalloffBasis FalloffBasis = FalloffBasis.DistanceFromCenterLine;
-
-		[Desc("Controls the way damage is calculated. Possible values are 'HitShape', 'ClosestTargetablePosition' and 'CenterPosition'.")]
-		public readonly DamageCalculationType DamageCalculationType = DamageCalculationType.HitShape;
-
 		[Desc("Projectile image to display.")]
 		public readonly string Image = null;
 
@@ -156,7 +169,10 @@ namespace OpenRA.Mods.CA.Projectiles
 		[Desc("Should the projectile animation repeat?")]
 		public readonly bool RepeatAnimation = true;
 
-		[Desc("If true, forces pulse position to start at ground level.")]
+		[Desc("Whether to force the pulse to ground level. Possible values are " +
+			"'None' - neither damage nor visuals are forced to ground level, " +
+			"'DamageOnly' - damage is forced to ground level, but visuals are not, " +
+			"'DamageAndVisual' - the damage and visual effects (projectile and impact animations) are forced to ground level.")]
 		public readonly LinearPulseForceGroundType ForceGround = LinearPulseForceGroundType.None;
 
 		[PaletteReference]
@@ -183,7 +199,16 @@ namespace OpenRA.Mods.CA.Projectiles
 		public readonly bool Blockable = false;
 
 		[Desc("Width of projectile (used for finding blocking actors).")]
-		public readonly WDist Width = new(1);
+		public readonly WDist BlockableWidth = new(1);
+
+		[Desc("Size of the area. A smudge will be created in each tile.", "Provide 2 values for a ring effect (outer/inner).")]
+		public readonly int[] SmudgeSize = { 0, 0 };
+
+		[Desc("Type of smudge to apply to terrain.")]
+		public readonly HashSet<string> SmudgeType = new();
+
+		[Desc("Percentage chance the smudge is created.")]
+		public readonly int SmudgeChance = 100;
 
 		[FieldLoader.LoadUsing(nameof(LoadImpactAnimations))]
 		public readonly List<ImpactAnimation> ImpactAnimations = new();
@@ -201,6 +226,21 @@ namespace OpenRA.Mods.CA.Projectiles
 
 			return retList;
 		}
+
+		[FieldLoader.LoadUsing(nameof(LoadDamageFalloffs))]
+		public readonly List<DamageFalloff> DamageFalloffs = new();
+
+		static object LoadDamageFalloffs(MiniYaml yaml)
+		{
+			var retList = new List<DamageFalloff>();
+			foreach (var node in yaml.Nodes.Where(n => n.Key.StartsWith("DamageFalloff", StringComparison.Ordinal)))
+			{
+				var falloff = new DamageFalloff(node.Value);
+				retList.Add(falloff);
+			}
+
+			return retList;
+		}
 	}
 
 	public class LinearPulse : IProjectile, ISync
@@ -212,7 +252,6 @@ namespace OpenRA.Mods.CA.Projectiles
 		readonly WVec directionalSpeed;
 		readonly WVec visualDirectionalSpeed;
 		readonly WDist impactInterval;
-		readonly WDist[] effectiveRange;
 
 		readonly WAngle facing;
 		readonly Animation anim;
@@ -263,28 +302,13 @@ namespace OpenRA.Mods.CA.Projectiles
 			totalVisualDistanceTravelled = 0;
 
 			// the weapon range (total distance to be travelled)
-			range = args.Weapon.Range.Length;
+			range = info.MaximumImpactDistance.Length > args.Weapon.Range.Length ? info.MaximumImpactDistance.Length : args.Weapon.Range.Length;
 			visualRange = info.VisualRange == WDist.Zero ? range : info.VisualRange.Length;
 
 			if (!info.IgnoreRangeModifiers)
 			{
 				range = Common.Util.ApplyPercentageModifiers(range, args.RangeModifiers);
 				visualRange = Common.Util.ApplyPercentageModifiers(visualRange, args.RangeModifiers);
-			}
-
-			// Calculate effective range for falloff (either from explicit Range or from Spread)
-			if (info.Range != null && info.Range.Length > 1 && info.Range[1] != new WDist(int.MaxValue))
-			{
-				// Use explicit Range values
-				effectiveRange = info.Range;
-			}
-			else
-			{
-				// Calculate ranges from Spread and Falloff array
-				effectiveRange = new WDist[info.Falloff.Length];
-				effectiveRange[0] = WDist.Zero;
-				for (var i = 1; i < info.Falloff.Length; i++)
-					effectiveRange[i] = new WDist(info.Spread.Length * i);
 			}
 
 			target = args.PassiveTarget;
@@ -337,7 +361,7 @@ namespace OpenRA.Mods.CA.Projectiles
 				visualPos += visualDirectionalSpeed;
 
 			// Check for walls or other blocking obstacles
-			if (info.Blockable && !blocked && BlocksProjectiles.AnyBlockingActorsBetween(world, args.SourceActor.Owner, lastPos, pos, info.Width, out var blockedPos))
+			if (info.Blockable && !blocked && BlocksProjectiles.AnyBlockingActorsBetween(world, args.SourceActor.Owner, lastPos, pos, info.BlockableWidth, out var blockedPos))
 			{
 				pos = blockedPos;
 				visualPos = blockedPos;
@@ -444,10 +468,15 @@ namespace OpenRA.Mods.CA.Projectiles
 				}
 			}
 
+			if (info.SmudgeType.Any())
+			{
+				DoSmudge(Target.FromPos(impactPos), new WarheadArgs(args));
+			}
+
 			switch (info.ImpactType)
 			{
 				case LinearPulseImpactType.StandardImpact:
-					args.Weapon.Impact(Target.FromPos(impactPos), new WarheadArgs(args));
+					args.Weapon.Impact(Target.FromPos(impactPosForDamage), new WarheadArgs(args));
 					break;
 				case LinearPulseImpactType.Rectangle:
 					ExplodeRectangle(impactPos);
@@ -539,43 +568,62 @@ namespace OpenRA.Mods.CA.Projectiles
 				// Check if actor intersects with the rectangle
 				if (IsActorInRectangle(actor, corner1, corner2, corner3, corner4))
 				{
-					// Find the closest HitShape to the reference point (like CapsuleDamageWarhead)
-					HitShape closestActiveShape = null;
-					var closestDistance = int.MaxValue;
+					// Calculate falloff data for all configured DamageFalloff settings
+					var falloffData = new List<(DamageFalloff Falloff, int FalloffDistance)>();
 
-					// PERF: Avoid using TraitsImplementing<HitShape> that needs to find the actor in the trait dictionary.
-					foreach (var targetPos in actor.EnabledTargetablePositions)
+					// If no DamageFalloffs are configured, apply damage without any falloff
+					if (info.DamageFalloffs.Count == 0)
 					{
-						if (targetPos is HitShape h)
+						ApplyDamageToActor(actor, impactPosForDamage, falloffData);
+					}
+					else
+					{
+						foreach (var damageFalloff in info.DamageFalloffs)
 						{
-							// For rectangles, calculate distance from HitShape to the center line or impact point
-							var referencePoint = GetReferencePoint(actor, impactPosForDamage);
-							var distance = h.DistanceFromEdge(actor, referencePoint).Length;
-							if (distance < closestDistance)
+							// Find the closest HitShape to the reference point for this falloff
+							HitShape closestActiveShape = null;
+							var closestDistance = int.MaxValue;
+
+							// PERF: Avoid using TraitsImplementing<HitShape> that needs to find the actor in the trait dictionary.
+							foreach (var targetPos in actor.EnabledTargetablePositions)
 							{
-								closestDistance = distance;
-								closestActiveShape = h;
+								if (targetPos is HitShape h)
+								{
+									var referencePoint = GetReferencePoint(actor, impactPosForDamage, damageFalloff);
+									var distance = h.DistanceFromEdge(actor, referencePoint).Length;
+									if (distance < closestDistance)
+									{
+										closestDistance = distance;
+										closestActiveShape = h;
+									}
+								}
 							}
+
+							// Cannot be damaged without an active HitShape for HitShape calculation type
+							if (damageFalloff.DamageCalculationType == DamageCalculationType.HitShape && closestActiveShape == null)
+								continue;
+
+							// Calculate damage falloff distance based on the selected calculation type
+							var falloffDistance = damageFalloff.DamageCalculationType switch
+							{
+								DamageCalculationType.HitShape => closestDistance,
+								DamageCalculationType.ClosestTargetablePosition => actor.GetTargetablePositions()
+									.Where(x => IsPointInRectangle(x, corner1, corner2, corner3, corner4))
+									.DefaultIfEmpty(actor.CenterPosition)
+									.Min(x => CalculateFalloffDistance(x, impactPosForDamage, damageFalloff)),
+								DamageCalculationType.CenterPosition => CalculateFalloffDistance(actor.CenterPosition, impactPosForDamage, damageFalloff),
+								_ => CalculateFalloffDistance(actor.CenterPosition, impactPosForDamage, damageFalloff)
+							};
+
+							falloffData.Add((damageFalloff, falloffDistance));
+						}
+
+						// If we have falloff data, apply damage
+						if (falloffData.Count > 0)
+						{
+							ApplyDamageToActor(actor, impactPosForDamage, falloffData);
 						}
 					}
-
-					// Cannot be damaged without an active HitShape.
-					if (closestActiveShape == null)
-						continue;
-
-					// Calculate damage falloff distance based on the selected calculation type
-					var falloffDistance = info.DamageCalculationType switch
-					{
-						DamageCalculationType.HitShape => closestDistance,
-						DamageCalculationType.ClosestTargetablePosition => actor.GetTargetablePositions()
-							.Where(x => IsPointInRectangle(x, corner1, corner2, corner3, corner4))
-							.DefaultIfEmpty(actor.CenterPosition)
-							.Min(x => CalculateFalloffDistance(x, impactPosForDamage)),
-						DamageCalculationType.CenterPosition => CalculateFalloffDistance(actor.CenterPosition, impactPosForDamage),
-						_ => CalculateFalloffDistance(actor.CenterPosition, impactPosForDamage)
-					};
-
-					ApplyDamageToActor(actor, impactPosForDamage, falloffDistance);
 
 					if (info.SingleHitPerActor)
 						impactedActors.Add(actor);
@@ -583,21 +631,25 @@ namespace OpenRA.Mods.CA.Projectiles
 			}
 		}
 
-		void ApplyDamageToActor(Actor actor, WPos impactPos, int falloffDistance)
+		void ApplyDamageToActor(Actor actor, WPos impactPos, List<(DamageFalloff Falloff, int FalloffDistance)> falloffData)
 		{
-			// The range to target is more than the range the warhead covers
-			if (falloffDistance > effectiveRange[^1].Length)
-				return;
+			// Calculate all damage modifiers from the falloffs
+			var damageModifiers = new List<int>(args.DamageModifiers);
 
-			var falloffModifier = GetFalloff(falloffDistance);
-			var adjustedModifiers = args.DamageModifiers.Append(falloffModifier);
+			foreach (var (falloff, distance) in falloffData)
+			{
+				var modifier = GetFalloffModifier(falloff, distance);
+				if (modifier > 0) // Only add non-zero modifiers
+					damageModifiers.Add(modifier);
+			}
 
 			var impactOrientation = new WRot(WAngle.Zero, WAngle.Zero, facing);
 
 			// If a warhead lands outside the victim's area, calculate impact angles
-			if (falloffDistance > 0)
+			// Use the first falloff's distance for impact angle calculation
+			if (falloffData.Count > 0 && falloffData[0].FalloffDistance > 0)
 			{
-				var referencePoint = GetReferencePoint(actor, impactPos);
+				var referencePoint = GetReferencePoint(actor, impactPos, falloffData[0].Falloff);
 				var towardsTargetYaw = (actor.CenterPosition - referencePoint).Yaw;
 				impactOrientation = new WRot(WAngle.Zero, WAngle.Zero, towardsTargetYaw);
 			}
@@ -606,7 +658,7 @@ namespace OpenRA.Mods.CA.Projectiles
 			{
 				ImpactOrientation = impactOrientation,
 				ImpactPosition = actor.CenterPosition,
-				DamageModifiers = adjustedModifiers.ToArray(),
+				DamageModifiers = damageModifiers.ToArray(),
 			};
 
 			args.Weapon.Impact(Target.FromActor(actor), warheadArgs);
@@ -688,40 +740,60 @@ namespace OpenRA.Mods.CA.Projectiles
 				// Check if actor is within the cone segment using the fixed forward direction
 				if (IsActorInConeSegment(actor, source, normalizedForwardDir, segmentStart, segmentEnd, halfConeAngleRadians))
 				{
-					// Find the closest HitShape to the reference point (like CapsuleDamageWarhead)
-					HitShape closestActiveShape = null;
-					var closestDistance = int.MaxValue;
+					// Calculate falloff data for all configured DamageFalloff settings
+					var falloffData = new List<(DamageFalloff Falloff, int FalloffDistance)>();
 
-					// PERF: Avoid using TraitsImplementing<HitShape> that needs to find the actor in the trait dictionary.
-					foreach (var targetPos in actor.EnabledTargetablePositions)
+					// If no DamageFalloffs are configured, apply damage without any falloff
+					if (info.DamageFalloffs.Count == 0)
 					{
-						if (targetPos is HitShape h)
+						ApplyDamageToActor(actor, impactPosForDamage, falloffData);
+					}
+					else
+					{
+						foreach (var damageFalloff in info.DamageFalloffs)
 						{
-							// For cones, calculate distance from HitShape to the source (apex of cone)
-							var referencePoint = GetReferencePoint(actor, impactPosForDamage);
-							var distance = h.DistanceFromEdge(actor, referencePoint).Length;
-							if (distance < closestDistance)
+							// Find the closest HitShape to the reference point for this falloff
+							HitShape closestActiveShape = null;
+							var closestDistance = int.MaxValue;
+
+							// PERF: Avoid using TraitsImplementing<HitShape> that needs to find the actor in the trait dictionary.
+							foreach (var targetPos in actor.EnabledTargetablePositions)
 							{
-								closestDistance = distance;
-								closestActiveShape = h;
+								if (targetPos is HitShape h)
+								{
+									var referencePoint = GetReferencePoint(actor, impactPosForDamage, damageFalloff);
+									var distance = h.DistanceFromEdge(actor, referencePoint).Length;
+									if (distance < closestDistance)
+									{
+										closestDistance = distance;
+										closestActiveShape = h;
+									}
+								}
 							}
+
+							// Cannot be damaged without an active HitShape for HitShape calculation type
+							if (damageFalloff.DamageCalculationType == DamageCalculationType.HitShape && closestActiveShape == null)
+								continue;
+
+							// Calculate damage falloff distance based on the selected calculation type
+							var falloffDistance = damageFalloff.DamageCalculationType switch
+							{
+								DamageCalculationType.HitShape => closestDistance,
+								DamageCalculationType.ClosestTargetablePosition => actor.GetTargetablePositions()
+									.Min(x => CalculateFalloffDistance(x, impactPosForDamage, damageFalloff)),
+								DamageCalculationType.CenterPosition => CalculateFalloffDistance(actor.CenterPosition, impactPosForDamage, damageFalloff),
+								_ => CalculateFalloffDistance(actor.CenterPosition, impactPosForDamage, damageFalloff)
+							};
+
+							falloffData.Add((damageFalloff, falloffDistance));
+						}
+
+						// If we have falloff data, apply damage
+						if (falloffData.Count > 0)
+						{
+							ApplyDamageToActor(actor, impactPosForDamage, falloffData);
 						}
 					}
-
-					// Cannot be damaged without an active HitShape.
-					if (closestActiveShape == null)
-						continue;
-
-					// Calculate damage falloff distance based on the selected calculation type
-					var falloffDistance = info.DamageCalculationType switch
-					{
-						DamageCalculationType.HitShape => closestDistance,
-						DamageCalculationType.ClosestTargetablePosition => actor.GetTargetablePositions()
-							.Min(x => CalculateFalloffDistance(x, impactPosForDamage)),
-						DamageCalculationType.CenterPosition => CalculateFalloffDistance(actor.CenterPosition, impactPosForDamage),
-						_ => CalculateFalloffDistance(actor.CenterPosition, impactPosForDamage)
-					};
-					ApplyDamageToActor(actor, impactPosForDamage, falloffDistance);
 
 					if (info.SingleHitPerActor)
 						impactedActors.Add(actor);
@@ -817,40 +889,61 @@ namespace OpenRA.Mods.CA.Projectiles
 
 					if (IsActorInTrapezoidSegment(actor, source, forwardDir, segStart, segEnd, startWidthAtSeg, endWidthAtSeg))
 					{
-						// Calculate damage falloff distance similar to rectangle/cone
-						var closestDistance = int.MaxValue;
-						HitShape closestActiveShape = null;
+						// Calculate falloff data for all configured DamageFalloff settings
+						var falloffData = new List<(DamageFalloff Falloff, int FalloffDistance)>();
 
-						foreach (var targetPos in actor.EnabledTargetablePositions)
+						// If no DamageFalloffs are configured, apply damage without any falloff
+						if (info.DamageFalloffs.Count == 0)
 						{
-							if (targetPos is HitShape h && h.IsTraitEnabled())
+							ApplyDamageToActor(actor, impactPosForDamage, falloffData);
+						}
+						else
+						{
+							foreach (var damageFalloff in info.DamageFalloffs)
 							{
-								var referencePoint = GetReferencePoint(actor, impactPosForDamage);
-								var distance = h.DistanceFromEdge(actor, referencePoint).Length;
-								if (distance < closestDistance)
+								// Calculate damage falloff distance similar to rectangle/cone
+								var closestDistance = int.MaxValue;
+								HitShape closestActiveShape = null;
+
+								foreach (var targetPos in actor.EnabledTargetablePositions)
 								{
-									closestDistance = distance;
-									closestActiveShape = h;
+									if (targetPos is HitShape h && h.IsTraitEnabled())
+									{
+										var referencePoint = GetReferencePoint(actor, impactPosForDamage, damageFalloff);
+										var distance = h.DistanceFromEdge(actor, referencePoint).Length;
+										if (distance < closestDistance)
+										{
+											closestDistance = distance;
+											closestActiveShape = h;
+										}
+									}
 								}
+
+								// Skip actors without active HitShape for HitShape calculation type
+								if (damageFalloff.DamageCalculationType == DamageCalculationType.HitShape && closestActiveShape == null)
+									continue;
+
+								// Calculate damage falloff distance based on the selected calculation type
+								var falloffDistance = damageFalloff.DamageCalculationType switch
+								{
+									DamageCalculationType.HitShape => closestDistance,
+									DamageCalculationType.ClosestTargetablePosition => actor.GetTargetablePositions()
+										.Where(x => IsPositionInTrapezoidSegment(x, source, forwardDir, segStart, segEnd, startWidthAtSeg, endWidthAtSeg))
+										.DefaultIfEmpty(actor.CenterPosition)
+										.Min(x => CalculateFalloffDistance(x, impactPosForDamage, damageFalloff)),
+									DamageCalculationType.CenterPosition => CalculateFalloffDistance(actor.CenterPosition, impactPosForDamage, damageFalloff),
+									_ => CalculateFalloffDistance(actor.CenterPosition, impactPosForDamage, damageFalloff)
+								};
+
+								falloffData.Add((damageFalloff, falloffDistance));
+							}
+
+							// If we have falloff data, apply damage
+							if (falloffData.Count > 0)
+							{
+								ApplyDamageToActor(actor, impactPosForDamage, falloffData);
 							}
 						}
-
-						// Skip actors without active HitShape for HitShape calculation type
-						if (info.DamageCalculationType == DamageCalculationType.HitShape && closestActiveShape == null)
-							continue;
-
-						// Calculate damage falloff distance based on the selected calculation type
-						var falloffDistance = info.DamageCalculationType switch
-						{
-							DamageCalculationType.HitShape => closestDistance,
-							DamageCalculationType.ClosestTargetablePosition => actor.GetTargetablePositions()
-								.Where(x => IsPositionInTrapezoidSegment(x, source, forwardDir, segStart, segEnd, startWidthAtSeg, endWidthAtSeg))
-								.DefaultIfEmpty(actor.CenterPosition)
-								.Min(x => CalculateFalloffDistance(x, impactPosForDamage)),
-							DamageCalculationType.CenterPosition => CalculateFalloffDistance(actor.CenterPosition, impactPosForDamage),
-							_ => CalculateFalloffDistance(actor.CenterPosition, impactPosForDamage)
-						};
-						ApplyDamageToActor(actor, impactPosForDamage, falloffDistance);
 
 						if (info.SingleHitPerActor)
 							impactedActors.Add(actor);
@@ -1070,13 +1163,14 @@ namespace OpenRA.Mods.CA.Projectiles
 			return true;
 		}
 
-		WPos GetReferencePoint(Actor actor, WPos impactPos)
+		WPos GetReferencePoint(Actor actor, WPos impactPos, DamageFalloff falloff)
 		{
-			// The reference point depends on the falloff basis (same logic for both rectangles and cones)
-			switch (info.FalloffBasis)
+			// The reference point depends on the falloff basis
+			switch (falloff.FalloffBasis)
 			{
-				case FalloffBasis.DistanceFromImpact:
-					return impactPos;
+				case FalloffBasis.DistanceFromCenter:
+					var finalImpactPos = source + directionalSpeed * range / directionalSpeed.Length;
+					return new WPos((source.X + finalImpactPos.X) / 2, (source.Y + finalImpactPos.Y) / 2, (source.Z + finalImpactPos.Z) / 2);
 
 				case FalloffBasis.DistanceFromCenterLine:
 					return TryProjectOntoCenterLine(actor.CenterPosition, out var proj)
@@ -1091,12 +1185,14 @@ namespace OpenRA.Mods.CA.Projectiles
 			}
 		}
 
-		int CalculateFalloffDistance(WPos position, WPos impactPos)
+		int CalculateFalloffDistance(WPos position, WPos impactPos, DamageFalloff falloff)
 		{
-			switch (info.FalloffBasis)
+			switch (falloff.FalloffBasis)
 			{
-				case FalloffBasis.DistanceFromImpact:
-					return (position - impactPos).Length;
+				case FalloffBasis.DistanceFromCenter:
+					var finalImpactPos = source + directionalSpeed * range / directionalSpeed.Length;
+					var centerPoint = new WPos((source.X + finalImpactPos.X) / 2, (source.Y + finalImpactPos.Y) / 2, (source.Z + finalImpactPos.Z) / 2);
+					return (position - centerPoint).Length;
 
 				case FalloffBasis.DistanceFromCenterLine:
 					return TryProjectOntoCenterLine(position, out var proj2)
@@ -1111,14 +1207,34 @@ namespace OpenRA.Mods.CA.Projectiles
 			}
 		}
 
-		int GetFalloff(int distance)
+		static int GetFalloffModifier(DamageFalloff falloff, int distance)
 		{
+			// Calculate effective range for this falloff (either from explicit Range or from Spread)
+			WDist[] effectiveRange;
+			if (falloff.Range != null && falloff.Range.Length > 1 && falloff.Range[1] != new WDist(int.MaxValue))
+			{
+				// Use explicit Range values
+				effectiveRange = falloff.Range;
+			}
+			else
+			{
+				// Calculate ranges from Spread and Falloff array
+				effectiveRange = new WDist[falloff.Falloff.Length];
+				effectiveRange[0] = WDist.Zero;
+				for (var i = 1; i < falloff.Falloff.Length; i++)
+					effectiveRange[i] = new WDist(falloff.Spread.Length * i);
+			}
+
+			// The range to target is more than the range this falloff covers
+			if (distance > effectiveRange[^1].Length)
+				return 0;
+
 			var inner = effectiveRange[0].Length;
 			for (var i = 1; i < effectiveRange.Length; i++)
 			{
 				var outer = effectiveRange[i].Length;
 				if (outer > distance)
-					return int2.Lerp(info.Falloff[i - 1], info.Falloff[i], distance - inner, outer - inner);
+					return int2.Lerp(falloff.Falloff[i - 1], falloff.Falloff[i], distance - inner, outer - inner);
 
 				inner = outer;
 			}
@@ -1356,6 +1472,40 @@ namespace OpenRA.Mods.CA.Projectiles
 			// Calculate the point on the line segment
 			var projectionVector = line * projectionLength / lineLength;
 			return lineStart + projectionVector;
+		}
+
+		void DoSmudge(in Target target, WarheadArgs args)
+		{
+			if (target.Type == TargetType.Invalid)
+				return;
+
+			var firedBy = args.SourceActor;
+			var world = firedBy.World;
+
+			if (info.SmudgeChance < world.LocalRandom.Next(100))
+				return;
+
+			var pos = target.CenterPosition;
+			var dat = world.Map.DistanceAboveTerrain(pos);
+
+			var targetTile = world.Map.CellContaining(pos);
+			var smudgeLayers = world.WorldActor.TraitsImplementing<SmudgeLayer>().ToDictionary(x => x.Info.Type);
+
+			var minRange = (info.SmudgeSize.Length > 1 && info.SmudgeSize[1] > 0) ? info.SmudgeSize[1] : 0;
+			var allCells = world.Map.FindTilesInAnnulus(targetTile, minRange, info.SmudgeSize[0]);
+
+			// Draw the smudges:
+			foreach (var sc in allCells)
+			{
+				var smudgeType = world.Map.GetTerrainInfo(sc).AcceptsSmudgeType.FirstOrDefault(info.SmudgeType.Contains);
+				if (smudgeType == null)
+					continue;
+
+				if (!smudgeLayers.TryGetValue(smudgeType, out var smudgeLayer))
+					throw new NotImplementedException($"Unknown smudge type `{smudgeType}`");
+
+				smudgeLayer.AddSmudge(sc);
+			}
 		}
 	}
 }
