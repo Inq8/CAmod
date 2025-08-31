@@ -2120,13 +2120,14 @@ ObliteratorBolt:
 	Report: oblt-fire1.aud
 	Projectile: LinearPulse
 		Speed: 768
-		Image: obltbolt
-		Sequences: idle, idle2
-		Palette: scrin
 		ImpactInterval: 390
-		FinalHitAnimSequence: idle
-		FinalHitAnimPalette: scrin
-		FinalHitAnim: enrvbolthit
+		ProjectileAnimation@1:
+			Image: obltbolt
+			Sequences: idle, idle2
+			Palette: scrin
+			HitAnim: enrvbolthit
+			HitAnimSequence: idle
+			HitAnimPalette: scrin
 	Warhead@1Dam: SpreadDamage
 		Spread: 390
 		Falloff: 100, 50, 0

@@ -16,6 +16,7 @@ using OpenRA.Graphics;
 using OpenRA.Mods.CA.Traits;
 using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Effects;
+using OpenRA.Mods.Common.Graphics;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Mods.Common.Warheads;
 using OpenRA.Primitives;
@@ -43,6 +44,104 @@ namespace OpenRA.Mods.CA.Projectiles
 		None,
 		DamageOnly,
 		DamageAndVisual
+	}
+
+	public class ProjectileAnimation
+	{
+		[Desc("Projectile animation image.")]
+		public readonly string Image = null;
+
+		[Desc("Sequences of projectile animation to use, one will be picked randomly for each shot.")]
+		[SequenceReference(nameof(Image), allowNullImage: true)]
+		public readonly string[] Sequences = { "idle" };
+
+		[PaletteReference]
+		[Desc("Palette to use for the projectile animation.")]
+		public readonly string Palette = "effect";
+
+		[Desc("Visual speed of this projectile animation. Set to zero to use the same speed as the pulse.")]
+		public readonly WDist Speed = WDist.Zero;
+
+		[Desc("Maximum distance travelled by this projectile animation. Zero falls back to weapon range.")]
+		public readonly WDist Range = WDist.Zero;
+
+		[Desc("Delay before this projectile animation starts.")]
+		public readonly int[] Delay = { 0 };
+
+		[Desc("Does this projectile animation have a shadow?")]
+		public readonly bool Shadow = false;
+
+		[Desc("Should this projectile animation repeat?")]
+		public readonly bool RepeatAnimation = true;
+
+		[PaletteReference]
+		[Desc("Palette to use for this projectile animation's shadow if Shadow is true.")]
+		public readonly string ShadowPalette = "shadow";
+
+		[Desc("Offset of the projectile target.")]
+		public readonly WVec TargetOffset = WVec.Zero;
+
+		[Desc("The maximum/constant/incremental inaccuracy used in conjunction with the InaccuracyType property.")]
+		public readonly WDist Inaccuracy = WDist.Zero;
+
+		[Desc("Controls the way inaccuracy is calculated. Possible values are " +
+			"'Maximum' - scale from 0 to max with range, " +
+			"'PerCellIncrement' - scale from 0 with range, " +
+			"'Absolute' - use set value regardless of range.")]
+		public readonly InaccuracyType InaccuracyType = InaccuracyType.Maximum;
+
+		[Desc("When set, display a line behind the actor. Length is measured in ticks after appearing.")]
+		public readonly int ContrailLength = 0;
+
+		[Desc("Time (in ticks) after which the line should appear. Controls the distance to the actor.")]
+		public readonly int ContrailDelay = 1;
+
+		[Desc("Equivalent to sequence ZOffset. Controls Z sorting.")]
+		public readonly int ContrailZOffset = 2047;
+
+		[Desc("Thickness of the emitted line at the start of the contrail.")]
+		public readonly WDist ContrailStartWidth = new(64);
+
+		[Desc("Thickness of the emitted line at the end of the contrail. Will default to " + nameof(ContrailStartWidth) + " if left undefined")]
+		public readonly WDist? ContrailEndWidth = null;
+
+		[Desc("RGB color at the contrail start.")]
+		public readonly Color ContrailStartColor = Color.White;
+
+		[Desc("Use player remap color instead of a custom color at the contrail the start.")]
+		public readonly bool ContrailStartColorUsePlayerColor = false;
+
+		[Desc("The alpha value [from 0 to 255] of color at the contrail the start.")]
+		public readonly int ContrailStartColorAlpha = 255;
+
+		[Desc("RGB color at the contrail end. Set to start color if undefined")]
+		public readonly Color? ContrailEndColor;
+
+		[Desc("Use player remap color instead of a custom color at the contrail end.")]
+		public readonly bool ContrailEndColorUsePlayerColor = false;
+
+		[Desc("The alpha value [from 0 to 255] of color at the contrail end.")]
+		public readonly int ContrailEndColorAlpha = 0;
+
+		[Desc("Final impact animation.")]
+		public readonly string HitAnim = null;
+
+		[SequenceReference(nameof(HitAnim), allowNullImage: true)]
+		[Desc("Sequence of impact animation to use.")]
+		public readonly string HitAnimSequence = "idle";
+
+		[PaletteReference]
+		public readonly string HitAnimPalette = "effect";
+
+		/// <summary>
+		/// This constructor is used solely for documentation generation.
+		/// </summary>
+		public ProjectileAnimation() { }
+
+		public ProjectileAnimation(MiniYaml content)
+		{
+			FieldLoader.Load(this, content);
+		}
 	}
 
 	public class ImpactAnimation
@@ -129,17 +228,11 @@ namespace OpenRA.Mods.CA.Projectiles
 		[Desc("Speed the pulse travels.")]
 		public readonly WDist Speed = WDist.FromCells(6);
 
-		[Desc("Visual speed of the projectile. Set to zero to use the same speed as the pulse.")]
-		public readonly WDist VisualSpeed = WDist.Zero;
-
 		[Desc("Minimum distance travelled before doing damage.")]
 		public readonly WDist MinimumImpactDistance = WDist.Zero;
 
 		[Desc("Maximum distance travelled after which no more damage occurs. Zero falls back to weapon range.")]
 		public readonly WDist MaximumImpactDistance = WDist.Zero;
-
-		[Desc("Maximum distance travelled by projectile visual (if present). Zero falls back to weapon range.")]
-		public readonly WDist VisualRange = WDist.Zero;
 
 		[Desc("Whether to ignore range modifiers, as these can mess up the relationship between ImpactInterval, Speed and max range.")]
 		public readonly bool IgnoreRangeModifiers = true;
@@ -153,41 +246,11 @@ namespace OpenRA.Mods.CA.Projectiles
 			"'Absolute' - use set value regardless of range.")]
 		public readonly InaccuracyType InaccuracyType = InaccuracyType.Maximum;
 
-		[Desc("Projectile image to display.")]
-		public readonly string Image = null;
-
-		[SequenceReference(nameof(Image), allowNullImage: true)]
-		[Desc("Loop a randomly chosen sequence of Image from this list while this projectile is moving.")]
-		public readonly string[] Sequences = { "idle" };
-
-		[Desc("The palette used to draw this projectile.")]
-		public readonly string Palette = "effect";
-
-		[Desc("Does this projectile have a shadow?")]
-		public readonly bool Shadow = false;
-
-		[Desc("Should the projectile animation repeat?")]
-		public readonly bool RepeatAnimation = true;
-
 		[Desc("Whether to force the pulse to ground level. Possible values are " +
 			"'None' - neither damage nor visuals are forced to ground level, " +
 			"'DamageOnly' - damage is forced to ground level, but visuals are not, " +
 			"'DamageAndVisual' - the damage and visual effects (projectile and impact animations) are forced to ground level.")]
 		public readonly LinearPulseForceGroundType ForceGround = LinearPulseForceGroundType.None;
-
-		[PaletteReference]
-		[Desc("Palette to use for this projectile's shadow if Shadow is true.")]
-		public readonly string ShadowPalette = "shadow";
-
-		[Desc("Final impact animation.")]
-		public readonly string FinalHitAnim = null;
-
-		[SequenceReference(nameof(FinalHitAnim), allowNullImage: true)]
-		[Desc("Sequence of impact animation to use.")]
-		public readonly string FinalHitAnimSequence = "idle";
-
-		[PaletteReference]
-		public readonly string FinalHitAnimPalette = "effect";
 
 		[Desc("If true (and not using Warhead impact type) then the same actor can only be impacted once.")]
 		public readonly bool SingleHitPerActor = false;
@@ -227,6 +290,21 @@ namespace OpenRA.Mods.CA.Projectiles
 			return retList;
 		}
 
+		[FieldLoader.LoadUsing(nameof(LoadProjectileAnimations))]
+		public readonly List<ProjectileAnimation> ProjectileAnimations = new();
+
+		static object LoadProjectileAnimations(MiniYaml yaml)
+		{
+			var retList = new List<ProjectileAnimation>();
+			foreach (var node in yaml.Nodes.Where(n => n.Key.StartsWith("ProjectileAnimation", StringComparison.Ordinal)))
+			{
+				var projectileAnim = new ProjectileAnimation(node.Value);
+				retList.Add(projectileAnim);
+			}
+
+			return retList;
+		}
+
 		[FieldLoader.LoadUsing(nameof(LoadDamageFalloffs))]
 		public readonly List<DamageFalloff> DamageFalloffs = new();
 
@@ -245,6 +323,75 @@ namespace OpenRA.Mods.CA.Projectiles
 		// To suppress errors
 		public readonly ImpactAnimation ImpactAnimation = null;
 		public readonly DamageFalloff DamageFalloff = null;
+		public readonly ProjectileAnimation ProjectileAnimation = null;
+	}
+
+	public class ProjectileAnimationState
+	{
+		public readonly ProjectileAnimation Config;
+		public readonly Animation Animation;
+		public readonly WVec DirectionalSpeed;
+		public readonly int Range;
+		public readonly ContrailRenderable Contrail;
+		public WPos Position;
+		public int TotalDistanceTravelled;
+		public bool TravelComplete;
+		public int RemainingDelay;
+		public bool HitAnimationCreated;
+
+		public ProjectileAnimationState(ProjectileAnimation config, Animation animation, WVec directionalSpeed, int range, WPos startPos, ContrailRenderable contrail = null)
+		{
+			Config = config;
+			Animation = animation;
+			DirectionalSpeed = directionalSpeed;
+			Range = range;
+			Position = startPos;
+			Contrail = contrail;
+			TotalDistanceTravelled = 0;
+			TravelComplete = false;
+			RemainingDelay = 0;
+			HitAnimationCreated = false;
+		}
+
+		public void UpdatePosition(bool blocked)
+		{
+			if (RemainingDelay > 0)
+			{
+				RemainingDelay--;
+				return;
+			}
+
+			if (!TravelComplete && !blocked)
+			{
+				var remainingRange = Range - TotalDistanceTravelled;
+				var speedLength = DirectionalSpeed.Length;
+
+				if (remainingRange <= 0)
+				{
+					TravelComplete = true;
+				}
+				else if (speedLength <= remainingRange)
+				{
+					Position += DirectionalSpeed;
+					TotalDistanceTravelled += speedLength;
+				}
+				else
+				{
+					var partialMove = DirectionalSpeed * remainingRange / speedLength;
+					Position += partialMove;
+					TotalDistanceTravelled = Range;
+					TravelComplete = true;
+				}
+			}
+
+			TravelComplete = TravelComplete || TotalDistanceTravelled >= Range || blocked;
+		}
+
+		public void SetBlockedPosition(WPos blockedPos, WPos source)
+		{
+			Position = blockedPos;
+			TotalDistanceTravelled = (blockedPos - source).Length;
+		}
 	}
 
 	public class LinearPulse : IProjectile, ISync
@@ -252,27 +399,21 @@ namespace OpenRA.Mods.CA.Projectiles
 		readonly LinearPulseInfo info;
 		readonly ProjectileArgs args;
 		readonly WVec speed;
-		readonly WVec visualSpeed;
 		readonly WVec directionalSpeed;
-		readonly WVec visualDirectionalSpeed;
 		readonly WDist impactInterval;
 
 		readonly WAngle facing;
-		readonly Animation anim;
+		readonly List<ProjectileAnimationState> projectileAnimations = new();
 
 		[Sync]
-		WPos pos, visualPos, target, source;
+		WPos pos, target, source;
 		int ticks;
 		int totalDistanceTravelled;
-		int totalVisualDistanceTravelled;
 		bool travelComplete;
-		bool visualTravelComplete;
 		bool blocked;
 		readonly int range;
-		readonly int visualRange;
 		readonly WPos[] impactPositions;
 		readonly HashSet<Actor> impactedActors = new();
-		bool finalHitCreated;
 
 		public Actor SourceActor { get { return args.SourceActor; } }
 
@@ -282,7 +423,6 @@ namespace OpenRA.Mods.CA.Projectiles
 			this.args = args;
 
 			speed = new WVec(0, -info.Speed.Length, 0);
-			visualSpeed = info.VisualSpeed != WDist.Zero && info.VisualSpeed != info.Speed ? new WVec(0, -info.VisualSpeed.Length, 0) : speed;
 
 			impactInterval = info.ImpactInterval > WDist.Zero ? info.ImpactInterval : info.Speed;
 
@@ -291,28 +431,24 @@ namespace OpenRA.Mods.CA.Projectiles
 			var world = args.SourceActor.World;
 
 			// projectile starts at the source position
-			pos = visualPos = args.Source;
+			pos = args.Source;
 
-			// Apply initial grounding based on ForceGround mode
-			var visualGrounded = info.ForceGround == LinearPulseForceGroundType.DamageAndVisual;
-			if (visualGrounded)
+			// apply initial grounding based on ForceGround mode
+			var damageGrounded = info.ForceGround != LinearPulseForceGroundType.None;
+			if (damageGrounded)
 			{
 				pos = new WPos(pos.X, pos.Y, 0);
-				visualPos = new WPos(visualPos.X, visualPos.Y, 0);
 			}
 
 			// initially no distance has been travelled by the pulse
 			totalDistanceTravelled = 0;
-			totalVisualDistanceTravelled = 0;
 
 			// the weapon range (total distance to be travelled)
 			range = info.MaximumImpactDistance.Length > args.Weapon.Range.Length ? info.MaximumImpactDistance.Length : args.Weapon.Range.Length;
-			visualRange = info.VisualRange == WDist.Zero ? range : info.VisualRange.Length;
 
 			if (!info.IgnoreRangeModifiers)
 			{
 				range = Common.Util.ApplyPercentageModifiers(range, args.RangeModifiers);
-				visualRange = Common.Util.ApplyPercentageModifiers(visualRange, args.RangeModifiers);
 			}
 
 			target = args.PassiveTarget;
@@ -331,7 +467,6 @@ namespace OpenRA.Mods.CA.Projectiles
 
 			// calculate the vectors for travel
 			directionalSpeed = speed.Rotate(WRot.FromYaw(facing));
-			visualDirectionalSpeed = info.VisualSpeed != info.Speed ? visualSpeed.Rotate(WRot.FromYaw(facing)) : directionalSpeed;
 
 			// calculate impact positions
 			var impactCount = range / impactInterval.Length;
@@ -341,42 +476,111 @@ namespace OpenRA.Mods.CA.Projectiles
 				.Select(i => pos + impactVector * (i + 1))
 				.ToArray();
 
-			if (!string.IsNullOrEmpty(info.Image))
+			foreach (var projectileAnim in info.ProjectileAnimations)
 			{
-				anim = new Animation(world, info.Image, new Func<WAngle>(GetEffectiveFacing));
+				if (!string.IsNullOrEmpty(projectileAnim.Image))
+				{
+					var projectileRange = projectileAnim.Range == WDist.Zero ? range : projectileAnim.Range.Length;
 
-				if (info.RepeatAnimation)
-					anim.PlayRepeating(info.Sequences.Random(world.SharedRandom));
-				else
-					anim.Play(info.Sequences.Random(world.SharedRandom));
+					// calculate target with offset and inaccuracy for this animation
+					// convert TargetOffset to forward, right, up format like Armament does
+					var convertedOffset = new WVec(projectileAnim.TargetOffset.Y, -projectileAnim.TargetOffset.X, projectileAnim.TargetOffset.Z);
+					var rotatedOffset = convertedOffset.Rotate(WRot.FromYaw(facing));
+
+					// create a target at maximum range to ensure consistent offset spacing
+					var maxRangeTarget = pos + new WVec(0, -projectileRange, 0).Rotate(WRot.FromYaw(facing));
+					var animTarget = maxRangeTarget + rotatedOffset;
+					var distanceToAnimTarget = (animTarget - pos).Length;
+
+					if (projectileAnim.Inaccuracy.Length > 0)
+					{
+						var maxInaccuracyOffset = Common.Util.GetProjectileInaccuracy(projectileAnim.Inaccuracy.Length, projectileAnim.InaccuracyType, args);
+						animTarget += WVec.FromPDF(world.SharedRandom, 2) * maxInaccuracyOffset / 1024;
+					}
+
+					var animFacing = (animTarget - pos).Yaw;
+
+					var animation = new Animation(world, projectileAnim.Image, new Func<WAngle>(() => GetEffectiveFacingForAnimation(animFacing)));
+
+					if (projectileAnim.RepeatAnimation)
+						animation.PlayRepeating(projectileAnim.Sequences.Random(world.SharedRandom));
+					else
+						animation.Play(projectileAnim.Sequences.Random(world.SharedRandom));
+
+					var projectileSpeed = projectileAnim.Speed != WDist.Zero ? new WVec(0, -projectileAnim.Speed.Length, 0) : speed;
+					var projectileDirectionalSpeed = projectileSpeed.Rotate(WRot.FromYaw(animFacing));
+
+					var animRange = distanceToAnimTarget;
+					if (!info.IgnoreRangeModifiers)
+					{
+						animRange = Common.Util.ApplyPercentageModifiers(animRange, args.RangeModifiers);
+					}
+
+					ContrailRenderable contrail = null;
+					if (projectileAnim.ContrailLength > 0)
+					{
+						var startcolor = projectileAnim.ContrailStartColorUsePlayerColor
+							? Color.FromArgb(projectileAnim.ContrailStartColorAlpha, args.SourceActor.OwnerColor())
+							: Color.FromArgb(projectileAnim.ContrailStartColorAlpha, projectileAnim.ContrailStartColor);
+
+						var endcolor = projectileAnim.ContrailEndColorUsePlayerColor
+							? Color.FromArgb(projectileAnim.ContrailEndColorAlpha, args.SourceActor.OwnerColor())
+							: Color.FromArgb(projectileAnim.ContrailEndColorAlpha, projectileAnim.ContrailEndColor ?? startcolor);
+
+						contrail = new ContrailRenderable(world, args.SourceActor,
+							startcolor, projectileAnim.ContrailStartColorUsePlayerColor,
+							endcolor, projectileAnim.ContrailEndColor == null ? projectileAnim.ContrailStartColorUsePlayerColor : projectileAnim.ContrailEndColorUsePlayerColor,
+							projectileAnim.ContrailStartWidth,
+							projectileAnim.ContrailEndWidth ?? projectileAnim.ContrailStartWidth,
+							projectileAnim.ContrailLength, projectileAnim.ContrailDelay, projectileAnim.ContrailZOffset);
+					}
+
+					var visualGrounded = info.ForceGround == LinearPulseForceGroundType.DamageAndVisual;
+					var initialPosition = visualGrounded ? new WPos(args.Source.X, args.Source.Y, 0) : args.Source;
+
+					var animState = new ProjectileAnimationState(projectileAnim, animation, projectileDirectionalSpeed, animRange, initialPosition, contrail);
+
+					if (projectileAnim.Delay.Length == 1)
+						animState.RemainingDelay = projectileAnim.Delay[0];
+					else if (projectileAnim.Delay.Length >= 2)
+						animState.RemainingDelay = world.SharedRandom.Next(projectileAnim.Delay[0], projectileAnim.Delay[1] + 1);
+
+					projectileAnimations.Add(animState);
+				}
 			}
 		}
 
 		public void Tick(World world)
 		{
-			anim?.Tick();
+			foreach (var animState in projectileAnimations)
+			{
+				if (animState.RemainingDelay == 0)
+					animState.Animation?.Tick();
+
+				if (animState.Contrail != null && animState.RemainingDelay == 0)
+					animState.Contrail.Update(animState.Position);
+			}
 
 			var lastPos = pos;
 
 			if (!travelComplete && !blocked)
 				pos += directionalSpeed;
 
-			if (!visualTravelComplete && !blocked)
-				visualPos += visualDirectionalSpeed;
+			foreach (var animState in projectileAnimations)
+				animState.UpdatePosition(blocked);
 
-			// Check for walls or other blocking obstacles
 			if (info.Blockable && !blocked && BlocksProjectiles.AnyBlockingActorsBetween(world, args.SourceActor.Owner, lastPos, pos, info.BlockableWidth, out var blockedPos))
 			{
 				pos = blockedPos;
-				visualPos = blockedPos;
 				blocked = true;
 				totalDistanceTravelled = (blockedPos - source).Length;
-				totalVisualDistanceTravelled = (blockedPos - source).Length;
+
+				foreach (var animState in projectileAnimations)
+					animState.SetBlockedPosition(blockedPos, source);
 			}
 			else
 			{
 				totalDistanceTravelled += info.Speed.Length;
-				totalVisualDistanceTravelled += info.VisualSpeed != WDist.Zero && info.VisualSpeed != info.Speed ? info.VisualSpeed.Length : info.Speed.Length;
 			}
 
 			if (!travelComplete)
@@ -397,57 +601,89 @@ namespace OpenRA.Mods.CA.Projectiles
 			}
 
 			travelComplete = totalDistanceTravelled >= range || blocked;
-			visualTravelComplete = totalVisualDistanceTravelled >= visualRange || blocked;
 
-			// Create final hit animation when visual travel completes
-			if (visualTravelComplete && !finalHitCreated && !string.IsNullOrEmpty(info.FinalHitAnim))
+			// Create hit animations for individual projectiles when they complete
+			foreach (var animState in projectileAnimations)
 			{
-				finalHitCreated = true;
-				var palette = info.FinalHitAnimPalette;
-				world.AddFrameEndTask(w => w.Add(new SpriteEffect(pos, facing, w, info.FinalHitAnim, info.FinalHitAnimSequence, palette)));
+				if (animState.TravelComplete && !animState.HitAnimationCreated && !string.IsNullOrEmpty(animState.Config.HitAnim))
+				{
+					animState.HitAnimationCreated = true;
+					var palette = animState.Config.HitAnimPalette;
+					var animFacing = animState.DirectionalSpeed.Yaw;
+					world.AddFrameEndTask(w => w.Add(new SpriteEffect(animState.Position, w, animState.Config.HitAnim, animState.Config.HitAnimSequence, palette)));
+				}
 			}
 
-			if (travelComplete && visualTravelComplete)
+			// Check if all projectile animations are complete
+			var allProjectileTravelComplete = projectileAnimations.Count == 0 || projectileAnimations.All(a => a.TravelComplete);
+
+			if (travelComplete && allProjectileTravelComplete)
+			{
+				// Add contrail faders for all animations that have contrails
+				foreach (var animState in projectileAnimations)
+				{
+					if (animState.Contrail != null)
+						world.AddFrameEndTask(w => w.Add(new ContrailFader(animState.Position, animState.Contrail)));
+				}
+
 				world.AddFrameEndTask(w => w.Remove(this));
+			}
 
 			ticks++;
 		}
 
-		WAngle GetEffectiveFacing()
+		WAngle GetEffectiveFacingForAnimation(WAngle animFacing)
 		{
 			var angle = WAngle.Zero;
 			var at = (float)ticks / (speed.Length - 1);
 			var attitude = angle.Tan() * (1 - 2 * at) / (4 * 1024);
 
-			var u = facing.Angle % 512 / 512f;
+			var u = animFacing.Angle % 512 / 512f;
 			var scale = 2048 * u * (1 - u);
 
-			var effective = (int)(facing.Angle < 512
-				? facing.Angle - scale * attitude
-				: facing.Angle + scale * attitude);
+			var effective = (int)(animFacing.Angle < 512
+				? animFacing.Angle - scale * attitude
+				: animFacing.Angle + scale * attitude);
 
 			return new WAngle(effective);
 		}
 
 		public IEnumerable<IRenderable> Render(WorldRenderer wr)
 		{
-			if (anim == null || totalVisualDistanceTravelled >= visualRange)
-				yield break;
-
 			var world = args.SourceActor.World;
-			if (!world.FogObscures(visualPos))
-			{
-				if (info.Shadow)
-				{
-					var dat = world.Map.DistanceAboveTerrain(visualPos);
-					var shadowPos = visualPos - new WVec(0, 0, dat.Length);
-					foreach (var r in anim.Render(shadowPos, wr.Palette(info.ShadowPalette)))
-						yield return r;
-				}
 
-				var palette = wr.Palette(info.Palette);
-				foreach (var r in anim.Render(visualPos, palette))
-					yield return r;
+			foreach (var animState in projectileAnimations)
+			{
+				// Don't render animations that are still delayed
+				if (animState.RemainingDelay > 0)
+					continue;
+
+				// Render contrail first if this animation has one
+				if (animState.Contrail != null)
+					yield return animState.Contrail;
+
+				if (animState.Animation == null || animState.TravelComplete)
+					continue;
+
+				if (!world.FogObscures(animState.Position))
+				{
+					// Find the corresponding ProjectileAnimation config for this animation state
+					var projectileAnim = animState.Config;
+					if (animState.Config != null)
+					{
+						if (projectileAnim.Shadow)
+						{
+							var dat = world.Map.DistanceAboveTerrain(animState.Position);
+							var shadowPos = animState.Position - new WVec(0, 0, dat.Length);
+							foreach (var r in animState.Animation.Render(shadowPos, wr.Palette(projectileAnim.ShadowPalette)))
+								yield return r;
+						}
+
+						var palette = wr.Palette(projectileAnim.Palette);
+						foreach (var r in animState.Animation.Render(animState.Position, palette))
+							yield return r;
+					}
+				}
 			}
 		}
 

@@ -247,12 +247,13 @@ BigFlamerTD:
 	BurstDelays: 5
 	Projectile: LinearPulse
 		Speed: 288
-		VisualSpeed: 96
-		Image: flameallfast
 		Inaccuracy: 484
-		Palette: tseffect-ignore-lighting-alpha90
 		MinimumImpactDistance: 288
 		MaximumImpactDistance: 2304
+		ProjectileAnimation@1:
+			Speed: 96
+			Image: flameallfast
+			Palette: tseffect-ignore-lighting-alpha90
 	Warhead@1Dam: SpreadDamage
 		Damage: 925
 		Versus:
@@ -272,8 +273,7 @@ FlamerTDBATF:
 BigFlamerTDFF:
 	Inherits: BigFlamerTD
 	Projectile: LinearPulse
-		-Image:
-		-Palette:
+		-ProjectileAnimation@1:
 		MinimumImpactDistance: 1440
 	Warhead@1Dam: SpreadDamage
 		Falloff: 100, 50, 0
@@ -307,8 +307,9 @@ ChemsprayTDBATF:
 	Inherits: BigFlamerTD
 	Burst: 1
 	Projectile: LinearPulse
-		Image: chemallfast
-		Palette: ra2effect-ignore-lighting-alpha90
+		ProjectileAnimation@1:
+			Image: chemallfast
+			Palette: ra2effect-ignore-lighting-alpha90
 	Warhead@1Dam: SpreadDamage
 		Damage: 1100
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
@@ -340,8 +341,9 @@ HeavyFlameTankFlamer.UPG:
 	Inherits: HeavyFlameTankFlamer
 	ReloadDelay: 95
 	Projectile: LinearPulse
-		Image: flameallblack
-		Palette: scrin-ignore-lighting-alpha85
+		ProjectileAnimation@1:
+			Image: flameallblack
+			Palette: scrin-ignore-lighting-alpha85
 	Warhead@1Dam: SpreadDamage
 		Damage: 180
 		Versus:
@@ -359,8 +361,7 @@ HeavyFlameTankFlamer.UPG.Decoy:
 HeavyFlameTankFlamerFF:
 	Inherits: HeavyFlameTankFlamer
 	Projectile: LinearPulse
-		-Image:
-		-Palette:
+		-ProjectileAnimation@1:
 		MinimumImpactDistance: 1440
 	Warhead@1Dam: SpreadDamage
 		Falloff: 100, 50, 0
@@ -402,13 +403,14 @@ BlackHandFlamer:
 	Range: 3c512
 	Projectile: LinearPulse
 		Speed: 440
-		VisualSpeed: 220
 		Inaccuracy: 160
-		Image: thinblueflame
-		Palette: effect-ignore-lighting-alpha85
 		MinimumImpactDistance: 440
 		MaximumImpactDistance: 3c512
-		RepeatAnimation: false
+		ProjectileAnimation@1:
+			Speed: 220
+			Image: thinblueflame
+			Palette: effect-ignore-lighting-alpha85
+			RepeatAnimation: false
 	Warhead@1Dam: SpreadDamage
 		Range: 0, 256, 512
 		Falloff: 100, 100, 0
@@ -3775,9 +3777,10 @@ BasiliskPulse:
 	Projectile: LinearPulse
 		Speed: 512
 		MinimumImpactDistance: 512
-		Image: sparks_overlay
-		Sequences: idle
-		Palette: tseffect-ignore-lighting-alpha75
+		ProjectileAnimation@1:
+			Image: sparks_overlay
+			Sequences: idle
+			Palette: tseffect-ignore-lighting-alpha75
 	Warhead@1Dam: SpreadDamage
 		Spread: 0c256
 		Falloff: 100, 75, 25, 0

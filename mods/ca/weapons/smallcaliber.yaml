@@ -981,6 +981,7 @@ WolverineGunTracer:
 	-Warhead@1Dam:
 	-Warhead@3EffWater:
 	Projectile: BulletCA
+		Blockable: true
 		Speed: 1350
 		ContrailStartWidth: 40
 		ContrailLength: 9
@@ -1007,10 +1008,72 @@ EnforcerShotgun:
 		TrapezoidEndWidth: 2c0
 		TrapezoidSegmentLength: 512
 		SingleHitPerActor: true
-		FinalHitAnim: explosion
-		FinalHitAnimSequence: piffs
 		ForceGround: DamageOnly
 		MinimumFriendlyFireRange: 2c0
+		ProjectileAnimation@1:
+			Image: empty
+			Speed: 1350
+			ContrailStartWidth: 40
+			ContrailLength: 9
+			ContrailStartColor: d6b4a044
+			ContrailStartColorAlpha: 60
+			TargetOffset: -128, -512, 0
+			Inaccuracy: 128
+			Delay: 0,3
+			HitAnim: explosion
+			HitAnimSequence: piff
+			HitAnimPalette: effect-ignore-lighting-alpha50
+		ProjectileAnimation@2:
+			Image: empty
+			Speed: 1350
+			ContrailStartWidth: 40
+			ContrailLength: 9
+			ContrailStartColor: d6b4a044
+			ContrailStartColorAlpha: 60
+			TargetOffset: -64, -256, 0
+			Inaccuracy: 128
+			Delay: 0,3
+			HitAnim: explosion
+			HitAnimSequence: piff
+			HitAnimPalette: effect-ignore-lighting-alpha50
+		ProjectileAnimation@3:
+			Image: empty
+			Speed: 1350
+			ContrailStartWidth: 40
+			ContrailLength: 9
+			ContrailStartColor: d6b4a044
+			ContrailStartColorAlpha: 60
+			Inaccuracy: 128
+			Delay: 0,3
+			HitAnim: explosion
+			HitAnimSequence: piff
+			HitAnimPalette: effect-ignore-lighting-alpha50
+		ProjectileAnimation@4:
+			Image: empty
+			Speed: 1350
+			ContrailStartWidth: 40
+			ContrailLength: 9
+			ContrailStartColor: d6b4a044
+			ContrailStartColorAlpha: 60
+			TargetOffset: -64, 256, 0
+			Inaccuracy: 128
+			Delay: 0,3
+			HitAnim: explosion
+			HitAnimSequence: piff
+			HitAnimPalette: effect-ignore-lighting-alpha50
+		ProjectileAnimation@5:
+			Image: empty
+			Speed: 1350
+			ContrailStartWidth: 40
+			ContrailLength: 9
+			ContrailStartColor: d6b4a044
+			ContrailStartColorAlpha: 60
+			TargetOffset: -128, 512, 0
+			Inaccuracy: 128
+			Delay: 0,3
+			HitAnim: explosion
+			HitAnimSequence: piff
+			HitAnimPalette: effect-ignore-lighting-alpha50
 		DamageFalloff@1:
 			Spread: 4c0
 			Falloff: 100, 25
