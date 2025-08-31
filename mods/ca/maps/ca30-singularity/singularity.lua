@@ -211,12 +211,12 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnDamaged(SignalTransmitter, function(self, attacker, damage)
-		if attacker.Owner == GDI then
+		if attacker.Owner == GDI and self.Health < (self.MaxHealth - self.MaxHealth / 3) then
 			InitHackers(0)
 		end
 	end)
 
-	Trigger.OnEnteredProximityTrigger(SignalTransmitter.CenterPosition, WDist.New(12 * 1024), function(a, id)
+	Trigger.OnEnteredProximityTrigger(SignalTransmitter.CenterPosition, WDist.New(9 * 1024), function(a, id)
 		if a.Owner == GDI and a.HasProperty("Health") and not a.HasProperty("Land") then
 			Trigger.RemoveProximityTrigger(id)
 			InitHackers(0)

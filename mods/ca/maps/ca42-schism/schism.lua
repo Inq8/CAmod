@@ -394,7 +394,7 @@ MaleficSpawn = function(isInitial)
 
 	local prepTime = 0
 	if isInitial then
-		prepTime = DateTime.Seconds(30)
+		prepTime = DateTime.Seconds(20)
 	end
 
 	Trigger.AfterDelay(GetInvasionInterval() + prepTime, MaleficSpawn)
@@ -421,7 +421,7 @@ OverlordSpawn = function(isInitial)
 
 	local prepTime = 0
 	if isInitial then
-		prepTime = DateTime.Seconds(30)
+		prepTime = DateTime.Seconds(20)
 	end
 
 	Trigger.AfterDelay(DateTime.Seconds(30) + prepTime, OverlordSpawn)
