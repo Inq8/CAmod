@@ -377,11 +377,23 @@ OncePerFiveSecondChecks = function()
 				end)
 			end)
 		end
+	end
+end
 
+OncePerFiveSecondChecks = function()
+	if DateTime.GameTime > 1 and DateTime.GameTime % DateTime.Seconds(15) == 0 then
 		if NodFreed and FirstHackersArrived and not MoreHackersRequested and not ShieldsOffline and not SignalTransmitter.IsDead then
-			local hackers = GDI.GetActorsByType("hack")
+			local numHackers = #GDI.GetActorsByType("hack")
+			local transports = GDI.GetActorsByTypes({ "tran", "halo", "apc", "btr", "apc2", "vulc", "sapc", "intl", "ifv" })
+			Utils.Do(transports, function(t)
+				Utils.Do(t.Passengers, function(p)
+					if p.Type == "hack" then
+						numHackers = numHackers + 1
+					end
+				end)
+			end)
 
-			if #hackers == 0 then
+			if numHackers == 0 then
 				MoreHackersRequested = true
 
 				Trigger.AfterDelay(HackersDelay[Difficulty], function()
