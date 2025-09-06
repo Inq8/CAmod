@@ -31,6 +31,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly bool StartsGranted = false;
 
 		public readonly bool ShowSelectionBar = false;
+		public readonly bool ShowSelectionBarWhenEmpty = true;
 		public readonly Color CooldownColor = Color.DarkRed;
 		public readonly Color ActiveColor = Color.DarkMagenta;
 
@@ -160,11 +161,11 @@ namespace OpenRA.Mods.CA.Traits
 				return 0f;
 
 			return IsEnabled
-				? (float)(active - ticks) / active
-					: (float)ticks / cooldown;
+				? (float)ticks / active
+				: (float)(cooldown - ticks) / cooldown;
 		}
 
-		bool ISelectionBar.DisplayWhenEmpty { get { return info.ShowSelectionBar; } }
+		bool ISelectionBar.DisplayWhenEmpty { get { return info.ShowSelectionBarWhenEmpty; } }
 
 		Color ISelectionBar.GetColor() { return IsEnabled ? info.ActiveColor : info.CooldownColor; }
 	}

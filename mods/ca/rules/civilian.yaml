@@ -58,6 +58,8 @@ FCOM:
 		Type: Wood
 	Tooltip:
 		Name: Forward Command
+	TooltipExtras:
+		Description: Provides buildable area.
 	TooltipDescription@ally:
 		Description: Provides buildable area.
 		ValidRelationships: Ally
@@ -111,7 +113,13 @@ HOSP:
 	Tooltip:
 		Name: Hospital
 	TooltipExtras:
-		Description: When controlled, heals nearby infantry and trains a Medic or Rejuvenator unit every two minutes.
+		Description: Heals nearby infantry and trains two Medics/Rejuvenators every two minutes.
+	TooltipDescription@ally:
+		Description: Heals nearby infantry and trains two Medics/Rejuvenators every two minutes.
+		ValidRelationships: Ally
+	TooltipDescription@other:
+		Description: Capture to heal nearby infantry and train two Medics/Rejuvenators every two minutes.
+		ValidRelationships: Neutral, Enemy
 	RevealsShroud:
 		Range: 4c0
 	WithBuildingBib:
@@ -135,7 +143,7 @@ HOSP:
 	PeriodicProducerCA@MEDIC:
 		Type: Hospital
 		ChargeDuration: 3000
-		Actors: medi
+		Actors: medi, medi
 		ShowSelectionBar: true
 		RequiresCondition: !is-neutral && !scrinplayer
 		ResetTraitOnOwnerChange: true
@@ -145,7 +153,7 @@ HOSP:
 	PeriodicProducerCA@REJUVENATOR:
 		Type: Hospital
 		ChargeDuration: 3000
-		Actors: smedi
+		Actors: smedi, smedi
 		ShowSelectionBar: true
 		RequiresCondition: !is-neutral && scrinplayer
 		ResetTraitOnOwnerChange: true
@@ -190,7 +198,13 @@ MACS:
 	Tooltip:
 		Name: Machine Shop
 	TooltipExtras:
-		Description: When controlled, repairs nearby vehicles and trains a Mechanic or Artificer unit every three minutes.
+		Description: Repairs nearby vehicles and trains two Mechanics/Artificers every two minutes.
+	TooltipDescription@ally:
+		Description: Repairs nearby infantry and trains two Mechanics/Artificers every two minutes.
+		ValidRelationships: Ally
+	TooltipDescription@other:
+		Description: Capture to repair nearby vehicles and train two Mechanics/Artificers every two minutes.
+		ValidRelationships: Neutral, Enemy
 	RevealsShroud:
 		Range: 4c0
 	WithBuildingBib:
@@ -214,7 +228,7 @@ MACS:
 	PeriodicProducerCA@MECHANIC:
 		Type: Macs
 		ChargeDuration: 4500
-		Actors: mech
+		Actors: mech, mech
 		ShowSelectionBar: true
 		RequiresCondition: !is-neutral && !scrinplayer
 		ResetTraitOnOwnerChange: true
@@ -224,7 +238,7 @@ MACS:
 	PeriodicProducerCA@ARTIFICER:
 		Type: Macs
 		ChargeDuration: 4500
-		Actors: arti
+		Actors: arti, arti
 		ShowSelectionBar: true
 		RequiresCondition: !is-neutral && scrinplayer
 		ResetTraitOnOwnerChange: true
@@ -470,6 +484,8 @@ MISS:
 		Type: Wood
 	Tooltip:
 		Name: Communications Center
+	TooltipExtras:
+		Description: Provides vision of the surrounding area.
 	TooltipDescription@ally:
 		Description: Provides vision of the surrounding area.
 		ValidRelationships: Ally
@@ -512,11 +528,13 @@ BIO:
 	InstantlyRepairable:
 	Tooltip:
 		Name: Biological Lab
+	TooltipExtras:
+		Description: Provides access to the toxin truck and chem mortar units.
 	TooltipDescription@ally:
-		Description: Provides prerequisite for Bio-Lab units.
+		Description: Provides access to the toxin truck and chem mortar units.
 		ValidRelationships: Ally
 	TooltipDescription@other:
-		Description: Capture to produce Bio-Lab units.
+		Description: Capture for access to the toxin truck and chem mortar units.
 		ValidRelationships: Neutral, Enemy
 	WithDeathAnimation:
 		DeathSequence: dead
@@ -555,10 +573,23 @@ OILB:
 	InstantlyRepairable:
 	CashTrickler:
 		Interval: 375
-		Amount: 100
+		Amount: 50
+		RequiresCondition: enabled && !surge
+	CashTrickler@Surge:
+		Interval: 1
+		Amount: 650
+		RequiresCondition: enabled && surge
+	GrantPeriodicCondition@Surge:
+		ActiveDuration: 1
+		CooldownDuration: 2999
+		Condition: surge
+		ShowSelectionBar: true
+		CooldownColor: FF00FF
 		RequiresCondition: enabled
 	Tooltip:
 		Name: Oil Derrick
+	TooltipExtras:
+		Description: Grants $50 every 15 seconds and an additional $600 every 2 minutes.
 	TooltipDescription@ally:
 		Description: Provides additional funds.
 		ValidRelationships: Ally
@@ -627,11 +658,13 @@ OILR:
 	InstantlyRepairable:
 	Tooltip:
 		Name: Oil Refinery
+	TooltipExtras:
+		Description: Provides 10% discount on all unit production.
 	TooltipDescription@ally:
-		Description: Provides 10% unit discount.
+		Description: Provides 10% discount on all unit production.
 		ValidRelationships: Ally
 	TooltipDescription@other:
-		Description: Capture to receive a 10% production discount.
+		Description: Capture to receive a 10% discount on all unit production.
 		ValidRelationships: Neutral, Enemy
 	FireWarheadsOnDeath:
 		Weapon: BarrelExplode
