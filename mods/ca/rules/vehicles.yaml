@@ -2049,6 +2049,7 @@ HARV:
 	Inherits@SELECTION: ^SelectableEconomicUnit
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Inherits@EconomyPolicyDiscount: ^EconomyPolicyDiscount
+	Inherits@EconomyPolicyDurability: ^EconomyPolicyDurability
 	Inherits@HeavyArmor: ^HeavyArmor
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
@@ -2400,7 +2401,7 @@ APC:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 121
-		Prerequisites: ~vehicles.allies, ~!rapc.upgrade, ~techlevel.low
+		Prerequisites: ~vehicles.allies, ~!aapc.upgrade, ~techlevel.low
 		Description: Tough infantry transport.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
@@ -2463,45 +2464,44 @@ APC:
 		TargetTypes: MindControlImmune
 		RequiresCondition: loaded-cmdo
 	ReplacedInQueue:
-		Actors: rapc
-	Upgradeable@RAIDER:
-		Type: rapc.upgrade
+		Actors: aapc
+	Upgradeable@Archer:
+		Type: aapc.upgrade
 		UpgradingCondition: upgrading
-		Actor: rapc
+		Actor: aapc
 		UpgradeAtActors: fix, rep, srep
 		RequiresCondition: !mindcontrolled
 	Encyclopedia:
 		Category: Allies/Vehicles
 
-RAPC:
+AAPC:
 	Inherits: APC
 	Buildable:
-		Prerequisites: ~vehicles.allies, ~rapc.upgrade, ~techlevel.medium
-		Description: Tough infantry transport that fires high explosive shells.
+		Prerequisites: ~vehicles.allies, ~aapc.upgrade, ~techlevel.medium
+		Description: Tough infantry transport with a target painting radar.
 	Valued:
 		Cost: 800
-	Mobile:
-		Speed: 82
 	RevealsShroud:
 		Range: 6c0
 	Tooltip:
-		Name: Armored Personnel Carrier (Raider)
+		Name: Armored Personnel Carrier (Archer)
 	TooltipExtras:
-		Description: Tough infantry transport that fires high explosive shells.
-		Strengths: • Strong vs Light Armor, Buildings, Defenses, Infantry
-		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
+		Description: Tough infantry transport with a target painting radar.
+		-Strengths:
+		Weaknesses: • Unarmed
+		Attributes: • Targets are revealed and take increased damage
 	-AttackFrontal:
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped || blinded
 	Turreted:
-		TurnSpeed: 28
+		TurnSpeed: 14
 	WithSpriteTurret:
 	Armament:
-		Weapon: 76mm
-		LocalOffset: 500,0,250
-		MuzzleSequence: muzzle2
+		Weapon: TargetPainter
+		LocalOffset: 0,0,250
+		-MuzzleSequence:
 	-ReplacedInQueue:
-	-Upgradeable@RAIDER:
+	-Upgradeable@Archer:
 	-WithDecoration@UpgradeOverlay:
 
 APC.AI:
@@ -2510,23 +2510,23 @@ APC.AI:
 	RenderSprites:
 		Image: APC
 	Buildable:
-		Prerequisites: ~botplayer, ~vehicles.allies, ~!rapc.upgrade, ~techlevel.low
+		Prerequisites: ~botplayer, ~vehicles.allies, ~!aapc.upgrade, ~techlevel.low
 	Cargo:
 		InitialUnits: E1,E1,E1,E3,E3
 	WithCargoSounds:
 		-EnterSounds:
 	-ReplacedInQueue:
-	-Upgradeable@RAIDER:
+	-Upgradeable@Archer:
 	-WithDecoration@UpgradeOverlay:
 	-Encyclopedia:
 
-RAPC.AI:
-	Inherits: RAPC
+AAPC.AI:
+	Inherits: AAPC
 	Inherits@AIUNLOAD: ^AIUNLOAD
 	RenderSprites:
-		Image: RAPC
+		Image: aapc
 	Buildable:
-		Prerequisites: ~botplayer, ~vehicles.allies, ~rapc.upgrade, ~techlevel.medium
+		Prerequisites: ~botplayer, ~vehicles.allies, ~aapc.upgrade, ~techlevel.medium
 	Cargo:
 		InitialUnits: E1,E1,E1,E3,E3
 	WithCargoSounds:
@@ -5630,6 +5630,7 @@ HARV.TD:
 	Inherits@SELECTION: ^SelectableEconomicUnit
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Inherits@EconomyPolicyDiscount: ^EconomyPolicyDiscount
+	Inherits@EconomyPolicyDurability: ^EconomyPolicyDurability
 	Inherits@HeavyArmor: ^HeavyArmor
 	RenderSprites:
 		Image: harv2
@@ -6211,7 +6212,6 @@ IFV:
 	Inherits@NOUNLOADCHRONO: ^NoUnloadWhenChronoshifted
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Inherits@COMMANDOSKULL: ^CommandoSkull
-	Inherits@HeavyArmor: ^HeavyArmor
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
@@ -6391,7 +6391,7 @@ IFV:
 		RequiresCondition: flamturr || chemturr || hoplturr
 	TooltipExtras@spyturr:
 		Weaknesses: • Cannot deal damage
-		Attributes: • Long vision range\n• Detects cloaked units\n• Marks vehicle/structure targets, revealing them and increasing the damage they take
+		Attributes: • Detects cloaked units\n• Disables nearby enemy defenses and power plants
 		IsStandard: false
 		RequiresCondition: spyturr
 	TooltipExtras@rmbcturr:
@@ -6462,7 +6462,9 @@ IFV:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 27000
+		HP: 30000
+	Armor:
+		Type: Light
 	Mobile:
 		Speed: 100
 	RevealsShroud:
@@ -6695,13 +6697,6 @@ IFV:
 		Weapon: CyborgReaperMissiles
 		LocalOffset: 192,100,256, 192,-100,256
 		RequiresCondition: reapturr
-	Armament@Spy:
-		Weapon: TargetPainter
-		RequiresCondition: spyturr
-		LocalOffset: 0,0,100
-	AutoTargetPriority@Spy:
-		ValidTargets: Vehicle, Structure
-		RequiresCondition: spyturr
 	AttackSoundsCA@REPAIRSOUND:
 		Sounds: repair11.aud
 		RequiresCondition: mechturr
@@ -6942,6 +6937,21 @@ IFV:
 		RequiresCondition: ivanturr && (invulnerability || tibstealth || triggered || berserk)
 	Passenger:
 		CargoCondition: passenger
+	ProximityExternalCondition@SPY:
+		Range: 6c0
+		Condition: powerdown
+		RequiresCondition: spyturr && !empdisable && !being-warped
+		ValidRelationships: Enemy, Ally
+	ProximityExternalCondition@SpyPowerDrain:
+		Range: 6c0
+		Condition: powerdrain
+		RequiresCondition: spyturr && !empdisable && !being-warped
+		ValidRelationships: Enemy, Ally
+	WithRangeCircle@SPY:
+		Type: SpyIFV
+		Color: FFFF0080
+		Range: 6c0
+		RequiresCondition: spyturr
 	ProximityExternalCondition@MEDIC:
 		RequiresCondition: medturr && !passenger
 		EnableSound: heal2.aud
@@ -6952,6 +6962,19 @@ IFV:
 		Color: 00FF0080
 		Range: 3c512
 		RequiresCondition: medturr
+	ProximityExternalCondition@Inspiration:
+		Range: 5c0
+		Condition: cmsr-inspiration
+		ValidRelationships: Ally
+		AffectsParent: true
+		RequiresCondition: cmsrturr && !passenger
+	WithRadiatingCircle:
+		EndRadius: 5c0
+		Interval: 75
+		Duration: 50
+		ValidRelationships: Ally
+		AlwaysShowMaxRange: true
+		RequiresCondition: cmsrturr
 	Capturable:
 		RequiresCondition: !being-warped && !full
 	Capturable@DRIVER_DEAD:
@@ -7117,19 +7140,6 @@ IFV:
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
-	ProximityExternalCondition@Inspiration:
-		Range: 5c0
-		Condition: cmsr-inspiration
-		ValidRelationships: Ally
-		AffectsParent: true
-		RequiresCondition: cmsrturr && !passenger
-	WithRadiatingCircle:
-		EndRadius: 5c0
-		Interval: 75
-		Duration: 50
-		ValidRelationships: Ally
-		AlwaysShowMaxRange: true
-		RequiresCondition: cmsrturr
 	Armament@Psi:
 		Weapon: EnslaveInfantry
 		LocalOffset: 200,0,300
@@ -7217,7 +7227,6 @@ IFV.AI:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
-	Inherits@HeavyArmor: ^HeavyArmor
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 170
@@ -7357,6 +7366,7 @@ IFV.AI:
 
 RECK:
 	Inherits: IFV
+	Inherits@HeavyArmor: ^HeavyArmor
 	Inherits@InfiltratorStolenTech: ^InfiltratorStolenTech
 	RenderSprites:
 		Image: reck

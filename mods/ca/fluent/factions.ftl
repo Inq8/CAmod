@@ -84,8 +84,7 @@ faction-russia =
 
     Bonuses:
       • Tesla Coil (10% Discount)
-      • Shock Trooper (10% Discount)
-      • Tesla Trooper (10% Discount)
+      • Free Tesla Trooper Upgrade
       • Kirov Tesla Bombs
 
 faction-ukraine =

@@ -734,6 +734,7 @@
 		Palette: chrome
 		RequiresCondition: powerdrain || discpowerdrain
 		Position: Center
+		ValidRelationships: Ally, Enemy, Neutral
 
 ^ResourceDrainable:
 	Targetable@ResourceDrain:
@@ -2121,6 +2122,14 @@
 	GrantConditionOnPrerequisite@EconomyPolicy2:
 		Condition: economy-policy2
 		Prerequisites: economy.policy, influence.level2
+
+^EconomyPolicyDurability:
+	DamageMultiplier@EconomyPolicy3:
+		Modifier: 133
+		RequiresCondition: economy-policy3
+	GrantConditionOnPrerequisite@EconomyPolicy3:
+		Condition: economy-policy3
+		Prerequisites: economy.policy, influence.level3
 
 ^DefensePolicyDamageReduction:
 	GrantConditionOnPrerequisite@DefensePolicy1:
@@ -3526,6 +3535,10 @@
 	-UpdatesBuildOrder:
 	ChangesHealth@DefensePolicy2:
 		Step: 140
+	ExternalCondition@PowerDown:
+		Condition: powerdown
+	DummyConditionConsumer@PowerDown:
+		Condition: powerdown
 
 ^DefenseTD:
 	Inherits@1: ^Defense
@@ -4266,6 +4279,7 @@
 		Palette: chrome
 		RequiresCondition: powerdown
 		Position: Center
+		ValidRelationships: Ally, Enemy, Neutral
 	PowerMultiplier@POWERDOWN:
 		RequiresCondition: powerdown
 		Modifier: 0

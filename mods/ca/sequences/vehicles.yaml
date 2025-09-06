@@ -569,13 +569,6 @@ apc:
 		Filename: minigun16.shp
 		Length: 6
 		Facings: 16
-	turret:
-		Filename: rapc.shp
-		Facings: 32
-		UseClassicFacings: True
-	muzzle2:
-		Filename: gunfire2.shp
-		Length: 5
 	open:
 		Filename: apc.shp
 		Start: 32
@@ -586,10 +579,14 @@ apc:
 	icon:
 		Filename: apcicon.shp
 
-rapc:
+aapc:
 	Inherits: apc
+	turret:
+		Filename: aapc.shp
+		Facings: 32
+		UseClassicFacings: True
 	icon:
-		Filename: rapcicon.shp
+		Filename: aapcicon.shp
 
 apc.destroyed:
 	Inherits: ^VehicleOverlays

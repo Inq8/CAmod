@@ -761,10 +761,10 @@ howi.upgrade:
 		Image: howi.upgrade
 	ProductionCostMultiplier@blackh:
 		Multiplier: 0
-		Prerequisites: radar.blackh
+		Prerequisites: player.blackh
 	ProductionTimeMultiplier@blackh:
 		Multiplier: 0
-		Prerequisites: radar.blackh
+		Prerequisites: player.blackh
 	WithProductionIconOverlay:
 		Prerequisites: howi.upgrade
 
@@ -1214,6 +1214,12 @@ ttrp.upgrade:
 		Image: ttrp.upgrade
 	WithProductionIconOverlay:
 		Prerequisites: ttrp.upgrade
+	ProductionCostMultiplier@russia:
+		Multiplier: 0
+		Prerequisites: player.russia
+	ProductionTimeMultiplier@russia:
+		Multiplier: 0
+		Prerequisites: player.russia
 
 deso.upgrade:
 	Inherits: ^SovietUpgrade
@@ -1518,7 +1524,7 @@ economy.policy:
 	Buildable:
 		BuildPaletteOrder: 1
 		Prerequisites: ~player.allies, influence.level1, !economy.policy, !defense.policy, !development.policy, ~techlevel.medium
-		Description: Pursue economic policy.\n\n• Level 1: -15% cost of Refineries, Harvesters & MCVs\n• Level 2: -30% cost of Refineries, Harvesters & MCVs, +20% MCV movement speed\n• Level 3: Free Chrono Miner upgrade, -20% Ore Purifier cost, +50% Ore Purifier income
+		Description: Pursue economic policy.\n\n• Level 1: -15% cost of Refineries, Harvesters & MCVs\n• Level 2: -30% cost of Refineries, Harvesters & MCVs, +20% MCV movement speed\n• Level 3: Free Chrono Miner upgrade, +33% Harvester durability, +50% Ore Purifier income
 	TooltipExtras:
 		Attributes: (!) Only ONE Policy may be chosen.
 	Valued:
@@ -1622,24 +1628,24 @@ sweden.coalition:
 	WithProductionIconOverlay:
 		Prerequisites: sweden.coalition
 
-rapc.upgrade:
+aapc.upgrade:
 	Inherits: ^AlliedUpgrade
 	Inherits@DevelopmentPolicyDiscount: ^DevelopmentPolicyDiscount
 	Tooltip:
-		Name: Research: Raider APC
+		Name: Research: Archer APC
 	Buildable:
 		BuildPaletteOrder: 20
 		Prerequisites: ~player.allies, anyradar, ~techlevel.medium
-		Description: Allows construction of the Raider APC.\n\nUpgrades: APC
+		Description: Allows construction of the Archer APC.\n\nUpgrades: APC
 	TooltipExtras:
-		Strengths: + Adds strong anti-structure damage\n+ Increased splash damage\n+ Adds turret
-		Weaknesses: – Increased cost\n– Slower projectile speed\n– Reduced speed
+		Strengths: + Adds a target painting radar that reveals enemies and makes them take increased damage
+		Weaknesses: – Increased cost\n– Cannot deal damage
 	Valued:
 		Cost: 750
 	RenderSprites:
-		Image: rapc.upgrade
+		Image: aapc.upgrade
 	WithProductionIconOverlay:
-		Prerequisites: rapc.upgrade
+		Prerequisites: aapc.upgrade
 
 optics.upgrade:
 	Inherits: ^AlliedUpgrade
