@@ -176,6 +176,15 @@ HOSP:
 		Condition: scrinplayer
 		Prerequisites: player.scrin
 
+HOSP.Rebuilt:
+	Inherits: HOSP
+	RenderSprites:
+		Image: hosp
+	PeriodicProducerCA@MEDIC:
+		Immediate: false
+	PeriodicProducerCA@REJUVENATOR:
+		Immediate: false
+
 MACS:
 	Inherits: ^TechBuilding
 	Inherits@shape: ^2x2Shape
@@ -260,6 +269,15 @@ MACS:
 	GrantConditionOnPrerequisite@SCRIN:
 		Condition: scrinplayer
 		Prerequisites: player.scrin
+
+MACS.Rebuilt:
+	Inherits: MACS
+	RenderSprites:
+		Image: macs
+	PeriodicProducerCA@MECHANIC:
+		Immediate: false
+	PeriodicProducerCA@ARTIFICER:
+		Immediate: false
 
 V01:
 	Inherits: ^CivBuilding
