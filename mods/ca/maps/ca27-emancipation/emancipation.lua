@@ -285,7 +285,7 @@ OncePerSecondChecks = function()
 			GDI.MarkCompletedObjective(ObjectiveEliminateScrin)
 		end
 
-		if GDI.HasNoRequiredUnits() then
+		if MissionPlayersHaveNoRequiredUnits() then
 			if ObjectiveLiberateBases ~= nil and not GDI.IsObjectiveCompleted(ObjectiveLiberateBases) then
 				GDI.MarkFailedObjective(ObjectiveLiberateBases)
 			end

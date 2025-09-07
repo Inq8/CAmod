@@ -193,6 +193,15 @@ OncePerFiveSecondChecks = function()
 				InitScrinReinforcements()
 			end
 		end
+
+		if MissionPlayersHaveNoRequiredUnits() then
+			if not Nod.IsObjectiveCompleted(ObjectiveChargeDevice) then
+				Nod.MarkFailedObjective(ObjectiveChargeDevice)
+			end
+			if ObjectiveDestroyRemainingLoyalists ~= nil and not Nod.IsObjectiveCompleted(ObjectiveDestroyRemainingLoyalists) then
+				Nod.MarkFailedObjective(ObjectiveDestroyRemainingLoyalists)
+			end
+		end
 	end
 end
 

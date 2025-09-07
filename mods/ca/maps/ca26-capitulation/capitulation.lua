@@ -257,7 +257,7 @@ OncePerSecondChecks = function()
 
 		UpdateObjectiveText()
 
-		if GDI.HasNoRequiredUnits() then
+		if MissionPlayersHaveNoRequiredUnits() then
 			GDI.MarkFailedObjective(ObjectiveCaptureOrDestroyBunker)
 		end
 	end

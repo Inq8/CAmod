@@ -279,7 +279,7 @@ OncePerSecondChecks = function()
 			end
 		end
 
-		if not EvacExiting and Nod.HasNoRequiredUnits() then
+		if not EvacExiting and MissionPlayersHaveNoRequiredUnits() then
 			if ObjectiveRescueResearchers ~= nil and not Nod.IsObjectiveCompleted(ObjectiveRescueResearchers) then
 				Nod.MarkFailedObjective(ObjectiveRescueResearchers)
 			end

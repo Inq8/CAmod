@@ -119,7 +119,7 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		if GDI.HasNoRequiredUnits() then
+		if MissionPlayersHaveNoRequiredUnits() then
 			if not GDI.IsObjectiveCompleted(ObjectiveLocateForces) then
 				GDI.MarkFailedObjective(ObjectiveLocateForces)
 			end

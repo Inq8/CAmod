@@ -324,7 +324,7 @@ OncePerSecondChecks = function()
 			end
 		end
 
-		if GDI.HasNoRequiredUnits() and not GDI.IsObjectiveCompleted(ObjectiveDestroyMothership) then
+		if MissionPlayersHaveNoRequiredUnits() and not GDI.IsObjectiveCompleted(ObjectiveDestroyMothership) then
 			GDI.MarkFailedObjective(ObjectiveDestroyMothership)
 		end
 

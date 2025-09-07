@@ -145,7 +145,7 @@ OncePerSecondChecks = function()
 			end
 		end
 
-		if USSR.HasNoRequiredUnits() then
+		if MissionPlayersHaveNoRequiredUnits() then
 			if ObjectiveCaptureSignalTransmitter ~= nil and not USSR.IsObjectiveCompleted(ObjectiveCaptureSignalTransmitter) then
 				USSR.MarkFailedObjective(ObjectiveCaptureSignalTransmitter)
 			end

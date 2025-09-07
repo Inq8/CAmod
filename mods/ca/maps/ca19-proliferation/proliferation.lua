@@ -213,7 +213,7 @@ OncePerSecondChecks = function()
 		Nod.Cash = Nod.ResourceCapacity - 1000
 		Nod.Resources = Nod.ResourceCapacity - 1000
 
-		if Scrin.HasNoRequiredUnits() then
+		if MissionPlayersHaveNoRequiredUnits() then
 			if ObjectiveEliminateNodHarvesting ~= nil and not Scrin.IsObjectiveCompleted(ObjectiveEliminateNodHarvesting) then
 				Scrin.MarkFailedObjective(ObjectiveDestroyFactories)
 			end

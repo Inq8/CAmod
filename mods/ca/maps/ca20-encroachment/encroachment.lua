@@ -179,7 +179,7 @@ OncePerSecondChecks = function()
 		Greece.Resources = Greece.ResourceCapacity - 500
 		GDI.Resources = GDI.ResourceCapacity - 500
 
-		if Scrin.HasNoRequiredUnits() then
+		if MissionPlayersHaveNoRequiredUnits() then
 			if ObjectiveDestroyAdvComms ~= nil and not Scrin.IsObjectiveCompleted(ObjectiveDestroyAdvComms) then
 				Scrin.MarkFailedObjective(ObjectiveDestroyAdvComms)
 			end

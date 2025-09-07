@@ -61,7 +61,7 @@ OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
 		GDI.Resources = GDI.ResourceCapacity - 500
 
-		if Nod.HasNoRequiredUnits() then
+		if MissionPlayersHaveNoRequiredUnits() then
 			if not Nod.IsObjectiveCompleted(ObjectiveDestroyAA) then
 				Nod.MarkFailedObjective(ObjectiveDestroyAA)
 			end

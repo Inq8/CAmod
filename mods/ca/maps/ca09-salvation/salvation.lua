@@ -172,7 +172,7 @@ OncePerSecondChecks = function()
 			end
 		end
 
-		if Nod.HasNoRequiredUnits() then
+		if MissionPlayersHaveNoRequiredUnits() then
 			if ObjectivePurgeScrin ~= nil and not Nod.IsObjectiveCompleted(ObjectivePurgeScrin) then
 				Nod.MarkFailedObjective(ObjectivePurgeScrin)
 			end

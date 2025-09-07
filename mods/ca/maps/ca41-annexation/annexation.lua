@@ -161,7 +161,7 @@ OncePerSecondChecks = function()
 			end
 		end
 
-		if USSR.HasNoRequiredUnits() then
+		if MissionPlayersHaveNoRequiredUnits() then
 			if not USSR.IsObjectiveCompleted(ObjectiveEliminateRebels) then
 				USSR.MarkFailedObjective(ObjectiveEliminateRebels)
 			end

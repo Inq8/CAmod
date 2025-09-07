@@ -142,7 +142,7 @@ OncePerSecondChecks = function()
 			end
 		end
 
-		if USSR.HasNoRequiredUnits() then
+		if MissionPlayersHaveNoRequiredUnits() then
 			if not USSR.IsObjectiveCompleted(ObjectiveSecureGateway) then
 				USSR.MarkFailedObjective(ObjectiveSecureGateway)
 			end

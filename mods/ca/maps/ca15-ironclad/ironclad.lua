@@ -128,7 +128,7 @@ OncePerSecondChecks = function()
 			USSR.MarkCompletedObjective(ObjectiveProtectIronCurtain)
 		end
 
-		if USSR.HasNoRequiredUnits() then
+		if MissionPlayersHaveNoRequiredUnits() then
 			USSR.MarkFailedObjective(ObjectiveDestroyBases)
 		end
 	end

@@ -176,7 +176,7 @@ OncePerSecondChecks = function()
 			end
 		end
 
-		if Nod.HasNoRequiredUnits() then
+		if MissionPlayersHaveNoRequiredUnits() then
 			if not Nod.IsObjectiveCompleted(ObjectiveKillSilos) then
 				Nod.MarkFailedObjective(ObjectiveKillSilos)
 			end

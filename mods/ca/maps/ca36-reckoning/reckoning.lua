@@ -224,7 +224,7 @@ OncePerFiveSecondChecks = function()
 			Nod.MarkFailedObjective(ObjectiveDefendRebels)
 		end
 
-		if Nod.HasNoRequiredUnits() and not Victory then
+		if MissionPlayersHaveNoRequiredUnits() and not Victory then
 			Nod.MarkFailedObjective(ObjectiveDestroyOverlordForces)
 		end
 	end

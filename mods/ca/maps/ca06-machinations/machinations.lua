@@ -245,7 +245,7 @@ OncePerSecondChecks = function()
 		end
 
 		if DateTime.GameTime > DateTime.Seconds(10) then
-			if Greece.HasNoRequiredUnits() then
+			if MissionPlayersHaveNoRequiredUnits() then
 				if ObjectiveFindLab ~= nil and not Greece.IsObjectiveCompleted(ObjectiveFindLab) then
 					Greece.MarkFailedObjective(ObjectiveFindLab)
 				end

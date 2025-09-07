@@ -256,7 +256,7 @@ OncePerSecondChecks = function()
 		RomanovUnited.Resources = RomanovUnited.ResourceCapacity - 500
 		KrukovUnited.Resources = KrukovUnited.ResourceCapacity - 500
 
-		if USSR.HasNoRequiredUnits() then
+		if MissionPlayersHaveNoRequiredUnits() then
 			if not USSR.IsObjectiveCompleted(ObjectiveEliminateMarinesko) then
 				USSR.MarkFailedObjective(ObjectiveEliminateMarinesko)
 			end

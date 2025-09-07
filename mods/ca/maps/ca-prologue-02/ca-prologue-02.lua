@@ -98,7 +98,7 @@ OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
 		Greece.Resources = Greece.ResourceCapacity - 500
 
-		if USSR.HasNoRequiredUnits() then
+		if MissionPlayersHaveNoRequiredUnits() then
 			if not USSR.IsObjectiveCompleted(ObjectiveWipeOutVillage) then
 				USSR.MarkFailedObjective(ObjectiveWipeOutVillage)
 			end

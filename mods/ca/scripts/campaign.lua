@@ -444,6 +444,15 @@ IsMissionPlayer = function(player)
 	return false
 end
 
+MissionPlayersHaveBuildings = function()
+	for _, p in pairs(MissionPlayers) do
+		if PlayerHasBuildings(p) then
+			return true
+		end
+	end
+	return false
+end
+
 PlayerHasBuildings = function(player)
 	return PlayerBuildingsCount(player) > 0
 end
@@ -453,6 +462,10 @@ PlayerBuildingsCount = function(player)
 		return a.HasProperty("StartBuildingRepairs") and not a.HasProperty("Attack")
 	end)
 	return #buildings
+end
+
+MissionPlayersHaveNoRequiredUnits = function()
+	return Utils.All(MissionPlayers, function(p) return p.HasNoRequiredUnits() end)
 end
 
 UpdatePlayerBaseLocations = function()

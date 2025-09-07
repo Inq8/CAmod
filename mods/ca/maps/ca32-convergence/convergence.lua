@@ -175,7 +175,7 @@ OncePerSecondChecks = function()
 			GDI.MarkCompletedObjective(ObjectiveStopFleet)
 		end
 
-		if GDI.HasNoRequiredUnits() and not GDI.IsObjectiveCompleted(ObjectiveStopFleet) then
+		if MissionPlayersHaveNoRequiredUnits() and not GDI.IsObjectiveCompleted(ObjectiveStopFleet) then
 			GDI.MarkFailedObjective(ObjectiveStopFleet)
 		end
 

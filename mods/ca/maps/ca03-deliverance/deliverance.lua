@@ -296,7 +296,7 @@ OncePerSecondChecks = function()
 			UpdateReinforcementCountdown()
 		end
 
-		if Greece.HasNoRequiredUnits() or not GDICommanderAlive then
+		if MissionPlayersHaveNoRequiredUnits() or not GDICommanderAlive then
 			if ObjectiveFindBase ~= nil and not Greece.IsObjectiveCompleted(ObjectiveFindBase) then
 				Greece.MarkFailedObjective(ObjectiveFindBase)
 			end

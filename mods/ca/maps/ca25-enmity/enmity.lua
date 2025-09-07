@@ -207,7 +207,7 @@ OncePerSecondChecks = function()
 			GDI.MarkCompletedObjective(ObjectiveEliminateNod)
 		end
 
-		if GDI.HasNoRequiredUnits() then
+		if MissionPlayersHaveNoRequiredUnits() then
 			GDI.MarkFailedObjective(ObjectiveEliminateNod)
 		end
 	end

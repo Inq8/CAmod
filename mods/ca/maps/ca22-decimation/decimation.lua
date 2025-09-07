@@ -266,7 +266,7 @@ OncePerSecondChecks = function()
 			end
 		end
 
-		if Scrin.HasNoRequiredUnits() then
+		if MissionPlayersHaveNoRequiredUnits() then
 			if ObjectiveDestroyBases ~= nil and not Scrin.IsObjectiveCompleted(ObjectiveDestroyBases) then
 				Scrin.MarkFailedObjective(ObjectiveDestroyBases)
 			end

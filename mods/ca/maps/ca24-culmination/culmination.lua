@@ -222,7 +222,7 @@ OncePerSecondChecks = function()
 			end
 		end
 
-		if Scrin.HasNoRequiredUnits() then
+		if MissionPlayersHaveNoRequiredUnits() then
 			if ObjectiveInitialSubjugation ~= nil and not Scrin.IsObjectiveCompleted(ObjectiveInitialSubjugation) then
 				Scrin.MarkFailedObjective(ObjectiveInitialSubjugation)
 			end

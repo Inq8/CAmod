@@ -274,7 +274,7 @@ OncePerSecondChecks = function()
 			end
 		end
 
-		if Greece.HasNoRequiredUnits() then
+		if MissionPlayersHaveNoRequiredUnits() then
 			if ObjectiveEstablishBase ~= nil and not Greece.IsObjectiveCompleted(ObjectiveEstablishBase) then
 				Greece.MarkFailedObjective(ObjectiveEstablishBase)
 			end

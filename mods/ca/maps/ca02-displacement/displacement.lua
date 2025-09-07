@@ -206,7 +206,7 @@ OncePerSecondChecks = function()
 			UpdateConvoyCountdown()
 		end
 
-		if Greece.HasNoRequiredUnits() then
+		if MissionPlayersHaveNoRequiredUnits() then
 			if ObjectiveClearPath ~= nil and not Greece.IsObjectiveCompleted(ObjectiveClearPath) then
 				Greece.MarkFailedObjective(ObjectiveClearPath)
 			end

@@ -124,7 +124,7 @@ OncePerSecondChecks = function()
 			USSR.MarkCompletedObjective(ObjectiveExpelGDI)
 		end
 
-		if McvArrived and USSR.HasNoRequiredUnits() then
+		if MissionPlayersHaveNoRequiredUnits() then
 			USSR.MarkFailedObjective(ObjectiveExpelGDI)
 		end
 	end

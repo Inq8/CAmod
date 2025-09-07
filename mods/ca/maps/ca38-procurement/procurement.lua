@@ -133,7 +133,7 @@ OncePerSecondChecks = function()
 			USSR.MarkCompletedObjective(ObjectiveExpelGDI)
 		end
 
-		if USSR.HasNoRequiredUnits() then
+		if MissionPlayersHaveNoRequiredUnits() then
 			USSR.MarkFailedObjective(ObjectiveExpelGDI)
 
 			if not USSR.IsObjectiveCompleted(ObjectiveAcquireWeapons) then
