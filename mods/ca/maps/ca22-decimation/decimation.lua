@@ -145,6 +145,7 @@ WorldLoaded = function()
 	USSR = Player.GetPlayer("USSR")
 	USSRUnmanned = Player.GetPlayer("USSRUnmanned")
 	MissionPlayers = { Scrin }
+	MissionEnemies = { USSR }
 	IslandAirfieldsEliminated = false
 	IslandSAMsDestroyed = false
 	DefensesOffline = false

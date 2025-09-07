@@ -30,6 +30,7 @@ WorldLoaded = function()
 	Scrin = Player.GetPlayer("Scrin")
 	Nod = Player.GetPlayer("Nod")
     MissionPlayers = { GDI }
+	MissionEnemies = { Nod, Scrin }
 
     Camera.Position = PlayerStart.CenterPosition
 

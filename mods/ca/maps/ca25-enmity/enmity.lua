@@ -117,6 +117,7 @@ WorldLoaded = function()
 	GDI = Player.GetPlayer("GDI")
 	Nod = Player.GetPlayer("Nod")
 	MissionPlayers = { GDI }
+	MissionEnemies = { Nod }
 	EnforceAiBuildRadius = true
 
 	Camera.Position = PlayerStart.CenterPosition

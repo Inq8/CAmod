@@ -72,6 +72,7 @@ WorldLoaded = function()
 	SpyPlaneProvider = Player.GetPlayer("SpyPlaneProvider")
 	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { USSR }
+	MissionEnemies = { Nod }
 	TimerTicks = 0
 	NumFactoriesCaptured = 0
 

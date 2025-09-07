@@ -89,6 +89,7 @@ WorldLoaded = function()
 	NodAbandoned = Player.GetPlayer("NodAbandoned")
 	Scrin = Player.GetPlayer("Scrin")
 	MissionPlayers = { USSR }
+	MissionEnemies = { Scrin }
 	TimerTicks = 0
 
 	NodAbandoned.Cash = 0

@@ -154,6 +154,7 @@ WorldLoaded = function()
 	GDI = Player.GetPlayer("GDI")
 	USSR = Player.GetPlayer("USSR")
 	MissionPlayers = { Greece }
+	MissionEnemies = { USSR }
 	TimerTicks = 0
 	GDICommanderAlive = true
 

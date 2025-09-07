@@ -206,6 +206,8 @@ WorldLoaded = function()
 	England = Player.GetPlayer("England")
 	USSR = Player.GetPlayer("USSR")
 	Civilians = Player.GetPlayer("Civilians")
+	MissionPlayers = { Greece }
+	MissionEnemies = { USSR }
 
 	InitObjectives(Greece)
 

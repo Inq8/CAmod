@@ -42,6 +42,7 @@ WorldLoaded = function()
 	GDI = Player.GetPlayer("GDI")
 	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { Nod }
+	MissionEnemies = { GDI, Greece }
 	TimerTicks = 0
 
 	Camera.Position = Commando.CenterPosition

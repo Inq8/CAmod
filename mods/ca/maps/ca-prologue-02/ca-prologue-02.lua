@@ -33,6 +33,7 @@ WorldLoaded = function()
 	Civilians = Player.GetPlayer("Civilians")
 	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { USSR }
+	MissionEnemies = { Greece }
 	TimerTicks = 0
 
 	Camera.Position = McvRally.CenterPosition

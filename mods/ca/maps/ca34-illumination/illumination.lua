@@ -89,6 +89,7 @@ WorldLoaded = function()
 	TibLifeforms = Player.GetPlayer("TibLifeforms")
 	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { Nod }
+	MissionEnemies = { Scrin }
 	TimerTicks = 0
 	FragmentsAcquired = {}
 	FragmentsAcquiredCount = 0

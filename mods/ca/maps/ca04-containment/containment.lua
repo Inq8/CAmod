@@ -54,6 +54,7 @@ WorldLoaded = function()
 	USSR = Player.GetPlayer("USSR")
 	Scrin = Player.GetPlayer("Scrin")
 	MissionPlayers = { Greece }
+	MissionEnemies = { USSR }
 	TimerTicks = 0
 
 	InitObjectives(Greece)

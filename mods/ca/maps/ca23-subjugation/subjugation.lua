@@ -92,6 +92,7 @@ WorldLoaded = function()
 	Scrin = Player.GetPlayer("Scrin")
 	USSR = Player.GetPlayer("USSR")
 	MissionPlayers = { Scrin }
+	MissionEnemies = { USSR }
 	TimerTicks = 0
 	TibFacilitiesCaptured = 0
 

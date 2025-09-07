@@ -75,6 +75,7 @@ WorldLoaded = function()
 	USSR = Player.GetPlayer("USSR")
 	Greece = Player.GetPlayer("Greece")
 	MissionPlayers = { GDI }
+	MissionEnemies = { Scrin }
 	LastScrinProduction = 0
 	ReinforcementGroupIndex = 1
 	ReinforcementLocationIndex = 1

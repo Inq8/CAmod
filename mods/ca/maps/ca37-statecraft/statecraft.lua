@@ -219,6 +219,7 @@ WorldLoaded = function()
 	KrukovUnited = Player.GetPlayer("KrukovUnited")
 	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { USSR }
+	MissionEnemies = { Marinesko, Romanov, Krukov, MarineskoUnited, RomanovUnited, KrukovUnited }
 	TimerTicks = 0
 
 	Camera.Position = PlayerStart.CenterPosition

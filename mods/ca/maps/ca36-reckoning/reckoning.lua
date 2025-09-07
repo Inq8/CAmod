@@ -153,6 +153,7 @@ WorldLoaded = function()
 	GDIHostile = Player.GetPlayer("GDIHostile")
 	GDI = Player.GetPlayer("GDI")
 	MissionPlayers = { Nod }
+	MissionEnemies = { Scrin }
 	NextExterminatorIndex = 1
 
 	Camera.Position = PlayerStart.CenterPosition

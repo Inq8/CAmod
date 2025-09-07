@@ -116,6 +116,7 @@ WorldLoaded = function()
 	USSR = Player.GetPlayer("USSR")
 	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { Greece }
+	MissionEnemies = { Scrin }
 	TimerTicks = 0
 	TrucksLost = 0
 	TrucksLostCurrentConvoy = 0

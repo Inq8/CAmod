@@ -73,6 +73,7 @@ WorldLoaded = function()
 	Scrin = Player.GetPlayer("Scrin")
 	GDISlaves = Player.GetPlayer("GDISlaves")
 	MissionPlayers = { GDI }
+	MissionEnemies = { Scrin }
 	EnslavedUnitsKilled = 0
 
 	Camera.Position = PlayerStart.CenterPosition

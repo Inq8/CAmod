@@ -170,6 +170,7 @@ WorldLoaded = function()
 	Nod = Player.GetPlayer("Nod")
 	USSR = Player.GetPlayer("USSR")
 	MissionPlayers = { Nod }
+	MissionEnemies = { USSR }
 	TimerTicks = HoldOutTime[Difficulty]
 	CyborgWaves = 0
 

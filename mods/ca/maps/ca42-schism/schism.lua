@@ -119,6 +119,7 @@ WorldLoaded = function()
 	Neutral = Player.GetPlayer("Neutral")
 	SpyPlaneProvider = Player.GetPlayer("SpyPlaneProvider")
 	MissionPlayers = { USSR }
+	MissionEnemies = { Nod, ScrinRebels, MaleficScrin }
 	TimerTicks = PurificationInterval
 
 	Camera.Position = PlayerStart.CenterPosition

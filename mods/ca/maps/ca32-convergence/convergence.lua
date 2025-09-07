@@ -98,6 +98,7 @@ WorldLoaded = function()
 	GDI = Player.GetPlayer("GDI")
 	TibLifeforms = Player.GetPlayer("TibLifeforms")
 	MissionPlayers = { GDI }
+	MissionEnemies = { Scrin }
 	TimerTicks = 0
 	WavesRemaining = #WaveSpawns
 	NumBreakthroughs = 0

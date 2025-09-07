@@ -82,6 +82,7 @@ WorldLoaded = function()
 	TibLifeforms = Player.GetPlayer("TibLifeforms")
 	GatewayOwner = Player.GetPlayer("GatewayOwner")
 	MissionPlayers = { GDI }
+	MissionEnemies = { Scrin }
 	TimerTicks = 0
 
 	Camera.Position = PlayerStart.CenterPosition

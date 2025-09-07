@@ -86,6 +86,7 @@ WorldLoaded = function()
 	Legion = Player.GetPlayer("Legion")
 	EvacPlayer = Player.GetPlayer("Evac")
 	MissionPlayers = { Nod }
+	MissionEnemies = { Greece, GDI }
 	TimerTicks = 0
 
 	Camera.Position = PlayerStart.CenterPosition

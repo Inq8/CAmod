@@ -68,6 +68,7 @@ WorldLoaded = function()
 	Traitor = Player.GetPlayer("Traitor")
 	USSRAbandoned = Player.GetPlayer("USSRAbandoned")
 	MissionPlayers = { USSR }
+	MissionEnemies = { Greece, Traitor }
 	TimerTicks = 0
 
 	Camera.Position = PlayerStart.CenterPosition

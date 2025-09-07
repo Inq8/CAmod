@@ -51,6 +51,7 @@ WorldLoaded = function()
 	China = Player.GetPlayer("China")
 	ChinaHostile = Player.GetPlayer("ChinaHostile")
 	MissionPlayers = { USSR }
+	MissionEnemies = { GDI }
 	TimerTicks = 0
 
 	Camera.Position = McvRally.CenterPosition

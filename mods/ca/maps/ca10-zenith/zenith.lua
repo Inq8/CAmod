@@ -99,6 +99,7 @@ WorldLoaded = function()
 	USSR = Player.GetPlayer("USSR")
 	USSRUnits = Player.GetPlayer("USSRUnits")
 	MissionPlayers = { Nod }
+	MissionEnemies = { USSR }
 	TimerTicks = 0
 
 	Camera.Position = PlayerStart.CenterPosition

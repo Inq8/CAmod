@@ -134,6 +134,7 @@ WorldLoaded = function()
 	NeutralScrin = Player.GetPlayer("NeutralScrin")
 	SignalTransmitterPlayer = Player.GetPlayer("SignalTransmitterPlayer") -- separate player to prevent AI from attacking it
 	MissionPlayers = { GDI }
+	MissionEnemies = { Scrin, SovietSlaves, AlliedSlaves, NodSlaves }
 	TimerTicks = 0
 
 	Camera.Position = PlayerStart.CenterPosition

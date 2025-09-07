@@ -84,6 +84,7 @@ WorldLoaded = function()
 	Greece = Player.GetPlayer("Greece")
 	GDI = Player.GetPlayer("GDI")
 	MissionPlayers = { Scrin }
+	MissionEnemies = { Greece, GDI }
 	TimerTicks = 0
 	StormsEnded = false
 

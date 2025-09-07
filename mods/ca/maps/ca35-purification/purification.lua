@@ -59,6 +59,7 @@ WorldLoaded = function()
 	Scrin = Player.GetPlayer("Scrin")
 	ScrinRebels = Player.GetPlayer("ScrinRebels")
 	MissionPlayers = { Nod }
+	MissionEnemies = { Scrin }
 	ShipmentsComplete = 0
 	TimerTicks = DateTime.Seconds(60)
 

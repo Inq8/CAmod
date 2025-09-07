@@ -85,6 +85,7 @@ WorldLoaded = function()
 	Nod3 = Player.GetPlayer("Nod3")
 	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { USSR }
+	MissionEnemies = { Nod1, Nod2, Nod3 }
 
 	if Difficulty ~= "easy" then
 		TimerTicks = TimeLimit[Difficulty]

@@ -35,6 +35,7 @@ WorldLoaded = function()
 	Neutral = Player.GetPlayer("Neutral")
 	England = Player.GetPlayer("England")
 	MissionPlayers = { Greece }
+	MissionEnemies = { Nod }
 	TimerTicks = 0
 
 	local samsRemaining = Nod.GetActorsByType("nsam")

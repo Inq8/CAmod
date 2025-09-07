@@ -63,6 +63,7 @@ WorldLoaded = function()
 	GDI = Player.GetPlayer("GDI")
 	Greece = Player.GetPlayer("Greece")
 	MissionPlayers = { USSR }
+	MissionEnemies = { GDI, Greece }
 	TimerTicks = 0
 	SiegeLosses = 0
 	SiegeBroken = false

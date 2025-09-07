@@ -79,6 +79,7 @@ WorldLoaded = function()
 	Scrin = Player.GetPlayer("Scrin")
 	Civilian = Player.GetPlayer("Civilian")
 	MissionPlayers = { Nod }
+	MissionEnemies = { Scrin }
 	TimerTicks = 0
 
 	Camera.Position = PlayerStart.CenterPosition

@@ -163,6 +163,7 @@ WorldLoaded = function()
 	GDI = Player.GetPlayer("GDI")
 	USSR = Player.GetPlayer("USSR")
 	MissionPlayers = { GDI }
+	MissionEnemies = { USSR }
 	TimerTicks = MaxReactorFuelTime
 	CurrentDelivery = 1
 	McvArrived = false

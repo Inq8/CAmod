@@ -152,6 +152,7 @@ WorldLoaded = function()
 	Scrin = Player.GetPlayer("Scrin")
 	Nod = Player.GetPlayer("Nod")
 	MissionPlayers = { Scrin }
+	MissionEnemies = { Nod }
 	TimerTicks = MaintenanceDuration[Difficulty]
 	FieldsClearedAndBeingHarvested = 0
 	NextReinforcementThreshold = ReinforcementInitialThreshold[Difficulty]

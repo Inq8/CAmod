@@ -25,6 +25,7 @@ WorldLoaded = function()
 	GDI = Player.GetPlayer("GDI")
 	Nod = Player.GetPlayer("Nod")
 	MissionPlayers = { Nod }
+	MissionEnemies = { GDI }
 
 	Camera.Position = PlayerStart.CenterPosition
 	WarpInBeaconPos = RocksToRemove1.CenterPosition

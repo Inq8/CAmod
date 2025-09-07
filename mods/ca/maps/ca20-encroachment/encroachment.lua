@@ -102,6 +102,7 @@ WorldLoaded = function()
 	Greece = Player.GetPlayer("Greece")
 	GDI = Player.GetPlayer("GDI")
 	MissionPlayers = { Scrin }
+	MissionEnemies = { Greece, GDI }
 
 	Camera.Position = PlayerStart.CenterPosition
 

@@ -8,6 +8,7 @@ WorldLoaded = function()
 	HiddenGDI = Player.GetPlayer("HiddenGDI")
 	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { GDI }
+	MissionEnemies = { USSR }
 	TimerTicks = 0
 	GroupsFound = {}
 	ExitDefendersDead = false

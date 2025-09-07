@@ -74,6 +74,7 @@ WorldLoaded = function()
 	SignalTransmittersPlayer = Player.GetPlayer("SignalTransmittersPlayer") -- separate player to prevent AI from attacking it
 	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { USSR }
+	MissionEnemies = { ScrinRebels1, ScrinRebels2, ScrinRebels3 }
 	TimerTicks = DateTime.Minutes(3)
 	NumTransmittersCaptured = 0
 

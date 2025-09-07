@@ -55,6 +55,7 @@ WorldLoaded = function()
 	USSR = Player.GetPlayer("USSR")
 	Nod = Player.GetPlayer("Nod")
 	MissionPlayers = { USSR }
+	MissionEnemies = { Nod }
 	TimerTicks = 0
 	TempleOfNodLocation = TempleOfNod.Location
 	LaserFencesDown = false

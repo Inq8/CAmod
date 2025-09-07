@@ -152,6 +152,7 @@ WorldLoaded = function()
 	Greece = Player.GetPlayer("Greece")
 	Nod = Player.GetPlayer("Nod")
 	MissionPlayers = { Greece }
+	MissionEnemies = { Nod }
 	TimerTicks = 0
 
 	Camera.Position = McvLanding.CenterPosition
