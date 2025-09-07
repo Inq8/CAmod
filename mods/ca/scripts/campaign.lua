@@ -281,7 +281,7 @@ IsVeryHardOrBelow = function()
 end
 
 AttackAircraftTargets = { }
-InitAttackAircraft = function(aircraft, targetPlayer, targetList, targetType)
+InitAttackAircraft = function(aircraft, targetPlayers, targetList, targetType)
 	if not aircraft.IsDead then
 		local typeKey = string.gsub(aircraft.Type, "%.", "_")
 		local fallbackTargetList = nil
@@ -293,11 +293,17 @@ InitAttackAircraft = function(aircraft, targetPlayer, targetList, targetType)
 			fallbackTargetType = AircraftTargets[typeKey].TargetType
 		end
 		Trigger.OnIdle(aircraft, function(self)
-			if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
+			if DateTime.GameTime > 1 and DateTime.GameTime % DateTime.Seconds(2) == 0 then
 				local actorId = tostring(aircraft)
 				local target = AttackAircraftTargets[actorId]
 
 				if not target or not target.IsInWorld then
+					if type(targetPlayers) ~= "table" then
+						targetPlayers = { targetPlayers }
+					end
+
+					local targetPlayer = Utils.Random(targetPlayers)
+
 					if targetList ~= nil and #targetList > 0 and targetType ~= nil then
 						target = ChooseRandomTargetOfTypes(self, targetPlayer, targetList, targetType)
 					end
@@ -1377,7 +1383,7 @@ SendAttackSquad = function(squad)
 	if squad.IsAirSquad ~= nil and squad.IsAirSquad then
 		Utils.Do(squad.IdleUnits, function(a)
 			if not a.IsDead then
-				InitAttackAircraft(a, squad.TargetPlayer, squad.AirTargetList, squad.AirTargetType)
+				InitAttackAircraft(a, squad.TargetPlayers, squad.AirTargetList, squad.AirTargetType)
 			end
 		end)
 	else
