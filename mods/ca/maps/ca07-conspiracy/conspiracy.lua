@@ -155,7 +155,7 @@ WorldLoaded = function()
 
 	-- On player reaching GDI base
 	Trigger.OnEnteredFootprint(SleeperAwakenTrigger, function(a, id)
-		if a.Owner == Nod then
+		if IsMissionPlayer(a.Owner) then
 			Trigger.RemoveFootprintTrigger(id)
 			AwakenSleeperCell()
 		end
@@ -163,7 +163,7 @@ WorldLoaded = function()
 
 	-- If player tries to go through the Allied base before going to GDI base, begin attacks after a delay
 	Trigger.OnEnteredProximityTrigger(BaseTriggerBackup.CenterPosition, WDist.New(10 * 1024), function(a, id)
-		if a.Owner == Nod then
+		if IsMissionPlayer(a.Owner) then
 			Trigger.RemoveProximityTrigger(id)
 			Trigger.AfterDelay(DateTime.Minutes(2), function()
 				InitAlliedAttacks()
@@ -174,7 +174,7 @@ WorldLoaded = function()
 	-- Finding researchers
 	Utils.Do(Researchers, function(researcher)
 		Trigger.OnEnteredProximityTrigger(researcher.CenterPosition, WDist.New(8 * 1024), function(a, id)
-			if a.Owner == Nod then
+			if IsMissionPlayer(a.Owner) then
 				Trigger.RemoveProximityTrigger(id)
 				Notification("Researcher located.")
 				MediaCA.PlaySound("n_researcherlocated.aud", 2)
@@ -189,7 +189,7 @@ WorldLoaded = function()
 		end)
 
 		Trigger.OnEnteredProximityTrigger(researcher.CenterPosition, WDist.New(2 * 1024), function(a, id)
-			if a.Owner == Nod and a.HasProperty("Move") and not a.HasProperty("Land") then
+			if IsMissionPlayer(a.Owner) and a.HasProperty("Move") and not a.HasProperty("Land") then
 				Trigger.RemoveProximityTrigger(id)
 				researcher.Owner = Nod
 				Notification("Escort researcher to evacuation point.")
@@ -206,7 +206,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnEnteredProximityTrigger(EvacPoint.CenterPosition, WDist.New(6 * 1024), function(a, id)
-		if a.Owner == Nod and (a == Researcher1 or a == Researcher2) then
+		if IsMissionPlayer(a.Owner) and (a == Researcher1 or a == Researcher2) then
 			a.Owner = EvacPlayer
 
 			if a == Researcher1 then
@@ -317,13 +317,7 @@ AwakenSleeperCell = function()
 		MediaCA.PlaySound("downwithgdi.aud", 2)
 		Trigger.AfterDelay(15, function()
 			UserInterface.SetMissionText("")
-			local legionForces = Legion.GetActors()
-
-			Utils.Do(legionForces, function(self)
-				if self.Type ~= "player" then
-					self.Owner = Nod
-				end
-			end)
+			TransferLegionForces()
 
 			if not GDIBarracks.IsDead then
 				GDIBarracks.Kill()
@@ -368,6 +362,16 @@ AwakenSleeperCell = function()
 			-- Initialise Allied attacks
 			InitAlliedAttacks()
 		end)
+	end)
+end
+
+TransferLegionForces = function()
+	local legionForces = Legion.GetActors()
+
+	Utils.Do(legionForces, function(self)
+		if self.Type ~= "player" then
+			self.Owner = Nod
+		end
 	end)
 end
 

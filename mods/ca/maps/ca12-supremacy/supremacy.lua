@@ -80,28 +80,28 @@ WorldLoaded = function()
 	end
 
 	Trigger.OnEnteredFootprint(eastAttackTriggerCells, function(a, id)
-		if a.Owner == Nod then
+		if IsMissionPlayer(a.Owner) then
 			Trigger.RemoveProximityTrigger(id)
 			InitGDIEast()
 		end
 	end)
 
 	Trigger.OnEnteredFootprint(westAttackTriggerCells, function(a, id)
-		if a.Owner == Nod then
+		if IsMissionPlayer(a.Owner) then
 			Trigger.RemoveProximityTrigger(id)
 			InitGDIWest()
 		end
 	end)
 
 	Trigger.OnEnteredProximityTrigger(WestBaseCenter.CenterPosition, WDist.New(15 * 1024), function(a, id)
-		if a.Owner == Nod then
+		if IsMissionPlayer(a.Owner) then
 			Trigger.RemoveProximityTrigger(id)
 			FlipWestBase()
 		end
 	end)
 
 	Trigger.OnEnteredProximityTrigger(EastBaseCenter.CenterPosition, WDist.New(15 * 1024), function(a, id)
-		if a.Owner == Nod then
+		if IsMissionPlayer(a.Owner) then
 			Trigger.RemoveProximityTrigger(id)
 			FlipEastBase()
 		end
@@ -329,13 +329,7 @@ FlipEastBase = function()
 		NodRadarProvider.Destroy()
 		ObjectiveDestroyGDI = Nod.AddObjective("Destroy GDI forces.")
         Nod.MarkCompletedObjective(ObjectiveReinforce)
-
-		local nod2Assets = Nod2.GetActors()
-		Utils.Do(nod2Assets, function(a)
-			if not a.IsDead and a.Type ~= "player" then
-				a.Owner = Nod
-			end
-		end)
+		TransferEastNod()
 
 		if IsNormalOrAbove() then
 			Trigger.AfterDelay(DateTime.Seconds(15), function()
@@ -345,19 +339,22 @@ FlipEastBase = function()
     end
 end
 
+TransferEastNod = function()
+	local nod2Assets = Nod2.GetActors()
+	Utils.Do(nod2Assets, function(a)
+		if not a.IsDead and a.Type ~= "player" then
+			a.Owner = Nod
+		end
+	end)
+end
+
 FlipWestBase = function()
     if not Nod.IsObjectiveCompleted(ObjectiveReinforce) then
 		Nod.Cash = 6000 + CashAdjustments[Difficulty]
 		NodRadarProvider.Destroy()
 		ObjectiveDestroyGDI = Nod.AddObjective("Destroy GDI forces.")
         Nod.MarkCompletedObjective(ObjectiveReinforce)
-
-		local nod3Assets = Nod3.GetActors()
-		Utils.Do(nod3Assets, function(a)
-			if not a.IsDead and a.Type ~= "player" then
-				a.Owner = Nod
-			end
-		end)
+		TransferWestNod()
 
 		if IsNormalOrAbove() then
 			Trigger.AfterDelay(DateTime.Seconds(15), function()
@@ -365,6 +362,15 @@ FlipWestBase = function()
 			end)
 		end
     end
+end
+
+TransferWestNod = function()
+	local nod3Assets = Nod3.GetActors()
+	Utils.Do(nod3Assets, function(a)
+		if not a.IsDead and a.Type ~= "player" then
+			a.Owner = Nod
+		end
+	end)
 end
 
 InitGDIAttacks = function()

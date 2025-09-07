@@ -204,7 +204,7 @@ WorldLoaded = function()
 	end
 
 	Trigger.OnEnteredProximityTrigger(Chronosphere.CenterPosition, WDist.New(8192), function(a, id)
-		if not IsChronosphereReached and a.Owner == Greece then
+		if not IsChronosphereReached and IsMissionPlayer(a.Owner) then
 			IsChronosphereReached = true
 			Trigger.RemoveProximityTrigger(id)
 			SAPC1.GrantCondition("cloak-force-disabled", 25)
@@ -429,7 +429,7 @@ DropChronoPrison = function()
 		MediaCA.PlaySound("r_cprendezvous.aud", 2)
 
 		Trigger.OnEnteredProximityTrigger(CarryallDropPoint.CenterPosition, WDist.New(2048), function(a, id)
-			if a.Owner == Greece and a.Type == "chpr" then
+			if IsMissionPlayer(a.Owner) and a.Type == "chpr" then
 				Trigger.RemoveProximityTrigger(id)
 				ChronoPrisonFlare.Destroy()
 

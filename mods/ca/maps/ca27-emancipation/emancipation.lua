@@ -219,7 +219,7 @@ WorldLoaded = function()
 			end)
 
 			Trigger.OnEnteredProximityTrigger(m.CenterPosition, WDist.New(11 * 1024), function(a, id)
-				if a.Owner == GDI and a.Type ~= "smallcamera" and not m.IsDead and not MastermindsLocated[tostring(m)] then
+				if IsMissionPlayer(a.Owner) and a.Type ~= "smallcamera" and not m.IsDead and not MastermindsLocated[tostring(m)] then
 					MastermindsLocated[tostring(m)] = true
 					Trigger.RemoveProximityTrigger(id)
 					local camera = Actor.Create("smallcamera", true, { Owner = GDI, Location = m.Location })
@@ -238,7 +238,7 @@ WorldLoaded = function()
 	Utils.Do(enslavedUnits, function(a)
 		if a.HasProperty("Move") then
 			Trigger.OnKilled(a, function(self, killer)
-				if killer.Owner == GDI and (self.Owner == GDISlaves or self.Owner == Scrin) then
+				if IsMissionPlayer(killer.Owner) and (self.Owner == GDISlaves or self.Owner == Scrin) then
 					EnslavedUnitKilled()
 				end
 			end)
@@ -246,10 +246,9 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnAnyProduction(function(producer, produced, productionType)
-
 		if produced.Owner == GDI and produced.HasProperty("Move") then
 			Trigger.OnKilled(produced, function(self, killer)
-				if killer.Owner == GDI and self.Owner == Scrin then
+				if IsMissionPlayer(killer.Owner) and self.Owner == Scrin then
 					EnslavedUnitKilled()
 				end
 			end)

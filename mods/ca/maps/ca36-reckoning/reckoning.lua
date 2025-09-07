@@ -180,7 +180,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnEnteredProximityTrigger(GDIBase.CenterPosition, WDist.New(18 * 1024), function(a, id)
-		if a.Owner == Nod then
+		if IsMissionPlayer(a.Owner) then
 			Trigger.RemoveProximityTrigger(id)
 			InitGDI()
 		end

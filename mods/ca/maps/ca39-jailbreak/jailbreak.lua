@@ -268,7 +268,7 @@ HasConyardAcrossRiver = function()
 	local conyards = USSR.GetActorsByType("fact")
 
 	local conyardsAcrossRiver = Utils.Where(conyards, function(c)
-		return c.Owner == USSR and c.Location.Y > 40
+		return IsMissionPlayer(c.Owner) and c.Location.Y > 40
 	end)
 
 	return #conyardsAcrossRiver > 0

@@ -71,7 +71,7 @@ WorldLoaded = function()
 	end
 
 	Trigger.OnEnteredProximityTrigger(WeaponsCache.CenterPosition, WDist.New(4 * 1024), function(a, id)
-		if a.Owner == USSR then
+		if IsMissionPlayer(a.Owner) then
 			Trigger.RemoveProximityTrigger(id)
 			InitWeaponsCache(true)
 		end
@@ -103,7 +103,7 @@ WorldLoaded = function()
 
 	Utils.Do(CommsCenters, function(c)
 		Trigger.OnEnteredProximityTrigger(c.CenterPosition, WDist.New(20 * 1024), function(a, id)
-			if a.Owner == USSR then
+			if IsMissionPlayer(a.Owner) then
 				Trigger.RemoveProximityTrigger(id)
 				InitCommsCenterObjective()
 			end
@@ -241,7 +241,7 @@ InitWeaponsCache = function(withOutpostFlare)
 				Beacon.New(USSR, GDIOutpostFlare.CenterPosition)
 
 				Trigger.OnEnteredProximityTrigger(GDIOutpostFlare.CenterPosition, WDist.New(6 * 1024), function(a, id)
-					if a.Owner == USSR and a.Type ~= "flare" then
+					if IsMissionPlayer(a.Owner) and a.Type ~= "flare" then
 						Trigger.RemoveProximityTrigger(id)
 						outpostFlare.Destroy()
 					end
@@ -292,7 +292,7 @@ InitChina = function()
 	Utils.Do(chinaUnits, function(a)
 
 		Trigger.OnKilled(a, function(self, killer)
-			if self.Owner == China and killer.Owner == USSR then
+			if self.Owner == China and IsMissionPlayer(killer.Owner) then
 				ChineseUnitsKilled = ChineseUnitsKilled + 1
 			end
 

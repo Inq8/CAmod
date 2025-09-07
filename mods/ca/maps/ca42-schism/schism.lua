@@ -213,7 +213,7 @@ OncePerSecondChecks = function()
 				TimerTicks = PurificationInterval
 			end
 
-			if Purifier.Owner == USSR then
+			if IsMissionPlayer(Purifier.Owner) then
 				TimerTicks = DefendDuration[Difficulty]
 
 				if ObjectiveDefendPurifier == nil then

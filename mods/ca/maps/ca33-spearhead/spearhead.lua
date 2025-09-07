@@ -148,7 +148,7 @@ HasConyardAcrossRiver = function()
 	local conyards = GDI.GetActorsByType("afac")
 
 	local conyardsAcrossRiver = Utils.Where(conyards, function(c)
-		return c.Owner == GDI and c.Location.X > 34 and c.Location.Y > 72
+		return IsMissionPlayer(c.Owner) and c.Location.X > 34 and c.Location.Y > 72
 	end)
 
 	return #conyardsAcrossRiver > 0

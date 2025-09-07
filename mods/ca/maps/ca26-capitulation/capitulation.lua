@@ -209,7 +209,7 @@ WorldLoaded = function()
 	local revealPoints = { SupplyReveal1, SupplyReveal2, SupplyReveal3 }
 	Utils.Do(revealPoints, function(p)
 		Trigger.OnEnteredProximityTrigger(p.CenterPosition, WDist.New(12 * 1024), function(a, id)
-			if a.Owner == GDI and a.Type ~= "camera" then
+			if IsMissionPlayer(a.Owner) and a.Type ~= "camera" then
 				Trigger.RemoveProximityTrigger(id)
 				local camera = Actor.Create("camera", true, { Owner = GDI, Location = p.Location })
 				Notification("Fuel supply route identified.")

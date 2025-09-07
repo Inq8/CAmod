@@ -216,7 +216,7 @@ WorldLoaded = function()
 
 	Utils.Do({ Turret1, Turret2, Turret3, Turret4, LeftAttack2, MiddleAttack3, EastBoundary }, function (t)
 		Trigger.OnEnteredProximityTrigger(t.CenterPosition, WDist.New(7 * 1024), function(a, id)
-			if a.Owner == Greece then
+			if IsMissionPlayer(a.Owner) then
 				Trigger.RemoveProximityTrigger(id)
 				InitNodAttacks()
 			end

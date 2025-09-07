@@ -135,7 +135,7 @@ OncePerSecondChecks = function()
 			Media.PlaySpeechNotification(GDI, "SignalFlare")
 			Notification("Signal flare detected.")
 			Trigger.OnEnteredProximityTrigger(Exit.CenterPosition, WDist.New(3 * 1024), function(a, id)
-				if (a.Owner == GDI or a.Owner == Greece) and a.Type ~= "flare" then
+				if IsMissionPlayer(a.Owner) and a.Type ~= "flare" then
 					Trigger.AfterDelay(DateTime.Seconds(5), function()
 						if not exitFlare.IsDead then
 							exitFlare.Destroy()

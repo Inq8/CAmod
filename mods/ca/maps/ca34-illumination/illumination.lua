@@ -125,7 +125,7 @@ WorldLoaded = function()
 		local fragmentId = tostring(fragment)
 
 		Trigger.OnEnteredProximityTrigger(pos, WDist.New((5 * 1024) + 512), function(a, id)
-			if a.Owner == Nod and a.Type == "kane" then
+			if IsMissionPlayer(a.Owner) and a.Type == "kane" then
 				if not FirstFragmentFound then
 					FirstFragmentFound = true
 					Beacon.New(Nod, pos)
@@ -142,7 +142,7 @@ WorldLoaded = function()
 		end)
 
 		Trigger.OnEnteredFootprint({ loc }, function(a, id)
-			if not fragment.IsDead and a.Owner == Nod and FragmentsDetected[fragmentId] ~= nil and FragmentsAcquired[fragmentId] == nil then
+			if not fragment.IsDead and IsMissionPlayer(a.Owner) and FragmentsDetected[fragmentId] ~= nil and FragmentsAcquired[fragmentId] == nil then
 				Trigger.RemoveFootprintTrigger(id)
 				fragment.Kill()
 				FragmentsAcquired[tostring(fragment)] = true
@@ -210,7 +210,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnEnteredProximityTrigger(Purifier.CenterPosition, WDist.New(7 * 1024), function(a, id)
-		if a.Owner == Nod and not PurifierFound and Nod.IsObjectiveCompleted(ObjectiveFindFragments) then
+		if IsMissionPlayer(a.Owner) and not PurifierFound and Nod.IsObjectiveCompleted(ObjectiveFindFragments) then
 			PurifierFound = true
 			Trigger.RemoveProximityTrigger(id)
 			Beacon.New(Nod, Purifier.CenterPosition)

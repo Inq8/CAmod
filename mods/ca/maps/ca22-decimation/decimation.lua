@@ -228,7 +228,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnEnteredProximityTrigger(TankYardReveal.CenterPosition, WDist.New(11 * 1024), function(a, id)
-		if a.Owner == Scrin and a.Type ~= "camera" then
+		if IsMissionPlayer(a.Owner) and a.Type ~= "camera" then
 			Trigger.RemoveProximityTrigger(id)
 
 			Notification("The entrance to the Soviet equipment holding area has been located.")

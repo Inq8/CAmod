@@ -45,7 +45,7 @@ WorldLoaded = function()
 	Tanya.GrantCondition("difficulty-" .. Difficulty)
 
 	Trigger.OnEnteredProximityTrigger(Tanya.CenterPosition, WDist.New(7 * 1024), function(a, id)
-		if a.Owner == GDI then
+		if IsMissionPlayer(a.Owner) then
 			Trigger.RemoveProximityTrigger(id)
 			Tanya.Owner = GDI
 			GDI.MarkCompletedObjective(ObjectiveFindTanya)
@@ -117,7 +117,7 @@ OncePerSecondChecks = function()
 			Media.PlaySpeechNotification(GDI, "SignalFlare")
 			Notification("Signal flare detected.")
 			Trigger.OnEnteredProximityTrigger(Exit.CenterPosition, WDist.New(3 * 1024), function(a, id)
-				if a.Owner == GDI and a.Type ~= "flare" then
+				if IsMissionPlayer(a.Owner) and a.Type ~= "flare" then
 					Trigger.AfterDelay(DateTime.Seconds(5), function()
 						if not exitFlare.IsDead then
 							exitFlare.Destroy()
@@ -194,7 +194,7 @@ UpdateProdigyTarget = function()
 		-- if current target has been set and is not dead, determine whether it's close enough to prevent looking for a new target
 		if ProdigyCurrentTarget ~= nil and not ProdigyCurrentTarget.IsDead then
 			local closeTargets = Map.ActorsInCircle(Prodigy.CenterPosition, WDist.New(30 * 1024), function(t)
-				return not t.IsDead and t.Owner == GDI and (t.Type == "rmbo" or t.Type == "e7")
+				return not t.IsDead and IsMissionPlayer(t.Owner) and (t.Type == "rmbo" or t.Type == "e7")
 			end)
 			Utils.Do(closeTargets, function(t)
 				if t == ProdigyCurrentTarget then

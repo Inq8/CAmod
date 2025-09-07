@@ -289,7 +289,7 @@ SetupSubterraneanStrikes = function()
 	end
 
 	Trigger.OnEnteredFootprint(leftBaseEntrance, function(a, id)
-		if a.Owner == USSR then
+		if IsMissionPlayer(a.Owner) then
 			Trigger.RemoveFootprintTrigger(id)
 			if not LeftBaseSubStrikeTriggered then
 				LeftBaseSubStrikeTriggered = true
@@ -306,7 +306,7 @@ SetupSubterraneanStrikes = function()
 	end)
 
 	Trigger.OnEnteredFootprint(rightBaseEntrance, function(a, id)
-		if a.Owner == USSR then
+		if IsMissionPlayer(a.Owner) then
 			Trigger.RemoveFootprintTrigger(id)
 			if not RightBaseSubStrikeTriggered then
 				RightBaseSubStrikeTriggered = true
@@ -323,7 +323,7 @@ SetupSubterraneanStrikes = function()
 	end)
 
 	Trigger.OnEnteredProximityTrigger(NodMainBaseCenter.CenterPosition, WDist.FromCells(15), function(a, id)
-		if a.Owner == USSR and not a.HasProperty("Land") then
+		if IsMissionPlayer(a.Owner) and not a.HasProperty("Land") then
 			Trigger.RemoveProximityTrigger(id)
 			if not MainBaseSubStrikeTriggered then
 				MainBaseSubStrikeTriggered = true

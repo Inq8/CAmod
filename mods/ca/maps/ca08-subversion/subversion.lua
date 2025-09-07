@@ -122,7 +122,7 @@ WorldLoaded = function()
 
 	if IsNormalOrBelow() then
 		Trigger.OnEnteredFootprint(DroneTipLocations, function(a, id)
-			if a.Owner == Nod and not DroneTipShown then
+			if IsMissionPlayer(a.Owner) and not DroneTipShown then
 				DroneTipShown = true
 				Trigger.RemoveFootprintTrigger(id)
 				if not MammothDrone.IsDead and MammothDrone.Owner ~= Nod then
@@ -135,7 +135,7 @@ WorldLoaded = function()
 	local revealPoints = { EntranceReveal1, EntranceReveal2, EntranceReveal3, EntranceReveal4, BridgeDefendersReveal1, BridgeDefendersReveal2, EmpDroneReveal }
 	Utils.Do(revealPoints, function(p)
 		Trigger.OnEnteredProximityTrigger(p.CenterPosition, WDist.New(11 * 1024), function(a, id)
-			if a.Owner == Nod and a.Type ~= "smallcamera" then
+			if IsMissionPlayer(a.Owner) and a.Type ~= "smallcamera" then
 				Trigger.RemoveProximityTrigger(id)
 				if p == BridgeDefendersReveal1 and not BridgeTipShown then
 					BridgeTipShown = true
@@ -192,7 +192,7 @@ OncePerSecondChecks = function()
 			end
 		end
 
-		if not IonControlHacked and IonControl.Owner == Nod then
+		if not IonControlHacked and IsMissionPlayer(IonControl.Owner) then
 			IonControlHacked = true
 			InitBridgesObjective()
 			ObjectiveDestroyAlliedBase = Nod.AddObjective("Use the Ion Cannon to destroy the Allied base.")

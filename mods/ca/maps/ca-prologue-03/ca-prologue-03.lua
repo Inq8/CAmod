@@ -32,7 +32,7 @@ WorldLoaded = function()
 	}
 
 	Trigger.OnEnteredProximityTrigger(Reveal2.CenterPosition, WDist.New(11 * 1024), function(a, id)
-		if a.Owner == GDI and a.Type ~= "smallcamera" and not FirstRevealComplete then
+		if IsMissionPlayer(a.Owner) and a.Type ~= "smallcamera" and not FirstRevealComplete then
 			Trigger.RemoveProximityTrigger(id)
 			FirstRevealComplete = true
 			local camera = Actor.Create("smallcamera", true, { Owner = GDI, Location = Reveal2.Location })
@@ -49,7 +49,7 @@ WorldLoaded = function()
 
 	Utils.Do(TroopGroups, function(g)
 		Trigger.OnEnteredProximityTrigger(g.Waypoint.CenterPosition, WDist.New(7 * 1024), function(a, id)
-			if a.Owner == GDI and not GroupsFound[g.Id] then
+			if IsMissionPlayer(a.Owner) and not GroupsFound[g.Id] then
 				Trigger.RemoveProximityTrigger(id)
 				GroupsFound[g.Id] = true
 				Notification("GDI forces found.")
@@ -131,7 +131,7 @@ OncePerSecondChecks = function()
 		if GDI.IsObjectiveCompleted(ObjectiveLocateForces) and ExitDefendersDead and not Rescued then
 			local exitActors = Map.ActorsInCircle(SignalFlare.CenterPosition, WDist.New(8 * 1024));
 			local gdiExitActors = Utils.Where(exitActors, function(a)
-				return a.Owner == GDI
+				return IsMissionPlayer(a.Owner)
 			end)
 
 			if #gdiExitActors > 0 then

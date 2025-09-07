@@ -211,13 +211,13 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnDamaged(SignalTransmitter, function(self, attacker, damage)
-		if attacker.Owner == GDI and self.Health < (self.MaxHealth - self.MaxHealth / 3) then
+		if IsMissionPlayer(attacker.Owner) and self.Health < (self.MaxHealth - self.MaxHealth / 3) then
 			InitHackers(0)
 		end
 	end)
 
 	Trigger.OnEnteredProximityTrigger(SignalTransmitter.CenterPosition, WDist.New(9 * 1024), function(a, id)
-		if a.Owner == GDI and a.HasProperty("Health") and not a.HasProperty("Land") then
+		if IsMissionPlayer(a.Owner) and a.HasProperty("Health") and not a.HasProperty("Land") then
 			Trigger.RemoveProximityTrigger(id)
 			InitHackers(0)
 		end
@@ -336,7 +336,7 @@ OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
 		UpdatePlayerBaseLocations()
 
-		if not ShieldsOffline and not SignalTransmitter.IsDead and SignalTransmitter.Owner == GDI then
+		if not ShieldsOffline and not SignalTransmitter.IsDead and IsMissionPlayer(SignalTransmitter.Owner) then
 			ShieldsOffline = true
 			MothershipShields.Destroy()
 			CreatePermanentMothershipCamera()

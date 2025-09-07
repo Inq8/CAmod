@@ -120,7 +120,7 @@ WorldLoaded = function()
 	local ussrCamera = Actor.Create("largecamera", true, { Owner = Scrin, Location = SovietBase.Location })
 
 	Trigger.OnEnteredProximityTrigger(AlliedBase.CenterPosition, WDist.New(14 * 1024), function(a, id)
-		if a.Owner == Scrin and a.Type == "subjugation.dummy" then
+		if IsMissionPlayer(a.Owner) and a.Type == "subjugation.dummy" then
 			Trigger.RemoveProximityTrigger(id)
 
 			if not Scrin.IsObjectiveCompleted(ObjectiveInitialSubjugation) then
@@ -145,7 +145,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnEnteredProximityTrigger(SovietBase.CenterPosition, WDist.New(14 * 1024), function(a, id)
-		if a.Owner == Scrin and a.Type == "subjugation.dummy" then
+		if IsMissionPlayer(a.Owner) and a.Type == "subjugation.dummy" then
 			Trigger.RemoveProximityTrigger(id)
 			if not Scrin.IsObjectiveCompleted(ObjectiveInitialSubjugation) then
 				ObjectiveSubjugateRemaining = Scrin.AddObjective("Capture Allied and Nod Construction Yards.")
@@ -169,7 +169,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnEnteredProximityTrigger(NodBase.CenterPosition, WDist.New(14 * 1024), function(a, id)
-		if a.Owner == Scrin and a.Type == "subjugation.dummy" then
+		if IsMissionPlayer(a.Owner) and a.Type == "subjugation.dummy" then
 			Trigger.RemoveProximityTrigger(id)
 			if not Scrin.IsObjectiveCompleted(ObjectiveInitialSubjugation) then
 				ObjectiveSubjugateRemaining = Scrin.AddObjective("Capture Allied and Soviet Construction Yards.")

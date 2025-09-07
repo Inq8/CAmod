@@ -253,7 +253,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnEnteredProximityTrigger(YuriHQ.CenterPosition, WDist.New(18 * 1024), function(a, id)
-		if a.Owner == Scrin and a.Type ~= "smallcamera" then
+		if IsMissionPlayer(a.Owner) and a.Type ~= "smallcamera" then
 			Trigger.RemoveProximityTrigger(id)
 			if not YuriDefenderTipShown then
 				YuriDefenderTipShown = true
@@ -289,7 +289,7 @@ OncePerFiveSecondChecks = function()
 		UpdatePlayerBaseLocations()
 
 		Utils.Do(TibTrucks, function(t)
-			if not t.Actor.IsDead and t.Actor.Owner == Scrin then
+			if not t.Actor.IsDead and IsMissionPlayer(t.Actor.Owner) then
 				if t.Objective ~= nil and not Scrin.IsObjectiveFailed(t.Objective) then
 					Scrin.MarkCompletedObjective(t.Objective)
 				end

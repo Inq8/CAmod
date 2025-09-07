@@ -291,7 +291,7 @@ CheckFields = function()
 		end)
 
 		Utils.Do(actors, function(a)
-			if a.Owner == Scrin then
+			if IsMissionPlayer(a.Owner) then
 				if a.Type == "harv" or a.Type == "harv.scrin" then
 					hasScrinHarv = true
 				elseif a.Type == "proc.scrin" or a.Type == "proc.td" then

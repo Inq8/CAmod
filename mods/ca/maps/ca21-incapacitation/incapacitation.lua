@@ -179,7 +179,7 @@ WorldLoaded = function()
 
 	Utils.Do(AircraftStructures, function(actor)
 		Trigger.OnDamaged(actor, function(self, attacker, damage)
-			if attacker.Owner == Scrin then
+			if IsMissionPlayer(attacker.Owner) then
 				local nearbyUnits = Map.ActorsInCircle(self.CenterPosition, WDist.New(3072), function(a) return IsGroundHunterUnit(a) and (a.Owner == GDI or a.Owner == Greece) end)
 				Utils.Do(nearbyUnits, function(nearbyUnit)
 					nearbyUnit.Attack(attacker)
@@ -303,7 +303,7 @@ InitGDI = function()
 
 	local titanTriggerFootprint = { TitanTrigger1.Location, TitanTrigger2.Location, TitanTrigger3.Location, TitanTrigger4.Location, TitanTrigger5.Location }
 	Trigger.OnEnteredFootprint(titanTriggerFootprint, function(a, id)
-		if a.Owner == Scrin and not TitanPatroller.IsDead and not IsTitanSpotted then
+		if IsMissionPlayer(a.Owner) and not TitanPatroller.IsDead and not IsTitanSpotted then
 			IsTitanSpotted = true
 			Trigger.RemoveProximityTrigger(id)
 			local camera = Actor.Create("smallcamera", true, { Owner = Scrin, Location = TitanPatroller.Location })

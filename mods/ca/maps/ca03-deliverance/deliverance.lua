@@ -204,7 +204,7 @@ WorldLoaded = function()
 
 	-- On finding the GDI base, transfer ownership to player
 	Trigger.OnEnteredProximityTrigger(GDIBaseTopRight.CenterPosition, WDist.New(16 * 1024), function(a, id)
-		if a.Owner == Greece then
+		if IsMissionPlayer(a.Owner) then
 			Trigger.RemoveProximityTrigger(id)
 			GDIBaseFound()
 		end
@@ -212,7 +212,7 @@ WorldLoaded = function()
 
 	-- On proximity to prison, reveal it and update objectives.
 	Trigger.OnEnteredProximityTrigger(SovietPrison.CenterPosition, WDist.New(10 * 1024), function(a, id)
-		if a.Owner == Greece then
+		if IsMissionPlayer(a.Owner) then
 			Trigger.RemoveProximityTrigger(id)
 			RevealPrison()
 		end
@@ -333,23 +333,7 @@ GDIBaseFound = function()
 	if not IsGDIBaseFound then
 		IsGDIBaseFound = true
 		MediaCA.PlaySound("r_gdibasediscovered.aud", 2)
-		Greece.PlayLowPowerNotification = false
-
-		local gdiForces = GDI.GetActors()
-		Utils.Do(gdiForces, function(a)
-			if a.Type ~= "player" then
-				a.Owner = Greece
-			end
-		end)
-
-		Trigger.AfterDelay(1, function()
-			Actor.Create("QueueUpdaterDummy", true, { Owner = Greece })
-		end)
-
-		Trigger.AfterDelay(DateTime.Seconds(5), function()
-			Greece.PlayLowPowerNotification = true
-		end)
-
+		TransferGDIUnits()
 		InitUSSRAttacks()
 		TimerTicks = HoldOutTime[Difficulty]
 
@@ -386,6 +370,25 @@ GDIBaseFound = function()
 			end)
 		end
 	end
+end
+
+TransferGDIUnits = function()
+	Greece.PlayLowPowerNotification = false
+
+	local gdiForces = GDI.GetActors()
+	Utils.Do(gdiForces, function(a)
+		if a.Type ~= "player" then
+			a.Owner = Greece
+		end
+	end)
+
+	Trigger.AfterDelay(1, function()
+		Actor.Create("QueueUpdaterDummy", true, { Owner = Greece })
+	end)
+
+	Trigger.AfterDelay(DateTime.Seconds(5), function()
+		Greece.PlayLowPowerNotification = true
+	end)
 end
 
 UpdateReinforcementCountdown = function()

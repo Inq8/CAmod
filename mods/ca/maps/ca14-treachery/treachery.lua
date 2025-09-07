@@ -117,7 +117,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnEnteredProximityTrigger(GuardsReveal1.CenterPosition, WDist.New(11 * 1024), function(a, id)
-		if a.Owner == USSR and not a.HasProperty("Land") then
+		if IsMissionPlayer(a.Owner) and not a.HasProperty("Land") then
 			Trigger.RemoveProximityTrigger(id)
 			local camera = Actor.Create("smallcamera", true, { Owner = USSR, Location = GuardsReveal1.Location })
 			Trigger.AfterDelay(DateTime.Seconds(5), function()
@@ -127,14 +127,14 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnEnteredProximityTrigger(TraitorTechCenter.CenterPosition, WDist.New(9 * 1024), function(a, id)
-		if a.Owner == USSR and a.Type ~= "smig" then
+		if IsMissionPlayer(a.Owner) and a.Type ~= "smig" then
 			Trigger.RemoveProximityTrigger(id)
 			TraitorTechCenterDiscovered()
 		end
 	end)
 
 	Trigger.OnEnteredProximityTrigger(AbandonedBaseCenter.CenterPosition, WDist.New(10 * 1024), function(a, id)
-		if a.Owner == USSR and not a.HasProperty("Land") then
+		if IsMissionPlayer(a.Owner) and not a.HasProperty("Land") then
 			Trigger.RemoveProximityTrigger(id)
 			AbandonedBaseDiscovered()
 		end
@@ -306,13 +306,7 @@ AbandonedBaseDiscovered = function()
 		TraitorGeneral.Destroy()
 	end
 
-	local baseBuildings = Map.ActorsInBox(AbandonedBaseTopLeft.CenterPosition, AbandonedBaseBottomRight.CenterPosition, function(a)
-		return a.Owner == USSRAbandoned
-	end)
-
-	Utils.Do(baseBuildings, function(a)
-		a.Owner = USSR
-	end)
+	TransferAbandonedBase()
 
 	USSR.MarkCompletedObjective(ObjectiveFindSovietBase)
 
@@ -339,6 +333,16 @@ AbandonedBaseDiscovered = function()
 	Trigger.AfterDelay(DateTime.Seconds(30), function()
 		Media.PlaySpeechNotification(USSR, "ReinforcementsArrived")
 		ShockDropper.TargetParatroopers(AbandonedBaseCenter.CenterPosition, Angle.SouthWest)
+	end)
+end
+
+TransferAbandonedBase = function()
+	local baseBuildings = Map.ActorsInBox(AbandonedBaseTopLeft.CenterPosition, AbandonedBaseBottomRight.CenterPosition, function(a)
+		return a.Owner == USSRAbandoned
+	end)
+
+	Utils.Do(baseBuildings, function(a)
+		a.Owner = USSR
 	end)
 end
 

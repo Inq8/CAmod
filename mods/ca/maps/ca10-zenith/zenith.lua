@@ -151,7 +151,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnEnteredFootprint({ HaloTrigger1.Location, HaloTrigger2.Location, HaloTrigger3.Location, HaloTrigger4.Location }, function(a, id)
-		if IsMissionPlayer(a) and not HaloDropsTriggered then
+		if IsMissionPlayer(a.Owner) and not HaloDropsTriggered then
 			HaloDropsTriggered = true
 			Trigger.RemoveFootprintTrigger(id)
 			DoHaloDrop()
@@ -250,7 +250,7 @@ InitUSSR = function()
 	end)
 
 	Trigger.OnEnteredProximityTrigger(MADTank.CenterPosition, WDist.New(7 * 1024), function(a, id)
-		if not MADTank.IsDead and not IsMADTankDetonated and a.Owner == Nod and not a.HasProperty("Land") and a.HasProperty("Health") then
+		if not MADTank.IsDead and not IsMADTankDetonated and IsMissionPlayer(a.Owner) and not a.HasProperty("Land") and a.HasProperty("Health") then
 			IsMADTankDetonated = true
 			Trigger.RemoveProximityTrigger(id)
 			MADTank.MadTankDetonate()

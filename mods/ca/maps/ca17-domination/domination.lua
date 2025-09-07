@@ -186,7 +186,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnEnteredProximityTrigger(EvacLanding.CenterPosition, WDist.New(2560), function(a, id)
-		if ObjectiveEscape ~= nil and not EvacStarted and a.Owner == USSR and a.Type == "yuri" then
+		if ObjectiveEscape ~= nil and not EvacStarted and IsMissionPlayer(a.Owner) and a.Type == "yuri" then
 			EvacStarted = true
 			Trigger.RemoveProximityTrigger(id)
 
@@ -201,7 +201,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnEnteredProximityTrigger(TempleOfNod.CenterPosition, WDist.New(10 * 1024), function(a, id)
-		if a.Owner == USSR and ObjectiveDestroyTemple ~= nil then
+		if IsMissionPlayer(a.Owner) and ObjectiveDestroyTemple ~= nil then
 			Trigger.RemoveProximityTrigger(id)
 			TempleDiscovered()
 		end
@@ -222,7 +222,7 @@ WorldLoaded = function()
 
 		Utils.Do({ CommandoTrigger1, CommandoTrigger2 }, function(t)
 			Trigger.OnEnteredProximityTrigger(t.CenterPosition, WDist.New(9 * 1024), function(a, id)
-				if a.Owner == USSR and not a.HasProperty("Land") then
+				if IsMissionPlayer(a.Owner) and not a.HasProperty("Land") then
 					Trigger.RemoveProximityTrigger(id)
 					if not CommandosInitialized then
 						CommandosInitialized = true

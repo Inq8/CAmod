@@ -71,14 +71,14 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnEnteredFootprint(TeslaTrigger, function(a, id)
-		if a.Owner == USSR then
+		if IsMissionPlayer(a.Owner) then
 			Trigger.RemoveFootprintTrigger(id)
 			WarpInTeslaTanks(TeslaSpawn1.Location, TeslaSpawn2.Location, TeslaBeacon.Location)
 		end
 	end)
 
 	Trigger.OnEnteredFootprint(TeslaTriggerWest, function(a, id)
-		if a.Owner == USSR then
+		if IsMissionPlayer(a.Owner) then
 			Trigger.RemoveFootprintTrigger(id)
 			WarpInTeslaTanks(TeslaSpawnWest1.Location, TeslaSpawnWest2.Location, TeslaBeaconWest.Location)
 		end

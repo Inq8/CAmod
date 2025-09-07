@@ -201,7 +201,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnEnteredProximityTrigger(SovietChronosphere.CenterPosition, WDist.New(7 * 1024), function(a, id)
-		if a.Owner == Greece then
+		if IsMissionPlayer(a.Owner) then
 			Trigger.RemoveProximityTrigger(id)
 			ChronosphereDiscovered()
 		end
@@ -220,7 +220,7 @@ WorldLoaded = function()
 		end)
 
 		Trigger.OnEnteredProximityTrigger(DeploySuggestion.CenterPosition, WDist.New(6 * 1024), function(a, id)
-			if a.Owner == Greece and a.Type ~= "waypoint" and a.Type ~= "flare" and not IsDeploySuggestionReached then
+			if IsMissionPlayer(a.Owner) and a.Type ~= "waypoint" and a.Type ~= "flare" and not IsDeploySuggestionReached then
 				IsDeploySuggestionReached = true
 				Trigger.RemoveProximityTrigger(id)
 				BaseFlare.Destroy()
@@ -330,7 +330,7 @@ InitUSSR = function()
 
 	-- On player crossing Soviet border start making infantry at western barracks
 	Trigger.OnEnteredFootprint(SovietBorder, function(a, id)
-		if a.Owner == Greece then
+		if IsMissionPlayer(a.Owner) then
 			Trigger.RemoveFootprintTrigger(id)
 			if not IsWesternSquadActive then
 				IsWesternSquadActive = true

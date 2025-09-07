@@ -107,7 +107,7 @@ WorldLoaded = function()
 	local transmitters = { SignalTransmitter1, SignalTransmitter2, SignalTransmitter3 }
 	Utils.Do(transmitters, function(t)
 		Trigger.OnEnteredProximityTrigger(t.CenterPosition, WDist.New(12 * 1024), function(a, id)
-			if a.Owner == USSR then
+			if IsMissionPlayer(a.Owner) then
 				Trigger.RemoveProximityTrigger(id)
 				InitSignalTransmittersObjective()
 			end

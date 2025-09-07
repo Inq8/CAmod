@@ -119,7 +119,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnEnteredProximityTrigger(SignalTransmitter.CenterPosition, WDist.New(8 * 1024), function(a, id)
-		if a.Owner == USSR then
+		if IsMissionPlayer(a.Owner) then
 			Trigger.RemoveProximityTrigger(id)
 			SignalTransmitterDiscovered()
 		end
