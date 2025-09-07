@@ -233,6 +233,8 @@ WorldLoaded = function()
 			MediaCA.PlaySound("stalin_warning.aud", 2)
 		end)
 	end)
+
+	AfterWorldLoaded()
 end
 
 Tick = function()

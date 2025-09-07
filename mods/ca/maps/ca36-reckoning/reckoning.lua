@@ -191,6 +191,8 @@ WorldLoaded = function()
 	Trigger.OnKilled(RebelMainNerveCenter, function(self, killer)
 		NodRadarProvider.Destroy()
 	end)
+
+	AfterWorldLoaded()
 end
 
 Tick = function()

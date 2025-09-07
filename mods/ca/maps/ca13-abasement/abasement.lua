@@ -124,6 +124,8 @@ WorldLoaded = function()
 			SignalTransmitterDiscovered()
 		end
 	end)
+
+	AfterWorldLoaded()
 end
 
 Tick = function()

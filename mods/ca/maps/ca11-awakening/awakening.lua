@@ -196,6 +196,8 @@ WorldLoaded = function()
 			Nod.MarkFailedObjective(ObjectiveProtectTemple)
 		end
 	end)
+
+	AfterWorldLoaded()
 end
 
 Tick = function()

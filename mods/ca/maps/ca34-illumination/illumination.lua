@@ -220,6 +220,8 @@ WorldLoaded = function()
 			MediaCA.PlaySound("kane_foundit.aud", 2)
 		end
 	end)
+
+	AfterWorldLoaded()
 end
 
 Tick = function()

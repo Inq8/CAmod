@@ -273,6 +273,7 @@ WorldLoaded = function()
 	end)
 
 	SetupReveals({ EntranceReveal1, EntranceReveal2, EntranceReveal3, GrandCannonReveal1, GrandCannonReveal2 })
+	AfterWorldLoaded()
 end
 
 MoveToWormhole = function(a)

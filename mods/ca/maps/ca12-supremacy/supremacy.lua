@@ -109,6 +109,8 @@ WorldLoaded = function()
 
 	Banshee1.ReturnToBase(Helipad1)
 	Banshee2.ReturnToBase(Helipad2)
+
+	AfterWorldLoaded()
 end
 
 Tick = function()

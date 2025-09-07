@@ -263,6 +263,7 @@ WorldLoaded = function()
 	end)
 
 	SetupReveals({ EntranceReveal1, EntranceReveal2, EntranceReveal3, EntranceReveal4, EntranceReveal5, EntranceReveal6, EntranceReveal7, EntranceReveal8, EntranceReveal9, EntranceReveal10, EntranceReveal11 }, "smallcamera")
+	AfterWorldLoaded()
 end
 
 Tick = function()

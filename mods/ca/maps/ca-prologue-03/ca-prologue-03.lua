@@ -111,6 +111,7 @@ WorldLoaded = function()
 
 	DistGuns()
 	Chatter()
+	AfterWorldLoaded()
 end
 
 Tick = function()

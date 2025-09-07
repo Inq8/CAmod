@@ -239,6 +239,8 @@ WorldLoaded = function()
 		Media.DisplayMessage("Romanov. Marinesko. Krukov. Comrade General, you must crush these pretenders. The Union must prevail!", "Premier Cherdenko", HSLColor.FromHex("FF0000"))
 		MediaCA.PlaySound("cdko_crushtraitors.aud", 2)
 	end)
+
+	AfterWorldLoaded()
 end
 
 Tick = function()

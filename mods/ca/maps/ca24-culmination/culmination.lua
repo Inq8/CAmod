@@ -196,6 +196,8 @@ WorldLoaded = function()
 		Scrin.MarkFailedObjective(ObjectiveProdigyMustSurvive)
 		Notification("The Prodigy used its psionic powers to cheat death and has fled the battlefield to recuperate.")
 	end)
+
+	AfterWorldLoaded()
 end
 
 Tick = function()

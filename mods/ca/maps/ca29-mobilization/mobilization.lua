@@ -127,6 +127,8 @@ WorldLoaded = function()
 	Trigger.AfterDelay(1, function()
 		SetActiveWormhole()
 	end)
+
+	AfterWorldLoaded()
 end
 
 Tick = function()

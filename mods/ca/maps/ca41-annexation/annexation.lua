@@ -136,6 +136,8 @@ WorldLoaded = function()
 			Gateway.Destroy()
 		end
 	end)
+
+	AfterWorldLoaded()
 end
 
 Tick = function()

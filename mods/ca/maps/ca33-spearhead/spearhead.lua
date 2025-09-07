@@ -80,6 +80,8 @@ WorldLoaded = function()
 			GDI.MarkFailedObjective(ObjectiveCaptureComms)
 		end
 	end)
+
+	AfterWorldLoaded()
 end
 
 Tick = function()

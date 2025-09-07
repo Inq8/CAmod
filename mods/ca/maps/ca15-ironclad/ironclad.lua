@@ -102,6 +102,8 @@ WorldLoaded = function()
 	Trigger.OnRemovedFromWorld(IronCurtain, function(a)
 		USSR.MarkFailedObjective(ObjectiveProtectIronCurtain)
 	end)
+
+	AfterWorldLoaded()
 end
 
 Tick = function()

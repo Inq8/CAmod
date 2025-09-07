@@ -205,6 +205,9 @@ McvProductionTriggers = { }
 -- end automatically populated vars
 --
 
+-- extra function called at the end of WorldLoaded in each mission script which can be overridden
+AfterWorldLoaded = function() end
+
 InitObjectives = function(player)
 	Trigger.OnObjectiveAdded(player, function(p, id)
 		if p.IsLocalPlayer then

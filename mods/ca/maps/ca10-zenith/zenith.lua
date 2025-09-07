@@ -157,6 +157,8 @@ WorldLoaded = function()
 			DoHaloDrop()
 		end
 	end)
+
+	AfterWorldLoaded()
 end
 
 Tick = function()

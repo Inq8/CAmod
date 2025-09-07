@@ -144,6 +144,7 @@ WorldLoaded = function()
 	end)
 
 	UpdateScrinCounter()
+	AfterWorldLoaded()
 end
 
 Tick = function()

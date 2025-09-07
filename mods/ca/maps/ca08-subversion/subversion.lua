@@ -172,6 +172,8 @@ WorldLoaded = function()
 			Nod.MarkCompletedObjective(ObjectiveDestroyBridges)
 		end
 	end)
+
+	AfterWorldLoaded()
 end
 
 Tick = function()

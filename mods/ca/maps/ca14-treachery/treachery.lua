@@ -204,6 +204,8 @@ WorldLoaded = function()
 	Trigger.OnCapture(TraitorHQ, function(self, captor, oldOwner, newOwner)
 		TraitorHQKilledOrCaptured()
 	end)
+
+	AfterWorldLoaded()
 end
 
 Tick = function()

@@ -150,6 +150,8 @@ WorldLoaded = function()
 		end
 		Tip("Your " .. rangersDesc .. " equipped with the Advanced Optics upgrade. Press [" .. UtilsCA.Hotkey("Deploy") .. "] (deploy) to activate for increased vision for a limited time.")
 	end)
+
+	AfterWorldLoaded()
 end
 
 Tick = function()

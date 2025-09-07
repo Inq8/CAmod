@@ -85,6 +85,8 @@ WorldLoaded = function()
 	Trigger.AfterDelay(DateTime.Minutes(1), function()
 		ActivateProdigy()
 	end)
+
+	AfterWorldLoaded()
 end
 
 Tick = function()

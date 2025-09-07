@@ -186,6 +186,7 @@ WorldLoaded = function()
 	end)
 
 	SetupReveals({ EntranceReveal1, EntranceReveal2, EntranceReveal3 })
+	AfterWorldLoaded()
 end
 
 Tick = function()

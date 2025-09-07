@@ -119,6 +119,7 @@ WorldLoaded = function()
 	end)
 
 	SetupSubterraneanStrikes()
+	AfterWorldLoaded()
 end
 
 Tick = function()

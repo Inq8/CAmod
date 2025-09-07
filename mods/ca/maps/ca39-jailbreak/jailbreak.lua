@@ -160,6 +160,8 @@ WorldLoaded = function()
 		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = Greece })
 		Actor.Create("ai.superweapons.enabled", true, { Owner = Greece })
 	end)
+
+	AfterWorldLoaded()
 end
 
 Tick = function()

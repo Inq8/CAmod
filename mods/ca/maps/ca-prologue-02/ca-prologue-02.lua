@@ -87,6 +87,8 @@ WorldLoaded = function()
 	Trigger.OnKilled(Church, function(self, killer)
 		Actor.Create("moneycrate", true, { Owner = USSR, Location = Church.Location })
 	end)
+
+	AfterWorldLoaded()
 end
 
 Tick = function()

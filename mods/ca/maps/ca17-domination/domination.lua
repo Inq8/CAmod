@@ -234,6 +234,7 @@ WorldLoaded = function()
 	end
 
 	SetupReveals({ LaserFenceReveal, EntranceReveal1, EntranceReveal2, EntranceReveal3 })
+	AfterWorldLoaded()
 end
 
 Tick = function()

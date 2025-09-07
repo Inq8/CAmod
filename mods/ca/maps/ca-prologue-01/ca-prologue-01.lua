@@ -248,6 +248,8 @@ WorldLoaded = function()
 	Trigger.AfterDelay(DateTime.Seconds(30), function()
 		Tip("Information is displayed in the bottom right of the screen if any single unit or structure is selected, listing its strengths and weaknesses (as long as Selected Unit Tooltip is enabled in settings).")
 	end)
+
+	AfterWorldLoaded()
 end
 
 PanToCruisers = function()

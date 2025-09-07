@@ -191,6 +191,8 @@ WorldLoaded = function()
 		Notification("Recon Drones are now equipped with stealth detection. This should help you locate the Nod bases in the area.")
 		MediaCA.PlaySound("c_recondrones", 2)
 	end)
+
+	AfterWorldLoaded()
 end
 
 Tick = function()

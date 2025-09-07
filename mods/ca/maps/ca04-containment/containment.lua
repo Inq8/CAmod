@@ -246,6 +246,8 @@ WorldLoaded = function()
 			end)
 		end
 	end)
+
+	AfterWorldLoaded()
 end
 
 Sunrise = function()

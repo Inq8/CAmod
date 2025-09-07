@@ -49,6 +49,8 @@ WorldLoaded = function()
 
 		Nod.MarkCompletedObjective(ObjectiveDestroyAA)
 	end)
+
+	AfterWorldLoaded()
 end
 
 Tick = function()

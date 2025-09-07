@@ -100,6 +100,8 @@ WorldLoaded = function()
 			end
 		end)
 	end)
+
+	AfterWorldLoaded()
 end
 
 Tick = function()

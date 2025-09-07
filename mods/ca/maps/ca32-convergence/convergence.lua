@@ -155,6 +155,8 @@ WorldLoaded = function()
 	for i=1, 128 do
 		table.insert(BottomOfMap, CPos.New(i,96))
 	end
+
+	AfterWorldLoaded()
 end
 
 Tick = function()
