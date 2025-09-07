@@ -2007,6 +2007,15 @@ GetTotalCostOfUnits = function(units)
 	return totalCost
 end
 
+GetMissionPlayersArmyValue = function()
+	local value = 0
+	Utils.Do(MissionPlayers, function(p)
+		local units = Utils.Where(p.GetActors(), function(a) return a.HasProperty("Attack") end)
+		value = value + GetTotalCostOfUnits(units)
+	end)
+	return value
+end
+
 CalculatePlayerCharacteristics = function()
 	Utils.Do(MissionPlayers, function(p)
 		PlayerCharacteristics[p.InternalName] = {

@@ -270,7 +270,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnKilled(SovietPrison, function(self, killer)
-		if self.Owner ~= Greece then
+		if not IsMissionPlayer(self.Owner) then
 			GDICommanderAlive = false
 		end
 	end)

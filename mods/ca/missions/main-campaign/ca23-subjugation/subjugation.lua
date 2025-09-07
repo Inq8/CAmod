@@ -150,7 +150,7 @@ WorldLoaded = function()
 
 	Utils.Do(TibFacilities, function(a)
 		Trigger.OnKilled(a, function(self, killer)
-			if self.Owner ~= Scrin then
+			if not IsMissionPlayer(self.Owner) then
 				Scrin.MarkFailedObjective(ObjectiveCaptureTibFacilities)
 			end
 		end)
@@ -185,7 +185,7 @@ WorldLoaded = function()
 			ObjectiveCaptureYuriHQ = Scrin.AddObjective("Capture Yuri's command center.")
 		end
 
-		if self.Owner ~= Scrin then
+		if not IsMissionPlayer(self.Owner) then
 			Scrin.MarkFailedObjective(ObjectiveCaptureYuriHQ)
 		end
 	end)

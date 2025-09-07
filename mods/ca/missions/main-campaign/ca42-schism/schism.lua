@@ -430,21 +430,8 @@ OverlordSpawn = function(isInitial)
 	Trigger.AfterDelay(DateTime.Seconds(30) + prepTime, OverlordSpawn)
 end
 
-GetPlayerArmyValue = function()
-	local value = 0
-	Utils.Do(USSR.GetActors(), function(a)
-		if a.HasProperty("Attack") then
-			if UnitCosts[a.Type] == nil then
-				UnitCosts[a.Type] = ActorCA.CostOrDefault(a.Type)
-			end
-			value = value + UnitCosts[a.Type]
-		end
-	end)
-	return value
-end
-
 GetInvasionInterval = function()
-	local armyValue = GetPlayerArmyValue()
+	local armyValue = GetMissionPlayersArmyValue()
 
 	if Difficulty == "easy" then
 		if armyValue >= 10000 then

@@ -403,7 +403,7 @@ SetupMainObjectives = function(conyards)
 		end)
 
 		Trigger.OnKilled(c, function(self, killer)
-			if self.Owner ~= Scrin then
+			if not IsMissionPlayer(self.Owner) then
 				Scrin.MarkFailedObjective(ObjectiveSubjugateRemaining)
 			end
 		end)

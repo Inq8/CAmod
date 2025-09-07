@@ -565,21 +565,8 @@ SendDevastators = function()
 	end)
 end
 
-GetPlayerArmyValue = function()
-	local value = 0
-	Utils.Do(Greece.GetActors(), function(a)
-		if a.HasProperty("Attack") then
-			if UnitCosts[a.Type] == nil then
-				UnitCosts[a.Type] = ActorCA.CostOrDefault(a.Type)
-			end
-			value = value + UnitCosts[a.Type]
-		end
-	end)
-	return value
-end
-
 GetInvasionInterval = function()
-	local armyValue = GetPlayerArmyValue()
+	local armyValue = GetMissionPlayersArmyValue()
 
 	if Difficulty == "easy" then
 		if armyValue >= 10000 then

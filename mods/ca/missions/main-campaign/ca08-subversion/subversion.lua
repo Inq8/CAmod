@@ -126,7 +126,7 @@ WorldLoaded = function()
 			if IsMissionPlayer(a.Owner) and not DroneTipShown then
 				DroneTipShown = true
 				Trigger.RemoveFootprintTrigger(id)
-				if not MammothDrone.IsDead and MammothDrone.Owner ~= Nod then
+				if not MammothDrone.IsDead and not IsMissionPlayer(MammothDrone.Owner) then
 					Tip("Mammoth Drone detected. Hackers can take control of this vehicle.")
 				end
 			end
