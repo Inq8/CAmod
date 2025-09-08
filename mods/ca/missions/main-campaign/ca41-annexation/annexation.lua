@@ -1,3 +1,5 @@
+MissionDir = "ca/missions/main-campaign/ca41-annexation"
+
 ScrinAttackValues = AdjustAttackValuesForDifficulty({ Min = 13, Max = 26 })
 
 NodBuildingsToSell = { NodConyard, NodHand, NodFactory, NodComms }
@@ -97,11 +99,11 @@ WorldLoaded = function()
 
 	Trigger.AfterDelay(DateTime.Seconds(3), function()
 		Media.DisplayMessage("Assist us to annihilate Kane and the rebels, and you will be rewarded.", "Scrin Overlord", HSLColor.FromHex("7700FF"))
-		MediaCA.PlaySound("ovld_assist.aud", 2)
+		MediaCA.PlaySound(MissionDir .. "/ovld_assist.aud", 2)
 
 		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(11)), function()
 			Media.DisplayMessage("The vastness of space, uncorrupted by capitalism, is ours for the taking!", "Premier Cherdenko", HSLColor.FromHex("FF0000"))
-			MediaCA.PlaySound("cdko_space.aud", 2)
+			MediaCA.PlaySound(MissionDir .. "/cdko_space.aud", 2)
 		end)
 	end)
 
@@ -269,7 +271,7 @@ InitSignalTransmittersObjective = function()
 	if ObjectiveSignalTransmitters == nil then
 		ObjectiveSignalTransmitters = USSR.AddObjective("Capture the three signal transmitters.")
 		Media.DisplayMessage("Capture the rebel Signal Transmiters, and I will unleash my forces to assist you.", "Scrin Overlord", HSLColor.FromHex("7700FF"))
-		MediaCA.PlaySound("ovld_capture.aud", 2)
+		MediaCA.PlaySound(MissionDir .. "/ovld_capture.aud", 2)
 
 		local transmitters = Utils.Where({ SignalTransmitter1, SignalTransmitter2, SignalTransmitter3 }, function(a)
 			return not a.IsDead and a.Owner == SignalTransmittersPlayer

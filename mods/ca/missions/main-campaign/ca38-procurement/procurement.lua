@@ -1,3 +1,5 @@
+MissionDir = "ca/missions/main-campaign/ca38-procurement"
+
 OutpostStructures = { OutpostConyard, OutpostFactory, OutpostBarracks, OutpostRefinery, OutpostPower1, OutpostPower2, OutpostPower3, OutpostSilo1, OutpostSilo2, OutpostGuardTower1, OutpostGuardTower2, OutpostGuardTower3, OutpostGuardTower4 }
 
 CommsCenters = { CommsCenter1, CommsCenter2, AdvancedComms }

@@ -1,3 +1,5 @@
+MissionDir = "ca/missions/main-campaign/ca01-crossrip"
+
 -- Locations
 
 SovietBorder = { CPos.New(9,32), CPos.New(10,32), CPos.New(11,32), CPos.New(12,32), CPos.New(13,32), CPos.New(14,32), CPos.New(15,32), CPos.New(16,32), CPos.New(17,32), CPos.New(18,32) }
@@ -404,7 +406,7 @@ ChronosphereDiscovered = function()
 		IsBaseEstablished = true
 		IsChronosphereDiscovered = true
 		Notification("Commander, the Soviets have been attempting to reverse engineer stolen Chronosphere technology! Use whatever means necessary to cease their experiments.")
-		MediaCA.PlaySound("r_chronodisc.aud", 2)
+		MediaCA.PlaySound(MissionDir .. "/r_chronodisc.aud", 2)
 
 		local autoCamera = Actor.Create("smallcamera", true, { Owner = Greece, Location = SovietChronosphereLocation })
 		Trigger.AfterDelay(DateTime.Seconds(5), autoCamera.Destroy)
@@ -460,7 +462,7 @@ InterdimensionalCrossrip = function()
 	Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(2)), function()
 		ScrinInvasion()
 		Notification("Unidentified hostile forces detected. Fall back to your base, and prepare for evacuation.")
-		MediaCA.PlaySound("r_evac.aud", 2)
+		MediaCA.PlaySound(MissionDir .. "/r_evac.aud", 2)
 		TimerTicks = EvacuationTime[Difficulty]
 		Trigger.AfterDelay(DateTime.Seconds(7), function()
 			unitLostSilencer.Destroy()

@@ -1,3 +1,5 @@
+MissionDir = "ca/missions/main-campaign/ca20-encroachment"
+
 
 AlliedAttackPaths = {
 	{ AlliedAttack1.Location, AlliedAttack2a.Location, AlliedAttack3.Location, AlliedAttack4.Location, AlliedAttack5a.Location },

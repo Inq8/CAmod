@@ -1,3 +1,5 @@
+MissionDir = "ca/missions/main-campaign/ca06-machinations"
+
 InitialUnits = {
 	easy = { "jeep", "mcv", "2tnk", "e1", "e1", "e1", "e3" },
 	normal = { "jeep", "mcv", "e1", "e1", "e1", "e3"  },
@@ -301,7 +303,7 @@ InitNodAttacks = function()
 	if not NodAttacksInitialized then
 		NodAttacksInitialized = true
 		Notification("Nod forces have been alerted to your presence, prepare your defenses!")
-		MediaCA.PlaySound("r_nodalerted.aud", 2)
+		MediaCA.PlaySound(MissionDir .. "/r_nodalerted.aud", 2)
 
 		InitAttackSquad(Squads.South, Nod)
 		InitAttackSquad(Squads.East, Nod)

@@ -1,3 +1,4 @@
+MissionDir = "ca/missions/main-campaign/ca31-foothold"
 
 SensorZones = { SensorZone1, SensorZone2, SensorZone3, SensorZone4 }
 
@@ -99,7 +100,7 @@ WorldLoaded = function()
 
 	if Difficulty ~= "easy" then
 		Trigger.AfterDelay(DateTime.Seconds(10), function()
-			MediaCA.PlaySound("c_tiblifeforms.aud", 2)
+			MediaCA.PlaySound(MissionDir .. "/c_tiblifeforms.aud", 2)
 			Notification("Dangerous Tiberium-based lifeforms detected. Recommend keeping your units at a safe distance.")
 		end)
 	end
@@ -146,7 +147,7 @@ WorldLoaded = function()
 		PeriodicReinforcements()
 
 		Trigger.AfterDelay(DateTime.Seconds(3), function()
-			MediaCA.PlaySound("c_gatewaystabilized.aud", 2)
+			MediaCA.PlaySound(MissionDir .. "/c_gatewaystabilized.aud", 2)
 			Notification("Interstellar gateway stabilized.")
 			GatewayStable = Actor.Create("wormholestable", true, { Owner = GatewayOwner, Location = Gateway.Location })
 			Gateway.Destroy()
@@ -158,7 +159,7 @@ WorldLoaded = function()
 				Reinforcements.Reinforce(GDI, { "hmmv", "mtnk", "mtnk", "n1", "n1", "n1", "n1", "n3", "amcv" }, { GatewayStable.Location, PlayerStart.Location }, 30)
 
 				Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(4)), function()
-					MediaCA.PlaySound("c_protectnervecenter.aud", 2)
+					MediaCA.PlaySound(MissionDir .. "/c_protectnervecenter.aud", 2)
 					Notification("Do not allow the Nerve Center to be destroyed, the gateway must remain stable.")
 				end)
 			end)
@@ -256,7 +257,7 @@ CheckSensors = function()
 			end)
 
 			Beacon.New(GDI, NerveCenter1.CenterPosition)
-			MediaCA.PlaySound("c_nervecenterlocated.aud", 2)
+			MediaCA.PlaySound(MissionDir .. "/c_nervecenterlocated.aud", 2)
 			Notification("Nerve Center located.")
 
 			Trigger.AfterDelay(DateTime.Seconds(4), function()
@@ -281,7 +282,7 @@ CheckSensors = function()
 				if not SPower2.IsDead then
 					local powerCamera = Actor.Create("smallcamera", true, { Owner = GDI, Location = SPower2.Location })
 					Notification("The Nerve Center is well protected by Storm Columns. Sensors have detected Scrin reactors to the south-east which are powering these defenses.")
-					MediaCA.PlaySound("c_nervecenterprotected.aud", 2)
+					MediaCA.PlaySound(MissionDir .. "/c_nervecenterprotected.aud", 2)
 					Beacon.New(GDI, SPower2.CenterPosition)
 
 					Trigger.AfterDelay(DateTime.Seconds(10), function()

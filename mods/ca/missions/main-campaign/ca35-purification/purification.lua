@@ -1,3 +1,4 @@
+MissionDir = "ca/missions/main-campaign/ca35-purification"
 
 UnitBuildTimeMultipliers = {
 	easy = 0.8,
@@ -91,7 +92,7 @@ WorldLoaded = function()
 
 	Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(2)), function()
 		Media.DisplayMessage("Commander, we must bring the device to full power as quickly as possible. Transporting crystals will take too long, so liquid Tiberium is our only option. We have set up a liquid T production facility. Do not let it be destroyed, and as each shipment becomes available load it into a tanker and bring it to the entrance of the cave system.", "Kane", HSLColor.FromHex("FF0000"))
-		MediaCA.PlaySound("kane_liquidt.aud", 2)
+		MediaCA.PlaySound(MissionDir .. "/kane_liquidt.aud", 2)
 		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(18)), function()
 			Tip("Move a tanker next to the processing plant to pick up a prepared shipment, then take it to the cave entrance in the north-east.")
 			Utils.Do({ InitAttacker1, InitAttacker2, InitAttacker3, InitAttacker4 }, function(a)
@@ -123,7 +124,7 @@ WorldLoaded = function()
 				a.Reload("primary", -1)
 				ShipmentsComplete = ShipmentsComplete + 1
 				Notification("Liquid Tiberium shipment delivered.")
-				MediaCA.PlaySound("n_liquidtibdelivered.aud", 2)
+				MediaCA.PlaySound(MissionDir .. "/n_liquidtibdelivered.aud", 2)
 				UpdateMissionText()
 				if ShipmentsComplete == 5 then
 					PurificationWave()
@@ -262,7 +263,7 @@ LiquidTibProduced = function()
 
 	TimerTicks = LiquidTibCooldown
 	Notification("Liquid Tiberium shipment ready.")
-	MediaCA.PlaySound("n_liquidtibready.aud", 2)
+	MediaCA.PlaySound(MissionDir .. "/n_liquidtibready.aud", 2)
 
 	if not LiquidTibFacility.IsDead then
 		LiquidTibFacility.Reload("primary", 1)
@@ -275,7 +276,7 @@ PurificationWave = function()
 
 	Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(2)), function()
 		Media.DisplayMessage("Well done commander! The device is at full power, and will soon release its purifying energy. The question is, will the Scrin fight for their freedom against the Overlord, or cower in servitude even after such heinous treachery is revealed?", "Kane", HSLColor.FromHex("FF0000"))
-		MediaCA.PlaySound("kane_purification.aud", 2)
+		MediaCA.PlaySound(MissionDir .. "/kane_purification.aud", 2)
 
 		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(14)), function()
 			MediaCA.PlaySound("purification.aud", 2)

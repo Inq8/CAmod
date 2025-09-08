@@ -1,3 +1,4 @@
+MissionDir = "ca/missions/main-campaign/ca34-illumination"
 
 Caves = {
 	{ WormholeLocation = Cave1Wormhole.Location, PatrolPath = { Cave1Patrol1.Location, Cave1Patrol2.Location, Cave1Patrol1.Location, Cave1Patrol3.Location, Cave1Patrol4.Location, Cave1Patrol5.Location, Cave1Patrol6.Location, Cave1Patrol5.Location, Cave1Patrol4.Location, Cave1Patrol3.Location }, Composition = {} },
@@ -114,7 +115,7 @@ WorldLoaded = function()
 
 	Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(2)), function()
 		Media.DisplayMessage("There are six fragments of an artifact hidden within these caverns. Only I have the ability to detect them. Once we have them all, the assembled artifact will lead us to our goal.", "Kane", HSLColor.FromHex("FF0000"))
-		MediaCA.PlaySound("kane_findfragments.aud", 2)
+		MediaCA.PlaySound(MissionDir .. "/kane_findfragments.aud", 2)
 		Trigger.AfterDelay(DateTime.Seconds(4), function()
 			Tip("Kane is able to create wormholes which can be used to travel between neighboring chambers. Only Kane can detect the hidden artifact fragments.")
 		end)
@@ -131,7 +132,7 @@ WorldLoaded = function()
 					FirstFragmentFound = true
 					Beacon.New(Nod, pos)
 					Media.DisplayMessage("There! We have already found the first fragment.", "Kane", HSLColor.FromHex("FF0000"))
-					MediaCA.PlaySound("kane_firstfragment.aud", 2)
+					MediaCA.PlaySound(MissionDir .. "/kane_firstfragment.aud", 2)
 				elseif FragmentsDetected[fragmentId] == nil then
 					Beacon.New(Nod, pos)
 					Notification("Artifact fragment detected.")
@@ -174,7 +175,7 @@ WorldLoaded = function()
 
 						Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(1)), function()
 							Media.DisplayMessage("With the fragments combined the path to our goal is revealed. Now we must get to the chamber before the Scrin.", "Kane", HSLColor.FromHex("FF0000"))
-							MediaCA.PlaySound("kane_fragmentscombined.aud", 2)
+							MediaCA.PlaySound(MissionDir .. "/kane_fragmentscombined.aud", 2)
 						end)
 					end)
 				end
@@ -197,7 +198,7 @@ WorldLoaded = function()
 		Nod.MarkCompletedObjective(ObjectiveActivatePurifier)
 		Trigger.AfterDelay(DateTime.Seconds(1), function()
 			Media.DisplayMessage("The Scrin have no doubt located us by now. Protect the device!", "Kane", HSLColor.FromHex("FF0000"))
-			MediaCA.PlaySound("kane_protect.aud", 2)
+			MediaCA.PlaySound(MissionDir .. "/kane_protect.aud", 2)
 			Trigger.AfterDelay(DateTime.Seconds(2), function()
 				ObjectiveDefendPurifier = Nod.AddObjective("Protect the ancient device.")
 				ObjectiveDestroyWormholes = Nod.AddObjective("Destroy Scrin wormholes.")
@@ -218,7 +219,7 @@ WorldLoaded = function()
 			ObjectiveActivatePurifier = Nod.AddObjective("Activate the ancient device.")
 			Nod.MarkCompletedObjective(ObjectiveExploreHiddenChamber)
 			Media.DisplayMessage("We found it! The Scrin rulers believed it to be destroyed long ago, but its creators hid it well. Quickly, let us activate it, we must make sure it still functions.", "Kane", HSLColor.FromHex("FF0000"))
-			MediaCA.PlaySound("kane_foundit.aud", 2)
+			MediaCA.PlaySound(MissionDir .. "/kane_foundit.aud", 2)
 		end
 	end)
 
@@ -243,7 +244,7 @@ OncePerFiveSecondChecks = function()
 			if #finalScrinUnits == 0 then
 				DoFinalBattleChecks = false
 				Media.DisplayMessage("Our forces on the surface have triumphed. The device is ours, and soon it will be ready to do what had been intended for it millennia ago. Excellent work commander, our ultimate victory draws ever closer.", "Kane", HSLColor.FromHex("FF0000"))
-				MediaCA.PlaySound("kane_victory.aud", 2)
+				MediaCA.PlaySound(MissionDir .. "/kane_victory.aud", 2)
 				Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(12)), function()
 					Nod.MarkCompletedObjective(ObjectiveDefendPurifier)
 					Nod.MarkCompletedObjective(ObjectiveDestroyWormholes)

@@ -1,3 +1,5 @@
+MissionDir = "ca/missions/main-campaign/ca11-awakening"
+
 
 -- Squads
 
@@ -189,7 +191,7 @@ WorldLoaded = function()
 	end
 
 	Trigger.AfterDelay(DateTime.Seconds(2), function()
-		MediaCA.PlaySound("n_defendtemple.aud", 2)
+		MediaCA.PlaySound(MissionDir .. "/n_defendtemple.aud", 2)
 	end)
 
 	Trigger.OnKilled(TemplePrime, function(self, killer)
@@ -232,7 +234,7 @@ OncePerSecondChecks = function()
 				TemplePrime.GrantCondition("awakening-complete")
 			end
 
-			MediaCA.PlaySound("n_cyborgscomplete.aud", 2)
+			MediaCA.PlaySound(MissionDir .. "/n_cyborgscomplete.aud", 2)
 			DeployCyborgs()
 
 			if ObjectiveDestroyBases ~= nil then
@@ -311,11 +313,11 @@ InitUSSR = function()
 		Trigger.AfterDelay(BaseAttemptTimes[attemptCount], function()
 			if ObjectiveDestroyBases == nil then
 				Notification("The Soviets are attempting to set up a base in the area.")
-				MediaCA.PlaySound("n_sovietbase.aud", 2)
+				MediaCA.PlaySound(MissionDir .. "/n_sovietbase.aud", 2)
 				ObjectiveDestroyBases = Nod.AddSecondaryObjective("Crush any Soviet attempts to establish a base\nbefore the timer runs out.")
 			else
 				Notification("The Soviets are attempting to set up another base.")
-				MediaCA.PlaySound("n_anothersovietbase.aud", 2)
+				MediaCA.PlaySound(MissionDir .. "/n_anothersovietbase.aud", 2)
 			end
 			Reinforcements.Reinforce(USSR, { "mcv" }, { attempt.SpawnLocation, attempt.DeployLocation }, 0, function(a)
 				a.Deploy()

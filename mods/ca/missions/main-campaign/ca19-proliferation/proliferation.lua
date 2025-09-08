@@ -1,3 +1,5 @@
+MissionDir = "ca/missions/main-campaign/ca19-proliferation"
+
 
 Fields = {
 	{ Reinforced = false, Waypoint = NWField, Reinforcements = { "gunw", "intl", "s1", "s1", "s3", "s1", "s1", "s3", "s1", "s4" } },
@@ -333,7 +335,7 @@ CheckFields = function()
 
 	if FieldsClearedAndBeingHarvested < PreviousFieldsClearedAndBeingHarvested then
 		Notification("You have lost control of an ichor field.")
-		MediaCA.PlaySound("s_ichorfieldlost.aud", 2)
+		MediaCA.PlaySound(MissionDir .. "/s_ichorfieldlost.aud", 2)
 	end
 end
 

@@ -1,3 +1,5 @@
+MissionDir = "ca/missions/main-campaign/ca36-reckoning"
+
 ExterminatorsStartTime = {
 	easy = DateTime.Minutes(10),
 	normal = DateTime.Minutes(8),
@@ -168,11 +170,11 @@ WorldLoaded = function()
 
 	Trigger.AfterDelay(DateTime.Seconds(3), function()
 		Media.DisplayMessage("The Overlord's tyranny will die today commander, and a new era will begin. Elsewhere, battles are still raging, but the decisive blow must be dealt here where his most elite forces are gathered. Show no mercy commander. Peace through power.", "Kane", HSLColor.FromHex("FF0000"))
-		MediaCA.PlaySound("kane_nomercy.aud", 2)
+		MediaCA.PlaySound(MissionDir .. "/kane_nomercy.aud", 2)
 
 		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(14)), function()
 			Media.DisplayMessage("Foolish humans! Your armies will be crushed, the rebellion will fall, and you will die here!", "Scrin Overlord", HSLColor.FromHex("7700FF"))
-			MediaCA.PlaySound("overlordwarning.aud", 2)
+			MediaCA.PlaySound(MissionDir .. "/overlordwarning.aud", 2)
 
 			Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(60)), function()
 				InitGDI()
@@ -216,7 +218,7 @@ OncePerFiveSecondChecks = function()
 		if not PlayerHasBuildings(Scrin) and #Scrin.GetActorsByType("etpd") == 0 and not Victory then
 			Victory = true
 			Media.DisplayMessage("The Overlord's fate is sealed, and the Scrin are liberated. Now we must return to Earth and forge a new beginning for mankind. With purified Tiberium the possibilites are truly limitless, and those who embrace its light will share in its blessings. Those who do not, will be left in the darkness.", "Kane", HSLColor.FromHex("FF0000"))
-			MediaCA.PlaySound("kane_newbeginning.aud", 2)
+			MediaCA.PlaySound(MissionDir .. "/kane_newbeginning.aud", 2)
 			Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(19)), function()
 				Nod.MarkCompletedObjective(ObjectiveDestroyOverlordForces)
 				Nod.MarkCompletedObjective(ObjectiveDefendRebels)
@@ -332,7 +334,7 @@ InitGDI = function()
 
 		Trigger.AfterDelay(DateTime.Seconds(1), function()
 			Media.DisplayMessage("Our forces were successful in luring GDI here and they have established a base. The situation has been explained to them and they have agreed to a cease fire, but remain vigilant commander, our old enemy cannot be trusted.", "Kane", HSLColor.FromHex("FF0000"))
-			MediaCA.PlaySound("kane_gdibase.aud", 2)
+			MediaCA.PlaySound(MissionDir .. "/kane_gdibase.aud", 2)
 		end)
 
 		AutoRepairAndRebuildBuildings(GDI, 15)
@@ -370,7 +372,7 @@ SendNextExterminator = function()
 			if NextExterminatorIndex == 1 then
 				Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(2)), function()
 					Media.DisplayMessage("Commander, the Overlord's most powerful weapons are being deployed. Use everything at your disposal to destroy them.", "Kane", HSLColor.FromHex("FF0000"))
-					MediaCA.PlaySound("kane_exterminators.aud", 2)
+					MediaCA.PlaySound(MissionDir .. "/kane_exterminators.aud", 2)
 				end)
 			else
 				Notification("Exterminator Tripod detected.")

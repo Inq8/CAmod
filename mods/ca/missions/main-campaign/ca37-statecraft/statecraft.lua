@@ -1,3 +1,5 @@
+MissionDir = "ca/missions/main-campaign/ca37-statecraft"
+
 MarineskoHardAndAboveCompositions = {
 	-- 0 to 10 minutes
 	{ Infantry = { "e3", "e1", "e1", "e1", "e1", "e1", "e2", "e3", "e4", "e1", "e1", "e1", "e3", "e1", "e1", "e1", "e1" }, Vehicles = { "btr.ai", "btr.ai" }, MaxTime = DateTime.Minutes(10), },
@@ -238,7 +240,7 @@ WorldLoaded = function()
 
 	Trigger.AfterDelay(DateTime.Seconds(3), function()
 		Media.DisplayMessage("Romanov. Marinesko. Krukov. Comrade General, you must crush these pretenders. The Union must prevail!", "Premier Cherdenko", HSLColor.FromHex("FF0000"))
-		MediaCA.PlaySound("cdko_crushtraitors.aud", 2)
+		MediaCA.PlaySound(MissionDir .. "/cdko_crushtraitors.aud", 2)
 	end)
 
 	AfterWorldLoaded()

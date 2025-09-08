@@ -1,3 +1,5 @@
+MissionDir = "ca/missions/main-campaign/ca39-jailbreak"
+
 CruisersEnabledTime = {
 	easy = DateTime.Minutes(25),
 	normal = DateTime.Minutes(20),
@@ -117,7 +119,7 @@ WorldLoaded = function()
 
 				if AlliedBuildingsEliminated() then
 					Media.DisplayMessage("Ah, Comrade General, thank you for releasing us. I have a proposal that you may find interesting...", "Yuri", HSLColor.FromHex("FF00BB"))
-					MediaCA.PlaySound("yuri_releasedwin.aud", 2)
+					MediaCA.PlaySound(MissionDir .. "/yuri_releasedwin.aud", 2)
 
 					Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(10)), function()
 						if ObjectiveCapturePrison ~= nil and not USSR.IsObjectiveCompleted(ObjectiveCapturePrison) then
@@ -139,7 +141,7 @@ WorldLoaded = function()
 					end
 
 					Media.DisplayMessage("Ah, Comrade General, thank you for releasing us. I have a proposal that you may find interesting. But first, we must deal with these pests.", "Yuri", HSLColor.FromHex("FF00BB"))
-					MediaCA.PlaySound("yuri_released.aud", 2)
+					MediaCA.PlaySound(MissionDir .. "/yuri_released.aud", 2)
 
 					Trigger.AfterDelay(DateTime.Seconds(5), function()
 						prodigy.Owner = USSR

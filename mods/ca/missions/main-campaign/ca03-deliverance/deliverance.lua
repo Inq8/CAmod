@@ -1,3 +1,5 @@
+MissionDir = "ca/missions/main-campaign/ca03-deliverance"
+
 -- Locations
 
 SovietMainAttackPaths = {
@@ -238,11 +240,11 @@ WorldLoaded = function()
 			Trigger.AfterDelay(DateTime.Seconds(3), function()
 				if GDICommanderAlive then
 					Notification("The GDI commander has been freed.")
-					MediaCA.PlaySound("r_gdicmdrfreed.aud", 2)
+					MediaCA.PlaySound(MissionDir .. "/r_gdicmdrfreed.aud", 2)
 				end
 
 				Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(3)), function()
-					MediaCA.PlaySound("r_gditraninbound.aud", 2)
+					MediaCA.PlaySound(MissionDir .. "/r_gditraninbound.aud", 2)
 					Reinforcements.ReinforceWithTransport(GDI, "tran.evac", nil, { GDIRescueSpawn.Location, GDIRescueRally.Location }, nil, function(transport, cargo)
 
 						Trigger.AfterDelay(DateTime.Seconds(1), function()
@@ -334,7 +336,7 @@ end
 GDIBaseFound = function()
 	if not IsGDIBaseFound then
 		IsGDIBaseFound = true
-		MediaCA.PlaySound("r_gdibasediscovered.aud", 2)
+		MediaCA.PlaySound(MissionDir .. "/r_gdibasediscovered.aud", 2)
 		TransferGDIUnits()
 		InitUSSRAttacks()
 		TimerTicks = HoldOutTime[Difficulty]

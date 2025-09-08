@@ -1,3 +1,5 @@
+MissionDir = "ca/missions/main-campaign/ca-prologue-03"
+
 Difficulty = "easy"
 
 -- Setup and Tick
@@ -54,12 +56,12 @@ WorldLoaded = function()
 				Trigger.RemoveProximityTrigger(id)
 				GroupsFound[g.Id] = true
 				Notification("GDI forces found.")
-				MediaCA.PlaySound("gdifound.aud", 2)
+				MediaCA.PlaySound(MissionDir .. "/gdifound.aud", 2)
 
 				if g.Id == 2 then
 					Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(2)), function()
 						Media.DisplayMessage("Thank god! You found us!.", "GDI Soldier", HSLColor.FromHex("F2CF74"))
-						MediaCA.PlaySound("thankgod.aud", 1.5)
+						MediaCA.PlaySound(MissionDir .. "/thankgod.aud", 1.5)
 					end)
 				end
 
@@ -91,11 +93,11 @@ WorldLoaded = function()
 
 	Trigger.AfterDelay(DateTime.Seconds(4), function()
 		Media.DisplayMessage("Commander what's going on, where the hell are we?!", "GDI Soldier", HSLColor.FromHex("F2CF74"))
-		Media.PlaySound("wherearewe.aud")
+		Media.PlaySound(MissionDir .. "/wherearewe.aud")
 
 		Trigger.AfterDelay(DateTime.Seconds(20), function()
 			Media.DisplayMessage("Come in, any GDI units, hostile troops have us pinned down.", "Radio", HSLColor.FromHex("F2CF74"))
-			MediaCA.PlaySoundAtPos("pinned.aud", 2, Camera.Position + WVec.New(2560, 0, 0))
+			MediaCA.PlaySoundAtPos(MissionDir .. "/pinned.aud", 2, Camera.Position + WVec.New(2560, 0, 0))
 		end)
 	end)
 
@@ -143,7 +145,7 @@ OncePerSecondChecks = function()
 
 					Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(2)), function()
 						Media.DisplayMessage("Hold your fire, we're GDI! Damn, we thought we'd lost the whole company! We've got a base not far from here, we'll take you there.", "GDI Soldier", HSLColor.FromHex("F2CF74"))
-						MediaCA.PlaySound("holdfire.aud", 2)
+						MediaCA.PlaySound(MissionDir .. "/holdfire.aud", 2)
 
 						Trigger.AfterDelay(DateTime.Seconds(12), function()
 							GDI.MarkCompletedObjective(ObjectiveExit)
@@ -177,7 +179,7 @@ DistGuns = function()
 	local distGunsDelay = AdjustTimeForGameSpeed(Utils.RandomInteger(DateTime.Seconds(10), DateTime.Seconds(25)))
 	Trigger.AfterDelay(distGunsDelay, function()
 		if not GDI.IsObjectiveCompleted(ObjectiveLocateForces) then
-			local distGunSounds = { "distguns1.aud", "distguns2.aud", "distguns3.aud" }
+			local distGunSounds = { MissionDir .. "/distguns.aud", MissionDir .. "/distguns2.aud", MissionDir .. "/distguns3.aud" }
 			local cameraPos = Camera.Position
 			local posModifier = WVec.New(Utils.Random({ -5120, 3072, 5120 }), 0, 0)
 			MediaCA.PlaySoundAtPos(Utils.Random(distGunSounds), 1, cameraPos + posModifier)
@@ -187,7 +189,7 @@ DistGuns = function()
 end
 
 Chatter = function()
-	local chatterSounds = { "chatter1.aud", "chatter2.aud", "chatter3.aud" }
+	local chatterSounds = { MissionDir .. "/chatter1.aud", MissionDir .. "/chatter2.aud", MissionDir .. "/chatter3.aud" }
 	local delay = 0
 
 	Utils.Do(Utils.Shuffle(chatterSounds), function(s)

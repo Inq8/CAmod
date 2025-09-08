@@ -1,3 +1,5 @@
+MissionDir = "ca/missions/main-campaign/ca18-succession"
+
 SuperweaponsEnabledTime = {
 	easy = DateTime.Seconds((60 * 45) + 41),
 	normal = DateTime.Seconds((60 * 30) + 41),

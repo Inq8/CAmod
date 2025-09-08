@@ -1,3 +1,5 @@
+MissionDir = "ca/missions/main-campaign/ca07-conspiracy"
+
 SleeperAwakenTrigger = { LeftBaseTrigger1.Location, LeftBaseTrigger2.Location, LeftBaseTrigger3.Location, LeftBaseTrigger4.Location, LeftBaseTrigger5.Location, LeftBaseTrigger6.Location, LeftBaseTrigger7.Location, RightBaseTrigger1.Location, RightBaseTrigger2.Location, RightBaseTrigger3.Location, RightBaseTrigger4.Location, RightBaseTrigger5.Location, RightBaseTrigger6.Location, RightBaseTrigger7.Location }
 
 Researchers = { Researcher1, Researcher2 }
@@ -178,7 +180,7 @@ WorldLoaded = function()
 			if IsMissionPlayer(a.Owner) then
 				Trigger.RemoveProximityTrigger(id)
 				Notification("Researcher located.")
-				MediaCA.PlaySound("n_researcherlocated.aud", 2)
+				MediaCA.PlaySound(MissionDir .. "/n_researcherlocated.aud", 2)
 				if ObjectiveRescueResearchers == nil then
 					ObjectiveRescueResearchers = Nod.AddObjective("Locate and rescue Nod researchers.")
 				end
@@ -194,7 +196,7 @@ WorldLoaded = function()
 				Trigger.RemoveProximityTrigger(id)
 				researcher.Owner = Nod
 				Notification("Escort researcher to evacuation point.")
-				MediaCA.PlaySound("n_escortresearcher.aud", 2)
+				MediaCA.PlaySound(MissionDir .. "/n_escortresearcher.aud", 2)
 				InitEvacSite()
 			end
 		end)
@@ -221,7 +223,7 @@ WorldLoaded = function()
 					EvacStarted = true
 
 					Notification("Evacuation transport inbound.")
-					MediaCA.PlaySound("n_evacinbound.aud", 2)
+					MediaCA.PlaySound(MissionDir .. "/n_evacinbound.aud", 2)
 
 					Trigger.AfterDelay(DateTime.Seconds(3), function()
 						if EvacFlare ~= nil then
@@ -313,10 +315,10 @@ AwakenSleeperCell = function()
 	end
 	SleeperCellAwakened = true
 	Media.DisplayMessage("The time has come, warriors of Nod.", "Nod Soldier", HSLColor.FromHex("FF0000"))
-	MediaCA.PlaySound("timehascome.aud", 2)
+	MediaCA.PlaySound(MissionDir .. "/timehascome.aud", 2)
 	Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(4)), function()
 		Media.DisplayMessage("Down with GDI!", "Nod Soldier", HSLColor.FromHex("FF0000"))
-		MediaCA.PlaySound("downwithgdi.aud", 2)
+		MediaCA.PlaySound(MissionDir .. "/downwithgdi.aud", 2)
 		Trigger.AfterDelay(15, function()
 			UserInterface.SetMissionText("")
 			TransferLegionForces()

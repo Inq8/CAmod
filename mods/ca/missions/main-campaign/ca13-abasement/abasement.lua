@@ -1,3 +1,5 @@
+MissionDir = "ca/missions/main-campaign/ca13-abasement"
+
 
 ScrinWaterAttackPaths = {
 	{ NorthAttackRally.Location, NorthAttack1.Location, NorthAttack2.Location, NorthAttack3.Location },
@@ -301,7 +303,7 @@ FlipNorthBase = function()
 		AutoRebuildBuilding(turret3, Nod)
 	end)
 
-	MediaCA.PlaySound("r2_northernnodbasesecured.aud", 2)
+	MediaCA.PlaySound(MissionDir .. "/r2_northernnodbasesecured.aud", 2)
 	BaseFlipNotification()
 end
 
@@ -340,7 +342,7 @@ FlipSouthBase = function()
 		AutoRebuildBuilding(turret5, Nod)
 	end)
 
-	MediaCA.PlaySound("r2_southernnodbasesecured.aud", 2)
+	MediaCA.PlaySound(MissionDir .. "/r2_southernnodbasesecured.aud", 2)
 	BaseFlipNotification()
 end
 
@@ -349,7 +351,7 @@ SignalTransmitterDiscovered = function()
 		IsSignalTransmitterDiscovered = true
 		Beacon.New(USSR, SignalTransmitter.CenterPosition)
 		Notification("Signal Transmitter located.")
-		MediaCA.PlaySound("r2_signaltransmitterlocated.aud", 2)
+		MediaCA.PlaySound(MissionDir .. "/r2_signaltransmitterlocated.aud", 2)
 		local autoCamera = Actor.Create("smallcamera", true, { Owner = USSR, Location = SignalTransmitterLocation })
 		Trigger.AfterDelay(DateTime.Seconds(5), autoCamera.Destroy)
 	end
@@ -359,11 +361,11 @@ BaseFlipNotification = function()
 	Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(4)), function()
 		if not IsFirstBaseFlipped then
 			IsFirstBaseFlipped = true
-			MediaCA.PlaySound("seth_appreciate.aud", 2)
+			MediaCA.PlaySound(MissionDir .. "/seth_appreciate.aud", 2)
 			Media.DisplayMessage("The Brotherhood appreciates your efforts. We will begin deploying our troops to assist you.", "Nod Commander", HSLColor.FromHex("FF0000"))
 		elseif not IsSecondBaseFlipped then
 			IsSecondBaseFlipped = true
-			MediaCA.PlaySound("seth_kanepleased.aud", 2)
+			MediaCA.PlaySound(MissionDir .. "/seth_kanepleased.aud", 2)
 			Media.DisplayMessage("Kane will be pleased. Now focus your efforts on securing the Signal Transmitter.", "Nod Commander", HSLColor.FromHex("FF0000"))
 		end
 	end)

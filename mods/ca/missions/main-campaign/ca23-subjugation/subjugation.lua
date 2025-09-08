@@ -1,3 +1,5 @@
+MissionDir = "ca/missions/main-campaign/ca23-subjugation"
+
 RespawnEnabled = Map.LobbyOption("respawn") == "enabled"
 
 PowerGrids = {
@@ -121,7 +123,7 @@ WorldLoaded = function()
 
 	Trigger.AfterDelay(DateTime.Seconds(7), function()
 		Media.DisplayMessage("Your powers are no match for me. Flee through your wormholes, while you can.", "Yuri", HSLColor.FromHex("FF00BB"))
-		MediaCA.PlaySound("yuri_taunt.aud", 2)
+		MediaCA.PlaySound(MissionDir .. "/yuri_taunt.aud", 2)
 		Trigger.AfterDelay(DateTime.Seconds(7), function()
 			Tip("The Mastermind can mind control up to three enemy units. Mind controlling a fourth will kill the earliest controlled.")
 			Trigger.AfterDelay(DateTime.Seconds(7), function()
@@ -169,12 +171,12 @@ WorldLoaded = function()
 				Scrin.MarkCompletedObjective(ObjectiveCaptureTibFacilities)
 				Trigger.AfterDelay(DateTime.Seconds(2), function()
 					Notification("Enriched ichor consumed. Your Mastermind has become a Prodigy and is able to protect nearby units from Yuri's influence.")
-					MediaCA.PlaySound("s_prodigy.aud", 2)
+					MediaCA.PlaySound(MissionDir .. "/s_prodigy.aud", 2)
 				end)
 			else
 				Trigger.AfterDelay(DateTime.Seconds(2), function()
 					Notification("Enriched ichor consumed. Mastermind mind control capacity increased by 1.")
-					MediaCA.PlaySound("s_ichorconsumed.aud", 2)
+					MediaCA.PlaySound(MissionDir .. "/s_ichorconsumed.aud", 2)
 				end)
 			end
 		end)
@@ -208,10 +210,10 @@ WorldLoaded = function()
 				if not FirstShipmentAnnounced then
 					FirstShipmentAnnounced = true
 					Notification("Enriched ichor shipment detected. Dispatch is imminent. Prevent it from reaching Yuri's command center.")
-					MediaCA.PlaySound("s_firstichorshipment.aud", 2)
+					MediaCA.PlaySound(MissionDir .. "/s_firstichorshipment.aud", 2)
 				else
 					Notification("Enriched ichor shipment detected.")
-					MediaCA.PlaySound("s_ichorshipment.aud", 2)
+					MediaCA.PlaySound(MissionDir .. "/s_ichorshipment.aud", 2)
 				end
 
 				t.Objective = Scrin.AddSecondaryObjective(t.ObjectiveText)
@@ -231,7 +233,7 @@ WorldLoaded = function()
 								YuriHQ.GrantCondition("enriched")
 								a.Destroy()
 								Notification("A shipment of enriched ichor has reached Yuri's command center and he has grown more powerful.")
-								MediaCA.PlaySound("s_yuripower.aud", 2)
+								MediaCA.PlaySound(MissionDir .. "/s_yuripower.aud", 2)
 								if t.Objective ~= nil and not Scrin.IsObjectiveCompleted(t.Objective) then
 									Scrin.MarkFailedObjective(t.Objective)
 								end

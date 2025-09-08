@@ -1,3 +1,5 @@
+MissionDir = "ca/missions/main-campaign/ca-prologue-01"
+
 InsertionHelicopterType = "tran.evac"
 InsertionPath = { InsertionEntry.Location, InsertionLZ.Location }
 ExtractionHelicopterType = "tran.evac"
@@ -93,7 +95,7 @@ SendCruisers = function()
 	CruisersArrived = true
 
 	Notification("Allied cruisers have arrived.")
-	MediaCA.PlaySound("r_alliedcruisers.aud", 2);
+	MediaCA.PlaySound(MissionDir .. "/r_alliedcruisers.aud", 2);
 	Actor.Create("camera", true, { Owner = Greece, Location = CruiserCameraPoint.Location })
 	Beacon.New(Greece, CruiserBeacon.CenterPosition)
 
@@ -107,10 +109,10 @@ SendCruisers = function()
 
 	Trigger.AfterDelay(DateTime.Seconds(4), function()
 		Media.DisplayMessage("Encountering Soviet naval presence! We're under heavy fire!", "Cruiser Captain", HSLColor.FromHex("99ACF2"))
-		MediaCA.PlaySound("encountering.aud", 2)
+		MediaCA.PlaySound(MissionDir .. "/encountering.aud", 2)
 		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(4)), function()
 			Media.DisplayMessage("This is impossible! These waters were cleared!", "Cruiser Captain", HSLColor.FromHex("99ACF2"))
-			MediaCA.PlaySound("impossible.aud", 2)
+			MediaCA.PlaySound(MissionDir .. "/impossible.aud", 2)
 			Trigger.AfterDelay(DateTime.Seconds(2), function()
 				if not SubPen.IsDead and ObjectiveDestroySubPen == nil then
 					ObjectiveDestroySubPen = Greece.AddObjective("Destroy the Soviet Sub Pen.")
@@ -119,7 +121,7 @@ SendCruisers = function()
 						PrismsArrived = true
 						Trigger.AfterDelay(DateTime.Seconds(1), function()
 							Lighting.Flash("Chronoshift", 10)
-							Media.PlaySound("chrono2.aud")
+							Media.PlaySound(MissionDir .. "/chrono2.aud")
 							Beacon.New(Greece, PrismBeacon.CenterPosition)
 							Actor.Create("warpin", true, { Owner = Greece, Location = PrismBeacon.Location })
 							Actor.Create("ptnk", true, { Owner = England, Location = PrismSpawn1.Location, Facing = Angle.East })
@@ -127,11 +129,11 @@ SendCruisers = function()
 							Actor.Create("ptnk", true, { Owner = England, Location = PrismSpawn3.Location, Facing = Angle.East })
 							Trigger.AfterDelay(DateTime.Seconds(2), function()
 								Notification("Unidentified Allied units detected.")
-								MediaCA.PlaySound("r_unidentified.aud", 2)
+								MediaCA.PlaySound(MissionDir .. "/r_unidentified.aud", 2)
 
 								Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(3)), function()
 									Media.DisplayMessage("Another temporal disturbance.. Well, we can work this out later. For now, we are at your disposal commander.", "Unknown", HSLColor.FromHex("99ACF2"))
-									MediaCA.PlaySound("disturbance.aud", 2)
+									MediaCA.PlaySound(MissionDir .. "/disturbance.aud", 2)
 									Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(5)), function()
 										local prismTanks = England.GetActorsByType("ptnk")
 										Utils.Do(prismTanks, function(a)

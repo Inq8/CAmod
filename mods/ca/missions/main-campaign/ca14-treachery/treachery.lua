@@ -1,3 +1,5 @@
+MissionDir = "ca/missions/main-campaign/ca14-treachery"
+
 
 GreeceMainAttackPaths = {
 	{ SouthAttackRally.Location, SouthAttack1.Location },
@@ -144,7 +146,7 @@ WorldLoaded = function()
 	Trigger.OnKilled(Boris, function(self, killer)
 		Trigger.AfterDelay(DateTime.Seconds(1), function()
 			Notification("Boris has been killed.")
-			MediaCA.PlaySound("r2_boriskilled.aud", 2)
+			MediaCA.PlaySound(MissionDir .. "/r2_boriskilled.aud", 2)
 		end)
 	end)
 
@@ -158,7 +160,7 @@ WorldLoaded = function()
 
 	Trigger.OnKilled(TraitorGeneral, function(self, killer)
 		USSR.MarkCompletedObjective(ObjectiveKillTraitor)
-		MediaCA.PlaySound("r2_yegeroveliminated.aud", 2)
+		MediaCA.PlaySound(MissionDir .. "/r2_yegeroveliminated.aud", 2)
 	end)
 
 	Trigger.OnAllKilled({ TraitorSAM1, TraitorSAM2 }, function()
@@ -355,7 +357,7 @@ TraitorHQKilledOrCaptured = function()
 		local traitorGeneral = Actor.Create("gnrl", true, { Owner = Traitor, Location = TraitorHQSpawn.Location })
 		traitorGeneral.Move(TraitorGeneralSafePoint.Location)
 		Trigger.OnKilled(traitorGeneral, function(self, killer)
-			MediaCA.PlaySound("r2_yegeroveliminated.aud", 2)
+			MediaCA.PlaySound(MissionDir .. "/r2_yegeroveliminated.aud", 2)
 			Trigger.AfterDelay(DateTime.Seconds(2), function()
 				USSR.MarkCompletedObjective(ObjectiveKillTraitor)
 			end)

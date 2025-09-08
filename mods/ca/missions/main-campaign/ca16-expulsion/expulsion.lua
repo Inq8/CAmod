@@ -1,3 +1,5 @@
+MissionDir = "ca/missions/main-campaign/ca16-expulsion"
+
 GDIMainAttackPaths = {
 	{ GDIRallyAlpha.Location, GDIAttack1.Location, GDIAttack2.Location, GDIAttack3.Location, GDIAttack4.Location, GDIAttack5.Location, GDIAttack6.Location },
 	{ GDIRallyAlpha.Location, GDIAttack7.Location, GDIAttack4.Location, GDIAttack5.Location, GDIAttack6.Location },

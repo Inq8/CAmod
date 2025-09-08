@@ -1,3 +1,5 @@
+MissionDir = "ca/missions/main-campaign/ca05-apprehension"
+
 SAMs = {
 	{ SAMSite = SAM1, Pos = SAM1Squad.CenterPosition, Rally = SAM1SquadRally.Location },
 	{ SAMSite = SAM2, Pos = SAM2Squad.CenterPosition, Rally = SAM2SquadRally.Location },

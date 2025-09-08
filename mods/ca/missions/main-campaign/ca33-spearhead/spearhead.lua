@@ -1,3 +1,4 @@
+MissionDir = "ca/missions/main-campaign/ca33-spearhead"
 
 ShardLaunchers = { Shard1, Shard2, Shard3, Shard4, Shard5, Shard6 }
 

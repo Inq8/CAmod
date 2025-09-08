@@ -1,3 +1,5 @@
+MissionDir = "ca/missions/main-campaign/ca15-ironclad"
+
 
 GreeceAttackPaths = {
 	{ AlliedAttackRally.Location, AlliedAttack1a.Location },
@@ -209,7 +211,7 @@ EngineerDrop = function()
 
 	Trigger.AfterDelay(DateTime.Seconds(2), function()
 		Notification("Engineering team inbound.")
-		MediaCA.PlaySound("r2_engineeringteam.aud", 2)
+		MediaCA.PlaySound(MissionDir .. "/r2_engineeringteam.aud", 2)
 	end)
 
 	DoHelicopterDrop(USSR, entryPath, "halo.engis", haloDropUnits, nil, function(t)

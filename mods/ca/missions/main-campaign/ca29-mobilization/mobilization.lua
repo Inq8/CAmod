@@ -1,3 +1,5 @@
+MissionDir = "ca/missions/main-campaign/ca29-mobilization"
+
 UnitBuildTimeMultipliers = {
 	easy = 0.05,
 	normal = 0.05,

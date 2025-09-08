@@ -1,3 +1,5 @@
+MissionDir = "ca/missions/main-campaign/ca40-conduit"
+
 TimeLimit = {
 	normal = DateTime.Minutes(75),
 	hard = DateTime.Minutes(45),
@@ -222,7 +224,7 @@ InitKaneReturn = function()
 	if not KaneReturnInitiated then
 		KaneReturnInitiated = true
 		Media.DisplayMessage("The Overlord will not be your salvation. Your empire is dead. Surrender, or be destroyed. My return will not be stopped.", "Kane", HSLColor.FromHex("FF0000"))
-		MediaCA.PlaySound("kane_return.aud", 2.5)
+		MediaCA.PlaySound(MissionDir .. "/kane_return.aud", 2.5)
 		DeployCyborgs()
 	end
 end

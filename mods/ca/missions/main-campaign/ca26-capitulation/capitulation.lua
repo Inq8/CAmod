@@ -1,3 +1,5 @@
+MissionDir = "ca/missions/main-campaign/ca26-capitulation"
+
 AttackPaths = {
 	{ WestDelivery3.Location, AttackRally1.Location },
 	{ WestDelivery3.Location, AttackRally2.Location },
@@ -226,12 +228,12 @@ WorldLoaded = function()
 	Trigger.AfterDelay(DateTime.Seconds(4), function()
 		Beacon.New(GDI, Spy.CenterPosition)
 		Media.DisplayMessage("It feels like they're getting suspicious, I'm getting out of here...", "Allied Spy", HSLColor.FromHex("1E90FF"))
-		MediaCA.PlaySound("suspicious.aud", 2)
+		MediaCA.PlaySound(MissionDir .. "/suspicious.aud", 2)
 		Spy.Move(SouthDelivery3.Location)
 		SpyKiller.Attack(Spy)
 		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(12)), function()
 			Media.DisplayMessage("Attention you capitalist dogs! My defenses are impenetrable. Leave at once, or prepare to be crushed!", "Stalin", HSLColor.FromHex("DD0000"))
-			MediaCA.PlaySound("stalin_warning.aud", 2)
+			MediaCA.PlaySound(MissionDir .. "/stalin_warning.aud", 2)
 		end)
 	end)
 
@@ -328,7 +330,7 @@ InitUSSR = function()
 					TimerTicks = MaxReactorFuelTime
 				end
 				Notification("A fuel shipment has reached the Soviet reactor.")
-				MediaCA.PlaySound("c_fuelshipment.aud", 2)
+				MediaCA.PlaySound(MissionDir .. "/c_fuelshipment.aud", 2)
 			end
 		end
 	end)
@@ -389,12 +391,12 @@ ReactorStarved = function()
 			notificationText = notificationText .. ". The Telsa Reactors in the south-east continue to provide the base with power."
 		end
 		Notification(notificationText)
-		MediaCA.PlaySound("c_atomicshutdown.aud", 2)
+		MediaCA.PlaySound(MissionDir .. "/c_atomicshutdown.aud", 2)
 		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(3)), function()
 			if AreTeslaReactorsOffline then
-				MediaCA.PlaySound("c_sovietbasenopower.aud", 2)
+				MediaCA.PlaySound(MissionDir .. "/c_sovietbasenopower.aud", 2)
 			else
-				MediaCA.PlaySound("c_teslareactorsremain.aud", 2)
+				MediaCA.PlaySound(MissionDir .. "/c_teslareactorsremain.aud", 2)
 			end
 		end)
 	end
@@ -426,12 +428,12 @@ TeslaReactorsOffline = function()
 			notificationText = notificationText .. " Tesla Coils are no longer supercharged and some perimeter air defenses are down, however the Atomic Reactor continues to provide the base with power."
 		end
 		Notification(notificationText)
-		MediaCA.PlaySound("c_sovietsecondarypoweroffline.aud", 2)
+		MediaCA.PlaySound(MissionDir .. "/c_sovietsecondarypoweroffline.aud", 2)
 		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(3)), function()
 			if IsReactorStarved then
-				MediaCA.PlaySound("c_sovietbasenopower.aud", 2)
+				MediaCA.PlaySound(MissionDir .. "/c_sovietbasenopower.aud", 2)
 			else
-				MediaCA.PlaySound("c_atomicup.aud", 2)
+				MediaCA.PlaySound(MissionDir .. "/c_atomicup.aud", 2)
 			end
 		end)
 	end

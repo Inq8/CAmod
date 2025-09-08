@@ -1,3 +1,5 @@
+MissionDir = "ca/missions/main-campaign/ca09-salvation"
+
 Wormholes = {
 	{ Locations = { WormholeSpawn1a.Location, WormholeSpawn1b.Location, WormholeSpawn1c.Location, WormholeSpawn1d.Location }, Actor = nil, SpawnCount = 0, Phase = 1 },
 	{ Locations = { WormholeSpawn4a.Location, WormholeSpawn4b.Location, WormholeSpawn4c.Location, WormholeSpawn4d.Location, WormholeSpawn4e.Location }, Actor = nil, SpawnCount = 0, Phase = 1 },
@@ -216,7 +218,7 @@ SpawnWormhole = function()
 		local camera = Actor.Create("smallcamera", true, { Owner = Nod, Location = randomLocation })
 		Beacon.New(Nod, randomDormantWormhole.Actor.CenterPosition)
 		Notification("Scrin portal detected. Destroy it before Scrin reinforcements arrive.")
-		MediaCA.PlaySound("n_scrinportal.aud", 2)
+		MediaCA.PlaySound(MissionDir .. "/n_scrinportal.aud", 2)
 
 		UpdateScrinCounter()
 

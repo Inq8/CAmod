@@ -1,3 +1,5 @@
+MissionDir = "ca/missions/main-campaign/ca32-convergence"
+
 MaxBreakthroughs = {
 	easy = 6,
 	normal = 3,
@@ -137,7 +139,7 @@ WorldLoaded = function()
 
 		Trigger.AfterDelay(DateTime.Seconds(120), function()
 			Notification("The area across the river is infested with Tiberium lifeforms. You will need to use aicraft to intercept Scrin fleet vessels attempting to break through there.")
-			MediaCA.PlaySound("c_acrossriver.aud", 2)
+			MediaCA.PlaySound(MissionDir .. "/c_acrossriver.aud", 2)
 			Beacon.New(GDI, AcrossRiver.CenterPosition)
 			local acrossRiverCamera = Actor.Create("camera", true, { Owner = GDI, Location = AcrossRiver.Location })
 			Trigger.AfterDelay(DateTime.Seconds(10), function()
@@ -258,7 +260,7 @@ end
 
 SendFleetWave = function()
 	Notification("Scrin fleet vessels approaching.")
-	MediaCA.PlaySound("c_scrinfleetvessels.aud", 2)
+	MediaCA.PlaySound(MissionDir .. "/c_scrinfleetvessels.aud", 2)
 	local currentWave = NextWave
 	local interval = 1
 
@@ -317,7 +319,7 @@ SendFleetWave = function()
 					pathRenderer.Destroy()
 				end)
 			end
-			Media.PlaySound("beepslct.aud")
+			Media.PlaySound(MissionDir .. "/beepslct.aud")
 		end)
 
 		if currentWave >= 8 and IsHardOrAbove() then

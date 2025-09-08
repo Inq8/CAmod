@@ -1,3 +1,5 @@
+MissionDir = "ca/missions/main-campaign/ca24-culmination"
+
 AlliedSavedAdvancedBuildings = {}
 USSRSavedAdvancedBuildings = {}
 NodSavedAdvancedBuildings = {}

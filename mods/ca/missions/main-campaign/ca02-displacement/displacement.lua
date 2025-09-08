@@ -1,3 +1,5 @@
+MissionDir = "ca/missions/main-campaign/ca02-displacement"
+
 -- Locations and Paths
 
 Convoys = {
@@ -174,7 +176,7 @@ WorldLoaded = function()
 
 	-- Easter egg
 	Trigger.OnKilled(Church, function(a)
-		Media.PlaySound("screams.aud")
+		Media.PlaySound(MissionDir .. "/screams.aud")
 		local congregation1 = Reinforcements.Reinforce(Neutral, { "c1" }, { Church.Location, CPos.New(Church.Location.X - 2, Church.Location.Y - 1) })[1]
 		local congregation2 = Reinforcements.Reinforce(Neutral, { "c3" }, { Church.Location, CPos.New(Church.Location.X - 2, Church.Location.Y) })[1]
 		local congregation3 = Reinforcements.Reinforce(Neutral, { "c4" }, { Church.Location, CPos.New(Church.Location.X - 2, Church.Location.Y + 1) })[1]
@@ -266,7 +268,7 @@ InitConvoy = function()
 	if not FirstConvoyAnnounced then
 		FirstConvoyAnnounced = true
 		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(3)), function()
-			MediaCA.PlaySound("r_firstconvoy.aud", 1.5)
+			MediaCA.PlaySound(MissionDir .. "/r_firstconvoy.aud", 1.5)
 		end)
 	end
 

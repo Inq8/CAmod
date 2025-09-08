@@ -1,3 +1,5 @@
+MissionDir = "ca/missions/main-campaign/ca08-subversion"
+
 RespawnEnabled = Map.LobbyOption("respawn") == "enabled"
 
 BattleTankPatrolPath = { BattleTankPatrol1.Location, BattleTankPatrol2.Location, BattleTankPatrol3.Location, BattleTankPatrol4.Location, BattleTankPatrol5.Location, BattleTankPatrol6.Location, BattleTankPatrol5.Location, BattleTankPatrol4.Location, BattleTankPatrol3.Location, BattleTankPatrol2.Location }
@@ -201,7 +203,7 @@ OncePerSecondChecks = function()
 			ObjectiveDestroyAlliedBase = Nod.AddObjective("Use the Ion Cannon to destroy the Allied base.")
 			Nod.MarkCompletedObjective(ObjectiveHackIonControl)
 			UserInterface.SetMissionText("Destroy bridges then use the Ion Cannon to destroy the Allied base.", HSLColor.Yellow)
-			MediaCA.PlaySound("n_useioncannon.aud", 2)
+			MediaCA.PlaySound(MissionDir .. "/n_useioncannon.aud", 2)
 			BaseCamera1 = Actor.Create("camera", true, { Owner = Nod, Location = AlliedBase1.Location })
 			BaseCamera2 = Actor.Create("camera", true, { Owner = Nod, Location = AlliedBase2.Location })
 			BaseCamera3 = Actor.Create("camera", true, { Owner = Nod, Location = AlliedBase3.Location })

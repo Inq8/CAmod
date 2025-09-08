@@ -1,3 +1,5 @@
+MissionDir = "ca/missions/main-campaign/ca12-supremacy"
+
 IonCannonEnabledTime = {
 	easy = DateTime.Seconds((60 * 40) + 48),
 	normal = DateTime.Seconds((60 * 25) + 48),

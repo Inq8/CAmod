@@ -1,3 +1,5 @@
+MissionDir = "ca/missions/main-campaign/ca10-zenith"
+
 
 Squads = {
 	Planes = {

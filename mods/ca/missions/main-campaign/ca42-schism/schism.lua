@@ -1,3 +1,5 @@
+MissionDir = "ca/missions/main-campaign/ca42-schism"
+
 PurificationInterval = DateTime.Minutes(3) + DateTime.Seconds(5)
 
 DefendDuration = {
@@ -158,10 +160,10 @@ WorldLoaded = function()
 
 	Trigger.AfterDelay(DateTime.Seconds(4), function()
 		Media.DisplayMessage("Stop this madness. You have no idea what you are dealing with. You will be the end of us all!", "Kane", HSLColor.FromHex("FF0000"))
-		MediaCA.PlaySound("kane_stopmadness.aud", 2)
+		MediaCA.PlaySound(MissionDir .. "/kane_stopmadness.aud", 2)
 		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(7)), function()
 			Media.DisplayMessage("Your foolish quest ends here Kane. The Overlord will have your head.", "Premier Cherdenko", HSLColor.FromHex("FF0000"))
-			MediaCA.PlaySound("cdko_quest.aud", 2)
+			MediaCA.PlaySound(MissionDir .. "/cdko_quest.aud", 2)
 			Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(7)), function()
 				spyPlaneDummy1.TargetAirstrike(Purifier.CenterPosition, Angle.NorthEast)
 				spyPlaneDummy1.Destroy()
@@ -323,7 +325,7 @@ end
 
 PurificationWave = function()
 	Lighting.Flash("Purification", AdjustTimeForGameSpeed(10))
-	MediaCA.PlaySound("purificationsm.aud", 2)
+	MediaCA.PlaySound(MissionDir .. "/purificationsm.aud", 2)
 
 	local exterminators = USSR.GetActorsByType("etpd")
 	if #exterminators > 0 then
@@ -355,10 +357,10 @@ MaleficInit = function()
 			Actor.Create("wormhole", true, { Owner = MaleficScrin, Location = loc})
 		end)
 
-		MediaCA.PlaySound("malefic.aud", 2)
+		MediaCA.PlaySound(MissionDir .. "/malefic.aud", 2)
 		Trigger.AfterDelay(DateTime.Seconds(8), function()
 			Media.DisplayMessage("Impossible! These Scrin are not..  Do not allow the device to be destroyed!", "Scrin Overlord", HSLColor.FromHex("7700FF"))
-			MediaCA.PlaySound("ovld_impossible.aud", 2)
+			MediaCA.PlaySound(MissionDir .. "/ovld_impossible.aud", 2)
 
 			Trigger.AfterDelay(DateTime.Seconds(8), function()
 				Utils.Do(OverlordSpawns, function(loc)
