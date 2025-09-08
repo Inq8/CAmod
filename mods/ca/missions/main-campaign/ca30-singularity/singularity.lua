@@ -296,6 +296,7 @@ Tick = function()
 	OncePerFiveSecondChecks()
 	OncePerThirtySecondChecks()
 	PanToFinale()
+	AfterTick()
 end
 
 ClearCyborgTarget = function(cyborg)

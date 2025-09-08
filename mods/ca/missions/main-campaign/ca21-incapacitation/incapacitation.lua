@@ -218,6 +218,8 @@ Tick = function()
 			Lighting.Ambient = Lighting.Ambient + 0.005
 		end
 	end
+
+	AfterTick()
 end
 
 OncePerSecondChecks = function()

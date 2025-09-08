@@ -195,6 +195,7 @@ Tick = function()
 	PanToCruisers()
 	PanToPrisms()
 	OncePerSecondChecks()
+	AfterTick()
 end
 
 OncePerSecondChecks = function()

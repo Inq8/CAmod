@@ -60,6 +60,7 @@ Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
 	PanToBanshees()
+	AfterTick()
 end
 
 OncePerSecondChecks = function()

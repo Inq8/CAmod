@@ -119,6 +119,7 @@ end
 
 Tick = function()
 	OncePerSecondChecks()
+	AfterTick()
 end
 
 OncePerSecondChecks = function()

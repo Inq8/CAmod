@@ -245,6 +245,7 @@ Tick = function()
 	OncePerFiveSecondChecks()
 	OncePerThirtySecondChecks()
 	PanToStart()
+	AfterTick()
 end
 
 OncePerSecondChecks = function()

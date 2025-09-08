@@ -229,6 +229,7 @@ end
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
+	AfterTick()
 end
 
 OncePerSecondChecks = function()

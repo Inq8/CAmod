@@ -202,6 +202,7 @@ Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
 	OncePerThirtySecondChecks()
+	AfterTick()
 end
 
 OncePerSecondChecks = function()
