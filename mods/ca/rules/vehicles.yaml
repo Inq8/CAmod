@@ -8752,18 +8752,6 @@ BATF:
 	Carryable:
 		LocalOffset: 0,0,500
 	-Crushable:
-	AutoTargetPriority@DEFAULT:
-		RequiresCondition: !stance-attackanything && !assault-move && !loaded-air
-	AutoTargetPriority@ATTACKANYTHING:
-		RequiresCondition: (stance-attackanything || assault-move) && !loaded-air
-	AutoTargetPriority@DEFAULT_AIR:
-		RequiresCondition: !stance-attackanything && !assault-move && loaded-air
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Defense
-		InvalidTargets: NoAutoTarget, WaterStructure, AntiAirDefense
-	AutoTargetPriority@ATTACKANYTHING_AIR:
-		RequiresCondition: (stance-attackanything || assault-move) && loaded-air
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Structure, Defense
-		InvalidTargets: NoAutoTarget
 	Voiced:
 		VoiceSet: BattleFortressVoice
 	UpdatesPlayerStatistics:

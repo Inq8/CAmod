@@ -148,6 +148,12 @@ WorldLoaded = function()
 	InitSovietSlaves()
 	InitAlliedSlaves()
 
+	if SignalTransmitter.HasProperty("Attack") then
+		Media.Debug("1")
+	else
+		Media.Debug("2")
+	end
+
 	if Difficulty == "easy" then
 		HardNormalAA1.Destroy()
 		HardNormalAA2.Destroy()
@@ -294,6 +300,7 @@ end
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
+	OncePerFifteenSecondChecks()
 	OncePerThirtySecondChecks()
 	PanToFinale()
 	AfterTick()
@@ -385,7 +392,7 @@ OncePerFiveSecondChecks = function()
 	end
 end
 
-OncePerFiveSecondChecks = function()
+OncePerFifteenSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % DateTime.Seconds(15) == 0 then
 		if NodFreed and FirstHackersArrived and not MoreHackersRequested and not ShieldsOffline and not SignalTransmitter.IsDead then
 			local numHackers = #GDI.GetActorsByType("hack")
@@ -420,7 +427,7 @@ OncePerThirtySecondChecks = function()
 end
 
 InitScrin = function()
-	RebuildExcludes.Scrin = { Types = { "sign", "rfgn", "reac", "rea2" } }
+	RebuildExcludes.Scrin = { Types = { "sign", "rfgn", "silo.scrinblue" }, Actors = Utils.Concat(NWReactors, NEReactors) }
 
 	AutoRepairBuildings(SignalTransmitterPlayer)
 
@@ -439,7 +446,6 @@ InitScrin = function()
 	end)
 
 	Mothership.Attack(Wormhole, true, true)
-	Actor.Create("ai.unlimited.power", true, { Owner = Scrin })
 	IonConduits = Actor.Create("ioncon.upgrade", true, { Owner = Scrin })
 	ScrinDefenseBuff1 = Actor.Create("scrindefensebuff1", true, { Owner = Scrin })
 	ScrinDefenseBuff2 = Actor.Create("scrindefensebuff2", true, { Owner = Scrin })
@@ -449,16 +455,6 @@ InitScrin = function()
 
 	Trigger.AfterDelay(RiftEnabledTime[Difficulty], function()
 		Actor.Create("ai.superweapons.enabled", true, { Owner = Scrin })
-	end)
-
-	local scrinPower = Scrin.GetActorsByTypes({ "reac", "rea2" })
-	Trigger.OnAllKilledOrCaptured(scrinPower, function()
-		local scrinDefenses = Scrin.GetActorsByTypes({ "scol", "shar" })
-		Utils.Do(scrinDefenses, function(a)
-			if not a.IsDead then
-				a.GrantCondition("disabled")
-			end
-		end)
 	end)
 end
 
@@ -651,11 +647,13 @@ InitMADTankAttack = function()
 			end
 		end)
 
-		Trigger.OnEnteredProximityTrigger(MADTankPath1.CenterPosition, WDist.New(7 * 1024), function(a, id)
-			if a.Owner == GDI and a.HasProperty("Attack") then
-				Trigger.RemoveProximityTrigger(id)
-				SendMADTank()
-			end
+		Trigger.AfterDelay(DateTime.Seconds(10), function()
+			Trigger.OnEnteredProximityTrigger(MADTankPath1.CenterPosition, WDist.New(7 * 1024), function(a, id)
+				if a.Owner == GDI and a.HasProperty("Attack") then
+					Trigger.RemoveProximityTrigger(id)
+					SendMADTank()
+				end
+			end)
 		end)
 
 		Trigger.AfterDelay(DateTime.Minutes(2), function()
@@ -789,6 +787,10 @@ FlipSlaveFaction = function(player)
 						a.Stop()
 						a.AttackMove(attackPath[1], 2)
 						a.AttackMove(attackPath[2], 2)
+					elseif a.HasProperty("Attack") then
+						a.Stop()
+					elseif a.HasProperty("Move") then
+						a.Stop()
 					elseif a.HasProperty("FindResources") then
 						a.Stop()
 						a.FindResources()
