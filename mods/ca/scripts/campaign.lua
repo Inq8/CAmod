@@ -730,7 +730,7 @@ ConyardEntry = function(player, a)
 		conyard.DeployLocation = a.Location + CVec.New(1, 1)
 	elseif a.Type == "sfac" then
 		conyard.McvType = "smcv"
-		conyard.DeployLocation = a.Location + CVec.New(1, 1)
+		conyard.DeployLocation = a.Location + CVec.New(1, 0)
 	end
 
 	return conyard
@@ -804,14 +804,16 @@ QueueMcv = function(player, mcvType)
 						if #possibleConyards > 0 then
 							targetConyard = Utils.Random(possibleConyards)
 							targetConyard.AssignedMcv = produced
+							produced.Move(targetConyard.DeployLocation)
+							produced.Deploy()
 
 							Trigger.OnIdle(produced, function(self)
-								produced.Move(targetConyard.DeployLocation)
-								produced.Deploy()
-
-								-- move to a random location within 5 cells to prevent excessive idle calls
+								-- if deploy failed, wait 10 seconds, move to a random location within 5 cells then return and try again
+								produced.Wait(DateTime.Seconds(10))
 								local randomCell = CPos.New(targetConyard.DeployLocation.X + Utils.RandomInteger(-5, 5), targetConyard.DeployLocation.Y + Utils.RandomInteger(-5, 5))
 								produced.Move(randomCell)
+								produced.Move(targetConyard.DeployLocation)
+								produced.Deploy()
 							end)
 
 							-- if deployed
