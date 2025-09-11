@@ -433,13 +433,6 @@ namespace OpenRA.Mods.CA.Projectiles
 			// projectile starts at the source position
 			pos = args.Source;
 
-			// apply initial grounding based on ForceGround mode
-			var damageGrounded = info.ForceGround != LinearPulseForceGroundType.None;
-			if (damageGrounded)
-			{
-				pos = new WPos(pos.X, pos.Y, 0);
-			}
-
 			// initially no distance has been travelled by the pulse
 			totalDistanceTravelled = 0;
 
@@ -710,7 +703,7 @@ namespace OpenRA.Mods.CA.Projectiles
 
 			if (info.SmudgeType.Any())
 			{
-				DoSmudge(Target.FromPos(impactPos), new WarheadArgs(args));
+				DoSmudge(Target.FromPos(impactPosForDamage), new WarheadArgs(args));
 			}
 
 			switch (info.ImpactType)
@@ -719,13 +712,13 @@ namespace OpenRA.Mods.CA.Projectiles
 					args.Weapon.Impact(Target.FromPos(impactPosForDamage), new WarheadArgs(args));
 					break;
 				case LinearPulseImpactType.Rectangle:
-					ExplodeRectangle(impactPos);
+					ExplodeRectangle(impactPosForDamage);
 					break;
 				case LinearPulseImpactType.Cone:
-					ExplodeCone(impactPos);
+					ExplodeCone(impactPosForDamage);
 					break;
 				case LinearPulseImpactType.Trapezoid:
-					ExplodeTrapezoid(impactPos);
+					ExplodeTrapezoid(impactPosForDamage);
 					break;
 			}
 		}
@@ -733,8 +726,6 @@ namespace OpenRA.Mods.CA.Projectiles
 		void ExplodeRectangle(WPos impactPos)
 		{
 			var world = args.SourceActor.World;
-			var damageGrounded = info.ForceGround != LinearPulseForceGroundType.None;
-			var impactPosForDamage = damageGrounded ? new WPos(impactPos.X, impactPos.Y, 0) : impactPos;
 
 			// Calculate rectangle dimensions and orientation
 			var halfLength = info.RectangleLength.Length / 2;
@@ -814,7 +805,7 @@ namespace OpenRA.Mods.CA.Projectiles
 					// If no DamageFalloffs are configured, apply damage without any falloff
 					if (info.DamageFalloffs.Count == 0)
 					{
-						ApplyDamageToActor(actor, impactPosForDamage, falloffData);
+						ApplyDamageToActor(actor, impactPos, falloffData);
 					}
 					else
 					{
@@ -829,7 +820,7 @@ namespace OpenRA.Mods.CA.Projectiles
 							{
 								if (targetPos is HitShape h)
 								{
-									var referencePoint = GetReferencePoint(actor, impactPosForDamage, damageFalloff);
+									var referencePoint = GetReferencePoint(actor, impactPos, damageFalloff);
 									var distance = h.DistanceFromEdge(actor, referencePoint).Length;
 									if (distance < closestDistance)
 									{
@@ -850,9 +841,9 @@ namespace OpenRA.Mods.CA.Projectiles
 								DamageCalculationType.ClosestTargetablePosition => actor.GetTargetablePositions()
 									.Where(x => IsPointInRectangle(x, corner1, corner2, corner3, corner4))
 									.DefaultIfEmpty(actor.CenterPosition)
-									.Min(x => CalculateFalloffDistance(x, impactPosForDamage, damageFalloff)),
-								DamageCalculationType.CenterPosition => CalculateFalloffDistance(actor.CenterPosition, impactPosForDamage, damageFalloff),
-								_ => CalculateFalloffDistance(actor.CenterPosition, impactPosForDamage, damageFalloff)
+									.Min(x => CalculateFalloffDistance(x, impactPos, damageFalloff)),
+								DamageCalculationType.CenterPosition => CalculateFalloffDistance(actor.CenterPosition, impactPos, damageFalloff),
+								_ => CalculateFalloffDistance(actor.CenterPosition, impactPos, damageFalloff)
 							};
 
 							falloffData.Add((damageFalloff, falloffDistance));
@@ -861,7 +852,7 @@ namespace OpenRA.Mods.CA.Projectiles
 						// If we have falloff data, apply damage
 						if (falloffData.Count > 0)
 						{
-							ApplyDamageToActor(actor, impactPosForDamage, falloffData);
+							ApplyDamageToActor(actor, impactPos, falloffData);
 						}
 					}
 
@@ -908,12 +899,8 @@ namespace OpenRA.Mods.CA.Projectiles
 		{
 			var world = args.SourceActor.World;
 
-			// Grounded impact position for damage calculations (reflects ForceGround for damage)
-			var damageGrounded = info.ForceGround != LinearPulseForceGroundType.None;
-			var impactPosForDamage = damageGrounded ? new WPos(impactPos.X, impactPos.Y, 0) : impactPos;
-
 			// Calculate distance from source to impact position (respecting damage grounding)
-			var distanceFromSource = (impactPosForDamage - source).Length; // Grounded distance calculation
+			var distanceFromSource = (impactPos - source).Length; // Grounded distance calculation
 
 			// Calculate the radius of the cone at this distance
 			var halfConeAngleRadians = info.ConeAngle * Math.PI / 360.0; // Convert degrees to radians and divide by 2
@@ -986,7 +973,7 @@ namespace OpenRA.Mods.CA.Projectiles
 					// If no DamageFalloffs are configured, apply damage without any falloff
 					if (info.DamageFalloffs.Count == 0)
 					{
-						ApplyDamageToActor(actor, impactPosForDamage, falloffData);
+						ApplyDamageToActor(actor, impactPos, falloffData);
 					}
 					else
 					{
@@ -1001,7 +988,7 @@ namespace OpenRA.Mods.CA.Projectiles
 							{
 								if (targetPos is HitShape h)
 								{
-									var referencePoint = GetReferencePoint(actor, impactPosForDamage, damageFalloff);
+									var referencePoint = GetReferencePoint(actor, impactPos, damageFalloff);
 									var distance = h.DistanceFromEdge(actor, referencePoint).Length;
 									if (distance < closestDistance)
 									{
@@ -1020,9 +1007,9 @@ namespace OpenRA.Mods.CA.Projectiles
 							{
 								DamageCalculationType.HitShape => closestDistance,
 								DamageCalculationType.ClosestTargetablePosition => actor.GetTargetablePositions()
-									.Min(x => CalculateFalloffDistance(x, impactPosForDamage, damageFalloff)),
-								DamageCalculationType.CenterPosition => CalculateFalloffDistance(actor.CenterPosition, impactPosForDamage, damageFalloff),
-								_ => CalculateFalloffDistance(actor.CenterPosition, impactPosForDamage, damageFalloff)
+									.Min(x => CalculateFalloffDistance(x, impactPos, damageFalloff)),
+								DamageCalculationType.CenterPosition => CalculateFalloffDistance(actor.CenterPosition, impactPos, damageFalloff),
+								_ => CalculateFalloffDistance(actor.CenterPosition, impactPos, damageFalloff)
 							};
 
 							falloffData.Add((damageFalloff, falloffDistance));
@@ -1031,7 +1018,7 @@ namespace OpenRA.Mods.CA.Projectiles
 						// If we have falloff data, apply damage
 						if (falloffData.Count > 0)
 						{
-							ApplyDamageToActor(actor, impactPosForDamage, falloffData);
+							ApplyDamageToActor(actor, impactPos, falloffData);
 						}
 					}
 
@@ -1045,12 +1032,8 @@ namespace OpenRA.Mods.CA.Projectiles
 		{
 			var world = args.SourceActor.World;
 
-			// Grounded impact position for damage calculations (reflects ForceGround for damage)
-			var damageGrounded = info.ForceGround != LinearPulseForceGroundType.None;
-			var impactPosForDamage = damageGrounded ? new WPos(impactPos.X, impactPos.Y, 0) : impactPos;
-
 			// Calculate distance from source to impact position (respecting damage grounding)
-			var distanceFromSource = (impactPosForDamage - source).Length;
+			var distanceFromSource = (impactPos - source).Length;
 
 			// Use the trapezoid segment length to determine how many segments we need
 			var segmentLength = info.TrapezoidSegmentLength.Length;
@@ -1135,7 +1118,7 @@ namespace OpenRA.Mods.CA.Projectiles
 						// If no DamageFalloffs are configured, apply damage without any falloff
 						if (info.DamageFalloffs.Count == 0)
 						{
-							ApplyDamageToActor(actor, impactPosForDamage, falloffData);
+							ApplyDamageToActor(actor, impactPos, falloffData);
 						}
 						else
 						{
@@ -1149,7 +1132,7 @@ namespace OpenRA.Mods.CA.Projectiles
 								{
 									if (targetPos is HitShape h && h.IsTraitEnabled())
 									{
-										var referencePoint = GetReferencePoint(actor, impactPosForDamage, damageFalloff);
+										var referencePoint = GetReferencePoint(actor, impactPos, damageFalloff);
 										var distance = h.DistanceFromEdge(actor, referencePoint).Length;
 										if (distance < closestDistance)
 										{
@@ -1170,9 +1153,9 @@ namespace OpenRA.Mods.CA.Projectiles
 									DamageCalculationType.ClosestTargetablePosition => actor.GetTargetablePositions()
 										.Where(x => IsPositionInTrapezoidSegment(x, source, forwardDir, segStart, segEnd, startWidthAtSeg, endWidthAtSeg))
 										.DefaultIfEmpty(actor.CenterPosition)
-										.Min(x => CalculateFalloffDistance(x, impactPosForDamage, damageFalloff)),
-									DamageCalculationType.CenterPosition => CalculateFalloffDistance(actor.CenterPosition, impactPosForDamage, damageFalloff),
-									_ => CalculateFalloffDistance(actor.CenterPosition, impactPosForDamage, damageFalloff)
+										.Min(x => CalculateFalloffDistance(x, impactPos, damageFalloff)),
+									DamageCalculationType.CenterPosition => CalculateFalloffDistance(actor.CenterPosition, impactPos, damageFalloff),
+									_ => CalculateFalloffDistance(actor.CenterPosition, impactPos, damageFalloff)
 								};
 
 								falloffData.Add((damageFalloff, falloffDistance));
@@ -1181,7 +1164,7 @@ namespace OpenRA.Mods.CA.Projectiles
 							// If we have falloff data, apply damage
 							if (falloffData.Count > 0)
 							{
-								ApplyDamageToActor(actor, impactPosForDamage, falloffData);
+								ApplyDamageToActor(actor, impactPos, falloffData);
 							}
 						}
 
@@ -1726,8 +1709,6 @@ namespace OpenRA.Mods.CA.Projectiles
 				return;
 
 			var pos = target.CenterPosition;
-			var dat = world.Map.DistanceAboveTerrain(pos);
-
 			var targetTile = world.Map.CellContaining(pos);
 			var smudgeLayers = world.WorldActor.TraitsImplementing<SmudgeLayer>().ToDictionary(x => x.Info.Type);
 

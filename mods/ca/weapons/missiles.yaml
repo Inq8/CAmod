@@ -890,6 +890,7 @@ PitbullRockets:
 		Duration: 45
 		Condition: blinded
 		ValidTargets: Vehicle
+		InvalidTargets: BlindImmune
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: caneon
@@ -918,7 +919,7 @@ PitbullRocketsAA:
 		Duration: 50
 		Condition: blinded
 		ValidTargets: Air, AirSmall
-		InvalidTargets: Shielded
+		InvalidTargets: BlindImmune
 		ValidRelationships: Enemy, Neutral
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
@@ -2305,6 +2306,7 @@ PhantomMissiles:
 		Range: 0c256
 		Duration: 150
 		Condition: blinded
+		InvalidTargets: BlindImmune
 
 PhantomMissilesAA:
 	Inherits: MaverickAA
@@ -2326,6 +2328,7 @@ PhantomMissilesAA:
 		Duration: 150
 		Condition: blinded
 		ValidTargets: Air, AirSmall
+		InvalidTargets: BlindImmune
 		ValidRelationships: Enemy, Neutral
 
 RocketShells:

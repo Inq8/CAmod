@@ -995,16 +995,16 @@ InitAttackSquad = function(squad, player, targetPlayers)
 	end
 end
 
-InitAirAttackSquad = function(squad, player, targetPlayer, targetList, targetType)
+InitAirAttackSquad = function(squad, player, targetPlayers, targetList, targetType)
 	squad.IsAirSquad = true
 	squad.AirTargetList = targetList
 	squad.AirTargetType = targetType
-	InitAttackSquad(squad, player, targetPlayer)
+	InitAttackSquad(squad, player, targetPlayers)
 end
 
-InitNavalAttackSquad = function(squad, player, targetPlayer)
+InitNavalAttackSquad = function(squad, player, targetPlayers)
 	squad.IsNaval = true
-	InitAttackSquad(squad, player, targetPlayer)
+	InitAttackSquad(squad, player, targetPlayers)
 end
 
 InitAttackWave = function(squad, player, targetPlayers)

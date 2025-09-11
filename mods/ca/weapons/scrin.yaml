@@ -1866,16 +1866,21 @@ TiberiumCoalescence:
 TiberiumCoalescenceZap:
 	Inherits: GreaterCoalescenceZap
 	Range: 4c512
+	ValidTargets: Infantry, Vehicle, Structure, Ship, Air, AirSmall
 	Projectile: PlasmaBeam
 		Colors: 00660006
 		Duration: 9
 	Warhead@1Dam: SpreadDamage
 		Damage: 800
+		Versus:
+			Aircraft: 50
 		DamageTypes: TriggerProne, RadiationDeath
+		ValidTargets: Ground, Water, Air, AirSmall
 	Warhead@3Eff: CreateEffect
 		Image: ruin
 		Explosions: muzzle
 		ExplosionPalette: scrin
+		ValidTargets: Ground, Water, Air, AirSmall
 	-Warhead@DRAIN:
 	-Warhead@SLOW:
 
@@ -2200,6 +2205,7 @@ NullifierBolt:
 		Duration: 125
 		Condition: blinded
 		ValidTargets: Infantry, Vehicle, Ship, Defense
+		InvalidTargets: BlindImmune
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: caneon

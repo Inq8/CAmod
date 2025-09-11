@@ -180,6 +180,8 @@ InitScrin = function()
 	InitAttackSquad(Squads.ScrinMain, Scrin)
 	InitAttackSquad(Squads.ScrinAir, Scrin)
 
+	Actor.Create("ai.unlimited.power", true, { Owner = Scrin })
+
 	local scrinGroundAttackers = Scrin.GetGroundAttackers()
 
 	Utils.Do(scrinGroundAttackers, function(a)

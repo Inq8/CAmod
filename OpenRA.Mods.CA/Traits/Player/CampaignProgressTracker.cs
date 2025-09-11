@@ -41,6 +41,9 @@ namespace OpenRA.Mods.CA.Traits
 			if (player != player.World.LocalPlayer)
 				return;
 
+			if (player.World.Players.Count(p => p.Playable) > 1)
+				return;
+
 			if (!player.World.Map.Categories.Contains("Campaign"))
 				return;
 
