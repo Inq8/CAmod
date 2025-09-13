@@ -302,7 +302,9 @@ InitAttackAircraft = function(aircraft, targetPlayers, targetList, targetType)
 				local actorId = tostring(aircraft)
 				local target = AttackAircraftTargets[actorId]
 
-				if not target or not target.IsInWorld then
+				if not target or not target.IsInWorld or target.IsDead then
+					target = nil
+
 					if type(targetPlayers) ~= "table" then
 						targetPlayers = { targetPlayers }
 					end
