@@ -26,8 +26,9 @@ AdjustedScrinCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Scr
 
 Squads = {
 	ScrinMain = {
-		Delay = AdjustDelayForDifficulty(DateTime.Minutes(2)),
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 25, Max = 55, RampDuration = DateTime.Minutes(11) }),
+		InitTimeAdjustment = -DateTime.Minutes(10),
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(1)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 25, Max = 55 }),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { Portal1, Portal2 }, Vehicles = { WarpSphere1, WarpSphere2 }, Aircraft = { GravityStabilizer1, GravityStabilizer2 } },
 		ProducerTypes = { Infantry = { "port", "wormhole" }, Vehicles = { "wsph", "wormhole" }, Aircraft = { "grav", "hiddenspawner" } },
@@ -40,8 +41,9 @@ Squads = {
 		},
 	},
 	ScrinSecondary = {
+		InitTimeAdjustment = -DateTime.Minutes(10),
 		Delay = AdjustDelayForDifficulty(DateTime.Seconds(170)),
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 25, RampDuration = DateTime.Minutes(11) }),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 25 }),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { Portal1, Portal2 }, Vehicles = { WarpSphere1, WarpSphere2 }, Aircraft = { GravityStabilizer1, GravityStabilizer2 } },
 		ProducerTypes = { Infantry = { "port", "wormhole" }, Vehicles = { "wsph", "wormhole" }, Aircraft = { "grav", "hiddenspawner" } },
