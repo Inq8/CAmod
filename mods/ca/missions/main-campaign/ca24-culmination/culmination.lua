@@ -27,7 +27,7 @@ Squads = {
 	Allies = {
 		InitTimeAdjustment = -DateTime.Minutes(10),
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(1)),
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40, RampDuration = DateTime.Minutes(13) }),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40, RampDuration = DateTime.Minutes(12) }),
 		FollowLeader = true,
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Allied),
 		AttackPaths = {
@@ -37,7 +37,7 @@ Squads = {
 	Nod = {
 		InitTimeAdjustment = -DateTime.Minutes(10),
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(1)),
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40, RampDuration = DateTime.Minutes(13) }),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40, RampDuration = DateTime.Minutes(12) }),
 		DispatchDelay = DateTime.Seconds(15),
 		FollowLeader = true,
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Nod),
@@ -48,7 +48,7 @@ Squads = {
 	Soviets = {
 		InitTimeAdjustment = -DateTime.Minutes(10),
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(1)),
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40, RampDuration = DateTime.Minutes(13) }),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40, RampDuration = DateTime.Minutes(12) }),
 		FollowLeader = true,
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Soviet),
 		AttackPaths = {
@@ -56,17 +56,17 @@ Squads = {
 		},
 	},
 	AlliedAir = {
-		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(5)),
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(4)),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 20 }),
 		Compositions = AirCompositions.Allied,
 	},
 	NodAir = {
-		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(5)),
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(4)),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 20 }),
 		Compositions = AirCompositions.Nod,
 	},
 	SovietAir = {
-		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(5)),
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(4)),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 20 }),
 		Compositions = AirCompositions.Soviet,
 	}
@@ -76,6 +76,7 @@ Squads = {
 
 WorldLoaded = function()
 	Scrin = Player.GetPlayer("Scrin")
+	ScrinNoControl = Player.GetPlayer("ScrinNoControl")
 	USSR = Player.GetPlayer("USSR")
 	Greece = Player.GetPlayer("Greece")
 	Nod = Player.GetPlayer("Nod")
@@ -89,7 +90,6 @@ WorldLoaded = function()
 	AdjustPlayerStartingCashForDifficulty()
 
 	ObjectiveInitialSubjugation = Scrin.AddObjective("Subjugate one of the three human bases.")
-	ObjectiveProdigyMustSurvive = Scrin.AddSecondaryObjective("Protect the Prodigy.")
 
 	local greeceAdvancedBuildings = Greece.GetActorsByTypes({ "atek", "alhq", "weat", "pdox", "dome", "hpad" })
 	local ussrAdvancedBuildings = USSR.GetActorsByTypes({ "stek", "npwr", "mslo", "iron", "dome", "afld" })
@@ -130,6 +130,7 @@ WorldLoaded = function()
 				ObjectiveSubjugateRemaining = Scrin.AddObjective("Capture Nod and Soviet Construction Yards.")
 				Scrin.MarkCompletedObjective(ObjectiveInitialSubjugation)
 				DestroyCameras()
+				WarpOutProdigy()
 				InitUSSR(SovietsVsAlliesPaths, AlliedBaseCameras)
 				InitNod(NodVsAlliesPaths, AlliedBaseCameras)
 				CreateWormholes(AlliedBase.Location)
@@ -154,6 +155,7 @@ WorldLoaded = function()
 				ObjectiveSubjugateRemaining = Scrin.AddObjective("Capture Allied and Nod Construction Yards.")
 				Scrin.MarkCompletedObjective(ObjectiveInitialSubjugation)
 				DestroyCameras()
+				WarpOutProdigy()
 				InitGreece(AlliesVsSovietPaths, SovietBaseCameras)
 				InitNod(NodVsSovietPaths, SovietBaseCameras)
 				CreateWormholes(SovietBase.Location)
@@ -178,6 +180,7 @@ WorldLoaded = function()
 				ObjectiveSubjugateRemaining = Scrin.AddObjective("Capture Allied and Soviet Construction Yards.")
 				Scrin.MarkCompletedObjective(ObjectiveInitialSubjugation)
 				DestroyCameras()
+				WarpOutProdigy()
 				InitUSSR(SovietsVsNodPaths, NodBaseCameras)
 				InitGreece(AlliesVsNodPaths, NodBaseCameras)
 				CreateWormholes(NodBase.Location)
@@ -193,11 +196,6 @@ WorldLoaded = function()
 				end
 			end
 		end
-	end)
-
-	Trigger.OnKilled(Prodigy, function(self, killer)
-		Scrin.MarkFailedObjective(ObjectiveProdigyMustSurvive)
-		Notification("The Prodigy used its psionic powers to cheat death and has fled the battlefield to recuperate.")
 	end)
 
 	AfterWorldLoaded()
@@ -251,10 +249,6 @@ OncePerFiveSecondChecks = function()
 		if ObjectiveDefeatRemaining ~= nil and not Scrin.IsObjectiveCompleted(ObjectiveDefeatRemaining) then
 			if not PlayerHasBuildings(Greece) and not PlayerHasBuildings(USSR) and not PlayerHasBuildings(Nod) then
 				Scrin.MarkCompletedObjective(ObjectiveDefeatRemaining)
-
-				if not Scrin.IsObjectiveCompleted(ObjectiveProdigyMustSurvive) then
-					Scrin.MarkCompletedObjective(ObjectiveProdigyMustSurvive)
-				end
 			end
 		end
 	end
@@ -408,6 +402,35 @@ SetupMainObjectives = function(conyards)
 		Trigger.OnKilled(c, function(self, killer)
 			if not IsMissionPlayer(self.Owner) then
 				Scrin.MarkFailedObjective(ObjectiveSubjugateRemaining)
+			end
+		end)
+	end)
+end
+
+WarpOutProdigy = function()
+	Prodigy.Owner = ScrinNoControl
+	Prodigy.Stop()
+	Trigger.AfterDelay(DateTime.Seconds(3), function()
+		Notification("The Prodigy will now leave the battlefield to recuperate.")
+		local prodigyExitWormhole = Actor.Create("wormhole.exit", true, { Owner = ScrinNoControl, Location = ProdigyExit.Location })
+		Prodigy.Move(prodigyExitWormhole.Location)
+		Trigger.OnEnteredFootprint({ ProdigyExit.Location }, function(a, id)
+			if a == Prodigy then
+				Trigger.RemoveFootprintTrigger(id)
+				Prodigy.Destroy()
+				Trigger.AfterDelay(DateTime.Seconds(2), function()
+					if not prodigyExitWormhole.IsDead then
+						prodigyExitWormhole.Kill()
+					end
+				end)
+			end
+		end)
+		Trigger.AfterDelay(DateTime.Seconds(20), function()
+			if not Prodigy.IsDead then
+				Prodigy.Destroy()
+			end
+			if not prodigyExitWormhole.IsDead then
+				prodigyExitWormhole.Kill()
 			end
 		end)
 	end)

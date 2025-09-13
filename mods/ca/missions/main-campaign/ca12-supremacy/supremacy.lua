@@ -5,7 +5,7 @@ IonCannonEnabledTime = {
 	normal = DateTime.Seconds((60 * 25) + 48),
 	hard = DateTime.Seconds((60 * 15) + 48),
 	vhard = DateTime.Seconds((60 * 10) + 48),
-	brutal = DateTime.Seconds((60 * 10) + 48)
+	brutal = DateTime.Seconds((60 * 8) + 48)
 }
 
 -- overrides

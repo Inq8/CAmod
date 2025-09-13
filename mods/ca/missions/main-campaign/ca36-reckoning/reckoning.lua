@@ -13,7 +13,7 @@ ExterminatorsInterval = {
 	normal = DateTime.Minutes(6),
 	hard = DateTime.Minutes(5),
 	vhard = DateTime.Minutes(4),
-	brutal = DateTime.Minutes(3) + DateTime.Seconds(30)
+	brutal = DateTime.Minutes(3) + DateTime.Seconds(20)
 }
 
 ExterminatorAttackCount = {
@@ -49,6 +49,11 @@ if IsHardOrAbove() then
 end
 
 AdjustedScrinCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Scrin)
+
+local friendlyDifficulty = Difficulty
+if Difficulty == "brutal" then
+	friendlyDifficulty = "vhard"
+end
 
 Squads = {
 	ScrinMain = {
@@ -90,10 +95,10 @@ Squads = {
 	},
 	ScrinRebelsMain = {
 		Delay = DateTime.Minutes(1),
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 28, Max = 28 }),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 28, Max = 28 }, friendlyDifficulty),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { RebelPortal1 }, Vehicles = { RebelWarpSphere1 }, Aircraft = { RebelGravityStabilizer1 } },
-		Compositions = AdjustedScrinCompositions,
+		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Scrin, friendlyDifficulty),
 		AttackPaths = {
 			{ M5.Location, M2.Location, M1.Location },
 			{ M5.Location, R4.Location, M2.Location },
@@ -101,9 +106,9 @@ Squads = {
 		},
 	},
 	GDIMain = {
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 64, Max = 64 }),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 64, Max = 64 }, friendlyDifficulty),
 		FollowLeader = true,
-		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.GDI),
+		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.GDI, friendlyDifficulty),
 		AttackPaths = {
 			{ R6.Location, R7.Location, ScrinBase2.Location },
 			{ R6.Location, R10.Location, R9.Location, ScrinBase2.Location },
@@ -117,7 +122,7 @@ Squads = {
 	},
 	ScrinAirToAir = AirToAirSquad(
 		{ "stmr", "enrv", "torm" },
-		AdjustAirDelayForDifficulty(DateTime.Minutes(10)),
+		AdjustAirDelayForDifficulty(DateTime.Minutes(8)),
 		function(a)
 			a.Patrol({ A2APatrol1.Location, A2APatrol2.Location, A2APatrol3.Location, A2APatrol4.Location, A2APatrol5.Location, A2APatrol6.Location, A2APatrol7.Location, A2APatrol8.Location })
 		end

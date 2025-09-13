@@ -26,8 +26,22 @@ AdjustedScrinCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Scr
 
 Squads = {
 	ScrinMain = {
-		Delay = AdjustDelayForDifficulty(DateTime.Seconds(150)),
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 40, Max = 80, RampDuration = DateTime.Minutes(11) }),
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(2)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 25, Max = 55, RampDuration = DateTime.Minutes(11) }),
+		FollowLeader = true,
+		ProducerActors = { Infantry = { Portal1, Portal2 }, Vehicles = { WarpSphere1, WarpSphere2 }, Aircraft = { GravityStabilizer1, GravityStabilizer2 } },
+		ProducerTypes = { Infantry = { "port", "wormhole" }, Vehicles = { "wsph", "wormhole" }, Aircraft = { "grav", "hiddenspawner" } },
+		Compositions = AdjustedScrinCompositions,
+		AttackPaths = {
+			{ ScrinAttack1a.Location, ScrinAttack1b.Location, ScrinAttack1c.Location, ScrinAttack1d.Location },
+			{ ScrinAttack1a.Location, ScrinAttack2.Location },
+			{ ScrinAttack3a.Location, ScrinAttack3b.Location, ScrinAttack3c.Location },
+			{ ScrinAttack3a.Location, ScrinAttack4a.Location, ScrinAttack4b.Location, ScrinAttack3c.Location },
+		},
+	},
+	ScrinSecondary = {
+		Delay = AdjustDelayForDifficulty(DateTime.Seconds(170)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 25, RampDuration = DateTime.Minutes(11) }),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { Portal1, Portal2 }, Vehicles = { WarpSphere1, WarpSphere2 }, Aircraft = { GravityStabilizer1, GravityStabilizer2 } },
 		ProducerTypes = { Infantry = { "port", "wormhole" }, Vehicles = { "wsph", "wormhole" }, Aircraft = { "grav", "hiddenspawner" } },
@@ -53,6 +67,15 @@ Squads = {
 			{ ScrinBaseCenter.Location },
 		},
 	},
+	TibTruckKillers = {
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(5)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		Compositions = {
+			{ Aircraft = { "stmr", "stmr", "stmr" } },
+			{ Aircraft = { "torm", "torm", "torm" } },
+			{ Aircraft = { "enrv", "enrv" } },
+		}
+	}
 }
 
 WorldLoaded = function()
@@ -243,7 +266,11 @@ end
 
 BeginScrinAttacks = function()
 	InitAttackSquad(Squads.ScrinMain, Scrin)
+	InitAttackSquad(Squads.ScrinSecondary, Scrin)
 	InitAirAttackSquad(Squads.ScrinAir, Scrin)
+	if Difficulty == "brutal" then
+		InitAirAttackSquad(Squads.TibTruckKillers, Scrin, MissionPlayers, { "ttrk" })
+	end
 end
 
 UpdateMissionText = function()

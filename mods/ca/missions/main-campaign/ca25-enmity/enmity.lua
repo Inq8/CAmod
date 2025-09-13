@@ -51,26 +51,43 @@ SuperweaponsEnabledTime = {
 
 StructuresToSellToAvoidCapture = { SouthHand1, SouthHand2, SouthAirstrip, SouthConyard, WestHand, CenterHand, Helipad1, Helipad2 }
 
-ShadowUnitCompositions = AdjustCompositionsForDifficulty({
+ShadowUnitCompositions = {
 	{ Infantry = {}, Vehicles = { "bike", "bike", "bike", "bike" }, MaxTime = DateTime.Minutes(10) },
 	{ Infantry = { "n3", "n1", "n1", "n1", "n4" }, Vehicles = { "bggy", "bggy", "bike", "bike" }, MaxTime = DateTime.Minutes(10) },
 	{ Infantry = { "n3", "n1", "n1", "n4" }, Vehicles = { "ltnk", "bggy", "bike" }, MaxTime = DateTime.Minutes(10) },
 
-	{ Infantry = {}, Vehicles = { "stnk.nod", "stnk.nod", "stnk.nod", "sapc.ai" }, MinTime = DateTime.Minutes(10) },
-	{ Infantry = { "n3", "n1", "n1", "n1", "n1", "n4", "n3", "shad" }, Vehicles = { "ltnk", "ltnk", "ftnk", "arty.nod" }, MinTime = DateTime.Minutes(10) },
-	{ Infantry = { "n3", "n1", "shad", "n1", "shad", "shad", "n4", "n1" }, Vehicles = { "stnk.nod", "ltnk", "bggy", "bike" }, MinTime = DateTime.Minutes(10) },
+	{ Infantry = {}, Vehicles = { "stnk.nod", "stnk.nod", "stnk.nod", "sapc.ai", "sapc.ai" }, MinTime = DateTime.Minutes(10) },
+	{ Infantry = { "n3", "n1", "n1", "n1", "n1", "n4", "n3", "shad" }, Vehicles = { "ltnk", "ltnk", "ftnk", "arty.nod", "ltnk" }, MinTime = DateTime.Minutes(10) },
+	{ Infantry = { "n3", "n1", "shad", "n1", "shad", "shad", "n4", "n1" }, Vehicles = { "stnk.nod", "ltnk", "bggy", "bike", "ltnk" }, MinTime = DateTime.Minutes(10) },
 
-	{ Infantry = { "n3", "n1", "n1", "n1", "n4", "n1", "shad" }, Vehicles = { "ltnk", "spec", "arty.nod", "stnk.nod" }, MinTime = DateTime.Minutes(13) },
-	{ Infantry = { "n3", "n1", "shad", "n1", "shad", "shad", "n4", "n1" }, Vehicles = { "stnk.nod", "spec", "bike", "bggy" }, MinTime = DateTime.Minutes(13) },
-})
+	{ Infantry = { "n3", "n1", "n1", "n1", "n4", "n1", "shad", "n1", "n1", "n1", "n1" }, Vehicles = { "ltnk", "spec", "arty.nod", "stnk.nod", "stnk.nod", "ltnk" }, MinTime = DateTime.Minutes(13) },
+	{ Infantry = { "n3", "n1", "shad", "n1", "shad", "shad", "n4", "n1", "n1", "n1", "n1", "n1" }, Vehicles = { "stnk.nod", "spec", "bike", "bggy", "ltnk" }, MinTime = DateTime.Minutes(13) },
+}
 
 if IsVeryHardOrAbove() then
-	table.insert(ShadowUnitCompositions, {
-		Vehicles = { "spec", "spec", "spec", "spec", "spec", "spec" },
-		MinTime = DateTime.Minutes(16),
-		IsSpecial = true
+	ShadowUnitCompositions = Utils.Concat(ShadowUnitCompositions, {
+		{
+			Infantry = { "shad", "shad", "shad", "shad", "shad", "shad", "shad" },
+			Vehicles = { "spec", "spec", "spec", "spec", "spec", "spec", "spec" },
+			MinTime = DateTime.Minutes(16),
+			IsSpecial = true
+		}
+		{
+			Infantry = { "n3", "n1", "n1", "n1", "n1", "n1", "n3", "rmbo", "n1", "n1", "n1", "n1", "n1", "n1", "n1", "n1", "n1", "n3", "n1", "n1", "n1", "n3" },
+			Vehicles = { "ftnk", "ftnk", "howi", "howi", "howi", "howi", "howi" },
+			MinTime = DateTime.Minutes(16),
+			RequiredTargetCharacteristics = { "MassInfantry" }
+		},
+		{
+			Infantry = { "n3", "n1", "n1", "n1", "n1", "n3", "n3", "rmbo", "n1", "n1", "n3", "n1", "n1", "n3", "n1", "n1", "n1", "n3", "n1", "n3", "n1", "n3" },
+			Vehicles = { "ltnk", "ltnk", "ltnk", "bike", "bike", "bike", "bike", "bike", "stnk.nod", "stnk.nod" },
+			MinTime = DateTime.Minutes(16),
+			RequiredTargetCharacteristics = { "MassHeavy" }
+		},
 	})
 end
+
+AdjustedShadowUnitCompositions = AdjustCompositionsForDifficulty(ShadowUnitCompositions)
 
 Squads = {
 	North = {
@@ -79,7 +96,7 @@ Squads = {
 		DispatchDelay = DateTime.Seconds(15),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { NorthHand1, NorthHand2 }, Vehicles = { NorthAirstrip } },
-		Compositions = ShadowUnitCompositions,
+		Compositions = AdjustedShadowUnitCompositions,
 		AttackPaths = NorthAttackPaths,
 	},
 	South = {
@@ -88,7 +105,7 @@ Squads = {
 		DispatchDelay = DateTime.Seconds(15),
 		FollowLeader = true,
 		ProducerActors = { Infantry = { SouthHand1, SouthHand2 }, Vehicles = { SouthAirstrip } },
-		Compositions = ShadowUnitCompositions,
+		Compositions = AdjustedShadowUnitCompositions,
 		AttackPaths = SouthAttackPaths,
 	},
 	Air = {

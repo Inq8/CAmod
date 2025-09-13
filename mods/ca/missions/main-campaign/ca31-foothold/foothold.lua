@@ -61,8 +61,10 @@ Squads = {
 	ScrinWater = {
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(7)),
 		AttackValuePerSecond = {
-			normal = { Min = 20, Max = 20,  },
+			normal = { Min = 20, Max = 20 },
 			hard = { Min = 28, Max = 55, RampDuration = DateTime.Minutes(11) },
+			vhard = { Min = 28, Max = 60, RampDuration = DateTime.Minutes(10) },
+			brutal = { Min = 28, Max = 65, RampDuration = DateTime.Minutes(9) }
 		},
 		FollowLeader = true,
 		Compositions = ScrinWaterCompositions,

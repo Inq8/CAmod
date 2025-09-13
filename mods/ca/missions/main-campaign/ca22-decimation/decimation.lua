@@ -75,11 +75,19 @@ IronCurtainEnabledDelay = {
 }
 
 if IsVeryHardOrAbove() then
-	table.insert(UnitCompositions.Soviet, {
-		Infantry = { "deso", "deso", "deso", "deso", "deso", "deso", "deso", "deso", "deso" },
-		Vehicles = { "apoc.erad", "apoc.erad", "apoc.erad", "apoc.erad", "4tnk.erad", "4tnk.erad", "4tnk.erad", "4tnk.erad" },
-		MinTime = DateTime.Minutes(18),
-		IsSpecial = true
+	UnitCompositions.Soviet = Utils.Concat(UnitCompositions.Soviet, {
+		{
+			Infantry = { "deso", "deso", "deso", "deso", "deso", "deso", "deso", "deso", "deso" },
+			Vehicles = { "apoc.erad", "apoc.erad", "apoc.erad", "apoc.erad", "4tnk.erad", "4tnk.erad", "4tnk.erad", "4tnk.erad" },
+			MinTime = DateTime.Minutes(18),
+			IsSpecial = true
+		},
+		{
+			Infantry = { "rmbc", "rmbc", "rmbc", "enli", "enli", "n1c", "n1c", "rmbc", "n1c", "n1c", "n1c", "n1c", "n1c", "n1c"},
+			Vehicles = { "apoc", "3tnk", "3tnk", "katy" },
+			MinTime = DateTime.Minutes(18),
+			IsSpecial = true
+		}
 	})
 end
 

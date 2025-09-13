@@ -45,9 +45,18 @@ Utils.Do(UnitCompositions.Scrin, function(c)
 	end
 end)
 
+if Difficulty == "brutal" then
+	table.insert(UnitCompositions.Scrin, {
+		Infantry = { "s1", "mrdr", "s1", "mrdr", "mrdr", "s1", "mrdr", "mrdr", "s1", "mrdr", "mrdr", "s1", "mrdr" },
+		Vehicles = { "oblt", "oblt", "oblt", "oblt", "oblt", "oblt" },
+		MinTime = DateTime.Minutes(14),
+		IsSpecial = true
+	})
+end
+
 Squads = {
 	ScrinMain = {
-		Delay = AdjustDelayForDifficulty(DateTime.Minutes(2)),
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(1)),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 40, Max = 80, RampDuration = DateTime.Minutes(13) }),
 		FollowLeader = true,
 		ProducerActors = nil,
@@ -58,7 +67,7 @@ Squads = {
 		},
 	},
 	ScrinAir = {
-		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(10)),
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(9)),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 28, Max = 28 }),
 		ProducerTypes = { Aircraft = { "hiddenspawner" } },
 		Compositions = {
@@ -272,31 +281,29 @@ SendReinforcements = function()
 		units = InitialReinforcementGroup
 	end
 
-	if ReinforcementWave == 3 then
+	if IsVeryHardOrBelow() and ReinforcementWave == 3 then
 		local unitsWithMcv = {}
 		Utils.Do(units, function(u)
 			table.insert(unitsWithMcv, u)
 		end)
 		table.insert(unitsWithMcv, "amcv")
 		units = unitsWithMcv
-		ActiveReinforcementLocations = Utils.Shuffle(ReinforcementLocations)
-	else
-		ReinforcementLocationIndex = ReinforcementLocationIndex + 1
-	end
-
-	TimerTicks = ReinforcementInterval
-	ReinforcementWave = ReinforcementWave + 1
-
-	if ReinforcementLocationIndex > #ReinforcementLocations then
-		ReinforcementLocations = Utils.Shuffle(ReinforcementLocations)
-		ReinforcementLocationIndex = 1
 	end
 
 	local reinforcements = Reinforcements.Reinforce(GDI, units, path, 50)
-
 	ReinforcementFlare.Destroy()
 	Media.PlaySpeechNotification(GDI, "ReinforcementsArrived")
 	Notification("Reinforcements have arrived.")
 	Beacon.New(GDI, Map.CenterOfCell(flareLoc))
+
+	TimerTicks = ReinforcementInterval
+	ReinforcementWave = ReinforcementWave + 1
+	ReinforcementLocationIndex = ReinforcementLocationIndex + 1
+
+	if ReinforcementLocationIndex > #ActiveReinforcementLocations then
+		ActiveReinforcementLocations = Utils.Shuffle(ReinforcementLocations)
+		ReinforcementLocationIndex = 1
+	end
+
 	NextReinforcementsFlare()
 end

@@ -32,19 +32,28 @@ ParabombsEnabledDelay = {
 	easy = DateTime.Minutes(9),
 	normal = DateTime.Minutes(7),
 	hard = DateTime.Minutes(5),
-	vhard = DateTime.Minutes(5),
-	brutal = DateTime.Minutes(4)
+	vhard = DateTime.Minutes(4),
+	brutal = DateTime.Minutes(3)
 }
 
 ParatroopersEnabledDelay = {
 	easy = DateTime.Minutes(8),
 	normal = DateTime.Minutes(6),
 	hard = DateTime.Minutes(4),
-	vhard = DateTime.Minutes(4),
-	brutal = DateTime.Minutes(3)
+	vhard = DateTime.Minutes(3),
+	brutal = DateTime.Minutes(2)
 }
 
 MaxReactorFuelTime = DateTime.Minutes(10)
+
+if Difficulty == "brutal" then
+	table.insert(UnitCompositions.Soviet, {
+		Infantry = { "e3", "ttrp", "e1", "ttrp", "ttrp", "ttrp", "ttrp", "ttrp", "e1", "e1", "e1", "e1", "e1", "e1", "e1", "ttrp", "e1", "e1" },
+		Vehicles = { "ttnk", "ttnk", "ttnk", "ttnk", "isu", "ttnk", "ttra", "ttra" },
+		MinTime = DateTime.Minutes(14),
+		RequiredTargetCharacteristics = { "MassInfantry" }
+	})
+end
 
 Squads = {
 	Main = {
@@ -69,10 +78,10 @@ Squads = {
 				{ Aircraft = { HindOrYak, HindOrYak, HindOrYak } },
 			},
 			vhard = {
-				{ Aircraft = { HindOrYak, HindOrYak, HindOrYak, HindOrYak } },
+				{ Aircraft = { HindOrYak, HindOrYak, HindOrYak, HindOrYak, HindOrYak } },
 			},
 			brutal = {
-				{ Aircraft = { HindOrYak, HindOrYak, HindOrYak, HindOrYak, HindOrYak } },
+				{ Aircraft = { HindOrYak, HindOrYak, HindOrYak, HindOrYak, HindOrYak, HindOrYak, HindOrYak } },
 			}
 		},
 	},
