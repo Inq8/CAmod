@@ -1620,6 +1620,7 @@ HPAD:
 	Inherits@AIR: ^ProducesHelicopters
 	Inherits@SOVIETBOMBINGPOWERS: ^SovietBombingPowers
 	Inherits@STRAFINGRUNPOWER: ^StrafingRunPower
+	Inherits@InfiltrateForSupportPower: ^InfiltrateForSupportPower
 	HitShape:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 768,-512,0, 768,512,0, -281,-512,0, -630,512,0
@@ -1698,13 +1699,9 @@ HPAD:
 		Prerequisite: radaroraircraft
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
-		TargetTypes: GrantSupportPowerInfiltrate, StealTechInfiltrate
-	InfiltrateToCreateProxyActor:
-		Types: GrantSupportPowerInfiltrate
+		TargetTypes: StealTechInfiltrate
+	InfiltrateToCreateProxyActor@SpySupportPower:
 		Proxy: powerproxy.paratroopers.allies
-		InfiltrationNotification: BuildingInfiltrated
-		InfiltratedNotification: BaseAttack
-		PlayerExperience: 15
 	InfiltrateToCreateProxyActor@STOLENTECH:
 		Types: StealTechInfiltrate
 		Proxy: stolentech.hpad
@@ -1724,6 +1721,7 @@ AFLD:
 	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
 	Inherits@AIR: ^ProducesAircraft
 	Inherits@SOVIETBOMBINGPOWERS: ^SovietBombingPowers
+	Inherits@InfiltrateForSupportPower: ^InfiltrateForSupportPower
 	HitShape:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 420,0,0, 420,-1024,0, 420,1024,0, -777,0,0, -777,-1024,0, -777,1024,0
@@ -1784,13 +1782,9 @@ AFLD:
 		Amount: -20
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
-		TargetTypes: GrantSupportPowerInfiltrate, StealTechInfiltrate
-	InfiltrateToCreateProxyActor:
+		TargetTypes: StealTechInfiltrate
+	InfiltrateToCreateProxyActor@SpySupportPower:
 		Proxy: powerproxy.airstrike
-		Types: GrantSupportPowerInfiltrate
-		InfiltrationNotification: BuildingInfiltrated
-		InfiltratedNotification: BaseAttack
-		PlayerExperience: 15
 	InfiltrateToCreateProxyActor@STOLENTECH:
 		Types: StealTechInfiltrate
 		Proxy: stolentech.afld
@@ -4150,6 +4144,7 @@ HPAD.TD:
 	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
 	Inherits@INTERCEPTORS: ^InterceptorsPower
 	Inherits@AIR: ^ProducesHelicopters
+	Inherits@InfiltrateForSupportPower: ^InfiltrateForSupportPower
 	RenderSprites:
 		Image: hpad2
 	HitShape:
@@ -4222,15 +4217,11 @@ HPAD.TD:
 		Prerequisite: radaroraircraft
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
-		TargetTypes: GrantSupportPowerInfiltrate, StealTechInfiltrate
+		TargetTypes: StealTechInfiltrate
 	WithResupplyAnimation:
 		RequiresCondition: !build-incomplete
-	InfiltrateToCreateProxyActor:
-		Types: GrantSupportPowerInfiltrate
+	InfiltrateToCreateProxyActor@SpySupportPower:
 		Proxy: powerproxy.paratroopers.allies
-		InfiltrationNotification: BuildingInfiltrated
-		InfiltratedNotification: BaseAttack
-		PlayerExperience: 15
 	InfiltrateToCreateProxyActor@STOLENTECH:
 		Types: StealTechInfiltrate
 		Proxy: stolentech.hpad.td
@@ -4416,6 +4407,7 @@ AFLD.GDI:
 	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
 	Inherits@INTERCEPTORS: ^InterceptorsPower
 	Inherits@AIR: ^ProducesAircraft
+	Inherits@InfiltrateForSupportPower: ^InfiltrateForSupportPower
 	RenderSprites:
 		Image: afldgdi
 	HitShape:
@@ -4473,15 +4465,11 @@ AFLD.GDI:
 		Amount: -20
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
-		TargetTypes: GrantSupportPowerInfiltrate, StealTechInfiltrate
+		TargetTypes: StealTechInfiltrate
 	WithResupplyAnimation:
 		RequiresCondition: !build-incomplete
-	InfiltrateToCreateProxyActor:
-		Types: GrantSupportPowerInfiltrate
+	InfiltrateToCreateProxyActor@SpySupportPower:
 		Proxy: powerproxy.airstrike
-		InfiltrationNotification: BuildingInfiltrated
-		InfiltratedNotification: BaseAttack
-		PlayerExperience: 15
 	InfiltrateToCreateProxyActor@STOLENTECH:
 		Types: StealTechInfiltrate
 		Proxy: stolentech.afld.gdi

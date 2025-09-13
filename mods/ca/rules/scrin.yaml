@@ -5204,6 +5204,7 @@ GRAV:
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@AIR: ^ProducesHelicopters
 	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
+	Inherits@InfiltrateForSupportPower: ^InfiltrateForSupportPower
 	HitShape:
 		TargetableOffsets: -355,-1024,0
 	Buildable:
@@ -5292,6 +5293,8 @@ GRAV:
 	AutoTarget:
 	AutoTargetPriority@DEFAULT:
 		ValidRelationships: Ally
+	InfiltrateToCreateProxyActor@SpySupportPower:
+		Proxy: powerproxy.airstrike
 	InfiltrateToCreateProxyActor@STOLENTECH:
 		Types: StealTechInfiltrate
 		Proxy: stolentech.grav

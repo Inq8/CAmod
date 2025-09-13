@@ -3550,6 +3550,8 @@ GDRN.TOW:
 		Count: 1
 		ShowSelectionBar: true
 		SelectionBarColor: aaaaaa
+	Selectable:
+		Class: gdrn
 	-ReplacedInQueue:
 	-Upgradeable@TOW:
 	-WithDecoration@UpgradeOverlay:
@@ -4446,6 +4448,7 @@ MTNK.Drone:
 	-WithSpriteTurret@LaserTank:
 	WithSpriteTurret@default:
 		RequiresCondition: !pointdef-upgrade
+	-Capturable:
 	-SpeedMultiplier@BERSERK:
 	-ReloadDelayMultiplier@BERSERK:
 	-ExternalCondition@BERSERK:
@@ -4459,6 +4462,8 @@ MTNK.Drone:
 	-WithDecoration@UpgradeOverlay:
 	-ProducibleWithLevel:
 	-WithProductionIconOverlay:
+	Selectable:
+		Class: mtnk
 	Sellable:
 		RequiresCondition: unit-sellable && !c4 && !being-warped
 	Encyclopedia:
@@ -4578,6 +4583,7 @@ MDRN:
 		TargetTypes: ChaosImmune
 	Targetable@DriverKillImmune:
 		TargetTypes: DriverKillImmune
+	-Capturable:
 	-WithDamageOverlay:
 	-Targetable@MINIDRONE:
 	-ChangesHealth@MINIDRONE:
@@ -4877,6 +4883,7 @@ HTNK.Drone:
 	ChangesHealth:
 		StartIfBelow: 100
 		RequiresCondition: !mdrn-attached
+	-Capturable:
 	-SpeedMultiplier@BERSERK:
 	-ReloadDelayMultiplier@BERSERK:
 	-ExternalCondition@BERSERK:
@@ -8939,6 +8946,7 @@ MEMP:
 		Palette: tseffect-ignore-lighting-alpha75
 		Offset: 0, 0, 0
 		Sequence: emp-overlay
+	-Capturable:
 	Targetable@MindControlImmune:
 		TargetTypes: MindControlImmune
 	Targetable@ChaosImmune:
@@ -9045,6 +9053,7 @@ CDRN:
 		Weapon: ChaosGas
 		RequiresCondition: triggered && ammo
 		AmmoPoolName: explosion
+	-Capturable:
 	Targetable@MindControlImmune:
 		TargetTypes: MindControlImmune
 	Targetable@ChaosImmune:
