@@ -2043,124 +2043,36 @@ SAPC.AI2:
 	-Encyclopedia:
 
 HARV:
-	Inherits: ^Vehicle-NOUPG
-	Inherits@HARVBALANCE: ^HarvesterBalancer
-	Inherits@HARVDMGNOTIFY: ^HarvesterDamageNotification
-	Inherits@SELECTION: ^SelectableEconomicUnit
-	Inherits@A2GPROTECTION: ^AirToGroundProtection
-	Inherits@EconomyPolicyDiscount: ^EconomyPolicyDiscount
-	Inherits@EconomyPolicyDurability: ^EconomyPolicyDurability
-	Inherits@HeavyArmor: ^HeavyArmor
+	Inherits@HarvesterBase: ^HarvesterBase
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 10
 		Prerequisites: anyrefinery, ~vehicles.ra, ~!charv.upgrade, ~techlevel.low
 		Description: Collects Ore, Gems and Tiberium for processing.
-	TooltipExtras:
-		Weaknesses: • Unarmed\n• Resistant to mind control
-	Valued:
-		Cost: 1400
 	Tooltip:
 		Name: Ore Truck
-		GenericName: Harvester
 	Selectable:
 		Priority: 7
 		DecorationBounds: 1792, 1792
-	Harvester:
-		Resources: Tiberium, BlueTiberium, BlackTiberium, Ore, Gems
-		BaleUnloadDelay: 1
-		BaleLoadDelay: 4
-		SearchFromProcRadius: 15
-		SearchFromHarvesterRadius: 8
-		HarvestFacings: 8
-		EmptyCondition: no-ore
-	DockClientManager:
-		OccupancyCostModifier: 4
-	WithStoresResourcesPipsDecoration:
-		Position: BottomLeft
-		Margin: 4, 3
-		RequiresSelection: true
-		PipCount: 5
-		ResourceSequences:
-			Ore: pip-yellow
-			Gems: pip-red
-			Tiberium: pip-green
-			BlueTiberium: pip-blue
-			BlackTiberium: pip-green
-	Health:
-		HP: 75000
-	Mobile:
-		Speed: 72
-		TurnSpeed: 24
-		Locomotor: heavywheeled
-	RevealsShroud:
-		Range: 4c0
 	WithHarvestAnimationCA:
 	WithDockingAnimationCA:
 		RefineryTypes: proc
 	SpawnActorOnDeath:
 		Actor: HARV.Husk
 		RequiresCondition: !being-warped && !charv-upgrade
-	GrantConditionOnTerrain@Tiberium:
-		Condition: ontib
-		TerrainTypes: Tiberium
-	GrantConditionOnTerrain@Ore:
-		Condition: onore
-		TerrainTypes: Ore
-	FireWarheadsOnDeath@Ore:
-		RequiresCondition: !no-ore && onore && !being-warped
-		Weapon: OreExplosion
-	FireWarheadsOnDeath@Tib:
-		RequiresCondition: !no-ore && ontib && !being-warped
-		Weapon: TibExplosion
-	-Crushable:
-	Targetable@ChaosImmune:
-		TargetTypes: ChaosImmune
-	Targetable@MindControlResistant:
-		TargetTypes: MindControlResistant
 	GrantConditionOnPrerequisite@OREPUPGRADE:
 		Prerequisites: charv.upgrade
 		Condition: charv-upgrade
 	PeriodicExplosion@WARPOUT:
 		Weapon: HarvSwap
 		RequiresCondition: charv-upgrade
-	SpawnRandomActorOnDeath:
-		Actors: c1,c7,c10
-		Probability: 5
-		RequiresCondition: !being-warped
-	GrantConditionOnPrerequisite@GSHIELD:
-		Condition: pointdef-upgrade
-		Prerequisites: pointdef.upgrade
-	TimedDamageMultiplier@GSHIELD:
-		ActiveCondition: gshield
-		ChargingColor: 008888
-		DrainingColor: 00ffff
-		Modifier: 25
-		Duration: 75
-		ChargeTime: 375
-		ActivateSound: gshieldup.aud
-		DeactivateSound: gshielddown.aud
-		RequiresCondition: pointdef-upgrade
-	WithIdleOverlay@NSHIELD:
-		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
-	ChangesHealth@MINIDRONE:
-		Step: 2250
-	DamageTypeDamageMultiplier@A2GPROTECTION:
-		Modifier: 60
 	TransformOnCondition:
 		RequiresCondition: charv-upgrade
 		IntoActor: harv.chrono
 	RejectsOrders@Transforming:
 		RequiresCondition: charv-upgrade
-	TransferResourcesOnTransform:
-	UpdatesCount@NodCovenant:
-		Type: NodCovenant
-		UpdateOn: Killed
 	ReplacedInQueue:
 		Actors: harv.chrono
-	StoresResources:
-		Capacity: 26
-		Resources: Tiberium, BlueTiberium, BlackTiberium, Ore, Gems
 	Encyclopedia:
 		Category: Allies/Vehicles; Soviets/Vehicles
 
@@ -2175,8 +2087,6 @@ HARV.Chrono:
 		Image: charv
 	Tooltip:
 		Name: Chrono Miner
-	Health:
-		HP: 75000
 	Mobile:
 		Voice: Move
 	Harvester:
@@ -2500,6 +2410,9 @@ AAPC:
 		Weapon: TargetPainter
 		LocalOffset: 0,0,250
 		-MuzzleSequence:
+	KeepsDistance:
+	GuardsSelection:
+		RequiresCondition: !stance-attackanything
 	-ReplacedInQueue:
 	-Upgradeable@Archer:
 	-WithDecoration@UpgradeOverlay:
@@ -5631,110 +5544,26 @@ HFTK:
 		Subfaction: blackh
 
 HARV.TD:
-	Inherits: ^VehicleTD-NOUPG
-	Inherits@HARVBALANCE: ^HarvesterBalancer
-	Inherits@HARVDMGNOTIFY: ^HarvesterDamageNotification
-	Inherits@SELECTION: ^SelectableEconomicUnit
-	Inherits@A2GPROTECTION: ^AirToGroundProtection
-	Inherits@EconomyPolicyDiscount: ^EconomyPolicyDiscount
-	Inherits@EconomyPolicyDurability: ^EconomyPolicyDurability
-	Inherits@HeavyArmor: ^HeavyArmor
+	Inherits@HarvesterBase: ^HarvesterBase
 	RenderSprites:
 		Image: harv2
-	Valued:
-		Cost: 1400
 	Tooltip:
 		Name: Harvester
-		GenericName: Harvester
 	Buildable:
 		BuildPaletteOrder: 12
 		Prerequisites: ~!sharv.upgrade, anyrefinery, ~vehicles.td, ~techlevel.low
 		Queue: VehicleSQ, VehicleMQ
 		IconPalette: chrometd
 		Description: Collects Ore, Gems and Tiberium for processing.
-	TooltipExtras:
-		Weaknesses: • Unarmed\n• Resistant to mind control
 	Selectable:
 		Priority: 7
 		DecorationBounds: 1536, 1536
-	Harvester:
-		Resources: Tiberium, BlueTiberium, BlackTiberium, Ore, Gems
-		BaleUnloadDelay: 1
-		BaleLoadDelay: 4
-		SearchFromProcRadius: 15
-		SearchFromHarvesterRadius: 8
-		HarvestFacings: 8
-		EmptyCondition: no-ore
-	DockClientManager:
-		OccupancyCostModifier: 4
-	WithStoresResourcesPipsDecoration:
-		Position: BottomLeft
-		Margin: 4, 3
-		RequiresSelection: true
-		PipCount: 6
-		ResourceSequences:
-			Ore: pip-yellow
-			Gems: pip-red
-			Tiberium: pip-green
-			BlueTiberium: pip-blue
-			BlackTiberium: pip-green
-	Mobile:
-		Speed: 72
-		TurnSpeed: 24
-		Locomotor: heavywheeled
-	Health:
-		HP: 75000
-	RevealsShroud:
-		Range: 4c0
 	SpawnActorOnDeath:
 		Actor: HARV.TD.Husk
 		RequiresCondition: !being-warped
 	WithHarvestAnimation:
 	WithDockingAnimationCA:
 		RefineryTypes: proc.td
-	GrantConditionOnTerrain@Tiberium:
-		Condition: ontib
-		TerrainTypes: Tiberium
-	GrantConditionOnTerrain@Ore:
-		Condition: onore
-		TerrainTypes: Ore
-	FireWarheadsOnDeath@Ore:
-		RequiresCondition: !no-ore && onore && !being-warped
-		Weapon: OreExplosion
-	FireWarheadsOnDeath@Tib:
-		RequiresCondition: !no-ore && ontib && !being-warped
-		Weapon: TibExplosion
-	-Crushable:
-	Targetable@ChaosImmune:
-		TargetTypes: ChaosImmune
-	Targetable@MindControlResistant:
-		TargetTypes: MindControlResistant
-	SpawnRandomActorOnDeath:
-		Actors: c1,c7,c10
-		Probability: 5
-		RequiresCondition: !being-warped
-	GrantConditionOnPrerequisite@GSHIELD:
-		Condition: pointdef-upgrade
-		Prerequisites: pointdef.upgrade
-	TimedDamageMultiplier@GSHIELD:
-		ActiveCondition: gshield
-		ChargingColor: 008888
-		DrainingColor: 00ffff
-		Modifier: 25
-		Duration: 75
-		ChargeTime: 375
-		ActivateSound: gshieldup.aud
-		DeactivateSound: gshielddown.aud
-		RequiresCondition: pointdef-upgrade
-	WithIdleOverlay@NSHIELD:
-		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
-	ChangesHealth@MINIDRONE:
-		Step: 2250
-	DamageTypeDamageMultiplier@A2GPROTECTION:
-		Modifier: 60
-	UpdatesCount@NodCovenant:
-		Type: NodCovenant
-		UpdateOn: Killed
 	GrantConditionOnPrerequisite@Stealth:
 		Condition: sharv-upgrade
 		Prerequisites: sharv.upgrade
@@ -5743,12 +5572,8 @@ HARV.TD:
 		IntoActor: harv.td.upg
 	RejectsOrders@Transforming:
 		RequiresCondition: sharv-upgrade
-	TransferResourcesOnTransform:
 	ReplacedInQueue:
 		Actors: harv.td.upg
-	StoresResources:
-		Capacity: 26
-		Resources: Tiberium, BlueTiberium, BlackTiberium, Ore, Gems
 	Encyclopedia:
 		Category: GDI/Vehicles; Nod/Vehicles
 
@@ -5758,8 +5583,6 @@ HARV.TD.UPG:
 		Prerequisites: ~sharv.upgrade, anyrefinery, ~vehicles.td, ~techlevel.low
 	RenderSprites:
 		Image: harv2.upg
-	Valued:
-		Cost: 1400
 	Health:
 		HP: 65000
 	Tooltip:

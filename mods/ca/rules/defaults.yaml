@@ -1622,7 +1622,63 @@
 		Modifier: 0
 		RequiresCondition: reapersnare
 
-^HarvesterBalancer:
+^HarvesterBase:
+	Inherits: ^Vehicle-NOUPG
+	Inherits@SELECTION: ^SelectableEconomicUnit
+	Inherits@A2GPROTECTION: ^AirToGroundProtection
+	Inherits@EconomyPolicyDiscount: ^EconomyPolicyDiscount
+	Inherits@EconomyPolicyDurability: ^EconomyPolicyDurability
+	Inherits@HeavyArmor: ^HeavyArmor
+	TooltipExtras:
+		Weaknesses: • Unarmed\n• Resistant to mind control
+	Valued:
+		Cost: 1400
+	Tooltip:
+		GenericName: Harvester
+	Health:
+		HP: 75000
+	Mobile:
+		Speed: 72
+		TurnSpeed: 24
+		Locomotor: heavywheeled
+	RevealsShroud:
+		Range: 4c0
+	SpawnRandomActorOnDeath:
+		Actors: c1,c7,c10
+		Probability: 5
+		RequiresCondition: !being-warped
+	ChangesHealth@MINIDRONE:
+		Step: 2250
+	DamageTypeDamageMultiplier@A2GPROTECTION:
+		Modifier: 60
+	UpdatesCount@NodCovenant:
+		Type: NodCovenant
+		UpdateOn: Killed
+	Harvester:
+		Resources: Tiberium, BlueTiberium, BlackTiberium, Ore, Gems
+		BaleUnloadDelay: 1
+		BaleLoadDelay: 4
+		SearchFromProcRadius: 15
+		SearchFromHarvesterRadius: 8
+		HarvestFacings: 8
+		EmptyCondition: no-ore
+	DockClientManager:
+		OccupancyCostModifier: 4
+	WithStoresResourcesPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
+		PipCount: 6
+		ResourceSequences:
+			Ore: pip-yellow
+			Gems: pip-red
+			Tiberium: pip-green
+			BlueTiberium: pip-blue
+			BlackTiberium: pip-green
+	StoresResources:
+		Capacity: 26
+		Resources: Tiberium, BlueTiberium, BlackTiberium, Ore, Gems
+	TransferResourcesOnTransform:
 	GrantConditionOnPrerequisite@HARVBALANCE:
 		Condition: global-balancedharvesting
 		Prerequisites: global.balancedharvesting
@@ -1632,13 +1688,43 @@
 	HarvesterBalancer:
 		Condition: harv-balance
 		RequiresCondition: global-balancedharvesting
-
-^HarvesterDamageNotification:
 	NotificationOnDamage:
 		Type: Harvester
 		Notification: HarvesterAttack
 		TextNotification: Harvester under attack.
 		MinimumDamage: 500
+	GrantConditionOnTerrain@Tiberium:
+		Condition: ontib
+		TerrainTypes: Tiberium
+	GrantConditionOnTerrain@Ore:
+		Condition: onore
+		TerrainTypes: Ore
+	FireWarheadsOnDeath@Ore:
+		RequiresCondition: !no-ore && onore && !being-warped
+		Weapon: OreExplosion
+	FireWarheadsOnDeath@Tib:
+		RequiresCondition: !no-ore && ontib && !being-warped
+		Weapon: TibExplosion
+	-Crushable:
+	GrantConditionOnPrerequisite@GSHIELD:
+		Condition: pointdef-upgrade
+		Prerequisites: pointdef.upgrade
+	TimedDamageMultiplier@GSHIELD:
+		ActiveCondition: gshield
+		ChargingColor: 008888
+		DrainingColor: 00ffff
+		Modifier: 25
+		Duration: 75
+		ChargeTime: 375
+		ActivateSound: gshieldup.aud
+		DeactivateSound: gshielddown.aud
+		RequiresCondition: pointdef-upgrade
+	WithIdleOverlay@NSHIELD:
+		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
+	Targetable@MindControlResistant:
+		TargetTypes: MindControlResistant
 
 ^Veilable:
 	RangeMultiplier@VEILED:
