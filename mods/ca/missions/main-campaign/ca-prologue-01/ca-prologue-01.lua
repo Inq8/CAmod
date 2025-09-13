@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca-prologue-01"
+MissionDir = "ca|missions/main-campaign/ca-prologue-01"
 
 InsertionHelicopterType = "tran.evac"
 InsertionPath = { InsertionEntry.Location, InsertionLZ.Location }

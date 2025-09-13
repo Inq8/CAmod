@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca13-abasement"
+MissionDir = "ca|missions/main-campaign/ca13-abasement"
 
 
 ScrinWaterAttackPaths = {

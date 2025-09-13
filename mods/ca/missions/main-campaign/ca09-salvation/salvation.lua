@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca09-salvation"
+MissionDir = "ca|missions/main-campaign/ca09-salvation"
 
 Wormholes = {
 	{ Locations = { WormholeSpawn1a.Location, WormholeSpawn1b.Location, WormholeSpawn1c.Location, WormholeSpawn1d.Location }, Actor = nil, SpawnCount = 0, Phase = 1 },

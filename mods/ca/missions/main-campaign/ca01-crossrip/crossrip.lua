@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca01-crossrip"
+MissionDir = "ca|missions/main-campaign/ca01-crossrip"
 
 -- Locations
 

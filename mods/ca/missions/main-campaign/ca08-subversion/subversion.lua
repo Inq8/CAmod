@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca08-subversion"
+MissionDir = "ca|missions/main-campaign/ca08-subversion"
 
 RespawnEnabled = Map.LobbyOption("respawn") == "enabled"
 

@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca10-zenith"
+MissionDir = "ca|missions/main-campaign/ca10-zenith"
 
 
 Squads = {

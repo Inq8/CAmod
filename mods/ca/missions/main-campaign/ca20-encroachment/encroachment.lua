@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca20-encroachment"
+MissionDir = "ca|missions/main-campaign/ca20-encroachment"
 
 
 AlliedAttackPaths = {

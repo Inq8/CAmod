@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca42-schism"
+MissionDir = "ca|missions/main-campaign/ca42-schism"
 
 PurificationInterval = DateTime.Minutes(3) + DateTime.Seconds(5)
 

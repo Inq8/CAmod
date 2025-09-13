@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca40-conduit"
+MissionDir = "ca|missions/main-campaign/ca40-conduit"
 
 TimeLimit = {
 	normal = DateTime.Minutes(75),

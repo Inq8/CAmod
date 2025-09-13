@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca11-awakening"
+MissionDir = "ca|missions/main-campaign/ca11-awakening"
 
 
 -- Squads

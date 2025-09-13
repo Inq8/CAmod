@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca21-incapacitation"
+MissionDir = "ca|missions/main-campaign/ca21-incapacitation"
 
 RespawnEnabled = Map.LobbyOption("respawn") == "enabled"
 

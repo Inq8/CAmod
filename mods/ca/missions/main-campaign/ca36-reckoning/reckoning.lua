@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca36-reckoning"
+MissionDir = "ca|missions/main-campaign/ca36-reckoning"
 
 ExterminatorsStartTime = {
 	easy = DateTime.Minutes(10),

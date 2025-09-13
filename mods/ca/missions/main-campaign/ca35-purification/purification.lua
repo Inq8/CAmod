@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca35-purification"
+MissionDir = "ca|missions/main-campaign/ca35-purification"
 
 UnitBuildTimeMultipliers = {
 	easy = 0.8,

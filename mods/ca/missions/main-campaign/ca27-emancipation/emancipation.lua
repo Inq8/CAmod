@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca27-emancipation"
+MissionDir = "ca|missions/main-campaign/ca27-emancipation"
 
 ScrinWaterAttackPaths = {
 	{ AttackNode1.Location, AttackNode2.Location },

@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca25-enmity"
+MissionDir = "ca|missions/main-campaign/ca25-enmity"
 
 
 PowerGrids = {

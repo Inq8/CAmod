@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca19-proliferation"
+MissionDir = "ca|missions/main-campaign/ca19-proliferation"
 
 
 Fields = {

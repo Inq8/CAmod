@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca14-treachery"
+MissionDir = "ca|missions/main-campaign/ca14-treachery"
 
 
 GreeceMainAttackPaths = {

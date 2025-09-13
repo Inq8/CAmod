@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca31-foothold"
+MissionDir = "ca|missions/main-campaign/ca31-foothold"
 
 SensorZones = { SensorZone1, SensorZone2, SensorZone3, SensorZone4 }
 

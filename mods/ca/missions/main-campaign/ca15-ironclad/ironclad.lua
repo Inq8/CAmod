@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca15-ironclad"
+MissionDir = "ca|missions/main-campaign/ca15-ironclad"
 
 
 GreeceAttackPaths = {

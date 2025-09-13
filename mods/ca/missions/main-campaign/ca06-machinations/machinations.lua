@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca06-machinations"
+MissionDir = "ca|missions/main-campaign/ca06-machinations"
 
 InitialUnits = {
 	easy = { "jeep", "mcv", "2tnk", "e1", "e1", "e1", "e3" },

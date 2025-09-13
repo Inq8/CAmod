@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca03-deliverance"
+MissionDir = "ca|missions/main-campaign/ca03-deliverance"
 
 -- Locations
 

@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca26-capitulation"
+MissionDir = "ca|missions/main-campaign/ca26-capitulation"
 
 AttackPaths = {
 	{ WestDelivery3.Location, AttackRally1.Location },

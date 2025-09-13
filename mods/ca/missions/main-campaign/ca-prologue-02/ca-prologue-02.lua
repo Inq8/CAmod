@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca-prologue-02"
+MissionDir = "ca|missions/main-campaign/ca-prologue-02"
 
 Difficulty = "easy"
 

@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca32-convergence"
+MissionDir = "ca|missions/main-campaign/ca32-convergence"
 
 MaxBreakthroughs = {
 	easy = 6,

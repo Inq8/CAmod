@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca23-subjugation"
+MissionDir = "ca|missions/main-campaign/ca23-subjugation"
 
 RespawnEnabled = Map.LobbyOption("respawn") == "enabled"
 

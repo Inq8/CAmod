@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca34-illumination"
+MissionDir = "ca|missions/main-campaign/ca34-illumination"
 
 Caves = {
 	{ WormholeLocation = Cave1Wormhole.Location, PatrolPath = { Cave1Patrol1.Location, Cave1Patrol2.Location, Cave1Patrol1.Location, Cave1Patrol3.Location, Cave1Patrol4.Location, Cave1Patrol5.Location, Cave1Patrol6.Location, Cave1Patrol5.Location, Cave1Patrol4.Location, Cave1Patrol3.Location }, Composition = {} },

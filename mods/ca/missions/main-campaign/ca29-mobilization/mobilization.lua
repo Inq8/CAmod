@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca29-mobilization"
+MissionDir = "ca|missions/main-campaign/ca29-mobilization"
 
 UnitBuildTimeMultipliers = {
 	easy = 0.05,

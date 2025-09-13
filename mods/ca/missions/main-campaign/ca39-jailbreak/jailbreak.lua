@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca39-jailbreak"
+MissionDir = "ca|missions/main-campaign/ca39-jailbreak"
 
 CruisersEnabledTime = {
 	easy = DateTime.Minutes(25),

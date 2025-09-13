@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca24-culmination"
+MissionDir = "ca|missions/main-campaign/ca24-culmination"
 
 AlliedSavedAdvancedBuildings = {}
 USSRSavedAdvancedBuildings = {}

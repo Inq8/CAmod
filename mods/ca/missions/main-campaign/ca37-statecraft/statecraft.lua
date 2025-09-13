@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca37-statecraft"
+MissionDir = "ca|missions/main-campaign/ca37-statecraft"
 
 MarineskoHardAndAboveCompositions = {
 	-- 0 to 10 minutes

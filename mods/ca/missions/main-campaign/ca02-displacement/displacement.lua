@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca02-displacement"
+MissionDir = "ca|missions/main-campaign/ca02-displacement"
 
 -- Locations and Paths
 

@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca30-singularity"
+MissionDir = "ca|missions/main-campaign/ca30-singularity"
 
 
 NWReactors = { NWPower1, NWPower2, NWPower3, NWPower4, NWPower5, NWPower6, NWPower7, NWPower8 }

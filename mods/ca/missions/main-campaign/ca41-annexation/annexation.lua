@@ -1,4 +1,4 @@
-MissionDir = "ca/missions/main-campaign/ca41-annexation"
+MissionDir = "ca|missions/main-campaign/ca41-annexation"
 
 ScrinAttackValues = AdjustAttackValuesForDifficulty({ Min = 13, Max = 26 })
 
