@@ -186,33 +186,37 @@ InitGDI = function()
 		Trigger.AfterDelay(DateTime.Minutes(16), function()
 			DoDisruptorDrop()
 		end)
-	end
 
-	if IsHardOrAbove() then
-		Trigger.AfterDelay(DateTime.Minutes(13), function()
-			if not Carrier1.IsDead then
-				Carrier1.Patrol({ CarrierPatrol1.Location, CarrierPatrol2.Location, CarrierPatrol3.Location, CarrierPatrol2.Location })
-			end
-			if not Carrier2.IsDead then
-				Carrier2.Patrol({ CarrierPatrol1.Location, CarrierPatrol2.Location, CarrierPatrol3.Location, CarrierPatrol2.Location })
-			end
-		end)
+		if IsHardOrAbove() then
+			Trigger.AfterDelay(DateTime.Minutes(13), function()
+				if not Carrier1.IsDead then
+					Carrier1.Patrol({ CarrierPatrol1.Location, CarrierPatrol2.Location, CarrierPatrol3.Location, CarrierPatrol2.Location })
+				end
+				if not Carrier2.IsDead then
+					Carrier2.Patrol({ CarrierPatrol1.Location, CarrierPatrol2.Location, CarrierPatrol3.Location, CarrierPatrol2.Location })
+				end
+			end)
 
-		Utils.Do({ Carrier1, Carrier2 }, function(c)
-			Trigger.OnKilled(c, function(self, killer)
-				Trigger.AfterDelay(DateTime.Minutes(3), function()
-					if not NavalYard.IsDead and NavalYard.Owner == GDI then
-						NavalYard.Produce("cv")
-					end
+			Utils.Do({ Carrier1, Carrier2 }, function(c)
+				Trigger.OnKilled(c, function(self, killer)
+					Trigger.AfterDelay(DateTime.Minutes(3), function()
+						if not NavalYard.IsDead and NavalYard.Owner == GDI then
+							NavalYard.Produce("cv")
+						end
+					end)
 				end)
 			end)
-		end)
 
-		Trigger.OnProduction(NavalYard, function(producer, produced)
-			if produced.Type == "cv" and not produced.IsDead then
-				produced.Patrol({ CarrierPatrol1.Location, CarrierPatrol2.Location, CarrierPatrol3.Location, CarrierPatrol2.Location })
+			Trigger.OnProduction(NavalYard, function(producer, produced)
+				if produced.Type == "cv" and not produced.IsDead then
+					produced.Patrol({ CarrierPatrol1.Location, CarrierPatrol2.Location, CarrierPatrol3.Location, CarrierPatrol2.Location })
+				end
+			end)
+
+			if Difficulty == "brutal" then
+				Actor.Create("eye.zocom.dummy", true, { Owner = GDI })
 			end
-		end)
+		end
 	end
 end
 
@@ -344,6 +348,11 @@ DeployChinese = function()
 end
 
 DoDisruptorDrop = function()
+	local gdiFactories = GDI.GetActorsByType("weap.td")
+	if #gdiFactories == 0 then
+		return
+	end
+
 	local dropPoints = { DisruptorDropDest1.Location, DisruptorDropDest2.Location }
 
 	if IsVeryHardOrAbove() then
@@ -367,4 +376,8 @@ DoDisruptorDrop = function()
 			end
 		end)
 	end)
+
+	if Difficulty == "brutal" then
+		Trigger.AfterDelay(DateTime.Minutes(5), DoDisruptorDrop)
+	end
 end

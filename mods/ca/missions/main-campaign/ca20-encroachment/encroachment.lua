@@ -212,11 +212,11 @@ InitGreece = function()
 	if Difficulty == "easy" then
 		RebuildExcludes.Greece = { Types = { "gun", "pbox", "pris", "awpr", "weat" } }
 	else
+		RebuildExcludes.Greece = { Types = { "awpr", "weat" } }
+
 		if Difficulty == "normal" then
 			RebuildExcludes.Greece.Actors = { NWPillbox1, NWPillbox2, NWPillbox3, NWPillbox4 }
 		end
-
-		RebuildExcludes.Greece = { Types = { "awpr", "weat" } }
 	end
 
 	AutoRepairAndRebuildBuildings(Greece, 15)

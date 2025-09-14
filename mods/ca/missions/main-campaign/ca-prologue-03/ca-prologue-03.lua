@@ -83,7 +83,7 @@ WorldLoaded = function()
 					Trigger.AfterDelay(DateTime.Seconds(4), function()
 						Actor.Create("flare", true, { Owner = GDI, Location = SignalFlare.Location })
 						Media.PlaySpeechNotification(GDI, "SignalFlare")
-						Notification("Signal flare detected.")
+						Notification("Signal flare detected. Press [" .. UtilsCA.Hotkey("ToLastEvent") .. "] to center screen on the most revent event.")
 						Beacon.New(GDI, SignalFlare.CenterPosition)
 					end)
 				end

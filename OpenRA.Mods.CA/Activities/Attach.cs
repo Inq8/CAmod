@@ -123,7 +123,7 @@ namespace OpenRA.Mods.CA.Activities
 
 			var attached = attachableTo.Attach(attachable, true);
 
-			if (attached && attachable.Info.AttachSound != null)
+			if (attached && attachable.Info.AttachSound != null && a.World.FogObscures(a.CenterPosition))
 				Game.Sound.Play(SoundType.World, attachable.Info.AttachSound, a.CenterPosition);
 		}
 

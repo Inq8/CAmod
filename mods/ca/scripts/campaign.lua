@@ -1235,19 +1235,6 @@ ProduceNextAttackSquadUnit = function(squad, queue, unitIndex)
 			if producer ~= nil then
 				local producerId = tostring(producer)
 
-				-- set that the next unit produced from this producer should be assigned to the specified squad
-				AddToSquadAssignmentQueue(producerId, squad)
-
-				-- add production trigger once for the producer (once for every owner, as the producer may be captured)
-				if OnProductionTriggers[producerId] == nil or OnProductionTriggers[producerId] ~= producer.Owner.InternalName then
-					OnProductionTriggers[producerId] = tostring(producer.Owner.InternalName)
-
-					-- add produced unit to list of idle units for the squad
-					Trigger.OnProduction(producer, function(p, produced)
-						HandleProducedSquadUnit(produced, producerId, squad)
-					end)
-				end
-
 				local engineersNearby = Map.ActorsInCircle(producer.CenterPosition, WDist.New(2730), function(a)
 					return not a.IsDead and (a.Type == "e6" or a.Type == "n6" or a.Type == "s6" or a.Type == "mast") and a.Owner ~= producer.Owner
 				end)
@@ -1255,6 +1242,20 @@ ProduceNextAttackSquadUnit = function(squad, queue, unitIndex)
 				-- prevents capturing player getting a free unit
 				-- the capture blocks the production until the capture completes
 				if #engineersNearby == 0 then
+
+					-- set that the next unit produced from this producer should be assigned to the specified squad
+					AddToSquadAssignmentQueue(producerId, squad)
+
+					-- add production trigger once for the producer (once for every owner, as the producer may be captured)
+					if OnProductionTriggers[producerId] == nil or OnProductionTriggers[producerId] ~= producer.Owner.InternalName then
+						OnProductionTriggers[producerId] = tostring(producer.Owner.InternalName)
+
+						-- add produced unit to list of idle units for the squad
+						Trigger.OnProduction(producer, function(p, produced)
+							HandleProducedSquadUnit(produced, producerId, squad)
+						end)
+					end
+
 					producer.Produce(nextUnit)
 
 					if UnitCosts[nextUnit] == nil then
