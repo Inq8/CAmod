@@ -1988,7 +1988,7 @@ end
 GetHighestCostUnit = function(units)
 	local chosenUnit
 	for _, u in pairs(units) do
-		if type(u) == "table" then
+		if type(u) == "userdata" then
 			u = u.Type
 		end
 		if UnitCosts[u] == nil then
@@ -2004,7 +2004,7 @@ end
 GetTotalCostOfUnits = function(units)
 	local totalCost = 0
 	for _, u in pairs(units) do
-		if type(u) == "table" then
+		if type(u) == "userdata" then
 			u = u.Type
 		end
 		if UnitCosts[u] == nil then
