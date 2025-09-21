@@ -1401,8 +1401,18 @@ SendAttackSquad = function(squad)
 		local squadLeader = nil
 		local attackPath = nil
 
-		if squad.AttackPaths ~= nil and #squad.AttackPaths > 0 then
-			attackPath = Utils.Random(squad.AttackPaths)
+		if squad.AttackPaths ~= nil then
+			local attackPaths = {}
+
+			if type(squad.AttackPaths) == "function" then
+				attackPaths = squad.AttackPaths(squad)
+			else
+				attackPaths = squad.AttackPaths
+			end
+
+			if #attackPaths > 0 then
+				attackPath = Utils.Random(squad.AttackPaths)
+			end
 		end
 
 		Utils.Do(squad.IdleUnits, function(a)
