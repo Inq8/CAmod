@@ -247,11 +247,11 @@ InitGDI = function()
 	if Difficulty == "easy" then
 		RebuildExcludes.GDI = { Types = { "gtwr", "atwr", "stwr", "nuk2", "eye" } }
 	else
+		RebuildExcludes.GDI = { Types = { "nuk2", "eye" } }
+
 		if Difficulty == "normal" then
 			RebuildExcludes.GDI.Actors = { NETower1, NETower2, NETower3, NETower4, NEBuilding7, NEBuilding8 }
 		end
-
-		RebuildExcludes.GDI = { Types = { "nuk2", "eye" } }
 	end
 
 	AutoRepairAndRebuildBuildings(GDI, 15)
