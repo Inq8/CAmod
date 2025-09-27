@@ -30,7 +30,8 @@ namespace OpenRA.Mods.CA.Traits
 	public class CampaignProgressTracker : INotifyWinStateChanged, IResolveOrder
 	{
 		private const string encryptionKey = "b14ca5898a4e4133bbce2ea2315a1916";
-		private static string campaignProgressFilePath = Path.Combine(Platform.SupportDir + "Logs", "ca-campaign.log");
+		private static string oldCampaignProgressFilePath = Path.Combine(Platform.SupportDir + "Logs", "ca-campaign.log");
+		private static string campaignProgressFilePath = Path.Combine(Platform.SupportDir + "Logs", "ca-progress.log");
 		private bool developerCommandUsed = false;
 
 		void INotifyWinStateChanged.OnPlayerWon(Player player)
@@ -145,6 +146,21 @@ namespace OpenRA.Mods.CA.Traits
 				{
 					var campaignProgressFileContents = File.ReadAllText(campaignProgressFilePath);
 					var decryptedJson = DecryptString(campaignProgressFileContents, encryptionKey);
+					campaignProgress = JsonConvert.DeserializeObject<Dictionary<string, MissionVictoryResult>>(decryptedJson);
+				}
+				catch
+				{
+					// do nothing
+				}
+			}
+			// backwards compatibility
+			else if (File.Exists(oldCampaignProgressFilePath))
+			{
+				try
+				{
+					var oldFileContents = File.ReadAllText(oldCampaignProgressFilePath);
+					File.WriteAllText(campaignProgressFilePath, oldFileContents);
+					var decryptedJson = DecryptString(oldFileContents, encryptionKey);
 					campaignProgress = JsonConvert.DeserializeObject<Dictionary<string, MissionVictoryResult>>(decryptedJson);
 				}
 				catch

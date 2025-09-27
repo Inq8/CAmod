@@ -1,0 +1,50 @@
+^Palettes:
+	PaletteFromFile@terrain-temperat:
+		Filename: summer.pal
+	FlashPostProcessEffect@LIGHTNINGSTRIKE:
+		Type: LightningStrike
+	WeatherOverlay@RAIN:
+		WindTick: 150, 550
+		UseSquares: false
+		ScatterDirection: 0, 0
+		Gravity: 30, 35
+		SwingOffset: 0, 0
+		SwingSpeed: 0, 0
+		SwingAmplitude: 0, 0
+		ParticleColors: 72aaae, 72aea6, 5caea3, 6da69f
+		LineTailAlphaValue: 30
+		ParticleSize: 1, 1
+		ParticleDensityFactor: 15
+	TerrainLighting:
+	TintPostProcessEffect:
+		Red: 1.22
+		Green: 1.27
+		Blue: 1.15
+		Ambient: 0.7
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, intervention.lua
+	MissionData:
+		Briefing: Assisted by Soviet forces, General Hawthorne was able to make an escape. It is not known how long he has been working with them, or what his reasons are, but it better explains GDI's recent reluctance to cooperate.\n\nPerhaps his hatred for Kane and the Brotherhood was stronger than anyone knew, enough to undermine his loyalty and his judgement, or perhaps he is another unfortunate victim of mind control. We expect it isn't that last we'll see of him.\n\nThe gateway's connection to the Scrin homeworld has been re-established and GDI's leadership has reasserted itself. Much needed supplies have made their way to their off-world forces. Communication with more of our agents has also been restored, and our attention must now turn to the Brotherhood.\n\nThe Tiberium purification device being lost to the Overlord has halted Kane's efforts to free the Scrin population from Tiberium dependency, leaving many subservient to the Overlord that would otherwise have risen up against him. Nod and Rebel forces are gradually losing ground now that they also have the Malefic Scrin to contend with.\n\nNod forces on Earth are currently completely cut off from Kane, and we believe they are now putting all of their efforts into preparing a new gateway. An unusual concentration of Nod forces has been detected near the Philippines, and we have visual confirmation of large stockpiles of Tiberium. The only other time we have seen such extensive stockpiling was when the Scrin were preparing their own gateway.\n\nWe do not have a large presence in the region, we need you to establish a forward base which can be reinforced and used to launch attacks on Nod forces. Tiberium is being stored in silos on numerous small islands. You must either destroy or capture all of these silos, thus removing any immediate possibility of Nod opening a gateway.\n\nResources in the area are scarce, so it's recommended that you capture rather than destroy any silos you come across, making use of the additional funds.\n\nOur Korean coalition partners are providing support for this mission. Their Black Eagle fighter jets should prove invaluable for controlling the skies above the islands.
+	MapOptions:
+		ShortGameCheckboxEnabled: False
+	MusicPlaylist:
+		StartingMusic: snake
+
+Player:
+	PlayerResources:
+		DefaultCash: 6000
+
+ALHQ:
+	FreeActor@Korea:
+		Actor: korea.coalition
+
+greece.coalition:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+sweden.coalition:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+korea.coalition:
+	Inherits@CAMPAIGNDISABLED: ^Disabled

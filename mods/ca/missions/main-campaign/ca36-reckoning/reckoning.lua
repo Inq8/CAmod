@@ -370,7 +370,7 @@ SendNextExterminator = function()
 			exterminator = { SpawnLocation = Utils.Random({ ExterminatorSpawnWest.Location, ExterminatorSpawnEast.Location }) }
 		end
 
-		local wormhole = Actor.Create("wormhole", true, { Owner = Scrin, Location = exterminator.SpawnLocation })
+		local wormhole = Actor.Create("wormholelg", true, { Owner = Scrin, Location = exterminator.SpawnLocation })
 
 		Trigger.AfterDelay(DateTime.Seconds(2), function()
 			MediaCA.PlaySound("etpd-aggro.aud", 2)

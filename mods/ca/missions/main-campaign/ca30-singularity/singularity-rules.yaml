@@ -51,8 +51,6 @@ WORMHOLE:
 		RedTint: 0.2
 
 WORMHOLEXXL:
-	Inherits: WORMHOLE
-	-Targetable:
 	ExternalCondition@KaneRevealed:
 		Condition: kane-revealed
 	ProximityExternalCondition@KaneRevealed:
@@ -60,6 +58,11 @@ WORMHOLEXXL:
 		Range: 20c0
 		RequiresCondition: kane-revealed
 		ValidRelationships: Enemy, Ally, Neutral
+	TerrainLightSource:
+		Range: 6c0
+		Intensity: 0.5
+		BlueTint: 1
+		RedTint: 0.2
 
 MSHP:
 	Inherits@CAMPAIGNDISABLED: ^Disabled

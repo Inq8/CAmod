@@ -48,7 +48,7 @@ WorldLoaded = function()
 	InitObjectives(Greece)
 	InitNod()
 
-    Actor.Create("optics.upgrade", true, { Owner = Greece })
+	Actor.Create("optics.upgrade", true, { Owner = Greece })
 	Actor.Create("radar.dummy", true, { Owner = Greece })
 
     ObjectiveDestroySAMSites = Greece.AddObjective("Destroy Nod SAM Sites.")

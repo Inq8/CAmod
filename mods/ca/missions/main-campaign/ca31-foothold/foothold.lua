@@ -151,7 +151,7 @@ WorldLoaded = function()
 		Trigger.AfterDelay(DateTime.Seconds(3), function()
 			MediaCA.PlaySound(MissionDir .. "/c_gatewaystabilized.aud", 2)
 			Notification("Interstellar gateway stabilized.")
-			GatewayStable = Actor.Create("wormholestable", true, { Owner = GatewayOwner, Location = Gateway.Location })
+			GatewayStable = Actor.Create("wormholexl", true, { Owner = GatewayOwner, Location = Gateway.Location })
 			Gateway.Destroy()
 
 			Trigger.AfterDelay(DateTime.Seconds(5), function()

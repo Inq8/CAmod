@@ -481,6 +481,15 @@ MissionPlayersHaveNoRequiredUnits = function()
 	return Utils.All(MissionPlayers, function(p) return p.HasNoRequiredUnits() end)
 end
 
+MissionPlayersHaveNavalPresence = function()
+	local count = 0
+	for _, p in pairs(MissionPlayers) do
+		local navalUnits = p.GetActorsByTypes({ "isub", "msub", "ca", "cv", "dd", "pt", "ss", "seas", "ss2", "sb", "dd2", "pt2" })
+		count = count + #navalUnits
+	end
+	return count > 6
+end
+
 UpdatePlayerBaseLocations = function()
 	if #MissionPlayers == 0 then
 		return false
