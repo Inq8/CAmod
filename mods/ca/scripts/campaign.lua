@@ -1411,7 +1411,7 @@ SendAttackSquad = function(squad)
 			end
 
 			if #attackPaths > 0 then
-				attackPath = Utils.Random(squad.AttackPaths)
+				attackPath = Utils.Random(attackPaths)
 			end
 		end
 
