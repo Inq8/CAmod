@@ -642,8 +642,8 @@ ETPD:
 		InitialStanceAI: AttackAnything
 	SpawnActorOnDeath:
 		Actor: ETPD.Husk
-	Targetable@ETPD:
-		TargetTypes: ExterminatorTripod
+	Targetable@CampaignBoss:
+		TargetTypes: CampaignBoss
 	Targetable@SHIELDED:
 		TargetTypes: Shielded
 		RequiresCondition: shields-up
@@ -676,6 +676,142 @@ ETPD.Husk:
 		Name: Husk (Exterminator Tripod)
 	RenderSprites:
 		Image: etpd.destroyed
+
+VENG:
+	Inherits: ^Vehicle
+	Inherits@ActorDifficultyConditions: ^ActorDifficultyConditions
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@HOVERTRAIL: ^HoverTrail
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
+	Inherits@HeavyArmor: ^HeavyArmor
+	TooltipExtras:
+		Description: Colossal Malefic Scrin war machine.
+		Strengths: • Unknown
+		Weaknesses: • Unknown
+	Valued:
+		Cost: 15000
+	Tooltip:
+		Name: Void Engine
+	Selectable:
+		Bounds: 2800, 3000, 0, -600
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 2000000
+	Mobile:
+		TurnSpeed: 4
+		Speed: 10
+		Locomotor: sheavytracked
+	WithShadow:
+		Offset: 43, 128, 0
+		ZOffset: -129
+		RequiresCondition: !invisibility
+	Hovers:
+		BobDistance: -25
+		Ticks: 12
+		RequiresCondition: !empdisable && !being-warped && !driver-dead
+	RevealsShroud:
+		Range: 10c0
+	Armament:
+		Weapon: VoidEngineBeam
+		LocalOffset: 1100,0,700
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+	WithMuzzleOverlay:
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
+	AttackFrontal:
+		PauseOnCondition: empdisable || blinded
+		TargetFrozenActors: True
+		ForceFireIgnoresActors: True
+		FacingTolerance: 8
+	GrantConditionOnTerrain@ONWATER:
+		TerrainTypes: Water
+		Condition: onwater
+	KillsSelf@SINK:
+		RequiresCondition: onwater && (empdisable || driver-dead)
+	Targetable@ONWATER:
+		TargetTypes: Water, Ship
+		RequiresCondition: onwater
+	SpawnActorOnDeath:
+		Actor: VENG.Husk
+		RequiresCondition: !being-warped
+	SpawnActorOnDeath@Rift:
+		Actor: voidenginedeathrift
+		RequiresCondition: !being-warped
+	AutoTarget:
+		InitialStanceAI: AttackAnything
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
+	Targetable@DriverKillImmune:
+		TargetTypes: DriverKillImmune
+	Targetable@BlindImmune:
+		TargetTypes: BlindImmune
+	Targetable@CampaignBoss:
+		TargetTypes: CampaignBoss
+	ExternalCondition@chilled:
+		TotalCap: 1
+	ChangesHealth:
+		Step: 2000
+		Delay: 25
+		StartIfBelow: 100
+		DamageCooldown: 250
+	SpeedMultiplier@TEMPORAL:
+		Modifier: 75
+	ReloadDelayMultiplier@TEMPORAL:
+		Modifier: 125
+		RequiresCondition: being-warped
+
+VENG.Husk:
+	Inherits: ^Husk
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
+	Tooltip:
+		Name: Husk (Void Engine)
+	RenderSprites:
+		Image: veng.destroyed
+
+VoidEngineRift:
+	Inherits: ^RiftBase
+	EditorOnlyTooltip:
+		Name: (Void Engine Rift)
+	RenderSprites:
+		Image: riftmd
+	PeriodicExplosion:
+		Weapon: VoidEngineRift
+	KillsSelf:
+		Delay: 250
+	SpawnActorOnDeath:
+		Actor: voidengineriftfade
+		SkipMakeAnimations: false
+	# required for spawning actor on death
+	Health:
+		HP: 1
+	WithSpriteBody:
+		StartSequence: make
+
+VoidEngineRiftFade:
+	Inherits: VoidEngineRift
+	WithSpriteBody:
+		Sequence: dead
+	WithMakeAnimation:
+		Sequence: die
+	KillsSelf:
+		Delay: 24
+	-SpawnActorOnDeath:
+	-PeriodicExplosion:
+
+VoidEngineDeathRift:
+	Inherits: VoidEngineRift
+	KillsSelf:
+		Delay: 1500
 
 SCRINPURIFIER:
 	Inherits: ^TechBuilding

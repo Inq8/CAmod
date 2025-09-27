@@ -869,11 +869,11 @@ RestoreSquadProduction = function(oldBuilding, newBuilding)
 		if squad.ProducerActors ~= nil then
 			for queue,actors in pairs(squad.ProducerActors) do
 				if actors ~= nil then
-					Utils.Do(actors, function(a)
+					for idx, a in pairs(actors) do
 						if a == oldBuilding then
-							table.insert(actors, newBuilding)
+							table.insert(actors, idx, newBuilding)
 						end
-					end)
+					end
 				end
 			end
 		end
@@ -1342,10 +1342,18 @@ CalculateIntervalForSquad = function(squad)
 	local attackValues
 
 	if squad.AttackValuePerSecond ~= nil then
-		if squad.AttackValuePerSecond[Difficulty] ~= nil then
-			attackValues = squad.AttackValuePerSecond[Difficulty]
+		local allAttackValues
+
+		if type(squad.AttackValuePerSecond) == "function" then
+			allAttackValues = squad.AttackValuePerSecond(squad)
 		else
-			attackValues = squad.AttackValuePerSecond
+			allAttackValues = squad.AttackValuePerSecond
+		end
+
+		if allAttackValues[Difficulty] ~= nil then
+			attackValues = allAttackValues[Difficulty]
+		else
+			attackValues = allAttackValues
 		end
 	end
 

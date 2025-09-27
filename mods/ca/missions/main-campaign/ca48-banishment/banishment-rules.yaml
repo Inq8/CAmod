@@ -1,0 +1,70 @@
+^Palettes:
+	PaletteFromFile@terrain-temperat:
+		Filename: ca|missions/main-campaign/ca47-ad-nihilum/dartmoor.pal
+	FlashPostProcessEffect@LIGHTNINGSTRIKE:
+		Type: LightningStrike
+	WeatherOverlay@RAIN:
+		WindTick: 150, 550
+		UseSquares: false
+		ScatterDirection: 0, 0
+		Gravity: 20, 25
+		SwingOffset: 0, 0
+		SwingSpeed: 0, 0
+		SwingAmplitude: 0, 0
+		ParticleColors: 72aaae, 72aea6, 5caea3, 6da69f
+		LineTailAlphaValue: 30
+		ParticleSize: 1, 1
+		ParticleDensityFactor: 10
+	TintPostProcessEffect:
+		Red: 1
+		Green: 1
+		Blue: 1.1
+		Ambient: 0.8
+
+^BaseWorld:
+	TerrainLighting:
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, banishment.lua
+	MissionData:
+		Briefing: The Malefic Scrin interstellar gateway has been located. Four of our bases along the Dahme river were overrun and our forces were pushed out of the area.\n\n\n\nOur assumption is that if we can drive the Malefic forces back and close this gateway, then the Malefic will no longer have a presence on Earth. We must do this before more of their Void Engines can be sent through.\n\n\n\nAn unusually high number of Nerve Centers have been established in the area. All of them must be destroyed for the gateway to be closed.\n\n\n\nReclaim our fallen bases by clearing out any Malefic forces and bring them back into operation, then locate and destroy all Scrin Nerve Centers.
+	MapOptions:
+		ShortGameCheckboxEnabled: False
+	MusicPlaylist:
+		StartingMusic: drill
+
+Player:
+	PlayerResources:
+		DefaultCash: 6000
+
+STLK:
+	Cloak@NORMAL:
+		CloakDelay: 750
+		RequiresCondition: !cloak-force-disabled && !being-warped && !parachute
+	GrantTimedCondition@Uncloaked:
+		RequiresCondition: !hidden
+	DummyConditionConsumer@cloak-active:
+		Condition: cloak-active
+	DummyConditionConsumer@cloak-charging:
+		Condition: cloak-charging
+
+FLARE:
+	RevealsShroud:
+		Range: 10c0
+
+LST.MCV:
+	Inherits: LST
+	-Buildable:
+	RenderSprites:
+		Image: lst
+	Cargo:
+		InitialUnits: mcv
+
+WCHR:
+	AutoTarget:
+		InitialStanceAI: AttackAnything
+
+WEAP:
+	ExternalCondition@PreventMcv:
+		Condition: has-mcv

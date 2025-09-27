@@ -19,17 +19,17 @@ GradReplacementDelay = {
 MaxBomberTargets = {
 	easy = 2,
 	normal = 3,
-	hard = 5,
-	vhard = 100,
-	brutal = 100
+	hard = 4,
+	vhard = 5,
+	brutal = 6
 }
 
 BombingRunInterval = {
-	easy = DateTime.Minutes(10),
-	normal = DateTime.Minutes(8),
-	hard = DateTime.Minutes(6),
-	vhard = DateTime.Minutes(4),
-	brutal = DateTime.Minutes(1)
+	easy = DateTime.Minutes(8),
+	normal = DateTime.Minutes(6),
+	hard = DateTime.Minutes(4),
+	vhard = DateTime.Minutes(3),
+	brutal = DateTime.Minutes(2)
 }
 
 SovietRallyPoints = { EastRally1, EastRally2, EastRally3, EastRally4, EastRally5, WestRally1, WestRally2, WestRally3 }
@@ -230,8 +230,37 @@ end
 
 InitBombingRun = function()
 	local delay = 1
-	local targets = Utils.Shuffle(Greece.GetActorsByTypes({ "proc", "fact" }))
-	targets = Utils.Take(math.min(MaxBomberTargets[Difficulty], #targets), targets)
+	local keyBuildings = Greece.GetActorsByTypes({ "proc", "fact" })
+	local targets
+	local rightTargets = {}
+	local leftTargets = {}
+	local usedXCoords = {}
+	local leftMinX = 2
+	local leftMaxX = 50
+	local rightMinX = 94
+	local rightMaxX = 138
+	local targetSide
+
+	Utils.Do(keyBuildings, function(b)
+		if b.Location.X > rightMinX then
+			table.insert(rightTargets, b)
+		elseif b.Location.X < leftMaxX then
+			table.insert(leftTargets, b)
+		end
+	end)
+
+	if math.abs(#leftTargets - #rightTargets) < 4 then
+		targets = Utils.Concat(leftTargets, rightTargets)
+		targetSide = "both"
+	elseif #leftTargets > #rightTargets then
+		targets = leftTargets
+		targetSide = "left"
+	elseif #rightTargets > #leftTargets then
+		targets = rightTargets
+		targetSide = "right"
+	end
+
+	targets = Utils.Take(math.min(MaxBomberTargets[Difficulty], #targets), Utils.Shuffle(targets))
 
 	if #targets > 0 then
 		Notification("Warning, bombing run incoming.")
@@ -240,8 +269,25 @@ InitBombingRun = function()
 		Utils.Do(targets, function(t)
 			Trigger.AfterDelay(delay, function()
 				if not t.IsDead then
-					local entry = CPos.New(t.Location.X + 1, 0)
-					local exit = CPos.New(t.Location.X + 1, 160)
+					local x = t.Location.X + 1
+
+					if usedXCoords[x] then
+						if targetSide == "both" then
+							targetSide = Utils.Random({ "left", "right" })
+						end
+						if targetSide == "left" then
+							x = Utils.RandomInteger(leftMinX, leftMaxX)
+						else
+							x = Utils.RandomInteger(rightMinX, rightMaxX)
+						end
+					end
+
+					usedXCoords[x] = true
+					usedXCoords[x - 1] = true
+					usedXCoords[x + 1] = true
+
+					local entry = CPos.New(x, 0)
+					local exit = CPos.New(x, 160)
 
 					Reinforcements.Reinforce(USSR, { "badr.carpet" }, { entry, exit }, 25, function(self)
 						self.Destroy()

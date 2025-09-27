@@ -37,3 +37,201 @@ ScorchMaker2:
 	Inherits: ScorchMaker1
 	Warhead@Smu2: LeaveSmudge
 		SmudgeType: Scorch
+
+# Super unit weapons
+
+ExterminatorLaser:
+	Inherits: TripodLaser
+	ReloadDelay: 55
+	Report: etpd-fire1.aud, etpd-fire2.aud
+	Projectile: PlasmaBeam
+		InnerLightness: 170
+		OuterLightness: 130
+		Colors: 880000EE, AA0000EE
+		CenterBeam: true
+		CenterBeamWidth: 40
+		CenterBeamColor: ffeeeeff
+		Radius: 3
+		Distortion: 64
+		DistortionAnimation: 64
+		SegmentLength: 196
+		RecalculateDistortionInterval: 2
+		MaxFacingDeviation: 256
+	Warhead@1Dam: SpreadDamage
+		Damage: 2250
+		Spread: 512
+		Versus:
+			Wood: 45
+			Concrete: 50
+	Warhead@3Eff: CreateEffect
+		Explosions: large_explosion, small_explosion_alt1, small_explosion_alt2, small_explosion_alt3
+
+ExterminatorLaserReversed:
+	Inherits: ExterminatorLaser
+	Projectile: PlasmaBeam
+		StartOffset: -150,-300,0
+		FollowingOffset: 50,100,0
+
+VoidEngineBeam:
+	ReloadDelay: 375
+	Range: 15c0
+	Report: veng-fire1.aud
+	Projectile: LaserZapCA
+		Duration: 30
+		Color: 000000FF
+		Width: 250
+		SecondaryBeamColor: 00000099
+		SecondaryBeamWidth: 350
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Falloff: 100, 37, 23, 10, 0
+		Damage: 200000
+		Versus:
+			Wood: 20
+			Concrete: 15
+		DamageTypes: BulletDeath
+	Warhead@Spawn: SpawnActor
+		Actors: voidenginerift
+		Range: 1
+		ForceGround: false
+		ValidTargets: Ground, Water
+		ImpactActors: false
+	Warhead@Arc: FireShrapnel
+		Weapon: VoidEngineArc
+		Amount: 3
+		AimChance: 100
+		ThrowWithoutTarget: true
+		ValidTargets: Ground, Water
+		ImpactActors: false
+
+VoidEngineArc:
+	Inherits: RiftCannon
+	-Report:
+	Range: 3c0
+	MinRange: 1c512
+	ValidTargets: Ground, Water
+
+VoidEngineRift:
+	ReloadDelay: 10
+	Range: 1c0
+	Projectile: InstantHit
+	Warhead@1Dam: SpreadDamage
+		Spread: 1c512
+		Damage: 840
+		Falloff: 100, 70, 0
+		DamageTypes: BulletDeath
+		ValidRelationships: Enemy, Neutral
+	Warhead@2Dam: SpreadDamage
+		Spread: 768
+		Damage: 168
+		Falloff: 100, 70, 0
+		DamageTypes: BulletDeath
+		ValidRelationships: Ally
+	Warhead@3Slow: GrantExternalConditionCA
+		Range: 1c512
+		Duration: 10
+		Condition: slowed
+		ValidTargets: Vehicle, Ship, Cyborg
+	Warhead@4Slow: GrantExternalConditionCA
+		Range: 3c0
+		Duration: 10
+		Condition: slowed
+		ValidTargets: Vehicle, Ship
+		ValidRelationships: Enemy, Neutral
+
+# Super unit modifiers
+
+C4:
+	Warhead@1Dam: HealthPercentageDamage
+		InvalidTargets: CampaignBoss
+	Warhead@etpd: SpreadDamage
+		Damage: 300000
+		ValidTargets: CampaignBoss
+
+^VsCampaignBossEmp:
+	Warhead@bossEmp: GrantExternalConditionCA
+		Range: 0c896
+		Duration: 20
+		Condition: empdisable
+		ValidTargets: CampaignBoss
+		InvalidTargets: Shielded
+
+MicrowaveZap:
+	Warhead@emp: GrantExternalConditionCA
+		InvalidTargets: EmpImmune, CampaignBoss
+
+MicrowaveZap.UPG:
+	Warhead@emp: GrantExternalConditionCA
+		InvalidTargets: EmpImmune, CampaignBoss
+	Warhead@emp2: GrantExternalConditionCA
+		InvalidTargets: EmpImmune, CampaignBoss
+	Inherits@VsCampaignBossEmp: ^VsCampaignBossEmp
+	Warhead@bossEmp: GrantExternalConditionCA
+		Duration: 40
+
+EnlightenedBeam:
+	Warhead@1Dam: HealthPercentageSpreadDamage
+		InvalidTargets: CampaignBoss
+	Warhead@boss: SpreadDamage
+		Damage: 15000
+		ValidTargets: CampaignBoss
+
+EnlightenedEmp:
+	Warhead@1Emp: GrantExternalConditionCA
+		InvalidTargets: Cyborg, EmpImmune, CampaignBoss
+	Inherits@VsCampaignBossEmp: ^VsCampaignBossEmp
+	Warhead@bossEmp: GrantExternalConditionCA
+		Duration: 20
+
+EMPGrenade:
+	Warhead@5emp: GrantExternalConditionCA
+		InvalidTargets: EmpImmune, CampaignBoss
+	Inherits@VsCampaignBossEmp: ^VsCampaignBossEmp
+	Warhead@bossEmp: GrantExternalConditionCA
+		Duration: 5
+
+OrcaBomb:
+	Warhead@emp: GrantExternalConditionCA
+		InvalidTargets: Defense, EmpImmune, CampaignBoss
+	Inherits@VsCampaignBossEmp: ^VsCampaignBossEmp
+	Warhead@bossEmp: GrantExternalConditionCA
+		Duration: 20
+
+BasiliskPulse:
+	Warhead@emp: GrantExternalConditionCA
+		InvalidTargets: EmpImmune, CampaignBoss
+	Inherits@VsCampaignBossEmp: ^VsCampaignBossEmp
+	Warhead@bossEmp: GrantExternalConditionCA
+		Duration: 40
+
+EMPMissileLauncher:
+	Warhead@emp1: GrantExternalConditionCA
+		InvalidTargets: EmpImmune, CampaignBoss
+	Warhead@emp2: GrantExternalConditionCA
+		InvalidTargets: EmpImmune, CampaignBoss
+	Warhead@emp3: GrantExternalConditionCA
+		InvalidTargets: EmpImmune, CampaignBoss
+	Inherits@VsCampaignBossEmp: ^VsCampaignBossEmp
+	Warhead@bossEmp: GrantExternalConditionCA
+		Range: 4c512
+		Duration: 75
+
+ShadeEmp:
+	Warhead@1Emp: GrantExternalConditionCA
+		InvalidTargets: Cyborg, EmpImmune, CampaignBoss
+	Warhead@2Emp: GrantExternalConditionCA
+		InvalidTargets: EmpImmune, CampaignBoss
+	Inherits@VsCampaignBossEmp: ^VsCampaignBossEmp
+	Warhead@bossEmp: GrantExternalConditionCA
+		Duration: 20
+
+RiftCannon:
+	Warhead@2Dam: HealthPercentageSpreadDamage
+		InvalidTargets: CampaignBoss
+
+NeutronCannon:
+	Warhead@Damage: WarpPercentDamage
+		InvalidTargets: CampaignBoss
+	Warhead@CampaignBoss: WarpDamage
+		Damage: 1000
+		ValidTargets: CampaignBoss

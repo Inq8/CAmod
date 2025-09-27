@@ -215,6 +215,8 @@ InitGDIAttacks = function()
 		InitAirAttackSquad(Squads.Air, GDI)
 
 		if IsHardOrAbove() then
+			InitAirAttackSquad(Squads.AirToAir, GDI, MissionPlayers, { "Aircraft" }, "ArmorType")
+
 			Trigger.AfterDelay(DateTime.Minutes(16), function()
 				DoDisruptorDrop()
 			end)

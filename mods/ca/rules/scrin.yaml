@@ -1018,20 +1018,25 @@ STLK:
 		ScanRadius: 5
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
+	TimedConditionBarCA@Cloaked:
+		Condition: cloak-active
+		Color: ffffff
+		RequiresCondition: hidden
 	GrantTimedConditionOnDeploy@Cloak:
-		DeployedCondition: cloak-active
+		DeployedCondition: cloak-triggered
+		ChargingCondition: cloak-charging
 		ShowSelectionBar: true
 		StartsFullyCharged: true
-		DeployedTicks: 250
-		CooldownTicks: 500
+		DeployedTicks: 1
+		CooldownTicks: 750
 		ShowSelectionBarWhenFull: false
+		ShowSelectionBarWhenEmpty: false
 		ChargingColor: 808080
 		DischargingColor: ffffff
 		Instant: true
-		RequiresCondition: !forced-decloak
 	Cloak@NORMAL:
 		InitialDelay: 0
-		CloakDelay: 0
+		CloakDelay: 250
 		CloakSound: stlk-cloak.aud
 		UncloakSound: stlk-uncloak.aud
 		CloakedCondition: hidden
@@ -1043,31 +1048,31 @@ STLK:
 		PauseOnCondition: invisibility
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden)
-	WithColoredSelectionBox@INVIS:
-		RequiresCondition: invisibility || hidden
-		ColorSource: Player
+	GrantTimedCondition@CloakActive:
+		Condition: cloak-active
+		Duration: 250
+		ForceFullDuration: true
+		RequiresCondition: cloak-triggered
+	GrantTimedCondition@Uncloaked:
+		Condition: phaseshield
+		RequiresCondition: cloak-charging && !hidden
+		Duration: 35
+		ForceFullDuration: true
 	SpeedMultiplier@CloakSpeed:
 		Modifier: 150
 		RequiresCondition: phaseshield || hidden
-	GrantConditionOnAttack@ForcedDecloak:
-		Condition: forced-decloak
-		RequiresCondition: hidden
-	GrantConditionOnDamage@ForcedDecloak:
-		Condition: forced-decloak
-		ValidRelationships: Ally, Enemy, Neutral
-		Duration: 1
-	GrantTimedCondition@Uncloaked:
-		Condition: phaseshield
-		RequiresCondition: forced-decloak
-		Duration: 35
-		ForceFullDuration: true
-	DamageMultiplier@UncloakShield:
+	DamageMultiplier@PhaseShield:
 		Modifier: 10
 		RequiresCondition: phaseshield || hidden
-	WithColoredOverlay@UncloakShield:
+	WithColoredOverlay@PhaseShield:
 		Color: 15091f88
 		RequiresCondition: phaseshield
 	-GrantConditionOnDamageState@UNCLOAK:
+	WithColoredSelectionBox@INVIS:
+		RequiresCondition: invisibility || hidden
+		ColorSource: Player
+	TakeCover:
+		PauseOnCondition: being-warped || phaseshield
 	EncyclopediaExtras:
 		AdditionalInfo: Requires Malefic Allegiance.
 
@@ -6296,7 +6301,7 @@ Rift:
 	EditorOnlyTooltip:
 		Name: (Rift)
 	RenderSprites:
-		Image: riftanim
+		Image: riftlg
 		Palette: effect-ignore-lighting-alpha85
 	PeriodicExplosion:
 		Weapon: Rift
@@ -6306,7 +6311,7 @@ Rift:
 	Health:
 		HP: 1
 	WithSpriteBody:
-		StartSequence: spawn
+		StartSequence: make
 	AmbientSound:
 		SoundFiles: rift1.aud, rift2.aud, rift3.aud
 		Interval: 50
@@ -6322,7 +6327,7 @@ RiftFade:
 	WithSpriteBody:
 		Sequence: dead
 	WithMakeAnimation:
-		Sequence: fade
+		Sequence: die
 	KillsSelf:
 		Delay: 24
 	-SpawnActorOnDeath:
@@ -6334,11 +6339,30 @@ RiftMinor:
 	EditorOnlyTooltip:
 		Name: (Minor Rift)
 	RenderSprites:
-		Image: riftanimmd
+		Image: riftsm
 	PeriodicExplosion:
 		Weapon: MiniRift
 	KillsSelf:
 		Delay: 120
+	# required for spawning actor on death
+	Health:
+		HP: 1
+	WithSpriteBody:
+		StartSequence: make
+	SpawnActorOnDeath:
+		Actor: riftminorfade
+		SkipMakeAnimations: false
+
+RiftMinorFade:
+	Inherits: RiftMinor
+	WithSpriteBody:
+		Sequence: dead
+	WithMakeAnimation:
+		Sequence: die
+	KillsSelf:
+		Delay: 24
+	-SpawnActorOnDeath:
+	-PeriodicExplosion:
 
 camera.resourcescan:
 	Inherits: ^CameraBase
