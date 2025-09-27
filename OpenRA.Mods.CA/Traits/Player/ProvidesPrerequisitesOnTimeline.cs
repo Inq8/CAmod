@@ -19,7 +19,7 @@ using OpenRA.Traits;
 namespace OpenRA.Mods.CA.Traits
 {
 	[TraitLocation(SystemActors.Player)]
-	public class ProvidesPrerequisitesOnTimelineInfo : PausableConditionalTraitInfo
+	public class ProvidesPrerequisitesOnTimelineInfo : PausableConditionalTraitInfo, ITechTreePrerequisiteInfo
 	{
 		[Desc("Identifier.")]
 		[FieldLoader.Require]
@@ -47,6 +47,11 @@ namespace OpenRA.Mods.CA.Traits
 		[NotificationReference("Sounds")]
 		[Desc("Sound notification to play when count is incremented.")]
 		public readonly string PrerequisiteGrantedSound = null;
+
+		IEnumerable<string> ITechTreePrerequisiteInfo.Prerequisites(ActorInfo info)
+		{
+			return Prerequisites.Values;
+		}
 
 		public override object Create(ActorInitializer init) { return new ProvidesPrerequisitesOnTimeline(init, this); }
 	}
