@@ -8,7 +8,7 @@ SuperweaponsEnabledTime = {
 	brutal = DateTime.Minutes(10)
 }
 
-V3ReplacementDelay = {
+GradReplacementDelay = {
 	easy = DateTime.Seconds(360),
 	normal = DateTime.Seconds(240),
 	hard = DateTime.Seconds(120),
@@ -16,9 +16,25 @@ V3ReplacementDelay = {
 	brutal = DateTime.Seconds(60)
 }
 
+MaxBomberTargets = {
+	easy = 2,
+	normal = 3,
+	hard = 5,
+	vhard = 100,
+	brutal = 100
+}
+
+BombingRunInterval = {
+	easy = DateTime.Minutes(10),
+	normal = DateTime.Minutes(8),
+	hard = DateTime.Minutes(6),
+	vhard = DateTime.Minutes(4),
+	brutal = DateTime.Minutes(1)
+}
+
 SovietRallyPoints = { EastRally1, EastRally2, EastRally3, EastRally4, EastRally5, WestRally1, WestRally2, WestRally3 }
 
-NextV3ReplacementTime = 0
+NextGradReplacementTime = 0
 
 SovietAttackPaths = function(squad)
 	local paths = {}
@@ -68,6 +84,7 @@ WorldLoaded = function()
 	AdjustPlayerStartingCashForDifficulty()
 	RemoveActorsBasedOnDifficultyTags()
 	InitUSSR()
+	SetupChurchMoneyCrates(Neutral)
 
 	ObjectiveEliminateSoviets = Greece.AddObjective("Eliminate the Soviet presence.")
 
@@ -151,26 +168,32 @@ InitUSSR = function()
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsUSSRGroundHunterUnit)
 	end)
 
-	local v3s = USSR.GetActorsByType("v3rl")
-	Utils.Do(v3s, function(a)
-		V3ReplacementTrigger(a, a.Location)
+	local grads = USSR.GetActorsByType("grad.defender")
+	Utils.Do(grads, function(a)
+		GradReplacementTrigger(a, a.Location)
+	end)
+
+	Trigger.AfterDelay(BombingRunInterval[Difficulty], function()
+		InitBombingRun()
 	end)
 end
 
-V3ReplacementTrigger = function(v3, loc)
-	Trigger.OnKilled(v3, function(self, killer)
-		local nextReplacementDelay = V3ReplacementDelay[Difficulty]
+GradReplacementTrigger = function(grad, loc)
+	Trigger.OnKilled(grad, function(self, killer)
+		if not SouthFactory.IsDead and SouthFactory.Owner == USSR then
+			local nextReplacementDelay = GradReplacementDelay[Difficulty]
 
-		if NextV3ReplacementTime > DateTime.GameTime then
-			nextReplacementDelay = nextReplacementDelay + NextV3ReplacementTime - DateTime.GameTime
+			if NextGradReplacementTime > DateTime.GameTime then
+				nextReplacementDelay = nextReplacementDelay + NextGradReplacementTime - DateTime.GameTime
+			end
+
+			NextGradReplacementTime = DateTime.GameTime + nextReplacementDelay
+
+			Trigger.AfterDelay(nextReplacementDelay, function()
+				local newGrad = Reinforcements.Reinforce(USSR, { "grad.defender" }, { GradSpawn.Location, loc })[1]
+				GradReplacementTrigger(newGrad, loc)
+			end)
 		end
-
-		NextV3ReplacementTime = DateTime.GameTime + nextReplacementDelay
-
-		Trigger.AfterDelay(nextReplacementDelay, function()
-			local newV3 = Reinforcements.Reinforce(USSR, { "v3rl" }, { V3Spawn.Location, loc })[1]
-			V3ReplacementTrigger(newV3, loc)
-		end)
 	end)
 end
 
@@ -203,4 +226,28 @@ AssumeControl = function()
 			Actor.Create("QueueUpdaterDummy", true, { Owner = Greece })
 		end)
 	end)
+end
+
+InitBombingRun = function()
+	local delay = 1
+	local targets = Utils.Shuffle(Greece.GetActorsByTypes({ "proc", "fact" }))
+	targets = Utils.Take(math.min(MaxBomberTargets[Difficulty], #targets), targets)
+
+	if #targets > 0 then
+		Notification("Warning, bombing run incoming.")
+		MediaCA.PlaySound(MissionDir .. "/r_bombingrun.aud", 2)
+
+		Utils.Do(targets, function(t)
+			Trigger.AfterDelay(delay, function()
+				local entry = CPos.New(t.Location.X + 1, 0)
+				local exit = CPos.New(t.Location.X + 1, 160)
+
+				Reinforcements.Reinforce(USSR, { "badr.carpet" }, { entry, exit }, 25, function(self)
+					self.Destroy()
+				end)
+			end)
+			delay = delay + DateTime.Seconds(2)
+		end)
+	end
+	Trigger.AfterDelay(BombingRunInterval[Difficulty], InitBombingRun)
 end

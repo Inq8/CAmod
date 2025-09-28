@@ -1527,6 +1527,18 @@ SetupRefAndSilosCaptureCredits = function(player)
 	end)
 end
 
+SetupChurchMoneyCrates = function(churchOwner)
+	if churchOwner == nil then
+		return
+	end
+	local churches = churchOwner.GetActorsByTypes({ "v01", "v25" })
+	Utils.Do(churches, function(a)
+		Trigger.OnKilled(a, function(self, killer)
+			Actor.Create("moneycrate", true, { Owner = churchOwner, Location = a.Location })
+		end)
+	end)
+end
+
 HasConyard = function(player)
 	return CountConyards(player) >= 1
 end

@@ -103,7 +103,7 @@ WorldLoaded = function()
 
 	Trigger.AfterDelay(1, function()
 		local alliedBaseDefenders = Map.ActorsInCircle(AlliedBaseCenter.CenterPosition, WDist.New(10 * 1024), function(a)
-			return not a.IsDead and a.Owner == GDI
+			return not a.IsDead and a.Owner == GDI and a.Type ~= "camera"
 		end)
 
 		Trigger.OnAllKilled(alliedBaseDefenders, function()
@@ -121,7 +121,7 @@ WorldLoaded = function()
 		end)
 
 		local sovietBaseDefenders = Map.ActorsInCircle(SovietBaseCenter.CenterPosition, WDist.New(15 * 1024), function(a)
-			return not a.IsDead and a.Owner == GDI
+			return not a.IsDead and a.Owner == GDI and a.Type ~= "camera"
 		end)
 
 		Trigger.OnAllKilled(sovietBaseDefenders, function()
@@ -129,7 +129,7 @@ WorldLoaded = function()
 		end)
 
 		local nodBaseDefenders = Map.ActorsInCircle(NodBaseCenter.CenterPosition, WDist.New(15 * 1024), function(a)
-			return not a.IsDead and a.Owner == GDI
+			return not a.IsDead and a.Owner == GDI and a.Type ~= "camera"
 		end)
 
 		Trigger.OnAllKilled(nodBaseDefenders, function()
@@ -235,7 +235,7 @@ FlipAlliedBase = function()
 		end
 	end)
 
-	Trigger.AfterDelay(DateTime.Seconds(12), function()
+	Trigger.AfterDelay(DateTime.Seconds(20), function()
 		Beacon.New(Greece, McvDest.CenterPosition)
 		Media.PlaySpeechNotification(Greece, "ReinforcementsArrived")
 		Notification("Reinforcements have arrived.")

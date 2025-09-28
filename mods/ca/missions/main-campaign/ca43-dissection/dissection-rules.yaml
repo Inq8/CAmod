@@ -48,3 +48,29 @@ korea.coalition:
 FLARE:
 	RevealsShroud:
 		Range: 8c0
+
+GRAD.Defender:
+	Inherits: GRAD
+	-Buildable:
+	RenderSprites:
+		Image: grad
+	AutoTarget:
+		InitialStanceAI: Defend
+
+BADR.Carpet:
+	Inherits: BADR.CBomber
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	-AmmoPool:
+	-AttackBomber:
+	AttackAircraft:
+		FacingTolerance: 512
+		OpportunityFire: true
+	Health:
+		HP: 40000
+	RevealsShroud:
+		Range: 12c0
+		Type: GroundPosition
+	AutoTarget:
+		InitialStanceAI: AttackAnything
+		MinimumScanTimeInterval: 1
+		MaximumScanTimeInterval: 2

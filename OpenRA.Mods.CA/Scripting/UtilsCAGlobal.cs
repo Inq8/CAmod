@@ -65,5 +65,17 @@ namespace OpenRA.Mods.CA.Scripting
 
 			return BuildingUtils.CanPlaceBuilding(world, cell, ai, bi, null);
 		}
+
+		[Desc("Returns whether shroud obscures a given cell location.")]
+		public bool ShroudObscures(CPos loc)
+		{
+			return world.ShroudObscures(loc);
+		}
+
+		[Desc("Returns whether fog of war obscures a given cell location.")]
+		public bool FogObscures(CPos loc)
+		{
+			return world.FogObscures(loc);
+		}
 	}
 }

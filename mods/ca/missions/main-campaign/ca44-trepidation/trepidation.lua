@@ -67,17 +67,18 @@ WorldLoaded = function()
 	InitUSSR()
 	InitScrin()
 
+	SetupReveals({ Reveal1, Reveal2, Reveal3, Reveal4 })
+	SetupChurchMoneyCrates(Neutral)
+
 	Actor.Create("optics.upgrade", true, { Owner = Greece })
 
 	ObjectiveExtractSpy = Greece.AddObjective("Get spy to safety.")
-
-	SetupReveals({ Reveal1, Reveal2, Reveal3, Reveal4 })
 
 	Trigger.AfterDelay(DateTime.Seconds(20), function()
 		Spy = Actor.Create("spy.noinfil", true, { Owner = Greece, Location = Gateway.Location })
 		Spy.DisguiseAs(SpyTarget)
 		Spy.Move(SpyDest.Location)
-		MediaCA.PlaySound("r_spydetected.aud", 2)
+		MediaCA.PlaySound(MissionDir .. "/r_spydetected.aud", 2)
 		Notification("Allied spy detected. Press [" .. UtilsCA.Hotkey("ToLastEvent") .. "] to view location.")
 		Beacon.New(Greece, SpyDest.CenterPosition)
 
@@ -121,6 +122,9 @@ OncePerSecondChecks = function()
 		USSR.Resources = USSR.ResourceCapacity - 500
 
 		if not PlayerHasBuildings(USSR) and not PlayerHasBuildings(Scrin) then
+			if ObjectiveEliminateEnemy == nil then
+				ObjectiveEliminateEnemy = Greece.AddObjective("Eliminate Soviet & Scrin presence.")
+			end
 			Greece.MarkCompletedObjective(ObjectiveEliminateEnemy)
 		end
 
@@ -220,7 +224,9 @@ SpyDeparture = function()
 			if a == Spy and not SpyDeparted then
 				Trigger.RemoveFootprintTrigger(id)
 				SpyDeparted = true
-				ObjectiveEliminateEnemy = Greece.AddObjective("Eliminate Soviet & Scrin presence.")
+				if ObjectiveEliminateEnemy == nil then
+					ObjectiveEliminateEnemy = Greece.AddObjective("Eliminate Soviet & Scrin presence.")
+				end
 				Greece.MarkCompletedObjective(ObjectiveExtractSpy)
 				Spy.Stop()
 				Spy.Destroy()
