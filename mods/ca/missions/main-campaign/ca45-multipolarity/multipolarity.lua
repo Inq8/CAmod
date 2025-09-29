@@ -228,11 +228,12 @@ InitGDIAttacks = function()
 end
 
 FlipAlliedBase = function()
-	local alliedBaseActors = England.GetActors()
+	local alliedBaseActors = Utils.Where(England.GetActors(), function(a)
+		return not a.IsDead and a.Type ~= "player"
+	end)
+
 	Utils.Do(alliedBaseActors, function(a)
-		if not a.IsDead then
-			a.Owner = Greece
-		end
+		a.Owner = Greece
 	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(20), function()

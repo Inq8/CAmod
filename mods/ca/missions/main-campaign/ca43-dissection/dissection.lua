@@ -239,12 +239,14 @@ InitBombingRun = function()
 
 		Utils.Do(targets, function(t)
 			Trigger.AfterDelay(delay, function()
-				local entry = CPos.New(t.Location.X + 1, 0)
-				local exit = CPos.New(t.Location.X + 1, 160)
+				if not t.IsDead then
+					local entry = CPos.New(t.Location.X + 1, 0)
+					local exit = CPos.New(t.Location.X + 1, 160)
 
-				Reinforcements.Reinforce(USSR, { "badr.carpet" }, { entry, exit }, 25, function(self)
-					self.Destroy()
-				end)
+					Reinforcements.Reinforce(USSR, { "badr.carpet" }, { entry, exit }, 25, function(self)
+						self.Destroy()
+					end)
+				end
 			end)
 			delay = delay + DateTime.Seconds(2)
 		end)

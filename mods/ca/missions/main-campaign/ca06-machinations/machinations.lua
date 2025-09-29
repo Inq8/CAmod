@@ -327,7 +327,7 @@ end
 DoMcvArrival = function()
 	local mcvArrivalPath = { McvEntry.Location, McvLanding.Location }
 	local mcvExitPath = { McvEntry.Location }
-	DoNavalTransportDrop(Greece, mcvArrivalPath, mcvExitPath, "lst.init", InitialUnits[Difficulty], function(a)
+	DoNavalTransportDrop(Greece, mcvArrivalPath, mcvExitPath, "lst.reinforce", InitialUnits[Difficulty], function(a)
 		a.Move(McvRally.Location)
 	end)
 end

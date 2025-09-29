@@ -537,6 +537,16 @@ TMPL:
 	ProduceActorPowerCA@SatelliteScanNoFog:
 		Prerequisites: anyradar, ~!fogenabled, ~!botplayer
 
+# Increase launch time for player GPS
+
+^GpsPower:
+	DummyGpsPower@FOG:
+		Delay: 3000
+	ProduceActorPowerCA@InitialSatelliteScan
+		ChargeInterval: 13500
+	ProduceActorPowerCA@SatelliteScan:
+		ChargeInterval: 10500
+
 # Manual targeting for Tesla Coil boost (otherwise they get stuck when AI attack moves)
 
 SHOK:
