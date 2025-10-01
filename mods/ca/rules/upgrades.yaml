@@ -1533,6 +1533,12 @@ economy.policy:
 		Image: economy.policy
 	WithProductionIconOverlay:
 		Prerequisites: economy.policy
+	ProvidesPrerequisite@FreeChronoMiner:
+		Prerequisite: charv.upgrade
+		RequiresCondition: charv-upgrade
+	GrantConditionOnPrerequisite@FreeChronoMiner:
+		Condition: charv-upgrade
+		Prerequisites: influence.level3
 
 defense.policy:
 	Inherits: ^AlliedUpgrade

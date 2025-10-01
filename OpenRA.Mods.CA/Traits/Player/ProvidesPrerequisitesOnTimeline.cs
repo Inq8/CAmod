@@ -116,7 +116,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		public string[] Factions => info.Factions;
 
-		public IEnumerable<string> ProvidesPrerequisites => prerequisitesGranted;
+		IEnumerable<string> ITechTreePrerequisite.ProvidesPrerequisites => prerequisitesGranted;
 
 		void INotifyCreated.Created(Actor self)
 		{

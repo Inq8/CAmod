@@ -2063,9 +2063,6 @@ HARV:
 	GrantConditionOnPrerequisite@OREPUPGRADE:
 		Prerequisites: charv.upgrade
 		Condition: charv-upgrade
-	GrantConditionOnPrerequisite@EcoPolicyChronoMiner:
-		Prerequisites: economy.policy, influence.level3
-		Condition: charv-upgrade
 	PeriodicExplosion@WARPOUT:
 		Weapon: HarvSwap
 		RequiresCondition: charv-upgrade
@@ -2110,7 +2107,6 @@ HARV.Chrono:
 		Actor: HARV.Chrono.Husk
 		RequiresCondition: !being-warped
 	-GrantConditionOnPrerequisite@OREPUPGRADE:
-	-GrantConditionOnPrerequisite@EcoPolicyChronoMiner:
 	-PeriodicExplosion@WARPOUT:
 	-TransformOnCondition:
 	-TransferResourcesOnTransform:
