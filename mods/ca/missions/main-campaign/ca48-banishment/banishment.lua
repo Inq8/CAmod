@@ -139,6 +139,11 @@ WorldLoaded = function()
 
 		BlockMcvConditionToken = WarFactory.GrantCondition("has-mcv")
 	end)
+
+	local productionBuildings = MaleficScrin.GetActorsByTypes({ "port", "wsph", "sfac", "grav" })
+	for _, b in pairs(productionBuildings) do
+		SellOnCaptureAttempt(b)
+	end
 end
 
 Tick = function()

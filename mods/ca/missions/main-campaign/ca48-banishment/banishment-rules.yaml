@@ -38,6 +38,50 @@ Player:
 	PlayerResources:
 		DefaultCash: 6000
 
+# Enable subfaction specific tech
+
+SNIP:
+	Buildable:
+		Prerequisites: tent, anyradar
+
+RTNK:
+	Buildable:
+		Prerequisites: ~vehicles.allies
+
+TNKD:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.allies
+
+CHPR:
+	Buildable:
+		Prerequisites: atek, ~vehicles.allies
+
+BATF:
+	Buildable:
+		Prerequisites: atek, ~vehicles.allies
+
+NHAW:
+	Buildable:
+		Prerequisites: ~aircraft.allies
+
+HTUR:
+	Buildable:
+		Prerequisites: ~structures.allies, anyradar
+
+entrench.upgrade:
+	Buildable:
+		Prerequisites: radar.allies
+
+apb.upgrade:
+	Buildable:
+		Prerequisites: atek
+
+tflx.upgrade:
+	Buildable:
+		Prerequisites: pdox
+
+# Misc
+
 STLK:
 	Cloak@NORMAL:
 		CloakDelay: 750

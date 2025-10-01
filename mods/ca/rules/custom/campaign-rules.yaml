@@ -671,6 +671,7 @@ ETPD:
 	FireWarheadsOnDeath:
 		Weapon: 380mm
 		EmptyWeapon: 380mm
+	-HealthCapDamageMultiplier@CHRONO:
 
 ETPD.Husk:
 	Inherits: TPOD.Husk
@@ -703,7 +704,7 @@ VENG:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 2000000
+		HP: 2200000
 	Mobile:
 		TurnSpeed: 4
 		Speed: 10
@@ -770,9 +771,9 @@ VENG:
 		StartIfBelow: 100
 		DamageCooldown: 250
 	SpeedMultiplier@TEMPORAL:
-		Modifier: 75
+		Modifier: 60
 	ReloadDelayMultiplier@TEMPORAL:
-		Modifier: 125
+		Modifier: 120
 		RequiresCondition: being-warped
 	FirepowerMultiplier@NORMAL:
 		Modifier: 75
@@ -789,6 +790,7 @@ VENG:
 	DamageTypeDamageMultiplier@A2GPROTECTION:
 		Modifier: 75
 		RequiresCondition: !difficulty-easy
+	-HealthCapDamageMultiplier@CHRONO:
 
 VENG.Husk:
 	Inherits: ^Husk

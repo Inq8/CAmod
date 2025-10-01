@@ -201,6 +201,11 @@ InitGDI = function()
 		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGDIGroundHunterUnit)
 	end)
+
+	local productionBuildings = GDI.GetActorsByTypes({ "pyle", "afac", "weap.td", "afld.gdi" })
+	for _, b in pairs(productionBuildings) do
+		SellOnCaptureAttempt(b)
+	end
 end
 
 InitGDIAttacks = function()
