@@ -29,11 +29,11 @@ VoidEngineStartTime = {
 }
 
 VoidEngineInterval = {
-	easy = DateTime.Minutes(15),
-	normal = DateTime.Minutes(10),
-	hard = DateTime.Minutes(7),
-	vhard = DateTime.Minutes(5),
-	brutal = DateTime.Minutes(3)
+	easy = DateTime.Minutes(7),
+	normal = DateTime.Minutes(6),
+	hard = DateTime.Minutes(5),
+	vhard = DateTime.Minutes(4),
+	brutal = DateTime.Minutes(3) + DateTime.Seconds(20)
 }
 
 VoidEngineAttackCount = {
@@ -67,21 +67,19 @@ table.insert(UnitCompositions.Scrin, {
 
 Squads = {
 	Left = {
-		Compositions = UnitCompositions.Scrin,
+		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Scrin),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 }),
 		FollowLeader = true,
 		AttackPaths = LeftAttackPaths,
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(2)),
-		RandomProducerActor = false,
 		ProducerActors = { Infantry = { LeftPortal }, Vehicles = { LeftWarpSphere }, Aircraft = { LeftGrav } }
 	},
 	Right = {
-		Compositions = UnitCompositions.Scrin,
+		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Scrin),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 }),
 		FollowLeader = true,
 		AttackPaths = RightAttackPaths,
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(4)),
-		RandomProducerActor = false,
 		ProducerActors = { Infantry = { MiddlePortal, RightPortal }, Vehicles = { MiddleWarpSphere, RightWarpSphere }, Aircraft = { MiddleGrav1, MiddleGrav2, MiddleGrav3, RightGrav } }
 	},
 	Air = {
@@ -227,9 +225,13 @@ SendNextVoidEngine = function()
 				a.Move(loc)
 			end)
 
-			a.Destroy()
-
 			a.GrantCondition("difficulty-" .. Difficulty)
+
+			Trigger.OnIdle(a, function(self)
+				if not self.IsDead then
+					self.AttackMove(path[#path])
+				end
+			end)
 
 			Trigger.OnDamaged(a, function(self, attacker, damage)
 				if IsMissionPlayer(attacker.Owner) and self.Health < self.MaxHealth / 3 * 2 then

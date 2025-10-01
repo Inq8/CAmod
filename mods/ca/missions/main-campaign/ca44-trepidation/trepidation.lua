@@ -28,20 +28,18 @@ ScrinAttackPaths = {
 
 Squads = {
 	SovietMain = {
-		Compositions = UnitCompositions.Soviet,
+		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Soviet),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 30, Max = 60 }),
 		FollowLeader = true,
 		AttackPaths = SovietAttackPaths,
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(7)),
-		RandomProducerActor = false,
 	},
 	ScrinMain = {
-		Compositions = UnitCompositions.Scrin,
+		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Scrin),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 10, Max = 20 }),
 		FollowLeader = true,
 		AttackPaths = ScrinAttackPaths,
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(8)),
-		RandomProducerActor = false,
 	},
 	Air = {
 		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(18)),

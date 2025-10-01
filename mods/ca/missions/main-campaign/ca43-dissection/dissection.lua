@@ -55,7 +55,7 @@ end
 
 Squads = {
 	Main = {
-		Compositions = UnitCompositions.Soviet,
+		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Soviet),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 40, Max = 80 }),
 		FollowLeader = true,
 		AttackPaths = SovietAttackPaths,

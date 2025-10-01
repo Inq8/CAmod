@@ -36,31 +36,40 @@ end
 
 Squads = {
 	North = {
-		Compositions = UnitCompositions.Scrin,
+		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Scrin),
 		AttackValuePerSecond = MainSquadAttackValues,
 		FollowLeader = true,
 		AttackPaths = NorthAttackPaths,
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(1)),
-		RandomProducerActor = false,
 		ProducerActors = { Infantry = { NorthPortal }, Vehicles = { NorthSphere1, NorthSphere2 }, Aircraft = { NorthGrav1, NorthGrav2 } }
 	},
 	West = {
-		Compositions = UnitCompositions.Scrin,
+		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Scrin),
 		AttackValuePerSecond = MainSquadAttackValues,
 		FollowLeader = true,
 		AttackPaths = WestAttackPaths,
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(1)),
-		RandomProducerActor = false,
 		ProducerActors = { Infantry = { WestPortal }, Vehicles = { WestSphere1, WestSphere2 }, Aircraft = { WestGrav } }
 	},
 	East = {
-		Compositions = UnitCompositions.Scrin,
+		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Scrin),
 		AttackValuePerSecond = MainSquadAttackValues,
 		FollowLeader = true,
 		AttackPaths = EastAttackPaths,
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(1)),
-		RandomProducerActor = false,
 		ProducerActors = { Infantry = { EastPortal }, Vehicles = { EastSphere }, Aircraft = { EastGrav } }
+	},
+	Devastators = {
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(10)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 6, Max = 20 }),
+		Compositions = {
+			easy = { { Aircraft = { "deva" } } },
+			normal = { { Aircraft = { "deva" } } },
+			hard = { { Aircraft = { "deva", "deva" } } },
+			vhard = { { Aircraft = { "deva", "deva", "deva" } } },
+			brutal = { { Aircraft = { "deva", "deva", "deva", "deva" } } },
+		},
+		FollowLeader = false,
 	},
 	Air = {
 		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(12)),
@@ -217,7 +226,7 @@ SecureBase = function(baseCenter)
 
 	NumBasesSecured = NumBasesSecured + 1
 
-	if NumBasesSecured == 1 then
+	if NumBasesSecured == 2 then
 		Trigger.AfterDelay(DateTime.Seconds(20), function()
 			Media.PlaySpeechNotification(Greece, "ReinforcementsArrived")
 			Notification("Reinforcements have arrived. Press [" .. UtilsCA.Hotkey("ToLastEvent") .. "] to view location.")
@@ -265,7 +274,7 @@ SecureNorthWestBase = function()
 		NorthWestBaseSecured = true
 		NWFlare.Destroy()
 
-		table.insert(NorthAttackPaths, { N1b.Location, N3b.Location })
+		table.insert(NorthAttackPaths, { N1c.Location, N2c.Location, N3c.Location })
 
 		table.insert(WestAttackPaths, { W1.Location, W2a.Location })
 		table.insert(WestAttackPaths, { W1.Location, W2d.Location })
@@ -282,6 +291,7 @@ SecureSouthEastBase = function()
 
 		table.insert(NorthAttackPaths, { N2d.Location, N3a.Location })
 		table.insert(NorthAttackPaths, { N2d.Location, N3b.Location })
+		table.insert(NorthAttackPaths, { N1a.Location, N2a.Location, N3d.Location })
 
 		table.insert(EastAttackPaths, { E1.Location, E2a.Location })
 		table.insert(EastAttackPaths, { E1.Location, E2b.Location })
@@ -309,6 +319,7 @@ InitFirstScrinBase = function()
 		FirstScrinBaseInitialized = true
 		InitAiUpgrades(MaleficScrin)
 		InitAirAttackSquad(Squads.Air, MaleficScrin)
+		InitAttackSquad(Squads.Devastators, MaleficScrin)
 		if IsHardOrAbove() then
 			InitAirAttackSquad(Squads.AirToAir, MaleficScrin, MissionPlayers, { "Aircraft" }, "ArmorType")
 		end

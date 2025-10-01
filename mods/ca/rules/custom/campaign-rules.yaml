@@ -687,6 +687,7 @@ VENG:
 	Inherits@HOVERTRAIL: ^HoverTrail
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Inherits@HeavyArmor: ^HeavyArmor
+	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	TooltipExtras:
 		Description: Colossal Malefic Scrin war machine.
 		Strengths: • Unknown
@@ -769,6 +770,21 @@ VENG:
 	ReloadDelayMultiplier@TEMPORAL:
 		Modifier: 125
 		RequiresCondition: being-warped
+	FirepowerMultiplier@NORMAL:
+		Modifier: 75
+		RequiresCondition: difficulty-normal
+	FirepowerMultiplier@EASY:
+		Modifier: 50
+		RequiresCondition: difficulty-easy
+	DamageMultiplier@NORMAL:
+		Modifier: 125
+		RequiresCondition: difficulty-normal
+	DamageMultiplier@EASY:
+		Modifier: 150
+		RequiresCondition: difficulty-easy
+	DamageTypeDamageMultiplier@A2GPROTECTION:
+		Modifier: 75
+		RequiresCondition: !difficulty-easy
 
 VENG.Husk:
 	Inherits: ^Husk
