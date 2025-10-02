@@ -154,6 +154,14 @@ OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
 		MaleficScrin.Resources = MaleficScrin.ResourceCapacity - 500
 
+		if not PlayerHasBuildings(MaleficScrin) then
+			Greece.MarkCompletedObjective(ObjectiveDestroyScrinBases)
+		end
+
+		if Greece.IsObjectiveCompleted(ObjectiveDestroyScrinBases) and #MaleficScrin.GetActorsByTypes({ "veng" }) == 0 then
+			Greece.MarkCompletedObjective(ObjectiveStopVoidEngines)
+		end
+
 		if MissionPlayersHaveNoRequiredUnits() then
 			Greece.MarkFailedObjective(ObjectiveDestroyScrinBases)
 			Greece.MarkFailedObjective(ObjectiveStopVoidEngines)

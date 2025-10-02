@@ -923,7 +923,7 @@ CallForHelp = function(self, range, filter)
 	end
 
 	local selfId = tostring(self)
-	if AlertedUnits[selfId] == nil then
+	if not AlertedUnits[selfId] then
 		if not self.IsDead then
 			AlertedUnits[selfId] = true
 			if filter(self) then
@@ -938,7 +938,7 @@ CallForHelp = function(self, range, filter)
 
 		Utils.Do(nearbyUnits, function(nearbyUnit)
 			local nearbyUnitId = tostring(nearbyUnit)
-			if not nearbyUnit.IsDead and AlertedUnits[nearbyUnitId] == nil then
+			if not nearbyUnit.IsDead and not AlertedUnits[nearbyUnitId] then
 				AlertedUnits[nearbyUnitId] = true
 				nearbyUnit.Stop()
 				IdleHunt(nearbyUnit)
@@ -2074,12 +2074,11 @@ CalculatePlayerCharacteristics = function()
 			AirValue = 0,
 		}
 
-		local infantryUnits = p.GetActorsByArmorTypes({ "None" })
-		local heavyUnits = p.GetActorsByArmorTypes({ "Heavy" })
-		local aircraft = p.GetActorsByArmorTypes({ "Aircraft" })
 		local infantryValue = 0
 		local heavyValue = 0
 		local airValue = 0
+
+		local infantryUnits = p.GetActorsByArmorTypes({ "None" })
 
 		Utils.Do(infantryUnits, function(u)
 			if UnitCosts[u.Type] == nil then
@@ -2088,12 +2087,16 @@ CalculatePlayerCharacteristics = function()
 			infantryValue = infantryValue + UnitCosts[u.Type]
 		end)
 
+		local heavyUnits = p.GetActorsByArmorTypes({ "Heavy" })
+
 		Utils.Do(heavyUnits, function(u)
 			if UnitCosts[u.Type] == nil then
 				UnitCosts[u.Type] = ActorCA.CostOrDefault(u.Type)
 			end
 			heavyValue = heavyValue + UnitCosts[u.Type]
 		end)
+
+		local aircraft = p.GetActorsByArmorTypes({ "Aircraft" })
 
 		Utils.Do(aircraft, function(u)
 			if UnitCosts[u.Type] == nil then
