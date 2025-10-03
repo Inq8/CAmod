@@ -174,7 +174,6 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				strengthsLabel.Text = "";
 				weaknessesLabel.Text = "";
 				attributesLabel.Text = "";
-				descText = "";
 			}
 
 			descLabel.Text = descText;

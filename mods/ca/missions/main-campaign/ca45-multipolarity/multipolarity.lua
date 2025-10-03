@@ -8,6 +8,14 @@ SuperweaponsEnabledTime = {
 	brutal = DateTime.Minutes(10)
 }
 
+McvDelayTime = {
+	easy = DateTime.Seconds(20),
+	normal = DateTime.Seconds(20),
+	hard = DateTime.Seconds(30),
+	vhard = DateTime.Seconds(40),
+	brutal = DateTime.Minutes(1)
+}
+
 GDIAttackPaths = {
 	{ WestPath1.Location, WestPath2.Location, WestPath3.Location, WestPath4a.Location },
 	{ WestPath1.Location, WestPath2.Location, WestPath3.Location, WestPath4b.Location },
@@ -17,9 +25,35 @@ GDIAttackPaths = {
 	{ MiddlePath1.Location, MiddlePath2.Location, MiddlePath3.Location, MiddlePath4b.Location }
 }
 
+CommandoDropTime = {
+	easy = DateTime.Minutes(16), -- not used
+	normal = DateTime.Minutes(14), -- not used
+	hard = DateTime.Minutes(12),
+	vhard = DateTime.Minutes(10),
+	brutal = DateTime.Seconds(8)
+}
+
+ZoneRaidTime = {
+	easy = DateTime.Minutes(9),
+	normal = DateTime.Minutes(8),
+	hard = DateTime.Minutes(7),
+	vhard = DateTime.Minutes(6),
+	brutal = DateTime.Minutes(5)
+}
+
+EngiDropTime = {
+	easy = DateTime.Minutes(12), -- not used
+	normal = DateTime.Minutes(10), -- not used
+	hard = DateTime.Minutes(8),
+	vhard = DateTime.Minutes(6),
+	brutal = DateTime.Minutes(4)
+}
+
+CaptureTargets = {}
+
 Squads = {
 	Main = {
-		InitTimeAdjustment = -DateTime.Minutes(3),
+		InitTimeAdjustment = -DateTime.Minutes(4),
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.GDI),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 }),
 		FollowLeader = true,
@@ -28,7 +62,7 @@ Squads = {
 		ProducerTypes = { Infantry = { "pyle" }, Vehicles = { "weap.td" } },
 	},
 	Secondary = {
-		InitTimeAdjustment = -DateTime.Minutes(3),
+		InitTimeAdjustment = -DateTime.Minutes(4),
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.GDI),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 }),
 		FollowLeader = true,
@@ -37,7 +71,7 @@ Squads = {
 		ProducerTypes = { Infantry = { "pyle" }, Vehicles = { "weap.td" } },
 	},
 	Soviet = {
-		InitTimeAdjustment = -DateTime.Minutes(3),
+		InitTimeAdjustment = -DateTime.Minutes(4),
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Soviet),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 10, Max = 20 }),
 		FollowLeader = true,
@@ -46,7 +80,7 @@ Squads = {
 		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
 	},
 	Nod = {
-		InitTimeAdjustment = -DateTime.Minutes(3),
+		InitTimeAdjustment = -DateTime.Minutes(4),
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Nod),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 10, Max = 20 }),
 		FollowLeader = true,
@@ -56,8 +90,8 @@ Squads = {
 		ProducerTypes = { Infantry = { "hand" }, Vehicles = { "airs" } },
 	},
 	Air = {
-		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(13)),
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(10)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 20 }),
 		Compositions = AirCompositions.GDI,
 	},
 	AirToAir = AirToAirSquad({ "orca" }, AdjustAirDelayForDifficulty(DateTime.Minutes(10))),
@@ -155,12 +189,24 @@ WorldLoaded = function()
 			end
 		end
 	end)
+
+	Trigger.AfterDelay(ZoneRaidTime[Difficulty], DoZoneRaid)
+
+	if IsHardOrAbove() then
+		Trigger.AfterDelay(CommandoDropTime[Difficulty], DoCommandoDrop)
+	end
+
+Trigger.AfterDelay(DateTime.Minutes(2), DoEngiDrop)
+Reinforcements.Reinforce(Greece, { "mcv" }, { McvSpawn.Location, McvDest.Location }, 75)
+
+	AfterWorldLoaded()
 end
 
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
 	OncePerThirtySecondChecks()
+	AfterTick()
 end
 
 OncePerSecondChecks = function()
@@ -239,7 +285,11 @@ FlipAlliedBase = function()
 		a.Owner = Greece
 	end)
 
-	Trigger.AfterDelay(DateTime.Seconds(20), function()
+	Trigger.AfterDelay(1, function()
+		Actor.Create("QueueUpdaterDummy", true, { Owner = Greece })
+	end)
+
+	Trigger.AfterDelay(McvDelayTime[Difficulty], function()
 		Beacon.New(Greece, McvDest.CenterPosition)
 		Media.PlaySpeechNotification(Greece, "ReinforcementsArrived")
 		Notification("Reinforcements have arrived.")
@@ -262,6 +312,10 @@ FlipNodBase = function()
 
 	Utils.Do(nodBaseActors, function(a)
 		a.Owner = Greece
+	end)
+
+	Trigger.AfterDelay(1, function()
+		Actor.Create("QueueUpdaterDummy", true, { Owner = Greece })
 	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(6), function()
@@ -312,6 +366,10 @@ FlipNodBase = function()
 	end)
 
 	InitGDIAttacks()
+
+	if IsHardOrAbove() then
+		Trigger.AfterDelay(EngiDropTime[Difficulty], DoEngiDrop)
+	end
 end
 
 FlipSovietBase = function()
@@ -327,6 +385,10 @@ FlipSovietBase = function()
 
 	Utils.Do(sovietBaseActors, function(a)
 		a.Owner = Greece
+	end)
+
+	Trigger.AfterDelay(1, function()
+		Actor.Create("QueueUpdaterDummy", true, { Owner = Greece })
 	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(6), function()
@@ -378,14 +440,13 @@ FlipSovietBase = function()
 	end)
 
 	InitGDIAttacks()
+
+	if IsHardOrAbove() then
+		Trigger.AfterDelay(EngiDropTime[Difficulty], DoEngiDrop)
+	end
 end
 
 DoDisruptorDrop = function()
-	local gdiFactories = GDI.GetActorsByType("weap.td")
-	if #gdiFactories == 0 then
-		return
-	end
-
 	local dropPoints = { DisruptorDropDest1.Location, DisruptorDropDest2.Location }
 
 	if IsVeryHardOrAbove() then
@@ -398,7 +459,7 @@ DoDisruptorDrop = function()
 	Utils.Do(dropPoints, function(p)
 		Trigger.AfterDelay(delay, function()
 			local entryPath = { DisruptorDropSpawn.Location, DisruptorDropRally.Location, p }
-			local exitPath =  { DisruptorDropExit.Location }
+			local exitPath =  { LeftDropExit.Location }
 			ReinforcementsCA.ReinforceWithTransport(GDI, "ocar.disr", nil, entryPath, exitPath)
 		end)
 		delay = delay + DateTime.Seconds(1)
@@ -413,4 +474,80 @@ DoDisruptorDrop = function()
 	if Difficulty == "brutal" then
 		Trigger.AfterDelay(DateTime.Minutes(7), DoDisruptorDrop)
 	end
+end
+
+DoCommandoDrop = function()
+	local entryPath
+	entryPath = { RightDropSpawn.Location, CommandoDropWp1.Location, CommandoDropDest.Location }
+	local chinookDropUnits = { "rmbo" }
+
+	DoHelicopterDrop(GDI, entryPath, "tran.paradrop", chinookDropUnits, AssaultPlayerBaseOrHunt, function(t)
+		Trigger.AfterDelay(DateTime.Seconds(5), function()
+			if not t.IsDead then
+				t.Move(RightDropExit.Location)
+				t.Destroy()
+			end
+		end)
+	end)
+end
+
+DoEngiDrop = function()
+	local entryPath
+	local exitLoc
+
+	if SovietBaseFlipped then
+		entryPath = { LeftDropSpawn.Location, LeftEngiDropDest.Location }
+		exitLoc = LeftDropExit.Location
+	else
+		entryPath = { RightDropSpawn.Location, RightEngiDropDest.Location }
+		exitLoc = RightDropExit.Location
+	end
+
+	local chinookDropUnits = { "n6", "n6", "n6", "n6", "n6" }
+
+	DoHelicopterDrop(GDI, entryPath, "tran.paradrop", chinookDropUnits, function(a)
+		if not a.IsDead then
+			CaptureRandomBuilding(a)
+		end
+	end, function(t)
+		Trigger.AfterDelay(DateTime.Seconds(5), function()
+			if not t.IsDead then
+				t.Move(exitLoc)
+				t.Destroy()
+			end
+		end)
+	end)
+end
+
+DoZoneRaid = function()
+	local zoneRaiders = { ZR1, ZR2, ZR3, ZR4, ZR5, ZR6, ZR7, ZR8 }
+	Utils.Do(zoneRaiders, function(a)
+		if not a.IsDead then
+			a.Move(ZRWP1.Location)
+			a.TargetedLeap(ZRWP2.Location, true)
+			a.Move(ZRWP3.Location)
+			a.Move(ZRWP4.Location)
+			local finalDest = Utils.Random({ ZRWP5a.Location, ZRWP5b.Location })
+			a.TargetedLeap(finalDest, true)
+			AssaultPlayerBaseOrHunt(a)
+		end
+	end)
+end
+
+CaptureRandomBuilding = function(engi)
+	local buildings = Map.ActorsInCircle(engi.CenterPosition, WDist.New(15 * 1024), function(a)
+		return not a.IsDead and IsMissionPlayer(a.Owner) and a.HasProperty("StartBuildingRepairs") and engi.CanCapture(a) and not CaptureTargets[tostring(a)]
+	end)
+
+	if #buildings == 0 then
+		buildings = Greece.GetActorsByTypes({ "fact", "proc" })
+	end
+
+	if #buildings == 0 then
+		return
+	end
+
+	local target = Utils.Random(buildings)
+	CaptureTargets[tostring(target)] = true
+	engi.Capture(target)
 end

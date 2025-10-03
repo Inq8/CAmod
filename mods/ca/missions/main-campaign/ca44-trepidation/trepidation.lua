@@ -107,12 +107,15 @@ WorldLoaded = function()
 			produced.Attack(Spy)
 		end
 	end)
+
+	AfterWorldLoaded()
 end
 
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
 	OncePerThirtySecondChecks()
+	AfterTick()
 end
 
 OncePerSecondChecks = function()
@@ -234,7 +237,7 @@ SpyDeparture = function()
 					Beacon.New(Greece, McvDest.CenterPosition)
 					Media.PlaySpeechNotification(Greece, "ReinforcementsArrived")
 					Notification("Reinforcements have arrived.")
-					Reinforcements.Reinforce(Greece, { "mcv", "2tnk", "2tnk", "arty", "e1", "e1", "e1", "e1", "e3", "medi" }, { McvSpawn.Location, McvDest.Location }, 75)
+					Reinforcements.Reinforce(Greece, { "mcv", "2tnk", "2tnk", "arty", "arty", "e1", "e1", "e1", "e1", "e3", "medi" }, { McvSpawn.Location, McvDest.Location }, 75)
 					InitUSSRAttacks()
 					InitScrinAttacks()
 				end)

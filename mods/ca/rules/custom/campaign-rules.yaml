@@ -541,11 +541,13 @@ TMPL:
 
 ^GpsPower:
 	DummyGpsPower@FOG:
-		Delay: 3000
+		Delay: 6000
 	ProduceActorPowerCA@InitialSatelliteScan
 		ChargeInterval: 13500
 	ProduceActorPowerCA@SatelliteScan:
-		ChargeInterval: 10500
+		ChargeInterval: 7500
+	ProduceActorPowerCA@SatelliteScanNoFog:
+		ChargeInterval: 15000
 
 # Manual targeting for Tesla Coil boost (otherwise they get stuck when AI attack moves)
 
@@ -601,7 +603,7 @@ ETPD:
 		Strengths: Strong vs all ground units and structures.
 	Mobile:
 		Speed: 36
-		PauseOnCondition: empdisable || being-warped || notmobile
+		PauseOnCondition: empdisable || notmobile
 		ImmovableCondition: alive
 	GrantCondition@ALIVE:
 		Condition: alive
@@ -661,6 +663,11 @@ ETPD:
 		TargetTypes: DriverKillImmune
 	Targetable@BlindImmune:
 		TargetTypes: BlindImmune
+	SpeedMultiplier@TEMPORAL:
+		Modifier: 75
+	ReloadDelayMultiplier@TEMPORAL:
+		Modifier: 120
+		RequiresCondition: being-warped
 	CaptureManager:
 		-BeingCapturedCondition:
 	-ExternalCondition@UNITSELL:
@@ -672,6 +679,8 @@ ETPD:
 		Weapon: 380mm
 		EmptyWeapon: 380mm
 	-HealthCapDamageMultiplier@CHRONO:
+	DummyConditionConsumer@CHRONO:
+		Condition: chronoshifted
 
 ETPD.Husk:
 	Inherits: TPOD.Husk
@@ -709,6 +718,7 @@ VENG:
 		TurnSpeed: 4
 		Speed: 10
 		Locomotor: sheavytracked
+		PauseOnCondition: empdisable || notmobile
 	WithShadow:
 		Offset: 43, 128, 0
 		ZOffset: -129
@@ -748,7 +758,10 @@ VENG:
 		RequiresCondition: !being-warped
 	SpawnActorOnDeath@Rift:
 		Actor: voidenginedeathrift
-		RequiresCondition: !being-warped
+		RequiresCondition: !being-warped && !difficulty-brutal
+	SpawnActorOnDeath@RiftFull:
+		Actor: voidenginedeathriftfull
+		RequiresCondition: !being-warped && difficulty-brutal
 	AutoTarget:
 		InitialStanceAI: AttackAnything
 	Targetable@MindControlImmune:
@@ -771,7 +784,7 @@ VENG:
 		StartIfBelow: 100
 		DamageCooldown: 250
 	SpeedMultiplier@TEMPORAL:
-		Modifier: 60
+		Modifier: 75
 	ReloadDelayMultiplier@TEMPORAL:
 		Modifier: 120
 		RequiresCondition: being-warped
@@ -791,6 +804,8 @@ VENG:
 		Modifier: 75
 		RequiresCondition: !difficulty-easy
 	-HealthCapDamageMultiplier@CHRONO:
+	DummyConditionConsumer@CHRONO:
+		Condition: chronoshifted
 
 VENG.Husk:
 	Inherits: ^Husk
@@ -834,6 +849,13 @@ VoidEngineDeathRift:
 	Inherits: VoidEngineRift
 	KillsSelf:
 		Delay: 1500
+
+VoidEngineDeathRiftFull:
+	Inherits: Rift
+	KillsSelf:
+		Delay: 1500
+	PeriodicExplosion:
+		Weapon: RiftReducedFriendlyFire
 
 SCRINPURIFIER:
 	Inherits: ^TechBuilding

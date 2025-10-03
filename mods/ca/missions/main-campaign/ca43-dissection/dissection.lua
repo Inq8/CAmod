@@ -114,12 +114,15 @@ WorldLoaded = function()
 			AssumeControl()
 		end
 	end)
+
+	AfterWorldLoaded()
 end
 
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
 	OncePerThirtySecondChecks()
+	AfterTick()
 end
 
 OncePerSecondChecks = function()

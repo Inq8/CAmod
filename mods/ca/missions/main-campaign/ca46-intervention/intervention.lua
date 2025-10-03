@@ -100,12 +100,15 @@ WorldLoaded = function()
 			Greece.MarkCompletedObjective(ObjectiveDestroySilos)
 		end)
 	end)
+
+	AfterWorldLoaded()
 end
 
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
 	OncePerThirtySecondChecks()
+	AfterTick()
 end
 
 OncePerSecondChecks = function()

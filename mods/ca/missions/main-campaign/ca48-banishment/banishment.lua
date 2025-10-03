@@ -41,7 +41,7 @@ Squads = {
 		FollowLeader = true,
 		AttackPaths = NorthAttackPaths,
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(1)),
-		ProducerActors = { Infantry = { NorthPortal }, Vehicles = { NorthSphere1, NorthSphere2 }, Aircraft = { NorthGrav1, NorthGrav2 } }
+		ProducerActors = { Infantry = { NorthPortal1, NorthPortal2 }, Vehicles = { NorthSphere1, NorthSphere2 }, Aircraft = { NorthGrav1, NorthGrav2 } }
 	},
 	West = {
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Scrin),
@@ -58,6 +58,14 @@ Squads = {
 		AttackPaths = EastAttackPaths,
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(1)),
 		ProducerActors = { Infantry = { EastPortal }, Vehicles = { EastSphere }, Aircraft = { EastGrav } }
+	},
+	Roamers = {
+		Compositions = AdjustCompositionsForDifficulty({
+			{ Infantry = { "s1", "s1", "s1", "s1", "s3", { "mrdr", "s4" }, "stlk" }, Vehicles = { { "lace", "seek" }, { "lace", "seek" } } },
+		}),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 10, Max = 20 }),
+		FollowLeader = false,
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(4)),
 	},
 	Devastators = {
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(10)),
@@ -123,7 +131,7 @@ WorldLoaded = function()
 			end)
 		end)
 
-		Utils.Do({ MiniBase1, MiniBase2, MiniBase3 }, function(loc)
+		Utils.Do({ MiniBase1, MiniBase2, MiniBase3, McvReveal }, function(loc)
 			local miniBaseDefenders = Map.ActorsInCircle(loc.CenterPosition, WDist.New(7 * 1024), function(a)
 				return not a.IsDead and a.Owner == MaleficScrin and a.Type ~= "camera"
 			end)
@@ -134,6 +142,20 @@ WorldLoaded = function()
 				Utils.Do(miniBaseActors, function(a)
 					a.Owner = Greece
 				end)
+				if IsVeryHardOrAbove() and loc == McvReveal then
+					InitNorthScrinBase()
+					InitWestScrinBase()
+					InitMcvObjective()
+					Trigger.AfterDelay(1, function()
+						Greece.MarkCompletedObjective(ObjectiveRecoverMcv)
+					end)
+					if not WarFactory.IsDead then
+						WarFactory.RevokeCondition(BlockMcvConditionToken)
+					end
+					if McvFlare ~= nil and not McvFlare.IsDead then
+						McvFlare.Destroy()
+					end
+				end
 			end)
 		end)
 
@@ -144,12 +166,15 @@ WorldLoaded = function()
 	for _, b in pairs(productionBuildings) do
 		SellOnCaptureAttempt(b)
 	end
+
+	AfterWorldLoaded()
 end
 
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
 	OncePerThirtySecondChecks()
+	AfterTick()
 end
 
 OncePerSecondChecks = function()
@@ -233,13 +258,20 @@ SecureBase = function(baseCenter)
 
 	if NumBasesSecured == 2 then
 		Trigger.AfterDelay(DateTime.Seconds(20), function()
-			Media.PlaySpeechNotification(Greece, "ReinforcementsArrived")
-			Notification("Reinforcements have arrived. Press [" .. UtilsCA.Hotkey("ToLastEvent") .. "] to view location.")
-			Reinforcements.Reinforce(Greece, { "lst.mcv" }, { McvSpawn.Location, McvDest.Location }, 75)
-			Beacon.New(Greece, McvDest.CenterPosition)
+			if IsVeryHardOrAbove() then
+				InitMcvObjective()
+				McvFlare = Actor.Create("flare", true, { Owner = Greece, Location = McvReveal.Location })
+				Beacon.New(Greece, McvReveal.CenterPosition)
+				Notification("Abandoned MCV located. Press [" .. UtilsCA.Hotkey("ToLastEvent") .. "] to view.")
+			else
+				Media.PlaySpeechNotification(Greece, "ReinforcementsArrived")
+				Notification("Reinforcements have arrived. Press [" .. UtilsCA.Hotkey("ToLastEvent") .. "] to view location.")
+				Reinforcements.Reinforce(Greece, { "lst.mcv" }, { McvSpawn.Location, McvDest.Location }, 75)
+				Beacon.New(Greece, McvDest.CenterPosition)
 
-			if not WarFactory.IsDead then
-				WarFactory.RevokeCondition(BlockMcvConditionToken)
+				if not WarFactory.IsDead then
+					WarFactory.RevokeCondition(BlockMcvConditionToken)
+				end
 			end
 		end)
 	end
@@ -324,9 +356,10 @@ InitFirstScrinBase = function()
 		FirstScrinBaseInitialized = true
 		InitAiUpgrades(MaleficScrin)
 		InitAirAttackSquad(Squads.Air, MaleficScrin)
-		InitAttackSquad(Squads.Devastators, MaleficScrin)
 		if IsHardOrAbove() then
 			InitAirAttackSquad(Squads.AirToAir, MaleficScrin, MissionPlayers, { "Aircraft" }, "ArmorType")
+			InitAttackSquad(Squads.Roamers, MaleficScrin)
+			InitAttackSquad(Squads.Devastators, MaleficScrin)
 		end
 		Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
 			Actor.Create("ai.superweapons.enabled", true, { Owner = MaleficScrin })
@@ -359,5 +392,11 @@ InitEastScrinBase = function()
 		EastScrinBaseInitialized = true
 		NumScrinBasesActive = NumScrinBasesActive + 1
 		InitAttackSquad(Squads.East, MaleficScrin)
+	end
+end
+
+InitMcvObjective = function()
+	if ObjectiveRecoverMcv == nil then
+		ObjectiveRecoverMcv = Greece.AddSecondaryObjective("Recover Allied MCV.")
 	end
 end

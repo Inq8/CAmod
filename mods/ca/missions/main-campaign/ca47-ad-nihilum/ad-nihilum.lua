@@ -17,7 +17,7 @@ GatewayLocations = {
 VoidEnginePaths = {
 	Left = { LeftPath1.Location, LeftPath2.Location, LeftPath3.Location, LeftPath4.Location, LeftPath5.Location, LeftPath6.Location, LeftPath7.Location, },
 	Right = { RightPath1.Location, RightPath2.Location, RightPath3.Location, RightPath4.Location, RightPath5.Location, RightPath6.Location, RightPath7.Location },
-	Middle = { MiddlePath1.Location, MiddlePath2.Location, MiddlePath3.Location, MiddlePath4.Location }
+	Middle = { MiddlePath1.Location, HighwayPath1.Location, HighWayExit.Location }
 }
 
 VoidEngineStartTime = {
@@ -49,14 +49,19 @@ LeftAttackPaths = {
 	{ LeftPath2.Location, LeftFlankPath1.Location, LeftFlankPath2a.Location, LeftFlankPath3.Location },
 	{ LeftPath2.Location, LeftFlankPath1.Location, LeftFlankPath2b.Location, LeftFlankPath3.Location },
 	{ LeftPath2.Location, LeftPath3.Location, LeftMiddlePath1.Location },
+	{ LeftPath2.Location, LeftPath3.Location, LeftMiddlePath1.Location },
 }
 
 RightAttackPaths = {
 	{ MiddlePath1.Location, MiddlePath2.Location, LeftMiddlePath1.Location },
 	{ MiddlePath1.Location, MiddlePath2.Location, MiddlePath3.Location },
-	{ RightPath4.Location, RightPath5.Location, RightPath6.Location },
+	{ RightPath4.Location, RightPath5.Location, RightPath6a.Location },
+	{ RightPath4.Location, RightPath5.Location, RightPath6b.Location },
 	{ RightFlankPath1.Location, RightFlankPath2.Location, RightFlankPath3.Location },
 }
+
+AggrodVoidEngines = {}
+AnathemaVoidEngines = {}
 
 table.insert(UnitCompositions.Scrin, {
 	Infantry = { "s1", "stlk", "s1", "s1", "s1", "stlk", "stlk", "s1", "s1", "stlk", "s1", "s1", "s1", "stlk", "stlk", "stlk", "s1", "s1", "s1" },
@@ -64,6 +69,14 @@ table.insert(UnitCompositions.Scrin, {
 	Aircraft = { PacOrDevastator, "pac" },
 	MinTime = DateTime.Minutes(17)
 })
+
+if IsVeryHardOrAbove() then
+	table.insert(UnitCompositions.Scrin, {
+		Vehicles = { "lace", "lace", "lace", "lace", "lace", "lace", "lace", "lace", "lace", "lace", "lace", "lace", "lace", "lace", "lace" },
+		MinTime = DateTime.Minutes(14),
+		IsSpecial = true
+	})
+end
 
 Squads = {
 	Left = {
@@ -87,7 +100,13 @@ Squads = {
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
 		Compositions = AirCompositions.Scrin,
 	},
-	AirToAir = AirToAirSquad({ "stmr", "enrv", "torm" }, AdjustAirDelayForDifficulty(DateTime.Minutes(10))),
+	AirToAir = AirToAirSquad(
+		{ "stmr", "enrv", "torm" },
+		AdjustAirDelayForDifficulty(DateTime.Minutes(10)),
+		function(a)
+			a.Patrol({ GatewayLocations.Left, GatewayLocations.Middle, GatewayLocations.Right, GatewayLocations.Middle })
+		end
+	),
 }
 
 WorldLoaded = function()
@@ -142,12 +161,15 @@ WorldLoaded = function()
 			Greece.MarkFailedObjective(ObjectiveStopVoidEngines)
 		end
 	end)
+
+	AfterWorldLoaded()
 end
 
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
 	OncePerThirtySecondChecks()
+	AfterTick()
 end
 
 OncePerSecondChecks = function()
@@ -234,6 +256,8 @@ SendNextVoidEngine = function()
 		end
 
 		local reinforcements = Reinforcements.Reinforce(MaleficScrin, { "veng" }, { spawnLoc }, 10, function(a)
+			local actorId = tostring(a)
+
 			Utils.Do(path, function(loc)
 				a.Move(loc)
 			end)
@@ -247,9 +271,18 @@ SendNextVoidEngine = function()
 			end)
 
 			Trigger.OnDamaged(a, function(self, attacker, damage)
-				if IsMissionPlayer(attacker.Owner) and self.Health < self.MaxHealth / 3 * 2 then
-					self.Stop()
-					self.AttackMove(path[#path])
+				if IsMissionPlayer(attacker.Owner) then
+					if not AggrodVoidEngines[actorId] and self.Health < self.MaxHealth / 3 * 2 then
+						AggrodVoidEngines[actorId] = true
+						self.Stop()
+						self.AttackMove(path[#path])
+					end
+
+					if IsVeryHardOrAbove() and not AnathemaVoidEngines[actorId] and self.Health < 200000 then
+						AnathemaVoidEngines[actorId] = true
+						self.GrantCondition("anathema")
+						Media.PlaySound("anathema.aud")
+					end
 				end
 			end)
 
