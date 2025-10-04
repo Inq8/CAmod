@@ -880,6 +880,7 @@ EVIS:
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor, Infantry
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
+		Attributes: • Increased range and damage while on resources (with upgrade)\n• Special Ability: Shard Bomb
 	Health:
 		HP: 12000
 	UpdatesPlayerStatistics:
@@ -891,31 +892,25 @@ EVIS:
 	AttackFrontal:
 		FacingTolerance: 64
 		PauseOnCondition: being-warped || blinded || reapersnare
-		Armaments: primary, primary-charged
 	Armament@PRIMARY:
 		Weapon: EvisceratorShards
 		LocalOffset: 0,-100,250, 0,100,250
-		PauseOnCondition: (ammo || charged-fire) && !uncharged-fire
-	Armament@PRIMARYCHARGED:
-		Name: primary-charged
-		Weapon: EvisceratorShardsCharged
-		PauseOnCondition: !ammo || uncharged-fire
+		PauseOnCondition: glob-attack || glob-fired
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: EvisceratorGlob
+		PauseOnCondition: !glob-attack
 		LocalOffset: 0,-100,250, 0,100,250
 	Armament@BATF:
 		Name: batf
 		Weapon: EvisceratorShards
-	AmmoPool@RESCONV:
-		Ammo: 20
-	ReloadAmmoPool@RESCONV:
-		Count: 5
-	WithAmmoPipsDecoration@RESCONV:
-		PipCount: 4
+	-AmmoPool@RESCONV:
+	-ReloadAmmoPool@RESCONV:
+	-WithAmmoPipsDecoration@RESCONV:
+	-GrantConditionOnAttack@PRIMARY:
+	-GrantConditionOnAttack@PRIMARYCHARGED:
 	GrantCondition@RESCONVCHARGE:
-		RequiresCondition: resconv-upgrade && on-resource && (ammo < 20 || charged-fire)
-	GrantConditionOnAttack@PRIMARY:
-		RevokeDelay: 28
-	GrantConditionOnAttack@PRIMARYCHARGED:
-		RevokeDelay: 28
+		RequiresCondition: resconv-upgrade && on-resource
 	WithIdleOverlay@RESCONVTIB:
 		Offset: 0,0,150
 		Sequence: greensm
@@ -928,8 +923,32 @@ EVIS:
 	WithIdleOverlay@RESCONVGEMS:
 		Offset: 0,0,150
 		Sequence: redsm
+	FirepowerMultiplier@RESCONVCHARGE:
+		Modifier: 110
+		RequiresCondition: charging-on-resource
+	RangeMultiplier@RESCONVCHARGE:
+		Modifier: 120
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
+	TargetedAttackAbility:
+		ActiveCondition: glob-attack
+		ArmamentNames: secondary
+		CircleColor: 00ff0050
+		Type: EnlightenedEmp
+		TargetModifiedCursor: ability2
+		CancelAfterAttack: true
+	GrantConditionOnAttack@GlobCooldown:
+		Condition: glob-fired
+		RevokeDelay: 50
+		ArmamentNames: secondary
+	AmmoPool:
+		Armaments: secondary
+		Ammo: 1
+	ReloadAmmoPoolCA:
+		Delay: 500 # equal to reload time of weapon
+		Count: 1
+		ShowSelectionBar: true
+		SelectionBarColor: 00a000
 	EncyclopediaExtras:
 		AdditionalInfo: Requires Loyalist Allegiance.
 
@@ -1028,7 +1047,7 @@ STLK:
 		ShowSelectionBar: true
 		StartsFullyCharged: true
 		DeployedTicks: 1
-		CooldownTicks: 750
+		CooldownTicks: 875
 		ShowSelectionBarWhenFull: false
 		ShowSelectionBarWhenEmpty: false
 		ChargingColor: 808080
@@ -1036,7 +1055,7 @@ STLK:
 		Instant: true
 	Cloak@NORMAL:
 		InitialDelay: 0
-		CloakDelay: 250
+		CloakDelay: 375
 		CloakSound: stlk-cloak.aud
 		UncloakSound: stlk-uncloak.aud
 		CloakedCondition: hidden
@@ -1050,7 +1069,7 @@ STLK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden)
 	GrantTimedCondition@CloakActive:
 		Condition: cloak-active
-		Duration: 250
+		Duration: 375
 		ForceFullDuration: true
 		RequiresCondition: cloak-triggered
 	GrantTimedCondition@Uncloaked:
@@ -6343,7 +6362,7 @@ RiftMinor:
 	PeriodicExplosion:
 		Weapon: MiniRift
 	KillsSelf:
-		Delay: 120
+		Delay: 144
 	# required for spawning actor on death
 	Health:
 		HP: 1

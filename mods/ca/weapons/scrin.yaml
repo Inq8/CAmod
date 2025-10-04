@@ -466,7 +466,7 @@ RiftCannon:
 		SecondaryBeamColor: 00000099
 		SecondaryBeamWidth: 90
 	Warhead@1Dam: SpreadDamage
-		Spread: 341
+		Spread: 426
 		Falloff: 100, 37, 23, 10, 0
 		Damage: 2500
 		Versus:
@@ -476,7 +476,7 @@ RiftCannon:
 			Brick: 75
 		DamageTypes: BulletDeath
 	Warhead@2Dam: HealthPercentageSpreadDamage
-		Spread: 341
+		Spread: 426
 		Falloff: 100, 37, 23, 10, 0
 		Damage: 100
 		Versus:
@@ -1260,30 +1260,71 @@ RavagerShards:
 
 EvisceratorShards:
 	Inherits: RavagerShards
-	Range: 6c0
+	Range: 5c512
 	ReloadDelay: 30
 	BurstDelays: 4
 	Projectile: Missile
 		Speed: 350
 	Warhead@1Dam: SpreadDamage
 		Damage: 2100
-		Versus:
-			Wood: 20
 
-EvisceratorShardsCharged:
-	Inherits: EvisceratorShards
-	StartBurstReport: shard-fire1.aud
-	Projectile: Missile
-		ContrailStartColorAlpha: 128
+EvisceratorGlob:
+	Report: evis-glob.aud
+	ReloadDelay: 500
+	Range: 8c0
+	TargetActorCenter: true
+	Projectile: Bullet
+		Image: tibglob
+		Palette: scrin
+		Speed: 200
+		ContrailStartWidth: 0c48
+		ContrailLength: 9
+		ContrailStartColor: 00FF00
+		ContrailStartColorAlpha: 68
+		Inaccuracy: 128
+		LaunchAngle: 90
+		Shadow: true
 	Warhead@1Dam: SpreadDamage
-		Damage: 2600
+		Spread: 341
+		Damage: 8000
 		Versus:
-			Wood: 30
+			Wood: 15
+			Light: 65
+			Heavy: 10
+			Concrete: 15
+			Brick: 5
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Scorch-NoFlame
+	Warhead@3Eff: CreateEffect
+		ImpactSounds: firebl3.aud
+		Explosions: idle
+		ExplosionPalette: caneon
+		Image: tibexplodeair
+	Warhead@4EffWater: CreateEffect
+		Explosions: small_splash
+		ImpactSounds: splash9.aud
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure, Bridge
+	Warhead@Arc: FireShrapnel
+		Weapon: EvisceratorGlobShard
+		Amount: 4
+		AimChance: 100
+		ThrowWithoutTarget: true
+		AimTargetStances: Enemy, Neutral
+
+EvisceratorGlobShard:
+	Inherits: EvisceratorShards
+	-Burst:
+	Range: 2c512
+	Warhead@1Dam: SpreadDamage
+		Damage: 2800
+		ValidRelationships: Enemy, Neutral
 
 StalkerShards:
 	Inherits: RavagerShards
 	StartBurstReport: stlk-fire1.aud, stlk-fire2.aud
-	Range: 3c512
+	Range: 4c0
 	Burst: 2
 	BurstDelays: 4
 	ReloadDelay: 40
@@ -1292,6 +1333,7 @@ StalkerShards:
 		Image: scrinzap
 		ContrailStartColor: 954fff
 	Warhead@1Dam: SpreadDamage
+		Spread: 192
 		Damage: 7500
 		Versus:
 			Wood: 15
