@@ -16,7 +16,7 @@ GatewayLocations = {
 
 VoidEnginePaths = {
 	Left = { LeftPath1.Location, LeftPath2.Location, LeftPath3.Location, LeftPath4.Location, LeftPath5.Location, LeftPath6.Location, LeftPath7.Location, },
-	Right = { RightPath1.Location, RightPath2.Location, RightPath3.Location, RightPath4.Location, RightPath5.Location, RightPath6.Location, RightPath7.Location },
+	Right = { RightPath1.Location, RightPath2.Location, RightPath3.Location, RightPath4.Location, RightPath5.Location, RightPath6a.Location, RightPath7.Location },
 	Middle = { MiddlePath1.Location, HighwayPath1.Location, HighWayExit.Location }
 }
 

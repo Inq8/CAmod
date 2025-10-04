@@ -7,8 +7,8 @@ Wormholes = {
 
 	{ Locations = { WormholeSpawn9a.Location, WormholeSpawn9b.Location, WormholeSpawn9c.Location }, Actor = nil, SpawnCount = 0, Phase = 2 }, -- Bottom outer
 	{ Locations = { WormholeSpawn5a.Location, WormholeSpawn5b.Location, WormholeSpawn5c.Location }, Actor = nil, SpawnCount = 0, Phase = 2 }, -- Center main
+	{ Locations = { WormholeSpawn2a.Location, WormholeSpawn2b.Location, WormholeSpawn2c.Location, WormholeSpawn2d.Location }, Actor = nil, SpawnCount = 0, Phase = 2 }, -- North-east corner
 
-	{ Locations = { WormholeSpawn2a.Location, WormholeSpawn2b.Location, WormholeSpawn2c.Location, WormholeSpawn2d.Location }, Actor = nil, SpawnCount = 0, Phase = 3 }, -- North-east corner
 	{ Locations = { WormholeSpawn3a.Location, WormholeSpawn3b.Location, WormholeSpawn3c.Location }, Actor = nil, SpawnCount = 0, Phase = 3 }, -- North-east inner
 	{ Locations = { WormholeSpawn6a.Location, WormholeSpawn6b.Location, WormholeSpawn6c.Location }, Actor = nil, SpawnCount = 0, Phase = 3 }, -- Bottom inner
 	{ Locations = { WormholeSpawn8a.Location, WormholeSpawn8b.Location, WormholeSpawn8c.Location }, Actor = nil, SpawnCount = 0, Phase = 3 }, -- Far east
@@ -40,11 +40,11 @@ WormholeUnitsDelay = {
 }
 
 WormholeUnitsInterval = {
-	easy = DateTime.Seconds(160),
-	normal = DateTime.Seconds(130),
+	easy = DateTime.Seconds(140),
+	normal = DateTime.Seconds(120),
 	hard = DateTime.Seconds(100),
 	vhard = DateTime.Seconds(80),
-	brutal = DateTime.Seconds(75)
+	brutal = DateTime.Seconds(60)
 }
 
 Phase2Start = {
@@ -207,7 +207,12 @@ SpawnWormhole = function()
 	ShuffleInPlace(Wormholes)
 
 	local dormantWormholes = Utils.Where(Wormholes, function(w)
-		return (w.Actor == nil or w.Actor.IsDead) and ((w.Phase == 1) or (w.Phase == 2 and DateTime.GameTime > Phase2Start[Difficulty]) or (w.Phase == 3 and DateTime.GameTime > Phase3Start[Difficulty]))
+		return
+			(w.Actor == nil or w.Actor.IsDead)
+			and ((w.Phase == 1 and DateTime.GameTime < Phase2Start[Difficulty])
+			or (w.Phase == 2 and DateTime.GameTime >= Phase2Start[Difficulty] and DateTime.GameTime < Phase3Start[Difficulty])
+			or (w.Phase == 3 and DateTime.GameTime >= Phase3Start[Difficulty])
+			or DateTime.GameTime > DateTime.Minutes(25))
 	end)
 
 	if #dormantWormholes > 0 then
