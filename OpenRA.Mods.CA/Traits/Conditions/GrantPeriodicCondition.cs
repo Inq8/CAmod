@@ -35,6 +35,8 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly Color CooldownColor = Color.DarkRed;
 		public readonly Color ActiveColor = Color.DarkMagenta;
 
+		public bool ResetTimeOnReenable = true;
+
 		public override object Create(ActorInitializer init) { return new GrantPeriodicCondition(init, this); }
 	}
 
@@ -116,7 +118,8 @@ namespace OpenRA.Mods.CA.Traits
 
 		protected override void TraitEnabled(Actor self)
 		{
-			SetDefaultState();
+			if (ticks == 0 && info.ResetTimeOnReenable)
+				SetDefaultState();
 		}
 
 		protected override void TraitDisabled(Actor self)
