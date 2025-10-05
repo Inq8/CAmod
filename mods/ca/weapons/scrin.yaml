@@ -1270,6 +1270,7 @@ EvisceratorShards:
 
 EvisceratorShardsCharged:
 	Inherits: EvisceratorShards
+	ReloadDelay: 26
 	StartBurstReport: shard-fire1.aud
 	Projectile: Missile
 		ContrailStartColorAlpha: 128
@@ -1288,11 +1289,16 @@ EvisceratorShardsCharged:
 EvisceratorArcShard:
 	Inherits: EvisceratorShards
 	-Burst:
-	Range: 1c512
+	Range: 2c0
 	Projectile: Missile
-		MinimumLaunchAngle: 112
-		MaximumLaunchAngle: 112
+		MinimumLaunchAngle: 80
+		MaximumLaunchAngle: 80
+		Inaccuracy: 32
+		HorizontalRateOfTurn: 30
+		VerticalRateOfTurn: 40
 	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 1400
 		ValidRelationships: Enemy, Neutral
 
 StalkerShards:
