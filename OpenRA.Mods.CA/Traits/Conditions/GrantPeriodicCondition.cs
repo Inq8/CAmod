@@ -35,6 +35,8 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly Color CooldownColor = Color.DarkRed;
 		public readonly Color ActiveColor = Color.DarkMagenta;
 
+		public bool ResetTimeOnReenable = true;
+
 		public override object Create(ActorInitializer init) { return new GrantPeriodicCondition(init, this); }
 	}
 
@@ -48,6 +50,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		int cooldown, active;
 		bool isSuspended;
+		bool initialDefaultStateSet;
 		int token = Actor.InvalidConditionToken;
 
 		bool IsEnabled { get { return token != Actor.InvalidConditionToken; } }
@@ -80,6 +83,7 @@ namespace OpenRA.Mods.CA.Traits
 					DisableCondition();
 			}
 
+			initialDefaultStateSet = true;
 			isSuspended = false;
 		}
 
@@ -116,7 +120,8 @@ namespace OpenRA.Mods.CA.Traits
 
 		protected override void TraitEnabled(Actor self)
 		{
-			SetDefaultState();
+			if (!initialDefaultStateSet || info.ResetTimeOnReenable)
+				SetDefaultState();
 		}
 
 		protected override void TraitDisabled(Actor self)
@@ -157,7 +162,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		float ISelectionBar.GetValue()
 		{
-			if (!info.ShowSelectionBar)
+			if (IsTraitDisabled || !info.ShowSelectionBar)
 				return 0f;
 
 			return IsEnabled

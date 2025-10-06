@@ -870,7 +870,7 @@ EVIS:
 		BuildPaletteOrder: 121
 		Prerequisites: anyradar, ~infantry.scrin, ~evis.upgrade, ~techlevel.medium
 		IconPalette: chromes
-		Description: Fast moving anti-personnel infantry.
+		Description: Durable, fast moving, short-range, anti-personnel infantry.
 	Selectable:
 		DecorationBounds: 640, 896, -32, -256
 	Valued:
@@ -880,9 +880,9 @@ EVIS:
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor, Infantry
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
-		Attributes: • Increased range and damage while on resources (with upgrade)\n• Special Ability: Shard Bomb
+		Attributes: • Charges a more powerful attack while on resources (with upgrade)
 	Health:
-		HP: 12000
+		HP: 16000
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Mobile:
@@ -892,25 +892,31 @@ EVIS:
 	AttackFrontal:
 		FacingTolerance: 64
 		PauseOnCondition: being-warped || blinded || reapersnare
+		Armaments: primary, primary-charged
 	Armament@PRIMARY:
 		Weapon: EvisceratorShards
 		LocalOffset: 0,-100,250, 0,100,250
-		PauseOnCondition: glob-attack || glob-fired
-	Armament@SECONDARY:
-		Name: secondary
-		Weapon: EvisceratorGlob
-		PauseOnCondition: !glob-attack
+		PauseOnCondition: (ammo || charged-fire) && !uncharged-fire
+	Armament@PRIMARYCHARGED:
+		Name: primary-charged
+		Weapon: EvisceratorShardsCharged
+		PauseOnCondition: !ammo || uncharged-fire
 		LocalOffset: 0,-100,250, 0,100,250
 	Armament@BATF:
 		Name: batf
 		Weapon: EvisceratorShards
-	-AmmoPool@RESCONV:
-	-ReloadAmmoPool@RESCONV:
-	-WithAmmoPipsDecoration@RESCONV:
-	-GrantConditionOnAttack@PRIMARY:
-	-GrantConditionOnAttack@PRIMARYCHARGED:
+	AmmoPool@RESCONV:
+		Ammo: 20
+	ReloadAmmoPool@RESCONV:
+		Count: 5
+	WithAmmoPipsDecoration@RESCONV:
+		PipCount: 4
 	GrantCondition@RESCONVCHARGE:
-		RequiresCondition: resconv-upgrade && on-resource
+		RequiresCondition: resconv-upgrade && on-resource && (ammo < 20 || charged-fire)
+	GrantConditionOnAttack@PRIMARY:
+		RevokeDelay: 28
+	GrantConditionOnAttack@PRIMARYCHARGED:
+		RevokeDelay: 28
 	WithIdleOverlay@RESCONVTIB:
 		Offset: 0,0,150
 		Sequence: greensm
@@ -923,32 +929,8 @@ EVIS:
 	WithIdleOverlay@RESCONVGEMS:
 		Offset: 0,0,150
 		Sequence: redsm
-	FirepowerMultiplier@RESCONVCHARGE:
-		Modifier: 110
-		RequiresCondition: charging-on-resource
-	RangeMultiplier@RESCONVCHARGE:
-		Modifier: 120
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
-	TargetedAttackAbility:
-		ActiveCondition: glob-attack
-		ArmamentNames: secondary
-		CircleColor: 00ff0050
-		Type: EnlightenedEmp
-		TargetModifiedCursor: ability2
-		CancelAfterAttack: true
-	GrantConditionOnAttack@GlobCooldown:
-		Condition: glob-fired
-		RevokeDelay: 50
-		ArmamentNames: secondary
-	AmmoPool:
-		Armaments: secondary
-		Ammo: 1
-	ReloadAmmoPoolCA:
-		Delay: 500 # equal to reload time of weapon
-		Count: 1
-		ShowSelectionBar: true
-		SelectionBarColor: 00a000
 	EncyclopediaExtras:
 		AdditionalInfo: Requires Loyalist Allegiance.
 
@@ -974,7 +956,7 @@ IMPL:
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 		Attributes: • Slows targets
 	Health:
-		HP: 9000
+		HP: 8000
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Mobile:
@@ -1005,19 +987,19 @@ STLK:
 		BuildPaletteOrder: 123
 		Prerequisites: anyradar, ~infantry.scrin, ~stlk.upgrade, ~techlevel.medium
 		IconPalette: chromes
-		Description: Fast moving anti-personnel infantry.
+		Description: Fast moving anti-personnel infantry that can turn invisible temporarily and ambush targets.
 	Selectable:
 		DecorationBounds: 640, 896, -32, -256
 	Valued:
-		Cost: 500
+		Cost: 600
 	Tooltip:
 		Name: Stalker
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor, Infantry
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
-		Attributes: • Special Ability: Cloak\n• Moves faster while cloaked\n• Takes greatly reduced damage for a short time after decloaking
+		Attributes: • Special Ability: Cloak\n• Moves faster while cloaked\n• Briefly takes greatly reduced damage after decloaking
 	Health:
-		HP: 12000
+		HP: 10000
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Mobile:
@@ -1075,7 +1057,7 @@ STLK:
 	GrantTimedCondition@Uncloaked:
 		Condition: phaseshield
 		RequiresCondition: cloak-charging && !hidden
-		Duration: 35
+		Duration: 50
 		ForceFullDuration: true
 	SpeedMultiplier@CloakSpeed:
 		Modifier: 150

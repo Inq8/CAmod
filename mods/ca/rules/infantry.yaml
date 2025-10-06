@@ -1204,7 +1204,6 @@ HACK:
 	Mobile:
 		Speed: 60
 		Voice: Move
-		RequireForceMoveCondition: hacking
 	RevealsShroud:
 		Range: 5c0
 	Passenger:
@@ -1212,12 +1211,11 @@ HACK:
 		Voice: Move
 		CargoType: Hacker
 	Armament@PRIMARY:
-		Weapon: PrepareHack
-		PauseOnCondition: deployed || bothacking
-		TargetRelationships: Enemy, Neutral
-	Armament@PRIMARYDEPLOYED:
 		Weapon: Hack
-		RequiresCondition: deployed
+		LocalOffset: 0,0,50
+		TargetRelationships: Enemy, Neutral
+	Armament@ARC:
+		Weapon: HackArc
 		LocalOffset: 0,0,50
 		TargetRelationships: Enemy, Neutral
 	AttackFrontal:
@@ -1228,15 +1226,21 @@ HACK:
 	WithInfantryBody:
 		IdleSequences: idle
 		StandSequences: stand
-		RequiresCondition: undeployed && !parachute && !being-warped && !reapersnare
+		RequiresCondition: !is-hacking && !parachute && !being-warped && !reapersnare
 	WithInfantryBody@Parachute:
-		RequiresCondition: undeployed && (parachute || reapersnare)
-	WithSpriteBody@DEPLOYED:
-		Name: deployed
+		RequiresCondition: !is-hacking && (parachute || reapersnare)
+	WithSpriteBody@Hacking:
+		Name: hacking
 		Sequence: hack
-		RequiresCondition: !undeployed
-	WithMakeAnimation:
-		BodyNames: deployed
+		RequiresCondition: is-hacking
+		StartSequence: make
+	GrantConditionOnAttack@Hacking:
+		Condition: is-hacking
+		RevokeDelay: 51
+		RequiresCondition: !moving
+	GrantConditionOnMovement@Moving:
+		ValidMovementTypes: Horizontal, Vertical
+		Condition: moving
 	Voiced:
 		VoiceSet: HackerVoice
 	ProducibleWithLevel:
@@ -1246,16 +1250,6 @@ HACK:
 		Prerequisites: barracks.upgraded
 	Targetable@ChaosImmune:
 		TargetTypes: ChaosImmune
-	GrantConditionOnDeploy@HACK:
-		DeployedCondition: deployed
-		UndeployedCondition: undeployed
-		UndeployOnMove: true
-		UndeployOnPickup: true
-		SmartDeploy: true
-		DeployCursor: move
-		DeployBlockedCursor: move
-	DeployOnAttack:
-		RequiresCondition: undeployed
 	MindController:
 		ControlType: Hack
 		ArmamentNames: primary
@@ -1292,11 +1286,9 @@ HACK:
 		Color: 00cc00cc
 	RejectsOrders@AIHACKER:
 		RequiresCondition: bothacking
-	GrantConditionOnAttack@AIHACKER:
+	GrantCondition@AIHACKER:
 		Condition: bothacking
-		ArmamentNames: primary
-		RevokeDelay: 75
-		RequiresCondition: botowner
+		RequiresCondition: botowner && is-hacking
 	GrantConditionOnBotOwner@AIHACKER:
 		Condition: botowner
 		Bots: brutal, vhard, hard, normal, easy, naval
@@ -2688,7 +2680,7 @@ ACOL:
 	Health:
 		HP: 9000
 	Mobile:
-		Speed: 54
+		Speed: 60
 		Voice: Move
 	RevealsShroud:
 		Range: 5c0
@@ -2740,6 +2732,8 @@ TPLR:
 		Cost: 550
 	Health:
 		HP: 21000
+	RevealsShroud:
+		Range: 6c0
 	Buildable:
 		Prerequisites: obliortmpl, anyradar, tmpp, ~infantry.marked, ~techlevel.high
 		BuildPaletteOrder: 112

@@ -604,12 +604,15 @@ OILB:
 		CooldownDuration: 2999
 		Condition: surge
 		ShowSelectionBar: true
+		ShowSelectionBarWhenEmpty: false
 		CooldownColor: FF00FF
 		RequiresCondition: enabled
+		ResetTimeOnReenable: false
 	Tooltip:
 		Name: Oil Derrick
 	TooltipExtras:
-		Description: Grants $50 every 15 seconds and an additional $600 every 2 minutes.
+		Description: Provides additional funds.
+		Attributes: • Gives $50 every 15 seconds and an additional $600 every 2 minutes.\n• Gives $400 on first capture.
 	TooltipDescription@ally:
 		Description: Provides additional funds.
 		ValidRelationships: Ally
@@ -641,7 +644,7 @@ OILB:
 	GrantConditionIfOwnerIsNeutral:
 		Condition: is-neutral
 	GivesCashOnCapture@defloration:
-		Amount: 300
+		Amount: 400
 		RequiresCondition: !has-been-captured
 	GivesCashOnCapture@subsequent:
 		Amount: 100

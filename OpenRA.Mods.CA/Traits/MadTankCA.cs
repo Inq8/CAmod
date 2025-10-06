@@ -300,7 +300,11 @@ namespace OpenRA.Mods.CA.Traits
 					if (mad.info.KillsSelf)
 						self.Kill(self, mad.info.DamageTypes);
 					else
+					{
+						// Reset the initiated flag when starting a new detonation cycle
+						mad.initiated = false;
 						self.QueueActivity(false, new DetonationSequence(self, mad));
+					}
 				});
 			}
 

@@ -926,14 +926,14 @@ CallForHelp = function(self, range, filter)
 	if not AlertedUnits[selfId] then
 		if not self.IsDead then
 			AlertedUnits[selfId] = true
-			if filter(self) then
+			if not filter or filter(self) then
 				self.Stop()
 				IdleHunt(self)
 			end
 		end
 
 		local nearbyUnits = Map.ActorsInCircle(self.CenterPosition, range, function(a)
-			return a.Owner.IsAlliedWith(self.Owner) and not IsMissionPlayer(a.Owner) and filter(a)
+			return a.Owner.IsAlliedWith(self.Owner) and not IsMissionPlayer(a.Owner) and (not filter or filter(a))
 		end)
 
 		Utils.Do(nearbyUnits, function(nearbyUnit)

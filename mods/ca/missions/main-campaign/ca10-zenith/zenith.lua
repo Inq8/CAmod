@@ -1,5 +1,21 @@
 MissionDir = "ca|missions/main-campaign/ca10-zenith"
 
+NukeSilos = { NukeSilo1, NukeSilo2, NukeSilo3, NukeSilo4 }
+
+NukeTimer = {
+	easy = DateTime.Minutes(60),
+	normal = DateTime.Minutes(45),
+	hard = DateTime.Minutes(35),
+	vhard = DateTime.Minutes(30),
+	brutal = DateTime.Minutes(25),
+}
+
+HaloDropStart = AdjustDelayForDifficulty(DateTime.Minutes(6))
+HaloDropAttackValue = AdjustAttackValuesForDifficulty({ Min = 5, Max = 8, RampDuration = DateTime.Minutes(6) })
+
+TeslaReactors = { TeslaReactor1, TeslaReactor2, TeslaReactor3, TeslaReactor4, TeslaReactor5, TeslaReactor6 }
+AirbaseStructures = { Airfield1, Airfield2, Airfield3, Airfield4, Airfield5, Helipad1, Helipad2, Helipad3 }
+PatrolPath = { Patrol1.Location, Patrol2.Location, Patrol3.Location, Patrol4.Location, Patrol5.Location, Patrol6.Location, Patrol7.Location, Patrol8.Location, Patrol9.Location }
 
 Squads = {
 	Planes = {
@@ -77,22 +93,6 @@ Squads = {
 	},
 	AirToAir = AirToAirSquad({ "mig" }, AdjustAirDelayForDifficulty(DateTime.Minutes(10)))
 }
-
-NukeSilos = { NukeSilo1, NukeSilo2, NukeSilo3, NukeSilo4 }
-
-NukeTimer = {
-	easy = DateTime.Minutes(60),
-	normal = DateTime.Minutes(45),
-	hard = DateTime.Minutes(35),
-	vhard = DateTime.Minutes(30),
-	brutal = DateTime.Minutes(25),
-}
-
-HaloDropAttackValue = AdjustAttackValuesForDifficulty({ Min = 5, Max = 8, RampDuration = DateTime.Minutes(6) })
-
-TeslaReactors = { TeslaReactor1, TeslaReactor2, TeslaReactor3, TeslaReactor4, TeslaReactor5, TeslaReactor6 }
-AirbaseStructures = { Airfield1, Airfield2, Airfield3, Airfield4, Airfield5, Helipad1, Helipad2, Helipad3 }
-PatrolPath = { Patrol1.Location, Patrol2.Location, Patrol3.Location, Patrol4.Location, Patrol5.Location, Patrol6.Location, Patrol7.Location, Patrol8.Location, Patrol9.Location }
 
 -- Setup and Tick
 
@@ -306,4 +306,14 @@ end
 PlayerHasICBMSubs = function()
 	local icbmSubs = Nod.GetActorsByType("isub")
 	return #icbmSubs > 0
+end
+
+IdleHunt = function(actor)
+	if actor.HasProperty("HuntCA") and not actor.IsDead then
+		Trigger.OnIdle(actor, function(a)
+			if not a.IsDead and a.IsInWorld and not IsMissionPlayer(a.Owner) then
+				a.HuntCA()
+			end
+		end)
+	end
 end

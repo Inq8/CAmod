@@ -138,7 +138,7 @@ namespace OpenRA.Mods.CA.Traits
 			bool isTurning = IsTurning;
 
 			charging =
-				(self.CurrentActivity is AttackCharged || self.CurrentActivity is AttackMoveActivity)
+				(self.CurrentActivity is AttackCharged || self.CurrentActivity is AttackMoveActivity || self.CurrentActivity is Hunt || self.CurrentActivity is HuntCA)
 				&& !reloading
 				&& IsAiming
 				&& (!isTurning || (isTurning && ChargeLevel > 0 && !Info.LosesChargeWhileTurning));
