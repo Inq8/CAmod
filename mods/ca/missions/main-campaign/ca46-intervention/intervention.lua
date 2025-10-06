@@ -191,3 +191,13 @@ LightningStrike = function()
 		Media.PlaySound("thunder" .. soundNumber .. ".aud")
 	end)
 end
+
+IdleHunt = function(actor)
+	if actor.HasProperty("HuntCA") and not actor.IsDead then
+		Trigger.OnIdle(actor, function(a)
+			if not a.IsDead and a.IsInWorld and not IsMissionPlayer(a.Owner) then
+				a.HuntCA()
+			end
+		end)
+	end
+end

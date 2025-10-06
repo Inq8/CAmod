@@ -267,7 +267,7 @@ OncePerFiveSecondChecks = function()
 end
 
 InitNod = function()
-	RebuildExcludes.Nod = { Types = { "nuke", "nuk2", "tmpl", "afac", "obli", "gun.nod" } }
+	RebuildExcludes.Nod = { Types = { "nuke", "nuk2", "tmpl", "obli", "gun.nod", "nsam" }, Actors = { StartHand, StartComms, MidHand, MidComms } }
 
 	AutoRepairAndRebuildBuildings(Nod, 15)
 	SetupRefAndSilosCaptureCredits(Nod)

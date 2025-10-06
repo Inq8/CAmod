@@ -198,6 +198,17 @@ WorldLoaded = function()
 	end)
 
 	SetupReveals({ EntranceReveal1, EntranceReveal2, EntranceReveal3, EntranceReveal4, EntranceReveal5, EntranceReveal6, EntranceReveal7, EntranceReveal8 })
+
+	Trigger.OnEnteredProximityTrigger(EntranceReveal6Alt.CenterPosition, WDist.New(7 * 1024), function(a, id)
+		if IsMissionPlayer(a.Owner) and a.Type ~= "smallcamera" then
+			Trigger.RemoveProximityTrigger(id)
+			local camera = Actor.Create("smallcamera", true, { Owner = a.Owner, Location = EntranceReveal6.Location })
+			Trigger.AfterDelay(DateTime.Seconds(4), function()
+				camera.Destroy()
+			end)
+		end
+	end)
+
 	AfterWorldLoaded()
 end
 
@@ -313,6 +324,9 @@ InitGDI = function()
 			IsTitanSpotted = true
 			Trigger.RemoveProximityTrigger(id)
 			local camera = Actor.Create("smallcamera", true, { Owner = Scrin, Location = TitanPatroller.Location })
+			Beacon.New(Scrin, TitanPatroller.CenterPosition)
+			Media.PlaySound("beacon.aud")
+			Notification("Dangerous unit patrolling. Evasion recommended. Press [" .. UtilsCA.Hotkey("ToLastEvent") .. "] to view.")
 			Trigger.AfterDelay(DateTime.Seconds(4), function()
 				camera.Destroy()
 			end)

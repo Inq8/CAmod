@@ -180,7 +180,7 @@ namespace OpenRA.Mods.Common.Traits
 				if (Info.InheritsExperience) {
 					var newGainsExperience = actor.TraitOrDefault<GainsExperience>();
 					if (oldGainsExperience != null && newGainsExperience != null)
-						newGainsExperience.GiveExperience(oldGainsExperience.Experience);
+						newGainsExperience.GiveExperience(oldGainsExperience.Experience, true);
 				}
 			});
 		}

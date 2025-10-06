@@ -972,40 +972,39 @@ IvanIFVTargeting:
 
 Hack:
 	Range: 11c0
-	ReloadDelay: 50
+	ReloadDelay: 5
 	ValidTargets: Hackable
 	TargetActorCenter: true
+	Projectile: InstantHit
+	Warhead@CAMERA: SpawnActor
+		Actors: camera.hacker
+		Range: 1
+		ImpactActors: false
+	Warhead@BeingCaptured: GrantExternalConditionCA
+		Range: 0c511
+		Duration: 6
+		Condition: being-captured
+		ValidTargets: Structure
+		ValidRelationships: Neutral, Enemy
+
+HackArc:
+	Inherits: Hack
+	ReloadDelay: 50
 	Report: hacker-pulse.aud
+	-Projectile:
 	Projectile: ArcLaserZap
 		Color: 1ce31270
 		Angle: 60
 		Width: 86
 		Duration: 20
 		HitAnim: empty
-	Warhead@1Dam: TargetDamage
-		ValidRelationships: Enemy, Neutral
-	Warhead@CAMERA: SpawnActor
-		Actors: camera.hacker
-		Range: 1
-		ImpactActors: false
 	Warhead@Flash: FlashTarget
 		Spread: 0c511
 		Color: 00ff00
 		ValidTargets: Structure, Vehicle
 		ValidRelationships: Neutral, Enemy
-	Warhead@BeingCaptured: GrantExternalConditionCA
-		Range: 0c511
-		Duration: 50
-		Condition: being-captured
-		ValidTargets: Structure
-		ValidRelationships: Neutral, Enemy
-
-PrepareHack:
-	Inherits: Hack
-	-Report:
-	-Projectile:
-	Projectile: InstantHit
-	-Warhead@Flash:
+	-Warhead@CAMERA:
+	-Warhead@BeingCaptured:
 
 MADTankDetonate:
 	InvalidTargets: Infantry
@@ -1070,10 +1069,16 @@ Laser:
 		SecondaryBeamZOffset: 511
 		SecondaryBeamColor: FF000040
 	Warhead@1Dam: SpreadDamage
-		Spread: 1c512
-		Falloff: 100, 0
-		Damage: 10000
+		Spread: 42
+		Damage: 37500
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		Versus:
+			None: 250
+			Light: 101
+			Wood: 60
+			Heavy: 101
+			Concrete: 90
+			Brick: 50
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees, Creep
@@ -2490,6 +2495,8 @@ DesolatorBeam:
 		Spread: 180
 		Versus:
 			Light: 120
+			Wood: 60
+			Concrete: 70
 	Warhead@2Dam: HealthPercentageDamage
 		Spread: 42
 		Damage: 300
