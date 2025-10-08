@@ -65,6 +65,11 @@ TMPL:
 TMPP:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
+# Disable powers
+
+AIRS:
+	-ParatroopersPowerCA@NodAirDrop:
+
 # Misc
 
 TSLA:
@@ -91,28 +96,32 @@ MSLO:
 NukeDummyEasy:
 	Inherits: ^NukeDummy
 	NukePower@ABomb:
-		ChargeInterval: 75000
+		ChargeInterval: 90000
 
 NukeDummyNormal:
 	Inherits: ^NukeDummy
 	NukePower@ABomb:
-		ChargeInterval: 60000
+		ChargeInterval: 67500
 
 NukeDummyHard:
 	Inherits: ^NukeDummy
 	NukePower@ABomb:
+		ChargeInterval: 52500
+
+NukeDummyVeryHard:
+	Inherits: ^NukeDummy
+	NukePower@ABomb:
 		ChargeInterval: 45000
+
+NukeDummyBrutal:
+	Inherits: ^NukeDummy
+	NukePower@ABomb:
+		ChargeInterval: 37500
 
 OILB:
 	CashTrickler:
 		Interval: 375
 		Amount: 200
-
-difficulty.easy:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
-	ProvidesPrerequisite:
 
 E2:
 	Mobile:

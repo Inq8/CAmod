@@ -32,7 +32,7 @@ ScrinCompositions = {
 		{ "s1", "s1", "s1", "s3", "evis", "s1", "s1", "s3", "s2", "gscr", "s4", { "gunw", "shrw" }, "s1", { "devo", "devo", "lchr", "corr" }, "gscr", { "tpod", "rtpd" }, "s1", "gscr", { "intl", "stcr" }, "gscr" }
 	},
 	brutal = {
-		{ "s1", "s1", "s1", "s3", "evis", "s1", "s1", "s3", "evis", "gscr", "s4", { "gunw", "shrw" }, "s1", { "devo", "devo", "lchr", "corr" }, "gscr", { "tpod", "rtpd" }, "s1", "gscr", { "intl", "stcr" }, "gscr" }
+		{ "s1", "s1", "s1", "s3", "evis", "s1", "s1", "s3", "evis", "gscr", "mrdr", { "gunw", "shrw" }, "s1", { "devo", "devo", "lchr", "corr" }, "gscr", { "tpod", "rtpd" }, "s1", "gscr", { "intl", "stcr" }, "gscr" }
 	}
 }
 
@@ -41,7 +41,7 @@ FinalBattleInfantryList = {
 	normal = { "s1", "gscr", "s3", "s4", "s1", "s1", "s2", "s1" },
 	hard = { "gscr", "s1", "s3", "s4", "s1", "gscr", "s3", "s1" },
 	vhard = { "gscr", "s1", "s3", "s4", "s1", "gscr", "s3", "s1" },
-	brutal = { "gscr", "s1", "s3", "s4", "s1", "gscr", "s3", "s1" }
+	brutal = { "gscr", "s1", "s3", "mrdr", "s1", "gscr", "s3", "s1" }
 }
 
 FinalBattleVehiclesList = {
@@ -112,6 +112,13 @@ WorldLoaded = function()
 	Actor.Create("quantum.upgrade", true, { Owner = Nod })
 	Actor.Create("cyborgarmor.upgrade", true, { Owner = Nod })
 	Actor.Create("cyborgspeed.upgrade", true, { Owner = Nod })
+
+	if Difficulty == "brutal" then
+		NonBrutalCyborg1.Destroy()
+		NonBrutalCyborg2.Destroy()
+		NonBrutalCyborg3.Destroy()
+		NonBrutalCyborg4.Destroy()
+	end
 
 	Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(2)), function()
 		Media.DisplayMessage("There are six fragments of an artifact hidden within these caverns. Only I have the ability to detect them. Once we have them all, the assembled artifact will lead us to our goal.", "Kane", HSLColor.FromHex("FF0000"))
