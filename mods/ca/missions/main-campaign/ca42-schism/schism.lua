@@ -10,6 +10,14 @@ DefendDuration = {
 	brutal = DateTime.Minutes(4),
 }
 
+McvDelay = {
+	easy = DateTime.Seconds(45),
+	normal = DateTime.Minutes(1),
+	hard = DateTime.Minutes(2),
+	vhard = DateTime.Minutes(3),
+	brutal = DateTime.Minutes(4),
+}
+
 MaleficSpawns = { MaleficSpawn1.Location, MaleficSpawn2.Location, MaleficSpawn3.Location, MaleficSpawn4.Location, MaleficSpawn5.Location, MaleficSpawn6.Location, MaleficSpawn7.Location }
 OverlordSpawns = { OverlordSpawn1.Location, OverlordSpawn2.Location, OverlordSpawn3.Location }
 
@@ -31,7 +39,8 @@ end
 
 Squads = {
 	Nod = {
-		Delay = AdjustDelayForDifficulty(DateTime.Minutes(3)),
+		InitTimeAdjustment = -DateTime.Minutes(7),
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(1) + DateTime.Seconds(30)),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 30, Max = 40 }),
 		ActiveCondition = function()
 			return not MaleficArrived
@@ -42,7 +51,8 @@ Squads = {
 		AttackPaths = { { NodRally1.Location, NodRally2.Location } },
 	},
 	ScrinRebels = {
-		Delay = AdjustDelayForDifficulty(DateTime.Minutes(3)),
+		InitTimeAdjustment = -DateTime.Minutes(7),
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(2)),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 30, Max = 40 }),
 		ActiveCondition = function()
 			return not MaleficArrived
@@ -184,6 +194,13 @@ WorldLoaded = function()
 				end)
 			end)
 		end)
+	end)
+
+	Trigger.AfterDelay(McvDelay[Difficulty], function()
+		Media.PlaySpeechNotification(USSR, "ReinforcementsArrived")
+		Notification("Reinforcements have arrived.")
+		Beacon.New(USSR, McvDest.CenterPosition)
+		Reinforcements.Reinforce(USSR, { "mcv" }, { McvSpawn.Location, McvDest.Location }, 75)
 	end)
 
 	AfterWorldLoaded()
