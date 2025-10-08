@@ -114,13 +114,16 @@ WorldLoaded = function()
 	ObjectiveKillReactors = Nod.AddSecondaryObjective("Destroy reactors on north-west of island.")
 	ObjectiveKillAirbase = Nod.AddSecondaryObjective("Destroy airbase on north-east of island.")
 
-	if IsHardOrAbove() then
+	if Difficulty == "brutal" then
+		NukeDummy = Actor.Create("NukeDummyBrutal", true, { Owner = USSR, Location = NukeSilo1.Location })
+	elseif Difficulty == "vhard" then
+		NukeDummy = Actor.Create("NukeDummyVeryHard", true, { Owner = USSR, Location = NukeSilo1.Location })
+	elseif Difficulty == "hard" then
 		NukeDummy = Actor.Create("NukeDummyHard", true, { Owner = USSR, Location = NukeSilo1.Location })
 	elseif Difficulty == "normal" then
 		NukeDummy = Actor.Create("NukeDummyNormal", true, { Owner = USSR, Location = NukeSilo1.Location })
 	else
 		NukeDummy = Actor.Create("NukeDummyEasy", true, { Owner = USSR, Location = NukeSilo1.Location })
-		Actor.Create("difficulty.easy", true, { Owner = Nod, Location = PlayerStart.Location })
 	end
 
 	local satHack = Actor.Create("camera.sathack", true, { Owner = Nod, Location = SatHack.Location })
