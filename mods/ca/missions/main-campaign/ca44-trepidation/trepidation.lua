@@ -155,6 +155,8 @@ InitUSSR = function()
 	AutoReplaceHarvesters(USSR)
 	AutoRebuildConyards(USSR)
 
+	Actor.Create("hazmatsoviet.upgrade", true, { Owner = USSR })
+
 	local ussrGroundAttackers = USSR.GetGroundAttackers()
 	Utils.Do(ussrGroundAttackers, function(a)
 		TargetSwapChance(a, 10)
