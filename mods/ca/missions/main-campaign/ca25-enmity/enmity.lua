@@ -71,7 +71,7 @@ if IsVeryHardOrAbove() then
 			Vehicles = { "spec", "spec", "spec", "spec", "spec", "spec", "spec" },
 			MinTime = DateTime.Minutes(16),
 			IsSpecial = true
-		}
+		},
 		{
 			Infantry = { "n3", "n1", "n1", "n1", "n1", "n1", "n3", "rmbo", "n1", "n1", "n1", "n1", "n1", "n1", "n1", "n1", "n1", "n3", "n1", "n1", "n1", "n3" },
 			Vehicles = { "ftnk", "ftnk", "howi", "howi", "howi", "howi", "howi" },

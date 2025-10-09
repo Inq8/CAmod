@@ -743,7 +743,7 @@ VENG:
 		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	AttackFrontal:
-		PauseOnCondition: empdisable || blinded
+		PauseOnCondition: empdisable
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
 		FacingTolerance: 8
@@ -772,8 +772,6 @@ VENG:
 		TargetTypes: ChaosImmune
 	Targetable@DriverKillImmune:
 		TargetTypes: DriverKillImmune
-	Targetable@BlindImmune:
-		TargetTypes: BlindImmune
 	Targetable@CampaignBoss:
 		TargetTypes: CampaignBoss
 	Targetable@VoidEngine:
@@ -790,6 +788,14 @@ VENG:
 	ReloadDelayMultiplier@TEMPORAL:
 		Modifier: 120
 		RequiresCondition: being-warped
+	RevealsShroudMultiplier@Blinded:
+		Modifier: 80
+	RangeMultiplier@Blinded:
+		Modifier: 80
+		RequiresCondition: blinded
+	FirepowerMultiplier@Blinded:
+		Modifier: 90
+		RequiresCondition: blinded
 	FirepowerMultiplier@NORMAL:
 		Modifier: 75
 		RequiresCondition: difficulty-normal
