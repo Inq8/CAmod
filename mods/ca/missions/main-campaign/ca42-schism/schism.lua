@@ -12,10 +12,10 @@ DefendDuration = {
 
 McvDelay = {
 	easy = DateTime.Seconds(45),
-	normal = DateTime.Minutes(1),
-	hard = DateTime.Minutes(2),
-	vhard = DateTime.Minutes(3),
-	brutal = DateTime.Minutes(4),
+	normal = DateTime.Minutes(1) + DateTime.Seconds(15),
+	hard = DateTime.Minutes(1) + DateTime.Seconds(45),
+	vhard = DateTime.Minutes(2) + DateTime.Seconds(15),
+	brutal = DateTime.Minutes(2) + DateTime.Seconds(45),
 }
 
 MaleficSpawns = { MaleficSpawn1.Location, MaleficSpawn2.Location, MaleficSpawn3.Location, MaleficSpawn4.Location, MaleficSpawn5.Location, MaleficSpawn6.Location, MaleficSpawn7.Location }
@@ -36,6 +36,10 @@ if IsHardOrAbove() then
 		IsSpecial = true
 	})
 end
+
+AttackDelayMultipliers.hard = 0.5
+AttackDelayMultipliers.vhard = 0.02
+AttackDelayMultipliers.brutal = 0.02
 
 Squads = {
 	Nod = {

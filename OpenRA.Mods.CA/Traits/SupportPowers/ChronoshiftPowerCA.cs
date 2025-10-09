@@ -36,7 +36,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly bool KeepFormation = false;
 
 		[Desc("Maximum distance a selected unit can move away from their initial location.")]
-		public readonly WDist LeashRange = WDist.FromCells(12);
+		public readonly WDist LeashRange = WDist.FromCells(15);
 
 		[Desc("Ticks until returning after teleportation.")]
 		public readonly int Duration = 750;

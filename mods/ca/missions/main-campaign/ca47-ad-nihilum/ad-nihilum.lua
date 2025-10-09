@@ -44,6 +44,14 @@ VoidEngineAttackCount = {
 	brutal = 50
 }
 
+VoidEngineRevealDelay = {
+	easy = DateTime.Seconds(15),
+	normal = DateTime.Seconds(30),
+	hard = DateTime.Seconds(45),
+	vhard = DateTime.Seconds(60),
+	brutal = DateTime.Seconds(75)
+}
+
 LeftAttackPaths = {
 	{ LeftPath2.Location, LeftPath3.Location, LeftPath4.Location, LeftPath5.Location },
 	{ LeftPath2.Location, LeftFlankPath1.Location, LeftFlankPath2a.Location, LeftFlankPath3.Location },
@@ -287,7 +295,7 @@ SendNextVoidEngine = function()
 			end)
 
 			if Difficulty ~= "brutal" then
-				Trigger.AfterDelay(DateTime.Seconds(30), function()
+				Trigger.AfterDelay(VoidEngineRevealDelay[Difficulty], function()
 					if not a.IsDead then
 						Beacon.New(Greece, a.CenterPosition)
 						Media.PlaySound("beacon.aud")

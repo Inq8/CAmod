@@ -1443,9 +1443,11 @@ SendAttackSquad = function(squad)
 
 					-- if squad leader, queue attack move to each attack path waypoint
 					if squadLeader == nil or a == squadLeader then
-						Utils.Do(attackPath, function(w)
-							a.AttackMove(w, 3)
-						end)
+						if attackPath ~= nil then
+							Utils.Do(attackPath, function(w)
+								a.AttackMove(w, 3)
+							end)
+						end
 
 						if squad.IsNaval ~= nil and squad.IsNaval then
 							IdleHunt(a)
@@ -1472,12 +1474,6 @@ SendAttackSquad = function(squad)
 							ClearSquadLeader(SquadLeaders[actorId])
 						end)
 					end
-				end
-			else
-				if squad.IsNaval ~= nil and squad.IsNaval then
-					IdleHunt(a)
-				else
-					AssaultPlayerBaseOrHunt(a, squad.TargetPlayer)
 				end
 			end
 		end)

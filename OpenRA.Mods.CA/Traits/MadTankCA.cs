@@ -27,26 +27,15 @@ namespace OpenRA.Mods.CA.Traits
 		[SequenceReference]
 		public readonly string ThumpSequence = null;
 
-		public readonly int ThumpInterval = 8;
+		public readonly int ThumpInterval = 100;
 
 		[WeaponReference]
 		public readonly string ThumpDamageWeapon = null;
 
 		[Desc("Measured in ticks.")]
-		public readonly int ChargeDelay = 96;
+		public readonly int ChargeDelay = 25;
 
 		public readonly string ChargeSound = "madchrg2.aud";
-
-		[SequenceReference]
-		public readonly string DetonationSequence = null;
-
-		[Desc("Measured in ticks.")]
-		public readonly int DetonationDelay = 42;
-
-		public readonly string DetonationSound = "madexplo.aud";
-
-		[WeaponReference]
-		public readonly string DetonationWeapon = null;
 
 		[ActorReference]
 		public readonly string DriverActor = null;
@@ -54,20 +43,11 @@ namespace OpenRA.Mods.CA.Traits
 		[VoiceReference]
 		public readonly string Voice = "Action";
 
-		public readonly bool FirstDetonationImmediate = false;
-
 		[GrantedConditionReference]
 		[Desc("The condition to grant to self while deployed.")]
 		public readonly string DeployedCondition = null;
 
 		public WeaponInfo ThumpDamageWeaponInfo { get; private set; }
-
-		public WeaponInfo DetonationWeaponInfo { get; private set; }
-
-		public readonly bool KillsSelf = true;
-
-		[Desc("Types of damage that this trait causes to self while self-destructing. Leave empty for no damage types.")]
-		public readonly BitSet<DamageType> DamageTypes = default(BitSet<DamageType>);
 
 		[CursorReference]
 		[Desc("Cursor to display when able to set up the detonation sequence.")]
@@ -84,15 +64,6 @@ namespace OpenRA.Mods.CA.Traits
 					throw new YamlException($"Weapons Ruleset does not contain an entry '{thumpDamageWeaponToLower}'");
 
 				ThumpDamageWeaponInfo = thumpDamageWeapon;
-			}
-
-			if (DetonationWeapon != null)
-			{
-				var detonationWeaponToLower = DetonationWeapon.ToLowerInvariant();
-				if (!rules.Weapons.TryGetValue(detonationWeaponToLower, out var detonationWeapon))
-					throw new YamlException($"Weapons Ruleset does not contain an entry '{detonationWeapon}'");
-
-				DetonationWeaponInfo = detonationWeapon;
 			}
 		}
 	}
@@ -118,14 +89,9 @@ namespace OpenRA.Mods.CA.Traits
 			base.Created(self);
 		}
 
-		int GetModifiedChargeDelay()
+		int GetModifiedThumpInterval()
 		{
-			return Util.ApplyPercentageModifiers(info.ChargeDelay, reloadModifiers.Select(m => m.GetReloadModifier()));
-		}
-
-		int GetModifiedDetonationDelay()
-		{
-			return Util.ApplyPercentageModifiers(info.DetonationDelay, reloadModifiers.Select(m => m.GetReloadModifier()));
+			return Util.ApplyPercentageModifiers(info.ThumpInterval, reloadModifiers.Select(m => m.GetReloadModifier()));
 		}
 
 		public IEnumerable<IOrderTargeter> Orders
@@ -181,14 +147,11 @@ namespace OpenRA.Mods.CA.Traits
 			readonly MadTankCA mad;
 			readonly IMove move;
 			readonly WithFacingSpriteBody wfsb;
-			readonly ScreenShaker screenShaker;
 			readonly bool assignTargetOnFirstRun;
 
 			int ticks;
 			Target target;
-
-			int chargeDelay;
-			int detonationDelay;
+			int thumpInterval;
 
 			public DetonationSequence(Actor self, MadTankCA mad)
 				: this(self, mad, Target.Invalid)
@@ -204,11 +167,9 @@ namespace OpenRA.Mods.CA.Traits
 
 				move = self.Trait<IMove>();
 				wfsb = self.Trait<WithFacingSpriteBody>();
-				screenShaker = self.World.WorldActor.Trait<ScreenShaker>();
 
-				// Cache delays with modifiers applied
-				chargeDelay = mad.GetModifiedChargeDelay();
-				detonationDelay = mad.GetModifiedDetonationDelay();
+				// Cache interval with modifiers applied
+				thumpInterval = mad.GetModifiedThumpInterval();
 			}
 
 			protected override void OnFirstRun(Actor self)
@@ -238,74 +199,42 @@ namespace OpenRA.Mods.CA.Traits
 						return true;
 
 					self.GrantCondition(mad.info.DeployedCondition);
-
-					if (!mad.FirstDetonationComplete)
-					{
-						if (mad.info.FirstDetonationImmediate)
-							ticks = mad.info.ChargeDelay - 1;
-
-						self.World.AddFrameEndTask(w => EjectDriver());
-						mad.FirstDetonationComplete = true;
-					}
-
+					self.World.AddFrameEndTask(w => EjectDriver());
 					IsInterruptible = false;
 					mad.initiated = true;
 				}
 
-				if (++ticks % mad.info.ThumpInterval == 0)
+				if (ticks == 1 && mad.info.ChargeSound != null)
+					Game.Sound.Play(SoundType.World, mad.info.ChargeSound, self.CenterPosition);
+
+				if (++ticks == mad.info.ChargeDelay)
 				{
 					if (mad.info.ThumpDamageWeapon != null)
 					{
-						// Use .FromPos since this weapon needs to affect more than just the MadTank actor
-						mad.info.ThumpDamageWeaponInfo.Impact(Target.FromPos(self.CenterPosition), self);
-					}
-
-					if (mad.info.ThumpSequence != null)
-						wfsb.PlayCustomAnimation(self, mad.info.ThumpSequence);
-				}
-
-				if (ticks == chargeDelay)
-					Game.Sound.Play(SoundType.World, mad.info.ChargeSound, self.CenterPosition);
-
-				return ticks == chargeDelay + detonationDelay;
-			}
-
-			protected override void OnLastRun(Actor self)
-			{
-				if (!mad.initiated)
-					return;
-
-				Game.Sound.Play(SoundType.World, mad.info.DetonationSound, self.CenterPosition);
-
-				self.World.AddFrameEndTask(w =>
-				{
-					if (mad.info.DetonationWeapon != null)
-					{
 						var args = new WarheadArgs
 						{
-							Weapon = mad.info.DetonationWeaponInfo,
+							Weapon = mad.info.ThumpDamageWeaponInfo,
 							SourceActor = self,
 							WeaponTarget = target,
 							DamageModifiers = self.TraitsImplementing<IFirepowerModifier>()
 								.Select(a => a.GetFirepowerModifier()).ToArray()
 						};
 
-						// Use .FromPos since this actor is killed. Cannot use Target.FromActor
-						mad.info.DetonationWeaponInfo.Impact(Target.FromPos(self.CenterPosition), args);
+						// Use .FromPos since this weapon needs to affect more than just the MadTank actor
+						mad.info.ThumpDamageWeaponInfo.Impact(Target.FromPos(self.CenterPosition), args);
 					}
 
-					if (mad.info.DetonationSequence != null)
-						wfsb.PlayCustomAnimation(self, mad.info.DetonationSequence);
+					if (mad.info.ThumpSequence != null)
+						wfsb.PlayCustomAnimation(self, mad.info.ThumpSequence);
+				}
 
-					if (mad.info.KillsSelf)
-						self.Kill(self, mad.info.DamageTypes);
-					else
-					{
-						// Reset the initiated flag when starting a new detonation cycle
-						mad.initiated = false;
-						self.QueueActivity(false, new DetonationSequence(self, mad));
-					}
-				});
+				if (ticks == thumpInterval + mad.info.ChargeDelay)
+				{
+					thumpInterval = mad.GetModifiedThumpInterval();
+					ticks = 0;
+				}
+
+				return false;
 			}
 
 			public override IEnumerable<TargetLineNode> TargetLineNodes(Actor self)
