@@ -113,6 +113,10 @@ WCHR:
 	AutoTarget:
 		InitialStanceAI: AttackAnything
 
-WEAP:
-	ExternalCondition@PreventMcv:
-		Condition: has-mcv
+MCV:
+	Buildable:
+		Prerequisites: vehicles.mcv, ~vehicles.ra, ~mcv.allowed
+
+mcv.allowed:
+	Inherits@DUMMY: ^InvisibleDummy
+	ProvidesPrerequisite:

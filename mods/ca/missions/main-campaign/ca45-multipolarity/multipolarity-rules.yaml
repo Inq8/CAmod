@@ -110,3 +110,29 @@ OCAR.DISR:
 		InitialFacing: 768
 	Carryall:
 		InitialActor: disr
+
+XO.Hawthorne:
+	Inherits: XO
+	Inherits@CommandoSkull: ^CommandoSkull
+	RenderSprites:
+		Image: xo
+	Tooltip:
+		Name: Gen. Hawthorne
+	-Targetable:
+	Mobile:
+		Locomotor: sheavytracked
+	RevealsShroud@Reveal:
+		Range: 6c0
+		ValidRelationships: Enemy
+	Targetable@CampaignBoss:
+		TargetTypes: CampaignBoss
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
+	Targetable@DriverKillImmune:
+		TargetTypes: DriverKillImmune
+	Targetable@BlindImmune:
+		TargetTypes: BlindImmune
+	Targetable@EmpImmune:
+		TargetTypes: EmpImmune
