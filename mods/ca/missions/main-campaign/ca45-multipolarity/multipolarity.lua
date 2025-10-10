@@ -175,7 +175,7 @@ WorldLoaded = function()
 
 	Trigger.OnCapture(HawthorneHQ, function(self, captor, oldOwner, newOwner)
 		if newOwner == Greece and not Greece.IsObjectiveCompleted(ObjectiveCaptureHQ) then
-			Greece.MarkCompletedObjective(ObjectiveCaptureHQ)
+			DoFinale()
 		end
 	end)
 
@@ -195,9 +195,6 @@ WorldLoaded = function()
 	if IsHardOrAbove() then
 		Trigger.AfterDelay(CommandoDropTime[Difficulty], DoCommandoDrop)
 	end
-
-Trigger.AfterDelay(DateTime.Minutes(2), DoEngiDrop)
-Reinforcements.Reinforce(Greece, { "mcv" }, { McvSpawn.Location, McvDest.Location }, 75)
 
 	AfterWorldLoaded()
 end
@@ -550,4 +547,22 @@ CaptureRandomBuilding = function(engi)
 	local target = Utils.Random(buildings)
 	CaptureTargets[tostring(target)] = true
 	engi.Capture(target)
+end
+
+DoFinale = function()
+	Media.DisplayMessage("This is far from over! You will regret making an enemy of me!", "Gen. Hawthorne", HSLColor.FromHex("F2CF74"))
+	MediaCA.PlaySound(MissionDir .. "/hth_farfromover.aud", 2)
+
+	Hawthorne = Actor.Create("xo.hawthorne", true, { Owner = GDI, Location = HawthorneSpawn.Location })
+	Hawthorne.TargetedLeap(HawthorneJumpDest.Location, false)
+	Hawthorne.Move(Gateway.Location)
+	Hawthorne.Destroy()
+
+	Trigger.OnRemovedFromWorld(Hawthorne, function(a)
+		Greece.MarkCompletedObjective(ObjectiveCaptureHQ)
+	end)
+
+	Trigger.AfterDelay(DateTime.Seconds(30), function()
+		Greece.MarkCompletedObjective(ObjectiveCaptureHQ)
+	end)
 end

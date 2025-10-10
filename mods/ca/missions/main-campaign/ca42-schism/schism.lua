@@ -1,6 +1,6 @@
 MissionDir = "ca|missions/main-campaign/ca42-schism"
 
-PurificationInterval = DateTime.Minutes(3) + DateTime.Seconds(5)
+PurificationInterval = DateTime.Minutes(3)
 
 DefendDuration = {
 	easy = DateTime.Minutes(3),
@@ -8,14 +8,6 @@ DefendDuration = {
 	hard = DateTime.Minutes(4),
 	vhard = DateTime.Minutes(4),
 	brutal = DateTime.Minutes(4),
-}
-
-McvDelay = {
-	easy = DateTime.Seconds(45),
-	normal = DateTime.Minutes(1) + DateTime.Seconds(15),
-	hard = DateTime.Minutes(1) + DateTime.Seconds(45),
-	vhard = DateTime.Minutes(2) + DateTime.Seconds(15),
-	brutal = DateTime.Minutes(2) + DateTime.Seconds(45),
 }
 
 MaleficSpawns = { MaleficSpawn1.Location, MaleficSpawn2.Location, MaleficSpawn3.Location, MaleficSpawn4.Location, MaleficSpawn5.Location, MaleficSpawn6.Location, MaleficSpawn7.Location }
@@ -137,6 +129,7 @@ WorldLoaded = function()
 	MissionPlayers = { USSR }
 	MissionEnemies = { Nod, ScrinRebels, MaleficScrin }
 	TimerTicks = PurificationInterval
+	IronCurtainIntegrityTicksRemaining = DateTime.Minutes(25)
 
 	Camera.Position = PlayerStart.CenterPosition
 
@@ -186,6 +179,7 @@ WorldLoaded = function()
 				Notification("Reinforcements have arrived.")
 				Reinforcements.Reinforce(USSR, { "kiro" }, { KirovSpawn1.Location, KirovRally1.Location })
 				Reinforcements.Reinforce(USSR, { "kiro" }, { KirovSpawn2.Location, KirovRally2.Location })
+				Reinforcements.Reinforce(USSR, { "mcv" }, { McvSpawn.Location, McvDest.Location }, 75)
 
 				Utils.Do({ SSMNorth, SSMEast1, SSMEast2 }, function(s)
 					if not s.IsDead then
@@ -198,13 +192,6 @@ WorldLoaded = function()
 				end)
 			end)
 		end)
-	end)
-
-	Trigger.AfterDelay(McvDelay[Difficulty], function()
-		Media.PlaySpeechNotification(USSR, "ReinforcementsArrived")
-		Notification("Reinforcements have arrived.")
-		Beacon.New(USSR, McvDest.CenterPosition)
-		Reinforcements.Reinforce(USSR, { "mcv" }, { McvSpawn.Location, McvDest.Location }, 75)
 	end)
 
 	AfterWorldLoaded()
@@ -238,6 +225,15 @@ OncePerSecondChecks = function()
 				end
 			else
 				TimerTicks = PurificationInterval
+			end
+
+			if Difficulty == "brutal" then
+				if IronCurtainIntegrityTicksRemaining > 0 then
+					IronCurtainIntegrityTicksRemaining = IronCurtainIntegrityTicksRemaining - 25
+				elseif not IronCurtain.IsDead then
+					IronCurtainIntegrityTicksRemaining = 0
+					IronCurtain.Kill()
+				end
 			end
 
 			if IsMissionPlayer(Purifier.Owner) then
@@ -294,7 +290,18 @@ UpdateMissionText = function()
 			if TimerTicks <= 125 then
 				color = HSLColor.Red
 			end
-			UserInterface.SetMissionText("Purification wave in " .. UtilsCA.FormatTimeForGameSpeed(TimerTicks), color)
+			local text = "Purification wave in " .. UtilsCA.FormatTimeForGameSpeed(TimerTicks)
+
+			if Difficulty == "brutal" then
+				if IronCurtainIntegrityTicksRemaining > 0 then
+					text = text .. " -- Iron Curtain integrity failure in " .. UtilsCA.FormatTimeForGameSpeed(IronCurtainIntegrityTicksRemaining)
+				else
+					color = HSLColor.Red
+					text = text .. " -- Iron Curtain destroyed"
+				end
+			end
+
+			UserInterface.SetMissionText(text, color)
 		else
 			UserInterface.SetMissionText("")
 		end

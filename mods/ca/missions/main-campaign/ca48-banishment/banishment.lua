@@ -149,17 +149,16 @@ WorldLoaded = function()
 					Trigger.AfterDelay(1, function()
 						Greece.MarkCompletedObjective(ObjectiveRecoverMcv)
 					end)
-					if not WarFactory.IsDead then
-						WarFactory.RevokeCondition(BlockMcvConditionToken)
-					end
+					Trigger.AfterDelay(DateTime.Seconds(120), function()
+						Actor.Create("mcv.allowed", true, { Owner = Greece })
+						Notification("MCV production now available.")
+					end)
 					if McvFlare ~= nil and not McvFlare.IsDead then
 						McvFlare.Destroy()
 					end
 				end
 			end)
 		end)
-
-		BlockMcvConditionToken = WarFactory.GrantCondition("has-mcv")
 	end)
 
 	local productionBuildings = MaleficScrin.GetActorsByTypes({ "port", "wsph", "sfac", "grav" })
@@ -268,10 +267,7 @@ SecureBase = function(baseCenter)
 				Notification("Reinforcements have arrived. Press [" .. UtilsCA.Hotkey("ToLastEvent") .. "] to view location.")
 				Reinforcements.Reinforce(Greece, { "lst.mcv" }, { McvSpawn.Location, McvDest.Location }, 75)
 				Beacon.New(Greece, McvDest.CenterPosition)
-
-				if not WarFactory.IsDead then
-					WarFactory.RevokeCondition(BlockMcvConditionToken)
-				end
+				Actor.Create("mcv.allowed", true, { Owner = Greece })
 			end
 		end)
 	end
