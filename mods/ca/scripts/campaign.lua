@@ -1435,45 +1435,43 @@ SendAttackSquad = function(squad)
 		Utils.Do(squad.IdleUnits, function(a)
 			local actorId = tostring(a)
 
-			if attackPath ~= nil then
-				if not a.IsDead and a.IsInWorld then
-					if squad.FollowLeader ~= nil and squad.FollowLeader == true and squadLeader == nil then
-						squadLeader = a
+			if not a.IsDead and a.IsInWorld then
+				if squad.FollowLeader ~= nil and squad.FollowLeader == true and squadLeader == nil then
+					squadLeader = a
+				end
+
+				-- if squad leader, queue attack move to each attack path waypoint
+				if squadLeader == nil or a == squadLeader then
+					if attackPath ~= nil then
+						Utils.Do(attackPath, function(w)
+							a.AttackMove(w, 3)
+						end)
 					end
 
-					-- if squad leader, queue attack move to each attack path waypoint
-					if squadLeader == nil or a == squadLeader then
-						if attackPath ~= nil then
-							Utils.Do(attackPath, function(w)
-								a.AttackMove(w, 3)
-							end)
-						end
-
-						if squad.IsNaval ~= nil and squad.IsNaval then
-							IdleHunt(a)
-						else
-							AssaultPlayerBaseOrHunt(a, squad.TargetPlayer)
-						end
-
-						-- on damaged or killed
-						Trigger.OnDamaged(a, function(self, attacker, damage)
-							ClearSquadLeader(squadLeader)
-						end)
-
-						Trigger.OnKilled(a, function(self, attacker, damage)
-							ClearSquadLeader(squadLeader)
-						end)
-
-					-- if not squad leader, follow the leader
+					if squad.IsNaval ~= nil and squad.IsNaval then
+						IdleHunt(a)
 					else
-						SquadLeaders[actorId] = squadLeader
-						FollowSquadLeader(a, squad)
-
-						-- if damaged (stop guarding, attack move to enemy base)
-						Trigger.OnDamaged(a, function(self, attacker, damage)
-							ClearSquadLeader(SquadLeaders[actorId])
-						end)
+						AssaultPlayerBaseOrHunt(a, squad.TargetPlayer)
 					end
+
+					-- on damaged or killed
+					Trigger.OnDamaged(a, function(self, attacker, damage)
+						ClearSquadLeader(squadLeader)
+					end)
+
+					Trigger.OnKilled(a, function(self, attacker, damage)
+						ClearSquadLeader(squadLeader)
+					end)
+
+				-- if not squad leader, follow the leader
+				else
+					SquadLeaders[actorId] = squadLeader
+					FollowSquadLeader(a, squad)
+
+					-- if damaged (stop guarding, attack move to enemy base)
+					Trigger.OnDamaged(a, function(self, attacker, damage)
+						ClearSquadLeader(SquadLeaders[actorId])
+					end)
 				end
 			end
 		end)
