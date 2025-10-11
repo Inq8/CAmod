@@ -233,7 +233,10 @@ SpyDeparture = function()
 				Greece.MarkCompletedObjective(ObjectiveExtractSpy)
 				Spy.Stop()
 				Spy.Destroy()
-				Greece.GrantCondition("spy-extracted")
+
+				for _, p in ipairs(MissionPlayers) do
+					p.GrantCondition("spy-extracted")
+				end
 
 				Trigger.AfterDelay(DateTime.Seconds(2), function()
 					Beacon.New(Greece, McvDest.CenterPosition)

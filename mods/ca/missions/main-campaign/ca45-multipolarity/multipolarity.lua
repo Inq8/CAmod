@@ -30,7 +30,7 @@ CommandoDropTime = {
 	normal = DateTime.Minutes(14), -- not used
 	hard = DateTime.Minutes(12),
 	vhard = DateTime.Minutes(10),
-	brutal = DateTime.Seconds(8)
+	brutal = DateTime.Minutes(8)
 }
 
 ZoneRaidTime = {
@@ -53,7 +53,7 @@ CaptureTargets = {}
 
 Squads = {
 	Main = {
-		InitTimeAdjustment = -DateTime.Minutes(4),
+		InitTimeAdjustment = -DateTime.Minutes(3),
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.GDI),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 }),
 		FollowLeader = true,
@@ -174,13 +174,13 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnCapture(HawthorneHQ, function(self, captor, oldOwner, newOwner)
-		if newOwner == Greece and not Greece.IsObjectiveCompleted(ObjectiveCaptureHQ) then
+		if IsMissionPlayer(newOwner) and not Greece.IsObjectiveCompleted(ObjectiveCaptureHQ) then
 			DoFinale()
 		end
 	end)
 
 	Trigger.OnEnteredProximityTrigger(HawthorneHQ.CenterPosition, WDist.New(15 * 1024), function(a, id)
-		if a.Owner == Greece then
+		if IsMissionPlayer(a.Owner) then
 			Trigger.RemoveProximityTrigger(id)
 			if not FinalTaunt then
 				FinalTaunt = true
@@ -194,6 +194,10 @@ WorldLoaded = function()
 
 	if IsHardOrAbove() then
 		Trigger.AfterDelay(CommandoDropTime[Difficulty], DoCommandoDrop)
+	end
+
+	if Difficulty == "brutal" then
+		DoCommandoDrop()
 	end
 
 	AfterWorldLoaded()
@@ -291,6 +295,7 @@ FlipAlliedBase = function()
 		Media.PlaySpeechNotification(Greece, "ReinforcementsArrived")
 		Notification("Reinforcements have arrived.")
 		Reinforcements.Reinforce(Greece, { "mcv" }, { McvSpawn.Location, McvDest.Location }, 75)
+		Actor.Create("mcv.allowed", true, { Owner = Greece })
 	end)
 
 	InitGDIAttacks()

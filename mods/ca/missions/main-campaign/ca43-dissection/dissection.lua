@@ -41,7 +41,7 @@ NextGradReplacementTime = 0
 
 SovietAttackPaths = function(squad)
 	local paths = {}
-	local conyards = Greece.GetActorsByTypes({ "fact", "mcv" })
+	local conyards = GetMissionPlayersActorsByTypes({ "fact", "mcv" })
 	for _, conyard in ipairs(conyards) do
 		local rallyPoints = Map.ActorsInCircle(conyard.CenterPosition, WDist.New(36 * 1024), function(a) return a.Type == "waypoint" end)
 		for _, rp in ipairs(rallyPoints) do
@@ -127,7 +127,7 @@ WorldLoaded = function()
 			DomeDisabled(d)
 		end)
 		Trigger.OnInfiltrated(d, function(self, infiltrator)
-			if infiltrator.Owner == Greece then
+			if IsMissionPlayer(infiltrator.Owner) then
 				DomeDisabled(d)
 			end
 		end)
@@ -136,7 +136,7 @@ WorldLoaded = function()
 	local power = USSR.GetActorsByTypes({"powr", "apwr", "tpwr"})
 	Utils.Do(power, function(p)
 		Trigger.OnInfiltrated(p, function(self, infiltrator)
-			if not p.IsDead and infiltrator.Owner == Greece then
+			if not p.IsDead and IsMissionPlayer(infiltrator.Owner) then
 				p.Sell()
 			end
 		end)
@@ -192,7 +192,7 @@ OncePerThirtySecondChecks = function()
 end
 
 InitUSSR = function()
-	RebuildExcludes.USSR = { Types = { "dome" } }
+	RebuildExcludes.USSR = { Types = { "dome", "apwr", "powr" } }
 
 	AutoRepairAndRebuildBuildings(USSR, 10)
 	SetupRefAndSilosCaptureCredits(USSR)
@@ -285,10 +285,10 @@ end
 
 InitBombingRun = function()
 	local delay = 1
-	local keyBuildings = Greece.GetActorsByTypes({ "proc", "fact", "pdox", "weat" })
-	local targets
-	local rightTargets = {}
-	local leftTargets = {}
+	local primaryTargets = GetMissionPlayersActorsByTypes({ "proc", "fact", "pdox", "weat" })
+	local rightPrimaryTargets = {}
+	local leftPrimaryTargets = {}
+	local targets = {}
 	local usedXCoords = {}
 	local leftMinX = 2
 	local leftMaxX = 50
@@ -296,33 +296,50 @@ InitBombingRun = function()
 	local rightMaxX = 138
 	local targetSide
 
-	Utils.Do(keyBuildings, function(b)
+	Utils.Do(primaryTargets, function(b)
 		if b.Location.X > rightMinX then
-			table.insert(rightTargets, b)
+			table.insert(rightPrimaryTargets, b)
 		elseif b.Location.X < leftMaxX then
-			table.insert(leftTargets, b)
+			table.insert(leftPrimaryTargets, b)
 		end
 	end)
 
-	if math.abs(#leftTargets - #rightTargets) < 4 then
-		targets = Utils.Concat(leftTargets, rightTargets)
+	if math.abs(#leftPrimaryTargets - #rightPrimaryTargets) < 4 then
+		targets = Utils.Concat(leftPrimaryTargets, rightPrimaryTargets)
 		targetSide = "both"
-	elseif #leftTargets > #rightTargets then
-		targets = leftTargets
+	elseif #leftPrimaryTargets > #rightPrimaryTargets then
+		targets = leftPrimaryTargets
 		targetSide = "left"
-	elseif #rightTargets > #leftTargets then
-		targets = rightTargets
+	elseif #rightPrimaryTargets > #leftPrimaryTargets then
+		targets = rightPrimaryTargets
 		targetSide = "right"
 	end
 
 	local maxTargets = MaxBomberTargets[Difficulty]
-	targets = Utils.Take(math.min(maxTargets, #targets), Utils.Shuffle(targets))
 
-	if (#targets < maxTargets or IsVeryHardOrAbove()) and DateTime.GameTime > DateTime.Minutes(20) then
-		local defenseTargets = Greece.ActorsByTypes({ "pbox", "gun", "pris", "htur" })
-		if #defenseTargets > 0 then
-			local randomDefenseTarget = Utils.Random(defenseTarget)
-			table.insert(targets, randomDefenseTarget)
+	if IsVeryHardOrAbove() and DateTime.GameTime > DateTime.Minutes(20) then
+		maxTargets = maxTargets + 1
+	end
+
+	if IsVeryHardOrAbove() and DateTime.GameTime > DateTime.Minutes(30) then
+		maxTargets = maxTargets + 1
+	end
+
+	if IsVeryHardOrAbove() and DateTime.GameTime > DateTime.Minutes(40) then
+		maxTargets = maxTargets + 1
+	end
+
+	targets = Utils.Take(math.min(maxTargets, #primaryTargets), Utils.Shuffle(primaryTargets))
+
+	if #targets < maxTargets and DateTime.GameTime > DateTime.Minutes(20) then
+		local secondaryTargets = GetMissionPlayersActorsByTypes({ "pbox", "gun", "pris", "htur" })
+		secondaryTargets = Utils.Shuffle(secondaryTargets)
+
+		for _, t in ipairs(secondaryTargets) do
+			table.insert(targets, t)
+			if #targets >= maxTargets then
+				break
+			end
 		end
 	end
 

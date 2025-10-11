@@ -472,7 +472,7 @@ end
 
 PlayerBuildingsCount = function(player)
 	local buildings = Utils.Where(player.GetActors(), function(a)
-		return a.HasProperty("StartBuildingRepairs") and not a.HasProperty("Attack")
+		return a.HasProperty("StartBuildingRepairs") and not a.HasProperty("Attack") and a.Type ~= "silo" and a.Type ~= "silo.td" and a.Type ~= "silo.scrin"
 	end)
 	return #buildings
 end
@@ -871,7 +871,7 @@ RestoreSquadProduction = function(oldBuilding, newBuilding)
 				if actors ~= nil then
 					for idx, a in pairs(actors) do
 						if a == oldBuilding then
-							table.insert(actors, idx, newBuilding)
+							actors[idx] = newBuilding
 						end
 					end
 				end
@@ -2055,6 +2055,17 @@ GetMissionPlayersArmyValue = function()
 		value = value + GetTotalCostOfUnits(units)
 	end)
 	return value
+end
+
+GetMissionPlayersActorsByTypes = function(types)
+	local actors = {}
+	Utils.Do(MissionPlayers, function(p)
+		local pActors = p.GetActorsByTypes(types)
+		Utils.Do(pActors, function(a)
+			actors[#actors + 1] = a
+		end)
+	end)
+	return actors
 end
 
 CalculatePlayerCharacteristics = function()
