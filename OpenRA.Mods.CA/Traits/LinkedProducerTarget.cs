@@ -153,7 +153,7 @@ namespace OpenRA.Mods.Common.Traits
 			var cloneActor = self.World.Map.Rules.Actors[info.CloneActors.ContainsKey(actorName) ? info.CloneActors[actorName] : actorName];
 
 			var sp = self.TraitsImplementing<Production>()
-				.FirstOrDefault(p => !p.IsTraitDisabled && !p.IsTraitPaused && p.Info.Produces.Where(p => info.Produces.Contains(p)).Any());
+				.FirstOrDefault(p => !p.IsTraitDisabled && !p.IsTraitPaused && p.Info.Produces.Any(p => info.Produces.Contains(p)));
 
 			if (sp != null)
 			{
