@@ -14,9 +14,9 @@ MSLO:
 		BuildPaletteOrder: 140
 		Prerequisites: stek, ~structures.soviet, ~techlevel.unrestricted
 		BuildLimit: 1
-		Description: Provides an atomic bomb.
+		Description: Provides the A-Bomb superweapon power.
 	TooltipExtras:
-		Attributes: • Maximum 1 can be built\n• Requires power to operate\n• Special Ability: Atom Bomb
+		Attributes: • Maximum 1 can be built\n• Requires power to operate\n• Special Ability: A-Bomb
 	Building:
 		Footprint: xx
 		Dimensions: 2,1
@@ -3991,7 +3991,7 @@ EYE:
 		Prerequisites: gtek, ~structures.gdi, ~techlevel.unrestricted
 		IconPalette: chrometd
 		BuildLimit: 1
-		Description: Provides radar and Orbital Ion Cannon support power.
+		Description: Provides radar and orbital Ion Cannon superweapon power.
 	TooltipExtras:
 		Attributes: • Maximum 1 can be built\n• Requires power to operate\n• Special Ability: Ion Cannon\n• Detects nearby enemy vehicles, aircraft and structures in fog of war
 	Valued:
@@ -5482,10 +5482,10 @@ CVAT:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.soviet, stek, playerxp.level3, ~infantry.doctrine, ~techlevel.high
-		Description: Clones infantry trained at a linked barracks.
+		Description: Clones infantry periodically at no cost.
 		BuildLimit: 1
 	TooltipExtras:
-		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked
+		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked\n• Clones any infantry unit put inside
 	Valued:
 		Cost: 2000
 	Health:
@@ -5507,17 +5507,13 @@ CVAT:
 	Production:
 		Produces: Clone
 		PauseOnCondition: tech-locked || being-warped
-	LinkedProducerTarget:
-		Mode: Clone
-		Types: InfantrySQ, InfantryMQ
-		Produces: Clone
 	Exit@1:
 		SpawnOffset: -700,1000,0
 		ExitCell: -2,2
 		Facing: 90
 	Exit@2:
 		SpawnOffset: 190,-400,0
-		ExitCell: 1,-1
+		ExitCell: 2,-1
 	RallyPoint:
 	Power:
 		Amount: -150
@@ -5542,6 +5538,49 @@ CVAT:
 	-PowerMultiplier@HACKED:
 	Encyclopedia:
 		Category: Soviets/Buildings
+	CargoCloner@SQ:
+		Types: Clone
+		OverrideUnitBuildDurationModifier: true
+		BuildDurationModifier: 120
+		ReadyAudio: UnitReady
+		BlockedAudio: NoBuild
+		BlockedTextNotification: Unable to build more.
+		ShowSelectionBar: true
+		PauseOnCondition: tech-locked || being-warped
+		RequiresCondition: !global-multiqueue
+	CargoCloner@MQ:
+		Types: Clone
+		OverrideUnitBuildDurationModifier: true
+		BuildDurationModifier: 80
+		ReadyAudio: UnitReady
+		BlockedAudio: NoBuild
+		BlockedTextNotification: Unable to build more.
+		ShowSelectionBar: true
+		PauseOnCondition: tech-locked || being-warped
+		RequiresCondition: global-multiqueue
+	Cargo:
+		MaxWeight: 1
+		Types: Infantry
+		LoadedCondition: cargo
+		InitialUnits: e1
+	WithCargoPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
+		CustomPipSequences:
+			gray: pip-gray
+			yellow: pip-yellow
+			red: pip-red
+			blue: pip-blue
+	WithCargoSounds:
+		EnterSounds: genter1a.aud
+		ExitSounds: gexit1a.aud
+	GrantConditionOnPrerequisite@MQF:
+		Condition: global-multiqueue
+		Prerequisites: global.multiqueuefull
+	GrantConditionOnPrerequisite@MQS:
+		Condition: global-multiqueue
+		Prerequisites: global.multiqueuescaled
 
 INDP:
 	Inherits: ^Building
@@ -6066,7 +6105,7 @@ UPGC.BOMB:
 	Buildable:
 		Queue: Upgrade
 		BuildPaletteOrder: 8
-		Prerequisites: ~player.gdi, upgc, !upgc.plugged, ~bombard2.strat, ~bombard.strat, ~!seek.strat, ~!hold.strat, ~techlevel.high
+		Prerequisites: ~player.gdi, upgc, !upgc.plugged, bombard2.strat, ~bombard.strat, ~!seek.strat, ~!hold.strat, ~techlevel.high
 		Description: Provides an napalm rocket barrage.
 		IconPalette: chrometd
 	TooltipExtras:
@@ -6098,7 +6137,7 @@ UPGC.SEEK:
 	Buildable:
 		Queue: Upgrade
 		BuildPaletteOrder: 10
-		Prerequisites: ~player.gdi, upgc, !upgc.plugged, ~seek2.strat, ~seek.strat, ~!bombard.strat, ~!hold.strat, ~techlevel.high
+		Prerequisites: ~player.gdi, upgc, !upgc.plugged, seek2.strat, ~seek.strat, ~!bombard.strat, ~!hold.strat, ~techlevel.high
 		Description: Provides detailed information on enemy locations.
 		IconPalette: chrometd
 	TooltipExtras:
@@ -6130,7 +6169,7 @@ UPGC.HOLD:
 	Buildable:
 		Queue: Upgrade
 		BuildPaletteOrder: 12
-		Prerequisites: ~player.gdi, upgc, !upgc.plugged, ~hold2.strat, ~hold.strat, ~!bombard.strat, ~!seek.strat, ~techlevel.high
+		Prerequisites: ~player.gdi, upgc, !upgc.plugged, hold2.strat, ~hold.strat, ~!bombard.strat, ~!seek.strat, ~techlevel.high
 		Description: Provides the ability to shield units in an area
 		IconPalette: chrometd
 	TooltipExtras:
@@ -6331,7 +6370,7 @@ MSLO.Nod:
 		IconPalette: chrometd
 		Prerequisites: tmpl, ~techlevel.unrestricted, ~structures.nod
 		BuildLimit: 1
-		Description: Provides a chemical missile.
+		Description: Provides the Chemical Missile superweapon power.
 	TooltipExtras:
 		Attributes: • Maximum 1 can be built\n• Requires power to operate\n• Special Ability: Chemical Missile
 	Building:
@@ -6383,7 +6422,7 @@ WEAT:
 		BuildPaletteOrder: 140
 		Prerequisites: atek, ~structures.allies, ~techlevel.unrestricted
 		BuildLimit: 1
-		Description: Provides Lightning Storm support power.
+		Description: Provides the Lightning Storm superweapon power.
 	TooltipExtras:
 		Attributes: • Maximum 1 can be built\n• Requires power to operate\n• Special Ability: Lightning Storm
 	Valued:

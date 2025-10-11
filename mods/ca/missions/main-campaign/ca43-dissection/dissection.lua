@@ -1,11 +1,11 @@
 MissionDir = "ca|missions/main-campaign/ca43-dissection"
 
 SuperweaponsEnabledTime = {
-	easy = DateTime.Minutes(40),
-	normal = DateTime.Minutes(25),
-	hard = DateTime.Minutes(15),
-	vhard = DateTime.Minutes(10),
-	brutal = DateTime.Minutes(10)
+	easy = DateTime.Minutes(60),
+	normal = DateTime.Minutes(40),
+	hard = DateTime.Minutes(30),
+	vhard = DateTime.Minutes(20),
+	brutal = DateTime.Minutes(15)
 }
 
 GradReplacementDelay = {
@@ -25,12 +25,15 @@ MaxBomberTargets = {
 }
 
 BombingRunInterval = {
-	easy = DateTime.Minutes(8),
-	normal = DateTime.Minutes(6),
+	easy = DateTime.Minutes(6),
+	normal = DateTime.Minutes(5),
 	hard = DateTime.Minutes(4),
 	vhard = DateTime.Minutes(3),
 	brutal = DateTime.Minutes(2)
 }
+
+AllDomesDisabled = false
+DomesDisabled = {}
 
 SovietRallyPoints = { EastRally1, EastRally2, EastRally3, EastRally4, EastRally5, WestRally1, WestRally2, WestRally3 }
 
@@ -38,9 +41,9 @@ NextGradReplacementTime = 0
 
 SovietAttackPaths = function(squad)
 	local paths = {}
-	local conyards = Greece.GetActorsByTypes({ "fact", "mcv" })
+	local conyards = GetMissionPlayersActorsByTypes({ "fact", "mcv" })
 	for _, conyard in ipairs(conyards) do
-		local rallyPoints = Map.ActorsInCircle(conyard.CenterPosition, WDist.New(30 * 1024), function(a) return a.Type == "waypoint" end)
+		local rallyPoints = Map.ActorsInCircle(conyard.CenterPosition, WDist.New(36 * 1024), function(a) return a.Type == "waypoint" end)
 		for _, rp in ipairs(rallyPoints) do
 			for _, srp in ipairs(SovietRallyPoints) do
 				if rp == srp then
@@ -75,6 +78,7 @@ WorldLoaded = function()
 	Scrin = Player.GetPlayer("Scrin")
 	England = Player.GetPlayer("England")
 	Neutral = Player.GetPlayer("Neutral")
+	TicksUntilBombingRun = BombingRunInterval[Difficulty]
 
 	MissionPlayers = { Greece }
 
@@ -87,6 +91,7 @@ WorldLoaded = function()
 	SetupChurchMoneyCrates(Neutral)
 
 	ObjectiveEliminateSoviets = Greece.AddObjective("Eliminate the Soviet presence.")
+	ObjectiveNeutralizeDomes = Greece.AddSecondaryObjective("Neutralize Soviet Radar Domes.")
 
 	Trigger.AfterDelay(DateTime.Seconds(1), function()
 		Media.PlaySpeechNotification(Greece, "ReinforcementsArrived")
@@ -101,18 +106,40 @@ WorldLoaded = function()
 		InitialRadar.Destroy()
 	end)
 
-	Trigger.OnEnteredProximityTrigger(WestBaseCenter.CenterPosition, WDist.New(11 * 1024), function(a, id)
+	Trigger.OnEnteredProximityTrigger(WestBaseCenter.CenterPosition, WDist.New(24 * 1024), function(a, id)
 		if IsMissionPlayer(a.Owner) then
 			Trigger.RemoveProximityTrigger(id)
 			AssumeControl()
 		end
 	end)
 
-	Trigger.OnEnteredProximityTrigger(EastBaseCenter.CenterPosition, WDist.New(11 * 1024), function(a, id)
+	Trigger.OnEnteredProximityTrigger(EastBaseCenter.CenterPosition, WDist.New(24 * 1024), function(a, id)
 		if IsMissionPlayer(a.Owner) then
 			Trigger.RemoveProximityTrigger(id)
 			AssumeControl()
 		end
+	end)
+
+	SovietDomes = USSR.GetActorsByType("dome")
+
+	Utils.Do(SovietDomes, function(d)
+		Trigger.OnKilled(d, function(self, killer)
+			DomeDisabled(d)
+		end)
+		Trigger.OnInfiltrated(d, function(self, infiltrator)
+			if IsMissionPlayer(infiltrator.Owner) then
+				DomeDisabled(d)
+			end
+		end)
+	end)
+
+	local power = USSR.GetActorsByTypes({"powr", "apwr", "tpwr"})
+	Utils.Do(power, function(p)
+		Trigger.OnInfiltrated(p, function(self, infiltrator)
+			if not p.IsDead and IsMissionPlayer(infiltrator.Owner) then
+				p.Sell()
+			end
+		end)
 	end)
 
 	AfterWorldLoaded()
@@ -136,6 +163,19 @@ OncePerSecondChecks = function()
 		if MissionPlayersHaveNoRequiredUnits() then
 			Greece.MarkFailedObjective(ObjectiveEliminateSoviets)
 		end
+
+		if AssumedControl and not AllDomesDisabled then
+			if TicksUntilBombingRun > 0 then
+				if USSR.PowerState == "Normal" then
+					TicksUntilBombingRun = TicksUntilBombingRun - 25
+				end
+			else
+				TicksUntilBombingRun = BombingRunInterval[Difficulty]
+				InitBombingRun()
+			end
+
+			UpdateMissionText()
+		end
 	end
 end
 
@@ -152,6 +192,8 @@ OncePerThirtySecondChecks = function()
 end
 
 InitUSSR = function()
+	RebuildExcludes.USSR = { Types = { "dome", "apwr", "powr" } }
+
 	AutoRepairAndRebuildBuildings(USSR, 10)
 	SetupRefAndSilosCaptureCredits(USSR)
 	AutoReplaceHarvesters(USSR)
@@ -175,10 +217,20 @@ InitUSSR = function()
 	Utils.Do(grads, function(a)
 		GradReplacementTrigger(a, a.Location)
 	end)
+end
 
-	Trigger.AfterDelay(BombingRunInterval[Difficulty], function()
-		InitBombingRun()
-	end)
+UpdateMissionText = function()
+	local color = HSLColor.Yellow
+	if TimerPushedBack then
+		color = HSLColor.Red
+		TimerPushedBack = false
+	end
+
+	if not AllDomesDisabled then
+		UserInterface.SetMissionText("Soviet bombing run ETA " .. UtilsCA.FormatTimeForGameSpeed(TicksUntilBombingRun), color)
+	else
+		UserInterface.SetMissionText("")
+	end
 end
 
 GradReplacementTrigger = function(grad, loc)
@@ -233,10 +285,10 @@ end
 
 InitBombingRun = function()
 	local delay = 1
-	local keyBuildings = Greece.GetActorsByTypes({ "proc", "fact" })
-	local targets
-	local rightTargets = {}
-	local leftTargets = {}
+	local primaryTargets = GetMissionPlayersActorsByTypes({ "proc", "fact", "pdox", "weat" })
+	local rightPrimaryTargets = {}
+	local leftPrimaryTargets = {}
+	local targets = {}
 	local usedXCoords = {}
 	local leftMinX = 2
 	local leftMaxX = 50
@@ -244,26 +296,52 @@ InitBombingRun = function()
 	local rightMaxX = 138
 	local targetSide
 
-	Utils.Do(keyBuildings, function(b)
+	Utils.Do(primaryTargets, function(b)
 		if b.Location.X > rightMinX then
-			table.insert(rightTargets, b)
+			table.insert(rightPrimaryTargets, b)
 		elseif b.Location.X < leftMaxX then
-			table.insert(leftTargets, b)
+			table.insert(leftPrimaryTargets, b)
 		end
 	end)
 
-	if math.abs(#leftTargets - #rightTargets) < 4 then
-		targets = Utils.Concat(leftTargets, rightTargets)
+	if math.abs(#leftPrimaryTargets - #rightPrimaryTargets) < 4 then
+		targets = Utils.Concat(leftPrimaryTargets, rightPrimaryTargets)
 		targetSide = "both"
-	elseif #leftTargets > #rightTargets then
-		targets = leftTargets
+	elseif #leftPrimaryTargets > #rightPrimaryTargets then
+		targets = leftPrimaryTargets
 		targetSide = "left"
-	elseif #rightTargets > #leftTargets then
-		targets = rightTargets
+	elseif #rightPrimaryTargets > #leftPrimaryTargets then
+		targets = rightPrimaryTargets
 		targetSide = "right"
 	end
 
-	targets = Utils.Take(math.min(MaxBomberTargets[Difficulty], #targets), Utils.Shuffle(targets))
+	local maxTargets = MaxBomberTargets[Difficulty]
+
+	if IsVeryHardOrAbove() and DateTime.GameTime > DateTime.Minutes(20) then
+		maxTargets = maxTargets + 1
+	end
+
+	if IsVeryHardOrAbove() and DateTime.GameTime > DateTime.Minutes(30) then
+		maxTargets = maxTargets + 1
+	end
+
+	if IsVeryHardOrAbove() and DateTime.GameTime > DateTime.Minutes(40) then
+		maxTargets = maxTargets + 1
+	end
+
+	targets = Utils.Take(math.min(maxTargets, #primaryTargets), Utils.Shuffle(primaryTargets))
+
+	if #targets < maxTargets and DateTime.GameTime > DateTime.Minutes(20) then
+		local secondaryTargets = GetMissionPlayersActorsByTypes({ "pbox", "gun", "pris", "htur" })
+		secondaryTargets = Utils.Shuffle(secondaryTargets)
+
+		for _, t in ipairs(secondaryTargets) do
+			table.insert(targets, t)
+			if #targets >= maxTargets then
+				break
+			end
+		end
+	end
 
 	if #targets > 0 then
 		Notification("Warning, bombing run incoming.")
@@ -301,4 +379,36 @@ InitBombingRun = function()
 		end)
 	end
 	Trigger.AfterDelay(BombingRunInterval[Difficulty], InitBombingRun)
+end
+
+DomeDisabled = function(d)
+	local actorId = tostring(d)
+
+	if DomesDisabled[actorId] then
+		return
+	end
+
+	DomesDisabled[actorId] = true
+
+	if not d.IsDead then
+		d.GrantCondition("powerdown")
+	end
+
+	local numDomesDisabled = 0
+	for _ in pairs(DomesDisabled) do
+		numDomesDisabled = numDomesDisabled + 1
+	end
+
+	if numDomesDisabled >= #SovietDomes then
+		AllDomesDisabled = true
+		Greece.MarkCompletedObjective(ObjectiveNeutralizeDomes)
+	end
+
+	TicksUntilBombingRun = TicksUntilBombingRun + DateTime.Minutes(1)
+	BombingRunInterval[Difficulty] = BombingRunInterval[Difficulty] + DateTime.Seconds(20)
+
+	if AssumedControl then
+		TimerPushedBack = true
+		UpdateMissionText()
+	end
 end

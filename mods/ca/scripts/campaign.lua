@@ -472,7 +472,7 @@ end
 
 PlayerBuildingsCount = function(player)
 	local buildings = Utils.Where(player.GetActors(), function(a)
-		return a.HasProperty("StartBuildingRepairs") and not a.HasProperty("Attack")
+		return a.HasProperty("StartBuildingRepairs") and not a.HasProperty("Attack") and a.Type ~= "silo" and a.Type ~= "silo.td" and a.Type ~= "silo.scrin"
 	end)
 	return #buildings
 end
@@ -510,6 +510,7 @@ RemoveActorsBasedOnDifficultyTags = function()
 	local easyOnlyActors = Map.ActorsWithTag("EasyOnly")
 	local normalAndBelowActors = Map.ActorsWithTag("NormalAndBelow")
 	local normalAndAboveActors = Map.ActorsWithTag("NormalAndAbove")
+	local hardAndBelowActors = Map.ActorsWithTag("HardAndBelow")
 	local hardAndAboveActors = Map.ActorsWithTag("HardAndAbove")
 	local veryHardAndAboveActors = Map.ActorsWithTag("VeryHardAndAbove")
 	local brutalOnlyActors = Map.ActorsWithTag("BrutalOnly")
@@ -518,8 +519,8 @@ RemoveActorsBasedOnDifficultyTags = function()
 		easy = Utils.Concat(normalAndAboveActors, Utils.Concat(hardAndAboveActors, Utils.Concat(veryHardAndAboveActors, brutalOnlyActors))),
 		normal = Utils.Concat(easyOnlyActors, Utils.Concat(hardAndAboveActors, Utils.Concat(veryHardAndAboveActors, brutalOnlyActors))),
 		hard = Utils.Concat(easyOnlyActors, Utils.Concat(normalAndBelowActors, Utils.Concat(veryHardAndAboveActors, brutalOnlyActors))),
-		vhard = Utils.Concat(easyOnlyActors, Utils.Concat(normalAndBelowActors, brutalOnlyActors)),
-		brutal = Utils.Concat(easyOnlyActors, normalAndBelowActors),
+		vhard = Utils.Concat(easyOnlyActors, Utils.Concat(normalAndBelowActors, Utils.Concat(hardAndBelowActors, brutalOnlyActors))),
+		brutal = Utils.Concat(easyOnlyActors, Utils.Concat(hardAndBelowActors, normalAndBelowActors)),
 	}
 
 	Utils.Do(actorsToRemove[Difficulty], function(a)
@@ -871,7 +872,7 @@ RestoreSquadProduction = function(oldBuilding, newBuilding)
 				if actors ~= nil then
 					for idx, a in pairs(actors) do
 						if a == oldBuilding then
-							table.insert(actors, idx, newBuilding)
+							actors[idx] = newBuilding
 						end
 					end
 				end
@@ -1435,45 +1436,43 @@ SendAttackSquad = function(squad)
 		Utils.Do(squad.IdleUnits, function(a)
 			local actorId = tostring(a)
 
-			if attackPath ~= nil then
-				if not a.IsDead and a.IsInWorld then
-					if squad.FollowLeader ~= nil and squad.FollowLeader == true and squadLeader == nil then
-						squadLeader = a
+			if not a.IsDead and a.IsInWorld then
+				if squad.FollowLeader ~= nil and squad.FollowLeader == true and squadLeader == nil then
+					squadLeader = a
+				end
+
+				-- if squad leader, queue attack move to each attack path waypoint
+				if squadLeader == nil or a == squadLeader then
+					if attackPath ~= nil then
+						Utils.Do(attackPath, function(w)
+							a.AttackMove(w, 3)
+						end)
 					end
 
-					-- if squad leader, queue attack move to each attack path waypoint
-					if squadLeader == nil or a == squadLeader then
-						if attackPath ~= nil then
-							Utils.Do(attackPath, function(w)
-								a.AttackMove(w, 3)
-							end)
-						end
-
-						if squad.IsNaval ~= nil and squad.IsNaval then
-							IdleHunt(a)
-						else
-							AssaultPlayerBaseOrHunt(a, squad.TargetPlayer)
-						end
-
-						-- on damaged or killed
-						Trigger.OnDamaged(a, function(self, attacker, damage)
-							ClearSquadLeader(squadLeader)
-						end)
-
-						Trigger.OnKilled(a, function(self, attacker, damage)
-							ClearSquadLeader(squadLeader)
-						end)
-
-					-- if not squad leader, follow the leader
+					if squad.IsNaval ~= nil and squad.IsNaval then
+						IdleHunt(a)
 					else
-						SquadLeaders[actorId] = squadLeader
-						FollowSquadLeader(a, squad)
-
-						-- if damaged (stop guarding, attack move to enemy base)
-						Trigger.OnDamaged(a, function(self, attacker, damage)
-							ClearSquadLeader(SquadLeaders[actorId])
-						end)
+						AssaultPlayerBaseOrHunt(a, squad.TargetPlayer)
 					end
+
+					-- on damaged or killed
+					Trigger.OnDamaged(a, function(self, attacker, damage)
+						ClearSquadLeader(squadLeader)
+					end)
+
+					Trigger.OnKilled(a, function(self, attacker, damage)
+						ClearSquadLeader(squadLeader)
+					end)
+
+				-- if not squad leader, follow the leader
+				else
+					SquadLeaders[actorId] = squadLeader
+					FollowSquadLeader(a, squad)
+
+					-- if damaged (stop guarding, attack move to enemy base)
+					Trigger.OnDamaged(a, function(self, attacker, damage)
+						ClearSquadLeader(SquadLeaders[actorId])
+					end)
 				end
 			end
 		end)
@@ -2059,7 +2058,27 @@ GetMissionPlayersArmyValue = function()
 	return value
 end
 
+GetMissionPlayersActorsByTypes = function(types)
+	local actors = {}
+	Utils.Do(MissionPlayers, function(p)
+		local pActors = p.GetActorsByTypes(types)
+		Utils.Do(pActors, function(a)
+			actors[#actors + 1] = a
+		end)
+	end)
+	return actors
+end
+
 CalculatePlayerCharacteristics = function()
+	PlayerCharacteristics["MissionPlayers"] = {
+		MassInfantry = false,
+		MassHeavy = false,
+		MassAir = false,
+		InfantryValue = 0,
+		HeavyValue = 0,
+		AirValue = 0,
+	}
+
 	Utils.Do(MissionPlayers, function(p)
 		PlayerCharacteristics[p.InternalName] = {
 			MassInfantry = false,
@@ -2122,6 +2141,12 @@ CalculatePlayerCharacteristics = function()
 		PlayerCharacteristics[p.InternalName].InfantryValue = infantryValue
 		PlayerCharacteristics[p.InternalName].HeavyValue = heavyValue
 		PlayerCharacteristics[p.InternalName].AirValue = airValue
+	end)
+
+	Utils.Do(MissionPlayers, function(p)
+		PlayerCharacteristics["MissionPlayers"].InfantryValue = PlayerCharacteristics["MissionPlayers"].InfantryValue + PlayerCharacteristics[p.InternalName].InfantryValue
+		PlayerCharacteristics["MissionPlayers"].HeavyValue = PlayerCharacteristics["MissionPlayers"].HeavyValue + PlayerCharacteristics[p.InternalName].HeavyValue
+		PlayerCharacteristics["MissionPlayers"].AirValue = PlayerCharacteristics["MissionPlayers"].AirValue + PlayerCharacteristics[p.InternalName].AirValue
 	end)
 end
 

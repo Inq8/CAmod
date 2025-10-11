@@ -30,7 +30,7 @@ CommandoDropTime = {
 	normal = DateTime.Minutes(14), -- not used
 	hard = DateTime.Minutes(12),
 	vhard = DateTime.Minutes(10),
-	brutal = DateTime.Seconds(8)
+	brutal = DateTime.Minutes(8)
 }
 
 ZoneRaidTime = {
@@ -53,7 +53,7 @@ CaptureTargets = {}
 
 Squads = {
 	Main = {
-		InitTimeAdjustment = -DateTime.Minutes(4),
+		InitTimeAdjustment = -DateTime.Minutes(3),
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.GDI),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 }),
 		FollowLeader = true,
@@ -95,6 +95,21 @@ Squads = {
 		Compositions = AirCompositions.GDI,
 	},
 	AirToAir = AirToAirSquad({ "orca" }, AdjustAirDelayForDifficulty(DateTime.Minutes(10))),
+	BrutalAirAntiDefense = {
+		ActiveCondition = function(squad)
+			return MissionPlayersDefenseValue > 3000
+		end,
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 30 }),
+		Compositions = function(squad)
+			local unitTypes = { "orca", "orcb", "auro" }
+			local units = { unitTypes }
+			local desiredCount = MissionPlayersDefenseValue / 2000
+			for i = 1, math.min(desiredCount, MaxSpecialistAir[Difficulty]) do
+				table.insert(units, unitTypes)
+			end
+			return { { Aircraft = units } }
+		end
+	}
 }
 
 WorldLoaded = function()
@@ -114,6 +129,8 @@ WorldLoaded = function()
 	AdjustPlayerStartingCashForDifficulty()
 	RemoveActorsBasedOnDifficultyTags()
 	InitGDI()
+
+	MissionPlayersDefenseValue = 0
 
 	ObjectiveSecureBase = Greece.AddObjective("Secure the decommissioned Allied base.")
 
@@ -174,13 +191,13 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnCapture(HawthorneHQ, function(self, captor, oldOwner, newOwner)
-		if newOwner == Greece and not Greece.IsObjectiveCompleted(ObjectiveCaptureHQ) then
+		if IsMissionPlayer(newOwner) and not Greece.IsObjectiveCompleted(ObjectiveCaptureHQ) then
 			DoFinale()
 		end
 	end)
 
 	Trigger.OnEnteredProximityTrigger(HawthorneHQ.CenterPosition, WDist.New(15 * 1024), function(a, id)
-		if a.Owner == Greece then
+		if IsMissionPlayer(a.Owner) then
 			Trigger.RemoveProximityTrigger(id)
 			if not FinalTaunt then
 				FinalTaunt = true
@@ -194,6 +211,10 @@ WorldLoaded = function()
 
 	if IsHardOrAbove() then
 		Trigger.AfterDelay(CommandoDropTime[Difficulty], DoCommandoDrop)
+	end
+
+	if Difficulty == "brutal" then
+		DoCommandoDrop()
 	end
 
 	AfterWorldLoaded()
@@ -230,7 +251,26 @@ end
 OncePerThirtySecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 750 == 0 then
 		CalculatePlayerCharacteristics()
+
+		if Difficulty == "brutal" then
+			CalculateDefensesValue()
+		end
 	end
+end
+
+CalculateDefensesValue = function()
+	local defenseValue = 0
+	Utils.Do(MissionPlayers, function(p)
+		local defenses = p.GetActorsByArmorTypes({ "Concrete" })
+
+		Utils.Do(defenses, function(d)
+			if UnitCosts[d.Type] == nil then
+				UnitCosts[d.Type] = ActorCA.CostOrDefault(d.Type)
+			end
+			defenseValue = defenseValue + UnitCosts[d.Type]
+		end)
+	end)
+	MissionPlayersDefenseValue = defenseValue
 end
 
 InitGDI = function()
@@ -249,6 +289,8 @@ InitGDI = function()
 	for _, b in pairs(productionBuildings) do
 		SellOnCaptureAttempt(b)
 	end
+
+	UpgradeCenter.GrantCondition("tower.rocket")
 end
 
 InitGDIAttacks = function()
@@ -264,6 +306,14 @@ InitGDIAttacks = function()
 			Trigger.AfterDelay(DateTime.Minutes(16), function()
 				DoDisruptorDrop()
 			end)
+
+			if IsVeryHardOrAbove() then
+				Actor.Create("ai.supportpowers.enabled", true, { Owner = GDI })
+
+				if Difficulty == "brutal" then
+					InitAirAttackSquad(Squads.BrutalAirAntiDefense, GDI, MissionPlayers, { "Concrete" }, "ArmorType")
+				end
+			end
 		end
 
 		Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
@@ -291,6 +341,7 @@ FlipAlliedBase = function()
 		Media.PlaySpeechNotification(Greece, "ReinforcementsArrived")
 		Notification("Reinforcements have arrived.")
 		Reinforcements.Reinforce(Greece, { "mcv" }, { McvSpawn.Location, McvDest.Location }, 75)
+		Actor.Create("mcv.allowed", true, { Owner = Greece })
 	end)
 
 	InitGDIAttacks()
