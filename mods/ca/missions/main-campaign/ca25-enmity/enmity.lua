@@ -117,7 +117,7 @@ Squads = {
 		Delay = DateTime.Minutes(10),
 		ActiveCondition = function(squad)
 			for _, player in pairs(MissionPlayers) do
-				if #player.ActorsByTypes({ "gtek", "upgc", "eye" }) > 0 then
+				if #player.GetActorsByTypes({ "gtek", "upgc", "eye" }) > 0 then
 					return true
 				end
 			end

@@ -11,9 +11,9 @@ SuperweaponsEnabledTime = {
 McvDelayTime = {
 	easy = DateTime.Seconds(20),
 	normal = DateTime.Seconds(20),
-	hard = DateTime.Seconds(30),
-	vhard = DateTime.Seconds(40),
-	brutal = DateTime.Minutes(1)
+	hard = DateTime.Seconds(20),
+	vhard = DateTime.Seconds(25),
+	brutal = DateTime.Minutes(30)
 }
 
 GDIAttackPaths = {
@@ -50,6 +50,15 @@ EngiDropTime = {
 }
 
 CaptureTargets = {}
+
+if IsVeryHardOrAbove() then
+	table.insert(UnitCompositions.GDI, {
+		Infantry = { "zrai", "zrai", "zrai", "zrai", "zrai", "zrai", "zrai", "zrai", "zrai" },
+		Vehicles = { "vulc", "vulc", "xo", "xo", "xo", "xo", "vulc", "vulc" },
+		MinTime = DateTime.Minutes(14),
+		IsSpecial = true
+	})
+end
 
 Squads = {
 	Main = {
@@ -575,7 +584,7 @@ DoZoneRaid = function()
 			a.TargetedLeap(ZRWP2.Location, true)
 			a.Move(ZRWP3.Location)
 			a.Move(ZRWP4.Location)
-			local finalDest = Utils.Random({ ZRWP5a.Location, ZRWP5b.Location })
+			local finalDest = Utils.Random({ ZRWP5a.Location, ZRWP5b.Location, ZRWP5c.Location })
 			a.TargetedLeap(finalDest, true)
 			AssaultPlayerBaseOrHunt(a)
 		end

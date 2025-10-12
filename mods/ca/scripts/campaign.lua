@@ -516,7 +516,8 @@ RemoveActorsBasedOnDifficultyTags = function()
 		easy = Utils.Concat(normalAndAboveActors, Utils.Concat(hardAndAboveActors, Utils.Concat(veryHardAndAboveActors, brutalOnlyActors))),
 		normal = Utils.Concat(hardAndAboveActors, Utils.Concat(veryHardAndAboveActors, brutalOnlyActors)),
 		hard = Utils.Concat(veryHardAndAboveActors, brutalOnlyActors),
-		vhard = brutalOnlyActors
+		vhard = brutalOnlyActors,
+		brutal = {}
 	}
 
 	Utils.Do(actorsToRemoveAbove[Difficulty], function(a)
@@ -534,7 +535,8 @@ RemoveActorsBasedOnDifficultyTags = function()
 		brutal = Utils.Concat(veryHardAndBelowActors, Utils.Concat(hardAndBelowActors, Utils.Concat(normalAndBelowActors, easyOnlyActors))),
 		vhard = Utils.Concat(hardAndBelowActors, Utils.Concat(normalAndBelowActors, easyOnlyActors)),
 		hard = Utils.Concat(normalAndBelowActors, easyOnlyActors),
-		normal = easyOnlyActors
+		normal = easyOnlyActors,
+		easy = {}
 	}
 
 	Utils.Do(actorsToRemoveBelow[Difficulty], function(a)
