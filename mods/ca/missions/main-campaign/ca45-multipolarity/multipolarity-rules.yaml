@@ -66,6 +66,24 @@ tflx.upgrade:
 	Buildable:
 		Prerequisites: pdox
 
+# AI powers
+
+UPGC:
+	ExternalCondition@Bombardment:
+		Condition: tower.rocket
+
+^FirestormPower:
+	AttackOrderPowerCA@ROCKET:
+		Prerequisites: ~ai.minor.superweapons.enabled
+
+^SurgicalStrikePower:
+	IonCannonPower@SurgicalStrike:
+		Prerequisites: ~ai.supportpowers.enabled
+
+^XODropPower:
+	ParatroopersPowerCA@xodrop:
+		Prerequisites: ~ai.supportpowers.enabled
+
 # Misc
 
 WORMHOLEXXL:

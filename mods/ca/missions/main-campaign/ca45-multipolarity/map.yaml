@@ -1047,7 +1047,7 @@ Actors:
 	Actor612: hq
 		Owner: GDI
 		Location: 75,36
-	Actor613: upgc
+	UpgradeCenter: upgc
 		Owner: GDI
 		Location: 79,22
 	Actor614: patr
@@ -2997,11 +2997,6 @@ Actors:
 		SubCell: 1
 		Facing: 0
 		Location: 77,126
-	Actor1305: medi
-		Owner: Greece
-		Location: 74,127
-		SubCell: 3
-		Facing: 0
 	NodBaseCenter: waypoint
 		Owner: Neutral
 		Location: 122,61
@@ -3674,24 +3669,6 @@ Actors:
 	HawthorneJumpDest: waypoint
 		Owner: Neutral
 		Location: 66,40
-	Actor1236: ifv
-		Owner: Greece
-		Location: 69,123
-		Facing: 0
-	Actor1418: ifv
-		Owner: Greece
-		Location: 79,123
-		Facing: 0
-	Actor1419: mech
-		Owner: Greece
-		Location: 69,125
-		SubCell: 3
-		Facing: 0
-	Actor1420: mech
-		Owner: Greece
-		Location: 79,125
-		SubCell: 3
-		Facing: 0
 	Actor1421: oilb
 		Owner: Neutral
 		Location: 5,7
@@ -3701,6 +3678,28 @@ Actors:
 	Actor1424: oilb
 		Owner: Neutral
 		Location: 10,11
+	HardAndBelowMechanic: mech
+		Owner: Greece
+		Location: 69,125
+		SubCell: 3
+		Facing: 0
+		ScriptTags: HardAndBelow
+	HardAndBelowMedic: medi
+		Owner: Greece
+		Facing: 0
+		Location: 79,125
+		SubCell: 3
+		ScriptTags: HardAndBelow
+	NormalAndBelowIFV1: ifv
+		Owner: Greece
+		Location: 69,123
+		Facing: 0
+		ScriptTags: NormalAndBelow
+	NormalAndBelowIFV2: ifv
+		Owner: Greece
+		Location: 79,123
+		Facing: 0
+		ScriptTags: NormalAndBelow
 
 Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, multipolarity-rules.yaml
 

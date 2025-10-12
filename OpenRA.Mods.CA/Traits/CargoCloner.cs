@@ -98,7 +98,7 @@ namespace OpenRA.Mods.Common.Traits
 
 				if (bi != null && bi.BuildLimit > 0)
 				{
-					if (existingCount >= bi.BuildLimit + 1)
+					if (existingCount >= bi.BuildLimit + 1 || passenger.Owner != self.Owner)
 					{
 						Unload();
 						Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", info.BlockedAudio, self.Owner.Faction.InternalName);

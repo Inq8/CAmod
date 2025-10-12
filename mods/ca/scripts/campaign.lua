@@ -510,6 +510,7 @@ RemoveActorsBasedOnDifficultyTags = function()
 	local easyOnlyActors = Map.ActorsWithTag("EasyOnly")
 	local normalAndBelowActors = Map.ActorsWithTag("NormalAndBelow")
 	local normalAndAboveActors = Map.ActorsWithTag("NormalAndAbove")
+	local hardAndBelowActors = Map.ActorsWithTag("HardAndBelow")
 	local hardAndAboveActors = Map.ActorsWithTag("HardAndAbove")
 	local veryHardAndAboveActors = Map.ActorsWithTag("VeryHardAndAbove")
 	local brutalOnlyActors = Map.ActorsWithTag("BrutalOnly")
@@ -518,8 +519,8 @@ RemoveActorsBasedOnDifficultyTags = function()
 		easy = Utils.Concat(normalAndAboveActors, Utils.Concat(hardAndAboveActors, Utils.Concat(veryHardAndAboveActors, brutalOnlyActors))),
 		normal = Utils.Concat(easyOnlyActors, Utils.Concat(hardAndAboveActors, Utils.Concat(veryHardAndAboveActors, brutalOnlyActors))),
 		hard = Utils.Concat(easyOnlyActors, Utils.Concat(normalAndBelowActors, Utils.Concat(veryHardAndAboveActors, brutalOnlyActors))),
-		vhard = Utils.Concat(easyOnlyActors, Utils.Concat(normalAndBelowActors, brutalOnlyActors)),
-		brutal = Utils.Concat(easyOnlyActors, normalAndBelowActors),
+		vhard = Utils.Concat(easyOnlyActors, Utils.Concat(normalAndBelowActors, Utils.Concat(hardAndBelowActors, brutalOnlyActors))),
+		brutal = Utils.Concat(easyOnlyActors, Utils.Concat(hardAndBelowActors, normalAndBelowActors)),
 	}
 
 	Utils.Do(actorsToRemove[Difficulty], function(a)
@@ -2069,6 +2070,15 @@ GetMissionPlayersActorsByTypes = function(types)
 end
 
 CalculatePlayerCharacteristics = function()
+	PlayerCharacteristics["MissionPlayers"] = {
+		MassInfantry = false,
+		MassHeavy = false,
+		MassAir = false,
+		InfantryValue = 0,
+		HeavyValue = 0,
+		AirValue = 0,
+	}
+
 	Utils.Do(MissionPlayers, function(p)
 		PlayerCharacteristics[p.InternalName] = {
 			MassInfantry = false,
@@ -2131,6 +2141,12 @@ CalculatePlayerCharacteristics = function()
 		PlayerCharacteristics[p.InternalName].InfantryValue = infantryValue
 		PlayerCharacteristics[p.InternalName].HeavyValue = heavyValue
 		PlayerCharacteristics[p.InternalName].AirValue = airValue
+	end)
+
+	Utils.Do(MissionPlayers, function(p)
+		PlayerCharacteristics["MissionPlayers"].InfantryValue = PlayerCharacteristics["MissionPlayers"].InfantryValue + PlayerCharacteristics[p.InternalName].InfantryValue
+		PlayerCharacteristics["MissionPlayers"].HeavyValue = PlayerCharacteristics["MissionPlayers"].HeavyValue + PlayerCharacteristics[p.InternalName].HeavyValue
+		PlayerCharacteristics["MissionPlayers"].AirValue = PlayerCharacteristics["MissionPlayers"].AirValue + PlayerCharacteristics[p.InternalName].AirValue
 	end)
 end
 

@@ -95,6 +95,21 @@ Squads = {
 		Compositions = AirCompositions.GDI,
 	},
 	AirToAir = AirToAirSquad({ "orca" }, AdjustAirDelayForDifficulty(DateTime.Minutes(10))),
+	BrutalAirAntiDefense = {
+		ActiveCondition = function(squad)
+			return MissionPlayersDefenseValue > 3000
+		end,
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 30 }),
+		Compositions = function(squad)
+			local unitTypes = { "orca", "orcb", "auro" }
+			local units = { unitTypes }
+			local desiredCount = MissionPlayersDefenseValue / 2000
+			for i = 1, math.min(desiredCount, MaxSpecialistAir[Difficulty]) do
+				table.insert(units, unitTypes)
+			end
+			return { { Aircraft = units } }
+		end
+	}
 }
 
 WorldLoaded = function()
@@ -114,6 +129,8 @@ WorldLoaded = function()
 	AdjustPlayerStartingCashForDifficulty()
 	RemoveActorsBasedOnDifficultyTags()
 	InitGDI()
+
+	MissionPlayersDefenseValue = 0
 
 	ObjectiveSecureBase = Greece.AddObjective("Secure the decommissioned Allied base.")
 
@@ -234,7 +251,26 @@ end
 OncePerThirtySecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 750 == 0 then
 		CalculatePlayerCharacteristics()
+
+		if Difficulty == "brutal" then
+			CalculateDefensesValue()
+		end
 	end
+end
+
+CalculateDefensesValue = function()
+	local defenseValue = 0
+	Utils.Do(MissionPlayers, function(p)
+		local defenses = p.GetActorsByArmorTypes({ "Concrete" })
+
+		Utils.Do(defenses, function(d)
+			if UnitCosts[d.Type] == nil then
+				UnitCosts[d.Type] = ActorCA.CostOrDefault(d.Type)
+			end
+			defenseValue = defenseValue + UnitCosts[d.Type]
+		end)
+	end)
+	MissionPlayersDefenseValue = defenseValue
 end
 
 InitGDI = function()
@@ -253,6 +289,8 @@ InitGDI = function()
 	for _, b in pairs(productionBuildings) do
 		SellOnCaptureAttempt(b)
 	end
+
+	UpgradeCenter.GrantCondition("tower.rocket")
 end
 
 InitGDIAttacks = function()
@@ -268,6 +306,14 @@ InitGDIAttacks = function()
 			Trigger.AfterDelay(DateTime.Minutes(16), function()
 				DoDisruptorDrop()
 			end)
+
+			if IsVeryHardOrAbove() then
+				Actor.Create("ai.supportpowers.enabled", true, { Owner = GDI })
+
+				if Difficulty == "brutal" then
+					InitAirAttackSquad(Squads.BrutalAirAntiDefense, GDI, MissionPlayers, { "Concrete" }, "ArmorType")
+				end
+			end
 		end
 
 		Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
