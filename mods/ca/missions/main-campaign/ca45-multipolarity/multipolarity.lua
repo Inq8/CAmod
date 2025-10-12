@@ -11,9 +11,9 @@ SuperweaponsEnabledTime = {
 McvDelayTime = {
 	easy = DateTime.Seconds(20),
 	normal = DateTime.Seconds(20),
-	hard = DateTime.Seconds(30),
-	vhard = DateTime.Seconds(40),
-	brutal = DateTime.Minutes(1)
+	hard = DateTime.Seconds(20),
+	vhard = DateTime.Seconds(25),
+	brutal = DateTime.Minutes(30)
 }
 
 GDIAttackPaths = {
@@ -51,6 +51,15 @@ EngiDropTime = {
 
 CaptureTargets = {}
 
+if IsVeryHardOrAbove() then
+	table.insert(UnitCompositions.GDI, {
+		Infantry = { "zrai", "zrai", "zrai", "zrai", "zrai", "zrai", "zrai", "zrai", "zrai" },
+		Vehicles = { "vulc", "vulc", "xo", "xo", "xo", "xo", "vulc", "vulc" },
+		MinTime = DateTime.Minutes(14),
+		IsSpecial = true
+	})
+end
+
 Squads = {
 	Main = {
 		InitTimeAdjustment = -DateTime.Minutes(3),
@@ -62,7 +71,7 @@ Squads = {
 		ProducerTypes = { Infantry = { "pyle" }, Vehicles = { "weap.td" } },
 	},
 	Secondary = {
-		InitTimeAdjustment = -DateTime.Minutes(4),
+		InitTimeAdjustment = -DateTime.Minutes(3),
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.GDI),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 }),
 		FollowLeader = true,
@@ -71,7 +80,7 @@ Squads = {
 		ProducerTypes = { Infantry = { "pyle" }, Vehicles = { "weap.td" } },
 	},
 	Soviet = {
-		InitTimeAdjustment = -DateTime.Minutes(4),
+		InitTimeAdjustment = -DateTime.Minutes(3),
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Soviet),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 10, Max = 20 }),
 		FollowLeader = true,
@@ -80,7 +89,7 @@ Squads = {
 		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
 	},
 	Nod = {
-		InitTimeAdjustment = -DateTime.Minutes(4),
+		InitTimeAdjustment = -DateTime.Minutes(3),
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Nod),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 10, Max = 20 }),
 		FollowLeader = true,
@@ -575,7 +584,7 @@ DoZoneRaid = function()
 			a.TargetedLeap(ZRWP2.Location, true)
 			a.Move(ZRWP3.Location)
 			a.Move(ZRWP4.Location)
-			local finalDest = Utils.Random({ ZRWP5a.Location, ZRWP5b.Location })
+			local finalDest = Utils.Random({ ZRWP5a.Location, ZRWP5b.Location, ZRWP5c.Location })
 			a.TargetedLeap(finalDest, true)
 			AssaultPlayerBaseOrHunt(a)
 		end

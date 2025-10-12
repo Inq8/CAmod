@@ -507,23 +507,39 @@ UpdatePlayerBaseLocations = function()
 end
 
 RemoveActorsBasedOnDifficultyTags = function()
-	local easyOnlyActors = Map.ActorsWithTag("EasyOnly")
-	local normalAndBelowActors = Map.ActorsWithTag("NormalAndBelow")
 	local normalAndAboveActors = Map.ActorsWithTag("NormalAndAbove")
-	local hardAndBelowActors = Map.ActorsWithTag("HardAndBelow")
 	local hardAndAboveActors = Map.ActorsWithTag("HardAndAbove")
 	local veryHardAndAboveActors = Map.ActorsWithTag("VeryHardAndAbove")
 	local brutalOnlyActors = Map.ActorsWithTag("BrutalOnly")
 
-	local actorsToRemove = {
+	local actorsToRemoveAbove = {
 		easy = Utils.Concat(normalAndAboveActors, Utils.Concat(hardAndAboveActors, Utils.Concat(veryHardAndAboveActors, brutalOnlyActors))),
-		normal = Utils.Concat(easyOnlyActors, Utils.Concat(hardAndAboveActors, Utils.Concat(veryHardAndAboveActors, brutalOnlyActors))),
-		hard = Utils.Concat(easyOnlyActors, Utils.Concat(normalAndBelowActors, Utils.Concat(veryHardAndAboveActors, brutalOnlyActors))),
-		vhard = Utils.Concat(easyOnlyActors, Utils.Concat(normalAndBelowActors, Utils.Concat(hardAndBelowActors, brutalOnlyActors))),
-		brutal = Utils.Concat(easyOnlyActors, Utils.Concat(hardAndBelowActors, normalAndBelowActors)),
+		normal = Utils.Concat(hardAndAboveActors, Utils.Concat(veryHardAndAboveActors, brutalOnlyActors)),
+		hard = Utils.Concat(veryHardAndAboveActors, brutalOnlyActors),
+		vhard = brutalOnlyActors,
+		brutal = {}
 	}
 
-	Utils.Do(actorsToRemove[Difficulty], function(a)
+	Utils.Do(actorsToRemoveAbove[Difficulty], function(a)
+		if not a.IsDead then
+			a.Destroy()
+		end
+	end)
+
+	local easyOnlyActors = Map.ActorsWithTag("EasyOnly")
+	local normalAndBelowActors = Map.ActorsWithTag("NormalAndBelow")
+	local hardAndBelowActors = Map.ActorsWithTag("HardAndBelow")
+	local veryHardAndBelowActors = Map.ActorsWithTag("VeryHardAndBelow")
+
+	local actorsToRemoveBelow = {
+		brutal = Utils.Concat(veryHardAndBelowActors, Utils.Concat(hardAndBelowActors, Utils.Concat(normalAndBelowActors, easyOnlyActors))),
+		vhard = Utils.Concat(hardAndBelowActors, Utils.Concat(normalAndBelowActors, easyOnlyActors)),
+		hard = Utils.Concat(normalAndBelowActors, easyOnlyActors),
+		normal = easyOnlyActors,
+		easy = {}
+	}
+
+	Utils.Do(actorsToRemoveBelow[Difficulty], function(a)
 		if not a.IsDead then
 			a.Destroy()
 		end
