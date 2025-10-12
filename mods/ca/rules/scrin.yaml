@@ -384,6 +384,64 @@ VEHICLES.SCRIN:
 		RequiresCondition: anathema
 		Palette: anathema
 
+^RebelMcvProduction:
+	Inherits@BLD: ^ProducesBuildings
+	-PrimaryBuilding:
+	-WithDecoration@primary:
+	GrantConditionOnPrerequisite@Rebel:
+		Prerequisites: rebel.allegiance
+		Condition: rebel-allegiance
+	ProvidesPrerequisite@scrin:
+		Prerequisite: structures.scrin
+		RequiresCondition: rebel-allegiance
+	ProvidesPrerequisiteValidatedFaction@reaper:
+		Factions: reaper
+		Prerequisite: structures.reaper
+		RequiresCondition: rebel-allegiance
+	ProvidesPrerequisiteValidatedFaction@traveler:
+		Factions: traveler
+		Prerequisite: structures.traveler
+		RequiresCondition: rebel-allegiance
+	ProvidesPrerequisiteValidatedFaction@harbinger:
+		Factions: harbinger
+		Prerequisite: structures.harbinger
+		RequiresCondition: rebel-allegiance
+	ProvidesPrerequisiteValidatedFaction@collector:
+		Factions: collector
+		Prerequisite: structures.collector
+		RequiresCondition: rebel-allegiance
+	FreeActor@QUEUEUPDATER:
+		RequiresCondition: updatequeue && rebel-allegiance
+	-SpawnActorOnCapture@QUEUEUPDATER:
+	-GrantConditionOnPrerequisite@MQF:
+	-GrantConditionOnPrerequisite@MQS:
+	GrantDelayedCondition@QUEUEUPDATER:
+		RequiresCondition: rebel-allegiance
+	-ProductionQueue@MQDEF:
+	-ProductionBar@MQDEF:
+	Production@SQBLD:
+		Produces: BuildingSQ
+		RequiresCondition: !global-multiqueuefull && rebel-allegiance
+		PauseOnCondition: being-warped
+	Production@MQBLD:
+		Produces: BuildingMQ
+		RequiresCondition: global-multiqueuefull && rebel-allegiance
+		PauseOnCondition: being-warped
+	ProductionBar@SQBLD:
+		RequiresCondition: !global-multiqueuefull && rebel-allegiance
+	ProductionBar@MQBLD:
+		RequiresCondition: global-multiqueuefull && rebel-allegiance
+	SpeedMultiplier@ProducingMobile:
+		Modifier: 60
+		RequiresCondition: producing-mobile
+	GrantConditionWhileProducing@ProducingMobile:
+		ProductionType: BuildingSQ
+		Condition: producing-mobile
+		RequiresCondition: rebel-allegiance && !has-conyard
+	GrantConditionOnPrerequisiteCA@has-conyard:
+		Condition: has-conyard
+		Prerequisites: anyconyard
+
 ^ScrinVehicleVoice:
 	Voiced:
 		VoiceSet: ScrinVehicleVoice
@@ -3003,7 +3061,7 @@ SMCV:
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Inherits@EconomyPolicyDiscount: ^EconomyPolicyDiscount
 	Inherits@EconomyPolicyMcvSpeedBonus: ^EconomyPolicyMcvSpeedBonus
-	Inherits@BLD: ^ProducesBuildings
+	Inherits@RebelMcvProduction: ^RebelMcvProduction
 	Inherits@HeavyArmor: ^HeavyArmor
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
@@ -3063,51 +3121,6 @@ SMCV:
 	UpdatesCount@NodCovenant:
 		Type: NodCovenant
 		UpdateOn: Killed
-	-PrimaryBuilding:
-	-WithDecoration@primary:
-	GrantConditionOnPrerequisite@Rebel:
-		Prerequisites: rebel.allegiance
-		Condition: rebel-allegiance
-	ProvidesPrerequisite@scrin:
-		Prerequisite: structures.scrin
-		RequiresCondition: rebel-allegiance
-	ProvidesPrerequisiteValidatedFaction@reaper:
-		Factions: reaper
-		Prerequisite: structures.reaper
-		RequiresCondition: rebel-allegiance
-	ProvidesPrerequisiteValidatedFaction@traveler:
-		Factions: traveler
-		Prerequisite: structures.traveler
-		RequiresCondition: rebel-allegiance
-	ProvidesPrerequisiteValidatedFaction@harbinger:
-		Factions: harbinger
-		Prerequisite: structures.harbinger
-		RequiresCondition: rebel-allegiance
-	ProvidesPrerequisiteValidatedFaction@collector:
-		Factions: collector
-		Prerequisite: structures.collector
-		RequiresCondition: rebel-allegiance
-	FreeActor@QUEUEUPDATER:
-		RequiresCondition: updatequeue && rebel-allegiance
-	-SpawnActorOnCapture@QUEUEUPDATER:
-	-GrantConditionOnPrerequisite@MQF:
-	-GrantConditionOnPrerequisite@MQS:
-	GrantDelayedCondition@QUEUEUPDATER:
-		RequiresCondition: rebel-allegiance
-	-ProductionQueue@MQDEF:
-	-ProductionBar@MQDEF:
-	Production@SQBLD:
-		Produces: BuildingSQ
-		RequiresCondition: !global-multiqueuefull && rebel-allegiance
-		PauseOnCondition: being-warped
-	Production@MQBLD:
-		Produces: BuildingMQ
-		RequiresCondition: global-multiqueuefull && rebel-allegiance
-		PauseOnCondition: being-warped
-	ProductionBar@SQBLD:
-		RequiresCondition: !global-multiqueuefull && rebel-allegiance
-	ProductionBar@MQBLD:
-		RequiresCondition: global-multiqueuefull && rebel-allegiance
 	Encyclopedia:
 		Category: Scrin/Vehicles
 
