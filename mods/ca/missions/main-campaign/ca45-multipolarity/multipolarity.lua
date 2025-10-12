@@ -13,7 +13,7 @@ McvDelayTime = {
 	normal = DateTime.Seconds(20),
 	hard = DateTime.Seconds(20),
 	vhard = DateTime.Seconds(25),
-	brutal = DateTime.Minutes(30)
+	brutal = DateTime.Seconds(30)
 }
 
 GDIAttackPaths = {
