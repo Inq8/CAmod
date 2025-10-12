@@ -62,7 +62,7 @@ Squads = {
 		ProducerTypes = { Infantry = { "pyle" }, Vehicles = { "weap.td" } },
 	},
 	Secondary = {
-		InitTimeAdjustment = -DateTime.Minutes(4),
+		InitTimeAdjustment = -DateTime.Minutes(3),
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.GDI),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 }),
 		FollowLeader = true,
@@ -71,7 +71,7 @@ Squads = {
 		ProducerTypes = { Infantry = { "pyle" }, Vehicles = { "weap.td" } },
 	},
 	Soviet = {
-		InitTimeAdjustment = -DateTime.Minutes(4),
+		InitTimeAdjustment = -DateTime.Minutes(3),
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Soviet),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 10, Max = 20 }),
 		FollowLeader = true,
@@ -80,7 +80,7 @@ Squads = {
 		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
 	},
 	Nod = {
-		InitTimeAdjustment = -DateTime.Minutes(4),
+		InitTimeAdjustment = -DateTime.Minutes(3),
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Nod),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 10, Max = 20 }),
 		FollowLeader = true,
