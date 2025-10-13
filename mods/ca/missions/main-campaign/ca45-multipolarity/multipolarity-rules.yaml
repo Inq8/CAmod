@@ -66,6 +66,10 @@ tflx.upgrade:
 	Buildable:
 		Prerequisites: pdox
 
+^VeilOfWarPower:
+	SpawnActorPowerCA@VeilOfWar:
+		Prerequisites: ~radar.allies
+
 # AI powers
 
 UPGC:
@@ -75,10 +79,6 @@ UPGC:
 ^FirestormPower:
 	AttackOrderPowerCA@ROCKET:
 		Prerequisites: ~ai.minor.superweapons.enabled
-
-^SurgicalStrikePower:
-	IonCannonPower@SurgicalStrike:
-		Prerequisites: ~ai.supportpowers.enabled
 
 ^XODropPower:
 	ParatroopersPowerCA@xodrop:
@@ -137,6 +137,8 @@ XO.Hawthorne:
 	Tooltip:
 		Name: Gen. Hawthorne
 	-Targetable:
+	-Targetable@TEMPORAL:
+	-Targetable@Jump:
 	Mobile:
 		Locomotor: sheavytracked
 	RevealsShroud@Reveal:
@@ -154,6 +156,8 @@ XO.Hawthorne:
 		TargetTypes: BlindImmune
 	Targetable@EmpImmune:
 		TargetTypes: EmpImmune
+	DamageMultiplier@Invuln:
+		Modifier: 0
 
 MCV:
 	Buildable:
