@@ -170,7 +170,7 @@ WorldLoaded = function()
 		SendNextVoidEngine()
 	end)
 
-	local productionBuildings = MaleficScrin.GetActorsByTypes({ "port", "wsph", "airs", "afac" })
+	local productionBuildings = MaleficScrin.GetActorsByTypes({ "port", "wsph", "airs", "sfac" })
 	for _, b in pairs(productionBuildings) do
 		SellOnCaptureAttempt(b)
 	end
@@ -282,7 +282,7 @@ SendNextVoidEngine = function()
 			spawnLoc = GatewayLocations[pathName]
 		end
 
-		local reinforcements = Reinforcements.Reinforce(MaleficScrin, { "veng" }, { spawnLoc }, 10, function(a)
+		local voidEngine = Reinforcements.Reinforce(MaleficScrin, { "veng" }, { spawnLoc }, 10, function(a)
 			local actorId = tostring(a)
 
 			Utils.Do(path, function(loc)
@@ -320,7 +320,7 @@ SendNextVoidEngine = function()
 								end
 							end
 						-- between 66% and 33% health, 10% chance every time damaged to clear target and attack move to exit
-						else
+						elseif AggrodVoidEngines[actorId] then
 							local rand = Utils.RandomInteger(1,100)
 							if rand > 100 - 10 then
 								self.Stop()
@@ -344,7 +344,22 @@ SendNextVoidEngine = function()
 					a.GrantCondition("veng-reveal")
 				end
 			end)
-		end)
+		end)[1]
+
+		if Difficulty == "brutal" and DateTime.GameTime > DateTime.Minutes(30) then
+			local guardsList = {}
+
+			-- starting with 4, add a guard for every 10 minutes past 30 minutes, up to a max of 10 guards
+			local numGuards = math.min(10, 4 + math.floor((DateTime.GameTime - DateTime.Minutes(30)) / DateTime.Minutes(10)))
+			for i = 1, numGuards do
+				table.insert(guardsList, "gunw")
+			end
+
+			local guards = Reinforcements.Reinforce(MaleficScrin, guardsList, { spawnLoc }, 250, function(g)
+				g.Guard(voidEngine)
+				IdleHunt(g)
+			end)
+		end
 
 		NextVoidEngineIndex = NextVoidEngineIndex + 1
 
