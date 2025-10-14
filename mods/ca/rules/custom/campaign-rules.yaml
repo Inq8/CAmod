@@ -555,6 +555,17 @@ TMPL:
 	ProduceActorPowerCA@SatelliteScanNoFog:
 		ChargeInterval: 22500
 
+# Disable Cloning Vat for AI
+
+CVAT:
+	CargoCloner@SQ:
+		RequiresCondition: !global-multiqueue && !owned-by-ai
+	CargoCloner@MQ:
+		RequiresCondition: global-multiqueue && !owned-by-ai
+	GrantConditionOnPrerequisite@OwnedByAi:
+		Condition: owned-by-ai
+		Prerequisites: botplayer
+
 # Manual targeting for Tesla Coil boost (otherwise they get stuck when AI attack moves)
 
 SHOK:

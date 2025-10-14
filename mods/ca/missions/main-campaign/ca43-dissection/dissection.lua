@@ -378,7 +378,6 @@ InitBombingRun = function()
 			delay = delay + DateTime.Seconds(2)
 		end)
 	end
-	Trigger.AfterDelay(BombingRunInterval[Difficulty], InitBombingRun)
 end
 
 DomeDisabled = function(d)

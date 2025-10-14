@@ -39,8 +39,8 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Duration between productions.")]
 		public readonly int ChargeDuration = 1000;
 
-		[Desc("Immediately produces before initial charge.")]
-		public readonly bool Immediate = false;
+		[Desc("If greater than -1, overrides the initial time.")]
+		public readonly int InitialChargeDuration = -1;
 
 		public readonly bool ResetTraitOnEnable = false;
 		public readonly bool ResetTraitOnOwnerChange = false;
@@ -67,7 +67,12 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			this.info = info;
 			self = init.Self;
-			ticks = info.Immediate ? 0 : info.ChargeDuration;
+			SetInitialCharge();
+		}
+
+		void SetInitialCharge()
+		{
+			ticks = info.InitialChargeDuration > -1 ? info.InitialChargeDuration : info.ChargeDuration;
 		}
 
 		void ITick.Tick(Actor self)
@@ -108,12 +113,12 @@ namespace OpenRA.Mods.CA.Traits
 		protected override void TraitEnabled(Actor self)
 		{
 			if (info.ResetTraitOnEnable)
-				ticks = info.Immediate ? 0 : info.ChargeDuration;
+				SetInitialCharge();
 		}
 
 		void INotifyOwnerChanged.OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)
 		{
-			ticks = info.Immediate ? 0 : info.ChargeDuration;
+			SetInitialCharge();
 		}
 
 		float ISelectionBar.GetValue()

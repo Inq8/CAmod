@@ -143,21 +143,21 @@ HOSP:
 	PeriodicProducerCA@MEDIC:
 		Type: Hospital
 		ChargeDuration: 3000
+		InitialChargeDuration: 125
 		Actors: medi, medi
 		ShowSelectionBar: true
 		RequiresCondition: !is-neutral && !scrinplayer
 		ResetTraitOnOwnerChange: true
-		Immediate: true
 		ReadyAudio: UnitReady
 		ChargeColor: ffffff
 	PeriodicProducerCA@REJUVENATOR:
 		Type: Hospital
 		ChargeDuration: 3000
+		InitialChargeDuration: 125
 		Actors: smedi, smedi
 		ShowSelectionBar: true
 		RequiresCondition: !is-neutral && scrinplayer
 		ResetTraitOnOwnerChange: true
-		Immediate: true
 		ReadyAudio: UnitReady
 		ChargeColor: ffffff
 	Exit@1:
@@ -181,9 +181,9 @@ HOSP.Rebuilt:
 	RenderSprites:
 		Image: hosp
 	PeriodicProducerCA@MEDIC:
-		Immediate: false
+		InitialChargeDuration: -1
 	PeriodicProducerCA@REJUVENATOR:
-		Immediate: false
+		InitialChargeDuration: -1
 	-MapEditorData:
 
 MACS:
@@ -238,21 +238,21 @@ MACS:
 	PeriodicProducerCA@MECHANIC:
 		Type: Macs
 		ChargeDuration: 4500
+		InitialChargeDuration: 125
 		Actors: mech, mech
 		ShowSelectionBar: true
 		RequiresCondition: !is-neutral && !scrinplayer
 		ResetTraitOnOwnerChange: true
-		Immediate: true
 		ReadyAudio: UnitReady
 		ChargeColor: ffffff
 	PeriodicProducerCA@ARTIFICER:
 		Type: Macs
 		ChargeDuration: 4500
+		InitialChargeDuration: 125
 		Actors: arti, arti
 		ShowSelectionBar: true
 		RequiresCondition: !is-neutral && scrinplayer
 		ResetTraitOnOwnerChange: true
-		Immediate: true
 		ReadyAudio: UnitReady
 		ChargeColor: ffffff
 	Exit@1:
@@ -276,9 +276,9 @@ MACS.Rebuilt:
 	RenderSprites:
 		Image: macs
 	PeriodicProducerCA@MECHANIC:
-		Immediate: false
+		InitialChargeDuration: -1
 	PeriodicProducerCA@ARTIFICER:
-		Immediate: false
+		InitialChargeDuration: -1
 	-MapEditorData:
 
 V01:
@@ -593,26 +593,13 @@ OILB:
 	InstantlyRepairable:
 	CashTrickler:
 		Interval: 375
-		Amount: 50
-		RequiresCondition: enabled && !surge
-	CashTrickler@Surge:
-		Interval: 1
-		Amount: 650
-		RequiresCondition: enabled && surge
-	GrantPeriodicCondition@Surge:
-		ActiveDuration: 1
-		CooldownDuration: 2999
-		Condition: surge
-		ShowSelectionBar: true
-		ShowSelectionBarWhenEmpty: false
-		CooldownColor: FF00FF
+		Amount: 125
 		RequiresCondition: enabled
-		ResetTimeOnReenable: false
 	Tooltip:
 		Name: Oil Derrick
 	TooltipExtras:
 		Description: Provides additional funds.
-		Attributes: • Gives $50 every 15 seconds and an additional $600 every 2 minutes.\n• Gives $400 on first capture.
+		Attributes: • Gives $125 every 15 seconds.\n• Gives $400 on first capture.
 	TooltipDescription@ally:
 		Description: Provides additional funds.
 		ValidRelationships: Ally
@@ -647,7 +634,7 @@ OILB:
 		Amount: 400
 		RequiresCondition: !has-been-captured
 	GivesCashOnCapture@subsequent:
-		Amount: 100
+		Amount: 125
 		RequiresCondition: has-been-captured
 	GrantDelayedCondition:
 		Delay: 1
