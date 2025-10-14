@@ -837,7 +837,9 @@ QueueMcv = function(player, conyardEntry)
 		end
 
 		table.insert(AiConyardRebuildQueue[player.InternalName], conyardEntry)
-		local producer = Utils.Random(conyardEntry.PossibleProducers)
+		local producer = Utils.Random(Utils.Where(conyardEntry.PossibleProducers, function(p)
+			return not p.IsDead
+		end))
 
 		if not McvProductionTriggers[tostring(producer)] then
 			McvProductionTriggers[tostring(producer)] = player.InternalName

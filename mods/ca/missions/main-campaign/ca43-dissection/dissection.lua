@@ -332,7 +332,7 @@ InitBombingRun = function()
 	targets = Utils.Take(math.min(maxTargets, #primaryTargets), Utils.Shuffle(primaryTargets))
 
 	if #targets < maxTargets and DateTime.GameTime > DateTime.Minutes(20) then
-		local secondaryTargets = GetMissionPlayersActorsByTypes({ "pbox", "gun", "pris", "htur" })
+		local secondaryTargets = GetMissionPlayersActorsByTypes({ "apwr", "weap", "atek", "dome", "hpad" })
 		secondaryTargets = Utils.Shuffle(secondaryTargets)
 
 		for _, t in ipairs(secondaryTargets) do

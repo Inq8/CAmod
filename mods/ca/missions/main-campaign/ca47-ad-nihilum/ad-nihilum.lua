@@ -75,6 +75,7 @@ RightFlankPaths = {
 }
 
 AggrodVoidEngines = {}
+BaseAttackVoidEngines = {}
 AnathemaVoidEngines = {}
 
 table.insert(UnitCompositions.Scrin, {
@@ -297,11 +298,35 @@ SendNextVoidEngine = function()
 			end)
 
 			Trigger.OnDamaged(a, function(self, attacker, damage)
-				if IsMissionPlayer(attacker.Owner) then
+				if IsMissionPlayer(attacker.Owner) and not self.IsDead then
+					-- below 66% health, start attacking units on path to exit
 					if not AggrodVoidEngines[actorId] and self.Health < self.MaxHealth / 3 * 2 then
 						AggrodVoidEngines[actorId] = true
 						self.Stop()
 						self.AttackMove(path[#path])
+					else
+						-- below 33% health, attack player base
+						if self.Health < self.MaxHealth / 3 then
+							if not BaseAttackVoidEngines[actorId] then
+								BaseAttackVoidEngines[actorId] = true
+								self.Stop()
+								AssaultPlayerBaseOrHunt(self)
+							-- 5% chance every time damaged to clear any current target and continue attacking player base
+							else
+								local rand = Utils.RandomInteger(1,100)
+								if rand > 100 - 5 then
+									self.Stop()
+									AssaultPlayerBaseOrHunt(self)
+								end
+							end
+						-- between 66% and 33% health, 10% chance every time damaged to clear target and attack move to exit
+						else
+							local rand = Utils.RandomInteger(1,100)
+							if rand > 100 - 10 then
+								self.Stop()
+								self.AttackMove(path[#path])
+							end
+						end
 					end
 
 					if IsVeryHardOrAbove() and not AnathemaVoidEngines[actorId] and self.Health < 200000 then
