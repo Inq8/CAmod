@@ -730,7 +730,10 @@ VENG:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 2200000
+		HP: 2250000
+	HitShape:
+		Type: Circle
+			Radius: 768
 	Mobile:
 		TurnSpeed: 4
 		Speed: 10
@@ -792,7 +795,7 @@ VENG:
 	Targetable@VoidEngine:
 		TargetTypes: VoidEngine
 	ExternalCondition@chilled:
-		TotalCap: 1
+		TotalCap: 2
 	ChangesHealth:
 		Step: 2000
 		Delay: 25
@@ -813,6 +816,8 @@ VENG:
 	FirepowerMultiplier@Blinded:
 		Modifier: 90
 		RequiresCondition: blinded
+	RangeMultiplier@GAPVEILED:
+		Modifier: 80
 	FirepowerMultiplier@NORMAL:
 		Modifier: 75
 		RequiresCondition: difficulty-normal
