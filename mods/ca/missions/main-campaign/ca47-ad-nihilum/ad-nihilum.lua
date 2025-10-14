@@ -25,7 +25,7 @@ VoidEngineStartTime = {
 	normal = DateTime.Minutes(8),
 	hard = DateTime.Minutes(6),
 	vhard = DateTime.Minutes(6),
-	brutal = DateTime.Seconds(6)
+	brutal = DateTime.Minutes(6)
 }
 
 VoidEngineInterval = {
