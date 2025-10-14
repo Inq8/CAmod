@@ -84,10 +84,9 @@ STLK:
 		Condition: cloak-charging
 
 VENG:
-	GrantTimedCondition@InitialNoReveal:
-		Condition: no-reveal
-		Duration: 750
+	ExternalCondition@VengReveal:
+		Condition: veng-reveal
 	RevealsShroud@Reveal:
 		Range: 5c0
 		ValidRelationships: Enemy
-		RequiresCondition: !no-reveal && !difficulty-brutal
+		RequiresCondition: veng-reveal

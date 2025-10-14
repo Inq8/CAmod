@@ -25,7 +25,7 @@ VoidEngineStartTime = {
 	normal = DateTime.Minutes(8),
 	hard = DateTime.Minutes(6),
 	vhard = DateTime.Minutes(6),
-	brutal = DateTime.Minutes(6)
+	brutal = DateTime.Seconds(6)
 }
 
 VoidEngineInterval = {
@@ -45,19 +45,22 @@ VoidEngineAttackCount = {
 }
 
 VoidEngineRevealDelay = {
-	easy = DateTime.Seconds(15),
-	normal = DateTime.Seconds(30),
-	hard = DateTime.Seconds(45),
-	vhard = DateTime.Seconds(60),
-	brutal = DateTime.Seconds(75)
+	easy = DateTime.Seconds(5),
+	normal = DateTime.Minutes(1),
+	hard = DateTime.Minutes(2),
+	vhard = DateTime.Minutes(3),
+	brutal = DateTime.Minutes(3) + DateTime.Seconds(30)
 }
 
 LeftAttackPaths = {
 	{ LeftPath2.Location, LeftPath3.Location, LeftPath4.Location, LeftPath5.Location },
+	{ LeftPath2.Location, LeftPath3.Location, LeftMiddlePath1.Location },
+	{ LeftPath2.Location, LeftPath3.Location, LeftMiddlePath1.Location },
+}
+
+LeftFlankPaths = {
 	{ LeftPath2.Location, LeftFlankPath1.Location, LeftFlankPath2a.Location, LeftFlankPath3.Location },
 	{ LeftPath2.Location, LeftFlankPath1.Location, LeftFlankPath2b.Location, LeftFlankPath3.Location },
-	{ LeftPath2.Location, LeftPath3.Location, LeftMiddlePath1.Location },
-	{ LeftPath2.Location, LeftPath3.Location, LeftMiddlePath1.Location },
 }
 
 RightAttackPaths = {
@@ -65,6 +68,9 @@ RightAttackPaths = {
 	{ MiddlePath1.Location, MiddlePath2.Location, MiddlePath3.Location },
 	{ RightPath4.Location, RightPath5.Location, RightPath6a.Location },
 	{ RightPath4.Location, RightPath5.Location, RightPath6b.Location },
+}
+
+RightFlankPaths = {
 	{ RightFlankPath1.Location, RightFlankPath2.Location, RightFlankPath3.Location },
 }
 
@@ -91,7 +97,13 @@ Squads = {
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Scrin),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 }),
 		FollowLeader = true,
-		AttackPaths = LeftAttackPaths,
+		AttackPaths = function(squad)
+			if DateTime.GameTime > DateTime.Minutes(12) then
+				return Utils.Concat(LeftAttackPaths, LeftFlankPaths)
+			else
+				return LeftAttackPaths
+			end
+		end,
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(2)),
 		ProducerActors = { Infantry = { LeftPortal }, Vehicles = { LeftWarpSphere }, Aircraft = { LeftGrav } }
 	},
@@ -99,7 +111,13 @@ Squads = {
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Scrin),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 }),
 		FollowLeader = true,
-		AttackPaths = RightAttackPaths,
+		AttackPaths = function(squad)
+			if DateTime.GameTime > DateTime.Minutes(14) then
+				return Utils.Concat(RightAttackPaths, RightFlankPaths)
+			else
+				return RightAttackPaths
+			end
+		end,
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(4)),
 		ProducerActors = { Infantry = { MiddlePortal, RightPortal }, Vehicles = { MiddleWarpSphere, RightWarpSphere }, Aircraft = { MiddleGrav1, MiddleGrav2, MiddleGrav3, RightGrav } }
 	},
@@ -294,14 +312,13 @@ SendNextVoidEngine = function()
 				end
 			end)
 
-			if Difficulty ~= "brutal" then
-				Trigger.AfterDelay(VoidEngineRevealDelay[Difficulty], function()
-					if not a.IsDead then
-						Beacon.New(Greece, a.CenterPosition)
-						Media.PlaySound("beacon.aud")
-					end
-				end)
-			end
+			Trigger.AfterDelay(VoidEngineRevealDelay[Difficulty], function()
+				if not a.IsDead then
+					Beacon.New(Greece, a.CenterPosition)
+					Media.PlaySound("beacon.aud")
+					a.GrantCondition("veng-reveal")
+				end
+			end)
 		end)
 
 		NextVoidEngineIndex = NextVoidEngineIndex + 1

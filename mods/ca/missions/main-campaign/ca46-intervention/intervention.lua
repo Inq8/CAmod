@@ -22,7 +22,7 @@ Squads = {
 		ActiveCondition = function()
 			return MissionPlayersHaveNavalPresence()
 		end,
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 8, Max = 8 }),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 8, Max = 12 }),
 		Compositions = {
 			easy = {
 				{ Ships = { "sb" } }
@@ -37,7 +37,7 @@ Squads = {
 				{ Ships = { "sb", "sb", "ss2" } }
 			},
 			brutal = {
-				{ Ships = { "sb", "sb", "ss2" } }
+				{ Ships = { "sb", "sb", "sb", "ss2" } }
 			}
 		},
 		AttackPaths = NodNavalAttackPaths
@@ -54,7 +54,7 @@ Squads = {
 	},
 	Air = {
 		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(12)),
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 20 }),
 		Compositions = AirCompositions.Nod,
 	},
 	AntiCruiserAir = {
@@ -66,8 +66,8 @@ Squads = {
 			end
 			return cruiserCount > 0
 		end,
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 10, Max = 10 }),
-		Compositions = { { "isub" } }
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 20 }),
+		Compositions = { { Aircraft = { "scrn", "scrn" } } }
 	},
 	AirToAir = AirToAirSquad({ "scrn", "apch", "venm" }, AdjustAirDelayForDifficulty(DateTime.Minutes(12)))
 }
@@ -93,14 +93,25 @@ WorldLoaded = function()
 		InitialTree.Destroy()
 	end
 
+	if Difficulty == "brutal" then
+		SecondTree.Destroy()
+	end
+
 	Trigger.AfterDelay(1, function()
 		local silos = Nod.GetActorsByType("silo.td")
 
 		Trigger.OnAllKilledOrCaptured(silos, function()
 			Greece.MarkCompletedObjective(ObjectiveDestroySilos)
 		end)
+
+		Utils.Do(silos, function(s)
+			Trigger.OnKilledOrCaptured(s, function()
+				UpdateMissionText()
+			end)
+		end)
 	end)
 
+	UpdateMissionText()
 	AfterWorldLoaded()
 end
 
@@ -130,6 +141,16 @@ end
 OncePerThirtySecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 750 == 0 then
 		CalculatePlayerCharacteristics()
+	end
+end
+
+UpdateMissionText = function()
+	local siloCount = #Nod.GetActorsByType("silo.td")
+
+	if siloCount > 0 then
+		UserInterface.SetMissionText(siloCount .. " silos remaining.", HSLColor.Yellow)
+	else
+		UserInterface.SetMissionText("")
 	end
 end
 

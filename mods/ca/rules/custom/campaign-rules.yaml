@@ -547,13 +547,24 @@ TMPL:
 
 ^GpsPower:
 	DummyGpsPower@FOG:
-		Delay: 6000
+		Delay: 17250
 	ProduceActorPowerCA@InitialSatelliteScan
-		ChargeInterval: 13500
+		ChargeInterval: 22500
 	ProduceActorPowerCA@SatelliteScan:
-		ChargeInterval: 7500
+		ChargeInterval: 5250
 	ProduceActorPowerCA@SatelliteScanNoFog:
-		ChargeInterval: 15000
+		ChargeInterval: 22500
+
+# Disable Cloning Vat for AI
+
+CVAT:
+	CargoCloner@SQ:
+		RequiresCondition: !global-multiqueue && !owned-by-ai
+	CargoCloner@MQ:
+		RequiresCondition: global-multiqueue && !owned-by-ai
+	GrantConditionOnPrerequisite@OwnedByAi:
+		Condition: owned-by-ai
+		Prerequisites: botplayer
 
 # Manual targeting for Tesla Coil boost (otherwise they get stuck when AI attack moves)
 
@@ -787,6 +798,8 @@ VENG:
 		Delay: 25
 		StartIfBelow: 100
 		DamageCooldown: 250
+	ReloadDelayMultiplier@concussion:
+		Modifier: 120
 	SpeedMultiplier@TEMPORAL:
 		Modifier: 75
 	ReloadDelayMultiplier@TEMPORAL:

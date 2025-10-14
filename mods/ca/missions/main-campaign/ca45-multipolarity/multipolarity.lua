@@ -9,20 +9,26 @@ SuperweaponsEnabledTime = {
 }
 
 McvDelayTime = {
-	easy = DateTime.Seconds(20),
-	normal = DateTime.Seconds(20),
-	hard = DateTime.Seconds(20),
-	vhard = DateTime.Seconds(25),
-	brutal = DateTime.Minutes(30)
+	easy = DateTime.Seconds(10),
+	normal = DateTime.Seconds(10),
+	hard = DateTime.Seconds(10),
+	vhard = DateTime.Seconds(10),
+	brutal = DateTime.Seconds(10)
 }
 
-GDIAttackPaths = {
+GDIWestAttackPaths = {
 	{ WestPath1.Location, WestPath2.Location, WestPath3.Location, WestPath4a.Location },
 	{ WestPath1.Location, WestPath2.Location, WestPath3.Location, WestPath4b.Location },
+}
+
+GDIMiddleAttackPaths = {
+	{ MiddlePath1.Location, MiddlePath2.Location, MiddlePath3.Location, MiddlePath4a.Location },
+	{ MiddlePath1.Location, MiddlePath2.Location, MiddlePath3.Location, MiddlePath4b.Location },
+}
+
+GDIEastAttackPaths = {
 	{ EastPath1.Location, EastPath2.Location, EastPath3.Location, EastPath4.Location, EastPath5a.Location },
 	{ EastPath1.Location, EastPath2.Location, EastPath3.Location, EastPath4.Location, EastPath5b.Location },
-	{ MiddlePath1.Location, MiddlePath2.Location, MiddlePath3.Location, MiddlePath4a.Location },
-	{ MiddlePath1.Location, MiddlePath2.Location, MiddlePath3.Location, MiddlePath4b.Location }
 }
 
 CommandoDropTime = {
@@ -49,6 +55,22 @@ EngiDropTime = {
 	brutal = DateTime.Minutes(4)
 }
 
+FirstAutoBaseClaimTime = {
+	easy = DateTime.Minutes(30), -- not used
+	normal = DateTime.Minutes(26), -- not used
+	hard = DateTime.Minutes(22),
+	vhard = DateTime.Minutes(18),
+	brutal = DateTime.Seconds(14)
+}
+
+SecondAutoBaseClaimTime = {
+	easy = DateTime.Minutes(40), -- not used
+	normal = DateTime.Minutes(36), -- not used
+	hard = DateTime.Minutes(32),
+	vhard = DateTime.Minutes(28),
+	brutal = DateTime.Seconds(24)
+}
+
 CaptureTargets = {}
 
 if IsVeryHardOrAbove() then
@@ -66,8 +88,9 @@ Squads = {
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.GDI),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 }),
 		FollowLeader = true,
-		AttackPaths = GDIAttackPaths,
+		AttackPaths = Utils.Concat(GDIWestAttackPaths, GDIMiddleAttackPaths),
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(2)),
+		ProducerActors = { Infantry = { WestBarracks }, Vehicles = { WestFactory } },
 		ProducerTypes = { Infantry = { "pyle" }, Vehicles = { "weap.td" } },
 	},
 	Secondary = {
@@ -75,8 +98,9 @@ Squads = {
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.GDI),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 }),
 		FollowLeader = true,
-		AttackPaths = GDIAttackPaths,
+		AttackPaths = Utils.Concat(GDIMiddleAttackPaths, GDIEastAttackPaths),
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(3)),
+		ProducerActors = { Infantry = { EastBarracks }, Vehicles = { EastFactory } },
 		ProducerTypes = { Infantry = { "pyle" }, Vehicles = { "weap.td" } },
 	},
 	Soviet = {
@@ -105,6 +129,7 @@ Squads = {
 	},
 	AirToAir = AirToAirSquad({ "orca" }, AdjustAirDelayForDifficulty(DateTime.Minutes(10))),
 	BrutalAirAntiDefense = {
+		Delay = DateTime.Minutes(12),
 		ActiveCondition = function(squad)
 			return MissionPlayersDefenseValue > 3000
 		end,
@@ -220,6 +245,19 @@ WorldLoaded = function()
 
 	if IsHardOrAbove() then
 		Trigger.AfterDelay(CommandoDropTime[Difficulty], DoCommandoDrop)
+
+		Trigger.AfterDelay(FirstAutoBaseClaimTime[Difficulty], function()
+			HawthorneClaimRandomBase()
+		end)
+
+		Trigger.AfterDelay(SecondAutoBaseClaimTime[Difficulty], function()
+			HawthorneClaimRandomBase()
+
+			if IsVeryHardOrAbove() then
+				Squads.Main.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 })
+				Squads.Secondary.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 })
+			end
+		end)
 	end
 
 	if Difficulty == "brutal" then
@@ -376,50 +414,7 @@ FlipNodBase = function()
 	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(6), function()
-		Media.DisplayMessage("Two can play that game commander. I think we can put that Soviet equipment to good use!", "Gen. Hawthorne", HSLColor.FromHex("F2CF74"))
-		MediaCA.PlaySound(MissionDir .. "/hth_sovequip.aud", 2)
-
-		local sovietBaseActors = Utils.Where(USSR.GetActors(), function(a)
-			return not a.IsDead and a.Type ~= "player"
-		end)
-
-		Utils.Do(sovietBaseActors, function(a)
-			a.Owner = GDI
-
-			Trigger.AfterDelay(1, function()
-				if not a.IsDead and a.HasProperty("StartBuildingRepairs") then
-					AutoRepairBuilding(a, GDI)
-					AutoRebuildBuilding(a, GDI, 10)
-					a.StartBuildingRepairs()
-				end
-			end)
-		end)
-
-		InitAttackSquad(Squads.Soviet, GDI)
-
-		Utils.Do({ Coil1.Location, Coil2.Location, Coil3.Location, Coil4.Location, Coil5.Location }, function(wp)
-			local tsla = Actor.Create("tsla", true, { Owner = GDI, Location = wp })
-			AutoRepairBuilding(tsla, GDI)
-			AutoRebuildBuilding(tsla, GDI, 10)
-		end)
-
-		Utils.Do({ FlameTower1.Location, FlameTower2.Location, FlameTower3.Location, FlameTower4.Location }, function(wp)
-			local ftur = Actor.Create("ftur", true, { Owner = GDI, Location = wp })
-			AutoRepairBuilding(ftur, GDI)
-			AutoRebuildBuilding(ftur, GDI, 10)
-		end)
-
-		local sam = Actor.Create("sam", true, { Owner = GDI, Location = SovietSAM1.Location })
-		AutoRepairBuilding(sam, GDI)
-		AutoRebuildBuilding(sam, GDI, 10)
-
-		Squads.Main.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 30 })
-		Squads.Secondary.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 30 })
-
-		Trigger.OnAllKilledOrCaptured({ SovietFactory, SovietBarracks }, function()
-			Squads.Main.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 })
-			Squads.Secondary.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 })
-		end)
+		HawthorneClaimSovietBase()
 	end)
 
 	InitGDIAttacks()
@@ -449,51 +444,7 @@ FlipSovietBase = function()
 	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(6), function()
-		Media.DisplayMessage("Two can play that game commander. I think we can put that Nod equipment to good use!", "Gen. Hawthorne", HSLColor.FromHex("F2CF74"))
-		MediaCA.PlaySound(MissionDir .. "/hth_nodequip.aud", 2)
-		InitAttackSquad(Squads.Nod, GDI)
-
-		local nodBaseActors = Utils.Where(Nod.GetActors(), function(a)
-			return not a.IsDead and a.Type ~= "player"
-		end)
-
-		Utils.Do(nodBaseActors, function(a)
-			a.Owner = GDI
-
-			Trigger.AfterDelay(1, function()
-				if not a.IsDead and a.HasProperty("StartBuildingRepairs") then
-					AutoRepairBuilding(a, GDI)
-					AutoRebuildBuilding(a, GDI, 10)
-					a.StartBuildingRepairs()
-				end
-			end)
-		end)
-
-		InitAttackSquad(Squads.Nod, GDI)
-
-		Utils.Do({ Obelisk1.Location, Obelisk2.Location, Obelisk3.Location, Obelisk4.Location, Obelisk5.Location }, function(wp)
-			local obli = Actor.Create("obli", true, { Owner = GDI, Location = wp })
-			AutoRepairBuilding(obli, GDI)
-			AutoRebuildBuilding(obli, GDI, 10)
-		end)
-
-		Utils.Do({ LasTur1.Location, LasTur2.Location, LasTur3.Location }, function(wp)
-			local ltur = Actor.Create("ltur", true, { Owner = GDI, Location = wp })
-			AutoRepairBuilding(ltur, GDI)
-			AutoRebuildBuilding(ltur, GDI, 10)
-		end)
-
-		local nsam = Actor.Create("nsam", true, { Owner = GDI, Location = NodSAM1.Location })
-		AutoRepairBuilding(nsam, GDI)
-		AutoRebuildBuilding(nsam, GDI, 10)
-
-		Squads.Main.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 30 })
-		Squads.Secondary.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 30 })
-
-		Trigger.OnAllKilledOrCaptured({ NodAirstrip, NodHand }, function()
-			Squads.Main.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 })
-			Squads.Secondary.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 })
-		end)
+		HawthorneClaimNodBase()
 	end)
 
 	InitGDIAttacks()
@@ -501,6 +452,141 @@ FlipSovietBase = function()
 	if IsHardOrAbove() then
 		Trigger.AfterDelay(EngiDropTime[Difficulty], DoEngiDrop)
 	end
+end
+
+HawthorneClaimRandomBase = function()
+	if HawthorneClaimedSovietBase and HawthorneClaimedNodBase then
+		return
+	elseif HawthorneClaimedSovietBase then
+		HawthorneClaimNodBase()
+	elseif HawthorneClaimedNodBase then
+		HawthorneClaimSovietBase()
+	else
+		local choice = Utils.Random({ "Soviet", "Nod" })
+		if choice == "Soviet" then
+			HawthorneClaimSovietBase()
+		else
+			HawthorneClaimNodBase()
+		end
+	end
+end
+
+HawthorneClaimSovietBase = function()
+	if HawthorneClaimedSovietBase then
+		return
+	end
+
+	HawthorneClaimedSovietBase = true
+
+	if NodBaseFlipped then
+		Media.DisplayMessage("Two can play that game commander. I think we can put that Soviet equipment to good use!", "Gen. Hawthorne", HSLColor.FromHex("F2CF74"))
+		MediaCA.PlaySound(MissionDir .. "/hth_sovequip.aud", 2)
+	else
+		Media.DisplayMessage("I think it's high time I got some use out of that old Soviet base!", "Gen. Hawthorne", HSLColor.FromHex("F2CF74"))
+		MediaCA.PlaySound(MissionDir .. "/hth_sovequipauto.aud", 2)
+	end
+
+	local sovietBaseActors = Utils.Where(USSR.GetActors(), function(a)
+		return not a.IsDead and a.Type ~= "player"
+	end)
+
+	Utils.Do(sovietBaseActors, function(a)
+		a.Owner = GDI
+
+		Trigger.AfterDelay(1, function()
+			if not a.IsDead and a.HasProperty("StartBuildingRepairs") then
+				AutoRepairBuilding(a, GDI)
+				AutoRebuildBuilding(a, GDI, 10)
+				a.StartBuildingRepairs()
+			end
+		end)
+	end)
+
+	InitAttackSquad(Squads.Soviet, GDI)
+
+	Utils.Do({ Coil1.Location, Coil2.Location, Coil3.Location, Coil4.Location, Coil5.Location }, function(wp)
+		local tsla = Actor.Create("tsla", true, { Owner = GDI, Location = wp })
+		AutoRepairBuilding(tsla, GDI)
+		AutoRebuildBuilding(tsla, GDI, 10)
+	end)
+
+	Utils.Do({ FlameTower1.Location, FlameTower2.Location, FlameTower3.Location, FlameTower4.Location }, function(wp)
+		local ftur = Actor.Create("ftur", true, { Owner = GDI, Location = wp })
+		AutoRepairBuilding(ftur, GDI)
+		AutoRebuildBuilding(ftur, GDI, 10)
+	end)
+
+	local sam = Actor.Create("sam", true, { Owner = GDI, Location = SovietSAM1.Location })
+	AutoRepairBuilding(sam, GDI)
+	AutoRebuildBuilding(sam, GDI, 10)
+
+	Squads.Main.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 30 })
+	Squads.Secondary.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 30 })
+
+	Trigger.OnAllKilledOrCaptured({ SovietFactory, SovietBarracks }, function()
+		Squads.Main.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 })
+		Squads.Secondary.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 })
+	end)
+end
+
+HawthorneClaimNodBase = function()
+	if HawthorneClaimedNodBase then
+		return
+	end
+
+	HawthorneClaimedNodBase = true
+
+	if SovietBaseFlipped then
+		Media.DisplayMessage("Two can play that game commander. I think we can put that Nod equipment to good use!", "Gen. Hawthorne", HSLColor.FromHex("F2CF74"))
+		MediaCA.PlaySound(MissionDir .. "/hth_nodequip.aud", 2)
+	else
+		Media.DisplayMessage("That Nod base has been sitting idle for too long. It's time I got some use out of it!", "Gen. Hawthorne", HSLColor.FromHex("F2CF74"))
+		MediaCA.PlaySound(MissionDir .. "/hth_nodequipauto.aud", 2)
+	end
+
+	InitAttackSquad(Squads.Nod, GDI)
+
+	local nodBaseActors = Utils.Where(Nod.GetActors(), function(a)
+		return not a.IsDead and a.Type ~= "player"
+	end)
+
+	Utils.Do(nodBaseActors, function(a)
+		a.Owner = GDI
+
+		Trigger.AfterDelay(1, function()
+			if not a.IsDead and a.HasProperty("StartBuildingRepairs") then
+				AutoRepairBuilding(a, GDI)
+				AutoRebuildBuilding(a, GDI, 10)
+				a.StartBuildingRepairs()
+			end
+		end)
+	end)
+
+	InitAttackSquad(Squads.Nod, GDI)
+
+	Utils.Do({ Obelisk1.Location, Obelisk2.Location, Obelisk3.Location, Obelisk4.Location, Obelisk5.Location }, function(wp)
+		local obli = Actor.Create("obli", true, { Owner = GDI, Location = wp })
+		AutoRepairBuilding(obli, GDI)
+		AutoRebuildBuilding(obli, GDI, 10)
+	end)
+
+	Utils.Do({ LasTur1.Location, LasTur2.Location, LasTur3.Location }, function(wp)
+		local ltur = Actor.Create("ltur", true, { Owner = GDI, Location = wp })
+		AutoRepairBuilding(ltur, GDI)
+		AutoRebuildBuilding(ltur, GDI, 10)
+	end)
+
+	local nsam = Actor.Create("nsam", true, { Owner = GDI, Location = NodSAM1.Location })
+	AutoRepairBuilding(nsam, GDI)
+	AutoRebuildBuilding(nsam, GDI, 10)
+
+	Squads.Main.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 30 })
+	Squads.Secondary.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 30 })
+
+	Trigger.OnAllKilledOrCaptured({ NodAirstrip, NodHand }, function()
+		Squads.Main.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 })
+		Squads.Secondary.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 })
+	end)
 end
 
 DoDisruptorDrop = function()
