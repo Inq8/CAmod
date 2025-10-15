@@ -68,8 +68,8 @@ Squads = {
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(4)),
 	},
 	Devastators = {
-		Delay = AdjustDelayForDifficulty(DateTime.Minutes(10)),
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 6, Max = 20 }),
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(16)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 6, Max = 14 }),
 		Compositions = {
 			easy = { { Aircraft = { "deva" } } },
 			normal = { { Aircraft = { "deva" } } },
@@ -87,16 +87,19 @@ Squads = {
 	AirToAir = AirToAirSquad({ "stmr", "enrv", "torm" }, AdjustAirDelayForDifficulty(DateTime.Minutes(10))),
 }
 
-WorldLoaded = function()
+DefinePlayers = function()
 	Greece = Player.GetPlayer("Greece")
 	MaleficScrin = Player.GetPlayer("MaleficScrin")
 	England = Player.GetPlayer("England")
 	Neutral = Player.GetPlayer("Neutral")
-
 	MissionPlayers = { Greece }
+	MissionEnemies = { MaleficScrin }
+end
+
+WorldLoaded = function()
+	DefinePlayers()
 
 	Camera.Position = PlayerStart.CenterPosition
-
 	NumBasesSecured = 0
 	NumScrinBasesActive = 1
 
@@ -110,9 +113,17 @@ WorldLoaded = function()
 	ObjectiveSecureAllBases = Greece.AddObjective("Secure the four abandoned Allied bases.")
 	ObjectiveDestroyScrinBases = Greece.AddObjective("Destroy all Scrin Nerve Centers.")
 
+	Actor.Create("radar.dummy", true, { Owner = Greece })
+
 	local nerveCenters = MaleficScrin.GetActorsByType("nerv")
 	Trigger.OnAllKilled(nerveCenters, function()
 		Greece.MarkCompletedObjective(ObjectiveDestroyScrinBases)
+	end)
+
+	Utils.Do(nerveCenters, function(n)
+		Trigger.OnKilled(n, function()
+			UpdateMissionText()
+		end)
 	end)
 
 	Trigger.AfterDelay(1, function()
@@ -166,6 +177,17 @@ WorldLoaded = function()
 		SellOnCaptureAttempt(b)
 	end
 
+	if IsHardOrAbove() then
+		Trigger.OnAnyKilled(productionBuildings, function()
+			Trigger.AfterDelay(DateTime.Minutes(6), function()
+				if not RoamersInitialized then
+					RoamersInitialized = true
+					InitAttackSquad(Squads.Roamers, MaleficScrin)
+				end
+			end)
+		end)
+	end
+
 	AfterWorldLoaded()
 end
 
@@ -200,6 +222,16 @@ end
 OncePerThirtySecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 750 == 0 then
 		CalculatePlayerCharacteristics()
+	end
+end
+
+UpdateMissionText = function(text)
+	local nerveCenterCount = #MaleficScrin.GetActorsByType("nerv")
+
+	if nerveCenterCount > 0 then
+		UserInterface.SetMissionText(siloCount .. " Nerve Centers remaining.", HSLColor.Yellow)
+	else
+		UserInterface.SetMissionText("")
 	end
 end
 
@@ -254,6 +286,12 @@ SecureBase = function(baseCenter)
 	end
 
 	NumBasesSecured = NumBasesSecured + 1
+
+	if NumBasesSecured == 1 then
+		for _, p in ipairs(MissionPlayers) do
+			p.GrantCondition("first-base-secured")
+		end
+	end
 
 	if NumBasesSecured == 2 then
 		Trigger.AfterDelay(DateTime.Seconds(20), function()
@@ -354,8 +392,11 @@ InitFirstScrinBase = function()
 		InitAirAttackSquad(Squads.Air, MaleficScrin)
 		if IsHardOrAbove() then
 			InitAirAttackSquad(Squads.AirToAir, MaleficScrin, MissionPlayers, { "Aircraft" }, "ArmorType")
-			InitAttackSquad(Squads.Roamers, MaleficScrin)
 			InitAttackSquad(Squads.Devastators, MaleficScrin)
+			if not RoamersInitialized then
+				RoamersInitialized = true
+				InitAttackSquad(Squads.Roamers, MaleficScrin)
+			end
 		end
 		Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
 			Actor.Create("ai.superweapons.enabled", true, { Owner = MaleficScrin })

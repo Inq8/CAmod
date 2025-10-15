@@ -79,15 +79,19 @@ Squads = {
 	},
 }
 
-WorldLoaded = function()
+DefinePlayers = function()
 	GDI = Player.GetPlayer("GDI")
 	Scrin = Player.GetPlayer("Scrin")
 	TibLifeforms = Player.GetPlayer("TibLifeforms")
 	GatewayOwner = Player.GetPlayer("GatewayOwner")
 	MissionPlayers = { GDI }
 	MissionEnemies = { Scrin }
-	TimerTicks = 0
+end
 
+WorldLoaded = function()
+	DefinePlayers()
+
+	TimerTicks = 0
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(GDI)

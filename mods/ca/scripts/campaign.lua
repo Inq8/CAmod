@@ -1571,7 +1571,11 @@ end
 
 SetupChurchMoneyCrates = function(churchOwner)
 	if churchOwner == nil then
-		return
+		if Neutral ~= nil then
+			churchOwner = Neutral
+		else
+			return
+		end
 	end
 	local churches = churchOwner.GetActorsByTypes({ "v01", "v25" })
 	Utils.Do(churches, function(a)

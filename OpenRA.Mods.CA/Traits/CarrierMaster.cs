@@ -315,5 +315,10 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			Recall();
 		}
+
+		protected override void TraitDisabled(Actor self)
+		{
+			Recall();
+		}
 	}
 }

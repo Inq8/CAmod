@@ -31,15 +31,19 @@ Squads = {
 
 -- Setup and Tick
 
-WorldLoaded = function()
+DefinePlayers = function()
 	Greece = Player.GetPlayer("Greece")
 	Nod = Player.GetPlayer("Nod")
 	Neutral = Player.GetPlayer("Neutral")
 	England = Player.GetPlayer("England")
 	MissionPlayers = { Greece }
 	MissionEnemies = { Nod }
-	TimerTicks = 0
+end
 
+WorldLoaded = function()
+	DefinePlayers()
+
+	TimerTicks = 0
 	local samsRemaining = Nod.GetActorsByType("nsam")
 	SAMCount = #samsRemaining
 

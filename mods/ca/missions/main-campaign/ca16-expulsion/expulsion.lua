@@ -68,14 +68,18 @@ Squads = {
 	}
 }
 
-WorldLoaded = function()
+DefinePlayers = function()
 	USSR = Player.GetPlayer("USSR")
 	GDI = Player.GetPlayer("GDI")
 	MissionPlayers = { USSR }
 	MissionEnemies = { GDI }
+end
+
+WorldLoaded = function()
+	DefinePlayers()
+
 	TimerTicks = 0
 	McvArrived = false
-
 	Camera.Position = McvRally.CenterPosition
 
 	InitObjectives(USSR)

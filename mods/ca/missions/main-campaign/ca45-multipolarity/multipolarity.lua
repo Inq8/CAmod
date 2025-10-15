@@ -60,7 +60,7 @@ FirstAutoBaseClaimTime = {
 	normal = DateTime.Minutes(26), -- not used
 	hard = DateTime.Minutes(22),
 	vhard = DateTime.Minutes(18),
-	brutal = DateTime.Seconds(14)
+	brutal = DateTime.Minutes(14)
 }
 
 SecondAutoBaseClaimTime = {
@@ -68,7 +68,7 @@ SecondAutoBaseClaimTime = {
 	normal = DateTime.Minutes(36), -- not used
 	hard = DateTime.Minutes(32),
 	vhard = DateTime.Minutes(28),
-	brutal = DateTime.Seconds(24)
+	brutal = DateTime.Minutes(24)
 }
 
 CaptureTargets = {}
@@ -146,7 +146,7 @@ Squads = {
 	}
 }
 
-WorldLoaded = function()
+DefinePlayers = function()
 	Greece = Player.GetPlayer("Greece")
 	GDI = Player.GetPlayer("GDI")
 	Scrin = Player.GetPlayer("Scrin")
@@ -154,8 +154,12 @@ WorldLoaded = function()
 	USSR = Player.GetPlayer("USSR")
 	Nod = Player.GetPlayer("Nod")
 	Neutral = Player.GetPlayer("Neutral")
-
 	MissionPlayers = { Greece }
+	MissionEnemies = { GDI }
+end
+
+WorldLoaded = function()
+	DefinePlayers()
 
 	Camera.Position = PlayerStart.CenterPosition
 

@@ -37,12 +37,23 @@ World:
 Player:
 	PlayerResources:
 		DefaultCash: 6000
+	ProvidesPrerequisitesOnTimeline:
+		PauseOnCondition: !first-base-secured
+	ExternalCondition@FirstBaseSecured:
+		Condition: first-base-secured
+	ProvidesPrerequisite@FirstBaseSecured:
+		Prerequisite: first.base.secured
+		RequiresCondition: first-base-secured
 
 # Enable subfaction specific tech
 
 SNIP:
 	Buildable:
 		Prerequisites: tent, anyradar
+
+SEAL:
+	Buildable:
+		Prerequisites: tent, atek
 
 RTNK:
 	Buildable:
@@ -99,7 +110,7 @@ STLK:
 
 FLARE:
 	RevealsShroud:
-		Range: 10c0
+		Range: 12c0
 
 LST.MCV:
 	Inherits: LST
@@ -120,3 +131,41 @@ MCV:
 mcv.allowed:
 	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
+
+HOSP:
+	PeriodicProducerCA@Initial:
+		Type: Hospital
+		ChargeDuration: 9999999
+		InitialChargeDuration: 5
+		Actors: medi, medi
+		RequiresCondition: !is-neutral && !first-base-secured
+		ResetTraitOnOwnerChange: true
+	PeriodicProducerCA@MEDIC:
+		RequiresCondition: !is-neutral && !scrinplayer && !owned-by-ai && first-base-secured
+	PeriodicProducerCA@REJUVENATOR:
+		RequiresCondition: !is-neutral && scrinplayer && !owned-by-ai && first-base-secured
+	GrantConditionOnPrerequisite@FirstBaseSecured:
+		Prerequisites: first.base.secured
+		Condition: first-base-secured
+
+HOSP.Rebuilt:
+	-PeriodicProducerCA@Initial:
+
+MACS:
+	PeriodicProducerCA@Initial:
+		Type: Macs
+		ChargeDuration: 9999999
+		InitialChargeDuration: 5
+		Actors: mech, mech
+		RequiresCondition: !is-neutral && !first-base-secured
+		ResetTraitOnOwnerChange: true
+	PeriodicProducerCA@MECHANIC:
+		RequiresCondition: !is-neutral && !scrinplayer && !owned-by-ai && first-base-secured
+	PeriodicProducerCA@ARTIFICER:
+		RequiresCondition: !is-neutral && scrinplayer && !owned-by-ai && first-base-secured
+	GrantConditionOnPrerequisite@FirstBaseSecured:
+		Prerequisites: first.base.secured
+		Condition: first-base-secured
+
+MACS.Rebuilt:
+	-PeriodicProducerCA@Initial:

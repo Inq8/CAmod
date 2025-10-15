@@ -76,14 +76,18 @@ WormholeUnitGroups = {
 
 -- Setup and Tick
 
-WorldLoaded = function()
+DefinePlayers = function()
 	Nod = Player.GetPlayer("Nod")
 	Scrin = Player.GetPlayer("Scrin")
 	Civilian = Player.GetPlayer("Civilian")
 	MissionPlayers = { Nod }
 	MissionEnemies = { Scrin }
-	TimerTicks = 0
+end
 
+WorldLoaded = function()
+	DefinePlayers()
+
+	TimerTicks = 0
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(Nod)

@@ -67,14 +67,18 @@ Squads = {
 	},
 }
 
-WorldLoaded = function()
+DefinePlayers = function()
 	GDI = Player.GetPlayer("GDI")
 	Scrin = Player.GetPlayer("Scrin")
 	GDISlaves = Player.GetPlayer("GDISlaves")
 	MissionPlayers = { GDI }
 	MissionEnemies = { Scrin }
-	EnslavedUnitsKilled = 0
+end
 
+WorldLoaded = function()
+	DefinePlayers()
+
+	EnslavedUnitsKilled = 0
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(GDI)

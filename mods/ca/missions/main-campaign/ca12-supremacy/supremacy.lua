@@ -48,7 +48,7 @@ Squads = {
 
 -- Setup and Tick
 
-WorldLoaded = function()
+DefinePlayers = function()
 	Nod = Player.GetPlayer("Nod")
 	Nod2 = Player.GetPlayer("Nod2")
 	Nod3 = Player.GetPlayer("Nod3")
@@ -56,8 +56,12 @@ WorldLoaded = function()
 	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { Nod }
 	MissionEnemies = { GDI }
-	TimerTicks = 0
+end
 
+WorldLoaded = function()
+	DefinePlayers()
+
+	TimerTicks = 0
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(Nod)

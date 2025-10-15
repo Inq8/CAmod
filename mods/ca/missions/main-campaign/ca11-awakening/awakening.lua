@@ -168,14 +168,18 @@ AirAttackCompositions = {
 
 -- Setup and Tick
 
-WorldLoaded = function()
+DefinePlayers = function()
 	Nod = Player.GetPlayer("Nod")
 	USSR = Player.GetPlayer("USSR")
 	MissionPlayers = { Nod }
 	MissionEnemies = { USSR }
+end
+
+WorldLoaded = function()
+	DefinePlayers()
+
 	TimerTicks = HoldOutTime[Difficulty]
 	CyborgWaves = 0
-
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(Nod)

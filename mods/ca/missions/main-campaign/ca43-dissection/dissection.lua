@@ -72,15 +72,20 @@ Squads = {
 	}
 }
 
-WorldLoaded = function()
+DefinePlayers = function()
 	Greece = Player.GetPlayer("Greece")
 	USSR = Player.GetPlayer("USSR")
 	Scrin = Player.GetPlayer("Scrin")
 	England = Player.GetPlayer("England")
 	Neutral = Player.GetPlayer("Neutral")
-	TicksUntilBombingRun = BombingRunInterval[Difficulty]
-
 	MissionPlayers = { Greece }
+	MissionEnemies = { USSR }
+end
+
+WorldLoaded = function()
+	DefinePlayers()
+
+	TicksUntilBombingRun = BombingRunInterval[Difficulty]
 
 	Camera.Position = PlayerStart.CenterPosition
 

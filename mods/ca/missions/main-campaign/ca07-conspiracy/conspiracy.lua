@@ -81,7 +81,7 @@ Squads = {
 
 -- Setup and Tick
 
-WorldLoaded = function()
+DefinePlayers = function()
 	Nod = Player.GetPlayer("Nod")
 	Greece = Player.GetPlayer("Greece")
 	GDI = Player.GetPlayer("GDI")
@@ -89,8 +89,12 @@ WorldLoaded = function()
 	EvacPlayer = Player.GetPlayer("Evac")
 	MissionPlayers = { Nod }
 	MissionEnemies = { Greece, GDI }
-	TimerTicks = 0
+end
 
+WorldLoaded = function()
+	DefinePlayers()
+
+	TimerTicks = 0
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(Nod)

@@ -170,15 +170,19 @@ Squads = {
 	},
 }
 
-WorldLoaded = function()
+DefinePlayers = function()
 	GDI = Player.GetPlayer("GDI")
 	USSR = Player.GetPlayer("USSR")
 	MissionPlayers = { GDI }
 	MissionEnemies = { USSR }
+end
+
+WorldLoaded = function()
+	DefinePlayers()
+
 	TimerTicks = MaxReactorFuelTime
 	CurrentDelivery = 1
 	McvArrived = false
-
 	Camera.Position = Spy.CenterPosition
 
 	InitObjectives(GDI)

@@ -18,13 +18,17 @@ ScrinWaveInterval = {
 	brutal = DateTime.Seconds(60)
 }
 
-WorldLoaded = function()
+DefinePlayers = function()
 	GDI = Player.GetPlayer("GDI")
 	Scrin = Player.GetPlayer("Scrin")
 	MissionPlayers = { GDI }
 	MissionEnemies = { Scrin }
-	TimerTicks = 0
+end
 
+WorldLoaded = function()
+	DefinePlayers()
+
+	TimerTicks = 0
 	Camera.Position = Commando.CenterPosition
 
 	InitObjectives(GDI)

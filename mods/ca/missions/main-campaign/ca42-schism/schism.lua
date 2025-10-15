@@ -117,7 +117,7 @@ Squads = {
 
 -- Setup and Tick
 
-WorldLoaded = function()
+DefinePlayers = function()
 	USSR = Player.GetPlayer("USSR")
 	Scrin = Player.GetPlayer("Scrin")
 	Nod = Player.GetPlayer("Nod")
@@ -128,9 +128,13 @@ WorldLoaded = function()
 	SpyPlaneProvider = Player.GetPlayer("SpyPlaneProvider")
 	MissionPlayers = { USSR }
 	MissionEnemies = { Nod, ScrinRebels, MaleficScrin }
+end
+
+WorldLoaded = function()
+	DefinePlayers()
+
 	TimerTicks = PurificationInterval
 	IronCurtainIntegrityTicksRemaining = DateTime.Minutes(25)
-
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(USSR)

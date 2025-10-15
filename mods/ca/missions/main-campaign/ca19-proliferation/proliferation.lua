@@ -150,15 +150,19 @@ Squads = {
 	},
 }
 
-WorldLoaded = function()
+DefinePlayers = function()
 	Scrin = Player.GetPlayer("Scrin")
 	Nod = Player.GetPlayer("Nod")
 	MissionPlayers = { Scrin }
 	MissionEnemies = { Nod }
+end
+
+WorldLoaded = function()
+	DefinePlayers()
+
 	TimerTicks = MaintenanceDuration[Difficulty]
 	FieldsClearedAndBeingHarvested = 0
 	NextReinforcementThreshold = ReinforcementInitialThreshold[Difficulty]
-
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(Scrin)

@@ -26,12 +26,16 @@ Squads = {
 	}
 }
 
-WorldLoaded = function()
+DefinePlayers = function()
     GDI = Player.GetPlayer("GDI")
 	Scrin = Player.GetPlayer("Scrin")
 	Nod = Player.GetPlayer("Nod")
     MissionPlayers = { GDI }
 	MissionEnemies = { Nod, Scrin }
+end
+
+WorldLoaded = function()
+	DefinePlayers()
 
     Camera.Position = PlayerStart.CenterPosition
 
