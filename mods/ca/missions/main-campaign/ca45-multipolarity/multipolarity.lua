@@ -60,7 +60,7 @@ FirstAutoBaseClaimTime = {
 	normal = DateTime.Minutes(26), -- not used
 	hard = DateTime.Minutes(22),
 	vhard = DateTime.Minutes(18),
-	brutal = DateTime.Seconds(14)
+	brutal = DateTime.Minutes(14)
 }
 
 SecondAutoBaseClaimTime = {
@@ -68,7 +68,7 @@ SecondAutoBaseClaimTime = {
 	normal = DateTime.Minutes(36), -- not used
 	hard = DateTime.Minutes(32),
 	vhard = DateTime.Minutes(28),
-	brutal = DateTime.Seconds(24)
+	brutal = DateTime.Minutes(24)
 }
 
 CaptureTargets = {}
