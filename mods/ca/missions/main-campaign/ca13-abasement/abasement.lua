@@ -85,18 +85,21 @@ Squads = {
 	},
 }
 
-WorldLoaded = function()
+DefinePlayers = function()
 	USSR = Player.GetPlayer("USSR")
 	Nod = Player.GetPlayer("Nod")
 	NodAbandoned = Player.GetPlayer("NodAbandoned")
 	Scrin = Player.GetPlayer("Scrin")
 	MissionPlayers = { USSR }
 	MissionEnemies = { Scrin }
-	TimerTicks = 0
+end
 
+WorldLoaded = function()
+	DefinePlayers()
+
+	TimerTicks = 0
 	NodAbandoned.Cash = 0
 	NodAbandoned.Resources = 0
-
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(USSR)

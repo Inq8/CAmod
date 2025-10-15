@@ -136,12 +136,16 @@ Squads = {
 	),
 }
 
-WorldLoaded = function()
+DefinePlayers = function()
 	Greece = Player.GetPlayer("Greece")
 	MaleficScrin = Player.GetPlayer("MaleficScrin")
 	Neutral = Player.GetPlayer("Neutral")
-
 	MissionPlayers = { Greece }
+	MissionEnemies = { MaleficScrin }
+end
+
+WorldLoaded = function()
+	DefinePlayers()
 
 	Camera.Position = PlayerStart.CenterPosition
 

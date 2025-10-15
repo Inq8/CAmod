@@ -47,15 +47,19 @@ Squads = {
 	AirToAir = AirToAirSquad({ "orca" }, AdjustAirDelayForDifficulty(DateTime.Minutes(10))),
 }
 
-WorldLoaded = function()
+DefinePlayers = function()
 	USSR = Player.GetPlayer("USSR")
 	GDI = Player.GetPlayer("GDI")
 	China = Player.GetPlayer("China")
 	ChinaHostile = Player.GetPlayer("ChinaHostile")
 	MissionPlayers = { USSR }
 	MissionEnemies = { GDI }
-	TimerTicks = 0
+end
 
+WorldLoaded = function()
+	DefinePlayers()
+
+	TimerTicks = 0
 	Camera.Position = McvRally.CenterPosition
 
 	InitObjectives(USSR)

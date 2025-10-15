@@ -51,17 +51,20 @@ NukeTimer = {
 
 -- Setup and Tick
 
-WorldLoaded = function()
+DefinePlayers = function()
 	Greece = Player.GetPlayer("Greece")
 	USSR = Player.GetPlayer("USSR")
 	Scrin = Player.GetPlayer("Scrin")
 	MissionPlayers = { Greece }
 	MissionEnemies = { USSR }
-	TimerTicks = 0
+end
 
+WorldLoaded = function()
+	DefinePlayers()
 	InitObjectives(Greece)
 	InitUSSR()
 
+	TimerTicks = 0
 	Camera.Position = PlayerStart.CenterPosition
 
 	Lighting.Ambient = 0.22

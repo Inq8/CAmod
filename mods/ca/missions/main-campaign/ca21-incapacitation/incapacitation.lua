@@ -81,17 +81,20 @@ Squads = {
 	}
 }
 
-WorldLoaded = function()
+DefinePlayers = function()
 	Scrin = Player.GetPlayer("Scrin")
 	Greece = Player.GetPlayer("Greece")
 	GDI = Player.GetPlayer("GDI")
 	MissionPlayers = { Scrin }
 	MissionEnemies = { Greece, GDI }
+end
+
+WorldLoaded = function()
+	DefinePlayers()
+
 	TimerTicks = 0
 	StormsEnded = false
-
 	Camera.Position = PlayerStart.CenterPosition
-
 	AntiAir = Utils.Concat(Greece.GetActorsByType("agun"), GDI.GetActorsByType("cram"))
 
 	InitObjectives(Scrin)

@@ -90,14 +90,18 @@ Squads = {
 	},
 }
 
-WorldLoaded = function()
+DefinePlayers = function()
 	Scrin = Player.GetPlayer("Scrin")
 	USSR = Player.GetPlayer("USSR")
 	MissionPlayers = { Scrin }
 	MissionEnemies = { USSR }
+end
+
+WorldLoaded = function()
+	DefinePlayers()
+
 	TimerTicks = 0
 	TibFacilitiesCaptured = 0
-
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(Scrin)

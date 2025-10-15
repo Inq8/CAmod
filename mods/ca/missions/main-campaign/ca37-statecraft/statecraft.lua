@@ -211,7 +211,7 @@ Squads = {
 	KrukovAirToAir = AntiHeavyAirSquad({ "mig", "yak" }, AdjustAirDelayForDifficulty(DateTime.Minutes(10))),
 }
 
-WorldLoaded = function()
+DefinePlayers = function()
 	USSR = Player.GetPlayer("USSR")
 	Marinesko = Player.GetPlayer("Marinesko")
 	Romanov = Player.GetPlayer("Romanov")
@@ -222,8 +222,12 @@ WorldLoaded = function()
 	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { USSR }
 	MissionEnemies = { Marinesko, Romanov, Krukov, MarineskoUnited, RomanovUnited, KrukovUnited }
-	TimerTicks = 0
+end
 
+WorldLoaded = function()
+	DefinePlayers()
+
+	TimerTicks = 0
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(USSR)

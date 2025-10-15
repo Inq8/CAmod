@@ -95,18 +95,22 @@ Squads = {
 	},
 }
 
-WorldLoaded = function()
+DefinePlayers = function()
 	Scrin = Player.GetPlayer("Scrin")
 	GDI = Player.GetPlayer("GDI")
 	TibLifeforms = Player.GetPlayer("TibLifeforms")
 	MissionPlayers = { GDI }
 	MissionEnemies = { Scrin }
+end
+
+WorldLoaded = function()
+	DefinePlayers()
+
 	TimerTicks = 0
 	WavesRemaining = #WaveSpawns
 	NumBreakthroughs = 0
 	NextWave = 1
 	FinalWaveArrived = false
-
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(GDI)

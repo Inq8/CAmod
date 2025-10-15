@@ -4,18 +4,22 @@ Difficulty = "easy"
 
 -- Setup and Tick
 
-WorldLoaded = function()
+DefinePlayers = function()
 	GDI = Player.GetPlayer("GDI")
 	USSR = Player.GetPlayer("USSR")
 	HiddenGDI = Player.GetPlayer("HiddenGDI")
 	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { GDI }
 	MissionEnemies = { USSR }
+end
+
+WorldLoaded = function()
+	DefinePlayers()
+
 	TimerTicks = 0
 	GroupsFound = {}
 	ExitDefendersDead = false
 	Rescued = false
-
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(GDI)

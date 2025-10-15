@@ -79,7 +79,7 @@ Squads = {
 	}
 }
 
-WorldLoaded = function()
+DefinePlayers = function()
 	GDI = Player.GetPlayer("GDI")
 	Scrin = Player.GetPlayer("Scrin")
 	Nod = Player.GetPlayer("Nod")
@@ -87,6 +87,11 @@ WorldLoaded = function()
 	Greece = Player.GetPlayer("Greece")
 	MissionPlayers = { GDI }
 	MissionEnemies = { Scrin }
+end
+
+WorldLoaded = function()
+	DefinePlayers()
+
 	LastScrinProduction = 0
 	ReinforcementGroupIndex = 1
 	ReinforcementLocationIndex = 1

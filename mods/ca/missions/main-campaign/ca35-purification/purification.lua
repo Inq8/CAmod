@@ -80,15 +80,19 @@ Squads = {
 	}
 }
 
-WorldLoaded = function()
+DefinePlayers = function()
 	Nod = Player.GetPlayer("Nod")
 	Scrin = Player.GetPlayer("Scrin")
 	ScrinRebels = Player.GetPlayer("ScrinRebels")
 	MissionPlayers = { Nod }
 	MissionEnemies = { Scrin }
+end
+
+WorldLoaded = function()
+	DefinePlayers()
+
 	ShipmentsComplete = 0
 	TimerTicks = DateTime.Seconds(60)
-
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(Nod)

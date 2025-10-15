@@ -23,11 +23,15 @@ Squads = {
 
 -- Setup and Tick
 
-WorldLoaded = function()
+DefinePlayers = function()
 	GDI = Player.GetPlayer("GDI")
 	Nod = Player.GetPlayer("Nod")
 	MissionPlayers = { Nod }
 	MissionEnemies = { GDI }
+end
+
+WorldLoaded = function()
+	DefinePlayers()
 
 	Camera.Position = PlayerStart.CenterPosition
 	WarpInBeaconPos = RocksToRemove1.CenterPosition

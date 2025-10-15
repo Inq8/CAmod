@@ -68,16 +68,20 @@ Squads = {
 	AirToAir = AirToAirSquad({ "scrn", "apch", "venm" }, AdjustAirDelayForDifficulty(DateTime.Minutes(10))),
 }
 
-WorldLoaded = function()
+DefinePlayers = function()
 	USSR = Player.GetPlayer("USSR")
 	Nod = Player.GetPlayer("Nod")
 	SpyPlaneProvider = Player.GetPlayer("SpyPlaneProvider")
 	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { USSR }
 	MissionEnemies = { Nod }
+end
+
+WorldLoaded = function()
+	DefinePlayers()
+
 	TimerTicks = 0
 	NumFactoriesCaptured = 0
-
 	Camera.Position = PlayerStart.CenterPosition
 
     InitNod()

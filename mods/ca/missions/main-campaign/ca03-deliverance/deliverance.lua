@@ -151,15 +151,19 @@ Squads = {
 
 -- Setup and Tick
 
-WorldLoaded = function()
+DefinePlayers = function()
 	Greece = Player.GetPlayer("Greece")
 	GDI = Player.GetPlayer("GDI")
 	USSR = Player.GetPlayer("USSR")
 	MissionPlayers = { Greece }
 	MissionEnemies = { USSR }
+end
+
+WorldLoaded = function()
+	DefinePlayers()
+
 	TimerTicks = 0
 	GDICommanderAlive = true
-
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(Greece)

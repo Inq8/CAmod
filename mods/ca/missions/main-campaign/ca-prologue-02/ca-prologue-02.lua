@@ -29,15 +29,19 @@ Squads = {
 
 -- Setup and Tick
 
-WorldLoaded = function()
+DefinePlayers = function()
 	Greece = Player.GetPlayer("Greece")
 	USSR = Player.GetPlayer("USSR")
 	Civilians = Player.GetPlayer("Civilians")
 	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { USSR }
 	MissionEnemies = { Greece }
-	TimerTicks = 0
+end
 
+WorldLoaded = function()
+	DefinePlayers()
+
+	TimerTicks = 0
 	Camera.Position = McvRally.CenterPosition
 
 	InitObjectives(USSR)

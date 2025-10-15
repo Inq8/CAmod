@@ -60,17 +60,21 @@ AutoAttackStartTime = {
 	brutal = DateTime.Minutes(7)
 }
 
-WorldLoaded = function()
+DefinePlayers = function()
 	USSR = Player.GetPlayer("USSR")
 	GDI = Player.GetPlayer("GDI")
 	Greece = Player.GetPlayer("Greece")
 	MissionPlayers = { USSR }
 	MissionEnemies = { GDI, Greece }
+end
+
+WorldLoaded = function()
+	DefinePlayers()
+
 	TimerTicks = 0
 	SiegeLosses = 0
 	SiegeBroken = false
 	AttacksStarted = false
-
 	Camera.Position = PlayerStart.CenterPosition
 	USSR.PlayLowPowerNotification = false
 

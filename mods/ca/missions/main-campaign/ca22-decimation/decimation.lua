@@ -150,16 +150,20 @@ Squads = {
 	}
 }
 
-WorldLoaded = function()
+DefinePlayers = function()
 	Scrin = Player.GetPlayer("Scrin")
 	USSR = Player.GetPlayer("USSR")
 	USSRUnmanned = Player.GetPlayer("USSRUnmanned")
 	MissionPlayers = { Scrin }
 	MissionEnemies = { USSR }
+end
+
+WorldLoaded = function()
+	DefinePlayers()
+
 	IslandAirfieldsEliminated = false
 	IslandSAMsDestroyed = false
 	DefensesOffline = false
-
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(Scrin)

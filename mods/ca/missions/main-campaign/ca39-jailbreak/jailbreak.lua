@@ -66,7 +66,7 @@ Squads = {
 
 -- Setup and Tick
 
-WorldLoaded = function()
+DefinePlayers = function()
 	USSR = Player.GetPlayer("USSR")
 	Greece = Player.GetPlayer("Greece")
 	GreeceNorth = Player.GetPlayer("GreeceNorth")
@@ -75,8 +75,12 @@ WorldLoaded = function()
 	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { USSR }
 	MissionEnemies = { Greece, GreeceNorth }
-	TimerTicks = 0
+end
 
+WorldLoaded = function()
+	DefinePlayers()
+
+	TimerTicks = 0
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(USSR)

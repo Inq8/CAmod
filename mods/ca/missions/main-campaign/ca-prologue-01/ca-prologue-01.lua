@@ -13,6 +13,75 @@ OpeningAttack = { Patrol1, Patrol2, Patrol3, Patrol4 }
 Responders = { Response1, Response2, Response3, Response4, Response5 }
 LabGuardsTeam = { LabGuard1, LabGuard2, LabGuard3 }
 
+DefinePlayers = function()
+	Greece = Player.GetPlayer("Greece")
+	England = Player.GetPlayer("England")
+	USSR = Player.GetPlayer("USSR")
+	Civilians = Player.GetPlayer("Civilians")
+	MissionPlayers = { Greece }
+	MissionEnemies = { USSR }
+end
+
+WorldLoaded = function()
+	DefinePlayers()
+	InitObjectives(Greece)
+
+	FindEinsteinObjective = Greece.AddObjective("Find Einstein.")
+	TanyaSurviveObjective = Greece.AddObjective("Tanya must survive.")
+	EinsteinSurviveObjective = Greece.AddObjective("Einstein must survive.")
+
+	RunInitialActivities()
+
+	Trigger.OnKilled(Lab, LabDestroyed)
+
+	SovietArmy = USSR.GetGroundAttackers()
+
+	Trigger.OnAllKilled(LabGuardsTeam, LabGuardsKilled)
+
+	Trigger.AfterDelay(DateTime.Seconds(5), function() Actor.Create("camera", true, { Owner = Greece, Location = BaseCameraPoint.Location }) end)
+
+	Camera.Position = InsertionLZ.CenterPosition
+
+	Trigger.OnEnteredProximityTrigger(NorthEastTeslaCoil.CenterPosition, WDist.New(8 * 1024), function(a, id)
+		if a.Owner == Civilians then
+			local autoCamera = Actor.Create("smallcamera", true, { Owner = Greece, Location = a.Location })
+			Trigger.AfterDelay(DateTime.Seconds(5), autoCamera.Destroy)
+		end
+	end)
+
+	Trigger.OnKilled(SubPen, function(self, killer)
+		if ObjectiveDestroySubPen == nil then
+			ObjectiveDestroySubPen = Greece.AddObjective("Destroy the Soviet Sub Pen.")
+		end
+
+		if not Greece.IsObjectiveCompleted(ObjectiveDestroySubPen) then
+			Greece.MarkCompletedObjective(ObjectiveDestroySubPen)
+			if not Greece.IsObjectiveFailed(TanyaSurviveObjective) then
+				Greece.MarkCompletedObjective(TanyaSurviveObjective)
+			end
+		end
+	end)
+
+	Trigger.AfterDelay(DateTime.Seconds(30), function()
+		Tip("Information is displayed in the bottom right of the screen if any single unit or structure is selected, listing its strengths and weaknesses (as long as Selected Unit Tooltip is enabled in settings).")
+	end)
+
+	AfterWorldLoaded()
+end
+
+Tick = function()
+	PanToCruisers()
+	PanToPrisms()
+	OncePerSecondChecks()
+	AfterTick()
+end
+
+OncePerSecondChecks = function()
+	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
+		USSR.Resources = USSR.ResourceCapacity - 500
+	end
+end
+
 SendInsertionHelicopter = function()
 	local passengers = Reinforcements.ReinforceWithTransport(Greece, InsertionHelicopterType,
 		TanyaReinforcements, InsertionPath, { InsertionEntry.Location })[2]
@@ -189,72 +258,6 @@ HelicopterGone = function()
 			SendCruisers()
 		end)
 	end
-end
-
-Tick = function()
-	PanToCruisers()
-	PanToPrisms()
-	OncePerSecondChecks()
-	AfterTick()
-end
-
-OncePerSecondChecks = function()
-	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		USSR.Resources = USSR.ResourceCapacity - 500
-	end
-end
-
-WorldLoaded = function()
-	Greece = Player.GetPlayer("Greece")
-	England = Player.GetPlayer("England")
-	USSR = Player.GetPlayer("USSR")
-	Civilians = Player.GetPlayer("Civilians")
-	MissionPlayers = { Greece }
-	MissionEnemies = { USSR }
-
-	InitObjectives(Greece)
-
-	FindEinsteinObjective = Greece.AddObjective("Find Einstein.")
-	TanyaSurviveObjective = Greece.AddObjective("Tanya must survive.")
-	EinsteinSurviveObjective = Greece.AddObjective("Einstein must survive.")
-
-	RunInitialActivities()
-
-	Trigger.OnKilled(Lab, LabDestroyed)
-
-	SovietArmy = USSR.GetGroundAttackers()
-
-	Trigger.OnAllKilled(LabGuardsTeam, LabGuardsKilled)
-
-	Trigger.AfterDelay(DateTime.Seconds(5), function() Actor.Create("camera", true, { Owner = Greece, Location = BaseCameraPoint.Location }) end)
-
-	Camera.Position = InsertionLZ.CenterPosition
-
-	Trigger.OnEnteredProximityTrigger(NorthEastTeslaCoil.CenterPosition, WDist.New(8 * 1024), function(a, id)
-		if a.Owner == Civilians then
-			local autoCamera = Actor.Create("smallcamera", true, { Owner = Greece, Location = a.Location })
-			Trigger.AfterDelay(DateTime.Seconds(5), autoCamera.Destroy)
-		end
-	end)
-
-	Trigger.OnKilled(SubPen, function(self, killer)
-		if ObjectiveDestroySubPen == nil then
-			ObjectiveDestroySubPen = Greece.AddObjective("Destroy the Soviet Sub Pen.")
-		end
-
-		if not Greece.IsObjectiveCompleted(ObjectiveDestroySubPen) then
-			Greece.MarkCompletedObjective(ObjectiveDestroySubPen)
-			if not Greece.IsObjectiveFailed(TanyaSurviveObjective) then
-				Greece.MarkCompletedObjective(TanyaSurviveObjective)
-			end
-		end
-	end)
-
-	Trigger.AfterDelay(DateTime.Seconds(30), function()
-		Tip("Information is displayed in the bottom right of the screen if any single unit or structure is selected, listing its strengths and weaknesses (as long as Selected Unit Tooltip is enabled in settings).")
-	end)
-
-	AfterWorldLoaded()
 end
 
 PanToCruisers = function()

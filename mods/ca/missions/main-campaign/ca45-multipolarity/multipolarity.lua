@@ -146,7 +146,7 @@ Squads = {
 	}
 }
 
-WorldLoaded = function()
+DefinePlayers = function()
 	Greece = Player.GetPlayer("Greece")
 	GDI = Player.GetPlayer("GDI")
 	Scrin = Player.GetPlayer("Scrin")
@@ -154,8 +154,12 @@ WorldLoaded = function()
 	USSR = Player.GetPlayer("USSR")
 	Nod = Player.GetPlayer("Nod")
 	Neutral = Player.GetPlayer("Neutral")
-
 	MissionPlayers = { Greece }
+	MissionEnemies = { GDI }
+end
+
+WorldLoaded = function()
+	DefinePlayers()
 
 	Camera.Position = PlayerStart.CenterPosition
 

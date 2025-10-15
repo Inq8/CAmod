@@ -66,7 +66,7 @@ Squads = {
 
 -- Setup and Tick
 
-WorldLoaded = function()
+DefinePlayers = function()
 	USSR = Player.GetPlayer("USSR")
 	Nod = Player.GetPlayer("Nod")
 	Scrin = Player.GetPlayer("Scrin")
@@ -77,9 +77,13 @@ WorldLoaded = function()
 	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { USSR }
 	MissionEnemies = { ScrinRebels1, ScrinRebels2, ScrinRebels3 }
+end
+
+WorldLoaded = function()
+	DefinePlayers()
+
 	TimerTicks = DateTime.Minutes(3)
 	NumTransmittersCaptured = 0
-
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(USSR)

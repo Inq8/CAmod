@@ -64,15 +64,19 @@ Squads = {
 	}
 }
 
-WorldLoaded = function()
+DefinePlayers = function()
 	USSR = Player.GetPlayer("USSR")
 	Greece = Player.GetPlayer("Greece")
 	Traitor = Player.GetPlayer("Traitor")
 	USSRAbandoned = Player.GetPlayer("USSRAbandoned")
 	MissionPlayers = { USSR }
 	MissionEnemies = { Greece, Traitor }
-	TimerTicks = 0
+end
 
+WorldLoaded = function()
+	DefinePlayers()
+
+	TimerTicks = 0
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(USSR)

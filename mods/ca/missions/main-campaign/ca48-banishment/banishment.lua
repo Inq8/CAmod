@@ -87,16 +87,19 @@ Squads = {
 	AirToAir = AirToAirSquad({ "stmr", "enrv", "torm" }, AdjustAirDelayForDifficulty(DateTime.Minutes(10))),
 }
 
-WorldLoaded = function()
+DefinePlayers = function()
 	Greece = Player.GetPlayer("Greece")
 	MaleficScrin = Player.GetPlayer("MaleficScrin")
 	England = Player.GetPlayer("England")
 	Neutral = Player.GetPlayer("Neutral")
-
 	MissionPlayers = { Greece }
+	MissionEnemies = { MaleficScrin }
+end
+
+WorldLoaded = function()
+	DefinePlayers()
 
 	Camera.Position = PlayerStart.CenterPosition
-
 	NumBasesSecured = 0
 	NumScrinBasesActive = 1
 

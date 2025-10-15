@@ -121,7 +121,7 @@ HackersDelay = {
 	brutal = DateTime.Minutes(2)
 }
 
-WorldLoaded = function()
+DefinePlayers = function()
 	GDI = Player.GetPlayer("GDI")
 	Greece = Player.GetPlayer("Greece")
 	USSR = Player.GetPlayer("USSR")
@@ -137,8 +137,12 @@ WorldLoaded = function()
 	SignalTransmitterPlayer = Player.GetPlayer("SignalTransmitterPlayer") -- separate player to prevent AI from attacking it
 	MissionPlayers = { GDI }
 	MissionEnemies = { Scrin, SovietSlaves, AlliedSlaves, NodSlaves }
-	TimerTicks = 0
+end
 
+WorldLoaded = function()
+	DefinePlayers()
+
+	TimerTicks = 0
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(GDI)

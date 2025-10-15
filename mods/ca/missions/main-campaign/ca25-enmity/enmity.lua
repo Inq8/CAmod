@@ -132,13 +132,17 @@ Squads = {
 	}
 }
 
-WorldLoaded = function()
+DefinePlayers = function()
 	GDI = Player.GetPlayer("GDI")
 	Nod = Player.GetPlayer("Nod")
 	MissionPlayers = { GDI }
 	MissionEnemies = { Nod }
-	EnforceAiBuildRadius = true
+end
 
+WorldLoaded = function()
+	DefinePlayers()
+
+	EnforceAiBuildRadius = true
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(GDI)

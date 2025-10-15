@@ -84,18 +84,22 @@ ContinuousSpawnFrequency = {
 	brutal = DateTime.Seconds(35)
 }
 
-WorldLoaded = function()
+DefinePlayers = function()
 	Scrin = Player.GetPlayer("Scrin")
 	Nod = Player.GetPlayer("Nod")
 	TibLifeforms = Player.GetPlayer("TibLifeforms")
 	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { Nod }
 	MissionEnemies = { Scrin }
+end
+
+WorldLoaded = function()
+	DefinePlayers()
+
 	TimerTicks = 0
 	FragmentsAcquired = {}
 	FragmentsAcquiredCount = 0
 	FragmentsDetected = {}
-
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(Nod)
