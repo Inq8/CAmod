@@ -18,6 +18,13 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.Common.Traits
 {
+	public enum BountyPoolType
+	{
+		None,
+		FromLosses,
+		FromEnemyKills
+	}
+
 	[Desc("When killed, this actor causes the attacking player to receive money.")]
 	sealed class GivesBountyCAInfo : ConditionalTraitInfo
 	{
@@ -34,7 +41,7 @@ namespace OpenRA.Mods.Common.Traits
 			"Use an empty list (the default) to allow all DeathTypes.")]
 		public readonly BitSet<DamageType> DeathTypes = default;
 
-		public readonly bool UsePlayerBountyPool = true;
+		public readonly BountyPoolType BountyPoolType = BountyPoolType.None;
 
 		public override object Create(ActorInitializer init) { return new GivesBountyCA(this); }
 	}
@@ -76,13 +83,24 @@ namespace OpenRA.Mods.Common.Traits
 			int displayedBounty, collectedBounty;
 			var attackerPool = e.Attacker.Owner.PlayerActor.Trait<PlayerBountyPool>();
 
-			if (Info.UsePlayerBountyPool) {
+			if (Info.BountyPoolType != BountyPoolType.None) {
 				var bountyValue = GetBountyValue(self);
-				attackerPool.AddBounty(bountyValue);
+				var killedPool = self.Owner.PlayerActor.Trait<PlayerBountyPool>();
+				int availableBounty;
 
-				var pool = self.Owner.PlayerActor.Trait<PlayerBountyPool>();
-				var availableBounty = pool.AvailableBounty;
-				collectedBounty = pool.CollectBounty(bountyValue);
+				if (Info.BountyPoolType == BountyPoolType.FromEnemyKills)
+				{
+					attackerPool.AddBounty(bountyValue);
+					availableBounty = killedPool.AvailableBounty;
+					collectedBounty = killedPool.CollectBounty(bountyValue);
+				}
+				else
+				{
+					killedPool.AddBounty(bountyValue);
+					availableBounty = attackerPool.AvailableBounty;
+					collectedBounty = attackerPool.CollectBounty(bountyValue);
+				}
+
 				displayedBounty = Math.Min(GetDisplayedBountyValue(self), availableBounty);
 			}
 			else
