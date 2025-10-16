@@ -1,11 +1,11 @@
 MissionDir = "ca|missions/main-campaign/ca48-banishment"
 
 SuperweaponsEnabledTime = {
-	easy = DateTime.Minutes(60),
-	normal = DateTime.Minutes(40),
-	hard = DateTime.Minutes(25),
-	vhard = DateTime.Minutes(18),
-	brutal = DateTime.Minutes(15)
+	easy = DateTime.Minutes(300),
+	normal = DateTime.Minutes(120),
+	hard = DateTime.Minutes(60),
+	vhard = DateTime.Minutes(40),
+	brutal = DateTime.Minutes(30)
 }
 
 table.insert(UnitCompositions.Scrin, {
@@ -126,6 +126,11 @@ WorldLoaded = function()
 		end)
 	end)
 
+	if IsHardOrBelow() then
+		AlliedMcv.Destroy()
+		VoidEngine2.Destroy()
+	end
+
 	Trigger.AfterDelay(1, function()
 		local englandHarvs = England.GetActorsByType("harv")
 		Utils.Do(englandHarvs, function(h)
@@ -179,7 +184,7 @@ WorldLoaded = function()
 
 	if IsHardOrAbove() then
 		Trigger.OnAnyKilled(productionBuildings, function()
-			Trigger.AfterDelay(DateTime.Minutes(6), function()
+			Trigger.AfterDelay(DateTime.Minutes(5), function()
 				if not RoamersInitialized then
 					RoamersInitialized = true
 					InitAttackSquad(Squads.Roamers, MaleficScrin)
@@ -216,6 +221,10 @@ end
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
 		UpdatePlayerBaseLocations()
+
+		if #MaleficScrin.GetActorsByType("sfac") == 0 then
+			InitVoidEngines()
+		end
 	end
 end
 
@@ -229,7 +238,7 @@ UpdateMissionText = function(text)
 	local nerveCenterCount = #MaleficScrin.GetActorsByType("nerv")
 
 	if nerveCenterCount > 0 then
-		UserInterface.SetMissionText(siloCount .. " Nerve Centers remaining.", HSLColor.Yellow)
+		UserInterface.SetMissionText(nerveCenterCount .. " Nerve Centers remaining.", HSLColor.Yellow)
 	else
 		UserInterface.SetMissionText("")
 	end
@@ -243,11 +252,27 @@ InitMaleficScrin = function()
 	AutoReplaceHarvesters(MaleficScrin)
 	AutoRebuildConyards(MaleficScrin)
 
-	local maleficScrinGroundAttackers = MaleficScrin.GetGroundAttackers()
+	local maleficScrinGroundAttackers = Utils.Where(MaleficScrin.GetGroundAttackers(), function (a) return a.Type ~= "veng" end)
 	Utils.Do(maleficScrinGroundAttackers, function(a)
 		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
 	end)
+
+	Utils.Do({ VoidEngine, VoidEngine2 }, function(v)
+		Trigger.OnDamaged(v, function(self, attacker, damage)
+			InitVoidEngines()
+		end)
+	end)
+end
+
+InitVoidEngines = function()
+	if not VoidEnginesHunting then
+		VoidEnginesHunting = true
+		MediaCA.PlaySound("veng-spawn.aud", 2)
+		Utils.Do({ VoidEngine, VoidEngine2 }, function(ve)
+			AssaultPlayerBaseOrHunt(v)
+		end)
+	end
 end
 
 SetupLightning = function()

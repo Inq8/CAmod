@@ -780,10 +780,7 @@ VENG:
 		RequiresCondition: !being-warped
 	SpawnActorOnDeath@Rift:
 		Actor: voidenginedeathrift
-		RequiresCondition: !being-warped && !difficulty-brutal
-	SpawnActorOnDeath@RiftFull:
-		Actor: voidenginedeathriftfull
-		RequiresCondition: !being-warped && difficulty-brutal
+		RequiresCondition: !being-warped
 	AutoTarget:
 		InitialStanceAI: AttackAnything
 	Targetable@MindControlImmune:
@@ -881,13 +878,6 @@ VoidEngineDeathRift:
 	Inherits: VoidEngineRift
 	KillsSelf:
 		Delay: 1512
-
-VoidEngineDeathRiftFull:
-	Inherits: Rift
-	KillsSelf:
-		Delay: 1512
-	PeriodicExplosion:
-		Weapon: RiftReducedFriendlyFire
 
 SCRINPURIFIER:
 	Inherits: ^TechBuilding
