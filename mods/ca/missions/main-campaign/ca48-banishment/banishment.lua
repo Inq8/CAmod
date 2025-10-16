@@ -126,11 +126,6 @@ WorldLoaded = function()
 		end)
 	end)
 
-	if IsHardOrBelow() then
-		AlliedMcv.Destroy()
-		VoidEngine2.Destroy()
-	end
-
 	Trigger.AfterDelay(1, function()
 		local englandHarvs = England.GetActorsByType("harv")
 		Utils.Do(englandHarvs, function(h)
