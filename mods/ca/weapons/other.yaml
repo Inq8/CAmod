@@ -3859,3 +3859,38 @@ TargetPainter:
 		Duration: 28
 		Condition: painted-target
 		ValidTargets: Vehicle, Ship, Structure
+
+SpyIFVInfiltrate:
+	Range: 2c512
+	Report: gpowof.aud
+	ReloadDelay: 25
+	ValidTargets: SpyIFVInfiltratable
+	TargetActorCenter: true
+	Projectile: InstantHit
+	Warhead@Infiltrate: Infiltrate
+		ValidTargets: SpyIFVInfiltratable
+		Types: ResetSupportPowerInfiltrate, PowerOutageInfiltrate, VetInfiltrate, ResetShroudInfiltrate, GrantSupportPowerInfiltrate
+		ValidRelationships: Enemy
+
+SpyIFVCharge:
+	Inherits: SpyIFVInfiltrate
+	-Projectile:
+	-Warhead@Infiltrate:
+	ReloadDelay: 25
+	Report: targetpainterbeep.aud
+	ValidTargets: ResetSupportPowerInfiltrate, PowerOutageInfiltrate, VetInfiltrate, ResetShroudInfiltrate, GrantSupportPowerInfiltrate
+	Projectile: ArcLaserZap
+		Color: 00006660
+		Angle: 70
+		Width: 70
+		Duration: 20
+		HitAnim: empty
+	Warhead@Flash: FlashTarget
+		Color: 0000ff
+		Spread: 0c256
+		ValidTargets: ResetSupportPowerInfiltrate, PowerOutageInfiltrate, VetInfiltrate, ResetShroudInfiltrate, GrantSupportPowerInfiltrate
+	Warhead@ProgressBar: GrantExternalConditionCA
+		Range: 0c256
+		Condition: spy-ifv-charging
+		Duration: 26
+		ValidTargets: ResetSupportPowerInfiltrate, PowerOutageInfiltrate, VetInfiltrate, ResetShroudInfiltrate, GrantSupportPowerInfiltrate

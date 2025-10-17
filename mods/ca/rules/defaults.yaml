@@ -1846,9 +1846,8 @@
 		ShowSelectionBarWhenFull: false
 		ChargingColor: ff0000
 		RequiresCondition: c4seal-preparing
-	Targetable@SealC4Progress: # Only required for yaml warning, as c4seal-prepared isn't used for anything (GrantChargingCondition just used for the progress bar)
-		TargetTypes: SealC4Prepared
-		RequiresCondition: c4seal-prepared
+	DummyConditionConsumer@SealC4Progress:
+		Condition: c4seal-prepared
 
 ^TNTPlantable:
 	DelayedWeaponAttachable@TNT:
@@ -1989,6 +1988,22 @@
 	Targetable@TechLock:
 		RequiresCondition: !being-warped
 		TargetTypes: TechLockInfiltrate
+
+^SpyIFVInfiltratable:
+	ExternalCondition@SpyIFVCharge:
+		Condition: spy-ifv-charging
+	GrantPeriodicCondition@SpyIFVCharge:
+		CooldownDuration: 300
+		CooldownColor: 0000ff
+		ActiveDuration: 2
+		Condition: spy-ifv-charged
+		RequiresCondition: spy-ifv-charging
+		ShowSelectionBar: true
+		ShowSelectionBarWhenEmpty: false
+		ResetTimeOnReenable: true
+	Targetable@SpyIFVInfiltrate:
+		TargetTypes: SpyIFVInfiltratable
+		RequiresCondition: spy-ifv-charged
 
 ^InfiltrateForSupportPower:
 	Targetable@GrantSupportPowerInfiltrate:
@@ -3429,6 +3444,7 @@
 	Inherits@6: ^WarpableBuilding
 	Inherits@7: ^BotBuilding
 	Inherits@HACKABLE: ^Hackable
+	Inherits@SpyIFVInfiltratable: ^SpyIFVInfiltratable
 	Inherits@WatcherParasite: ^WatcherParasiteAttachable
 	Inherits@TargetPaintable: ^TargetPaintable
 	Inherits@DefensePolicyDamageReduction: ^DefensePolicyDamageReduction

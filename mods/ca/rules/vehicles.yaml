@@ -6220,7 +6220,7 @@ IFV:
 		RequiresCondition: flamturr || chemturr || hoplturr
 	TooltipExtras@spyturr:
 		Weaknesses: • Cannot deal damage
-		Attributes: • Detects cloaked units\n• Disables nearby enemy defenses and power plants
+		Attributes: • Sabotages enemy structures:\n    • Power Plants: Power outage\n    • Barracks/Factory: Infantry/vehicles produced as veteran\n    • Superweapons: Reset timer\n    • Radar: Reset shroud\n    • Helipad: Single-use paratroopers\n    • Airfield/Gravity Stabilizer: Single-use airstrike
 		IsStandard: false
 		RequiresCondition: spyturr
 	TooltipExtras@rmbcturr:
@@ -6526,6 +6526,15 @@ IFV:
 		Weapon: CyborgReaperMissiles
 		LocalOffset: 192,100,256, 192,-100,256
 		RequiresCondition: reapturr
+	Armament@Spy:
+		Weapon: SpyIFVInfiltrate
+		LocalOffset: 0,0,100
+		RequiresCondition: spyturr
+	Armament@SpyCharge:
+		Weapon: SpyIFVCharge
+		LocalOffset: 0,0,100
+		RequiresCondition: spyturr
+		Name: secondary
 	AttackSoundsCA@REPAIRSOUND:
 		Sounds: repair11.aud
 		RequiresCondition: mechturr
@@ -6766,21 +6775,6 @@ IFV:
 		RequiresCondition: ivanturr && (invulnerability || tibstealth || triggered || berserk)
 	Passenger:
 		CargoCondition: passenger
-	ProximityExternalCondition@SPY:
-		Range: 6c0
-		Condition: powerdown
-		RequiresCondition: spyturr && !empdisable && !being-warped
-		ValidRelationships: Enemy, Neutral
-	ProximityExternalCondition@SpyPowerDrain:
-		Range: 6c0
-		Condition: powerdrain
-		RequiresCondition: spyturr && !empdisable && !being-warped
-		ValidRelationships: Enemy, Neutral
-	WithRangeCircle@SPY:
-		Type: SpyIFV
-		Color: FFFF0080
-		Range: 6c0
-		RequiresCondition: spyturr
 	ProximityExternalCondition@MEDIC:
 		RequiresCondition: medturr && !passenger
 		EnableSound: heal2.aud
