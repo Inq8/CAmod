@@ -96,11 +96,6 @@ WorldLoaded = function()
 	ObjectiveCaptureNerveCenter = USSR.AddObjective("Capture rebel Nerve Center.")
 	ObjectiveEliminateRebels = USSR.AddObjective("Eliminate all rebel forces.")
 
-	if IsNormalOrBelow() then
-		HardOnlyElite.Destroy()
-		HardOnlyReaper.Destroy()
-	end
-
 	Trigger.AfterDelay(DateTime.Seconds(3), function()
 		Media.DisplayMessage("Assist us to annihilate Kane and the rebels, and you will be rewarded.", "Scrin Overlord", HSLColor.FromHex("7700FF"))
 		MediaCA.PlaySound(MissionDir .. "/ovld_assist.aud", 2)

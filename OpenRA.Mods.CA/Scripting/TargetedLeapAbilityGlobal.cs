@@ -27,10 +27,10 @@ namespace OpenRA.Mods.CA.Scripting
 
 		[ScriptActorPropertyActivity]
 		[Desc("Queue targeted leap.")]
-		public void TargetedLeap(CPos targetCell, bool queued = false)
+		public void TargetedLeap(CPos targetCell)
 		{
 			var target = Target.FromCell(Self.World, targetCell);
-			LeapAbility.ResolveOrder(Self, new Order("TargetableLeapOrderLeap", Self, target, queued));
+			LeapAbility.ResolveOrder(Self, new Order("TargetableLeapOrderLeap", Self, target, true));
 		}
 	}
 }

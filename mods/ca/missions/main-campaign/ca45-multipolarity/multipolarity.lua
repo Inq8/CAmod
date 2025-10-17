@@ -333,7 +333,9 @@ InitGDI = function()
 	local GDIGroundAttackers = GDI.GetGroundAttackers()
 	Utils.Do(GDIGroundAttackers, function(a)
 		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGDIGroundHunterUnit)
+		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), function(a)
+			return IsGDIGroundHunterUnit(a) and a.Type ~= "zrai" -- exclude zone raiders so they aren't interrupted before the jump
+		end)
 	end)
 
 	local productionBuildings = GDI.GetActorsByTypes({ "pyle", "afac", "weap.td", "afld.gdi" })
@@ -671,11 +673,9 @@ DoZoneRaid = function()
 	Utils.Do(zoneRaiders, function(a)
 		if not a.IsDead then
 			a.Move(ZRWP1.Location)
-			a.TargetedLeap(ZRWP2.Location, true)
-			a.Move(ZRWP3.Location)
-			a.Move(ZRWP4.Location)
+			a.TargetedLeap(ZRWP2.Location)
 			local finalDest = Utils.Random({ ZRWP5a.Location, ZRWP5b.Location, ZRWP5c.Location })
-			a.TargetedLeap(finalDest, true)
+			a.TargetedLeap(finalDest)
 			AssaultPlayerBaseOrHunt(a)
 		end
 	end)
@@ -704,7 +704,7 @@ DoFinale = function()
 	MediaCA.PlaySound(MissionDir .. "/hth_farfromover.aud", 2)
 
 	Hawthorne = Actor.Create("xo.hawthorne", true, { Owner = GDI, Location = HawthorneSpawn.Location })
-	Hawthorne.TargetedLeap(HawthorneJumpDest.Location, false)
+	Hawthorne.TargetedLeap(HawthorneJumpDest.Location)
 	Hawthorne.Move(Gateway.Location)
 	Hawthorne.Destroy()
 

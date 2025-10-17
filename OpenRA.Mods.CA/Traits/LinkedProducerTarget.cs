@@ -125,26 +125,26 @@ namespace OpenRA.Mods.Common.Traits
 				if (!unit.IsInWorld)
 					return;
 
-				self.World.Remove(unit);
-				self.World.AddFrameEndTask(w => {
-					w.Add(unit);
-					unit.Trait<IPositionable>().SetPosition(unit, self.Location);
-					unit.CancelActivity();
-					var rp = self.TraitOrDefault<RallyPoint>();
-					var move = unit.TraitOrDefault<IMove>();
+				var mobile = unit.TraitOrDefault<Mobile>();
+				if (mobile == null)
+					return;
 
-					if (move != null && rp != null && rp.Path.Count > 0)
-					{
-						foreach (var cell in rp.Path)
-							unit.QueueActivity(new AttackMoveActivity(unit, () => move.MoveTo(cell, 1, evaluateNearestMovableCell: true, targetLineColor: Color.OrangeRed)));
-					}
-					else
-					{
-						var mobile = unit.TraitOrDefault<Mobile>();
-						if (mobile != null)
-							unit.QueueActivity(false, new Nudge(unit));
-					}
-				});
+				unit.CancelActivity();
+				unit.Trait<Mobile>().SetPosition(self, self.Location);
+				unit.Generation++;
+
+				var rp = self.TraitOrDefault<RallyPoint>();
+				var move = unit.TraitOrDefault<IMove>();
+
+				if (move != null && rp != null && rp.Path.Count > 0)
+				{
+					foreach (var cell in rp.Path)
+						unit.QueueActivity(new AttackMoveActivity(unit, () => move.MoveTo(cell, 1, evaluateNearestMovableCell: true, targetLineColor: Color.OrangeRed)));
+				}
+				else
+				{
+					unit.QueueActivity(new Nudge(unit));
+				}
 			}
 		}
 
