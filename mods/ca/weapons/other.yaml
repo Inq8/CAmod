@@ -3655,6 +3655,14 @@ ZoneRaiderGrenade:
 		ImpactSounds: splashm1.aud, splashm2.aud, splashm3.aud
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
+	Warhead@Concussion: GrantExternalConditionCA
+		Range: 0c512
+		Duration: 50
+		Condition: concussion
+		ValidTargets: Infantry, Vehicle, Ship
+	Warhead@5Eff: CreateEffect
+		Explosions: sonicimpactsm
+		ExplosionPalette: effect
 
 ZoneDefenderGun:
 	ReloadDelay: 70
