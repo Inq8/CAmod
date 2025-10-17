@@ -41,6 +41,19 @@ Squads = {
 		AttackPaths = ScrinAttackPaths,
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(8)),
 	},
+	Hunters = {
+		ActiveCondition = function()
+			return not Greece.IsObjectiveCompleted(ObjectiveExtractSpy)
+		end,
+		Compositions = {
+			{ Infantry = { "e1", "e1" } },
+			{ Infantry = { "e1", "e1", "e1" } },
+			{ Infantry = { "e1", "e1", "e1", "e1" } },
+		},
+		FollowLeader = false,
+		ProducerActors = { Infantry = { SecondaryBarracks } },
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 5, Max = 18 }),
+	},
 	Air = {
 		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(18)),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
@@ -166,6 +179,13 @@ InitUSSR = function()
 		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsUSSRGroundHunterUnit)
 	end)
+
+	if IsHardOrAbove() then
+		local ussrStructures = USSR.GetActorsByTypes({ "tpwr", "mslo", "stek", "weap", "barr", "iron", "afld", "proc", "dome" })
+		Trigger.OnAnyKilled(ussrStructures, function()
+			InitAttackSquad(Squads.Hunters, USSR)
+		end)
+	end
 end
 
 InitUSSRAttacks = function()
