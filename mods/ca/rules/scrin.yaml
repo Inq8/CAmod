@@ -522,6 +522,7 @@ S1:
 	Inherits@BERSERK: ^Berserk
 	Inherits@BOTHELPER: ^BotCaptureHelper
 	Inherits@HeroOfTheUnionTargetable: ^HeroOfTheUnionTargetable
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -608,6 +609,7 @@ S3:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
 	Inherits@HeroOfTheUnionTargetable: ^HeroOfTheUnionTargetable
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -1137,6 +1139,7 @@ STLK:
 
 SMEDI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: Hospital
 		BuildPaletteOrder: 240
@@ -1188,6 +1191,7 @@ SMEDI:
 
 ARTI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: Hospital
 		BuildPaletteOrder: 240
@@ -6517,8 +6521,8 @@ REBELGATEWAY:
 	Tooltip:
 		Name: Gateway
 	TooltipExtras:
-		Attributes: • Can be powered down to disable, or sold to remove.
-		Description: Acts as a remote exit for a targeted production structure.
+		Attributes: • Can be powered down to disable, or sold to remove\n• Structures must be manually linked for gateway to function
+		Description: Acts as a remote exit for linked ground unit production structures
 	RenderSprites:
 		Image: wormholelg
 	Selectable:
