@@ -323,7 +323,7 @@ VEHICLES.SCRIN:
 ^Anathema:
 	GrantStackingCondition@Anathema:
 		Condition: anathema
-		DelayPerInstance: 75
+		DelayPerInstance: 125
 		MaximumInstances: 4
 		RevokeDelay: -1
 		RequiresCondition: anathema
@@ -347,23 +347,35 @@ VEHICLES.SCRIN:
 	ReloadDelayMultiplier@Anathema4:
 		Modifier: 40
 		RequiresCondition: anathema >= 4
-	FirepowerMultiplier@Anathema1:
-		Modifier: 125
+	ValueScalingFirepowerMultiplier@Anathema1:
+		MinValue: 600
+		MaxValue: 2000
+		MinValueModifier: 250
+		MaxValueModifier: 125
 		RequiresCondition: anathema == 1
-	FirepowerMultiplier@Anathema2:
-		Modifier: 150
+	ValueScalingFirepowerMultiplier@Anathema2:
+		MinValue: 600
+		MaxValue: 2000
+		MinValueModifier: 300
+		MaxValueModifier: 150
 		RequiresCondition: anathema == 2
-	FirepowerMultiplier@Anathema3:
-		Modifier: 175
+	ValueScalingFirepowerMultiplier@Anathema3:
+		MinValue: 600
+		MaxValue: 2000
+		MinValueModifier: 350
+		MaxValueModifier: 175
 		RequiresCondition: anathema == 3
-	FirepowerMultiplier@Anathema4:
-		Modifier: 200
+	ValueScalingFirepowerMultiplier@Anathema4:
+		MinValue: 600
+		MaxValue: 2000
+		MinValueModifier: 400
+		MaxValueModifier: 200
 		RequiresCondition: anathema >= 4
-	DamageMultiplier@Anathema1:
-		Modifier: 75
-		RequiresCondition: anathema && anathema < 4
-	DamageMultiplier@Anathema2:
-		Modifier: 50
+	SpeedMultiplier@Anathema2:
+		Modifier: 120
+		RequiresCondition: anathema >= 2 && anathema < 4
+	SpeedMultiplier@Anathema4:
+		Modifier: 140
 		RequiresCondition: anathema >= 4
 	GrantTimedCondition@Anathema:
 		Condition: anathema-alive
