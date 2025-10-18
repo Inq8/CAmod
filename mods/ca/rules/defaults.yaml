@@ -1629,6 +1629,7 @@
 	Inherits@EconomyPolicyDiscount: ^EconomyPolicyDiscount
 	Inherits@EconomyPolicyDurability: ^EconomyPolicyDurability
 	Inherits@HeavyArmor: ^HeavyArmor
+	Inherits@NodCovenantTarget: ^NodCovenantTarget
 	TooltipExtras:
 		Weaknesses: • Unarmed\n• Resistant to mind control
 	Valued:
@@ -1651,9 +1652,6 @@
 		Step: 2250
 	DamageTypeDamageMultiplier@A2GPROTECTION:
 		Modifier: 60
-	UpdatesCount@NodCovenant:
-		Type: NodCovenant
-		UpdateOn: Killed
 	Harvester:
 		Resources: Tiberium, BlueTiberium, BlackTiberium, Ore, Gems
 		BaleUnloadDelay: 1
@@ -1846,9 +1844,8 @@
 		ShowSelectionBarWhenFull: false
 		ChargingColor: ff0000
 		RequiresCondition: c4seal-preparing
-	Targetable@SealC4Progress: # Only required for yaml warning, as c4seal-prepared isn't used for anything (GrantChargingCondition just used for the progress bar)
-		TargetTypes: SealC4Prepared
-		RequiresCondition: c4seal-prepared
+	DummyConditionConsumer@SealC4Progress:
+		Condition: c4seal-prepared
 
 ^TNTPlantable:
 	DelayedWeaponAttachable@TNT:
@@ -1989,6 +1986,22 @@
 	Targetable@TechLock:
 		RequiresCondition: !being-warped
 		TargetTypes: TechLockInfiltrate
+
+^SpyIFVInfiltratable:
+	ExternalCondition@SpyIFVCharge:
+		Condition: spy-ifv-charging
+	GrantPeriodicCondition@SpyIFVCharge:
+		CooldownDuration: 300
+		CooldownColor: 0000ff
+		ActiveDuration: 2
+		Condition: spy-ifv-charged
+		RequiresCondition: spy-ifv-charging
+		ShowSelectionBar: true
+		ShowSelectionBarWhenEmpty: false
+		ResetTimeOnReenable: true
+	Targetable@SpyIFVInfiltrate:
+		TargetTypes: SpyIFVInfiltratable
+		RequiresCondition: spy-ifv-charged
 
 ^InfiltrateForSupportPower:
 	Targetable@GrantSupportPowerInfiltrate:
@@ -3429,9 +3442,11 @@
 	Inherits@6: ^WarpableBuilding
 	Inherits@7: ^BotBuilding
 	Inherits@HACKABLE: ^Hackable
+	Inherits@SpyIFVInfiltratable: ^SpyIFVInfiltratable
 	Inherits@WatcherParasite: ^WatcherParasiteAttachable
 	Inherits@TargetPaintable: ^TargetPaintable
 	Inherits@DefensePolicyDamageReduction: ^DefensePolicyDamageReduction
+	Inherits@NodCovenantTarget: ^NodCovenantTarget
 	WithPalettedOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability && !forceshield
 		Palette: invuln
@@ -3448,7 +3463,7 @@
 		RequiresCondition: !being-warped
 		RepairCondition: being-repaired
 	InstantlyRepairable:
-		RequiresCondition: !tnt && !c4
+		RequiresCondition: !tnt && !c4 && !c4seal
 	AcceptsDeliveredCash:
 	WithMakeAnimation:
 		Condition: build-incomplete
@@ -3513,9 +3528,6 @@
 		CloakSound: cloak5.aud
 		UncloakSound: appear1.aud
 	UpdatesBuildOrder:
-	UpdatesCount@NodCovenant:
-		Type: NodCovenant
-		UpdateOn: Killed
 	InfiltrateToCreateProxyActor@InfiltratorVision:
 		Proxy: camera.infiltrator
 		Types: VisionInfiltrate
@@ -4507,6 +4519,7 @@
 
 ^EngineerBase:
 	Inherits@SELECTION: ^SelectableSupportUnit
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -4564,7 +4577,7 @@
 		ArmamentNames: tertiary
 		RevokeDelay: 7
 	AutoTarget:
-		ScanRadius: 2
+		ScanRadius: 3
 	AutoTargetPriority@defuse:
 		ValidTargets: C4Attached, TNTAttached
 		InvalidTargets: NoAutoTarget
@@ -4683,6 +4696,11 @@
 	GrantConditionOnPrerequisiteCA@has-mcv:
 		Condition: has-mcv
 		Prerequisites: anymcv
+
+^NodCovenantTarget:
+	UpdatesCount@NodCovenant:
+		Type: NodCovenant
+		UpdateOn: Killed, SoldAfterDamage
 
 ^AIUNLOAD:
 	GrantConditionWhileAiming@AIUNLOAD:

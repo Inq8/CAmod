@@ -1474,6 +1474,8 @@ PROC:
 		Footprint: _X_ xxx X++ ===
 		Dimensions: 3,4
 		LocalCenterOffset: 0,-512,0
+	Sellable:
+		RequiresCondition: !build-incomplete && !c4 && !being-captured && !being-warped && !hacked && !resourcedrain
 	Selectable:
 		Bounds: 3072, 2512, 0, 256
 		DecorationBounds: 3072, 2986, 0, -85
@@ -1836,6 +1838,8 @@ POWR:
 	Power:
 		Amount: 100
 	ScalePowerWithHealth:
+	Sellable:
+		RequiresCondition: !build-incomplete && !c4 && !being-captured && !being-warped && !hacked && !discpowerdrain
 	WithDeathAnimation:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
@@ -1880,6 +1884,8 @@ APWR:
 	Power:
 		Amount: 200
 	ScalePowerWithHealth:
+	Sellable:
+		RequiresCondition: !build-incomplete && !c4 && !being-captured && !being-warped && !hacked && !discpowerdrain
 	WithDeathAnimation:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
@@ -1931,6 +1937,8 @@ NPWR:
 	Power:
 		Amount: 1000
 	ScalePowerWithHealth:
+	Sellable:
+		RequiresCondition: !build-incomplete && !c4 && !being-captured && !being-warped && !hacked && !discpowerdrain
 	WithDeathAnimation:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
@@ -3233,6 +3241,8 @@ NUKE:
 	Power:
 		Amount: 100
 	ScalePowerWithHealth:
+	Sellable:
+		RequiresCondition: !build-incomplete && !c4 && !being-captured && !being-warped && !hacked && !discpowerdrain
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite:
 		Prerequisite: anypower
@@ -3285,6 +3295,8 @@ NUK2:
 		Amount: 200
 	ProvidesPrerequisite@buildingname:
 	ScalePowerWithHealth:
+	Sellable:
+		RequiresCondition: !build-incomplete && !c4 && !being-captured && !being-warped && !hacked && !discpowerdrain
 	UpdatesBuildOrder:
 		Limit: 1
 	Encyclopedia:
@@ -4275,6 +4287,8 @@ PROC.TD:
 		Footprint: _x_ xxx +++ ===
 		Dimensions: 3,4
 		LocalCenterOffset: 0,-512,0
+	Sellable:
+		RequiresCondition: !build-incomplete && !c4 && !being-captured && !being-warped && !hacked && !resourcedrain
 	Health:
 		HP: 90000
 	Armor:
@@ -5564,7 +5578,7 @@ CVAT:
 		RequiresCondition: global-multiqueue
 	Cargo:
 		MaxWeight: 1
-		Types: Infantry
+		Types: Infantry, Brute, Hacker
 		InitialUnits: e1
 	WithCargoPipsDecoration:
 		Position: BottomLeft

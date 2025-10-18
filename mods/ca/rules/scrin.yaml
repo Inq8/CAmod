@@ -323,7 +323,7 @@ VEHICLES.SCRIN:
 ^Anathema:
 	GrantStackingCondition@Anathema:
 		Condition: anathema
-		DelayPerInstance: 75
+		DelayPerInstance: 125
 		MaximumInstances: 4
 		RevokeDelay: -1
 		RequiresCondition: anathema
@@ -347,23 +347,35 @@ VEHICLES.SCRIN:
 	ReloadDelayMultiplier@Anathema4:
 		Modifier: 40
 		RequiresCondition: anathema >= 4
-	FirepowerMultiplier@Anathema1:
-		Modifier: 125
+	ValueScalingFirepowerMultiplier@Anathema1:
+		MinValue: 600
+		MaxValue: 2000
+		MinValueModifier: 250
+		MaxValueModifier: 125
 		RequiresCondition: anathema == 1
-	FirepowerMultiplier@Anathema2:
-		Modifier: 150
+	ValueScalingFirepowerMultiplier@Anathema2:
+		MinValue: 600
+		MaxValue: 2000
+		MinValueModifier: 300
+		MaxValueModifier: 150
 		RequiresCondition: anathema == 2
-	FirepowerMultiplier@Anathema3:
-		Modifier: 175
+	ValueScalingFirepowerMultiplier@Anathema3:
+		MinValue: 600
+		MaxValue: 2000
+		MinValueModifier: 350
+		MaxValueModifier: 175
 		RequiresCondition: anathema == 3
-	FirepowerMultiplier@Anathema4:
-		Modifier: 200
+	ValueScalingFirepowerMultiplier@Anathema4:
+		MinValue: 600
+		MaxValue: 2000
+		MinValueModifier: 400
+		MaxValueModifier: 200
 		RequiresCondition: anathema >= 4
-	DamageMultiplier@Anathema1:
-		Modifier: 75
-		RequiresCondition: anathema && anathema < 4
-	DamageMultiplier@Anathema2:
-		Modifier: 50
+	SpeedMultiplier@Anathema2:
+		Modifier: 120
+		RequiresCondition: anathema >= 2 && anathema < 4
+	SpeedMultiplier@Anathema4:
+		Modifier: 140
 		RequiresCondition: anathema >= 4
 	GrantTimedCondition@Anathema:
 		Condition: anathema-alive
@@ -522,6 +534,7 @@ S1:
 	Inherits@BERSERK: ^Berserk
 	Inherits@BOTHELPER: ^BotCaptureHelper
 	Inherits@HeroOfTheUnionTargetable: ^HeroOfTheUnionTargetable
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -608,6 +621,7 @@ S3:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
 	Inherits@HeroOfTheUnionTargetable: ^HeroOfTheUnionTargetable
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -1137,6 +1151,7 @@ STLK:
 
 SMEDI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: Hospital
 		BuildPaletteOrder: 240
@@ -1188,6 +1203,7 @@ SMEDI:
 
 ARTI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: Hospital
 		BuildPaletteOrder: 240
@@ -1218,7 +1234,7 @@ ARTI:
 		ForceTargetRelationships: None
 		Name: secondary
 	AutoTargetPriority@defuse:
-		ValidTargets: C4Attached
+		ValidTargets: C4Attached, TNTAttached
 		InvalidTargets: NoAutoTarget
 		ValidRelationships: Ally
 	AttackFrontal:
@@ -1251,6 +1267,7 @@ ARTI:
 	Guard:
 		Voice: Move
 	AutoTarget:
+		ScanRadius: 3
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Repair
 		ValidRelationships: Ally
@@ -3063,6 +3080,7 @@ SMCV:
 	Inherits@EconomyPolicyMcvSpeedBonus: ^EconomyPolicyMcvSpeedBonus
 	Inherits@RebelMcvProduction: ^RebelMcvProduction
 	Inherits@HeavyArmor: ^HeavyArmor
+	Inherits@NodCovenantTarget: ^NodCovenantTarget
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 602
@@ -3118,9 +3136,6 @@ SMCV:
 		RequiresCondition: !empdisable && !being-warped && !driver-dead
 	DamageTypeDamageMultiplier@A2GPROTECTION:
 		Modifier: 60
-	UpdatesCount@NodCovenant:
-		Type: NodCovenant
-		UpdateOn: Killed
 	Encyclopedia:
 		Category: Scrin/Vehicles
 
@@ -4734,6 +4749,8 @@ REAC:
 	Power:
 		Amount: 100
 	ScalePowerWithHealth:
+	Sellable:
+		RequiresCondition: !build-incomplete && !c4 && !being-captured && !being-warped && !hacked && !discpowerdrain
 	ProvidesPrerequisite@buildingname:
 	UpdatesBuildOrder:
 		Limit: 2
@@ -4775,6 +4792,8 @@ REA2:
 		Amount: 200
 	ProvidesPrerequisite@buildingname:
 	ScalePowerWithHealth:
+	Sellable:
+		RequiresCondition: !build-incomplete && !c4 && !being-captured && !being-warped && !hacked && !discpowerdrain
 	UpdatesBuildOrder:
 		Limit: 1
 
@@ -4809,6 +4828,8 @@ PROC.SCRIN:
 		Footprint: _x_ xxx +++ ===
 		Dimensions: 3,4
 		LocalCenterOffset: 0,-512,0
+	Sellable:
+		RequiresCondition: !build-incomplete && !c4 && !being-captured && !being-warped && !hacked && !resourcedrain
 	Health:
 		HP: 90000
 	Armor:
@@ -6516,8 +6537,8 @@ REBELGATEWAY:
 	Tooltip:
 		Name: Gateway
 	TooltipExtras:
-		Attributes: • Can be powered down to disable, or sold to remove.
-		Description: Acts as a remote exit for a targeted production structure.
+		Attributes: • Can be powered down to disable, or sold to remove\n• Structures must be manually linked for gateway to function
+		Description: Acts as a remote exit for linked ground unit production structures
 	RenderSprites:
 		Image: wormholelg
 	Selectable:

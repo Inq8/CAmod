@@ -17,25 +17,43 @@ using OpenRA.Mods.Common.Traits;
 
 namespace OpenRA.Mods.Common.Effects
 {
-	public class LinkedProducerSourceIndicator : IEffect, IEffectAboveShroud, IEffectAnnotation
+	public class LinkedProducerIndicator : IEffect, IEffectAboveShroud, IEffectAnnotation
 	{
 		readonly Actor building;
 		readonly LinkedProducerTarget lpt;
+		readonly LinkedProducerSource lps;
 
 		readonly List<WPos> targetLineNodes = new() { };
 		List<WPos> cachedNodes;
 
-		public LinkedProducerSourceIndicator(Actor building, LinkedProducerTarget lpt)
+		public LinkedProducerIndicator(Actor building, LinkedProducerTarget lpt)
 		{
 			this.building = building;
 			this.lpt = lpt;
+			this.lps = null;
+			UpdateTargetLineNodes(building.World);
+		}
+
+		public LinkedProducerIndicator(Actor building, LinkedProducerSource lps)
+		{
+			this.building = building;
+			this.lpt = null;
+			this.lps = lps;
 			UpdateTargetLineNodes(building.World);
 		}
 
 		void IEffect.Tick(World world)
 		{
-			if (cachedNodes == null || !cachedNodes.SequenceEqual(lpt.LinkNodes))
+			if (lpt != null)
 			{
+				if (cachedNodes == null || !cachedNodes.SequenceEqual(lpt.LinkNodes))
+				{
+					UpdateTargetLineNodes(world);
+				}
+			}
+			else if (lps != null)
+			{
+				// For sources, we need to update if the target changes
 				UpdateTargetLineNodes(world);
 			}
 
@@ -45,15 +63,30 @@ namespace OpenRA.Mods.Common.Effects
 
 		void UpdateTargetLineNodes(World world)
 		{
-			cachedNodes = new List<WPos>(lpt.LinkNodes);
 			targetLineNodes.Clear();
-			foreach (var n in cachedNodes)
-				targetLineNodes.Add(n);
 
-			if (targetLineNodes.Count == 0)
-				return;
+			if (lpt != null)
+			{
+				// Target mode: show connections to all sources
+				cachedNodes = new List<WPos>(lpt.LinkNodes);
 
-			targetLineNodes.Insert(0, building.CenterPosition);
+				// Add the building position first
+				targetLineNodes.Add(building.CenterPosition);
+
+				// Add all source positions
+				foreach (var n in cachedNodes)
+					targetLineNodes.Add(n);
+			}
+			else if (lps != null)
+			{
+				// Source mode: show connection to target
+				targetLineNodes.Add(building.CenterPosition);
+
+				if (lps.HasTarget)
+				{
+					targetLineNodes.Add(lps.Target.Actor.CenterPosition);
+				}
+			}
 		}
 
 		IEnumerable<IRenderable> IEffect.Render(WorldRenderer wr) { return SpriteRenderable.None; }
@@ -66,9 +99,7 @@ namespace OpenRA.Mods.Common.Effects
 			if (!building.World.Selection.Contains(building))
 				return SpriteRenderable.None;
 
-			var renderables = SpriteRenderable.None;
-
-			return renderables;
+			return SpriteRenderable.None;
 		}
 
 		IEnumerable<IRenderable> IEffectAnnotation.RenderAnnotation(WorldRenderer wr)
@@ -90,11 +121,15 @@ namespace OpenRA.Mods.Common.Effects
 
 		IEnumerable<IRenderable> RenderInner()
 		{
-			var prev = targetLineNodes[0];
-			foreach (var pos in targetLineNodes.Skip(1))
+			if (targetLineNodes.Count < 2)
+				yield break;
+
+			var targetPos = targetLineNodes[0]; // Building position
+
+			// Draw lines from target to each source
+			foreach (var sourcePos in targetLineNodes.Skip(1))
 			{
-				var targetLine = new[] { prev, pos };
-				prev = pos;
+				var targetLine = new[] { targetPos, sourcePos };
 				yield return new TargetLineRenderable(targetLine, Color.DarkGreen, 4, 7);
 				yield return new TargetLineRenderable(targetLine, Color.Lime, 2, 5);
 			}

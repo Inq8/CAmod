@@ -1849,7 +1849,7 @@ SPEC:
 	Armor:
 		Type: Light
 	Mobile:
-		Speed: 92
+		Speed: 82
 		Locomotor: lighttracked
 		Voice: Move
 	AttackMove:
@@ -1865,16 +1865,11 @@ SPEC:
 	Armament:
 		Weapon: 155mmSpec
 		LocalOffset: 624,0,408
-	AttackFrontalCharged:
+	AttackFrontal:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
 		PauseOnCondition: empdisable || being-warped || blinded
 		FacingTolerance: 32
-		ChargeLevel: 25
-		DischargeRate: 5
-		ShotsPerCharge: 3
-		ShowSelectionBar: true
-		SelectionBarColor: 666666
 		Voice: Attack
 	WithMuzzleOverlay:
 	FireWarheadsOnDeath:
@@ -2123,6 +2118,7 @@ MCV:
 	Inherits@EconomyPolicyDiscount: ^EconomyPolicyDiscount
 	Inherits@EconomyPolicyMcvSpeedBonus: ^EconomyPolicyMcvSpeedBonus
 	Inherits@HeavyArmor: ^HeavyArmor
+	Inherits@NodCovenantTarget: ^NodCovenantTarget
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 600
@@ -2173,9 +2169,6 @@ MCV:
 		TargetTypes: ChaosImmune
 	DamageTypeDamageMultiplier@A2GPROTECTION:
 		Modifier: 60
-	UpdatesCount@NodCovenant:
-		Type: NodCovenant
-		UpdateOn: Killed
 	Encyclopedia:
 		Category: Allies/Vehicles; Soviets/Vehicles
 
@@ -3157,6 +3150,7 @@ AMCV:
 	Inherits@EconomyPolicyDiscount: ^EconomyPolicyDiscount
 	Inherits@EconomyPolicyMcvSpeedBonus: ^EconomyPolicyMcvSpeedBonus
 	Inherits@HeavyArmor: ^HeavyArmor
+	Inherits@NodCovenantTarget: ^NodCovenantTarget
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 601
@@ -3208,9 +3202,6 @@ AMCV:
 		TargetTypes: ChaosImmune
 	DamageTypeDamageMultiplier@A2GPROTECTION:
 		Modifier: 60
-	UpdatesCount@NodCovenant:
-		Type: NodCovenant
-		UpdateOn: Killed
 	Encyclopedia:
 		Category: GDI/Vehicles; Nod/Vehicles
 
@@ -6220,7 +6211,7 @@ IFV:
 		RequiresCondition: flamturr || chemturr || hoplturr
 	TooltipExtras@spyturr:
 		Weaknesses: • Cannot deal damage
-		Attributes: • Detects cloaked units\n• Disables nearby enemy defenses and power plants
+		Attributes: • Sabotages enemy structures:\n    • Power Plants: Power outage\n    • Barracks/Factory: Infantry/vehicles produced as veteran\n    • Superweapons: Reset timer\n    • Radar: Reset shroud\n    • Helipad: Single-use paratroopers\n    • Airfield/Gravity Stabilizer: Single-use airstrike
 		IsStandard: false
 		RequiresCondition: spyturr
 	TooltipExtras@rmbcturr:
@@ -6439,7 +6430,7 @@ IFV:
 		Cursor: goldwrench
 		OutsideRangeCursor: goldwrench
 		TargetRelationships: Ally
-		RequiresCondition: engturr
+		RequiresCondition: engturr || mechturr
 		ForceTargetRelationships: None
 		Name: secondary
 	Armament@Acol:
@@ -6526,6 +6517,15 @@ IFV:
 		Weapon: CyborgReaperMissiles
 		LocalOffset: 192,100,256, 192,-100,256
 		RequiresCondition: reapturr
+	Armament@Spy:
+		Weapon: SpyIFVInfiltrate
+		LocalOffset: 0,0,100
+		RequiresCondition: spyturr
+	Armament@SpyCharge:
+		Weapon: SpyIFVCharge
+		LocalOffset: 0,0,100
+		RequiresCondition: spyturr
+		Name: secondary
 	AttackSoundsCA@REPAIRSOUND:
 		Sounds: repair11.aud
 		RequiresCondition: mechturr
@@ -6766,21 +6766,6 @@ IFV:
 		RequiresCondition: ivanturr && (invulnerability || tibstealth || triggered || berserk)
 	Passenger:
 		CargoCondition: passenger
-	ProximityExternalCondition@SPY:
-		Range: 6c0
-		Condition: powerdown
-		RequiresCondition: spyturr && !empdisable && !being-warped
-		ValidRelationships: Enemy, Neutral
-	ProximityExternalCondition@SpyPowerDrain:
-		Range: 6c0
-		Condition: powerdrain
-		RequiresCondition: spyturr && !empdisable && !being-warped
-		ValidRelationships: Enemy, Neutral
-	WithRangeCircle@SPY:
-		Type: SpyIFV
-		Color: FFFF0080
-		Range: 6c0
-		RequiresCondition: spyturr
 	ProximityExternalCondition@MEDIC:
 		RequiresCondition: medturr && !passenger
 		EnableSound: heal2.aud

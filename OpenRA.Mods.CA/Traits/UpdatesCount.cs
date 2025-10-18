@@ -9,6 +9,7 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
 
@@ -20,6 +21,7 @@ namespace OpenRA.Mods.CA.Traits
 		Created = 1,
 		Disposed = 2,
 		Killed = 4,
+		SoldAfterDamage = 8,
 	}
 
 	[Desc("Updates a counter when the actor is created/disposed or changes owner.")]
@@ -32,13 +34,17 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("What triggers an update.")]
 		public readonly UpdateOnType UpdateOn = UpdateOnType.Created | UpdateOnType.Disposed;
 
+		[Desc("Ticks after being damaged during which selling the actor will update the counter for the damaging player(s).")]
+		public readonly int SoldAfterDamageCooldown = 75;
+
 		public override object Create(ActorInitializer init) { return new UpdatesCount(this); }
 	}
 
-	public class UpdatesCount : ConditionalTrait<UpdatesCountInfo>, INotifyCreated, INotifyActorDisposing, INotifyOwnerChanged, INotifyKilled
+	public class UpdatesCount : ConditionalTrait<UpdatesCountInfo>, INotifyCreated, INotifyActorDisposing, INotifyOwnerChanged, INotifyKilled, INotifySold, INotifyDamage
 	{
 		public readonly UpdatesCountInfo info;
 		CountManager countManager;
+		public readonly Dictionary<Player, int> lastDamagedTicks = new();
 
 		public UpdatesCount(UpdatesCountInfo info)
 			: base(info)
@@ -110,6 +116,34 @@ namespace OpenRA.Mods.CA.Traits
 
 			var attackerCounter = attackingPlayer.PlayerActor.Trait<CountManager>();
 			attackerCounter.Increment(info.Type);
+		}
+
+		void INotifySold.Selling(Actor self) { }
+
+		void INotifySold.Sold(Actor self)
+		{
+			if (!info.UpdateOn.HasFlag(UpdateOnType.SoldAfterDamage))
+				return;
+
+			var currentTick = self.World.WorldTick;
+			foreach (var kvp in lastDamagedTicks)
+			{
+				var player = kvp.Key;
+				var damagedTick = kvp.Value;
+				if (currentTick - damagedTick <= info.SoldAfterDamageCooldown && player.RelationshipWith(self.Owner) == PlayerRelationship.Enemy)
+				{
+					var attackerCounter = player.PlayerActor.Trait<CountManager>();
+					attackerCounter.Increment(info.Type);
+				}
+			}
+		}
+
+		void INotifyDamage.Damaged(Actor self, AttackInfo e)
+		{
+			if (!info.UpdateOn.HasFlag(UpdateOnType.SoldAfterDamage))
+				return;
+
+			lastDamagedTicks[e.Attacker.Owner] = self.World.WorldTick;
 		}
 	}
 }

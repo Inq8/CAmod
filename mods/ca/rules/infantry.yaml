@@ -655,7 +655,6 @@ E4:
 E6:
 	Inherits: ^Soldier
 	Inherits@ENGINEER: ^EngineerBase
-	Inherits@Inspirable: ^Inspirable
 	Mobile:
 		ImmovableCondition: deployed
 		RequireForceMoveCondition: !undeployed
@@ -1043,7 +1042,7 @@ MECH:
 		ForceTargetRelationships: None
 		Name: secondary
 	AutoTargetPriority@defuse:
-		ValidTargets: C4Attached
+		ValidTargets: C4Attached, TNTAttached
 		InvalidTargets: NoAutoTarget
 		ValidRelationships: Ally
 	AttackFrontal:
@@ -1074,6 +1073,7 @@ MECH:
 	Voiced:
 		VoiceSet: MechanicVoice
 	AutoTarget:
+		ScanRadius: 3
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Repair
 		ValidRelationships: Ally
@@ -1137,7 +1137,7 @@ CMEC:
 		ForceTargetRelationships: None
 		Name: secondary
 	AutoTargetPriority@defuse:
-		ValidTargets: C4Attached
+		ValidTargets: C4Attached, TNTAttached
 		InvalidTargets: NoAutoTarget
 		ValidRelationships: Ally
 	AttackFrontal:
@@ -1168,6 +1168,7 @@ CMEC:
 	Voiced:
 		VoiceSet: CyborgVoice
 	AutoTarget:
+		ScanRadius: 3
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Repair
 		ValidRelationships: Ally
@@ -1191,7 +1192,7 @@ HACK:
 		Queue: HackerCell
 		Description: Specialist able to take control of enemy structures & drones from range.
 	Valued:
-		Cost: 500
+		Cost: 750
 	Tooltip:
 		Name: Hacker
 	TooltipExtras:
@@ -2101,7 +2102,6 @@ RMBO:
 N6:
 	Inherits: ^Soldier
 	Inherits@ENGINEER: ^EngineerBase
-	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		BuildPaletteOrder: 31
 		Prerequisites: ~infantry.td
@@ -2481,7 +2481,7 @@ ASSA:
 		Weaknesses: • Weak vs Heavy Armor, Light Armor\n• Cannot attack aircraft
 		Attributes: • Plants C4 to destroy structures\n• Resistant to mind control
 	Valued:
-		Cost: 500
+		Cost: 750
 	Tooltip:
 		Name: Assassin
 	UpdatesPlayerStatistics:
@@ -2587,7 +2587,7 @@ CONF:
 		Description: Fanatical elite infantry that can deploy Idols of Kane to inspire allies and demoralize enemies.
 		IconPalette: chrometd
 	Valued:
-		Cost: 500
+		Cost: 750
 	Tooltip:
 		Name: Confessor
 	UpdatesPlayerStatistics:
@@ -3538,7 +3538,7 @@ BRUT:
 		Speed: 60
 		Voice: Move
 	Passenger:
-		CargoType: Vehicle
+		CargoType: Brute
 	RevealsShroud:
 		Range: 5c0
 	Selectable:
@@ -4857,6 +4857,7 @@ ZRAI:
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor, Buildings
 		Weaknesses: • Cannot attack Aircraft
+		Attributes: • Shots reduce enemy movement and rate of fire\n• Special Ability: Jump-Pack
 	Armament@PRIMARY:
 		Weapon: ZoneRaiderGrenade
 		LocalOffset: 350,0,300

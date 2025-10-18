@@ -793,11 +793,10 @@ PlaceC4:
 		TriggerTime: 60
 		DeathTypes: ExplosionDeath
 		Range: 1
-	Warhead@TargetValidator: SpreadDamage
 	Warhead@Flash: FlashTarget
 		Spread: 0c256
 		Color: ffffff
-		ValidTargets: Ground, Structure, Vehicle
+		ValidTargets: Structure, Vehicle
 
 PlaceC4Seal:
 	Inherits: PlaceC4
@@ -807,7 +806,7 @@ PlaceC4Seal:
 		Type: c4seal
 		ScaleTriggerTimeWithValue: true
 	Warhead@Flash: FlashTarget
-		ValidTargets: Ground, Structure
+		ValidTargets: Structure
 
 PlaceC4Assassin:
 	Inherits: PlaceC4Seal
@@ -955,8 +954,6 @@ DefuseKit:
 		Range: 128
 		ValidRelationships: Ally
 		ValidTargets: C4Attached, TNTAttached
-	Warhead@TargetValidator: SpreadDamage
-		ValidTargets: C4Attached
 
 IFVDefuseKit:
 	Inherits: DefuseKit
@@ -3655,6 +3652,14 @@ ZoneRaiderGrenade:
 		ImpactSounds: splashm1.aud, splashm2.aud, splashm3.aud
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
+	Warhead@Concussion: GrantExternalConditionCA
+		Range: 0c512
+		Duration: 50
+		Condition: concussion
+		ValidTargets: Infantry, Vehicle, Ship
+	Warhead@5Eff: CreateEffect
+		Explosions: sonicimpactsm
+		ExplosionPalette: effect
 
 ZoneDefenderGun:
 	ReloadDelay: 70
@@ -3859,3 +3864,40 @@ TargetPainter:
 		Duration: 28
 		Condition: painted-target
 		ValidTargets: Vehicle, Ship, Structure
+
+SpyIFVInfiltrate:
+	Range: 2c512
+	Report: gpowof.aud
+	ReloadDelay: 25
+	ValidTargets: SpyIFVInfiltratable
+	TargetActorCenter: true
+	Projectile: InstantHit
+	Warhead@Infiltrate: Infiltrate
+		ValidTargets: SpyIFVInfiltratable
+		Types: ResetSupportPowerInfiltrate, PowerOutageInfiltrate, VetInfiltrate, ResetShroudInfiltrate, GrantSupportPowerInfiltrate
+		ValidRelationships: Enemy, Neutral
+
+SpyIFVCharge:
+	Inherits: SpyIFVInfiltrate
+	-Projectile:
+	-Warhead@Infiltrate:
+	ReloadDelay: 25
+	Report: targetpainterbeep.aud
+	ValidTargets: ResetSupportPowerInfiltrate, PowerOutageInfiltrate, VetInfiltrate, ResetShroudInfiltrate, GrantSupportPowerInfiltrate
+	Projectile: ArcLaserZap
+		Color: 00006660
+		Angle: 70
+		Width: 70
+		Duration: 20
+		HitAnim: empty
+	Warhead@Flash: FlashTarget
+		Color: 0000ff
+		Spread: 0c256
+		ValidTargets: ResetSupportPowerInfiltrate, PowerOutageInfiltrate, VetInfiltrate, ResetShroudInfiltrate, GrantSupportPowerInfiltrate
+		ValidRelationships: Enemy, Neutral
+	Warhead@ProgressBar: GrantExternalConditionCA
+		Range: 0c256
+		Condition: spy-ifv-charging
+		Duration: 26
+		ValidTargets: ResetSupportPowerInfiltrate, PowerOutageInfiltrate, VetInfiltrate, ResetShroudInfiltrate, GrantSupportPowerInfiltrate
+		ValidRelationships: Enemy, Neutral
