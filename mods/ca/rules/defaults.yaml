@@ -1629,6 +1629,7 @@
 	Inherits@EconomyPolicyDiscount: ^EconomyPolicyDiscount
 	Inherits@EconomyPolicyDurability: ^EconomyPolicyDurability
 	Inherits@HeavyArmor: ^HeavyArmor
+	Inherits@NodCovenantTarget: ^NodCovenantTarget
 	TooltipExtras:
 		Weaknesses: • Unarmed\n• Resistant to mind control
 	Valued:
@@ -1651,9 +1652,6 @@
 		Step: 2250
 	DamageTypeDamageMultiplier@A2GPROTECTION:
 		Modifier: 60
-	UpdatesCount@NodCovenant:
-		Type: NodCovenant
-		UpdateOn: Killed
 	Harvester:
 		Resources: Tiberium, BlueTiberium, BlackTiberium, Ore, Gems
 		BaleUnloadDelay: 1
@@ -3448,6 +3446,7 @@
 	Inherits@WatcherParasite: ^WatcherParasiteAttachable
 	Inherits@TargetPaintable: ^TargetPaintable
 	Inherits@DefensePolicyDamageReduction: ^DefensePolicyDamageReduction
+	Inherits@NodCovenantTarget: ^NodCovenantTarget
 	WithPalettedOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability && !forceshield
 		Palette: invuln
@@ -3529,9 +3528,6 @@
 		CloakSound: cloak5.aud
 		UncloakSound: appear1.aud
 	UpdatesBuildOrder:
-	UpdatesCount@NodCovenant:
-		Type: NodCovenant
-		UpdateOn: Killed
 	InfiltrateToCreateProxyActor@InfiltratorVision:
 		Proxy: camera.infiltrator
 		Types: VisionInfiltrate
@@ -4700,6 +4696,11 @@
 	GrantConditionOnPrerequisiteCA@has-mcv:
 		Condition: has-mcv
 		Prerequisites: anymcv
+
+^NodCovenantTarget:
+	UpdatesCount@NodCovenant:
+		Type: NodCovenant
+		UpdateOn: Killed, SoldAfterDamage
 
 ^AIUNLOAD:
 	GrantConditionWhileAiming@AIUNLOAD:

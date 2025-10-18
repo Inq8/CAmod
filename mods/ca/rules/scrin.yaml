@@ -3080,6 +3080,7 @@ SMCV:
 	Inherits@EconomyPolicyMcvSpeedBonus: ^EconomyPolicyMcvSpeedBonus
 	Inherits@RebelMcvProduction: ^RebelMcvProduction
 	Inherits@HeavyArmor: ^HeavyArmor
+	Inherits@NodCovenantTarget: ^NodCovenantTarget
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 602
@@ -3135,9 +3136,6 @@ SMCV:
 		RequiresCondition: !empdisable && !being-warped && !driver-dead
 	DamageTypeDamageMultiplier@A2GPROTECTION:
 		Modifier: 60
-	UpdatesCount@NodCovenant:
-		Type: NodCovenant
-		UpdateOn: Killed
 	Encyclopedia:
 		Category: Scrin/Vehicles
 
@@ -4751,6 +4749,8 @@ REAC:
 	Power:
 		Amount: 100
 	ScalePowerWithHealth:
+	Sellable:
+		RequiresCondition: !build-incomplete && !c4 && !being-captured && !being-warped && !hacked && !discpowerdrain
 	ProvidesPrerequisite@buildingname:
 	UpdatesBuildOrder:
 		Limit: 2
@@ -4792,6 +4792,8 @@ REA2:
 		Amount: 200
 	ProvidesPrerequisite@buildingname:
 	ScalePowerWithHealth:
+	Sellable:
+		RequiresCondition: !build-incomplete && !c4 && !being-captured && !being-warped && !hacked && !discpowerdrain
 	UpdatesBuildOrder:
 		Limit: 1
 
@@ -4826,6 +4828,8 @@ PROC.SCRIN:
 		Footprint: _x_ xxx +++ ===
 		Dimensions: 3,4
 		LocalCenterOffset: 0,-512,0
+	Sellable:
+		RequiresCondition: !build-incomplete && !c4 && !being-captured && !being-warped && !hacked && !resourcedrain
 	Health:
 		HP: 90000
 	Armor:
