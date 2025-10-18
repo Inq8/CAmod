@@ -38,8 +38,9 @@ namespace OpenRA.Mods.CA.Activities
 		}
 
 		protected override void OnFirstRun(Actor self)
-		{
-		}
+        {
+			IsInterruptible = false;
+        }
 
 		public override bool Tick(Actor self)
 		{
@@ -57,9 +58,6 @@ namespace OpenRA.Mods.CA.Activities
 			var makeAnimation = self.TraitOrDefault<WithMakeAnimation>();
 			if (!SkipMakeAnims && makeAnimation != null)
 			{
-				// Once the make animation starts the activity must not be stopped anymore.
-				IsInterruptible = false;
-
 				// Wait forever
 				QueueChild(new WaitFor(() => false));
 				makeAnimation.Reverse(self, () => DoTransform(self));

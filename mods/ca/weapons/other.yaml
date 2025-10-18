@@ -793,11 +793,10 @@ PlaceC4:
 		TriggerTime: 60
 		DeathTypes: ExplosionDeath
 		Range: 1
-	Warhead@TargetValidator: SpreadDamage
 	Warhead@Flash: FlashTarget
 		Spread: 0c256
 		Color: ffffff
-		ValidTargets: Ground, Structure, Vehicle
+		ValidTargets: Structure, Vehicle
 
 PlaceC4Seal:
 	Inherits: PlaceC4
@@ -807,7 +806,7 @@ PlaceC4Seal:
 		Type: c4seal
 		ScaleTriggerTimeWithValue: true
 	Warhead@Flash: FlashTarget
-		ValidTargets: Ground, Structure
+		ValidTargets: Structure
 
 PlaceC4Assassin:
 	Inherits: PlaceC4Seal
@@ -955,8 +954,6 @@ DefuseKit:
 		Range: 128
 		ValidRelationships: Ally
 		ValidTargets: C4Attached, TNTAttached
-	Warhead@TargetValidator: SpreadDamage
-		ValidTargets: C4Attached
 
 IFVDefuseKit:
 	Inherits: DefuseKit
@@ -3878,7 +3875,7 @@ SpyIFVInfiltrate:
 	Warhead@Infiltrate: Infiltrate
 		ValidTargets: SpyIFVInfiltratable
 		Types: ResetSupportPowerInfiltrate, PowerOutageInfiltrate, VetInfiltrate, ResetShroudInfiltrate, GrantSupportPowerInfiltrate
-		ValidRelationships: Enemy
+		ValidRelationships: Enemy, Neutral
 
 SpyIFVCharge:
 	Inherits: SpyIFVInfiltrate
@@ -3897,8 +3894,10 @@ SpyIFVCharge:
 		Color: 0000ff
 		Spread: 0c256
 		ValidTargets: ResetSupportPowerInfiltrate, PowerOutageInfiltrate, VetInfiltrate, ResetShroudInfiltrate, GrantSupportPowerInfiltrate
+		ValidRelationships: Enemy, Neutral
 	Warhead@ProgressBar: GrantExternalConditionCA
 		Range: 0c256
 		Condition: spy-ifv-charging
 		Duration: 26
 		ValidTargets: ResetSupportPowerInfiltrate, PowerOutageInfiltrate, VetInfiltrate, ResetShroudInfiltrate, GrantSupportPowerInfiltrate
+		ValidRelationships: Enemy, Neutral

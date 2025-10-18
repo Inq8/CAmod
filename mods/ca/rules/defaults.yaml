@@ -3464,7 +3464,7 @@
 		RequiresCondition: !being-warped
 		RepairCondition: being-repaired
 	InstantlyRepairable:
-		RequiresCondition: !tnt && !c4
+		RequiresCondition: !tnt && !c4 && !c4seal
 	AcceptsDeliveredCash:
 	WithMakeAnimation:
 		Condition: build-incomplete
@@ -4580,7 +4580,7 @@
 		ArmamentNames: tertiary
 		RevokeDelay: 7
 	AutoTarget:
-		ScanRadius: 2
+		ScanRadius: 3
 	AutoTargetPriority@defuse:
 		ValidTargets: C4Attached, TNTAttached
 		InvalidTargets: NoAutoTarget
