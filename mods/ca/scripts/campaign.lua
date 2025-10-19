@@ -205,6 +205,9 @@ AiConyardRebuildQueue = { }
 -- stores actors that have a trigger assigned for rebuilding AI conyards
 McvProductionTriggers = { }
 
+-- stores buildings that should be sold on capture attempts
+BuildingsToSellOnCaptureAttempt = { }
+
 --
 -- end automatically populated vars
 --
@@ -615,17 +618,19 @@ AutoRebuildBuilding = function(building, player, maxAttempts)
 	if building.IsDead then
 		return
 	end
+	local actorId = tostring(building)
 	Trigger.OnKilled(building, function(self, killer)
-		AddToRebuildQueue(building, player, building.Location, building.CenterPosition, maxAttempts)
+		AddToRebuildQueue(building, actorId, player, building.Location, building.CenterPosition, maxAttempts)
 	end)
 	Trigger.OnSold(building, function(self)
-		AddToRebuildQueue(building, player, building.Location, building.CenterPosition, maxAttempts)
+		AddToRebuildQueue(building, actorId, player, building.Location, building.CenterPosition, maxAttempts)
 	end)
 end
 
-AddToRebuildQueue = function(building, player, loc, pos, maxAttempts)
+AddToRebuildQueue = function(building, actorId, player, loc, pos, maxAttempts)
 	local queueItem = {
 		Actor = building,
+		ActorId = actorId,
 		Player = player,
 		Location = loc,
 		CenterPosition = pos,
@@ -662,6 +667,11 @@ RebuildBuilding = function(queueItem)
 			AutoRepairBuilding(b, queueItem.Player)
 			AutoRebuildBuilding(b, queueItem.Player, queueItem.MaxAttempts)
 			RestoreSquadProduction(queueItem.Actor, b)
+
+			if BuildingsToSellOnCaptureAttempt[queueItem.ActorId] then
+				BuildingsToSellOnCaptureAttempt[tostring(b)] = true
+				SellOnCaptureAttempt(b)
+			end
 
 			if RebuildFunctions ~= nil and RebuildFunctions[queueItem.Player.InternalName] ~= nil then
 				RebuildFunctions[queueItem.Player.InternalName](b)
@@ -1643,6 +1653,7 @@ SellOnCaptureAttempt = function(buildings, sellAsGroup)
 		buildings = { buildings }
 	end
 	Utils.Do(buildings, function(b)
+		BuildingsToSellOnCaptureAttempt[tostring(b)] = true
 		Trigger.OnEnteredProximityTrigger(b.CenterPosition, WDist.New(5 * 1024), function(a, id)
 			if IsMissionPlayer(a.Owner) and (a.Type == "e6" or a.Type == "n6" or a.Type == "s6" or a.Type == "mast" or (a.Type == "ifv" and a.HasPassengers and Utils.Any(a.Passengers, function(p) return p.Type == "e6" or p.Type == "n6" or p.Type == "s6" end))) then
 				Trigger.RemoveProximityTrigger(id)
