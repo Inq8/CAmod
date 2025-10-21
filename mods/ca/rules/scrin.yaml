@@ -3846,6 +3846,14 @@ PAC:
 	Encyclopedia:
 		Category: Scrin/Aircraft
 		Scale: 1.5
+	EncyclopediaExtras:
+		RenderPreviewActor: pac.preview
+
+PAC.Preview:
+	Inherits: ^PreviewDummy
+	RenderSprites:
+		Image: pac
+	WithFacingSpriteBody:
 
 INVA:
 	Inherits: ^NeutralPlane
@@ -5493,7 +5501,7 @@ SILO.SCRIN:
 		Prerequisites: proc.scrin, ~structures.scrin
 		Queue: DefenseSQ, DefenseMQ
 		IconPalette: chromes
-		Description: Stores processed Tiberium, Ore and Gems
+		Description: Stores processed Tiberium, Ore and Gems.
 	-GivesBuildableArea:
 	Health:
 		HP: 30000
