@@ -231,7 +231,6 @@ OncePerSecondChecks = function()
 			ObjectiveDestroySovietForces = Nod.AddObjective("Destroy all Soviet forces.")
 			Nod.MarkCompletedObjective(ObjectiveProtectTemple)
 
-			Actor.Create("advcyber.upgrade", true, { Owner = Nod })
 			Actor.Create("cyborgspeed.upgrade", true, { Owner = Nod })
 			Actor.Create("cyborgarmor.upgrade", true, { Owner = Nod })
 

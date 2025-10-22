@@ -1921,7 +1921,7 @@ SAPC:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 272
-		Prerequisites: tmpl, ~vehicles.nod, ~techlevel.high
+		Prerequisites: tmpl, ~vehicles.nod, ~!cust.upgrade, ~techlevel.high
 		Description: Stealth infantry transport.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
@@ -2010,6 +2010,8 @@ SAPC:
 	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || hidden
 		ColorSource: Player
+	ReplacedInQueue:
+		Actors: cust
 	Encyclopedia:
 		Category: Nod/Vehicles
 
@@ -3472,7 +3474,7 @@ BGGY:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 50
 		IconPalette: chrometd
-		Prerequisites: ~vehicles.nod, ~techlevel.low
+		Prerequisites: ~vehicles.nod, ~!rbug.upgrade, ~techlevel.low
 		Description: Fast scout & anti-infantry vehicle.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
@@ -3566,8 +3568,35 @@ BGGY:
 		RequiresCondition: player-blackh && decoy-upgrade && ammo && !(empdisable || being-warped)
 		AmmoPool: decoyspawner
 		FaceTarget: true
+	ReplacedInQueue:
+		Actors: rbug
 	Encyclopedia:
 		Category: Nod/Vehicles
+
+RBUG:
+	Inherits: BGGY
+	Inherits@HeavyArmor: ^HeavyArmor
+	Buildable:
+		Prerequisites: ~vehicles.nod, ~rbug.upgrade, ~techlevel.low
+	Tooltip:
+		Name: Raider Buggy
+	Valued:
+		Cost: 400
+	Armament:
+		Weapon: RaiderBuggyLaser
+		MuzzleSequence: muzzle
+		MuzzlePalette: caneon
+		LocalOffset: 250,0,400
+	Mobile:
+		Speed: 126
+		TurnSpeed: 36
+	Turreted:
+		TurnSpeed: 36
+		Offset: -100,0,0
+	-ReplacedInQueue:
+	-WithEjectedCasings:
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Zeal Covenant.
 
 ^DecoyUnit:
 	Inherits@selection: ^SelectableSupportUnit
@@ -10458,7 +10487,7 @@ AVTR:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 273
-		Prerequisites: ~vehicles.nod, tmpp, advcyber.upgrade, ~wrath.covenant, ~techlevel.high
+		Prerequisites: ~vehicles.nod, tmpp, covenant.level3, ~wrath.covenant, ~techlevel.high
 		Description: Heavy mech armed with a powerful laser and a flamethrower.
 		IconPalette: chrometd
 	TooltipExtras:
@@ -10599,3 +10628,112 @@ AVTR:
 		Category: Nod/Vehicles
 	EncyclopediaExtras:
 		AdditionalInfo: Requires Wrath Covenant.
+
+CUST:
+	Inherits: ^Tank
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@TRANSPORT: ^Transport
+	Inherits@NOUNLOADCHRONO: ^NoUnloadWhenChronoshifted
+	Inherits@SLOWCRUSH: ^SlowedByCrushing
+	Inherits@COMMANDOSKULL: ^CommandoSkull
+	Inherits@AIUNLOAD: ^AIUNLOAD
+	Inherits@HeavyArmor: ^HeavyArmor
+	Buildable:
+		Queue: VehicleSQ, VehicleMQ
+		BuildPaletteOrder: 272
+		Prerequisites: tmpl, ~vehicles.nod, ~cust.upgrade, ~techlevel.high
+		Description: Heavy transport and support unit pre-loaded with cyborgs.
+	TooltipExtras:
+		Weaknesses: • Unarmed
+		Attributes: • Regenerates nearby cyborgs and vehicles
+	Valued:
+		Cost: 2500
+	Tooltip:
+		Name: Custodian
+	UpdatesPlayerStatistics:
+		AddToArmyValue: false
+		AddToAssetsValue: false
+	Health:
+		HP: 70000
+	Mobile:
+		Speed: 46
+		TurnSpeed: 16
+		Voice: Move
+	Voiced:
+		VoiceSet: CyborgVoice
+	Passenger:
+		Voice: Move
+		CargoCondition: passenger
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Cargo:
+		Types: Infantry, Hacker
+		MaxWeight: 5
+		LoadingCondition: notmobile
+		LoadedCondition: cargo
+		PassengerConditions:
+			e7: loaded-cmdo
+			rmbo: loaded-cmdo
+			bori: loaded-cmdo
+			yuri: loaded-cmdo
+			mast: loaded-cmdo
+		InitialUnits: N1C, N1C, N1C, N1C, N1C
+	WithCargoSounds:
+		EnterSounds: genter1a.aud
+		ExitSounds: gexit1a.aud
+		RequiresCondition: !no-cargo-sounds
+	GrantTimedCondition@NoPassengerSound:
+		Duration: 10
+		Condition: no-cargo-sounds
+	CargoBlocked:
+		RequiresCondition: mindcontrolled
+	WithDecoration@COMMANDOSKULL:
+		RequiresCondition: loaded-cmdo
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
+	Capturable:
+		RequiresCondition: !being-warped && !cargo
+	Capturable@DRIVER_DEAD:
+		RequiresCondition: driver-dead && !cargo
+	Targetable@MindControlResistant:
+		TargetTypes: MindControlResistant
+		RequiresCondition: cargo
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+		RequiresCondition: loaded-cmdo
+	KeepsDistance:
+	AttackTurreted:
+	AttackMove:
+	AutoTarget:
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: HealableCyborg, Repairable
+		ValidRelationships: Ally
+	Armament:
+		Weapon: CustodianHeal
+		TargetRelationships: Ally
+		ForceTargetRelationships: None
+		Cursor: ability
+		OutsideRangeCursor: ability
+	Turreted:
+		Offset: -150,0,500
+	WithIdleOverlay@SPINNER:
+		Sequence: spinner
+		Offset: -150,0,0
+	GivesExperienceCA:
+		ActorExperienceModifier: 2000
+		PlayerExperienceModifier: 0
+	GivesBountyCA:
+		Percentage: 2
+	Sellable:
+		RefundPercent: 10
+	Encyclopedia:
+		Category: Nod/Vehicles
+	EncyclopediaExtras:
+		AdditionalInfo: Requires Unity Covenant.

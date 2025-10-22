@@ -3358,7 +3358,7 @@ RMBC:
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 232
 		IconPalette: chrometd
-		Prerequisites: ~infantry.nod, tmpp, advcyber.upgrade, ~techlevel.high
+		Prerequisites: ~infantry.nod, tmpp, covenant.level3, ~techlevel.high
 		Description: Elite cyborg infantry unit armed with a plasma cannon.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
@@ -3411,7 +3411,7 @@ RMBC:
 	-Targetable@HEAL:
 	Targetable@REPAIR:
 		RequiresCondition: !parachute && damaged && !being-warped && !repair-cooldown
-		TargetTypes: Repair
+		TargetTypes: Repairable
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		StandSequences: stand
@@ -4356,7 +4356,7 @@ ENLI:
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 230
 		IconPalette: chrometd
-		Prerequisites: ~infantry.nod, tmpp, advcyber.upgrade, ~zeal.covenant, ~techlevel.high
+		Prerequisites: ~infantry.nod, tmpp, covenant.level3, ~zeal.covenant, ~techlevel.high
 		Description: Heavy cyborg infantry unit armed with a particle cannon.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
@@ -4376,7 +4376,7 @@ ENLI:
 	-Targetable@HEAL:
 	Targetable@REPAIR:
 		RequiresCondition: damaged && !parachute && !being-warped && !repair-cooldown
-		TargetTypes: Repair
+		TargetTypes: Repairable
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -5259,7 +5259,7 @@ REAP:
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 231
 		IconPalette: chrometd
-		Prerequisites: ~infantry.nod, tmpp, advcyber.upgrade, ~unity.covenant, ~techlevel.high
+		Prerequisites: ~infantry.nod, tmpp, covenant.level3, ~unity.covenant, ~techlevel.high
 		Description: Heavy cyborg with dual missile launchers and an infantry incapacitating grenade launcher.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor, Buildings
@@ -5281,7 +5281,7 @@ REAP:
 	-Targetable@HEAL:
 	Targetable@REPAIR:
 		RequiresCondition: damaged && !parachute && !being-warped && !repair-cooldown
-		TargetTypes: Repair
+		TargetTypes: Repairable
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:

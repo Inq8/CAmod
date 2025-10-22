@@ -1774,7 +1774,7 @@ LeecherOrbHeal:
 		Spread: 1c128
 		Damage: -1650
 		Falloff: 100, 100, 0
-		ValidTargets: Heal, Repair
+		ValidTargets: Healable, Repairable
 		Versus:
 			None: 50
 			Light: 75
@@ -1802,7 +1802,7 @@ GreaterCoalescence:
 		Range: 0, 4c512
 		Falloff: 100, 100
 		Damage: -600
-		ValidTargets: Heal, Repair
+		ValidTargets: Healable, Repairable
 		Versus:
 			None: 40
 			Light: 65
@@ -2208,14 +2208,14 @@ NullifierBolt:
 ScrinRepair:
 	Inherits: Heal
 	Range: 2c512
-	ValidTargets: Repair
+	ValidTargets: Repairable
 	Projectile: LaserZapCA
 		Width: 48
 		Duration: 4
 		Color: FFFFFF80
 	Warhead@1Dam: SpreadDamage
 		Damage: -3000
-		ValidTargets: Repair
+		ValidTargets: Repairable
 		DamageTypes: DirectRepair
 	-Warhead@2Dam:
 	-Warhead@3Dam:
@@ -2223,4 +2223,4 @@ ScrinRepair:
 	Warhead@Flash: FlashTarget
 		Spread: 0c511
 		Color: ff0000
-		ValidTargets: Repair
+		ValidTargets: Repairable

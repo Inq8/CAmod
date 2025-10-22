@@ -3551,18 +3551,22 @@ wormholelg:
 		Filename: wormholelg.shp
 
 wormholexl:
-	Inherits: wormhole
 	Defaults:
 		Filename: wormholexl.shp
-	-die:
-	-make:
+		ZOffset: 1023
+		BlendMode: Additive
+		IgnoreWorldTint: true
+		Length: *
+	idle:
+	die:
+		Alpha: 0.92, 0.84, 0.76, 0.68, 0.60, 0.52, 0.44, 0.36, 0.28, 0.20, 0.12, 0.04, 0.02
+	make:
+		Alpha: 0.02, 0.04, 0.12, 0.20, 0.28, 0.36, 0.44, 0.52, 0.60, 0.68, 0.76, 0.84, 0.92
 
 wormholexxl:
-	Inherits: wormhole
+	Inherits: wormholexl
 	Defaults:
 		Filename: wormholexxl.shp
-	-die:
-	-make:
 
 plasmatorp1:
 	Defaults:

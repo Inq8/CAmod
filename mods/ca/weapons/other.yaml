@@ -685,7 +685,7 @@ Commandeer:
 Heal:
 	ReloadDelay: 80
 	Range: 4c0
-	ValidTargets: Heal
+	ValidTargets: Healable
 	Projectile: InstantHit
 		Blockable: true
 	TargetActorCenter: true
@@ -694,35 +694,67 @@ Heal:
 		Damage: -3500
 		Falloff: 100, 52, 20, 7, 0
 		ValidRelationships: Ally
-		ValidTargets: Heal
+		ValidTargets: Healable
 		DebugOverlayColor: 00FF00
 		DamageTypes: DirectHeal
 	Warhead@2Dam: TargetDamage
 		Damage: -500
 		ValidRelationships: Ally
-		ValidTargets: Heal
+		ValidTargets: Healable
 		DamageTypes: DirectHeal
 		Delay: 20
 	Warhead@3Dam: TargetDamage
 		Damage: -500
 		ValidRelationships: Ally
-		ValidTargets: Heal
+		ValidTargets: Healable
 		DamageTypes: DirectHeal
 		Delay: 40
 	Warhead@4Dam: TargetDamage
 		Damage: -500
 		ValidRelationships: Ally
-		ValidTargets: Heal
+		ValidTargets: Healable
 		DamageTypes: DirectHeal
 		Delay: 60
+
+CustodianHeal:
+	ReloadDelay: 80
+	Range: 3c0
+	Report: custheal.aud
+	ValidTargets: HealableCyborg, Repairable
+	TargetActorCenter: true
+	Projectile: LaserZap
+		Width: 70
+		Duration: 10
+		Color: 4000FF80
+		ZOffset: 512
+		SecondaryBeam: true
+		SecondaryBeamWidth: 100
+		SecondaryBeamZOffset: 511
+		SecondaryBeamColor: 4000FF40
+	Warhead@1Dam: SpreadDamage
+		Spread: 256
+		Damage: -6000
+		Falloff: 100, 52, 20, 7, 0
+		DebugOverlayColor: 00FF00
+		ValidTargets: HealableCyborg, Repairable
+		DamageTypes: DirectHeal, DirectRepair
+		ValidRelationships: Ally, Neutral
+	Warhead@3Eff: CreateEffect
+		Image: custhealhit
+		Explosions: idle, idle2
+	Warhead@Flash: FlashTarget
+		Spread: 0c511
+		Color: 0000ff
+		ValidTargets: HealableCyborg, Repairable
+		ValidRelationships: Ally, Neutral
 
 Repair:
 	Inherits: Heal
 	Range: 2c512
-	ValidTargets: Repair
+	ValidTargets: Repairable
 	Warhead@1Dam: SpreadDamage
 		Damage: -3000
-		ValidTargets: Repair
+		ValidTargets: Repairable
 		DamageTypes: DirectRepair
 	-Warhead@2Dam:
 	-Warhead@3Dam:
@@ -730,7 +762,7 @@ Repair:
 	Warhead@Flash: FlashTarget
 		Spread: 0c511
 		Color: ffffff
-		ValidTargets: Repair
+		ValidTargets: Repairable
 
 CyborgRepair:
 	Inherits: Repair
@@ -748,10 +780,10 @@ RepairFlash:
 	Inherits: Heal
 	Range: 1c0
 	Report: fixit1.aud
-	ValidTargets: Repair
+	ValidTargets: Repairable
 	Warhead@1Dam: SpreadDamage
 		Damage: -1
-		ValidTargets: Repair
+		ValidTargets: Repairable
 		-DamageTypes:
 	-Warhead@2Dam:
 	-Warhead@3Dam:
@@ -759,7 +791,7 @@ RepairFlash:
 	Warhead@Flash: FlashTarget
 		Spread: 1c0
 		Color: ffffff
-		ValidTargets: Repair
+		ValidTargets: Repairable
 
 ShieldFlash:
 	Inherits: RepairFlash
@@ -1161,6 +1193,31 @@ LightTankLaser:
 BattleTankLaser:
 	Inherits: LightTankLaser
 	ReloadDelay: 40
+
+RaiderBuggyLaser:
+	Inherits: M60mgTD
+	ReloadDelay: 25
+	-Burst:
+	Report: rbug-fire1.aud
+	-Projectile:
+	Projectile: LaserZapCA
+		Width: 45
+		Duration: 5
+		HitAnim: laserfire
+		Color: FF000080
+		ZOffset: 512
+		SecondaryBeam: true
+		SecondaryBeamWidth: 65
+		SecondaryBeamColor: FF000030
+		Blockable: true
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 2750
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+	-Warhead@2Eff:
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Scorch-NoFlame
+		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees, Creep
 
 StealthAPCLaser:
 	Inherits: LaserTur

@@ -2391,7 +2391,7 @@
 		RequiresCondition: !parachute && !being-warped
 	Targetable@REPAIR:
 		RequiresCondition: !parachute && !being-warped && damaged && !repair-cooldown
-		TargetTypes: Repair
+		TargetTypes: Repairable
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
 		ValidDamageStates: Light, Medium, Heavy, Critical
@@ -2637,7 +2637,7 @@
 		RequiresCondition: !parachute && !being-warped
 	Targetable@HEAL:
 		RequiresCondition: !parachute && !being-warped && damaged
-		TargetTypes: Heal
+		TargetTypes: Healable
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
 		ValidDamageStates: Light, Medium, Heavy, Critical
@@ -2856,6 +2856,11 @@
 	Targetable@Cyborg:
 		TargetTypes: Cyborg
 		RequiresCondition: !parachute && !being-warped
+	Targetable@HealableCyborg:
+		RequiresCondition: !parachute && !being-warped && damaged && !healing-cooldown
+		TargetTypes: HealableCyborg
+	DummyConditionGranter@HealingCooldown:
+		Condition: healing-cooldown
 	ExternalCondition@ONTIB:
 		Condition: on-tib
 	ExternalCondition@ONBLUETIB:
@@ -3022,7 +3027,7 @@
 		RequiresCondition: !being-warped
 	Targetable@REPAIR:
 		RequiresCondition: damaged && !being-warped
-		TargetTypes: Repair
+		TargetTypes: Repairable
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
 		ValidDamageStates: Light, Medium, Heavy, Critical
@@ -3172,7 +3177,7 @@
 		TargetTypes: Air
 	Targetable@REPAIR:
 		RequiresCondition: !airborne && damaged
-		TargetTypes: Repair
+		TargetTypes: Repairable
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
 		ValidDamageStates: Light, Medium, Heavy, Critical

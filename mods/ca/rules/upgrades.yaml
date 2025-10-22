@@ -690,8 +690,8 @@ wrath.covenant:
 		Name: Covenant of Wrath
 	Buildable:
 		BuildPaletteOrder: 13
-		Prerequisites: ~player.nod, nod.covenants.available, !unity.covenant, !zeal.covenant, ~techlevel.medium
-		Description: Required for:\n• Avatar\n• Assassin Squad\n• Compressed Plasma (+3 Banshee ammo)\n• Cyborg Firepower Upgrade\n\n
+		Prerequisites: ~player.nod, covenant.level1, !unity.covenant, !zeal.covenant, ~techlevel.medium
+		Description: Adopt the Covenant of Wrath.\n\n• Level 1: Assassin Squad & Compressed Plasma (+3 Banshee ammo)\n• Level 2: Temple Prime & Laser Tanks Upgrade\n• Level 3: Avatar, Cyborg Elite & Cyborg Firepower Upgrade
 		IconPalette: chrometd
 	TooltipExtras:
 		Attributes: (!) Only ONE Covenant may be chosen.
@@ -710,8 +710,8 @@ unity.covenant:
 		Name: Covenant of Unity
 	Buildable:
 		BuildPaletteOrder: 14
-		Prerequisites: ~player.nod, nod.covenants.available, !wrath.covenant, !zeal.covenant, ~techlevel.medium
-		Description: Required for:\n• Cyborg Reaper\n• Hacker Cell\n• Siphoned Funds ($ from Hackers in Comms Center)\n• Augmented Fabrication Upgrade\n\n
+		Prerequisites: ~player.nod, covenant.level1, !wrath.covenant, !zeal.covenant, ~techlevel.medium
+		Description: Adopt the Covenant of Unity.\n\n• Level 1: Hacker Squad, Internet Center & Siphoned Funds ($ from Hackers in Internet Center)\n• Level 2: Temple Prime & Custodian Upgrade\n• Level 3: Cyborg Reaper, Cyborg Elite & Augmented Fabrication Upgrade
 		IconPalette: chrometd
 	TooltipExtras:
 		Attributes: (!) Only ONE Covenant may be chosen.
@@ -730,8 +730,8 @@ zeal.covenant:
 		Name: Covenant of Zeal
 	Buildable:
 		BuildPaletteOrder: 15
-		Prerequisites: ~player.nod, nod.covenants.available, !unity.covenant, !wrath.covenant, ~techlevel.medium
-		Description: Required for:\n• Enlightened\n• Confessor Cabal\n• Fast Harrassers (+15% Bike/Buggy/Howitzer speed)\n• Cyborg Speed Upgrade\n\n
+		Prerequisites: ~player.nod, covenant.level1, !unity.covenant, !wrath.covenant, ~techlevel.medium
+		Description: Adopt the Covenant of Zeal.\n\n• Level 1: Confessor Cabal & Fast Harrassers (+15% Bike/Buggy/Howitzer speed)\n• Level 2: Temple Prime & Raider Buggy Upgrade\n• Level 3: Enlightened, Cyborg Elite & Cyborg Speed Upgrade
 		IconPalette: chrometd
 	TooltipExtras:
 		Attributes: (!) Only ONE Covenant may be chosen.
@@ -824,24 +824,6 @@ tibcore.upgrade:
 	WithProductionIconOverlay:
 		Prerequisites: tibcore.upgrade
 
-lastnk.upgrade:
-	Inherits: ^NodUpgrade
-	Tooltip:
-		Name: Upgrade: Laser Tanks
-	Buildable:
-		BuildPaletteOrder: 30
-		Prerequisites: ~player.nod, tmpl, ~techlevel.high
-		Description: Upgrades: Light Tank\nUpgrades: Battle Tank
-	TooltipExtras:
-		Strengths: + Increased damage vs infantry & light armor\n+ Increased range
-		Weaknesses: – Reduced damage vs heavy armor
-	Valued:
-		Cost: 750
-	RenderSprites:
-		Image: lastnk.upgrade
-	WithProductionIconOverlay:
-		Prerequisites: lastnk.upgrade
-
 blacknapalm.upgrade:
 	Inherits: ^NodUpgrade
 	Tooltip:
@@ -924,21 +906,76 @@ hstk.upgrade:
 	EncyclopediaExtras:
 		Subfaction: shadow
 
-advcyber.upgrade:
+covenant.upgrade:
 	Inherits: ^NodUpgrade
 	Tooltip:
-		Name: Research: Advanced Cybernetics
+		Name: Covenant Dependent Upgrade
 	Buildable:
-		BuildPaletteOrder: 40
-		Prerequisites: ~player.nod, tmpp, ~techlevel.high
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.nod, anycovenant, tmpl, covenant.level2, ~!wrath.covenant, ~!unity.covenant, ~!zeal.covenant, ~techlevel.high
 		IconPalette: chrometd
-		Description: Allows production of advanced cybernetic units.\n\nUnlocks: Cyborg Elite\nUnlocks: Avatar (Wrath Covenant Only)\nUnlocks: Cyborg Reaper (Unity Convenant only)\nUnlocks: Enlightened (Zeal Covenant only)
+		Description: Upgrade depends on chosen covenant.\n\n• Wrath: Laser Tanks\n• Unity: Custodian\n• Zeal: Raider Buggy
 	Valued:
-		Cost: 1000
+		Cost: 750
 	RenderSprites:
-		Image: advcyber.upgrade
+		Image: covenant.upgrade
 	WithProductionIconOverlay:
-		Prerequisites: advcyber.upgrade
+		Prerequisites: covenant.upgrade
+	-Encyclopedia:
+
+lastnk.upgrade:
+	Inherits: ^NodUpgrade
+	Tooltip:
+		Name: Upgrade: Laser Tanks
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.nod, tmpl, covenant.level2, ~wrath.covenant, ~techlevel.high
+		Description: Upgrades: Light Tank\nUpgrades: Battle Tank
+	TooltipExtras:
+		Strengths: + Increased damage vs infantry & light armor\n+ Increased range
+		Weaknesses: – Reduced damage vs heavy armor
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: lastnk.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: lastnk.upgrade
+
+cust.upgrade:
+	Inherits: ^NodUpgrade
+	Tooltip:
+		Name: Research: Custodian
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.nod, tmpl, covenant.level2, ~unity.covenant, ~techlevel.high
+		Description: Replaces: Stealth APC
+	TooltipExtras:
+		Strengths: + Heavy armor\n+ Heals cyborgs & repairs vehicles
+		Weaknesses: – No stealth capability\n– No offensive capability\n– Reduced speed\n– Increased cost
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: cust.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: cust.upgrade
+
+rbug.upgrade:
+	Inherits: ^NodUpgrade
+	Tooltip:
+		Name: Research: Raider Buggy
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.nod, tmpl, covenant.level2, ~zeal.covenant, ~techlevel.high
+		Description: Replaces: Buggy
+	TooltipExtras:
+		Strengths: + Heavy armor\n+ Increased damage
+		Weaknesses: – Increased cost\n– Reduced speed
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: rbug.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: rbug.upgrade
 
 cyborgarmor.upgrade:
 	Inherits: ^NodUpgrade
@@ -958,13 +995,13 @@ cyborgarmor.upgrade:
 	WithProductionIconOverlay:
 		Prerequisites: cyborgarmor.upgrade
 
-covenant.upgrade:
+covenant.upgrade2:
 	Inherits: ^NodUpgrade
 	Tooltip:
 		Name: Covenant Dependent Upgrade
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~player.nod, anycovenant, ~!wrath.covenant, ~!unity.covenant, ~!zeal.covenant, ~techlevel.high
+		Prerequisites: ~player.nod, anycovenant, tmpp, covenant.level3, ~!wrath.covenant, ~!unity.covenant, ~!zeal.covenant, ~techlevel.high
 		IconPalette: chrometd
 		Description: Upgrade depends on chosen covenant.\n\n• Wrath: Cyborg Firepower\n• Unity: Augmented Fabrication\n• Zeal: Cyborg Speed
 	Valued:
@@ -972,7 +1009,7 @@ covenant.upgrade:
 	RenderSprites:
 		Image: covenant.upgrade
 	WithProductionIconOverlay:
-		Prerequisites: covenant.upgrade
+		Prerequisites: covenant.upgrade2
 	-Encyclopedia:
 
 cyborgdmg.upgrade:
@@ -981,7 +1018,7 @@ cyborgdmg.upgrade:
 		Name: Upgrade: Improved Cyborg Firepower
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~player.nod, tmpp, ~wrath.covenant, ~techlevel.high
+		Prerequisites: ~player.nod, tmpp, covenant.level3, ~wrath.covenant, ~techlevel.high
 		IconPalette: chrometd
 		Description: Increases cyborg firepower.\n\nUpgrades: Cyborg\nUpgrades: Cyborg Rocket Soldier\nUpgrades: Chemical Warrior\nUpgrades: Acolyte/Templar\nUpgrades: Cyborg Mechanic\nUpgrades: Cyborg Elite
 	TooltipExtras:
@@ -1001,7 +1038,7 @@ cyborgprod.upgrade:
 		Name: Upgrade: Augmented Fabrication
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~player.nod, tmpp, ~unity.covenant, ~techlevel.high
+		Prerequisites: ~player.nod, tmpp, covenant.level3, ~unity.covenant, ~techlevel.high
 		IconPalette: chrometd
 		Description: Leverage CABAL AI to increase cyborg production speed.\n\nUpgrades: Cyborg\nUpgrades: Cyborg Rocket Soldier\nUpgrades: Chemical Warrior\nUpgrades: Acolyte/Templar\nUpgrades: Cyborg Mechanic\nUpgrades: Cyborg Reaper\nUpgrades: Cyborg Elite
 	TooltipExtras:
@@ -1021,7 +1058,7 @@ cyborgspeed.upgrade:
 		Name: Upgrade: Improved Cyborg Speed
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~player.nod, tmpp, ~zeal.covenant, ~techlevel.high
+		Prerequisites: ~player.nod, tmpp, covenant.level3, ~zeal.covenant, ~techlevel.high
 		IconPalette: chrometd
 		Description: Increases cyborg movement speed.\n\nUpgrades: Cyborg\nUpgrades: Cyborg Rocket Soldier\nUpgrades: Chemical Warrior\nUpgrades: Acolyte/Templar\nUpgrades: Cyborg Mechanic\nUpgrades: Enlightened\nUpgrades: Cyborg Elite
 	TooltipExtras:
