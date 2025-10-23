@@ -1143,6 +1143,13 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				"Buildings" => 3,
 				"Defenses" => 4,
 				"Naval" => 5,
+				"Upgrades" => 6,
+				"Support Powers" => 7,
+				"Subfactions" => 8,
+				"General" => 9,
+				"Debuffs" => 10,
+				"Tech Buildings" => 11,
+				"Tech Units" => 12,
 				_ => 1000
 			};
 		}

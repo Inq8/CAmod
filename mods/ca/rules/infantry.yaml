@@ -4537,6 +4537,12 @@ CDOG:
 		Weapon: CyberdogJaw
 	GrantConditionOnAttack:
 		RevokeDelay: 25
+	Targetable@Cyborg:
+		TargetTypes: Cyborg
+		RequiresCondition: !parachute && !being-warped
+	Targetable@HealableCyborg:
+		RequiresCondition: !parachute && !being-warped && damaged
+		TargetTypes: HealableCyborg
 	Encyclopedia:
 		Category: Nod/Infantry
 	EncyclopediaExtras:
@@ -4583,11 +4589,10 @@ MORT.Chem:
 		AdditionalInfo: Stolen from Hand of Nod.
 
 CSCR:
-	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Inherits: ^Cyborg
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
-	Inherits@CYBORGUPG: ^NodCyborgUpgrade
-	Inherits@SLOWABLE: ^Slowable
 	Inherits@InfiltratorStolenTech: ^InfiltratorStolenTech
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
@@ -4628,36 +4633,14 @@ CSCR:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	WithInfantryBody:
+		IdleSequences: idle1, idle2, idle3, idle4
 		DefaultAttackSequence: shoot
+	WithDeathAnimation:
+		DeathSequencePalette: playerscrin
+		CrushedSequencePalette: playerscrin
 	-TakeCover:
 	Voiced:
 		VoiceSet: CyberscrinVoice
-	Targetable:
-		TargetTypes: Ground, Infantry, Cyborg
-	GrantConditionOnTerrain@ONTIB:
-		Condition: on-tib
-		TerrainTypes: Tiberium, BlueTiberium
-	ExternalCondition@ONTIB:
-		Condition: on-tib
-	ChangesHealth@THEAL:
-		Step: 0
-		PercentageStep: 1
-		Delay: 15
-		StartIfBelow: 100
-		DamageCooldown: 150
-		RequiresCondition: on-tib
-		DamageTypes: ToxinDeath
-	WithDecoration@REDCROSS:
-		RequiresCondition: on-tib || (hospitalheal && damaged)
-	WithDecoration@RANK-1:
-		BlinkPatterns:
-			on-tib || (damaged && hospitalheal): On, Off
-	WithDecoration@RANK-2:
-		BlinkPatterns:
-			on-tib || (damaged && hospitalheal): On, Off
-	WithDecoration@RANK-ELITE:
-		BlinkPatterns:
-			on-tib || (damaged && hospitalheal): On, Off
 	Encyclopedia:
 		Category: Nod/Infantry
 	EncyclopediaExtras:
