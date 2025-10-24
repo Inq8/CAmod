@@ -3469,6 +3469,7 @@ BGGY:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	RenderSprites:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
@@ -3601,6 +3602,7 @@ RBUG:
 		Offset: -100,0,0
 	-ReplacedInQueue:
 	-Upgradeable@Raider:
+	-WithDecoration@UpgradeOverlay:
 	-WithEjectedCasings:
 	EncyclopediaExtras:
 		AdditionalInfo: Requires Zeal Covenant.
@@ -4746,7 +4748,7 @@ HTNK.Hover:
 		Prerequisites: gtek, ~vehicles.htnk, ~hovermam.upgrade, ~techlevel.high
 		Description: Big and fairly mobile tank with anti-air capability.
 	TooltipExtras:
-		Attributes: • Can traverse water\n• Self repairs to 50% out of combat
+		Attributes: • Can traverse water\n• Self repairs to 50% out of combat\n• Afterburner ability (with upgrade)
 	Mobile:
 		Speed: 68
 		Locomotor: hover
@@ -4775,6 +4777,40 @@ HTNK.Hover:
 	-Upgradeable@HOVER:
 	-Upgradeable@DRONE:
 	-WithDecoration@UpgradeOverlay:
+	GrantTimedConditionOnDeploy@Afterburner:
+		DeployedCondition: abur-active
+		RequiresCondition: abur-upgrade
+		ShowSelectionBar: true
+		StartsFullyCharged: true
+		DeployedTicks: 150
+		CooldownTicks: 1500
+		ShowSelectionBarWhenFull: false
+		ChargingColor: 808080
+		DischargingColor: ff6600
+		DeploySound: htnkabur.aud
+		Instant: true
+	GrantConditionOnPrerequisite@Afterburner:
+		Condition: abur-upgrade
+		Prerequisites: abur.upgrade
+	SpeedMultiplier@Afterburner:
+		RequiresCondition: abur-active
+		Modifier: 150
+	Contrail@AB1:
+		Offset: -300,-150,-70
+		StartColorUsePlayerColor: false
+		ZOffset: -512
+		StartColor: cc550080
+		StartColorAlpha: 128
+		TrailLength: 10
+		RequiresCondition: abur-upgrade && abur-active
+	Contrail@AB2:
+		Offset: -300,150,-70
+		StartColorUsePlayerColor: false
+		ZOffset: -512
+		StartColor: cc550080
+		StartColorAlpha: 128
+		TrailLength: 10
+		RequiresCondition: abur-upgrade && abur-active
 	EncyclopediaExtras:
 		Subfaction: eagle
 

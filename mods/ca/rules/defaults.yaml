@@ -2911,6 +2911,13 @@
 	-GrantConditionOnPrerequisite@FLAKARMOR:
 	WithDecoration@BINO:
 		-BlinkPatterns:
+	AddsToReclaimableValue@Cyborg:
+		Type: Cyborg
+		ValuePercentage: 5
+		RequiresCondition: reclaimed-fabrication
+	GrantConditionOnPrerequisite@ReclaimedFabrication:
+		Condition: reclaimed-fabrication
+		Prerequisites: cyborgprod.upgrade
 
 ^CivInfantry:
 	Inherits: ^Infantry
