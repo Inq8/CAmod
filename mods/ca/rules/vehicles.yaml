@@ -3570,6 +3570,12 @@ BGGY:
 		FaceTarget: true
 	ReplacedInQueue:
 		Actors: rbug
+	Upgradeable@Raider:
+		Type: rbug.upgrade
+		UpgradingCondition: upgrading
+		Actor: rbug
+		UpgradeAtActors: fix, rep, srep
+		RequiresCondition: !mindcontrolled
 	Encyclopedia:
 		Category: Nod/Vehicles
 
@@ -3594,6 +3600,7 @@ RBUG:
 		TurnSpeed: 36
 		Offset: -100,0,0
 	-ReplacedInQueue:
+	-Upgradeable@Raider:
 	-WithEjectedCasings:
 	EncyclopediaExtras:
 		AdditionalInfo: Requires Zeal Covenant.
