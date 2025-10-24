@@ -235,7 +235,10 @@ namespace OpenRA.Mods.CA.Traits
 				OnComplete = a => CompleteDetach()
 			};
 
-			self.QueueActivity(false, transform);
+			self.World.AddFrameEndTask(w =>
+			{
+				self.QueueActivity(false, transform);
+			});
 		}
 
 		/** Updates AttachedTo and updates conditions. */

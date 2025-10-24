@@ -230,7 +230,7 @@ bjet.upgrade:
 		Strengths: + Strong vs Buildings, Defenses, Light Armor
 		Weaknesses: – Weak vs Heavy Armor\n– Has difficulty hitting moving targets\n– Cannot attack Aircraft
 	Valued:
-		Cost: 750
+		Cost: 1000
 	RenderSprites:
 		Image: bjet.upgrade
 	WithProductionIconOverlay:
@@ -513,12 +513,12 @@ sonic.upgrade:
 abur.upgrade:
 	Inherits: ^GDIUpgrade
 	Tooltip:
-		Name: Upgrade: Afterburner
+		Name: Upgrade: Afterburners
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.eagle, gtek, ~techlevel.high
 		IconPalette: chrometd
-		Description: Equips Orcas and Orca Bombers with afterburners.\n\nUpgrades: Orca\nUpgrades: Orca Bomber
+		Description: Equips Orcas, Orca Bombers and Hover Mammoths with afterburners.\n\nUpgrades: Orca\nUpgrades: Orca Bomber\nUpgrades: Hover Mammoth
 	TooltipExtras:
 		Strengths: + Added Afterburner for temporary speed boost
 	Valued:
@@ -566,7 +566,7 @@ railgun.upgrade:
 	TooltipExtras:
 		Strengths: + Increased range\n+ Damages targets in a line
 	Valued:
-		Cost: 1000
+		Cost: 750
 	AnnounceOnCreation:
 		SoundNotification: UPG-railgun
 		Delay: 60
@@ -589,7 +589,7 @@ ionmam.upgrade:
 	TooltipExtras:
 		Strengths: + Increased range\n+ Increased area of effect
 	Valued:
-		Cost: 1000
+		Cost: 750
 	RenderSprites:
 		Image: ionmam.upgrade
 	AnnounceOnCreation:
@@ -612,7 +612,7 @@ hovermam.upgrade:
 	TooltipExtras:
 		Strengths: + Faster movement speed\n+ Can traverse water
 	Valued:
-		Cost: 1000
+		Cost: 750
 	RenderSprites:
 		Image: hovermam.upgrade
 	AnnounceOnCreation:
@@ -636,7 +636,7 @@ mdrone.upgrade:
 		Strengths: + Immunity to crew kill, chaos gas and mind control\n+ Reduced cost\n+ Increased rate of fire\n+ Improved self-repair
 		Weaknesses: – Disabled if radar is down\n– Can be hacked
 	Valued:
-		Cost: 1000
+		Cost: 750
 	RenderSprites:
 		Image: mdrone.upgrade
 	AnnounceOnCreation:
@@ -690,8 +690,8 @@ wrath.covenant:
 		Name: Covenant of Wrath
 	Buildable:
 		BuildPaletteOrder: 13
-		Prerequisites: ~player.nod, nod.covenants.available, !unity.covenant, !zeal.covenant, ~techlevel.medium
-		Description: Required for:\n• Avatar\n• Assassin Squad\n• Compressed Plasma (+3 Banshee ammo)\n• Cyborg Firepower Upgrade\n\n
+		Prerequisites: ~player.nod, covenant.level1, !unity.covenant, !zeal.covenant, ~techlevel.medium
+		Description: Adopt the Covenant of Wrath.\n\n• Level 1: Assassin Squad & Compressed Plasma (+3 Banshee ammo)\n• Level 2: Temple Prime & Laser Tanks Upgrade\n• Level 3: Avatar, Cyborg Elite & Cyborg Firepower Upgrade
 		IconPalette: chrometd
 	TooltipExtras:
 		Attributes: (!) Only ONE Covenant may be chosen.
@@ -710,8 +710,8 @@ unity.covenant:
 		Name: Covenant of Unity
 	Buildable:
 		BuildPaletteOrder: 14
-		Prerequisites: ~player.nod, nod.covenants.available, !wrath.covenant, !zeal.covenant, ~techlevel.medium
-		Description: Required for:\n• Cyborg Reaper\n• Hacker Cell\n• Siphoned Funds ($ from Hackers in Comms Center)\n• Augmented Fabrication Upgrade\n\n
+		Prerequisites: ~player.nod, covenant.level1, !wrath.covenant, !zeal.covenant, ~techlevel.medium
+		Description: Adopt the Covenant of Unity.\n\n• Level 1: Hacker Squad, Internet Center & Siphoned Funds ($ from Hackers in Internet Center)\n• Level 2: Temple Prime & Custodian Upgrade\n• Level 3: Cyborg Reaper, Cyborg Elite & Augmented Fabrication Upgrade
 		IconPalette: chrometd
 	TooltipExtras:
 		Attributes: (!) Only ONE Covenant may be chosen.
@@ -730,8 +730,8 @@ zeal.covenant:
 		Name: Covenant of Zeal
 	Buildable:
 		BuildPaletteOrder: 15
-		Prerequisites: ~player.nod, nod.covenants.available, !unity.covenant, !wrath.covenant, ~techlevel.medium
-		Description: Required for:\n• Enlightened\n• Confessor Cabal\n• Fast Harrassers (+15% Bike/Buggy/Howitzer speed)\n• Cyborg Speed Upgrade\n\n
+		Prerequisites: ~player.nod, covenant.level1, !unity.covenant, !wrath.covenant, ~techlevel.medium
+		Description: Adopt the Covenant of Zeal.\n\n• Level 1: Confessor Cabal & Fast Harrassers (+15% Bike/Buggy/Howitzer speed)\n• Level 2: Temple Prime & Raider Buggy Upgrade\n• Level 3: Enlightened, Cyborg Elite & Cyborg Speed Upgrade
 		IconPalette: chrometd
 	TooltipExtras:
 		Attributes: (!) Only ONE Covenant may be chosen.
@@ -775,7 +775,7 @@ decoy.upgrade:
 	Buildable:
 		BuildPaletteOrder: 20
 		Prerequisites: ~player.nod, anyradar, ~techlevel.medium
-		Description: Grant Buggies the ability to project a pair of decoy Flame Tanks. Decoys provide small area of vision for a short time after being killed.\n\nUpgrades: Buggy
+		Description: Grant Buggies the ability to project a pair of decoy Flame Tanks. Decoys provide small area of vision for a short time after being killed.\n\nUpgrades: Buggy\nUpgrades: Raider Buggy
 	TooltipExtras:
 		Strengths: + Decoy projection ability
 	Valued:
@@ -823,24 +823,6 @@ tibcore.upgrade:
 		Delay: 60
 	WithProductionIconOverlay:
 		Prerequisites: tibcore.upgrade
-
-lastnk.upgrade:
-	Inherits: ^NodUpgrade
-	Tooltip:
-		Name: Upgrade: Laser Tanks
-	Buildable:
-		BuildPaletteOrder: 30
-		Prerequisites: ~player.nod, tmpl, ~techlevel.high
-		Description: Upgrades: Light Tank\nUpgrades: Battle Tank
-	TooltipExtras:
-		Strengths: + Increased damage vs infantry & light armor\n+ Increased range
-		Weaknesses: – Reduced damage vs heavy armor
-	Valued:
-		Cost: 750
-	RenderSprites:
-		Image: lastnk.upgrade
-	WithProductionIconOverlay:
-		Prerequisites: lastnk.upgrade
 
 blacknapalm.upgrade:
 	Inherits: ^NodUpgrade
@@ -924,21 +906,76 @@ hstk.upgrade:
 	EncyclopediaExtras:
 		Subfaction: shadow
 
-advcyber.upgrade:
+covenant.upgrade:
 	Inherits: ^NodUpgrade
 	Tooltip:
-		Name: Research: Advanced Cybernetics
+		Name: Covenant Dependent Upgrade
 	Buildable:
-		BuildPaletteOrder: 40
-		Prerequisites: ~player.nod, tmpp, ~techlevel.high
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.nod, anycovenant, tmpl, covenant.level2, ~!wrath.covenant, ~!unity.covenant, ~!zeal.covenant, ~techlevel.high
 		IconPalette: chrometd
-		Description: Allows production of advanced cybernetic units.\n\nUnlocks: Cyborg Elite\nUnlocks: Avatar (Wrath Covenant Only)\nUnlocks: Cyborg Reaper (Unity Convenant only)\nUnlocks: Enlightened (Zeal Covenant only)
+		Description: Upgrade depends on chosen covenant.\n\n• Wrath: Laser Tanks\n• Unity: Custodian\n• Zeal: Raider Buggy
 	Valued:
-		Cost: 1000
+		Cost: 750
 	RenderSprites:
-		Image: advcyber.upgrade
+		Image: covenant.upgrade
 	WithProductionIconOverlay:
-		Prerequisites: advcyber.upgrade
+		Prerequisites: covenant.upgrade
+	-Encyclopedia:
+
+lastnk.upgrade:
+	Inherits: ^NodUpgrade
+	Tooltip:
+		Name: Upgrade: Laser Tanks
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.nod, covenant.level2, ~wrath.covenant, ~techlevel.high
+		Description: Upgrades: Light Tank\nUpgrades: Battle Tank
+	TooltipExtras:
+		Strengths: + Increased damage vs infantry & light armor\n+ Increased range
+		Weaknesses: – Reduced damage vs heavy armor
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: lastnk.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: lastnk.upgrade
+
+cust.upgrade:
+	Inherits: ^NodUpgrade
+	Tooltip:
+		Name: Research: Custodian
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.nod, covenant.level2, ~unity.covenant, ~techlevel.high
+		Description: Replaces: Stealth APC
+	TooltipExtras:
+		Strengths: + Heavy armor\n+ Heals cyborgs & repairs vehicles
+		Weaknesses: – No stealth capability\n– No offensive capability\n– Reduced speed\n– Increased cost
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: cust.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: cust.upgrade
+
+rbug.upgrade:
+	Inherits: ^NodUpgrade
+	Tooltip:
+		Name: Research: Raider Buggy
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.nod, covenant.level2, ~zeal.covenant, ~techlevel.high
+		Description: Replaces: Buggy
+	TooltipExtras:
+		Strengths: + Heavy armor\n+ Increased damage
+		Weaknesses: – Increased cost\n– Reduced speed
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: rbug.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: rbug.upgrade
 
 cyborgarmor.upgrade:
 	Inherits: ^NodUpgrade
@@ -958,13 +995,13 @@ cyborgarmor.upgrade:
 	WithProductionIconOverlay:
 		Prerequisites: cyborgarmor.upgrade
 
-covenant.upgrade:
+covenant.upgrade2:
 	Inherits: ^NodUpgrade
 	Tooltip:
 		Name: Covenant Dependent Upgrade
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~player.nod, anycovenant, ~!wrath.covenant, ~!unity.covenant, ~!zeal.covenant, ~techlevel.high
+		Prerequisites: ~player.nod, anycovenant, tmpp, covenant.level3, ~!wrath.covenant, ~!unity.covenant, ~!zeal.covenant, ~techlevel.high
 		IconPalette: chrometd
 		Description: Upgrade depends on chosen covenant.\n\n• Wrath: Cyborg Firepower\n• Unity: Augmented Fabrication\n• Zeal: Cyborg Speed
 	Valued:
@@ -972,7 +1009,7 @@ covenant.upgrade:
 	RenderSprites:
 		Image: covenant.upgrade
 	WithProductionIconOverlay:
-		Prerequisites: covenant.upgrade
+		Prerequisites: covenant.upgrade2
 	-Encyclopedia:
 
 cyborgdmg.upgrade:
@@ -981,7 +1018,7 @@ cyborgdmg.upgrade:
 		Name: Upgrade: Improved Cyborg Firepower
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~player.nod, tmpp, ~wrath.covenant, ~techlevel.high
+		Prerequisites: ~player.nod, tmpp, covenant.level3, ~wrath.covenant, ~techlevel.high
 		IconPalette: chrometd
 		Description: Increases cyborg firepower.\n\nUpgrades: Cyborg\nUpgrades: Cyborg Rocket Soldier\nUpgrades: Chemical Warrior\nUpgrades: Acolyte/Templar\nUpgrades: Cyborg Mechanic\nUpgrades: Cyborg Elite
 	TooltipExtras:
@@ -998,14 +1035,14 @@ cyborgdmg.upgrade:
 cyborgprod.upgrade:
 	Inherits: ^NodUpgrade
 	Tooltip:
-		Name: Upgrade: Augmented Fabrication
+		Name: Upgrade: Reclaimed Fabrication
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~player.nod, tmpp, ~unity.covenant, ~techlevel.high
+		Prerequisites: ~player.nod, tmpp, covenant.level3, ~unity.covenant, ~techlevel.high
 		IconPalette: chrometd
-		Description: Leverage CABAL AI to increase cyborg production speed.\n\nUpgrades: Cyborg\nUpgrades: Cyborg Rocket Soldier\nUpgrades: Chemical Warrior\nUpgrades: Acolyte/Templar\nUpgrades: Cyborg Mechanic\nUpgrades: Cyborg Reaper\nUpgrades: Cyborg Elite
+		Description: Leverage CABAL AI to reclaim components from lost cyborgs to replacements.
 	TooltipExtras:
-		Strengths: + 10% faster production
+		Strengths: + 5% of lost cyborgs value is reclaimed to create new Cyborgs from Temple Prime
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -1021,7 +1058,7 @@ cyborgspeed.upgrade:
 		Name: Upgrade: Improved Cyborg Speed
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~player.nod, tmpp, ~zeal.covenant, ~techlevel.high
+		Prerequisites: ~player.nod, tmpp, covenant.level3, ~zeal.covenant, ~techlevel.high
 		IconPalette: chrometd
 		Description: Increases cyborg movement speed.\n\nUpgrades: Cyborg\nUpgrades: Cyborg Rocket Soldier\nUpgrades: Chemical Warrior\nUpgrades: Acolyte/Templar\nUpgrades: Cyborg Mechanic\nUpgrades: Enlightened\nUpgrades: Cyborg Elite
 	TooltipExtras:
@@ -1151,7 +1188,7 @@ lasher.upgrade:
 		Strengths: + 25% faster movement\n+ Improved crushing performance
 		Weaknesses: – Reduced hit points\n– Reduced firepower
 	Valued:
-		Cost: 1000
+		Cost: 750
 	RenderSprites:
 		Image: lasher.upgrade
 	WithProductionIconOverlay:

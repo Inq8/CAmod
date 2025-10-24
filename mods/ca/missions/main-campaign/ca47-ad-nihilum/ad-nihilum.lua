@@ -209,6 +209,9 @@ OncePerSecondChecks = function()
 
 		if not PlayerHasBuildings(MaleficScrin) then
 			Greece.MarkCompletedObjective(ObjectiveDestroyScrinBases)
+			LeftGateway.Kill()
+			RightGateway.Kill()
+			MiddleGateway.Kill()
 		end
 
 		if Greece.IsObjectiveCompleted(ObjectiveDestroyScrinBases) and #MaleficScrin.GetActorsByTypes({ "veng" }) == 0 then
@@ -266,7 +269,7 @@ InitMaleficScrin = function()
 end
 
 SendNextVoidEngine = function()
-	if NextVoidEngineIndex <= VoidEngineAttackCount[Difficulty] then
+	if NextVoidEngineIndex <= VoidEngineAttackCount[Difficulty] and not Greece.IsObjectiveCompleted(ObjectiveDestroyScrinBases) then
 		MediaCA.PlaySound("veng-spawn.aud", 2)
 
 		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(2)), function()

@@ -24,6 +24,13 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Additional info/requirements.")]
 		public readonly string AdditionalInfo;
 
+		[Desc("If true, will not show anything for the production info.")]
+		public readonly bool HideNotProducible = false;
+
+		[FluentReference]
+		[Desc("If no Buildable Description exists, this will be shown instead.")]
+		public readonly string Description = "";
+
 		public override object Create(ActorInitializer init) { return new EncyclopediaExtras(init, this); }
 	}
 

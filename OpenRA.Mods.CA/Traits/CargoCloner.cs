@@ -68,7 +68,7 @@ namespace OpenRA.Mods.Common.Traits
 		public override object Create(ActorInitializer init) { return new CargoCloner(init.Self, this); }
 	}
 
-	public class CargoCloner : PausableConditionalTrait<CargoClonerInfo>, ITick, INotifyPassengerEntered, INotifyPassengerExited, ISelectionBar
+	public class CargoCloner : PausableConditionalTrait<CargoClonerInfo>, ITick, INotifyPassengerEntered, INotifyPassengerExited, ISelectionBar, INotifyPowerLevelChanged, INotifyOwnerChanged
 	{
 		readonly Actor self;
 		readonly CargoClonerInfo info;
@@ -76,6 +76,8 @@ namespace OpenRA.Mods.Common.Traits
 		int ticksUntilCloned;
 		public string[] Types => info.Types;
 
+		PowerState previousPowerState;
+		PowerManager playerPower;
 		Actor actorToClone;
 		BuildableInfo bi;
 		bool exitOnCompletion = false;
@@ -87,6 +89,13 @@ namespace OpenRA.Mods.Common.Traits
 			this.self = self;
 			ticksUntilCloned = 0;
 			actorToClone = null;
+		}
+
+		protected override void Created(Actor self)
+		{
+			base.Created(self);
+			playerPower = self.Owner.PlayerActor.Trait<PowerManager>();
+			previousPowerState = playerPower.PowerState;
 		}
 
 		void INotifyPassengerEntered.OnPassengerEntered(Actor self, Actor passenger)
@@ -123,6 +132,27 @@ namespace OpenRA.Mods.Common.Traits
 				bi = null;
 				totalTicksToClone = ticksUntilCloned = 0;
 			}
+		}
+
+		void INotifyPowerLevelChanged.PowerLevelChanged(Actor self)
+		{
+			totalTicksToClone = CalculateBuildTime();
+
+			if (playerPower.PowerState == PowerState.Normal && previousPowerState != PowerState.Normal)
+			{
+				ticksUntilCloned /= 2;
+			}
+			else if (playerPower.PowerState != PowerState.Normal && previousPowerState == PowerState.Normal)
+			{
+				ticksUntilCloned *= 2;
+			}
+
+			previousPowerState = playerPower.PowerState;
+		}
+
+		void INotifyOwnerChanged.OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)
+		{
+			playerPower = newOwner.PlayerActor.Trait<PowerManager>();
 		}
 
 		void ITick.Tick(Actor self)
@@ -181,7 +211,8 @@ namespace OpenRA.Mods.Common.Traits
 			if (!info.OverrideUnitBuildDurationModifier && bi != null)
 				buildDurationModifier = bi.BuildDurationModifier;
 
-			return Util.ApplyPercentageModifiers(cost, new int[] { buildDurationModifier });
+			var powerStateBuildDurationModifier = playerPower.PowerState != PowerState.Normal ? 200 : 100;
+			return Util.ApplyPercentageModifiers(cost, new int[] { buildDurationModifier, powerStateBuildDurationModifier });
 		}
 
 		int GetUnitCost(ActorInfo unit)

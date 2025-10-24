@@ -142,7 +142,7 @@ Player:
 		Prerequisites: playerxp.level1
 		Condition: upgrades-available
 	GrantConditionOnPrerequisite@CovenantsAvailable:
-		Prerequisites: nod.covenants.available
+		Prerequisites: covenant.level1
 		Condition: upgrades-available
 	GrantConditionOnPrerequisite@AllegiancesAvailable:
 		Prerequisites: scrin.allegiances.available
@@ -376,6 +376,11 @@ Player:
 	UpgradesManager:
 	ProductionTracker:
 	PopController:
+	ReclaimableValueProducer:
+		Type: Cyborg
+		ProducerActors: tmpp
+		ActorToProduce: n1c
+		ProductionTypes: InfantrySQ, InfantryMQ, CyborgMQ
 	PlayerBountyPool:
 	PlayerExperience:
 	PlayerExperienceLevels:
@@ -402,24 +407,30 @@ Player:
 	ProvidesPrerequisite@FreeChronoMiner:
 		Prerequisite: charv.upgrade
 		RequiresPrerequisites: influence.level3, economy.policy
-	ProvidesPrerequisiteOnCount@NodCovenants:
+	ProvidesPrerequisitesOnCount@NodCovenants:
 		Type: NodCovenant
-		RequiredCount: 3
 		Factions: nod, blackh, marked, legion, shadow
-		Prerequisite: nod.covenants.available
-		RequiredCountReachedNotification: CovenantsAvailable
-		RequiredCountReachedTextNotification: Covenants are now available.
+		Prerequisites:
+			1: covenant.level1
+			2: covenant.level2
+			3: covenant.level3
+		CountReachedNotifications:
+			1: CovenantsAvailable
+		CountReachedTextNotifications:
+			1: Covenants are now available.
 		DummyActor: QueueUpdaterDummy
 		IncrementSound: PlayerRankUp
 		PermanentWhenReached: true
 		NotificationDelay: 35
-	ProvidesPrerequisiteOnCount@ScrinAllegiances:
+	ProvidesPrerequisitesOnCount@ScrinAllegiances:
 		Type: ScrinAllegiance
-		RequiredCount: 4
 		Factions: scrin, reaper, traveler, harbinger, collector
-		Prerequisite: scrin.allegiances.available
-		RequiredCountReachedNotification: AllegianceDeclarationAvailable
-		RequiredCountReachedTextNotification: Allegiance declaration available.
+		Prerequisites:
+			4: scrin.allegiances.available
+		CountReachedNotifications:
+			4: AllegianceDeclarationAvailable
+		CountReachedTextNotifications:
+			4: Allegiance declaration available.
 		DummyActor: QueueUpdaterDummy
 		IncrementSound: PlayerRankUp
 		PermanentAfterUpgrades: loyalist.allegiance, rebel.allegiance, malefic.allegiance

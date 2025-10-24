@@ -8,7 +8,6 @@
  */
 #endregion
 
-using System;
 using System.Linq;
 using OpenRA.Mods.CA.Traits;
 using OpenRA.Mods.Common.Widgets;
@@ -38,9 +37,12 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 		string chosenCoalition;
 		string chosenPolicy;
+		int currentTicks = 0;
 
 		private readonly UpgradesManager upgradesManager;
-		private readonly AlliedInfluenceMeterWidget influenceMeter;
+		private readonly ContainerWidget influenceMeter;
+		private readonly CroppableImageWidget influenceMeterFull;
+		private readonly ImageWidget influenceLevel;
 
 		[ObjectCreator.UseCtor]
 		public AlliedInfluenceIndicatorLogic(Widget widget, World world)
@@ -48,18 +50,20 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			timeline = world.LocalPlayer.PlayerActor.TraitsImplementing<ProvidesPrerequisitesOnTimeline>()
 				.FirstOrDefault(c => c.Info.Type == "AlliedInfluence");
 
-			var container = widget.Get<ContainerWidget>("ALLIED_INFLUENCE");
+			var container = widget.Get<ContainerWithTooltipWidget>("ALLIED_INFLUENCE");
 			var coalitionImage = container.Get<ImageWidget>("ALLIED_COALITION_IMAGE");
 			var noCoalitionImage = container.Get<ImageWidget>("ALLIED_NO_COALITION_IMAGE");
-			influenceMeter = container.Get<AlliedInfluenceMeterWidget>("ALLIED_INFLUENCE_METER");
+
+			influenceMeter = container.Get<ContainerWidget>("ALLIED_INFLUENCE_METER");
+			influenceMeterFull = influenceMeter.Get<CroppableImageWidget>("ALLIED_INFLUENCE_METER_FULL");
+			influenceLevel = container.Get<ImageWidget>("ALLIED_INFLUENCE_LEVEL");
+
 			noCoalitionImage.IsVisible = () => false;
 
 			// influence meter is only shown if player is an allied faction
 			if (world.LocalPlayer.Faction.Side != "Allies")
 			{
-				coalitionImage.GetImageName = () => DisabledImage;
-				coalitionImage.IsVisible = () => false;
-				influenceMeter.IsVisible = () => false;
+				container.IsVisible = () => false;
 				return;
 			}
 
@@ -68,8 +72,32 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			if (timeline != null)
 			{
-				influenceMeter.Thresholds = timeline.Thresholds;
-				influenceMeter.MaxTicks = timeline.MaxTicks;
+				influenceMeterFull.Direction = CroppableImageWidget.CropDirection.BottomUp;
+				influenceMeterFull.GetCropPercentage = () =>
+				{
+					var thresholds = timeline.Thresholds;
+					if (thresholds.Length == 0)
+						return 0f;
+
+					var currentThreshold = 0;
+					var nextThreshold = thresholds.FirstOrDefault(t => t > currentTicks);
+
+					for (var i = thresholds.Length - 1; i >= 0; i--)
+					{
+						if (thresholds[i] <= currentTicks)
+						{
+							currentThreshold = thresholds[i];
+							break;
+						}
+					}
+
+					if (nextThreshold == 0)
+						return 1f;
+
+					var progressInThreshold = currentTicks - currentThreshold;
+					var thresholdSize = nextThreshold - currentThreshold;
+					return thresholdSize > 0 ? (float)progressInThreshold / thresholdSize : 0f;
+				};
 
 				var influenceMeterTooltipTextCached = new CachedTransform<string, string>((timeCoalitionPolicy) =>
 				{
@@ -89,13 +117,22 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 					return tooltip;
 				});
 
-				influenceMeter.GetTooltipText = () =>
-				{
-					var timeCoalitionPolicy = $"{(timeline.TicksUntilNextThreshold / 25).ToString()}-{chosenCoalition}-{chosenPolicy}";
-					return influenceMeterTooltipTextCached.Update(timeCoalitionPolicy);
-				};
-
 				timeline.TicksChanged += HandleTicksChanged;
+
+				influenceLevel.GetImageName = () =>
+				{
+					if (chosenCoalition != null)
+						return "level0";
+
+					return timeline.ThresholdsPassed switch
+					{
+						0 => "level0",
+						1 => "level1",
+						2 => "level2",
+						3 => "level3",
+						_ => "level0",
+					};
+				};
 
 				coalitionImage.GetImageName = () =>
 				{
@@ -105,7 +142,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 					return DisabledImage;
 				};
 
-				coalitionImage.GetTooltipText = () =>
+				container.GetTooltipText = () =>
 				{
 					var timeCoalitionPolicy = $"{(timeline.TicksUntilNextThreshold / 25).ToString()}-{chosenCoalition}-{chosenPolicy}";
 					return influenceMeterTooltipTextCached.Update(timeCoalitionPolicy);
@@ -115,8 +152,10 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			{
 				coalitionImage.GetImageName = () => NoneImage;
 				influenceMeter.IsVisible = () => false;
+				influenceLevel.IsVisible = () => false;
 				coalitionImage.IsVisible = () => false;
 				noCoalitionImage.IsVisible = () => true;
+				container.GetTooltipText = () => FluentProvider.GetMessage(PlayerInfluenceLevel, "level", "N/A");;
 			}
 		}
 
@@ -133,7 +172,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 		private void HandleTicksChanged(int ticks)
 		{
-			influenceMeter.CurrentTicks = ticks;
+			currentTicks = ticks;
 
 			if (ticks >= timeline.MaxTicks)
 			{

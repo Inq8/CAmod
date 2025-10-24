@@ -21,7 +21,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 		const string CountType = "ScrinAllegiance";
 		const string DisabledImage = "disabled";
 
-		readonly ProvidesPrerequisiteOnCount counter;
+		readonly ProvidesPrerequisitesOnCount counter;
 
 		string chosenAllegiance;
 
@@ -36,7 +36,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 		[ObjectCreator.UseCtor]
 		public ScrinAllegianceIndicatorLogic(Widget widget, World world)
 		{
-			counter = world.LocalPlayer.PlayerActor.TraitsImplementing<ProvidesPrerequisiteOnCount>()
+			counter = world.LocalPlayer.PlayerActor.TraitsImplementing<ProvidesPrerequisitesOnCount>()
 				.FirstOrDefault(c => c.Info.Type == CountType);
 
 			var container = widget.Get<ContainerWidget>("SCRIN_ALLEGIANCE");

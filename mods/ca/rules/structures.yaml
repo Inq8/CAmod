@@ -1580,7 +1580,7 @@ SILO:
 		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 35
 		Prerequisites: anyrefinery, ~structures.ra
-		Description: Stores excess refined\nTiberium, Ore and Gems.
+		Description: Stores processed Tiberium, Ore and Gems.
 	Valued:
 		Cost: 150
 	Tooltip:
@@ -3581,11 +3581,11 @@ ATWR:
 		Weaknesses: • Cannot attack Aircraft
 		Attributes: • Requires power to operate\n• Detects cloaked units
 	Valued:
-		Cost: 1100
+		Cost: 1250
 	Tooltip:
 		Name: Advanced Guard Tower
 	Health:
-		HP: 50000
+		HP: 52000
 	Armor:
 		Type: Concrete
 	Selectable:
@@ -3611,7 +3611,7 @@ ATWR:
 	ClassicFacingBodyOrientation:
 		QuantizedFacings: 8
 	Power:
-		Amount: -70
+		Amount: -75
 	DetectCloaked:
 		RequiresCondition: !(disabled || empdisable || being-warped)
 	Encyclopedia:
@@ -3983,6 +3983,64 @@ HQ.UPG:
 		Interval: 375
 		Amount: 400
 		RequiresCondition: cargo == 5
+	RevealsShroud:
+		Range: 7c0
+		-MinRange:
+		-RequiresCondition:
+		RevealGeneratedShroud: True
+	-RevealsShroud@Offline:
+	-RevealsShroud@GAPGEN:
+	GrantCondition@RadarActive:
+		Condition: radar-active
+		RequiresCondition: !jammed && (!disabled || backup-power) && !being-warped && !build-incomplete
+	RangedGpsRadarProvider:
+		Range: 12c0
+		TargetTypes: Vehicle, Air, Structure
+		RequiresCondition: radar-active && cargo == 0
+	RangedGpsRadarProvider@1:
+		Range: 13c0
+		TargetTypes: Vehicle, Air, Structure
+		RequiresCondition: radar-active && cargo == 1
+	RangedGpsRadarProvider@2:
+		Range: 14c0
+		TargetTypes: Vehicle, Air, Structure
+		RequiresCondition: radar-active && cargo == 2
+	RangedGpsRadarProvider@3:
+		Range: 15c0
+		TargetTypes: Vehicle, Air, Structure
+		RequiresCondition: radar-active && cargo == 3
+	RangedGpsRadarProvider@4:
+		Range: 16c0
+		TargetTypes: Vehicle, Air, Structure
+		RequiresCondition: radar-active && cargo == 3
+	RangedGpsRadarProvider@5:
+		Range: 17c0
+		TargetTypes: Vehicle, Air, Structure
+		RequiresCondition: radar-active && cargo == 3
+	WithRangeCircle:
+		Type: RadarDetection
+		Range: 12c0
+		RequiresCondition: radar-active && cargo == 0
+	WithRangeCircle@1:
+		Type: RadarDetection
+		Range: 13c0
+		RequiresCondition: radar-active && cargo == 1
+	WithRangeCircle@2:
+		Type: RadarDetection
+		Range: 14c0
+		RequiresCondition: radar-active && cargo == 2
+	WithRangeCircle@3:
+		Type: RadarDetection
+		Range: 15c0
+		RequiresCondition: radar-active && cargo == 3
+	WithRangeCircle@4:
+		Type: RadarDetection
+		Range: 16c0
+		RequiresCondition: radar-active && cargo == 4
+	WithRangeCircle@5:
+		Type: RadarDetection
+		Range: 17c0
+		RequiresCondition: radar-active && cargo == 5
 	Encyclopedia:
 		Category: Nod/Buildings
 
@@ -4379,7 +4437,7 @@ SILO.TD:
 		Prerequisites: anyrefinery, ~structures.td
 		Queue: DefenseSQ, DefenseMQ
 		IconPalette: chrometd
-		Description: Stores processed Tiberium, Ore and Gems
+		Description: Stores processed Tiberium, Ore and Gems.
 	Building:
 		Footprint: xx
 		Dimensions: 2,1
@@ -6277,7 +6335,7 @@ TMPP:
 			TopLeft: -1536, -1024
 			BottomRight: 1536, 1536
 	Building:
-		Footprint: ___ xxx xxx ===
+		Footprint: ___ xxx xxx +++
 		Dimensions: 3,4
 		LocalCenterOffset: 0,-512,0
 	Health:
@@ -6295,7 +6353,7 @@ TMPP:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 200
 		IconPalette: chrometd
-		Prerequisites: ~structures.nod, tmpl, ~techlevel.high
+		Prerequisites: ~structures.nod, tmpl, covenant.level2, ~techlevel.high
 		Description: Provides access to cybernetic upgrades.
 		BuildLimit: 1
 	TooltipExtras:
