@@ -11,6 +11,7 @@
 using System;
 using System.Collections.Generic;
 using OpenRA.Mods.Common.Traits;
+using OpenRA.Primitives;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
@@ -18,10 +19,10 @@ namespace OpenRA.Mods.CA.Traits
 	[Flags]
 	public enum UpdateOnType
 	{
-		Created = 1,
-		Disposed = 2,
-		Killed = 4,
-		SoldAfterDamage = 8,
+		Owned = 1,
+		Killed = 2,
+		SoldAfterDamage = 4,
+		Captured = 8
 	}
 
 	[Desc("Updates a counter when the actor is created/disposed or changes owner.")]
@@ -32,7 +33,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly string Type = null;
 
 		[Desc("What triggers an update.")]
-		public readonly UpdateOnType UpdateOn = UpdateOnType.Created | UpdateOnType.Disposed;
+		public readonly UpdateOnType UpdateOn = UpdateOnType.Owned;
 
 		[Desc("Ticks after being damaged during which selling the actor will update the counter for the damaging player(s).")]
 		public readonly int SoldAfterDamageCooldown = 75;
@@ -40,7 +41,8 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new UpdatesCount(this); }
 	}
 
-	public class UpdatesCount : ConditionalTrait<UpdatesCountInfo>, INotifyCreated, INotifyActorDisposing, INotifyOwnerChanged, INotifyKilled, INotifySold, INotifyDamage
+	public class UpdatesCount : ConditionalTrait<UpdatesCountInfo>, INotifyCreated, INotifyActorDisposing, INotifyOwnerChanged,
+		INotifyKilled, INotifySold, INotifyDamage, INotifyCapture
 	{
 		public readonly UpdatesCountInfo info;
 		CountManager countManager;
@@ -52,11 +54,16 @@ namespace OpenRA.Mods.CA.Traits
 			this.info = info;
 		}
 
+		void UpdateCounter(Player owner)
+		{
+			countManager = owner.PlayerActor.Trait<CountManager>();
+		}
+
 		void INotifyCreated.Created(Actor self)
 		{
 			UpdateCounter(self.Owner);
 
-			if (!info.UpdateOn.HasFlag(UpdateOnType.Created))
+			if (!info.UpdateOn.HasFlag(UpdateOnType.Owned))
 				return;
 
 			if (IsTraitDisabled)
@@ -65,40 +72,35 @@ namespace OpenRA.Mods.CA.Traits
 			countManager.Increment(info.Type);
 		}
 
-		void UpdateCounter(Player owner)
-		{
-			countManager = owner.PlayerActor.Trait<CountManager>();
-		}
-
-		void INotifyOwnerChanged.OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)
-		{
-			countManager.Decrement(info.Type);
-			UpdateCounter(newOwner);
-			countManager.Increment(info.Type);
-		}
-
-		void INotifyActorDisposing.Disposing(Actor self)
-		{
-			if (!info.UpdateOn.HasFlag(UpdateOnType.Disposed))
-				return;
-
-			countManager.Decrement(info.Type);
-		}
-
 		protected override void TraitEnabled(Actor self)
 		{
-			if (!info.UpdateOn.HasFlag(UpdateOnType.Created))
-				return;
-
-			countManager.Increment(info.Type);
+			if (info.UpdateOn.HasFlag(UpdateOnType.Owned))
+				countManager.Increment(info.Type);
 		}
 
 		protected override void TraitDisabled(Actor self)
 		{
-			if (!info.UpdateOn.HasFlag(UpdateOnType.Created))
-				return;
+			if (info.UpdateOn.HasFlag(UpdateOnType.Owned))
+				countManager.Decrement(info.Type);
+		}
 
-			countManager.Decrement(info.Type);
+		void INotifyOwnerChanged.OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)
+		{
+			UpdateCounter(newOwner);
+
+			if (info.UpdateOn.HasFlag(UpdateOnType.Owned))
+			{
+				oldOwner.PlayerActor.Trait<CountManager>().Decrement(info.Type);
+
+				if (!info.UpdateOn.HasFlag(UpdateOnType.Captured))
+					countManager.Increment(info.Type);
+			}
+		}
+
+		void INotifyActorDisposing.Disposing(Actor self)
+		{
+			if (info.UpdateOn.HasFlag(UpdateOnType.Owned))
+				countManager.Decrement(info.Type);
 		}
 
 		void INotifyKilled.Killed(Actor self, AttackInfo e)
@@ -140,10 +142,14 @@ namespace OpenRA.Mods.CA.Traits
 
 		void INotifyDamage.Damaged(Actor self, AttackInfo e)
 		{
-			if (!info.UpdateOn.HasFlag(UpdateOnType.SoldAfterDamage))
-				return;
+			if (info.UpdateOn.HasFlag(UpdateOnType.SoldAfterDamage))
+				lastDamagedTicks[e.Attacker.Owner] = self.World.WorldTick;
+		}
 
-			lastDamagedTicks[e.Attacker.Owner] = self.World.WorldTick;
+		void INotifyCapture.OnCapture(Actor self, Actor captor, Player oldOwner, Player newOwner, BitSet<CaptureType> captureTypes)
+		{
+			if (info.UpdateOn.HasFlag(UpdateOnType.Captured))
+				newOwner.PlayerActor.Trait<CountManager>().Increment(info.Type);
 		}
 	}
 }
