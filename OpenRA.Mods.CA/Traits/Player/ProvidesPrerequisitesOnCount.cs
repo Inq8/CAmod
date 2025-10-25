@@ -54,6 +54,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Sound notification to play when count is incremented.")]
 		public readonly string IncrementSound = null;
 
+		[Desc("If true, adds the to the observer Upgrades tab.")]
+		public readonly bool AddToUpgradesTab = false;
+
 		IEnumerable<string> ITechTreePrerequisiteInfo.Prerequisites(ActorInfo info)
 		{
 			return Prerequisites.Values;
@@ -182,7 +185,7 @@ namespace OpenRA.Mods.CA.Traits
 				techTree.ActorChanged(self);
 
 				// If there's an actor that represents the prerequisite, add it to the build order
-				if (self.World.Map.Rules.Actors.ContainsKey(prerequisite))
+				if (Info.AddToUpgradesTab && self.World.Map.Rules.Actors.ContainsKey(prerequisite))
 					upgradesManager.UpgradeProviderCreated(prerequisite);
 
 				CountThresholdReached?.Invoke(count);

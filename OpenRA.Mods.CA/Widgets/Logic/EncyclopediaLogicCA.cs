@@ -1146,7 +1146,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				"Upgrades" => 6,
 				"Support Powers" => 7,
 				"Subfactions" => 8,
-				"General" => 9,
+				"Tips" => 9,
 				"Debuffs" => 10,
 				"Tech Buildings" => 11,
 				"Tech Units" => 12,
