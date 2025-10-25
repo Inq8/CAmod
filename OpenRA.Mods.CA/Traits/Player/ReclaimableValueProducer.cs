@@ -75,11 +75,8 @@ namespace OpenRA.Mods.CA.Traits
 				requiredValue = Info.RequiredValue;
 		}
 
-		public void AddValue(string type, int amount)
+		public void AddValue(int amount)
 		{
-			if (type != Info.Type)
-				return;
-
 			currentValue += amount;
 
 			if (currentValue >= requiredValue)

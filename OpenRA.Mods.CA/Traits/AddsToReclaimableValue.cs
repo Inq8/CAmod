@@ -42,7 +42,7 @@ namespace OpenRA.Mods.CA.Traits
 		protected override void Created(Actor self)
 		{
 			base.Created(self);
-			producerTrait = self.Owner.PlayerActor.TraitsImplementing<ReclaimableValueProducer>().FirstOrDefault(t => t.Info.Type == Info.Type);
+			producerTrait = self.Owner.PlayerActor.TraitsImplementing<ReclaimableValueProducer>().SingleOrDefault(t => t.Info.Type == Info.Type);
 		}
 
 		int GetReclaimableValue(Actor self)
@@ -65,12 +65,12 @@ namespace OpenRA.Mods.CA.Traits
 			if (value <= 0)
 				return;
 
-			producerTrait.AddValue(Info.Type, value);
+			producerTrait.AddValue(value);
 		}
 
 		void INotifyOwnerChanged.OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)
 		{
-			producerTrait = newOwner.PlayerActor.TraitsImplementing<ReclaimableValueProducer>().FirstOrDefault(t => t.Info.Type == Info.Type);
+			producerTrait = newOwner.PlayerActor.TraitsImplementing<ReclaimableValueProducer>().SingleOrDefault(t => t.Info.Type == Info.Type);
 		}
 	}
 }
