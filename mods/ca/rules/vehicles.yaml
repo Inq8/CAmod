@@ -6910,7 +6910,7 @@ IFV:
 	AttackMove:
 		AssaultMoveCondition: assault-move
 	AutoTargetPriority@REPAIR:
-		ValidTargets: Repair
+		ValidTargets: Repairable
 		RequiresCondition: mechturr
 		ValidRelationships: Ally
 	AutoTargetPriority@HEAL:
@@ -8956,7 +8956,7 @@ CDRN:
 
 CHPR:
 	Inherits: ^Tank
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
 	Inherits@HeavyArmor: ^HeavyArmor
@@ -8969,8 +8969,8 @@ CHPR:
 		Prerequisites: atek, ~vehicles.germany, ~techlevel.high
 		Description: Advanced heavy tank that can erase targets from existence.
 	TooltipExtras:
-		Strengths: • Strong vs Heavy Armor, Defenses, Aircraft
-		Weaknesses: • Weak vs Buildings
+		Strengths: • Strong vs Heavy Armor, Defenses
+		Weaknesses: • Weak vs Buildings\n• Cannot attack Aircraft
 		Attributes: • Target is disabled while being erased\n• Can crush concrete walls\n• Special Ability: Teleport (with upgrade)
 	Valued:
 		Cost: 1700
@@ -8999,9 +8999,6 @@ CHPR:
 		Offset: -156,0,0
 	Armament@PRIMARY:
 		Weapon: NeutronCannon
-		LocalOffset: 600,0,480
-	Armament@SECONDARY:
-		Weapon: NeutronCannonAA
 		LocalOffset: 600,0,480
 	Armament@VISUAL:
 		Weapon: NeutronCannonBeam

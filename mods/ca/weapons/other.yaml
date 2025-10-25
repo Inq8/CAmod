@@ -2758,21 +2758,6 @@ NeutronCannon:
 		ValidTargets: Temporal
 		DamageTypes: ChronoDeath
 
-NeutronCannonAA:
-	Inherits: NeutronCannon
-	ValidTargets: TemporalAir
-	Warhead@Damage: WarpPercentDamage
-		ValidTargets: TemporalAir
-		InvalidTargets: Shielded
-	Warhead@ShieldDamage: SpreadDamage
-		Damage: 250
-		ValidTargets: Shielded
-	Warhead@ShieldWarp: GrantExternalConditionCA
-		Range: 0c512
-		Duration: 10
-		Condition: shield-warped
-		ValidTargets: Shielded
-
 NeutronCannonBeam:
 	ValidTargets: Temporal, TemporalAir
 	ReloadDelay: 5
