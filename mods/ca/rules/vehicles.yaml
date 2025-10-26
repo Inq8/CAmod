@@ -10701,12 +10701,12 @@ CUST:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 272
 		Prerequisites: tmpl, ~vehicles.nod, ~cust.upgrade, ~techlevel.high
-		Description: Heavy transport and support unit pre-loaded with cyborgs.
+		Description: Heavy transport that repairs cyborgs and vehicles and empowers cyborg machine learning.
 	TooltipExtras:
 		Weaknesses: • Unarmed
-		Attributes: • Regenerates nearby cyborgs and vehicles
+		Attributes: • Repairs cyborgs and vehicles\n• Nearby cyborgs gain experience faster
 	Valued:
-		Cost: 2500
+		Cost: 1500
 	Tooltip:
 		Name: Custodian
 	UpdatesPlayerStatistics:
@@ -10715,7 +10715,7 @@ CUST:
 	Health:
 		HP: 70000
 	Mobile:
-		Speed: 46
+		Speed: 50
 		TurnSpeed: 16
 		Voice: Move
 	Voiced:
@@ -10740,7 +10740,6 @@ CUST:
 			bori: loaded-cmdo
 			yuri: loaded-cmdo
 			mast: loaded-cmdo
-		InitialUnits: N1C, N1C, N1C, N1C, N1C
 	WithCargoSounds:
 		EnterSounds: genter1a.aud
 		ExitSounds: gexit1a.aud
@@ -10785,6 +10784,18 @@ CUST:
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
 		Offset: -150,0,0
+	ProximityExternalCondition@MachineLearning:
+		Range: 6c0
+		Condition: machine-learning
+		ValidRelationships: Ally
+	WithRadiatingCircle@MachineLearning:
+		EndRadius: 6c0
+		Interval: 75
+		Duration: 50
+		ValidRelationships: Ally
+		AlwaysShowMaxRange: true
+		Color: 0040FF60
+		MaxRadiusColor: 0040FF80
 	GivesExperienceCA:
 		ActorExperienceModifier: 2000
 		PlayerExperienceModifier: 0

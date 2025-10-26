@@ -1049,6 +1049,28 @@
 		DamageTypes: FlakVestMitigatedMinor
 		Modifier: 95
 
+^CustodianBuff:
+	ExternalCondition@InspirationCmsr:
+		Condition: machine-learning
+	GainsExperienceMultiplier@MachineLearning1:
+		Modifier: 125
+		RequiresCondition: machine-learning == 1
+	GainsExperienceMultiplier@MachineLearning2:
+		Modifier: 150
+		RequiresCondition: machine-learning >= 2
+	WithIdleOverlay@MachineLearning1:
+		Image: custbuff
+		Sequence: idle-overlay1
+		Palette: effect
+		RequiresCondition: machine-learning == 1
+		IsDecoration: True
+	WithIdleOverlay@MachineLearning2:
+		Image: custbuff
+		Sequence: idle-overlay2
+		Palette: effect
+		RequiresCondition: machine-learning >= 2
+		IsDecoration: True
+
 ^BinoUpgrade:
 	ExternalCondition@BINO:
 		Condition: bino
@@ -2852,6 +2874,7 @@
 ^Cyborg:
 	Inherits: ^Soldier
 	Inherits@CYBORGUPG: ^NodCyborgUpgrade
+	Inherits@CustodianBuff: ^CustodianBuff
 	Inherits@SLOWABLE: ^Slowable
 	Targetable@Cyborg:
 		TargetTypes: Cyborg
