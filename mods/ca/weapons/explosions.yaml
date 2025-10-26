@@ -128,6 +128,43 @@ UnitExplodeFlameSmall:
 	Warhead@Smu: LeaveSmudge
 		SmudgeType: Scorch
 
+UnitExplodeFlame:
+	Inherits: ^Explosion
+	Warhead@1Dam: SpreadDamage
+		Falloff: 1000, 368, 135, 50, 18, 7, 0
+		Delay: 5
+		ValidTargets: Ground, Trees
+		InvalidTargets: Structure
+		Versus:
+			None: 120
+			Light: 50
+			Brick: 50
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, Incendiary
+	Warhead@2Dam: SpreadDamage
+		Damage: 15000
+		Range: 0, 1c256, 2c512
+		Falloff: 100, 100, 0
+		Delay: 5
+		ValidTargets: Structure
+		Versus:
+			Wood: 100
+			Concrete: 50
+		DamageTypes: ExplosionDeath, Incendiary
+	Warhead@2Eff: CreateEffect
+		Explosions: napalm
+		ImpactSounds: firebl3.aud
+		Delay: 5
+	-Warhead@3EffWater:
+	Warhead@Smu: LeaveSmudge
+		SmudgeType: Scorch
+		Size: 2
+		Delay: 5
+	Warhead@Flames: FireCluster
+		Weapon: BurnFx
+		RandomClusterCount: 1
+		Dimensions: 2,2
+		Footprint: xx xx
+
 UnitExplodeChemSmall:
 	Inherits: ^Explosion
 	Warhead@1Dam: SpreadDamage

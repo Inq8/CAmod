@@ -48,7 +48,7 @@ V2RL:
 		Sequence: empty-idle
 		Name: reloading
 	FireWarheadsOnDeath:
-		Weapon: BarrelExplode
+		Weapon: UnitExplodeFlame
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
@@ -119,7 +119,7 @@ KATY:
 		FacingTolerance: 0
 		Voice: Attack
 	FireWarheadsOnDeath:
-		Weapon: BarrelExplode
+		Weapon: UnitExplodeFlame
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
@@ -4770,7 +4770,7 @@ HTNK.Hover:
 	TooltipExtras:
 		Attributes: • Can traverse water\n• Self repairs to 50% out of combat\n• Afterburner ability (with upgrade)
 	Mobile:
-		Speed: 68
+		Speed: 60
 		Locomotor: hover
 	Turreted:
 		TurnSpeed: 20
@@ -5119,7 +5119,7 @@ MLRS:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 		Condition: moving
 	FireWarheadsOnDeath:
-		Weapon: BarrelExplode
+		Weapon: UnitExplodeFlame
 	ReloadAmmoPool@1:
 		Delay: 120
 		Count: 2
@@ -5512,8 +5512,8 @@ FTNK:
 		PauseOnCondition: empdisable || being-warped || blinded || parachute
 		FacingTolerance: 0
 	FireWarheadsOnDeath:
-		Weapon: BarrelExplode
-		EmptyWeapon: BarrelExplode
+		Weapon: UnitExplodeFlame
+		EmptyWeapon: UnitExplodeFlame
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
@@ -5592,8 +5592,8 @@ HFTK:
 	Voiced:
 		VoiceSet: FlameTankVoice
 	FireWarheadsOnDeath:
-		Weapon: BarrelExplode
-		EmptyWeapon: BarrelExplode
+		Weapon: UnitExplodeFlame
+		EmptyWeapon: UnitExplodeFlame
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
@@ -8095,7 +8095,7 @@ V3RL:
 		Margin: 4, 3
 		RequiresSelection: true
 	FireWarheadsOnDeath:
-		Weapon: BarrelExplode
+		Weapon: UnitExplodeFlame
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
@@ -10276,7 +10276,7 @@ THWK:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 		Condition: moving
 	FireWarheadsOnDeath:
-		Weapon: BarrelExplode
+		Weapon: UnitExplodeFlame
 	Voiced:
 		VoiceSet: ThwkVoice
 	ProducibleWithLevel:
@@ -10705,6 +10705,8 @@ CUST:
 	TooltipExtras:
 		Weaknesses: • Unarmed
 		Attributes: • Repairs cyborgs and vehicles\n• Nearby cyborgs gain experience faster
+	Selectable:
+		DecorationBounds: 1536, 1536, 0, -128
 	Valued:
 		Cost: 1500
 	Tooltip:
