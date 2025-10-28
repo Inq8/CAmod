@@ -62,7 +62,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			var tooltipTextCached = new CachedTransform<int, string>((CurrentCount) =>
 			{
-				var tooltip = FluentProvider.GetMessage(CovenantLevel, "level", counter.CurrentCount);
+				var tooltip = FluentProvider.GetMessage(CovenantLevel, "level", CurrentCount);
 				tooltip += "\n\n";
 				tooltip += FluentProvider.GetMessage(CovenantDescription);
 				return tooltip;
