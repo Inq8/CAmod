@@ -9,6 +9,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Linq;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
 
@@ -40,6 +41,7 @@ namespace OpenRA.Mods.CA.Traits
 		INotifyCenterPositionChanged, INotifySold
 	{
 		public readonly AttachableToInfo Info;
+		INotifyAttachedTo[] notifyAttached;
 		public Carryable Carryable { get; private set; }
 		readonly Actor self;
 		readonly HashSet<Attachable> attached = new HashSet<Attachable>();
@@ -48,6 +50,9 @@ namespace OpenRA.Mods.CA.Traits
 		int attachedToken = Actor.InvalidConditionToken;
 		int limitToken = Actor.InvalidConditionToken;
 		bool reserved;
+
+		public Actor Actor => self;
+		public HashSet<Attachable> Attached => attached;
 
 		public AttachableTo(ActorInitializer init, AttachableToInfo info)
 		{
@@ -70,6 +75,7 @@ namespace OpenRA.Mods.CA.Traits
 		void INotifyCreated.Created(Actor self)
 		{
 			Carryable = self.TraitOrDefault<Carryable>();
+			notifyAttached = self.TraitsImplementing<INotifyAttachedTo>().ToArray();
 		}
 
 		void IResolveOrder.ResolveOrder(Actor self, Order order)
@@ -169,7 +175,7 @@ namespace OpenRA.Mods.CA.Traits
 			return true;
 		}
 
-		public bool Attach(Attachable attachable, bool ignoreReservation = false)
+		public bool Attach(Actor attachedActor, Attachable attachable, bool ignoreReservation = false)
 		{
 			if (!CanAttach(attachable, ignoreReservation))
 				return false;
@@ -185,10 +191,14 @@ namespace OpenRA.Mods.CA.Traits
 				limitToken = self.GrantCondition(Info.LimitCondition);
 
 			reserved = false;
+
+			foreach (var notify in notifyAttached)
+				notify.Attached(self, attachedActor, attachable);
+
 			return true;
 		}
 
-		public void Detach(Attachable attachable)
+		public void Detach(Actor detachedActor, Attachable attachable)
 		{
 			attached.Remove(attachable);
 			attachedCount--;
@@ -198,6 +208,9 @@ namespace OpenRA.Mods.CA.Traits
 
 			if (limitToken != Actor.InvalidConditionToken && (Info.Limit == 0 || attachedCount < Info.Limit))
 				limitToken = self.RevokeCondition(limitToken);
+
+			foreach (var notify in notifyAttached)
+				notify.Detached(self, detachedActor, attachable);
 		}
 
 		void INotifyStanceChanged.StanceChanged(Actor self, AutoTarget autoTarget, UnitStance oldStance, UnitStance newStance)

@@ -122,7 +122,7 @@ namespace OpenRA.Mods.CA.Warheads
 				if (positionable != null)
 					positionable.SetPosition(actorToAttach, targetCell);
 
-				var attached = targetTrait.Attach(actorToAttach.Trait<Attachable>());
+				var attached = targetTrait.Attach(actorToAttach, actorToAttach.Trait<Attachable>());
 				if (!attached)
 					actorToAttach.Dispose();
 			});

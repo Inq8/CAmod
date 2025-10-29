@@ -1905,6 +1905,9 @@ SPEC:
 		ColorSource: Player
 	Voiced:
 		VoiceSet: SpectreVoice
+	GrantConditionToAttached@Cloak:
+		Condition: inherited-cloak
+		RequiresCondition: hidden || invisibility
 	Encyclopedia:
 		Category: Nod/Vehicles
 	EncyclopediaExtras:
@@ -2010,6 +2013,9 @@ SAPC:
 	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || hidden
 		ColorSource: Player
+	GrantConditionToAttached@Cloak:
+		Condition: inherited-cloak
+		RequiresCondition: hidden || invisibility
 	ReplacedInQueue:
 		Actors: cust
 	Encyclopedia:
@@ -4606,6 +4612,19 @@ MDRN.Attached:
 		-BeingCapturedCondition:
 	ReclaimsExperience:
 		Type: mdrn
+	Cloak@NORMAL:
+		InitialDelay: 0
+		CloakDelay: 0
+		CloakStyle: Palette
+		CloakedPalette: cloak
+		IsPlayerPalette: false
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
+		RequiresCondition: inherited-cloak
+		PauseOnCondition: invisibility
+	Cloak@CRATE-CLOAK:
+		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || inherited-cloak)
+	ExternalCondition@CLOAK:
+		Condition: inherited-cloak
 	-Targetable@HACKABLE:
 	-MindControllable@HACKABLE:
 	-MindControllableProgressBar@HACKABLE:
@@ -5268,6 +5287,9 @@ STNK.Nod:
 		Voice: Move
 	AttackMove:
 		Voice: Attack
+	GrantConditionToAttached@Cloak:
+		Condition: inherited-cloak
+		RequiresCondition: hidden || invisibility
 	Encyclopedia:
 		Category: Nod/Vehicles
 
@@ -5377,6 +5399,9 @@ HSTK:
 		Voice: Move
 	AttackMove:
 		Voice: Attack
+	GrantConditionToAttached@Cloak:
+		Condition: inherited-cloak
+		RequiresCondition: hidden || invisibility
 	Encyclopedia:
 		Category: Nod/Vehicles
 	EncyclopediaExtras:
@@ -5630,6 +5655,10 @@ HFTK:
 HARV.TD:
 	Inherits@HarvesterBase: ^HarvesterBase
 	Inherits@TDPAL: ^TDPalette
+	WithDamageOverlay:
+		Image: smoke_mtd
+	Cloak@CRATE-CLOAK:
+		CloakedPalette: cloak
 	RenderSprites:
 		Image: harv2
 	Tooltip:
@@ -5686,6 +5715,9 @@ HARV.TD.UPG:
 		PauseOnCondition: invisibility
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
+	GrantConditionToAttached@Cloak:
+		Condition: inherited-cloak
+		RequiresCondition: hidden || invisibility
 	SpawnActorOnDeath:
 		Actor: HARV.TD.UPG.Husk
 	-GrantConditionOnPrerequisite@Stealth:
@@ -8026,6 +8058,9 @@ RTNK:
 	FirepowerMultiplier@Ambush:
 		Modifier: 150
 		RequiresCondition: hidden
+	GrantConditionToAttached@Cloak:
+		Condition: inherited-cloak
+		RequiresCondition: hidden || invisibility
 	Encyclopedia:
 		Category: Allies/Vehicles
 	EncyclopediaExtras:
@@ -9381,6 +9416,9 @@ BASI:
 	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || hidden
 		ColorSource: Player
+	GrantConditionToAttached@Cloak:
+		Condition: inherited-cloak
+		RequiresCondition: hidden || invisibility
 	Encyclopedia:
 		Category: Nod/Vehicles
 	EncyclopediaExtras:

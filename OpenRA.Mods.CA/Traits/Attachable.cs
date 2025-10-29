@@ -159,7 +159,7 @@ namespace OpenRA.Mods.CA.Traits
 		public void HostTransformed(Actor newActor)
 		{
 			var newAttachableTo = newActor.TraitsImplementing<AttachableTo>().FirstOrDefault(a => a.CanAttach(this));
-			if (newAttachableTo != null && newAttachableTo.Attach(this))
+			if (newAttachableTo != null && newAttachableTo.Attach(self, this))
 				return;
 
 			InitDetach();
@@ -246,7 +246,7 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			if (attachedTo != null)
 			{
-				attachedTo.Detach(this);
+				attachedTo.Detach(self, this);
 				attachedTo = null;
 			}
 
@@ -255,6 +255,16 @@ namespace OpenRA.Mods.CA.Traits
 
 			if (Info.DetachedCondition != null && detachedConditionToken == Actor.InvalidConditionToken)
 				detachedConditionToken = self.GrantCondition(Info.DetachedCondition);
+		}
+
+		public int GrantConditionFromAttachedTo(string condition)
+		{
+			return self.GrantCondition(condition);
+		}
+
+		public void RevokeConditionFromAttachedTo(int token)
+		{
+			self.RevokeCondition(token);
 		}
 
 		public void Stop()
