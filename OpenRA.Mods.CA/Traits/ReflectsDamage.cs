@@ -48,6 +48,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("If true, negative damage (repairs/heals) is also reflected.")]
 		public readonly bool ReflectsHealing = false;
 
+		[Desc("If true, damage modifiers on the target will be ignored when reflecting damage.")]
+		public readonly bool IgnoreModifiers = false;
+
 		public override object Create(ActorInitializer init) { return new ReflectsDamage(init, this); }
 	}
 
@@ -113,7 +116,7 @@ namespace OpenRA.Mods.CA.Traits
 				var health = unit.TraitOrDefault<IHealth>();
 
 				if (health != null)
-					health.InflictDamage(unit, unit, damage, true);
+					health.InflictDamage(unit, unit, damage, Info.IgnoreModifiers);
 			}
 		}
 

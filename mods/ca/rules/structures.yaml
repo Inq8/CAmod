@@ -3945,7 +3945,7 @@ HQ.UPG:
 	Tooltip:
 		Name: Internet Center
 	TooltipExtras:
-		Attributes: • Requires power to operate\n• Detects nearby enemy vehicles, aircraft and structures in fog of war\n• $25 delivered every 60 seconds (normal speed)\n• Income increased by $75 per garrisoned Hacker\n• Cannot be hacked
+		Attributes: • Requires power to operate\n• Detects nearby enemy vehicles, aircraft and structures in fog of war (increases per garrisoned Hacker)\n• $25 delivered every 60 seconds (normal speed)\n• Income increased by $75 per garrisoned Hacker\n• Cannot be hacked
 	RenderSprites:
 		PlayerPalette: playertd
 	-Targetable@HACKABLE:
@@ -6320,10 +6320,6 @@ TMPP:
 	Inherits@INF: ^ProducesCyborgs
 	Inherits@UPG: ^ProducesUpgrades
 	Inherits@TECHLOCKABLE: ^TechLockable
-	HitShape@TOP:
-		Type: Rectangle
-			TopLeft: -512, -1450
-			BottomRight: 896, -512
 	RenderSprites:
 		PlayerPalette: playertd
 	Selectable:
@@ -6332,7 +6328,7 @@ TMPP:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 512,0,0, -256,0,0, -256,1024,0, -256,-1024,0, -1536,0,0, -1536,1024,0, -1536,-1024,0
 		Type: Rectangle
-			TopLeft: -1536, -1024
+			TopLeft: -1536, -512
 			BottomRight: 1536, 1536
 	Building:
 		Footprint: ___ xxx xxx +++

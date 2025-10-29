@@ -2759,7 +2759,7 @@ NeutronCannon:
 		DamageTypes: ChronoDeath
 
 NeutronCannonBeam:
-	ValidTargets: Temporal, TemporalAir
+	ValidTargets: Temporal
 	ReloadDelay: 5
 	Range: 5c0
 	TargetActorCenter: true
@@ -2782,7 +2782,7 @@ NeutronCannonBeam:
 			Heavy: 0
 			Concrete: 0
 			Brick: 0
-		ValidTargets: Temporal, TemporalAir
+		ValidTargets: Temporal
 		DamageTypes: ChronoDeath
 
 NeutronCannonPulse:
@@ -2894,7 +2894,7 @@ DisruptorPulse:
 			Light: 30
 			Heavy: 15
 		ValidRelationships: Enemy, Neutral
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, FlakVestMitigatedMinor
 	Warhead@friendlyFire: SpreadDamage
 		Damage: 600
 		Versus:
@@ -2904,7 +2904,7 @@ DisruptorPulse:
 			Light: 30
 			Heavy: 15
 		ValidRelationships: Ally
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, FlakVestMitigatedMinor
 		InvalidTargets: Disruptor
 
 DisruptorPulse.Amp:

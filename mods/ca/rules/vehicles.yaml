@@ -48,7 +48,7 @@ V2RL:
 		Sequence: empty-idle
 		Name: reloading
 	FireWarheadsOnDeath:
-		Weapon: BarrelExplode
+		Weapon: UnitExplodeFlame
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
@@ -119,7 +119,7 @@ KATY:
 		FacingTolerance: 0
 		Voice: Attack
 	FireWarheadsOnDeath:
-		Weapon: BarrelExplode
+		Weapon: UnitExplodeFlame
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
@@ -3342,6 +3342,7 @@ GDRN:
 	Inherits@BERSERK: ^Berserk
 	Inherits@HACKABLE: ^Hackable
 	Inherits@UpgradeOverlay: ^UpgradeOverlay
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	RenderSprites:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
@@ -3352,7 +3353,7 @@ GDRN:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Buildings
 		Weaknesses: • Weak vs Infantry, Defenses\n• Cannot attack Aircraft
-		Attributes: • Detects cloaked units and spies\n• Immune to mind control
+		Attributes: • Detects cloaked units and spies\n• Immune to mind control\n• XP of losses reclaimed by replacements
 	Valued:
 		Cost: 450
 	Tooltip:
@@ -3423,6 +3424,7 @@ GDRN:
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 200
 		RequiresCondition: !mindcontrolled
+	ReclaimsExperience:
 	Sellable:
 		RequiresCondition: unit-sellable && !c4 && !being-warped
 	Encyclopedia:
@@ -3460,6 +3462,8 @@ GDRN.TOW:
 		SelectionBarColor: aaaaaa
 	Selectable:
 		Class: gdrn
+	ReclaimsExperience:
+		Type: gdrn
 	-ReplacedInQueue:
 	-Upgradeable@TOW:
 	-WithDecoration@UpgradeOverlay:
@@ -4347,7 +4351,7 @@ MTNK.Drone:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
 		Weaknesses: • Weak vs Infantry, Defenses\n• Cannot attack Aircraft
-		Attributes: • Self repairs to 50% out of combat\n• Immune to mind control\n• Requires active radar communication
+		Attributes: • Self repairs to 50% out of combat\n• Immune to mind control\n• Requires active radar communication\n• XP of losses reclaimed by replacements
 		-RequiresCondition:
 	-Tooltip@LaserTank:
 	-TooltipExtras@LaserTank:
@@ -4410,6 +4414,7 @@ MTNK.Drone:
 		Class: mtnk
 	Sellable:
 		RequiresCondition: unit-sellable && !c4 && !being-warped
+	ReclaimsExperience:
 	Encyclopedia:
 		Category: GDI/Vehicles
 	EncyclopediaExtras:
@@ -4457,6 +4462,7 @@ MDRN:
 	Inherits: ^Vehicle
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@HACKABLE: ^Hackable
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Tooltip:
 		Name: Mini Drone
 	Buildable:
@@ -4467,7 +4473,7 @@ MDRN:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
-		Attributes: • Attaches to vehicles to provide support and repairs\n• Immune to mind control
+		Attributes: • Attaches to vehicles to provide support and repairs\n• Immune to mind control\n• XP of losses reclaimed by replacements
 	Valued:
 		Cost: 225
 	UpdatesPlayerStatistics:
@@ -4546,6 +4552,7 @@ MDRN:
 	FireWarheadsOnDeath:
 		Weapon: VisualExplodeSmall
 		EmptyWeapon: VisualExplodeSmall
+	ReclaimsExperience:
 	Sellable:
 		RequiresCondition: unit-sellable && !c4 && !being-warped
 	Encyclopedia:
@@ -4597,6 +4604,8 @@ MDRN.Attached:
 		DamageCooldown: 50
 	CaptureManager:
 		-BeingCapturedCondition:
+	ReclaimsExperience:
+		Type: mdrn
 	-Targetable@HACKABLE:
 	-MindControllable@HACKABLE:
 	-MindControllableProgressBar@HACKABLE:
@@ -4606,6 +4615,17 @@ MDRN.Attached:
 	-ChronoshiftableCA:
 	-HealthCapDamageMultiplier@CHRONO:
 	-Encyclopedia:
+	-GrantConditionOnPrerequisite@NODRANK:
+	-GrantConditionOnPrerequisite@SCRINRANK:
+	-WithDecoration@RANK-1:
+	-WithDecoration@RANK-2:
+	-WithDecoration@RANK-ELITE:
+	-WithDecoration@NODRANK-1:
+	-WithDecoration@NODRANK-2:
+	-WithDecoration@NODRANK-ELITE:
+	-WithDecoration@SCRINRANK-1:
+	-WithDecoration@SCRINRANK-2:
+	-WithDecoration@SCRINRANK-ELITE:
 
 HTNK:
 	Inherits: ^TankTD
@@ -4750,7 +4770,7 @@ HTNK.Hover:
 	TooltipExtras:
 		Attributes: • Can traverse water\n• Self repairs to 50% out of combat\n• Afterburner ability (with upgrade)
 	Mobile:
-		Speed: 68
+		Speed: 60
 		Locomotor: hover
 	Turreted:
 		TurnSpeed: 20
@@ -4825,7 +4845,7 @@ HTNK.Drone:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
 		Weaknesses: • Requires active radar communication
-		Attributes: • Can crush concrete walls\n• Self repairs out of combat\n• Immune to mind control
+		Attributes: • Can crush concrete walls\n• Self repairs out of combat\n• Immune to mind control\n• XP of losses reclaimed by replacements
 	Valued:
 		Cost: 1500
 	Tooltip:
@@ -4873,6 +4893,7 @@ HTNK.Drone:
 	-Upgradeable@HOVER:
 	-Upgradeable@DRONE:
 	-WithDecoration@UpgradeOverlay:
+	ReclaimsExperience:
 	Sellable:
 		RequiresCondition: unit-sellable && !c4 && !being-warped
 	EncyclopediaExtras:
@@ -5098,7 +5119,7 @@ MLRS:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 		Condition: moving
 	FireWarheadsOnDeath:
-		Weapon: BarrelExplode
+		Weapon: UnitExplodeFlame
 	ReloadAmmoPool@1:
 		Delay: 120
 		Count: 2
@@ -5491,8 +5512,8 @@ FTNK:
 		PauseOnCondition: empdisable || being-warped || blinded || parachute
 		FacingTolerance: 0
 	FireWarheadsOnDeath:
-		Weapon: BarrelExplode
-		EmptyWeapon: BarrelExplode
+		Weapon: UnitExplodeFlame
+		EmptyWeapon: UnitExplodeFlame
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
@@ -5571,8 +5592,8 @@ HFTK:
 	Voiced:
 		VoiceSet: FlameTankVoice
 	FireWarheadsOnDeath:
-		Weapon: BarrelExplode
-		EmptyWeapon: BarrelExplode
+		Weapon: UnitExplodeFlame
+		EmptyWeapon: UnitExplodeFlame
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
@@ -8074,7 +8095,7 @@ V3RL:
 		Margin: 4, 3
 		RequiresSelection: true
 	FireWarheadsOnDeath:
-		Weapon: BarrelExplode
+		Weapon: UnitExplodeFlame
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
@@ -8973,7 +8994,7 @@ CHPR:
 		Weaknesses: • Weak vs Buildings\n• Cannot attack Aircraft
 		Attributes: • Target is disabled while being erased\n• Can crush concrete walls\n• Special Ability: Teleport (with upgrade)
 	Valued:
-		Cost: 1700
+		Cost: 1550
 	Tooltip:
 		Name: Chrono Prison
 		GenericName: Tank
@@ -10255,7 +10276,7 @@ THWK:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 		Condition: moving
 	FireWarheadsOnDeath:
-		Weapon: BarrelExplode
+		Weapon: UnitExplodeFlame
 	Voiced:
 		VoiceSet: ThwkVoice
 	ProducibleWithLevel:
@@ -10680,12 +10701,14 @@ CUST:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 272
 		Prerequisites: tmpl, ~vehicles.nod, ~cust.upgrade, ~techlevel.high
-		Description: Heavy transport and support unit pre-loaded with cyborgs.
+		Description: Heavy transport that repairs cyborgs and vehicles and empowers cyborg machine learning.
 	TooltipExtras:
 		Weaknesses: • Unarmed
-		Attributes: • Regenerates nearby cyborgs and vehicles
+		Attributes: • Repairs cyborgs and vehicles\n• Nearby cyborgs gain experience faster
+	Selectable:
+		DecorationBounds: 1536, 1536, 0, -128
 	Valued:
-		Cost: 2500
+		Cost: 1500
 	Tooltip:
 		Name: Custodian
 	UpdatesPlayerStatistics:
@@ -10694,7 +10717,7 @@ CUST:
 	Health:
 		HP: 70000
 	Mobile:
-		Speed: 46
+		Speed: 50
 		TurnSpeed: 16
 		Voice: Move
 	Voiced:
@@ -10719,7 +10742,6 @@ CUST:
 			bori: loaded-cmdo
 			yuri: loaded-cmdo
 			mast: loaded-cmdo
-		InitialUnits: N1C, N1C, N1C, N1C, N1C
 	WithCargoSounds:
 		EnterSounds: genter1a.aud
 		ExitSounds: gexit1a.aud
@@ -10764,6 +10786,18 @@ CUST:
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
 		Offset: -150,0,0
+	ProximityExternalCondition@MachineLearning:
+		Range: 6c0
+		Condition: machine-learning
+		ValidRelationships: Ally
+	WithRadiatingCircle@MachineLearning:
+		EndRadius: 6c0
+		Interval: 75
+		Duration: 50
+		ValidRelationships: Ally
+		AlwaysShowMaxRange: true
+		Color: 0040FF60
+		MaxRadiusColor: 0040FF80
 	GivesExperienceCA:
 		ActorExperienceModifier: 2000
 		PlayerExperienceModifier: 0

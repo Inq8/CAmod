@@ -209,9 +209,11 @@ OncePerSecondChecks = function()
 
 		if not PlayerHasBuildings(MaleficScrin) then
 			Greece.MarkCompletedObjective(ObjectiveDestroyScrinBases)
-			LeftGateway.Kill()
-			RightGateway.Kill()
-			MiddleGateway.Kill()
+			Utils.Do({ LeftGateway, RightGateway, MiddleGateway }, function(g)
+				if not g.IsDead then
+					g.Kill()
+				end
+			end)
 		end
 
 		if Greece.IsObjectiveCompleted(ObjectiveDestroyScrinBases) and #MaleficScrin.GetActorsByTypes({ "veng" }) == 0 then

@@ -320,7 +320,7 @@ end
 DoShoreSAMFlare = function()
 	Trigger.AfterDelay(DateTime.Seconds(4), function()
 		ShoreSAMFlare = Actor.Create("flare", true, { Owner = Greece, Location = ShoreSAMFlareLocation })
-		Notification("Signal flare detected. A shore SAM Site has been located.")
+		Notification("Signal flare detected. A shore SAM Site has been located. Press [" .. UtilsCA.Hotkey("ToLastEvent") .. "] to view location.")
 		MediaCA.PlaySound(MissionDir .. "/r_samlocated.aud", 2)
 		Beacon.New(Greece, ShoreSAMBeaconPosition)
 		Trigger.AfterDelay(DateTime.Seconds(10), function()
@@ -426,7 +426,7 @@ DropChronoPrison = function()
 	Media.PlaySpeechNotification(Greece, "SignalFlare")
 
 	Trigger.AfterDelay(DateTime.Seconds(1), function()
-		Notification("Signal flare detected. Reinforcements inbound.")
+		Notification("Signal flare detected. Press [" .. UtilsCA.Hotkey("ToLastEvent") .. "] to view location.")
 		Beacon.New(Greece, CarryallDropPoint.CenterPosition)
 	end)
 

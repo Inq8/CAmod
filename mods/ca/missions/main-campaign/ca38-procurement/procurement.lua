@@ -251,7 +251,7 @@ InitWeaponsCache = function(withOutpostFlare)
 			Trigger.AfterDelay(DateTime.Seconds(5), function()
 				local outpostFlare = Actor.Create("flare", true, { Owner = USSR, Location = GDIOutpostFlare.Location })
 				Media.PlaySpeechNotification(USSR, "SignalFlare")
-				Notification("Signal flare detected.")
+				Notification("Signal flare detected. Press [" .. UtilsCA.Hotkey("ToLastEvent") .. "] to view location.")
 				Beacon.New(USSR, GDIOutpostFlare.CenterPosition)
 
 				Trigger.OnEnteredProximityTrigger(GDIOutpostFlare.CenterPosition, WDist.New(6 * 1024), function(a, id)

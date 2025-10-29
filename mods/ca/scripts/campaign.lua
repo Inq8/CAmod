@@ -480,7 +480,8 @@ PlayerBuildingsCount = function(player)
 	local buildings = Utils.Where(player.GetActors(), function(a)
 		return a.HasProperty("StartBuildingRepairs") and not a.HasProperty("Attack") and a.Type ~= "silo" and a.Type ~= "silo.td" and a.Type ~= "silo.scrin"
 	end)
-	return #buildings
+	local mcvs = player.GetActorsByTypes(McvTypes)
+	return #buildings + #mcvs
 end
 
 MissionPlayersHaveNoRequiredUnits = function()
