@@ -497,11 +497,11 @@ end
 GoodSpread = function()
 	Trigger.AfterDelay(5, GoodSpread)
 	if Stopspread ~= true then
-		local attackers = InitialCoopUnitsOwner.GetGroundAttackers()
+		local attackers = Utils.Where(InitialCoopUnitsOwner.GetActors(), function(a) return a.HasProperty("Move") and not a.HasProperty("Land") end)
 
 		if #attackers >= 1 then
 			if WeightedSpread ~= true then
-			AssignToCoopPlayers(InitialCoopUnitsOwner.GetGroundAttackers())
+			AssignToCoopPlayers(attackers)
 			else
 			--WeightedAssignToCoopPlayers(InitialCoopUnitsOwner.GetGroundAttackers())
 			end
@@ -1592,7 +1592,7 @@ CoopInit25 = function(mission)
     end
 
 	if InitialCoopUnitsOwner and Stopspread ~= true then
-		local initialUnits = MainPlayer.GetGroundAttackers()
+		local initialUnits = Utils.Where(MainPlayer.GetActors(), function(a) return a.HasProperty("Move") and not a.HasProperty("Land") end)
 
 		Utils.Do(initialUnits, function(unit)
 			unit.Owner = InitialCoopUnitsOwner

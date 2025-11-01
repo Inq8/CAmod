@@ -1,4 +1,8 @@
 
+DefinePlayers = function()
+
+end
+
 AfterWorldLoaded = function()
 
 end
