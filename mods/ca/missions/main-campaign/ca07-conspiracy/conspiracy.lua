@@ -247,7 +247,7 @@ WorldLoaded = function()
 							Trigger.OnPassengerEntered(transport, function(t, passenger)
 								if t.PassengerCount == 2 then
 									EvacExiting = true
-									Media.PlaySpeechNotification(nil, "TargetRescued")
+									PlaySpeechNotificationToMissionPlayers("TargetRescued")
 									t.Move(EvacSpawn.Location)
 									t.Destroy()
 									Trigger.AfterDelay(DateTime.Seconds(4), function()

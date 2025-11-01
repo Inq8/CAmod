@@ -146,7 +146,7 @@ InitNod = function()
 end
 
 InitMcv = function()
-	Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+	PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 	Notification("Reinforcements have arrived.")
     local entryPath = { CarryallSpawn.Location, CarryallDest.Location }
     local exitPath =  { CarryallSpawn.Location }

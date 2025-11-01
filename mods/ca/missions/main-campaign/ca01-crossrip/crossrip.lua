@@ -216,7 +216,7 @@ WorldLoaded = function()
 
 	Trigger.AfterDelay(DateTime.Seconds(2), function()
 		BaseFlare = Actor.Create("flare", true, { Owner = Greece, Location = DeploySuggestion.Location })
-		Media.PlaySpeechNotification(nil, "SignalFlare")
+		PlaySpeechNotificationToMissionPlayers("SignalFlare")
 		Notification("Signal flare detected. Press [" .. UtilsCA.Hotkey("ToLastEvent") .. "] to view location.")
 		Beacon.New(Greece, DeploySuggestion.CenterPosition)
 		Trigger.AfterDelay(DateTime.Seconds(2), function()

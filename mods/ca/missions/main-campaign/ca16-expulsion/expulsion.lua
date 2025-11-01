@@ -96,7 +96,7 @@ WorldLoaded = function()
 	local initialAttackers = { InitialAttacker1, InitialAttacker2, InitialAttacker3, InitialAttacker4, InitialAttacker5, InitialAttacker6 }
 
 	Trigger.AfterDelay(DateTime.Seconds(8), function()
-		Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+		PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 		Notification("Reinforcements have arrived.")
 		Reinforcements.Reinforce(USSR, { "mcv" }, { McvSpawn.Location, McvRally.Location }, 75)
 		McvArrived = true

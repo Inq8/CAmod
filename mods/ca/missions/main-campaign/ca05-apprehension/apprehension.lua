@@ -250,7 +250,7 @@ InitNod = function()
 end
 
 InitLongbows = function()
-	Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+	PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 	Notification("Air support inbound.")
 	local targets = { Obelisk3, Obelisk1, Obelisk2, Turret1, Turret2 }
 	local delay = DateTime.Seconds(2)

@@ -132,7 +132,7 @@ LabGuardsKilled = function()
 
 	Trigger.AfterDelay(DateTime.Seconds(4), function()
 		Actor.Create(FlareType, true, { Owner = England, Location = ExtractionFlarePoint.Location })
-		Media.PlaySpeechNotification(nil, "SignalFlare")
+		PlaySpeechNotificationToMissionPlayers("SignalFlare")
 		SendExtractionHelicopter()
 	end)
 
@@ -229,12 +229,12 @@ LabDestroyed = function()
 end
 
 RescueFailed = function()
-	Media.PlaySpeechNotification(nil, "ObjectiveNotMet")
+	PlaySpeechNotificationToMissionPlayers("ObjectiveNotMet")
 	Greece.MarkFailedObjective(EinsteinSurviveObjective)
 end
 
 TanyaKilledInAction = function()
-	Media.PlaySpeechNotification(nil, "ObjectiveNotMet")
+	PlaySpeechNotificationToMissionPlayers("ObjectiveNotMet")
 	Greece.MarkFailedObjective(TanyaSurviveObjective)
 end
 
@@ -244,12 +244,12 @@ CreateEinstein = function()
 	Einstein.Scatter()
 	Trigger.OnKilled(Einstein, RescueFailed)
 	ExtractObjective = Greece.AddObjective("Bring Einstein to the extraction point and board\nthe transport helicopter.")
-	Trigger.AfterDelay(DateTime.Seconds(1), function() Media.PlaySpeechNotification(nil, "TargetFreed") end)
+	Trigger.AfterDelay(DateTime.Seconds(1), function() PlaySpeechNotificationToMissionPlayers("TargetFreed") end)
 end
 
 HelicopterGone = function()
 	if not Heli.IsDead then
-		Media.PlaySpeechNotification(nil, "TargetRescued")
+		PlaySpeechNotificationToMissionPlayers("TargetRescued")
 		Trigger.AfterDelay(DateTime.Seconds(1), function()
 			Greece.MarkCompletedObjective(ExtractObjective)
 			Greece.MarkCompletedObjective(EinsteinSurviveObjective)

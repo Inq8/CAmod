@@ -92,7 +92,7 @@ WorldLoaded = function()
 		if not McvRequested then
 			McvRequested = true
 			Trigger.AfterDelay(DateTime.Seconds(5), function()
-				Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+				PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 				Notification("Reinforcements have arrived.")
 				Reinforcements.Reinforce(USSR, { "mcv" }, { McvSpawn.Location, McvRally.Location })
 				Beacon.New(USSR, McvRally.CenterPosition)
@@ -250,7 +250,7 @@ InitWeaponsCache = function(withOutpostFlare)
 		if withOutpostFlare then
 			Trigger.AfterDelay(DateTime.Seconds(5), function()
 				local outpostFlare = Actor.Create("flare", true, { Owner = USSR, Location = GDIOutpostFlare.Location })
-				Media.PlaySpeechNotification(nil, "SignalFlare")
+				PlaySpeechNotificationToMissionPlayers("SignalFlare")
 				Notification("Signal flare detected. Press [" .. UtilsCA.Hotkey("ToLastEvent") .. "] to view location.")
 				Beacon.New(USSR, GDIOutpostFlare.CenterPosition)
 

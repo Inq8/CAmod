@@ -99,7 +99,7 @@ WorldLoaded = function()
 	ObjectiveNeutralizeDomes = Greece.AddSecondaryObjective("Neutralize Soviet Radar Domes.")
 
 	Trigger.AfterDelay(DateTime.Seconds(1), function()
-		Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+		PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 		Notification("Reinforcements have arrived.")
 		Reinforcements.Reinforce(Greece, { "lst.mcv" }, { ReinforcementSpawn.Location, ReinforcementDest.Location }, 75)
 		Beacon.New(Greece, ReinforcementDest.CenterPosition)
