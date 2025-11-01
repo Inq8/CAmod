@@ -104,7 +104,7 @@ namespace OpenRA.Mods.CA.Traits
 				if (attachable == null)
 					return;
 
-				var attached = attachableToTrait.Attach(attachable);
+				var attached = attachableToTrait.Attach(actorToAttach, attachable);
 
 				if (!attached && actorToAttach != infiltrator)
 					actorToAttach.Dispose();

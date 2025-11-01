@@ -75,7 +75,7 @@ namespace OpenRA.Mods.CA.Traits
 					return;
 				}
 
-				var attached = attachableToTrait.Attach(attachable);
+				var attached = attachableToTrait.Attach(actorToAttach, attachable);
 
 				if (!attached)
 					actorToAttach.Dispose();
