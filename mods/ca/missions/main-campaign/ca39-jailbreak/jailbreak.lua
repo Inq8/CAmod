@@ -293,7 +293,7 @@ PathCleared = function()
 		McvRequested = true
 
 		Trigger.AfterDelay(DateTime.Seconds(5), function()
-			Media.PlaySpeechNotification(USSR, "ReinforcementsArrived")
+			Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
 			Notification("Reinforcements have arrived.")
 			Reinforcements.Reinforce(USSR, { "mcv" }, { McvSpawn.Location, McvRally.Location })
 			Beacon.New(USSR, McvRally.CenterPosition)
@@ -308,7 +308,7 @@ end
 
 SendLandingCraft = function()
 	Trigger.AfterDelay(DateTime.Seconds(4), function()
-		Media.PlaySpeechNotification(USSR, "ReinforcementsArrived")
+		Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
 		Notification("Reinforcements have arrived.")
 		Beacon.New(USSR, LandingCraftSpawn.CenterPosition)
 		Reinforcements.Reinforce(USSR, { "ss" }, { SubSpawn1.Location, SubRally1.Location })

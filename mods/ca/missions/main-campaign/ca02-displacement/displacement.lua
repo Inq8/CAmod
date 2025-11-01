@@ -268,7 +268,7 @@ InitConvoy = function()
 
 	-- Spawn and announce flare
 	ConvoyFlare = Actor.Create("flare", true, { Owner = Greece, Location = nextConvoy.FlareWaypoint.Location })
-	Media.PlaySpeechNotification(Greece, "SignalFlare")
+	Media.PlaySpeechNotification(nil, "SignalFlare")
 	Beacon.New(Greece, nextConvoy.FlareWaypoint.CenterPosition)
 
 	if not FirstConvoyAnnounced then
@@ -291,7 +291,7 @@ InitConvoy = function()
 	Trigger.AfterDelay(TimerTicks, function()
 		ConvoyFlare.Destroy()
 		UpdateConvoyCountdown()
-		Media.PlaySpeechNotification(Greece, "ConvoyApproaching")
+		Media.PlaySpeechNotification(nil, "ConvoyApproaching")
 		Notification("Convoy approaching.")
 		CurrentConvoyArrivalComplete = false
 
@@ -314,8 +314,8 @@ InitConvoy = function()
 			Trigger.OnKilled(truck, function(self, killer)
 				TrucksLost = TrucksLost + 1
 				TrucksLostCurrentConvoy = TrucksLostCurrentConvoy + 1
-				Media.PlaySpeechNotification(Greece, "ConvoyUnitLost")
-				Media.PlaySoundNotification(Greece, "AlertBuzzer")
+				Media.PlaySpeechNotification(nil, "ConvoyUnitLost")
+				Media.PlaySoundNotification(nil, "AlertBuzzer")
 
 				if TimerTicks == 0 then
 					UpdateConvoyCountdown()
@@ -420,7 +420,7 @@ end
 NavalReinforcements = function()
 	if not NavalReinforcementsArrived then
 		NavalReinforcementsArrived = true
-		Media.PlaySpeechNotification(Greece, "ReinforcementsArrived")
+		Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
 		Beacon.New(Greece, DestroyerSpawn1.CenterPosition)
 		Reinforcements.Reinforce(Greece, { "dd" }, { DestroyerSpawn1.Location, DestroyerRally1.Location })
 		Reinforcements.Reinforce(Greece, { "dd" }, { DestroyerSpawn2.Location, DestroyerRally2.Location })

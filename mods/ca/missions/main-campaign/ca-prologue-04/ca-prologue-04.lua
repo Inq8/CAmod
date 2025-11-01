@@ -127,7 +127,7 @@ WarpInBanshees = function()
 		end)
 
 		Trigger.AfterDelay(DateTime.Seconds(2), function()
-			Media.PlaySpeechNotification(Nod, "ReinforcementsArrived")
+			Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
 			Notification("Reinforcements have arrived.")
 
 			Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(3)), function()

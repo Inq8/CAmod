@@ -258,7 +258,7 @@ WorldLoaded = function()
 						end)
 
 						Trigger.OnPassengerEntered(transport, function(t, passenger)
-							Media.PlaySpeechNotification(Greece, "TargetRescued")
+							Media.PlaySpeechNotification(nil, "TargetRescued")
 							t.Move(GDIReinforcementsEntry.Location)
 							t.Destroy()
 							Trigger.AfterDelay(DateTime.Seconds(7), function()
@@ -355,7 +355,7 @@ GDIBaseFound = function()
 
 		Trigger.AfterDelay(HoldOutTime[Difficulty] - DateTime.Seconds(20), function()
 			McvFlare = Actor.Create("flare", true, { Owner = Greece, Location = McvRally.Location })
-			Media.PlaySpeechNotification(Greece, "SignalFlare")
+			Media.PlaySpeechNotification(nil, "SignalFlare")
 			Notification("Signal flare detected, reinforcements inbound. Press [" .. UtilsCA.Hotkey("ToLastEvent") .. "] to view location.")
 			Beacon.New(Greece, McvRally.CenterPosition)
 			Trigger.AfterDelay(DateTime.Seconds(20), function()
@@ -369,7 +369,7 @@ GDIBaseFound = function()
 
 		if IsNormalOrBelow() then
 			Trigger.AfterDelay(DateTime.Seconds(792), function()
-				Media.PlaySpeechNotification(Greece, "ReinforcementsArrived")
+				Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
 				Beacon.New(Greece, GDIReinforcementsEntry.CenterPosition)
 				local gdiReinforcements = { "mtnk", "htnk" }
 				if Difficulty == "easy" then
@@ -419,7 +419,7 @@ HoldOutComplete = function()
 
 		if ObjectiveCapturePrison == nil or not Greece.IsObjectiveCompleted(ObjectiveCapturePrison) then
 			Trigger.AfterDelay(DateTime.Seconds(1), function()
-				Media.PlaySpeechNotification(Greece, "ReinforcementsArrived")
+				Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
 				Notification("Reinforcements have arrived.")
 				Reinforcements.Reinforce(Greece, { "2tnk", "mcv", "2tnk" }, { McvEntry.Location, McvRally.Location }, 75)
 				Beacon.New(Greece, McvRally.CenterPosition)
@@ -622,7 +622,7 @@ NavalReinforcements = function()
 				destroyers = { "dd", "dd", "dd", "dd" }
 			end
 
-			Media.PlaySpeechNotification(Greece, "ReinforcementsArrived")
+			Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
 			Beacon.New(Greece, CruiserSpawn.CenterPosition)
 			Reinforcements.Reinforce(Greece, cruisers, { CruiserSpawn.Location, CruiserDestination.Location }, 75)
 			Reinforcements.Reinforce(Greece, destroyers, { DestroyerSpawn.Location, DestroyerDestination.Location }, 75)

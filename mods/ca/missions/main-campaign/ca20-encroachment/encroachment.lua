@@ -148,7 +148,7 @@ WorldLoaded = function()
 				local wormhole = Actor.Create("wormhole", true, { Owner = Scrin, Location = group.Waypoint.Location })
 
 				Trigger.AfterDelay(DateTime.Seconds(2), function()
-					Media.PlaySpeechNotification(Scrin, "ReinforcementsArrived")
+					Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
 					Notification("Reinforcements have arrived.")
 					Beacon.New(Scrin, group.Waypoint.CenterPosition)
 

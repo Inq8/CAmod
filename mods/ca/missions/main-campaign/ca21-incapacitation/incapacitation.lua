@@ -415,7 +415,7 @@ SpawnLeechers = function()
 	Beacon.New(Scrin, LeecherSpawn.CenterPosition, DateTime.Seconds(20))
 
 	Trigger.AfterDelay(DateTime.Seconds(2), function()
-		Media.PlaySpeechNotification(Scrin, "ReinforcementsArrived")
+		Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
 
 		local leecherSquad = { "lchr", "lchr" }
 		if IsHardOrAbove() then
@@ -440,7 +440,7 @@ SpawnIntruders = function()
 	Beacon.New(Scrin, IntruderSpawn.CenterPosition, DateTime.Seconds(20))
 
 	Trigger.AfterDelay(DateTime.Seconds(2), function()
-		Media.PlaySpeechNotification(Scrin, "ReinforcementsArrived")
+		Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
 		local intruderSquad = { "s4", "s4", "s4", "s4", "s4", "s4" }
 
 		if IsHardOrAbove() then

@@ -235,7 +235,7 @@ WorldLoaded = function()
 			end
 			NukeDummy.Destroy()
 			Media.PlaySound("nukelaunch.aud")
-			Media.PlaySpeechNotification(Greece, "AbombLaunchDetected")
+			Media.PlaySpeechNotification(nil, "AbombLaunchDetected")
 			Notification("A-Bomb launch detected.")
 
 			Trigger.AfterDelay(DateTime.Seconds(15), function()
@@ -423,7 +423,7 @@ end
 
 DropChronoPrison = function()
 	ChronoPrisonFlare = Actor.Create("flare", true, { Owner = Greece, Location = CarryallDropPoint.Location })
-	Media.PlaySpeechNotification(Greece, "SignalFlare")
+	Media.PlaySpeechNotification(nil, "SignalFlare")
 
 	Trigger.AfterDelay(DateTime.Seconds(1), function()
 		Notification("Signal flare detected. Press [" .. UtilsCA.Hotkey("ToLastEvent") .. "] to view location.")

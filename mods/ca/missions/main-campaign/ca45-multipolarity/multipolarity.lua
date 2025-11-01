@@ -391,7 +391,7 @@ FlipAlliedBase = function()
 
 	Trigger.AfterDelay(McvDelayTime[Difficulty], function()
 		Beacon.New(Greece, McvDest.CenterPosition)
-		Media.PlaySpeechNotification(Greece, "ReinforcementsArrived")
+		Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
 		Notification("Reinforcements have arrived.")
 		Reinforcements.Reinforce(Greece, { "mcv" }, { McvSpawn.Location, McvDest.Location }, 75)
 		Actor.Create("mcv.allowed", true, { Owner = Greece })

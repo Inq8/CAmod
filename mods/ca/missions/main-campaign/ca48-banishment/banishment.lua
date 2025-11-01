@@ -321,7 +321,7 @@ SecureBase = function(baseCenter)
 				Beacon.New(Greece, McvReveal.CenterPosition)
 				Notification("Abandoned MCV located. Press [" .. UtilsCA.Hotkey("ToLastEvent") .. "] to view.")
 			else
-				Media.PlaySpeechNotification(Greece, "ReinforcementsArrived")
+				Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
 				Notification("Reinforcements have arrived. Press [" .. UtilsCA.Hotkey("ToLastEvent") .. "] to view location.")
 				Reinforcements.Reinforce(Greece, { "lst.mcv" }, { McvSpawn.Location, McvDest.Location }, 75)
 				Beacon.New(Greece, McvDest.CenterPosition)
