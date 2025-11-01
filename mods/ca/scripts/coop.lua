@@ -497,11 +497,11 @@ end
 GoodSpread = function()
 	Trigger.AfterDelay(5, GoodSpread)
 	if Stopspread ~= true then
-		local attackers = Utils.Where(InitialCoopUnitsOwner.GetActors(), function(a) return a.HasProperty("Move") and not a.HasProperty("Land") end)
+		local attackers = Utils.Where(InitialCoopUnitsOwner.GetActors(), function(a) return a.HasProperty("Move") and not a.HasProperty("Land") and not IsMcv(a) end)
 
 		if #attackers >= 1 then
 			if WeightedSpread ~= true then
-			AssignToCoopPlayers(attackers)
+				AssignToCoopPlayers(attackers)
 			else
 			--WeightedAssignToCoopPlayers(InitialCoopUnitsOwner.GetGroundAttackers())
 			end
@@ -1569,7 +1569,7 @@ CoopInit25 = function(mission)
 	--Media.DisplayMessage(mainEnemies[1].InternalName .. " is the Main Enemy after compatibility layer.")
 	--Media.DisplayMessage(Dummyplayer.InternalName .. " is the Dummy Player after compatibility layer.")
 
-	CoopPlayers = { MainPlayer, Multi1, Multi2, Multi3, Multi4, Multi5 }
+	CoopPlayers = MissionPlayers
 	CoopPlayers = Utils.Where(CoopPlayers, function(player)
 		return player ~= nil
 	end)
@@ -1592,7 +1592,7 @@ CoopInit25 = function(mission)
     end
 
 	if InitialCoopUnitsOwner and Stopspread ~= true then
-		local initialUnits = Utils.Where(MainPlayer.GetActors(), function(a) return a.HasProperty("Move") and not a.HasProperty("Land") end)
+		local initialUnits = Utils.Where(MainPlayer.GetActors(), function(a) return a.HasProperty("Move") and not a.HasProperty("Land") and not IsMcv(a) end)
 
 		Utils.Do(initialUnits, function(unit)
 			unit.Owner = InitialCoopUnitsOwner
