@@ -111,7 +111,7 @@ Squads = {
 
 -- Setup and Tick
 
-DefinePlayers = function()
+SetupPlayers = function()
 	Greece = Player.GetPlayer("Greece")
 	England = Player.GetPlayer("England")
 	Scrin = Player.GetPlayer("Scrin")
@@ -122,7 +122,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	TimerTicks = 0
 	TrucksLost = 0

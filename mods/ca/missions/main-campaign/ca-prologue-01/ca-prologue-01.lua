@@ -13,7 +13,7 @@ OpeningAttack = { Patrol1, Patrol2, Patrol3, Patrol4 }
 Responders = { Response1, Response2, Response3, Response4, Response5 }
 LabGuardsTeam = { LabGuard1, LabGuard2, LabGuard3 }
 
-DefinePlayers = function()
+SetupPlayers = function()
 	Greece = Player.GetPlayer("Greece")
 	England = Player.GetPlayer("England")
 	USSR = Player.GetPlayer("USSR")
@@ -24,7 +24,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 	InitObjectives(Greece)
 
 	FindEinsteinObjective = Greece.AddObjective("Find Einstein.")

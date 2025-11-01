@@ -4,7 +4,7 @@ Difficulty = "easy"
 
 -- Setup and Tick
 
-DefinePlayers = function()
+SetupPlayers = function()
 	GDI = Player.GetPlayer("GDI")
 	USSR = Player.GetPlayer("USSR")
 	HiddenGDI = Player.GetPlayer("HiddenGDI")
@@ -14,7 +14,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	TimerTicks = 0
 	GroupsFound = {}

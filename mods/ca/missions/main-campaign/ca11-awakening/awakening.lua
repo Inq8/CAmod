@@ -168,7 +168,7 @@ AirAttackCompositions = {
 
 -- Setup and Tick
 
-DefinePlayers = function()
+SetupPlayers = function()
 	Nod = Player.GetPlayer("Nod")
 	USSR = Player.GetPlayer("USSR")
 	MissionPlayers = { Nod }
@@ -176,7 +176,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	TimerTicks = HoldOutTime[Difficulty]
 	CyborgWaves = 0

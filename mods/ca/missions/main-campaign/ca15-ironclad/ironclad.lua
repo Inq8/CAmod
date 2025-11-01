@@ -60,7 +60,7 @@ AutoAttackStartTime = {
 	brutal = DateTime.Minutes(7)
 }
 
-DefinePlayers = function()
+SetupPlayers = function()
 	USSR = Player.GetPlayer("USSR")
 	GDI = Player.GetPlayer("GDI")
 	Greece = Player.GetPlayer("Greece")
@@ -69,7 +69,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	TimerTicks = 0
 	SiegeLosses = 0

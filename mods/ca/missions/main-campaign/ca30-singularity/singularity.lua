@@ -121,7 +121,7 @@ HackersDelay = {
 	brutal = DateTime.Minutes(2)
 }
 
-DefinePlayers = function()
+SetupPlayers = function()
 	GDI = Player.GetPlayer("GDI")
 	Greece = Player.GetPlayer("Greece")
 	USSR = Player.GetPlayer("USSR")
@@ -140,7 +140,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	TimerTicks = 0
 	Camera.Position = PlayerStart.CenterPosition
