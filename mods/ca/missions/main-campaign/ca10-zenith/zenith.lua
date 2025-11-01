@@ -149,7 +149,7 @@ WorldLoaded = function()
 			end
 			NukeDummy.Destroy()
 			Media.PlaySound("nukelaunch.aud")
-			Media.PlaySpeechNotification(Nod, "AbombLaunchDetected")
+			Media.PlaySpeechNotification(nil, "AbombLaunchDetected")
 			Notification("A-Bomb launch detected.")
 
 			Trigger.AfterDelay(DateTime.Seconds(3), function()

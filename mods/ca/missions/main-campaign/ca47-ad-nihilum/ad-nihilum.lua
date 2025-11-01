@@ -158,7 +158,7 @@ WorldLoaded = function()
 	ObjectiveStopVoidEngines = Greece.AddObjective("Prevent Void Engines from breaking through.")
 
 	Trigger.AfterDelay(DateTime.Seconds(4), function()
-		Media.PlaySpeechNotification(Greece, "ReinforcementsArrived")
+		Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
 		Notification("Reinforcements have arrived.")
 		Reinforcements.Reinforce(Greece, { "mcv" }, { McvSpawn1.Location, McvDest1.Location }, 75)
 		Reinforcements.Reinforce(Greece, { "mcv" }, { McvSpawn2.Location, McvDest2.Location }, 75)
@@ -188,7 +188,7 @@ WorldLoaded = function()
 		if a.Type == "veng" then
 			a.Destroy()
 			Notification("A Void Engine has broken through.")
-			Media.PlaySoundNotification(Greece, "AlertBuzzer")
+			Media.PlaySoundNotification(nil, "AlertBuzzer")
 			Greece.MarkFailedObjective(ObjectiveStopVoidEngines)
 		end
 	end)

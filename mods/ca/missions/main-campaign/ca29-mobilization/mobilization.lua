@@ -297,7 +297,7 @@ SendReinforcements = function()
 
 	local reinforcements = Reinforcements.Reinforce(GDI, units, path, 50)
 	ReinforcementFlare.Destroy()
-	Media.PlaySpeechNotification(GDI, "ReinforcementsArrived")
+	Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
 	Notification("Reinforcements have arrived.")
 	Beacon.New(GDI, Map.CenterOfCell(flareLoc))
 

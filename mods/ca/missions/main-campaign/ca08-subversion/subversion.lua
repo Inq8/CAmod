@@ -293,7 +293,7 @@ CommandoDeathTrigger = function(commando)
 			Trigger.AfterDelay(DateTime.Seconds(20), function()
 				Commando = Reinforcements.Reinforce(Nod, { "rmbo" }, { Respawn.Location, RespawnRally.Location })[1]
 				Beacon.New(Nod, RespawnRally.CenterPosition)
-				Media.PlaySpeechNotification(Nod, "ReinforcementsArrived")
+				Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
 				if IsNormalOrBelow() then
 					Commando.GrantCondition("difficulty-" .. Difficulty)
 				end
@@ -311,7 +311,7 @@ HackerDeathTrigger = function(hacker)
 				Trigger.AfterDelay(DateTime.Seconds(20), function()
 					Hacker = Reinforcements.Reinforce(Nod, { "hack" }, { Respawn.Location, RespawnRally.Location })[1]
 					Beacon.New(Nod, RespawnRally.CenterPosition)
-					Media.PlaySpeechNotification(Nod, "ReinforcementsArrived")
+					Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
 					if IsNormalOrBelow() then
 						Hacker.GrantCondition("difficulty-" .. Difficulty)
 					end
@@ -332,7 +332,7 @@ StealthTankDeathTrigger = function(stealthTank)
 				Trigger.AfterDelay(DateTime.Seconds(20), function()
 					StealthTank = Reinforcements.Reinforce(Nod, { "stnk.nod" }, { Respawn.Location, RespawnRally.Location })[1]
 					Beacon.New(Nod, RespawnRally.CenterPosition)
-					Media.PlaySpeechNotification(Nod, "ReinforcementsArrived")
+					Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
 					if IsNormalOrBelow() then
 						StealthTank.GrantCondition("difficulty-" .. Difficulty)
 					end

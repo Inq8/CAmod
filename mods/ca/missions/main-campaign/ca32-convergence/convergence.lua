@@ -315,7 +315,7 @@ SendFleetWave = function()
 			local ships = Reinforcements.Reinforce(Scrin, { shipType }, { entry, exit }, 25, function(self)
 				self.Destroy()
 				NumBreakthroughs = NumBreakthroughs + 1
-				Media.PlaySoundNotification(GDI, "AlertBuzzer")
+				Media.PlaySoundNotification(nil, "AlertBuzzer")
 				Notification("A Scrin fleet vessel has broken through.")
 			end)
 			if IsNormalOrBelow() then
