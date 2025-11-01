@@ -85,7 +85,7 @@ Squads = {
 	},
 }
 
-DefinePlayers = function()
+SetupPlayers = function()
 	USSR = Player.GetPlayer("USSR")
 	Nod = Player.GetPlayer("Nod")
 	NodAbandoned = Player.GetPlayer("NodAbandoned")
@@ -95,7 +95,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	TimerTicks = 0
 	NodAbandoned.Cash = 0

@@ -96,7 +96,7 @@ Squads = {
 
 -- Setup and Tick
 
-DefinePlayers = function()
+SetupPlayers = function()
 	Nod = Player.GetPlayer("Nod")
 	USSR = Player.GetPlayer("USSR")
 	USSRUnits = Player.GetPlayer("USSRUnits")
@@ -105,7 +105,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	TimerTicks = 0
 	Camera.Position = PlayerStart.CenterPosition
@@ -149,7 +149,7 @@ WorldLoaded = function()
 			end
 			NukeDummy.Destroy()
 			Media.PlaySound("nukelaunch.aud")
-			Media.PlaySpeechNotification(nil, "AbombLaunchDetected")
+			PlaySpeechNotificationToMissionPlayers("AbombLaunchDetected")
 			Notification("A-Bomb launch detected.")
 
 			Trigger.AfterDelay(DateTime.Seconds(3), function()

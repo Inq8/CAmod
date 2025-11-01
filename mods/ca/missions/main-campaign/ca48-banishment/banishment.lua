@@ -87,7 +87,7 @@ Squads = {
 	AirToAir = AirToAirSquad({ "stmr", "enrv", "torm" }, AdjustAirDelayForDifficulty(DateTime.Minutes(10))),
 }
 
-DefinePlayers = function()
+SetupPlayers = function()
 	Greece = Player.GetPlayer("Greece")
 	MaleficScrin = Player.GetPlayer("MaleficScrin")
 	England = Player.GetPlayer("England")
@@ -97,7 +97,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	Camera.Position = PlayerStart.CenterPosition
 	NumBasesSecured = 0
@@ -321,7 +321,7 @@ SecureBase = function(baseCenter)
 				Beacon.New(Greece, McvReveal.CenterPosition)
 				Notification("Abandoned MCV located. Press [" .. UtilsCA.Hotkey("ToLastEvent") .. "] to view.")
 			else
-				Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+				PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 				Notification("Reinforcements have arrived. Press [" .. UtilsCA.Hotkey("ToLastEvent") .. "] to view location.")
 				Reinforcements.Reinforce(Greece, { "lst.mcv" }, { McvSpawn.Location, McvDest.Location }, 75)
 				Beacon.New(Greece, McvDest.CenterPosition)

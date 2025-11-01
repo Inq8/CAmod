@@ -90,7 +90,7 @@ Squads = {
 	},
 }
 
-DefinePlayers = function()
+SetupPlayers = function()
 	Scrin = Player.GetPlayer("Scrin")
 	USSR = Player.GetPlayer("USSR")
 	MissionPlayers = { Scrin }
@@ -98,7 +98,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	TimerTicks = 0
 	TibFacilitiesCaptured = 0
@@ -367,7 +367,7 @@ RespawnMastermind = function()
 		Beacon.New(Scrin, PlayerStart.CenterPosition, DateTime.Seconds(20))
 
 		Trigger.AfterDelay(DateTime.Seconds(2), function()
-			Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+			PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 			Mastermind = Reinforcements.Reinforce(Scrin, { "mast" }, { PlayerStart.Location }, 1)[1]
 			Mastermind.Scatter()
 

@@ -150,7 +150,7 @@ Squads = {
 	}
 }
 
-DefinePlayers = function()
+SetupPlayers = function()
 	Scrin = Player.GetPlayer("Scrin")
 	USSR = Player.GetPlayer("USSR")
 	USSRUnmanned = Player.GetPlayer("USSRUnmanned")
@@ -159,7 +159,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	IslandAirfieldsEliminated = false
 	IslandSAMsDestroyed = false
@@ -181,7 +181,7 @@ WorldLoaded = function()
 	ObjectiveDestroySAMs = Scrin.AddSecondaryObjective("Destroy front line of Soviet SAM Sites.")
 
 	Trigger.AfterDelay(DateTime.Seconds(5), function()
-		Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+		PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 		Notification("Reinforcements have arrived.")
 		Reinforcements.Reinforce(Scrin, { "devo" }, { ScrinReinforce1Spawn.Location, ScrinReinforce1Dest.Location }, 75)
 		Reinforcements.Reinforce(Scrin, { "devo" }, { ScrinReinforce2Spawn.Location, ScrinReinforce2Dest.Location }, 75)
@@ -228,7 +228,7 @@ WorldLoaded = function()
 
 		Trigger.AfterDelay(DateTime.Seconds(5), function()
 			Notification("Reinforcements have arrived.")
-			Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+			PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 			Reinforcements.Reinforce(Scrin, { "pac" }, { ScrinReinforce1Spawn.Location, ScrinReinforce1Dest.Location }, 75)
 			Reinforcements.Reinforce(Scrin, { "pac" }, { ScrinReinforce2Spawn.Location, ScrinReinforce2Dest.Location }, 75)
 		end)
@@ -375,7 +375,7 @@ end
 DevastatorReinforcements = function()
 	Trigger.AfterDelay(DateTime.Seconds(5), function()
 		Notification("Reinforcements have arrived.")
-		Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+		PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 		Reinforcements.Reinforce(Scrin, { "deva" }, { ScrinReinforce1Spawn.Location, ScrinReinforce1Dest.Location }, 75)
 		Reinforcements.Reinforce(Scrin, { "deva" }, { ScrinReinforce2Spawn.Location, ScrinReinforce2Dest.Location }, 75)
 	end)

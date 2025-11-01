@@ -26,7 +26,7 @@ Squads = {
 	}
 }
 
-DefinePlayers = function()
+SetupPlayers = function()
     GDI = Player.GetPlayer("GDI")
 	Scrin = Player.GetPlayer("Scrin")
 	Nod = Player.GetPlayer("Nod")
@@ -35,7 +35,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
     Camera.Position = PlayerStart.CenterPosition
 
@@ -146,7 +146,7 @@ InitNod = function()
 end
 
 InitMcv = function()
-	Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+	PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 	Notification("Reinforcements have arrived.")
     local entryPath = { CarryallSpawn.Location, CarryallDest.Location }
     local exitPath =  { CarryallSpawn.Location }

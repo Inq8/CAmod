@@ -99,7 +99,7 @@ Squads = {
 	}
 }
 
-DefinePlayers = function()
+SetupPlayers = function()
 	Scrin = Player.GetPlayer("Scrin")
 	Greece = Player.GetPlayer("Greece")
 	GDI = Player.GetPlayer("GDI")
@@ -108,7 +108,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	Camera.Position = PlayerStart.CenterPosition
 
@@ -148,7 +148,7 @@ WorldLoaded = function()
 				local wormhole = Actor.Create("wormhole", true, { Owner = Scrin, Location = group.Waypoint.Location })
 
 				Trigger.AfterDelay(DateTime.Seconds(2), function()
-					Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+					PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 					Notification("Reinforcements have arrived.")
 					Beacon.New(Scrin, group.Waypoint.CenterPosition)
 

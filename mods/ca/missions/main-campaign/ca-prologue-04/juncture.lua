@@ -23,7 +23,7 @@ Squads = {
 
 -- Setup and Tick
 
-DefinePlayers = function()
+SetupPlayers = function()
 	GDI = Player.GetPlayer("GDI")
 	Nod = Player.GetPlayer("Nod")
 	MissionPlayers = { Nod }
@@ -31,7 +31,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	Camera.Position = PlayerStart.CenterPosition
 	WarpInBeaconPos = RocksToRemove1.CenterPosition
@@ -127,7 +127,7 @@ WarpInBanshees = function()
 		end)
 
 		Trigger.AfterDelay(DateTime.Seconds(2), function()
-			Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+			PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 			Notification("Reinforcements have arrived.")
 
 			Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(3)), function()

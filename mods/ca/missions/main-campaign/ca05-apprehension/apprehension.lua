@@ -31,7 +31,7 @@ Squads = {
 
 -- Setup and Tick
 
-DefinePlayers = function()
+SetupPlayers = function()
 	Greece = Player.GetPlayer("Greece")
 	Nod = Player.GetPlayer("Nod")
 	Neutral = Player.GetPlayer("Neutral")
@@ -41,7 +41,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	TimerTicks = 0
 	local samsRemaining = Nod.GetActorsByType("nsam")
@@ -250,7 +250,7 @@ InitNod = function()
 end
 
 InitLongbows = function()
-	Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+	PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 	Notification("Air support inbound.")
 	local targets = { Obelisk3, Obelisk1, Obelisk2, Turret1, Turret2 }
 	local delay = DateTime.Seconds(2)

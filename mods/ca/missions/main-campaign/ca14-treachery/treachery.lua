@@ -64,7 +64,7 @@ Squads = {
 	}
 }
 
-DefinePlayers = function()
+SetupPlayers = function()
 	USSR = Player.GetPlayer("USSR")
 	Greece = Player.GetPlayer("Greece")
 	Traitor = Player.GetPlayer("Traitor")
@@ -74,7 +74,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	TimerTicks = 0
 	Camera.Position = PlayerStart.CenterPosition
@@ -117,7 +117,7 @@ WorldLoaded = function()
 					local islandFlare = Actor.Create("flare", true, { Owner = USSR, Location = ReinforcementsDestination.Location })
 					Trigger.AfterDelay(DateTime.Seconds(10), islandFlare.Destroy)
 					Beacon.New(USSR, ReinforcementsDestination.CenterPosition)
-					Media.PlaySpeechNotification(nil, "SignalFlare")
+					PlaySpeechNotificationToMissionPlayers("SignalFlare")
 				end)
 			end
 		end
@@ -168,7 +168,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnAllKilled({ TraitorSAM1, TraitorSAM2 }, function()
-		Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+		PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 		HaloDropper.TargetParatroopers(EastParadrop1.CenterPosition, Angle.West)
 
 		Trigger.AfterDelay(DateTime.Seconds(2), function()
@@ -294,7 +294,7 @@ TraitorTechCenterDiscovered = function()
 	local traitorTechCenterFlare = Actor.Create("flare", true, { Owner = USSR, Location = TraitorTechCenterFlare.Location })
 	Trigger.AfterDelay(DateTime.Seconds(10), traitorTechCenterFlare.Destroy)
 	Beacon.New(USSR, TraitorTechCenterFlare.CenterPosition)
-	Media.PlaySpeechNotification(nil, "SignalFlare")
+	PlaySpeechNotificationToMissionPlayers("SignalFlare")
 
 	if ObjectiveCaptureTraitorTechCenter == nil then
 		ObjectiveCaptureTraitorTechCenter = USSR.AddSecondaryObjective("Capture Traitor's Tech Center.")
@@ -331,7 +331,7 @@ AbandonedBaseDiscovered = function()
 	end)
 
 	Trigger.AfterDelay(ReinforcementsDelay[Difficulty], function()
-		Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+		PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 		Beacon.New(USSR, ReinforcementsDestination.CenterPosition)
 		local reinforcements = { "4tnk", "4tnk", "v3rl", "v3rl", "btr" }
 		if IsHardOrAbove() then
@@ -341,7 +341,7 @@ AbandonedBaseDiscovered = function()
 	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(30), function()
-		Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+		PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 		ShockDropper.TargetParatroopers(AbandonedBaseCenter.CenterPosition, Angle.SouthWest)
 	end)
 end

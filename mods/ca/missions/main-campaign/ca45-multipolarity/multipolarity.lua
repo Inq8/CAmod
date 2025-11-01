@@ -146,7 +146,7 @@ Squads = {
 	}
 }
 
-DefinePlayers = function()
+SetupPlayers = function()
 	Greece = Player.GetPlayer("Greece")
 	GDI = Player.GetPlayer("GDI")
 	Scrin = Player.GetPlayer("Scrin")
@@ -159,7 +159,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	Camera.Position = PlayerStart.CenterPosition
 
@@ -391,7 +391,7 @@ FlipAlliedBase = function()
 
 	Trigger.AfterDelay(McvDelayTime[Difficulty], function()
 		Beacon.New(Greece, McvDest.CenterPosition)
-		Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+		PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 		Notification("Reinforcements have arrived.")
 		Reinforcements.Reinforce(Greece, { "mcv" }, { McvSpawn.Location, McvDest.Location }, 75)
 		Actor.Create("mcv.allowed", true, { Owner = Greece })

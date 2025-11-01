@@ -497,6 +497,12 @@ MissionPlayersHaveNavalPresence = function()
 	return count > 4
 end
 
+PlaySpeechNotificationToMissionPlayers = function(notification)
+	Utils.Do(MissionPlayers, function(p)
+		Media.PlaySpeechNotification(p, notification)
+	end)
+end
+
 UpdatePlayerBaseLocations = function()
 	if #MissionPlayers == 0 then
 		return false

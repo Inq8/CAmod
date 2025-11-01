@@ -68,7 +68,7 @@ Squads = {
 	AirToAir = AirToAirSquad({ "scrn", "apch", "venm" }, AdjustAirDelayForDifficulty(DateTime.Minutes(10))),
 }
 
-DefinePlayers = function()
+SetupPlayers = function()
 	USSR = Player.GetPlayer("USSR")
 	Nod = Player.GetPlayer("Nod")
 	SpyPlaneProvider = Player.GetPlayer("SpyPlaneProvider")
@@ -78,7 +78,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	TimerTicks = 0
 	NumFactoriesCaptured = 0
@@ -153,7 +153,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(5), function()
-		Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+		PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 		Notification("Reinforcements have arrived.")
 		Reinforcements.Reinforce(USSR, { "kiro" }, { KirovSpawn1.Location, KirovRally1.Location })
 		Reinforcements.Reinforce(USSR, { "kiro" }, { KirovSpawn2.Location, KirovRally2.Location })

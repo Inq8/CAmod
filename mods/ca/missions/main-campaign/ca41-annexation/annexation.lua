@@ -66,7 +66,7 @@ Squads = {
 
 -- Setup and Tick
 
-DefinePlayers = function()
+SetupPlayers = function()
 	USSR = Player.GetPlayer("USSR")
 	Nod = Player.GetPlayer("Nod")
 	Scrin = Player.GetPlayer("Scrin")
@@ -80,7 +80,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	TimerTicks = DateTime.Minutes(3)
 	NumTransmittersCaptured = 0
@@ -305,7 +305,7 @@ InitSignalTransmittersObjective = function()
 				Trigger.AfterDelay(DateTime.Seconds(3), function()
 					local wormhole = SpawnWormhole(wormholeLoc)
 					Trigger.AfterDelay(DateTime.Seconds(3), function()
-						Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+						PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 						Notification("Reinforcements have arrived.")
 						InitScrinReinforcements(wormhole)
 						FleetRecall(transmitterLocation)

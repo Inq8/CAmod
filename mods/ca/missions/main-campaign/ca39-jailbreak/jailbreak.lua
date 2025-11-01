@@ -66,7 +66,7 @@ Squads = {
 
 -- Setup and Tick
 
-DefinePlayers = function()
+SetupPlayers = function()
 	USSR = Player.GetPlayer("USSR")
 	Greece = Player.GetPlayer("Greece")
 	GreeceNorth = Player.GetPlayer("GreeceNorth")
@@ -78,7 +78,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	TimerTicks = 0
 	Camera.Position = PlayerStart.CenterPosition
@@ -293,7 +293,7 @@ PathCleared = function()
 		McvRequested = true
 
 		Trigger.AfterDelay(DateTime.Seconds(5), function()
-			Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+			PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 			Notification("Reinforcements have arrived.")
 			Reinforcements.Reinforce(USSR, { "mcv" }, { McvSpawn.Location, McvRally.Location })
 			Beacon.New(USSR, McvRally.CenterPosition)
@@ -308,7 +308,7 @@ end
 
 SendLandingCraft = function()
 	Trigger.AfterDelay(DateTime.Seconds(4), function()
-		Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+		PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 		Notification("Reinforcements have arrived.")
 		Beacon.New(USSR, LandingCraftSpawn.CenterPosition)
 		Reinforcements.Reinforce(USSR, { "ss" }, { SubSpawn1.Location, SubRally1.Location })

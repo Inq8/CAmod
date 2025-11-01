@@ -29,7 +29,7 @@ Squads = {
 
 -- Setup and Tick
 
-DefinePlayers = function()
+SetupPlayers = function()
 	Greece = Player.GetPlayer("Greece")
 	USSR = Player.GetPlayer("USSR")
 	Civilians = Player.GetPlayer("Civilians")
@@ -39,7 +39,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	TimerTicks = 0
 	Camera.Position = McvRally.CenterPosition
@@ -51,14 +51,14 @@ WorldLoaded = function()
 	ObjectiveDestroyBase = USSR.AddObjective("Destroy the Allied base.")
 
 	Trigger.AfterDelay(DateTime.Seconds(2), function()
-		Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+		PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 		Notification("Reinforcements have arrived.")
 		Reinforcements.Reinforce(USSR, { "mcv" }, { McvSpawn.Location, McvRally.Location })
 	end)
 
 	Trigger.AfterDelay(DateTime.Minutes(1), function()
 		local villageFlare = Actor.Create("flare", true, { Owner = USSR, Location = VillageCenter.Location })
-		Media.PlaySpeechNotification(nil, "SignalFlare")
+		PlaySpeechNotificationToMissionPlayers("SignalFlare")
 		Notification("Signal flare detected. Press [" .. UtilsCA.Hotkey("ToLastEvent") .. "] to view location.")
 		Beacon.New(USSR, VillageCenter.CenterPosition)
 		Trigger.AfterDelay(DateTime.Minutes(5), villageFlare.Destroy)

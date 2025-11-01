@@ -153,7 +153,7 @@ Squads = {
 	}
 }
 
-DefinePlayers = function()
+SetupPlayers = function()
 	Nod = Player.GetPlayer("Nod")
 	Scrin = Player.GetPlayer("Scrin")
 	ScrinRebels = Player.GetPlayer("ScrinRebels")
@@ -164,7 +164,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	NextExterminatorIndex = 1
 	Camera.Position = PlayerStart.CenterPosition

@@ -4,7 +4,7 @@ Difficulty = "easy"
 
 -- Setup and Tick
 
-DefinePlayers = function()
+SetupPlayers = function()
 	GDI = Player.GetPlayer("GDI")
 	USSR = Player.GetPlayer("USSR")
 	HiddenGDI = Player.GetPlayer("HiddenGDI")
@@ -14,7 +14,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	TimerTicks = 0
 	GroupsFound = {}
@@ -86,7 +86,7 @@ WorldLoaded = function()
 
 					Trigger.AfterDelay(DateTime.Seconds(4), function()
 						Actor.Create("flare", true, { Owner = GDI, Location = SignalFlare.Location })
-						Media.PlaySpeechNotification(nil, "SignalFlare")
+						PlaySpeechNotificationToMissionPlayers("SignalFlare")
 						Notification("Signal flare detected. Press [" .. UtilsCA.Hotkey("ToLastEvent") .. "] to view location.")
 						Beacon.New(GDI, SignalFlare.CenterPosition)
 					end)

@@ -48,7 +48,7 @@ Squads = {
 
 -- Setup and Tick
 
-DefinePlayers = function()
+SetupPlayers = function()
 	Nod = Player.GetPlayer("Nod")
 	Nod2 = Player.GetPlayer("Nod2")
 	Nod3 = Player.GetPlayer("Nod3")
@@ -59,7 +59,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	TimerTicks = 0
 	Camera.Position = PlayerStart.CenterPosition

@@ -132,7 +132,7 @@ Squads = {
 	}
 }
 
-DefinePlayers = function()
+SetupPlayers = function()
 	GDI = Player.GetPlayer("GDI")
 	Nod = Player.GetPlayer("Nod")
 	MissionPlayers = { GDI }
@@ -140,7 +140,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	EnforceAiBuildRadius = true
 	Camera.Position = PlayerStart.CenterPosition
@@ -176,7 +176,7 @@ WorldLoaded = function()
 
 	Trigger.AfterDelay(HoldOutTime[Difficulty] - DateTime.Seconds(20), function()
 		local mcvFlare = Actor.Create("flare", true, { Owner = GDI, Location = McvRally.Location })
-		Media.PlaySpeechNotification(nil, "SignalFlare")
+		PlaySpeechNotificationToMissionPlayers("SignalFlare")
 		Notification("Signal flare detected. Reinforcements inbound.")
 		Beacon.New(GDI, McvRally.CenterPosition)
 		Trigger.AfterDelay(DateTime.Seconds(20), function()
@@ -185,7 +185,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.AfterDelay(HoldOutTime[Difficulty], function()
-		Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+		PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 		Notification("Reinforcements have arrived.")
 		Reinforcements.Reinforce(GDI, { "hmmv", "mtnk", "amcv", "mtnk" }, { McvSpawn.Location, McvRally.Location }, 75)
 		Beacon.New(GDI, McvRally.CenterPosition)

@@ -72,7 +72,7 @@ Squads = {
 	}
 }
 
-DefinePlayers = function()
+SetupPlayers = function()
 	Greece = Player.GetPlayer("Greece")
 	USSR = Player.GetPlayer("USSR")
 	Scrin = Player.GetPlayer("Scrin")
@@ -83,7 +83,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	TicksUntilBombingRun = BombingRunInterval[Difficulty]
 
@@ -99,7 +99,7 @@ WorldLoaded = function()
 	ObjectiveNeutralizeDomes = Greece.AddSecondaryObjective("Neutralize Soviet Radar Domes.")
 
 	Trigger.AfterDelay(DateTime.Seconds(1), function()
-		Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+		PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 		Notification("Reinforcements have arrived.")
 		Reinforcements.Reinforce(Greece, { "lst.mcv" }, { ReinforcementSpawn.Location, ReinforcementDest.Location }, 75)
 		Beacon.New(Greece, ReinforcementDest.CenterPosition)

@@ -95,7 +95,7 @@ Squads = {
 	},
 }
 
-DefinePlayers = function()
+SetupPlayers = function()
 	Scrin = Player.GetPlayer("Scrin")
 	GDI = Player.GetPlayer("GDI")
 	TibLifeforms = Player.GetPlayer("TibLifeforms")
@@ -104,7 +104,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	TimerTicks = 0
 	WavesRemaining = #WaveSpawns

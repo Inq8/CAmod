@@ -84,7 +84,7 @@ ContinuousSpawnFrequency = {
 	brutal = DateTime.Seconds(35)
 }
 
-DefinePlayers = function()
+SetupPlayers = function()
 	Scrin = Player.GetPlayer("Scrin")
 	Nod = Player.GetPlayer("Nod")
 	TibLifeforms = Player.GetPlayer("TibLifeforms")
@@ -94,7 +94,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	TimerTicks = 0
 	FragmentsAcquired = {}

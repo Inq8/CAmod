@@ -53,7 +53,7 @@ Squads = {
 	},
 }
 
-DefinePlayers = function()
+SetupPlayers = function()
 	USSR = Player.GetPlayer("USSR")
 	Nod = Player.GetPlayer("Nod")
 	MissionPlayers = { USSR }
@@ -61,7 +61,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	TimerTicks = 0
 	TempleOfNodLocation = TempleOfNod.Location

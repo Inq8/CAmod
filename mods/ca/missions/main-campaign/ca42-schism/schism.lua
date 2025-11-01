@@ -117,7 +117,7 @@ Squads = {
 
 -- Setup and Tick
 
-DefinePlayers = function()
+SetupPlayers = function()
 	USSR = Player.GetPlayer("USSR")
 	Scrin = Player.GetPlayer("Scrin")
 	Nod = Player.GetPlayer("Nod")
@@ -131,7 +131,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	TimerTicks = PurificationInterval
 	IronCurtainIntegrityTicksRemaining = DateTime.Minutes(25)
@@ -179,7 +179,7 @@ WorldLoaded = function()
 				spyPlaneDummy1.TargetAirstrike(Purifier.CenterPosition, Angle.NorthEast)
 				spyPlaneDummy1.Destroy()
 
-				Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+				PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 				Notification("Reinforcements have arrived.")
 				Reinforcements.Reinforce(USSR, { "kiro" }, { KirovSpawn1.Location, KirovRally1.Location })
 				Reinforcements.Reinforce(USSR, { "kiro" }, { KirovSpawn2.Location, KirovRally2.Location })

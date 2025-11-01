@@ -150,7 +150,7 @@ Squads = {
 	},
 }
 
-DefinePlayers = function()
+SetupPlayers = function()
 	Scrin = Player.GetPlayer("Scrin")
 	Nod = Player.GetPlayer("Nod")
 	MissionPlayers = { Scrin }
@@ -158,7 +158,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	TimerTicks = MaintenanceDuration[Difficulty]
 	FieldsClearedAndBeingHarvested = 0
@@ -201,7 +201,7 @@ WorldLoaded = function()
 	Utils.Do(AirReinforcements, function(r)
 		Trigger.OnAllKilled(r.SAMSites, function()
 			Trigger.AfterDelay(DateTime.Seconds(2), function()
-				Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+				PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 				Notification("Reinforcements have arrived.")
 				Beacon.New(Scrin, r.Spawn.CenterPosition)
 				Reinforcements.Reinforce(Scrin, { "stmr" }, { r.Spawn.Location, r.Dest.Location }, 25)
@@ -318,7 +318,7 @@ CheckFields = function()
 				local wormhole = Actor.Create("wormhole", true, { Owner = Scrin, Location = field.Waypoint.Location })
 
 				Trigger.AfterDelay(DateTime.Seconds(2), function()
-					Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+					PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 					Notification("Reinforcements have arrived.")
 					Beacon.New(Scrin, field.Waypoint.CenterPosition)
 
@@ -391,7 +391,7 @@ DoReinforcements = function()
 	local wormhole = Actor.Create("wormhole", true, { Owner = Scrin, Location = reinforcementsWaypoint.Location })
 
 	Trigger.AfterDelay(DateTime.Seconds(2), function()
-		Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+		PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 		Notification("Reinforcements have arrived.")
 		Beacon.New(Scrin, reinforcementsWaypoint.CenterPosition)
 
@@ -415,7 +415,7 @@ CheckColonyPlatform = function()
 			local wormhole = Actor.Create("wormhole", true, { Owner = Scrin, Location = McvReplace.Location })
 
 			Trigger.AfterDelay(DateTime.Seconds(2), function()
-				Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+				PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 				Notification("Reinforcements have arrived.")
 				Beacon.New(Scrin, McvReplace.CenterPosition)
 				ColonyPlatformBeingReplaced = false

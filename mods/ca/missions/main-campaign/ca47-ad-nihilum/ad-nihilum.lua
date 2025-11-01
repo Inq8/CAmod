@@ -136,7 +136,7 @@ Squads = {
 	),
 }
 
-DefinePlayers = function()
+SetupPlayers = function()
 	Greece = Player.GetPlayer("Greece")
 	MaleficScrin = Player.GetPlayer("MaleficScrin")
 	Neutral = Player.GetPlayer("Neutral")
@@ -145,7 +145,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	Camera.Position = PlayerStart.CenterPosition
 
@@ -158,7 +158,7 @@ WorldLoaded = function()
 	ObjectiveStopVoidEngines = Greece.AddObjective("Prevent Void Engines from breaking through.")
 
 	Trigger.AfterDelay(DateTime.Seconds(4), function()
-		Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+		PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 		Notification("Reinforcements have arrived.")
 		Reinforcements.Reinforce(Greece, { "mcv" }, { McvSpawn1.Location, McvDest1.Location }, 75)
 		Reinforcements.Reinforce(Greece, { "mcv" }, { McvSpawn2.Location, McvDest2.Location }, 75)

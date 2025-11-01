@@ -72,7 +72,7 @@ Squads = {
 	AirToAir = AirToAirSquad({ "scrn", "apch", "venm" }, AdjustAirDelayForDifficulty(DateTime.Minutes(12)))
 }
 
-DefinePlayers = function()
+SetupPlayers = function()
 	Greece = Player.GetPlayer("Greece")
 	Nod = Player.GetPlayer("Nod")
 	Neutral = Player.GetPlayer("Neutral")
@@ -81,7 +81,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	Camera.Position = PlayerStart.CenterPosition
 

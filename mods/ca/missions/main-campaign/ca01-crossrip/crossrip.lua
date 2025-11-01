@@ -178,7 +178,7 @@ Squads = {
 
 -- Setup and Tick
 
-DefinePlayers = function()
+SetupPlayers = function()
 	Greece = Player.GetPlayer("Greece")
 	USSR = Player.GetPlayer("USSR")
 	Scrin = Player.GetPlayer("Scrin")
@@ -188,7 +188,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	TimerTicks = 0
 	Camera.Position = PlayerMcv.CenterPosition
@@ -216,7 +216,7 @@ WorldLoaded = function()
 
 	Trigger.AfterDelay(DateTime.Seconds(2), function()
 		BaseFlare = Actor.Create("flare", true, { Owner = Greece, Location = DeploySuggestion.Location })
-		Media.PlaySpeechNotification(nil, "SignalFlare")
+		PlaySpeechNotificationToMissionPlayers("SignalFlare")
 		Notification("Signal flare detected. Press [" .. UtilsCA.Hotkey("ToLastEvent") .. "] to view location.")
 		Beacon.New(Greece, DeploySuggestion.CenterPosition)
 		Trigger.AfterDelay(DateTime.Seconds(2), function()

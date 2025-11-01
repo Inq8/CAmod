@@ -81,7 +81,7 @@ Squads = {
 	}
 }
 
-DefinePlayers = function()
+SetupPlayers = function()
 	Scrin = Player.GetPlayer("Scrin")
 	Greece = Player.GetPlayer("Greece")
 	GDI = Player.GetPlayer("GDI")
@@ -90,7 +90,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	TimerTicks = 0
 	StormsEnded = false
@@ -415,7 +415,7 @@ SpawnLeechers = function()
 	Beacon.New(Scrin, LeecherSpawn.CenterPosition, DateTime.Seconds(20))
 
 	Trigger.AfterDelay(DateTime.Seconds(2), function()
-		Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+		PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 
 		local leecherSquad = { "lchr", "lchr" }
 		if IsHardOrAbove() then
@@ -440,7 +440,7 @@ SpawnIntruders = function()
 	Beacon.New(Scrin, IntruderSpawn.CenterPosition, DateTime.Seconds(20))
 
 	Trigger.AfterDelay(DateTime.Seconds(2), function()
-		Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+		PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 		local intruderSquad = { "s4", "s4", "s4", "s4", "s4", "s4" }
 
 		if IsHardOrAbove() then

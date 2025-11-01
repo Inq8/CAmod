@@ -80,7 +80,7 @@ Squads = {
 
 -- Setup and Tick
 
-DefinePlayers = function()
+SetupPlayers = function()
 	USSR = Player.GetPlayer("USSR")
 	Nod1 = Player.GetPlayer("Nod1")
 	Nod2 = Player.GetPlayer("Nod2")
@@ -91,7 +91,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	if Difficulty ~= "easy" then
 		TimerTicks = TimeLimit[Difficulty]

@@ -79,7 +79,7 @@ Squads = {
 	}
 }
 
-DefinePlayers = function()
+SetupPlayers = function()
 	GDI = Player.GetPlayer("GDI")
 	Scrin = Player.GetPlayer("Scrin")
 	Nod = Player.GetPlayer("Nod")
@@ -90,7 +90,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	LastScrinProduction = 0
 	ReinforcementGroupIndex = 1
@@ -297,7 +297,7 @@ SendReinforcements = function()
 
 	local reinforcements = Reinforcements.Reinforce(GDI, units, path, 50)
 	ReinforcementFlare.Destroy()
-	Media.PlaySpeechNotification(nil, "ReinforcementsArrived")
+	PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 	Notification("Reinforcements have arrived.")
 	Beacon.New(GDI, Map.CenterOfCell(flareLoc))
 

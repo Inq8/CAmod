@@ -74,7 +74,7 @@ Squads = {
 
 -- Setup and Tick
 
-DefinePlayers = function()
+SetupPlayers = function()
 	Scrin = Player.GetPlayer("Scrin")
 	ScrinNoControl = Player.GetPlayer("ScrinNoControl")
 	USSR = Player.GetPlayer("USSR")
@@ -85,7 +85,7 @@ DefinePlayers = function()
 end
 
 WorldLoaded = function()
-	DefinePlayers()
+	SetupPlayers()
 
 	TimerTicks = 0
 	Camera.Position = PlayerStart.CenterPosition
