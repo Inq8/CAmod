@@ -87,12 +87,12 @@ namespace OpenRA.Mods.CA.Traits
 
 		void ITick.Tick(Actor self)
 		{
-			var isProducing = IsProducing();
+			var isProducing = !IsTraitDisabled && IsProducing();
 
-			if (!IsTraitDisabled || (isProducing && !wasProducing))
-				GrantCondition();
-			else if (IsTraitDisabled || (!isProducing && wasProducing))
+			if (!isProducing && wasProducing)
 				RevokeCondition();
+			else if (isProducing && !wasProducing)
+				GrantCondition();
 
 			wasProducing = isProducing;
 		}
