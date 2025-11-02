@@ -124,7 +124,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		void Terminate()
 		{
-			foreach (var attachable in attached)
+			foreach (var attachable in attached.ToArray())
 			{
 				if (attachable.IsValid)
 					attachable.HostLost();
