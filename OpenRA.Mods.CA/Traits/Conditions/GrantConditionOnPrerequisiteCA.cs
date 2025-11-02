@@ -64,12 +64,12 @@ namespace OpenRA.Mods.CA.Traits
 
 		public void PrerequisitesUpdated(Actor self, bool available)
 		{
-			if (available == wasAvailable)
-				return;
-
 			// fix for CA - only difference to standard GrantConditionOnPrerequisite is this part is wrapped in an AddFrameEndTask
 			self.World.AddFrameEndTask(w =>
 			{
+				if (available == wasAvailable)
+					return;
+
 				if (available && conditionToken == Actor.InvalidConditionToken)
 					conditionToken = self.GrantCondition(info.Condition);
 				else if (!available && conditionToken != Actor.InvalidConditionToken)

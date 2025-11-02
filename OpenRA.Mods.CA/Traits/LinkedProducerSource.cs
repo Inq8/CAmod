@@ -157,7 +157,13 @@ namespace OpenRA.Mods.Common.Traits
 				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", info.TargetSetNotification, self.Owner.Faction.InternalName);
 				TextNotificationsManager.AddTransientLine(self.Owner, info.TargetSetTextNotification);
 
-				return new Order(order.OrderID, self, target, queued);
+				var selectedWithTrait = self.World.Selection.Actors
+					.Where(a => a.Owner == self.Owner
+						&& !a.IsDead
+						&& a.Info.HasTraitInfo<LinkedProducerSourceInfo>())
+					.ToArray();
+
+				return new Order(order.OrderID, self, target, queued, selectedWithTrait);
 			}
 
 			return null;
@@ -169,11 +175,27 @@ namespace OpenRA.Mods.Common.Traits
 			{
 				var targetActor = order.Target.Actor;
 				var targetTrait = targetActor.Trait<LinkedProducerTarget>();
+				var thisIsLinked = linkedTarget == targetTrait;
 
-				if (linkedTarget == targetTrait)
-					targetTrait.RemoveLink(this, true);
-				else
-					targetTrait.AddLink(self, this);
+				if (order.ExtraActors.Length > 1)
+				{
+					var selectedSourceTraits = order.ExtraActors
+						.Select(a => a.TraitOrDefault<LinkedProducerSource>())
+						.ToArray();
+
+					var anyUnlinked = selectedSourceTraits.Any(t => t != this && t.Target != targetTrait);
+
+					if (thisIsLinked && anyUnlinked)
+						return;
+				}
+
+				self.World.AddFrameEndTask(w =>
+				{
+					if (thisIsLinked)
+						targetTrait.RemoveLink(this, true);
+					else
+						targetTrait.AddLink(self, this);
+				});
 			}
 		}
 

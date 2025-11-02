@@ -343,7 +343,7 @@ InitGDI = function()
 		SellOnCaptureAttempt(b)
 	end
 
-	UpgradeCenter.GrantCondition("tower.rocket")
+	UpgradeCenter.GrantCondition("tower-rocket")
 end
 
 InitGDIAttacks = function()

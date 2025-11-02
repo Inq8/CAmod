@@ -1149,10 +1149,6 @@ SHAR:
 	Buildable:
 		Prerequisites: ~player.scrin
 
-UPGC.DROP:
-	Buildable:
-		Prerequisites: ~disabled
-
 ^Upgrade:
 	ProductionCostMultiplier@FREEUPGRADES:
 		Multiplier: 0
@@ -1174,6 +1170,10 @@ bombard2.strat:
 	Buildable:
 		Prerequisites: ~player.gdi, ~bombard.strat
 
+bombard3.strat:
+	Buildable:
+		Prerequisites: ~player.gdi, ~bombard2.strat
+
 seek.strat:
 	Buildable:
 		Prerequisites: ~player.gdi, ~!bombard.strat, ~!hold.strat
@@ -1182,6 +1182,10 @@ seek2.strat:
 	Buildable:
 		Prerequisites: ~player.gdi, ~seek.strat
 
+seek3.strat:
+	Buildable:
+		Prerequisites: ~player.gdi, ~seek2.strat
+
 hold.strat:
 	Buildable:
 		Prerequisites: ~player.gdi, ~!bombard.strat, ~!seek.strat
@@ -1189,6 +1193,10 @@ hold.strat:
 hold2.strat:
 	Buildable:
 		Prerequisites: ~player.gdi, ~hold.strat
+
+hold3.strat:
+	Buildable:
+		Prerequisites: ~player.gdi, ~hold2.strat
 
 vulcan.upgrade:
 	Buildable:
@@ -1278,19 +1286,7 @@ mdrone.upgrade:
 	Buildable:
 		Prerequisites: ~disabled
 
-UPGC.BOMB:
-	Buildable:
-		Prerequisites: ~disabled
-
-UPGC.SEEK:
-	Buildable:
-		Prerequisites: ~disabled
-
-UPGC.HOLD:
-	Buildable:
-		Prerequisites: ~disabled
-
-UPGC.DROP:
+upgc.drop:
 	Buildable:
 		Prerequisites: ~disabled
 
