@@ -5985,7 +5985,7 @@ UPGC:
 		ChargeDuration: 1500
 		Actors: truk.drop
 		ShowSelectionBar: true
-		RequiresCondition: tower.drop
+		RequiresCondition: tower-drop
 		PauseOnCondition: empdisable || disabled || being-warped
 	Exit:
 		SpawnOffset: 511,511,0
@@ -5999,7 +5999,7 @@ UPGC:
 		PauseOnCondition: disabled || empdisable || being-warped
 	AttackTurretedCharged:
 		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
-		RequiresCondition: tower.rocket && loaded-rocket > 0
+		RequiresCondition: tower-rocket && loaded-rocket > 0
 		ChargeLevel: 45
 		DischargeRate: 45
 		ShotsPerCharge: 3
@@ -6007,7 +6007,7 @@ UPGC:
 		SelectionBarColor: FF4400
 		ChargeWhileTurning: true
 	Armament@ROCKET:
-		RequiresCondition: tower.rocket
+		RequiresCondition: tower-rocket
 		Weapon: FirestormBarrage
 		LocalOffset: 768,64,368, 768,-64,368, 768,64,255, 768,-64,255
 	SupportPowerChargeBar:
@@ -6025,29 +6025,29 @@ UPGC:
 		Delay: 100
 		Count: 3
 	WithSpriteTurret@ROCKET:
-		RequiresCondition: !build-incomplete && tower.rocket
+		RequiresCondition: !build-incomplete && tower-rocket
 		Recoils: false
 		Sequence: turret-rocket
 	WithIdleOverlay@RADAR:
-		RequiresCondition: !build-incomplete && tower.radar
+		RequiresCondition: !build-incomplete && tower-radar
 		Sequence: turret-radar
 		PauseOnCondition: !scan-active || disabled || being-warped
 	WithIdleOverlay@SHIELD:
-		RequiresCondition: !build-incomplete && tower.shield && !nshield-active
+		RequiresCondition: !build-incomplete && tower-shield && !nshield-active
 		Sequence: turret-shield
 		PauseOnCondition: disabled || being-warped
 	WithIdleOverlay@SHIELD-ACTIVE:
-		RequiresCondition: !build-incomplete && tower.shield && nshield-active
+		RequiresCondition: !build-incomplete && tower-shield && nshield-active
 		Sequence: turret-shield-active
 		PauseOnCondition: disabled || being-warped
 	WithIdleOverlay@SHIELD-ACTIVE-EFFECT:
-		RequiresCondition: !build-incomplete && tower.shield && nshield-active
+		RequiresCondition: !build-incomplete && tower-shield && nshield-active
 		Sequence: emp-overlay
 		Palette: tseffect
 		PauseOnCondition: disabled || being-warped
 		Offset: -1284,384,0
 	WithIdleOverlay@DZONE:
-		RequiresCondition: !build-incomplete && tower.drop
+		RequiresCondition: !build-incomplete && tower-drop
 		Sequence: turret-drop
 		PauseOnCondition: disabled || being-warped
 	DrainPrerequisitePowerOnDamage@RADAR:
@@ -6062,7 +6062,7 @@ UPGC:
 		Prerequisites: radar-active
 		Condition: radar-active
 	GpsRadarProvider:
-		RequiresCondition: tower.radar && scan-active && !(disabled || being-warped)
+		RequiresCondition: tower-radar && scan-active && !(disabled || being-warped)
 	ExternalCondition@NSACTIVE:
 		Condition: nshield-active
 	ExternalCondition@NSAUDIO:
@@ -6077,35 +6077,18 @@ UPGC:
 		Delay: 3
 		Interval: 0
 		RequiresCondition: nshield-audio || nshield-active
-	Pluggable:
-		Conditions:
-			tower.rocket: tower.rocket
-			tower.radar: tower.radar
-			tower.shield: tower.shield
-			tower.drop: tower.drop
-		Requirements:
-			tower.rocket: !build-incomplete && !tower.radar && !tower.rocket && !tower.shield && !tower.drop
-			tower.radar: !build-incomplete && !tower.radar && !tower.rocket && !tower.shield && !tower.drop
-			tower.shield: !build-incomplete && !tower.radar && !tower.rocket && !tower.shield && !tower.drop
-			tower.drop: !build-incomplete && !tower.radar && !tower.rocket && !tower.shield && !tower.drop
-	ProvidesPrerequisite@pluggable:
-		RequiresCondition: !build-incomplete && (tower.rocket || tower.radar || tower.shield || tower.drop)
-		Prerequisite: upgc.plugged
-	ProvidesPrerequisite@AMPSEEK:
-		RequiresCondition: !build-incomplete && tower.radar
-		Prerequisite: seek3.strat
-		RequiresPrerequisites: seek.strat
-	ProvidesPrerequisite@AMPBOMB:
-		RequiresCondition: !build-incomplete && tower.rocket
-		Prerequisite: bombard3.strat
-		RequiresPrerequisites: bombard.strat
-	ProvidesPrerequisite@AMPHOLD:
-		RequiresCondition: !build-incomplete && tower.shield
-		Prerequisite: hold3.strat
-		RequiresPrerequisites: hold.strat
-	ProvidesPrerequisite@AMPDROP:
-		RequiresCondition: !build-incomplete && tower.drop
-		Prerequisite: dropzone
+	GrantConditionOnPrerequisite@Bombard3:
+		Prerequisites: bombard3.strat
+		Condition: tower-rocket
+	GrantConditionOnPrerequisite@Seek3:
+		Prerequisites: seek3.strat
+		Condition: tower-radar
+	GrantConditionOnPrerequisite@Hold3:
+		Prerequisites: hold3.strat
+		Condition: tower-shield
+	GrantConditionOnPrerequisite@Dropzone:
+		Prerequisites: upgc.drop
+		Condition: tower-drop
 	GrantConditionOnPrerequisite:
 		Prerequisites: nshield
 		Condition: nshield-active
@@ -6120,199 +6103,23 @@ UPGC:
 	-WithDecoration@HACKED:
 	-WithDecoration@RESTORING:
 	-PowerMultiplier@HACKED:
-	UpdatesCount:
-		Type: StrategyLevel
-		RequiresCondition: tower.rocket || tower.radar || tower.shield || tower.drop
-	FreeActor@SubsequentDiscountBomb:
-		Actor: upgc.bomb.previous
-		RequiresCondition: tower.rocket
-	FreeActor@SubsequentDiscountSeek:
-		Actor: upgc.seek.previous
-		RequiresCondition: tower.radar
-	FreeActor@SubsequentDiscountHold:
-		Actor: upgc.hold.previous
-		RequiresCondition: tower.shield
-	FreeActor@SubsequentDiscountDrop:
-		Actor: upgc.drop.previous
-		RequiresCondition: tower.drop
 	UpdatesSupportPowerTimer@Firestorm:
 		OrderName: rocketbarrage
 		InitialOnly: true
-		RequiresCondition: tower.rocket
+		RequiresCondition: tower-rocket
 		Ticks: 3000
 	UpdatesSupportPowerTimer@AdvancedRadar:
 		OrderName: advradarorder
 		InitialOnly: true
-		RequiresCondition: tower.radar
+		RequiresCondition: tower-radar
 		Ticks: 75
 	UpdatesSupportPowerTimer@NaniteShield:
 		OrderName: nshieldorder
 		InitialOnly: true
-		RequiresCondition: tower.shield
+		RequiresCondition: tower-shield
 		Ticks: 1500
-	ProvidesUpgrade@Firestorm:
-		RequiresCondition: tower.rocket
-		Type: upgc.bomb
-	ProvidesUpgrade@AdvancedRadar:
-		RequiresCondition: tower.radar
-		Type: upgc.seek
-	ProvidesUpgrade@NaniteShield:
-		RequiresCondition: tower.shield
-		Type: upgc.hold
-	ProvidesUpgrade@SupplyDrop:
-		RequiresCondition: tower.drop
-		Type: upgc.drop
 	Encyclopedia:
 		Category: GDI/Buildings
-
-UPGC.SOCK:
-	AlwaysVisible:
-	Interactable:
-	Tooltip:
-		Name: Component Platform
-
-UPGC.BOMB:
-	Inherits: ^BuildingPlug
-	Valued:
-		Cost: 1000
-	Tooltip:
-		Name: Upgrade: Firestorm Missile System
-	Buildable:
-		Queue: Upgrade
-		BuildPaletteOrder: 8
-		Prerequisites: ~player.gdi, upgc, !upgc.plugged, bombard2.strat, ~bombard.strat, ~!seek.strat, ~!hold.strat, ~techlevel.high
-		Description: Provides an napalm rocket barrage.
-		IconPalette: chrometd
-	TooltipExtras:
-		Strengths: + Increases firepower and rate of fire of vehicles and aircraft by a further 3%\n+ Unlocks Firestorm Missile Barrage power
-		Attributes: \n• Place on Upgrade Center\n(!) Mutually exclusive with Supply Drop Zone
-	Plug:
-		Type: tower.rocket
-	Power:
-		Amount: -50
-	RenderSprites:
-		PlayerPalette: playertd
-	WithProductionIconOverlay:
-		Types: Upgrade
-		Prerequisites: bombard3.strat
-	ProductionCostMultiplier@SubsequentDiscount:
-		Multiplier: 20
-		Prerequisites: upgc.bomb.previous
-	Encyclopedia:
-		Category: GDI/Upgrades
-	EncyclopediaExtras:
-		AdditionalInfo: Requires Bombardment Strategy.
-
-UPGC.SEEK:
-	Inherits: ^BuildingPlug
-	Valued:
-		Cost: 1000
-	Tooltip:
-		Name: Upgrade: Advanced Radar System
-	Buildable:
-		Queue: Upgrade
-		BuildPaletteOrder: 10
-		Prerequisites: ~player.gdi, upgc, !upgc.plugged, seek2.strat, ~seek.strat, ~!bombard.strat, ~!hold.strat, ~techlevel.high
-		Description: Provides detailed information on enemy locations.
-		IconPalette: chrometd
-	TooltipExtras:
-		Strengths: + Increases speed and weapon range of vehicles and aircraft by a further 5%\n+ Unlocks Advanced Radar Scan power
-		Attributes: \n• Place on Upgrade Center\n(!) Mutually exclusive with Supply Drop Zone
-	Plug:
-		Type: tower.radar
-	Power:
-		Amount: -50
-	RenderSprites:
-		PlayerPalette: playertd
-	WithProductionIconOverlay:
-		Types: Upgrade
-		Prerequisites: seek3.strat
-	ProductionCostMultiplier@SubsequentDiscount:
-		Multiplier: 20
-		Prerequisites: upgc.seek.previous
-	Encyclopedia:
-		Category: GDI/Upgrades
-	EncyclopediaExtras:
-		AdditionalInfo: Requires Seek & Destroy Strategy.
-
-UPGC.HOLD:
-	Inherits: ^BuildingPlug
-	Valued:
-		Cost: 1000
-	Tooltip:
-		Name: Upgrade: Nanoshield Generator
-	Buildable:
-		Queue: Upgrade
-		BuildPaletteOrder: 12
-		Prerequisites: ~player.gdi, upgc, !upgc.plugged, hold2.strat, ~hold.strat, ~!bombard.strat, ~!seek.strat, ~techlevel.high
-		Description: Provides the ability to shield units in an area
-		IconPalette: chrometd
-	TooltipExtras:
-		Strengths: + Increases armor of vehicles and aircraft by a further 5%\n+ Unlocks Nanite Shield power
-		Attributes: \n• Place on Upgrade Center\n(!) Mutually exclusive with Supply Drop Zone
-	Plug:
-		Type: tower.shield
-	Power:
-		Amount: -50
-	RenderSprites:
-		PlayerPalette: playertd
-	WithProductionIconOverlay:
-		Types: Upgrade
-		Prerequisites: hold3.strat
-	ProductionCostMultiplier@SubsequentDiscount:
-		Multiplier: 20
-		Prerequisites: upgc.hold.previous
-	Encyclopedia:
-		Category: GDI/Upgrades
-	EncyclopediaExtras:
-		AdditionalInfo: Requires Hold the Line Strategy.
-
-UPGC.DROP:
-	Inherits: ^BuildingPlug
-	Valued:
-		Cost: 1000
-	Tooltip:
-		Name: Upgrade: Supply Drop Zone
-	Buildable:
-		Queue: Upgrade
-		BuildPaletteOrder: 90
-		Prerequisites: ~gdiorupgc, upgc, !upgc.plugged, ~techlevel.high
-		Description: Provides a dropzone for emergency supplies.
-		IconPalette: chrometd
-	TooltipExtras:
-		Strengths: + $1250 delivered every 60 seconds (normal speed)
-		Attributes: \n• Place on Upgrade Center\n(!) Mutually exclusive with Firestorm Missile System, Advanced Radar System and Nanoshield Generator
-	Plug:
-		Type: tower.drop
-	Power:
-		Amount: -25
-	RenderSprites:
-		PlayerPalette: playertd
-	WithProductionIconOverlay:
-		Types: Upgrade
-		Prerequisites: dropzone
-	ProductionCostMultiplier@SubsequentDiscount:
-		Multiplier: 20
-		Prerequisites: upgc.drop.previous
-	Encyclopedia:
-		Category: GDI/Upgrades
-
-^BuildingPlugPrevious:
-	Inherits@DUMMY: ^InvisibleDummy
-	ProvidesPrerequisite:
-	PopControlled:
-
-upgc.bomb.previous:
-	Inherits: ^BuildingPlugPrevious
-
-upgc.seek.previous:
-	Inherits: ^BuildingPlugPrevious
-
-upgc.hold.previous:
-	Inherits: ^BuildingPlugPrevious
-
-upgc.drop.previous:
-	Inherits: ^BuildingPlugPrevious
 
 TMPP:
 	Inherits: ^BuildingTD
