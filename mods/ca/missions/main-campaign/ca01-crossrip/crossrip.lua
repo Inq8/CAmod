@@ -459,7 +459,11 @@ InterdimensionalCrossrip = function()
 		Greece.MarkCompletedObjective(ObjectiveCaptureOrDestroyChronosphere)
 	end
 
-	local unitLostSilencer = Actor.Create("unitlostsilencer", true, { Owner = Greece })
+	local unitLostSilencers = {}
+
+	Utils.Do(MissionPlayers, function(p)
+		table.insert(unitLostSilencers, Actor.Create("unitlostsilencer", true, { Owner = p }))
+	end)
 
 	Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(2)), function()
 		ScrinInvasion()
@@ -467,7 +471,9 @@ InterdimensionalCrossrip = function()
 		MediaCA.PlaySound(MissionDir .. "/r_evac.aud", 2)
 		TimerTicks = EvacuationTime[Difficulty]
 		Trigger.AfterDelay(DateTime.Seconds(7), function()
-			unitLostSilencer.Destroy()
+			Utils.Do(unitLostSilencers, function(silencer)
+				silencer.Destroy()
+			end)
 		end)
 	end)
 

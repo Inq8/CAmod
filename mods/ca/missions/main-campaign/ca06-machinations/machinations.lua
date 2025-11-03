@@ -166,6 +166,7 @@ WorldLoaded = function()
 	InitObjectives(Greece)
 	AdjustPlayerStartingCashForDifficulty()
 	InitNod()
+	SetupChurchMoneyCrates()
 	DoMcvArrival()
 
 	if IsNormalOrBelow() then
@@ -186,14 +187,6 @@ WorldLoaded = function()
 
 	Trigger.AfterDelay(PreparationTime[Difficulty], function()
 		InitNodAttacks()
-	end)
-
-	Trigger.OnKilled(Church1, function(self, killer)
-		Actor.Create("moneycrate", true, { Owner = Greece, Location = Church1.Location })
-	end)
-
-	Trigger.OnKilled(Church2, function(self, killer)
-		Actor.Create("moneycrate", true, { Owner = Greece, Location = Church2.Location })
 	end)
 
 	ObjectiveFindLab = Greece.AddObjective("Locate the Nod research lab.")

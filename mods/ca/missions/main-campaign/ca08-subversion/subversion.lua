@@ -66,21 +66,11 @@ WorldLoaded = function()
 		Hospital.Destroy()
 		Actor.Create("hosp.husk", true, { Owner = Neutral, Location = hospitalLocation })
 	else
-
-		if Difficulty == "normal" then
-			Commando.GrantCondition("difficulty-normal")
-			Hacker1.GrantCondition("difficulty-normal")
-			Hacker2.GrantCondition("difficulty-normal")
-			StealthTank1.GrantCondition("difficulty-normal")
-			StealthTank2.GrantCondition("difficulty-normal")
-		else
-			Commando.GrantCondition("difficulty-easy")
-			Hacker1.GrantCondition("difficulty-easy")
-			Hacker2.GrantCondition("difficulty-easy")
-			StealthTank1.GrantCondition("difficulty-easy")
-			StealthTank2.GrantCondition("difficulty-easy")
-			Actor.Create("sathack.dummy", true, { Owner = Nod, Location = Commando.Location })
-		end
+		Commando.GrantCondition("difficulty-" .. Difficulty)
+		Hacker1.GrantCondition("difficulty-" .. Difficulty)
+		Hacker2.GrantCondition("difficulty-" .. Difficulty)
+		StealthTank1.GrantCondition("difficulty-" .. Difficulty)
+		StealthTank2.GrantCondition("difficulty-" .. Difficulty)
 
 		JumpJet1.Destroy()
 		JumpJet2.Destroy()
@@ -92,6 +82,12 @@ WorldLoaded = function()
 		HardOnlyDisruptor1.Destroy()
 		HardOnlyDisruptor2.Destroy()
 		HardOnlyMammoth.Destroy()
+
+		if Difficulty == "easy" then
+			Utils.Do(MissionPlayers, function(p)
+				Actor.Create("sathack.dummy", true, { Owner = p, Location = Commando.Location })
+			end)
+		end
 
 		Trigger.AfterDelay(DateTime.Seconds(3), function()
 			Tip("Hackers can remotely take control of enemy structures, defenses and drone vehicles.")

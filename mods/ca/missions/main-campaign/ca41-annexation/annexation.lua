@@ -91,7 +91,9 @@ WorldLoaded = function()
 	InitScrinRebels()
 	InitNod()
 
-	Actor.Create("hazmatsoviet.upgrade", true, { Owner = USSR })
+	Utils.Do(MissionPlayers, function(p)
+		Actor.Create("hazmatsoviet.upgrade", true, { Owner = p })
+	end)
 
 	ObjectiveCaptureNerveCenter = USSR.AddObjective("Capture rebel Nerve Center.")
 	ObjectiveEliminateRebels = USSR.AddObjective("Eliminate all rebel forces.")

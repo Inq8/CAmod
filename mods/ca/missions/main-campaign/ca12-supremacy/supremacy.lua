@@ -70,7 +70,11 @@ WorldLoaded = function()
 	InitGDI()
 	InitNod()
 
-	NodRadarProvider = Actor.Create("radar.dummy", true, { Owner = Nod })
+	NodRadarProviders = {}
+
+	Utils.Do(MissionPlayers, function(p)
+		table.insert(NodRadarProviders, Actor.Create("radar.dummy", true, { Owner = p }))
+	end)
 
 	ObjectiveReinforce = Nod.AddObjective("Reinforce one of the two Nod bases.")
 
@@ -335,8 +339,14 @@ end
 
 FlipEastBase = function()
     if not Nod.IsObjectiveCompleted(ObjectiveReinforce) then
-		Nod.Cash = 6000 + CashAdjustments[Difficulty]
-		NodRadarProvider.Destroy()
+		Utils.Do(MissionPlayers, function(p)
+			p.Cash = 6000 + CashAdjustments[Difficulty]
+		end)
+
+		Utils.Do(NodRadarProviders, function(p)
+			p.Destroy()
+		end)
+
 		ObjectiveDestroyGDI = Nod.AddObjective("Destroy GDI forces.")
         Nod.MarkCompletedObjective(ObjectiveReinforce)
 		TransferEastNod()
@@ -360,8 +370,14 @@ end
 
 FlipWestBase = function()
     if not Nod.IsObjectiveCompleted(ObjectiveReinforce) then
-		Nod.Cash = 6000 + CashAdjustments[Difficulty]
-		NodRadarProvider.Destroy()
+		Utils.Do(MissionPlayers, function(p)
+			p.Cash = 6000 + CashAdjustments[Difficulty]
+		end)
+
+		Utils.Do(NodRadarProviders, function(p)
+			p.Destroy()
+		end)
+
 		ObjectiveDestroyGDI = Nod.AddObjective("Destroy GDI forces.")
         Nod.MarkCompletedObjective(ObjectiveReinforce)
 		TransferWestNod()

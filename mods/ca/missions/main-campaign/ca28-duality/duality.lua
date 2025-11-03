@@ -47,7 +47,10 @@ WorldLoaded = function()
 
 	Scrin.Resources = Scrin.ResourceCapacity
 
-	Actor.Create("radar.dummy", true, { Owner = GDI })
+	Utils.Do(MissionPlayers, function(p)
+		Actor.Create("radar.dummy", true, { Owner = p })
+	end)
+
 	Commando.GrantCondition("difficulty-" .. Difficulty)
 	Tanya.GrantCondition("difficulty-" .. Difficulty)
 

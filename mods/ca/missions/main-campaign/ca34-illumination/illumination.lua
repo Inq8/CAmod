@@ -112,10 +112,12 @@ WorldLoaded = function()
 
 	UpdateMissionText()
 
-	Actor.Create("hazmat.upgrade", true, { Owner = Nod })
-	Actor.Create("quantum.upgrade", true, { Owner = Nod })
-	Actor.Create("cyborgarmor.upgrade", true, { Owner = Nod })
-	Actor.Create("cyborgspeed.upgrade", true, { Owner = Nod })
+	Utils.Do(MissionPlayers, function(p)
+		Actor.Create("hazmat.upgrade", true, { Owner = p })
+		Actor.Create("quantum.upgrade", true, { Owner = p })
+		Actor.Create("cyborgarmor.upgrade", true, { Owner = p })
+		Actor.Create("cyborgspeed.upgrade", true, { Owner = p })
+	end)
 
 	if Difficulty == "brutal" then
 		NonBrutalCyborg1.Destroy()

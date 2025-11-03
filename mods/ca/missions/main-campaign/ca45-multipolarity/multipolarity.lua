@@ -394,7 +394,10 @@ FlipAlliedBase = function()
 		PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 		Notification("Reinforcements have arrived.")
 		Reinforcements.Reinforce(Greece, { "mcv" }, { McvSpawn.Location, McvDest.Location }, 75)
-		Actor.Create("mcv.allowed", true, { Owner = Greece })
+
+		Utils.Do(MissionPlayers, function(p)
+			Actor.Create("mcv.allowed", true, { Owner = p })
+		end)
 	end)
 
 	InitGDIAttacks()

@@ -87,7 +87,9 @@ WorldLoaded = function()
 	RespawnTrigger(Seal2)
 	RespawnTrigger(Spy)
 
-	Actor.Create("radar.dummy", true, { Owner = Greece })
+	Utils.Do(MissionPlayers, function(p)
+		Actor.Create("radar.dummy", true, { Owner = p })
+	end)
 
 	local seals = { Seal1, Seal2 }
 	Utils.Do(seals, function(a)
