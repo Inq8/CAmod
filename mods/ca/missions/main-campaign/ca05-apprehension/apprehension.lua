@@ -52,8 +52,10 @@ WorldLoaded = function()
 	InitObjectives(Greece)
 	InitNod()
 
-	Actor.Create("optics.upgrade", true, { Owner = Greece })
-	Actor.Create("radar.dummy", true, { Owner = Greece })
+	Utils.Do(MissionPlayers, function(p)
+		Actor.Create("optics.upgrade", true, { Owner = p })
+		Actor.Create("radar.dummy", true, { Owner = p })
+	end)
 
     ObjectiveDestroySAMSites = Greece.AddObjective("Destroy Nod SAM Sites.")
 	ObjectiveClearBase = Greece.AddObjective("Clear the Nod naval base.")

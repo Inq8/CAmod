@@ -107,9 +107,11 @@ WorldLoaded = function()
 	ObjectiveDestroyAirfields = Scrin.AddObjective("Destroy all airfields and helipads.")
 	ObjectiveDestroyAntiAir = Scrin.AddObjective("Destroy or disable all air defense structures.")
 
-	Actor.Create("radar.dummy", true, { Owner = Scrin })
-	Actor.Create("blink.upgrade", true, { Owner = Scrin })
-	Actor.Create("coalescence.upgrade", true, { Owner = Scrin })
+	Utils.Do(MissionPlayers, function(p)
+		Actor.Create("radar.dummy", true, { Owner = p })
+		Actor.Create("blink.upgrade", true, { Owner = p })
+		Actor.Create("coalescence.upgrade", true, { Owner = p })
+	end)
 
 	if Difficulty ~= "easy" then
 		EasyOnlyIntruder1.Destroy()

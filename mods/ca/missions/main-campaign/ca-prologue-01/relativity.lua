@@ -20,7 +20,6 @@ SetupPlayers = function()
 	Civilians = Player.GetPlayer("Civilians")
 	MissionPlayers = { Greece }
 	MissionEnemies = { USSR }
-	ReinforcementsPlayer = Greece
 end
 
 WorldLoaded = function()
@@ -39,13 +38,13 @@ WorldLoaded = function()
 
 	Trigger.OnAllKilled(LabGuardsTeam, LabGuardsKilled)
 
-	Trigger.AfterDelay(DateTime.Seconds(5), function() Actor.Create("camera", true, { Owner = ReinforcementsPlayer, Location = BaseCameraPoint.Location }) end)
+	Trigger.AfterDelay(DateTime.Seconds(5), function() Actor.Create("camera", true, { Owner = Greece, Location = BaseCameraPoint.Location }) end)
 
 	Camera.Position = InsertionLZ.CenterPosition
 
 	Trigger.OnEnteredProximityTrigger(NorthEastTeslaCoil.CenterPosition, WDist.New(8 * 1024), function(a, id)
 		if a.Owner == Civilians then
-			local autoCamera = Actor.Create("smallcamera", true, { Owner = ReinforcementsPlayer, Location = a.Location })
+			local autoCamera = Actor.Create("smallcamera", true, { Owner = Greece, Location = a.Location })
 			Trigger.AfterDelay(DateTime.Seconds(5), autoCamera.Destroy)
 		end
 	end)
@@ -84,7 +83,7 @@ OncePerSecondChecks = function()
 end
 
 SendInsertionHelicopter = function()
-	local passengers = Reinforcements.ReinforceWithTransport(ReinforcementsPlayer, InsertionHelicopterType,
+	local passengers = Reinforcements.ReinforceWithTransport(Greece, InsertionHelicopterType,
 		TanyaReinforcements, InsertionPath, { InsertionEntry.Location })[2]
 	local tanya = passengers[1]
 	Trigger.OnKilled(tanya, TanyaKilledInAction)
@@ -146,7 +145,7 @@ LabGuardsKilled = function()
 end
 
 SendExtractionHelicopter = function()
-	Heli = Reinforcements.ReinforceWithTransport(ReinforcementsPlayer, ExtractionHelicopterType, nil, ExtractionPath)[1]
+	Heli = Reinforcements.ReinforceWithTransport(Greece, ExtractionHelicopterType, nil, ExtractionPath)[1]
 	if not Einstein.IsDead then
 		Trigger.OnRemovedFromWorld(Einstein, EvacuateHelicopter)
 	end
@@ -166,7 +165,7 @@ SendCruisers = function()
 
 	Notification("Allied cruisers have arrived.")
 	MediaCA.PlaySound(MissionDir .. "/r_alliedcruisers.aud", 2);
-	Actor.Create("camera", true, { Owner = ReinforcementsPlayer, Location = CruiserCameraPoint.Location })
+	Actor.Create("camera", true, { Owner = Greece, Location = CruiserCameraPoint.Location })
 	Beacon.New(Greece, CruiserBeacon.CenterPosition)
 
 	local i = 1
@@ -193,7 +192,7 @@ SendCruisers = function()
 							Lighting.Flash("Chronoshift", 10)
 							Media.PlaySound(MissionDir .. "/chrono2.aud")
 							Beacon.New(Greece, PrismBeacon.CenterPosition)
-							Actor.Create("warpin", true, { Owner = ReinforcementsPlayer, Location = PrismBeacon.Location })
+							Actor.Create("warpin", true, { Owner = Greece, Location = PrismBeacon.Location })
 							Actor.Create("ptnk", true, { Owner = England, Location = PrismSpawn1.Location, Facing = Angle.East })
 							Actor.Create("ptnk", true, { Owner = England, Location = PrismSpawn2.Location, Facing = Angle.East })
 							Actor.Create("ptnk", true, { Owner = England, Location = PrismSpawn3.Location, Facing = Angle.East })
@@ -208,7 +207,7 @@ SendCruisers = function()
 										local prismTanks = England.GetActorsByType("ptnk")
 										Utils.Do(prismTanks, function(a)
 											if not a.IsDead then
-												a.Owner = ReinforcementsPlayer
+												a.Owner = Greece
 											end
 										end)
 									end)
@@ -240,7 +239,7 @@ end
 
 CreateEinstein = function()
 	Greece.MarkCompletedObjective(FindEinsteinObjective)
-	Einstein = Actor.Create(EinsteinType, true, { Location = EinsteinSpawnPoint.Location, Owner = ReinforcementsPlayer })
+	Einstein = Actor.Create(EinsteinType, true, { Location = EinsteinSpawnPoint.Location, Owner = Greece })
 	Einstein.Scatter()
 	Trigger.OnKilled(Einstein, RescueFailed)
 	ExtractObjective = Greece.AddObjective("Bring Einstein to the extraction point and board\nthe transport helicopter.")

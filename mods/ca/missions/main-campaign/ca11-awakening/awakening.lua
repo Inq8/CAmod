@@ -231,8 +231,10 @@ OncePerSecondChecks = function()
 			ObjectiveDestroySovietForces = Nod.AddObjective("Destroy all Soviet forces.")
 			Nod.MarkCompletedObjective(ObjectiveProtectTemple)
 
-			Actor.Create("cyborgspeed.upgrade", true, { Owner = Nod })
-			Actor.Create("cyborgarmor.upgrade", true, { Owner = Nod })
+			Utils.Do(MissionPlayers, function(p)
+				Actor.Create("cyborgspeed.upgrade", true, { Owner = p })
+				Actor.Create("cyborgarmor.upgrade", true, { Owner = p })
+			end)
 
 			if not TemplePrime.IsDead then
 				TemplePrime.GrantCondition("awakening-complete")

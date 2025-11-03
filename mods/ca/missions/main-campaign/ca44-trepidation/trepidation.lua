@@ -83,9 +83,11 @@ WorldLoaded = function()
 	InitScrin()
 
 	SetupReveals({ Reveal1, Reveal2, Reveal3, Reveal4 })
-	SetupChurchMoneyCrates(Neutral)
+	SetupChurchMoneyCrates()
 
-	Actor.Create("optics.upgrade", true, { Owner = Greece })
+	Utils.Do(MissionPlayers, function(p)
+		Actor.Create("optics.upgrade", true, { Owner = p })
+	end)
 
 	ObjectiveExtractSpy = Greece.AddObjective("Get spy to safety.")
 

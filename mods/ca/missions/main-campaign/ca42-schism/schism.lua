@@ -142,7 +142,9 @@ WorldLoaded = function()
 	InitScrinRebels()
 	InitNod()
 
-	Actor.Create("hazmatsoviet.upgrade", true, { Owner = USSR })
+	Utils.Do(MissionPlayers, function(p)
+		Actor.Create("hazmatsoviet.upgrade", true, { Owner = p })
+	end)
 
 	ObjectiveSecurePurifier = USSR.AddObjective("Use the Exterminator Tripod to secure\nthe purification device.")
 	UpdateMissionText()

@@ -96,8 +96,10 @@ WorldLoaded = function()
 		AdvComms.Destroy()
 	end
 
-	Actor.Create("bdrone.upgrade", true, { Owner = GDI })
-	Actor.Create("mdrone.upgrade", true, { Owner = GDI })
+	Utils.Do(MissionPlayers, function(p)
+		Actor.Create("bdrone.upgrade", true, { Owner = p })
+		Actor.Create("mdrone.upgrade", true, { Owner = p })
+	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(7), function()
 		Tip("Drones (e.g. Guardian Drones, Mini Drones, Battle Drones, Mammoth Drones and Mobile EMP) are immune to mind control.")
@@ -218,7 +220,9 @@ WorldLoaded = function()
 				end)
 
 				if m == Mastermind4 then
-					Actor.Create("amcv.enabled", true, { Owner = GDI })
+					Utils.Do(MissionPlayers, function(p)
+						Actor.Create("amcv.enabled", true, { Owner = p })
+					end)
 				end
 			end)
 
