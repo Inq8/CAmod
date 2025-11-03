@@ -26,11 +26,11 @@ local MovieStyle = Map.LobbyOption("fmvstyle", "fmvfull")
 
 CoopScrinMCVs = function(Mainplayer,MCVPlayers,WarpInLocation)
 	if #MCVPlayers > 1 then
-		local wormhole = Actor.Create("wormhole", true, { Owner = DummyGuy, Location = WarpInLocation.Location })
+		local wormhole = Actor.Create("wormhole", true, { Owner = InitialCoopUnitsOwner, Location = WarpInLocation.Location })
 		Trigger.AfterDelay(DateTime.Seconds(2), function()
 			Media.PlaySpeechNotification(All, "ReinforcementsArrived")
 			Notification("Reinforcements have arrived.")
-			Beacon.New(DummyGuy, WarpInLocation.CenterPosition)
+			Beacon.New(InitialCoopUnitsOwner, WarpInLocation.CenterPosition)
 
 			Utils.Do(MCVPlayers, function(PID)
 				if PID ~= Mainplayer then
@@ -1588,7 +1588,7 @@ CoopInit25 = function(mission)
     end
 
 	if Map.LobbyOption("basesharing") == "1" then
-        table.insert(MCVPlayers, MainPlayer)
+        table.insert(MCVPlayers, CoopPlayers[1])
     end
 
 	if InitialCoopUnitsOwner and Stopspread ~= true then
