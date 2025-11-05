@@ -26,12 +26,16 @@ McvRebuildDelay = {
 }
 
 UnitBuildTimeMultipliers = {
-	-- at 1.0 a single queue can produce 2500 value/min (~41.6/s)
 	easy = 1.25, -- 2000 value/min per queue (~33/s)
 	normal = 0.81, -- 3086 value/min per queue (~51/s)
 	hard = 0.6, -- 4166 value/min per queue (~69/s)
 	vhard = 0.4, -- 6250 value/min per queue (~104/s)
 	brutal = 0.3 -- 8333 value/min per queue (~138/s)
+	-- 1.0 -- 2500 value/min per queue (~41.6/s)
+	-- 0.52 -- 4807 value/min per queue (~80/s)
+	-- 0.34 -- 7352 value/min per queue (~122/s)
+	-- 0.26 -- 9615 value/min per queue (~160/s)
+	-- 0.2 --- 12500 value/min per queue (~208/s)
 }
 
 AttackValueMultipliers = {
