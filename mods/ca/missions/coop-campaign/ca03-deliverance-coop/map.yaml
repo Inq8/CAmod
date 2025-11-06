@@ -28,31 +28,85 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
+		Enemies: USSR, Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 	PlayerReference@Greece:
 		Name: Greece
-		AllowBots: False
-		Playable: True
-		Required: True
-		LockFaction: True
 		Faction: allies
-		LockColor: True
 		Color: 99ACF2
-		LockSpawn: True
-		LockTeam: True
+		Allies: Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: USSR, Creeps
 	PlayerReference@GDI:
 		Name: GDI
 		NonCombatant: True
 		Faction: gdi
 		Color: F2CF74
-		Allies: Neutral
 		Enemies: Creeps
 	PlayerReference@USSR:
 		Name: USSR
 		Bot: campaign
 		Faction: soviet
 		Color: FE1100
-		Enemies: Greece, Creeps
+		Enemies: Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
+	PlayerReference@Multi0:
+		Name: Multi0
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: allies
+		Allies: Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, Creeps
+	PlayerReference@Multi1:
+		Name: Multi1
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: allies
+		Allies: Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, Creeps
+	PlayerReference@Multi2:
+		Name: Multi2
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: allies
+		Allies: Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, Creeps
+	PlayerReference@Multi3:
+		Name: Multi3
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: allies
+		Allies: Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, Creeps
+	PlayerReference@Multi4:
+		Name: Multi4
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: allies
+		Allies: Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, Creeps
+	PlayerReference@Multi5:
+		Name: Multi5
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: allies
+		Allies: Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, Creeps
 
 Actors:
 	Actor3: sbag
@@ -3707,8 +3761,8 @@ Actors:
 		Owner: USSR
 		Location: 98,66
 
-Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-coalitions.yaml, deliverance-rules.yaml
+Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-coalitions.yaml, ca|missions/main-campaign/ca013-deliverance/deliverance-rules.yaml, ca|rules/custom/coop-rules.yaml, deliverance-rules.yaml
 
 Weapons: ca|weapons/custom/campaign.yaml
 
-Voices: deliverance-voices.yaml
+Voices: ca|missions/main-campaign/ca013-deliverance/deliverance-voices.yaml

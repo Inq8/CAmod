@@ -28,40 +28,33 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
-		Enemies: GDI, Scrin, Greece
+		Enemies: GDI, Scrin, Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 	PlayerReference@GDI:
 		Name: GDI
-		AllowBots: False
-		Playable: True
-		Required: True
-		LockFaction: True
 		Faction: gdi
-		LockColor: True
 		Color: F2CF74
-		LockSpawn: True
-		LockTeam: True
-		Allies: Greece, Nod, USSR
+		Allies: Greece, Nod, USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: Scrin, NodSlaves, SovietSlaves, AlliedSlaves, CyborgSlaves, Creeps, Kane
 	PlayerReference@Greece:
 		Name: Greece
 		Bot: campaign
 		Faction: allies
 		Color: 99ACF2
-		Allies: GDI, USSR, Nod
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, USSR, Nod
 		Enemies: Scrin, NodSlaves, SovietSlaves, AlliedSlaves, Creeps, Kane
 	PlayerReference@USSR:
 		Name: USSR
 		Bot: campaign
 		Faction: soviet
 		Color: FE1100
-		Allies: GDI, Greece, Nod
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Greece, Nod
 		Enemies: Scrin, NodSlaves, SovietSlaves, AlliedSlaves, Creeps, Kane
 	PlayerReference@Nod:
 		Name: Nod
 		Bot: campaign
 		Faction: nod
 		Color: FE1100
-		Allies: GDI, Greece, USSR
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Greece, USSR
 		Enemies: Scrin, NodSlaves, SovietSlaves, AlliedSlaves, Creeps
 	PlayerReference@Scrin:
 		Name: Scrin
@@ -69,47 +62,47 @@ Players:
 		Faction: scrin
 		Color: 7700FF
 		Allies: NodSlaves, SovietSlaves, AlliedSlaves, CyborgSlaves
-		Enemies: GDI, Greece, USSR, Nod, Creeps, Kane
+		Enemies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Greece, USSR, Nod, Creeps, Kane
 	PlayerReference@NodSlaves:
 		Name: NodSlaves
 		Bot: campaign
 		Faction: nod
 		Color: D500E8
 		Allies: Scrin, SovietSlaves, AlliedSlaves, CyborgSlaves
-		Enemies: GDI, Greece, USSR, Nod, Creeps
+		Enemies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Greece, USSR, Nod, Creeps
 	PlayerReference@SovietSlaves:
 		Name: SovietSlaves
 		Bot: campaign
 		Faction: soviet
 		Color: D500E8
 		Allies: Scrin, AlliedSlaves, NodSlaves, CyborgSlaves
-		Enemies: GDI, Greece, USSR, Nod, Creeps, Kane
+		Enemies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Greece, USSR, Nod, Creeps, Kane
 	PlayerReference@AlliedSlaves:
 		Name: AlliedSlaves
 		Bot: campaign
 		Faction: allies
 		Color: D500E8
 		Allies: Scrin, NodSlaves, SovietSlaves, CyborgSlaves
-		Enemies: GDI, Greece, USSR, Nod, Creeps, Kane
+		Enemies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Greece, USSR, Nod, Creeps, Kane
 	PlayerReference@CyborgSlaves:
 		Name: CyborgSlaves
 		Bot: campaign
 		Faction: nod
 		Color: D500E8
 		Allies: Scrin, SovietSlaves, AlliedSlaves, NodSlaves
-		Enemies: GDI, Greece, USSR, Creeps
+		Enemies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Greece, USSR, Creeps
 	PlayerReference@Kane:
 		Name: Kane
 		Bot: campaign
 		Faction: nod
 		Color: FE1100
-		Enemies: Scrin, GDI, USSR, Greece, AlliedSlaves, SovietSlaves
+		Enemies: Scrin, GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, USSR, Greece, AlliedSlaves, SovietSlaves
 	PlayerReference@SignalTransmitterPlayer:
 		Name: SignalTransmitterPlayer
 		Bot: campaign
 		Faction: scrin
 		Color: 7700FF
-		Enemies: GDI
+		Enemies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 	PlayerReference@NeutralGDI:
 		Name: NeutralGDI
 		Bot: campaign
@@ -122,6 +115,66 @@ Players:
 		NonCombatant: True
 		Faction: scrin
 		Color: 7700FF
+	PlayerReference@Multi0:
+		Name: Multi0
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Greece, Nod, USSR
+		Enemies: Scrin, NodSlaves, SovietSlaves, AlliedSlaves, CyborgSlaves, Creeps, Kane
+	PlayerReference@Multi1:
+		Name: Multi1
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Greece, Nod, USSR
+		Enemies: Scrin, NodSlaves, SovietSlaves, AlliedSlaves, CyborgSlaves, Creeps, Kane
+	PlayerReference@Multi2:
+		Name: Multi2
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Greece, Nod, USSR
+		Enemies: Scrin, NodSlaves, SovietSlaves, AlliedSlaves, CyborgSlaves, Creeps, Kane
+	PlayerReference@Multi3:
+		Name: Multi3
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Greece, Nod, USSR
+		Enemies: Scrin, NodSlaves, SovietSlaves, AlliedSlaves, CyborgSlaves, Creeps, Kane
+	PlayerReference@Multi4:
+		Name: Multi4
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Greece, Nod, USSR
+		Enemies: Scrin, NodSlaves, SovietSlaves, AlliedSlaves, CyborgSlaves, Creeps, Kane
+	PlayerReference@Multi5:
+		Name: Multi5
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Greece, Nod, USSR
+		Enemies: Scrin, NodSlaves, SovietSlaves, AlliedSlaves, CyborgSlaves, Creeps, Kane
 
 Actors:
 	Actor3: shar
@@ -5372,8 +5425,8 @@ Actors:
 		Owner: Scrin
 		Location: 69,8
 
-Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, singularity-rules.yaml
+Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|missions/main-campaign/ca30-singularity/singularity-rules.yaml, ca|rules/custom/coop-rules.yaml, crossrip-coop-rules.yaml
 
-Sequences: singularity-sequences.yaml
+Sequences: ca|missions/main-campaign/ca30-singularity/singularity-sequences.yaml
 
-Weapons: ca|weapons/custom/campaign.yaml, singularity-weapons.yaml
+Weapons: ca|weapons/custom/campaign.yaml, ca|missions/main-campaign/ca30-singularity/singularity-weapons.yaml

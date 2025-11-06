@@ -28,58 +28,112 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
-		Enemies: USSR, Marinesko, Romanov, Krukov, MarineskoUnited, RomanovUnited, KrukovUnited
+		Enemies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Marinesko, Romanov, Krukov, MarineskoUnited, RomanovUnited, KrukovUnited
 	PlayerReference@USSR:
 		Name: USSR
-		AllowBots: False
-		Playable: True
-		Required: True
-		LockFaction: True
 		Faction: soviet
-		LockColor: True
 		Color: FE1100
-		LockSpawn: True
-		LockTeam: True
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: Marinesko, Romanov, Krukov, MarineskoUnited, RomanovUnited, KrukovUnited, Creeps
 	PlayerReference@Marinesko:
 		Name: Marinesko
 		Bot: campaign
 		Faction: soviet
 		Color: 994050
-		Enemies: USSR, Romanov, Krukov, Creeps
+		Enemies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Romanov, Krukov, Creeps
 	PlayerReference@Romanov:
 		Name: Romanov
 		Bot: campaign
 		Faction: soviet
 		Color: FF9922
-		Enemies: USSR, Marinesko, Krukov, Creeps
+		Enemies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Marinesko, Krukov, Creeps
 	PlayerReference@Krukov:
 		Name: Krukov
 		Bot: campaign
 		Faction: soviet
 		Color: 485183
-		Enemies: USSR, Marinesko, Romanov, Creeps
+		Enemies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Marinesko, Romanov, Creeps
 	PlayerReference@MarineskoUnited:
 		Name: MarineskoUnited
 		Bot: campaign
 		Faction: soviet
 		Color: 994050
 		Allies: RomanovUnited, KrukovUnited
-		Enemies: USSR, Creeps
+		Enemies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
 	PlayerReference@RomanovUnited:
 		Name: RomanovUnited
 		Bot: campaign
 		Faction: soviet
 		Color: FF9922
 		Allies: MarineskoUnited, KrukovUnited
-		Enemies: USSR, Creeps
+		Enemies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
 	PlayerReference@KrukovUnited:
 		Name: KrukovUnited
 		Bot: campaign
 		Faction: soviet
 		Color: 485183
 		Allies: MarineskoUnited, RomanovUnited
-		Enemies: USSR, Creeps
+		Enemies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
+	PlayerReference@Multi0:
+		Name: Multi0
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Marinesko, Romanov, Krukov, MarineskoUnited, RomanovUnited, KrukovUnited, Creeps
+	PlayerReference@Multi1:
+		Name: Multi1
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Marinesko, Romanov, Krukov, MarineskoUnited, RomanovUnited, KrukovUnited, Creeps
+	PlayerReference@Multi2:
+		Name: Multi2
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Marinesko, Romanov, Krukov, MarineskoUnited, RomanovUnited, KrukovUnited, Creeps
+	PlayerReference@Multi3:
+		Name: Multi3
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Marinesko, Romanov, Krukov, MarineskoUnited, RomanovUnited, KrukovUnited, Creeps
+	PlayerReference@Multi4:
+		Name: Multi4
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Marinesko, Romanov, Krukov, MarineskoUnited, RomanovUnited, KrukovUnited, Creeps
+	PlayerReference@Multi5:
+		Name: Multi5
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Marinesko, Romanov, Krukov, MarineskoUnited, RomanovUnited, KrukovUnited, Creeps
 
 Actors:
 	Actor0: mcv
@@ -4441,6 +4495,6 @@ Actors:
 		Facing: 777
 		Location: 38,63
 
-Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-doctrines.yaml, statecraft-rules.yaml
+Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-doctrines.yaml, ca|missions/main-campaign/ca37-statecraft/statecraft-rules.yaml, ca|rules/custom/coop-rules.yaml, statecraft-coop-rules.yaml
 
 Weapons: ca|weapons/custom/campaign.yaml

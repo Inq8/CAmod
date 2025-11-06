@@ -28,19 +28,12 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
-		Enemies: USSR, Nod, Nod2
+		Enemies: USSR, Nod, Nod2, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 	PlayerReference@USSR:
 		Name: USSR
-		AllowBots: False
-		Playable: True
-		Required: True
-		LockFaction: True
 		Faction: soviet
-		LockColor: True
 		Color: FE1100
-		LockSpawn: True
-		LockTeam: True
-		Allies: SpyPlaneProvider
+		Allies: SpyPlaneProvider, USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: Nod, Nod2, Creeps
 	PlayerReference@Nod:
 		Name: Nod
@@ -48,20 +41,80 @@ Players:
 		Faction: nod
 		Color: 6D738C
 		Allies: Nod2
-		Enemies: USSR, Creeps
+		Enemies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
 	PlayerReference@Nod2:
 		Name: Nod2
 		Bot: campaign
 		Faction: nod
 		Color: 6D738C
 		Allies: Nod
-		Enemies: USSR, Creeps
+		Enemies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
 	PlayerReference@SpyPlaneProvider:
 		Name: SpyPlaneProvider
 		NonCombatant: True
 		Faction: soviet
 		Color: FE1100
 		Allies: USSR
+	PlayerReference@Multi0:
+		Name: Multi0
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, SpyPlaneProvider
+		Enemies: Nod, Nod2, Creeps
+	PlayerReference@Multi1:
+		Name: Multi1
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, SpyPlaneProvider
+		Enemies: Nod, Nod2, Creeps
+	PlayerReference@Multi2:
+		Name: Multi2
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, SpyPlaneProvider
+		Enemies: Nod, Nod2, Creeps
+	PlayerReference@Multi3:
+		Name: Multi3
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, SpyPlaneProvider
+		Enemies: Nod, Nod2, Creeps
+	PlayerReference@Multi4:
+		Name: Multi4
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, SpyPlaneProvider
+		Enemies: Nod, Nod2, Creeps
+	PlayerReference@Multi5:
+		Name: Multi5
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, SpyPlaneProvider
+		Enemies: Nod, Nod2, Creeps
 
 Actors:
 	Actor44: rock2
@@ -3086,6 +3139,6 @@ Actors:
 		Owner: Nod
 		Location: 71,78
 
-Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-doctrines.yaml, succession-rules.yaml
+Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-doctrines.yaml, ca|missions/main-campaign/ca18-succession/succession-rules.yaml, ca|rules/custom/coop-rules.yaml, succession-coop-rules.yaml
 
 Weapons: ca|weapons/custom/campaign.yaml

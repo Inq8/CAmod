@@ -28,100 +28,89 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
-		Enemies: USSR, Greece
+		Enemies: USSR, Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, England
+	PlayerReference@Greece:
+		Name: Greece
+		Faction: allies
+		Color: 99ACF2
+		Allies: England, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, Creeps
 	PlayerReference@USSR:
 		Name: USSR
 		Bot: campaign
 		Faction: soviet
 		Color: FE1100
-		Enemies: DummyGuy, Greece, Multi1, Multi2, Multi3, Multi4, Multi5, England, Civilians, Creeps
-	PlayerReference@Greece:
-		Name: Greece
-		AllowBots: False
-		Playable: True
-		Required: True
-		LockFaction: True
-		Faction: allies
-		Color: 99ACF2
-		LockSpawn: True
-		LockTeam: True
-		Team: 1
-		Allies: DummyGuy, Multi1, Multi2, Multi3, Multi4, Multi5
-		Enemies: USSR, Creeps
+		Enemies: Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, England, Civilians, Creeps
 	PlayerReference@England:
 		Name: England
 		Faction: allies
 		Color: A1EF8C
-		Allies: DummyGuy, Greece, Multi1, Multi2, Multi3, Multi4, Multi5
+		Allies: Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: USSR
 	PlayerReference@Civilians:
 		NonCombatant: True
 		Name: Civilians
 		Faction: ukraine
 		Enemies: USSR
-	PlayerReference@DummyGuy:
-		Name: DummyGuy
-		Bot: campaign
+	PlayerReference@Multi0:
+		Name: Multi0
+		Playable: True
 		LockFaction: True
-		Faction: allies
-		Color: 99ACF2
+		LockSpawn: True
+		LockTeam: True
 		Team: 1
-		Allies: DummyGuy, Greece, Multi1, Multi2, Multi3, Multi4, Multi5
+		Faction: allies
+		Allies: Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: USSR, Creeps
 	PlayerReference@Multi1:
 		Name: Multi1
 		Playable: True
-		Color: A1EF8C
 		LockFaction: True
-		Faction: allies
 		LockSpawn: True
 		LockTeam: True
 		Team: 1
-		Allies: DummyGuy, Greece, Multi2, Multi3, Multi4, Multi5
+		Faction: allies
+		Allies: Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: USSR, Creeps
 	PlayerReference@Multi2:
 		Name: Multi2
 		Playable: True
-		Color: F6D679
 		LockFaction: True
-		Faction: allies
 		LockSpawn: True
 		LockTeam: True
 		Team: 1
-		Allies: DummyGuy, Greece, Multi1, Multi3, Multi4, Multi5
+		Faction: allies
+		Allies: Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: USSR, Creeps
 	PlayerReference@Multi3:
 		Name: Multi3
 		Playable: True
-		Color: 505050
 		LockFaction: True
-		Faction: allies
 		LockSpawn: True
 		LockTeam: True
 		Team: 1
-		Allies: DummyGuy, Greece, Multi1, Multi2, Multi4, Multi5
+		Faction: allies
+		Allies: Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: USSR, Creeps
 	PlayerReference@Multi4:
 		Name: Multi4
 		Playable: True
-		Color: 0CF7B2
 		LockFaction: True
-		Faction: allies
 		LockSpawn: True
 		LockTeam: True
 		Team: 1
-		Allies: DummyGuy, Greece, Multi1, Multi2, Multi3, Multi5
+		Faction: allies
+		Allies: Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: USSR, Creeps
 	PlayerReference@Multi5:
 		Name: Multi5
 		Playable: True
-		Color: D2997D
 		LockFaction: True
-		Faction: allies
 		LockSpawn: True
 		LockTeam: True
 		Team: 1
-		Allies: DummyGuy, Greece, Multi1, Multi2, Multi3, Multi4
+		Faction: allies
+		Allies: Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: USSR, Creeps
 
 Actors:

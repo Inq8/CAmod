@@ -28,18 +28,12 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
-		Enemies: USSR, Greece, Traitor
+		Enemies: USSR, Greece, Traitor, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 	PlayerReference@USSR:
 		Name: USSR
-		AllowBots: False
-		Playable: True
-		Required: True
-		LockFaction: True
 		Faction: soviet
-		LockColor: True
 		Color: FE1100
-		LockSpawn: True
-		LockTeam: True
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: Greece, Traitor, Creeps
 	PlayerReference@Greece:
 		Name: Greece
@@ -47,19 +41,79 @@ Players:
 		Faction: allies
 		Color: 99ACF2
 		Allies: Traitor
-		Enemies: USSR, Creeps
+		Enemies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
 	PlayerReference@Traitor:
 		Name: Traitor
 		Bot: campaign
 		Faction: soviet
 		Color: FF9922
 		Allies: Greece
-		Enemies: USSR, Creeps
+		Enemies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
 	PlayerReference@USSRAbandoned:
 		Name: USSRAbandoned
 		NonCombatant: True
 		Faction: soviet
 		Color: FE1100
+	PlayerReference@Multi0:
+		Name: Multi0
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Greece, Traitor, Creeps
+	PlayerReference@Multi1:
+		Name: Multi1
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Greece, Traitor, Creeps
+	PlayerReference@Multi2:
+		Name: Multi2
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Greece, Traitor, Creeps
+	PlayerReference@Multi3:
+		Name: Multi3
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Greece, Traitor, Creeps
+	PlayerReference@Multi4:
+		Name: Multi4
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Greece, Traitor, Creeps
+	PlayerReference@Multi5:
+		Name: Multi5
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Greece, Traitor, Creeps
 
 Actors:
 	Actor0: fenc
@@ -3427,6 +3481,6 @@ Actors:
 		Owner: Neutral
 		Location: 34,60
 
-Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-doctrines.yaml, treachery-rules.yaml
+Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-doctrines.yaml, ca|missions/main-campaign/ca14-treachery/treachery-rules.yaml, ca|rules/custom/coop-rules.yaml, treachery-coop-rules.yaml
 
 Weapons: ca|weapons/custom/campaign.yaml

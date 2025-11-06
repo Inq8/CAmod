@@ -28,25 +28,79 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
-		Enemies: Scrin, USSR
+		Enemies: Scrin, USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 	PlayerReference@Scrin:
 		Name: Scrin
-		AllowBots: False
-		Playable: True
-		Required: True
-		LockFaction: True
 		Faction: scrin
-		LockColor: True
 		Color: 7700FF
-		LockSpawn: True
-		LockTeam: True
+		Allies: Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: USSR, Creeps
 	PlayerReference@USSR:
 		Name: USSR
 		Bot: campaign
 		Faction: soviet
 		Color: FE1100
-		Enemies: Scrin, Creeps
+		Enemies: Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
+	PlayerReference@Multi0:
+		Name: Multi0
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: scrin
+		Allies: Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, Creeps
+	PlayerReference@Multi1:
+		Name: Multi1
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: scrin
+		Allies: Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, Creeps
+	PlayerReference@Multi2:
+		Name: Multi2
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: scrin
+		Allies: Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, Creeps
+	PlayerReference@Multi3:
+		Name: Multi3
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: scrin
+		Allies: Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, Creeps
+	PlayerReference@Multi4:
+		Name: Multi4
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: scrin
+		Allies: Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, Creeps
+	PlayerReference@Multi5:
+		Name: Multi5
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: scrin
+		Allies: Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, Creeps
 
 Actors:
 	Actor0: s1
@@ -3614,6 +3668,6 @@ Actors:
 		Owner: USSR
 		Location: 54,63
 
-Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-allegiances.yaml, ca|rules/custom/commando-mission.yaml, subjugation-rules.yaml
+Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-allegiances.yaml, ca|rules/custom/commando-mission.yaml, ca|missions/main-campaign/ca23-subjugation/subjugation-rules.yaml, ca|rules/custom/coop-rules.yaml, subjugation-coop-rules.yaml
 
-Weapons: ca|weapons/custom/campaign.yaml, subjugation-weapons.yaml
+Weapons: ca|weapons/custom/campaign.yaml, ca|missions/main-campaign/ca23-subjugation/subjugation-weapons.yaml

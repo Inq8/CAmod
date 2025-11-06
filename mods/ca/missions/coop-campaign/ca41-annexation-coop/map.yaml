@@ -28,19 +28,12 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
-		Enemies: USSR, ScrinRebels1, ScrinRebels2, ScrinRebels3, Nod, Scrin
+		Enemies: USSR, ScrinRebels1, ScrinRebels2, ScrinRebels3, Nod, Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 	PlayerReference@USSR:
 		Name: USSR
-		AllowBots: False
-		Playable: True
-		Required: True
-		LockFaction: True
 		Faction: soviet
-		LockColor: True
 		Color: FE1100
-		LockSpawn: True
-		LockTeam: True
-		Allies: Scrin
+		Allies: Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: ScrinRebels1, ScrinRebels2, ScrinRebels3, Nod, Creeps
 	PlayerReference@Scrin:
 		Name: Scrin
@@ -55,28 +48,28 @@ Players:
 		Faction: scrin
 		Color: 2FB4A6
 		Allies: Nod, ScrinRebels2, ScrinRebels3, SignalTransmittersPlayer
-		Enemies: USSR, Scrin, Creeps
+		Enemies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Scrin, Creeps
 	PlayerReference@ScrinRebels2:
 		Name: ScrinRebels2
 		Bot: campaign
 		Faction: scrin
 		Color: 2FB4A6
 		Allies: Nod, ScrinRebels1, ScrinRebels3, SignalTransmittersPlayer
-		Enemies: USSR, Scrin, Creeps
+		Enemies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Scrin, Creeps
 	PlayerReference@ScrinRebels3:
 		Name: ScrinRebels3
 		Bot: campaign
 		Faction: scrin
 		Color: 2FB4A6
 		Allies: Nod, ScrinRebels1, ScrinRebels2, SignalTransmittersPlayer
-		Enemies: USSR, Scrin, Creeps
+		Enemies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Scrin, Creeps
 	PlayerReference@Nod:
 		Name: Nod
 		Bot: campaign
 		Faction: nod
 		Color: 6D738C
 		Allies: ScrinRebels1, ScrinRebels2, ScrinRebels3, SignalTransmittersPlayer
-		Enemies: USSR, Scrin, Creeps
+		Enemies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Scrin, Creeps
 	PlayerReference@NodGatewayPlayer:
 		Name: NodGatewayPlayer
 		Bot: campaign
@@ -90,7 +83,67 @@ Players:
 		Faction: scrin
 		Color: 2FB4A6
 		Allies: Nod, ScrinRebels1, ScrinRebels2, ScrinRebels3
-		Enemies: USSR
+		Enemies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+	PlayerReference@Multi0:
+		Name: Multi0
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Scrin
+		Enemies: ScrinRebels1, ScrinRebels2, ScrinRebels3, Nod, Creeps
+	PlayerReference@Multi1:
+		Name: Multi1
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Scrin
+		Enemies: ScrinRebels1, ScrinRebels2, ScrinRebels3, Nod, Creeps
+	PlayerReference@Multi2:
+		Name: Multi2
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Scrin
+		Enemies: ScrinRebels1, ScrinRebels2, ScrinRebels3, Nod, Creeps
+	PlayerReference@Multi3:
+		Name: Multi3
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Scrin
+		Enemies: ScrinRebels1, ScrinRebels2, ScrinRebels3, Nod, Creeps
+	PlayerReference@Multi4:
+		Name: Multi4
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Scrin
+		Enemies: ScrinRebels1, ScrinRebels2, ScrinRebels3, Nod, Creeps
+	PlayerReference@Multi5:
+		Name: Multi5
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Scrin
+		Enemies: ScrinRebels1, ScrinRebels2, ScrinRebels3, Nod, Creeps
 
 Actors:
 	Actor5: brik
@@ -3193,6 +3246,6 @@ Actors:
 		Facing: 118
 		Location: 63,53
 
-Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, annexation-rules.yaml
+Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|missions/main-campaign/ca41-annexation/annexation-rules.yaml, ca|rules/custom/coop-rules.yaml, annexation-coop-rules.yaml
 
-Weapons: ca|weapons/custom/campaign.yaml, annexation-weapons.yaml
+Weapons: ca|weapons/custom/campaign.yaml, ca|missions/main-campaign/ca41-annexation/annexation-weapons.yaml

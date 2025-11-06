@@ -28,26 +28,19 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
-		Enemies: USSR, Scrin, Nod
+		Enemies: USSR, Scrin, Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 	PlayerReference@USSR:
 		Name: USSR
-		AllowBots: False
-		Playable: True
-		Required: True
-		LockFaction: True
 		Faction: soviet
-		LockColor: True
 		Color: FE1100
-		LockSpawn: True
-		LockTeam: True
-		Allies: Nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: Scrin, Creeps
 	PlayerReference@Scrin:
 		Name: Scrin
 		Bot: campaign
 		Faction: scrin
 		Color: 7700FF
-		Enemies: USSR, Nod, Creeps
+		Enemies: USSR, Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
 	PlayerReference@Nod:
 		Name: Nod
 		Bot: campaign
@@ -60,6 +53,66 @@ Players:
 		Bot: campaign
 		Faction: nod
 		Color: 6D738C
+	PlayerReference@Multi0:
+		Name: Multi0
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Scrin, Creeps
+	PlayerReference@Multi1:
+		Name: Multi1
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Scrin, Creeps
+	PlayerReference@Multi2:
+		Name: Multi2
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Scrin, Creeps
+	PlayerReference@Multi3:
+		Name: Multi3
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Scrin, Creeps
+	PlayerReference@Multi4:
+		Name: Multi4
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Scrin, Creeps
+	PlayerReference@Multi5:
+		Name: Multi5
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Scrin, Creeps
 
 Actors:
 	SignalTransmitter: sign
@@ -2099,6 +2152,6 @@ Actors:
 		Owner: Neutral
 		Location: 91,17
 
-Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-doctrines.yaml, abasement-rules.yaml
+Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-doctrines.yaml, ca|missions/main-campaign/ca13-abasement/abasement-rules.yaml, ca|rules/custom/coop-rules.yaml, abasement-coop-rules.yaml
 
 Weapons: ca|weapons/custom/campaign.yaml

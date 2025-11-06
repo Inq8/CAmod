@@ -28,26 +28,19 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
-		Enemies: USSR, GDI, China, ChinaWalls, ChinaHostile
+		Enemies: USSR, GDI, China, ChinaWalls, ChinaHostile, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 	PlayerReference@USSR:
 		Name: USSR
-		AllowBots: False
-		Playable: True
-		Required: True
-		LockFaction: True
 		Faction: soviet
-		LockColor: True
 		Color: FE1100
-		LockSpawn: True
-		LockTeam: True
-		Allies: ChinaWalls
+		Allies: ChinaWalls, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: GDI, Creeps, ChinaHostile
 	PlayerReference@GDI:
 		Name: GDI
 		Bot: campaign
 		Faction: gdi
 		Color: F2CF74
-		Enemies: USSR, Creeps
+		Enemies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
 	PlayerReference@China:
 		Name: China
 		Bot: dormant
@@ -68,7 +61,67 @@ Players:
 		Faction: soviet
 		Color: FFEE00
 		Allies: China, ChinaWalls
-		Enemies: USSR, Creeps
+		Enemies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
+	PlayerReference@Multi0:
+		Name: Multi0
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, ChinaWalls
+		Enemies: GDI, Creeps, ChinaHostile
+	PlayerReference@Multi1:
+		Name: Multi1
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, ChinaWalls
+		Enemies: GDI, Creeps, ChinaHostile
+	PlayerReference@Multi2:
+		Name: Multi2
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, ChinaWalls
+		Enemies: GDI, Creeps, ChinaHostile
+	PlayerReference@Multi3:
+		Name: Multi3
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, ChinaWalls
+		Enemies: GDI, Creeps, ChinaHostile
+	PlayerReference@Multi4:
+		Name: Multi4
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, ChinaWalls
+		Enemies: GDI, Creeps, ChinaHostile
+	PlayerReference@Multi5:
+		Name: Multi5
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, ChinaWalls
+		Enemies: GDI, Creeps, ChinaHostile
 
 Actors:
 	Actor87: chain
@@ -3665,6 +3718,6 @@ Actors:
 		Location: 58,94
 		Facing: 256
 
-Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, procurement-rules.yaml
+Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|missions/main-campaign/ca38-procurement/procurement-rules.yaml, ca|rules/custom/coop-rules.yaml, procurement-coop-rules.yaml
 
 Weapons: ca|weapons/custom/campaign.yaml

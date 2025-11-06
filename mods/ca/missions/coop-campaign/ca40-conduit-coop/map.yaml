@@ -28,18 +28,12 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
-		Enemies: USSR, Nod1, Nod2, Nod3
+		Enemies: USSR, Nod1, Nod2, Nod3, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 	PlayerReference@USSR:
 		Name: USSR
-		AllowBots: False
-		Playable: True
-		Required: True
-		LockFaction: True
 		Faction: soviet
-		LockColor: True
 		Color: FE1100
-		LockSpawn: True
-		LockTeam: True
+		Allies: Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: Nod1, Nod2, Nod3, Creeps
 	PlayerReference@Nod1:
 		Name: Nod1
@@ -47,27 +41,87 @@ Players:
 		Faction: nod
 		Color: 6D738C
 		Allies: Nod2, Nod3
-		Enemies: USSR, Creeps
+		Enemies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
 	PlayerReference@Nod2:
 		Name: Nod2
 		Bot: dormant
 		Faction: nod
 		Color: 6D738C
 		Allies: Nod1, Nod3
-		Enemies: USSR, Creeps
+		Enemies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
 	PlayerReference@Nod3:
 		Name: Nod3
 		Bot: dormant
 		Faction: nod
 		Color: 6D738C
 		Allies: Nod1, Nod2
-		Enemies: USSR, Creeps
+		Enemies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
 	PlayerReference@NodGateway:
 		Name: NodGateway
 		Bot: dormant
 		NonCombatant: True
 		Faction: nod
 		Color: FE1100
+	PlayerReference@Multi0:
+		Name: Multi0
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Nod1, Nod2, Nod3, Creeps
+	PlayerReference@Multi1:
+		Name: Multi1
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Nod1, Nod2, Nod3, Creeps
+	PlayerReference@Multi2:
+		Name: Multi2
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Nod1, Nod2, Nod3, Creeps
+	PlayerReference@Multi3:
+		Name: Multi3
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Nod1, Nod2, Nod3, Creeps
+	PlayerReference@Multi4:
+		Name: Multi4
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Nod1, Nod2, Nod3, Creeps
+	PlayerReference@Multi5:
+		Name: Multi5
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Nod1, Nod2, Nod3, Creeps
 
 Actors:
 	Actor0: fact
@@ -1551,6 +1605,6 @@ Actors:
 		Owner: Neutral
 		Location: 58,113
 
-Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, conduit-rules.yaml
+Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|missions/main-campaign/ca40-conduit/conduit-rules.yaml, ca|rules/custom/coop-rules.yaml, conduit-coop-rules.yaml
 
 Weapons: ca|weapons/custom/campaign.yaml

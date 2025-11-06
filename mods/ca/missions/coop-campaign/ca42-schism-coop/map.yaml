@@ -28,26 +28,19 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
-		Enemies: USSR, Nod, Scrin, ScrinRebels, ScrinRebelsOuter, MaleficScrin
+		Enemies: USSR, Nod, Scrin, ScrinRebels, ScrinRebelsOuter, MaleficScrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 	PlayerReference@USSR:
 		Name: USSR
-		AllowBots: False
-		Playable: True
-		Required: True
-		LockFaction: True
 		Faction: soviet
-		LockColor: True
 		Color: FE1100
-		LockSpawn: True
-		LockTeam: True
-		Allies: Scrin, SpyPlaneProvider
+		Allies: Scrin, SpyPlaneProvider, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: Nod, ScrinRebels, ScrinRebelsOuter, MaleficScrin, Creeps
 	PlayerReference@Scrin:
 		Name: Scrin
 		Bot: campaign
 		Faction: scrin
 		Color: 7700FF
-		Allies: USSR, SpyPlaneProvider
+		Allies: USSR, SpyPlaneProvider, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: Nod, ScrinRebels, ScrinRebelsOuter, MaleficScrin, Creeps
 	PlayerReference@Nod:
 		Name: Nod
@@ -55,33 +48,93 @@ Players:
 		Faction: nod
 		Color: 6D738C
 		Allies: ScrinRebels, ScrinRebelsOuter
-		Enemies: USSR, Scrin, MaleficScrin, Creeps
+		Enemies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Scrin, MaleficScrin, Creeps
 	PlayerReference@ScrinRebels:
 		Name: ScrinRebels
 		Bot: campaign
 		Faction: scrin
 		Color: 2FB4A6
 		Allies: Nod, ScrinRebelsOuter
-		Enemies: USSR, Scrin, MaleficScrin, Creeps
+		Enemies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Scrin, MaleficScrin, Creeps
 	PlayerReference@ScrinRebelsOuter:
 		Name: ScrinRebelsOuter
 		Bot: campaign
 		Faction: scrin
 		Color: 2FB4A6
 		Allies: Nod, ScrinRebels
-		Enemies: USSR, Scrin, MaleficScrin, Creeps
+		Enemies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Scrin, MaleficScrin, Creeps
 	PlayerReference@MaleficScrin:
 		Name: MaleficScrin
 		Bot: campaign
 		Faction: scrin
 		Color: 3E4549
-		Enemies: USSR, Nod, Scrin, ScrinRebels, ScrinRebelsOuter, Creeps
+		Enemies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Nod, Scrin, ScrinRebels, ScrinRebelsOuter, Creeps
 	PlayerReference@SpyPlaneProvider:
 		Name: SpyPlaneProvider
 		NonCombatant: True
 		Faction: soviet
 		Color: FE1100
-		Allies: USSR, Scrin
+		Allies: USSR, Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+	PlayerReference@Multi0:
+		Name: Multi0
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Scrin, SpyPlaneProvider
+		Enemies: Nod, ScrinRebels, ScrinRebelsOuter, MaleficScrin, Creeps
+	PlayerReference@Multi1:
+		Name: Multi1
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Scrin, SpyPlaneProvider
+		Enemies: Nod, ScrinRebels, ScrinRebelsOuter, MaleficScrin, Creeps
+	PlayerReference@Multi2:
+		Name: Multi2
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Scrin, SpyPlaneProvider
+		Enemies: Nod, ScrinRebels, ScrinRebelsOuter, MaleficScrin, Creeps
+	PlayerReference@Multi3:
+		Name: Multi3
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Scrin, SpyPlaneProvider
+		Enemies: Nod, ScrinRebels, ScrinRebelsOuter, MaleficScrin, Creeps
+	PlayerReference@Multi4:
+		Name: Multi4
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Scrin, SpyPlaneProvider
+		Enemies: Nod, ScrinRebels, ScrinRebelsOuter, MaleficScrin, Creeps
+	PlayerReference@Multi5:
+		Name: Multi5
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: soviet
+		Allies: USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Scrin, SpyPlaneProvider
+		Enemies: Nod, ScrinRebels, ScrinRebelsOuter, MaleficScrin, Creeps
 
 Actors:
 	Actor0: swal
@@ -5855,6 +5908,6 @@ Actors:
 		Owner: Neutral
 		Location: 14,104
 
-Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, schism-rules.yaml
+Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|missions/main-campaign/ca42-schism/schism-rules.yaml, ca|rules/custom/coop-rules.yaml, schism-coop-rules.yaml
 
-Weapons: ca|weapons/custom/campaign.yaml, schism-weapons.yaml
+Weapons: ca|weapons/custom/campaign.yaml, ca|missions/main-campaign/ca42-schism/schism-weapons.yaml

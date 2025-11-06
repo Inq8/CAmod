@@ -28,18 +28,12 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
-		Enemies: Nod, GDI
+		Enemies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, GDI
 	PlayerReference@Nod:
 		Name: Nod
-		AllowBots: False
-		Playable: True
-		Required: True
-		LockFaction: True
 		Faction: nod
-		LockColor: True
 		Color: FE1100
-		LockSpawn: True
-		LockTeam: True
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: GDI, Creeps
 	PlayerReference@GDI:
 		Name: GDI
@@ -47,6 +41,66 @@ Players:
 		Faction: gdi
 		Color: F2CF74
 		Enemies: Nod, Creeps
+	PlayerReference@Multi0:
+		Name: Multi0
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: GDI, Creeps
+	PlayerReference@Multi1:
+		Name: Multi1
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: GDI, Creeps
+	PlayerReference@Multi2:
+		Name: Multi2
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: GDI, Creeps
+	PlayerReference@Multi3:
+		Name: Multi3
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: GDI, Creeps
+	PlayerReference@Multi4:
+		Name: Multi4
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: GDI, Creeps
+	PlayerReference@Multi5:
+		Name: Multi5
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: GDI, Creeps
 
 Actors:
 	Actor0: dd2

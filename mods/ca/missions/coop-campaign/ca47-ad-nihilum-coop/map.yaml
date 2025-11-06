@@ -28,25 +28,79 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
-		Enemies: Greece, MaleficScrin
+		Enemies: Greece, MaleficScrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 	PlayerReference@Greece:
 		Name: Greece
-		AllowBots: False
-		Playable: True
-		Required: True
-		LockFaction: True
 		Faction: allies
-		LockColor: True
 		Color: 99ACF2
-		LockSpawn: True
-		LockTeam: True
+		Allies: Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: MaleficScrin, Creeps
 	PlayerReference@MaleficScrin:
 		Name: MaleficScrin
 		Bot: campaign
 		Faction: scrin
 		Color: 3E4549
-		Enemies: Greece, Creeps
+		Enemies: Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
+	PlayerReference@Multi0:
+		Name: Multi0
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: allies
+		Allies: Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: MaleficScrin, Creeps
+	PlayerReference@Multi1:
+		Name: Multi1
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: allies
+		Allies: Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: MaleficScrin, Creeps
+	PlayerReference@Multi2:
+		Name: Multi2
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: allies
+		Allies: Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: MaleficScrin, Creeps
+	PlayerReference@Multi3:
+		Name: Multi3
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: allies
+		Allies: Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: MaleficScrin, Creeps
+	PlayerReference@Multi4:
+		Name: Multi4
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: allies
+		Allies: Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: MaleficScrin, Creeps
+	PlayerReference@Multi5:
+		Name: Multi5
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: allies
+		Allies: Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: MaleficScrin, Creeps
 
 Actors:
 	Actor1: tc05
@@ -8853,6 +8907,6 @@ Actors:
 		Location: 37,114
 		SubCell: 3
 
-Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ad-nihilum-rules.yaml
+Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|missions/main-campaign/ca47-ad-nihilum/ad-nihilum-rules.yaml, ca|rules/custom/coop-rules.yaml, ad-nihilum-coop-rules.yaml
 
 Weapons: ca|weapons/custom/campaign.yaml

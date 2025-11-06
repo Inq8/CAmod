@@ -28,18 +28,12 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
-		Enemies: Nod, Greece, GDI
+		Enemies: Nod, Greece, GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 	PlayerReference@Nod:
 		Name: Nod
-		AllowBots: False
-		Playable: True
-		Required: True
-		LockFaction: True
 		Faction: nod
-		LockColor: True
 		Color: FE1100
-		LockSpawn: True
-		LockTeam: True
+		Allies: Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: Greece, GDI, Creeps
 	PlayerReference@Greece:
 		Name: Greece
@@ -47,14 +41,74 @@ Players:
 		Faction: allies
 		Color: 99ACF2
 		Allies: GDI
-		Enemies: Nod, Creeps
+		Enemies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
 	PlayerReference@GDI:
 		Name: GDI
 		Bot: campaign
 		Faction: gdi
 		Color: F2CF74
 		Allies: Greece
-		Enemies: Nod, Creeps
+		Enemies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
+	PlayerReference@Multi0:
+		Name: Multi0
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Greece, GDI, Creeps
+	PlayerReference@Multi1:
+		Name: Multi1
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Greece, GDI, Creeps
+	PlayerReference@Multi2:
+		Name: Multi2
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Greece, GDI, Creeps
+	PlayerReference@Multi3:
+		Name: Multi3
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Greece, GDI, Creeps
+	PlayerReference@Multi4:
+		Name: Multi4
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Greece, GDI, Creeps
+	PlayerReference@Multi5:
+		Name: Multi5
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Greece, GDI, Creeps
 
 Actors:
 	Commando: rmbo
@@ -4358,6 +4412,6 @@ Actors:
 		Location: 101,64
 		Facing: 512
 
-Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-covenants.yaml, ca|rules/custom/commando-mission.yaml, subversion-rules.yaml
+Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-covenants.yaml, ca|rules/custom/commando-mission.yaml, ca|missions/main-campaign/ca08-subversion/subversion-rules.yaml, ca|rules/custom/coop-rules.yaml, subversion-coop-rules.yaml
 
-Weapons: ca|weapons/custom/campaign.yaml, subversion-weapons.yaml
+Weapons: ca|weapons/custom/campaign.yaml, ca|missions/main-campaign/ca08-subversion/subversion-weapons.yaml

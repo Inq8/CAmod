@@ -28,25 +28,19 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
-		Enemies: GDI, USSR
+		Enemies: GDI, USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 	PlayerReference@GDI:
 		Name: GDI
-		AllowBots: False
-		Playable: True
-		Required: True
-		LockFaction: True
 		Faction: gdi
-		LockColor: True
 		Color: F2CF74
-		LockSpawn: True
-		LockTeam: True
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: USSR, Creeps
 	PlayerReference@USSR:
 		Name: USSR
 		Bot: campaign
 		Faction: soviet
 		Color: FE1100
-		Enemies: GDI, Creeps
+		Enemies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
 	PlayerReference@Greece:
 		Name: Greece
 		Bot: campaign
@@ -54,6 +48,66 @@ Players:
 		Color: FE1100
 		Allies: GDI
 		Enemies: Creeps
+	PlayerReference@Multi0:
+		Name: Multi0
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, Creeps
+	PlayerReference@Multi1:
+		Name: Multi1
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, Creeps
+	PlayerReference@Multi2:
+		Name: Multi2
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, Creeps
+	PlayerReference@Multi3:
+		Name: Multi3
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, Creeps
+	PlayerReference@Multi4:
+		Name: Multi4
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, Creeps
+	PlayerReference@Multi5:
+		Name: Multi5
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, Creeps
 
 Actors:
 	Actor10: fact
@@ -3859,6 +3913,6 @@ Actors:
 		Location: 54,26
 		ScriptTags: BrutalOnly
 
-Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, capitulation-rules.yaml
+Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|missions/main-campaign/ca26-capitulation/capitulation-rules.yaml, ca|rules/custom/coop-rules.yaml, capitulation-coop-rules.yaml
 
-Weapons: ca|weapons/custom/campaign.yaml, capitulation-weapons.yaml
+Weapons: ca|weapons/custom/campaign.yaml, ca|missions/main-campaign/ca26-capitulation/capitulation-weapons.yaml

@@ -28,18 +28,12 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
-		Enemies: Nod, USSR, USSRUnits
+		Enemies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, USSR, USSRUnits
 	PlayerReference@Nod:
 		Name: Nod
-		AllowBots: False
-		Playable: True
-		Required: True
-		LockFaction: True
 		Faction: nod
-		LockColor: True
 		Color: FE1100
-		LockSpawn: True
-		LockTeam: True
+		Allies: Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: USSR, USSRUnits, Creeps
 	PlayerReference@USSR:
 		Name: USSR
@@ -47,14 +41,74 @@ Players:
 		Faction: soviet
 		Color: 994050
 		Allies: USSRUnits
-		Enemies: Nod, Creeps
+		Enemies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
 	PlayerReference@USSRUnits:
 		Name: USSRUnits
 		Bot: campaign
 		Faction: soviet
 		Color: 994050
 		Allies: USSR
-		Enemies: Nod, Creeps
+		Enemies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
+	PlayerReference@Multi0:
+		Name: Multi0
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, USSRUnits, Creeps
+	PlayerReference@Multi1:
+		Name: Multi1
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, USSRUnits, Creeps
+	PlayerReference@Multi2:
+		Name: Multi2
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, USSRUnits, Creeps
+	PlayerReference@Multi3:
+		Name: Multi3
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, USSRUnits, Creeps
+	PlayerReference@Multi4:
+		Name: Multi4
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, USSRUnits, Creeps
+	PlayerReference@Multi5:
+		Name: Multi5
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, USSRUnits, Creeps
 
 Actors:
 	Airfield2: afld
@@ -4450,6 +4504,6 @@ Actors:
 		Owner: Neutral
 		Location: 29,72
 
-Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-covenants.yaml, zenith-rules.yaml
+Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-covenants.yaml, ca|missions/main-campaign/ca10-zenith/zenith-rules.yaml, ca|rules/custom/coop-rules.yaml, zenith-coop-rules.yaml
 
-Weapons: ca|weapons/custom/campaign.yaml, zenith-weapons.yaml
+Weapons: ca|weapons/custom/campaign.yaml, ca|missions/main-campaign/ca10-zenith/zenith-weapons.yaml

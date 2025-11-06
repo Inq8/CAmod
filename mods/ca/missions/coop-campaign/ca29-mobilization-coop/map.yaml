@@ -28,19 +28,12 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
-		Enemies: GDI, Scrin, Slaves, Greece, USSR, Nod
+		Enemies: GDI, Scrin, Slaves, Greece, USSR, Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 	PlayerReference@GDI:
 		Name: GDI
-		AllowBots: False
-		Playable: True
-		Required: True
-		LockFaction: True
 		Faction: gdi
-		LockColor: True
 		Color: F2CF74
-		LockSpawn: True
-		LockTeam: True
-		Allies: Greece, Nod, USSR
+		Allies: Greece, Nod, USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: Scrin, Slaves, Creeps
 	PlayerReference@Scrin:
 		Name: Scrin
@@ -48,27 +41,27 @@ Players:
 		Faction: scrin
 		Color: 7700FF
 		Allies: Slaves
-		Enemies: GDI, Creeps, Nod, Greece, USSR
+		Enemies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps, Nod, Greece, USSR
 	PlayerReference@Greece:
 		Name: Greece
 		Bot: campaign
 		Faction: allies
 		Color: 99ACF2
-		Allies: GDI, Nod, USSR
+		Allies: GDI, Nod, USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: Scrin, Slaves, Creeps
 	PlayerReference@USSR:
 		Name: USSR
 		Bot: campaign
 		Faction: soviet
 		Color: FE1100
-		Allies: GDI, Greece, Nod
+		Allies: GDI, Greece, Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: Scrin, Slaves, Creeps
 	PlayerReference@Nod:
 		Name: Nod
 		Bot: campaign
 		Faction: nod
 		Color: 6D738C
-		Allies: GDI, Greece, USSR
+		Allies: GDI, Greece, USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: Scrin, Slaves, Creeps
 	PlayerReference@Slaves:
 		Name: Slaves
@@ -76,7 +69,67 @@ Players:
 		Faction: allies
 		Color: D500E8
 		Allies: Scrin
-		Enemies: GDI, Creeps, Nod, Greece, USSR
+		Enemies: GDI, Creeps, Nod, Greece, USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+	PlayerReference@Multi0:
+		Name: Multi0
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Greece, Nod, USSR
+		Enemies: Scrin, Slaves, Creeps
+	PlayerReference@Multi1:
+		Name: Multi1
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Greece, Nod, USSR
+		Enemies: Scrin, Slaves, Creeps
+	PlayerReference@Multi2:
+		Name: Multi2
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Greece, Nod, USSR
+		Enemies: Scrin, Slaves, Creeps
+	PlayerReference@Multi3:
+		Name: Multi3
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Greece, Nod, USSR
+		Enemies: Scrin, Slaves, Creeps
+	PlayerReference@Multi4:
+		Name: Multi4
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Greece, Nod, USSR
+		Enemies: Scrin, Slaves, Creeps
+	PlayerReference@Multi5:
+		Name: Multi5
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Greece, Nod, USSR
+		Enemies: Scrin, Slaves, Creeps
 
 Actors:
 	Actor0: tc05
@@ -8611,6 +8664,6 @@ Actors:
 		Facing: 384
 		Location: 141,56
 
-Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-coalitions.yaml, mobilization-rules.yaml
+Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-coalitions.yaml, ca|missions/main-campaign/ca29-mobilization/mobilization-rules.yaml, ca|rules/custom/coop-rules.yaml, mobilization-coop-rules.yaml
 
 Weapons: ca|weapons/custom/campaign.yaml

@@ -28,18 +28,12 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
-		Enemies: USSR, Greece, Nod, Scrin
+		Enemies: USSR, Greece, Nod, Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 	PlayerReference@Scrin:
 		Name: Scrin
-		AllowBots: False
-		Playable: True
-		Required: True
-		LockFaction: True
 		Faction: scrin
-		LockColor: True
 		Color: 7700FF
-		LockSpawn: True
-		LockTeam: True
+		Allies: Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: USSR, Greece, Nod, Creeps
 	PlayerReference@Greece:
 		Name: Greece
@@ -47,27 +41,87 @@ Players:
 		Faction: allies
 		Color: 99ACF2
 		Allies: USSR, Nod
-		Enemies: Scrin, Creeps
+		Enemies: Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
 	PlayerReference@USSR:
 		Name: USSR
 		Bot: campaign
 		Faction: soviet
 		Color: FE1100
 		Allies: Nod, Greece
-		Enemies: Scrin, Creeps
+		Enemies: Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
 	PlayerReference@Nod:
 		Name: Nod
 		Bot: campaign
 		Faction: nod
 		Color: 6D738C
 		Allies: Greece, USSR
-		Enemies: Scrin, Creeps
+		Enemies: Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
 	PlayerReference@ScrinNoControl:
 		Name: ScrinNoControl
 		NonCombatant: True
 		Faction: scrin
 		Color: 7700FF
-		Allies: Scrin
+		Allies: Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
+	PlayerReference@Multi0:
+		Name: Multi0
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: scrin
+		Allies: Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, Greece, Nod, Creeps
+	PlayerReference@Multi1:
+		Name: Multi1
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: scrin
+		Allies: Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, Greece, Nod, Creeps
+	PlayerReference@Multi2:
+		Name: Multi2
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: scrin
+		Allies: Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, Greece, Nod, Creeps
+	PlayerReference@Multi3:
+		Name: Multi3
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: scrin
+		Allies: Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, Greece, Nod, Creeps
+	PlayerReference@Multi4:
+		Name: Multi4
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: scrin
+		Allies: Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, Greece, Nod, Creeps
+	PlayerReference@Multi5:
+		Name: Multi5
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: scrin
+		Allies: Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, Greece, Nod, Creeps
 
 Actors:
 	Actor0: tc05
@@ -7897,8 +7951,8 @@ Actors:
 		Owner: Neutral
 		Location: 56,75
 
-Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-allegiances.yaml, culmination-rules.yaml
+Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-allegiances.yaml, ca|missions/main-campaign/ca24-culmination/culmination-rules.yaml, ca|rules/custom/coop-rules.yaml, culmination-coop-rules.yaml
 
-Sequences: culmination-sequences.yaml
+Sequences: ca|missions/main-campaign/ca24-culmination/culmination-sequences.yaml
 
-Weapons: ca|weapons/custom/campaign.yaml, culmination-weapons.yaml
+Weapons: ca|weapons/custom/campaign.yaml, ca|missions/main-campaign/ca24-culmination/culmination-weapons.yaml

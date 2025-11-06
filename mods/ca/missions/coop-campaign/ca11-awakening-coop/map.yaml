@@ -28,25 +28,79 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
-		Enemies: Nod, USSR
+		Enemies: Nod, USSR, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 	PlayerReference@Nod:
 		Name: Nod
-		AllowBots: False
-		Playable: True
-		Required: True
-		LockFaction: True
 		Faction: nod
-		LockColor: True
 		Color: FE1100
-		LockSpawn: True
-		LockTeam: True
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: USSR, Creeps
 	PlayerReference@USSR:
 		Name: USSR
 		Bot: campaign
 		Faction: soviet
 		Color: 994050
-		Enemies: Nod, Creeps
+		Enemies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
+	PlayerReference@Multi0:
+		Name: Multi0
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, Creeps
+	PlayerReference@Multi1:
+		Name: Multi1
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, Creeps
+	PlayerReference@Multi2:
+		Name: Multi2
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, Creeps
+	PlayerReference@Multi3:
+		Name: Multi3
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, Creeps
+	PlayerReference@Multi4:
+		Name: Multi4
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, Creeps
+	PlayerReference@Multi5:
+		Name: Multi5
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: USSR, Creeps
 
 Actors:
 	Actor0: tmpl
@@ -1771,6 +1825,6 @@ Actors:
 		Owner: Neutral
 		Location: 21,41
 
-Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-covenants.yaml, awakening-rules.yaml
+Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-covenants.yaml, ca|missions/main-campaign/ca11-awakening/awakening-rules.yaml, ca|rules/custom/coop-rules.yaml, awakening-coop-rules.yaml
 
 Weapons: ca|weapons/custom/campaign.yaml

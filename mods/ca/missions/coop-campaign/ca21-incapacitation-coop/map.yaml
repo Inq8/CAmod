@@ -28,18 +28,12 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
-		Enemies: Scrin, Greece, GDI
+		Enemies: Scrin, Greece, GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 	PlayerReference@Scrin:
 		Name: Scrin
-		AllowBots: False
-		Playable: True
-		Required: True
-		LockFaction: True
 		Faction: scrin
-		LockColor: True
 		Color: 7700FF
-		LockSpawn: True
-		LockTeam: True
+		Allies: Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: Greece, GDI, Creeps
 	PlayerReference@Greece:
 		Name: Greece
@@ -47,14 +41,74 @@ Players:
 		Faction: allies
 		Color: 99ACF2
 		Allies: GDI
-		Enemies: Scrin, Creeps
+		Enemies: Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
 	PlayerReference@GDI:
 		Name: GDI
 		Bot: campaign
 		Faction: gdi
 		Color: F2CF74
 		Allies: Greece
-		Enemies: Scrin, Creeps
+		Enemies: Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
+	PlayerReference@Multi0:
+		Name: Multi0
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: scrin
+		Allies: Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Greece, GDI, Creeps
+	PlayerReference@Multi1:
+		Name: Multi1
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: scrin
+		Allies: Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Greece, GDI, Creeps
+	PlayerReference@Multi2:
+		Name: Multi2
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: scrin
+		Allies: Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Greece, GDI, Creeps
+	PlayerReference@Multi3:
+		Name: Multi3
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: scrin
+		Allies: Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Greece, GDI, Creeps
+	PlayerReference@Multi4:
+		Name: Multi4
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: scrin
+		Allies: Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Greece, GDI, Creeps
+	PlayerReference@Multi5:
+		Name: Multi5
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: scrin
+		Allies: Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Greece, GDI, Creeps
 
 Actors:
 	Actor0: n2
@@ -3764,6 +3818,6 @@ Actors:
 		Owner: Neutral
 		Location: 84,67
 
-Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-allegiances.yaml, incapacitation-rules.yaml
+Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-allegiances.yaml, ca|missions/main-campaign/ca21-incapacitation/incapacitation-rules.yaml, ca|rules/custom/coop-rules.yaml, incapacitation-coop-rules.yaml
 
-Weapons: ca|weapons/custom/campaign.yaml, incapacitation-weapons.yaml
+Weapons: ca|weapons/custom/campaign.yaml, ca|missions/main-campaign/ca21-incapacitation/incapacitation-weapons.yaml

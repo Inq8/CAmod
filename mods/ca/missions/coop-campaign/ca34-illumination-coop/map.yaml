@@ -28,18 +28,13 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
-		Enemies: Nod, Scrin, ScrinRebels
+		Enemies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Scrin
 	PlayerReference@Nod:
 		Name: Nod
-		AllowBots: False
-		Playable: True
-		Required: True
 		LockFaction: True
 		Faction: nod
-		LockColor: True
 		Color: FE1100
-		LockSpawn: True
-		LockTeam: True
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: Scrin, Creeps, TibLifeforms
 	PlayerReference@Scrin:
 		Name: Scrin
@@ -47,20 +42,74 @@ Players:
 		Faction: scrin
 		Color: 7700FF
 		Allies: TibLifeforms
-		Enemies: Nod, ScrinRebels, Creeps
+		Enemies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
 	PlayerReference@TibLifeforms:
 		Name: TibLifeforms
 		NonCombatant: True
 		Faction: scrin
 		Color: 00FF00
 		Allies: Scrin
-		Enemies: Nod, Creeps
-	PlayerReference@ScrinRebels:
-		Name: ScrinRebels
-		NonCombatant: True
-		Faction: scrin
-		Color: 55E1AE
-		Enemies: Scrin, Creeps
+		Enemies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
+	PlayerReference@Multi0:
+		Name: Multi0
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Scrin, Creeps, TibLifeforms
+	PlayerReference@Multi1:
+		Name: Multi1
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Scrin, Creeps, TibLifeforms
+	PlayerReference@Multi2:
+		Name: Multi2
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Scrin, Creeps, TibLifeforms
+	PlayerReference@Multi3:
+		Name: Multi3
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Scrin, Creeps, TibLifeforms
+	PlayerReference@Multi4:
+		Name: Multi4
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Scrin, Creeps, TibLifeforms
+	PlayerReference@Multi5:
+		Name: Multi5
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Scrin, Creeps, TibLifeforms
 
 Actors:
 	Actor66: scrinflora12
@@ -681,10 +730,10 @@ Actors:
 		Location: 18,50
 		Facing: 768
 
-Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-covenants.yaml, illumination-rules.yaml
+Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-covenants.yaml, ca|missions/main-campaign/ca34-illumination/illumination-rules.yaml, ca|rules/custom/coop-rules.yaml, illumination-coop-rules.yaml
 
-Sequences: illumination-sequences.yaml
+Sequences: ca|missions/main-campaign/ca34-illumination/illumination-sequences.yaml
 
-Weapons: ca|weapons/custom/campaign.yaml, illumination-weapons.yaml
+Weapons: ca|weapons/custom/campaign.yaml, ca|missions/main-campaign/ca34-illumination/illumination-weapons.yaml
 
-Voices: illumination-voices.yaml
+Voices: ca|missions/main-campaign/ca34-illumination/illumination-voices.yaml

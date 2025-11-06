@@ -28,18 +28,12 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
-		Enemies: GDI, Nod, NodCiv
+		Enemies: GDI, Nod, NodCiv, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 	PlayerReference@GDI:
 		Name: GDI
-		AllowBots: False
-		Playable: True
-		Required: True
-		LockFaction: True
 		Faction: gdi
-		LockColor: True
 		Color: F2CF74
-		LockSpawn: True
-		LockTeam: True
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: Nod, Creeps
 	PlayerReference@Nod:
 		Name: Nod
@@ -47,14 +41,74 @@ Players:
 		Faction: nod
 		Color: FE1100
 		Allies: NodCiv
-		Enemies: GDI, Creeps
+		Enemies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
 	PlayerReference@NodCiv:
 		Name: NodCiv
 		Bot: campaign
 		NonCombatant: True
 		Faction: nod
 		Allies: Nod
-		Enemies: GDI, Creeps
+		Enemies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
+	PlayerReference@Multi0:
+		Name: Multi0
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Nod, Creeps
+	PlayerReference@Multi1:
+		Name: Multi1
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Nod, Creeps
+	PlayerReference@Multi2:
+		Name: Multi2
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Nod, Creeps
+	PlayerReference@Multi3:
+		Name: Multi3
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Nod, Creeps
+	PlayerReference@Multi4:
+		Name: Multi4
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Nod, Creeps
+	PlayerReference@Multi5:
+		Name: Multi5
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Nod, Creeps
 
 Actors:
 	Actor1: htnk
@@ -2697,6 +2751,6 @@ Actors:
 		Facing: 0
 		Location: 37,92
 
-Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, enmity-rules.yaml
+Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|missions/main-campaign/ca25-enmity/enmity-rules.yaml, ca|rules/custom/coop-rules.yaml, enmity-coop-rules.yaml
 
 Weapons: ca|weapons/custom/campaign.yaml

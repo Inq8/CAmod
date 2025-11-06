@@ -28,18 +28,12 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
-		Enemies: GDI, Scrin
+		Enemies: GDI, Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 	PlayerReference@GDI:
 		Name: GDI
-		AllowBots: False
-		Playable: True
-		Required: True
-		LockFaction: True
 		Faction: gdi
-		LockColor: True
 		Color: F2CF74
-		LockSpawn: True
-		LockTeam: True
+		Allies: Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: Scrin, Creeps, TibLifeforms
 	PlayerReference@Scrin:
 		Name: Scrin
@@ -47,14 +41,74 @@ Players:
 		Faction: scrin
 		Color: 7700FF
 		Allies: TibLifeforms
-		Enemies: GDI, Creeps
+		Enemies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
 	PlayerReference@TibLifeforms:
 		Name: TibLifeforms
 		NonCombatant: True
 		Faction: scrin
 		Color: 00FF00
 		Allies: Scrin
-		Enemies: GDI, Creeps
+		Enemies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
+	PlayerReference@Multi0:
+		Name: Multi0
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Scrin, Creeps, TibLifeforms
+	PlayerReference@Multi1:
+		Name: Multi1
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Scrin, Creeps, TibLifeforms
+	PlayerReference@Multi2:
+		Name: Multi2
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Scrin, Creeps, TibLifeforms
+	PlayerReference@Multi3:
+		Name: Multi3
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Scrin, Creeps, TibLifeforms
+	PlayerReference@Multi4:
+		Name: Multi4
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Scrin, Creeps, TibLifeforms
+	PlayerReference@Multi5:
+		Name: Multi5
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
+		Enemies: Scrin, Creeps, TibLifeforms
 
 Actors:
 	Actor0: sbag
@@ -1721,6 +1775,6 @@ Actors:
 		Location: 19,74
 		Facing: 174
 
-Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, convergence-rules.yaml
+Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|missions/main-campaign/ca32-convergence/convergence-rules.yaml, ca|rules/custom/coop-rules.yaml, convergence-coop-rules.yaml
 
 Weapons: ca|weapons/custom/campaign.yaml

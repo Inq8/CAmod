@@ -28,19 +28,12 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
-		Enemies: GDI, Scrin, ScrinRebels
+		Enemies: GDI, Scrin, ScrinRebels, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 	PlayerReference@GDI:
 		Name: GDI
-		AllowBots: False
-		Playable: True
-		Required: True
-		LockFaction: True
 		Faction: gdi
-		LockColor: True
 		Color: F2CF74
-		LockSpawn: True
-		LockTeam: True
-		Allies: GatewayOwner
+		Allies: GatewayOwner, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: Scrin, Creeps, TibLifeforms
 	PlayerReference@Scrin:
 		Name: Scrin
@@ -48,14 +41,14 @@ Players:
 		Faction: scrin
 		Color: 7700FF
 		Allies: TibLifeforms
-		Enemies: GDI, ScrinRebels, Creeps
+		Enemies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, ScrinRebels, Creeps
 	PlayerReference@TibLifeforms:
 		Name: TibLifeforms
 		NonCombatant: True
 		Faction: scrin
 		Color: 00FF00
 		Allies: Scrin
-		Enemies: GDI, Creeps
+		Enemies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Creeps
 	PlayerReference@ScrinRebels:
 		Name: ScrinRebels
 		NonCombatant: True
@@ -68,6 +61,66 @@ Players:
 		Faction: gdi
 		Color: 7700FF
 		Allies: GDI
+	PlayerReference@Multi0:
+		Name: Multi0
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, GatewayOwner
+		Enemies: Scrin, Creeps, TibLifeforms
+	PlayerReference@Multi1:
+		Name: Multi1
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, GatewayOwner
+		Enemies: Scrin, Creeps, TibLifeforms
+	PlayerReference@Multi2:
+		Name: Multi2
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, GatewayOwner
+		Enemies: Scrin, Creeps, TibLifeforms
+	PlayerReference@Multi3:
+		Name: Multi3
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, GatewayOwner
+		Enemies: Scrin, Creeps, TibLifeforms
+	PlayerReference@Multi4:
+		Name: Multi4
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, GatewayOwner
+		Enemies: Scrin, Creeps, TibLifeforms
+	PlayerReference@Multi5:
+		Name: Multi5
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: gdi
+		Allies: GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, GatewayOwner
+		Enemies: Scrin, Creeps, TibLifeforms
 
 Actors:
 	Actor12: scrinflora1
@@ -1899,8 +1952,8 @@ Actors:
 		Owner: Neutral
 		Location: 39,94
 
-Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, foothold-rules.yaml
+Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|missions/main-campaign/ca31-foothold/foothold-rules.yaml, ca|rules/custom/coop-rules.yaml, foothold-coop-rules.yaml
 
-Sequences: foothold-sequences.yaml
+Sequences: ca|missions/main-campaign/ca31-foothold/foothold-sequences.yaml
 
 Weapons: ca|weapons/custom/campaign.yaml

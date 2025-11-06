@@ -28,38 +28,31 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
-		Enemies: Nod, Scrin, ScrinRebels, GDI, GDIHostile
+		Enemies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, Scrin, ScrinRebels, GDI, GDIHostile
 	PlayerReference@Nod:
 		Name: Nod
-		AllowBots: False
-		Playable: True
-		Required: True
-		LockFaction: True
 		Faction: nod
-		LockColor: True
 		Color: FE1100
-		LockSpawn: True
-		LockTeam: True
-		Allies: ScrinRebels, GDI
+		Allies: ScrinRebels, GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: Scrin, GDIHostile, Creeps
 	PlayerReference@Scrin:
 		Name: Scrin
 		Bot: campaign
 		Faction: scrin
 		Color: 7700FF
-		Enemies: Nod, ScrinRebels, GDI, GDIHostile, Creeps
+		Enemies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, ScrinRebels, GDI, GDIHostile, Creeps
 	PlayerReference@ScrinRebels:
 		Name: ScrinRebels
 		Faction: scrin
 		Color: 55E1AE
-		Allies: Nod, GDI
+		Allies: Nod, GDI, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: Scrin, Creeps
 	PlayerReference@GDI:
 		Name: GDI
 		Bot: campaign
 		Faction: gdi
 		Color: F2CF74
-		Allies: Nod, ScrinRebels
+		Allies: Nod, ScrinRebels, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: Scrin, Creeps
 	PlayerReference@GDIHostile:
 		Name: GDIHostile
@@ -67,6 +60,66 @@ Players:
 		Faction: gdi
 		Color: F2CF74
 		Enemies: Scrin, Nod, Creeps
+	PlayerReference@Multi0:
+		Name: Multi0
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, ScrinRebels, GDI
+		Enemies: Scrin, GDIHostile, Creeps
+	PlayerReference@Multi1:
+		Name: Multi1
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, ScrinRebels, GDI
+		Enemies: Scrin, GDIHostile, Creeps
+	PlayerReference@Multi2:
+		Name: Multi2
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, ScrinRebels, GDI
+		Enemies: Scrin, GDIHostile, Creeps
+	PlayerReference@Multi3:
+		Name: Multi3
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, ScrinRebels, GDI
+		Enemies: Scrin, GDIHostile, Creeps
+	PlayerReference@Multi4:
+		Name: Multi4
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, ScrinRebels, GDI
+		Enemies: Scrin, GDIHostile, Creeps
+	PlayerReference@Multi5:
+		Name: Multi5
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: nod
+		Allies: Nod, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, ScrinRebels, GDI
+		Enemies: Scrin, GDIHostile, Creeps
 
 Actors:
 	Actor0: amcv
@@ -4831,6 +4884,6 @@ Actors:
 		Owner: Neutral
 		Location: 51,115
 
-Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, reckoning-rules.yaml
+Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|missions/main-campaign/ca36-reckoning/reckoning-rules.yaml, ca|rules/custom/coop-rules.yaml, reckoning-coop-rules.yaml
 
 Weapons: ca|weapons/custom/campaign.yaml

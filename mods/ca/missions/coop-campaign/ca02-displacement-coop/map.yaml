@@ -28,18 +28,12 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
-		Enemies: USSR, Greece, England, Scrin
+		Enemies: USSR, Greece, England, Scrin, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 	PlayerReference@Greece:
 		Name: Greece
-		AllowBots: False
-		Playable: True
-		Required: True
-		LockFaction: True
 		Faction: allies
-		LockColor: True
 		Color: 99ACF2
-		LockSpawn: True
-		LockTeam: True
+		Allies: England, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: Scrin, Creeps
 	PlayerReference@Scrin:
 		Name: Scrin
@@ -52,13 +46,73 @@ Players:
 		Bot: campaign
 		Faction: allies
 		Color: A1EF8C
-		Allies: Greece
+		Allies: Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5
 		Enemies: Scrin, Creeps
 	PlayerReference@USSR:
 		Name: USSR
 		Bot: campaign
 		Faction: soviet
 		Color: FE1100
+		Enemies: Scrin, Creeps
+	PlayerReference@Multi0:
+		Name: Multi0
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: allies
+		Allies: Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, England
+		Enemies: Scrin, Creeps
+	PlayerReference@Multi1:
+		Name: Multi1
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: allies
+		Allies: Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, England
+		Enemies: Scrin, Creeps
+	PlayerReference@Multi2:
+		Name: Multi2
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: allies
+		Allies: Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, England
+		Enemies: Scrin, Creeps
+	PlayerReference@Multi3:
+		Name: Multi3
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: allies
+		Allies: Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, England
+		Enemies: Scrin, Creeps
+	PlayerReference@Multi4:
+		Name: Multi4
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: allies
+		Allies: Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, England
+		Enemies: Scrin, Creeps
+	PlayerReference@Multi5:
+		Name: Multi5
+		Playable: True
+		LockFaction: True
+		LockSpawn: True
+		LockTeam: True
+		Team: 1
+		Faction: allies
+		Allies: Greece, Multi0, Multi1, Multi2, Multi3, Multi4, Multi5, England
 		Enemies: Scrin, Creeps
 
 Actors:
@@ -2974,6 +3028,6 @@ Actors:
 		Owner: Neutral
 		Location: 83,29
 
-Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-coalitions.yaml, displacement-rules.yaml
+Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-coalitions.yaml, ca|missions/main-campaign/ca02-displacement/displacement-rules.yaml, ca|rules/custom/coop-rules.yaml, displacement-coop-rules.yaml
 
 Weapons: ca|weapons/custom/campaign.yaml
