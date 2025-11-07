@@ -1592,7 +1592,7 @@ CoopInit25 = function(mission)
     end
 
 	if InitialCoopUnitsOwner and Stopspread ~= true then
-		local initialUnits = Utils.Where(MainPlayer.GetActors(), function(a) return a.HasProperty("Move") and not a.HasProperty("Land") and not IsMcv(a) end)
+		local initialUnits = Utils.Where(InitialCoopUnitsOwner.GetActors(), function(a) return a.HasProperty("Move") and not a.HasProperty("Land") and not IsMcv(a) end)
 
 		Utils.Do(initialUnits, function(unit)
 			unit.Owner = InitialCoopUnitsOwner
