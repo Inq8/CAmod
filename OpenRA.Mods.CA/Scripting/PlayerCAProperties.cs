@@ -10,6 +10,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using OpenRA.Mods.CA.Traits;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Scripting;
 
@@ -44,5 +45,8 @@ namespace OpenRA.Mods.Common.Scripting
 
 			return result.ToArray();
 		}
+
+		[Desc("True if the player has not surrendered or disconnected.")]
+		public bool PlayerIsActive => !Player.Spectating && Player.WinState != WinState.Lost && Player.PlayerActor.TraitOrDefault<PlayerConnectionStatus>()?.IsConnected == true;
 	}
 }
