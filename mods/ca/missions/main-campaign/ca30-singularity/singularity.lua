@@ -134,6 +134,7 @@ SetupPlayers = function()
 	NeutralGDI = Player.GetPlayer("NeutralGDI")
 	NeutralScrin = Player.GetPlayer("NeutralScrin")
 	SignalTransmitterPlayer = Player.GetPlayer("SignalTransmitterPlayer") -- separate player to prevent AI from attacking it
+	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { GDI }
 	MissionEnemies = { Scrin, SovietSlaves, AlliedSlaves, NodSlaves }
 end

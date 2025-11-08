@@ -154,6 +154,7 @@ SetupPlayers = function()
 	Scrin = Player.GetPlayer("Scrin")
 	USSR = Player.GetPlayer("USSR")
 	USSRUnmanned = Player.GetPlayer("USSRUnmanned")
+	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { Scrin }
 	MissionEnemies = { USSR }
 end

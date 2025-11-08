@@ -124,8 +124,8 @@ SetupPlayers = function()
 	ScrinRebels = Player.GetPlayer("ScrinRebels")
 	ScrinRebelsOuter = Player.GetPlayer("ScrinRebelsOuter")
 	MaleficScrin = Player.GetPlayer("MaleficScrin")
-	Neutral = Player.GetPlayer("Neutral")
 	SpyPlaneProvider = Player.GetPlayer("SpyPlaneProvider")
+	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { USSR }
 	MissionEnemies = { Nod, ScrinRebels, MaleficScrin }
 end
