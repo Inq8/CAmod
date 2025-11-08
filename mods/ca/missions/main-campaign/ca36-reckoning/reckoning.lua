@@ -159,6 +159,7 @@ SetupPlayers = function()
 	ScrinRebels = Player.GetPlayer("ScrinRebels")
 	GDIHostile = Player.GetPlayer("GDIHostile")
 	GDI = Player.GetPlayer("GDI")
+	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { Nod }
 	MissionEnemies = { Scrin }
 end

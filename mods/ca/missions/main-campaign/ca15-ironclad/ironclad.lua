@@ -64,6 +64,7 @@ SetupPlayers = function()
 	USSR = Player.GetPlayer("USSR")
 	GDI = Player.GetPlayer("GDI")
 	Greece = Player.GetPlayer("Greece")
+	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { USSR }
 	MissionEnemies = { GDI, Greece }
 end

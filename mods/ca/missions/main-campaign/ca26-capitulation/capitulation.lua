@@ -173,6 +173,7 @@ Squads = {
 SetupPlayers = function()
 	GDI = Player.GetPlayer("GDI")
 	USSR = Player.GetPlayer("USSR")
+	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { GDI }
 	MissionEnemies = { USSR }
 end

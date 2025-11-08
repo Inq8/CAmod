@@ -34,8 +34,8 @@ Squads = {
 SetupPlayers = function()
 	Greece = Player.GetPlayer("Greece")
 	Nod = Player.GetPlayer("Nod")
-	Neutral = Player.GetPlayer("Neutral")
 	England = Player.GetPlayer("England")
+	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { Greece }
 	MissionEnemies = { Nod }
 end

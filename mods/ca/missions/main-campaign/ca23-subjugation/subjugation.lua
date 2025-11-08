@@ -93,6 +93,7 @@ Squads = {
 SetupPlayers = function()
 	Scrin = Player.GetPlayer("Scrin")
 	USSR = Player.GetPlayer("USSR")
+	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { Scrin }
 	MissionEnemies = { USSR }
 end

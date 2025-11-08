@@ -171,6 +171,7 @@ AirAttackCompositions = {
 SetupPlayers = function()
 	Nod = Player.GetPlayer("Nod")
 	USSR = Player.GetPlayer("USSR")
+	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { Nod }
 	MissionEnemies = { USSR }
 end

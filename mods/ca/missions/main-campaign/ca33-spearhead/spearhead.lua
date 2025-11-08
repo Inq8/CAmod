@@ -30,6 +30,7 @@ SetupPlayers = function()
     GDI = Player.GetPlayer("GDI")
 	Scrin = Player.GetPlayer("Scrin")
 	Nod = Player.GetPlayer("Nod")
+	Neutral = Player.GetPlayer("Neutral")
     MissionPlayers = { GDI }
 	MissionEnemies = { Nod, Scrin }
 end

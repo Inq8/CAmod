@@ -84,6 +84,7 @@ SetupPlayers = function()
 	Scrin = Player.GetPlayer("Scrin")
 	TibLifeforms = Player.GetPlayer("TibLifeforms")
 	GatewayOwner = Player.GetPlayer("GatewayOwner")
+	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { GDI }
 	MissionEnemies = { Scrin }
 end

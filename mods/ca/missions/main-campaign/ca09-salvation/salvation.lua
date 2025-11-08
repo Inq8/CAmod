@@ -80,6 +80,7 @@ SetupPlayers = function()
 	Nod = Player.GetPlayer("Nod")
 	Scrin = Player.GetPlayer("Scrin")
 	Civilian = Player.GetPlayer("Civilian")
+	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = { Nod }
 	MissionEnemies = { Scrin }
 end
