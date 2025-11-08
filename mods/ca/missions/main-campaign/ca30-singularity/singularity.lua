@@ -1,6 +1,5 @@
 MissionDir = "ca|missions/main-campaign/ca30-singularity"
 
-
 NWReactors = { NWPower1, NWPower2, NWPower3, NWPower4, NWPower5, NWPower6, NWPower7, NWPower8 }
 
 NEReactors = { NEPower1, NEPower2, NEPower3, NEPower4, NEPower5, NEPower6, NEPower7, NEPower8 }
@@ -151,12 +150,6 @@ WorldLoaded = function()
 	InitNodSlaves()
 	InitSovietSlaves()
 	InitAlliedSlaves()
-
-	if SignalTransmitter.HasProperty("Attack") then
-		Media.Debug("1")
-	else
-		Media.Debug("2")
-	end
 
 	if Difficulty == "easy" then
 		HardNormalAA1.Destroy()
