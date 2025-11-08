@@ -5,13 +5,45 @@ World:
 		BuildRadiusCheckboxLocked: False
 		BuildRadiusCheckboxEnabled: False
 
+	ScriptLobbyDropdown@basesharing:
+		ID: basesharing
+		Label: Base Sharing
+		Description: Controls whether every player gets a MCV and whether tech is shared.\nWhen tech is shared you can produce units from other players production buildings if you don't have that building.\nNo effect in baseless missions.
+		Values:
+			1: Shared base & tech
+			2: MCVs for all, tech shared
+			3: MCVs for all, no tech shared
+		Default: 2
+		Locked: False
+		DisplayOrder: 999
+
+	ScriptLobbyDropdown@incomeshare:
+		ID: incomeshare
+		Label: Income Sharing
+		Description: Shares a percentage of all player refinery income with all other players.\nFor technical reasons this makes silos useless.
+		Values:
+			0: Off
+			999: Full Amount to All
+			100: Equally Split
+			10: 10%
+			15: 15%
+			20: 20%
+			25: 25%
+			30: 30%
+			35: 35%
+			40: 40%
+			45: 45%
+			50: 50%
+		Default: 100
+		DisplayOrder: 999
+
 	ScriptLobbyDropdown@enprotime:
 		ID: enprotime
 		Label: AI Unit Production Time Multiplier
-		Description: Decreases the Time the AI needs to build a single unit.\nUnlike the Enemy Production Multiplier that copies units, this taps directly into the enemy Production queue.\nThe Value is applied after the regular Difficulty Modificators and caps at 1 production per game tick if the exits are not blocked.\nThis does not change the size and time between attack waves, but the time it takes to produce the wave.
+		Description: Adjusts AI unit production time.\nUnlike the Enemy Production Multiplier that copies units, this taps directly into the enemy production queue.\nThe value is applied after the regular Difficulty modifiers and caps at 1 production per game tick if the exits are not blocked.\nThis does not change the size and time between attack waves, only the time it takes to produce the wave.
 		Values:
-			999: x1 - (0.1 * PlayerCount)
-			998: x1 - (0.15 * PlayerCount)
+			999: x1 - (0.1 * player count)
+			998: x1 - (0.15 * player count)
 			1: x1.0 (Off)
 			0.9: x0.9
 			0.8: x0.8
@@ -30,7 +62,7 @@ World:
 	ScriptLobbyDropdown@enmp:
 		ID: enmp
 		Label: Enemy Starting Unit Multiplier
-		Description: Multiplies starting ground combat Units of the Enemy.\nSome levels may become unbeatable if values are raised.
+		Description: Multiplies starting ground combat units of the enemy.\nSome missions may become unbeatable if this value is raised.
 		Values:
 			999: x Player Count
 			0: 1x (Off)
@@ -38,25 +70,25 @@ World:
 			2: 3x
 			3: 4x
 			4: 5x
-			5: 6x Shouldn't go higher
+			5: 6x (Shouldn't go higher)
 			6: 7x
 			7: 8x
 			8: 9x
 			9: 10x
 			10: 11x
-			11: 12x Stop it!
+			11: 12x (Stop it!)
 			19: 20x
-			39: 40x CPU may melt.
+			39: 40x (CPU may melt)
 			59: 60x
 			79: 80x
-			99: 100x Abandon all hope!!!
+			99: 100x (Abandon all hope!!!)
 		Default: 0
 		DisplayOrder: 999
 
 	ScriptLobbyDropdown@prmp:
 		ID: prmp
 		Label: Enemy Production Multiplier
-		Description: Gives the enemy a multiple of any ground combat Unit they produce for free.\nThis raises the difficulty a lot and should be used with care.
+		Description: Copies any ground combat units the enemy AI produces.\nThis raises the difficulty significantly and should be used with care.
 		Values:
 			999: x Player Count
 			0: 1x (Off)
@@ -64,25 +96,25 @@ World:
 			2: 3x
 			3: 4x
 			4: 5x
-			5: 6x Shouldn't go higher
+			5: 6x (Shouldn't go higher)
 			6: 7x
 			7: 8x
 			8: 9x
 			9: 10x
 			10: 11x
-			11: 12x Stop it!
+			11: 12x (Stop it!)
 			19: 20x
-			39: 40x CPU may melt.
+			39: 40x (CPU may melt)
 			59: 60x
 			79: 80x
-			99: 100x Abandon all hope!!!
+			99: 100x (Abandon all hope!!!)
 		Default: 0
 		DisplayOrder: 999
 
 	ScriptLobbyDropdown@pfollow:
 		ID: pfollow
 		Label: Produced Follow
-		Description: Odds that a Multiplied Produced Unit will follow the Unit they are copied from, and go hunting when it dies.\nLeads to bigger attack waves.\nFollowers will also switch to hunt mode after a while to prevent clogging of production areas.
+		Description: Odds that a multiplied produced unit will follow the unit they are copied from, and go hunting when it dies.\nLeads to bigger attack waves.\nFollowers will also switch to hunt mode after a while to prevent clogging of production areas.
 		Values:
 			0: 0 (Will never happen)
 			1: 1
@@ -96,7 +128,7 @@ World:
 	ScriptLobbyDropdown@phunt:
 		ID: phunt
 		Label: Produced Hunt Chance
-		Description: Odds that a Multiplied Produced Unit will immediately go and attack the players.
+		Description: Odds that a multiplied produced unit will immediately attack the players.
 		Values:
 			0: 0 (Will never happen)
 			1: 1%
@@ -110,7 +142,7 @@ World:
 	ScriptLobbyDropdown@pwander:
 		ID: pwander
 		Label: Produced Wander
-		Description: Odds that a Multiplied Produced Unit will roam around the Map at Random.\nLeading to unpredictable attack Directions and random Enemies at unexpected Locations.
+		Description: Odds that a multiplied produced unit will roam around the map randomly.\nLeading to unpredictable attack directions and random enemies at unexpected locations.
 		Values:
 			0: 0 (Will never happen)
 			1: 1
@@ -124,7 +156,7 @@ World:
 	ScriptLobbyDropdown@pidle:
 		ID: pidle
 		Label: Produced Idle
-		Description: Odds that a Multiplied Produced Unit will just stand around and will only move and attack when enemies get near them or they are attacked.\nThis leads to bases full of enemies.\nThis value will default to 1 if all other values are 0.
+		Description: Odds that a multiplied produced unit will just stand around and will only move and attack when enemies get near them or they are attacked.\nThis results in bases full of enemies.\nThis value will default to 1 if all other values are 0.
 		Values:
 			0: 0 (Will never happen)
 			1: 1
@@ -138,7 +170,7 @@ World:
 	ScriptLobbyDropdown@sfollow:
 		ID: sfollow
 		Label: Starters Follow
-		Description: Odds that a Multiplied Starter Unit will follow the Unit they are copied from, and go hunting when it dies.\nLeads to bigger Garrisons and Patrols.
+		Description: Odds that a multiplied starting unit will follow the unit they are copied from, and go hunting when it dies.\nResults in bigger garrisons and patrols.
 		Values:
 			0: 0 (Will never happen)
 			1: 1
@@ -152,7 +184,7 @@ World:
 	ScriptLobbyDropdown@shunt:
 		ID: shunt
 		Label: Starters Hunt
-		Description: Odds that a Multiplied Starter Unit will immediately go and attack the players.\nCan lead to being rushed in the early game.
+		Description: Odds that a multiplied starting unit will immediately go and attack the players.\nCan lead to being rushed in the early game.
 		Values:
 			0: 0 (Will never happen)
 			1: 1
@@ -166,7 +198,7 @@ World:
 	ScriptLobbyDropdown@swander:
 		ID: swander
 		Label: Starters Wander
-		Description: Odds that a Multiplied Starter Unit will roam around the Map at Random.\nLeading to unpredictable attack Directions and random Enemies at unexpected Locations.
+		Description: Odds that a multiplied starting unit will roam around the map randomly.\nResults in unpredictable attack directions and random enemies at unexpected locations.
 		Values:
 			0: 0 (Will never happen)
 			1: 1
@@ -180,7 +212,7 @@ World:
 	ScriptLobbyDropdown@sidle:
 		ID: sidle
 		Label: Starters Idle
-		Description: Odds that a Multiplied Starter Unit will just stand around and will only move and attack when enemies get near them or they are attacked.\nThis leads to bases full of enemies.\nThis value will default to 1 if all other values are 0.
+		Description: Odds that a multiplied starting unit will just stand around and will only move and attack when enemies get near them or they are attacked.\nThis results in bases full of enemies.\nThis value will default to 1 if all other values are 0.
 		Values:
 			0: 0 (Will never happen)
 			1: 1
@@ -194,62 +226,30 @@ World:
 	ScriptLobbyDropdown@multiplyaircraft:
 		ID: multiplyaircraft
 		Label: also Multiply Aircraft
-		Description: EXPERIMENTAL\nInclude Aircraft in the Unit Multiplication.\nThe AI may have problems resupplying them all.
+		Description: EXPERIMENTAL\nInclude aircraft in the unit multiplication.\nThe AI may have problems resupplying them all.
 		Values:
-			domulti: Do multiply Aircraft
-			dontmulti: Don't multiply Aircraft
+			domulti: On (Multiply aircraft)
+			dontmulti: Off (Don't multiply aircraft)
 		Default: dontmulti
 		DisplayOrder: 999
 
 	ScriptLobbyDropdown@oremines:
 		ID: oremines
-		Label: Resource spawners
+		Label: Resource Spawners
 		Description: Adjustements to resource spawners on the map.\n\nNo change: Resource spawners are unchanged\nAdditional: Adds a mine or blossom tree to every field that has none. Amount varies from map to map.\nUpgrade: All ore mines become gem mines, all green blossom trees become blue blossom trees.\nAdd & Upgrade: Adds spawners and upgrades all of them\nDelete all: Remove all spawners. Warning: All resources are finite now. This can make some missions extremely difficult or impossible without near-perfect execution.
 		Values:
-			oreoff: No change
+			oreoff: No Change
 			oreon: Additional
 			oreupgrade: Upgrade
 			oreonupgrade: Add & Upgrade
-			orefinite: Delete all (Hardcore)
+			orefinite: Delete All (Hardcore)
 		Default: oreon
-		DisplayOrder: 999
-
-	ScriptLobbyDropdown@incomeshare:
-		ID: incomeshare
-		Label: Income Sharing
-		Description: Shares a Percentage of all Player income through refineries with all other players.\nDue to technical reasons, this makes Silos useless.\n"Feeding the multitude" gives the full amount of all income to all players.
-		Values:
-			0: Off
-			999: Feeding the multitude
-			100: Equal Split
-			10: 10%
-			15: 15%
-			20: 20%
-			25: 25%
-			30: 30%
-			35: 35%
-			40: 40%
-			45: 45%
-			50: 50%
-		Default: 100
-		DisplayOrder: 999
-
-	ScriptLobbyDropdown@basesharing:
-		ID: basesharing
-		Label: Base Sharing
-		Description: Control if every Players gets a MCV and if Technology is shared.\nWhen Tec is shared you can produce Units from other players production Buildings if you dont have that building.\nThis option does nothing in Baseless Missions.
-		Values:
-			1: 1 MCV, Tec Shared
-			2: MCVs for all, Tec shared
-			3: MCVs for all, no Tec shared
-		Default: 2
-		Locked: False
 		DisplayOrder: 999
 
 	ScriptLobbyDropdown@enemyranks:
 		ID: enemyranks
 		Label: Enemy Unit Rank
-		Description: Give every enemy combat unit this level of base Veterancy to boost their stats.
+		Description: Give every enemy combat unit this level of base veterancy to boost their stats.
 		Values:
 			0: 0
 			1: 1

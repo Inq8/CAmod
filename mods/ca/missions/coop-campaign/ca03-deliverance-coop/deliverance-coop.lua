@@ -23,3 +23,17 @@ end
 AfterTick = function()
 
 end
+
+TransferGDIUnits = function()
+	local gdiForces = GDI.GetActors()
+	Utils.Do(gdiForces, function(a)
+		if a.Type ~= "player" then
+			a.Owner = Greece
+		end
+	end)
+
+	Trigger.AfterDelay(1, function()
+		TransferBaseToPlayer(SinglePlayerPlayer, GetFirstActivePlayer())
+		CACoopQueueSyncer()
+	end)
+end

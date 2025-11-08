@@ -343,12 +343,19 @@ GDIBaseFound = function()
 	if not IsGDIBaseFound then
 		IsGDIBaseFound = true
 		MediaCA.PlaySound(MissionDir .. "/r_gdibasediscovered.aud", 2)
+
+		Greece.PlayLowPowerNotification = false
+
 		TransferGDIUnits()
+
+		Trigger.AfterDelay(DateTime.Seconds(5), function()
+			Greece.PlayLowPowerNotification = true
+		end)
+
 		InitUSSRAttacks()
 		TimerTicks = HoldOutTime[Difficulty]
 
 		Trigger.AfterDelay(DateTime.Seconds(1), function()
-			Actor.Create("QueueUpdaterDummy", true, { Owner = Greece })
 			ObjectiveHoldOut = Greece.AddObjective("Hold out until reinforcements arrive.")
 			UpdateReinforcementCountdown()
 			Greece.MarkCompletedObjective(ObjectiveFindBase)
@@ -383,8 +390,6 @@ GDIBaseFound = function()
 end
 
 TransferGDIUnits = function()
-	Greece.PlayLowPowerNotification = false
-
 	local gdiForces = GDI.GetActors()
 	Utils.Do(gdiForces, function(a)
 		if a.Type ~= "player" then
@@ -394,10 +399,6 @@ TransferGDIUnits = function()
 
 	Trigger.AfterDelay(1, function()
 		Actor.Create("QueueUpdaterDummy", true, { Owner = Greece })
-	end)
-
-	Trigger.AfterDelay(DateTime.Seconds(5), function()
-		Greece.PlayLowPowerNotification = true
 	end)
 end
 

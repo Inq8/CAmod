@@ -15,9 +15,33 @@ local SharedBank = 0
 local LastAssignedCoopID
 
 PrepareBuildingLists = function()
-	SharedBuildingList = { "mslo", "spen", "syrd", "pdox", "tsla", "dome", "atek", "npwr", "stek", "hq", "gtek", "tmpl", "ftur", "powr", "apwr", "weap", "fact", "proc", "hpad", "afld", "tpwr", "barr", "kenn", "tent", "fix", "pyle", "hand", "weap.td", "airs", "nuke", "afac", "obli", "eye", "rep", "hpad.td", "proc.td", "afld.gdi", "pris", "spen.nod", "syrd.gdi", "ttur", "mslo.nod", "weat", "sfac", "reac", "rea2", "proc.scrin", "wsph", "nerv", "scrt", "grav", "srep", "rfgn" }
+	UnitProducers = Utils.Concat(BarracksTypes, Utils.Concat(FactoryTypes, Utils.Concat(AirProductionTypes, Utils.Concat(NavalProductionTypes))))
+
+	SharedBuildingsLists = {
+		"allies" = { "fact", "powr", "apwr", "tent", "weap", "hpad", "proc", "dome", "atek", "pdox", "weat", "fix", "syrd" },
+		"soviet" = { "fact", "powr", "apwr", "barr", "weap", "afld", "proc", "dome", "stek", "mslo", "fix", "kenn", "spen", "npwr", "tpwr", "ftur", "ttur", "tsla" },
+		"gdi" = { "afac", "nuke", "nuk2", "pyle", "weap.td", "afld.gdi", "proc.td", "hq", "gtek", "eye", "rep", "syrd.gdi" },
+		"nod" = { "afac", "nuke", "nuk2", "hand", "weap.td", "airs", "hpad.td", "proc.td", "hq", "tmpl", "mslo.nod", "rep", "spen.nod", "obli" },
+		"scrin" = { "sfac", "reac", "rea2", "port", "wsph", "grav", "proc.scrin", "nerv", "scrt", "rfgn", "srep" }
+	}
+
+	SharedBuildingsList = {
+		"fact", "afac", "sfac",
+		"tent", "barr", "pyle", "hand", "port",
+		"weap", "weap.td", "airs", "wsph",
+		"hpad", "afld", "afld.gdi", "hpad.td", "grav",
+		"kenn", "syrd", "spen", "spen.nod", "syrd.gdi",
+		"powr", "apwr", "nuke", "nuk2", "reac", "rea2", "tpwr", "npwr"
+		"proc", "proc.td", "proc.scrin",
+		"ftur", "ttur", "tsla", "obli",
+		"rep", "fix", "srep",
+		"dome", "hq", "nerv",
+		"atek", "stek", "gtek", "tmpl", "scrt",
+		"pdox", "weat", "mslo", "eye", "mslo.nod", "rfgn"
+	}
+
+	-- non-shared buildings (build limit 1)
 	-- "alhq", "cvat", "indp", "munp", "orep", "upgc", "tmpp", "sign"
-	UnitProducers = { "spen", "syrd", "weap", "hpad", "afld", "barr", "kenn", "tent", "pyle", "hand", "weap.td", "airs", "hpad.td", "afld.gdi", "spen.nod", "syrd.gdi", "port", "wsph", "grav" }
 
 	RemoteExits =
 	{
@@ -56,22 +80,10 @@ ForEachPlayer = function(action)
 	Utils.Do(CoopPlayers, action)
 end
 
----@param action fun(player: player)
-ForEachExtraPlayer = function(action)
-	Utils.Do(GetExtraPlayers(), action)
-end
-
 ---@return integer
 GetCoopPlayerCount = function()
 	return #Utils.Where(CoopPlayers, function(cp)
 		return cp ~= nil
-	end)
-end
-
----@return player[]
-GetExtraPlayers = function()
-	return Utils.Where(CoopPlayers, function(player)
-		return player ~= MainPlayer
 	end)
 end
 
@@ -204,21 +216,6 @@ local function CanSplitAmongPlayers(unit)
 	return not matched
 end
 
----@param unit actor
----@param newOwner player
-local function AssignOnceAddedToWorld(unit, newOwner)
-	local done = false
-
-	Trigger.OnAddedToWorld(unit, function()
-		if done then
-			return
-		end
-
-		done = true
-		unit.Owner = newOwner
-	end)
-end
-
 --- Split the ownership of a group among the different co-op players.
 ---@param units actor[]
 ---@param specificPlayers? player[]
@@ -234,34 +231,29 @@ AssignToCoopPlayers = function(units, specificPlayers, Ignoreblacklist)
 	-- unit to each until no more units remain.
 	Utils.Do(units, function(unit)
 		if unit.Type ~= "player" then
+			ownerID = ownerID + 1
 
-		ownerID = ownerID + 1
+			if ownerID > playerCount then
+				ownerID = 1
+			end
 
-		if ownerID > playerCount then
-			ownerID = 1
-		end
+			LastAssignedCoopID = ownerID
+			local newOwner = CoopPlayers[ownerID]
+			local valid = specificPlayers == nil or IsPlayerInList(newOwner, specificPlayers)
 
-		LastAssignedCoopID = ownerID
-		local newOwner = CoopPlayers[ownerID]
-		local valid = specificPlayers == nil or IsPlayerInList(newOwner, specificPlayers)
+			if not valid then
+				return
+			end
 
-		if not valid then
-			return
-		end
+			unit.Owner = newOwner
 
-		if not unit.IsInWorld then
-			-- Should cover units created by Reinforce or similar functions.
-			AssignOnceAddedToWorld(unit, newOwner)
-			return
-		end
-
-		unit.Owner = newOwner
+			if unit.HasProperty("HasPassengers") then
+				Trigger.AfterDelay(1, function()
+					AssignToCoopPlayers(Utils.Where(unit.Passengers, function(a) return not a.IsDead end))
+				end)
+			end
 		end
 	end)
-end
-
-AssignToExtraPlayers = function(units)
-	AssignToCoopPlayers(units, GetExtraPlayers())
 end
 
 ---@param units actor[]
@@ -332,7 +324,7 @@ local function SyncObjectives()
 		local type = MainPlayer.GetObjectiveType(obid)
 		local required = type == texts.primary
 
-		ForEachExtraPlayer(function(player)
+		ForEachPlayer(function(player)
 			player.AddObjective(description, type, required)
 			local OBJcolour = HSLColor.Yellow
 			if required then
@@ -344,7 +336,7 @@ local function SyncObjectives()
 		end)
 	end)
 
-	ForEachExtraPlayer(function(player)
+	ForEachPlayer(function(player)
 		Trigger.OnPlayerWon(player, function()
 			Trigger.AfterDelay(DateTime.Seconds(1), function()
 				Media.PlaySpeechNotification(player, "Win")
@@ -355,12 +347,6 @@ local function SyncObjectives()
 			for i, v in ipairs(CoopPlayers) do
 				if v == player then
 					table.remove(CoopPlayers, i)
-					break
-				end
-			end
-			for i, v in ipairs(MCVPlayers) do
-				if v == player then
-					table.remove(MCVPlayers, i)
 					break
 				end
 			end
@@ -462,7 +448,7 @@ local function SyncObjectives()
 	end)
 
 	Trigger.OnObjectiveCompleted(MainPlayer, function(_, obid)
-		ForEachExtraPlayer(function(player)
+		ForEachPlayer(function(player)
 			player.MarkCompletedObjective(obid)
 			if player.IsLocalPlayer then
 				Media.PlaySoundNotification(player, "AlertBleep")
@@ -472,7 +458,7 @@ local function SyncObjectives()
 	end)
 
 	Trigger.OnObjectiveFailed(MainPlayer, function(_, obid)
-		ForEachExtraPlayer(function(player)
+		ForEachPlayer(function(player)
 			player.MarkFailedObjective(obid)
 			if player.IsLocalPlayer then
 				Media.PlaySoundNotification(player, "AlertBleep")
@@ -599,36 +585,36 @@ local function CreateRemoteBuilding(owner, originalType, remoteType)
 	end)
 
 	if IsProducer == true then
-	Trigger.OnProduction(remote, function(producer, produced)
-		--Media.DisplayMessage(tostring(originalType) .. " is the Remote Building Type.")
-		local primary
+		Trigger.OnProduction(remote, function(producer, produced)
+			--Media.DisplayMessage(tostring(originalType) .. " is the Remote Building Type.")
+			local primary
 
-		-- Use the newest player-created producer as the "primary building".
-		ForEachPlayer(function(player)
-			local realProducers = player.GetActorsByType(originalType)
-			if #realProducers > 0 then
-				primary = realProducers[#realProducers]
+			-- Use the newest player-created producer as the "primary building".
+			ForEachPlayer(function(player)
+				local realProducers = player.GetActorsByType(originalType)
+				if #realProducers > 0 then
+					primary = realProducers[#realProducers]
+				end
+			end)
+
+			if not primary then
+				-- It seems all factories of this type have been wiped
+				-- out before the shared prerequisites were updated.
+				--print(produced.Type .. " produced by " .. tostring(produced.Owner) .. " lacks a spawn building. Refunded.")
+				producer.Owner.Cash = producer.Owner.Cash + Actor.Cost(produced.Type)
+				produced.Destroy()
+				--Media.DisplayMessage(produced.Type .. " produced by " .. tostring(produced.Owner) .. " lacks a spawn building. Refunded.")
+				return
 			end
-		end)
 
-		if not primary then
-			-- It seems all factories of this type have been wiped
-			-- out before the shared prerequisites were updated.
-			--print(produced.Type .. " produced by " .. tostring(produced.Owner) .. " lacks a spawn building. Refunded.")
-			producer.Owner.Cash = producer.Owner.Cash + Actor.Cost(produced.Type)
+			local exit = primary.Location + offset
+			local remoteUnit = Actor.Create(produced.Type, true, { Owner = producer.Owner, Location = exit })
+			MoveDownIfAble(remoteUnit)
+			produced.Owner = Neutral
+			produced.IsInWorld = false
 			produced.Destroy()
-			--Media.DisplayMessage(produced.Type .. " produced by " .. tostring(produced.Owner) .. " lacks a spawn building. Refunded.")
-			return
-		end
-
-		local exit = primary.Location + offset
-		local remoteUnit = Actor.Create(produced.Type, true, { Owner = producer.Owner, Location = exit })
-		MoveDownIfAble(remoteUnit)
-		produced.Owner = Neutral
-		produced.IsInWorld = false
-		produced.Destroy()
-		--Media.DisplayMessage(produced.Type .. " produced by " .. tostring(produced.Owner) .. " has a spawn building. Produced.")
-	end)
+			--Media.DisplayMessage(produced.Type .. " produced by " .. tostring(produced.Owner) .. " has a spawn building. Produced.")
+		end)
 	end
 end
 
@@ -661,7 +647,6 @@ local function UpdateCoopPrequisites()
 					remote.Destroy()
 					--Media.DisplayMessage("Remotebuilding destroyed")
 				end)
-
 				return
 			end
 
@@ -1022,28 +1007,23 @@ CoopInit = function()
 
 	MainPlayer = SinglePlayerPlayer
 	CoopPlayers = MissionPlayers
-	MCVPlayers = {}
 
 	local mainEnemies = MissionEnemies
 
 	PrepareBuildingLists()
 
-	if Map.LobbyOption("basesharing") == "1" or Map.LobbyOption("basesharing") == "2" then
-        BaseShared = true
+	local baseSharingValue = Map.LobbyOption("basesharing")
+
+	if baseSharingValue == "1" then
+        McvPerPlayer = false
+		TechShared = true
+	elseif baseSharingValue == "2" then
+		McvPerPlayer = true
+		TechShared = true
     else
-		BaseShared = false
+		McvPerPlayer = false
+		TechShared = false
 	end
-
-	--BaseShared = Map.LobbyOptionOrDefault("basesharing", "2") == 1
-	TechShared = BaseShared --or Map.LobbyOption("basesharing") == 2
-
-	if Map.LobbyOption("basesharing") ~= "1" then
-        MCVPlayers = CoopPlayers
-    end
-
-	if Map.LobbyOption("basesharing") == "1" then
-        table.insert(MCVPlayers, CoopPlayers[1])
-    end
 
 	GoodSpread()
 	SyncObjectives()
@@ -1118,14 +1098,17 @@ TransferBaseToPlayer = function(fromPlayer, toPlayer)
 	end)
 end
 
-CopyMcvsToPlayers = function(fromPlayer, toPlayers)
-	local mcvs = fromPlayer.GetActorsByTypes(McvTypes)
+TransferMcvsToPlayers = function()
+	local mcvs = SinglePlayerPlayer.GetActorsByTypes(McvTypes)
+	local toPlayers = GetMcvPlayers()
 	Utils.Do(mcvs, function(mcv)
-		Utils.Do(Utils.Skip(toPlayers, 1), function(p)
-			local copy = Actor.Create(mcv.Type, true, { Owner = p, Location = mcv.Location })
-			ScatterIfAble(copy)
-		end)
 		mcv.Owner = toPlayers[1]
+		if McvPerPlayer then
+			Utils.Do(Utils.Skip(toPlayers, 1), function(p)
+				local copy = Actor.Create(mcv.Type, true, { Owner = p, Location = mcv.Location })
+				ScatterIfAble(copy)
+			end)
+		end
 	end)
 end
 
@@ -1136,4 +1119,17 @@ GetFirstActivePlayer = function()
 		end
 	end
 	return nil
+end
+
+GetMcvPlayers = function()
+	if McvPerPlayer then
+		return CoopPlayers
+	else
+		local firstActive = GetFirstActivePlayer()
+		if firstActive then
+			return { firstActive }
+		else
+			return {}
+		end
+	end
 end

@@ -79,46 +79,51 @@ WorldLoaded = function()
 	ObjectiveKillSAMSites = Greece.AddObjective("Destroy Soviet SAM sites along shoreline.")
 	ObjectiveKillSilos = Greece.AddObjective("Destroy Atom Bomb silos before they launch.")
 	ObjectiveNeutralizeChronosphere = Greece.AddObjective("Neutralize the Chronosphere.")
-	ObjectivePreserveSEALs = Greece.AddSecondaryObjective("Keep both SEALs alive.")
+	ObjectiveKeepAlive = Greece.AddSecondaryObjective("Keep all team members alive.")
 
 	LandingCraft.Move(LandingCraftExit.Location)
 	LandingCraft.Destroy()
-
-	RespawnTrigger(Seal1)
-	RespawnTrigger(Seal2)
-	RespawnTrigger(Spy)
 
 	Utils.Do(MissionPlayers, function(p)
 		Actor.Create("radar.dummy", true, { Owner = p })
 	end)
 
-	local seals = { Seal1, Seal2 }
-	Utils.Do(seals, function(a)
+	SetupUnits()
+
+	Utils.Do(Seals, function(a)
 		Trigger.OnKilled(a, function(self, killer)
-			Greece.MarkFailedObjective(ObjectivePreserveSEALs)
+			Greece.MarkFailedObjective(ObjectiveKeepAlive)
 
-			if Seal1.IsDead and Seal2.IsDead then
-				BothSealsDead = true
-			end
+			if not RespawnEnabled then
+				local allSealsDead = false
 
-			if BothSealsDead and not RespawnEnabled then
-				if not AllReactorsDead then
-					Greece.MarkFailedObjective(ObjectiveKillReactors)
+				if #Utils.Where(Seals, function(a) return not a.IsDead end) == 0 then
+					allSealsDead = true
 				end
 
-				if not BothNukeSilosDead then
-					Greece.MarkFailedObjective(ObjectiveKillSilos)
-				end
+				if allSealsDead then
+					if not AllReactorsDead then
+						Greece.MarkFailedObjective(ObjectiveKillReactors)
+					end
 
-				if not AllSAMSitesDead then
-					Greece.MarkFailedObjective(ObjectiveKillSAMSites)
-				end
+					if not BothNukeSilosDead then
+						Greece.MarkFailedObjective(ObjectiveKillSilos)
+					end
 
-				if not AllReactorsDead or not BothNukeSilosDead or not AllSAMSitesDead then
-					Greece.MarkFailedObjective(ObjectiveNeutralizeChronosphere)
+					if not AllSAMSitesDead then
+						Greece.MarkFailedObjective(ObjectiveKillSAMSites)
+					end
+
+					if not AllReactorsDead or not BothNukeSilosDead or not AllSAMSitesDead then
+						Greece.MarkFailedObjective(ObjectiveNeutralizeChronosphere)
+					end
 				end
 			end
 		end)
+	end)
+
+	Trigger.OnKilled(Spy, function(self, killer)
+		Greece.MarkFailedObjective(ObjectiveKeepAlive)
 	end)
 
 	Trigger.OnKilled(WestReactor, function(self, killer)
@@ -168,8 +173,8 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnKilled(Chronosphere, function(self, killer)
-		if not Greece.IsObjectiveFailed(ObjectivePreserveSEALs) then
-			Greece.MarkCompletedObjective(ObjectivePreserveSEALs)
+		if not Greece.IsObjectiveFailed(ObjectiveKeepAlive) then
+			Greece.MarkCompletedObjective(ObjectiveKeepAlive)
 		end
 		Greece.MarkCompletedObjective(ObjectiveNeutralizeChronosphere)
 	end)
@@ -185,8 +190,9 @@ WorldLoaded = function()
 	if IsNormalOrBelow() then
 		V22.Destroy()
 
-		Seal1.GrantCondition("difficulty-" .. Difficulty)
-		Seal2.GrantCondition("difficulty-" .. Difficulty)
+		Utils.Do(Seals, function(a)
+			a.GrantCondition("difficulty-" .. Difficulty)
+		end)
 
 		Trigger.AfterDelay(DateTime.Seconds(3), function()
 			Tip('Disguise your spy by "attacking" enemy infantry. Dogs can see through the disguise.')
@@ -257,6 +263,13 @@ WorldLoaded = function()
 	end)
 
 	AfterWorldLoaded()
+end
+
+SetupUnits = function()
+	Seals = { Seal1, Seal2 }
+	RespawnTrigger(Seal1, Seal1.Location)
+	RespawnTrigger(Seal2, Seal2.Location)
+	RespawnTrigger(Spy, Spy.Location)
 end
 
 Sunrise = function()
@@ -461,7 +474,7 @@ DropChronoPrison = function()
 	end)
 end
 
-RespawnTrigger = function(a)
+RespawnTrigger = function(a, loc)
 	if RespawnEnabled then
 		Trigger.OnKilled(a, function(self, killer)
 			local name
@@ -472,13 +485,13 @@ RespawnTrigger = function(a)
 			end
 			Notification(name .. " respawns in 20 seconds.")
 			Trigger.AfterDelay(DateTime.Seconds(20), function()
-				local respawnedActor = Actor.Create(a.Type, true, { Owner = a.Owner, Location = PlayerStart.Location })
+				local respawnedActor = Actor.Create(a.Type, true, { Owner = a.Owner, Location = loc })
 				Beacon.New(a.Owner, PlayerStart.CenterPosition)
 				Media.PlaySpeechNotification(a.Owner, "ReinforcementsArrived")
 				if a.Type == "seal" then
 					respawnedActor.GrantCondition("difficulty-" .. Difficulty)
 				end
-				RespawnTrigger(respawnedActor)
+				RespawnTrigger(respawnedActor, loc)
 			end)
 		end)
 	end

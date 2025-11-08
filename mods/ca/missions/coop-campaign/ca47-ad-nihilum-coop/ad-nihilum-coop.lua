@@ -13,6 +13,7 @@ SetupPlayers = function()
 	MissionEnemies = { MaleficScrin }
 	SinglePlayerPlayer = Greece
 	CoopInit()
+	TechShared = false
 end
 
 AfterWorldLoaded = function()

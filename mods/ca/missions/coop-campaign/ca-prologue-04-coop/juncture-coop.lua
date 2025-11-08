@@ -16,7 +16,7 @@ SetupPlayers = function()
 end
 
 AfterWorldLoaded = function()
-
+	TransferMcvsToPlayers()
 end
 
 AfterTick = function()

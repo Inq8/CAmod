@@ -23,3 +23,15 @@ end
 AfterTick = function()
 
 end
+
+DoMcvArrival = function()
+	PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
+	Notification("Reinforcements have arrived.")
+	local delay = 0
+	Utils.Do(GetMcvPlayers(), function(p)
+		Trigger.AfterDelay(DateTime.Seconds(delay), function()
+			Reinforcements.Reinforce(p, { "mcv" }, { McvSpawn.Location, McvRally.Location })
+		end)
+		delay = delay + DateTime.Seconds(1)
+	end)
+end

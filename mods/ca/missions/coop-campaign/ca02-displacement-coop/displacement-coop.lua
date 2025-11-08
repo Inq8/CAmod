@@ -18,7 +18,7 @@ SetupPlayers = function()
 end
 
 AfterWorldLoaded = function()
-	TransferBaseToPlayer(SinglePlayerPlayer, MissionPlayers[1])
+	TransferBaseToPlayer(SinglePlayerPlayer, GetFirstActivePlayer())
 end
 
 AfterTick = function()

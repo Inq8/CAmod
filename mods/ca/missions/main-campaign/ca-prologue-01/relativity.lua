@@ -248,7 +248,7 @@ CreateEinstein = function()
 end
 
 HelicopterGone = function()
-	if not Heli.IsDead then
+	if not Heli.IsDead and #Heli.Passengers > 0 then
 		PlaySpeechNotificationToMissionPlayers("TargetRescued")
 		Trigger.AfterDelay(DateTime.Seconds(1), function()
 			Greece.MarkCompletedObjective(ExtractObjective)

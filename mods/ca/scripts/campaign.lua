@@ -491,11 +491,6 @@ PlayerBuildingsCount = function(player)
 end
 
 MissionPlayersHaveNoRequiredUnits = function()
-
-	Utils.Do(MissionPlayers, function(p)
-		Media.Debug("Checking player " .. tostring(p) .. " for no required units: " .. tostring(p.HasNoRequiredUnits()) )
-	end)
-
 	return Utils.All(MissionPlayers, function(p) return p.HasNoRequiredUnits() end)
 end
 
@@ -1709,7 +1704,7 @@ AddHarvesterDeathStack = function(player)
 end
 
 DoHelicopterDrop = function(player, entryPath, transportType, units, unitFunc, transportExitFunc)
-	Reinforcements.ReinforceWithTransport(player, transportType, units, entryPath, nil, function(transport, cargo)
+	return Reinforcements.ReinforceWithTransport(player, transportType, units, entryPath, nil, function(transport, cargo)
 		if not transport.IsDead then
 			transport.UnloadPassengers()
 			if unitFunc ~= nil then
@@ -1727,7 +1722,8 @@ DoHelicopterDrop = function(player, entryPath, transportType, units, unitFunc, t
 end
 
 DoNavalTransportDrop = function(player, entryPath, exitPath, transportType, units, unitFunc)
-	local cargo = Reinforcements.ReinforceWithTransport(player, transportType, units, entryPath, exitPath)[2]
+	local reinforcements = Reinforcements.ReinforceWithTransport(player, transportType, units, entryPath, exitPath)
+	local cargo = reinforcements[2]
 	if unitFunc ~= nil then
 		Utils.Do(cargo, function(a)
 			Trigger.OnAddedToWorld(a, function(self)
@@ -1735,6 +1731,7 @@ DoNavalTransportDrop = function(player, entryPath, exitPath, transportType, unit
 			end)
 		end)
 	end
+	return reinforcements
 end
 
 PlayerHasNavalProduction = function(player)
@@ -2172,8 +2169,6 @@ CalculatePlayerCharacteristics = function()
 	MissionPlayers = Utils.Where(MissionPlayers, function(p)
 		return p.PlayerIsActive
 	end)
-
-	Media.Debug("there are " .. #MissionPlayers .. " active mission players")
 
 	Utils.Do(MissionPlayers, function(p)
 		PlayerCharacteristics[p.InternalName] = {

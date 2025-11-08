@@ -17,8 +17,7 @@ SetupPlayers = function()
 end
 
 AfterWorldLoaded = function()
-	CopyMcvsToPlayers(SinglePlayerPlayer, MissionPlayers)
-	TransferBaseToPlayer(SinglePlayerPlayer, MissionPlayers[1])
+	TransferMcvsToPlayers()
 end
 
 AfterTick = function()
