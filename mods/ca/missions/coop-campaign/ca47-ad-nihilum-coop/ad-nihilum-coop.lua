@@ -11,15 +11,8 @@ SetupPlayers = function()
 	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = Utils.Where({ Multi0, Multi1, Multi2, Multi3, Multi4, Multi5 }, function(p) return p ~= nil end)
 	MissionEnemies = { MaleficScrin }
-
-	ORAMod = "ca"
-	coopInfo =
-	{
-		Mainplayer = Greece, -- The original single player player
-		Dummyplayer = Greece,
-		MainEnemies = MissionEnemies,
-	}
-	CoopInit25(coopInfo)
+	SinglePlayerPlayer = Greece
+	CoopInit()
 end
 
 AfterWorldLoaded = function()

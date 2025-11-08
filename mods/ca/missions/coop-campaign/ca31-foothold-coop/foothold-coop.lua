@@ -10,17 +10,11 @@ SetupPlayers = function()
 	Scrin = Player.GetPlayer("Scrin")
 	TibLifeforms = Player.GetPlayer("TibLifeforms")
 	GatewayOwner = Player.GetPlayer("GatewayOwner")
+	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = Utils.Where({ Multi0, Multi1, Multi2, Multi3, Multi4, Multi5 }, function(p) return p ~= nil end)
 	MissionEnemies = { Scrin }
-
-	ORAMod = "ca"
-	coopInfo =
-	{
-		Mainplayer = GDI, -- The original single player player
-		Dummyplayer = GDI,
-		MainEnemies = MissionEnemies,
-	}
-	CoopInit25(coopInfo)
+	SinglePlayerPlayer = GDI
+	CoopInit()
 end
 
 AfterWorldLoaded = function()

@@ -12,30 +12,13 @@ SetupPlayers = function()
 	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = Utils.Where({ Multi0, Multi1, Multi2, Multi3, Multi4, Multi5 }, function(p) return p ~= nil end)
 	MissionEnemies = { USSR, Scrin }
-
-    ORAMod = "ca"
-	coopInfo =
-	{
-		Mainplayer = Greece, -- The original single player player
-		Dummyplayer = Greece,
-		MainEnemies = MissionEnemies,
-	}
-	CoopInit25(coopInfo)
-
-	Utils.Do(MissionPlayers, function(p)
-		if p == MissionPlayers[1] then
-			PlayerMcv.Owner = p
-		else
-			if #p.GetActorsByType("mcv") == 0 then
-				local mcv = Actor.Create("mcv", true, { Owner = p, Location = PlayerMcv.Location })
-				mcv.Scatter()
-			end
-		end
-	end)
+	SinglePlayerPlayer = Greece
+	CoopInit()
 end
 
 AfterWorldLoaded = function()
-
+	CopyMcvsToPlayers(SinglePlayerPlayer, MissionPlayers)
+	TransferBaseToPlayer(SinglePlayerPlayer, MissionPlayers[1])
 end
 
 AfterTick = function()

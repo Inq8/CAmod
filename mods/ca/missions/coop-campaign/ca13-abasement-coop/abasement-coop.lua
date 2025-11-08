@@ -10,17 +10,11 @@ SetupPlayers = function()
 	Nod = Player.GetPlayer("Nod")
 	NodAbandoned = Player.GetPlayer("NodAbandoned")
 	Scrin = Player.GetPlayer("Scrin")
+	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = Utils.Where({ Multi0, Multi1, Multi2, Multi3, Multi4, Multi5 }, function(p) return p ~= nil end)
 	MissionEnemies = { Scrin }
-
-	ORAMod = "ca"
-	coopInfo =
-	{
-		Mainplayer = USSR,-- The original single player player
-		Dummyplayer = USSR,
-		MainEnemies = MissionEnemies,
-	}
-	CoopInit25(coopInfo)
+	SinglePlayerPlayer = Nod
+	CoopInit()
 end
 
 AfterWorldLoaded = function()

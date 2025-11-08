@@ -8,17 +8,11 @@ SetupPlayers = function()
 	Multi5 = Player.GetPlayer("Multi5")
 	GDI = Player.GetPlayer("GDI")
 	Nod = Player.GetPlayer("Nod")
+	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = Utils.Where({ Multi0, Multi1, Multi2, Multi3, Multi4, Multi5 }, function(p) return p ~= nil end)
 	MissionEnemies = { GDI }
-
-	ORAMod = "ca"
-	coopInfo =
-	{
-		Mainplayer = GDI, -- The original single player player
-		Dummyplayer = GDI,
-		MainEnemies = MissionEnemies,
-	}
-	CoopInit25(coopInfo)
+	SinglePlayerPlayer = Nod
+	CoopInit()
 end
 
 AfterWorldLoaded = function()

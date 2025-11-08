@@ -1,75 +1,23 @@
 ---@type player[]
 CoopPlayers = {}
 
----@type boolean[]
-CoopPlayersSet = {}
-
 ---@type player
 local MainPlayer
-
-Iterations = 0
 
 ---@type string[]
 SplitOwnerBlacklist = {}
 
---- The last player (attempted to be) given a unit in AssignToCoopPlayers.
 ---@type integer
 local SharedBank = 0
+
+--- The last player (attempted to be) given a unit in AssignToCoopPlayers.
+---@type integer
 local LastAssignedCoopID
 
-local StartNotification = "StartGame"
-local Movies = {}
-local MovieStyle = Map.LobbyOption("fmvstyle", "fmvfull")
---local MultipliedUnitBehavior = Map.LobbyOption("multibehave", "normal")
---local MovieStyle = "fmvfull"
---local MultipliedUnitBehavior = "normal"
-
-CoopScrinMCVs = function(Mainplayer,MCVPlayers,WarpInLocation)
-	if #MCVPlayers > 1 then
-		local wormhole = Actor.Create("wormhole", true, { Owner = InitialCoopUnitsOwner, Location = WarpInLocation.Location })
-		Trigger.AfterDelay(DateTime.Seconds(2), function()
-			Media.PlaySpeechNotification(All, "ReinforcementsArrived")
-			Notification("Reinforcements have arrived.")
-			Beacon.New(InitialCoopUnitsOwner, WarpInLocation.CenterPosition)
-
-			Utils.Do(MCVPlayers, function(PID)
-				if PID ~= Mainplayer then
-					if (PID.Cash + PID.Resources) < 3000 then
-						PID.Cash = 3000
-					end
-					local ExtraSMCV = Actor.Create("smcv", true, { Owner = PID, Location = WarpInLocation.Location })
-					ScatterIfAble(ExtraSMCV)
-				end
-			end)
-		end)
-
-		Trigger.AfterDelay(DateTime.Seconds(5), function()
-			wormhole.Kill()
-		end)
-	end
-end
-
 PrepareBuildingLists = function()
-	---Prepare Building Lists for Sharing
-	if ORAMod == "ra" then
-		SharedBuildingList = { "powr", "apwr", "barr", "tent", "proc", "weap", "fact", "dome", "atek", "stek", "spen", "syrd", "kenn", "tsla", "ftur", "fix", "hpad", "afld"}
-		UnitProducers = { "barr", "tent", "weap", "spen", "syrd", "kenn", "hpad", "afld" }
-	end
-
-	if ORAMod == "td" then
-		SharedBuildingList = { "proc", "weap", "fact", "fact.gdi", "fact.nod", "fix", "hpad", "afld", "pyle", "hand", "nuke", "nuk2", "hq", "eye", "tmpl"  }
-		UnitProducers = { "weap", "hpad", "afld", "pyle", "hand" }
-	end
-
-	if ORAMod == "ca" then
-		SharedBuildingList = { "mslo", "spen", "syrd", "pdox", "tsla", "dome", "atek", --[["alhq",]] "npwr", "stek", "hq", "gtek", "tmpl", --[["cvat", "indp", "munp", "orep", "upgc", "tmpp",]] "ftur", "powr", "apwr", "weap", "fact", "proc", "hpad", "afld", "tpwr", "barr", "kenn", "tent", "fix", "pyle", "hand", "weap.td", "airs", "nuke", "afac", "obli", "eye", "rep", "hpad.td", "proc.td", "afld.gdi", "pris", "spen.nod", "syrd.gdi", "ttur", "mslo.nod", "weat", "sfac", "reac", "rea2", "proc.scrin", "wsph", "nerv", "scrt", "grav", --[["sign",]] "srep", "rfgn" }
-		UnitProducers = { "spen", "syrd", "weap", "hpad", "afld", "barr", "kenn", "tent", "pyle", "hand", "weap.td", "airs", "hpad.td", "afld.gdi", "spen.nod", "syrd.gdi", "port", "wsph", "grav" }
-	end
-
-	if ORAMod == "tibalt" then
-		SharedBuildingList = { "proc", "weap", "fact", "fact.gdi", "fact.nod", "fix", "hpad", "afld", "pyle", "hand", "nuke", "nuk2", "hq", "eye", "tmpl", "powr", "apwr", "pdox"}
-		UnitProducers = { "weap", "hpad", "afld", "pyle", "hand" }
-	end
+	SharedBuildingList = { "mslo", "spen", "syrd", "pdox", "tsla", "dome", "atek", "npwr", "stek", "hq", "gtek", "tmpl", "ftur", "powr", "apwr", "weap", "fact", "proc", "hpad", "afld", "tpwr", "barr", "kenn", "tent", "fix", "pyle", "hand", "weap.td", "airs", "nuke", "afac", "obli", "eye", "rep", "hpad.td", "proc.td", "afld.gdi", "pris", "spen.nod", "syrd.gdi", "ttur", "mslo.nod", "weat", "sfac", "reac", "rea2", "proc.scrin", "wsph", "nerv", "scrt", "grav", "srep", "rfgn" }
+	-- "alhq", "cvat", "indp", "munp", "orep", "upgc", "tmpp", "sign"
+	UnitProducers = { "spen", "syrd", "weap", "hpad", "afld", "barr", "kenn", "tent", "pyle", "hand", "weap.td", "airs", "hpad.td", "afld.gdi", "spen.nod", "syrd.gdi", "port", "wsph", "grav" }
 
 	RemoteExits =
 	{
@@ -96,16 +44,11 @@ PrepareBuildingLists = function()
 end
 
 CACoopQueueSyncer = function()
-	if ORAMod == "ca" then
-		Utils.Do(CoopPlayers,function(PID)
-			local QueueSyncer = Actor.Create("COOPQUEUESYNCER", true, { Owner = PID, Location = CPos.New(3, 3) })
-			Trigger.AfterDelay(1, function()
-				QueueSyncer.Owner = Neutral
-				QueueSyncer.IsInWorld = false
-				QueueSyncer.Destroy()
-			end)
+	Trigger.AfterDelay(1, function()
+		Utils.Do(CoopPlayers,function(p)
+			Actor.Create("QueueUpdaterDummy", true, { Owner = p })
 		end)
-	end
+	end)
 end
 
 ---@param action fun(player: player)
@@ -195,20 +138,13 @@ GetCoopGroundAttackers = function()
 	return attackers
 end
 
----@return boolean
-CoopTeamHasNoRequiredUnits = function()
-	return Utils.All(CoopPlayers, function(player)
-		return player.HasNoRequiredUnits()
-	end)
-end
-
 ---@param player player
 local function MaintainBotMoney(player)
-	local RefineryType = "proc"
-	local BaseBuilderType = "fact"
+	local RefineryType = "anyrefinery"
+	local BaseBuilderType = "anyconyard"
 	local CanBuildBase = player.HasPrerequisites({ BaseBuilderType })
 	local HasNoRefineries = not player.HasPrerequisites({ RefineryType })
-	local cost = Actor.Cost(RefineryType)
+	local cost = Actor.Cost("proc")
 	local bank = player.Cash + player.Resources
 
 	if bank < cost and CanBuildBase and HasNoRefineries then
@@ -221,18 +157,6 @@ end
 local function UpdateCoopBot(bot, interval)
 	MaintainBotMoney(bot)
 	local mcvs = bot.GetActorsByType("mcv")
-	print("MCV list for " .. tostring(bot) .. " (" .. tostring(#mcvs) .. " entries):")
-
-	if ORAMod ~= "ca" then
-		Utils.Do(mcvs, function(mcv)
-			print(tostring(mcv))
-
-			Trigger.OnIdle(mcv, function()
-				mcv.Deploy()
-				mcv.CallFunc(mcv.Scatter)
-			end)
-		end)
-	end
 
 	if not interval then
 		return
@@ -270,29 +194,6 @@ MoveDownIfAble = function(unit)
 	end
 end
 
----@param aircraft actor
-InitializeCoopAttackAircraft = function(aircraft)
-	local enemyPlayer = RandomCoopPlayer()
-	local target
-
-	Trigger.OnIdle(aircraft, function()
-		if not enemyPlayer then
-			enemyPlayer = RandomCoopPlayer()
-			return
-		end
-
-		if not target or not target.IsInWorld then
-			target = ChooseRandomTarget(aircraft, enemyPlayer)
-		end
-
-		if target then
-			aircraft.Attack(target)
-		else
-			aircraft.ReturnToBase()
-		end
-	end)
-end
-
 ---@param unit actor
 ---@return boolean
 local function CanSplitAmongPlayers(unit)
@@ -328,11 +229,14 @@ AssignToCoopPlayers = function(units, specificPlayers, Ignoreblacklist)
 
 	local playerCount = GetCoopPlayerCount()
 	local ownerID = LastAssignedCoopID or 0
+
 	-- Rotate through the player list and assign a
 	-- unit to each until no more units remain.
 	Utils.Do(units, function(unit)
 		if unit.Type ~= "player" then
+
 		ownerID = ownerID + 1
+
 		if ownerID > playerCount then
 			ownerID = 1
 		end
@@ -342,11 +246,9 @@ AssignToCoopPlayers = function(units, specificPlayers, Ignoreblacklist)
 		local valid = specificPlayers == nil or IsPlayerInList(newOwner, specificPlayers)
 
 		if not valid then
-			--print("Would-be owner " .. tostring(newOwner) .. " has been skipped.")
 			return
 		end
 
-		--print("Reassigning unit " .. tostring(unit.Type) .. " to " .. tostring(CoopPlayers[ownerID]))
 		if not unit.IsInWorld then
 			-- Should cover units created by Reinforce or similar functions.
 			AssignOnceAddedToWorld(unit, newOwner)
@@ -355,33 +257,6 @@ AssignToCoopPlayers = function(units, specificPlayers, Ignoreblacklist)
 
 		unit.Owner = newOwner
 		end
-	end)
-end
-
---- Split ownership of a transport's passengers among the co-op players.
---- Standard assignment should work for most transport reinforcements,
---- but some cases like paratrooper planes are more fiddly.
----@param transport actor
----@param specificPlayers? player[]
-AssignPassengersToCoopPlayers = function(transport, specificPlayers)
-	if transport.IsInWorld and transport.HasPassengers then
-		print(tostring(transport) .. " already in world. Using standard passenger assignment.")
-		AssignToCoopPlayers(transport.Passengers, specificPlayers)
-		return
-	end
-
-	local assigned = false
-
-	Trigger.OnAddedToWorld(transport, function()
-		-- Wait a tick to ensure passengers are created and loaded.
-		Trigger.AfterDelay(1, function()
-			if assigned or not transport.IsInWorld then
-				return
-			end
-
-			assigned = true
-			AssignToCoopPlayers(transport.Passengers, specificPlayers)
-		end)
 	end)
 end
 
@@ -399,141 +274,36 @@ AssignToOddPlayers = function(units)
 	AssignToCoopPlayers(units, GetOddPlayers())
 end
 
----@param types string[]
----@param goal cpos|cpos[]
----@param interval? integer
----@param specificPlayers? player[]
----@return actor[]
-ReinforceCoopUnits = function(types, goal, interval, specificPlayers)
-	if type(goal) ~= "table" then
-		goal = { goal }
-	end
-
-	local units = Reinforcements.Reinforce(MainPlayer, types, goal, interval or 0, ScatterIfAble)
-	AssignToCoopPlayers(units, specificPlayers or CoopPlayers)
-	return units
-end
-
----@param type string
----@param goal cpos|cpos[]
----@param interval? integer
----@param specificPlayers? player[]
----@return actor[]
-ReinforceUnitPerPlayer = function(type, goal, interval, specificPlayers)
-	local units = { }
-
-	Utils.Do(specificPlayers or CoopPlayers, function()
-		units[#units + 1] = type
-	end)
-
-	return ReinforceCoopUnits(units, goal, interval, specificPlayers or CoopPlayers)
-end
-
----@param goal cpos|cpos[]
----@param interval? integer
----@param faction? string
----@param facing? wangle
----@return actor[]
-ReinforceExtraMCVs = function(goal, interval, faction, facing)
-	if BaseShared then
-		return { }
-	end
-
-	if not faction then
-		local mcvs = ReinforceUnitPerPlayer("mcv", goal, interval, GetExtraPlayers())
-
-		Utils.Do(mcvs, function(mcv)
-			if not mcv.Owner.IsBot then
-				return
-			end
-
-			Trigger.OnAddedToWorld(mcv, function()
-				UpdateCoopBot(mcv.Owner)
-			end)
-		end)
-
-		return mcvs
-	end
-
-	-- Special case for certain missions (like Tanya's Tale)
-	-- where faction-specific MCVs are desired.
-	interval = interval or 0
-	local delay = 0
-	local mcvs = { }
-
-	if type(goal) ~= "table" then
-		goal = { goal }
-	end
-
-	ForEachExtraPlayer(function(player)
-		local ordered = false
-		local mcv = Actor.Create("mcv", false, { Owner = player, Location = goal[1], Faction = faction, Facing = facing or Angle.South })
-		mcvs[#mcvs + 1] = mcv
-
-		Trigger.AfterDelay(delay, function()
-			mcv.IsInWorld = true
-		end)
-
-		Trigger.OnAddedToWorld(mcv, function()
-			if ordered then
-				return
-			end
-
-			ordered = true
-			Utils.Do(goal, mcv.Move)
-			mcv.CallFunc(mcv.Scatter)
-
-			if mcv.Owner.IsBot then
-				UpdateCoopBot(mcv.Owner)
-			end
-		end)
-
-		delay = delay + interval
-	end)
-
-	return mcvs
-end
-
 GoodSpread = function()
 	Trigger.AfterDelay(5, GoodSpread)
-	if Stopspread ~= true then
-		local attackers = Utils.Where(InitialCoopUnitsOwner.GetActors(), function(a) return a.HasProperty("Move") and not a.HasProperty("Land") and not IsMcv(a) end)
 
-		if #attackers >= 1 then
-			if WeightedSpread ~= true then
-				AssignToCoopPlayers(attackers)
-			else
-			--WeightedAssignToCoopPlayers(InitialCoopUnitsOwner.GetGroundAttackers())
-			end
+	if StopSpread ~= true then
+		local actors = Utils.Where(SinglePlayerPlayer.GetActors(), function(a) return a.HasProperty("Move") and not IsHarvester(a) and not IsMcv(a) end)
+
+		if #actors >= 1 then
+			AssignToCoopPlayers(actors)
 		end
 	end
 end
 
 local function SecondaryObjectivesRequired()
 	local SecondaryMissionsText = "Complete all other Primary and Secondary objectives."
-	if ORAMod ~= "ca" then
-		SecondarysRequired = AddPrimaryObjective(MainPlayer, SecondaryMissionsText)
-	else
-		SecondarysRequired = MainPlayer.AddObjective(SecondaryMissionsText)
-	end
+	SecondarysRequired = MainPlayer.AddObjective(SecondaryMissionsText)
 	local NumAllObjectives = 0
 	local NumAllCompleted = 0
 	Trigger.OnObjectiveAdded(MainPlayer, function(_, obid)
 		if obid ~= SecondarysRequired then
 			NumAllObjectives = NumAllObjectives + 1
-			--Media.DisplayMessage("Objectives " .. NumAllCompleted .. "/" .. NumAllObjectives)
 		end
 	end)
 	Trigger.OnObjectiveCompleted(MainPlayer, function(_, obid)
 		if obid ~= SecondarysRequired then
 			NumAllCompleted = NumAllCompleted + 1
-			--Media.DisplayMessage("Objectives " .. NumAllCompleted .. "/" .. NumAllObjectives)
 			if NumAllCompleted >= NumAllObjectives and NumAllObjectives > 0 then
 				Trigger.AfterDelay(DateTime.Seconds(1), function()
 					Utils.Do(CoopPlayers,function(PID)
 						PID.MarkCompletedObjective(SecondarysRequired)
 					end)
-					--MainPlayer.MarkCompletedObjective(SecondarysRequired)
 				end)
 			end
 		end
@@ -544,64 +314,32 @@ local function SecondaryObjectivesRequired()
 				Utils.Do(CoopPlayers,function(PID)
 					PID.MarkFailedObjective(SecondarysRequired)
 				end)
-				--MainPlayer.MarkFailedObjective(SecondarysRequired)
 			end)
 		end
 	end)
 end
 
 local function SyncObjectives()
-	-- Translate some reusable text and store it.
-	if ORAMod ~= "ca" and ORAMod ~= "tibalt" then
-		texts =
-		{
-			primary = UserInterface.GetFluentMessage("primary"),
-			secondary = UserInterface.GetFluentMessage("secondary"),
-			newPrimary = UserInterface.GetFluentMessage("new-primary-objective"),
-			newSecondary = UserInterface.GetFluentMessage("new-secondary-objective")
-		}
-	else
-		texts =
-		{
-			primary = "Primary",
-			secondary = "Secondary",
-			newPrimary = "New primary objective",
-			newSecondary = "New secondary objective"
-		}
-	end
+	local texts = {
+		primary = "Primary",
+		secondary = "Secondary",
+		newPrimary = "New primary objective",
+		newSecondary = "New secondary objective"
+	}
 
-	--Syncing new Objectives
 	Trigger.OnObjectiveAdded(MainPlayer, function(_, obid)
 		local description = MainPlayer.GetObjectiveDescription(obid)
 		local type = MainPlayer.GetObjectiveType(obid)
 		local required = type == texts.primary
 
 		ForEachExtraPlayer(function(player)
-			-- Using AddObjective directly to avoid duplicate translations
-			-- from the usual AddPrimaryObjective or AddSecondaryObjective.
 			player.AddObjective(description, type, required)
-			if ORAMod ~= "ca" and ORAMod ~= "tibalt" then
-				if required then
-					Media.DisplayMessageToPlayer(player, description, texts.newPrimary)
-				else
-					Media.DisplayMessageToPlayer(player, description, texts.newSecondary)
-				end
-			elseif ORAMod == "tibalt" then
-				if player.IsLocalPlayer == true then
-					if required then
-						Media.DisplayMessage(player, description, texts.newPrimary)
-					else
-						Media.DisplayMessage(player, description, texts.newSecondary)
-					end
-				end
-			elseif ORAMod == "ca" then
-				local OBJcolour = HSLColor.Yellow
-				if required then
-					Media.DisplayMessageToPlayer(player, description, texts.newPrimary, OBJcolour)
-				else
-					OBJcolour = HSLColor.Gray
-					Media.DisplayMessageToPlayer(player, description, texts.newSecondary, OBJcolour)
-				end
+			local OBJcolour = HSLColor.Yellow
+			if required then
+				Media.DisplayMessageToPlayer(player, description, texts.newPrimary, OBJcolour)
+			else
+				OBJcolour = HSLColor.Gray
+				Media.DisplayMessageToPlayer(player, description, texts.newSecondary, OBJcolour)
 			end
 		end)
 	end)
@@ -614,17 +352,16 @@ local function SyncObjectives()
 		end)
 
 		Trigger.OnPlayerLost(player, function()
-			--Media.DisplayMessage("Does this shit even trigger?", "High Command", player.Color)
 			for i, v in ipairs(CoopPlayers) do
 				if v == player then
 					table.remove(CoopPlayers, i)
-					--return  -- Exit after removing the first occurrence
+					break
 				end
 			end
 			for i, v in ipairs(MCVPlayers) do
 				if v == player then
 					table.remove(MCVPlayers, i)
-					--return
+					break
 				end
 			end
 
@@ -713,12 +450,10 @@ local function SyncObjectives()
 
 			Trigger.AfterDelay(DateTime.Seconds(10), function()
 				--Failsafe if reassignment isnt possible
-				--Media.DisplayMessage("Failsafe triggered")
 				local Deathlist = player.GetActors()
 				Utils.Do(Deathlist,function(UID)
 					if UID.Type ~= "player" and not UID.IsDead and UID.HasProperty(Health) then
 						UID.Kill()
-						--Media.DisplayMessage("Killed as Failsafe: " .. UID.Type)
 					end
 				end)
 			end)
@@ -726,65 +461,23 @@ local function SyncObjectives()
 		end)
 	end)
 
-	--[[
-		Unsure why these were commented out, but I've fiddled with them.
-		Unless there's something I've missed, they should work in place
-		of the per-player marks without issues.
-	]]
-
-	if OldObjSync == nil then
-		Trigger.OnObjectiveCompleted(MainPlayer, function(_, obid)
-			ForEachExtraPlayer(function(player)
-				player.MarkCompletedObjective(obid)
-				if ORAMod == "ca" and player.IsLocalPlayer then
-					Media.PlaySoundNotification(player, "AlertBleep")
-					Media.DisplayMessage(MainPlayer.GetObjectiveDescription(obid), "Objective completed", HSLColor.LimeGreen)
-				end
-			end)
-		end)
-
-		Trigger.OnObjectiveFailed(MainPlayer, function(_, obid)
-			ForEachExtraPlayer(function(player)
-				player.MarkFailedObjective(obid)
-				if ORAMod == "ca" and player.IsLocalPlayer then
-					Media.PlaySoundNotification(player, "AlertBleep")
-					Media.DisplayMessage(MainPlayer.GetObjectiveDescription(obid), "Objective failed", HSLColor.Red)
-				end
-			end)
-		end)
-	end
-end
-
-local function TibAltSyncObjectives()
-	local texts =
-		{
-			primary = "Primary",
-			secondary = "Secondary",
-			newPrimary = "New primary objective",
-			newSecondary = "New secondary objective"
-		}
-
-	--Syncing new Objectives
-	Trigger.OnObjectiveAdded(MainPlayer, function(_, obid)
-		local description = MainPlayer.GetObjectiveDescription(obid)
-		local type = MainPlayer.GetObjectiveType(obid)
-		local required = type == texts.primary
-
-		ForEachExtraPlayer(function(player)
-			-- Using AddObjective directly to avoid duplicate translations
-			-- from the usual AddPrimaryObjective or AddSecondaryObjective.
-			player.AddObjective(description, type, required)
-		end)
-	end)
 	Trigger.OnObjectiveCompleted(MainPlayer, function(_, obid)
 		ForEachExtraPlayer(function(player)
 			player.MarkCompletedObjective(obid)
+			if player.IsLocalPlayer then
+				Media.PlaySoundNotification(player, "AlertBleep")
+				Media.DisplayMessage(MainPlayer.GetObjectiveDescription(obid), "Objective completed", HSLColor.LimeGreen)
+			end
 		end)
 	end)
 
 	Trigger.OnObjectiveFailed(MainPlayer, function(_, obid)
 		ForEachExtraPlayer(function(player)
 			player.MarkFailedObjective(obid)
+			if player.IsLocalPlayer then
+				Media.PlaySoundNotification(player, "AlertBleep")
+				Media.DisplayMessage(MainPlayer.GetObjectiveDescription(obid), "Objective failed", HSLColor.Red)
+			end
 		end)
 	end)
 end
@@ -808,7 +501,7 @@ local function OrderCopiedUnit(unit, produced, original, isAircraft)
 		end
 		local IsAggro = false
 		if isAircraft == true then
-			CAInitAttackAircraft (unit, nil, nil, nil)
+			InitAttackAircraft(unit)
 			return
 		end
 		Trigger.OnDamaged(unit,function(self, attacker, damage)
@@ -858,35 +551,6 @@ local function OrderCopiedUnit(unit, produced, original, isAircraft)
 			StartIdling(unit)
 		end
 	end)
-end
-
-CAInitAttackAircraft = function(aircraft, targetPlayer, targetList, targetType)
-	if not aircraft.IsDead then
-		Trigger.OnIdle(aircraft, function(self)
-			if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-				local actorId = tostring(aircraft)
-				local target = AttackAircraftTargets[actorId]
-
-				if not target or not target.IsInWorld then
-					if targetList ~= nil and #targetList > 0 and targetType ~= nil then
-						target = ChooseRandomTargetOfTypes(self, targetPlayer, targetList, targetType)
-					end
-					if target == nil then
-						local RandomTargetPlayer = RandomCoopPlayer()
-						target = ChooseRandomTarget(self, RandomTargetPlayer)
-					end
-				end
-
-				if target.IsDead == false and target.IsInWorld == true then
-					AttackAircraftTargets[actorId] = target
-					self.AttackMove(target.Location)
-				else
-					AttackAircraftTargets[actorId] = nil
-					self.ReturnToBase()
-				end
-			end
-		end)
-	end
 end
 
 StartIdling = function(unit)
@@ -959,11 +623,7 @@ local function CreateRemoteBuilding(owner, originalType, remoteType)
 
 		local exit = primary.Location + offset
 		local remoteUnit = Actor.Create(produced.Type, true, { Owner = producer.Owner, Location = exit })
-		if ORAMod == "ca" then
-			MoveDownIfAble(remoteUnit)
-		else
-			ScatterIfAble(remoteUnit)
-		end
+		MoveDownIfAble(remoteUnit)
 		produced.Owner = Neutral
 		produced.IsInWorld = false
 		produced.Destroy()
@@ -976,14 +636,12 @@ end
 --- be shared through the creation/destruction of remote buildings.
 local function UpdateCoopPrequisites()
 	Trigger.AfterDelay(5, UpdateCoopPrequisites)
-	--Media.DisplayMessage("Updating Prequisites")
+
 	if not TechShared then
-		--Media.DisplayMessage("Nothing to Update")
 		return
 	end
 
 	Utils.Do(SharedBuildingList, function(buildingType)
-		--Media.DisplayMessage("Checking for Prequs")
 		local teamHasPrerequisite = false
 
 		ForEachPlayer(function(player)
@@ -1010,7 +668,6 @@ local function UpdateCoopPrequisites()
 			if #remoteBuildings == 0 then
 				-- The team has the prerequisite, but this individual does not.
 				-- Share the base/tech with a new remote building.
-				--Media.DisplayMessage("Trying to create Remotebuilding")
 				CreateRemoteBuilding(player, buildingType, remoteType)
 			end
 		end)
@@ -1025,11 +682,7 @@ local function MultiplyEnemyStartingUnits(enemyPlayer)
 	if Map.LobbyOption("enmp") == "999"  then
 		multiplier = playerCount - 1
 	else
-		if ORAMod ~= "tibalt" then
-			multiplier = tonumber(Map.LobbyOptionOrDefault("enmp", "0"))
-		else
-			multiplier = tonumber(Map.LobbyOption("enmp", "0"))
-		end
+		multiplier = tonumber(Map.LobbyOptionOrDefault("enmp", "0"))
 	end
 
 	if multiplier == 0 then
@@ -1041,17 +694,12 @@ local function MultiplyEnemyStartingUnits(enemyPlayer)
 	local ValidAircrafts = {}
 
 	if AirCraftMulti == "domulti" then
-
 		local FoundAircrafts = {}
-		if ORAMod == "ca" then
-			ValidAircrafts = {"b2b","mig","suk","suk.upg","yak","p51","heli","u2","u2.killzone","smig","a10","a10.sw","a10.gau","a10.bomber","apch","orca","orcb","uav","rah","kiro","harr","scrn","venm","auro","pmak","beag","phan","kamv","shde","vert","mcor","disc","jack","stmr","torm","enrv","deva","pac","inva","mshp"}
-			FoundAircrafts = enemyPlayer.GetActorsByTypes(ValidAircrafts)
-			--Media.DisplayMessage(#enemyUnits .. " Ground Attackers found. " .. #ValidAircrafts .. " Aircraft Types. " .. #FoundAircrafts .. " Aircrafts found.")
-		end
+		ValidAircrafts = {"b2b","mig","suk","suk.upg","yak","p51","heli","u2","u2.killzone","smig","a10","a10.sw","a10.gau","a10.bomber","apch","orca","orcb","uav","rah","kiro","harr","scrn","venm","auro","pmak","beag","phan","kamv","shde","vert","mcor","disc","jack","stmr","torm","enrv","deva","pac","inva","mshp"}
+		FoundAircrafts = enemyPlayer.GetActorsByTypes(ValidAircrafts)
 		Utils.Do(FoundAircrafts,function(UID)
 			table.insert(enemyUnits,UID)
 		end)
-		--Media.DisplayMessage(#enemyUnits .. " Units overall found.")
 	end
 
 	Utils.Do(enemyUnits, function(original)
@@ -1069,11 +717,7 @@ local function MultiplyEnemyStartingUnits(enemyPlayer)
 					return false
 				end
 			end)
-			if isAircraft == true and ORAMod == "ca" then
-				OrderCopiedUnit(copy, false, original, isAircraft)
-			else
-				OrderCopiedUnit(copy, false, original)
-			end
+			OrderCopiedUnit(copy, false, original, isAircraft)
 		end)
 	end)
 end
@@ -1086,11 +730,7 @@ local function MultiplyEnemyProduction(enemyPlayer)
 	if Map.LobbyOption("prmp") == "999" then
 		multiplier = playerCount - 1
 	else
-		if ORAMod ~= "tibalt" then
-			multiplier = 0 + tonumber(Map.LobbyOptionOrDefault("prmp", "0"))
-		else
-			multiplier = 0 + tonumber(Map.LobbyOption("prmp", "0"))
-		end
+		multiplier = 0 + tonumber(Map.LobbyOptionOrDefault("prmp", "0"))
 	end
 
 	if multiplier == 0 then
@@ -1105,10 +745,10 @@ local function MultiplyEnemyProduction(enemyPlayer)
 		local ValidAircrafts = {}
 		if AirCraftMulti == "domulti" then
 			local FoundAircrafts = {}
-			if ORAMod == "ca" then
-				ValidAircrafts = {"b2b","mig","suk","suk.upg","yak","p51","heli","u2","u2.killzone","smig","a10","a10.sw","a10.gau","a10.bomber","apch","orca","orcb","uav","rah","kiro","harr","scrn","venm","auro","pmak","beag","phan","kamv","shde","vert","mcor","disc","jack","stmr","torm","enrv","deva","pac","inva","mshp"}
-				FoundAircrafts = enemyPlayer.GetActorsByTypes(ValidAircrafts)
-			end
+
+			ValidAircrafts = {"b2b","mig","suk","suk.upg","yak","p51","heli","u2","u2.killzone","smig","a10","a10.sw","a10.gau","a10.bomber","apch","orca","orcb","uav","rah","kiro","harr","scrn","venm","auro","pmak","beag","phan","kamv","shde","vert","mcor","disc","jack","stmr","torm","enrv","deva","pac","inva","mshp"}
+			FoundAircrafts = enemyPlayer.GetActorsByTypes(ValidAircrafts)
+
 			Utils.Do(FoundAircrafts,function(UID)
 				table.insert(AttackerFilter,UID)
 			end)
@@ -1134,7 +774,7 @@ local function MultiplyEnemyProduction(enemyPlayer)
 						end
 					end)
 
-					if isAircraft == true and ORAMod == "ca" then
+					if isAircraft == true then
 						OrderCopiedUnit(copy, true, original, isAircraft)
 					else
 						OrderCopiedUnit(copy, true, original)
@@ -1152,83 +792,38 @@ local function SetExtraMines()
 		return
 	end
 	if Map.LobbyOption("oremines") == "oreon" or Map.LobbyOption("oremines") == "oreonupgrade" then
-		if ORAMod == "ra" then
-			local OreMineList = { ExtraMine1, ExtraMine2, ExtraMine3, ExtraMine4, ExtraMine5, ExtraMine6, ExtraMine7, ExtraMine8, ExtraMine9, ExtraMine10 }
-			local GemMineList = { ExtraGemMine1, ExtraGemMine2, ExtraGemMine3, ExtraGemMine4, ExtraGemMine5, ExtraGemMine6, ExtraGemMine7, ExtraGemMine8, ExtraGemMine9, ExtraGemMine10, ExtraDiamondMine1, ExtraDiamondMine2, ExtraDiamondMine3, ExtraDiamondMine4, ExtraDiamondMine5, ExtraDiamondMine6, ExtraDiamondMine7, ExtraDiamondMine8, ExtraDiamondMine9, ExtraDiamondMine10 }
+		local OreMineList = { ExtraMine1, ExtraMine2, ExtraMine3, ExtraMine4, ExtraMine5, ExtraMine6, ExtraMine7, ExtraMine8, ExtraMine9, ExtraMine10 }
+		local GemMineList = { ExtraGemMine1, ExtraGemMine2, ExtraGemMine3, ExtraGemMine4, ExtraGemMine5, ExtraGemMine6, ExtraGemMine7, ExtraGemMine8, ExtraGemMine9, ExtraGemMine10, ExtraDiamondMine1, ExtraDiamondMine2, ExtraDiamondMine3, ExtraDiamondMine4, ExtraDiamondMine5, ExtraDiamondMine6, ExtraDiamondMine7, ExtraDiamondMine8, ExtraDiamondMine9, ExtraDiamondMine10 }
+		local GreenBlossomList = { ExtraBlossom1, ExtraBlossom2, ExtraBlossom3, ExtraBlossom4, ExtraBlossom5, ExtraBlossom6, ExtraBlossom7, ExtraBlossom8, ExtraBlossom9, ExtraBlossom10 }
+		local BlueBlossomList = { ExtraBlueBlossom1, ExtraBlueBlossom2, ExtraBlueBlossom3, ExtraBlueBlossom4, ExtraBlueBlossom5, ExtraBlueBlossom6, ExtraBlueBlossom7, ExtraBlueBlossom8, ExtraBlueBlossom9, ExtraBlueBlossom10 }
 
-			Utils.Do(OreMineList, function(actor)
-				if actor then
-					Actor.Create("mine", true, { Location = actor.Location, Owner = Neutral })
-					--Media.DisplayMessage("Extra Ore Mine created.")
-				end
-			end)
-			Utils.Do(GemMineList, function(actor)
-				if actor then
-					Actor.Create("gmine", true, { Location = actor.Location, Owner = Neutral })
-					--Media.DisplayMessage("Extra Gem Mine created.")
-				end
-			end)
-		end
-		if ORAMod == "td" or ORAMod == "tibalt" then
-			local GreenBlossomList = { ExtraBlossom1, ExtraBlossom2, ExtraBlossom3, ExtraBlossom4, ExtraBlossom5, ExtraBlossom6, ExtraBlossom7, ExtraBlossom8, ExtraBlossom9, ExtraBlossom10 }
-			local BlueBlossomList = { ExtraBlueBlossom1, ExtraBlueBlossom2, ExtraBlueBlossom3, ExtraBlueBlossom4, ExtraBlueBlossom5, ExtraBlueBlossom6, ExtraBlueBlossom7, ExtraBlueBlossom8, ExtraBlueBlossom9, ExtraBlueBlossom10 }
-
-			Utils.Do(GreenBlossomList, function(actor)
-				if actor then
-					Actor.Create("split2", true, { Location = actor.Location, Owner = Neutral })
-				end
-			end)
-			Utils.Do(BlueBlossomList, function(actor)
-				if actor then
-					Actor.Create("splitblue", true, { Location = actor.Location, Owner = Neutral })
-				end
-			end)
-		end
-
-		if ORAMod == "ca" then
-			local OreMineList = { ExtraMine1, ExtraMine2, ExtraMine3, ExtraMine4, ExtraMine5, ExtraMine6, ExtraMine7, ExtraMine8, ExtraMine9, ExtraMine10 }
-			local GemMineList = { ExtraGemMine1, ExtraGemMine2, ExtraGemMine3, ExtraGemMine4, ExtraGemMine5, ExtraGemMine6, ExtraGemMine7, ExtraGemMine8, ExtraGemMine9, ExtraGemMine10, ExtraDiamondMine1, ExtraDiamondMine2, ExtraDiamondMine3, ExtraDiamondMine4, ExtraDiamondMine5, ExtraDiamondMine6, ExtraDiamondMine7, ExtraDiamondMine8, ExtraDiamondMine9, ExtraDiamondMine10 }
-			local GreenBlossomList = { ExtraBlossom1, ExtraBlossom2, ExtraBlossom3, ExtraBlossom4, ExtraBlossom5, ExtraBlossom6, ExtraBlossom7, ExtraBlossom8, ExtraBlossom9, ExtraBlossom10 }
-			local BlueBlossomList = { ExtraBlueBlossom1, ExtraBlueBlossom2, ExtraBlueBlossom3, ExtraBlueBlossom4, ExtraBlueBlossom5, ExtraBlueBlossom6, ExtraBlueBlossom7, ExtraBlueBlossom8, ExtraBlueBlossom9, ExtraBlueBlossom10 }
-
-			Utils.Do(OreMineList, function(actor)
-				if actor then
-					Actor.Create("mine", true, { Location = actor.Location, Owner = Neutral })
-					--Media.DisplayMessage("Extra Ore Mine created.")
-				end
-			end)
-			Utils.Do(GemMineList, function(actor)
-				if actor then
-					Actor.Create("gmine", true, { Location = actor.Location, Owner = Neutral })
-					--Media.DisplayMessage("Extra Gem Mine created.")
-				end
-			end)
-			Utils.Do(GreenBlossomList, function(actor)
-				if actor then
-					Actor.Create("split2", true, { Location = actor.Location, Owner = Neutral })
-				end
-			end)
-			Utils.Do(BlueBlossomList, function(actor)
-				if actor then
-					Actor.Create("splitblue", true, { Location = actor.Location, Owner = Neutral })
-				end
-			end)
-		end
+		Utils.Do(OreMineList, function(actor)
+			if actor then
+				Actor.Create("mine", true, { Location = actor.Location, Owner = Neutral })
+				--Media.DisplayMessage("Extra Ore Mine created.")
+			end
+		end)
+		Utils.Do(GemMineList, function(actor)
+			if actor then
+				Actor.Create("gmine", true, { Location = actor.Location, Owner = Neutral })
+				--Media.DisplayMessage("Extra Gem Mine created.")
+			end
+		end)
+		Utils.Do(GreenBlossomList, function(actor)
+			if actor then
+				Actor.Create("split2", true, { Location = actor.Location, Owner = Neutral })
+			end
+		end)
+		Utils.Do(BlueBlossomList, function(actor)
+			if actor then
+				Actor.Create("splitblue", true, { Location = actor.Location, Owner = Neutral })
+			end
+		end)
 	end
 	if Map.LobbyOption("oremines") == "oreupgrade" or Map.LobbyOption("oremines") == "oreonupgrade" then
 		Trigger.AfterDelay(2, function()
 			local AllT1Spawners = {}
-			if ORAMod == "ra" then
-				AllT1Spawners = Neutral.GetActorsByTypes({"mine"})
-			end
-
-			if ORAMod == "td" or ORAMod == "tibalt" then
-				AllT1Spawners = Neutral.GetActorsByTypes({"split2", "split3"})
-			end
-
-			if ORAMod == "ca" then
-				AllT1Spawners = Neutral.GetActorsByTypes({"split2", "split3", "mine"})
-			end
+			AllT1Spawners = Neutral.GetActorsByTypes({"split2", "split3", "mine"})
 			Utils.Do(AllT1Spawners,function(SID)
 				local Spawnertype = SID.Type
 				local Spawnerlocation = SID.Location
@@ -1245,17 +840,7 @@ local function SetExtraMines()
 	if Map.LobbyOption("oremines") == "orefinite" then
 		Trigger.AfterDelay(2, function()
 			local AllSpawners = {}
-			if ORAMod == "ra" then
-				AllSpawners = Neutral.GetActorsByTypes({"mine", "gmine"})
-			end
-
-			if ORAMod == "td" or ORMod == "tibalt" then
-				AllSpawners = Neutral.GetActorsByTypes({"split2", "split3", "splitblue"})
-			end
-
-			if ORAMod == "ca" then
-				AllSpawners = Neutral.GetActorsByTypes({"split2", "split3", "splitblue", "mine"})
-			end
+			AllSpawners = Neutral.GetActorsByTypes({"split2", "split3", "splitblue", "mine"})
 			Utils.Do(AllSpawners,function(SID)
 				SID.Destroy()
 			end)
@@ -1264,73 +849,14 @@ local function SetExtraMines()
 	end
 end
 
----@param filename string
----@param type string
----@param after fun()
-PlayMovie = function(filename, type, after)
-	if not filename then
-		after()
-		return
-	end
-
-	if MovieStyle == "fmvfull" then
-		Media.PlayMovieFullscreen(filename, after)
-		return
-	elseif MovieStyle == "fmvradar" then
-		Media.PlayMovieInRadar(filename, after)
-		return
-	end
-
-	-- Mixed rules from here on.
-	if type == "briefing" then
-		Media.PlayMovieFullscreen(filename, after)
-	elseif type == "intro" then
-		Media.PlayMovieFullscreen(filename, after)
-	elseif type == "opening" then
-		Media.PlayMovieInRadar(filename, after)
-	else -- Unknown type? Assume we're mid-mission and use the radar.
-		Media.PlayMovieInRadar(filename, after)
-	end
-end
-
-PlayIntro = function()
-	Media.StopMusic()
-	PlayMovie(Movies.extra, "intro", PlayBriefing)
-end
-
-PlayBriefing = function()
-	PlayMovie(Movies.briefing, "briefing", PlayOpening)
-end
-
-PlayOpening = function()
-	PlayMovie(Movies.opening, "opening", PlayStartSounds)
-end
-
-PlaySoundtrack = function()
-	-- Need to test and be extra certain that onPlayComplete
-	-- and PlayMusic are both local only. ~ JF
-	Media.PlayMusic(nil, PlaySoundtrack)
-end
-
-PlayStartSounds = function()
-	-- The normal notification is skipped in the rules to avoid hearing it
-	-- at the start of fullscreen movies. Now that those are done, we play the
-	-- sound. Some mission rules like those in Production Disruption and
-	-- Mousetrap specify a different notification or may even skip it.
-	if StartNotification and string.lower(StartNotification) ~= "skip" and ORAMod ~= "ca" then
-		Media.PlaySpeechNotification(nil, StartNotification)
-	end
-	PlaySoundtrack()
-end
-
 IncomeSharing = function()
     Utils.Do(CoopPlayers, function(PID)
         -- Handle 100% Shared: Send everything to SharedBank
-        if Incomepercentage == 100 then
+        if IncomePercentage == 100 then
             SharedBank = SharedBank + PID.Resources
             PID.Resources = 0
 		-- Handle 999% Shared: Send everything to everyone
-		elseif Incomepercentage == 999 then
+		elseif IncomePercentage == 999 then
 			if PID.Resources > 0 then
 				Utils.Do(CoopPlayers,function(PID2)
 					PID2.Cash = PID2.Cash + PID.Resources
@@ -1346,7 +872,7 @@ IncomeSharing = function()
             end
 
             -- Convert Buffered Resources into Cash & SharedBank when threshold is met
-            local shareThreshold = 1 + (Incomepercentage / 100)  -- Example: If Incomepercentage = 30, this would be 1.3
+            local shareThreshold = 1 + (IncomePercentage / 100)  -- Example: If IncomePercentage = 30, this would be 1.3
 
             while ResourceBuffer[PID] >= shareThreshold do
                 -- Pay the player 1$ in cash
@@ -1376,6 +902,7 @@ IncomeSharing = function()
         SharedBank = remainder
 		--Media.DisplayMessage((fullDollars * #CoopPlayers) .. "$ distributed " .. remainder .. "$ left in Shared Account.")
     end
+
     -- Loop with a delay to keep running
     Trigger.AfterDelay(1, IncomeSharing)
 end
@@ -1383,7 +910,7 @@ end
 EnemyVeterancy = function(mainEnemies)
 	--Small delay for the Multiplicators
 	Trigger.AfterDelay(5, function()
-	local EnLevel = tonumber(Map.LobbyOption("enemyranks"))
+		local EnLevel = tonumber(Map.LobbyOption("enemyranks"))
 		if EnLevel ~= 0 then
 			--Level up all Starting Units
 			Utils.Do(mainEnemies, function(EID)
@@ -1426,7 +953,7 @@ end
 
 StartCashSpread = function(MinStartCash)
 	if MinStartCash == nil then
-		MinStartCash = 2500 --This should be enough for a Power Plant and a Refinery for each Player
+		MinStartCash = 2500 --This should be enough for a power plant and a refinery for each player
 	end
 	local StartCash = MainPlayer.Cash / #CoopPlayers
 	if StartCash < MinStartCash then
@@ -1438,44 +965,6 @@ StartCashSpread = function(MinStartCash)
 end
 
 CoopInit = function()
---This is the backwards compatibility Layer for Maps created with the older Version of the Base Script from before the Joviahaul.
-
-	if Mainplayer == nil then
-		Mainplayer = Greece
-	end
-	--Media.DisplayMessage(Mainplayer.InternalName .. " is the Main Player.")
-	if Enemyplayer == nil then
-		Enemyplayer = USSR
-	end
-	--Media.DisplayMessage(Enemyplayer.InternalName .. " is the Main Enemy.")
-	local Enemylist = { Enemyplayer }
-	if Enemyplayer2 ~= nil then
-		table.insert(Enemylist, Enemyplayer2)
-	end
-
-	if Dummyplayer == nil then
-		Dummyplayer = Player.GetPlayer("GoodGuy")
-	end
-	--Media.DisplayMessage(Dummyplayer.InternalName .. " is the Dummy Player.")
-	local coopInfo =
-	{
-		FMVExtra = FMVExtra,
-		FMVBriefing = FMVBriefing,
-		FMVOpening = FMVOpening,
-		Mainplayer = Mainplayer,
-		MainEnemies = Enemylist,
-		Dummyplayer = Dummyplayer
-	}
-	SpreadBlacklist = {}
-	SplitOwnerBlacklist = SpreadBlacklist
-	CoopCurrent = 1
-	--Use the old method of Objective Syncing in Mission Script
-	OldObjSync = true
-	CoopInit25(coopInfo)
-end
-
-CoopInit25 = function(mission)
-
 	SBehaviours = {}
 	PBehaviours = {}
 
@@ -1491,16 +980,18 @@ CoopInit25 = function(mission)
 	local Swander = tonumber(Map.LobbyOption("swander"))
 	local Sidle = tonumber(Map.LobbyOption("sidle"))
 
-
 	for i = 1, Pfollow do
 		table.insert(PBehaviours,"normal")
 	end
+
 	for i = 1, Phunt do
 		table.insert(PBehaviours,"hunt")
 	end
+
 	for i = 1, Pwander do
 		table.insert(PBehaviours,"wander")
 	end
+
 	for i = 1, Pidle do
 		table.insert(PBehaviours,"idle")
 	end
@@ -1508,12 +999,15 @@ CoopInit25 = function(mission)
 	for i = 1, Sfollow do
 		table.insert(SBehaviours,"normal")
 	end
+
 	for i = 1, Shunt do
 		table.insert(SBehaviours,"hunt")
 	end
+
 	for i = 1, Swander do
 		table.insert(SBehaviours,"wander")
 	end
+
 	for i = 1, Sidle do
 		table.insert(SBehaviours,"idle")
 	end
@@ -1521,68 +1015,28 @@ CoopInit25 = function(mission)
 	if #SBehaviours == 0 then
 		SBehaviours = {"idle"}
 	end
+
 	if #PBehaviours == 0 then
 		PBehaviours = {"idle"}
 	end
 
-	if ORAMod ~= "tibalt" then
-		MovieStyle = Map.LobbyOptionOrDefault("fmvstyle", "fmvfull")
-	end
+	MainPlayer = SinglePlayerPlayer
+	CoopPlayers = MissionPlayers
+	MCVPlayers = {}
 
-	Movies.extra = mission.FMVExtra
-	Movies.opening = mission.FMVOpening
-	Movies.briefing = mission.FMVBriefing
-	StartNotification = mission.StartNotification or StartNotification
-	MainPlayer = mission.Mainplayer
-	InitialCoopUnitsOwner = mission.Dummyplayer
-
-	local mainEnemies = mission.MainEnemies or { }
-
-	Multi1 = Player.GetPlayer("Multi1")
-	Multi2 = Player.GetPlayer("Multi2")
-	Multi3 = Player.GetPlayer("Multi3")
-	Multi4 = Player.GetPlayer("Multi4")
-	Multi5 = Player.GetPlayer("Multi5")
-	Neutral = Player.GetPlayer("Neutral")
-	GoodGuy = Player.GetPlayer("GoodGuy")
-	BadGuy = Player.GetPlayer("BadGuy")
-
-	if ORAMod == nil then
-		ORAMod = "ra"
-	end
+	local mainEnemies = MissionEnemies
 
 	PrepareBuildingLists()
-
-	if InitialCoopUnitsOwner == nil then
-		InitialCoopUnitsOwner = GoodGuy
-	end
 
 	if Map.LobbyOption("basesharing") == "1" or Map.LobbyOption("basesharing") == "2" then
         BaseShared = true
     else
 		BaseShared = false
 	end
+
 	--BaseShared = Map.LobbyOptionOrDefault("basesharing", "2") == 1
 	TechShared = BaseShared --or Map.LobbyOption("basesharing") == 2
 
-	--Media.DisplayMessage(MainPlayer.InternalName .. " is the Main Player after compatibility layer.")
-	--Media.DisplayMessage(mainEnemies[1].InternalName .. " is the Main Enemy after compatibility layer.")
-	--Media.DisplayMessage(Dummyplayer.InternalName .. " is the Dummy Player after compatibility layer.")
-
-	CoopPlayers = MissionPlayers
-	CoopPlayers = Utils.Where(CoopPlayers, function(player)
-		return player ~= nil
-	end)
-	if ORAMod == "ca" then
-		MissionPlayers = CoopPlayers
-		OverrideAttackTarget()
-	end
-
-	if ORAMod == "tibalt" then
-		TibAltShuffleMissionPlayer()
-	end
-
-	MCVPlayers = {}
 	if Map.LobbyOption("basesharing") ~= "1" then
         MCVPlayers = CoopPlayers
     end
@@ -1591,38 +1045,17 @@ CoopInit25 = function(mission)
         table.insert(MCVPlayers, CoopPlayers[1])
     end
 
-	if InitialCoopUnitsOwner and Stopspread ~= true then
-		local initialUnits = Utils.Where(InitialCoopUnitsOwner.GetActors(), function(a) return a.HasProperty("Move") and not a.HasProperty("Land") and not IsMcv(a) end)
-
-		Utils.Do(initialUnits, function(unit)
-			unit.Owner = InitialCoopUnitsOwner
-		end)
-	end
 	GoodSpread()
-
-	if ORAMod ~= "tibalt" then
-		SyncObjectives()
-	elseif ORAMod == "tibalt" then
-		TibAltSyncObjectives()
-	end
-
+	SyncObjectives()
 
 	Trigger.AfterDelay(DateTime.Seconds(1), function()
 		if Map.LobbyOption("secondariesrequired") == "required" then
 			SecondaryObjectivesRequired()
 		end
-		PlayIntro()
 	end)
 
-	SyncDelay = 5
-	if ORAMod == "ca" then
-		SyncDelay = 2
-	end
-	Trigger.AfterDelay(DateTime.Seconds(SyncDelay), function()
-
-		if ORAMod == "ca" then
+	Trigger.AfterDelay(DateTime.Seconds(2), function()
 		OverrideProductionSpeeds()
-		end
 
 		Utils.Do(mainEnemies, function(player)
 			MultiplyEnemyProduction(player)
@@ -1630,14 +1063,17 @@ CoopInit25 = function(mission)
 		end)
 
 		IncomeshareLobbyoption = Map.LobbyOption("incomeshare")
+
 		if MoneyShareOverride ~= nil then
 			if IncomeshareLobbyoption == "999" and MoneyShareOverride == 100 then
 				MoneyShareOverride = "999"
 			end
 			IncomeshareLobbyoption = MoneyShareOverride
 		end
-		Incomepercentage = tonumber(IncomeshareLobbyoption)
-		if Incomepercentage ~= 0 and #CoopPlayers >= 2 then
+
+		IncomePercentage = tonumber(IncomeshareLobbyoption)
+
+		if IncomePercentage ~= 0 and #CoopPlayers >= 2 then
 			ResourceBuffer = {}
 
 			Utils.Do(CoopPlayers, function(PID)
@@ -1651,59 +1087,9 @@ CoopInit25 = function(mission)
 
 		SetExtraMines()
 		originalLocation = CPos.New(3, 3)
-		--[[Utils.Do(CoopPlayers,function(PID)
-			Utils.Do(PID.GetActorsByTypes(SharedBuildingList),function(BID)
-				originalLocation = BID.Location
-				--Media.DisplayMessage("Remote Spawn Location changed.")
-			end)
-		end)]]
 		UpdateCoopPrequisites()
 		StartCoopBots()
 		EnemyVeterancy(mainEnemies)
-	end)
-end
-
--- Hooking into the InitAttackSquad function of CA
-OverrideAttackTarget = function()
-	local originalInitAttackSquad = InitAttackSquad
-	InitAttackSquad = function(squad, player, targetPlayer)
-		if targetPlayer == nil or IsMissionPlayer(targetPlayer) then
-			if targetPlayer ~= nil then
-				--Media.DisplayMessage("Attack Squad Called for:" .. targetPlayer.Name)
-			else
-				--Media.DisplayMessage("Attack Squad Called for undefined Player.")
-			end
-			local newTarget = Utils.Random(CoopPlayers)
-			originalInitAttackSquad(squad, player, newTarget)
-			--Media.DisplayMessage("Attacked Player changed to:" .. newTarget.Name)
-		else
-			originalInitAttackSquad(squad, player, targetPlayer)
-			--Media.DisplayMessage("Attacked Player is no Coop Player and stays " .. targetPlayer.Name)
-		end
-	end
-
-	local originalAssaultPlayerBaseOrHunt = AssaultPlayerBaseOrHunt
-	AssaultPlayerBaseOrHunt = function(actor, targetPlayer, waypoints, fromIdle)
-		if targetPlayer == nil or IsMissionPlayer(targetPlayer) then
-			if targetPlayer ~= nil then
-				--Media.DisplayMessage("Assault Called for:" .. targetPlayer.Name)
-			else
-				--Media.DisplayMessage("Assault Called for undefined Player.")
-			end
-			local newTarget = Utils.Random(CoopPlayers)
-			originalAssaultPlayerBaseOrHunt(actor, newTarget, waypoints, fromIdle)
-			--Media.DisplayMessage("Assaulted Player changed to:" .. newTarget.Name)
-		else
-			originalAssaultPlayerBaseOrHunt(actor, targetPlayer, waypoints, fromIdle)
-			--Media.DisplayMessage("Assaulted Player is no Coop Player and stays " .. targetPlayer.Name)
-		end
-	end
-end
-
-TibAltShuffleMissionPlayer = function()
-	Trigger.AfterDelay(DateTime.Seconds(1), function()
-		MissionPlayer = RandomCoopPlayer()
-		TibAltShuffleMissionPlayer()
 	end)
 end
 
@@ -1717,4 +1103,37 @@ OverrideProductionSpeeds = function()
 		ProSpeedDeductor = tonumber(Map.LobbyOption("enprotime"))
 	end
 	UnitBuildTimeMultipliers[Difficulty] = UnitBuildTimeMultipliers[Difficulty] * ProSpeedDeductor
+end
+
+-------------------
+
+TransferBaseToPlayer = function(fromPlayer, toPlayer)
+	Trigger.AfterDelay(1, function()
+		local baseActors = Utils.Where(fromPlayer.GetActors(), function(a)
+			return a.HasProperty("StartBuildingRepairs") or IsHarvester(a) or Utils.Any(WallTypes, function(t) return a.Type == t end)
+		end)
+		Utils.Do(baseActors, function(a)
+			a.Owner = toPlayer
+		end)
+	end)
+end
+
+CopyMcvsToPlayers = function(fromPlayer, toPlayers)
+	local mcvs = fromPlayer.GetActorsByTypes(McvTypes)
+	Utils.Do(mcvs, function(mcv)
+		Utils.Do(Utils.Skip(toPlayers, 1), function(p)
+			local copy = Actor.Create(mcv.Type, true, { Owner = p, Location = mcv.Location })
+			ScatterIfAble(copy)
+		end)
+		mcv.Owner = toPlayers[1]
+	end)
+end
+
+GetFirstActivePlayer = function()
+	for _, p in ipairs(MissionPlayers) do
+		if p.PlayerIsActive then
+			return player
+		end
+	end
+	return nil
 end

@@ -25,6 +25,7 @@ World:
 			0.05: x0.05
 			0.01: x0.01 (Practically instant)
 		Default: 1
+		DisplayOrder: 999
 
 	ScriptLobbyDropdown@enmp:
 		ID: enmp
@@ -37,7 +38,7 @@ World:
 			2: 3x
 			3: 4x
 			4: 5x
-			5: 6x Shouldn´t go higher
+			5: 6x Shouldn't go higher
 			6: 7x
 			7: 8x
 			8: 9x
@@ -50,6 +51,7 @@ World:
 			79: 80x
 			99: 100x Abandon all hope!!!
 		Default: 0
+		DisplayOrder: 999
 
 	ScriptLobbyDropdown@prmp:
 		ID: prmp
@@ -62,7 +64,7 @@ World:
 			2: 3x
 			3: 4x
 			4: 5x
-			5: 6x Shouldn´t go higher
+			5: 6x Shouldn't go higher
 			6: 7x
 			7: 8x
 			8: 9x
@@ -75,6 +77,7 @@ World:
 			79: 80x
 			99: 100x Abandon all hope!!!
 		Default: 0
+		DisplayOrder: 999
 
 	ScriptLobbyDropdown@pfollow:
 		ID: pfollow
@@ -88,19 +91,21 @@ World:
 			4: 4
 			5: 5
 		Default: 5
+		DisplayOrder: 999
 
 	ScriptLobbyDropdown@phunt:
 		ID: phunt
-		Label: Produced Hunt
+		Label: Produced Hunt Chance
 		Description: Odds that a Multiplied Produced Unit will immediately go and attack the players.
 		Values:
 			0: 0 (Will never happen)
-			1: 1
-			2: 2
-			3: 3
-			4: 4
-			5: 5
+			1: 1%
+			2: 2%
+			3: 3%
+			4: 4%
+			5: 5%
 		Default: 0
+		DisplayOrder: 999
 
 	ScriptLobbyDropdown@pwander:
 		ID: pwander
@@ -114,6 +119,7 @@ World:
 			4: 4
 			5: 5
 		Default: 0
+		DisplayOrder: 999
 
 	ScriptLobbyDropdown@pidle:
 		ID: pidle
@@ -127,6 +133,7 @@ World:
 			4: 4
 			5: 5
 		Default: 0
+		DisplayOrder: 999
 
 	ScriptLobbyDropdown@sfollow:
 		ID: sfollow
@@ -140,6 +147,7 @@ World:
 			4: 4
 			5: 5
 		Default: 5
+		DisplayOrder: 999
 
 	ScriptLobbyDropdown@shunt:
 		ID: shunt
@@ -153,6 +161,7 @@ World:
 			4: 4
 			5: 5
 		Default: 0
+		DisplayOrder: 999
 
 	ScriptLobbyDropdown@swander:
 		ID: swander
@@ -166,6 +175,7 @@ World:
 			4: 4
 			5: 5
 		Default: 0
+		DisplayOrder: 999
 
 	ScriptLobbyDropdown@sidle:
 		ID: sidle
@@ -179,6 +189,7 @@ World:
 			4: 4
 			5: 5
 		Default: 0
+		DisplayOrder: 999
 
 	ScriptLobbyDropdown@multiplyaircraft:
 		ID: multiplyaircraft
@@ -186,8 +197,9 @@ World:
 		Description: EXPERIMENTAL\nInclude Aircraft in the Unit Multiplication.\nThe AI may have problems resupplying them all.
 		Values:
 			domulti: Do multiply Aircraft
-			dontmulti: Don´t multiply Aircraft
+			dontmulti: Don't multiply Aircraft
 		Default: dontmulti
+		DisplayOrder: 999
 
 	ScriptLobbyDropdown@oremines:
 		ID: oremines
@@ -200,6 +212,7 @@ World:
 			oreonupgrade: Add & Upgrade
 			orefinite: Delete all (Hardcore)
 		Default: oreon
+		DisplayOrder: 999
 
 	ScriptLobbyDropdown@incomeshare:
 		ID: incomeshare
@@ -219,6 +232,7 @@ World:
 			45: 45%
 			50: 50%
 		Default: 100
+		DisplayOrder: 999
 
 	ScriptLobbyDropdown@basesharing:
 		ID: basesharing
@@ -230,17 +244,7 @@ World:
 			3: MCVs for all, no Tec shared
 		Default: 2
 		Locked: False
-
-	ScriptLobbyDropdown@fmvstyle:
-		ID: fmvstyle
-		Label: FMV presentation
-		Description: How FMVs are Presented\nFullscreen all: Shows FMVs for Briefings and Openings before the Mission starts.\nMixed: Show the FMVs for Briefings in Fullscreen while the game is paused, and the shorter Openings in the Radar screen as the Mission begins.\nRadar all: Show all Briefings and Openings in the Radar as the Mission begins.\n\nIf you dont have Cutscenes installed the Videos are skipped.\nIf at least one player has them installed, the game is paused until all Fullscreen Cutscenes are finished or skipped manually.
-		Values:
-			fmvfull: Fullscreen all
-			fmvmixed: Mixed
-			fmvradar: Radar all
-		Default: fmvradar
-		Locked: True
+		DisplayOrder: 999
 
 	ScriptLobbyDropdown@enemyranks:
 		ID: enemyranks
@@ -253,6 +257,7 @@ World:
 			3: 3
 			4: 4
 		Default: 0
+		DisplayOrder: 999
 
 	ScriptLobbyDropdown@secondariesrequired:
 		ID: secondariesrequired
@@ -262,6 +267,7 @@ World:
 			notrequired: not required
 			required: required
 		Default: notrequired
+		DisplayOrder: 999
 
 Player:
 	LobbyPrerequisiteCheckbox@GLOBALFACTUNDEPLOY:
@@ -277,22 +283,6 @@ Player:
 
 COOPDUMMY:
 	Inherits: ^InvisibleDummy
-
-COOPQUEUESYNCER:
-	Inherits: COOPDUMMY
-	ProductionQueue@SQINF:
-		Type: InfantryMQ
-		DisplayOrder: 3
-		Group: Infantry
-		LowPowerModifier: 250
-		ReadyAudio: UnitReady
-		BlockedAudio: NoBuild
-		BlockedTextNotification: Unable to build more.
-		LimitedAudio: BuildingInProgress
-		LimitedTextNotification: Unable to comply. Building in progress.
-		QueuedAudio: Training
-		OnHoldAudio: OnHold
-		CancelledAudio: Cancelled
 
 ^COOPProducesBuildings:
 	Inherits@PRIMARY: ^PrimaryBuilding

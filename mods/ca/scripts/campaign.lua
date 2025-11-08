@@ -315,7 +315,9 @@ InitAttackAircraft = function(aircraft, targetPlayers, targetList, targetType)
 				if not target or not target.IsInWorld or target.IsDead then
 					target = nil
 
-					if type(targetPlayers) ~= "table" then
+					if targetPlayers == nil then
+						targetPlayers = MissionPlayers
+					elseif type(targetPlayers) ~= "table" then
 						targetPlayers = { targetPlayers }
 					end
 
@@ -489,6 +491,11 @@ PlayerBuildingsCount = function(player)
 end
 
 MissionPlayersHaveNoRequiredUnits = function()
+
+	Utils.Do(MissionPlayers, function(p)
+		Media.Debug("Checking player " .. tostring(p) .. " for no required units: " .. tostring(p.HasNoRequiredUnits()) )
+	end)
+
 	return Utils.All(MissionPlayers, function(p) return p.HasNoRequiredUnits() end)
 end
 
@@ -499,6 +506,16 @@ MissionPlayersHaveNavalPresence = function()
 		count = count + #navalUnits
 	end
 	return count > 4
+end
+
+MissionPlayersHaveConyard = function()
+	for _, p in pairs(MissionPlayers) do
+		local conyards = p.GetActorsByTypes(ConyardTypes)
+		if #conyards > 0 then
+			return true
+		end
+	end
+	return false
 end
 
 PlaySpeechNotificationToMissionPlayers = function(notification)
@@ -2151,6 +2168,12 @@ CalculatePlayerCharacteristics = function()
 		HeavyValue = 0,
 		AirValue = 0,
 	}
+
+	MissionPlayers = Utils.Where(MissionPlayers, function(p)
+		return p.PlayerIsActive
+	end)
+
+	Media.Debug("there are " .. #MissionPlayers .. " active mission players")
 
 	Utils.Do(MissionPlayers, function(p)
 		PlayerCharacteristics[p.InternalName] = {
