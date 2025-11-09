@@ -17,7 +17,23 @@ SetupPlayers = function()
 end
 
 AfterWorldLoaded = function()
-
+	if CoopPlayers[6] ~= nil then
+		local ExtraStealthTank = Actor.Create(StealthTank1.Type, true, { Owner = Nod, Location = StealthTank1.Location })
+		ExtraStealthTank.GrantCondition("difficulty-" .. Difficulty)
+		StealthTankDeathTrigger(ExtraStealthTank)
+		ExtraStealthTank.Scatter()
+	end
+	--[[ --Just some Debug Trigger to test the Ending Sequence
+	Trigger.OnDamaged(Hacker1,function()
+		if Hacker1.Health < Hacker1.MaxHealth then
+			Hacker1.Health = Hacker1.MaxHealth
+		end
+	end)
+	Trigger.OnDamaged(Hacker2,function()
+		if Hacker2.Health < Hacker2.MaxHealth then
+			Hacker2.Health = Hacker2.MaxHealth
+		end
+	end)]]
 end
 
 AfterTick = function()

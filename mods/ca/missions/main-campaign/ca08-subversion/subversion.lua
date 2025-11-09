@@ -294,7 +294,7 @@ CommandoDeathTrigger = function(commando)
 			Trigger.AfterDelay(DateTime.Seconds(20), function()
 				Commando = Reinforcements.Reinforce(self.Owner, { "rmbo" }, { Respawn.Location, RespawnRally.Location })[1]
 				Beacon.New(self.Owner, RespawnRally.CenterPosition)
-				Media.PlaySpeechNotification(a.Owner, "ReinforcementsArrived")
+				Media.PlaySpeechNotification(self.Owner, "ReinforcementsArrived")
 				if IsNormalOrBelow() then
 					Commando.GrantCondition("difficulty-" .. Difficulty)
 				end
@@ -312,7 +312,7 @@ HackerDeathTrigger = function(hacker)
 				Trigger.AfterDelay(DateTime.Seconds(20), function()
 					Hacker = Reinforcements.Reinforce(self.Owner, { "hack" }, { Respawn.Location, RespawnRally.Location })[1]
 					Beacon.New(self.Owner, RespawnRally.CenterPosition)
-					Media.PlaySpeechNotification(a.Owner, "ReinforcementsArrived")
+					Media.PlaySpeechNotification(self.Owner, "ReinforcementsArrived")
 					if IsNormalOrBelow() then
 						Hacker.GrantCondition("difficulty-" .. Difficulty)
 					end
@@ -333,7 +333,7 @@ StealthTankDeathTrigger = function(stealthTank)
 				Trigger.AfterDelay(DateTime.Seconds(20), function()
 					StealthTank = Reinforcements.Reinforce(self.Owner, { "stnk.nod" }, { Respawn.Location, RespawnRally.Location })[1]
 					Beacon.New(self.Owner, RespawnRally.CenterPosition)
-					Media.PlaySpeechNotification(a.Owner, "ReinforcementsArrived")
+					Media.PlaySpeechNotification(self.Owner, "ReinforcementsArrived")
 					if IsNormalOrBelow() then
 						StealthTank.GrantCondition("difficulty-" .. Difficulty)
 					end
