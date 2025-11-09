@@ -375,6 +375,7 @@ AwakenSleeperCell = function()
 	end)
 end
 
+-- overridden in co-op version
 TransferLegionForces = function()
 	local legionForces = Legion.GetActors()
 

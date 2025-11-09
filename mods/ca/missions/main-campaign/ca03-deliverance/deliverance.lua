@@ -231,7 +231,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnCapture(SovietPrison, function(self, captor, oldOwner, newOwner)
-		if newOwner == Greece then
+		if IsMissionPlayer(newOwner) then
 			local commander = Reinforcements.Reinforce(GDI, { "gnrl" }, { GDICommanderSpawn.Location, GDICommanderRally.Location })[1]
 
 			if ObjectiveLocateCommander ~= nil and not Greece.IsObjectiveCompleted(ObjectiveLocateCommander) then
@@ -389,6 +389,7 @@ GDIBaseFound = function()
 	end
 end
 
+-- overridden in co-op version
 TransferGDIUnits = function()
 	local gdiForces = GDI.GetActors()
 	Utils.Do(gdiForces, function(a)
@@ -436,6 +437,7 @@ HoldOutComplete = function()
 	end
 end
 
+-- overridden in co-op version
 DoMcvArrival = function()
 	Reinforcements.Reinforce(Greece, { "2tnk", "mcv", "2tnk" }, { McvEntry.Location, McvRally.Location }, 75)
 end

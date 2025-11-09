@@ -141,6 +141,7 @@ InitGreece = function()
 	end)
 end
 
+-- overridden in co-op version
 DoMcvArrival = function()
 	Reinforcements.Reinforce(USSR, { "mcv" }, { McvSpawn.Location, McvRally.Location })
 end

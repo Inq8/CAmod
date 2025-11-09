@@ -265,6 +265,7 @@ WorldLoaded = function()
 	AfterWorldLoaded()
 end
 
+-- overridden in co-op version
 SetupUnits = function()
 	Seals = { Seal1, Seal2 }
 	RespawnTrigger(Seal1, Seal1.Location)

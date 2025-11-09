@@ -396,7 +396,7 @@ SetupMainObjectives = function(conyards)
 
 	Utils.Do(conyards, function(c)
 		Trigger.OnCapture(c, function(self, captor, oldOwner, newOwner)
-			if newOwner == Scrin then
+			if IsMissionPlayer(newOwner) then
 				ConyardsCaptured = ConyardsCaptured + 1
 				if ConyardsCaptured == 2 then
 					Scrin.MarkCompletedObjective(ObjectiveSubjugateRemaining)

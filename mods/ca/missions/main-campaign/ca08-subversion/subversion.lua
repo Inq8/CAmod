@@ -228,7 +228,7 @@ OncePerSecondChecks = function()
 end
 
 InitIonControl = function()
-	-- overridden in coop version for damage scoreboard
+	-- overridden in co-op version for damage scoreboard
 end
 
 OncePerFiveSecondChecks = function()

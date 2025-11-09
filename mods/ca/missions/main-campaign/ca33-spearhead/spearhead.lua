@@ -77,7 +77,7 @@ WorldLoaded = function()
 	end)
 
     Trigger.OnCapture(NodCommsCenter, function(self, captor, oldOwner, newOwner)
-        if newOwner == GDI then
+        if IsMissionPlayer(newOwner) then
             GDI.MarkCompletedObjective(ObjectiveCaptureComms)
         end
     end)

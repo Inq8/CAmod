@@ -115,7 +115,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnCapture(Prison, function(self, captor, oldOwner, newOwner)
-		if newOwner == USSR then
+		if IsMissionPlayer(newOwner) then
 			local yuri = Reinforcements.Reinforce(USSR, { "yuri" }, { PrisonerSpawn.Location, YuriRally.Location })[1]
 			local prodigy = Reinforcements.Reinforce(Scrin, { "pdgy" }, { PrisonerSpawn.Location, ProdigyRally.Location })[1]
 

@@ -165,7 +165,7 @@ WorldLoaded = function()
 		end)
 
 		Trigger.OnCapture(a, function(self, captor, oldOwner, newOwner)
-			if newOwner == Scrin then
+			if IsMissionPlayer(newOwner) then
 				TibFacilitiesCaptured = TibFacilitiesCaptured + 1
 				Mastermind.GrantCondition("rank-veteran")
 				Mastermind.Health = Mastermind.MaxHealth

@@ -27,3 +27,29 @@ end
 AfterTick = function()
 
 end
+
+TransferEastNod = function()
+	local nod2Assets = Nod2.GetActors()
+	Utils.Do(nod2Assets, function(a)
+		if not a.IsDead and a.Type ~= "player" then
+			a.Owner = Nod
+		end
+	end)
+	Trigger.AfterDelay(1, function()
+		local firstActivePlayer = GetFirstActivePlayer()
+		TransferBaseToPlayer(SinglePlayerPlayer, firstActivePlayer)
+	end)
+end
+
+TransferWestNod = function()
+	local nod3Assets = Nod3.GetActors()
+	Utils.Do(nod3Assets, function(a)
+		if not a.IsDead and a.Type ~= "player" then
+			a.Owner = Nod
+		end
+	end)
+	Trigger.AfterDelay(1, function()
+		local firstActivePlayer = GetFirstActivePlayer()
+		TransferBaseToPlayer(SinglePlayerPlayer, firstActivePlayer)
+	end)
+end

@@ -201,7 +201,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnCapture(ResearchLab, function(self, captor, oldOwner, newOwner)
-		if newOwner == Greece then
+		if IsMissionPlayer(newOwner) then
 			Greece.MarkCompletedObjective(ObjectiveCaptureLab)
 		end
 	end)
@@ -322,6 +322,7 @@ InitNodAttacks = function()
 	end
 end
 
+-- overridden in co-op version
 DoMcvArrival = function()
 	local mcvArrivalPath = { McvEntry.Location, McvLanding.Location }
 	local mcvExitPath = { McvEntry.Location }
