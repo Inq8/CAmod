@@ -234,7 +234,7 @@ AssignToCoopPlayers = function(units, specificPlayers, Ignoreblacklist)
 
 			LastAssignedCoopID = ownerID
 			local newOwner = CoopPlayers[ownerID]
-			local valid = specificPlayers == nil or IsPlayerInList(newOwner, specificPlayers)
+			local valid = newOwner and (specificPlayers == nil or IsPlayerInList(newOwner, specificPlayers))
 
 			if not valid then
 				return
@@ -1105,6 +1105,7 @@ TransferBaseToPlayer = function(fromPlayer, toPlayer)
 		Utils.Do(baseActors, function(a)
 			a.Owner = toPlayer
 		end)
+		Media.Debug("Mission players count : " .. #MissionPlayers)
 	end)
 end
 
@@ -1114,9 +1115,11 @@ TransferMcvsToPlayers = function()
 	Utils.Do(mcvs, function(mcv)
 		mcv.Owner = toPlayers[1]
 		if McvPerPlayer then
-			Utils.Do(Utils.Skip(toPlayers, 1), function(p)
-				local copy = Actor.Create(mcv.Type, true, { Owner = p, Location = mcv.Location })
-				ScatterIfAble(copy)
+			Utils.Do(toPlayers, function(p)
+				if p ~= toPlayers[1] then
+					local copy = Actor.Create(mcv.Type, true, { Owner = p, Location = mcv.Location })
+					ScatterIfAble(copy)
+				end
 			end)
 		end
 	end)

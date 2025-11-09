@@ -406,7 +406,7 @@ RespawnTrigger = function(a)
 		end
 
 		if not RespawnFlare or RespawnFlare.IsDead then
-			RespawnFlare = Actor.Create("flare", true, { Owner = USSR, Location = respawnLocation })
+			RespawnFlare = Actor.Create("flare", true, { Owner = a.Owner, Location = respawnLocation })
 		end
 
 		Beacon.New(a.Owner, Map.CenterOfCell(respawnLocation), DateTime.Seconds(20))

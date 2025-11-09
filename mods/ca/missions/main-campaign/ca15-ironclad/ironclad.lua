@@ -107,7 +107,11 @@ WorldLoaded = function()
 		StartAttacks()
 	end)
 
-	Trigger.OnRemovedFromWorld(IronCurtain, function(a)
+	Trigger.OnKilled(IronCurtain, function(self, killer)
+		USSR.MarkFailedObjective(ObjectiveProtectIronCurtain)
+	end)
+
+	Trigger.OnSold(IronCurtain, function(self)
 		USSR.MarkFailedObjective(ObjectiveProtectIronCurtain)
 	end)
 

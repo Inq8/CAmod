@@ -1224,6 +1224,10 @@ PlayerHasCharacteristic = function(player, characteristic)
 	return PlayerCharacteristics[player.InternalName] ~= nil and PlayerCharacteristics[player.InternalName][characteristic] ~= nil and PlayerCharacteristics[player.InternalName][characteristic]
 end
 
+MissionPlayersHaveCharacteristic = function(characteristic)
+	return PlayerCharacteristics["MissionPlayers"] ~= nil and PlayerCharacteristics["MissionPlayers"][characteristic] ~= nil and PlayerCharacteristics["MissionPlayers"][characteristic]
+end
+
 ProduceNextAttackSquadUnit = function(squad, queue, unitIndex)
 	local units = squad.QueuedUnits[queue]
 
