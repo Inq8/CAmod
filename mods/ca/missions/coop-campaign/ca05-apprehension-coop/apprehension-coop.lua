@@ -13,9 +13,10 @@ SetupPlayers = function()
 	MissionPlayers = Utils.Where({ Multi0, Multi1, Multi2, Multi3, Multi4, Multi5 }, function(p) return p ~= nil end)
 	MissionEnemies = { Nod }
 	SinglePlayerPlayer = Greece
-	CoopInit()
 	StopSpread = true
 	TechShared = false
+	CoopInit()
+	
 end
 
 AfterWorldLoaded = function()
@@ -27,7 +28,6 @@ AfterWorldLoaded = function()
 		local teamRangers = Greece.GetActorsByType("jeep")
 		local teamAPCs = Greece.GetActorsByType("apc")
 		local teamHealers = Greece.GetActorsByTypes({"medi","mech"})
-
 		Utils.Do(teamSnipers,function(UID)
 			UID.Owner = MissionPlayers[1]
 		end)
@@ -49,6 +49,9 @@ AfterWorldLoaded = function()
 				UID.Owner = MissionPlayers[2]
 			end)
 			Utils.Do(teamHealers,function(UID)
+				UID.Owner = MissionPlayers[2]
+			end)
+			Utils.Do(teamAPCs,function(UID)
 				UID.Owner = MissionPlayers[2]
 			end)
 		end
@@ -73,7 +76,7 @@ AfterWorldLoaded = function()
 			Utils.Do(teamSnipers,function(UID)
 				if SpreadIterator == 5 then
 					UID.Owner = MissionPlayers[SpreadIterator]
-					SpreadIterator = 1
+					SpreadIterator = 2
 				else
 					UID.Owner = MissionPlayers[SpreadIterator]
 					SpreadIterator = 5
