@@ -15,30 +15,25 @@ local SharedBank = 0
 local LastAssignedCoopID
 
 PrepareBuildingLists = function()
-	UnitProducers = Utils.Concat(BarracksTypes, Utils.Concat(FactoryTypes, Utils.Concat(AirProductionTypes, Utils.Concat(NavalProductionTypes))))
+	UnitProducers = Utils.Concat(BarracksTypes, Utils.Concat(FactoryTypes, Utils.Concat(AirProductionTypes, NavalProductionTypes)))
 
-	SharedBuildingsLists = {
-		"allies" = { "fact", "powr", "apwr", "tent", "weap", "hpad", "proc", "dome", "atek", "pdox", "weat", "fix", "syrd" },
-		"soviet" = { "fact", "powr", "apwr", "barr", "weap", "afld", "proc", "dome", "stek", "mslo", "fix", "kenn", "spen", "npwr", "tpwr", "ftur", "ttur", "tsla" },
-		"gdi" = { "afac", "nuke", "nuk2", "pyle", "weap.td", "afld.gdi", "proc.td", "hq", "gtek", "eye", "rep", "syrd.gdi" },
-		"nod" = { "afac", "nuke", "nuk2", "hand", "weap.td", "airs", "hpad.td", "proc.td", "hq", "tmpl", "mslo.nod", "rep", "spen.nod", "obli" },
-		"scrin" = { "sfac", "reac", "rea2", "port", "wsph", "grav", "proc.scrin", "nerv", "scrt", "rfgn", "srep" }
+	SharedBuildingLists = {
+		allies = { "fact", "powr", "apwr", "tent", "weap", "hpad", "proc", "dome", "atek", "pdox", "weat", "fix", "syrd" },
+		soviet = { "fact", "powr", "apwr", "barr", "weap", "afld", "proc", "dome", "stek", "mslo", "fix", "kenn", "spen", "npwr", "tpwr", "ftur", "ttur", "tsla" },
+		gdi = { "afac", "nuke", "nuk2", "pyle", "weap.td", "afld.gdi", "proc.td", "hq", "gtek", "eye", "rep", "syrd.gdi" },
+		nod = { "afac", "nuke", "nuk2", "hand", "weap.td", "airs", "hpad.td", "proc.td", "hq", "tmpl", "mslo.nod", "rep", "spen.nod", "obli" },
+		scrin = { "sfac", "reac", "rea2", "port", "wsph", "grav", "proc.scrin", "nerv", "scrt", "rfgn", "srep" }
 	}
 
-	SharedBuildingsList = {
-		"fact", "afac", "sfac",
-		"tent", "barr", "pyle", "hand", "port",
-		"weap", "weap.td", "airs", "wsph",
-		"hpad", "afld", "afld.gdi", "hpad.td", "grav",
-		"kenn", "syrd", "spen", "spen.nod", "syrd.gdi",
-		"powr", "apwr", "nuke", "nuk2", "reac", "rea2", "tpwr", "npwr"
-		"proc", "proc.td", "proc.scrin",
-		"ftur", "ttur", "tsla", "obli",
-		"rep", "fix", "srep",
-		"dome", "hq", "nerv",
-		"atek", "stek", "gtek", "tmpl", "scrt",
-		"pdox", "weat", "mslo", "eye", "mslo.nod", "rfgn"
-	}
+	RemoteBuildingLists = {}
+
+	-- copy SharedBuildingLists to RemoteBuildingLists with "coop" prefix
+	for faction, buildingTypes in pairs(SharedBuildingLists) do
+		RemoteBuildingLists[faction] = {}
+		Utils.Do(buildingTypes, function(buildingType)
+			RemoteBuildingLists[faction][#RemoteBuildingLists[faction] + 1] = "coop" .. buildingType
+		end)
+	end
 
 	-- non-shared buildings (build limit 1)
 	-- "alhq", "cvat", "indp", "munp", "orep", "upgc", "tmpp", "sign"
@@ -627,36 +622,50 @@ local function UpdateCoopPrequisites()
 		return
 	end
 
-	Utils.Do(SharedBuildingList, function(buildingType)
-		local teamHasPrerequisite = false
-
-		ForEachPlayer(function(player)
-			if teamHasPrerequisite or #player.GetActorsByType(buildingType) > 0 then
-				teamHasPrerequisite = true
-			end
+	for faction, sharedBuildingTypesForFaction in pairs(SharedBuildingLists) do
+		local factionPlayers = Utils.Where(CoopPlayers, function(player)
+			return player.Faction == faction
 		end)
 
-		ForEachPlayer(function(player)
-			local remoteType = "coop" .. buildingType
-			local remoteBuildings = player.GetActorsByType(remoteType)
+		if #factionPlayers > 0 then
+			local teamBuildings = {}
+			local teamRemoteBuildings = {}
+			local playerBuildingTypes = {}
 
-			if not teamHasPrerequisite or #player.GetActorsByType(buildingType) > 0 then
-				-- Either no buildings of the original type remain
-				-- or this player does not need a remote substitute.
-				Utils.Do(remoteBuildings, function(remote)
-					remote.Destroy()
-					--Media.DisplayMessage("Remotebuilding destroyed")
+			for _, player in ipairs(factionPlayers) do
+				playerBuildingTypes[player.InternalName] = {}
+
+				local playerBuildings = player.GetActorsByTypes(sharedBuildingTypesForFaction)
+				Utils.Do(playerBuildings, function(b)
+					teamBuildings[b.Type] = true
+					playerBuildingTypes[player.InternalName][b.Type] = true
 				end)
-				return
+				local playerRemoteBuildings = player.GetActorsByTypes(RemoteBuildingLists[faction])
+				Utils.Do(playerRemoteBuildings, function(rb)
+					teamRemoteBuildings[rb.Type] = true
+				end)
 			end
 
-			if #remoteBuildings == 0 then
-				-- The team has the prerequisite, but this individual does not.
-				-- Share the base/tech with a new remote building.
-				CreateRemoteBuilding(player, buildingType, remoteType)
+			-- if the team has a building, ensure all players have it or its remote equivalent
+			for _, buildingType in ipairs(sharedBuildingTypesForFaction) do
+				local teamHasBuilding = teamBuildings[buildingType] == true
+
+				Utils.Do(factionPlayers, function(player)
+					local remoteType = "coop" .. buildingType
+					local teamHasRemoteBuilding = teamRemoteBuildings[remoteType] == true
+
+					if playerBuildingTypes[player.InternalName][buildingType] or (not teamHasBuilding and teamHasRemoteBuilding) then
+						local remoteBuildings = player.GetActorsByType(remoteType)
+						Utils.Do(remoteBuildings, function(remote)
+							remote.Destroy()
+						end)
+					elseif not playerBuildingTypes[player.InternalName][buildingType] and teamHasBuilding and not teamHasRemoteBuilding then
+						CreateRemoteBuilding(player, buildingType, remoteType)
+					end
+				end)
 			end
-		end)
-	end)
+		end
+	end
 end
 
 ---@param enemyPlayer player
