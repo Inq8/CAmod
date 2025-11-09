@@ -19,9 +19,31 @@ SetupPlayers = function()
 end
 
 AfterWorldLoaded = function()
-
+	StartCashSpread(3000)
 end
 
 AfterTick = function()
 
+end
+
+TransferLegionForces = function()
+	local legionForces = Legion.GetActors()
+	local firstActivePlayer = GetFirstActivePlayer()
+
+	Utils.Do(legionForces, function(self)
+		if self.Type ~= "player" then
+			self.Owner = firstActivePlayer
+		end
+	end)
+
+	local factoryExitCell = CPos.New(19, 47)
+
+	Trigger.AfterDelay(DateTime.Seconds(3), function()
+		Utils.Do(GetMcvPlayers(), function(p)
+			if p ~= firstActivePlayer then
+				local mcv = Actor.Create("amcv", true, { Owner = p, Location = factoryExitCell })
+				mcv.Scatter()
+			end
+		end)
+	end)
 end

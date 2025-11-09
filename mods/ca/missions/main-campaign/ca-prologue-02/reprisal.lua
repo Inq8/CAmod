@@ -51,6 +51,8 @@ WorldLoaded = function()
 	ObjectiveDestroyBase = USSR.AddObjective("Destroy the Allied base.")
 
 	Trigger.AfterDelay(DateTime.Seconds(2), function()
+		PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
+		Notification("Reinforcements have arrived.")
 		DoMcvArrival()
 	end)
 
@@ -140,8 +142,6 @@ InitGreece = function()
 end
 
 DoMcvArrival = function()
-	PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
-	Notification("Reinforcements have arrived.")
 	Reinforcements.Reinforce(USSR, { "mcv" }, { McvSpawn.Location, McvRally.Location })
 end
 

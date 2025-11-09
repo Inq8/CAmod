@@ -1,0 +1,35 @@
+# Palette overrides so GDI forces are gold regardless of player color
+
+^TDPalette:
+	RenderSprites:
+		Palette: temptd
+
+^GDIInfantry:
+	RenderSprites:
+		Palette: temptd
+	WithDeathAnimation:
+		DeathSequencePalette: temptd
+		DeathPaletteIsPlayerPalette: false
+		CrushedSequencePalette: temptd
+		CrushedPaletteIsPlayerPalette: false
+
+^BuildingTD:
+	WithDeathAnimation:
+		DeathSequencePalette: temptd
+		DeathPaletteIsPlayerPalette: false
+
+N1:
+	Inherits@GDIPAL: ^GDIInfantry
+
+N2:
+	Inherits@GDIPAL: ^GDIInfantry
+
+N3:
+	Inherits@GDIPAL: ^GDIInfantry
+
+N6:
+	Inherits@GDIPAL: ^GDIInfantry
+
+CRYO:
+	RenderSprites:
+		-Palette:

@@ -930,7 +930,7 @@ EnemyVeterancy = function(mainEnemies)
 	end)
 end
 
-LateEnemyVeterancy = function(mainEnemies,EnLevel)
+LateEnemyVeterancy = function(mainEnemies, EnLevel)
 	Utils.Do(mainEnemies, function(EID)
 		Utils.Do(EID.GetActors(), function(UID)
 			if UID.HasProperty("CanGainLevel") == true then
@@ -953,8 +953,8 @@ StartCashSpread = function(MinStartCash)
 	if StartCash < MinStartCash then
 		StartCash = MinStartCash
 	end
-	Utils.Do(CoopPlayers,function(PID)
-		PID.Cash = StartCash
+	Utils.Do(CoopPlayers, function(p)
+		p.Cash = StartCash
 	end)
 end
 

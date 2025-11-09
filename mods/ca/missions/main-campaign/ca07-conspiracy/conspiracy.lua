@@ -199,7 +199,7 @@ WorldLoaded = function()
 		Trigger.OnEnteredProximityTrigger(researcher.CenterPosition, WDist.New(2 * 1024), function(a, id)
 			if IsMissionPlayer(a.Owner) and a.HasProperty("Move") and not a.HasProperty("Land") then
 				Trigger.RemoveProximityTrigger(id)
-				researcher.Owner = Nod
+				researcher.Owner = a.Owner
 				Notification("Escort researcher to evacuation point.")
 				MediaCA.PlaySound(MissionDir .. "/n_escortresearcher.aud", 2)
 				InitEvacSite()

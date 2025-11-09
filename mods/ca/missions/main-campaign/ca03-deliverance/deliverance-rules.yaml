@@ -26,11 +26,7 @@ Player:
 	ParatroopersPowerCA@paratroopers:
 		Prerequisites: ~support.paratroopers, ~!botplayer
 
-# Palette & voice overrides so GDI forces are gold regardless of player color and always use TD voices
-
-^TDPalette:
-	RenderSprites:
-		Palette: temptd
+# Voice overrides so GDI forces use TD voices
 
 ^VehicleTD-NOUPG:
 	Voiced:
@@ -45,36 +41,23 @@ Player:
 		VoiceSet: VehicleTDVoice
 
 ^GDIInfantry:
-	RenderSprites:
-		Palette: temptd
-	WithDeathAnimation:
-		DeathSequencePalette: temptd
-		DeathPaletteIsPlayerPalette: false
-		CrushedSequencePalette: temptd
-		CrushedPaletteIsPlayerPalette: false
+	Voiced:
+		VoiceSet: GenericTDVoice
+N1:
 	Voiced:
 		VoiceSet: GenericTDVoice
 
-^BuildingTD:
-	WithDeathAnimation:
-		DeathSequencePalette: temptd
-		DeathPaletteIsPlayerPalette: false
-
-N1:
-	Inherits@GDIPAL: ^GDIInfantry
-
 N2:
-	Inherits@GDIPAL: ^GDIInfantry
+	Voiced:
+		VoiceSet: GenericTDVoice
 
 N3:
-	Inherits@GDIPAL: ^GDIInfantry
+	Voiced:
+		VoiceSet: GenericTDVoice
 
 N6:
-	Inherits@GDIPAL: ^GDIInfantry
-
-CRYO:
-	RenderSprites:
-		-Palette:
+	Voiced:
+		VoiceSet: GenericTDVoice
 
 # Prerequisite adjustments
 

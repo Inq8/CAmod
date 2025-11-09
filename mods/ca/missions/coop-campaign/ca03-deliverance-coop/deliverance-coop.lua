@@ -17,7 +17,7 @@ SetupPlayers = function()
 end
 
 AfterWorldLoaded = function()
-
+	StartCashSpread(3000)
 end
 
 AfterTick = function()
@@ -35,5 +35,16 @@ TransferGDIUnits = function()
 	Trigger.AfterDelay(1, function()
 		TransferBaseToPlayer(SinglePlayerPlayer, GetFirstActivePlayer())
 		CACoopQueueSyncer()
+	end)
+end
+
+DoMcvArrival = function()
+	Reinforcements.Reinforce(Greece, { "2tnk", "2tnk" }, { McvEntry.Location, McvRally.Location }, 75)
+	local delay = 150
+	Utils.Do(GetMcvPlayers(), function(p)
+		Trigger.AfterDelay(delay, function()
+			Reinforcements.Reinforce(p, { "mcv" }, { McvEntry.Location, McvRally.Location })
+		end)
+		delay = delay + DateTime.Seconds(1)
 	end)
 end

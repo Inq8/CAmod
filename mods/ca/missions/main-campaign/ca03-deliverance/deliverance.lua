@@ -423,7 +423,7 @@ HoldOutComplete = function()
 			Trigger.AfterDelay(DateTime.Seconds(1), function()
 				PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 				Notification("Reinforcements have arrived.")
-				Reinforcements.Reinforce(Greece, { "2tnk", "mcv", "2tnk" }, { McvEntry.Location, McvRally.Location }, 75)
+				DoMcvArrival()
 				Beacon.New(Greece, McvRally.CenterPosition)
 			end)
 		end
@@ -434,6 +434,10 @@ HoldOutComplete = function()
 			end)
 		end
 	end
+end
+
+DoMcvArrival = function()
+	Reinforcements.Reinforce(Greece, { "2tnk", "mcv", "2tnk" }, { McvEntry.Location, McvRally.Location }, 75)
 end
 
 RevealPrison = function()
