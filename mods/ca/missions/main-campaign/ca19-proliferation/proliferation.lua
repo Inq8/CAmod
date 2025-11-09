@@ -248,20 +248,7 @@ end
 
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
-		local playerTotalFunds = Scrin.Cash + Scrin.Resources
-		Scrin.Cash = 0
-		Scrin.Resources = playerTotalFunds
-
-		if Scrin.Resources >= NextReinforcementThreshold then
-			Scrin.Resources = Scrin.Resources - NextReinforcementThreshold
-
-			if NextReinforcementThreshold < ReinforcementFinalThreshold[Difficulty] then
-				NextReinforcementThreshold = NextReinforcementThreshold + ReinforcementThresholdIncrement
-			end
-
-			DoReinforcements()
-		end
-
+		CheckReinforcementThreshold()
 		UpdateRaidTarget()
 		CheckFields()
 		CheckColonyPlatform()
@@ -349,7 +336,7 @@ UpdateObjectiveMessage = function()
 	if FieldsClearedAndBeingHarvested == 6 then
 		UserInterface.SetMissionText("6 of 6 fields occupied.\n   Maintain for " .. UtilsCA.FormatTimeForGameSpeed(TimerTicks), HSLColor.Lime)
 	else
-		local missionText = FieldsClearedAndBeingHarvested .. " of 6 fields occupied  -  Next reinforcement threshold: $" .. NextReinforcementThreshold
+		local missionText = FieldsClearedAndBeingHarvested .. " of 6 fields occupied  -  Next reinforcement threshold: $" .. Scrin.Cash + Scrin.Resources .. "/" .. NextReinforcementThreshold
 		UserInterface.SetMissionText(missionText, HSLColor.Yellow)
 	end
 end
@@ -406,6 +393,22 @@ DoReinforcements = function()
 	end)
 
 	UpdateObjectiveMessage()
+end
+
+CheckReinforcementThreshold = function()
+	local playerTotalFunds = Scrin.Cash + Scrin.Resources
+	Scrin.Cash = 0
+	Scrin.Resources = playerTotalFunds
+
+	if Scrin.Resources >= NextReinforcementThreshold then
+		Scrin.Resources = Scrin.Resources - NextReinforcementThreshold
+
+		if NextReinforcementThreshold < ReinforcementFinalThreshold[Difficulty] then
+			NextReinforcementThreshold = NextReinforcementThreshold + ReinforcementThresholdIncrement
+		end
+
+		DoReinforcements()
+	end
 end
 
 CheckColonyPlatform = function()

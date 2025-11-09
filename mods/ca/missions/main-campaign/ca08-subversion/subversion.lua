@@ -318,7 +318,7 @@ HackerDeathTrigger = function(hacker)
 					end
 					HackerDeathTrigger(Hacker)
 				end)
-			else
+			elseif #GetMissionPlayersActorsByTypes({ "hack" }) == 0 then
 				Nod.MarkFailedObjective(ObjectiveHackIonControl)
 			end
 		end

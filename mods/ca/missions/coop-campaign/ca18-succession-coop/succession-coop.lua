@@ -16,9 +16,28 @@ SetupPlayers = function()
 end
 
 AfterWorldLoaded = function()
-
+	TransferMcvsToPlayers()
+	StartCashSpread(2500)
 end
 
 AfterTick = function()
 
+end
+
+-- overridden in co-op version
+SendKirovs = function()
+	local firstActivePlayer = GetFirstActivePlayer()
+	Reinforcements.Reinforce(firstActivePlayer, { "kiro" }, { KirovSpawn1.Location, KirovRally1.Location })
+
+	if #MissionPlayers > 1 then
+		local kirovIterator = 0
+		Utils.Do(MissionPlayers, function(p)
+			if p ~= firstActivePlayer then
+				Reinforcements.Reinforce(p, { "kiro" }, { (KirovSpawn2.Location - CVec.New((kirovIterator), 0)), (KirovRally2.Location - CVec.New((kirovIterator), 0)) })
+				kirovIterator = kirovIterator + 4
+			end
+		end)
+	else
+		Reinforcements.Reinforce(firstActivePlayer, { "kiro" }, { KirovSpawn2.Location, KirovRally2.Location })
+	end
 end

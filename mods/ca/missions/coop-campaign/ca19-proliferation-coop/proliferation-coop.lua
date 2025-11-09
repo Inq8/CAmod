@@ -16,9 +16,88 @@ SetupPlayers = function()
 end
 
 AfterWorldLoaded = function()
+	local firstActivePlayer = GetFirstActivePlayer()
+	TransferBaseToPlayer(SinglePlayerPlayer, firstActivePlayer)
+	TotalFundsDisplay = 0
 
+	if #MissionPlayers > 1 then
+		Actor3.Owner = MissionPlayers[2]
+		Actor599.Owner = MissionPlayers[2]
+		Actor11.Owner = MissionPlayers[2]
+		Trigger.AfterDelay(1, function()
+			Scrin.GetActorsByType("harv.scrin")[2].Owner = MissionPlayers[2]
+		end)
+	end
+
+	if #MissionPlayers > 2 then
+		Actor342.Owner = MissionPlayers[3]
+		Actor11.Owner = MissionPlayers[3]
+	end
+
+	Utils.Do(MissionPlayers, function(p)
+		if p ~= firstActivePlayer then
+			PID.Cash = 3000
+		end
+	end)
 end
 
 AfterTick = function()
 
+end
+
+UpdateObjectiveMessage = function()
+	if FieldsClearedAndBeingHarvested == 6 then
+		UserInterface.SetMissionText("6 of 6 fields occupied.\n   Maintain for " .. UtilsCA.FormatTimeForGameSpeed(TimerTicks), HSLColor.Lime)
+	else
+		local missionText = FieldsClearedAndBeingHarvested .. " of 6 fields occupied  -  Next reinforcement threshold: $" .. TotalFundsDisplay .. "/" .. NextReinforcementThreshold
+		UserInterface.SetMissionText(missionText, HSLColor.Yellow)
+	end
+end
+
+CheckReinforcementThreshold = function()
+	local CoopTotalFunds = 0
+	Utils.Do(MissionPlayers, function(p)
+		local playerTotalFunds = p.Resources
+		CoopTotalFunds = CoopTotalFunds + playerTotalFunds
+	end)
+
+	TotalFundsDisplay = CoopTotalFunds
+
+	if CoopTotalFunds >= NextReinforcementThreshold then
+		Utils.Do(MissionPlayers, function(p)
+			p.Resources = p.Resources - (NextReinforcementThreshold / #MissionPlayers)
+		end)
+
+		if NextReinforcementThreshold < ReinforcementFinalThreshold[Difficulty] then
+			NextReinforcementThreshold = NextReinforcementThreshold + ReinforcementThresholdIncrement
+		end
+
+		DoReinforcements()
+	end
+end
+
+CheckColonyPlatform = function()
+	Utils.Do(GetMcvPlayers(), function(p)
+		local colonyPlatformsAndMcvs = p.GetActorsByTypes({ "smcv", "sfac" })
+		if #colonyPlatformsAndMcvs == 0 and not ColonyPlatformBeingReplaced then
+			ColonyPlatformBeingReplaced = true
+			Trigger.AfterDelay(DateTime.Seconds(15), function()
+				local wormhole = Actor.Create("wormhole", true, { Owner = p, Location = McvReplace.Location })
+
+				Trigger.AfterDelay(DateTime.Seconds(2), function()
+					Media.PlaySpeechNotification(All, "ReinforcementsArrived")
+					Notification("Reinforcements have arrived.")
+					Beacon.New(p, McvReplace.CenterPosition)
+					Reinforcements.Reinforce(p, { "smcv" }, { McvReplace.Location })
+					Trigger.AfterDelay(1, function()
+						ColonyPlatformBeingReplaced = false
+					end)
+				end)
+
+				Trigger.AfterDelay(DateTime.Seconds(5), function()
+					wormhole.Kill()
+				end)
+			end)
+		end
+	end)
 end
