@@ -23,5 +23,11 @@ AfterWorldLoaded = function()
 end
 
 AfterTick = function()
-
+	Utils.Do(CoopPlayers,function(PID)
+		if PID ~= CoopPlayers[1] then
+			Utils.Do(PID.GetActorsByTypes({"harv","proc","powr","silo"}),function(UID)
+				UID.Owner = CoopPlayers[1]
+			end)
+		end
+	end)
 end
