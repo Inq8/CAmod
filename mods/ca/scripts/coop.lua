@@ -640,10 +640,13 @@ local function UpdateCoopPrequisites()
 					teamBuildings[b.Type] = true
 					playerBuildingTypes[player.InternalName][b.Type] = true
 				end)
-				local playerRemoteBuildings = player.GetActorsByTypes(RemoteBuildingLists[faction])
-				Utils.Do(playerRemoteBuildings, function(rb)
-					teamRemoteBuildings[rb.Type] = true
-				end)
+
+				if not teamRemoteBuildings[rb.Type] then
+					local playerRemoteBuildings = player.GetActorsByTypes(RemoteBuildingLists[faction])
+					Utils.Do(playerRemoteBuildings, function(rb)
+						teamRemoteBuildings[rb.Type] = true
+					end)
+				end
 			end
 
 			-- if the team has a building, ensure all players have it or its remote equivalent

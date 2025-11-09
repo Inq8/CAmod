@@ -18,7 +18,10 @@ SetupPlayers = function()
 end
 
 AfterWorldLoaded = function()
-
+	TransferMcvsToPlayers()
+	if Nod.Cash > 2500 then
+		StartCashSpread(2500)
+	end
 end
 
 AfterTick = function()

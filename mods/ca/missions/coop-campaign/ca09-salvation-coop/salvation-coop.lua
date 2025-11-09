@@ -17,7 +17,7 @@ SetupPlayers = function()
 end
 
 AfterWorldLoaded = function()
-
+	StartCashSpread(0)
 end
 
 AfterTick = function()

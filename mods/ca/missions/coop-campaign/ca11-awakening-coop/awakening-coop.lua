@@ -16,7 +16,60 @@ SetupPlayers = function()
 end
 
 AfterWorldLoaded = function()
+	StartCashSpread(2000)
 
+	local firstActivePlayer = GetFirstActivePlayer()
+	local initialHarvesters = Nod.GetActorsByType("harv.td")
+	local EnergyBuildingslist = Nod.GetActorsByTypes({"nuk2"})
+	local DefenseBuildingslist = Nod.GetActorsByTypes({"gun.nod","obli","nsam","ltur"})
+	local ProducerBuildingslist = Nod.GetActorsByTypes({"hand","airs","rep","hpad.td"})
+
+	TransferBaseToPlayer(SinglePlayerPlayer, firstActivePlayer)
+
+	local mcvSpawnCell = CPos.New(60, 65)
+	Utils.Do(GetMcvPlayers(), function(p)
+		if p ~= firstActivePlayer then
+			local mcv = Actor.Create("amcv", true, { Owner = p, Location = mcvSpawnCell })
+			mcv.Scatter()
+		end
+	end)
+
+	if #MissionPlayers >= 6 then
+		--table.remove(EnergyBuildingslist, 1)
+	end
+
+	table.sort(DefenseBuildingslist, function(a, b)
+		return a.Type < b.Type
+	end)
+
+	table.sort(ProducerBuildingslist, function(a, b)
+		return a.Type < b.Type
+	end)
+
+	local BuildinglistList = {EnergyBuildingslist, DefenseBuildingslist, ProducerBuildingslist}
+
+	local Assignmentiterator = 1
+	Utils.Do(BuildinglistList,function(AID)
+		Utils.Do(AID,function(BID)
+			if Assignmentiterator > #MissionPlayers then
+				Assignmentiterator = 1
+			end
+			BID.Owner = MissionPlayers[Assignmentiterator]
+			Assignmentiterator = Assignmentiterator + 1
+		end)
+	end)
+
+	TemplePrime.Owner = firstActivePlayer
+	Utils.Do(CyborgFactories, function(f)
+		f.Owner = firstActivePlayer
+	end)
+
+	if #MissionPlayers >= 2 then
+		Actor202.Owner = MissionPlayers[2]
+		Trigger.AfterDelay(2, function()
+			initialHarvesters[2].Owner = MissionPlayers[2]
+		end)
+	end
 end
 
 AfterTick = function()
