@@ -20,14 +20,24 @@ end
 AfterWorldLoaded = function()
 	TransferBaseToPlayer(SinglePlayerPlayer, GetFirstActivePlayer())
 	StartCashSpread(0)
+
+	Trigger.OnAnyProduction(function(producer, produced, productionType)
+		local firstActivePlayer = GetFirstActivePlayer()
+		if IsHarvester(produced) and IsMissionPlayer(produced.Owner) and produced.Owner ~= firstActivePlayer then
+			produced.Owner = firstActivePlayer
+		end
+	end)
+
+	Utils.Do({ SovietRefinery, SovietSilo1, SovietSilo2, SovietPower1, SovietPower2, SovietPower3 }, function(a)
+		Trigger.OnCapture(a, function(self, captor, oldOwner, newOwner)
+			local firstActivePlayer = GetFirstActivePlayer()
+			if newOwner ~= firstActivePlayer then
+				self.Owner = firstActivePlayer
+			end
+		end)
+	end)
 end
 
 AfterTick = function()
-	Utils.Do(CoopPlayers,function(PID)
-		if PID ~= CoopPlayers[1] then
-			Utils.Do(PID.GetActorsByTypes({"harv","proc","powr","silo"}),function(UID)
-				UID.Owner = CoopPlayers[1]
-			end)
-		end
-	end)
+
 end

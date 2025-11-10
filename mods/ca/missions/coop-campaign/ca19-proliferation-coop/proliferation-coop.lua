@@ -19,6 +19,7 @@ AfterWorldLoaded = function()
 	local firstActivePlayer = GetFirstActivePlayer()
 	TransferBaseToPlayer(SinglePlayerPlayer, firstActivePlayer)
 	TotalFundsDisplay = 0
+	ColonyPlatformsBeingReplaced = {}
 
 	if #MissionPlayers > 1 then
 		Actor3.Owner = MissionPlayers[2]
@@ -36,7 +37,7 @@ AfterWorldLoaded = function()
 
 	Utils.Do(MissionPlayers, function(p)
 		if p ~= firstActivePlayer then
-			PID.Cash = 3000
+			p.Cash = 3000
 		end
 	end)
 end
@@ -79,22 +80,25 @@ end
 CheckColonyPlatform = function()
 	Utils.Do(GetMcvPlayers(), function(p)
 		local colonyPlatformsAndMcvs = p.GetActorsByTypes({ "smcv", "sfac" })
-		if #colonyPlatformsAndMcvs == 0 and not ColonyPlatformBeingReplaced then
-			ColonyPlatformBeingReplaced = true
-			Trigger.AfterDelay(DateTime.Seconds(15), function()
+		if #colonyPlatformsAndMcvs == 0 and not ColonyPlatformsBeingReplaced[p.InternalName] then
+			ColonyPlatformsBeingReplaced[p.InternalName] = true
+			Trigger.AfterDelay(DateTime.Seconds(Utils.RandomInteger(7,16)), function()
 				local wormhole = Actor.Create("wormhole", true, { Owner = p, Location = McvReplace.Location })
-
-				Trigger.AfterDelay(DateTime.Seconds(2), function()
-					Media.PlaySpeechNotification(All, "ReinforcementsArrived")
-					Notification("Reinforcements have arrived.")
-					Beacon.New(p, McvReplace.CenterPosition)
+				Trigger.AfterDelay(DateTime.Seconds(1), function()
+					if p.IsLocalPlayer then
+						Media.PlaySpeechNotification(p, "ReinforcementsArrived")
+						Notification("Reinforcements have arrived.")
+						Beacon.New(p, McvReplace.CenterPosition)
+					end
 					Reinforcements.Reinforce(p, { "smcv" }, { McvReplace.Location })
 					Trigger.AfterDelay(1, function()
-						ColonyPlatformBeingReplaced = false
+						ColonyPlatformsBeingReplaced[p.InternalName] = false
 					end)
+					if DateTime.GameTime < DateTime.Minutes(1) then
+						p.Cash = p.Cash + 2500
+					end
 				end)
-
-				Trigger.AfterDelay(DateTime.Seconds(5), function()
+				Trigger.AfterDelay(DateTime.Seconds(3), function()
 					wormhole.Kill()
 				end)
 			end)

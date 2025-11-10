@@ -332,6 +332,7 @@ CheckFields = function()
 	end
 end
 
+-- overridden in co-op version
 UpdateObjectiveMessage = function()
 	if FieldsClearedAndBeingHarvested == 6 then
 		UserInterface.SetMissionText("6 of 6 fields occupied.\n   Maintain for " .. UtilsCA.FormatTimeForGameSpeed(TimerTicks), HSLColor.Lime)
@@ -395,6 +396,7 @@ DoReinforcements = function()
 	UpdateObjectiveMessage()
 end
 
+-- overridden in co-op version
 CheckReinforcementThreshold = function()
 	local playerTotalFunds = Scrin.Cash + Scrin.Resources
 	Scrin.Cash = 0
@@ -411,6 +413,7 @@ CheckReinforcementThreshold = function()
 	end
 end
 
+-- overridden in co-op version
 CheckColonyPlatform = function()
 	local colonyPlatformsAndMcvs = Scrin.GetActorsByTypes({ "smcv", "sfac" })
 	if #colonyPlatformsAndMcvs == 0 and not ColonyPlatformBeingReplaced then

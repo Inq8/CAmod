@@ -845,11 +845,11 @@ local function SetExtraMines()
 end
 
 IncomeSharing = function()
-    Utils.Do(CoopPlayers, function(PID)
-        -- Handle 100% Shared: Send everything to SharedBank
-        if IncomePercentage == 100 then
-            SharedBank = SharedBank + PID.Resources
-            PID.Resources = 0
+	Utils.Do(CoopPlayers, function(PID)
+		-- Handle 100% Shared: Send everything to SharedBank
+		if IncomePercentage == 100 then
+			SharedBank = SharedBank + PID.Resources
+			PID.Resources = 0
 		-- Handle 999% Shared: Send everything to everyone
 		elseif IncomePercentage == 999 then
 			if PID.Resources > 0 then
@@ -859,47 +859,47 @@ IncomeSharing = function()
 				--Media.DisplayMessage(PID.Resources .. "$ distributed to all players.")
 				PID.Resources = 0
 			end
-        else
-            -- Store resources in the buffer for non-100% sharing
-            if PID.Resources > 0 then
-                ResourceBuffer[PID] = ResourceBuffer[PID] + PID.Resources
-                PID.Resources = 0  -- Ensure resources are fully moved to buffer
-            end
+		else
+			-- Store resources in the buffer for non-100% sharing
+			if PID.Resources > 0 then
+				ResourceBuffer[PID] = ResourceBuffer[PID] + PID.Resources
+				PID.Resources = 0  -- Ensure resources are fully moved to buffer
+			end
 
-            -- Convert Buffered Resources into Cash & SharedBank when threshold is met
-            local shareThreshold = 1 + (IncomePercentage / 100)  -- Example: If IncomePercentage = 30, this would be 1.3
+			-- Convert Buffered Resources into Cash & SharedBank when threshold is met
+			local shareThreshold = 1 + (IncomePercentage / 100)  -- Example: If IncomePercentage = 30, this would be 1.3
 
-            while ResourceBuffer[PID] >= shareThreshold do
-                -- Pay the player 1$ in cash
-                PID.Cash = PID.Cash + 1
+			while ResourceBuffer[PID] >= shareThreshold do
+				-- Pay the player 1$ in cash
+				PID.Cash = PID.Cash + 1
 
-                -- Transfer the shared portion to SharedBank
-                local shareAmount = shareThreshold - 1
-                SharedBank = SharedBank + shareAmount
+				-- Transfer the shared portion to SharedBank
+				local shareAmount = shareThreshold - 1
+				SharedBank = SharedBank + shareAmount
 
-                -- Reduce buffer accordingly
-                ResourceBuffer[PID] = ResourceBuffer[PID] - shareThreshold
-            end
-        end
-    end)
+				-- Reduce buffer accordingly
+				ResourceBuffer[PID] = ResourceBuffer[PID] - shareThreshold
+			end
+		end
+	end)
 
-    -- Distribute Shared Account Money when there's enough in SharedBank
-    if SharedBank >= #CoopPlayers then
-        local fullDollars = math.floor(SharedBank / #CoopPlayers)  -- Calculate the full dollars to distribute
-        local remainder = SharedBank - (fullDollars * #CoopPlayers)  -- Calculate the remaining SharedBank value
+	-- Distribute Shared Account Money when there's enough in SharedBank
+	if SharedBank >= #CoopPlayers then
+		local fullDollars = math.floor(SharedBank / #CoopPlayers)  -- Calculate the full dollars to distribute
+		local remainder = SharedBank - (fullDollars * #CoopPlayers)  -- Calculate the remaining SharedBank value
 
-        -- Distribute the full dollars to each player
-        Utils.Do(CoopPlayers, function(PID)
-            PID.Cash = PID.Cash + fullDollars
-        end)
+		-- Distribute the full dollars to each player
+		Utils.Do(CoopPlayers, function(PID)
+			PID.Cash = PID.Cash + fullDollars
+		end)
 
-        -- Remaining SharedBank goes back to the SharedBank after distribution
-        SharedBank = remainder
+		-- Remaining SharedBank goes back to the SharedBank after distribution
+		SharedBank = remainder
 		--Media.DisplayMessage((fullDollars * #CoopPlayers) .. "$ distributed " .. remainder .. "$ left in Shared Account.")
-    end
+	end
 
-    -- Loop with a delay to keep running
-    Trigger.AfterDelay(1, IncomeSharing)
+	-- Loop with a delay to keep running
+	Trigger.AfterDelay(1, IncomeSharing)
 end
 
 EnemyVeterancy = function(mainEnemies)
@@ -1025,13 +1025,13 @@ CoopInit = function()
 	local baseSharingValue = Map.LobbyOption("basesharing")
 
 	if baseSharingValue == "1" then
-        McvPerPlayer = false
+		McvPerPlayer = false
 		TechShared = true
 	elseif baseSharingValue == "2" then
 		McvPerPlayer = true
 		TechShared = true
-    else
-		McvPerPlayer = false
+	else
+		McvPerPlayer = true
 		TechShared = false
 	end
 
@@ -1105,7 +1105,6 @@ TransferBaseToPlayer = function(fromPlayer, toPlayer)
 		Utils.Do(baseActors, function(a)
 			a.Owner = toPlayer
 		end)
-		Media.Debug("Mission players count : " .. #MissionPlayers)
 	end)
 end
 
