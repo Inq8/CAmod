@@ -214,8 +214,8 @@ end
 --- Split the ownership of a group among the different co-op players.
 ---@param units actor[]
 ---@param specificPlayers? player[]
-AssignToCoopPlayers = function(units, specificPlayers, Ignoreblacklist)
-	if not Ignoreblacklist then
+AssignToCoopPlayers = function(units, specificPlayers, ignoreBlackList)
+	if not ignoreBlackList then
 		units = Utils.Where(units, CanSplitAmongPlayers)
 	end
 

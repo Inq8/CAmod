@@ -27,6 +27,8 @@ SetupPlayers = function()
 end
 
 AfterWorldLoaded = function()
+	SplitOwnerBlacklist[#SplitOwnerBlacklist] = "yf23.interceptor"
+
 	local firstActivePlayer = GetFirstActivePlayer()
 	TransferBaseToPlayer(SinglePlayerPlayer, firstActivePlayer)
 	StartCashSpread(3000)
@@ -34,7 +36,7 @@ AfterWorldLoaded = function()
 	local x = 66
 	Utils.Do(GetMcvPlayers(), function(p)
 		if p ~= firstActivePlayer then
-			Reinforcements.Reinforce(p, { "amcv" }, { CPos.New(x, 132), CPos.New(x, 129)})
+			Reinforcements.Reinforce(p, { "amcv" }, { CPos.New(x, 132), CPos.New(x, 130)})
 			x = x + 2
 		end
 	end)

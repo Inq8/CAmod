@@ -1,6 +1,5 @@
 MissionDir = "ca|missions/main-campaign/ca28-duality"
 
-
 RespawnEnabled = Map.LobbyOption("respawn") == "enabled"
 
 ProdigyPatrolPath = { ProdigyPatrol1.Location, ProdigyPatrol2.Location, ProdigyPatrol3.Location, ProdigyPatrol4.Location, ProdigyPatrol5.Location, ProdigyPatrol6.Location, ProdigyPatrol7.Location, ProdigyPatrol8.Location, ProdigyPatrol9.Location, ProdigyPatrol10.Location, ProdigyPatrol11.Location, ProdigyPatrol12.Location, ProdigyPatrol13.Location, ProdigyPatrol14.Location, ProdigyPatrol15.Location, ProdigyPatrol16.Location, ProdigyPatrol17.Location, ProdigyPatrol18.Location, ProdigyPatrol19.Location, ProdigyPatrol9.Location, ProdigyPatrol8.Location, ProdigyPatrol20.Location }
@@ -29,18 +28,10 @@ end
 WorldLoaded = function()
 	SetupPlayers()
 
-	TimerTicks = 0
 	Camera.Position = Commando.CenterPosition
 
 	InitObjectives(GDI)
 	InitScrin()
-
-	ObjectiveFindTanya = GDI.AddObjective("Find Tanya.")
-	ObjectiveDestroyTiberiumStores = GDI.AddObjective("Destroy all Scrin Tiberium stores.")
-
-	SetupKeepAliveObjectives()
-
-	Scrin.Resources = Scrin.ResourceCapacity
 
 	Utils.Do(MissionPlayers, function(p)
 		Actor.Create("radar.dummy", true, { Owner = p })
@@ -49,14 +40,9 @@ WorldLoaded = function()
 	Commando.GrantCondition("difficulty-" .. Difficulty)
 	Tanya.GrantCondition("difficulty-" .. Difficulty)
 
-	Trigger.OnEnteredProximityTrigger(Tanya.CenterPosition, WDist.New(7 * 1024), function(a, id)
-		if IsMissionPlayer(a.Owner) then
-			Trigger.RemoveProximityTrigger(id)
-			Tanya.Owner = GDI
-			GDI.MarkCompletedObjective(ObjectiveFindTanya)
-			MediaCA.PlaySound(MissionDir .. "/c_tanya.aud", 2)
-		end
-	end)
+	SetupFindTanyaObjective()
+	ObjectiveDestroyTiberiumStores = GDI.AddObjective("Destroy all Scrin Tiberium stores.")
+	SetupKeepAliveObjectives()
 
 	CommandoDeathTrigger(Commando)
 	TanyaDeathTrigger(Tanya)
@@ -65,12 +51,9 @@ WorldLoaded = function()
 	Utils.Do(silos, function(a)
 		NumSilosRemaining = #silos
 		Trigger.OnKilled(a, function(self, killer)
-			NumSilosRemaining = NumSilosRemaining - 1
-			UpdateObjectiveText()
+			SiloKilled(killer)
 		end)
 	end)
-
-	UpdateObjectiveText()
 
 	if IsHardOrAbove() then
 		HealCrate2.Destroy()
@@ -91,6 +74,7 @@ WorldLoaded = function()
 		ActivateProdigy()
 	end)
 
+	UpdateObjectiveText()
 	AfterWorldLoaded()
 end
 
@@ -102,23 +86,9 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		if TimerTicks > 0 then
-			if TimerTicks > 25 then
-				TimerTicks = TimerTicks - 25
-			else
-				TimerTicks = 0
-			end
-		end
-
 		if NumSilosRemaining == 0 and not GDI.IsObjectiveCompleted(ObjectiveDestroyTiberiumStores) then
 			ObjectiveEscape = GDI.AddObjective("Exit the facility.")
-
-			if GDI.IsObjectiveCompleted(ObjectiveFindTanya) then
-				UserInterface.SetMissionText("Exit the facility." , HSLColor.Lime)
-			else
-				UserInterface.SetMissionText("Find Tanya and exit the facility." , HSLColor.Lime)
-			end
-
+			SetEscapeText()
 			GDI.MarkCompletedObjective(ObjectiveDestroyTiberiumStores)
 			local exitFlare = Actor.Create("flare", true, { Owner = GDI, Location = Exit.Location })
 			Beacon.New(GDI, Exit.CenterPosition)
@@ -132,7 +102,7 @@ OncePerSecondChecks = function()
 						end
 					end)
 					if a.Type == "rmbo" then
-						if GDI.IsObjectiveCompleted(ObjectiveFindTanya) then
+						if not ObjectiveFindTanya or GDI.IsObjectiveCompleted(ObjectiveFindTanya) then
 							CommandoEscaped = true
 							if ObjectiveCommandoSurvive ~= nil then
 								GDI.MarkCompletedObjective(ObjectiveCommandoSurvive)
@@ -168,6 +138,8 @@ OncePerFiveSecondChecks = function()
 end
 
 InitScrin = function()
+	Scrin.Resources = Scrin.ResourceCapacity
+
 	local scrinGroundAttackers = Scrin.GetGroundAttackers()
 
 	Utils.Do(scrinGroundAttackers, function(a)
@@ -312,6 +284,20 @@ ScrinReinforcements = function()
 end
 
 -- overridden in co-op version
+SetupFindTanyaObjective = function()
+	ObjectiveFindTanya = GDI.AddObjective("Find Tanya.")
+
+	Trigger.OnEnteredProximityTrigger(Tanya.CenterPosition, WDist.New(7 * 1024), function(a, id)
+		if IsMissionPlayer(a.Owner) then
+			Trigger.RemoveProximityTrigger(id)
+			Tanya.Owner = GDI
+			GDI.MarkCompletedObjective(ObjectiveFindTanya)
+			MediaCA.PlaySound(MissionDir .. "/c_tanya.aud", 2)
+		end
+	end)
+end
+
+-- overridden in co-op version
 SetupKeepAliveObjectives = function()
 	if not RespawnEnabled then
 		ObjectiveCommandoSurvive = GDI.AddObjective("Commando must survive.")
@@ -319,5 +305,19 @@ SetupKeepAliveObjectives = function()
 	else
 		ObjectiveCommandoSurvive = GDI.AddSecondaryObjective("Keep Commando alive.")
 		ObjectiveTanyaSurvive = GDI.AddSecondaryObjective("Keep Tanya alive.")
+	end
+end
+
+-- overridden in co-op version
+SiloKilled = function(killer)
+	NumSilosRemaining = NumSilosRemaining - 1
+	UpdateObjectiveText()
+end
+
+SetEscapeText = function()
+	if GDI.IsObjectiveCompleted(ObjectiveFindTanya) then
+		UserInterface.SetMissionText("Exit the facility." , HSLColor.Lime)
+	else
+		UserInterface.SetMissionText("Find Tanya and exit the facility." , HSLColor.Lime)
 	end
 end

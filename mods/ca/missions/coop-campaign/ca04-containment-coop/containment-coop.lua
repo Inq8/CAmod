@@ -23,10 +23,13 @@ end
 
 AfterTick = function()
 	if CamlockEnabled then
-		Utils.Do(CoopPlayers,function(PID)
-			local ValidCamTargets = PID.GetActorsByTypes({"spy", "seal", "chpr"})
-			if PID.IsLocalPlayer and #ValidCamTargets == 1 then
-				PanToPos(ValidCamTargets[1].CenterPosition, 100)
+		Utils.Do(MissionPlayers, function(p)
+			if not p.IsLocalPlayer then
+				return
+			end
+			local validCamTargets = p.GetActorsByTypes({"spy", "seal", "chpr"})
+			if #validCamTargets == 1 then
+				PanToPos(validCamTargets[1].CenterPosition, 100)
 			end
 		end)
 	end
