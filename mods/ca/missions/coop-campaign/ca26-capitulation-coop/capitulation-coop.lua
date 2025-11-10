@@ -16,9 +16,24 @@ SetupPlayers = function()
 end
 
 AfterWorldLoaded = function()
+	StartCashSpread(3000)
 
+	local StartAPCs = {Actor1010, Actor1015}
+	Utils.Do(StartAPCs, function(UID)
+		UID.UnloadPassengers()
+	end)
 end
 
 AfterTick = function()
 
+end
+
+DoMcvArrival = function()
+	local delay = 0
+	Utils.Do(GetMcvPlayers(), function(p)
+		Trigger.AfterDelay(delay, function()
+			Reinforcements.Reinforce(p, { "amcv" }, { McvSpawn.Location, PlayerStart.Location })
+		end)
+		delay = delay + DateTime.Seconds(1)
+	end)
 end

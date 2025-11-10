@@ -16,9 +16,28 @@ SetupPlayers = function()
 end
 
 AfterWorldLoaded = function()
-
+	if #MissionPlayers > 1 then
+		local player2Buildings = { Actor109, Actor96, Actor100, Actor294 }
+		Utils.Do(player2Buildings, function(b)
+			b.Owner = MissionPlayers[2]
+		end)
+	end
 end
 
 AfterTick = function()
 
+end
+
+DoReinforcements = function
+	Reinforcements.Reinforce(GDI, { "hmmv", "mtnk", "mtnk" }, { McvSpawn.Location, McvRally.Location }, 75)
+	GDI.Cash = 6000 + CashAdjustments[Difficulty]
+	StartCashSpread(3000)
+
+	local delay = 0
+	Utils.Do(GetMcvPlayers(), function(p)
+		Trigger.AfterDelay(delay, function()
+			Reinforcements.Reinforce(p, { "mcv" }, { McvSpawn.Location, McvRally.Location })
+		end)
+		delay = delay + DateTime.Seconds(1)
+	end)
 end

@@ -19,7 +19,8 @@ SetupPlayers = function()
 end
 
 AfterWorldLoaded = function()
-
+	TransferMcvsToPlayers()
+	StartCashSpread(3000)
 end
 
 AfterTick = function()

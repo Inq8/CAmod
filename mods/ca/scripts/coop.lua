@@ -624,7 +624,7 @@ local function UpdateCoopPrequisites()
 
 	for faction, sharedBuildingTypesForFaction in pairs(SharedBuildingLists) do
 		local factionPlayers = Utils.Where(CoopPlayers, function(player)
-			return player.Faction == faction
+			return player.Faction == faction or (ExtraPrerequisiteFactions and Utils.Any(ExtraPrerequisiteFactions, function(ef) return ef == faction end))
 		end)
 
 		if #factionPlayers > 0 then
