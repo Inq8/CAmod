@@ -19,7 +19,6 @@ AfterWorldLoaded = function()
 	StartCashSpread(2000)
 
 	local firstActivePlayer = GetFirstActivePlayer()
-	local initialHarvesters = Nod.GetActorsByType("harv.td")
 	local EnergyBuildingslist = Nod.GetActorsByTypes({"nuk2"})
 	local DefenseBuildingslist = Nod.GetActorsByTypes({"gun.nod","obli","nsam","ltur"})
 	local ProducerBuildingslist = Nod.GetActorsByTypes({"hand","airs","rep","hpad.td"})
@@ -59,17 +58,47 @@ AfterWorldLoaded = function()
 		end)
 	end)
 
-	TemplePrime.Owner = firstActivePlayer
-	Utils.Do(CyborgFactories, function(f)
-		f.Owner = firstActivePlayer
-	end)
-
 	if #MissionPlayers >= 2 then
 		Actor202.Owner = MissionPlayers[2]
-		Trigger.AfterDelay(2, function()
+		Trigger.AfterDelay(5, function()
+			local initialHarvesters = firstActivePlayer.GetActorsByType("harv.td")
 			initialHarvesters[2].Owner = MissionPlayers[2]
+			
+			TemplePrime.Owner = Nod
+			Utils.Do(CyborgFactories, function(f)
+				f.Owner = Nod
+			end)
+			
 		end)
 	end
+	
+	Trigger.AfterDelay(10, function()
+		WaveAdjuster()
+	end)
+end
+
+WaveAdjuster = function()
+	Groundinterv = Map.LobbyOption("groundint")
+	Airinterv = Map.LobbyOption("airint")
+	
+	if Groundinterv == 999 then
+		Groundinterv = 1 - (0.1 * #CoopPlayers)
+	end
+	if Groundinterv == 998 then
+		Groundinterv = 1 - (0.15 * #CoopPlayers)
+	end
+	
+	if Airinterv == 999 then
+		Airinterv = 1 - (0.1 * #CoopPlayers)
+	end
+	if Airinterv == 998 then
+		Airinterv = 1 - (0.15 * #CoopPlayers)
+	end
+	
+	GroundAttackInterval[Difficulty] = GroundAttackInterval[Difficulty] * Groundinterv
+	HaloDropStart = HaloDropStart * Groundinterv
+	AirAttackInterval[Difficulty] = AirAttackInterval[Difficulty] * Airinterv
+	
 end
 
 AfterTick = function()
