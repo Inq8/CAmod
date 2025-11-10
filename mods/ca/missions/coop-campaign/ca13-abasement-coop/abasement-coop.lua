@@ -13,7 +13,7 @@ SetupPlayers = function()
 	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayers = Utils.Where({ Multi0, Multi1, Multi2, Multi3, Multi4, Multi5 }, function(p) return p ~= nil end)
 	MissionEnemies = { Scrin }
-	SinglePlayerPlayer = Nod
+	SinglePlayerPlayer = USSR
 	CoopInit()
 end
 
