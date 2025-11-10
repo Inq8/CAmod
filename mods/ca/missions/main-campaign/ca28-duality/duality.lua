@@ -219,7 +219,7 @@ UpdateProdigyTarget = function()
 
 		-- if current target hasn't been set yet, or it's dead, or the current target isn't close, randomly select a new target
 		if not maintainCurrentTarget then
-			local possibleTargets = GDI.GetActorsByTypes({ "rmbo", "e7" })
+			local possibleTargets = GetMissionPlayersActorsByTypes({ "rmbo", "e7" })
 			if #possibleTargets > 0 then
 				ProdigyCurrentTarget = Utils.Random(possibleTargets)
 				Prodigy.Stop()

@@ -155,10 +155,10 @@ InitMcv = function()
 end
 
 HasConyardAcrossRiver = function()
-	local conyards = GDI.GetActorsByType("afac")
+	local conyards = GetMissionPlayersActorsByType("afac")
 
 	local conyardsAcrossRiver = Utils.Where(conyards, function(c)
-		return IsMissionPlayer(c.Owner) and c.Location.X > 34 and c.Location.Y > 72
+		return c.Location.X > 34 and c.Location.Y > 72
 	end)
 
 	return #conyardsAcrossRiver > 0

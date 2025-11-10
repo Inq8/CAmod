@@ -120,13 +120,13 @@ Squads = {
 	},
 	AirFleetKillers = {
 		ActiveCondition = function(squad)
-			local scrinFleet = squad.TargetPlayer.GetActorsByTypes({ "pac", "deva" })
+			local scrinFleet = GetMissionPlayersActorsByTypes({ "pac", "deva" })
 			return #scrinFleet > AirFleetKillersThreshold[Difficulty] and not IslandAirfieldsEliminated
 		end,
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 50, Max = 50 }),
 		Compositions = function(squad)
 			local migs = { "mig" }
-			local numFleetShips = #squad.TargetPlayer.GetActorsByArmorTypes({ "Aircraft" })
+			local numFleetShips = #GetMissionPlayersActorsByTypes({ "pac", "deva" })
 			for i = 1, math.min(numFleetShips, MaxFleetKillers[Difficulty]) do
 				table.insert(migs, "mig")
 			end
@@ -135,13 +135,13 @@ Squads = {
 	},
 	TripodKillers = {
 		ActiveCondition = function(squad)
-			local tripods = squad.TargetPlayer.GetActorsByTypes({ "tpod", "rtpd" })
+			local tripods = GetMissionPlayersActorsByTypes({ "tpod", "rtpd" })
 			return #tripods > TripodKillersThreshold[Difficulty] and not IslandAirfieldsEliminated
 		end,
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 30, Max = 30 }),
 		Compositions = function(squad)
 			local sukhois = { "suk" }
-			local numTripods = #squad.TargetPlayer.GetActorsByTypes({ "tpod", "rtpd" })
+			local numTripods = #GetMissionPlayersActorsByTypes({ "tpod", "rtpd" })
 			for i = 1, math.min(numTripods, MaxTripodKillers[Difficulty]) do
 				table.insert(sukhois, "suk")
 			end

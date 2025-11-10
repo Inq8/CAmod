@@ -190,7 +190,7 @@ WorldLoaded = function()
 	ObjectiveProtectTemple = Nod.AddObjective("Protect Temple Prime.")
 
 	if IsHardOrAbove() then
-		Utils.Do(Nod.GetActorsByType("mlrs"), function(a)
+		Utils.Do(GetMissionPlayersActorsByType("mlrs"), function(a)
 			a.Destroy()
 		end)
 	end

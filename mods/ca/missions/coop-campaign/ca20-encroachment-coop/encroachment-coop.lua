@@ -17,7 +17,17 @@ SetupPlayers = function()
 end
 
 AfterWorldLoaded = function()
+	local firstActivePlayer = GetFirstActivePlayer()
+	TransferBaseToPlayer(SinglePlayerPlayer, firstActivePlayer)
+	StartCashSpread(3000)
 
+	local mcvSpawnCell = CPos.New(45, 3)
+	Utils.Do(GetMcvPlayers(), function(p)
+		if p ~= firstActivePlayer then
+			local mcv = Actor.Create("smcv", true, { Owner = p, Location = mcvSpawnCell })
+			mcv.Scatter()
+		end
+	end)
 end
 
 AfterTick = function()

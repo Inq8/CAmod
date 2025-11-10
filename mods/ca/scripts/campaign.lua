@@ -2153,6 +2153,17 @@ GetMissionPlayersArmyValue = function()
 	return value
 end
 
+GetMissionPlayersActorsByType = function(type)
+	local actors = {}
+	Utils.Do(MissionPlayers, function(p)
+		local pActors = p.GetActorsByType(type)
+		Utils.Do(pActors, function(a)
+			actors[#actors + 1] = a
+		end)
+	end)
+	return actors
+end
+
 GetMissionPlayersActorsByTypes = function(types)
 	local actors = {}
 	Utils.Do(MissionPlayers, function(p)

@@ -124,7 +124,7 @@ Squads = {
 	},
 	Naval = {
 		ActiveCondition = function()
-			return PlayerHasNavalPresence(Greece)
+			return MissionPlayersHaveNavalPresence()
 		end,
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 16, Max = 16 }),
 		ProducerActors = { Ships = { SovietSouthSubPen1, SovietSouthSubPen2 } },
@@ -636,9 +636,4 @@ NavalReinforcements = function()
 			Reinforcements.Reinforce(Greece, destroyers, { DestroyerSpawn.Location, DestroyerDestination.Location }, 75)
 		end)
 	end
-end
-
-PlayerHasNavalPresence = function(player)
-	local navalUnits = player.GetActorsByTypes({"ca", "dd", "pt", "ss", "seas"})
-	return #navalUnits > 6
 end

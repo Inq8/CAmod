@@ -275,10 +275,10 @@ InitGreece = function()
 end
 
 HasConyardAcrossRiver = function()
-	local conyards = USSR.GetActorsByType("fact")
+	local conyards = GetMissionPlayersActorsByType("fact")
 
 	local conyardsAcrossRiver = Utils.Where(conyards, function(c)
-		return IsMissionPlayer(c.Owner) and c.Location.Y > 40
+		return c.Location.Y > 40
 	end)
 
 	return #conyardsAcrossRiver > 0

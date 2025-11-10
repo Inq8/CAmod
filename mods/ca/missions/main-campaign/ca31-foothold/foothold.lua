@@ -277,7 +277,7 @@ CheckSensors = function()
 				Utils.Do(reinforcements, function(a)
 					if a.Type == "n6" then
 						Trigger.OnKilled(a, function(self, killer)
-							local engis = GDI.GetActorsByType("n6")
+							local engis = GetMissionPlayersActorsByType("n6")
 							if #engis == 0 and not GDI.IsObjectiveCompleted(ObjectiveCaptureNerveCenter) then
 								GDI.MarkFailedObjective(ObjectiveCaptureNerveCenter)
 							end

@@ -362,7 +362,7 @@ PurificationWave = function()
 	Lighting.Flash("Purification", AdjustTimeForGameSpeed(10))
 	MediaCA.PlaySound(MissionDir .. "/purificationsm.aud", 2)
 
-	local exterminators = USSR.GetActorsByType("etpd")
+	local exterminators = GetMissionPlayersActorsByType("etpd")
 	if #exterminators > 0 then
 		local exterminator = exterminators[1]
 		local dummy = Actor.Create("purification.dummy", true, { Owner = ScrinRebels, Location = exterminator.Location })
@@ -497,7 +497,7 @@ ApplyIronCurtain = function()
 	if USSR.PowerState ~= "Normal" then
 		return
 	end
-	local ics = USSR.GetActorsByType("iron")
+	local ics = GetMissionPlayersActorsByType("iron")
 	if #ics > 0 then
 		local ic = ics[1]
 		Media.PlaySound("ironcur9.aud")

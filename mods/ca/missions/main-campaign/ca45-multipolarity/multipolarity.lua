@@ -690,7 +690,7 @@ CaptureRandomBuilding = function(engi)
 	end)
 
 	if #buildings == 0 then
-		buildings = Greece.GetActorsByTypes({ "fact", "proc" })
+		buildings = GetMissionPlayersActorsByTypes({ "fact", "proc" })
 	end
 
 	if #buildings == 0 then

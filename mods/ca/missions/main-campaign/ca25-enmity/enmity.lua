@@ -116,12 +116,7 @@ Squads = {
 	BrutalComanches = {
 		Delay = DateTime.Minutes(10),
 		ActiveCondition = function(squad)
-			for _, player in pairs(MissionPlayers) do
-				if #player.GetActorsByTypes({ "gtek", "upgc", "eye" }) > 0 then
-					return true
-				end
-			end
-			return false
+			return #GetMissionPlayersActorsByTypes({ "gtek", "upgc", "eye" }) > 0
 		end,
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 24, Max = 24 }),
 		Compositions = {

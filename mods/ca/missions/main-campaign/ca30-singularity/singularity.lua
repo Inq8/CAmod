@@ -393,8 +393,8 @@ end
 OncePerFifteenSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % DateTime.Seconds(15) == 0 then
 		if NodFreed and FirstHackersArrived and not MoreHackersRequested and not ShieldsOffline and not SignalTransmitter.IsDead then
-			local numHackers = #GDI.GetActorsByType("hack")
-			local transports = GDI.GetActorsByTypes({ "tran", "halo", "apc", "btr", "apc2", "vulc", "sapc", "intl", "ifv" })
+			local numHackers = #GetMissionPlayersActorsByType("hack")
+			local transports = GetMissionPlayersActorsByTypes({ "tran", "halo", "apc", "btr", "apc2", "vulc", "sapc", "intl", "ifv" })
 			Utils.Do(transports, function(t)
 				Utils.Do(t.Passengers, function(p)
 					if p.Type == "hack" then

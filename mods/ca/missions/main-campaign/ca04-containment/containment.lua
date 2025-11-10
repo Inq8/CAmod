@@ -455,13 +455,10 @@ DropChronoPrison = function()
 		MediaCA.PlaySound(MissionDir .. "/r_cprendezvous.aud", 2)
 
 		Trigger.OnEnteredProximityTrigger(CarryallDropPoint.CenterPosition, WDist.New(2048), function(a, id)
-			if IsMissionPlayer(a.Owner) and a.Type == "chpr" then
+			if a.Type == "chpr" then
 				Trigger.RemoveProximityTrigger(id)
 				ChronoPrisonFlare.Destroy()
-
-				local chronoPrisons = Greece.GetActorsByType("chpr")
-				local chronoPrison = chronoPrisons[1]
-				chronoPrison.GrantCondition("difficulty-" .. Difficulty)
+				a.GrantCondition("difficulty-" .. Difficulty)
 
 				Trigger.OnKilled(chronoPrison, function(self, killer)
 					if RespawnEnabled then
