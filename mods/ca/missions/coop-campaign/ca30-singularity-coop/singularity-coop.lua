@@ -27,7 +27,17 @@ SetupPlayers = function()
 end
 
 AfterWorldLoaded = function()
+	local firstActivePlayer = GetFirstActivePlayer()
+	TransferBaseToPlayer(SinglePlayerPlayer, firstActivePlayer)
+	StartCashSpread(3000)
 
+	local x = 66
+	Utils.Do(GetMcvPlayers(), function(p)
+		if p ~= firstActivePlayer then
+			Reinforcements.Reinforce(p, { "amcv" }, { CPos.New(x, 132), CPos.New(x, 129)})
+			x = x + 2
+		end
+	end)
 end
 
 AfterTick = function()

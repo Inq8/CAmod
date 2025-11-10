@@ -288,12 +288,7 @@ SendReinforcements = function()
 	end
 
 	if IsVeryHardOrBelow() and ReinforcementWave == 3 then
-		local unitsWithMcv = {}
-		Utils.Do(units, function(u)
-			table.insert(unitsWithMcv, u)
-		end)
-		table.insert(unitsWithMcv, "amcv")
-		units = unitsWithMcv
+		DoMcvArrival()
 	end
 
 	local reinforcements = Reinforcements.Reinforce(GDI, units, path, 50)
@@ -312,4 +307,11 @@ SendReinforcements = function()
 	end
 
 	NextReinforcementsFlare()
+end
+
+-- overridden in co-op version
+DoMcvArrival = function(path)
+	Trigger.AfterDelay(25, function()
+		Reinforcements.Reinforce(GDI, { "amcv" }, path)
+	end)
 end

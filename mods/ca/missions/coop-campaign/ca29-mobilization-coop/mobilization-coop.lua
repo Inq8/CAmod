@@ -19,9 +19,19 @@ SetupPlayers = function()
 end
 
 AfterWorldLoaded = function()
-
+	StartCashSpread(3000)
 end
 
 AfterTick = function()
 
+end
+
+DoMcvArrival = function(path)
+	local delay = 25
+	Utils.Do(GetMcvPlayers(), function(p)
+		Trigger.AfterDelay(delay, function()
+			Reinforcements.Reinforce(p, { "amcv" }, path)
+		end)
+		delay = delay + DateTime.Seconds(1)
+	end)
 end

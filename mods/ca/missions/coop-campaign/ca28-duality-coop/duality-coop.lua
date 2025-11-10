@@ -22,3 +22,13 @@ end
 AfterTick = function()
 
 end
+
+SetupKeepAliveObjectives = function()
+	if not RespawnEnabled then
+		ObjectiveCommandoSurvive = GDI.AddObjective("All Commandos must survive.")
+		ObjectiveTanyaSurvive = GDI.AddObjective("All Tanyas must survive.")
+	else
+		ObjectiveCommandoSurvive = GDI.AddSecondaryObjective("Keep all Commandos alive.")
+		ObjectiveTanyaSurvive = GDI.AddSecondaryObjective("Keep all Tanyas alive.")
+	end
+end

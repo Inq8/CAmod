@@ -1,3 +1,22 @@
 World:
 	LuaScript:
 		Scripts: campaign.lua, coop.lua, ca|missions/main-campaign/ca28-duality/duality.lua, duality-coop.lua
+	ScriptLobbyDropdown@CAMLOCK:
+		ID: camlock
+		Label: Camera Lock
+		Description: Enable/disable locking the camera on your last unit.
+		Values:
+			enabled: Enabled
+			disabled: Disabled
+		Default: disabled
+		DisplayOrder: 999
+	ScriptLobbyDropdown@MISSIONTIMER:
+		ID: missiontimer
+		Label: Mission Timer
+		Description: Enable/disable time limit\nOr activate Rush Mode, where you have 1 Minute and gain time for each destroyed silo.
+		Values:
+			enabled: Enabled
+			disabled: Disabled
+			rush: Rush Mode
+		Default: disabled
+		DisplayOrder: 999

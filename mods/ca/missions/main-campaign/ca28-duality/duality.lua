@@ -38,13 +38,7 @@ WorldLoaded = function()
 	ObjectiveFindTanya = GDI.AddObjective("Find Tanya.")
 	ObjectiveDestroyTiberiumStores = GDI.AddObjective("Destroy all Scrin Tiberium stores.")
 
-	if not RespawnEnabled then
-		ObjectiveCommandoSurvive = GDI.AddObjective("Commando must survive.")
-		ObjectiveTanyaSurvive = GDI.AddObjective("Tanya must survive.")
-	else
-		ObjectiveCommandoSurvive = GDI.AddSecondaryObjective("Keep Commando alive.")
-		ObjectiveTanyaSurvive = GDI.AddSecondaryObjective("Keep Tanya alive.")
-	end
+	SetupKeepAliveObjectives()
 
 	Scrin.Resources = Scrin.ResourceCapacity
 
@@ -182,6 +176,7 @@ InitScrin = function()
 	end)
 end
 
+-- overridden in co-op version
 UpdateObjectiveText = function()
 	UserInterface.SetMissionText("Tiberium stores remaining: " .. NumSilosRemaining , HSLColor.Yellow)
 end
@@ -243,8 +238,8 @@ CommandoDeathTrigger = function(commando)
 				if NumSilosRemaining == 0 then
 					respawnWaypoint = EscapeRespawn
 				end
-				Commando = Actor.Create("rmbo", true, { Owner = GDI, Location = respawnWaypoint.Location })
-				Beacon.New(GDI, respawnWaypoint.CenterPosition)
+				Commando = Actor.Create("rmbo", true, { Owner = self.Owner, Location = respawnWaypoint.Location })
+				Beacon.New(self.Owner, respawnWaypoint.CenterPosition)
 				PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 				Commando.GrantCondition("difficulty-" .. Difficulty)
 				CommandoDeathTrigger(Commando)
@@ -263,8 +258,8 @@ TanyaDeathTrigger = function(tanya)
 				if NumSilosRemaining == 0 then
 					respawnWaypoint = EscapeRespawn
 				end
-				Tanya = Actor.Create("e7", true, { Owner = GDI, Location = respawnWaypoint.Location })
-				Beacon.New(GDI, respawnWaypoint.CenterPosition)
+				Tanya = Actor.Create("e7", true, { Owner = self.Owner, Location = respawnWaypoint.Location })
+				Beacon.New(self.Owner, respawnWaypoint.CenterPosition)
 				PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 				Tanya.GrantCondition("difficulty-" .. Difficulty)
 				TanyaDeathTrigger(Tanya)
@@ -314,4 +309,15 @@ ScrinReinforcements = function()
 	end
 
 	Trigger.AfterDelay(timeUntilNext, ScrinReinforcements)
+end
+
+-- overridden in co-op version
+SetupKeepAliveObjectives = function()
+	if not RespawnEnabled then
+		ObjectiveCommandoSurvive = GDI.AddObjective("Commando must survive.")
+		ObjectiveTanyaSurvive = GDI.AddObjective("Tanya must survive.")
+	else
+		ObjectiveCommandoSurvive = GDI.AddSecondaryObjective("Keep Commando alive.")
+		ObjectiveTanyaSurvive = GDI.AddSecondaryObjective("Keep Tanya alive.")
+	end
 end
