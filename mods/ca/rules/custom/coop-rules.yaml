@@ -283,16 +283,24 @@ Player:
 
 # Make Oil Derrick use resource storage so it works with income sharing
 OILB:
-	UseResourceStorage: True
+	CashTrickler:
+		UseResourceStorage: True
 
 COOPDUMMY:
 	Inherits: ^InvisibleDummy
+	DummyConditionGranter@MQ:
+		Condition: global-multiqueue
+	DummyConditionGranter@MQFull:
+		Condition: global-multiqueuefull
+	DummyConditionConsumer@MQ:
+		Condition: global-multiqueue
+	DummyConditionConsumer@MQFull:
+		Condition: global-multiqueuefull
 
 ^COOPProducesBuildings:
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Production@SQBLD:
 		Produces: BuildingSQ, DefenseSQ
-		PauseOnCondition: forceshield || being-warped
 		RequiresCondition: !global-multiqueuefull
 
 ^COOPProducesVehicles:
@@ -307,7 +315,6 @@ COOPDUMMY:
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Production:
 		Produces: ShipSQ, Boat, Submarine
-		PauseOnCondition: forceshield || being-warped
 		RequiresCondition: !global-multiqueue
 	UpdatesUnitsProduced:
 
@@ -317,14 +324,10 @@ COOPDUMMY:
 		Prerequisite: aircraft.any
 	Production:
 		Produces: AircraftSQ, Plane, Helicopter
-		PauseOnCondition: forceshield || being-warped
 		RequiresCondition: !global-multiqueue
 	GrantConditionOnPrerequisite@KoreanBonus:
 		Prerequisites: korea.coalition
 		Condition: korea-coalition
-	GrantCondition@KoreanBonus:
-		RequiresCondition: korea-coalition
-		Condition: aircraft-repair
 	DamageMultiplier@KoreanBonus:
 		Modifier: 50
 		RequiresCondition: korea-coalition
@@ -342,7 +345,6 @@ COOPDUMMY:
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Production:
 		Produces: InfantrySQ, Cyborg, Soldier, ParadropInfantry
-		PauseOnCondition: forceshield || being-warped
 		RequiresCondition: !global-multiqueue
 	GrantExternalConditionToProduced:
 		Condition: produced
@@ -361,10 +363,8 @@ COOPDUMMY:
 ^COOPProducesUpgrades:
 	Production:
 		Produces: Upgrade
-		PauseOnCondition: forceshield || being-warped
 	ProvidesPrerequisite@UpgradesProducer:
 		Prerequisite: upgrades.producer
-		RequiresCondition: !(forceshield || being-warped)
 
 COOPMSLO:
 	Inherits: COOPDUMMY
@@ -402,51 +402,38 @@ COOPDOME:
 	ValidFactions:
 		Factions: allies, england, france, germany, usa, soviet, russia, ukraine, iraq, yuri
 	ProvidesPrerequisite@buildingname:
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@anyradar:
 		Prerequisite: anyradar
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@radarorrepair:
 		Prerequisite: radarorrepair
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@RadarOrAircraft:
 		Prerequisite: radaroraircraft
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@FlameTowerOrRadar:
 		Prerequisite: fturorradar
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@allrad:
 		Factions: allies, england, france, germany, usa
 		Prerequisite: radar.allies
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@engrad:
 		Factions: england
 		Prerequisite: radar.england
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@frarad:
 		Factions: france
 		Prerequisite: radar.france
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@sovrad:
 		Factions: soviet, russia, ukraine, iraq, yuri
 		Prerequisite: radar.soviet
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@rusrad:
 		Factions: russia
 		Prerequisite: radar.russia
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@ukrrad:
 		Factions: ukraine
 		Prerequisite: radar.ukraine
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@irarad:
 		Factions: iraq
 		Prerequisite: radar.iraq
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@yurirad:
 		Factions: yuri
 		Prerequisite: radar.yuri
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@radar-active:
 		Prerequisite: radar-active
 
@@ -463,25 +450,19 @@ COOPATEK:
 	ValidFactions:
 		Factions: allies, england, germany, france, usa
 	ProvidesPrerequisite@buildingname:
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisite:
 		Prerequisite: techcenter.any
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@AtekOrHq:
 		Prerequisite: atekoralhq
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@germanyatek:
 		Factions: germany
 		Prerequisite: atek.germany
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@franceatek:
 		Factions: france
 		Prerequisite: atek.france
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@usaatek:
 		Factions: usa
 		Prerequisite: atek.usa
-		RequiresCondition: !tech-locked
 
 COOPALHQ:
 	Inherits: COOPDUMMY
@@ -701,30 +682,23 @@ COOPSTEK:
 	Inherits@UPG: ^COOPProducesUpgrades
 	ProvidesPrerequisite:
 		Prerequisite: stek
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisite:
 		Prerequisite: techcenter.any
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@TeslaCoilOrSovietTechCenter:
 		Prerequisite: tslaorstek
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@ChemTowerOrSovietTechCenter:
 		Prerequisite: tturorstek
-		RequiresCondition: !tech-locked
 	ValidFactions:
 		Factions: soviet, russia, ukraine, iraq, yuri
 	ProvidesPrerequisiteValidatedFaction@russia:
 		Factions: russia
 		Prerequisite: stek.russia
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@ukraine:
 		Factions: ukraine
 		Prerequisite: stek.ukraine
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@iraq:
 		Factions: iraq
 		Prerequisite: stek.iraq
-		RequiresCondition: !tech-locked
 
 COOPBARR:
 	Inherits: COOPDUMMY
@@ -1041,55 +1015,41 @@ COOPHQ:
 	ValidFactions:
 		Factions: gdi, talon, zocom, eagle, arc, nod, blackh, marked, legion, shadow
 	ProvidesPrerequisite@buildingname:
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@anyradar:
 		Prerequisite: anyradar
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@radarorrepair:
 		Prerequisite: radarorrepair
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@RadarOrAircraft:
 		Prerequisite: radaroraircraft
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@FlameTowerOrRadar:
 		Prerequisite: fturorradar
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@gdirad:
 		Factions: gdi, talon, zocom, eagle, arc
 		Prerequisite: radar.gdi
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@talrad:
 		Factions: talon
 		Prerequisite: radar.talon
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@zocrad:
 		Factions: zocom
 		Prerequisite: radar.zocom
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@eagrad:
 		Factions: eagle
 		Prerequisite: radar.eagle
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@arcrad:
 		Factions: arc
 		Prerequisite: radar.arc
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@nodrad:
 		Factions: nod, blackh, marked, legion, shadow
 		Prerequisite: radar.nod
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@bhrad:
 		Factions: blackh
 		Prerequisite: radar.blackh
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@legrad:
 		Factions: legion
 		Prerequisite: radar.legion
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@shadrad:
 		Factions: shadow
 		Prerequisite: radar.shadow
-		RequiresCondition: !tech-locked
 
 COOPEYE:
 	Inherits: COOPDUMMY
@@ -1184,65 +1144,50 @@ COOPGTEK:
 	Inherits@UPG: ^COOPProducesUpgrades
 	ProvidesPrerequisite:
 		Prerequisite: gtek
-		RequiresCondition: !tech-locked
 	ValidFactions:
 		Factions: gdi, talon, zocom, eagle, arc
 	ProvidesPrerequisite:
 		Prerequisite: techcenter.any
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@tdtek:
 		Prerequisite: techcenter.td
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@talongtek:
 		Factions: talon
 		Prerequisite: gtek.talon
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@arcgtek:
 		Factions: arc
 		Prerequisite: gtek.arc
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@zocomgtek:
 		Factions: zocom
 		Prerequisite: gtek.zocom
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@eaglegtek:
 		Factions: eagle
 		Prerequisite: gtek.eagle
-		RequiresCondition: !tech-locked
 
 COOPTMPL:
 	Inherits: COOPDUMMY
 	Inherits@UPG: ^COOPProducesUpgrades
 	ProvidesPrerequisite:
 		Prerequisite: tmpl
-		RequiresCondition: !tech-locked
 	ValidFactions:
 		Factions: nod, blackh, marked, legion, shadow
 	ProvidesPrerequisite:
 		Prerequisite: techcenter.any
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@tdtek:
 		Prerequisite: techcenter.td
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@ObeliskOrTemple:
 		Prerequisite: obliortmpl
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@blackhtmpl:
 		Factions: blackh
 		Prerequisite: tmpl.blackh
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@markedtmpl:
 		Factions: marked
 		Prerequisite: tmpl.marked
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@legiontmpl:
 		Factions: legion
 		Prerequisite: tmpl.legion
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@shadowtmpl:
 		Factions: shadow
 		Prerequisite: tmpl.shadow
-		RequiresCondition: !tech-locked
 
 COOPPRIS:
 	Inherits: COOPDUMMY
@@ -1291,16 +1236,12 @@ COOPMUNP:
 		Prerequisite: munp
 	ProvidesPrerequisite@IndpOrMunp:
 		Prerequisite: indpormunp
-		RequiresCondition: !tech-locked
 
 COOPOREP:
 	Inherits: COOPDUMMY
 	Inherits@UPG: ^COOPProducesUpgrades
 	ProvidesPrerequisite:
 		Prerequisite: orep
-	ProvidesPrerequisite@ai-pcan:
-		Prerequisite: pcan.upgrade
-		RequiresCondition: ai-pcan-upgrade && owned-by-ai
 
 COOPUPGC:
 	Inherits: COOPDUMMY
@@ -1332,14 +1273,11 @@ COOPTMPP:
 		Prerequisite: tmpp
 	ProvidesPrerequisite@nod:
 		Prerequisite: infantry.nod
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@marked:
 		Factions: marked
 		Prerequisite: infantry.marked
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@mech:
 		Prerequisite: infantry.mech
-		RequiresCondition: !tech-locked
 
 COOPMSLO.Nod:
 	Inherits: COOPDUMMY
@@ -1461,38 +1399,28 @@ COOPNERV:
 	ValidFactions:
 		Factions: scrin, reaper, traveler, harbinger, collector
 	ProvidesPrerequisite@buildingname:
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@anyradar:
 		Prerequisite: anyradar
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@radarorrepair:
 		Prerequisite: radarorrepair
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@RadarOrAircraft:
 		Prerequisite: radaroraircraft
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@FlameTowerOrRadar:
 		Prerequisite: fturorradar
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@scrinrad:
 		Prerequisite: radar.scrin
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@reaprad:
 		Factions: reaper
 		Prerequisite: radar.reaper
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@travrad:
 		Factions: traveler
 		Prerequisite: radar.traveler
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@harbrad:
 		Factions: harbinger
 		Prerequisite: radar.harbinger
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@desprad:
 		Factions: collector
 		Prerequisite: radar.collector
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@radar-active:
 		Prerequisite: radar-active
 
@@ -1504,18 +1432,14 @@ COOPSCRT:
 	ProvidesPrerequisite:
 		Prerequisite: scrt
 	ProvidesPrerequisite@buildingname:
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisite:
 		Prerequisite: techcenter.any
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@harbscrt:
 		Factions: harbinger
 		Prerequisite: scrt.harbinger
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@collscrt:
 		Factions: collector
 		Prerequisite: scrt.collector
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@BotAllegiance:
 		Prerequisite: scrin.allegiances.available
 		RequiresPrerequisites: botplayer
@@ -1540,7 +1464,6 @@ COOPSIGN:
 	Inherits@UPG: ^COOPProducesUpgrades
 	ProvidesPrerequisite:
 		Prerequisite: sign
-		RequiresCondition: !tech-locked
 
 COOPSREP:
 	Inherits: COOPDUMMY
