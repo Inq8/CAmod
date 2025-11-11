@@ -21,7 +21,9 @@ SetupPlayers = function()
 end
 
 AfterWorldLoaded = function()
-
+	Utils.Do(Utils.Where({ Multi2, Multi5 }, function(p) return p ~= nil end), function(p)
+		Actor.Create(true, "rebel.allegiance", { Owner = p })
+	end)
 end
 
 AfterTick = function()

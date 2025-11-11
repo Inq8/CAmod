@@ -24,3 +24,17 @@ end
 AfterTick = function()
 
 end
+
+DoMcvArrival = function()
+	local interval = 30
+	local defenders = { "hmmv", "mtnk", "mtnk", "n1", "n1", "n1", "n1", "n3" }
+	Reinforcements.Reinforce(GDI, defenders, { GatewayStable.Location, PlayerStart.Location }, interval)
+
+	local delay = interval * #defenders
+	Utils.Do(GetMcvPlayers(), function(p)
+		Trigger.AfterDelay(delay, function()
+			Reinforcements.Reinforce(p, { "amcv" }, { GatewayStable.Location, PlayerStart.Location })
+		end)
+		delay = delay + interval
+	end)
+end
