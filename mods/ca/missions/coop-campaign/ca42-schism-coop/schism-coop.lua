@@ -21,7 +21,8 @@ SetupPlayers = function()
 end
 
 AfterWorldLoaded = function()
-
+	TransferBaseToPlayer(SinglePlayerPlayer, GetFirstActivePlayer())
+	StartCashSpread(3000)
 end
 
 AfterTick = function()
