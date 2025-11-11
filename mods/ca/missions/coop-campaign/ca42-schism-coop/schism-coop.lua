@@ -21,10 +21,42 @@ SetupPlayers = function()
 end
 
 AfterWorldLoaded = function()
+	local TeslaPlants = USSR.GetActorsByType("tpwr")
+
+	if #MissionPlayers >= 2 then
+		TeslaPlants[1].Owner = MissionPlayers[2]
+		Actor1724.Owner = MissionPlayers[2]
+		Actor820.Owner = MissionPlayers[2]
+	end
+	if #MissionPlayers >= 3 then
+		TeslaPlants[2].Owner = MissionPlayers[3]
+		Actor1803.Owner = MissionPlayers[3]
+		Actor821.Owner = MissionPlayers[3]
+	end
+	if #MissionPlayers >= 4 then
+		TeslaPlants[3].Owner = MissionPlayers[4]
+		Actor1610.Owner = MissionPlayers[4]
+		Actor822.Owner = MissionPlayers[4]
+		Actor823.Owner = MissionPlayers[4]
+	end
+	if #MissionPlayers >= 5 then
+		TeslaPlants[4].Owner = MissionPlayers[5]
+		Actor1846.Owner = MissionPlayers[5]
+		Actor823.Owner = MissionPlayers[5]
+	end
+	if #MissionPlayers >= 6 then
+		TeslaPlants[5].Owner = MissionPlayers[6]
+		Actor1611.Owner = MissionPlayers[6]
+	end
+
 	TransferBaseToPlayer(SinglePlayerPlayer, GetFirstActivePlayer())
 	StartCashSpread(3000)
 end
 
 AfterTick = function()
 
+end
+
+TransferExterminator = function()
+	Exterminator.Owner = GetFirstActivePlayer()
 end

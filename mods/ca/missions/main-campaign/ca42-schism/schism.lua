@@ -167,7 +167,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(10), function()
-		Exterminator.Owner = USSR
+		TransferExterminator()
 		Exterminator.GrantCondition("difficulty-" .. Difficulty)
 	end)
 
@@ -503,4 +503,8 @@ ApplyIronCurtain = function()
 		Media.PlaySound("ironcur9.aud")
 		Exterminator.GrantCondition("invulnerability", DateTime.Seconds(8))
 	end
+end
+
+TransferExterminator = function()
+	Exterminator.Owner = USSR
 end
