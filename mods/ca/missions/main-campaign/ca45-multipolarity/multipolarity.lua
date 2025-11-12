@@ -377,13 +377,7 @@ InitGDIAttacks = function()
 end
 
 FlipAlliedBase = function()
-	local alliedBaseActors = Utils.Where(England.GetActors(), function(a)
-		return not a.IsDead and a.Type ~= "player"
-	end)
-
-	Utils.Do(alliedBaseActors, function(a)
-		a.Owner = Greece
-	end)
+	TransferAlliedAssets()
 
 	Trigger.AfterDelay(1, function()
 		Utils.Do(MissionPlayers, function(p)
@@ -717,6 +711,17 @@ end
 -- overridden in co-op version
 DoMcvArrival = function()
 	Reinforcements.Reinforce(Greece, { "mcv" }, { McvSpawn.Location, McvDest.Location }, 75)
+end
+
+-- overridden in co-op version
+TransferAlliedAssets = function()
+	local alliedBaseActors = Utils.Where(England.GetActors(), function(a)
+		return not a.IsDead and a.Type ~= "player"
+	end)
+
+	Utils.Do(alliedBaseActors, function(a)
+		a.Owner = Greece
+	end)
 end
 
 -- overridden in co-op version

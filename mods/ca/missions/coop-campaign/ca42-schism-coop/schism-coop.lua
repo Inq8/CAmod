@@ -60,3 +60,13 @@ end
 TransferExterminator = function()
 	Exterminator.Owner = GetFirstActivePlayer()
 end
+
+DoMcvArrival = function()
+	local delay = 0
+	Utils.Do(GetMcvPlayers(), function(p)
+		Trigger.AfterDelay(delay, function()
+			Reinforcements.Reinforce(p, { "mcv" }, { McvSpawn.Location, McvDest.Location })
+		end)
+		delay = delay + DateTime.Seconds(1)
+	end)
+end

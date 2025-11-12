@@ -250,7 +250,9 @@ AssignToCoopPlayers = function(units, specificPlayers, ignoreBlackList)
 
 			if unit.HasProperty("HasPassengers") then
 				Trigger.AfterDelay(1, function()
-					AssignToCoopPlayers(Utils.Where(unit.Passengers, function(a) return not a.IsDead end), specificPlayers, ignoreBlackList)
+					if not unit.IsDead then
+						AssignToCoopPlayers(Utils.Where(unit.Passengers, function(a) return not a.IsDead end), specificPlayers, ignoreBlackList)
+					end
 				end)
 			end
 		end

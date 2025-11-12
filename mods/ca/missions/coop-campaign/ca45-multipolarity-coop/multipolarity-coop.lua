@@ -35,6 +35,25 @@ DoMcvArrival = function()
 	end)
 end
 
+TransferAlliedAssets = function()
+	local recipientPlayer = GetFirstActivePlayer()
+	local highestAssetValue = 0
+
+	Utils.Do(GetMcvPlayers(), function(p)
+		local playerAssetsNearby = Utils.Where(Map.ActorsInCircle(AlliedBaseCenter.CenterPosition, WDist.New(20 * 1024)), function(a)
+			return a.Owner == p
+		end)
+
+		local playerAssetValue = GetTotalCostOfUnits(playerAssetsNearby)
+		if playerAssetValue > highestAssetValue then
+			highestAssetValue = playerAssetValue
+			recipientPlayer = p
+		end
+	end)
+
+	TransferBaseToPlayer(England, recipientPlayer)
+end
+
 TransferSovietAssets = function()
 	local recipientPlayer = GetFirstActivePlayer()
 	local highestAssetValue = 0

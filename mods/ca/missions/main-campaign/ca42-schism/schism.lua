@@ -185,7 +185,7 @@ WorldLoaded = function()
 				Notification("Reinforcements have arrived.")
 				Reinforcements.Reinforce(USSR, { "kiro" }, { KirovSpawn1.Location, KirovRally1.Location })
 				Reinforcements.Reinforce(USSR, { "kiro" }, { KirovSpawn2.Location, KirovRally2.Location })
-				Reinforcements.Reinforce(USSR, { "mcv" }, { McvSpawn.Location, McvDest.Location }, 75)
+				DoMcvArrival()
 
 				Utils.Do({ SSMNorth, SSMEast1, SSMEast2 }, function(s)
 					if not s.IsDead then
@@ -507,4 +507,9 @@ end
 
 TransferExterminator = function()
 	Exterminator.Owner = USSR
+end
+
+-- overridden in co-op version
+DoMcvArrival = function()
+	Reinforcements.Reinforce(USSR, { "mcv" }, { McvSpawn.Location, McvDest.Location }, 75)
 end
