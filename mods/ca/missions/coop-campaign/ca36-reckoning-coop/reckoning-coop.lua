@@ -22,7 +22,7 @@ end
 
 AfterWorldLoaded = function()
 	Utils.Do(Utils.Where({ Multi2, Multi5 }, function(p) return p ~= nil end), function(p)
-		Actor.Create(true, "rebel.allegiance", { Owner = p })
+		Actor.Create("rebel.allegiance", true, { Owner = p })
 	end)
 end
 
@@ -54,9 +54,9 @@ DistributeUnitsAndBases = function()
 		GDIActive = true
 
 		local firstGdiPlayer = Multi1 ~= nil and Multi1 or Multi4
-		TransferBaseToPlayer(GDI, firstGdiPlayer)
+		TransferBaseToPlayer(GDIHostile, firstGdiPlayer)
 
-		local gdiUnits = Utils.Where(GDI.GetActors(), function(a)
+		local gdiUnits = Utils.Where(GDIHostile.GetActors(), function(a)
 			return a.HasProperty("Move") and not IsHarvester(a) and not IsMcv(a)
 		end)
 
@@ -64,44 +64,42 @@ DistributeUnitsAndBases = function()
 
 		-- if there are 2 GDI players,  send MCV for second GDI player
 		if Multi1 ~= nil and Multi4 ~= nil then
-			Reinforcements.Reinforce(Multi4, { "mcv" }, { CPos.New(113, 1), CPos.New(118, 12) })
+			Reinforcements.Reinforce(Multi4, { "amcv" }, { CPos.New(113, 1), CPos.New(118, 12) })
 		end
 	end
 
-	-- transfer top Scrin base to first Scrin player (y = 0 -> 50)
-	if Multi2 ~= nil or Multi5 ~= nil then
-		ScrinRebelsActive = true
+	Trigger.AfterDelay(1, function()
+		-- transfer top Scrin base to first Scrin player (y = 0 -> 50)
+		if Multi2 ~= nil or Multi5 ~= nil then
+			ScrinRebelsActive = true
 
-		local firstScrinPlayer = Multi2 ~= nil and Multi2 or Multi5
+			local firstScrinPlayer = Multi2 ~= nil and Multi2 or Multi5
 
-		local scrinTopActors = Utils.Where(ScrinRebels.GetActors(), function(a)
-			return a.HasProperty("Health") and a.Location.Y <= 50
-		end)
-
-		Utils.Do(scrinTopActors, function(a)
-			a.Owner = firstScrinPlayer
-		end)
-
-		local scrinMiddleActors = Utils.Where(ScrinRebels.GetActors(), function(a)
-			return a.HasProperty("Health") and a.Location.Y > 50 and a.Location.Y <= 80
-		end)
-
-		-- if there are 2 Scrin players, give middle Scrin base to second Scrin player (y = 51 -> 80)
-		if Multi2 ~= nil and Multi5 ~= nil then
-			Utils.Do(scrinMiddleActors, function(a)
-				a.Owner = Multi5
+			local scrinTopActors = Utils.Where(ScrinRebels.GetActors(), function(a)
+				return a.HasProperty("Health") and a.Location.Y <= 50
 			end)
-		-- otherwise give it to first Scrin player
-		else
-			Utils.Do(scrinMiddleActors, function(a)
+
+			Utils.Do(scrinTopActors, function(a)
 				a.Owner = firstScrinPlayer
 			end)
+
+			local scrinMiddleActors = Utils.Where(ScrinRebels.GetActors(), function(a)
+				return a.HasProperty("Health") and a.Location.Y > 50 and a.Location.Y <= 80
+			end)
+
+			-- if there are 2 Scrin players, give middle Scrin base to second Scrin player (y = 51 -> 80)
+			if Multi2 ~= nil and Multi5 ~= nil then
+				Utils.Do(scrinMiddleActors, function(a)
+					a.Owner = Multi5
+				end)
+			-- otherwise give it to first Scrin player
+			else
+				Utils.Do(scrinMiddleActors, function(a)
+					a.Owner = firstScrinPlayer
+				end)
+			end
 		end
-	end
-
-	if GDIActive then
-
-	end
+	end)
 
 	CACoopQueueSyncer()
 end

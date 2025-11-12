@@ -252,7 +252,7 @@ OncePerSecondChecks = function()
 			end
 		end
 
-		local intruders = GetMissionPlayersActorsByTypes({"s4"})
+		local intruders = GetMissionPlayersActorsByType("s4")
 		local leechers = GetMissionPlayersActorsByTypes({ "lchr", "lchr.orb" })
 
 		if RespawnEnabled then

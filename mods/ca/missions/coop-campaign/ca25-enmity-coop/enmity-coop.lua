@@ -36,7 +36,7 @@ DoReinforcements = function
 	local delay = 0
 	Utils.Do(GetMcvPlayers(), function(p)
 		Trigger.AfterDelay(delay, function()
-			Reinforcements.Reinforce(p, { "mcv" }, { McvSpawn.Location, McvRally.Location })
+			Reinforcements.Reinforce(p, { "amcv" }, { McvSpawn.Location, McvRally.Location })
 		end)
 		delay = delay + DateTime.Seconds(1)
 	end)

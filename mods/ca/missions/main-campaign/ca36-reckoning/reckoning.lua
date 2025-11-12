@@ -302,6 +302,8 @@ InitScrin = function()
 		end
 	end)
 
+	Actor.Create("loyalist.allegiance", true, { Owner = Scrin })
+
 	Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
 		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = Scrin })
 		Actor.Create("ai.superweapons.enabled", true, { Owner = Scrin })
