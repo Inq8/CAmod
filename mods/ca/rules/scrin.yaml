@@ -444,7 +444,7 @@ VEHICLES.SCRIN:
 	ProductionBar@MQBLD:
 		RequiresCondition: global-multiqueuefull && rebel-allegiance
 	SpeedMultiplier@ProducingMobile:
-		Modifier: 60
+		Modifier: 50
 		RequiresCondition: producing-mobile
 	GrantConditionWhileProducing@ProducingMobile:
 		ProductionType: BuildingSQ
@@ -6506,6 +6506,8 @@ IonSurgeFade:
 		CrushedSequence: die
 		FallbackSequence: die
 	WithMakeAnimation:
+	OwnerLostAction:
+		Action: Kill
 	# required for death animation
 	Health:
 		HP: 1

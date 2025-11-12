@@ -118,6 +118,8 @@ WorldLoaded = function()
 		end)
 	end)
 
+	GatewayNerveCenter.GrantCondition("nerv-damage-reduction")
+
 	Trigger.OnCapture(GatewayNerveCenter, function(self, captor, oldOwner, newOwner)
 		if newOwner == USSR and not USSR.IsObjectiveCompleted(ObjectiveCaptureNerveCenter) then
 			USSR.MarkCompletedObjective(ObjectiveCaptureNerveCenter)
