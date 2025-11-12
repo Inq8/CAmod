@@ -200,21 +200,7 @@ WorldLoaded = function()
 
 			Trigger.OnKilled(m, function(self, killer)
 				UpdateObjectiveText()
-				Utils.Do(slaves, function(s)
-					if not s.IsDead then
-						s.Owner = GDI
-						Trigger.AfterDelay(1, function()
-							if not s.IsDead then
-								if s.HasProperty("Move") then
-									s.Stop()
-								end
-								if s.HasProperty("FindResources") then
-									s.FindResources()
-								end
-							end
-						end)
-					end
-				end)
+				FreeSlaves(slaves)
 
 				Trigger.AfterDelay(1, function()
 					Actor.Create("QueueUpdaterDummy", true, { Owner = GDI })
@@ -369,4 +355,23 @@ EnslavedUnitKilled = function()
 	if ObjectiveMinimiseCasualties ~= nil and EnslavedUnitsKilled > MaxEnslavedUnitsKilled[Difficulty] then
 		GDI.MarkFailedObjective(ObjectiveMinimiseCasualties)
 	end
+end
+
+-- overridden in co-op version
+FreeSlaves = function(slaves)
+	Utils.Do(slaves, function(s)
+		if not s.IsDead then
+			s.Owner = GDI
+			Trigger.AfterDelay(1, function()
+				if not s.IsDead then
+					if s.HasProperty("Move") then
+						s.Stop()
+					end
+					if s.HasProperty("FindResources") then
+						s.FindResources()
+					end
+				end
+			end)
+		end
+	end)
 end

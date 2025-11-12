@@ -53,7 +53,7 @@ WorldLoaded = function()
 	Trigger.AfterDelay(DateTime.Seconds(2), function()
 		PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 		Notification("Reinforcements have arrived.")
-		Reinforcements.Reinforce(USSR, { "mcv" }, { McvSpawn.Location, McvRally.Location })
+		DoMcvArrival()
 	end)
 
 	Trigger.AfterDelay(DateTime.Minutes(1), function()
@@ -139,6 +139,11 @@ InitGreece = function()
 		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGreeceGroundHunterUnit)
 	end)
+end
+
+-- overridden in co-op version
+DoMcvArrival = function()
+	Reinforcements.Reinforce(USSR, { "mcv" }, { McvSpawn.Location, McvRally.Location })
 end
 
 WarpInTeslaTanks = function(TankLocation1, TankLocation2, EffectLocation)

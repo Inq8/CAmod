@@ -114,7 +114,7 @@ WorldLoaded = function()
 	ObjectiveSecureSouthNodBase = USSR.AddSecondaryObjective("Secure southern Nod base.")
 
 	Trigger.OnCapture(SignalTransmitter, function(self, captor, oldOwner, newOwner)
-		if newOwner == USSR then
+		if IsMissionPlayer(newOwner) then
 			USSR.MarkCompletedObjective(ObjectiveCaptureSignalTransmitter)
 		end
 	end)

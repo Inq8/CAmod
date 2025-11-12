@@ -92,7 +92,7 @@ WorldLoaded = function()
 	ObjectiveExtractSpy = Greece.AddObjective("Get spy to safety.")
 
 	Trigger.AfterDelay(DateTime.Seconds(20), function()
-		Spy = Actor.Create("spy.noinfil", true, { Owner = Greece, Location = Gateway.Location })
+		CreateSpy()
 		Spy.DisguiseAs(SpyTarget)
 		Spy.Move(SpyDest.Location)
 		MediaCA.PlaySound(MissionDir .. "/r_spydetected.aud", 2)
@@ -268,11 +268,21 @@ SpyDeparture = function()
 					Beacon.New(Greece, McvDest.CenterPosition)
 					PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 					Notification("Reinforcements have arrived.")
-					Reinforcements.Reinforce(Greece, { "mcv", "2tnk", "2tnk", "arty", "arty", "e1", "e1", "e1", "e1", "e3", "medi" }, { McvSpawn.Location, McvDest.Location }, 75)
+					DoMcvArrival()
 					InitUSSRAttacks()
 					InitScrinAttacks()
 				end)
 			end
 		end)
 	end)
+end
+
+-- overridden in co-op version
+CreateSpy = function()
+	Spy = Actor.Create("spy.noinfil", true, { Owner = Greece, Location = Gateway.Location })
+end
+
+-- overridden in co-op version
+DoMcvArrival = function()
+	Reinforcements.Reinforce(Greece, { "mcv", "2tnk", "2tnk", "arty", "arty", "e1", "e1", "e1", "e1", "e3", "medi" }, { McvSpawn.Location, McvDest.Location }, 75)
 end

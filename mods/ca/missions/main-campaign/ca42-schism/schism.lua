@@ -122,7 +122,7 @@ SetupPlayers = function()
 	Scrin = Player.GetPlayer("Scrin")
 	Nod = Player.GetPlayer("Nod")
 	ScrinRebels = Player.GetPlayer("ScrinRebels")
-    ScrinRebelsOuter = Player.GetPlayer("ScrinRebelsOuter")
+	ScrinRebelsOuter = Player.GetPlayer("ScrinRebelsOuter")
 	MaleficScrin = Player.GetPlayer("MaleficScrin")
 	SpyPlaneProvider = Player.GetPlayer("SpyPlaneProvider")
 	Neutral = Player.GetPlayer("Neutral")
@@ -167,7 +167,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(10), function()
-		Exterminator.Owner = USSR
+		TransferExterminator()
 		Exterminator.GrantCondition("difficulty-" .. Difficulty)
 	end)
 
@@ -185,7 +185,7 @@ WorldLoaded = function()
 				Notification("Reinforcements have arrived.")
 				Reinforcements.Reinforce(USSR, { "kiro" }, { KirovSpawn1.Location, KirovRally1.Location })
 				Reinforcements.Reinforce(USSR, { "kiro" }, { KirovSpawn2.Location, KirovRally2.Location })
-				Reinforcements.Reinforce(USSR, { "mcv" }, { McvSpawn.Location, McvDest.Location }, 75)
+				DoMcvArrival()
 
 				Utils.Do({ SSMNorth, SSMEast1, SSMEast2 }, function(s)
 					if not s.IsDead then
@@ -362,7 +362,7 @@ PurificationWave = function()
 	Lighting.Flash("Purification", AdjustTimeForGameSpeed(10))
 	MediaCA.PlaySound(MissionDir .. "/purificationsm.aud", 2)
 
-	local exterminators = USSR.GetActorsByType("etpd")
+	local exterminators = GetMissionPlayersActorsByType("etpd")
 	if #exterminators > 0 then
 		local exterminator = exterminators[1]
 		local dummy = Actor.Create("purification.dummy", true, { Owner = ScrinRebels, Location = exterminator.Location })
@@ -497,10 +497,19 @@ ApplyIronCurtain = function()
 	if USSR.PowerState ~= "Normal" then
 		return
 	end
-	local ics = USSR.GetActorsByType("iron")
+	local ics = GetMissionPlayersActorsByType("iron")
 	if #ics > 0 then
 		local ic = ics[1]
 		Media.PlaySound("ironcur9.aud")
 		Exterminator.GrantCondition("invulnerability", DateTime.Seconds(8))
 	end
+end
+
+TransferExterminator = function()
+	Exterminator.Owner = USSR
+end
+
+-- overridden in co-op version
+DoMcvArrival = function()
+	Reinforcements.Reinforce(USSR, { "mcv" }, { McvSpawn.Location, McvDest.Location }, 75)
 end

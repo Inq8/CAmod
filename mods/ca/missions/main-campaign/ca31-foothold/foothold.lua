@@ -163,8 +163,7 @@ WorldLoaded = function()
 				PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 				Notification("Reinforcements have arrived.")
 				Beacon.New(GDI, GatewayStable.CenterPosition)
-				Reinforcements.Reinforce(GDI, { "hmmv", "mtnk", "mtnk", "n1", "n1", "n1", "n1", "n3", "amcv" }, { GatewayStable.Location, PlayerStart.Location }, 30)
-
+				DoMcvArrival()
 				Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(4)), function()
 					MediaCA.PlaySound(MissionDir .. "/c_protectnervecenter.aud", 2)
 					Notification("Do not allow the Nerve Center to be destroyed, the gateway must remain stable.")
@@ -277,7 +276,7 @@ CheckSensors = function()
 				Utils.Do(reinforcements, function(a)
 					if a.Type == "n6" then
 						Trigger.OnKilled(a, function(self, killer)
-							local engis = GDI.GetActorsByType("n6")
+							local engis = GetMissionPlayersActorsByType("n6")
 							if #engis == 0 and not GDI.IsObjectiveCompleted(ObjectiveCaptureNerveCenter) then
 								GDI.MarkFailedObjective(ObjectiveCaptureNerveCenter)
 							end
@@ -404,4 +403,9 @@ SpawnTibLifeform = function()
 	Trigger.AfterDelay(SpawnLifeformsInterval[Difficulty], function()
 		SpawnTibLifeform()
 	end)
+end
+
+-- overridden in co-op version
+DoMcvArrival = function()
+	Reinforcements.Reinforce(GDI, { "hmmv", "mtnk", "mtnk", "n1", "n1", "n1", "n1", "n3", "amcv" }, { GatewayStable.Location, PlayerStart.Location }, 30)
 end

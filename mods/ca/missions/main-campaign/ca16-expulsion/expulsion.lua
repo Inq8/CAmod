@@ -99,7 +99,7 @@ WorldLoaded = function()
 	Trigger.AfterDelay(DateTime.Seconds(8), function()
 		PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 		Notification("Reinforcements have arrived.")
-		Reinforcements.Reinforce(USSR, { "mcv" }, { McvSpawn.Location, McvRally.Location }, 75)
+		DoMcvArrival()
 		McvArrived = true
 
 		Utils.Do(initialAttackers, function(a)
@@ -176,4 +176,9 @@ InitGDI = function()
 			Actor.Create("ai.minor.superweapons.enabled", true, { Owner = GDI })
 		end)
 	end
+end
+
+-- overridden in co-op version
+DoMcvArrival = function()
+	Reinforcements.Reinforce(USSR, { "mcv" }, { McvSpawn.Location, McvRally.Location }, 75)
 end

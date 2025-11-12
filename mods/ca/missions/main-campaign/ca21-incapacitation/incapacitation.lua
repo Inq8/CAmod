@@ -252,8 +252,8 @@ OncePerSecondChecks = function()
 			end
 		end
 
-		local intruders = Scrin.GetActorsByType("s4")
-		local leechers = Scrin.GetActorsByTypes({ "lchr", "lchr.orb" })
+		local intruders = GetMissionPlayersActorsByType("s4")
+		local leechers = GetMissionPlayersActorsByTypes({ "lchr", "lchr.orb" })
 
 		if RespawnEnabled then
 			if #intruders == 0 and not IntrudersRespawning then
@@ -448,6 +448,12 @@ SpawnIntruders = function()
 
 		if IsHardOrAbove() then
 			intruderSquad = { "s4", "s4", "s4" }
+			if #MissionPlayers >= 5 then
+				table.insert(intruderSquad,"s4")
+			end
+			if #MissionPlayers >= 6 then
+				table.insert(intruderSquad,"s4")
+			end
 		elseif Difficulty == "normal" then
 			intruderSquad = { "s4", "s4", "s4", "s4" }
 		end

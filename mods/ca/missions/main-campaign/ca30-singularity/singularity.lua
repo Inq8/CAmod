@@ -191,13 +191,13 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnKilled(AlliedMastermind, function(self, killer)
-		FlipSlaveFaction(AlliedSlaves)
+		FlipSlaveFaction(AlliedSlaves, killer)
 	end)
 	Trigger.OnKilled(SovietMastermind, function(self, killer)
-		FlipSlaveFaction(SovietSlaves)
+		FlipSlaveFaction(SovietSlaves, killer)
 	end)
 	Trigger.OnKilled(NodMastermind, function(self, killer)
-		FlipSlaveFaction(NodSlaves)
+		FlipSlaveFaction(NodSlaves, killer)
 	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(5), function()
@@ -393,8 +393,8 @@ end
 OncePerFifteenSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % DateTime.Seconds(15) == 0 then
 		if NodFreed and FirstHackersArrived and not MoreHackersRequested and not ShieldsOffline and not SignalTransmitter.IsDead then
-			local numHackers = #GDI.GetActorsByType("hack")
-			local transports = GDI.GetActorsByTypes({ "tran", "halo", "apc", "btr", "apc2", "vulc", "sapc", "intl", "ifv" })
+			local numHackers = #GetMissionPlayersActorsByType("hack")
+			local transports = GetMissionPlayersActorsByTypes({ "tran", "halo", "apc", "btr", "apc2", "vulc", "sapc", "intl", "ifv" })
 			Utils.Do(transports, function(t)
 				Utils.Do(t.Passengers, function(p)
 					if p.Type == "hack" then
@@ -691,6 +691,8 @@ DoInterceptors = function()
 
 		if not Mothership.IsDead then
 			interceptor1.Attack(Mothership)
+			interceptor1.Move(InterceptorExit1.Location)
+			interceptor1.Destroy()
 		end
 
 		Trigger.OnIdle(interceptor1, function(a)
@@ -707,7 +709,12 @@ DoInterceptors = function()
 
 			if not Mothership.IsDead then
 				interceptor2.Attack(Mothership)
+				interceptor2.Move(InterceptorExit2.Location)
+				interceptor2.Destroy()
+
 				interceptor3.Attack(Mothership)
+				interceptor3.Move(InterceptorExit3.Location)
+				interceptor3.Destroy()
 			end
 
 			Trigger.OnIdle(interceptor2, function(a)
@@ -729,7 +736,8 @@ DoInterceptors = function()
 	end)
 end
 
-FlipSlaveFaction = function(player)
+-- overridden in co-op version
+FlipSlaveFaction = function(player, killer)
 	local attackPath
 	local targetPlayer
 
@@ -767,35 +775,32 @@ FlipSlaveFaction = function(player)
 		MediaCA.PlaySound(MissionDir .. "/c_alliesreleased.aud", 2)
 	end
 
-	local actors = player.GetActors()
-
+	local actors = Utils.Where(player.GetActors(), function(a) return not a.IsDead and a.IsInWorld and a.Type ~= "player" end)
 	Utils.Do(actors, function(a)
-		if not a.IsDead and a.IsInWorld and a.Type ~= "player" then
-			a.Owner = targetPlayer
-			Trigger.ClearAll(a)
+		a.Owner = targetPlayer
+		Trigger.ClearAll(a)
 
-			local delay = Utils.RandomInteger(DateTime.Seconds(1), DateTime.Seconds(25))
-			if a.HasProperty("FindResources") then
-				delay = 1
-			end
-
-			Trigger.AfterDelay(delay, function()
-				if not a.IsDead then
-					if a.HasProperty("AttackMove") then
-						a.Stop()
-						a.AttackMove(attackPath[1], 2)
-						a.AttackMove(attackPath[2], 2)
-					elseif a.HasProperty("Attack") then
-						a.Stop()
-					elseif a.HasProperty("Move") then
-						a.Stop()
-					elseif a.HasProperty("FindResources") then
-						a.Stop()
-						a.FindResources()
-					end
-				end
-			end)
+		local delay = Utils.RandomInteger(DateTime.Seconds(1), DateTime.Seconds(25))
+		if a.HasProperty("FindResources") then
+			delay = 1
 		end
+
+		Trigger.AfterDelay(delay, function()
+			if not a.IsDead then
+				if a.HasProperty("AttackMove") then
+					a.Stop()
+					a.AttackMove(attackPath[1], 2)
+					a.AttackMove(attackPath[2], 2)
+				elseif a.HasProperty("Attack") then
+					a.Stop()
+				elseif a.HasProperty("Move") then
+					a.Stop()
+				elseif a.HasProperty("FindResources") then
+					a.Stop()
+					a.FindResources()
+				end
+			end
+		end)
 	end)
 end
 

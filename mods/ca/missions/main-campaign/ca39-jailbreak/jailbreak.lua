@@ -115,8 +115,8 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnCapture(Prison, function(self, captor, oldOwner, newOwner)
-		if newOwner == USSR then
-			local yuri = Reinforcements.Reinforce(USSR, { "yuri" }, { PrisonerSpawn.Location, YuriRally.Location })[1]
+		if IsMissionPlayer(newOwner) then
+			local yuri = Reinforcements.Reinforce(newOwner, { "yuri" }, { PrisonerSpawn.Location, YuriRally.Location })[1]
 			local prodigy = Reinforcements.Reinforce(Scrin, { "pdgy" }, { PrisonerSpawn.Location, ProdigyRally.Location })[1]
 
 			Trigger.AfterDelay(DateTime.Seconds(2), function()
@@ -148,7 +148,7 @@ WorldLoaded = function()
 					MediaCA.PlaySound(MissionDir .. "/yuri_released.aud", 2)
 
 					Trigger.AfterDelay(DateTime.Seconds(5), function()
-						prodigy.Owner = USSR
+						prodigy.Owner = newOwner
 					end)
 				end
 			end)
@@ -275,10 +275,10 @@ InitGreece = function()
 end
 
 HasConyardAcrossRiver = function()
-	local conyards = USSR.GetActorsByType("fact")
+	local conyards = GetMissionPlayersActorsByType("fact")
 
 	local conyardsAcrossRiver = Utils.Where(conyards, function(c)
-		return IsMissionPlayer(c.Owner) and c.Location.Y > 40
+		return c.Location.Y > 40
 	end)
 
 	return #conyardsAcrossRiver > 0
@@ -295,8 +295,8 @@ PathCleared = function()
 		Trigger.AfterDelay(DateTime.Seconds(5), function()
 			PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 			Notification("Reinforcements have arrived.")
-			Reinforcements.Reinforce(USSR, { "mcv" }, { McvSpawn.Location, McvRally.Location })
 			Beacon.New(USSR, McvRally.CenterPosition)
+			DoMcvArrival()
 			McvArrived = true
 
 			Trigger.AfterDelay(ChronoTankInterval[Difficulty], function()
@@ -405,4 +405,9 @@ AlliedBuildingsEliminated = function()
 		return a.HasProperty("StartBuildingRepairs") and not a.HasProperty("Attack") and a.Type ~= "silo"
 	end)
 	return #alliedBuildings == 0
+end
+
+-- overridden in co-op version
+DoMcvArrival = function()
+	Reinforcements.Reinforce(USSR, { "mcv" }, { McvSpawn.Location, McvRally.Location })
 end

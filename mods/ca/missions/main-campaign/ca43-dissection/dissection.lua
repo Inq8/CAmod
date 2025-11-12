@@ -101,27 +101,32 @@ WorldLoaded = function()
 	Trigger.AfterDelay(DateTime.Seconds(1), function()
 		PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 		Notification("Reinforcements have arrived.")
-		Reinforcements.Reinforce(Greece, { "lst.mcv" }, { ReinforcementSpawn.Location, ReinforcementDest.Location }, 75)
-		Beacon.New(Greece, ReinforcementDest.CenterPosition)
+		DoMcvArrival()
 	end)
 
-	InitialRadar = Actor.Create("radar.dummy", true, { Owner = Greece })
+	InitialRadars = {}
+	Utils.Do(MissionPlayers, function(p)
+		local radar = Actor.Create("radar.dummy", true, { Owner = p })
+		table.insert(InitialRadars, radar)
+	end)
 
 	Trigger.OnKilled(EnglandDome, function(self, killer)
-		InitialRadar.Destroy()
+		Utils.Do(InitialRadars, function(radar)
+			radar.Destroy()
+		end)
 	end)
 
 	Trigger.OnEnteredProximityTrigger(WestBaseCenter.CenterPosition, WDist.New(24 * 1024), function(a, id)
 		if IsMissionPlayer(a.Owner) then
 			Trigger.RemoveProximityTrigger(id)
-			AssumeControl()
+			AssumeControl(a.Owner, "west")
 		end
 	end)
 
 	Trigger.OnEnteredProximityTrigger(EastBaseCenter.CenterPosition, WDist.New(24 * 1024), function(a, id)
 		if IsMissionPlayer(a.Owner) then
 			Trigger.RemoveProximityTrigger(id)
-			AssumeControl()
+			AssumeControl(a.Owner, "east")
 		end
 	end)
 
@@ -266,7 +271,8 @@ DestroyFlares = function()
 	end
 end
 
-AssumeControl = function()
+-- overridden in co-op version
+AssumeControl = function(player, side)
 	if AssumedControl then
 		return
 	end
@@ -415,4 +421,9 @@ DomeDisabled = function(d)
 		TimerPushedBack = true
 		UpdateMissionText()
 	end
+end
+
+DoMcvArrival = function()
+	Beacon.New(Greece, ReinforcementDest.CenterPosition)
+	Reinforcements.Reinforce(Greece, { "lst.mcv" }, { ReinforcementSpawn.Location, ReinforcementDest.Location }, 75)
 end

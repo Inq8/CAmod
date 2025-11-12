@@ -377,23 +377,19 @@ InitGDIAttacks = function()
 end
 
 FlipAlliedBase = function()
-	local alliedBaseActors = Utils.Where(England.GetActors(), function(a)
-		return not a.IsDead and a.Type ~= "player"
-	end)
-
-	Utils.Do(alliedBaseActors, function(a)
-		a.Owner = Greece
-	end)
+	TransferAlliedAssets()
 
 	Trigger.AfterDelay(1, function()
-		Actor.Create("QueueUpdaterDummy", true, { Owner = Greece })
+		Utils.Do(MissionPlayers, function(p)
+			Actor.Create("QueueUpdaterDummy", true, { Owner = p })
+		end)
 	end)
 
 	Trigger.AfterDelay(McvDelayTime[Difficulty], function()
 		Beacon.New(Greece, McvDest.CenterPosition)
 		PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 		Notification("Reinforcements have arrived.")
-		Reinforcements.Reinforce(Greece, { "mcv" }, { McvSpawn.Location, McvDest.Location }, 75)
+		DoMcvArrival()
 
 		Utils.Do(MissionPlayers, function(p)
 			Actor.Create("mcv.allowed", true, { Owner = p })
@@ -410,16 +406,12 @@ FlipNodBase = function()
 
 	NodBaseFlipped = true
 
-	local nodBaseActors = Utils.Where(Nod.GetActors(), function(a)
-		return not a.IsDead and a.Type ~= "player"
-	end)
-
-	Utils.Do(nodBaseActors, function(a)
-		a.Owner = Greece
-	end)
+	TransferNodAssets()
 
 	Trigger.AfterDelay(1, function()
-		Actor.Create("QueueUpdaterDummy", true, { Owner = Greece })
+		Utils.Do(MissionPlayers, function(p)
+			Actor.Create("QueueUpdaterDummy", true, { Owner = p })
+		end)
 	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(6), function()
@@ -440,16 +432,12 @@ FlipSovietBase = function()
 
 	SovietBaseFlipped = true
 
-	local sovietBaseActors = Utils.Where(USSR.GetActors(), function(a)
-		return not a.IsDead and a.Type ~= "player"
-	end)
-
-	Utils.Do(sovietBaseActors, function(a)
-		a.Owner = Greece
-	end)
+	TransferSovietAssets()
 
 	Trigger.AfterDelay(1, function()
-		Actor.Create("QueueUpdaterDummy", true, { Owner = Greece })
+		Utils.Do(MissionPlayers, function(p)
+			Actor.Create("QueueUpdaterDummy", true, { Owner = p })
+		end)
 	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(6), function()
@@ -690,7 +678,7 @@ CaptureRandomBuilding = function(engi)
 	end)
 
 	if #buildings == 0 then
-		buildings = Greece.GetActorsByTypes({ "fact", "proc" })
+		buildings = GetMissionPlayersActorsByTypes({ "fact", "proc" })
 	end
 
 	if #buildings == 0 then
@@ -717,5 +705,43 @@ DoFinale = function()
 
 	Trigger.AfterDelay(DateTime.Seconds(30), function()
 		Greece.MarkCompletedObjective(ObjectiveCaptureHQ)
+	end)
+end
+
+-- overridden in co-op version
+DoMcvArrival = function()
+	Reinforcements.Reinforce(Greece, { "mcv" }, { McvSpawn.Location, McvDest.Location }, 75)
+end
+
+-- overridden in co-op version
+TransferAlliedAssets = function()
+	local alliedBaseActors = Utils.Where(England.GetActors(), function(a)
+		return not a.IsDead and a.Type ~= "player"
+	end)
+
+	Utils.Do(alliedBaseActors, function(a)
+		a.Owner = Greece
+	end)
+end
+
+-- overridden in co-op version
+TransferSovietAssets = function()
+	local sovietBaseActors = Utils.Where(USSR.GetActors(), function(a)
+		return not a.IsDead and a.Type ~= "player"
+	end)
+
+	Utils.Do(sovietBaseActors, function(a)
+		a.Owner = Greece
+	end)
+end
+
+-- overridden in co-op version
+TransferNodAssets = function()
+	local nodBaseActors = Utils.Where(Nod.GetActors(), function(a)
+		return not a.IsDead and a.Type ~= "player"
+	end)
+
+	Utils.Do(nodBaseActors, function(a)
+		a.Owner = Greece
 	end)
 end

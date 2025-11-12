@@ -59,12 +59,7 @@ Squads = {
 	},
 	AntiCruiserAir = {
 		ActiveCondition = function(squad)
-			local cruiserCount = 0
-			for _, p in pairs(MissionPlayers) do
-				local cruisers = p.GetActorsByTypes({ "ca" })
-				cruiserCount = cruiserCount + #cruisers
-			end
-			return cruiserCount > 0
+			return #GetMissionPlayersActorsByType("ca") > 0
 		end,
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 20 }),
 		Compositions = { { Aircraft = { "scrn", "scrn" } } }

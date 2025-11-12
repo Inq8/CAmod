@@ -8,6 +8,17 @@ SuperweaponsEnabledTime = {
 	brutal = DateTime.Minutes(30)
 }
 
+Bases = {
+	{ Name = "SouthEast",  Center = SEBaseCenter, TopLeft = SEBaseTopLeft, BottomRight = SEBaseBottomRight, Secured = false, IsPrimary = true },
+	{ Name = "SouthWest",  Center = SWBaseCenter, TopLeft = SWBaseTopLeft, BottomRight = SWBaseBottomRight, Secured = false, IsPrimary = true },
+	{ Name = "NorthEast",  Center = NEBaseCenter, TopLeft = NEBaseTopLeft, BottomRight = NEBaseBottomRight, Secured = false, IsPrimary = true },
+	{ Name = "NorthWest",  Center = NWBaseCenter, TopLeft = NWBaseTopLeft, BottomRight = NWBaseBottomRight, Secured = false, IsPrimary = true },
+	{ Name = "MiniBase1",  Center = MiniBase1, TopLeft = MiniBase1TopLeft, BottomRight = MiniBase1BottomRight, Secured = false, IsPrimary = false },
+	{ Name = "MiniBase2",  Center = MiniBase2, TopLeft = MiniBase2TopLeft, BottomRight = MiniBase2BottomRight, Secured = false, IsPrimary = false },
+	{ Name = "MiniBase3",  Center = MiniBase3, TopLeft = MiniBase3TopLeft, BottomRight = MiniBase3BottomRight, Secured = false, IsPrimary = false },
+	{ Name = "McvBase",  Center = McvReveal, TopLeft = McvBaseTopLeft, BottomRight = McvBaseBottomRight, Secured = false, IsPrimary = false },
+}
+
 table.insert(UnitCompositions.Scrin, {
 	Infantry = { "s1", "stlk", "s1", "s1", "s1", "stlk", "stlk", "s1", "s1", "stlk", "s1", "s1", "s1", "stlk", "stlk", "stlk", "s1", "s1", "s1" },
 	Vehicles = { "dark", "gunw", "dark", "dark", "gunw", "dark" },
@@ -133,47 +144,6 @@ WorldLoaded = function()
 		Utils.Do(englandHarvs, function(h)
 			h.Stop()
 		end)
-
-		Utils.Do({ SEBaseCenter, SWBaseCenter, NEBaseCenter, NWBaseCenter }, function(center)
-			local defenders = Map.ActorsInCircle(center.CenterPosition, WDist.New(10 * 1024), function(a)
-				return not a.IsDead and a.Owner == MaleficScrin and a.Type ~= "camera"
-			end)
-
-			Trigger.OnAllKilled(defenders, function()
-				SecureBase(center)
-			end)
-		end)
-
-		Utils.Do({ MiniBase1, MiniBase2, MiniBase3, McvReveal }, function(loc)
-			local miniBaseDefenders = Map.ActorsInCircle(loc.CenterPosition, WDist.New(7 * 1024), function(a)
-				return not a.IsDead and a.Owner == MaleficScrin and a.Type ~= "camera"
-			end)
-			Trigger.OnAllKilled(miniBaseDefenders, function()
-				local miniBaseActors = Map.ActorsInCircle(loc.CenterPosition, WDist.New(7 * 1024), function(a)
-					return not a.IsDead and (a.Owner == England or a.Type == "macs" or a.Type == "hosp")
-				end)
-				Utils.Do(miniBaseActors, function(a)
-					a.Owner = Greece
-				end)
-				if IsVeryHardOrAbove() and loc == McvReveal then
-					InitNorthScrinBase()
-					InitWestScrinBase()
-					InitMcvObjective()
-					Trigger.AfterDelay(1, function()
-						Greece.MarkCompletedObjective(ObjectiveRecoverMcv)
-					end)
-					Trigger.AfterDelay(DateTime.Seconds(120), function()
-						Utils.Do(MissionPlayers, function(p)
-							Actor.Create("mcv.allowed", true, { Owner = p })
-						end)
-						Notification("MCV production now available.")
-					end)
-					if McvFlare ~= nil and not McvFlare.IsDead then
-						McvFlare.Destroy()
-					end
-				end
-			end)
-		end)
 	end)
 
 	local productionBuildings = MaleficScrin.GetActorsByTypes({ "port", "wsph", "sfac", "grav" })
@@ -214,6 +184,8 @@ OncePerSecondChecks = function()
 				Greece.MarkFailedObjective(ObjectiveDestroyScrinBases)
 			end
 		end
+
+		CheckBasesSecured()
 	end
 end
 
@@ -298,15 +270,25 @@ LightningStrike = function()
 	end)
 end
 
-SecureBase = function(baseCenter)
-	if baseCenter == SEBaseCenter then
+SecureBase = function(base)
+	base.Secured = true
+
+	if base.Name == "SouthEast" then
 		SecureSouthEastBase()
-	elseif baseCenter == SWBaseCenter then
+	elseif base.Name == "SouthWest" then
 		SecureSouthWestBase()
-	elseif baseCenter == NEBaseCenter then
+	elseif base.Name == "NorthEast" then
 		SecureNorthEastBase()
-	elseif baseCenter == NWBaseCenter then
+	elseif base.Name == "NorthWest" then
 		SecureNorthWestBase()
+	elseif base.Name == "McvBase" then
+		SecureMcv()
+	end
+
+	TransferBaseActors(base)
+
+	if not base.IsPrimary then
+		return
 	end
 
 	NumBasesSecured = NumBasesSecured + 1
@@ -320,14 +302,11 @@ SecureBase = function(baseCenter)
 	if NumBasesSecured == 2 then
 		Trigger.AfterDelay(DateTime.Seconds(20), function()
 			if IsVeryHardOrAbove() then
-				InitMcvObjective()
-				McvFlare = Actor.Create("flare", true, { Owner = Greece, Location = McvReveal.Location })
-				Beacon.New(Greece, McvReveal.CenterPosition)
-				Notification("Abandoned MCV located. Press [" .. UtilsCA.Hotkey("ToLastEvent") .. "] to view.")
+				InitMcvObjective(true)
 			else
 				PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 				Notification("Reinforcements have arrived. Press [" .. UtilsCA.Hotkey("ToLastEvent") .. "] to view location.")
-				Reinforcements.Reinforce(Greece, { "lst.mcv" }, { McvSpawn.Location, McvDest.Location }, 75)
+				DoMcvArrival()
 				Beacon.New(Greece, McvDest.CenterPosition)
 				Utils.Do(MissionPlayers, function(p)
 					Actor.Create("mcv.allowed", true, { Owner = p })
@@ -339,14 +318,6 @@ SecureBase = function(baseCenter)
 	if NumBasesSecured >= 4 then
 		Greece.MarkCompletedObjective(ObjectiveSecureAllBases)
 	end
-
-	local baseActors = Map.ActorsInCircle(baseCenter.CenterPosition, WDist.New(22 * 1024), function(a)
-		return not a.IsDead and a.Owner == England
-	end)
-
-	Utils.Do(baseActors, function(a)
-		a.Owner = Greece
-	end)
 end
 
 SecureNorthEastBase = function()
@@ -458,8 +429,64 @@ InitEastScrinBase = function()
 	end
 end
 
-InitMcvObjective = function()
+InitMcvObjective = function(notify)
 	if ObjectiveRecoverMcv == nil then
 		ObjectiveRecoverMcv = Greece.AddSecondaryObjective("Recover Allied MCV.")
+
+		if notify then
+			McvFlare = Actor.Create("flare", true, { Owner = Greece, Location = McvReveal.Location })
+			Beacon.New(Greece, McvReveal.CenterPosition)
+			Notification("Abandoned MCV located. Press [" .. UtilsCA.Hotkey("ToLastEvent") .. "] to view.")
+		end
 	end
+end
+
+CheckBasesSecured = function()
+	for _, base in ipairs(Bases) do
+		if not base.Secured then
+			local defenders = Map.ActorsInBox(base.TopLeft.CenterPosition, base.BottomRight.CenterPosition, function(a)
+				return not a.IsDead and a.Owner == MaleficScrin and a.Type ~= "camera"
+			end)
+
+			if #defenders == 0 then
+				SecureBase(base)
+			end
+		end
+	end
+end
+
+SecureMcv = function()
+	if IsVeryHardOrAbove() then
+		InitNorthScrinBase()
+		InitWestScrinBase()
+		InitMcvObjective(false)
+		Trigger.AfterDelay(1, function()
+			Greece.MarkCompletedObjective(ObjectiveRecoverMcv)
+		end)
+		Trigger.AfterDelay(DateTime.Seconds(120), function()
+			Utils.Do(MissionPlayers, function(p)
+				Actor.Create("mcv.allowed", true, { Owner = p })
+			end)
+			Notification("MCV production now available.")
+		end)
+		if McvFlare ~= nil and not McvFlare.IsDead then
+			McvFlare.Destroy()
+		end
+	end
+end
+
+-- overridden in co-op version
+TransferBaseActors = function(base)
+	local baseActors = Map.ActorsInBox(base.TopLeft.CenterPosition, base.BottomRight.CenterPosition, function(a)
+		return not a.IsDead and (a.Owner == England or a.Type == "macs" or a.Type == "hosp")
+	end)
+
+	Utils.Do(baseActors, function(a)
+		a.Owner = Greece
+	end)
+end
+
+-- overridden in co-op version
+DoMcvArrival = function()
+	Reinforcements.Reinforce(Greece, { "lst.mcv" }, { McvSpawn.Location, McvDest.Location }, 75)
 end

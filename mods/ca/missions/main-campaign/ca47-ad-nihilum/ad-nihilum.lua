@@ -160,8 +160,7 @@ WorldLoaded = function()
 	Trigger.AfterDelay(DateTime.Seconds(4), function()
 		PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 		Notification("Reinforcements have arrived.")
-		Reinforcements.Reinforce(Greece, { "mcv" }, { McvSpawn1.Location, McvDest1.Location }, 75)
-		Reinforcements.Reinforce(Greece, { "mcv" }, { McvSpawn2.Location, McvDest2.Location }, 75)
+		DoMcvArrival()
 	end)
 
 	Trigger.AfterDelay(VoidEngineStartTime[Difficulty], function()
@@ -376,4 +375,9 @@ SendNextVoidEngine = function()
 			SendNextVoidEngine()
 		end)
 	end
+end
+
+DoMcvArrival = function()
+	Reinforcements.Reinforce(Greece, { "mcv" }, { McvSpawn1.Location, McvDest1.Location }, 75)
+	Reinforcements.Reinforce(Greece, { "mcv" }, { McvSpawn2.Location, McvDest2.Location }, 75)
 end

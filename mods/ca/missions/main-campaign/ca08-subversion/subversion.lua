@@ -222,8 +222,13 @@ OncePerSecondChecks = function()
 				BridgeCamera1.Destroy()
 				BridgeCamera2.Destroy()
 			end)
+			InitIonControl()
 		end
 	end
+end
+
+InitIonControl = function()
+	-- overridden in co-op version for damage scoreboard
 end
 
 OncePerFiveSecondChecks = function()
@@ -287,9 +292,9 @@ CommandoDeathTrigger = function(commando)
 		if RespawnEnabled then
 			Notification("Commando arriving in 20 seconds.")
 			Trigger.AfterDelay(DateTime.Seconds(20), function()
-				Commando = Reinforcements.Reinforce(Nod, { "rmbo" }, { Respawn.Location, RespawnRally.Location })[1]
-				Beacon.New(Nod, RespawnRally.CenterPosition)
-				PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
+				Commando = Reinforcements.Reinforce(self.Owner, { "rmbo" }, { Respawn.Location, RespawnRally.Location })[1]
+				Beacon.New(self.Owner, RespawnRally.CenterPosition)
+				Media.PlaySpeechNotification(self.Owner, "ReinforcementsArrived")
 				if IsNormalOrBelow() then
 					Commando.GrantCondition("difficulty-" .. Difficulty)
 				end
@@ -301,19 +306,19 @@ end
 
 HackerDeathTrigger = function(hacker)
 	Trigger.OnKilled(hacker, function(self, killer)
-		if #Nod.GetActorsByType("hack") == 0 and not Nod.IsObjectiveCompleted(ObjectiveHackIonControl) then
+		if #self.Owner.GetActorsByType("hack") == 0 and not Nod.IsObjectiveCompleted(ObjectiveHackIonControl) then
 			if RespawnEnabled then
 				Notification("Hacker arriving in 20 seconds.")
 				Trigger.AfterDelay(DateTime.Seconds(20), function()
-					Hacker = Reinforcements.Reinforce(Nod, { "hack" }, { Respawn.Location, RespawnRally.Location })[1]
-					Beacon.New(Nod, RespawnRally.CenterPosition)
-					PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
+					Hacker = Reinforcements.Reinforce(self.Owner, { "hack" }, { Respawn.Location, RespawnRally.Location })[1]
+					Beacon.New(self.Owner, RespawnRally.CenterPosition)
+					Media.PlaySpeechNotification(self.Owner, "ReinforcementsArrived")
 					if IsNormalOrBelow() then
 						Hacker.GrantCondition("difficulty-" .. Difficulty)
 					end
 					HackerDeathTrigger(Hacker)
 				end)
-			else
+			elseif #GetMissionPlayersActorsByTypes({ "hack" }) == 0 then
 				Nod.MarkFailedObjective(ObjectiveHackIonControl)
 			end
 		end
@@ -322,13 +327,13 @@ end
 
 StealthTankDeathTrigger = function(stealthTank)
 	Trigger.OnKilled(stealthTank, function(self, killer)
-		if #Nod.GetActorsByType("stnk.nod") == 0 then
+		if #self.Owner.GetActorsByType("stnk.nod") == 0 then
 			if RespawnEnabled then
 				Notification("Stealth Tank arriving in 20 seconds.")
 				Trigger.AfterDelay(DateTime.Seconds(20), function()
-					StealthTank = Reinforcements.Reinforce(Nod, { "stnk.nod" }, { Respawn.Location, RespawnRally.Location })[1]
-					Beacon.New(Nod, RespawnRally.CenterPosition)
-					PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
+					StealthTank = Reinforcements.Reinforce(self.Owner, { "stnk.nod" }, { Respawn.Location, RespawnRally.Location })[1]
+					Beacon.New(self.Owner, RespawnRally.CenterPosition)
+					Media.PlaySpeechNotification(self.Owner, "ReinforcementsArrived")
 					if IsNormalOrBelow() then
 						StealthTank.GrantCondition("difficulty-" .. Difficulty)
 					end

@@ -116,12 +116,7 @@ Squads = {
 	BrutalComanches = {
 		Delay = DateTime.Minutes(10),
 		ActiveCondition = function(squad)
-			for _, player in pairs(MissionPlayers) do
-				if #player.GetActorsByTypes({ "gtek", "upgc", "eye" }) > 0 then
-					return true
-				end
-			end
-			return false
+			return #GetMissionPlayersActorsByTypes({ "gtek", "upgc", "eye" }) > 0
 		end,
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 24, Max = 24 }),
 		Compositions = {
@@ -188,9 +183,8 @@ WorldLoaded = function()
 	Trigger.AfterDelay(HoldOutTime[Difficulty], function()
 		PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 		Notification("Reinforcements have arrived.")
-		Reinforcements.Reinforce(GDI, { "hmmv", "mtnk", "amcv", "mtnk" }, { McvSpawn.Location, McvRally.Location }, 75)
 		Beacon.New(GDI, McvRally.CenterPosition)
-		GDI.Cash = 6000 + CashAdjustments[Difficulty]
+		DoReinforcements()
 	end)
 
 	Trigger.OnKilled(Church1, function(self, killer)
@@ -289,4 +283,10 @@ InitNod = function()
 		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = Nod })
 		Actor.Create("ai.superweapons.enabled", true, { Owner = Nod })
 	end)
+end
+
+-- overridden in co-op version
+DoReinforcements = function
+	Reinforcements.Reinforce(GDI, { "hmmv", "mtnk", "amcv", "mtnk" }, { McvSpawn.Location, McvRally.Location }, 75)
+	GDI.Cash = 6000 + CashAdjustments[Difficulty]
 end

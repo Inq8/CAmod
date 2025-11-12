@@ -110,8 +110,8 @@ WorldLoaded = function()
 	end
 
 	Trigger.OnCapture(AbandonedHelipad, function(self, captor, oldOwner, newOwner)
-		if newOwner == USSR then
-			AbandonedHalo.Owner = USSR
+		if IsMissionPlayer(newOwner) then
+			AbandonedHalo.Owner = newOwner
 
 			if IsNormalOrBelow() then
 				Trigger.AfterDelay(DateTime.Seconds(5), function()
@@ -188,7 +188,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnCapture(TraitorTechCenter, function(self, captor, oldOwner, newOwner)
-		if newOwner == USSR then
+		if IsMissionPlayer(newOwner) then
 			if ObjectiveCaptureTraitorTechCenter == nil then
 				ObjectiveCaptureTraitorTechCenter = USSR.AddSecondaryObjective("Capture Traitor's Tech Center.")
 			end

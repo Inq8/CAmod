@@ -237,7 +237,7 @@ WorldLoaded = function()
 end
 
 Tick = function()
-	if not IsBaseEstablished and HasConyard(Greece) then
+	if not IsBaseEstablished and MissionPlayersHaveConyard() then
 		IsBaseEstablished = true
 		if ObjectiveInvestigateArea == nil then
 			ObjectiveInvestigateArea = Greece.AddObjective("Investigate the area.")

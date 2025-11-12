@@ -359,6 +359,7 @@ FlipEastBase = function()
     end
 end
 
+-- overridden in co-op version
 TransferEastNod = function()
 	local nod2Assets = Nod2.GetActors()
 	Utils.Do(nod2Assets, function(a)
@@ -390,6 +391,7 @@ FlipWestBase = function()
     end
 end
 
+-- overridden in co-op version
 TransferWestNod = function()
 	local nod3Assets = Nod3.GetActors()
 	Utils.Do(nod3Assets, function(a)
