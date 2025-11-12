@@ -16,7 +16,7 @@ Bases = {
 	{ Name = "MiniBase1",  Center = MiniBase1, TopLeft = MiniBase1TopLeft, BottomRight = MiniBase1BottomRight, Secured = false, IsPrimary = false },
 	{ Name = "MiniBase2",  Center = MiniBase2, TopLeft = MiniBase2TopLeft, BottomRight = MiniBase2BottomRight, Secured = false, IsPrimary = false },
 	{ Name = "MiniBase3",  Center = MiniBase3, TopLeft = MiniBase3TopLeft, BottomRight = MiniBase3BottomRight, Secured = false, IsPrimary = false },
-	{ Name = "McvBase",  Center = McvReveal, TopLeft = McvBaseTopLeft, BottomRight = McvBaseTopLeft, Secured = false, IsPrimary = false },
+	{ Name = "McvBase",  Center = McvReveal, TopLeft = McvBaseTopLeft, BottomRight = McvBaseBottomRight, Secured = false, IsPrimary = false },
 }
 
 table.insert(UnitCompositions.Scrin, {
@@ -271,6 +271,8 @@ LightningStrike = function()
 end
 
 SecureBase = function(base)
+	base.Secured = true
+
 	if base.Name == "SouthEast" then
 		SecureSouthEastBase()
 	elseif base.Name == "SouthWest" then
