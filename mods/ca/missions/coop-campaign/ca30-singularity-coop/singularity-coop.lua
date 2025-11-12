@@ -45,3 +45,33 @@ end
 AfterTick = function()
 
 end
+
+FlipSlaveFaction = function(player, killer)
+	if player == NodSlaves then
+		NodFreed = true
+		Squads.NodSlaves.IdleUnits = { }
+		if ScrinDefenseBuff1.IsDead and ScrinDefenseBuff2.IsDead then
+			InitHackers(HackersDelay[Difficulty])
+		end
+		Notification("Nod forces have been released from Scrin control.")
+		MediaCA.PlaySound(MissionDir .. "/c_nodreleased.aud", 2)
+	elseif player == SovietSlaves then
+		SovietsFreed = true
+		Squads.SovietSlaves.IdleUnits = { }
+		InitMADTankAttack()
+		Notification("Soviet forces have been released from Scrin control.")
+		MediaCA.PlaySound(MissionDir .. "/c_sovietsreleased.aud", 2)
+	elseif player == AlliedSlaves then
+		AlliesFreed = true
+		Squads.AlliedSlaves.IdleUnits = { }
+		InitChronoTanks()
+		Notification("Allied forces have been released from Scrin control.")
+		MediaCA.PlaySound(MissionDir .. "/c_alliesreleased.aud", 2)
+	end
+
+	local actors = Utils.Where(player.GetActors(), function(a) return not a.IsDead and a.IsInWorld and a.Type ~= "player" end)
+	Utils.Do(actors, function(a)
+		a.Owner = killer.Owner
+		Trigger.ClearAll(a)
+	end)
+end
