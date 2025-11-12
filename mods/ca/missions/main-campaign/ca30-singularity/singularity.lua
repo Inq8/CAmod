@@ -691,6 +691,8 @@ DoInterceptors = function()
 
 		if not Mothership.IsDead then
 			interceptor1.Attack(Mothership)
+			interceptor1.Move(InterceptorExit1.Location)
+			interceptor1.Destroy()
 		end
 
 		Trigger.OnIdle(interceptor1, function(a)
@@ -707,7 +709,12 @@ DoInterceptors = function()
 
 			if not Mothership.IsDead then
 				interceptor2.Attack(Mothership)
+				interceptor2.Move(InterceptorExit2.Location)
+				interceptor2.Destroy()
+
 				interceptor3.Attack(Mothership)
+				interceptor3.Move(InterceptorExit3.Location)
+				interceptor3.Destroy()
 			end
 
 			Trigger.OnIdle(interceptor2, function(a)

@@ -219,8 +219,16 @@ AssignToCoopPlayers = function(units, specificPlayers, ignoreBlackList)
 		units = Utils.Where(units, CanSplitAmongPlayers)
 	end
 
-	local playerCount = GetCoopPlayerCount()
-	local ownerID = LastAssignedCoopID or 0
+	local playerCount
+	local ownerID
+
+	if specificPlayers then
+		players = specificPlayers
+		ownerID = 0
+	else
+		players = CoopPlayers
+		ownerID = LastAssignedCoopID or 0
+	end
 
 	-- Rotate through the player list and assign a
 	-- unit to each until no more units remain.
@@ -228,23 +236,21 @@ AssignToCoopPlayers = function(units, specificPlayers, ignoreBlackList)
 		if unit.Type ~= "player" then
 			ownerID = ownerID + 1
 
-			if ownerID > playerCount then
+			if ownerID > #players then
 				ownerID = 1
 			end
 
-			LastAssignedCoopID = ownerID
-			local newOwner = CoopPlayers[ownerID]
-			local valid = newOwner and (specificPlayers == nil or IsPlayerInList(newOwner, specificPlayers))
+			local newOwner = players[ownerID]
 
-			if not valid then
-				return
+			if not specificPlayers then
+				LastAssignedCoopID = ownerID
 			end
 
 			unit.Owner = newOwner
 
 			if unit.HasProperty("HasPassengers") then
 				Trigger.AfterDelay(1, function()
-					AssignToCoopPlayers(Utils.Where(unit.Passengers, function(a) return not a.IsDead end))
+					AssignToCoopPlayers(Utils.Where(unit.Passengers, function(a) return not a.IsDead end), specificPlayers, ignoreBlackList)
 				end)
 			end
 		end

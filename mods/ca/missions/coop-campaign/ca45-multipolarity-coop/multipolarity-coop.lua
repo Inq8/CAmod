@@ -36,10 +36,10 @@ DoMcvArrival = function()
 end
 
 TransferSovietAssets = function()
-	local playerWithMostAssetsNearby
+	local recipientPlayer = GetFirstActivePlayer()
 	local highestAssetValue = 0
 
-	Utils.Do(MissionPlayers, function(p)
+	Utils.Do(GetMcvPlayers(), function(p)
 		local playerAssetsNearby = Utils.Where(Map.ActorsInCircle(SovietBaseCenter.CenterPosition, WDist.New(20 * 1024)), function(a)
 			return a.Owner == p
 		end)
@@ -47,18 +47,18 @@ TransferSovietAssets = function()
 		local playerAssetValue = GetTotalCostOfUnits(playerAssetsNearby)
 		if playerAssetValue > highestAssetValue then
 			highestAssetValue = playerAssetValue
-			playerWithMostAssetsNearby = p
+			recipientPlayer = p
 		end
 	end)
 
-	TransferBaseToPlayer(USSR, playerWithMostAssetsNearby)
+	TransferBaseToPlayer(USSR, recipientPlayer)
 end
 
 TransferNodAssets = function()
-	local playerWithMostAssetsNearby
+	local recipientPlayer = GetFirstActivePlayer()
 	local highestAssetValue = 0
 
-	Utils.Do(MissionPlayers, function(p)
+	Utils.Do(GetMcvPlayers(), function(p)
 		local playerAssetsNearby = Utils.Where(Map.ActorsInCircle(NodBaseCenter.CenterPosition, WDist.New(20 * 1024)), function(a)
 			return a.Owner == p
 		end)
@@ -66,9 +66,9 @@ TransferNodAssets = function()
 		local playerAssetValue = GetTotalCostOfUnits(playerAssetsNearby)
 		if playerAssetValue > highestAssetValue then
 			highestAssetValue = playerAssetValue
-			playerWithMostAssetsNearby = p
+			recipientPlayer = p
 		end
 	end)
 
-	TransferBaseToPlayer(Nod, playerWithMostAssetsNearby)
+	TransferBaseToPlayer(Nod, recipientPlayer)
 end
