@@ -219,23 +219,20 @@ AssignToCoopPlayers = function(units, specificPlayers, ignoreBlackList)
 		units = Utils.Where(units, CanSplitAmongPlayers)
 	end
 
-	local playerCount
 	local ownerID
 
 	if specificPlayers then
 		players = specificPlayers
-		ownerID = 0
+		ownerID = 1
 	else
 		players = CoopPlayers
-		ownerID = LastAssignedCoopID or 0
+		ownerID = LastAssignedCoopID or 1
 	end
 
 	-- Rotate through the player list and assign a
 	-- unit to each until no more units remain.
 	Utils.Do(units, function(unit)
 		if unit.Type ~= "player" then
-			ownerID = ownerID + 1
-
 			if ownerID > #players then
 				ownerID = 1
 			end
@@ -255,6 +252,8 @@ AssignToCoopPlayers = function(units, specificPlayers, ignoreBlackList)
 					end
 				end)
 			end
+
+			ownerID = ownerID + 1
 		end
 	end)
 end
@@ -1043,7 +1042,11 @@ CoopInit = function()
 		TechShared = false
 	end
 
-	GoodSpread()
+	-- delay by 1 tick to allow difficulty based removals to take effect
+	Trigger.AfterDelay(1, function()
+		GoodSpread()
+	end)
+
 	SyncObjectives()
 
 	Trigger.AfterDelay(DateTime.Seconds(1), function()

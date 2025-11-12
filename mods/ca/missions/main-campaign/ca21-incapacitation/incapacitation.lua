@@ -54,6 +54,8 @@ GroundedAircraft = {
 	{ Harrier2, HarrierPad2 },
 }
 
+OrbsRespawning = { }
+
 Squads = {
 	Allied = {
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(6)),
@@ -123,6 +125,11 @@ WorldLoaded = function()
 		EasyNormalOnlyIntruder.Destroy()
 	end
 
+	Utils.Do(Scrin.GetActorsByType("s4"), function(a)
+		a.GrantCondition("difficulty-" .. Difficulty)
+		IntruderDeathTrigger(a)
+	end)
+
 	Trigger.AfterDelay(DateTime.Seconds(3), function()
 		Tip("Intruders can teleport short distances using either the deploy command [" .. UtilsCA.Hotkey("Deploy") .. "] or force move (they can be teleported as a group).")
 	end)
@@ -150,8 +157,6 @@ WorldLoaded = function()
 			UpdateObjective()
 		end)
 	end)
-
-	LeechersRespawning = true
 
 	Trigger.AfterDelay(DateTime.Seconds(5), function()
 		SpawnLeechers()
@@ -255,21 +260,12 @@ OncePerSecondChecks = function()
 		local intruders = GetMissionPlayersActorsByType("s4")
 		local leechers = GetMissionPlayersActorsByTypes({ "lchr", "lchr.orb" })
 
-		if RespawnEnabled then
-			if #intruders == 0 and not IntrudersRespawning then
-				RespawnIntruders()
+		if not RespawnEnabled and #intruders + #leechers == 0 then
+			if ObjectiveDestroyAirfields ~= nil and not Scrin.IsObjectiveCompleted(ObjectiveDestroyAirfields) then
+				Scrin.MarkFailedObjective(ObjectiveDestroyAirfields)
 			end
-			if #leechers == 0 and not LeechersRespawning then
-				RespawnLeechers()
-			end
-		else
-			if #intruders + #leechers == 0 then
-				if ObjectiveDestroyAirfields ~= nil and not Scrin.IsObjectiveCompleted(ObjectiveDestroyAirfields) then
-					Scrin.MarkFailedObjective(ObjectiveDestroyAirfields)
-				end
-				if ObjectiveDestroyAntiAir ~= nil and not Scrin.IsObjectiveCompleted(ObjectiveDestroyAntiAir) then
-					Scrin.MarkFailedObjective(ObjectiveDestroyAntiAir)
-				end
+			if ObjectiveDestroyAntiAir ~= nil and not Scrin.IsObjectiveCompleted(ObjectiveDestroyAntiAir) then
+				Scrin.MarkFailedObjective(ObjectiveDestroyAntiAir)
 			end
 		end
 	end
@@ -393,24 +389,10 @@ IonStorm = function()
 	Media.PlaySound("ionstorm" .. soundNumber .. ".aud")
 end
 
-RespawnLeechers = function()
-	if not LeechersRespawning then
-		LeechersRespawning = true
-		Notification("Reinforcements will arrive in 30 seconds.")
-		Trigger.AfterDelay(DateTime.Seconds(30), function()
-			SpawnLeechers()
-		end)
-	end
-end
-
-RespawnIntruders = function()
-	if not IntrudersRespawning then
-		IntrudersRespawning = true
-		Notification("Reinforcements will arrive in 20 seconds.")
-		Trigger.AfterDelay(DateTime.Seconds(20), function()
-			SpawnIntruders()
-		end)
-	end
+UpdateObjective = function()
+	local activeAA = Utils.Where(AntiAir, function(a) return not a.IsDead and not DisabledAntiAir[tostring(a)] end)
+	local aircraftStructuresRemaining = Utils.Where(AircraftStructures, function(a) return not a.IsDead end)
+	UserInterface.SetMissionText(#activeAA .. " active anti-aircraft defenses remaining. " .. #aircraftStructuresRemaining .. " aircraft structures remaining.", HSLColor.Yellow)
 end
 
 SpawnLeechers = function()
@@ -427,10 +409,10 @@ SpawnLeechers = function()
 
 		local leechers = Reinforcements.Reinforce(Scrin, leecherSquad, { LeecherSpawn.Location }, 1)
 		Utils.Do(leechers, function(leecher)
+			leecher.GrantCondition("difficulty-" .. Difficulty)
 			leecher.Scatter()
+			LeecherDeathTrigger(leecher)
 		end)
-
-		LeechersRespawning = false
 
 		Trigger.AfterDelay(DateTime.Seconds(5), function()
 			wormhole.Kill()
@@ -438,41 +420,66 @@ SpawnLeechers = function()
 	end)
 end
 
-SpawnIntruders = function()
-	local wormhole = Actor.Create("wormhole", true, { Owner = Scrin, Location = IntruderSpawn.Location })
-	Beacon.New(Scrin, IntruderSpawn.CenterPosition, DateTime.Seconds(20))
+LeecherDeathTrigger = function(a)
+	if RespawnEnabled then
+		Trigger.OnKilled(a, function(self, killer)
+			Trigger.AfterDelay(1, function()
+				local orbs = Utils.Where(self.Owner.GetActorsByType("lchr.orb"), function(a)
+					return not OrbsRespawning[tostring(a)]
+				end)
 
-	Trigger.AfterDelay(DateTime.Seconds(2), function()
-		PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
-		local intruderSquad = { "s4", "s4", "s4", "s4", "s4", "s4" }
+				Utils.Do(orbs, function(orb)
+					OrbsRespawning[tostring(orb)] = true
 
-		if IsHardOrAbove() then
-			intruderSquad = { "s4", "s4", "s4" }
-			if #MissionPlayers >= 5 then
-				table.insert(intruderSquad,"s4")
-			end
-			if #MissionPlayers >= 6 then
-				table.insert(intruderSquad,"s4")
-			end
-		elseif Difficulty == "normal" then
-			intruderSquad = { "s4", "s4", "s4", "s4" }
-		end
+					Trigger.OnKilled(orb, function(self, killer)
+						local spawnCell = CPos.New(LeecherSpawn.Location.X + Utils.RandomInteger(-1, 1), LeecherSpawn.Location.Y + Utils.RandomInteger(-1, 1))
+						Notification("Leecher arriving in 20 seconds.")
 
-		local intruders = Reinforcements.Reinforce(Scrin, intruderSquad, { IntruderSpawn.Location }, 1)
-		Utils.Do(intruders, function(intruder)
-			intruder.Scatter()
+						Trigger.AfterDelay(DateTime.Seconds(20), function()
+							local wormhole = Actor.Create("wormhole", true, { Owner = Scrin, Location = spawnCell })
+
+							Trigger.AfterDelay(DateTime.Seconds(1), function()
+								local leecher = Reinforcements.Reinforce(self.Owner, { "lchr" }, { spawnCell }, 1)[1]
+								leecher.Scatter()
+								Beacon.New(self.Owner, leecher.CenterPosition)
+								Media.PlaySpeechNotification(self.Owner, "ReinforcementsArrived")
+								leecher.GrantCondition("difficulty-" .. Difficulty)
+								LeecherDeathTrigger(leecher)
+							end)
+
+							Trigger.AfterDelay(DateTime.Seconds(5), function()
+								wormhole.Kill()
+							end)
+						end)
+					end)
+				end)
+			end)
 		end)
-
-		IntrudersRespawning = false
-
-		Trigger.AfterDelay(DateTime.Seconds(5), function()
-			wormhole.Kill()
-		end)
-	end)
+	end
 end
 
-UpdateObjective = function()
-	local activeAA = Utils.Where(AntiAir, function(a) return not a.IsDead and not DisabledAntiAir[tostring(a)] end)
-	local aircraftStructuresRemaining = Utils.Where(AircraftStructures, function(a) return not a.IsDead end)
-	UserInterface.SetMissionText(#activeAA .. " active anti-aircraft defenses remaining. " .. #aircraftStructuresRemaining .. " aircraft structures remaining.", HSLColor.Yellow)
+IntruderDeathTrigger = function(a)
+	if RespawnEnabled then
+		Trigger.OnKilled(a, function(self, killer)
+			local spawnCell = CPos.New(IntruderSpawn.Location.X + Utils.RandomInteger(-2, 2), IntruderSpawn.Location.Y + Utils.RandomInteger(-2, 2))
+			Notification("Intruder arriving in 20 seconds.")
+
+			Trigger.AfterDelay(DateTime.Seconds(20), function()
+				local wormhole = Actor.Create("wormhole", true, { Owner = Scrin, Location = spawnCell })
+
+				Trigger.AfterDelay(DateTime.Seconds(1), function()
+					local intruder = Reinforcements.Reinforce(self.Owner, { "s4" }, { spawnCell }, 1)[1]
+					intruder.Scatter()
+					Beacon.New(self.Owner, intruder.CenterPosition)
+					Media.PlaySpeechNotification(self.Owner, "ReinforcementsArrived")
+					intruder.GrantCondition("difficulty-" .. Difficulty)
+					IntruderDeathTrigger(intruder)
+				end)
+
+				Trigger.AfterDelay(DateTime.Seconds(5), function()
+					wormhole.Kill()
+				end)
+			end)
+		end)
+	end
 end

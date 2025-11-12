@@ -17,7 +17,23 @@ SetupPlayers = function()
 end
 
 AfterWorldLoaded = function()
+	if IsHardOrAbove() then
+		local extraIntruder1 = Actor.Create("s4", true, { Owner = Scrin, Location = CPos.New(5, 30), Facing = Angle.East })
+		extraIntruder1.GrantCondition("difficulty-" .. Difficulty)
+		IntruderDeathTrigger(extraIntruder1)
 
+		if #MissionPlayers >= 5 then
+			local extraIntruder2 = Actor.Create("s4", true, { Owner = Scrin, Location = CPos.New(5, 32), Facing = Angle.East })
+			extraIntruder2.GrantCondition("difficulty-" .. Difficulty)
+			IntruderDeathTrigger(extraIntruder2)
+
+			if #MissionPlayers >= 6 then
+				local extraIntruder3 = Actor.Create("s4", true, { Owner = Scrin, Location = CPos.New(5, 31), Facing = Angle.East })
+				extraIntruder3.GrantCondition("difficulty-" .. Difficulty)
+				IntruderDeathTrigger(extraIntruder3)
+			end
+		end
+	end
 end
 
 AfterTick = function()
