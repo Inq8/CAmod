@@ -60,12 +60,16 @@ DistributeUnitsAndBases = function()
 			return a.HasProperty("Move") and not IsHarvester(a) and not IsMcv(a)
 		end)
 
-		AssignToCoopPlayers(gdiUnits, Utils.Where({ Multi1, Multi4 }, function(p) return p ~= nil end))
+		local activeGdiPlayers = Utils.Where({ Multi1, Multi4 }, function(p) return p ~= nil end)
+		AssignToCoopPlayers(gdiUnits, activeGdiPlayers)
 
 		-- if there are 2 GDI players,  send MCV for second GDI player
 		if Multi1 ~= nil and Multi4 ~= nil then
 			Reinforcements.Reinforce(Multi4, { "amcv" }, { CPos.New(113, 1), CPos.New(118, 12) })
 		end
+
+		Squads.ScrinGDIKiller.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 40, Max = 80 })
+		InitAttackSquad(Squads.ScrinGDIKiller, Scrin, activeGdiPlayers)
 	end
 
 	Trigger.AfterDelay(1, function()
@@ -98,6 +102,10 @@ DistributeUnitsAndBases = function()
 					a.Owner = firstScrinPlayer
 				end)
 			end
+
+			local activeRebelPlayers = Utils.Where({ Multi1, Multi4 }, function(p) return p ~= nil end)
+			Squads.ScrinRebelKiller.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 40, Max = 80 })
+			InitAttackSquad(Squads.ScrinRebelKiller, Scrin, activeRebelPlayers)
 		end
 	end)
 

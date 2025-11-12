@@ -11,8 +11,8 @@ World:
 		Description: Controls whether every player gets a MCV and whether tech is shared.\nWhen tech is shared you can produce units from other players production buildings if you don't have that building.\nNo effect in baseless missions.
 		Values:
 			1: Shared base & tech
-			2: MCV for all, tech shared
-			3: MCV for all, no tech shared
+			2: MCV each, tech shared
+			3: MCV each, no tech shared
 		Default: 2
 		Locked: False
 		DisplayOrder: 999
@@ -37,6 +37,37 @@ World:
 		Default: 100
 		DisplayOrder: 999
 
+	ScriptLobbyDropdown@enattackstr:
+		ID: enattackstr
+		Label: Enemy Attack Modifier
+		Description: Increases AI attack wave frequency and size (applied after any difficulty modifiers).
+		Values:
+			0: +0% (Off)
+			20: +20%
+			40: +40%
+			60: +60%
+			80: +80%
+			100: +100%
+			120: +120%
+			140: +140%
+			160: +160%
+			180: +180%
+			200: +200%
+		Default: 0
+		DisplayOrder: 999
+
+	ScriptLobbyDropdown@enemyranks:
+		ID: enemyranks
+		Label: Enemy Veterancy
+		Description: Give every enemy combat unit this level of base veterancy to boost their stats.
+		Values:
+			0: 0
+			1: 1
+			2: 2
+			3: 3
+		Default: 0
+		DisplayOrder: 999
+
 	ScriptLobbyDropdown@oremines:
 		ID: oremines
 		Label: Resource Spawners
@@ -47,47 +78,12 @@ World:
 			oreupgrade: Upgrade
 			oreonupgrade: Add & Upgrade
 			orefinite: Delete All (Hardcore)
-		Default: oreon
+		Default: oreoff
 		DisplayOrder: 999
-
-	ScriptLobbyDropdown@enemyranks:
-		ID: enemyranks
-		Label: Enemy Unit Rank
-		Description: Give every enemy combat unit this level of base veterancy to boost their stats.
-		Values:
-			0: 0
-			1: 1
-			2: 2
-			3: 3
-			4: 4
-		Default: 0
-		DisplayOrder: 999
-
-	ScriptLobbyDropdown@enprotime:
-		ID: enprotime
-		Label: AI Unit Production Time Multiplier
-		Description: Adjusts AI unit production time.\nUnlike the Enemy Production Multiplier that copies units, this taps directly into the enemy production queue.\nThe value is applied after the regular Difficulty modifiers and caps at 1 production per game tick if the exits are not blocked.\nThis does not change the size and time between attack waves, only the time it takes to produce the wave.
-		Values:
-			999: x1 - (0.1 * player count)
-			998: x1 - (0.15 * player count)
-			1: x1.0 (Off)
-			0.9: x0.9
-			0.8: x0.8
-			0.7: x0.7
-			0.6: x0.6
-			0.5: x0.5
-			0.4: x0.4
-			0.3: x0.3
-			0.2: x0.2
-			0.1: x0.1
-			0.05: x0.05
-			0.01: x0.01 (Practically instant)
-		Default: 1
-		DisplayOrder: 1000
 
 	ScriptLobbyDropdown@enmp:
 		ID: enmp
-		Label: Enemy Starting Unit Multiplier
+		Label: Duplicate Enemy Starting Units
 		Description: Multiplies starting ground combat units of the enemy.\nSome missions may become unbeatable if this value is raised.
 		Values:
 			999: x Player Count
@@ -113,7 +109,7 @@ World:
 
 	ScriptLobbyDropdown@prmp:
 		ID: prmp
-		Label: Enemy Production Multiplier
+		Label: Duplicate Enemy Produced Units
 		Description: Copies any ground combat units the enemy AI produces.\nThis raises the difficulty significantly and should be used with care.
 		Values:
 			999: x Player Count
@@ -140,7 +136,7 @@ World:
 	ScriptLobbyDropdown@pfollow:
 		ID: pfollow
 		Label: Produced Follow
-		Description: Odds that a multiplied produced unit will follow the unit they are copied from, and go hunting when it dies.\nLeads to bigger attack waves.\nFollowers will also switch to hunt mode after a while to prevent clogging of production areas.
+		Description: Odds that a duplicated produced unit will follow the unit they are copied from, and go hunting when it dies.\nLeads to bigger attack waves.\nFollowers will also switch to hunt mode after a while to prevent clogging of production areas.
 		Values:
 			0: 0 (Will never happen)
 			1: 1
@@ -154,7 +150,7 @@ World:
 	ScriptLobbyDropdown@phunt:
 		ID: phunt
 		Label: Produced Hunt Chance
-		Description: Odds that a multiplied produced unit will immediately attack the players.
+		Description: Odds that a duplicated produced unit will immediately attack the players.
 		Values:
 			0: 0 (Will never happen)
 			1: 1%
@@ -168,7 +164,7 @@ World:
 	ScriptLobbyDropdown@pwander:
 		ID: pwander
 		Label: Produced Wander
-		Description: Odds that a multiplied produced unit will roam around the map randomly.\nLeading to unpredictable attack directions and random enemies at unexpected locations.
+		Description: Odds that a duplicated produced unit will roam around the map randomly.\nLeading to unpredictable attack directions and random enemies at unexpected locations.
 		Values:
 			0: 0 (Will never happen)
 			1: 1
@@ -182,7 +178,7 @@ World:
 	ScriptLobbyDropdown@pidle:
 		ID: pidle
 		Label: Produced Idle
-		Description: Odds that a multiplied produced unit will just stand around and will only move and attack when enemies get near them or they are attacked.\nThis results in bases full of enemies.\nThis value will default to 1 if all other values are 0.
+		Description: Odds that a duplicated produced unit will just stand around and will only move and attack when enemies get near them or they are attacked.\nThis results in bases full of enemies.\nThis value will default to 1 if all other values are 0.
 		Values:
 			0: 0 (Will never happen)
 			1: 1
@@ -196,7 +192,7 @@ World:
 	ScriptLobbyDropdown@sfollow:
 		ID: sfollow
 		Label: Starters Follow
-		Description: Odds that a multiplied starting unit will follow the unit they are copied from, and go hunting when it dies.\nResults in bigger garrisons and patrols.
+		Description: Odds that a duplicated starting unit will follow the unit they are copied from, and go hunting when it dies.\nResults in bigger garrisons and patrols.
 		Values:
 			0: 0 (Will never happen)
 			1: 1
@@ -210,7 +206,7 @@ World:
 	ScriptLobbyDropdown@shunt:
 		ID: shunt
 		Label: Starters Hunt
-		Description: Odds that a multiplied starting unit will immediately go and attack the players.\nCan lead to being rushed in the early game.
+		Description: Odds that a duplicated starting unit will immediately go and attack the players.\nCan lead to being rushed in the early game.
 		Values:
 			0: 0 (Will never happen)
 			1: 1
@@ -224,7 +220,7 @@ World:
 	ScriptLobbyDropdown@swander:
 		ID: swander
 		Label: Starters Wander
-		Description: Odds that a multiplied starting unit will roam around the map randomly.\nResults in unpredictable attack directions and random enemies at unexpected locations.
+		Description: Odds that a duplicated starting unit will roam around the map randomly.\nResults in unpredictable attack directions and random enemies at unexpected locations.
 		Values:
 			0: 0 (Will never happen)
 			1: 1
@@ -238,7 +234,7 @@ World:
 	ScriptLobbyDropdown@sidle:
 		ID: sidle
 		Label: Starters Idle
-		Description: Odds that a multiplied starting unit will just stand around and will only move and attack when enemies get near them or they are attacked.\nThis results in bases full of enemies.\nThis value will default to 1 if all other values are 0.
+		Description: Odds that a duplicated starting unit will just stand around and will only move and attack when enemies get near them or they are attacked.\nThis results in bases full of enemies.\nThis value will default to 1 if all other values are 0.
 		Values:
 			0: 0 (Will never happen)
 			1: 1
@@ -251,8 +247,8 @@ World:
 
 	ScriptLobbyDropdown@multiplyaircraft:
 		ID: multiplyaircraft
-		Label: also Multiply Aircraft
-		Description: EXPERIMENTAL\nInclude aircraft in the unit multiplication.\nThe AI may have problems resupplying them all.
+		Label: Also Duplicate Aircraft
+		Description: EXPERIMENTAL\nInclude aircraft in the unit duplication.\nThe AI may have problems resupplying them all.
 		Values:
 			domulti: On (Multiply)
 			dontmulti: Off (Don't multiply)

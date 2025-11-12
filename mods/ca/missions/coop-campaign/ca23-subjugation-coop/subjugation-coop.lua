@@ -22,20 +22,3 @@ end
 AfterTick = function()
 
 end
-
--- overrides the base campaign version
-SetupRefAndSilosCaptureCredits = function(player)
-	local silosAndRefineries = player.GetActorsByTypes(CashRewardOnCaptureTypes)
-	Utils.Do(silosAndRefineries, function(a)
-		Trigger.OnCapture(a, function(self, captor, oldOwner, newOwner)
-			if IsMissionPlayer(newOwner) then
-				Utils.Do(MissionPlayers, function(PID)
-					PID.Cash = PID.Cash + (CapturedCreditsAmount / #MissionPlayers)
-				end)
-			else
-				newOwner.Cash = newOwner.Cash + CapturedCreditsAmount
-			end
-			Media.FloatingText("+$" .. CapturedCreditsAmount, self.CenterPosition, 30, newOwner.Color)
-		end)
-	end)
-end

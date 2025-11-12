@@ -1,4 +1,8 @@
 
+if attackStrengthMultiplier ~= nil and GroundAttackInterval ~= nil and GroundAttackInterval[Difficulty] ~= nil then
+	GroundAttackInterval[Difficulty] = math.max(GroundAttackInterval[Difficulty] / attackStrengthMultiplier, 1)
+end
+
 SetupPlayers = function()
 	Multi0 = Player.GetPlayer("Multi0")
 	Multi1 = Player.GetPlayer("Multi1")
@@ -63,42 +67,30 @@ AfterWorldLoaded = function()
 		Trigger.AfterDelay(5, function()
 			local initialHarvesters = firstActivePlayer.GetActorsByType("harv.td")
 			initialHarvesters[2].Owner = MissionPlayers[2]
-			
+
 			TemplePrime.Owner = Nod
 			Utils.Do(CyborgFactories, function(f)
 				f.Owner = Nod
 			end)
-			
+
 		end)
 	end
-	
+
 	Trigger.AfterDelay(10, function()
 		WaveAdjuster()
 	end)
 end
 
 WaveAdjuster = function()
-	Groundinterv = Map.LobbyOption("groundint")
 	Airinterv = Map.LobbyOption("airint")
-	
-	if Groundinterv == 999 then
-		Groundinterv = 1 - (0.1 * #CoopPlayers)
-	end
-	if Groundinterv == 998 then
-		Groundinterv = 1 - (0.15 * #CoopPlayers)
-	end
-	
+
 	if Airinterv == 999 then
 		Airinterv = 1 - (0.1 * #CoopPlayers)
-	end
-	if Airinterv == 998 then
+	elseif Airinterv == 998 then
 		Airinterv = 1 - (0.15 * #CoopPlayers)
 	end
-	
-	GroundAttackInterval[Difficulty] = GroundAttackInterval[Difficulty] * Groundinterv
-	HaloDropStart = HaloDropStart * Groundinterv
+
 	AirAttackInterval[Difficulty] = AirAttackInterval[Difficulty] * Airinterv
-	
 end
 
 AfterTick = function()

@@ -14,6 +14,20 @@ local SharedBank = 0
 ---@type integer
 local LastAssignedCoopID
 
+---------
+-- Attack strength modifier has to be in global scope to affect squad definitions.
+local attackStrengthMultiplier = 1
+local attackStrengthOptionValue = tonumber(Map.LobbyOption("enattackstr"))
+
+if attackStrengthOptionValue > 0 then
+	attackStrengthMultiplier = 1 + (attackStrengthOptionValue / 100)
+end
+
+AttackValueMultipliers[Difficulty] = AttackValueMultipliers[Difficulty] * attackStrengthMultiplier
+CompositionValueMultipliers[Difficulty] = CompositionValueMultipliers[Difficulty] * attackStrengthMultiplier
+UnitBuildTimeMultipliers[Difficulty] = math.max(UnitBuildTimeMultipliers[Difficulty] / attackStrengthMultiplier, 0.1)
+--------
+
 PrepareBuildingLists = function()
 	UnitProducers = Utils.Concat(BarracksTypes, Utils.Concat(FactoryTypes, Utils.Concat(AirProductionTypes, NavalProductionTypes)))
 
@@ -1056,8 +1070,6 @@ CoopInit = function()
 	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(2), function()
-		OverrideProductionSpeeds()
-
 		Utils.Do(mainEnemies, function(player)
 			MultiplyEnemyProduction(player)
 			MultiplyEnemyStartingUnits(player)
@@ -1092,18 +1104,6 @@ CoopInit = function()
 		StartCoopBots()
 		EnemyVeterancy(mainEnemies)
 	end)
-end
-
-OverrideProductionSpeeds = function()
-	local ProSpeedDeductor = 1
-	if Map.LobbyOption("enprotime") == "999"  then
-		ProSpeedDeductor = 1 - (#CoopPlayers * 0.1)
-	elseif Map.LobbyOption("enprotime") == "998"  then
-		ProSpeedDeductor = 1 - (#CoopPlayers * 0.15)
-	else
-		ProSpeedDeductor = tonumber(Map.LobbyOption("enprotime"))
-	end
-	UnitBuildTimeMultipliers[Difficulty] = UnitBuildTimeMultipliers[Difficulty] * ProSpeedDeductor
 end
 
 -------------------
@@ -1155,4 +1155,21 @@ GetMcvPlayers = function()
 			return {}
 		end
 	end
+end
+
+-- overrides the base campaign version
+SetupRefAndSilosCaptureCredits = function(player)
+	local silosAndRefineries = player.GetActorsByTypes(CashRewardOnCaptureTypes)
+	Utils.Do(silosAndRefineries, function(a)
+		Trigger.OnCapture(a, function(self, captor, oldOwner, newOwner)
+			if IsMissionPlayer(newOwner) then
+				Utils.Do(MissionPlayers, function(p)
+					p.Cash = p.Cash + (CapturedCreditsAmount / #MissionPlayers)
+				end)
+			else
+				newOwner.Cash = newOwner.Cash + CapturedCreditsAmount
+			end
+			Media.FloatingText("+$" .. CapturedCreditsAmount, self.CenterPosition, 30, newOwner.Color)
+		end)
+	end)
 end
