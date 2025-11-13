@@ -129,6 +129,9 @@ end
 
 ---@return player
 RandomCoopPlayer = function()
+	if #CoopPlayers == 0 then
+		return Neutral
+	end
 	return Utils.Random(CoopPlayers)
 end
 
@@ -243,6 +246,10 @@ AssignToCoopPlayers = function(units, specificPlayers, ignoreBlackList)
 		ownerID = LastAssignedCoopID or 1
 	end
 
+	if #players == 0 then
+		return
+	end
+
 	-- Rotate through the player list and assign a
 	-- unit to each until no more units remain.
 	Utils.Do(units, function(unit)
@@ -262,7 +269,7 @@ AssignToCoopPlayers = function(units, specificPlayers, ignoreBlackList)
 			if unit.HasProperty("HasPassengers") then
 				Trigger.AfterDelay(1, function()
 					if not unit.IsDead then
-						AssignToCoopPlayers(Utils.Where(unit.Passengers, function(a) return not a.IsDead end), specificPlayers, ignoreBlackList)
+						AssignToCoopPlayers(Utils.Where(unit.Passengers, function(a) return not a.IsDead and not IsMissionPlayer(a.Owner) end), specificPlayers, ignoreBlackList)
 					end
 				end)
 			end
@@ -1108,10 +1115,14 @@ end
 
 -------------------
 
+IsBaseTransferActor = function(actor)
+	return actor.HasProperty("StartBuildingRepairs") or IsHarvester(actor) or Utils.Any(WallTypes, function(t) return actor.Type == t end)
+end
+
 TransferBaseToPlayer = function(fromPlayer, toPlayer)
 	Trigger.AfterDelay(1, function()
 		local baseActors = Utils.Where(fromPlayer.GetActors(), function(a)
-			return a.HasProperty("StartBuildingRepairs") or IsHarvester(a) or Utils.Any(WallTypes, function(t) return a.Type == t end)
+			return IsBaseTransferActor(a)
 		end)
 		Utils.Do(baseActors, function(a)
 			a.Owner = toPlayer
@@ -1141,7 +1152,7 @@ GetFirstActivePlayer = function()
 			return p
 		end
 	end
-	return nil
+	return Neutral
 end
 
 GetMcvPlayers = function()
@@ -1152,7 +1163,7 @@ GetMcvPlayers = function()
 		if firstActive then
 			return { firstActive }
 		else
-			return {}
+			return { Neutral }
 		end
 	end
 end

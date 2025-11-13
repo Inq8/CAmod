@@ -1,4 +1,8 @@
 
+if attackStrengthMultiplier ~= nil and RaidInterval ~= nil and RaidInterval[Difficulty] ~= nil then
+	RaidInterval[Difficulty] = math.max(RaidInterval[Difficulty] / attackStrengthMultiplier, 1)
+end
+
 SetupPlayers = function()
 	Multi0 = Player.GetPlayer("Multi0")
 	Multi1 = Player.GetPlayer("Multi1")

@@ -16,7 +16,6 @@ SetupPlayers = function()
 	StopSpread = true
 	TechShared = false
 	CoopInit()
-	
 end
 
 AfterWorldLoaded = function()
@@ -97,7 +96,7 @@ AfterWorldLoaded = function()
 		end
 	else
 		local allUnits = Greece.GetActorsByTypes({ "snip", "rtnk", "jeep", "apc", "medi", "mech" })
-		AssignToCoopPlayers()
+		AssignToCoopPlayers(allUnits)
 	end
 end
 

@@ -1,4 +1,13 @@
 
+if attackStrengthMultiplier ~= nil then
+	if CruiserInterval ~= nil and CruiserInterval[Difficulty] ~= nil then
+		CruiserInterval[Difficulty] = math.max(CruiserInterval[Difficulty] / attackStrengthMultiplier, 1)
+	end
+	if ChronoTankInterval ~= nil and ChronoTankInterval[Difficulty] ~= nil then
+		ChronoTankInterval[Difficulty] = math.max(ChronoTankInterval[Difficulty] / attackStrengthMultiplier, 1)
+	end
+end
+
 SetupPlayers = function()
 	Multi0 = Player.GetPlayer("Multi0")
 	Multi1 = Player.GetPlayer("Multi1")

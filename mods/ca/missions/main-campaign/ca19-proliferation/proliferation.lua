@@ -1,6 +1,5 @@
 MissionDir = "ca|missions/main-campaign/ca19-proliferation"
 
-
 Fields = {
 	{ Reinforced = false, Waypoint = NWField, Reinforcements = { "gunw", "intl", "s1", "s1", "s3", "s1", "s1", "s3", "s1", "s4" } },
 	{ Reinforced = false, Waypoint = NField, Reinforcements = { "devo", "corr", "s1", "s1", "s3", "s1", "s2", "s1", "s1", "s3" } },

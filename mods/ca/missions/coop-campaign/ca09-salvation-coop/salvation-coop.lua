@@ -17,6 +17,11 @@ SetupPlayers = function()
 end
 
 AfterWorldLoaded = function()
+	local firstActivePlayer = GetFirstActivePlayer()
+	TransferBaseToPlayer(SinglePlayerPlayer, firstActivePlayer)
+	Utils.Do(Nod.GetActorsByTypes({"hosp", "oilb"}), function(a)
+		a.Owner = firstActivePlayer
+	end)
 	StartCashSpread(0)
 end
 

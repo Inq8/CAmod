@@ -27,14 +27,12 @@ AfterTick = function()
 end
 
 TransferLegionForces = function()
-	local legionForces = Legion.GetActors()
+	local legionActors = Legion.GetActors()
+	local legionForces = Utils.Where(legionActors, function(s) return s.HasProperty("Move") and not IsHarvester(s) end)
 	local firstActivePlayer = GetFirstActivePlayer()
 
-	Utils.Do(legionForces, function(self)
-		if self.Type ~= "player" then
-			self.Owner = firstActivePlayer
-		end
-	end)
+	TransferBaseToPlayer(Legion, firstActivePlayer)
+	AssignToCoopPlayers(legionForces)
 
 	local factoryExitCell = CPos.New(19, 47)
 

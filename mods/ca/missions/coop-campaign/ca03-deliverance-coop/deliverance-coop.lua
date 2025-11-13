@@ -1,3 +1,4 @@
+ExtraPrerequisiteFactions = { "gdi" }
 
 SetupPlayers = function()
 	Multi0 = Player.GetPlayer("Multi0")

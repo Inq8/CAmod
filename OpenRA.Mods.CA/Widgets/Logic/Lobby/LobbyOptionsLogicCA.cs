@@ -232,15 +232,41 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 		{
 			var allOptions = GetOptions();
 			var options = new Dictionary<string, string>();
+			var previouslySavedOptions = new Dictionary<string, string>();
+
+			if (hasSavedOptions)
+			{
+				try
+				{
+					var savedOptionsFileContents = File.ReadAllText(savedOptionsFilePath);
+					previouslySavedOptions = JsonConvert.DeserializeObject<Dictionary<string, string>>(savedOptionsFileContents);
+				}
+				catch
+				{
+					// do nothing
+				}
+			}
 
 			foreach (var option in allOptions.Where(o => o is LobbyBooleanOption))
 			{
+				if (option.IsLocked && previouslySavedOptions.TryGetValue(option.Id, out var savedValue))
+				{
+					options.Add(option.Id, savedValue);
+					continue;
+				}
+
 				var optionEnabled = orderManager.LobbyInfo.GlobalSettings.OptionOrDefault(option.Id, false);
 				options.Add(option.Id, optionEnabled ? "True" : "False");
 			}
 
 			foreach (var option in allOptions.Where(o => o is not LobbyBooleanOption))
 			{
+				if (option.IsLocked && previouslySavedOptions.TryGetValue(option.Id, out var savedValue))
+				{
+					options.Add(option.Id, savedValue);
+					continue;
+				}
+
 				var optionValue = orderManager.LobbyInfo.GlobalSettings.OptionOrDefault(option.Id, null);
 				if (optionValue != null)
 					options.Add(option.Id, optionValue);

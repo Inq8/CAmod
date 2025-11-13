@@ -32,7 +32,7 @@ AfterTick = function()
 end
 
 FreeSlaves = function(slaves)
-	local baseSlaves = Utils.Where(slaves, function(s) return s.HasProperty("StartBuildingRepairs") or IsHarvester(s) or Utils.Any(WallTypes, function(t) return s.Type == t end)
+	local baseSlaves = Utils.Where(slaves, function(s) return IsBaseTransferActor(a))
 	local otherSlaves = Utils.Where(slaves, function(s) return s.HasProperty("Move") and not IsHarvester(s) end)
 	local firstActivePlayer = GetFirstActivePlayer()
 

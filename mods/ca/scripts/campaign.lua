@@ -321,6 +321,10 @@ InitAttackAircraft = function(aircraft, targetPlayers, targetList, targetType)
 						targetPlayers = { targetPlayers }
 					end
 
+					if #targetPlayers == 0 then
+						return
+					end
+
 					local targetPlayer = Utils.Random(targetPlayers)
 
 					if targetList ~= nil and #targetList > 0 and targetType ~= nil then
@@ -422,6 +426,10 @@ AssaultPlayerBaseOrHunt = function(actor, targetPlayers, waypoints, fromIdle)
 
 	if type(targetPlayers) ~= "table" then
 		targetPlayers = { targetPlayers }
+	end
+
+	if #targetPlayers == 0 then
+		return
 	end
 
 	local targetPlayer = Utils.Random(targetPlayers)
@@ -1075,10 +1083,10 @@ InitAttackSquad = function(squad, player, targetPlayers)
 			delay = squad.Delay
 		end
 		Trigger.AfterDelay(delay, function()
-			InitAttackWave(squad, player, targetPlayers)
+			InitAttackWave(squad)
 		end)
 	else
-		InitAttackWave(squad, player, targetPlayers)
+		InitAttackWave(squad)
 	end
 end
 
@@ -1094,7 +1102,7 @@ InitNavalAttackSquad = function(squad, player, targetPlayers)
 	InitAttackSquad(squad, player, targetPlayers)
 end
 
-InitAttackWave = function(squad, player, targetPlayers)
+InitAttackWave = function(squad)
 
 	if IsSquadInProduction(squad) then
 		return
@@ -1102,6 +1110,10 @@ InitAttackWave = function(squad, player, targetPlayers)
 
 	squad.WaveTotalCost = 0
 	squad.WaveStartTime = DateTime.GameTime
+
+	if squad.TargetPlayers == nil or #squad.TargetPlayers == 0 then
+		return
+	end
 
 	-- randomly select target for the current wave
 	squad.TargetPlayer = Utils.Random(squad.TargetPlayers)
@@ -1175,12 +1187,12 @@ InitAttackWave = function(squad, player, targetPlayers)
 			end)
 		else
 			Trigger.AfterDelay(DateTime.Seconds(15), function()
-				InitAttackWave(squad, squad.Player, squad.TargetPlayers)
+				InitAttackWave(squad)
 			end)
 		end
 	else
 		Trigger.AfterDelay(DateTime.Seconds(15), function()
-			InitAttackWave(squad, squad.Player, squad.TargetPlayers)
+			InitAttackWave(squad)
 		end)
 	end
 end
