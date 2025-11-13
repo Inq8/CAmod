@@ -873,9 +873,10 @@ end
 
 IncomeSharing = function()
 	Utils.Do(CoopPlayers, function(PID)
-		-- Handle 100% Shared: Send everything to SharedBank
-		if IncomePercentage == 100 then
-			SharedBank = SharedBank + PID.Resources
+		-- Handle 100/125/150% Shared: Send everything to SharedBank (with 0/25/50% extra per player)
+		if IncomePercentage == 100 or IncomePercentage == 125 or IncomePercentage == 150 then
+			local extraAmount = PID.Resources * #CoopPlayers * (1 - (IncomePercentage / 100))
+			SharedBank = SharedBank + PID.Resources + extraAmount
 			PID.Resources = 0
 		-- Handle 999% Shared: Send everything to everyone
 		elseif IncomePercentage == 999 then
