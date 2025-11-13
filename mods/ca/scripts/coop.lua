@@ -180,7 +180,6 @@ end
 ---@param interval? integer
 local function UpdateCoopBot(bot, interval)
 	MaintainBotMoney(bot)
-	local mcvs = bot.GetActorsByType("mcv")
 
 	if not interval then
 		return

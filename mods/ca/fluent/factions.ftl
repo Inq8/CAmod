@@ -394,15 +394,20 @@ faction-random =
 
 faction-allies =
     .name = Allies
+    .description = Allies
 
 faction-soviet =
     .name = Soviet
+    .description = Soviet
 
 faction-gdi =
     .name = GDI
+    .description = GDI
 
 faction-nod =
     .name = Nod
+    .description = Nod
 
 faction-scrin =
     .name = Scrin
+    .description = Scrin
