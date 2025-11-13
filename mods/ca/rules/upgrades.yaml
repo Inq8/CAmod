@@ -1944,7 +1944,7 @@ loyalist.allegiance:
 	Buildable:
 		BuildPaletteOrder: 16
 		Prerequisites: ~player.scrin, scrin.allegiances.available, !rebel.allegiance, !malefic.allegiance, ~techlevel.medium
-		Description: Declare your allegiance and side with the Scrin Overlord.\n\nRequired for:\n• Eviscerator\n• Ruiner\n• Overlord's Wrath\n• 25% faster regrowth of resources near Colony Platforms\n\n
+		Description: Declare your allegiance and side with the Scrin Overlord.\n\nRequired for:\n• Eviscerator\n• Ruiner\n• Overlord's Wrath\n• Ichor Spike\n\n
 		IconPalette: chromes
 	TooltipExtras:
 		Attributes: (!) Only ONE allegiance may be chosen.
@@ -1954,6 +1954,8 @@ loyalist.allegiance:
 		Image: loyalist.allegiance
 	WithProductionIconOverlay:
 		Prerequisites: loyalist.allegiance
+	FreeActorCA@IchorSpike:
+		Actor: ichorspike.provider
 
 rebel.allegiance:
 	Inherits: ^ScrinUpgrade

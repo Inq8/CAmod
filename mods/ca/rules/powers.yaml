@@ -1850,6 +1850,31 @@
 		CircleBorderColor: 007700AA
 		SupportPowerPaletteOrder: 10
 
+^IchorSpikePower:
+	DetonateWeaponPower@IchorSpike:
+		OrderName: ichorspike
+		Icon: ichorspike
+		IconPalette: chromes
+		Prerequisites: loyalist.allegiance
+		Cursor: ability
+		ChargeInterval: 7500
+		Name: Ichor Spike
+		ActivationDelay: 1
+		Description: Creates an Ichor Spike at the target location. Resources within its area of influence grow and spread faster.\n\nAlso empowers units with Resource Conversion upgrade.
+		LaunchSound: scrinbuild.aud
+		Weapon: IchorSpikeSpawner
+		AirburstAltitude: 0c0
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		EndChargeSpeechNotification: IchorSpikeReady
+		EndChargeTextNotification: Ichor Spike ready.
+		CameraActor: camera.dummy
+		CameraRemoveDelay: 1
+		DisplayRadarPing: True
+		SupportPowerPaletteOrder: 50
+		TargetCircleRange: 8c0
+		TargetCircleColor: 00ff00aa
+
 ^VoidSpikePower:
 	DetonateWeaponPower@VoidSpike:
 		OrderName: voidspike
@@ -1860,14 +1885,14 @@
 		ChargeInterval: 6000
 		Name: Voidspike
 		ActivationDelay: 1
-		Description: Creates an void spike at the target location. Gradually transforms nearby resources into Black Tiberium which is devoid of most of its useful properties.\n\nDamages nearby enemy units.
+		Description: Creates a Voidspike at the target location. Gradually transforms nearby resources into Black Tiberium which is devoid of most of its useful properties.\n\nDamages nearby enemy units.
 		LaunchSound: scrinbuild.aud
 		Weapon: VoidSpikeSpawner
 		AirburstAltitude: 0c0
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		EndChargeSpeechNotification: VoidSpikeReady
-		EndChargeTextNotification: Void Spike ready.
+		EndChargeTextNotification: Voidspike ready.
 		CameraActor: camera.dummy
 		CameraRemoveDelay: 1
 		DisplayRadarPing: True
@@ -2293,6 +2318,14 @@
 		WarpEffectPalette: scrineffect
 
 # Providers
+
+ichorspike.provider:
+	Inherits@DUMMY: ^InvisibleDummy
+	Inherits@IchorSpike: ^IchorSpikePower
+	UpdatesSupportPowerTimer:
+		OrderName: ichorspike
+		InitialOnly: true
+		Ticks: 75
 
 voidspike.provider:
 	Inherits@DUMMY: ^InvisibleDummy

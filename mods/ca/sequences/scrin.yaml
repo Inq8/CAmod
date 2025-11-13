@@ -2911,26 +2911,23 @@ scol:
 
 vspk:
 	Inherits: ^StructureOverlays
+	Defaults:
+		Filename: vspk.shp
+		ZOffset: 512
 	idle:
-		Filename: vspk.shp
 		Length: *
 		Frames: 0,1,2,3,4,0,0,0,0,0,0,0,0,0,0,0
 		Offset: 0,-15
 		Tick: 80
-		ZOffset: 512
 	damaged-idle:
-		Filename: vspk.shp
 		Frames: 0,1,2,3,4,0,0,0,0,0,0,0,0,0,0,0
 		Length: *
 		Offset: 0,-15
 		Tick: 80
-		ZOffset: 512
 	make:
-		Filename: vspk.shp
 		Length: 14
 		Start: 5
 		Offset: 0,-15
-		ZOffset: 512
 	overlay:
 		Filename: voidpulse.shp
 		Length: *
@@ -2941,6 +2938,7 @@ vspk:
 		Scale: 3
 		IgnoreWorldTint: true
 	bib:
+		ZOffset: 0
 		Filename: mbTSLA.tem
 		TilesetFilenames:
 			SNOW: mbTSLA.sno
@@ -2949,6 +2947,58 @@ vspk:
 			JUNGLE: mbTSLA.jun
 			WINTER: mbTSLA.win
 		Length: *
+	icon:
+		Filename: vspkicon.shp
+
+ispk:
+	Inherits: ^StructureOverlays
+	Defaults:
+		Filename: ispk.shp
+		ZOffset: 512
+	idle:
+		Offset: 0,-18
+	damaged-idle:
+		Offset: 0,-18
+	idle2:
+		Frames: 1,5
+		Length: *
+		Tick: 120
+		Offset: 0,-18
+	idle3:
+		Frames: 7,3
+		Length: *
+		Tick: 120
+		Offset: 0,-18
+	idle4:
+		Frames: 4,2
+		Length: *
+		Tick: 120
+		Offset: 0,-18
+	idle5:
+		Frames: 3,5,7
+		Length: *
+		Tick: 120
+		Offset: 0,-18
+	idle5:
+		Frames: 6,1
+		Length: *
+		Tick: 120
+		Offset: 0,-18
+	make:
+		Frames: 17,16,15,14,13,12,11,10,9,8
+		Length: *
+		Tick: 80
+		Offset: 0,-18
+	bib:
+		Filename: mbTSLA.tem
+		TilesetFilenames:
+			SNOW: mbTSLA.sno
+			INTERIOR: mbTSLA.int
+			DESERT: mbTSLA.des
+			JUNGLE: mbTSLA.jun
+			WINTER: mbTSLA.win
+		Length: *
+		ZOffset: 0
 	icon:
 		Filename: vspkicon.shp
 

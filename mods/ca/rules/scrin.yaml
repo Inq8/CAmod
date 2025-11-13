@@ -4713,14 +4713,6 @@ SFAC:
 		ActorTypes: s1,s1,s1,s1,s6
 		GuaranteedActorTypes: s1, s1
 	-UpdatesBuildOrder:
-	GrantConditionOnPrerequisite@LoyalistBonus:
-		Condition: loyalist-allegiance
-		Prerequisites: loyalist.allegiance
-	ProximityExternalCondition@IchorBoost:
-		Range: 16c0
-		Condition: ichor-boost
-		ValidRelationships: Neutral
-		RequiresCondition: loyalist-allegiance
 
 REAC:
 	Inherits: ^ScrinBuilding
@@ -6004,7 +5996,7 @@ SCOL.Temp:
 	-UpdatesCount@NodCovenant:
 	-Encyclopedia:
 
-VSPK:
+^SpikeBase:
 	Inherits: ^BasicBuilding
 	-ShakeOnDeath:
 	OwnerLostAction:
@@ -6014,6 +6006,23 @@ VSPK:
 	FireWarheadsOnDeath:
 		Weapon: SmallBuildingExplode
 		EmptyWeapon: SmallBuildingExplode
+	Armor:
+		Type: Concrete
+	Targetable:
+		TargetTypes: Ground, Structure, Defense
+	Building:
+		Dimensions: 1,1
+		Footprint: x
+		TerrainTypes: Clear,Road,Ore,Gems,Tiberium,BlueTiberium,BlackTiberium
+		AllowPlacementOnResources: true
+	WithMakeAnimation:
+		Condition: build-incomplete
+	SoundOnDamageTransition:
+		-DamagedSounds:
+		DestroyedSounds: kaboom15.aud
+
+VSPK:
+	Inherits: ^SpikeBase
 	Selectable:
 		Bounds: 1280, 1792, 0, -512
 		DecorationBounds: 1280, 2560, 0, -768
@@ -6024,25 +6033,12 @@ VSPK:
 	TooltipExtras:
 		Attributes: • Corrupts resources\n• Damages nearby enemies over time\n• Direct damage is reflected back to the attacker
 		Description: Gradually transforms nearby resources into Black Tiberium, which is devoid of most of its useful properties.
-	Armor:
-		Type: Concrete
-	Targetable:
-		TargetTypes: Ground, Structure, Defense
 	RevealsShroud:
 		MinRange: 6c0
 		Range: 8c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 6c0
-	Building:
-		Dimensions: 1,1
-		Footprint: x
-		TerrainTypes: Clear,Road,Ore,Gems,Tiberium,BlueTiberium,BlackTiberium
-		AllowPlacementOnResources: true
-	WithMakeAnimation:
-	SoundOnDamageTransition:
-		-DamagedSounds:
-		DestroyedSounds: kaboom15.aud
 	ProximityExternalCondition@VoidSpike:
 		Condition: voidspike
 		Range: 8c0
@@ -6070,10 +6066,57 @@ VSPK:
 		Sequence: overlay
 		Palette: scrin
 		IsDecoration: true
+		RequiresCondition: !build-incomplete
 	ReflectsDamage:
 		DamagePercentage: 50
 		ValidRelationships: Ally, Enemy, Neutral
 		ReflectToAttacker: true
+
+ISPK:
+	Inherits: ^SpikeBase
+	Selectable:
+		Bounds: 1280, 2304, 0, -576
+		DecorationBounds: 1280, 2816, 0, -832
+	Health:
+		HP: 40000
+	Tooltip:
+		Name: Ichor Spike
+	TooltipExtras:
+		Attributes: • Enriches Tiberium trees\n• Empowers units with Resource Conversion upgrade
+		Description: Enriches nearby Tiberium trees causing them to seed Tiberium more quickly.
+	RevealsShroud:
+		MinRange: 6c0
+		Range: 8c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 6c0
+	WithIdleAnimation:
+		Sequences: idle2, idle3, idle4, idle5
+		Interval: 5, 50
+		RequiresCondition: !build-incomplete
+	ProximityExternalCondition@IchorBoost:
+		Range: 8c0
+		Condition: ichor-boost
+		ValidRelationships: Neutral
+	ProximityExternalCondition@ONTIB:
+		Condition: on-tib
+		Range: 8c0
+		ValidRelationships: Ally, Neutral, Enemy
+	WithRangeCircleCA@IchorBoost:
+		Type: IchorSpike
+		Range: 8c0
+		ValidRelationships: Ally, Enemy, Neutral
+		Color: 00ff00aa
+	TerrainLightSource:
+		Range: 3c0
+		Intensity: 0.1
+		GreenTint: 0.3
+	ChangesHealth:
+		Step: 0
+		PercentageStep: 1
+		Delay: 25
+		StartIfBelow: 100
+		DamageCooldown: 150
 
 #
 # ---- misc
