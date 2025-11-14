@@ -32,6 +32,7 @@ Player:
 	Inherits@OVERLORDSWRATHPOWER: ^OverlordsWrathPower
 	Inherits@ANATHEMAPOWER: ^AnathemaPower
 	Inherits@ICHORSPIKEPOWER: ^IchorSpikePower
+	Inherits@COLONYSPIKEPOWER: ^ColonySpikePower
 	Inherits@VOIDSPIKEPOWER: ^VoidSpikePower
 	Inherits@SUPPRESSIONPOWER: ^SuppressionPower
 	GrantExternalConditionPowerCA@FSHIELD:
@@ -178,12 +179,17 @@ Player:
 		-Prerequisites:
 		-EndChargeSpeechNotification:
 		ChargeInterval: 1
-	DetonateWeaponPower@VoidSpike:
+	DetonateWeaponPower@IchorSpike:
 		-Prerequisites:
 		-EndChargeSpeechNotification:
 		DisplayTimerRelationships: None
 		ChargeInterval: 1
-	DetonateWeaponPower@IchorSpike:
+	DetonateWeaponPower@ColonySpike:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		DisplayTimerRelationships: None
+		ChargeInterval: 1
+	DetonateWeaponPower@VoidSpike:
 		-Prerequisites:
 		-EndChargeSpeechNotification:
 		DisplayTimerRelationships: None

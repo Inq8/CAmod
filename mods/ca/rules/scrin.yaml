@@ -5952,7 +5952,7 @@ SCOL.Temp:
 	Tooltip:
 		Name: Storm Spike
 	RenderSprites:
-		Image: scol
+		Image: sspk
 	-Sellable:
 	-Buildable:
 	Health:
@@ -6120,6 +6120,38 @@ ISPK:
 		DamageCooldown: 150
 	WithBuildingBib:
 		HasMinibib: true
+
+CSPK:
+	Inherits: ^SpikeBase
+	Selectable:
+		Bounds: 1280, 2304, 0, -576
+		DecorationBounds: 1280, 2816, 0, -832
+	Health:
+		HP: 40000
+	Tooltip:
+		Name: Colony Spike
+	TooltipExtras:
+		Attributes: • Provides build radius
+		Description: Allows structures to be built nearby.
+	RevealsShroud:
+		MinRange: 6c0
+		Range: 8c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 6c0
+	GivesBuildableArea:
+		AreaTypes: building
+	BaseProvider:
+		Range: 6c0
+	WithRangeCircle:
+		Type: ColonySpike
+		Range: 6c0
+		Color: ffffff50
+	WithBuildingBib:
+		HasMinibib: true
+	Building:
+		TerrainTypes: Clear,Road
+		AllowPlacementOnResources: false
 
 #
 # ---- misc

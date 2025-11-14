@@ -1964,7 +1964,7 @@ rebel.allegiance:
 	Buildable:
 		BuildPaletteOrder: 17
 		Prerequisites: ~player.scrin, scrin.allegiances.available, !loyalist.allegiance, !malefic.allegiance, ~techlevel.medium
-		Description: Declare your allegiance and side with the Scrin Rebels.\n\nRequired for:\n• Impaler\n• Nullifier\n• Gateway\n• Colony Ships can produce non-defense structures on the move\n\n
+		Description: Declare your allegiance and side with the Scrin Rebels.\n\nRequired for:\n• Impaler\n• Nullifier\n• Gateway\n• Colony Spike\n\n
 		IconPalette: chromes
 	TooltipExtras:
 		Attributes: (!) Only ONE allegiance may be chosen.
@@ -1974,6 +1974,8 @@ rebel.allegiance:
 		Image: rebel.allegiance
 	WithProductionIconOverlay:
 		Prerequisites: rebel.allegiance
+	FreeActorCA@ColonySpike:
+		Actor: colonyspike.provider
 
 malefic.allegiance:
 	Inherits: ^ScrinUpgrade

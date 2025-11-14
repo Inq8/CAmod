@@ -2909,6 +2909,34 @@ scol:
 	icon:
 		Filename: scolicon.shp
 
+sspk:
+	Inherits: ^StructureOverlays
+	idle:
+		Filename: sspk.shp
+		Length: 1
+		Offset: 0,-12
+	damaged-idle:
+		Filename: sspk.shp
+		Start: 11
+		Length: 1
+		Offset: 0,-12
+	make:
+		Filename: sspk.shp
+		Frames: 1,2,3,4,5,6,7,8,9,10
+		Length: *
+		Offset: 0,-12
+	bib:
+		Filename: mbTSLA.tem
+		TilesetFilenames:
+			SNOW: mbTSLA.sno
+			INTERIOR: mbTSLA.int
+			DESERT: mbTSLA.des
+			JUNGLE: mbTSLA.jun
+			WINTER: mbTSLA.win
+		Length: *
+	icon:
+		Filename: scolicon.shp
+
 vspk:
 	Inherits: ^StructureOverlays
 	Defaults:
@@ -3002,6 +3030,34 @@ ispk:
 		Offset: -1,1
 	icon:
 		Filename: ispkicon.shp
+
+cspk:
+	Inherits: ^StructureOverlays
+	Defaults:
+		Filename: cspk.shp
+		ZOffset: 512
+	idle:
+		Offset: 0,-18
+	damaged-idle:
+		Offset: 0,-18
+	make:
+		Start: 1
+		Length: 11
+		Tick: 60
+		Offset: 0,-18
+	bib:
+		Filename: mbTSLA.tem
+		TilesetFilenames:
+			SNOW: mbTSLA.sno
+			INTERIOR: mbTSLA.int
+			DESERT: mbTSLA.des
+			JUNGLE: mbTSLA.jun
+			WINTER: mbTSLA.win
+		Length: *
+		ZOffset: 0
+		Offset: -1,1
+	icon:
+		Filename: cspkicon.shp
 
 #
 # ---- animations

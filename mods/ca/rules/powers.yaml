@@ -1875,6 +1875,32 @@
 		TargetCircleRange: 8c0
 		TargetCircleColor: 00ff00aa
 
+^ColonySpikePower:
+	DetonateWeaponPower@ColonySpike:
+		OrderName: colonyspike
+		Icon: colonyspike
+		IconPalette: chromes
+		Prerequisites: rebel.allegiance
+		Cursor: ability
+		ChargeInterval: 7500
+		Name: Colony Spike
+		ActivationDelay: 1
+		Description: Creates a Colony Spike at the target location. Allows non-defensive structures to be placed nearby.
+		LaunchSound: cspk.aud
+		IncomingSound: cspk.aud
+		Weapon: ColonySpikeSpawner
+		AirburstAltitude: 0c0
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		EndChargeSpeechNotification: ColonySpikeReady
+		EndChargeTextNotification: Colony Spike ready.
+		CameraActor: camera.dummy
+		CameraRemoveDelay: 1
+		DisplayRadarPing: True
+		SupportPowerPaletteOrder: 50
+		TargetCircleRange: 6c0
+		TargetCircleColor: ffffffa0
+
 ^VoidSpikePower:
 	DetonateWeaponPower@VoidSpike:
 		OrderName: voidspike
@@ -2327,6 +2353,14 @@ ichorspike.provider:
 		OrderName: ichorspike
 		InitialOnly: true
 		Ticks: 75
+
+colonyspike.provider:
+	Inherits@DUMMY: ^InvisibleDummy
+	Inherits@ColonySpike: ^ColonySpikePower
+	UpdatesSupportPowerTimer:
+		OrderName: colonyspike
+		InitialOnly: true
+		Ticks: 750
 
 voidspike.provider:
 	Inherits@DUMMY: ^InvisibleDummy
