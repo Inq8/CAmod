@@ -1,6 +1,7 @@
 MissionDir = "ca|missions/main-campaign/ca42-schism"
 
 PurificationInterval = DateTime.Minutes(3)
+PurifierPosition = Purifier.CenterPosition
 
 DefendDuration = {
 	easy = DateTime.Minutes(3),
@@ -392,7 +393,7 @@ MaleficInit = function()
 			Actor.Create("wormhole", true, { Owner = MaleficScrin, Location = loc})
 		end)
 
-		MediaCA.PlaySound(MissionDir .. "/malefic.aud", 2)
+		MediaCA.PlaySound("malefic.aud", 2)
 		Trigger.AfterDelay(DateTime.Seconds(8), function()
 			Media.DisplayMessage("Impossible! These Scrin are not..  Do not allow the device to be destroyed!", "Scrin Overlord", HSLColor.FromHex("7700FF"))
 			MediaCA.PlaySound(MissionDir .. "/ovld_impossible.aud", 2)
@@ -468,29 +469,28 @@ OverlordSpawn = function(isInitial)
 end
 
 GetInvasionInterval = function()
-	local armyValue = GetMissionPlayersArmyValue()
+	local defenders = Utils.Where(Map.ActorsInCircle(PurifierPosition, WDist.New(20 * 1024)), function(a)
+		return IsMissionPlayer(a.Owner) and not a.IsDead and a.HasProperty("Attack") and a.Type ~= "etpd"
+	end)
+
+	local armyValue = GetTotalCostOfUnits(defenders)
+	local baseInterval = DateTime.Seconds(30)
+	local secondsToSubtract = math.floor(armyValue / 3500)
+	local minimumInterval = DateTime.Seconds(12)
+
+	if not Purifier.IsDead and Purifier.Health < Purifier.MaxHealth / 3 then
+		baseInterval = baseInterval + DateTime.Seconds(15)
+	end
 
 	if Difficulty == "easy" then
-		if armyValue >= 10000 then
-			return DateTime.Seconds(30)
-		else
-			return DateTime.Seconds(40)
-		end
-	else
-		if armyValue >= 48000 then
-			return DateTime.Seconds(15)
-		elseif armyValue >= 38000 then
-			return DateTime.Seconds(18)
-		elseif armyValue >= 28000 then
-			return DateTime.Seconds(21)
-		elseif armyValue >= 18000 then
-			return DateTime.Seconds(24)
-		elseif armyValue >= 10000 then
-			return DateTime.Seconds(27)
-		else
-			return DateTime.Seconds(30)
-		end
+		minimumInterval = DateTime.Seconds(30)
+	elseif Difficulty == "normal" then
+		minimumInterval = DateTime.Seconds(24)
+	elseif Difficulty == "hard" then
+		minimumInterval = DateTime.Seconds(18)
 	end
+
+	return math.max(baseInterval - DateTime.Seconds(secondsToSubtract), minimumInterval)
 end
 
 ApplyIronCurtain = function()

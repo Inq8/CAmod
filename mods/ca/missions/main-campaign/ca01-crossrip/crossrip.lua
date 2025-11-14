@@ -577,26 +577,17 @@ end
 
 GetInvasionInterval = function()
 	local armyValue = GetMissionPlayersArmyValue()
+	local baseInterval = DateTime.Seconds(23)
+	local secondsToSubtract = math.floor(armyValue / 5000)
+	local minimumInterval = DateTime.Seconds(10)
 
 	if Difficulty == "easy" then
-		if armyValue >= 10000 then
-			return DateTime.Seconds(22)
-		else
-			return DateTime.Seconds(24)
-		end
-	else
-		if armyValue >= 48000 then
-			return DateTime.Seconds(13)
-		elseif armyValue >= 38000 then
-			return DateTime.Seconds(15)
-		elseif armyValue >= 28000 then
-			return DateTime.Seconds(17)
-		elseif armyValue >= 18000 then
-			return DateTime.Seconds(19)
-		elseif armyValue >= 10000 then
-			return DateTime.Seconds(22)
-		else
-			return DateTime.Seconds(24)
-		end
+		minimumInterval = DateTime.Seconds(21)
+	elseif Difficulty == "normal" then
+		minimumInterval = DateTime.Seconds(18)
+	elseif Difficulty == "hard" then
+		minimumInterval = DateTime.Seconds(15)
 	end
+
+	return math.max(baseInterval - DateTime.Seconds(secondsToSubtract), minimumInterval)
 end
