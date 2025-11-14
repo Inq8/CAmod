@@ -245,7 +245,9 @@ Tick = function()
 		end
 		Greece.MarkCompletedObjective(ObjectiveEstablishBase)
 
-		if IsNormalOrBelow() then
+		if IsHardOrBelow() then
+			InitUSSRAttacks()
+
 			Trigger.AfterDelay(DateTime.Seconds(5), function()
 				Tip("Build a barracks for access to static defenses which should allow you to hold off any early attacks. Use Pillboxes against infantry and Turrets against vehicles.")
 			end)
@@ -316,8 +318,10 @@ InitUSSR = function()
 	SetupRefAndSilosCaptureCredits(USSR)
 	AutoReplaceHarvesters(USSR)
 	AutoRebuildConyards(USSR)
-	InitAttackSquad(Squads.Main, USSR)
-	InitAirAttackSquad(Squads.Migs, USSR)
+
+	if IsVeryHardOrAbove() then
+		InitUSSRAttacks()
+	end
 
 	-- Set western patrol
 	Utils.Do(WestPatrolUnits, function(unit)
@@ -355,6 +359,11 @@ InitUSSR = function()
 	Trigger.OnCapture(SovietChronosphere, function(self, captor, oldOwner, newOwner)
 		SovietChronosphere.Kill()
 	end)
+end
+
+InitUSSRAttacks = function()
+	InitAttackSquad(Squads.Main, USSR)
+	InitAirAttackSquad(Squads.Migs, USSR)
 end
 
 ScrinInvasion = function()
