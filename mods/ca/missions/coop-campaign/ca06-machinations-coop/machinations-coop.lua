@@ -32,7 +32,7 @@ DoMcvArrival = function()
 		brutal = { "jeep" }
 	}
 
-	while #InitialUnits[Difficulty] < #MissionPlayers do
+	while #InitialUnits[Difficulty] <= #MissionPlayers do
 		table.insert(InitialUnits[Difficulty], "e1")
 	end
 
@@ -49,10 +49,9 @@ DoMcvArrival = function()
 				p.Owner = Greece
 			end
 		end)
-	end)
-
-	Utils.Do(GetMcvPlayers(), function(p)
-		local mcv = Actor.Create("mcv", false, { Owner = p })
-		transport.LoadPassenger(mcv)
+		Utils.Do(GetMcvPlayers(), function(p)
+			local mcv = Actor.Create("mcv", false, { Owner = p })
+			transport.LoadPassenger(mcv)
+		end)
 	end)
 end

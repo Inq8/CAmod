@@ -286,7 +286,7 @@ InitNod = function()
 end
 
 -- overridden in co-op version
-DoReinforcements = function
+DoReinforcements = function()
 	Reinforcements.Reinforce(GDI, { "hmmv", "mtnk", "amcv", "mtnk" }, { McvSpawn.Location, McvRally.Location }, 75)
 	GDI.Cash = 6000 + CashAdjustments[Difficulty]
 end

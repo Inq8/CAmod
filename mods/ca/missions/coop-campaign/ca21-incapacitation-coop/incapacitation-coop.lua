@@ -17,21 +17,18 @@ SetupPlayers = function()
 end
 
 AfterWorldLoaded = function()
-	if IsHardOrAbove() then
-		local extraIntruder1 = Actor.Create("s4", true, { Owner = Scrin, Location = CPos.New(5, 30), Facing = Angle.East })
-		extraIntruder1.GrantCondition("difficulty-" .. Difficulty)
-		IntruderDeathTrigger(extraIntruder1)
+	local extraLocations = {
+		CPos.New(5, 30),
+		CPos.New(5, 32)
+	}
 
-		if #MissionPlayers >= 5 then
-			local extraIntruder2 = Actor.Create("s4", true, { Owner = Scrin, Location = CPos.New(5, 32), Facing = Angle.East })
-			extraIntruder2.GrantCondition("difficulty-" .. Difficulty)
-			IntruderDeathTrigger(extraIntruder2)
-
-			if #MissionPlayers >= 6 then
-				local extraIntruder3 = Actor.Create("s4", true, { Owner = Scrin, Location = CPos.New(5, 31), Facing = Angle.East })
-				extraIntruder3.GrantCondition("difficulty-" .. Difficulty)
-				IntruderDeathTrigger(extraIntruder3)
-			end
+	if IsHardOrAbove() and #MissionPlayers >= 5 then
+		-- spawn an extra intruder for each extra player above 4
+		for i = 1, #MissionPlayers - 4 do
+			local loc = extraLocations[i]
+			local extraIntruder = Actor.Create("s4", true, { Owner = Scrin, Location = loc, Facing = Angle.East })
+			extraIntruder.GrantCondition("difficulty-" .. Difficulty)
+			IntruderDeathTrigger(extraIntruder)
 		end
 	end
 end

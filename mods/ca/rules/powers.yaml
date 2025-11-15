@@ -1857,7 +1857,7 @@
 		IconPalette: chromes
 		Prerequisites: loyalist.allegiance
 		Cursor: ability
-		ChargeInterval: 7500
+		ChargeInterval: 6000
 		Name: Ichor Spike
 		ActivationDelay: 1
 		Description: Creates an Ichor Spike at the target location. Resources within its area of influence grow and spread faster.\n\nAlso empowers units with Resource Conversion upgrade.
@@ -2346,30 +2346,6 @@
 
 # Providers
 
-ichorspike.provider:
-	Inherits@DUMMY: ^InvisibleDummy
-	Inherits@IchorSpike: ^IchorSpikePower
-	UpdatesSupportPowerTimer:
-		OrderName: ichorspike
-		InitialOnly: true
-		Ticks: 75
-
-colonyspike.provider:
-	Inherits@DUMMY: ^InvisibleDummy
-	Inherits@ColonySpike: ^ColonySpikePower
-	UpdatesSupportPowerTimer:
-		OrderName: colonyspike
-		InitialOnly: true
-		Ticks: 750
-
-voidspike.provider:
-	Inherits@DUMMY: ^InvisibleDummy
-	Inherits@VoidSpike: ^VoidSpikePower
-	UpdatesSupportPowerTimer:
-		OrderName: voidspike
-		InitialOnly: true
-		Ticks: 750
-
 assassinsquad.provider:
 	Inherits@DUMMY: ^InvisibleDummy
 	Inherits@AssassinSquad: ^AssassinSquadPower
@@ -2393,3 +2369,27 @@ confessorcabal.provider:
 		OrderName: confessorcabal
 		InitialOnly: true
 		Ticks: 3750
+
+ichorspike.provider:
+	Inherits@DUMMY: ^InvisibleDummy
+	Inherits@IchorSpike: ^IchorSpikePower
+	UpdatesSupportPowerTimer:
+		OrderName: ichorspike
+		InitialOnly: true
+		Ticks: 75
+
+colonyspike.provider:
+	Inherits@DUMMY: ^InvisibleDummy
+	Inherits@ColonySpike: ^ColonySpikePower
+	UpdatesSupportPowerTimer:
+		OrderName: colonyspike
+		InitialOnly: true
+		Ticks: 750
+
+voidspike.provider:
+	Inherits@DUMMY: ^InvisibleDummy
+	Inherits@VoidSpike: ^VoidSpikePower
+	UpdatesSupportPowerTimer:
+		OrderName: voidspike
+		InitialOnly: true
+		Ticks: 750

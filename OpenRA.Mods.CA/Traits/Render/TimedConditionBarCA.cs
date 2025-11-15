@@ -13,7 +13,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.Common.Traits.Render
 {
-	[Desc("Visualizes the remaining time for a condition. CA version is conditional.")]
+	[Desc("Visualizes the remaining time for a condition. CA version is conditional and allows relationship to be specified.")]
 	sealed class TimedConditionBarCAInfo : ConditionalTraitInfo
 	{
 		[FieldLoader.Require]
@@ -21,6 +21,9 @@ namespace OpenRA.Mods.Common.Traits.Render
 		public readonly string Condition = null;
 
 		public readonly Color Color = Color.Red;
+
+		[Desc("Relationships that can see the bar.")]
+		public readonly PlayerRelationship ValidRelationships = PlayerRelationship.Ally;
 
 		public override object Create(ActorInitializer init) { return new TimedConditionBarCA(init.Self, this); }
 	}
@@ -50,7 +53,7 @@ namespace OpenRA.Mods.Common.Traits.Render
 			if (IsTraitDisabled)
 				return 0;
 
-			if (!self.Owner.IsAlliedWith(self.World.RenderPlayer))
+			if (Info.ValidRelationships.HasRelationship(self.Owner.RelationshipWith(self.World.RenderPlayer)))
 				return 0;
 
 			return value;

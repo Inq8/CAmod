@@ -239,10 +239,10 @@ AssignToCoopPlayers = function(units, specificPlayers, ignoreBlackList)
 
 	if specificPlayers then
 		players = specificPlayers
-		ownerID = 1
+		ownerID = 0
 	else
 		players = CoopPlayers
-		ownerID = LastAssignedCoopID or 1
+		ownerID = LastAssignedCoopID or 0
 	end
 
 	if #players == 0 then
@@ -253,6 +253,8 @@ AssignToCoopPlayers = function(units, specificPlayers, ignoreBlackList)
 	-- unit to each until no more units remain.
 	Utils.Do(units, function(unit)
 		if unit.Type ~= "player" then
+			ownerID = ownerID + 1
+
 			if ownerID > #players then
 				ownerID = 1
 			end
@@ -268,12 +270,10 @@ AssignToCoopPlayers = function(units, specificPlayers, ignoreBlackList)
 			if unit.HasProperty("HasPassengers") then
 				Trigger.AfterDelay(1, function()
 					if not unit.IsDead then
-						AssignToCoopPlayers(Utils.Where(unit.Passengers, function(a) return not a.IsDead and not IsMissionPlayer(a.Owner) end), specificPlayers, ignoreBlackList)
+						AssignToCoopPlayers(Utils.Where(unit.Passengers, function(a) return not a.IsDead end), specificPlayers, ignoreBlackList)
 					end
 				end)
 			end
-
-			ownerID = ownerID + 1
 		end
 	end)
 end
@@ -294,7 +294,7 @@ GoodSpread = function()
 	if StopSpread ~= true then
 		local actors = Utils.Where(SinglePlayerPlayer.GetActors(), function(a) return a.HasProperty("Move") and not IsHarvester(a) and not IsMcv(a) end)
 
-		if #actors >= 1 then
+		if #actors > 0 then
 			AssignToCoopPlayers(actors)
 		end
 	end

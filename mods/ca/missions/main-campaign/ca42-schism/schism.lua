@@ -135,7 +135,7 @@ WorldLoaded = function()
 	SetupPlayers()
 
 	TimerTicks = PurificationInterval
-	IronCurtainIntegrityTicksRemaining = DateTime.Minutes(25)
+	IronCurtainIntegrityTicksRemaining = DateTime.Minutes(30)
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(USSR)

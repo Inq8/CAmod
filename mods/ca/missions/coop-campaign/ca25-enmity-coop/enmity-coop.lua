@@ -28,7 +28,7 @@ AfterTick = function()
 
 end
 
-DoReinforcements = function
+DoReinforcements = function()
 	Reinforcements.Reinforce(GDI, { "hmmv", "mtnk", "mtnk" }, { McvSpawn.Location, McvRally.Location }, 75)
 	GDI.Cash = 6000 + CashAdjustments[Difficulty]
 	StartCashSpread(3000)

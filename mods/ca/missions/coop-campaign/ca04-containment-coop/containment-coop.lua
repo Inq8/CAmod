@@ -59,3 +59,7 @@ SetupUnits = function()
 
 	RespawnTrigger(Spy, Spy.Location)
 end
+
+TransferChronoPrisonOwnership = function(chronoPrison)
+	chronoPrison.Owner = GetFirstActivePlayer()
+end

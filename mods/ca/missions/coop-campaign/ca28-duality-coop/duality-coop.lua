@@ -40,7 +40,6 @@ AfterWorldLoaded = function()
 	CamlockEnabled = Map.LobbyOption("camlock") == "enabled"
 	Commando.Owner = MissionPlayers[1]
 	Tanya.Owner = MissionPlayers[2]
-	HealCrate1.Destroy()
 	Actor.Create("healcrate", true, { Owner = Neutral, Location = CPos.New(70, 25) })
 
 	if #MissionPlayers > 2 then

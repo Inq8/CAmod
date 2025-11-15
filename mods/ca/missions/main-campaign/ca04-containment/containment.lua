@@ -459,6 +459,7 @@ DropChronoPrison = function()
 				Trigger.RemoveProximityTrigger(id)
 				ChronoPrisonFlare.Destroy()
 				a.GrantCondition("difficulty-" .. Difficulty)
+				TransferChronoPrisonOwnership(a)
 
 				Trigger.OnKilled(chronoPrison, function(self, killer)
 					if RespawnEnabled then
@@ -493,4 +494,9 @@ RespawnTrigger = function(a, loc)
 			end)
 		end)
 	end
+end
+
+-- overridden in co-op version
+TransferChronoPrisonOwnership = function(chronoPrison)
+	-- do nothing
 end

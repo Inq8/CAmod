@@ -18,8 +18,20 @@ SetupPlayers = function()
 end
 
 AfterWorldLoaded = function()
-	TransferMcvsToPlayers()
+	local firstActivePlayer = GetFirstActivePlayer()
+	TransferBaseToPlayer(SinglePlayerPlayer, firstActivePlayer)
 	StartCashSpread(3000)
+
+	local delay = 25
+	local path = { CPos.New(18,1), CPos.New(18,8) }
+	Utils.Do(GetMcvPlayers(), function(p)
+		if p ~= firstActivePlayer then
+			Trigger.AfterDelay(delay, function()
+				Reinforcements.Reinforce(p, { "mcv" }, path)
+			end)
+			delay = delay + DateTime.Seconds(1)
+		end
+	end)
 end
 
 AfterTick = function()

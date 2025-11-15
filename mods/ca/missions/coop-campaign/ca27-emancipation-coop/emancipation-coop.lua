@@ -17,13 +17,12 @@ SetupPlayers = function()
 end
 
 AfterWorldLoaded = function()
-	local firstActivePlayer = GetFirstActivePlayer()
-	local MSAIterator = 2
+	local x = InitialSensor.Location.X
+	local facing = InitialSensor.Facing
+	InitialSensor.Destroy()
 	Utils.Do(MissionPlayers, function(p)
-		if p ~= firstActivePlayer then
-			local ExtraMSA = Actor.Create(Actor196.Type, true, { Owner = p, Location = (Actor196.Location+CVec.New((MSAIterator), 0)) })
-			MSAIterator = MSAIterator + 2
-		end
+		local extraSensor = Actor.Create("msar", true, { Owner = p, Location = CPos.New(x, 2), DeployState = 2, Facing = facing })
+		x = x + 2
 	end)
 end
 
@@ -32,7 +31,7 @@ AfterTick = function()
 end
 
 FreeSlaves = function(slaves)
-	local baseSlaves = Utils.Where(slaves, function(s) return IsBaseTransferActor(a))
+	local baseSlaves = Utils.Where(slaves, function(s) return IsBaseTransferActor(a) end)
 	local otherSlaves = Utils.Where(slaves, function(s) return s.HasProperty("Move") and not IsHarvester(s) end)
 	local firstActivePlayer = GetFirstActivePlayer()
 
