@@ -5613,6 +5613,10 @@ HFTK:
 		RangeMargin: 0
 		PauseOnCondition: empdisable || being-warped || blinded || parachute
 	WithSpriteTurret:
+		RequiresCondition: !blacknapalm-upgrade
+	WithSpriteTurret@BlackNapalm:
+		Sequence: turret-upg
+		RequiresCondition: blacknapalm-upgrade
 	WithMuzzleOverlay:
 	Voiced:
 		VoiceSet: FlameTankVoice
