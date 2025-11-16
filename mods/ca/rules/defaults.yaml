@@ -3490,7 +3490,7 @@
 		Action: Kill
 	UpdatesPlayerStatistics:
 	GivesBuildableArea:
-		AreaTypes: building, fake
+		AreaTypes: building, defense, fake
 	RepairableBuilding:
 		RepairStep: 500
 		RepairPercent: 30
@@ -3678,7 +3678,7 @@
 	DelayedWeaponAttachable@TNT:
 		RequiresCondition: !invulnerability
 	RequiresBuildableArea:
-		AreaTypes: building, defense
+		AreaTypes: defense
 	GivesExperienceCA:
 		ActorExperienceModifier: 10000
 	-UpdatesBuildOrder:
@@ -3731,7 +3731,7 @@
 		UndeploySounds: cashturn.aud
 	FootprintPlaceBuildingPreview:
 	RequiresBuildableArea:
-		AreaTypes: building, defense
+		AreaTypes: defense
 		Adjacent: 7
 	SoundOnDamageTransition:
 		DamagedSounds: sandbag2.aud
@@ -4886,7 +4886,7 @@
 	Production@SQINF:
 		Produces: InfantrySQ, Cyborg, ParadropInfantry, Upgrade
 	Production@MQINF:
-		Produces: CyborgMQ, Cyborg, Upgrade
+		Produces: CyborgMQ, Cyborg, ParadropInfantry, Upgrade
 	ProductionBar@SQINF:
 		ProductionType: InfantrySQ
 	ProductionBar@MQINF:
