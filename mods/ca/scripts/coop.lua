@@ -16,16 +16,16 @@ local LastAssignedCoopID
 
 ---------
 -- Attack strength modifier has to be in global scope to affect squad definitions.
-local attackStrengthMultiplier = 1
+local CoopAttackStrengthMultiplier = 1
 local attackStrengthOptionValue = tonumber(Map.LobbyOption("enattackstr"))
 
 if attackStrengthOptionValue > 0 then
-	attackStrengthMultiplier = 1 + (attackStrengthOptionValue / 100)
+	CoopAttackStrengthMultiplier = 1 + (attackStrengthOptionValue / 100)
 end
 
-AttackValueMultipliers[Difficulty] = AttackValueMultipliers[Difficulty] * attackStrengthMultiplier
-CompositionValueMultipliers[Difficulty] = CompositionValueMultipliers[Difficulty] * attackStrengthMultiplier
-UnitBuildTimeMultipliers[Difficulty] = math.max(UnitBuildTimeMultipliers[Difficulty] / attackStrengthMultiplier, 0.1)
+AttackValueMultipliers[Difficulty] = AttackValueMultipliers[Difficulty] * CoopAttackStrengthMultiplier
+CompositionValueMultipliers[Difficulty] = CompositionValueMultipliers[Difficulty] * CoopAttackStrengthMultiplier
+UnitBuildTimeMultipliers[Difficulty] = math.max(UnitBuildTimeMultipliers[Difficulty] / CoopAttackStrengthMultiplier, 0.1)
 --------
 
 PrepareBuildingLists = function()

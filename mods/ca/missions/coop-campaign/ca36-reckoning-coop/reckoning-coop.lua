@@ -1,4 +1,11 @@
 
+local exterminatorFrequencyOptionValue = tonumber(Map.LobbyOption("etpdfreq"))
+
+if exterminatorFrequencyOptionValue ~= nil then
+	local ExterminatorMultiplier = 1 + (exterminatorFrequencyOptionValue / 100)
+	ExterminatorsInterval[Difficulty] = math.max(ExterminatorsInterval[Difficulty] / ExterminatorMultiplier, 25)
+end
+
 SetupPlayers = function()
 	Multi0 = Player.GetPlayer("Multi0")
 	Multi1 = Player.GetPlayer("Multi1")

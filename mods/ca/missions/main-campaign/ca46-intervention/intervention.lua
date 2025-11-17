@@ -110,6 +110,13 @@ WorldLoaded = function()
 		end)
 	end)
 
+	Trigger.OnKilledOrCaptured(StealthGen, function()
+		local mobileStealthGens = Nod.GetActorsByType("msg")
+		Utils.Do(mobileStealthGens, function(m)
+			m.Kill()
+		end)
+	end)
+
 	UpdateMissionText()
 	AfterWorldLoaded()
 end

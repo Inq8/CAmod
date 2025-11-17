@@ -1,10 +1,10 @@
 
-if attackStrengthMultiplier ~= nil then
+if CoopAttackStrengthMultiplier ~= nil then
 	if CruiserInterval ~= nil and CruiserInterval[Difficulty] ~= nil then
-		CruiserInterval[Difficulty] = math.max(CruiserInterval[Difficulty] / attackStrengthMultiplier, 1)
+		CruiserInterval[Difficulty] = math.max(CruiserInterval[Difficulty] / CoopAttackStrengthMultiplier, 25)
 	end
 	if ChronoTankInterval ~= nil and ChronoTankInterval[Difficulty] ~= nil then
-		ChronoTankInterval[Difficulty] = math.max(ChronoTankInterval[Difficulty] / attackStrengthMultiplier, 1)
+		ChronoTankInterval[Difficulty] = math.max(ChronoTankInterval[Difficulty] / CoopAttackStrengthMultiplier, 25)
 	end
 end
 

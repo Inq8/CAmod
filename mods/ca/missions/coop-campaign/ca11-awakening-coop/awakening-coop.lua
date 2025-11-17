@@ -1,6 +1,6 @@
 
-if attackStrengthMultiplier ~= nil and GroundAttackInterval ~= nil and GroundAttackInterval[Difficulty] ~= nil then
-	GroundAttackInterval[Difficulty] = math.max(GroundAttackInterval[Difficulty] / attackStrengthMultiplier, 1)
+if CoopAttackStrengthMultiplier ~= nil and GroundAttackInterval ~= nil and GroundAttackInterval[Difficulty] ~= nil then
+	GroundAttackInterval[Difficulty] = math.max(GroundAttackInterval[Difficulty] / CoopAttackStrengthMultiplier, 25)
 end
 
 SetupPlayers = function()

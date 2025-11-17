@@ -1,4 +1,11 @@
 
+local voidFrequencyOptionValue = tonumber(Map.LobbyOption("voidfreq"))
+
+if voidFrequencyOptionValue ~= nil then
+	local VoidIntervalMultiplier = 1 + (voidFrequencyOptionValue / 100)
+	VoidEngineInterval[Difficulty] = math.max(VoidEngineInterval[Difficulty] / VoidIntervalMultiplier, 25)
+end
+
 SetupPlayers = function()
 	Multi0 = Player.GetPlayer("Multi0")
 	Multi1 = Player.GetPlayer("Multi1")

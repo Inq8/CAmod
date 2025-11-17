@@ -1,6 +1,6 @@
 
-if attackStrengthMultiplier ~= nil and RaidInterval ~= nil and RaidInterval[Difficulty] ~= nil then
-	RaidInterval[Difficulty] = math.max(RaidInterval[Difficulty] / attackStrengthMultiplier, 1)
+if CoopAttackStrengthMultiplier ~= nil and RaidInterval ~= nil and RaidInterval[Difficulty] ~= nil then
+	RaidInterval[Difficulty] = math.max(RaidInterval[Difficulty] / CoopAttackStrengthMultiplier, 25)
 end
 
 SetupPlayers = function()
