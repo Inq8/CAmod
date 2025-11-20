@@ -5945,29 +5945,27 @@ SSPK:
 		Condition: active
 
 ^SpikeBase:
-	Inherits: ^BasicBuilding
-	-ShakeOnDeath:
+	Inherits: ^Defense
 	OwnerLostAction:
 		Action: Kill
 	RenderSprites:
 		PlayerPalette: playerscrin
-	FireWarheadsOnDeath:
-		Weapon: SmallBuildingExplode
-		EmptyWeapon: SmallBuildingExplode
 	Armor:
 		Type: Concrete
-	Targetable:
-		TargetTypes: Ground, Structure, Defense
 	Building:
-		Dimensions: 1,1
-		Footprint: x
 		TerrainTypes: Clear,Road,Ore,Gems,Tiberium,BlueTiberium,BlackTiberium
 		AllowPlacementOnResources: true
-	WithMakeAnimation:
-		Condition: build-incomplete
+		-BuildSounds:
 	SoundOnDamageTransition:
 		-DamagedSounds:
 		DestroyedSounds: kaboom15.aud
+	-ShakeOnDeath:
+	-RepairableBuilding:
+	-WithBuildingRepairDecoration:
+	-Sellable:
+	-ChangesHealth@DefensePolicy2:
+	-RenderRangeCircle:
+	-DetectCloaked:
 
 VSPK:
 	Inherits: ^SpikeBase
@@ -5991,6 +5989,7 @@ VSPK:
 		Condition: voidspike
 		Range: 8c0
 		ValidRelationships: Enemy, Neutral
+		RequiresCondition: !build-incomplete && !being-warped
 	WithRangeCircleCA@VoidSpike:
 		Type: VoidSpike
 		Range: 8c0
@@ -6003,23 +6002,27 @@ VSPK:
 		ConvertTo: BlackTiberium
 		Interval: 10
 		Amount: 1
+		RequiresCondition: !build-incomplete && !being-warped
 	PeriodicExplosion:
 		Weapon: VoidSpike
+		RequiresCondition: !build-incomplete && !being-warped
 	AmbientSoundCA:
 		SoundFiles: grcl-loop1.aud, grcl-loop2.aud
 		Delay: 0
 		Interval: 20
 		VolumeMultiplier: 0.3
 		AudibleThroughFog: true
+		RequiresCondition: !build-incomplete && !being-warped
 	WithIdleOverlay:
 		Sequence: overlay
 		Palette: scrin
 		IsDecoration: true
-		RequiresCondition: !build-incomplete
+		RequiresCondition: !build-incomplete && !being-warped
 	ReflectsDamage:
 		DamagePercentage: 50
 		ValidRelationships: Ally, Enemy, Neutral
 		ReflectToAttacker: true
+		RequiresCondition: !build-incomplete && !being-warped
 
 ISPK:
 	Inherits: ^SpikeBase
@@ -6042,11 +6045,12 @@ ISPK:
 	WithIdleAnimation:
 		Sequences: idle2, idle3, idle4, idle5
 		Interval: 5, 50
-		RequiresCondition: !build-incomplete
+		RequiresCondition: !build-incomplete && !being-warped
 	ProximityExternalCondition@IchorBoost:
 		Range: 8c0
 		Condition: ichor-boost
 		ValidRelationships: Neutral
+		RequiresCondition: !build-incomplete && !being-warped
 	ProximityExternalCondition@ONTIB:
 		Condition: on-tib
 		Range: 8c0
@@ -6071,6 +6075,7 @@ ISPK:
 
 CSPK:
 	Inherits: ^SpikeBase
+	Inherits@ProducesBuildings: ^ProducesBuildings
 	Selectable:
 		Bounds: 1280, 2304, 0, -576
 		DecorationBounds: 1280, 2816, 0, -832
@@ -6079,29 +6084,49 @@ CSPK:
 	Tooltip:
 		Name: Colony Spike
 	TooltipExtras:
-		Attributes: • Provides build radius
-		Description: Allows structures to be built nearby.
+		Attributes: • Produces non-defense buildings.
+		Description: Enables production of non-defense buildings.
 	RevealsShroud:
 		MinRange: 6c0
-		Range: 8c0
+		Range: 10c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 6c0
-	GivesBuildableArea:
-		AreaTypes: building
-	BaseProvider:
-		Range: 6c0
-	WithRangeCircle:
-		Type: ColonySpike
-		Range: 6c0
-		Color: ffffff50
 	WithBuildingBib:
 		HasMinibib: true
 	Building:
 		TerrainTypes: Clear,Road
 		AllowPlacementOnResources: false
-	WithMakeAnimation:
-		-Condition:
+	-PrimaryBuilding:
+	-WithDecoration@primary:
+	-ProductionQueue@MQDEF:
+	-ProductionBar@MQDEF:
+	-GrantConditionOnPrerequisite@MQF:
+	-GrantConditionOnPrerequisite@MQS:
+	Production@SQBLD:
+		Produces: BuildingSQ
+		PauseOnCondition: build-incomplete || being-warped
+	Production@MQBLD:
+		Produces: BuildingMQ
+		PauseOnCondition: build-incomplete || being-warped
+	ProductionBar@SQBLD:
+		ProductionType: BuildingSQ
+	ProductionBar@MQBLD:
+		ProductionType: BuildingMQ
+	ProvidesPrerequisite@scrin:
+		Prerequisite: structures.scrin
+	ProvidesPrerequisiteValidatedFaction@reaper:
+		Factions: reaper
+		Prerequisite: structures.reaper
+	ProvidesPrerequisiteValidatedFaction@traveler:
+		Factions: traveler
+		Prerequisite: structures.traveler
+	ProvidesPrerequisiteValidatedFaction@harbinger:
+		Factions: harbinger
+		Prerequisite: structures.harbinger
+	ProvidesPrerequisiteValidatedFaction@collector:
+		Factions: collector
+		Prerequisite: structures.collector
 
 #
 # ---- misc
