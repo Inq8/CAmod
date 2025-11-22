@@ -870,9 +870,12 @@ namespace OpenRA.Mods.CA.Projectiles
 			foreach (var (falloff, distance) in falloffData)
 			{
 				var modifier = GetFalloffModifier(falloff, distance);
-				if (modifier > 0) // Only add non-zero modifiers
-					damageModifiers.Add(modifier);
+				damageModifiers.Add(modifier);
 			}
+
+			// If the sum of all modifiers is zero, we can skip applying damage
+			if (damageModifiers.Sum() == 0)
+				return;
 
 			var impactOrientation = new WRot(WAngle.Zero, WAngle.Zero, facing);
 
@@ -1215,7 +1218,7 @@ namespace OpenRA.Mods.CA.Projectiles
 						var distance = h.DistanceFromEdge(actor, closestPoint2);
 
 						// Check if the closest point is inside the HitShape OR if HitShape is very close (intersecting)
-						if (distance == WDist.Zero || distance.Length <= 128) // Small tolerance for edge intersection
+						if (distance == WDist.Zero || distance.Length <= 64) // Small tolerance for edge intersection
 							return true;
 					}
 				}
@@ -1288,7 +1291,7 @@ namespace OpenRA.Mods.CA.Projectiles
 					var distance = h.DistanceFromEdge(actor, closestPoint2);
 
 					// Check if closest point is inside the HitShape OR if HitShape is very close (intersecting)
-					if (distance == WDist.Zero || distance.Length <= 128) // Small tolerance for edge intersection
+					if (distance == WDist.Zero || distance.Length <= 64) // Small tolerance for edge intersection
 						return true;
 				}
 			}
@@ -1494,7 +1497,7 @@ namespace OpenRA.Mods.CA.Projectiles
 						var distance = h.DistanceFromEdge(actor, closestPoint2);
 
 						// Check if closest point is inside the HitShape OR if HitShape is very close (intersecting)
-						if (distance == WDist.Zero || distance.Length <= 128) // Small tolerance for edge intersection
+						if (distance == WDist.Zero || distance.Length <= 64) // Small tolerance for edge intersection
 							return true;
 					}
 				}

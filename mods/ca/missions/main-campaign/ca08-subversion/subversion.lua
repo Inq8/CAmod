@@ -292,13 +292,13 @@ CommandoDeathTrigger = function(commando)
 		if RespawnEnabled then
 			Notification("Commando arriving in 20 seconds.")
 			Trigger.AfterDelay(DateTime.Seconds(20), function()
-				Commando = Reinforcements.Reinforce(self.Owner, { "rmbo" }, { Respawn.Location, RespawnRally.Location })[1]
+				local respawnedCommando = Reinforcements.Reinforce(self.Owner, { "rmbo" }, { Respawn.Location, RespawnRally.Location })[1]
 				Beacon.New(self.Owner, RespawnRally.CenterPosition)
 				Media.PlaySpeechNotification(self.Owner, "ReinforcementsArrived")
 				if IsNormalOrBelow() then
-					Commando.GrantCondition("difficulty-" .. Difficulty)
+					respawnedCommando.GrantCondition("difficulty-" .. Difficulty)
 				end
-				CommandoDeathTrigger(Commando)
+				CommandoDeathTrigger(respawnedCommando)
 			end)
 		end
 	end)
@@ -310,13 +310,13 @@ HackerDeathTrigger = function(hacker)
 			if RespawnEnabled then
 				Notification("Hacker arriving in 20 seconds.")
 				Trigger.AfterDelay(DateTime.Seconds(20), function()
-					Hacker = Reinforcements.Reinforce(self.Owner, { "hack" }, { Respawn.Location, RespawnRally.Location })[1]
+					local respawnedHacker = Reinforcements.Reinforce(self.Owner, { "hack" }, { Respawn.Location, RespawnRally.Location })[1]
 					Beacon.New(self.Owner, RespawnRally.CenterPosition)
 					Media.PlaySpeechNotification(self.Owner, "ReinforcementsArrived")
 					if IsNormalOrBelow() then
-						Hacker.GrantCondition("difficulty-" .. Difficulty)
+						respawnedHacker.GrantCondition("difficulty-" .. Difficulty)
 					end
-					HackerDeathTrigger(Hacker)
+					HackerDeathTrigger(respawnedHacker)
 				end)
 			elseif #GetMissionPlayersActorsByTypes({ "hack" }) == 0 then
 				Nod.MarkFailedObjective(ObjectiveHackIonControl)
@@ -331,13 +331,13 @@ StealthTankDeathTrigger = function(stealthTank)
 			if RespawnEnabled then
 				Notification("Stealth Tank arriving in 20 seconds.")
 				Trigger.AfterDelay(DateTime.Seconds(20), function()
-					StealthTank = Reinforcements.Reinforce(self.Owner, { "stnk.nod" }, { Respawn.Location, RespawnRally.Location })[1]
+					local respawnedStealthTank = Reinforcements.Reinforce(self.Owner, { "stnk.nod" }, { Respawn.Location, RespawnRally.Location })[1]
 					Beacon.New(self.Owner, RespawnRally.CenterPosition)
 					Media.PlaySpeechNotification(self.Owner, "ReinforcementsArrived")
 					if IsNormalOrBelow() then
-						StealthTank.GrantCondition("difficulty-" .. Difficulty)
+						respawnedStealthTank.GrantCondition("difficulty-" .. Difficulty)
 					end
-					StealthTankDeathTrigger(StealthTank)
+					StealthTankDeathTrigger(respawnedStealthTank)
 				end)
 			end
 		end
