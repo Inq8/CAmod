@@ -3604,7 +3604,7 @@ RBUG:
 		Weapon: RaiderBuggyLaser
 		MuzzleSequence: muzzle
 		MuzzlePalette: caneon
-		LocalOffset: 250,0,400
+		LocalOffset: 250,0,300
 	Mobile:
 		Speed: 126
 		TurnSpeed: 36
@@ -4363,7 +4363,9 @@ MTNK.Drone:
 	-Tooltip@LaserTank:
 	-TooltipExtras@LaserTank:
 	Valued:
-		Cost: 800
+		Cost: 600
+	Health:
+		HP: 40000
 	Tooltip:
 		Name: Battle Drone
 		-RequiresCondition:
@@ -4866,7 +4868,9 @@ HTNK.Drone:
 		Weaknesses: • Requires active radar communication
 		Attributes: • Can crush concrete walls\n• Self repairs out of combat\n• Immune to mind control\n• XP of losses reclaimed by replacements
 	Valued:
-		Cost: 1500
+		Cost: 1300
+	Health:
+		HP: 88000
 	Tooltip:
 		Name: Mammoth Drone
 	Mobile:
@@ -4876,6 +4880,8 @@ HTNK.Drone:
 		Voice: Move
 	Armament@PRIMARY:
 		Weapon: 130mmTD.Drone
+	Armament@SECONDARY:
+		Weapon: MammothTusk.Drone
 	AttackTurreted:
 		PauseOnCondition: !radarenabled || empdisable || being-warped || blinded
 		Voice: Attack

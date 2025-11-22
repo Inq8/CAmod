@@ -695,6 +695,8 @@ DoFinale = function()
 	MediaCA.PlaySound(MissionDir .. "/hth_farfromover.aud", 2)
 
 	Hawthorne = Actor.Create("xo.hawthorne", true, { Owner = GDI, Location = HawthorneSpawn.Location })
+	Hawthorne.GrantCondition("invulnerability")
+	Media.PlaySound("ironcur9.aud")
 	Hawthorne.TargetedLeap(HawthorneJumpDest.Location)
 	Hawthorne.Move(Gateway.Location)
 	Hawthorne.Destroy()

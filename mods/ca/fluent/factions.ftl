@@ -111,7 +111,7 @@ faction-iraq =
     .description = Iraq: Nuclear Warfare
     Units:
       • Rad Trooper (replaces Shock Trooper)
-      • Toxin Tower (replaces Flame Tower)
+      • Chem Tower (replaces Flame Tower)
 
     Powers:
       • A-Bomb
@@ -195,7 +195,7 @@ faction-eagle =
 
     Upgrades:
       • Hover Mammoth (replaces Mammoth Tank)
-      • Orca Afterburner
+      • Afterburners
 
     Bonuses:
       • Aircraft (10% Discount)
@@ -219,7 +219,7 @@ faction-arc =
       • Recon Drone (-20% Cooldown)
       • Mobile Sensor Array (20% Discount)
       • Drone Carrier (10% Discount)
-      • Additional Comms. Centers (-50% Discount)
+      • Additional Comms. Centers (50% Discount)
       • Comms. Center emergency backup power
 
 faction-blackh =
