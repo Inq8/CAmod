@@ -111,8 +111,10 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnKilled(EnglandDome, function(self, killer)
-		Utils.Do(InitialRadars, function(radar)
-			radar.Destroy()
+		Trigger.AfterDelay(DateTime.Seconds(5), function()
+			Utils.Do(InitialRadars, function(radar)
+				radar.Destroy()
+			end)
 		end)
 	end)
 

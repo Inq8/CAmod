@@ -1,5 +1,5 @@
 
-AssumedControl = {}
+SideAssumedControl = {}
 
 SetupPlayers = function()
 	Multi0 = Player.GetPlayer("Multi0")
@@ -41,7 +41,13 @@ DoMcvArrival = function()
 	local mcvPlayers = GetMcvPlayers()
 
 	Utils.Do(mcvPlayers, function(p)
-		local transport = Actor.Create("lst", true, { Owner = p, Location = entryPoints[i] })
+		local entryPoint = entryPoints[i]
+
+		if #mcvPlayers == 1 then
+			entryPoint = ReinforcementSpawn.Location
+		end
+
+		local transport = Actor.Create("lst", true, { Owner = p, Location = entryPoint })
 		local mcv = Actor.Create("mcv", false, { Owner = p })
 		local tank = Actor.Create("2tnk", false, { Owner = p })
 		transport.LoadPassenger(mcv)
@@ -62,17 +68,23 @@ DoMcvArrival = function()
 			end
 		end
 
-		transport.Move(CPos.New(entryPoints[i].X, 151))
+		transport.Move(CPos.New(entryPoint.X, 151))
 		i = i + 1
+
+		if p.IsLocalPlayer then
+			Camera.Position = transport.CenterPosition
+		end
 	end)
 end
 
 AssumeControl = function(player, side)
-	if AssumedControl[side] then
+	AssumedControl = true
+
+	if SideAssumedControl[side] then
 		return
 	end
 
-	AssumedControl[side] = true
+	SideAssumedControl[side] = true
 
 	if player.IsLocalPlayer then
 		Notification("Command transfer complete.")

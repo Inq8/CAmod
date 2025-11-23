@@ -103,7 +103,9 @@ WorldLoaded = function()
 	StealthTankDeathTrigger(StealthTank1)
 	StealthTankDeathTrigger(StealthTank2)
 
-	Actor.Create("radar.dummy", true, { Owner = Nod })
+	Utils.Do(MissionPlayers, function(p)
+		Actor.Create("radar.dummy", true, { Owner = p })
+	end)
 
 	Trigger.OnKilled(IonControl, function(self, killer)
 		if ObjectiveHackIonControl ~= nil and not Nod.IsObjectiveCompleted(ObjectiveHackIonControl) then

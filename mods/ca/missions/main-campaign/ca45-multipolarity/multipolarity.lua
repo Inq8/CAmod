@@ -1,5 +1,9 @@
 MissionDir = "ca|missions/main-campaign/ca45-multipolarity"
 
+Utils.Do({ "vhard", "brutal" }, function(k)
+	CompositionValueMultipliers[k] = CompositionValueMultipliers[k] * 1.2
+end)
+
 SuperweaponsEnabledTime = {
 	easy = DateTime.Minutes(40),
 	normal = DateTime.Minutes(25),
@@ -84,41 +88,41 @@ end
 
 Squads = {
 	Main = {
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(2)),
 		InitTimeAdjustment = -DateTime.Minutes(3),
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.GDI),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 }),
 		FollowLeader = true,
 		AttackPaths = Utils.Concat(GDIWestAttackPaths, GDIMiddleAttackPaths),
-		Delay = AdjustDelayForDifficulty(DateTime.Minutes(2)),
 		ProducerActors = { Infantry = { WestBarracks }, Vehicles = { WestFactory } },
 		ProducerTypes = { Infantry = { "pyle" }, Vehicles = { "weap.td" } },
 	},
 	Secondary = {
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(3)),
 		InitTimeAdjustment = -DateTime.Minutes(3),
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.GDI),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 }),
 		FollowLeader = true,
 		AttackPaths = Utils.Concat(GDIMiddleAttackPaths, GDIEastAttackPaths),
-		Delay = AdjustDelayForDifficulty(DateTime.Minutes(3)),
 		ProducerActors = { Infantry = { EastBarracks }, Vehicles = { EastFactory } },
 		ProducerTypes = { Infantry = { "pyle" }, Vehicles = { "weap.td" } },
 	},
 	Soviet = {
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(2)),
 		InitTimeAdjustment = -DateTime.Minutes(3),
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Soviet),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 10, Max = 20 }),
 		FollowLeader = true,
 		AttackPaths = { { SovietRally.Location } },
-		Delay = AdjustDelayForDifficulty(DateTime.Minutes(2)),
 		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
 	},
 	Nod = {
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(2)),
 		InitTimeAdjustment = -DateTime.Minutes(3),
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Nod),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 10, Max = 20 }),
 		FollowLeader = true,
 		AttackPaths = { { NodRally.Location } },
-		Delay = AdjustDelayForDifficulty(DateTime.Minutes(2)),
 		DispatchDelay = DateTime.Seconds(15),
 		ProducerTypes = { Infantry = { "hand" }, Vehicles = { "airs" } },
 	},
@@ -351,6 +355,7 @@ InitGDIAttacks = function()
 		GDIAttacksInitialized = true
 		InitAiUpgrades(GDI)
 		InitAttackSquad(Squads.Main, GDI)
+		InitAttackSquad(Squads.Secondary, GDI)
 		InitAirAttackSquad(Squads.Air, GDI)
 
 		if IsHardOrAbove() then
