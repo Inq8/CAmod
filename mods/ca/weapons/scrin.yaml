@@ -1660,7 +1660,7 @@ MothershipChargeBeam:
 	ReloadDelay: 3
 	Range: 0c512
 	TargetActorCenter: true
-	ValidTargets: Structure
+	InvalidTargets: Vehicle, Infantry, Ship
 	Projectile: PlasmaBeam
 		ForceVertical: true
 		Duration: 2
@@ -1677,7 +1677,7 @@ MothershipBeam:
 	ReloadDelay: 150
 	Range: 0c512
 	TargetActorCenter: true
-	ValidTargets: Structure
+	InvalidTargets: Vehicle, Infantry, Ship
 	Projectile: PlasmaBeam
 		ForceVertical: true
 		Duration: 125
@@ -1723,7 +1723,7 @@ MothershipDiscs:
 	ReloadDelay: 65
 	Burst: 6
 	BurstDelays: 4
-	InvalidTargets: Structure
+	ValidTargets: Infantry, Vehicle, Ship
 	Projectile: Bullet
 		Image: plasmatorp1
 		Palette: scrin
@@ -1733,7 +1733,7 @@ MothershipDiscs:
 		ShadowColor: 00000033
 		Speed: 280
 	Warhead@1Dam: SpreadDamage
-		Damage: 4000
+		Damage: 3750
 		Versus:
 			None: 100
 			Wood: 45
