@@ -30,6 +30,19 @@
 		TargetCircleColor: 0066ff
 		Range: 3c0
 
+^SendCashPower:
+	SendCashPower@SendCash:
+		OrderName: sendcash
+		Icon: sendcash
+		ChargeInterval: 1
+		Name: Send Cash
+		Description: Sends up to $1000 to the owner of the target allied unit or structure.
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		Cursor: ability
+		SupportPowerPaletteOrder: 0
+		Prerequisites: sendcash.enabled
+
 ^TimeSkipPower:
 	ProduceActorPowerCA@TimeSkip:
 		OrderName: timeskip

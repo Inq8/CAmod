@@ -139,13 +139,16 @@
 		Prerequisites: is-easy-ai
 
 # Refineries have an explicit BuildDuration so build time is unaffected by ProductionCostMultiplier
-^BotRefinery:
+^Refinery:
+	Inherits@SendCash: ^SendCashPower
 	ProductionTimeMultiplier@brutalbonus:
 		Multiplier: 90
 		Prerequisites: is-brutal-ai
 	ProductionTimeMultiplier@vhardbonus:
 		Multiplier: 95
 		Prerequisites: is-vhard-ai
+	ProvidesPrerequisiteIfAlliesExist:
+		Prerequisite: sendcash.enabled
 
 ^BotDefenseProductionBonus:
 	ProductionCostMultiplier@brutalbonus:

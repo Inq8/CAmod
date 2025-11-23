@@ -95,6 +95,11 @@ namespace OpenRA.Mods.CA.Traits
 
 				foreach (var p in players)
 				{
+					TextNotificationsManager.Debug("Player: {0}, Faction: {1}", p.InternalName, p.Faction.InternalName);
+				}
+
+				foreach (var p in players)
+				{
 					if (validFactions.Info.Factions.Contains(p.Faction.InternalName))
 					{
 						faction = p.Faction.InternalName;
