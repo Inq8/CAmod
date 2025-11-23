@@ -775,7 +775,7 @@ wrath.covenant:
 	Buildable:
 		BuildPaletteOrder: 13
 		Prerequisites: ~player.nod, covenant.level1, !unity.covenant, !zeal.covenant, ~techlevel.medium
-		Description: Adopt the Covenant of Wrath.\n\n• Level 1: Assassin Squad & Compressed Plasma (+3 Banshee ammo)\n• Level 2: Temple Prime & Laser Tanks Upgrade\n• Level 3: Avatar, Cyborg Elite & Cyborg Firepower Upgrade
+		Description: Adopt the Covenant of Wrath.\n\n• Level 1: Assassin Squad & Compressed Plasma (+3 Banshee ammo)\n• Level 2: Cyborg Armor & Laser Tanks Upgrades\n• Level 3: Avatar, Cyborg Elite & Cyborg Firepower Upgrade
 		IconPalette: chrometd
 	TooltipExtras:
 		Attributes: (!) Only ONE Covenant may be chosen.
@@ -795,7 +795,7 @@ unity.covenant:
 	Buildable:
 		BuildPaletteOrder: 14
 		Prerequisites: ~player.nod, covenant.level1, !wrath.covenant, !zeal.covenant, ~techlevel.medium
-		Description: Adopt the Covenant of Unity.\n\n• Level 1: Hacker Squad, Internet Center & Siphoned Funds ($ from Hackers in Internet Center)\n• Level 2: Temple Prime & Custodian Upgrade\n• Level 3: Cyborg Reaper, Cyborg Elite & Reclaimed Fabrication Upgrade
+		Description: Adopt the Covenant of Unity.\n\n• Level 1: Hacker Squad, Internet Center & Siphoned Funds ($ from Hackers in Internet Center)\n• Level 2: Cyborg Armor & Custodian Upgrades\n• Level 3: Cyborg Reaper, Cyborg Elite & Reclaimed Fabrication Upgrade
 		IconPalette: chrometd
 	TooltipExtras:
 		Attributes: (!) Only ONE Covenant may be chosen.
@@ -815,7 +815,7 @@ zeal.covenant:
 	Buildable:
 		BuildPaletteOrder: 15
 		Prerequisites: ~player.nod, covenant.level1, !unity.covenant, !wrath.covenant, ~techlevel.medium
-		Description: Adopt the Covenant of Zeal.\n\n• Level 1: Confessor Cabal & Fast Harrassers (+15% Bike/Buggy/Howitzer speed)\n• Level 2: Temple Prime & Raider Buggy Upgrade\n• Level 3: Enlightened, Cyborg Elite & Cyborg Speed Upgrade
+		Description: Adopt the Covenant of Zeal.\n\n• Level 1: Confessor Cabal & Fast Harrassers (+15% Bike/Buggy/Howitzer speed)\n• Level 2: Cyborg Armor & Raider Buggy Upgrades\n• Level 3: Enlightened, Cyborg Elite & Cyborg Speed Upgrade
 		IconPalette: chrometd
 	TooltipExtras:
 		Attributes: (!) Only ONE Covenant may be chosen.
@@ -996,7 +996,7 @@ covenant.upgrade:
 		Name: Covenant Dependent Upgrade
 	Buildable:
 		BuildPaletteOrder: 30
-		Prerequisites: ~player.nod, anycovenant, tmpl, covenant.level2, ~!wrath.covenant, ~!unity.covenant, ~!zeal.covenant, ~techlevel.high
+		Prerequisites: ~player.nod, anycovenant, covenant.level2, ~!wrath.covenant, ~!unity.covenant, ~!zeal.covenant, ~techlevel.high
 		IconPalette: chrometd
 		Description: Upgrade depends on chosen covenant.\n\n• Wrath: Laser Tanks\n• Unity: Custodian\n• Zeal: Raider Buggy
 	Valued:
@@ -1067,7 +1067,7 @@ cyborgarmor.upgrade:
 		Name: Upgrade: Improved Cyborg Armor
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~player.nod, tmpp, ~techlevel.high
+		Prerequisites: ~player.nod, covenant.level2, ~techlevel.high
 		IconPalette: chrometd
 		Description: Improves cyborg armor.\n\nUpgrades: Cyborg\nUpgrades: Cyborg Rocket Soldier\nUpgrades: Chemical Warrior\nUpgrades: Acolyte/Templar\nUpgrades: Cyborg Mechanic\nUpgrades: Enlightened\nUpgrades: Cyborg Reaper\nUpgrades: Cyborg Elite
 	TooltipExtras:
@@ -1102,7 +1102,7 @@ cyborgdmg.upgrade:
 		Name: Upgrade: Improved Cyborg Firepower
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~player.nod, tmpp, covenant.level3, ~wrath.covenant, ~techlevel.high
+		Prerequisites: ~player.nod, covenant.level3, ~wrath.covenant, ~techlevel.high
 		IconPalette: chrometd
 		Description: Increases cyborg firepower.\n\nUpgrades: Cyborg\nUpgrades: Cyborg Rocket Soldier\nUpgrades: Chemical Warrior\nUpgrades: Acolyte/Templar\nUpgrades: Cyborg Mechanic\nUpgrades: Cyborg Elite
 	TooltipExtras:
@@ -1122,7 +1122,7 @@ cyborgprod.upgrade:
 		Name: Upgrade: Reclaimed Fabrication
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~player.nod, tmpp, covenant.level3, ~unity.covenant, ~techlevel.high
+		Prerequisites: ~player.nod, covenant.level3, ~unity.covenant, ~techlevel.high
 		IconPalette: chrometd
 		Description: Leverage CABAL AI to reclaim components from lost cyborgs to replacements.
 	TooltipExtras:
@@ -1142,7 +1142,7 @@ cyborgspeed.upgrade:
 		Name: Upgrade: Improved Cyborg Speed
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~player.nod, tmpp, covenant.level3, ~zeal.covenant, ~techlevel.high
+		Prerequisites: ~player.nod, covenant.level3, ~zeal.covenant, ~techlevel.high
 		IconPalette: chrometd
 		Description: Increases cyborg movement speed.\n\nUpgrades: Cyborg\nUpgrades: Cyborg Rocket Soldier\nUpgrades: Chemical Warrior\nUpgrades: Acolyte/Templar\nUpgrades: Cyborg Mechanic\nUpgrades: Enlightened\nUpgrades: Cyborg Elite
 	TooltipExtras:
