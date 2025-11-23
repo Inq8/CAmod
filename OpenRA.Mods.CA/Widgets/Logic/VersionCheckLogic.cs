@@ -74,7 +74,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 					foreach (var release in releases)
 					{
-						if (release.draft)
+						if (release.draft || release.name.Contains("Draft"))
 							continue;
 
 						// For devtest releases, only consider versions that are at least 30 minutes old
@@ -177,6 +177,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 		class Release
 		{
+			public string name { get; set; }
 			public string tag_name { get; set; }
 			public string html_url { get; set; }
 			public bool prerelease { get; set; }

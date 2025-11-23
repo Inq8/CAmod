@@ -22,7 +22,8 @@ namespace OpenRA.Mods.CA.Traits
 		Owned = 1,
 		Killed = 2,
 		SoldAfterDamage = 4,
-		Captured = 8
+		Captured = 8,
+		Infiltrated = 16
 	}
 
 	[Desc("Updates a counter when the actor is created/disposed or changes owner.")]
@@ -42,10 +43,11 @@ namespace OpenRA.Mods.CA.Traits
 	}
 
 	public class UpdatesCount : ConditionalTrait<UpdatesCountInfo>, INotifyCreated, INotifyActorDisposing, INotifyOwnerChanged,
-		INotifyKilled, INotifySold, INotifyDamage, INotifyCapture
+		INotifyKilled, INotifySold, INotifyDamage, INotifyCapture, INotifyInfiltrated
 	{
 		public readonly UpdatesCountInfo info;
 		CountManager countManager;
+		bool hasBeenInfiltrated = false;
 		public readonly Dictionary<Player, int> lastDamagedTicks = new();
 
 		public UpdatesCount(UpdatesCountInfo info)
@@ -150,6 +152,15 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			if (info.UpdateOn.HasFlag(UpdateOnType.Captured))
 				newOwner.PlayerActor.Trait<CountManager>().Increment(info.Type);
+		}
+
+		void INotifyInfiltrated.Infiltrated(Actor self, Actor infiltrator, BitSet<TargetableType> types)
+		{
+			if (!hasBeenInfiltrated && info.UpdateOn.HasFlag(UpdateOnType.Infiltrated))
+			{
+				infiltrator.Owner.PlayerActor.Trait<CountManager>().Increment(info.Type);
+				hasBeenInfiltrated = true;
+			}
 		}
 	}
 }
