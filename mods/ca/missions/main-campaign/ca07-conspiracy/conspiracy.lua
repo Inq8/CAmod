@@ -238,13 +238,18 @@ WorldLoaded = function()
 						Reinforcements.ReinforceWithTransport(EvacPlayer, "tran.evac", nil, { EvacSpawn.Location, EvacPoint.Location }, nil, function(transport, cargo)
 
 							Trigger.AfterDelay(DateTime.Seconds(1), function()
-								if not Researcher1.IsDead then
-									Researcher1.EnterTransport(transport)
-								end
-								if not Researcher1.IsDead then
-									Researcher2.EnterTransport(transport)
-								end
+								Utils.Do({ Researcher1, Researcher2 }, function(r)
+									if not r.IsDead then
+										r.EnterTransport(transport)
+										Trigger.OnIdle(r, function(r)
+											if not r.IsDead then
+												r.EnterTransport(transport)
+											end
+										end)
+									end
+								end)
 							end)
+
 							Trigger.OnPassengerEntered(transport, function(t, passenger)
 								if t.PassengerCount == 2 then
 									EvacExiting = true

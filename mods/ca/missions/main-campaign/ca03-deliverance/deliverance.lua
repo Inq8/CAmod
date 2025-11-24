@@ -255,6 +255,11 @@ WorldLoaded = function()
 						Trigger.AfterDelay(DateTime.Seconds(1), function()
 							if not commander.IsDead then
 								commander.EnterTransport(transport)
+								Trigger.OnIdle(commander, function(c)
+									if not c.IsDead then
+										c.EnterTransport(transport)
+									end
+								end)
 							end
 						end)
 
@@ -404,7 +409,7 @@ TransferGDIUnits = function()
 end
 
 UpdateReinforcementCountdown = function()
-	if not IsHoldOutComplete and not IsPrisonRevealed then
+	if not IsHoldOutComplete and (not IsPrisonRevealed or (ObjectiveCapturePrison ~= nil and Greece.IsObjectiveCompleted(ObjectiveCapturePrison))) then
 		UserInterface.SetMissionText("Hold out until reinforcements arrive: " .. UtilsCA.FormatTimeForGameSpeed(TimerTicks), HSLColor.Yellow)
 	end
 end
