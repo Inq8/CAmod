@@ -1708,7 +1708,7 @@ namespace OpenRA.Mods.CA.Projectiles
 			var firedBy = args.SourceActor;
 			var world = firedBy.World;
 
-			if (info.SmudgeChance < world.LocalRandom.Next(100))
+			if (info.SmudgeChance < world.SharedRandom.Next(100))
 				return;
 
 			var pos = target.CenterPosition;

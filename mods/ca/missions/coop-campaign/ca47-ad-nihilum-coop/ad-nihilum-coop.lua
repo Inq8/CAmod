@@ -26,8 +26,18 @@ end
 AfterWorldLoaded = function()
 	StartCashSpread(3000)
 
-	local leftSidePlayers = Utils.Where({ Multi0, Multi2, Multi4 }, function(p) return p ~= nil end)
-	local rightSidePlayers = Utils.Where({ Multi1, Multi3, Multi5 }, function(p) return p ~= nil end)
+	local leftSidePlayers = {}
+	local rightSidePlayers = {}
+	local isLeft = true
+
+	for _, p in ipairs(MissionPlayers) do
+		if isLeft then
+			table.insert(leftSidePlayers, p)
+		else
+			table.insert(rightSidePlayers, p)
+		end
+		isLeft = not isLeft
+	end
 
 	if #leftSidePlayers == 0 then
 		leftSidePlayers = rightSidePlayers

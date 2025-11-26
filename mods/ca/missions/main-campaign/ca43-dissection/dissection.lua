@@ -411,6 +411,8 @@ DomeDisabled = function(d)
 		numDomesDisabled = numDomesDisabled + 1
 	end
 
+	Notification("Radar Dome neutralized, Soviet bombing runs have been delayed.")
+
 	if numDomesDisabled >= #SovietDomes then
 		AllDomesDisabled = true
 		Greece.MarkCompletedObjective(ObjectiveNeutralizeDomes)

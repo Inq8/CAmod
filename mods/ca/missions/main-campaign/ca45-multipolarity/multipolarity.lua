@@ -243,7 +243,7 @@ WorldLoaded = function()
 			Trigger.RemoveProximityTrigger(id)
 			if not FinalTaunt then
 				FinalTaunt = true
-				Media.DisplayMessage("You not stop me from bringing Kane and his minions to justice!", "Gen. Hawthorne", HSLColor.FromHex("F2CF74"))
+				Media.DisplayMessage("You will not stop me from bringing Kane and his minions to justice!", "Gen. Hawthorne", HSLColor.FromHex("F2CF74"))
 				MediaCA.PlaySound(MissionDir .. "/hth_notstop.aud", 2)
 			end
 		end

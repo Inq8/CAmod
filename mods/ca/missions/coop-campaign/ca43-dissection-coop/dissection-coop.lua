@@ -40,17 +40,22 @@ DoMcvArrival = function()
 	local i = 1
 	local mcvPlayers = GetMcvPlayers()
 
-	Utils.Do(mcvPlayers, function(p)
+	Utils.Do(MissionPlayers, function(p)
+		local isMcvPlayer = Utils.Any(mcvPlayers, function(mcvPlayer) return p == mcvPlayer end)
 		local entryPoint = entryPoints[i]
 
-		if #mcvPlayers == 1 then
+		if #mcvPlayers == 1 and isMcvPlayer then
 			entryPoint = ReinforcementSpawn.Location
 		end
 
 		local transport = Actor.Create("lst", true, { Owner = p, Location = entryPoint })
-		local mcv = Actor.Create("mcv", false, { Owner = p })
+
+		if isMcvPlayer then
+			local mcv = Actor.Create("mcv", false, { Owner = p })
+			transport.LoadPassenger(mcv)
+		end
+
 		local tank = Actor.Create("2tnk", false, { Owner = p })
-		transport.LoadPassenger(mcv)
 		transport.LoadPassenger(tank)
 
 		if #mcvPlayers < 4 then

@@ -121,7 +121,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 				influenceLevel.GetImageName = () =>
 				{
-					if (chosenCoalition != null)
+					if (chosenCoalition != null && timeline.ThresholdsPassed >= timeline.Thresholds.Length)
 						return "level0";
 
 					return timeline.ThresholdsPassed switch
