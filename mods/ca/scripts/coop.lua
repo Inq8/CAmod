@@ -460,7 +460,7 @@ local function SyncObjectives()
 				--Failsafe if reassignment isnt possible
 				local Deathlist = player.GetActors()
 				Utils.Do(Deathlist,function(UID)
-					if UID.Type ~= "player" and not UID.IsDead and UID.HasProperty(Health) then
+					if UID.Type ~= "player" and not UID.IsDead and UID.HasProperty("Health") then
 						UID.Kill()
 					end
 				end)

@@ -416,7 +416,7 @@ end
 
 AssaultPlayerBaseOrHunt = function(actor, targetPlayers, waypoints, fromIdle)
 
-	if not actor.HasProperty("AttackMove") or IsMissionPlayer(actor.Owner) then
+	if actor.IsDead or not actor.HasProperty("AttackMove") or IsMissionPlayer(actor.Owner) then
 		return
 	end
 

@@ -230,9 +230,11 @@ InitMaleficScrin = function()
 	end)
 
 	Utils.Do({ VoidEngine, VoidEngine2 }, function(v)
-		Trigger.OnDamaged(v, function(self, attacker, damage)
-			InitVoidEngines()
-		end)
+		if not v.IsDead then
+			Trigger.OnDamaged(v, function(self, attacker, damage)
+				InitVoidEngines()
+			end)
+		end
 	end)
 end
 
@@ -241,7 +243,9 @@ InitVoidEngines = function()
 		VoidEnginesHunting = true
 		MediaCA.PlaySound("veng-spawn.aud", 2)
 		Utils.Do({ VoidEngine, VoidEngine2 }, function(ve)
-			AssaultPlayerBaseOrHunt(v)
+			if not ve.IsDead then
+				AssaultPlayerBaseOrHunt(v)
+			end
 		end)
 	end
 end
