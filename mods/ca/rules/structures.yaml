@@ -1083,9 +1083,6 @@ ATEK:
 	ProvidesPrerequisite:
 		Prerequisite: techcenter.any
 		RequiresCondition: !tech-locked
-	ProvidesPrerequisite@AtekOrHq:
-		Prerequisite: atekoralhq
-		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@germanyatek:
 		Factions: germany
 		Prerequisite: atek.germany
@@ -1166,9 +1163,6 @@ ALHQ:
 	SpawnRandomActorOnDeath:
 		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
-		RequiresCondition: !tech-locked
-	ProvidesPrerequisite@AtekOrHq:
-		Prerequisite: atekoralhq
 		RequiresCondition: !tech-locked
 	WithDecoration@TechLock:
 		RequiresCondition: tech-locked
@@ -2706,14 +2700,6 @@ FTURORRADAR:
 	Buildable:
 		Description: Flame Tower or Radar
 
-ATEKORALHQ:
-	AlwaysVisible:
-	Interactable:
-	Tooltip:
-		Name: Allied Tech Center or Allied HQ
-	Buildable:
-		Description: Allied Tech Center or Allied HQ
-
 VEHICLES.MCV:
 	AlwaysVisible:
 	Interactable:
@@ -3792,7 +3778,7 @@ HQ:
 		RequiresCondition: arc-built
 		IsStandard: false
 	Valued:
-		Cost: 1800
+		Cost: 1500
 	Tooltip:
 		Name: Comm. Center
 		RequiresCondition: !arc-built
@@ -5833,7 +5819,7 @@ OREP:
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 200
-		Prerequisites: ~structures.allies, atekoralhq, ~techlevel.high
+		Prerequisites: ~structures.allies, alhq, ~techlevel.high
 		Description: Refines ore, gems & Tiberium, increasing income by 10%.
 		BuildLimit: 1
 	TooltipExtras:

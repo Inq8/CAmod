@@ -848,7 +848,7 @@ E7:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 200
-		Prerequisites: ~tent, atekoralhq, ~techlevel.high
+		Prerequisites: ~tent, atek, ~techlevel.high
 		BuildLimit: 1
 		Description: Elite commando infantry armed with dual pistols and C4.
 	TooltipExtras:
@@ -890,6 +890,8 @@ E7:
 		PauseOnCondition: being-warped || blinded || reapersnare
 		Armaments: primary, secondary
 		FacingTolerance: 0
+	AutoTarget:
+		AllowMovement: false
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		StandSequences: stand
@@ -2055,6 +2057,8 @@ RMBO:
 		Armaments: primary, secondary
 		PauseOnCondition: being-warped || blinded || reapersnare
 		FacingTolerance: 0
+	AutoTarget:
+		AllowMovement: false
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		IdleSequences: idle1,idle2,idle3
@@ -4550,6 +4554,8 @@ CDOG:
 		Category: Nod/Infantry
 	EncyclopediaExtras:
 		AdditionalInfo: Stolen from Soviet Barracks.
+	-KeepsDistance:
+	-GuardsSelection:
 
 MORT.Sonic:
 	Inherits: ^MortarInfantryBase

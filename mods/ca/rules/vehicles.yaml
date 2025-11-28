@@ -10767,11 +10767,11 @@ CUST:
 		Voice: Move
 		CargoCondition: passenger
 	RevealsShroud:
-		MinRange: 4c0
-		Range: 6c0
+		MinRange: 6c0
+		Range: 8c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 4c0
+		Range: 6c0
 	Cargo:
 		Types: Infantry, Hacker
 		MaxWeight: 5
@@ -10786,10 +10786,6 @@ CUST:
 	WithCargoSounds:
 		EnterSounds: genter1a.aud
 		ExitSounds: gexit1a.aud
-		RequiresCondition: !no-cargo-sounds
-	GrantTimedCondition@NoPassengerSound:
-		Duration: 10
-		Condition: no-cargo-sounds
 	CargoBlocked:
 		RequiresCondition: mindcontrolled
 	WithDecoration@COMMANDOSKULL:
@@ -10810,7 +10806,11 @@ CUST:
 		TargetTypes: MindControlImmune
 		RequiresCondition: loaded-cmdo
 	KeepsDistance:
+	GuardsSelection:
+		ValidTargets: Cyborg, Vehicle
+		RequiresCondition: !stance-attackanything
 	AttackTurreted:
+		PauseOnCondition: empdisable || being-warped || blinded
 	AttackMove:
 	AutoTarget:
 	AutoTargetPriority@DEFAULT:
@@ -10831,6 +10831,7 @@ CUST:
 		Range: 6c0
 		Condition: machine-learning
 		ValidRelationships: Ally
+		RequiresCondition: !empdisable && !being-warped
 	WithRadiatingCircle@MachineLearning:
 		EndRadius: 6c0
 		Interval: 75
@@ -10840,11 +10841,6 @@ CUST:
 		Color: 0040FF60
 		MaxRadiusColor: 0040FF80
 		MaxRadiusFlashColor: 0040FF80
-	GivesExperienceCA:
-		ActorExperienceModifier: 2000
-		PlayerExperienceModifier: 0
-	GivesBountyCA:
-		Percentage: 2
 	Sellable:
 		RefundPercent: 10
 	Encyclopedia:
