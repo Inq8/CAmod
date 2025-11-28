@@ -119,6 +119,7 @@ WorldLoaded = function()
 	end)
 
 	GatewayNerveCenter.GrantCondition("nerv-damage-reduction")
+	GatewayNerveCenter.GrantCondition("no-auto-target")
 
 	Trigger.OnCapture(GatewayNerveCenter, function(self, captor, oldOwner, newOwner)
 		if IsMissionPlayer(newOwner) and not USSR.IsObjectiveCompleted(ObjectiveCaptureNerveCenter) then

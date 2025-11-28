@@ -1,3 +1,5 @@
+IsCoop = true
+
 ---@type player[]
 CoopPlayers = {}
 
@@ -298,39 +300,6 @@ GoodSpread = function()
 			AssignToCoopPlayers(actors)
 		end
 	end
-end
-
-local function SecondaryObjectivesRequired()
-	local SecondaryMissionsText = "Complete all other Primary and Secondary objectives."
-	SecondarysRequired = MainPlayer.AddObjective(SecondaryMissionsText)
-	local NumAllObjectives = 0
-	local NumAllCompleted = 0
-	Trigger.OnObjectiveAdded(MainPlayer, function(_, obid)
-		if obid ~= SecondarysRequired then
-			NumAllObjectives = NumAllObjectives + 1
-		end
-	end)
-	Trigger.OnObjectiveCompleted(MainPlayer, function(_, obid)
-		if obid ~= SecondarysRequired then
-			NumAllCompleted = NumAllCompleted + 1
-			if NumAllCompleted >= NumAllObjectives and NumAllObjectives > 0 then
-				Trigger.AfterDelay(DateTime.Seconds(1), function()
-					Utils.Do(CoopPlayers,function(PID)
-						PID.MarkCompletedObjective(SecondarysRequired)
-					end)
-				end)
-			end
-		end
-	end)
-	Trigger.OnObjectiveFailed(MainPlayer, function(_, obid)
-		if obid ~= SecondarysRequired then
-			Trigger.AfterDelay(DateTime.Seconds(1), function()
-				Utils.Do(CoopPlayers,function(PID)
-					PID.MarkFailedObjective(SecondarysRequired)
-				end)
-			end)
-		end
-	end)
 end
 
 local function SyncObjectives()
@@ -1068,12 +1037,6 @@ CoopInit = function()
 	end)
 
 	SyncObjectives()
-
-	Trigger.AfterDelay(DateTime.Seconds(1), function()
-		if Map.LobbyOption("secondariesrequired") == "required" then
-			SecondaryObjectivesRequired()
-		end
-	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(2), function()
 		Utils.Do(mainEnemies, function(player)

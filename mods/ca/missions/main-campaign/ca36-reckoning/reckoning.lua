@@ -176,7 +176,10 @@ WorldLoaded = function()
 	InitScrinRebels()
 
 	ObjectiveDestroyOverlordForces = Nod.AddObjective("Destroy Scrin forces loyal to the Overlord.")
-	ObjectiveDefendRebels = Nod.AddObjective("Protect Scrin rebel forces.")
+
+	if not IsCoop then
+		ObjectiveDefendRebels = Nod.AddObjective("Protect Scrin rebel forces.")
+	end
 
 	Trigger.AfterDelay(DateTime.Seconds(3), function()
 		Media.DisplayMessage("The Overlord's tyranny will die today commander, and a new era will begin. Elsewhere, battles are still raging, but the decisive blow must be dealt here where his most elite forces are gathered. Show no mercy commander. Peace through power.", "Kane", HSLColor.FromHex("FF0000"))
@@ -238,11 +241,15 @@ OncePerFiveSecondChecks = function()
 			MediaCA.PlaySound(MissionDir .. "/kane_newbeginning.aud", 2)
 			Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(19)), function()
 				Nod.MarkCompletedObjective(ObjectiveDestroyOverlordForces)
-				Nod.MarkCompletedObjective(ObjectiveDefendRebels)
+				if ObjectiveDefendRebels ~= nil then
+					Nod.MarkCompletedObjective(ObjectiveDefendRebels)
+				end
 			end)
 		end
 
-		DefendScrinRebelsCheck()
+		if ObjectiveDefendRebels ~= nil and not PlayerHasBuildings(ScrinRebels) and not Victory then
+			Nod.MarkFailedObjective(ObjectiveDefendRebels)
+		end
 
 		if MissionPlayersHaveNoRequiredUnits() and not Victory then
 			Nod.MarkFailedObjective(ObjectiveDestroyOverlordForces)
@@ -455,10 +462,4 @@ end
 
 IsScrinGroundHunterUnitExcludingExterminators = function(actor)
 	return IsScrinGroundHunterUnit(actor) and actor.Type ~= "etpd"
-end
-
-DefendScrinRebelsCheck = function()
-	if not PlayerHasBuildings(ScrinRebels) and not Victory then
-		Nod.MarkFailedObjective(ObjectiveDefendRebels)
-	end
 end
