@@ -197,7 +197,7 @@ WorldLoaded = function()
 
 		Trigger.OnAllKilled(alliedBaseDefenders, function()
 			if not Greece.IsObjectiveCompleted(ObjectiveSecureBase) then
-				ObjectiveCaptureHQ = Greece.AddObjective("Capture Gen. Hawthorne's Command Center.")
+				InitCaptureHQObjective()
 				Greece.MarkCompletedObjective(ObjectiveSecureBase)
 
 				Trigger.AfterDelay(DateTime.Seconds(3), function()
@@ -241,6 +241,7 @@ WorldLoaded = function()
 	Trigger.OnEnteredProximityTrigger(HawthorneHQ.CenterPosition, WDist.New(15 * 1024), function(a, id)
 		if IsMissionPlayer(a.Owner) then
 			Trigger.RemoveProximityTrigger(id)
+			InitCaptureHQObjective()
 			if not FinalTaunt then
 				FinalTaunt = true
 				Media.DisplayMessage("You will not stop me from bringing Kane and his minions to justice!", "Gen. Hawthorne", HSLColor.FromHex("F2CF74"))
@@ -693,6 +694,12 @@ CaptureRandomBuilding = function(engi)
 	local target = Utils.Random(buildings)
 	CaptureTargets[tostring(target)] = true
 	engi.Capture(target)
+end
+
+InitCaptureHQObjective() = function()
+	if not ObjectiveCaptureHQ then
+		ObjectiveCaptureHQ = Greece.AddObjective("Capture Gen. Hawthorne's Command Center.")
+	end
 end
 
 DoFinale = function()
