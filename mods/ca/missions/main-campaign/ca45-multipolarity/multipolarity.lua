@@ -227,13 +227,13 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnKilled(HawthorneHQ, function(self, killer)
-		if not Greece.IsObjectiveCompleted(ObjectiveCaptureHQ) then
+		if ObjectiveCaptureHQ ~= nil and not Greece.IsObjectiveCompleted(ObjectiveCaptureHQ) then
 			Greece.MarkFailedObjective(ObjectiveCaptureHQ)
 		end
 	end)
 
 	Trigger.OnCapture(HawthorneHQ, function(self, captor, oldOwner, newOwner)
-		if IsMissionPlayer(newOwner) and not Greece.IsObjectiveCompleted(ObjectiveCaptureHQ) then
+		if IsMissionPlayer(newOwner) and ObjectiveCaptureHQ ~= nil and not Greece.IsObjectiveCompleted(ObjectiveCaptureHQ) then
 			DoFinale()
 		end
 	end)
@@ -241,6 +241,7 @@ WorldLoaded = function()
 	Trigger.OnEnteredProximityTrigger(HawthorneHQ.CenterPosition, WDist.New(15 * 1024), function(a, id)
 		if IsMissionPlayer(a.Owner) then
 			Trigger.RemoveProximityTrigger(id)
+			InitGDIAttacks()
 			InitCaptureHQObjective()
 			if not FinalTaunt then
 				FinalTaunt = true
@@ -696,7 +697,7 @@ CaptureRandomBuilding = function(engi)
 	engi.Capture(target)
 end
 
-InitCaptureHQObjective() = function()
+InitCaptureHQObjective = function()
 	if not ObjectiveCaptureHQ then
 		ObjectiveCaptureHQ = Greece.AddObjective("Capture Gen. Hawthorne's Command Center.")
 	end

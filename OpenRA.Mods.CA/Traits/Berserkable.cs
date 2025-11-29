@@ -8,9 +8,11 @@
  */
 #endregion
 
+using System.Data;
 using System.Linq;
 using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Traits;
+using OpenRA.Primitives;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
@@ -18,13 +20,24 @@ namespace OpenRA.Mods.CA.Traits
 	[Desc("When enabled, the actor will randomly try to attack nearby other actors.")]
 	public class BerserkableInfo : ConditionalTraitInfo
 	{
+		[Desc("Will only attack units with these target types.")]
+		public readonly BitSet<TargetableType> InvalidTargets = new BitSet<TargetableType>();
+
+		[Desc("Maximum scan range. If zero, uses the maximum range of the unit's weapons and auto-target traits.")]
+		public readonly WDist MaxRange = WDist.Zero;
+
 		public override object Create(ActorInitializer init) { return new Berserkable(init.Self, this); }
 	}
 
 	class Berserkable : ConditionalTrait<BerserkableInfo>, INotifyIdle
 	{
+		readonly Mobile mobile;
+
 		public Berserkable(Actor self, BerserkableInfo info)
-			: base(info) { }
+			: base(info)
+        {
+            mobile = self.TraitOrDefault<Mobile>();
+        }
 
 		void Blink(Actor self)
 		{
@@ -35,10 +48,6 @@ namespace OpenRA.Mods.CA.Traits
 					var stop = new Order("Stop", self, false);
 					foreach (var t in self.TraitsImplementing<IResolveOrder>())
 						t.ResolveOrder(self, stop);
-
-					w.Remove(self);
-					self.Generation++;
-					w.Add(self);
 				}
 			});
 		}
@@ -76,6 +85,9 @@ namespace OpenRA.Mods.CA.Traits
 					range = r;
 			}
 
+			if (Info.MaxRange.Length != 0 && Info.MaxRange.Length < range.Length)
+				range = Info.MaxRange;
+
 			return range;
 		}
 
@@ -94,10 +106,15 @@ namespace OpenRA.Mods.CA.Traits
 			WDist range = GetScanRange(self, atbs);
 
 			var targets = self.World.FindActorsInCircle(self.CenterPosition, range)
-				.Where(a => !a.Owner.NonCombatant && a != self && a.IsTargetableBy(self));
+				.Where(a => !a.Owner.NonCombatant
+					&& a != self && a.IsTargetableBy(self)
+					&& !Info.InvalidTargets.Overlaps(a.GetEnabledTargetTypes()));
 
 			if (!targets.Any())
 			{
+				if (mobile != null)
+					self.QueueActivity(false, new Nudge(self));
+
 				self.QueueActivity(new Wait(15));
 				return;
 			}

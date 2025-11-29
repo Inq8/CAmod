@@ -11,6 +11,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Graphics;
+using OpenRA.Mods.Common.Effects;
 using OpenRA.Mods.Common.Orders;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
@@ -65,20 +66,22 @@ namespace OpenRA.Mods.CA.Traits
 			PlayLaunchSounds();
 			Game.Sound.Play(SoundType.World, info.OnFireSound, order.Target.CenterPosition);
 
-			// Calculate how much money we can actually send
 			var playerResources = self.Owner.PlayerActor.Trait<PlayerResources>();
 			var amountToSend = System.Math.Min(info.Amount, playerResources.Cash + playerResources.Resources);
 
 			if (amountToSend > 0)
 			{
-				// Take money from the sending player
 				playerResources.TakeCash(amountToSend, true);
 
-				// Give money to the target's owner
 				var targetResources = target.Owner.PlayerActor.Trait<PlayerResources>();
 				targetResources.GiveCash(amountToSend);
 
-				// Show a text notification
+				self.World.AddFrameEndTask(w =>
+				{
+					w.Add(new FloatingText(target.CenterPosition, target.OwnerColor(), FloatingText.FormatCashTick(amountToSend), 30));
+					w.Add(new FlashTarget(target, Color.Yellow));
+				});
+
 				TextNotificationsManager.AddTransientLine(self.Owner, $"Sent ${amountToSend} to {target.Owner.ResolvedPlayerName}");
 				TextNotificationsManager.AddTransientLine(target.Owner, $"Received ${amountToSend} from {self.Owner.ResolvedPlayerName}");
 			}
