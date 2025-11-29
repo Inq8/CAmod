@@ -141,7 +141,7 @@ OncePerSecondChecks = function()
 			end
 
 			if ObjectiveDestroyGDI ~= nil and not Nod.IsObjectiveCompleted(ObjectiveDestroyGDI) then
-				Nod.MarkCompletedObjective(ObjectiveDestroyGDI)
+				Nod.MarkFailedObjective(ObjectiveDestroyGDI)
 			end
 		end
 

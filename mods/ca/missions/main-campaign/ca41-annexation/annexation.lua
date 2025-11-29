@@ -162,7 +162,7 @@ OncePerSecondChecks = function()
 		SignalTransmittersPlayer.Resources = SignalTransmittersPlayer.ResourceCapacity - 500
 
 		if not PlayerHasBuildings(ScrinRebels1) and not PlayerHasBuildings(ScrinRebels2) and not PlayerHasBuildings(ScrinRebels3) then
-			if not USSR.IsObjectiveCompleted(ObjectiveHoldNerveCenter) then
+			if ObjectiveHoldNerveCenter ~= nil not USSR.IsObjectiveCompleted(ObjectiveHoldNerveCenter) then
 				USSR.MarkCompletedObjective(ObjectiveHoldNerveCenter)
 			end
 

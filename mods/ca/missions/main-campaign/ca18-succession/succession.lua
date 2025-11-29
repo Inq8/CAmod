@@ -196,12 +196,12 @@ OncePerSecondChecks = function()
 		Nod.Resources = Nod.ResourceCapacity - 500
 
 		if MissionPlayersHaveNoRequiredUnits() then
-			if not Nod.IsObjectiveCompleted(ObjectiveCaptureFactories) then
-				Nod.MarkFailedObjective(ObjectiveCaptureFactories)
+			if not USSR.IsObjectiveCompleted(ObjectiveCaptureFactories) then
+				USSR.MarkFailedObjective(ObjectiveCaptureFactories)
 			end
 
-			if not Nod.IsObjectiveCompleted(ObjectiveCaptureTemplePrime) then
-				Nod.MarkFailedObjective(ObjectiveCaptureTemplePrime)
+			if not USSR.IsObjectiveCompleted(ObjectiveCaptureTemplePrime) then
+				USSR.MarkFailedObjective(ObjectiveCaptureTemplePrime)
 			end
 		end
 	end
