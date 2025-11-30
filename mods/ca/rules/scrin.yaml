@@ -977,15 +977,19 @@ IMPL:
 		Speed: 60
 	RevealsShroud:
 		Range: 6c0
-	AttackFrontal:
-		FacingTolerance: 64
-		PauseOnCondition: being-warped || blinded
+	AttackFrontalCharged:
+		FacingTolerance: 32
+		ChargeLevel: 0,2
+		PauseOnCondition: being-warped || blinded || reapersnare
 	Armament@PRIMARY:
 		Weapon: ImpalerSpike
 		LocalOffset: 150,0,400
+	Armament@Tracer:
+		Weapon: ImpalerTracer
+		LocalOffset: 150,0,400
 	Armament@BATF:
 		Name: batf
-		Weapon: ImpalerSpike
+		Weapon: ImpalerSpikePassenger
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 	EncyclopediaExtras:

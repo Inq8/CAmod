@@ -1338,6 +1338,7 @@ ShardWalkerShards:
 	ReloadDelay: 35
 	StartBurstReport: shard-fire1.aud
 	Projectile: Missile
+		Speed: 448
 		ContrailStartColor: 00FF0066
 		ContrailStartColorAlpha: 102
 		MinimumLaunchAngle: 80
@@ -1348,7 +1349,7 @@ ShardWalkerShards:
 		Spread: 128
 		Damage: 2650
 		Versus:
-			None: 115
+			None: 120
 			Wood: 10
 			Light: 32
 			Heavy: 10
@@ -1421,18 +1422,8 @@ ImpalerSpike:
 	Burst: 2
 	BurstDelays: 25
 	Report: impl-fire1.aud
-	Projectile: Missile
-		Speed: 750
+	Projectile: InstantHit
 		Blockable: false
-		Image: DRAGON
-		Shadow: True
-		HorizontalRateOfTurn: 20
-		RangeLimit: 8c0
-		ContrailLength: 11
-		ContrailStartWidth: 0c48
-		ContrailStartColor: ffffff
-		ContrailStartColorAlpha: 64
-		AllowSnapping: true
 	Warhead@1Dam: SpreadDamage
 		Damage: 12500
 		Spread: 128
@@ -1454,6 +1445,38 @@ ImpalerSpike:
 		Duration: 25
 		Condition: slowed
 		ValidTargets: Vehicle, Infantry
+
+ImpalerTracer:
+	Inherits: ImpalerSpike
+	-Report:
+	Projectile: Bullet
+		Speed: 1400
+		Blockable: false
+		Image: DRAGON
+		Shadow: True
+		ContrailLength: 11
+		ContrailStartWidth: 0c48
+		ContrailStartColor: ffffff
+		ContrailStartColorAlpha: 64
+	-Warhead@1Dam:
+	-Warhead@3Eff:
+	-Warhead@Slow:
+
+ImpalerSpikePassenger:
+	Inherits: ImpalerSpike
+	-Projectile:
+	Projectile: Missile
+		Speed: 800
+		Blockable: false
+		Image: DRAGON
+		Shadow: True
+		HorizontalRateOfTurn: 20
+		RangeLimit: 8c0
+		ContrailLength: 11
+		ContrailStartWidth: 0c48
+		ContrailStartColor: ffffff
+		ContrailStartColorAlpha: 64
+		AllowSnapping: true
 
 WatcherDart:
 	Range: 6c0
