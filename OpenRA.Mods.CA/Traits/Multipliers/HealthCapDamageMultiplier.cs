@@ -14,7 +14,7 @@ using OpenRA.Traits;
 namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("Modifies the damage taken by the actor to emulate specified maximum health.")]
-	public class HealthCapDamageMultiplierInfo : ConditionalTraitInfo, Requires<HealthInfo>
+	public class HealthCapDamageMultiplierInfo : ConditionalTraitInfo
 	{
 		[Desc("Maximum health to emulate.")]
 		public readonly int MaxHealthEquivalent = 40000;
@@ -30,7 +30,10 @@ namespace OpenRA.Mods.CA.Traits
 			: base(info)
 		{
 			modifier = 100;
-			var healthInfo = self.Info.TraitInfo<HealthInfo>();
+			var healthInfo = self.Info.TraitInfoOrDefault<HealthInfo>();
+
+			if (healthInfo == null)
+				return;
 
 			if (healthInfo.HP > info.MaxHealthEquivalent)
 				modifier = (int)(((float)healthInfo.HP / (float)info.MaxHealthEquivalent) * 100);

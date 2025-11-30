@@ -1,0 +1,92 @@
+^Palettes:
+	PaletteFromFile@terrain-temperat:
+		Filename: ca|missions/main-campaign/ca47-ad-nihilum/dartmoor.pal
+	TintPostProcessEffect:
+		Red: 1
+		Green: 1
+		Blue: 1
+		Ambient: 0.85
+
+^BaseWorld:
+	TerrainLighting:
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, ad-nihilum.lua
+	MissionData:
+		Briefing: We have received an urgent and highly troubling communication from GDI HQ on the Scrin homeworld. One of their bases, which had been holding its ground against Malefic Scrin assaults, detected a massive radar signature slowly heading towards them. Before they could even get a visual, the entire base was annihilated.\n\nThe Malefic Scrin have thus far prevented GDI from getting a closer look, but these are undoubtedly war machines of enormous power; perhaps even surpassing the Exterminator Tripods deployed by the Overlord.\n\nWe have reason to believe that an unknown number of these machines, which we have designated "Void Engines", have travelled to Earth. GDI have detected them moving through an interstellar gateway that scans have indicated is directed towards Earth.\n\nGDI reports that the Scrin Rebels have suffered devastating losses in an attempt to engage one of the machines. It is not known whether the Overlord or the Soviets have encountered one yet. Their exact purpose, beyond their sheer destructive power, is also not yet known.\n\nNone have thus far been detected on Earth, and we haven't been able to locate the interstellar gateway being used, however a significant Malefic Scrin presence has been identified along with three unusually large gateways that are not powerful enough to be of the interstellar variety. Their size may be to allow these massive machines through.\n\nThe gateways are located south of Berlin, Germany — the heart of Allied territory. An evacuation of the city is underway, however several of our bases further south have gone dark which suggests we have precious little time. Assuming Berlin is their target, we must stop them from reaching the city at all costs.\n\nDestroy any Void Engines before they can break through your lines. Once your forces are sufficient, destroy the Scrin bases to secure their gateways.
+	MapOptions:
+		ShortGameCheckboxEnabled: False
+	MusicPlaylist:
+		StartingMusic: malev
+
+Player:
+	PlayerResources:
+		DefaultCash: 6000
+
+# Enable subfaction specific tech
+
+SNIP:
+	Buildable:
+		Prerequisites: tent, anyradar
+
+RTNK:
+	Buildable:
+		Prerequisites: ~vehicles.allies
+
+TNKD:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.allies
+
+CHPR:
+	Buildable:
+		Prerequisites: atek, ~vehicles.allies
+
+BATF:
+	Buildable:
+		Prerequisites: atek, ~vehicles.allies
+
+NHAW:
+	Buildable:
+		Prerequisites: ~aircraft.allies
+
+HTUR:
+	Buildable:
+		Prerequisites: ~structures.allies, anyradar
+
+entrench.upgrade:
+	Buildable:
+		Prerequisites: anyradar, ~radar.allies
+
+apb.upgrade:
+	Buildable:
+		Prerequisites: atek
+
+tflx.upgrade:
+	Buildable:
+		Prerequisites: pdox
+
+^VeilOfWarPower:
+	SpawnActorPowerCA@VeilOfWar:
+		Prerequisites: ~radar.allies
+
+# Misc
+
+STLK:
+	Cloak@NORMAL:
+		CloakDelay: 750
+		RequiresCondition: !cloak-force-disabled && !being-warped && !parachute
+	GrantTimedCondition@Uncloaked:
+		RequiresCondition: !hidden
+	DummyConditionConsumer@cloak-active:
+		Condition: cloak-active
+	DummyConditionConsumer@cloak-charging:
+		Condition: cloak-charging
+
+VENG:
+	ExternalCondition@VengReveal:
+		Condition: veng-reveal
+	RevealsShroud@Reveal:
+		Range: 5c0
+		ValidRelationships: Enemy
+		RequiresCondition: veng-reveal

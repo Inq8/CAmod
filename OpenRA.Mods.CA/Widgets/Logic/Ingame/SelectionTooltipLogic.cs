@@ -174,10 +174,14 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				strengthsLabel.Text = "";
 				weaknessesLabel.Text = "";
 				attributesLabel.Text = "";
-				descText = "";
 			}
 
 			descLabel.Text = descText;
+
+			// Recalculate description size after potentially updating with TooltipExtras description
+			descSize = descText != "" ? descFont.Measure(descText) : new int2(0, 0);
+			descLabel.Bounds.Width = descSize.X;
+			descLabel.Bounds.Height = descSize.Y;
 
 			var extrasSpacing = descLabel.Bounds.X / 2;
 			var strengthsSize = strengthsLabel.Text != "" ? descFont.Measure(strengthsLabel.Text) : new int2(0, 0);

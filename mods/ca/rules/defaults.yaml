@@ -139,13 +139,16 @@
 		Prerequisites: is-easy-ai
 
 # Refineries have an explicit BuildDuration so build time is unaffected by ProductionCostMultiplier
-^BotRefinery:
+^Refinery:
+	Inherits@SendCash: ^SendCashPower
 	ProductionTimeMultiplier@brutalbonus:
 		Multiplier: 90
 		Prerequisites: is-brutal-ai
 	ProductionTimeMultiplier@vhardbonus:
 		Multiplier: 95
 		Prerequisites: is-vhard-ai
+	ProvidesPrerequisiteIfAlliesExist:
+		Prerequisite: sendcash.enabled
 
 ^BotDefenseProductionBonus:
 	ProductionCostMultiplier@brutalbonus:
@@ -221,7 +224,7 @@
 		RequiresCondition: botowner
 	GrantConditionOnBotOwner@AIHELPER:
 		Condition: botowner
-		Bots: brutal, vhard, hard, normal, easy, naval
+		Bots: brutal, vhard, hard, normal, easy, naval, campaign
 	GrantConditionOnAttack@AIHELPER:
 		Condition: removeunit
 		ArmamentNames: commandeer
@@ -392,6 +395,7 @@
 		Condition: berserk
 	Berserkable@BERSERK:
 		RequiresCondition: berserkactive
+		MaxRange: 6c0
 	WithPalettedOverlay@BERSERK:
 		RequiresCondition: berserkactive
 		Palette: berserk
@@ -494,8 +498,8 @@
 		RequiresCondition: !herooftheunion
 	ExternalCondition@HeroOfTheUnion:
 		Condition: herooftheunion
-	DamageMultiplier@HeroOfTheUnion:
-		Modifier: 15
+	FlatHealthDamageMultiplier@HeroOfTheUnion:
+		HP: 28000
 		RequiresCondition: herooftheunion
 	SpeedMultiplier@HeroOfTheUnion:
 		Modifier: 120
@@ -529,8 +533,8 @@
 
 ^HeroOfTheUnionTargetableGrenFlamer:
 	Inherits: ^HeroOfTheUnionTargetable
-	DamageMultiplier@HeroOfTheUnion:
-		Modifier: 60
+	FlatHealthDamageMultiplier@HeroOfTheUnion:
+		HP: 5000
 	ReloadDelayMultiplier@HeroOfTheUnion:
 		Modifier: 90
 	RangeMultiplier@HeroOfTheUnion:
@@ -734,6 +738,7 @@
 		Palette: chrome
 		RequiresCondition: powerdrain || discpowerdrain
 		Position: Center
+		ValidRelationships: Ally, Enemy, Neutral
 
 ^ResourceDrainable:
 	Targetable@ResourceDrain:
@@ -1047,6 +1052,28 @@
 		RequiresCondition: cyborgarmor-upgrade
 		DamageTypes: FlakVestMitigatedMinor
 		Modifier: 95
+
+^CustodianBuff:
+	ExternalCondition@InspirationCmsr:
+		Condition: machine-learning
+	GainsExperienceMultiplier@MachineLearning1:
+		Modifier: 125
+		RequiresCondition: machine-learning == 1
+	GainsExperienceMultiplier@MachineLearning2:
+		Modifier: 150
+		RequiresCondition: machine-learning >= 2
+	WithIdleOverlay@MachineLearning1:
+		Image: custbuff
+		Sequence: idle-overlay1
+		Palette: effect
+		RequiresCondition: machine-learning == 1
+		IsDecoration: True
+	WithIdleOverlay@MachineLearning2:
+		Image: custbuff
+		Sequence: idle-overlay2
+		Palette: effect
+		RequiresCondition: machine-learning >= 2
+		IsDecoration: True
 
 ^BinoUpgrade:
 	ExternalCondition@BINO:
@@ -1621,7 +1648,60 @@
 		Modifier: 0
 		RequiresCondition: reapersnare
 
-^HarvesterBalancer:
+^HarvesterBase:
+	Inherits: ^Vehicle-NOUPG
+	Inherits@SELECTION: ^SelectableEconomicUnit
+	Inherits@A2GPROTECTION: ^AirToGroundProtection
+	Inherits@EconomyPolicyDiscount: ^EconomyPolicyDiscount
+	Inherits@EconomyPolicyDurability: ^EconomyPolicyDurability
+	Inherits@HeavyArmor: ^HeavyArmor
+	Inherits@NodCovenantTarget: ^NodCovenantTarget
+	TooltipExtras:
+		Weaknesses: • Unarmed\n• Resistant to mind control
+	Valued:
+		Cost: 1400
+	Tooltip:
+		GenericName: Harvester
+	Health:
+		HP: 75000
+	Mobile:
+		Speed: 72
+		TurnSpeed: 24
+		Locomotor: heavywheeled
+	RevealsShroud:
+		Range: 4c0
+	SpawnRandomActorOnDeath:
+		Actors: c1,c7,c10
+		Probability: 5
+		RequiresCondition: !being-warped
+	ChangesHealth@MINIDRONE:
+		Step: 2250
+	DamageTypeDamageMultiplier@A2GPROTECTION:
+		Modifier: 60
+	Harvester:
+		Resources: Tiberium, BlueTiberium, BlackTiberium, Ore, Gems
+		BaleUnloadDelay: 1
+		BaleLoadDelay: 4
+		SearchFromProcRadius: 15
+		SearchFromHarvesterRadius: 8
+		HarvestFacings: 8
+		EmptyCondition: no-ore
+	DockClientManager:
+	WithStoresResourcesPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
+		PipCount: 6
+		ResourceSequences:
+			Ore: pip-yellow
+			Gems: pip-red
+			Tiberium: pip-green
+			BlueTiberium: pip-blue
+			BlackTiberium: pip-green
+	StoresResources:
+		Capacity: 26
+		Resources: Tiberium, BlueTiberium, BlackTiberium, Ore, Gems
+	TransferResourcesOnTransform:
 	GrantConditionOnPrerequisite@HARVBALANCE:
 		Condition: global-balancedharvesting
 		Prerequisites: global.balancedharvesting
@@ -1631,13 +1711,43 @@
 	HarvesterBalancer:
 		Condition: harv-balance
 		RequiresCondition: global-balancedharvesting
-
-^HarvesterDamageNotification:
 	NotificationOnDamage:
 		Type: Harvester
 		Notification: HarvesterAttack
 		TextNotification: Harvester under attack.
 		MinimumDamage: 500
+	GrantConditionOnTerrain@Tiberium:
+		Condition: ontib
+		TerrainTypes: Tiberium
+	GrantConditionOnTerrain@Ore:
+		Condition: onore
+		TerrainTypes: Ore
+	FireWarheadsOnDeath@Ore:
+		RequiresCondition: !no-ore && onore && !being-warped
+		Weapon: OreExplosion
+	FireWarheadsOnDeath@Tib:
+		RequiresCondition: !no-ore && ontib && !being-warped
+		Weapon: TibExplosion
+	-Crushable:
+	GrantConditionOnPrerequisite@GSHIELD:
+		Condition: pointdef-upgrade
+		Prerequisites: pointdef.upgrade
+	TimedDamageMultiplier@GSHIELD:
+		ActiveCondition: gshield
+		ChargingColor: 008888
+		DrainingColor: 00ffff
+		Modifier: 25
+		Duration: 75
+		ChargeTime: 375
+		ActivateSound: gshieldup.aud
+		DeactivateSound: gshielddown.aud
+		RequiresCondition: pointdef-upgrade
+	WithIdleOverlay@NSHIELD:
+		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
+	Targetable@MindControlResistant:
+		TargetTypes: MindControlResistant
 
 ^Veilable:
 	RangeMultiplier@VEILED:
@@ -1668,7 +1778,7 @@
 ^WeaponJammable:
 	ReloadDelayMultiplier@WEAPJAMMED:
 		RequiresCondition: weapjammed
-		Modifier: 120
+		Modifier: 125
 	FirepowerMultiplier@WEAPJAMMED:
 		RequiresCondition: weapjammed
 		Modifier: 90
@@ -1693,23 +1803,23 @@
 	WithColoredOverlay@ZoneDefenderShield:
 		Color: 00ffff10
 		RequiresCondition: zdef-shield
-	DamageMultiplier@ZoneDefenderShield1:
-		Modifier: 75
+	FlatHealthDamageMultiplier@ZoneDefenderShield1:
+		HP: 1250
 		RequiresCondition: zdef-shield == 1
-	DamageMultiplier@ZoneDefenderShield2:
-		Modifier: 70
+	FlatHealthDamageMultiplier@ZoneDefenderShield2:
+		HP: 2500
 		RequiresCondition: zdef-shield == 2
-	DamageMultiplier@ZoneDefenderShield3:
-		Modifier: 65
+	FlatHealthDamageMultiplier@ZoneDefenderShield3:
+		HP: 3750
 		RequiresCondition: zdef-shield == 3
-	DamageMultiplier@ZoneDefenderShield4:
-		Modifier: 60
+	FlatHealthDamageMultiplier@ZoneDefenderShield4:
+		HP: 5000
 		RequiresCondition: zdef-shield == 4
-	DamageMultiplier@ZoneDefenderShield5:
-		Modifier: 55
+	FlatHealthDamageMultiplier@ZoneDefenderShield5:
+		HP: 6250
 		RequiresCondition: zdef-shield == 5
-	DamageMultiplier@ZoneDefenderShield6:
-		Modifier: 50
+	FlatHealthDamageMultiplier@ZoneDefenderShield6:
+		HP: 7500
 		RequiresCondition: zdef-shield >= 6
 	WithIdleOverlay@ZoneDefenderShield:
 		Sequence: idle
@@ -1760,9 +1870,8 @@
 		ShowSelectionBarWhenFull: false
 		ChargingColor: ff0000
 		RequiresCondition: c4seal-preparing
-	Targetable@SealC4Progress: # Only required for yaml warning, as c4seal-prepared isn't used for anything (GrantChargingCondition just used for the progress bar)
-		TargetTypes: SealC4Prepared
-		RequiresCondition: c4seal-prepared
+	DummyConditionConsumer@SealC4Progress:
+		Condition: c4seal-prepared
 
 ^TNTPlantable:
 	DelayedWeaponAttachable@TNT:
@@ -1903,6 +2012,39 @@
 	Targetable@TechLock:
 		RequiresCondition: !being-warped
 		TargetTypes: TechLockInfiltrate
+
+^SpyIFVInfiltratable:
+	ExternalCondition@SpyIFVCharge:
+		Condition: spy-ifv-charging
+	GrantPeriodicCondition@SpyIFVCharge:
+		CooldownDuration: 300
+		CooldownColor: 0000ff
+		ActiveDuration: 2
+		Condition: spy-ifv-charged
+		RequiresCondition: spy-ifv-charging
+		ShowSelectionBar: true
+		ShowSelectionBarWhenEmpty: false
+		ResetTimeOnReenable: true
+	Targetable@SpyIFVInfiltrate:
+		TargetTypes: SpyIFVInfiltratable
+		RequiresCondition: spy-ifv-charged
+
+^InfiltrateForSupportPower:
+	Targetable@GrantSupportPowerInfiltrate:
+		RequiresCondition: !being-warped && !spy-infiltrate-cooldown
+		TargetTypes: GrantSupportPowerInfiltrate
+	InfiltrateToCreateProxyActor@SpySupportPower:
+		Types: GrantSupportPowerInfiltrate
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
+		PlayerExperience: 15
+	InfiltrateForTimedCondition@SpySupportPower:
+		Condition: spy-infiltrate-cooldown
+		Duration: 1500
+		Types: GrantSupportPowerInfiltrate
+		ShowSelectionBar: true
+		SelectionBarColor: aaaaaa
+		ApplyToAllOfType: true
 
 ^GeneticallyMutatable:
 	ExternalCondition@GMUT:
@@ -2097,54 +2239,65 @@
 	GivesBountyCA:
 		RequiresCondition: global-bounty
 		Percentage: 15
+		BountyPoolType: FromLosses
 
 ^EconomyPolicyDiscount:
 	ProductionCostMultiplier@EconomyPolicy1:
-		Multiplier: 90
+		Multiplier: 85
 		Prerequisites: economy.policy, influence.level1, !influence.level2
 	ProductionCostMultiplier@EconomyPolicy2:
-		Multiplier: 80
-		Prerequisites: economy.policy, influence.level2, !influence.level3
-	ProductionCostMultiplier@EconomyPolicy3:
-		Multiplier: 70
-		Prerequisites: economy.policy, influence.level3
+		Multiplier: 75
+		Prerequisites: economy.policy, influence.level2
 
 ^EconomyPolicyTimeReduction:
 	ProductionTimeMultiplier@EconomyPolicy1:
-		Multiplier: 90
+		Multiplier: 85
 		Prerequisites: economy.policy, influence.level1, !influence.level2
 	ProductionTimeMultiplier@EconomyPolicy2:
-		Multiplier: 80
-		Prerequisites: economy.policy, influence.level2, !influence.level3
-	ProductionTimeMultiplier@EconomyPolicy3:
-		Multiplier: 70
+		Multiplier: 75
+		Prerequisites: economy.policy, influence.level2
+
+^EconomyPolicyMcvSpeedBonus:
+	SpeedMultiplier@EconomyPolicy2:
+		Modifier: 120
+		RequiresCondition: economy-policy2
+	GrantConditionOnPrerequisite@EconomyPolicy2:
+		Condition: economy-policy2
+		Prerequisites: economy.policy, influence.level2
+
+^EconomyPolicyDurability:
+	DamageMultiplier@EconomyPolicy3:
+		Modifier: 87
+		RequiresCondition: economy-policy3
+	GrantConditionOnPrerequisite@EconomyPolicy3:
+		Condition: economy-policy3
 		Prerequisites: economy.policy, influence.level3
 
 ^DefensePolicyDamageReduction:
 	GrantConditionOnPrerequisite@DefensePolicy1:
 		Condition: defense-policy1
-		Prerequisites: defense.policy, influence.level1, !influence.level2
+		Prerequisites: defense.policy, influence.level1
 	GrantConditionOnPrerequisite@DefensePolicy2:
 		Condition: defense-policy2
-		Prerequisites: defense.policy, influence.level2, !influence.level3
+		Prerequisites: defense.policy, influence.level2
 	GrantConditionOnPrerequisite@DefensePolicy3:
 		Condition: defense-policy3
 		Prerequisites: defense.policy, influence.level3
 	DamageMultiplier@DefensePolicy1:
-		Modifier: 91
-		RequiresCondition: defense-policy1
+		Modifier: 87
+		RequiresCondition: defense-policy1 && !defense-policy2
 	DamageMultiplier@DefensePolicy2:
-		Modifier: 83
-		RequiresCondition: defense-policy2
-	DamageMultiplier@DefensePolicy3:
 		Modifier: 77
-		RequiresCondition: defense-policy3
+		RequiresCondition: defense-policy2
 	ChangesHealth@DefensePolicy2:
 		Step: 200
 		StartIfBelow: 100
 		Delay: 24
 		DamageCooldown: 0
 		RequiresCondition: defense-policy2 && being-repaired
+	RevealsShroudMultiplier@DefensePolicy3:
+		Modifier: 125
+		RequiresCondition: defense-policy3
 
 ^DefensePolicyDamageBonus:
 	GrantConditionOnPrerequisite@DefensePolicy3:
@@ -2265,7 +2418,7 @@
 		RequiresCondition: !parachute && !being-warped
 	Targetable@REPAIR:
 		RequiresCondition: !parachute && !being-warped && damaged && !repair-cooldown
-		TargetTypes: Repair
+		TargetTypes: Repairable
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
 		ValidDamageStates: Light, Medium, Heavy, Critical
@@ -2401,6 +2554,12 @@
 	Mobile:
 		Locomotor: tracked
 
+^HeavyArmor:
+	Armor:
+		Type: Heavy
+	Targetable@HeavyArmor:
+		TargetTypes: Heavy
+
 ^SlowedByCrushing:
 	ExternalCondition@CRUSHATTEMPTSLOW:
 		Condition: crush-attempt-slow
@@ -2505,7 +2664,7 @@
 		RequiresCondition: !parachute && !being-warped
 	Targetable@HEAL:
 		RequiresCondition: !parachute && !being-warped && damaged
-		TargetTypes: Heal
+		TargetTypes: Healable
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
 		ValidDamageStates: Light, Medium, Heavy, Critical
@@ -2720,10 +2879,16 @@
 ^Cyborg:
 	Inherits: ^Soldier
 	Inherits@CYBORGUPG: ^NodCyborgUpgrade
+	Inherits@CustodianBuff: ^CustodianBuff
 	Inherits@SLOWABLE: ^Slowable
 	Targetable@Cyborg:
 		TargetTypes: Cyborg
 		RequiresCondition: !parachute && !being-warped
+	Targetable@HealableCyborg:
+		RequiresCondition: !parachute && !being-warped && damaged && !healing-cooldown
+		TargetTypes: HealableCyborg
+	DummyConditionGranter@HealingCooldown:
+		Condition: healing-cooldown
 	ExternalCondition@ONTIB:
 		Condition: on-tib
 	ExternalCondition@ONBLUETIB:
@@ -2774,6 +2939,13 @@
 	-GrantConditionOnPrerequisite@FLAKARMOR:
 	WithDecoration@BINO:
 		-BlinkPatterns:
+	AddsToReclaimableValue@Cyborg:
+		Type: Cyborg
+		ValuePercentage: 5
+		RequiresCondition: reclaimed-fabrication
+	GrantConditionOnPrerequisite@ReclaimedFabrication:
+		Condition: reclaimed-fabrication
+		Prerequisites: cyborgprod.upgrade
 
 ^CivInfantry:
 	Inherits: ^Infantry
@@ -2890,7 +3062,7 @@
 		RequiresCondition: !being-warped
 	Targetable@REPAIR:
 		RequiresCondition: damaged && !being-warped
-		TargetTypes: Repair
+		TargetTypes: Repairable
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
 		ValidDamageStates: Light, Medium, Heavy, Critical
@@ -3040,7 +3212,7 @@
 		TargetTypes: Air
 	Targetable@REPAIR:
 		RequiresCondition: !airborne && damaged
-		TargetTypes: Repair
+		TargetTypes: Repairable
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
 		ValidDamageStates: Light, Medium, Heavy, Critical
@@ -3122,6 +3294,7 @@
 		EjectInAir: true
 		AllowUnsuitableCell: true
 		ChuteSound: chute1.aud
+		RequiresCondition: airborne && !being-warped
 	Cloak@TIBSTEALTH:
 		RequiresCondition: invisibility || crate-cloak && (!cloak-force-disabled && !airborne && !being-warped)
 		CloakDelay: 90
@@ -3309,9 +3482,11 @@
 	Inherits@6: ^WarpableBuilding
 	Inherits@7: ^BotBuilding
 	Inherits@HACKABLE: ^Hackable
+	Inherits@SpyIFVInfiltratable: ^SpyIFVInfiltratable
 	Inherits@WatcherParasite: ^WatcherParasiteAttachable
 	Inherits@TargetPaintable: ^TargetPaintable
 	Inherits@DefensePolicyDamageReduction: ^DefensePolicyDamageReduction
+	Inherits@NodCovenantTarget: ^NodCovenantTarget
 	WithPalettedOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability && !forceshield
 		Palette: invuln
@@ -3320,7 +3495,7 @@
 		Action: Kill
 	UpdatesPlayerStatistics:
 	GivesBuildableArea:
-		AreaTypes: building, fake
+		AreaTypes: building, defense, fake
 	RepairableBuilding:
 		RepairStep: 500
 		RepairPercent: 30
@@ -3328,7 +3503,7 @@
 		RequiresCondition: !being-warped
 		RepairCondition: being-repaired
 	InstantlyRepairable:
-		RequiresCondition: !tnt && !c4
+		RequiresCondition: !tnt && !c4 && !c4seal
 	AcceptsDeliveredCash:
 	WithMakeAnimation:
 		Condition: build-incomplete
@@ -3371,8 +3546,7 @@
 		RequiresCondition: !being-warped
 	Targetable@TNTPlantable:
 		RequiresCondition: !being-warped
-	Targetable@HACKCAPTURABLE:
-		TargetTypes: HackCapturable
+	Targetable@HACKABLE:
 		RequiresCondition: !build-incomplete && !being-warped
 	FireWarheadsOnDeath:
 		RequiresCondition: !being-warped
@@ -3394,9 +3568,6 @@
 		CloakSound: cloak5.aud
 		UncloakSound: appear1.aud
 	UpdatesBuildOrder:
-	UpdatesCount@NodCovenant:
-		Type: NodCovenant
-		UpdateOn: Killed
 	InfiltrateToCreateProxyActor@InfiltratorVision:
 		Proxy: camera.infiltrator
 		Types: VisionInfiltrate
@@ -3505,7 +3676,6 @@
 	DetectCloaked@UNDERBRIDGE:
 		DetectionTypes: Underbridge
 		Range: 6c0
-	-Targetable@HACKCAPTURABLE:
 	DelayedWeaponAttachable@C4:
 		RequiresCondition: !invulnerability
 	DelayedWeaponAttachable@C4Seal:
@@ -3513,12 +3683,16 @@
 	DelayedWeaponAttachable@TNT:
 		RequiresCondition: !invulnerability
 	RequiresBuildableArea:
-		AreaTypes: building, defense
+		AreaTypes: defense
 	GivesExperienceCA:
 		ActorExperienceModifier: 10000
 	-UpdatesBuildOrder:
 	ChangesHealth@DefensePolicy2:
 		Step: 140
+	ExternalCondition@PowerDown:
+		Condition: powerdown
+	DummyConditionConsumer@PowerDown:
+		Condition: powerdown
 
 ^DefenseTD:
 	Inherits@1: ^Defense
@@ -3562,7 +3736,7 @@
 		UndeploySounds: cashturn.aud
 	FootprintPlaceBuildingPreview:
 	RequiresBuildableArea:
-		AreaTypes: building, defense
+		AreaTypes: defense
 		Adjacent: 7
 	SoundOnDamageTransition:
 		DamagedSounds: sandbag2.aud
@@ -3795,9 +3969,10 @@
 		ResourceType: BlackTiberium
 		Interval: 66
 		RequiresCondition: voidspike
-	WithColoredOverlay@VoidSpike:
-		Color: 00000070
+	WithPalettedOverlay@VoidSpike:
+		Palette: voidspike
 		RequiresCondition: voidspike
+		VisibleThroughFog: false
 
 ^TibTree:
 	Inherits@1: ^SpriteActor
@@ -4259,6 +4434,7 @@
 		Palette: chrome
 		RequiresCondition: powerdown
 		Position: Center
+		ValidRelationships: Ally, Enemy, Neutral
 	PowerMultiplier@POWERDOWN:
 		RequiresCondition: powerdown
 		Modifier: 0
@@ -4384,6 +4560,7 @@
 
 ^EngineerBase:
 	Inherits@SELECTION: ^SelectableSupportUnit
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -4441,7 +4618,7 @@
 		ArmamentNames: tertiary
 		RevokeDelay: 7
 	AutoTarget:
-		ScanRadius: 2
+		ScanRadius: 3
 	AutoTargetPriority@defuse:
 		ValidTargets: C4Attached, TNTAttached
 		InvalidTargets: NoAutoTarget
@@ -4560,6 +4737,11 @@
 	GrantConditionOnPrerequisiteCA@has-mcv:
 		Condition: has-mcv
 		Prerequisites: anymcv
+
+^NodCovenantTarget:
+	UpdatesCount@NodCovenant:
+		Type: NodCovenant
+		UpdateOn: Killed, SoldAfterDamage, Captured, Infiltrated
 
 ^AIUNLOAD:
 	GrantConditionWhileAiming@AIUNLOAD:
@@ -4709,7 +4891,7 @@
 	Production@SQINF:
 		Produces: InfantrySQ, Cyborg, ParadropInfantry, Upgrade
 	Production@MQINF:
-		Produces: CyborgMQ, Cyborg, Upgrade
+		Produces: CyborgMQ, Cyborg, ParadropInfantry, Upgrade
 	ProductionBar@SQINF:
 		ProductionType: InfantrySQ
 	ProductionBar@MQINF:

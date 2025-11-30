@@ -1202,7 +1202,7 @@ HIND:
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 32
 		Prerequisites: afld, ~aircraft.soviet, ~techlevel.medium
-		Description: Durable helicopter gunship armed with a chaingun and anti-tank rockets.
+		Description: Durable helicopter gunship armed with a chaingun and rockets.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Heavy Armor, Light Armor
 		Weaknesses: • Weak vs Defenses\n• Cannot attack Aircraft
@@ -1227,9 +1227,6 @@ HIND:
 		LocalOffset: 500,0,-250
 		MuzzleSequence: muzzle
 		PauseOnCondition: !ammo
-		CasingWeapon: BrassDebrisAir
-		CasingSpawnLocalOffset: 400,-225,0
-		CasingTargetOffset: 400, -300, 0
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: HindRockets
@@ -1245,6 +1242,11 @@ HIND:
 		PauseOnCondition: !ammo2 || rockets-reloading
 		RequiresCondition: rocketpods-upgrade
 		AmmoUsage: 2
+	WithEjectedCasings:
+		CasingWeapon: BrassDebrisAir
+		CasingSpawnLocalOffset: 400,-225,0
+		CasingTargetOffset: 400, -300, 0
+		ArmamentNames: primary
 	AttackAircraft:
 		FacingTolerance: 80
 		AttackType: Hover
@@ -2091,17 +2093,16 @@ APCH:
 		LocalOffset: 350,0,-150
 		MuzzleSequence: muzzle
 		PauseOnCondition: !ammo
-		CasingWeapon: BrassDebrisAir
-		CasingSpawnLocalOffset: 400,-225,0
-		CasingTargetOffset: 400, -300, 0
 	Armament@SECONDARY:
 		Weapon: HeliGunAA
 		LocalOffset: 350,0,-150
 		MuzzleSequence: muzzle
 		PauseOnCondition: !ammo
+	WithEjectedCasings:
 		CasingWeapon: BrassDebrisAir
 		CasingSpawnLocalOffset: 400,-225,0
 		CasingTargetOffset: 400, -300, 0
+		ArmamentNames: primary
 	AttackAircraft:
 		FacingTolerance: 80
 		AttackType: Hover
@@ -2519,7 +2520,8 @@ UAV:
 		RequiresCondition: enable-smoke
 	RejectsOrders:
 	DetectCloaked:
-		DetectionTypes: Cloak, Thief
+		Range: 5c0
+		DetectionTypes: Cloak
 	RevealsShroud:
 		Range: 12c0
 		MinRange: 10c0
@@ -2698,7 +2700,7 @@ KIRO:
 		Description: Heavily armored airship armed with specialised bombs.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
-		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets\n• Vulnerable when dropping bombs
+		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets\n• Takes +33% damage when dropping bombs
 		Attributes: • Self repairs to 75% out of combat
 	Valued:
 		Cost: 2000
@@ -3485,14 +3487,12 @@ YF23.Bomber:
 	Armament:
 		Weapon: WidowAA
 		LocalOffset: 0,-256,-43, 0,256,-43
-		PauseOnCondition: !ammo
-	AttackBomberCA:
-		FacingTolerance: 84
+	Interceptor:
 	AttackAircraft:
 		PersistentTargeting: false
 		OpportunityFire: True
 		PauseOnCondition: empdisable || being-warped
-		FacingTolerance: 84
+		FacingTolerance: 128
 	Aircraft:
 		CruiseAltitude: 2560
 		InitialFacing: 192
@@ -3502,13 +3502,6 @@ YF23.Bomber:
 		RepulsionSpeed: 40
 		MaximumPitch: 56
 		MoveIntoShroud: False
-	AmmoPool:
-		Ammo: 10
-		AmmoCondition: ammo
-	ReloadAmmoPool:
-		Delay: 150
-		Count: 2
-		ResetOnFire: true
 	-Huntable:
 	-Selectable:
 	-Voiced:
@@ -3930,7 +3923,7 @@ PMAK:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 71
-		Prerequisites: atekoralhq, ~aircraft.allies, ~techlevel.high
+		Prerequisites: alhq, ~aircraft.allies, ~techlevel.high
 		Description: Heavy VTOL bomber with powerful armor penetrating bombs.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Defenses, Light Armor
@@ -4866,7 +4859,6 @@ DISC:
 		Armaments: primary, secondary, tertiary
 		Voice: Attack
 		PauseOnCondition: empdisable || being-warped || blinded
-		PersistentTargeting: false
 	Armament@PRIMARY:
 		Weapon: FloatingDiscLaser
 		FireDelay: 5
@@ -5067,6 +5059,7 @@ JACK:
 		CircleWidth: 0
 		Type: JackKnifeDive
 		TargetFrozenActors: true
+		DeployCursor: move
 	-AttackMove:
 	AutoTargetPriority@ATTACKANYTHING:
 		RequiresCondition: stance-attackanything

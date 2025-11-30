@@ -18,11 +18,14 @@ namespace OpenRA.Mods.CA.Traits
 	[Desc("Attach this to the player actor (not a building!) to define a new shared build queue.",
 		"Will only work together with the Production: trait on the actor that actually does the production.",
 		"You will also want to add PrimaryBuildings: to let the user choose where new units should exit.",
-		"CA version allows build speed reduction to take into account all buildings for a type if BuildAtProductionType is set.")]
+		"CA version allows build speed reduction to take into account all buildings for a type if BuildAtProductionType is set,",
+		"and allows excluding certain types from that calculation.")]
 	public class ClassicProductionQueueCAInfo : ClassicProductionQueueInfo
 	{
 		[Desc("If true, ignore BuildAtProductionType when calculating build duration, so all structures for this queue are counted.")]
 		public readonly bool CombinedBuildSpeedReduction = false;
+
+		public readonly string[] BuildSpeedReductionExcludedTypes = Array.Empty<string>();
 
 		public override object Create(ActorInitializer init) { return new ClassicProductionQueueCA(init, this); }
 	}
@@ -55,7 +58,8 @@ namespace OpenRA.Mods.CA.Traits
 					type = Info.Type;
 
 				var selfsameProductionsCount = self.World.ActorsWithTrait<Production>()
-					.Count(p => !p.Trait.IsTraitDisabled && !p.Trait.IsTraitPaused && p.Actor.Owner == self.Owner && p.Trait.Info.Produces.Contains(type));
+					.Count(p => !p.Trait.IsTraitDisabled && !p.Trait.IsTraitPaused && p.Actor.Owner == self.Owner && p.Trait.Info.Produces.Contains(type)
+						&& !Info.BuildSpeedReductionExcludedTypes.Contains(p.Actor.Info.Name));
 
 				var speedModifier = selfsameProductionsCount.Clamp(1, Info.BuildTimeSpeedReduction.Length) - 1;
 				time = (time * Info.BuildTimeSpeedReduction[speedModifier]) / 100;

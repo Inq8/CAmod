@@ -1,0 +1,143 @@
+^Palettes:
+	TintPostProcessEffect:
+		Red: 0.8
+		Green: 0.8
+		Blue: 1
+		Ambient: 0.9
+	WeatherOverlay:
+		ParticleDensityFactor: 16
+		Gravity: 16, 24
+		WindTick: 150, 425
+		ScatterDirection: -12, 12
+		ParticleSize: 2, 3
+		ParticleColors: ECECEC44, E4E4E444, D0D0D044, BCBCBC44
+		LineTailAlphaValue: 0
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, zenith.lua
+	MissionData:
+		Briefing: Despite my assurances, the Soviets have begun a large scale offensive towards our Temple Prime facility. Stalin always was a short-sighted fool.\n\nTo ensure the safety of the temple, we must take the Soviet nuclear arsenal out of the equation. My informants tell me that the Soviets plan to launch their missiles to wipe out the bulk of our defense forces, and then roll in with their tanks to clean up any survivors.\n\nThe Soviet missile silos are located on a heavily fortified island. We are not in an ideal position to strike, but with the Soviet army moving south we should be able to set up a staging area on the coast and storm the island before the Soviets can send reinforcements.
+	MapOptions:
+		ShortGameCheckboxEnabled: False
+	MusicPlaylist:
+		StartingMusic: smsh226m
+
+Player:
+	PlayerResources:
+		DefaultCash: 6000
+
+# Enable subfaction specific tech
+
+BH:
+	Buildable:
+		Prerequisites: anyradar
+
+WTNK:
+	Buildable:
+		Prerequisites: ~vehicles.nod, anyradar
+
+# Disable tech
+
+cyborgarmor.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+cyborgspeed.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+MSLO.Nod:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+ENLI:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+RMBC:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+TMPL:
+	-NukePower@Cluster:
+	-GrantConditionOnPrerequisite@OwnedByAi:
+	-GrantConditionOnPrerequisite@AiSuperweaponsEnabled:
+
+TMPP:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+# Disable powers
+
+AIRS:
+	-ParatroopersPowerCA@NodAirDrop:
+
+# Misc
+
+TSLA:
+	-Targetable@TeslaBoost:
+
+MSLO:
+	NukePower@ABomb:
+		DisplayTimerRelationships: Ally
+		ChargeInterval: 25
+		AllowMultiple: true
+	-InfiltrateForSupportPowerReset:
+	-Targetable@INFILTRATION:
+	Health:
+		HP: 200000
+
+^NukeDummy:
+	Inherits@ABOMBPOWER: ^ABombPower
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	NukePower@ABomb:
+		-PauseOnCondition:
+
+NukeDummyEasy:
+	Inherits: ^NukeDummy
+	NukePower@ABomb:
+		ChargeInterval: 90000
+
+NukeDummyNormal:
+	Inherits: ^NukeDummy
+	NukePower@ABomb:
+		ChargeInterval: 67500
+
+NukeDummyHard:
+	Inherits: ^NukeDummy
+	NukePower@ABomb:
+		ChargeInterval: 52500
+
+NukeDummyVeryHard:
+	Inherits: ^NukeDummy
+	NukePower@ABomb:
+		ChargeInterval: 45000
+
+NukeDummyBrutal:
+	Inherits: ^NukeDummy
+	NukePower@ABomb:
+		ChargeInterval: 37500
+
+OILB:
+	CashTrickler:
+		Interval: 375
+		Amount: 200
+
+E2:
+	Mobile:
+		Speed: 46
+
+E3:
+	Mobile:
+		Speed: 46
+
+E4:
+	Mobile:
+		Speed: 46
+
+C17:
+	Health:
+		HP: 15000
+
+camera.sathack:
+	DetectCloaked:
+		Range: 8c0
+	RevealsShroud:
+		Range: 8c0

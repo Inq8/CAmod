@@ -140,6 +140,9 @@ VEHICLES.SCRIN:
 	Targetable@SHIELDS:
 		TargetTypes: Shielded
 		RequiresCondition: shields-up
+	Targetable@ShieldedBlindImmune:
+		TargetTypes: BlindImmune
+		RequiresCondition: shields-up
 	GrantConditionOnPrerequisite@SHIELDS:
 		Condition: shields-upgrade
 		Prerequisites: shields.upgrade
@@ -301,6 +304,9 @@ VEHICLES.SCRIN:
 	WithPalettedOverlay@HYPERCHARGEDEBUFF:
 		Palette: darkened
 		RequiresCondition: hyperchargedebuff
+	DamageMultiplier@HYPERCHARGEDEBUFF:
+		Modifier: 120
+		RequiresCondition: hypercharged
 	SpeedMultiplier@HYPERCHARGEDEBUFF:
 		Modifier: 75
 		RequiresCondition: hyperchargedebuff
@@ -317,7 +323,7 @@ VEHICLES.SCRIN:
 ^Anathema:
 	GrantStackingCondition@Anathema:
 		Condition: anathema
-		DelayPerInstance: 75
+		DelayPerInstance: 125
 		MaximumInstances: 4
 		RevokeDelay: -1
 		RequiresCondition: anathema
@@ -330,34 +336,46 @@ VEHICLES.SCRIN:
 		RequiresCondition: anathema
 		IsDecoration: True
 	ReloadDelayMultiplier@Anathema1:
-		Modifier: 80
-		RequiresCondition: anathema == 1
-	FirepowerMultiplier@Anathema1:
-		Modifier: 130
+		Modifier: 73
 		RequiresCondition: anathema == 1
 	ReloadDelayMultiplier@Anathema2:
-		Modifier: 65
-		RequiresCondition: anathema == 2
-	FirepowerMultiplier@Anathema2:
-		Modifier: 160
+		Modifier: 57
 		RequiresCondition: anathema == 2
 	ReloadDelayMultiplier@Anathema3:
-		Modifier: 50
-		RequiresCondition: anathema == 3
-	FirepowerMultiplier@Anathema3:
-		Modifier: 190
+		Modifier: 47
 		RequiresCondition: anathema == 3
 	ReloadDelayMultiplier@Anathema4:
-		Modifier: 35
+		Modifier: 40
 		RequiresCondition: anathema >= 4
-	FirepowerMultiplier@Anathema4:
-		Modifier: 220
+	ValueScalingFirepowerMultiplier@Anathema1:
+		MinValue: 600
+		MaxValue: 2000
+		MinValueModifier: 250
+		MaxValueModifier: 125
+		RequiresCondition: anathema == 1
+	ValueScalingFirepowerMultiplier@Anathema2:
+		MinValue: 600
+		MaxValue: 2000
+		MinValueModifier: 300
+		MaxValueModifier: 150
+		RequiresCondition: anathema == 2
+	ValueScalingFirepowerMultiplier@Anathema3:
+		MinValue: 600
+		MaxValue: 2000
+		MinValueModifier: 350
+		MaxValueModifier: 175
+		RequiresCondition: anathema == 3
+	ValueScalingFirepowerMultiplier@Anathema4:
+		MinValue: 600
+		MaxValue: 2000
+		MinValueModifier: 400
+		MaxValueModifier: 200
 		RequiresCondition: anathema >= 4
-	DamageMultiplier@Anathema1:
-		Modifier: 75
-		RequiresCondition: anathema && anathema < 4
-	DamageMultiplier@Anathema2:
-		Modifier: 50
+	SpeedMultiplier@Anathema2:
+		Modifier: 120
+		RequiresCondition: anathema >= 2 && anathema < 4
+	SpeedMultiplier@Anathema4:
+		Modifier: 140
 		RequiresCondition: anathema >= 4
 	GrantTimedCondition@Anathema:
 		Condition: anathema-alive
@@ -458,6 +476,7 @@ S1:
 	Inherits@BERSERK: ^Berserk
 	Inherits@BOTHELPER: ^BotCaptureHelper
 	Inherits@HeroOfTheUnionTargetable: ^HeroOfTheUnionTargetable
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -544,6 +563,7 @@ S3:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
 	Inherits@HeroOfTheUnionTargetable: ^HeroOfTheUnionTargetable
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -744,7 +764,7 @@ WCHR:
 		Name: Watcher
 	TooltipExtras:
 		Weaknesses: • Cannot deal damage
-		Attributes: • Can attach parasites to enemy vehicles & structures\n• Cloaked when not moving\n• Special Ability: Teleport (with upgrade)
+		Attributes: • Can attach parasites to enemy vehicles & structures\n• Cloaked when not moving\n• Detects cloaked ground units and spies\n• Special Ability: Teleport (with upgrade)
 	Health:
 		HP: 5000
 	UpdatesPlayerStatistics:
@@ -753,6 +773,9 @@ WCHR:
 		Speed: 80
 	RevealsShroud:
 		Range: 6c0
+	IgnoresDisguise:
+	DetectCloaked:
+		Range: 5c0
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 	AttackFrontal:
@@ -848,6 +871,7 @@ BRST:
 		ArmamentNames: primary
 		CircleWidth: 0
 		Type: BursterAttack
+		DeployCursor: move
 
 EVIS:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -860,7 +884,7 @@ EVIS:
 		BuildPaletteOrder: 121
 		Prerequisites: anyradar, ~infantry.scrin, ~evis.upgrade, ~techlevel.medium
 		IconPalette: chromes
-		Description: Fast moving anti-personnel infantry.
+		Description: Durable, fast moving, short-range, anti-personnel infantry.
 	Selectable:
 		DecorationBounds: 640, 896, -32, -256
 	Valued:
@@ -870,8 +894,9 @@ EVIS:
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor, Infantry
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
+		Attributes: • Charges a more powerful attack while on resources (with upgrade)
 	Health:
-		HP: 12000
+		HP: 16000
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Mobile:
@@ -945,22 +970,26 @@ IMPL:
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 		Attributes: • Slows targets
 	Health:
-		HP: 9000
+		HP: 8000
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Mobile:
 		Speed: 60
 	RevealsShroud:
 		Range: 6c0
-	AttackFrontal:
-		FacingTolerance: 64
-		PauseOnCondition: being-warped || blinded
+	AttackFrontalCharged:
+		FacingTolerance: 32
+		ChargeLevel: 0,2
+		PauseOnCondition: being-warped || blinded || reapersnare
 	Armament@PRIMARY:
 		Weapon: ImpalerSpike
 		LocalOffset: 150,0,400
+	Armament@Tracer:
+		Weapon: ImpalerTracer
+		LocalOffset: 150,0,400
 	Armament@BATF:
 		Name: batf
-		Weapon: ImpalerSpike
+		Weapon: ImpalerSpikePassenger
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 	EncyclopediaExtras:
@@ -976,19 +1005,19 @@ STLK:
 		BuildPaletteOrder: 123
 		Prerequisites: anyradar, ~infantry.scrin, ~stlk.upgrade, ~techlevel.medium
 		IconPalette: chromes
-		Description: Fast moving anti-personnel infantry.
+		Description: Fast moving anti-personnel infantry that can turn invisible temporarily and ambush targets.
 	Selectable:
 		DecorationBounds: 640, 896, -32, -256
 	Valued:
-		Cost: 500
+		Cost: 600
 	Tooltip:
 		Name: Stalker
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor, Infantry
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
-		Attributes: • Special Ability: Cloak\n• Moves faster while cloaked.
+		Attributes: • Special Ability: Cloak\n• Moves faster while cloaked\n• Briefly takes greatly reduced damage after decloaking
 	Health:
-		HP: 12000
+		HP: 10000
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Mobile:
@@ -1008,19 +1037,25 @@ STLK:
 		ScanRadius: 5
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
+	TimedConditionBarCA@Cloaked:
+		Condition: cloak-active
+		Color: ffffff
+		RequiresCondition: hidden
 	GrantTimedConditionOnDeploy@Cloak:
-		DeployedCondition: cloak
+		DeployedCondition: cloak-triggered
+		ChargingCondition: cloak-charging
 		ShowSelectionBar: true
 		StartsFullyCharged: true
-		DeployedTicks: 250
-		CooldownTicks: 500
+		DeployedTicks: 1
+		CooldownTicks: 875
 		ShowSelectionBarWhenFull: false
+		ShowSelectionBarWhenEmpty: false
 		ChargingColor: 808080
 		DischargingColor: ffffff
 		Instant: true
 	Cloak@NORMAL:
 		InitialDelay: 0
-		CloakDelay: 50
+		CloakDelay: 375
 		CloakSound: stlk-cloak.aud
 		UncloakSound: stlk-uncloak.aud
 		CloakedCondition: hidden
@@ -1028,31 +1063,41 @@ STLK:
 		CloakedPalette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
-		RequiresCondition: !cloak-force-disabled && !being-warped && !parachute && cloak
+		RequiresCondition: !cloak-force-disabled && !being-warped && !parachute && cloak-active
 		PauseOnCondition: invisibility
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden)
+	GrantTimedCondition@CloakActive:
+		Condition: cloak-active
+		Duration: 375
+		ForceFullDuration: true
+		RequiresCondition: cloak-triggered
+	GrantTimedCondition@Uncloaked:
+		Condition: phaseshield
+		RequiresCondition: cloak-charging && !hidden
+		Duration: 50
+		ForceFullDuration: true
+	SpeedMultiplier@CloakSpeed:
+		Modifier: 150
+		RequiresCondition: phaseshield || hidden
+	DamageMultiplier@PhaseShield:
+		Modifier: 10
+		RequiresCondition: phaseshield || hidden
+	WithColoredOverlay@PhaseShield:
+		Color: 15091f88
+		RequiresCondition: phaseshield
+	-GrantConditionOnDamageState@UNCLOAK:
 	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || hidden
 		ColorSource: Player
-	SpeedMultiplier@CloakSpeed:
-		Modifier: 150
-		RequiresCondition: hidden
-	GrantTimedCondition@Uncloaked:
-		Condition: phaseshield
-		RequiresCondition: !hidden
-		Duration: 25
-	DamageMultiplier@UncloakShield:
-		Modifier: 33
-		RequiresCondition: phaseshield
-	WithColoredOverlay@UncloakShield:
-		Color: 15091f77
-		RequiresCondition: phaseshield
+	TakeCover:
+		PauseOnCondition: being-warped || phaseshield
 	EncyclopediaExtras:
 		AdditionalInfo: Requires Malefic Allegiance.
 
 SMEDI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: Hospital
 		BuildPaletteOrder: 240
@@ -1104,6 +1149,7 @@ SMEDI:
 
 ARTI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: Hospital
 		BuildPaletteOrder: 240
@@ -1134,7 +1180,7 @@ ARTI:
 		ForceTargetRelationships: None
 		Name: secondary
 	AutoTargetPriority@defuse:
-		ValidTargets: C4Attached
+		ValidTargets: C4Attached, TNTAttached
 		InvalidTargets: NoAutoTarget
 		ValidRelationships: Ally
 	AttackFrontal:
@@ -1167,8 +1213,9 @@ ARTI:
 	Guard:
 		Voice: Move
 	AutoTarget:
+		ScanRadius: 3
 	AutoTargetPriority@DEFAULT:
-		ValidTargets: Repair
+		ValidTargets: Repairable
 		ValidRelationships: Ally
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
@@ -1247,7 +1294,7 @@ MAST:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Vehicles, Defenses, Buildings
 		Weaknesses: • Cannot attack Aircraft
-		Attributes: • Maximum 1 can be trained\n• Can detect cloaked ground units and spies\n• Immune to mind control\n• Can capture enemy buildings\n• Shorter range and longer reload against vehicles\n• Special Ability: Mind Spark
+		Attributes: • Maximum 1 can be trained\n• Detects cloaked ground units and spies\n• Immune to mind control\n• Can capture enemy buildings\n• Shorter range and longer reload against vehicles\n• Special Ability: Mind Spark
 	Voiced:
 		VoiceSet: MastermindVoice
 	Valued:
@@ -1268,8 +1315,7 @@ MAST:
 		Range: 7c0
 	IgnoresDisguise:
 	DetectCloaked:
-		DetectionTypes: Cloak, Thief
-		Range: 5c0
+		Range: 2c0
 	Armament@PRIMARY:
 		Weapon: EnslaveInfantry
 		LocalOffset: 150,0,400
@@ -1585,6 +1631,8 @@ SHRW:
 	Armament@SECONDARY:
 		Weapon: ShardWalkerShardsAA
 		LocalOffset: 690,92,0, 690,-92,0
+	Selectable:
+		Class: gunw
 	-GrantConditionOnFaction@TRAVELERSPEED:
 	-SpeedMultiplier@TRAVELERSPEED:
 	-ReplacedInQueue:
@@ -1618,7 +1666,7 @@ SEEK:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Buildings
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
-		Attributes: • Can detect cloaked units, spies and submarines.\n• Can traverse water
+		Attributes: • Detects cloaked units, spies and submarines.\n• Can traverse water
 	Mobile:
 		Speed: 113
 		Locomotor: lighthover
@@ -1627,11 +1675,11 @@ SEEK:
 	Armor:
 		Type: Light
 	RevealsShroud:
-		MinRange: 5c0
-		Range: 7c0
+		MinRange: 6c0
+		Range: 8c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 5c0
+		Range: 6c0
 	Turreted:
 		TurnSpeed: 40
 		Offset: -280,0,0
@@ -1656,7 +1704,7 @@ SEEK:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
-		DetectionTypes: Cloak, Thief, AirCloak, Underwater
+		DetectionTypes: Cloak, AirCloak, Underwater
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -1700,7 +1748,7 @@ LACE:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Buildings
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
-		Attributes: • Can detect cloaked units, spies and submarines.\n• Can traverse water
+		Attributes: • Detects cloaked units, spies and submarines.\n• Can traverse water
 	Mobile:
 		TurnSpeed: 40
 		Speed: 144
@@ -1710,11 +1758,11 @@ LACE:
 	Armor:
 		Type: Light
 	RevealsShroud:
-		MinRange: 5c0
-		Range: 7c0
+		MinRange: 6c0
+		Range: 8c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 5c0
+		Range: 6c0
 	Turreted:
 		TurnSpeed: 40
 		Offset: -50,0,0
@@ -1742,7 +1790,7 @@ LACE:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
-		DetectionTypes: Cloak, Thief, AirCloak, Underwater
+		DetectionTypes: Cloak, AirCloak, Underwater
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -1771,6 +1819,7 @@ INTL:
 	Inherits@TRANSPORT: ^Transport
 	Inherits@NOUNLOADCHRONO: ^NoUnloadWhenChronoshifted
 	Inherits@HOVERTRAIL: ^HoverTrail
+	Inherits@HeavyArmor: ^HeavyArmor
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Inherits@COMMANDOSKULL: ^CommandoSkull
@@ -1797,8 +1846,6 @@ INTL:
 		Locomotor: lighthover
 	Health:
 		HP: 44000
-	Armor:
-		Type: Heavy
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -1903,6 +1950,8 @@ INTL.AI:
 	WithCargoSounds:
 		-EnterSounds:
 	-Encyclopedia:
+	Selectable:
+		Class: intl
 
 INTL.AI2:
 	Inherits: INTL.AI
@@ -2074,6 +2123,7 @@ LCHR.Orb:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@bounty: ^GlobalBounty
 	Inherits@Warpable: ^Warpable
+	ScriptTriggers:
 	Selectable:
 		DecorationBounds: 1536, 1536, 0, -128
 	Tooltip:
@@ -2165,6 +2215,7 @@ STCR:
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
+	Inherits@HeavyArmor: ^HeavyArmor
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -2187,8 +2238,6 @@ STCR:
 		TurnSpeed: 16
 	Health:
 		HP: 84000
-	Armor:
-		Type: Heavy
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -2335,6 +2384,7 @@ DARK:
 	Inherits@HOVERTRAIL: ^HoverTrail
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
+	Inherits@HeavyArmor: ^HeavyArmor
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 292
@@ -2355,8 +2405,6 @@ DARK:
 		AddToArmyValue: true
 	Health:
 		HP: 38000
-	Armor:
-		Type: Heavy
 	Mobile:
 		TurnSpeed: 16
 		Speed: 60
@@ -2589,6 +2637,7 @@ TPOD:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@HeavyArmor: ^HeavyArmor
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	Inherits@ONRESOURCE: ^OnResourceConditions
 	Buildable:
@@ -2612,12 +2661,10 @@ TPOD:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 82000
-	Armor:
-		Type: Heavy
+		HP: 86000
 	Mobile:
 		Locomotor: heavytracked
-		Speed: 44
+		Speed: 50
 		TurnSpeed: 512
 	Passenger:
 		Weight: 3
@@ -2700,7 +2747,7 @@ RTPD:
 	Tooltip:
 		Name: Reaper Tripod
 	Health:
-		HP: 98000
+		HP: 102000
 	SpawnActorOnDeath:
 		Actor: RTPD.Husk
 	AttackTurreted:
@@ -2782,6 +2829,7 @@ OBLT:
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
+	Inherits@HeavyArmor: ^HeavyArmor
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 283
@@ -2802,8 +2850,6 @@ OBLT:
 		AddToArmyValue: true
 	Health:
 		HP: 30000
-	Armor:
-		Type: Heavy
 	Mobile:
 		TurnSpeed: 512
 		Speed: 48
@@ -2903,6 +2949,7 @@ NULL:
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
+	Inherits@HeavyArmor: ^HeavyArmor
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 291
@@ -2923,8 +2970,6 @@ NULL:
 		AddToArmyValue: true
 	Health:
 		HP: 25000
-	Armor:
-		Type: Heavy
 	Mobile:
 		TurnSpeed: 512
 		Speed: 60
@@ -2979,7 +3024,9 @@ SMCV:
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Inherits@EconomyPolicyDiscount: ^EconomyPolicyDiscount
-	Inherits@BLD: ^ProducesBuildings
+	Inherits@EconomyPolicyMcvSpeedBonus: ^EconomyPolicyMcvSpeedBonus
+	Inherits@HeavyArmor: ^HeavyArmor
+	Inherits@NodCovenantTarget: ^NodCovenantTarget
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 602
@@ -2999,8 +3046,6 @@ SMCV:
 		Bounds: 1792, 1792
 	Health:
 		HP: 75000
-	Armor:
-		Type: Heavy
 	Mobile:
 		Speed: 54
 		Locomotor: lighthover
@@ -3037,54 +3082,6 @@ SMCV:
 		RequiresCondition: !empdisable && !being-warped && !driver-dead
 	DamageTypeDamageMultiplier@A2GPROTECTION:
 		Modifier: 60
-	UpdatesCount@NodCovenant:
-		Type: NodCovenant
-		UpdateOn: Killed
-	-PrimaryBuilding:
-	-WithDecoration@primary:
-	GrantConditionOnPrerequisite@Rebel:
-		Prerequisites: rebel.allegiance
-		Condition: rebel-allegiance
-	ProvidesPrerequisite@scrin:
-		Prerequisite: structures.scrin
-		RequiresCondition: rebel-allegiance
-	ProvidesPrerequisiteValidatedFaction@reaper:
-		Factions: reaper
-		Prerequisite: structures.reaper
-		RequiresCondition: rebel-allegiance
-	ProvidesPrerequisiteValidatedFaction@traveler:
-		Factions: traveler
-		Prerequisite: structures.traveler
-		RequiresCondition: rebel-allegiance
-	ProvidesPrerequisiteValidatedFaction@harbinger:
-		Factions: harbinger
-		Prerequisite: structures.harbinger
-		RequiresCondition: rebel-allegiance
-	ProvidesPrerequisiteValidatedFaction@collector:
-		Factions: collector
-		Prerequisite: structures.collector
-		RequiresCondition: rebel-allegiance
-	FreeActor@QUEUEUPDATER:
-		RequiresCondition: updatequeue && rebel-allegiance
-	-SpawnActorOnCapture@QUEUEUPDATER:
-	-GrantConditionOnPrerequisite@MQF:
-	-GrantConditionOnPrerequisite@MQS:
-	GrantDelayedCondition@QUEUEUPDATER:
-		RequiresCondition: rebel-allegiance
-	-ProductionQueue@MQDEF:
-	-ProductionBar@MQDEF:
-	Production@SQBLD:
-		Produces: BuildingSQ
-		RequiresCondition: !global-multiqueuefull && rebel-allegiance
-		PauseOnCondition: being-warped
-	Production@MQBLD:
-		Produces: BuildingMQ
-		RequiresCondition: global-multiqueuefull && rebel-allegiance
-		PauseOnCondition: being-warped
-	ProductionBar@SQBLD:
-		RequiresCondition: !global-multiqueuefull && rebel-allegiance
-	ProductionBar@MQBLD:
-		RequiresCondition: global-multiqueuefull && rebel-allegiance
 	Encyclopedia:
 		Category: Scrin/Vehicles
 
@@ -3141,7 +3138,6 @@ STMR:
 	WithMuzzleOverlay:
 	AttackAircraft:
 		FacingTolerance: 512
-		PersistentTargeting: false
 		OpportunityFire: true
 		PauseOnCondition: empdisable || being-warped || blinded
 	Aircraft:
@@ -3532,7 +3528,7 @@ DEVA:
 	Voiced:
 		VoiceSet: DevastatorVoice
 	Valued:
-		Cost: 2500
+		Cost: 2400
 	Tooltip:
 		Name: Devastator Warship
 		GenericName: Aircraft
@@ -3795,6 +3791,14 @@ PAC:
 	Encyclopedia:
 		Category: Scrin/Aircraft
 		Scale: 1.5
+	EncyclopediaExtras:
+		RenderPreviewActor: pac.preview
+
+PAC.Preview:
+	Inherits: ^PreviewDummy
+	RenderSprites:
+		Image: pac
+	WithFacingSpriteBody:
 
 INVA:
 	Inherits: ^NeutralPlane
@@ -4628,14 +4632,14 @@ SFAC:
 	BaseProvider:
 		Range: 16c0
 		PauseOnCondition: being-captured
-		RequiresCondition: !economy-policy2
-	BaseProvider@EconomyPolicy2:
+		RequiresCondition: !defense-policy
+	BaseProvider@DefensePolicy:
 		Range: 20c0
 		PauseOnCondition: being-captured
-		RequiresCondition: economy-policy2
-	GrantConditionOnPrerequisite@EconomyPolicy2:
-		Condition: economy-policy2
-		Prerequisites: economy.policy, influence.level2
+		RequiresCondition: defense-policy
+	GrantConditionOnPrerequisite@DefensePolicy:
+		Condition: defense-policy
+		Prerequisites: defense.policy
 	WithBuildingPlacedAnimation:
 		RequiresCondition: !build-incomplete && !chrono-vortex
 	Power:
@@ -4653,14 +4657,6 @@ SFAC:
 		ActorTypes: s1,s1,s1,s1,s6
 		GuaranteedActorTypes: s1, s1
 	-UpdatesBuildOrder:
-	GrantConditionOnPrerequisite@LoyalistBonus:
-		Condition: loyalist-allegiance
-		Prerequisites: loyalist.allegiance
-	ProximityExternalCondition@IchorBoost:
-		Range: 16c0
-		Condition: ichor-boost
-		ValidRelationships: Neutral
-		RequiresCondition: loyalist-allegiance
 
 REAC:
 	Inherits: ^ScrinBuilding
@@ -4698,6 +4694,8 @@ REAC:
 	Power:
 		Amount: 100
 	ScalePowerWithHealth:
+	Sellable:
+		RequiresCondition: !build-incomplete && !c4 && !being-captured && !being-warped && !hacked && !discpowerdrain
 	ProvidesPrerequisite@buildingname:
 	UpdatesBuildOrder:
 		Limit: 2
@@ -4739,12 +4737,14 @@ REA2:
 		Amount: 200
 	ProvidesPrerequisite@buildingname:
 	ScalePowerWithHealth:
+	Sellable:
+		RequiresCondition: !build-incomplete && !c4 && !being-captured && !being-warped && !hacked && !discpowerdrain
 	UpdatesBuildOrder:
 		Limit: 1
 
 PROC.SCRIN:
 	Inherits: ^ScrinBuilding
-	Inherits@BOTREF: ^BotRefinery
+	Inherits@Refinery: ^Refinery
 	Inherits@ResourceDrainable: ^ResourceDrainable
 	Inherits@EconomyPolicyDiscount: ^EconomyPolicyDiscount
 	Inherits@EconomyPolicyTimeReduction: ^EconomyPolicyTimeReduction
@@ -4773,6 +4773,8 @@ PROC.SCRIN:
 		Footprint: _x_ xxx +++ ===
 		Dimensions: 3,4
 		LocalCenterOffset: 0,-512,0
+	Sellable:
+		RequiresCondition: !build-incomplete && !c4 && !being-captured && !being-warped && !hacked && !resourcedrain
 	Health:
 		HP: 90000
 	Armor:
@@ -4796,6 +4798,7 @@ PROC.SCRIN:
 		IsDragRequired: True
 		DragOffset: -554,512,0
 		DragLength: 12
+		MaxQueueLength: 12
 	StoresPlayerResourcesCA:
 		Capacity: 2000
 	WithResourceStoragePipsDecoration:
@@ -5187,6 +5190,7 @@ GRAV:
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@AIR: ^ProducesHelicopters
 	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
+	Inherits@InfiltrateForSupportPower: ^InfiltrateForSupportPower
 	HitShape:
 		TargetableOffsets: -355,-1024,0
 	Buildable:
@@ -5275,6 +5279,8 @@ GRAV:
 	AutoTarget:
 	AutoTargetPriority@DEFAULT:
 		ValidRelationships: Ally
+	InfiltrateToCreateProxyActor@SpySupportPower:
+		Proxy: powerproxy.airstrike
 	InfiltrateToCreateProxyActor@STOLENTECH:
 		Types: StealTechInfiltrate
 		Proxy: stolentech.grav
@@ -5432,7 +5438,7 @@ SILO.SCRIN:
 		Prerequisites: proc.scrin, ~structures.scrin
 		Queue: DefenseSQ, DefenseMQ
 		IconPalette: chromes
-		Description: Stores processed Tiberium, Ore and Gems
+		Description: Stores processed Tiberium, Ore and Gems.
 	-GivesBuildableArea:
 	Health:
 		HP: 30000
@@ -5529,7 +5535,7 @@ RFGN:
 		BuildPaletteOrder: 140
 		Prerequisites: scrt, ~structures.scrin, ~techlevel.unrestricted
 		BuildLimit: 1
-		Description: Provides Rift support power.
+		Description: Provides the Rift superweapon power.
 		IconPalette: chrome
 	TooltipExtras:
 		Attributes: • Maximum 1 can be built\n• Requires power to operate\n• Special Ability: Rift
@@ -5597,7 +5603,7 @@ PTUR:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Cannot attack Aircraft
-		Attributes: • Can detect cloaked units
+		Attributes: • Detects cloaked units
 	Valued:
 		Cost: 725
 	CustomSellValue:
@@ -5663,7 +5669,7 @@ SHAR:
 	TooltipExtras:
 		Strengths: • Strong vs Aircraft
 		Weaknesses: • Cannot attack ground units
-		Attributes: • Requires power to operate\n• Can detect cloaked aircraft
+		Attributes: • Requires power to operate\n• Detects cloaked aircraft
 	Valued:
 		Cost: 800
 	Tooltip:
@@ -5729,7 +5735,7 @@ SCOL:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
 		Weaknesses: • Cannot attack Aircraft
-		Attributes: • Requires power to operate\n• Can detect cloaked units
+		Attributes: • Requires power to operate\n• Detects cloaked units
 	Valued:
 		Cost: 1400
 	Tooltip:
@@ -5885,12 +5891,10 @@ STRM2:
 	JamsMissiles@IONSTORM:
 		Range: 2c512
 
-SCOL.Temp:
+SSPK:
 	Inherits: SCOL
 	Tooltip:
 		Name: Storm Spike
-	RenderSprites:
-		Image: scol
 	-Sellable:
 	-Buildable:
 	Health:
@@ -5915,6 +5919,8 @@ SCOL.Temp:
 	-WithDecoration@POWERDOWN:
 	-RevealsShroudMultiplier@POWERDOWN:
 	-ToggleConditionOnOrder:
+	-ExternalCondition@PowerDown:
+	-DummyConditionConsumer@PowerDown:
 	-Armament:
 	Armament:
 		Weapon: StormColumnZap
@@ -5931,17 +5937,41 @@ SCOL.Temp:
 	-ChangesHealth@DefensePolicy2:
 	-UpdatesCount@NodCovenant:
 	-Encyclopedia:
+	GrantTimedCondition@Active:
+		Condition: active
+		Duration: 750
+	TimedConditionBarCA@Active:
+		Condition: active
+		Color: FFFFFF
+		ValidRelationships: Ally, Enemy, Neutral
+	DummyConditionConsumer@Active:
+		Condition: active
 
-VSPK:
-	Inherits: ^BasicBuilding
-	-ShakeOnDeath:
+^SpikeBase:
+	Inherits: ^Defense
 	OwnerLostAction:
 		Action: Kill
 	RenderSprites:
 		PlayerPalette: playerscrin
-	FireWarheadsOnDeath:
-		Weapon: SmallBuildingExplode
-		EmptyWeapon: SmallBuildingExplode
+	Armor:
+		Type: Concrete
+	Building:
+		TerrainTypes: Clear,Road,Ore,Gems,Tiberium,BlueTiberium,BlackTiberium
+		AllowPlacementOnResources: true
+		-BuildSounds:
+	SoundOnDamageTransition:
+		-DamagedSounds:
+		DestroyedSounds: kaboom15.aud
+	-ShakeOnDeath:
+	-RepairableBuilding:
+	-WithBuildingRepairDecoration:
+	-Sellable:
+	-ChangesHealth@DefensePolicy2:
+	-RenderRangeCircle:
+	-DetectCloaked:
+
+VSPK:
+	Inherits: ^SpikeBase
 	Selectable:
 		Bounds: 1280, 1792, 0, -512
 		DecorationBounds: 1280, 2560, 0, -768
@@ -5952,29 +5982,17 @@ VSPK:
 	TooltipExtras:
 		Attributes: • Corrupts resources\n• Damages nearby enemies over time\n• Direct damage is reflected back to the attacker
 		Description: Gradually transforms nearby resources into Black Tiberium, which is devoid of most of its useful properties.
-	Armor:
-		Type: Concrete
-	Targetable:
-		TargetTypes: Ground, Structure, Defense
 	RevealsShroud:
 		MinRange: 6c0
 		Range: 8c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 6c0
-	Building:
-		Dimensions: 1,1
-		Footprint: x
-		TerrainTypes: Clear,Road,Ore,Gems,Tiberium,BlueTiberium,BlackTiberium
-		AllowPlacementOnResources: true
-	WithMakeAnimation:
-	SoundOnDamageTransition:
-		-DamagedSounds:
-		DestroyedSounds: kaboom15.aud
 	ProximityExternalCondition@VoidSpike:
 		Condition: voidspike
 		Range: 8c0
 		ValidRelationships: Enemy, Neutral
+		RequiresCondition: !build-incomplete && !being-warped
 	WithRangeCircleCA@VoidSpike:
 		Type: VoidSpike
 		Range: 8c0
@@ -5987,21 +6005,131 @@ VSPK:
 		ConvertTo: BlackTiberium
 		Interval: 10
 		Amount: 1
+		RequiresCondition: !build-incomplete && !being-warped
 	PeriodicExplosion:
 		Weapon: VoidSpike
+		RequiresCondition: !build-incomplete && !being-warped
 	AmbientSoundCA:
 		SoundFiles: grcl-loop1.aud, grcl-loop2.aud
 		Delay: 0
 		Interval: 20
 		VolumeMultiplier: 0.3
+		AudibleThroughFog: true
+		RequiresCondition: !build-incomplete && !being-warped
 	WithIdleOverlay:
 		Sequence: overlay
 		Palette: scrin
 		IsDecoration: true
+		RequiresCondition: !build-incomplete && !being-warped
 	ReflectsDamage:
 		DamagePercentage: 50
 		ValidRelationships: Ally, Enemy, Neutral
 		ReflectToAttacker: true
+		RequiresCondition: !build-incomplete && !being-warped
+
+ISPK:
+	Inherits: ^SpikeBase
+	Selectable:
+		Bounds: 1280, 2304, 0, -576
+		DecorationBounds: 1280, 2816, 0, -832
+	Health:
+		HP: 40000
+	Tooltip:
+		Name: Ichor Spike
+	TooltipExtras:
+		Attributes: • Enriches Tiberium trees\n• Empowers units with Resource Conversion upgrade
+		Description: Enriches nearby Tiberium trees causing them to seed Tiberium more quickly.
+	RevealsShroud:
+		MinRange: 6c0
+		Range: 8c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 6c0
+	WithIdleAnimation:
+		Sequences: idle2, idle3, idle4, idle5
+		Interval: 5, 50
+		RequiresCondition: !build-incomplete && !being-warped
+	ProximityExternalCondition@IchorBoost:
+		Range: 8c0
+		Condition: ichor-boost
+		ValidRelationships: Neutral
+		RequiresCondition: !build-incomplete && !being-warped
+	ProximityExternalCondition@ONTIB:
+		Condition: on-tib
+		Range: 8c0
+		ValidRelationships: Ally, Neutral, Enemy
+	WithRangeCircleCA@IchorBoost:
+		Type: IchorSpike
+		Range: 8c0
+		ValidRelationships: Ally, Enemy, Neutral
+		Color: 00ff00aa
+	TerrainLightSource:
+		Range: 3c0
+		Intensity: 0.1
+		GreenTint: 0.3
+	ChangesHealth:
+		Step: 0
+		PercentageStep: 1
+		Delay: 25
+		StartIfBelow: 100
+		DamageCooldown: 150
+	WithBuildingBib:
+		HasMinibib: true
+
+CSPK:
+	Inherits: ^SpikeBase
+	Inherits@ProducesBuildings: ^ProducesBuildings
+	Selectable:
+		Bounds: 1280, 2304, 0, -576
+		DecorationBounds: 1280, 2816, 0, -832
+	Health:
+		HP: 40000
+	Tooltip:
+		Name: Colony Spike
+	TooltipExtras:
+		Attributes: • Produces non-defense buildings.
+		Description: Enables production of non-defense buildings.
+	RevealsShroud:
+		MinRange: 6c0
+		Range: 10c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 6c0
+	WithBuildingBib:
+		HasMinibib: true
+	Building:
+		TerrainTypes: Clear,Road
+		AllowPlacementOnResources: false
+	-PrimaryBuilding:
+	-WithDecoration@primary:
+	-ProductionQueue@MQDEF:
+	-ProductionBar@MQDEF:
+	-GrantConditionOnPrerequisite@MQF:
+	-GrantConditionOnPrerequisite@MQS:
+	Production@SQBLD:
+		Produces: BuildingSQ
+		PauseOnCondition: build-incomplete || being-warped
+	Production@MQBLD:
+		Produces: BuildingMQ
+		PauseOnCondition: build-incomplete || being-warped
+	ProductionBar@SQBLD:
+		ProductionType: BuildingSQ
+	ProductionBar@MQBLD:
+		ProductionType: BuildingMQ
+	ProvidesPrerequisite@scrin:
+		Prerequisite: structures.scrin
+	ProvidesPrerequisiteValidatedFaction@reaper:
+		Factions: reaper
+		Prerequisite: structures.reaper
+	ProvidesPrerequisiteValidatedFaction@traveler:
+		Factions: traveler
+		Prerequisite: structures.traveler
+	ProvidesPrerequisiteValidatedFaction@harbinger:
+		Factions: harbinger
+		Prerequisite: structures.harbinger
+	ProvidesPrerequisiteValidatedFaction@collector:
+		Factions: collector
+		Prerequisite: structures.collector
 
 #
 # ---- misc
@@ -6268,7 +6396,7 @@ Rift:
 	EditorOnlyTooltip:
 		Name: (Rift)
 	RenderSprites:
-		Image: riftanim
+		Image: riftlg
 		Palette: effect-ignore-lighting-alpha85
 	PeriodicExplosion:
 		Weapon: Rift
@@ -6278,7 +6406,7 @@ Rift:
 	Health:
 		HP: 1
 	WithSpriteBody:
-		StartSequence: spawn
+		StartSequence: make
 	AmbientSound:
 		SoundFiles: rift1.aud, rift2.aud, rift3.aud
 		Interval: 50
@@ -6294,7 +6422,7 @@ RiftFade:
 	WithSpriteBody:
 		Sequence: dead
 	WithMakeAnimation:
-		Sequence: fade
+		Sequence: die
 	KillsSelf:
 		Delay: 24
 	-SpawnActorOnDeath:
@@ -6306,11 +6434,30 @@ RiftMinor:
 	EditorOnlyTooltip:
 		Name: (Minor Rift)
 	RenderSprites:
-		Image: riftanimmd
+		Image: riftsm
 	PeriodicExplosion:
 		Weapon: MiniRift
 	KillsSelf:
-		Delay: 120
+		Delay: 144
+	# required for spawning actor on death
+	Health:
+		HP: 1
+	WithSpriteBody:
+		StartSequence: make
+	SpawnActorOnDeath:
+		Actor: riftminorfade
+		SkipMakeAnimations: false
+
+RiftMinorFade:
+	Inherits: RiftMinor
+	WithSpriteBody:
+		Sequence: dead
+	WithMakeAnimation:
+		Sequence: die
+	KillsSelf:
+		Delay: 24
+	-SpawnActorOnDeath:
+	-PeriodicExplosion:
 
 camera.resourcescan:
 	Inherits: ^CameraBase
@@ -6411,6 +6558,16 @@ IonSurgeFade:
 	Immobile:
 		OccupiesSpace: true
 	Interactable:
+	WithDeathAnimation:
+		UseDeathTypeSuffix: false
+		CrushedSequence: die
+		FallbackSequence: die
+	WithMakeAnimation:
+	OwnerLostAction:
+		Action: Kill
+	# required for death animation
+	Health:
+		HP: 1
 
 WORMHOLE:
 	Inherits: ^WormholeBase
@@ -6436,11 +6593,6 @@ WORMHOLE:
 	Exit:
 	MapEditorData:
 		Categories: System
-	WithDeathAnimation:
-		UseDeathTypeSuffix: false
-		CrushedSequence: die
-		FallbackSequence: die
-	WithMakeAnimation:
 
 REBELGATEWAY:
 	Inherits: ^WormholeBase
@@ -6449,8 +6601,8 @@ REBELGATEWAY:
 	Tooltip:
 		Name: Gateway
 	TooltipExtras:
-		Attributes: • Can be powered down to disable, or sold to remove.
-		Description: Acts as a remote exit for a targeted production structure.
+		Attributes: • Can be powered down to disable, or sold to remove\n• Structures must be manually linked for gateway to function
+		Description: Acts as a remote exit for linked ground unit production structures
 	RenderSprites:
 		Image: wormholelg
 	Selectable:
@@ -6466,11 +6618,6 @@ REBELGATEWAY:
 	Health:
 		HP: 50000
 	RallyPoint:
-	WithDeathAnimation:
-		UseDeathTypeSuffix: false
-		CrushedSequence: die
-		FallbackSequence: die
-	WithMakeAnimation:
 	LinkedProducerTarget:
 		Mode: Exit
 		Types: InfantrySQ, InfantryMQ, VehicleSQ, VehicleMQ

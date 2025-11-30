@@ -834,7 +834,7 @@ namespace OpenRA.Mods.CA.Projectiles
 				desiredVFacing = vFacing + world.SharedRandom.Next(-info.JammedDiversionRange, info.JammedDiversionRange + 1);
 			}
 			else if (!args.GuidedTarget.IsValidFor(args.SourceActor))
-				desiredHFacing = hFacing;
+				desiredHFacing = tarDistVec.HorizontalLengthSquared != 0 ? tarDistVec.Yaw.Facing : hFacing;
 
 			// Compute new direction the projectile will be facing
 			hFacing = Util.TickFacing(hFacing, desiredHFacing, info.HorizontalRateOfTurn.Facing);
@@ -873,7 +873,8 @@ namespace OpenRA.Mods.CA.Projectiles
 
 			// Check if target position should be updated (actor visible & locked on)
 			var newTarPos = targetPosition;
-			if (args.GuidedTarget.IsValidFor(args.SourceActor) && lockOn)
+			var targetWasValid = args.GuidedTarget.IsValidFor(args.SourceActor);
+			if (targetWasValid && lockOn)
 				newTarPos = (args.Weapon.TargetActorCenter ? args.GuidedTarget.CenterPosition : args.GuidedTarget.Positions.ClosestToIgnoringPath(args.Source))
 					+ new WVec(WDist.Zero, WDist.Zero, info.AirburstAltitude);
 
@@ -881,7 +882,13 @@ namespace OpenRA.Mods.CA.Projectiles
 			var yaw1 = tarVel.HorizontalLengthSquared != 0 ? tarVel.Yaw : WAngle.FromFacing(hFacing);
 			tarVel = newTarPos - targetPosition;
 			var yaw2 = tarVel.HorizontalLengthSquared != 0 ? tarVel.Yaw : WAngle.FromFacing(hFacing);
-			predVel = tarVel.Rotate(WRot.FromYaw(yaw2 - yaw1));
+
+			// Clear predicted velocity when target is invalid to prevent erratic behavior
+			if (!targetWasValid)
+				predVel = WVec.Zero;
+			else
+				predVel = tarVel.Rotate(WRot.FromYaw(yaw2 - yaw1));
+
 			targetPosition = newTarPos;
 
 			// Compute current distance from target position

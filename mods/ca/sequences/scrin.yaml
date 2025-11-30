@@ -2017,6 +2017,35 @@ etpd.destroyed:
 		UseClassicFacings: True
 		ZOffset: -512
 
+veng:
+	Inherits: ^VehicleOverlays
+	idle:
+		Filename: veng.shp
+		Frames: 0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62
+		Facings: 32
+		UseClassicFacings: True
+	muzzle:
+		Filename: rift.shp
+		Length: *
+		Frames: 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23
+		Alpha: 0.96, 0.88, 0.80, 0.72, 0.64, 0.56, 0.48, 0.40, 0.32, 0.24, 0.16, 0.08
+		ZOffset: 2048
+		BlendMode: Subtractive
+		IgnoreWorldTint: true
+		Scale: 0.4
+		Tick: 60
+	icon:
+		Filename: oblticon.shp
+
+veng.destroyed:
+	Inherits: ^VehicleOverlays
+	idle:
+		Filename: veng.shp
+		Frames: 0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62
+		Facings: 32
+		ZOffset: -512
+		UseClassicFacings: True
+
 oblt:
 	Inherits: ^VehicleOverlays
 	idle:
@@ -2880,37 +2909,22 @@ scol:
 	icon:
 		Filename: scolicon.shp
 
-vspk:
+sspk:
 	Inherits: ^StructureOverlays
 	idle:
-		Filename: vspk.shp
-		Length: *
-		Frames: 0,1,2,3,4,0,0,0,0,0,0,0,0,0,0,0
-		Offset: 0,-15
-		Tick: 80
-		ZOffset: 512
+		Filename: sspk.shp
+		Length: 1
+		Offset: 0,-12
 	damaged-idle:
-		Filename: vspk.shp
-		Frames: 0,1,2,3,4,0,0,0,0,0,0,0,0,0,0,0
-		Length: *
-		Offset: 0,-15
-		Tick: 80
-		ZOffset: 512
+		Filename: sspk.shp
+		Start: 11
+		Length: 1
+		Offset: 0,-12
 	make:
-		Filename: vspk.shp
-		Length: 14
-		Start: 5
-		Offset: 0,-15
-		ZOffset: 512
-	overlay:
-		Filename: voidpulse.shp
+		Filename: sspk.shp
+		Frames: 1,2,3,4,5,6,7,8,9,10
 		Length: *
-		BlendMode: Subtractive
-		ZOffset: -1
-		Alpha: 0.3
-		Offset: 1, 0
-		Scale: 3
-		IgnoreWorldTint: true
+		Offset: 0,-12
 	bib:
 		Filename: mbTSLA.tem
 		TilesetFilenames:
@@ -2921,7 +2935,130 @@ vspk:
 			WINTER: mbTSLA.win
 		Length: *
 	icon:
+		Filename: scolicon.shp
+
+vspk:
+	Inherits: ^StructureOverlays
+	Defaults:
+		Filename: vspk.shp
+		ZOffset: 512
+	idle:
+		Length: *
+		Frames: 0,1,2,3,4,0,0,0,0,0,0,0,0,0,0,0
+		Offset: 0,-15
+		Tick: 80
+	damaged-idle:
+		Frames: 0,1,2,3,4,0,0,0,0,0,0,0,0,0,0,0
+		Length: *
+		Offset: 0,-15
+		Tick: 80
+	make:
+		Length: 14
+		Start: 5
+		Offset: 0,-15
+	overlay:
+		Filename: voidpulse.shp
+		Length: *
+		BlendMode: Subtractive
+		ZOffset: -1
+		Alpha: 0.45
+		Offset: 1, 1
+		Scale: 2
+		IgnoreWorldTint: true
+		Tick: 40
+	bib:
+		ZOffset: 0
+		Filename: mbTSLA.tem
+		TilesetFilenames:
+			SNOW: mbTSLA.sno
+			INTERIOR: mbTSLA.int
+			DESERT: mbTSLA.des
+			JUNGLE: mbTSLA.jun
+			WINTER: mbTSLA.win
+		Length: *
+	icon:
 		Filename: vspkicon.shp
+
+ispk:
+	Inherits: ^StructureOverlays
+	Defaults:
+		Filename: ispk.shp
+		ZOffset: 512
+	idle:
+		Offset: 0,-18
+	damaged-idle:
+		Offset: 0,-18
+	idle2:
+		Frames: 1,5
+		Length: *
+		Tick: 120
+		Offset: 0,-18
+	idle3:
+		Frames: 7,3
+		Length: *
+		Tick: 120
+		Offset: 0,-18
+	idle4:
+		Frames: 4,2
+		Length: *
+		Tick: 120
+		Offset: 0,-18
+	idle5:
+		Frames: 3,5,7
+		Length: *
+		Tick: 120
+		Offset: 0,-18
+	idle5:
+		Frames: 6,1
+		Length: *
+		Tick: 120
+		Offset: 0,-18
+	make:
+		Frames: 17,16,15,14,13,12,11,10,9,8
+		Length: *
+		Tick: 60
+		Offset: 0,-18
+	bib:
+		Filename: mbTSLA.tem
+		TilesetFilenames:
+			SNOW: mbTSLA.sno
+			INTERIOR: mbTSLA.int
+			DESERT: mbTSLA.des
+			JUNGLE: mbTSLA.jun
+			WINTER: mbTSLA.win
+		Length: *
+		ZOffset: 0
+		Offset: -1,1
+	icon:
+		Filename: ispkicon.shp
+
+cspk:
+	Inherits: ^StructureOverlays
+	Defaults:
+		Filename: cspk.shp
+		ZOffset: 512
+	idle:
+		Offset: 0,-18
+	damaged-idle:
+		Offset: 0,-18
+	make:
+		Start: 1
+		Length: 11
+		Tick: 60
+		Offset: 0,-18
+	bib:
+		Filename: mbTSLA.tem
+		TilesetFilenames:
+			SNOW: mbTSLA.sno
+			INTERIOR: mbTSLA.int
+			DESERT: mbTSLA.des
+			JUNGLE: mbTSLA.jun
+			WINTER: mbTSLA.win
+		Length: *
+		ZOffset: 0
+		Offset: -1,1
+	icon:
+		Filename: cspkicon.shp
 
 #
 # ---- animations
@@ -2969,7 +3106,6 @@ mrdrdisc:
 tibglob:
 	idle:
 		Filename: tibglob.shp
-		BlendMode: Additive
 		IgnoreWorldTint: true
 		Length: *
 		ZOffset: 2047
@@ -2978,7 +3114,6 @@ tibglob:
 tibgloblg:
 	idle:
 		Filename: tibgloblg.shp
-		BlendMode: Additive
 		IgnoreWorldTint: true
 		Length: *
 		ZOffset: 2047
@@ -3043,6 +3178,13 @@ tibexplodeair:
 		Filename: tibexplodeair.shp
 		Length: *
 		ZOffset: 2047
+
+evischargedhit:
+	idle:
+		Filename: tibexplodeair.shp
+		Length: *
+		ZOffset: 2047
+		Scale: 0.5
 
 tibspew1:
 	idle:
@@ -3196,9 +3338,9 @@ mindcontrol:
 		Offset: 0,-8
 		IgnoreWorldTint: true
 
-riftanim:
+riftlg:
 	Defaults:
-		Filename: riftloop.shp
+		Filename: rift.shp
 		Tick: 40
 		Length: *
 		ZOffset: 2048
@@ -3206,23 +3348,47 @@ riftanim:
 		IgnoreWorldTint: true
 		Scale: 2
 	idle:
-	spawn:
-		Filename: riftstart.shp
+	make:
+		Alpha: 0.04, 0.08, 0.12, 0.16, 0.20, 0.24, 0.28, 0.32, 0.36, 0.40, 0.44, 0.48, 0.52, 0.56, 0.60, 0.64, 0.68, 0.72, 0.76, 0.80, 0.84, 0.88, 0.92, 0.96
 	die:
-		Filename: riftend.shp
-	fade:
-		Filename: riftend.shp
+		Alpha: 0.96, 0.92, 0.88, 0.84, 0.80, 0.76, 0.72, 0.68, 0.64, 0.60, 0.56, 0.52, 0.48, 0.44, 0.40, 0.36, 0.32, 0.28, 0.24, 0.20, 0.16, 0.12, 0.08, 0.04
 	dead:
 		Alpha: 0
 
-riftanimmd:
-	idle:
-		Filename: riftloopmd.shp
+riftmd:
+	Defaults:
+		Filename: rift.shp
 		Tick: 40
 		Length: *
 		ZOffset: 2048
 		BlendMode: Subtractive
 		IgnoreWorldTint: true
+	idle:
+	make:
+		Frames: 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23
+		Alpha: 0.08, 0.16, 0.24, 0.32, 0.40, 0.48, 0.56, 0.64, 0.72, 0.80, 0.88, 0.96
+	die:
+		Alpha: 0.96, 0.92, 0.88, 0.84, 0.80, 0.76, 0.72, 0.68, 0.64, 0.60, 0.56, 0.52, 0.48, 0.44, 0.40, 0.36, 0.32, 0.28, 0.24, 0.20, 0.16, 0.12, 0.08, 0.04
+	dead:
+		Alpha: 0
+
+riftsm:
+	Defaults:
+		Filename: rift.shp
+		Tick: 40
+		Length: *
+		ZOffset: 2048
+		BlendMode: Subtractive
+		IgnoreWorldTint: true
+		Scale: 0.64
+	idle:
+	make:
+		Frames: 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23
+		Alpha: 0.08, 0.16, 0.24, 0.32, 0.40, 0.48, 0.56, 0.64, 0.72, 0.80, 0.88, 0.96
+	die:
+		Alpha: 0.96, 0.92, 0.88, 0.84, 0.80, 0.76, 0.72, 0.68, 0.64, 0.60, 0.56, 0.52, 0.48, 0.44, 0.40, 0.36, 0.32, 0.28, 0.24, 0.20, 0.16, 0.12, 0.08, 0.04
+	dead:
+		Alpha: 0
 
 mspk:
 	idle:
@@ -3493,18 +3659,22 @@ wormholelg:
 		Filename: wormholelg.shp
 
 wormholexl:
-	Inherits: wormhole
 	Defaults:
 		Filename: wormholexl.shp
-	-die:
-	-make:
+		ZOffset: 1023
+		BlendMode: Additive
+		IgnoreWorldTint: true
+		Length: *
+	idle:
+	die:
+		Alpha: 0.92, 0.84, 0.76, 0.68, 0.60, 0.52, 0.44, 0.36, 0.28, 0.20, 0.12, 0.04, 0.02
+	make:
+		Alpha: 0.02, 0.04, 0.12, 0.20, 0.28, 0.36, 0.44, 0.52, 0.60, 0.68, 0.76, 0.84, 0.92
 
 wormholexxl:
-	Inherits: wormhole
+	Inherits: wormholexl
 	Defaults:
 		Filename: wormholexxl.shp
-	-die:
-	-make:
 
 plasmatorp1:
 	Defaults:

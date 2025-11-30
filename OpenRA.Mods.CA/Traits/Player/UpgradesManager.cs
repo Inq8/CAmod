@@ -116,7 +116,7 @@ namespace OpenRA.Mods.CA.Traits
 			var targetActorInfo = self.World.Map.Rules.Actors[targetActorType];
 			var targetActorValued = targetActorInfo.TraitInfoOrDefault<ValuedInfo>();
 			var targetActorCost = targetActorValued?.Cost ?? 0;
-			return Math.Max(targetActorCost - sourceActorCost, 0);
+			return targetActorCost - sourceActorCost;
 		}
 
 		int CalculateBuildDuration(int cost, int buildDurationModifier)

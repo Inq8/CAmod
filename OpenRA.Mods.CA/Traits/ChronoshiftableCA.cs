@@ -208,7 +208,10 @@ namespace OpenRA.Mods.CA.Traits
 			this.killCargo = killCargo;
 
 			// Set up the teleport
-			self.QueueActivity(false, new TeleportCA(chronosphere, targetLocation, null, killCargo, true, Info.ChronoshiftSound));
+			self.World.AddFrameEndTask(w =>
+			{
+				self.QueueActivity(false, new TeleportCA(chronosphere, targetLocation, null, killCargo, true, Info.ChronoshiftSound, false));
+			});
 
 			return true;
 		}

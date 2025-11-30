@@ -90,16 +90,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		public int? XpRequiredForNextLevel => currentLevel >= maxLevel ? null : nextLevelXpRequired;
 
-		public IEnumerable<string> ProvidesPrerequisites
-		{
-			get
-			{
-				if (currentLevel > 0)
-					return Info.LevelPrerequisites.Take(currentLevel);
-				else
-					return Enumerable.Empty<string>();
-			}
-		}
+		IEnumerable<string> ITechTreePrerequisite.ProvidesPrerequisites => currentLevel > 0 ? Info.LevelPrerequisites.Take(currentLevel) : Enumerable.Empty<string>();
 
 		protected override void Created(Actor self)
 		{

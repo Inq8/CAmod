@@ -1,0 +1,176 @@
+^Palettes:
+	PaletteFromFile@terrain-temperat:
+		Filename: ca|missions/main-campaign/ca19-proliferation/charred.pal
+	TintPostProcessEffect:
+		Red: 1
+		Green: 1
+		Blue: 1.1
+		Ambient: 0.8
+
+^BaseWorld:
+	TerrainLighting:
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, multipolarity.lua
+	MissionData:
+		Briefing: Our spy has been debriefed and an emergency meeting of the Allied High Command has just concluded.\n\nThe third Scrin faction has revealed itself to be an ancient cult that was exiled by the Overlord — known to other Scrin as "the Malefic". Seeing the Overlord's dominance waning, they have re-emerged and have already made significant gains on the Scrin homeworld. Their exact nature and motives are unclear, but they have been brutal and merciless in their advance.\n\nWe have also learned of an apparent coup within GDI. Their highest ranking commanders remain on the Scrin homeworld, along with a significant portion of their forces, and a General Hawthorne has seized the opportunity to take control of the GDI forces on Earth, declaring martial law across their territories.\n\nHe claims the GDI forces that departed for the Scrin homeworld are now in league with their arch enemy Kane, and that this represents an unforgivable betrayal. Apparently some of GDI's leadership are more willing to put their differences with Kane aside than others. Hawthorne has downplayed the threat from the Overlord and does not see a rebel victory as necessarily beneficial. He also believes purified Tiberium is not the blessing Kane purports it to be, but is part of some elaborate plan.\n\nOur knowledge of the Brotherhood is understandably still quite limited, but there are those within the Allied High Command that are sympathetic to Hawthorne's view. Such voices are not a majority, at least not yet.\n\nIt has been agreed that the safety of Earth must be our priority. The Malefic Scrin and the Soviet-Overlord alliance pose existential threats to humanity. On that basis, our primary goals are to secure — and ultimately shut down — any remaining gateways connecting to the Scrin homeworld, and then prevent further gateways being opened.\n\nWith the Soviet gateway now closed, the only other that we are aware of is the one that was created by the Scrin Mothership. Hawthorne's forces are in full control of it, preventing any off-world forces from returning.\n\nNegotiations with the General have gone nowhere, so an operation to take control of the gateway by force has been given the green light. Our old base in the area, and those that were established by Nod and the Soviets, have been decommissioned and are under GDI guard. If we can take control of these bases it should make our assault on the main GDI base easier.\n\nYour mission is to secure the gateway and capture General Hawthorne's command center. GDI's true leadership will then be able to return home, after which we can seal the gateway for good.\n\nOur Swedish coalition partners have offered their assistance for this mission. Their cryo based weaponry should prove very effective at weakening GDI heavy armor.
+	MapOptions:
+		ShortGameCheckboxEnabled: False
+	MusicPlaylist:
+		StartingMusic: prp
+
+Player:
+	PlayerResources:
+		DefaultCash: 6000
+
+# Enable subfaction specific tech
+
+SNIP:
+	Buildable:
+		Prerequisites: tent, anyradar
+
+RTNK:
+	Buildable:
+		Prerequisites: ~vehicles.allies
+
+TNKD:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.allies
+
+CHPR:
+	Buildable:
+		Prerequisites: atek, ~vehicles.allies
+
+BATF:
+	Buildable:
+		Prerequisites: atek, ~vehicles.allies
+
+NHAW:
+	Buildable:
+		Prerequisites: ~aircraft.allies
+
+HTUR:
+	Buildable:
+		Prerequisites: ~structures.allies, anyradar
+
+entrench.upgrade:
+	Buildable:
+		Prerequisites: anyradar, ~radar.allies
+
+apb.upgrade:
+	Buildable:
+		Prerequisites: atek
+
+tflx.upgrade:
+	Buildable:
+		Prerequisites: pdox
+
+^VeilOfWarPower:
+	SpawnActorPowerCA@VeilOfWar:
+		Prerequisites: ~radar.allies
+
+# AI powers
+
+UPGC:
+	ExternalCondition@Bombardment:
+		Condition: tower-rocket
+
+^FirestormPower:
+	AttackOrderPowerCA@ROCKET:
+		Prerequisites: ~ai.minor.superweapons.enabled
+
+^XODropPower:
+	ParatroopersPowerCA@xodrop:
+		Prerequisites: ~ai.supportpowers.enabled
+
+# Misc
+
+WORMHOLEXXL:
+	TerrainLightSource:
+		Range: 6c0
+		Intensity: 0.5
+		BlueTint: 1
+		RedTint: 0.2
+
+FLARE:
+	RevealsShroud:
+		Range: 10c0
+
+ALHQ:
+	FreeActor@Sweden:
+		Actor: sweden.coalition
+
+greece.coalition:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+sweden.coalition:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+korea.coalition:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+MISS:
+	Tooltip:
+		Name: Hawthorne's Command Center
+	TooltipDescription:
+		Description: Command center of GDI forces in the area.
+		ValidRelationships: Ally
+	Health:
+		HP: 200000
+	Targetable@NoAutoTarget:
+		TargetTypes: NoAutoTarget
+
+OCAR.DISR:
+	Inherits: OCAR
+	-Buildable:
+	Aircraft:
+		InitialFacing: 768
+	Carryall:
+		InitialActor: disr
+
+XO.Hawthorne:
+	Inherits: XO
+	Inherits@CommandoSkull: ^CommandoSkull
+	RenderSprites:
+		Image: xo
+	Tooltip:
+		Name: Gen. Hawthorne
+	-Targetable:
+	-Targetable@TEMPORAL:
+	-Targetable@Jump:
+	Mobile:
+		Locomotor: sheavytracked
+	RevealsShroud@Reveal:
+		Range: 6c0
+		ValidRelationships: Enemy
+	Targetable@CampaignBoss:
+		TargetTypes: CampaignBoss
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
+	Targetable@DriverKillImmune:
+		TargetTypes: DriverKillImmune
+	Targetable@BlindImmune:
+		TargetTypes: BlindImmune
+	Targetable@EmpImmune:
+		TargetTypes: EmpImmune
+	DamageMultiplier@Invuln:
+		Modifier: 0
+	ExternalCondition@IC:
+		Condition: invulnerability
+	WithRestartableIdleOverlay@IC:
+		PlayOnce: true
+		Image: explosion
+		Sequence: ironcurtain_effect
+		Palette: effect-ignore-lighting-alpha85
+		RequiresCondition: invulnerability
+
+MCV:
+	Buildable:
+		Prerequisites: vehicles.mcv, ~vehicles.ra, ~mcv.allowed
+
+mcv.allowed:
+	Inherits@DUMMY: ^InvisibleDummy
+	ProvidesPrerequisite:

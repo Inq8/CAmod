@@ -40,7 +40,7 @@
 		Damage: 3100
 		Versus:
 			None: 25
-			Wood: 52
+			Wood: 60
 			Light: 116
 			Heavy: 75
 			Concrete: 30
@@ -69,6 +69,7 @@
 	Warhead@1Dam: SpreadDamage
 		Damage: 3500
 		Versus:
+			Wood: 52
 			Heavy: 70
 			Concrete: 35
 
@@ -122,7 +123,7 @@
 	Inherits: 120mm
 	ReloadDelay: 30
 	Warhead@1Dam: SpreadDamage
-		Damage: 2500
+		Damage: 1900
 
 120mmHEAT:
 	Inherits: 25mm
@@ -246,7 +247,7 @@
 	Inherits: 130mmTD
 	ReloadDelay: 28
 	Warhead@1Dam: SpreadDamage
-		Damage: 2600
+		Damage: 2000
 
 135mm:
 	Inherits: 130mm
@@ -361,7 +362,7 @@ TitanGun:
 	Warhead@1Dam: SpreadDamage
 		Damage: 14500
 		Versus:
-			None: 50
+			None: 30
 			Wood: 70
 			Concrete: 60
 			Light: 70
@@ -424,17 +425,16 @@ TitanGun:
 	Inherits: 155mmTD
 	Range: 7c768
 	Report: howi-fire1.aud, howi-fire2.aud
+	ReloadDelay: 100
 	Projectile: Bullet
 		Speed: 682
 		LaunchAngle: 50
 		Inaccuracy: 448
 	Warhead@1Dam: SpreadDamage
-		Damage: 7750
-		Spread: 288
+		Damage: 11500
+		Spread: 341
 		Versus:
-			None: 90
-			Wood: 80
-			Light: 100
+			Wood: 65
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
 		ImpactSounds: kaboom12.aud
@@ -557,7 +557,7 @@ TitanGun:
 	Range: 18c0
 	TargetActorCenter: true
 	Projectile: Bullet
-		Speed: 145
+		Speed: 180
 		Image: 280mma
 		LaunchAngle: 92
 		Inaccuracy: 768
@@ -815,7 +815,7 @@ ShadowGliderGrenade:
 			Light: 45
 			Heavy: 45
 			Concrete: 40
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
 	Warhead@4EffWater: CreateEffect
 		Explosions: small_splash
 		ImpactSounds: splashm1.aud, splashm2.aud, splashm3.aud
@@ -830,7 +830,7 @@ ChemicalMortar:
 	Warhead@1Dam: SpreadDamage
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 	Warhead@2Dam: SpreadDamage
-		Damage: 10000
+		Damage: 8000
 		Spread: 426
 		Falloff: 100, 50, 25, 0
 		ValidTargets: Cyborg
@@ -907,18 +907,21 @@ SonicMortar:
 
 HallucinationGrenade:
 	Inherits: ^Mortar
+	ReloadDelay: 130
 	Projectile: Bullet
 		ContrailStartColor: dc289c
 		ContrailStartColorAlpha: 128
+	Warhead@1Dam: SpreadDamage
+		Damage: 2500
+	Warhead@chaos: GrantExternalConditionCA
+		Range: 0c768
+		Duration: 75
+		Condition: berserk
+		InvalidTargets: ChaosImmune
 	Warhead@3Eff: CreateEffect
 		Explosions: chaosexplosion
 		ExplosionPalette: caneon
 		ImpactSounds: firebl3.aud
-	Warhead@Cloud1: SpawnActor
-		Actors: chaoscloud2
-		Range: 2
-		ValidTargets: Ground, Water
-		ImpactActors: false
 
 DepthCharge:
 	Inherits: ^Artillery
@@ -1012,7 +1015,7 @@ GuardianDroneGun:
 	Inherits: 25mm
 	ReloadDelay: 80
 	Burst: 3
-	BurstDelays: 3
+	BurstDelays: 2
 	Report: gdrn-fire1.aud, gdrn-fire2.aud
 	Projectile: Bullet
 		Speed: 1c0

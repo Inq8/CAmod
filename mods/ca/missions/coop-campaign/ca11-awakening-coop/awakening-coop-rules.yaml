@@ -1,0 +1,24 @@
+World:
+	LuaScript:
+		Scripts: campaign.lua, coop.lua, ca|missions/main-campaign/ca11-awakening/awakening.lua, awakening-coop.lua
+	ScriptLobbyDropdown@airint:
+		ID: airint
+		Label: Enemy Airstrike Multiplier
+		Description: Reduces the time between enemy airstrikes.
+		Values:
+			999: x1 - (0.1 * player count)
+			998: x1 - (0.15 * player count)
+			1: x1.0 (2 Minutes)
+			0.9: x0.9
+			0.8: x0.8
+			0.7: x0.7
+			0.6: x0.6
+			0.5: x0.5 (1 Minute)
+			0.4: x0.4
+			0.3: x0.3
+			0.2: x0.2
+			0.1: x0.1
+			0.05: x0.05
+			0.01: x0.01 (1.2 Seconds)
+		Default: 1
+		DisplayOrder: 999

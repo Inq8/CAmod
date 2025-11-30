@@ -13,6 +13,7 @@
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Mods.Common.Widgets;
 using OpenRA.Scripting;
+using System.Linq;
 
 namespace OpenRA.Mods.CA.Scripting
 {
@@ -65,5 +66,33 @@ namespace OpenRA.Mods.CA.Scripting
 
 			return BuildingUtils.CanPlaceBuilding(world, cell, ai, bi, null);
 		}
-	}
+
+		[Desc("Returns whether shroud obscures a given cell location.")]
+		public bool ShroudObscures(CPos loc)
+		{
+			return world.ShroudObscures(loc);
+		}
+
+		[Desc("Returns whether fog of war obscures a given cell location.")]
+		public bool FogObscures(CPos loc)
+		{
+			return world.FogObscures(loc);
+		}
+
+		[Desc("Returns whether a path exists between source and target for given locomotor.")]
+		public bool PathExistsForLocomotor(string locomotorName, CPos source, CPos target)
+		{
+			var pathFinder = world.WorldActor.TraitOrDefault<IPathFinder>();
+
+			if (pathFinder == null)
+				return false;
+
+			var locomotor = world.WorldActor.TraitsImplementing<Locomotor>().SingleOrDefault(l => l.Info.Name == locomotorName);
+
+			if (locomotor == null)
+				return false;
+
+			return pathFinder.PathExistsForLocomotor(locomotor, source, target);
+		}
+    }
 }

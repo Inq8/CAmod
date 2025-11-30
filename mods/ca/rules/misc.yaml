@@ -338,9 +338,6 @@ camera.infiltrator:
 	KillsSelf:
 		RemoveInstead: true
 		Delay: 3000
-	UpdatesCount@NodCovenant:
-		Type: NodCovenant
-		UpdateOn: Created
 
 camera.paradrop:
 	Inherits: ^CameraBase
@@ -1451,14 +1448,6 @@ optimized.production2:
 	ProvidesPrerequisite:
 	PopControlled:
 
-nod.covenants.available:
-	AlwaysVisible:
-	Interactable:
-	Tooltip:
-		Name: 3x enemy buildings destroyed/infiltrated or harvesters destroyed
-	Buildable:
-		Description: 3x enemy buildings destroyed/infiltrated or harvesters destroyed
-
 scrin.allegiances.available:
 	AlwaysVisible:
 	Interactable:
@@ -1521,4 +1510,28 @@ influence.level3:
 		Name: Influence Level 3
 	Buildable:
 		Description: Allied influence level 3.
+	RenderSprites:
+
+covenant.level1:
+	Inherits@DUMMY: ^InvisibleDummy
+	Tooltip:
+		Name: Covenant level 1 (1x enemy building destroyed/captured/infiltrated or harvester destroyed)
+	Buildable:
+		Description: Covenant level 1 (1x enemy building destroyed/captured/infiltrated or harvester destroyed)
+	RenderSprites:
+
+covenant.level2:
+	Inherits@DUMMY: ^InvisibleDummy
+	Tooltip:
+		Name: Covenant level 2
+	Buildable:
+		Description: Covenant level 2.
+	RenderSprites:
+
+covenant.level3:
+	Inherits@DUMMY: ^InvisibleDummy
+	Tooltip:
+		Name: Covenant level 3
+	Buildable:
+		Description: Covenant level 3.
 	RenderSprites:

@@ -35,8 +35,8 @@ namespace OpenRA.Mods.Common.Traits
 		[Desc("Matches the `Produces` property of the Production trait (for Clone mode only).")]
 		public readonly string Produces = null;
 
-		[Desc("Valid target types, to further limit valid sources.")]
-		public readonly BitSet<TargetableType> TargetTypes = default;
+		[Desc("Maximum number of sources that can be linked. Set to 0 for unlimited sources.")]
+		public readonly int MaxSources = 0;
 
 		[Desc("List of actors to ignore.")]
 		public readonly string[] InvalidActors = Array.Empty<string>();
@@ -58,21 +58,23 @@ namespace OpenRA.Mods.Common.Traits
 		public override object Create(ActorInitializer init) { return new LinkedProducerTarget(init.Self, this); }
 	}
 
-	public class LinkedProducerTarget : ConditionalTrait<ConditionalTraitInfo>, IIssueOrder, IResolveOrder, INotifyOwnerChanged, INotifyCreated, INotifyKilled, INotifySold, INotifyAddedToWorld, INotifyRemovedFromWorld
+	public class LinkedProducerTarget : ConditionalTrait<ConditionalTraitInfo>, IIssueOrder, IResolveOrder, INotifyOwnerChanged, INotifyCreated,
+		INotifyKilled, INotifySold, INotifyAddedToWorld, INotifyRemovedFromWorld
 	{
 		const string OrderID = "SetLinkedProducerSource";
 
 		private readonly Actor self;
 		private bool singleQueue;
-		private LinkedProducerSource linkedProducerSource;
+		private readonly HashSet<LinkedProducerSource> linkedSources = new HashSet<LinkedProducerSource>();
 		public LinkedProducerTargetInfo info;
-		LinkedProducerSourceIndicator effect;
+		LinkedProducerIndicator effect;
 
 		public List<WPos> LinkNodes;
-		bool delayUntilNext;
+		private readonly HashSet<LinkedProducerSource> delayedSources = new HashSet<LinkedProducerSource>();
 
 		public string[] Types => info.Types;
-		public LinkedProducerSource Source => linkedProducerSource;
+		public IEnumerable<LinkedProducerSource> Sources => linkedSources;
+		public Actor Actor => self;
 
 		public LinkedProducerTarget(Actor self, LinkedProducerTargetInfo info)
 			: base(info)
@@ -80,14 +82,12 @@ namespace OpenRA.Mods.Common.Traits
 			this.info = info;
 			this.self = self;
 			LinkNodes = new List<WPos>();
-			delayUntilNext = false;
 		}
 
 		void INotifyCreated.Created(Actor self)
 		{
 			singleQueue = self.World.LobbyInfo.GlobalSettings.OptionOrDefault("queuetype", "") == "global.singlequeue";
-			effect = new LinkedProducerSourceIndicator(self, this);
-			SetSourceToPreferred();
+			effect = new LinkedProducerIndicator(self, this);
 		}
 
 		void INotifyAddedToWorld.AddedToWorld(Actor self)
@@ -100,7 +100,7 @@ namespace OpenRA.Mods.Common.Traits
 			self.World.AddFrameEndTask(w => w.Remove(effect));
 		}
 
-		public void UnitProduced(Actor unit)
+		public void UnitProduced(Actor unit, LinkedProducerSource source)
 		{
 			if (IsTraitDisabled || self.IsDead)
 				return;
@@ -110,11 +110,8 @@ namespace OpenRA.Mods.Common.Traits
 			if (info.InvalidActors.Contains(actorName))
 				return;
 
-			if (delayUntilNext)
-			{
-				delayUntilNext = false;
+			if (delayedSources.Remove(source))
 				return;
-			}
 
 			if (info.Mode == LinkedProducerMode.Clone)
 			{
@@ -125,26 +122,26 @@ namespace OpenRA.Mods.Common.Traits
 				if (!unit.IsInWorld)
 					return;
 
-				self.World.Remove(unit);
-				self.World.AddFrameEndTask(w => {
-					w.Add(unit);
-					unit.Trait<IPositionable>().SetPosition(unit, self.Location);
-					unit.CancelActivity();
-					var rp = self.TraitOrDefault<RallyPoint>();
-					var move = unit.TraitOrDefault<IMove>();
+				var mobile = unit.TraitOrDefault<Mobile>();
+				if (mobile == null)
+					return;
 
-					if (move != null && rp != null && rp.Path.Count > 0)
-					{
-						foreach (var cell in rp.Path)
-							unit.QueueActivity(new AttackMoveActivity(unit, () => move.MoveTo(cell, 1, evaluateNearestMovableCell: true, targetLineColor: Color.OrangeRed)));
-					}
-					else
-					{
-						var mobile = unit.TraitOrDefault<Mobile>();
-						if (mobile != null)
-							unit.QueueActivity(false, new Nudge(unit));
-					}
-				});
+				unit.CancelActivity();
+				unit.Trait<Mobile>().SetPosition(self, self.Location);
+				unit.Generation++;
+
+				var rp = self.TraitOrDefault<RallyPoint>();
+				var move = unit.TraitOrDefault<IMove>();
+
+				if (move != null && rp != null && rp.Path.Count > 0)
+				{
+					foreach (var cell in rp.Path)
+						unit.QueueActivity(new AttackMoveActivity(unit, () => move.MoveTo(cell, 1, evaluateNearestMovableCell: true, targetLineColor: Color.OrangeRed)));
+				}
+				else
+				{
+					unit.QueueActivity(new Nudge(unit));
+				}
 			}
 		}
 
@@ -153,7 +150,7 @@ namespace OpenRA.Mods.Common.Traits
 			var cloneActor = self.World.Map.Rules.Actors[info.CloneActors.ContainsKey(actorName) ? info.CloneActors[actorName] : actorName];
 
 			var sp = self.TraitsImplementing<Production>()
-				.FirstOrDefault(p => !p.IsTraitDisabled && !p.IsTraitPaused && p.Info.Produces.Where(p => info.Produces.Contains(p)).Any());
+				.FirstOrDefault(p => !p.IsTraitDisabled && !p.IsTraitPaused && p.Info.Produces.Any(p => info.Produces.Contains(p)));
 
 			if (sp != null)
 			{
@@ -167,48 +164,15 @@ namespace OpenRA.Mods.Common.Traits
 			}
 		}
 
-		public void PrimaryUpdated()
-		{
-			if (singleQueue)
-			{
-				UnlinkSource();
-				SetSourceToPreferred();
-			}
-		}
-
-		private void SetSourceToPreferred()
-		{
-			self.World.AddFrameEndTask(w => {
-				var producer = self.World.ActorsWithTrait<LinkedProducerSource>()
-					.Where(a => !a.Actor.IsDead && a.Actor.IsInWorld && a.Actor.Owner == self.Owner && a.Trait.ProductionTypes.Where(t => info.Types.Contains(t)).Any())
-					.OrderByDescending(p => p.Actor.TraitOrDefault<PrimaryBuilding>()?.IsPrimary)
-					.ThenByDescending(p => p.Actor.ActorID)
-					.FirstOrDefault();
-
-				LinkNodes.Clear();
-
-				if (producer.Actor != null)
-				{
-					SetSource(producer.Actor, producer.Trait);
-				}
-			});
-		}
-
 		public IEnumerable<IOrderTargeter> Orders
 		{
 			get {
-				if (singleQueue)
-					yield break;
-
-				yield return new LinkedProducerTargetSetSourceOrderTargeter(info.Cursor);
+				yield return new LinkedProducerTargetAddLinkOrderTargeter(info.Cursor);
 			}
 		}
 
 		public Order IssueOrder(Actor self, IOrderTargeter order, in Target target, bool queued)
 		{
-			if (singleQueue)
-				return null;
-
 			if (order.OrderID == OrderID)
 			{
 				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", info.SourceSetNotification, self.Owner.Faction.InternalName);
@@ -222,71 +186,131 @@ namespace OpenRA.Mods.Common.Traits
 
 		public void ResolveOrder(Actor self, Order order)
 		{
-			if (singleQueue)
-				return;
+			if (order.OrderString == OrderID)
+			{
+				var targetActor = order.Target.Actor;
+				var targetSource = targetActor.Trait<LinkedProducerSource>();
 
-			if (order.OrderString == "Stop")
-			{
-				UnlinkSource();
-			}
-			else if (order.OrderString == OrderID)
-			{
-				UnlinkSource();
-				SetSource(order.Target.Actor, order.Target.Actor.Trait<LinkedProducerSource>());
+				if (linkedSources.Contains(targetSource))
+					RemoveLink(targetSource, true);
+				else
+					AddLink(targetActor, targetSource);
 			}
 		}
 
-		void SetSource(Actor producer, LinkedProducerSource source)
+		public void AddLink(Actor producer, LinkedProducerSource source)
 		{
-			linkedProducerSource = source;
-			linkedProducerSource.AddLinkedProducerTarget(this);
-			LinkNodes.Clear();
-			LinkNodes.Add(producer.CenterPosition);
+			if (linkedSources.Contains(source))
+				return;
+
+			if (singleQueue)
+			{
+				var sourceTypes = source.ProductionTypes.Where(t => info.Types.Contains(t));
+
+				var sourcesToLink = self.World.ActorsWithTrait<LinkedProducerSource>()
+					.Where(a => !a.Actor.IsDead && a.Actor.IsInWorld && a.Actor.Owner == self.Owner
+						&& a.Trait.ProductionTypes.Any(pt => sourceTypes.Contains(pt)))
+					.Select(a => a.Trait);
+
+				foreach (var sourceToLink in sourcesToLink)
+				{
+					if (linkedSources.Add(sourceToLink))
+					{
+						sourceToLink.SetTarget(this);
+						LinkNodes.Add(sourceToLink.Actor.CenterPosition);
+					}
+				}
+			}
+			else
+			{
+				if (info.MaxSources > 0 && linkedSources.Count >= info.MaxSources)
+					return;
+
+				linkedSources.Add(source);
+				source.SetTarget(this);
+				LinkNodes.Add(producer.CenterPosition);
+			}
 
 			if (!singleQueue && producer.TraitsImplementing<ProductionQueue>().Any(q => q.CurrentItem() != null))
-				delayUntilNext = true;
+			{
+				delayedSources.Add(source);
+			}
+		}
+
+		public void RemoveLink(LinkedProducerSource source, bool manualRemoval = false)
+		{
+			if (!linkedSources.Contains(source))
+				return;
+
+			if (singleQueue && manualRemoval)
+			{
+				// Unlink all sources with shared types
+				var sourceTypes = source.ProductionTypes.Where(t => info.Types.Contains(t));
+
+				var sourcesToUnlink = linkedSources
+					.Where(s => s.ProductionTypes.Any(pt => sourceTypes.Contains(pt)))
+					.ToList();
+
+				foreach (var sourceToUnlink in sourcesToUnlink)
+				{
+					sourceToUnlink.RemoveTarget(this);
+					linkedSources.Remove(sourceToUnlink);
+					delayedSources.Remove(sourceToUnlink);
+				}
+			}
+			else
+			{
+				source.RemoveTarget(this);
+				linkedSources.Remove(source);
+				delayedSources.Remove(source);
+			}
+
+			LinkNodes.Clear();
+			foreach (var remainingSource in linkedSources)
+				LinkNodes.Add(remainingSource.Actor.CenterPosition);
+		}
+
+		private void RemoveAllLinks()
+		{
+			foreach (var source in linkedSources.ToList())
+			{
+				source.RemoveTarget(this);
+				linkedSources.Remove(source);
+			}
+
+			delayedSources.Clear();
+			LinkNodes.Clear();
+		}
+
+		public void SourceInvalidated(LinkedProducerSource linkedSource)
+		{
+			RemoveLink(linkedSource);
 		}
 
 		void INotifyKilled.Killed(Actor self, AttackInfo e)
 		{
-			UnlinkSource();
+			RemoveAllLinks();
 		}
 
 		void INotifySold.Selling(Actor self)
 		{
-			UnlinkSource();
+			RemoveAllLinks();
 		}
 
 		void INotifySold.Sold(Actor self) {}
 
 		void INotifyOwnerChanged.OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)
 		{
-			UnlinkSource();
+			RemoveAllLinks();
 		}
 
-		public void SourceInvalidated(LinkedProducerSource linkedProducerSource)
-		{
-			if (this.linkedProducerSource == linkedProducerSource)
-				UnlinkSource();
-
-			SetSourceToPreferred();
-		}
-
-		private void UnlinkSource()
-		{
-			if (linkedProducerSource != null)
-				linkedProducerSource.RemoveLinkedProducerTarget(this);
-
-			linkedProducerSource = null;
-		}
-
-		sealed class LinkedProducerTargetSetSourceOrderTargeter : UnitOrderTargeter
+		sealed class LinkedProducerTargetAddLinkOrderTargeter : UnitOrderTargeter
 		{
 			public const string Id = "SetLinkedProducerSource";
 
 			private string cursor;
 
-			public LinkedProducerTargetSetSourceOrderTargeter(string cursor)
+			public LinkedProducerTargetAddLinkOrderTargeter(string cursor)
 				: base(Id, 6, cursor, false, true)
 			{
 				this.cursor = cursor;

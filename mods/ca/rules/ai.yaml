@@ -217,44 +217,32 @@ Player:
 					CheckRadius: 8c0
 			airborne:
 				OrderName: airborne
-				MinimumAttractiveness: 5
+				MinimumAttractiveness: 3
 				Consideration@1:
 					Against: Enemy
 					Types: Structure
-					Attractiveness: 2
-					TargetMetric: Value
+					Attractiveness: 1
+					TargetMetric: None
 					CheckRadius: 8c0
 				Consideration@2:
-					Against: Ally
-					Types: Infantry, Vehicle
-					Attractiveness: 1
-					TargetMetric: Value
-					CheckRadius: 8c0
-				Consideration@3:
 					Against: Enemy
 					Types: Water
-					Attractiveness: -5
+					Attractiveness: -3
 					TargetMetric: None
 					CheckRadius: 5c0
 			airbornetank:
 				OrderName: airbornetank
-				MinimumAttractiveness: 5
+				MinimumAttractiveness: 3
 				Consideration@1:
 					Against: Enemy
 					Types: Structure
-					Attractiveness: 2
-					TargetMetric: Value
+					Attractiveness: 1
+					TargetMetric: None
 					CheckRadius: 8c0
 				Consideration@2:
-					Against: Ally
-					Types: Infantry, Vehicle
-					Attractiveness: 1
-					TargetMetric: Value
-					CheckRadius: 8c0
-				Consideration@3:
 					Against: Enemy
 					Types: Water
-					Attractiveness: -5
+					Attractiveness: -3
 					TargetMetric: None
 					CheckRadius: 5c0
 			assassinsquadai:
@@ -578,19 +566,13 @@ Player:
 				OrderName: ironcurtain
 				MinimumAttractiveness: 1000
 				FineScanRadius: 2
-				Consideration@2:
-					Against: Enemy
-					Types: Infantry
-					Attractiveness: 2
-					TargetMetric: Value
-					CheckRadius: 2c0
-				Consideration@3:
+				Consideration@1:
 					Against: Ally
-					Types: Vehicle, Tank
+					Types: Vehicle
 					Attractiveness: 5
 					TargetMetric: Value
 					CheckRadius: 3c0
-				Consideration@4:
+				Consideration@2:
 					Against: Ally
 					Types: Infantry
 					Attractiveness: -2
@@ -753,21 +735,6 @@ Player:
 					Attractiveness: -10
 					TargetMetric: Value
 					CheckRadius: 5c0
-			gateway:
-				OrderName: gateway
-				MinimumAttractiveness: 5
-				Consideration@1:
-					Against: Enemy
-					Types: Structure
-					Attractiveness: 1
-					TargetMetric: None
-					CheckRadius: 8c0
-				Consideration@2:
-					Against: Enemy
-					Types: Water
-					Attractiveness: -5
-					TargetMetric: None
-					CheckRadius: 8c0
 			suppressionpower:
 				OrderName: suppression
 				MinimumAttractiveness: 3000
@@ -1008,9 +975,6 @@ Player:
 			munp: 1
 			tmpp: 1
 			upgc: 1
-			upgc.bomb: 1
-			upgc.seek: 1
-			upgc.hold: 1
 			upgc.drop: 1
 			orep: 1
 			sign: 1
@@ -1023,10 +987,13 @@ Player:
 			syrd.gdi: 1
 			bombard.strat: 1
 			bombard2.strat: 1
+			bombard3.strat: 1
 			seek.strat: 1
 			seek2.strat: 1
+			seek3.strat: 1
 			hold.strat: 1
 			hold2.strat: 1
+			hold3.strat: 1
 			sonic.upgrade: 1
 			mdrone.upgrade: 1
 			bdrone.upgrade: 1
@@ -1042,7 +1009,7 @@ Player:
 			hovermam.upgrade: 1
 			ionmam.upgrade: 1
 			vulcan.upgrade: 1
-			rapc.upgrade: 1
+			aapc.upgrade: 1
 			empgren.upgrade: 1
 			avenger.upgrade: 1
 			sidewinders.upgrade: 1
@@ -1058,7 +1025,8 @@ Player:
 			rahstealth.upgrade: 1
 			sharv.upgrade: 1
 			hstk.upgrade: 1
-			advcyber.upgrade: 1
+			cust.upgrade: 1
+			rbug.upgrade: 1
 			cyborgdmg.upgrade: 1
 			cyborgprod.upgrade: 1
 			cyborgspeed.upgrade: 1
@@ -1279,9 +1247,6 @@ Player:
 			munp: 1
 			tmpp: 1
 			upgc: 1
-			upgc.bomb: 1
-			upgc.seek: 1
-			upgc.hold: 1
 			upgc.drop: 1
 			orep: 1
 			sign: 1
@@ -1294,10 +1259,13 @@ Player:
 			syrd.gdi: 1
 			bombard.strat: 1
 			bombard2.strat: 1
+			bombard3.strat: 1
 			seek.strat: 1
 			seek2.strat: 1
+			seek3.strat: 1
 			hold.strat: 1
 			hold2.strat: 1
+			hold3.strat: 1
 			sonic.upgrade: 1
 			mdrone.upgrade: 1
 			bdrone.upgrade: 1
@@ -1313,7 +1281,7 @@ Player:
 			hovermam.upgrade: 1
 			ionmam.upgrade: 1
 			vulcan.upgrade: 1
-			rapc.upgrade: 1
+			aapc.upgrade: 1
 			empgren.upgrade: 1
 			avenger.upgrade: 1
 			sidewinders.upgrade: 1
@@ -1329,7 +1297,8 @@ Player:
 			rahstealth.upgrade: 1
 			sharv.upgrade: 1
 			hstk.upgrade: 1
-			advcyber.upgrade: 1
+			cust.upgrade: 1
+			rbug.upgrade: 1
 			cyborgdmg.upgrade: 1
 			cyborgprod.upgrade: 1
 			cyborgspeed.upgrade: 1
@@ -1549,9 +1518,6 @@ Player:
 			munp: 1
 			tmpp: 1
 			upgc: 1
-			upgc.bomb: 1
-			upgc.seek: 1
-			upgc.hold: 1
 			upgc.drop: 1
 			orep: 1
 			sign: 1
@@ -1564,10 +1530,13 @@ Player:
 			syrd.gdi: 1
 			bombard.strat: 1
 			bombard2.strat: 1
+			bombard3.strat: 1
 			seek.strat: 1
 			seek2.strat: 1
+			seek3.strat: 1
 			hold.strat: 1
 			hold2.strat: 1
+			hold3.strat: 1
 			sonic.upgrade: 1
 			mdrone.upgrade: 1
 			bdrone.upgrade: 1
@@ -1583,7 +1552,7 @@ Player:
 			hovermam.upgrade: 1
 			ionmam.upgrade: 1
 			vulcan.upgrade: 1
-			rapc.upgrade: 1
+			aapc.upgrade: 1
 			empgren.upgrade: 1
 			avenger.upgrade: 1
 			sidewinders.upgrade: 1
@@ -1599,7 +1568,8 @@ Player:
 			rahstealth.upgrade: 1
 			sharv.upgrade: 1
 			hstk.upgrade: 1
-			advcyber.upgrade: 1
+			cust.upgrade: 1
+			rbug.upgrade: 1
 			cyborgdmg.upgrade: 1
 			cyborgprod.upgrade: 1
 			cyborgspeed.upgrade: 1
@@ -1819,9 +1789,6 @@ Player:
 			munp: 1
 			tmpp: 1
 			upgc: 1
-			upgc.bomb: 1
-			upgc.seek: 1
-			upgc.hold: 1
 			upgc.drop: 1
 			orep: 1
 			sign: 1
@@ -1834,10 +1801,13 @@ Player:
 			syrd.gdi: 1
 			bombard.strat: 1
 			bombard2.strat: 1
+			bombard3.strat: 1
 			seek.strat: 1
 			seek2.strat: 1
+			seek3.strat: 1
 			hold.strat: 1
 			hold2.strat: 1
+			hold3.strat: 1
 			sonic.upgrade: 1
 			mdrone.upgrade: 1
 			bdrone.upgrade: 1
@@ -1853,7 +1823,7 @@ Player:
 			hovermam.upgrade: 1
 			ionmam.upgrade: 1
 			vulcan.upgrade: 1
-			rapc.upgrade: 1
+			aapc.upgrade: 1
 			empgren.upgrade: 1
 			avenger.upgrade: 1
 			sidewinders.upgrade: 1
@@ -1869,7 +1839,8 @@ Player:
 			rahstealth.upgrade: 1
 			sharv.upgrade: 1
 			hstk.upgrade: 1
-			advcyber.upgrade: 1
+			cust.upgrade: 1
+			rbug.upgrade: 1
 			cyborgdmg.upgrade: 1
 			cyborgprod.upgrade: 1
 			cyborgspeed.upgrade: 1
@@ -2049,9 +2020,6 @@ Player:
 			munp: 1
 			tmpp: 1
 			upgc: 1
-			upgc.bomb: 1
-			upgc.seek: 1
-			upgc.hold: 1
 			upgc.drop: 1
 			orep: 1
 			sign: 1
@@ -2068,10 +2036,13 @@ Player:
 			syrd.gdi: 1
 			bombard.strat: 1
 			bombard2.strat: 1
+			bombard3.strat: 1
 			seek.strat: 1
 			seek2.strat: 1
+			seek3.strat: 1
 			hold.strat: 1
 			hold2.strat: 1
+			hold3.strat: 1
 			sonic.upgrade: 1
 			mdrone.upgrade: 1
 			bdrone.upgrade: 1
@@ -2087,7 +2058,7 @@ Player:
 			hovermam.upgrade: 1
 			ionmam.upgrade: 1
 			vulcan.upgrade: 1
-			rapc.upgrade: 1
+			aapc.upgrade: 1
 			empgren.upgrade: 1
 			avenger.upgrade: 1
 			sidewinders.upgrade: 1
@@ -2103,7 +2074,8 @@ Player:
 			rahstealth.upgrade: 1
 			sharv.upgrade: 1
 			hstk.upgrade: 1
-			advcyber.upgrade: 1
+			cust.upgrade: 1
+			rbug.upgrade: 1
 			cyborgdmg.upgrade: 1
 			cyborgprod.upgrade: 1
 			cyborgspeed.upgrade: 1
@@ -2230,6 +2202,8 @@ Player:
 			mast: 2250
 			yuri: 2250
 			bori: 2250
+			u3.squad: 3750
+			gtnk.squad: 3750
 		UnitsToBuild:
 			e1: 65
 			e2: 25
@@ -2296,7 +2270,7 @@ Player:
 			jeep: 30
 			apc2.nodai: 20
 			apc2.gdiai: 20
-			rapc.ai: 20
+			aapc.ai: 20
 			vulc.ai: 10
 			hmmv: 30
 			gdrn: 30
@@ -2449,7 +2423,7 @@ Player:
 			apc.ai: 2
 			apc2.nodai: 2
 			apc2.gdiai: 2
-			rapc.ai: 2
+			aapc.ai: 2
 			vulc.ai: 5
 			btr.ai: 5
 			btr.yuri.ai: 5
@@ -2561,6 +2535,8 @@ Player:
 			mast: 3000
 			yuri: 3000
 			bori: 3000
+			u3.squad: 4500
+			gtnk.squad: 4500
 		UnitsToBuild:
 			e1: 65
 			e2: 25
@@ -2780,7 +2756,7 @@ Player:
 			apc.ai: 2
 			apc2.nodai: 2
 			apc2.gdiai: 2
-			rapc.ai: 2
+			aapc.ai: 2
 			vulc.ai: 5
 			btr.ai: 5
 			btr.yuri.ai: 5
@@ -2856,6 +2832,8 @@ Player:
 			mast: 3750
 			yuri: 3750
 			bori: 3750
+			u3.squad: 4500
+			gtnk.squad: 4500
 		UnitsToBuild:
 			e1: 65
 			e2: 25
@@ -2915,7 +2893,7 @@ Player:
 			yuri: 15
 			mast: 15
 			apc: 20
-			rapc: 20
+			aapc: 20
 			sapc: 10
 			intl: 10
 			jeep: 30
@@ -3070,7 +3048,7 @@ Player:
 			nhaw: 1
 			apc: 2
 			apc2: 2
-			rapc: 2
+			aapc: 2
 			vulc: 5
 			hmmv: 2
 			bggy: 2
@@ -3143,6 +3121,8 @@ Player:
 			mast: 4500
 			yuri: 4500
 			bori: 4500
+			u3.squad: 4500
+			gtnk.squad: 4500
 		UnitsToBuild:
 			e1: 65
 			e2: 25
@@ -3202,7 +3182,7 @@ Player:
 			yuri: 15
 			mast: 15
 			apc: 20
-			rapc: 20
+			aapc: 20
 			sapc: 10
 			intl: 10
 			jeep: 30
@@ -3357,7 +3337,7 @@ Player:
 			nhaw: 1
 			apc: 2
 			apc2: 2
-			rapc: 2
+			aapc: 2
 			vulc: 5
 			hmmv: 2
 			bggy: 2
@@ -3416,6 +3396,8 @@ Player:
 			harv.td.upg: 2250
 			harv.scrin: 2250
 			harv.chrono: 2250
+			u3.squad: 4500
+			gtnk.squad: 4500
 		UnitsToBuild:
 			e1: 65
 			e2: 25

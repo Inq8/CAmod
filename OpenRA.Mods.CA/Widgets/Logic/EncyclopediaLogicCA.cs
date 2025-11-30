@@ -593,9 +593,12 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				}
 			}
 
+			var currentY = 0;
+
 			if (productionContainer != null)
 			{
 				var currentX = 0;
+				var productionContainerHeight = 0;
 				const int IconWidth = 16;
 				const int LabelSpacing = 4;
 				const int GroupSpacing = 20;
@@ -630,6 +633,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 						costIcon.Visible = true;
 						productionCost.Visible = true;
+						productionContainerHeight = descriptionFont.Measure(costText).Y;
 					}
 
 					var time = BuildTime(selectedActor, selectedInfo.BuildableQueue);
@@ -644,16 +648,25 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 						timeIcon.Visible = true;
 						productionTime.Visible = true;
+						productionContainerHeight = Math.Max(productionContainerHeight, descriptionFont.Measure(timeText).Y);
 					}
 				}
 				else
 				{
-					notProducibleIcon.Visible = true;
-					notProducibleIcon.Bounds.X = currentX;
-					notProducibleLabel.Visible = true;
-					notProducibleLabel.Bounds.X = currentX + IconWidth + LabelSpacing;
-					var notProducibleLabelWidth = Game.Renderer.Fonts[notProducibleLabel.Font].Measure(notProducibleLabel.Text).X;
-					currentX += IconWidth + LabelSpacing + notProducibleLabelWidth + GroupSpacing;
+					if (encyclopediaExtrasInfo != null && encyclopediaExtrasInfo.HideNotProducible)
+					{
+						productionContainer.Visible = false;
+					}
+					else
+					{
+						notProducibleIcon.Visible = true;
+						notProducibleIcon.Bounds.X = currentX;
+						notProducibleLabel.Visible = true;
+						notProducibleLabel.Bounds.X = currentX + IconWidth + LabelSpacing;
+						var notProducibleLabelWidth = Game.Renderer.Fonts[notProducibleLabel.Font].Measure(notProducibleLabel.Text).X;
+						currentX += IconWidth + LabelSpacing + notProducibleLabelWidth + GroupSpacing;
+						productionContainerHeight = descriptionFont.Measure(notProducibleLabel.Text).Y;
+					}
 				}
 
 				if (armorTypeLabel != null && armorTypeIcon != null)
@@ -672,7 +685,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 							armorTypeIcon.Visible = true;
 							armorTypeLabel.Visible = true;
-
+							productionContainerHeight = Math.Max(productionContainerHeight, descriptionFont.Measure(armorTypeLabel.Text).Y);
 						}
 					}
 				}
@@ -689,12 +702,20 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 					productionPowerIcon.Visible = true;
 					productionPower.Visible = true;
+					productionContainerHeight = Math.Max(productionContainerHeight, descriptionFont.Measure(powerText).Y);
 				}
 
-				productionContainer.Visible = true;
+				// Only show the production container if it has any visible content
+				var hasVisibleContent = (costIcon?.Visible == true) ||
+					(timeIcon?.Visible == true) ||
+					(armorTypeIcon?.Visible == true) ||
+					(productionPowerIcon?.Visible == true) ||
+					(notProducibleIcon?.Visible == true);
+
+				productionContainer.Visible = hasVisibleContent;
+				currentY = productionContainerHeight + 10;
 			}
 
-			var currentY = 0;
 			FactionInfo subfaction = null;
 			var subfactionText = "";
 			var subfactionHeight = 0;
@@ -702,6 +723,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			{
 				subfaction = factions[encyclopediaExtrasInfo.Subfaction];
 				subfactionText = $"{FluentProvider.GetMessage(subfaction.Name)} only.";
+
 				// var subfactionText = FluentProvider.GetMessage(SubfactionOnly, "factionName", FluentProvider.GetMessage(subfaction.Name));
 				subfactionHeight = descriptionFont.Measure(subfactionText).Y;
 			}
@@ -800,6 +822,26 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				}
 			}
 
+			var tooltipExtras = actor.TraitInfos<TooltipExtrasInfo>().FirstOrDefault(info => info.IsStandard);
+
+			if (string.IsNullOrEmpty(descriptionText))
+			{
+				if (tooltipExtras != null && !string.IsNullOrEmpty(tooltipExtras.Description))
+				{
+					descriptionText = WidgetUtilsCA.WrapTextWithIndent(
+						FluentProvider.GetMessage(tooltipExtras.Description.Replace("\\n", "\n")),
+						descriptionLabel.Bounds.Width,
+						descriptionFont);
+				}
+				else if (encyclopediaExtrasInfo != null && !string.IsNullOrEmpty(encyclopediaExtrasInfo.Description))
+				{
+					descriptionText = WidgetUtilsCA.WrapTextWithIndent(
+						FluentProvider.GetMessage(encyclopediaExtrasInfo.Description.Replace("\\n", "\n")),
+						descriptionLabel.Bounds.Width,
+						descriptionFont);
+				}
+			}
+
 			var prerequisitesHeight = string.IsNullOrEmpty(prerequisitesText) ? 0 : descriptionFont.Measure(prerequisitesText).Y;
 			prerequisitesLabel.GetText = () => prerequisitesText;
 			prerequisitesLabel.Bounds.Height = prerequisitesHeight;
@@ -821,8 +863,6 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				descriptionLabel.Bounds.Y = currentY;
 				currentY += descriptionHeight + 8;
 			}
-
-			var tooltipExtras = actor.TraitInfos<TooltipExtrasInfo>().FirstOrDefault(info => info.IsStandard);
 
 			var strengthsText = "";
 			var weaknessesText = "";
@@ -1103,6 +1143,13 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				"Buildings" => 3,
 				"Defenses" => 4,
 				"Naval" => 5,
+				"Upgrades" => 6,
+				"Support Powers" => 7,
+				"Subfactions" => 8,
+				"Tips" => 9,
+				"Debuffs" => 10,
+				"Tech Buildings" => 11,
+				"Tech Units" => 12,
 				_ => 1000
 			};
 		}

@@ -95,4 +95,7 @@ namespace OpenRA.Mods.CA.Traits
 
 	[RequireExplicitImplementation]
 	public interface ISeedsResourceIntervalModifier { int GetModifier(); }
+
+	[RequireExplicitImplementation]
+	public interface INotifyAttachedTo { void Attached(Actor self, Actor attachedActor, Attachable attachable); void Detached(Actor self, Actor detachedActor, Attachable attachable); }
 }

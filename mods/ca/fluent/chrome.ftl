@@ -8,6 +8,10 @@ label-player-influence-level-time = Next level in { $time }
 label-player-influence-coalition = Coalition: { $coalition }
 label-player-influence-policy = Policy: { $policy }
 
+label-covenant-level = Covenant level: { $level }
+label-covenant-description = Gained by destroying enemy harvesters,
+    or by destroying/capturing/infiltrating enemy buildings.
+
 ## ObserverStatsLogic
 options-observer-stats =
     .none = Information: None

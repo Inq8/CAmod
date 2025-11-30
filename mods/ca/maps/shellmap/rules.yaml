@@ -64,7 +64,7 @@ SPLITBLUE:
 
 UPGC:
 	GrantCondition@RADAR:
-		Condition: tower.radar
+		Condition: tower-radar
 
 AIRS:
 	ProductionAirdropCA@SQVEH:
@@ -123,6 +123,8 @@ NUKC:
 ^GainsExperience:
 	GrantCondition@Shell:
 		Condition: shellmap
+	DummyConditionConsumer@Shell:
+		Condition: shellmap
 	WithDecoration@RANK-1:
 		RequiresCondition: rank-veteran == 1 && !shellmap
 	WithDecoration@RANK-2:
@@ -168,9 +170,6 @@ PROC.TD:
 ^Veil:
 	-RenderShroudCircleCA:
 
-CVAT:
-	-LinkedProducerTarget:
-
 RMBO:
 	WithDecoration@COMMANDOSKULL:
 		Image: empty
@@ -198,6 +197,10 @@ MACS:
 	-PeriodicProducerCA@ARTIFICER:
 	-GrantConditionIfOwnerIsNeutral:
 	-GrantConditionOnPrerequisite@SCRIN:
+
+MACS.Rebuilt:
+	-PeriodicProducerCA@MECHANIC:
+	-PeriodicProducerCA@ARTIFICER:
 
 MINV:
 	-WithColoredSelectionBox@PlayerColorBox:

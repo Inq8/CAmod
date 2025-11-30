@@ -19,7 +19,7 @@ using OpenRA.Traits;
 namespace OpenRA.Mods.CA.Traits
 {
 	[TraitLocation(SystemActors.Player)]
-	public class ProvidesPrerequisitesOnTimelineInfo : TraitInfo, ITechTreePrerequisiteInfo
+	public class ProvidesPrerequisitesOnTimelineInfo : PausableConditionalTraitInfo, ITechTreePrerequisiteInfo
 	{
 		[Desc("Identifier.")]
 		[FieldLoader.Require]
@@ -56,9 +56,9 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new ProvidesPrerequisitesOnTimeline(init, this); }
 	}
 
-	public class ProvidesPrerequisitesOnTimeline : ITechTreePrerequisite, INotifyCreated, ITick
+	public class ProvidesPrerequisitesOnTimeline : PausableConditionalTrait<ProvidesPrerequisitesOnTimelineInfo>, ITechTreePrerequisite, INotifyCreated, ITick
 	{
-		public readonly ProvidesPrerequisitesOnTimelineInfo Info;
+		public readonly ProvidesPrerequisitesOnTimelineInfo info;
 		readonly Actor self;
 		readonly HashSet<string> prerequisitesGranted;
 		readonly bool validFaction;
@@ -75,8 +75,9 @@ namespace OpenRA.Mods.CA.Traits
 		public event Action<int> TicksChanged;
 
 		public ProvidesPrerequisitesOnTimeline(ActorInitializer init, ProvidesPrerequisitesOnTimelineInfo info)
+			: base(info)
 		{
-			Info = info;
+			this.info = info;
 			self = init.Self;
 			ticksElapsed = 0;
 			ticksUntilNotification = info.NotificationDelay;
@@ -87,21 +88,21 @@ namespace OpenRA.Mods.CA.Traits
 			validFaction = info.Factions.Length == 0 || info.Factions.Contains(player.Faction.InternalName);
 		}
 
-		public int MaxTicks => Info.Prerequisites?.Keys.Max() ?? 0;
-		public bool Enabled => validFaction;
+		public int MaxTicks => info.Prerequisites?.Keys.Max() ?? 0;
+		public bool Enabled => validFaction && !IsTraitDisabled;
 		public int TicksElapsed => ticksElapsed;
 		public int TicksRemaining => MaxTicks - ticksElapsed;
-		public int[] Thresholds => Info.Prerequisites?.Keys.ToArray() ?? Array.Empty<int>();
+		public int[] Thresholds => info.Prerequisites?.Keys.ToArray() ?? Array.Empty<int>();
 		public int ThresholdsPassed => thresholdsPassed.Count;
 
 		public int TicksUntilNextThreshold
 		{
 			get
 			{
-				if (Info.Prerequisites == null || !Info.Prerequisites.Any())
+				if (info.Prerequisites == null || !info.Prerequisites.Any())
 					return 0;
 
-				var nextThreshold = Info.Prerequisites.Keys
+				var nextThreshold = info.Prerequisites.Keys
 					.Where(t => t > ticksElapsed)
 					.OrderBy(t => t)
 					.FirstOrDefault();
@@ -113,9 +114,9 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
-		public string[] Factions => Info.Factions;
+		public string[] Factions => info.Factions;
 
-		public IEnumerable<string> ProvidesPrerequisites => prerequisitesGranted;
+		IEnumerable<string> ITechTreePrerequisite.ProvidesPrerequisites => prerequisitesGranted;
 
 		void INotifyCreated.Created(Actor self)
 		{
@@ -131,29 +132,28 @@ namespace OpenRA.Mods.CA.Traits
 
 		void HandlePrerequisiteThreshold(int tick)
 		{
-			if (Info.Prerequisites == null || !Info.Prerequisites.ContainsKey(tick) || thresholdsPassed.Contains(tick))
+			if (info.Prerequisites == null || !info.Prerequisites.ContainsKey(tick) || thresholdsPassed.Contains(tick))
 				return;
 
 			thresholdsPassed.Add(tick);
-			var prerequisite = Info.Prerequisites[tick];
+			var prerequisite = info.Prerequisites[tick];
 
-			if (!prerequisitesGranted.Contains(prerequisite))
+			if (prerequisitesGranted.Add(prerequisite))
 			{
-				prerequisitesGranted.Add(prerequisite);
 				techTree.ActorChanged(self);
 
 				// if there's an actor that represents the prerequisite, add it to the build order
 				if (self.World.Map.Rules.Actors.ContainsKey(prerequisite))
 					upgradesManager.UpgradeProviderCreated(prerequisite);
 
-				if (Info.PrerequisiteGrantedSound != null)
+				if (info.PrerequisiteGrantedSound != null)
 					Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Sounds",
-						Info.PrerequisiteGrantedSound, self.Owner.Faction.InternalName);
+						info.PrerequisiteGrantedSound, self.Owner.Faction.InternalName);
 
-				if (Info.DummyActor != null)
+				if (info.DummyActor != null)
 				{
-					if (Info.PrerequisiteGrantedNotifications != null && Info.PrerequisiteGrantedNotifications.ContainsKey(tick))
-						notificationQueued = Info.PrerequisiteGrantedNotifications[tick];
+					if (info.PrerequisiteGrantedNotifications != null && info.PrerequisiteGrantedNotifications.TryGetValue(tick, out var value))
+						notificationQueued = value;
 
 					dummyActorQueued = true;
 					ticksUntilSpawnDummyActor = 1;
@@ -163,7 +163,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		void ITick.Tick(Actor self)
 		{
-			if (!Enabled)
+			if (!Enabled || IsTraitDisabled || IsTraitPaused)
 				return;
 
 			var previousTicks = ticksElapsed;
@@ -182,18 +182,18 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", notificationQueued, self.Owner.Faction.InternalName);
 
-				if (Info.PrerequisiteGrantedTextNotification != null)
-					TextNotificationsManager.AddTransientLine(self.Owner, Info.PrerequisiteGrantedTextNotification);
+				if (info.PrerequisiteGrantedTextNotification != null)
+					TextNotificationsManager.AddTransientLine(self.Owner, info.PrerequisiteGrantedTextNotification);
 
 				notificationQueued = null;
-				ticksUntilNotification = Info.NotificationDelay;
+				ticksUntilNotification = info.NotificationDelay;
 			}
 
 			if (dummyActorQueued && --ticksUntilSpawnDummyActor <= 0)
 			{
 				self.World.AddFrameEndTask(w =>
 				{
-					w.CreateActor(Info.DummyActor, new TypeDictionary
+					w.CreateActor(info.DummyActor, new TypeDictionary
 					{
 						new ParentActorInit(self),
 						new LocationInit(CPos.Zero),
@@ -219,7 +219,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (initialTicks != ticksElapsed)
 				TicksChanged?.Invoke(ticksElapsed);
 
-			if (Info.Prerequisites != null)
+			if (info.Prerequisites != null)
 			{
 				for (int t = initialTicks + 1; t <= ticksElapsed; t++)
 					HandlePrerequisiteThreshold(t);

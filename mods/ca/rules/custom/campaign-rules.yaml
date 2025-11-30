@@ -9,7 +9,6 @@
 Player:
 	-ConquestVictoryConditions:
 	MissionObjectives:
-		EarlyGameOver: true
 	Shroud:
 		ExploredMapCheckboxEnabled: False
 		ExploredMapCheckboxLocked: True
@@ -32,6 +31,8 @@ Player:
 		Condition: enable-campaign-ai
 		Bots: campaign
 	SupportPowerBotModule:
+		RequiresCondition: enable-brutal-ai || enable-vhard-ai || enable-hard-ai || enable-normal-ai || enable-easy-ai || enable-naval-ai || enable-campaign-ai
+	HarvesterBotModuleCA:
 		RequiresCondition: enable-brutal-ai || enable-vhard-ai || enable-hard-ai || enable-normal-ai || enable-easy-ai || enable-naval-ai || enable-campaign-ai
 	LobbyPrerequisiteCheckbox@GLOBALBOUNTY:
 		Enabled: False
@@ -106,6 +107,21 @@ World:
 	MusicPlaylist:
 		VictoryMusic: score
 		DefeatMusic: map
+	Faction@0:
+		Selectable: True
+		Description: faction-allies.description
+	Faction@4:
+		Selectable: True
+		Description: faction-soviet.description
+	Faction@8:
+		Selectable: True
+		Description: faction-gdi.description
+	Faction@12:
+		Selectable: True
+		Description: faction-nod.description
+	Faction@16:
+		Selectable: True
+		Description: faction-scrin.description
 
 ^Infantry:
 	GrantConditionOnPrerequisite@BIO:
@@ -114,6 +130,14 @@ World:
 ^Disabled:
 	Buildable:
 		Prerequisites: ~disabled
+
+^NameTag:
+	WithNameTagDecoration:
+		MaxLength: 5
+		ValidRelationships: Ally
+		UsePlayerColor: True
+		Position: Top
+		Margin: 0,-15
 
 # Assigned to actors in missions, assigned in lua dynamically
 # (so we use DummyConditionConsumer to prevent yaml warnings)
@@ -145,6 +169,12 @@ World:
 ^AffectedByDriverKill:
 	ChangesHealth@DRIVER_DEAD:
 		PercentageStep: 0
+
+# Reduce XP gain for snipers to prevent excessive exploiting of driver kill
+
+SNIP:
+	GainsExperienceMultiplier@TenPercentXp:
+		Modifier: 10
 
 # Extra power for AI to reduce the number of power plants needed
 
@@ -231,7 +261,7 @@ SCOL:
 	ExternalCondition@DISABLED:
 		Condition: disabled
 
-SCOL.Temp:
+SSPK:
 	-ExternalCondition@DISABLED:
 
 SHAR:
@@ -291,6 +321,10 @@ ai.superweapons.enabled:
 	ProvidesPrerequisite:
 
 ai.minor.superweapons.enabled:
+	Inherits@DUMMY: ^InvisibleDummy
+	ProvidesPrerequisite:
+
+ai.supportpowers.enabled:
 	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
 
@@ -471,7 +505,6 @@ PDOX:
 	Inherits@AiMinorSuperweaponsEnabled: ^AiMinorSuperweaponsEnabled
 	DetonateWeaponPower@ChronoAI:
 		RequiresCondition: ai-minor-superweapons-enabled || !owned-by-ai
-		DisplayTimerRelationships: Ally
 
 MSLO:
 	Inherits@AiSuperweaponsEnabled: ^AiSuperweaponsEnabled
@@ -482,7 +515,6 @@ IRON:
 	Inherits@AiMinorSuperweaponsEnabled: ^AiMinorSuperweaponsEnabled
 	GrantExternalConditionPowerCA@IRONCURTAIN:
 		RequiresCondition: ai-minor-superweapons-enabled || !owned-by-ai
-		DisplayTimerRelationships: Ally
 
 EYE:
 	Inherits@AiSuperweaponsEnabled: ^AiSuperweaponsEnabled
@@ -493,7 +525,6 @@ PATR:
 	Inherits@AiMinorSuperweaponsEnabled: ^AiMinorSuperweaponsEnabled
 	AttackOrderPowerCA@EMPMISSILE:
 		RequiresCondition: ai-minor-superweapons-enabled || !owned-by-ai
-		DisplayTimerRelationships: Ally
 
 MSLO.Nod:
 	Inherits@AiSuperweaponsEnabled: ^AiSuperweaponsEnabled
@@ -515,13 +546,11 @@ MANI:
 	Inherits@AiMinorSuperweaponsEnabled: ^AiMinorSuperweaponsEnabled
 	GrantExternalConditionPowerCA@SUPPRESSION:
 		RequiresCondition: ai-minor-superweapons-enabled || !owned-by-ai
-		DisplayTimerRelationships: Ally
 
 TMPL:
 	Inherits@AiMinorSuperweaponsEnabled: ^AiMinorSuperweaponsEnabled
 	NukePower@Cluster:
 		RequiresCondition: ai-minor-superweapons-enabled || !owned-by-ai
-		DisplayTimerRelationships: Ally
 
 # Disable GPS for AI
 
@@ -541,6 +570,29 @@ TMPL:
 		Prerequisites: anyradar, ~gps.satellite, ~gps.satellite.firstscan, ~fogenabled, ~!botplayer
 	ProduceActorPowerCA@SatelliteScanNoFog:
 		Prerequisites: anyradar, ~!fogenabled, ~!botplayer
+
+# Increase launch time for player GPS
+
+^GpsPower:
+	DummyGpsPower@FOG:
+		Delay: 17250
+	ProduceActorPowerCA@InitialSatelliteScan
+		ChargeInterval: 22500
+	ProduceActorPowerCA@SatelliteScan:
+		ChargeInterval: 5250
+	ProduceActorPowerCA@SatelliteScanNoFog:
+		ChargeInterval: 22500
+
+# Disable Cloning Vat for AI
+
+CVAT:
+	CargoCloner@SQ:
+		RequiresCondition: !global-multiqueue && !owned-by-ai
+	CargoCloner@MQ:
+		RequiresCondition: global-multiqueue && !owned-by-ai
+	GrantConditionOnPrerequisite@OwnedByAi:
+		Condition: owned-by-ai
+		Prerequisites: botplayer
 
 # Manual targeting for Tesla Coil boost (otherwise they get stuck when AI attack moves)
 
@@ -584,6 +636,7 @@ ETPD:
 	Inherits@SHIELDS: ^ScrinShields
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Inherits@SHRAPNEL: ^ThrowsShrapnelBig
+	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Turreted@SHIELDS:
 		Offset: 0,0,0
 	GrantCondition@SHIELDS:
@@ -596,7 +649,7 @@ ETPD:
 		Strengths: Strong vs all ground units and structures.
 	Mobile:
 		Speed: 36
-		PauseOnCondition: empdisable || being-warped || notmobile
+		PauseOnCondition: empdisable || notmobile
 		ImmovableCondition: alive
 	GrantCondition@ALIVE:
 		Condition: alive
@@ -637,7 +690,9 @@ ETPD:
 		InitialStanceAI: AttackAnything
 	SpawnActorOnDeath:
 		Actor: ETPD.Husk
-	Targetable@ETPD:
+	Targetable@CampaignBoss:
+		TargetTypes: CampaignBoss
+	Targetable@ExterminatorTripod:
 		TargetTypes: ExterminatorTripod
 	Targetable@SHIELDED:
 		TargetTypes: Shielded
@@ -652,6 +707,13 @@ ETPD:
 		RequiresCondition: shields-up
 	Targetable@DriverKillImmune:
 		TargetTypes: DriverKillImmune
+	Targetable@BlindImmune:
+		TargetTypes: BlindImmune
+	SpeedMultiplier@TEMPORAL:
+		Modifier: 75
+	ReloadDelayMultiplier@TEMPORAL:
+		Modifier: 120
+		RequiresCondition: being-warped
 	CaptureManager:
 		-BeingCapturedCondition:
 	-ExternalCondition@UNITSELL:
@@ -662,6 +724,9 @@ ETPD:
 	FireWarheadsOnDeath:
 		Weapon: 380mm
 		EmptyWeapon: 380mm
+	-HealthCapDamageMultiplier@CHRONO:
+	DummyConditionConsumer@CHRONO:
+		Condition: chronoshifted
 
 ETPD.Husk:
 	Inherits: TPOD.Husk
@@ -669,6 +734,178 @@ ETPD.Husk:
 		Name: Husk (Exterminator Tripod)
 	RenderSprites:
 		Image: etpd.destroyed
+
+VENG:
+	Inherits: ^Vehicle
+	Inherits@ActorDifficultyConditions: ^ActorDifficultyConditions
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@HOVERTRAIL: ^HoverTrail
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
+	Inherits@HeavyArmor: ^HeavyArmor
+	Inherits@A2GPROTECTION: ^AirToGroundProtection
+	Inherits@COMMANDOSKULL: ^CommandoSkull
+	TooltipExtras:
+		Description: Colossal Malefic Scrin war machine.
+		Strengths: • Unknown
+		Weaknesses: • Unknown
+	Valued:
+		Cost: 15000
+	Tooltip:
+		Name: Void Engine
+	Selectable:
+		Bounds: 2800, 3000, 0, -600
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 2250000
+	HitShape:
+		Type: Circle
+			Radius: 768
+	Mobile:
+		TurnSpeed: 4
+		Speed: 10
+		Locomotor: sheavytracked
+		PauseOnCondition: empdisable || notmobile
+	WithShadow:
+		Offset: 43, 128, 0
+		ZOffset: -129
+		RequiresCondition: !invisibility
+	Hovers:
+		BobDistance: -25
+		Ticks: 12
+		RequiresCondition: !empdisable && !being-warped && !driver-dead
+	RevealsShroud:
+		Range: 10c0
+	Armament:
+		Weapon: VoidEngineBeam
+		LocalOffset: 1100,0,700
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+	WithMuzzleOverlay:
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
+	AttackFrontal:
+		PauseOnCondition: empdisable
+		TargetFrozenActors: True
+		ForceFireIgnoresActors: True
+		FacingTolerance: 8
+	GrantConditionOnTerrain@ONWATER:
+		TerrainTypes: Water
+		Condition: onwater
+	KillsSelf@SINK:
+		RequiresCondition: onwater && (empdisable || driver-dead)
+	Targetable@ONWATER:
+		TargetTypes: Water, Ship
+		RequiresCondition: onwater
+	SpawnActorOnDeath:
+		Actor: VENG.Husk
+		RequiresCondition: !being-warped
+	SpawnActorOnDeath@Rift:
+		Actor: voidenginedeathrift
+		RequiresCondition: !being-warped
+	AutoTarget:
+		InitialStanceAI: AttackAnything
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
+	Targetable@DriverKillImmune:
+		TargetTypes: DriverKillImmune
+	Targetable@CampaignBoss:
+		TargetTypes: CampaignBoss
+	Targetable@VoidEngine:
+		TargetTypes: VoidEngine
+	ExternalCondition@chilled:
+		TotalCap: 2
+	ChangesHealth:
+		Step: 2000
+		Delay: 25
+		StartIfBelow: 100
+		DamageCooldown: 250
+	ReloadDelayMultiplier@concussion:
+		Modifier: 120
+	SpeedMultiplier@TEMPORAL:
+		Modifier: 75
+	ReloadDelayMultiplier@TEMPORAL:
+		Modifier: 120
+		RequiresCondition: being-warped
+	RevealsShroudMultiplier@Blinded:
+		Modifier: 80
+	RangeMultiplier@Blinded:
+		Modifier: 80
+		RequiresCondition: blinded
+	FirepowerMultiplier@Blinded:
+		Modifier: 90
+		RequiresCondition: blinded
+	RangeMultiplier@GAPVEILED:
+		Modifier: 80
+	FirepowerMultiplier@NORMAL:
+		Modifier: 75
+		RequiresCondition: difficulty-normal
+	FirepowerMultiplier@EASY:
+		Modifier: 50
+		RequiresCondition: difficulty-easy
+	DamageMultiplier@NORMAL:
+		Modifier: 125
+		RequiresCondition: difficulty-normal
+	DamageMultiplier@EASY:
+		Modifier: 150
+		RequiresCondition: difficulty-easy
+	DamageTypeDamageMultiplier@A2GPROTECTION:
+		Modifier: 75
+		RequiresCondition: !difficulty-easy
+	-HealthCapDamageMultiplier@CHRONO:
+	DummyConditionConsumer@CHRONO:
+		Condition: chronoshifted
+
+VENG.Husk:
+	Inherits: ^Husk
+	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
+	Tooltip:
+		Name: Husk (Void Engine)
+	RenderSprites:
+		Image: veng.destroyed
+
+VoidEngineRift:
+	Inherits: ^RiftBase
+	EditorOnlyTooltip:
+		Name: (Void Engine Rift)
+	RenderSprites:
+		Image: riftmd
+	PeriodicExplosion:
+		Weapon: VoidEngineRift
+	KillsSelf:
+		Delay: 264
+	SpawnActorOnDeath:
+		Actor: voidengineriftfade
+		SkipMakeAnimations: false
+	# required for spawning actor on death
+	Health:
+		HP: 1
+	WithSpriteBody:
+		StartSequence: make
+
+VoidEngineRiftFade:
+	Inherits: VoidEngineRift
+	WithSpriteBody:
+		Sequence: dead
+	WithMakeAnimation:
+		Sequence: die
+	KillsSelf:
+		Delay: 24
+	-SpawnActorOnDeath:
+	-PeriodicExplosion:
+
+VoidEngineDeathRift:
+	Inherits: VoidEngineRift
+	KillsSelf:
+		Delay: 1512
 
 SCRINPURIFIER:
 	Inherits: ^TechBuilding
@@ -693,6 +930,25 @@ SCRINPURIFIER:
 	Health:
 		HP: 150000
 	-CaptureNotification:
+
+WORMHOLELG:
+	Inherits: ^WormholeBase
+	MapEditorData:
+		Categories: System
+
+WORMHOLEXL:
+	Inherits: ^WormholeBase
+	Tooltip:
+		Name: Gateway
+	MapEditorData:
+		Categories: System
+
+WORMHOLEXXL:
+	Inherits: ^WormholeBase
+	Tooltip:
+		Name: Gateway
+	MapEditorData:
+		Categories: System
 
 # Smudge makers
 
@@ -741,6 +997,40 @@ ScorchMaker2:
 		Weapon: ScorchMaker2
 	EditorOnlyTooltip:
 		Name: Scorch Maker x2
+
+# Enable Soviet/GDI aircraft from Helipad
+
+YAK:
+	Buildable:
+		Prerequisites: ~aircraft.soviet, ~techlevel.medium
+
+HALO:
+	Buildable:
+		Prerequisites: ~aircraft.soviet, ~techlevel.medium
+
+MIG:
+	Buildable:
+		Prerequisites: ~aircraft.soviet, ~techlevel.medium
+
+SUK:
+	Buildable:
+		Prerequisites: stek, ~aircraft.soviet, ~!seismic.upgrade, ~techlevel.high
+
+KIRO:
+	Buildable:
+		Prerequisites: stek, ~aircraft.kiro, ~techlevel.high
+
+ORCA:
+	Buildable:
+		Prerequisites: ~aircraft.gdi, ~techlevel.medium
+
+A10:
+	Buildable:
+		Prerequisites: ~aircraft.gdi, ~!sidewinders.upgrade, ~!avenger.upgrade, ~techlevel.medium
+
+ORCB:
+	Buildable:
+		Prerequisites: ~aircraft.gdi, gtek, ~techlevel.high
 
 # Enable subfaction specific units/upgrades for all campaign missions
 
@@ -798,7 +1088,7 @@ APC.AI:
 	Valued:
 		Cost: 1500
 
-RAPC.AI:
+AAPC.AI:
 	Valued:
 		Cost: 1700
 

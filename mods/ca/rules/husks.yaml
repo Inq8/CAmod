@@ -1361,7 +1361,7 @@ CYCP.Husk:
 		Image: cycp.destroyed
 
 BASI.Husk:
-	Inherits: ^Husk
+	Inherits: ^HuskTD
 	Tooltip:
 		Name: Husk (Basilisk)
 	RenderSprites:
@@ -1453,9 +1453,9 @@ HOSP.Husk:
 	Tooltip:
 		Name: Ruin (Hospital)
 	TransformOnCapture:
-		IntoActor: hosp
+		IntoActor: hosp.rebuilt
 	InfiltrateForTransform:
-		IntoActor: hosp
+		IntoActor: hosp.rebuilt
 	RenderSprites:
 		Image: HOSP.destroyed
 
@@ -1467,9 +1467,9 @@ MACS.Husk:
 	Tooltip:
 		Name: Ruin (Machine Shop)
 	TransformOnCapture:
-		IntoActor: macs
+		IntoActor: macs.rebuilt
 	InfiltrateForTransform:
-		IntoActor: macs
+		IntoActor: macs.rebuilt
 	RenderSprites:
 		Image: MACS.destroyed
 

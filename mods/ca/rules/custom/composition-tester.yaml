@@ -29,7 +29,7 @@ Player:
 	PlayerResources:
 		SelectableCash: 5000, 7500, 10000, 15000, 20000, 25000, 30000, 35000, 40000, 45000, 50000, 75000, 100000, 200000
 		DefaultCash: 30000
-	ClassicProductionQueue@Building:
+	ClassicProductionQueueCA@Building:
 		BuildTimeSpeedReduction: 0
 		SpeedUp: True
 	ClassicProductionQueue@Defense:
@@ -228,6 +228,10 @@ SAPC:
 	Buildable:
 		Prerequisites: ~player.nod
 
+CUST:
+	Buildable:
+		Prerequisites: ~player.nod
+
 AVTR:
 	Buildable:
 		Prerequisites: ~player.nod
@@ -252,7 +256,7 @@ APC:
 	Buildable:
 		Prerequisites: ~player.allies
 
-RAPC:
+AAPC:
 	Buildable:
 		Prerequisites: ~player.allies
 
@@ -313,6 +317,10 @@ GDRN.TOW:
 		Prerequisites: ~player.gdi
 
 BGGY:
+	Buildable:
+		Prerequisites: ~player.nod
+
+RBUG:
 	Buildable:
 		Prerequisites: ~player.nod
 
@@ -642,8 +650,6 @@ N5:
 	Buildable:
 		Prerequisites: ~player.nod
 
-
-
 N6:
 	Buildable:
 		Prerequisites: ~player.td
@@ -673,6 +679,10 @@ CSCR:
 		Prerequisites: ~player.nod
 
 CDOG:
+	Buildable:
+		Prerequisites: ~player.nod
+
+SAB:
 	Buildable:
 		Prerequisites: ~player.nod
 
@@ -1141,10 +1151,6 @@ SHAR:
 	Buildable:
 		Prerequisites: ~player.scrin
 
-UPGC.DROP:
-	Buildable:
-		Prerequisites: ~disabled
-
 ^Upgrade:
 	ProductionCostMultiplier@FREEUPGRADES:
 		Multiplier: 0
@@ -1166,6 +1172,10 @@ bombard2.strat:
 	Buildable:
 		Prerequisites: ~player.gdi, ~bombard.strat
 
+bombard3.strat:
+	Buildable:
+		Prerequisites: ~player.gdi, ~bombard2.strat
+
 seek.strat:
 	Buildable:
 		Prerequisites: ~player.gdi, ~!bombard.strat, ~!hold.strat
@@ -1174,6 +1184,10 @@ seek2.strat:
 	Buildable:
 		Prerequisites: ~player.gdi, ~seek.strat
 
+seek3.strat:
+	Buildable:
+		Prerequisites: ~player.gdi, ~seek2.strat
+
 hold.strat:
 	Buildable:
 		Prerequisites: ~player.gdi, ~!bombard.strat, ~!seek.strat
@@ -1181,6 +1195,10 @@ hold.strat:
 hold2.strat:
 	Buildable:
 		Prerequisites: ~player.gdi, ~hold.strat
+
+hold3.strat:
+	Buildable:
+		Prerequisites: ~player.gdi, ~hold2.strat
 
 vulcan.upgrade:
 	Buildable:
@@ -1270,19 +1288,7 @@ mdrone.upgrade:
 	Buildable:
 		Prerequisites: ~disabled
 
-UPGC.BOMB:
-	Buildable:
-		Prerequisites: ~disabled
-
-UPGC.SEEK:
-	Buildable:
-		Prerequisites: ~disabled
-
-UPGC.HOLD:
-	Buildable:
-		Prerequisites: ~disabled
-
-UPGC.DROP:
+upgc.drop:
 	Buildable:
 		Prerequisites: ~disabled
 
@@ -1329,7 +1335,15 @@ quantum.upgrade:
 	Buildable:
 		Prerequisites: ~player.nod
 
-advcyber.upgrade:
+covenant.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+cust.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+rbug.upgrade:
 	Buildable:
 		Prerequisites: ~disabled
 
@@ -1337,7 +1351,7 @@ cyborgarmor.upgrade:
 	Buildable:
 		Prerequisites: ~player.nod
 
-covenant.upgrade:
+covenant.upgrade2:
 	Buildable:
 		Prerequisites: ~disabled
 
@@ -1467,7 +1481,7 @@ sweden.coalition:
 	Buildable:
 		Prerequisites: ~disabled
 
-rapc.upgrade:
+aapc.upgrade:
 	Buildable:
 		Prerequisites: ~disabled
 

@@ -569,13 +569,6 @@ apc:
 		Filename: minigun16.shp
 		Length: 6
 		Facings: 16
-	turret:
-		Filename: rapc.shp
-		Facings: 32
-		UseClassicFacings: True
-	muzzle2:
-		Filename: gunfire2.shp
-		Length: 5
 	open:
 		Filename: apc.shp
 		Start: 32
@@ -586,10 +579,14 @@ apc:
 	icon:
 		Filename: apcicon.shp
 
-rapc:
+aapc:
 	Inherits: apc
+	turret:
+		Filename: aapc.shp
+		Facings: 32
+		UseClassicFacings: True
 	icon:
-		Filename: rapcicon.shp
+		Filename: aapcicon.shp
 
 apc.destroyed:
 	Inherits: ^VehicleOverlays
@@ -1019,6 +1016,23 @@ bggy.destroyed:
 		Facings: 32
 		UseClassicFacings: True
 		ZOffset: -512
+
+rbug:
+	Inherits: ^VehicleOverlays
+	idle:
+		Filename: rbug.shp
+		Facings: 32
+		UseClassicFacings: True
+	turret:
+		Filename: rbug.shp
+		Start: 32
+		Facings: 32
+		UseClassicFacings: True
+	muzzle:
+		Filename: lasermuzzle.shp
+		Length: *
+	icon:
+		Filename: rbugicnh.shp
 
 mtnk:
 	Inherits: ^VehicleOverlays
@@ -1519,6 +1533,11 @@ hftk:
 	turret:
 		Filename: hftk.shp
 		Start: 32
+		Facings: 32
+		UseClassicFacings: True
+	turret-upg:
+		Filename: hftk.shp
+		Start: 64
 		Facings: 32
 		UseClassicFacings: True
 	muzzle:
@@ -3175,3 +3194,26 @@ avtr.destroyed:
 		Facings: 32
 		ZOffset: -512
 		Offset: 0, -5
+
+cust:
+	Inherits: ^VehicleOverlays
+	idle:
+		Filename: cust.shp
+		Facings: 32
+		UseClassicFacings: True
+	spinner:
+		Filename: cust.shp
+		ZOffset: 512
+		Start: 32
+		Length: 8
+		Tick: 80
+	icon:
+		Filename: custicon.shp
+
+cust.destroyed:
+	Inherits: ^VehicleOverlays
+	idle:
+		Filename: cust.shp
+		Facings: 32
+		UseClassicFacings: True
+		ZOffset: -512

@@ -34,6 +34,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Maximum range that guarding actors will maintain.")]
 		public readonly WDist Range = WDist.FromCells(2);
 
+		[Desc("Maximum number of guard orders to chain together.")]
+		public readonly WDist MaxDistance = WDist.FromCells(15);
+
 		public override object Create(ActorInitializer init) { return new GuardsSelection(init, this); }
 	}
 
@@ -78,7 +81,7 @@ namespace OpenRA.Mods.CA.Traits
 					&& !a.IsDead
 					&& a.IsInWorld
 					&& a != self
-					&& IsValidGuardTarget(a))
+					&& IsValidGuardTarget(self, a))
 				.ToArray();
 
 			if (guardActors.Length == 0)
@@ -103,7 +106,7 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
-		bool IsValidGuardTarget(Actor targetActor)
+		bool IsValidGuardTarget(Actor self, Actor targetActor)
 		{
 			if (!Info.ValidTargets.Overlaps(targetActor.GetEnabledTargetTypes()))
 				return false;
@@ -113,6 +116,9 @@ namespace OpenRA.Mods.CA.Traits
 
 			var guardsSelection = targetActor.TraitsImplementing<GuardsSelection>();
 			if (guardsSelection.Any(t => !t.IsTraitDisabled))
+				return false;
+
+			if ((targetActor.CenterPosition - self.CenterPosition).HorizontalLengthSquared > Info.MaxDistance.LengthSquared)
 				return false;
 
 			return true;

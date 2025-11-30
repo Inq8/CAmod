@@ -11,7 +11,7 @@ SS:
 	TooltipExtras:
 		Strengths: • Strong vs Naval Units
 		Weaknesses: • Cannot attack Ground Units, Aircraft
-		Attributes: • Can detect other submarines
+		Attributes: • Detects other submarines
 	Valued:
 		Cost: 950
 	Tooltip:
@@ -81,7 +81,7 @@ MSUB:
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Ground Units
 		Weaknesses: • Weak vs Naval Units\n• Cannot attack Aircraft
-		Attributes: • Can detect other submarines
+		Attributes: • Detects other submarines
 	Valued:
 		Cost: 1650
 	Tooltip:
@@ -133,7 +133,7 @@ DD:
 	TooltipExtras:
 		Strengths: • Strong vs Naval Units, Vehicles, Aircraft
 		Weaknesses: • Weak vs Infantry
-		Attributes: • Can detect submarines
+		Attributes: • Detects submarines
 	Valued:
 		Cost: 1000
 	Tooltip:
@@ -149,7 +149,7 @@ DD:
 		Speed: 56
 	RevealsShroud:
 		MinRange: 5c0
-		Range: 6c0
+		Range: 8c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 5c0
@@ -306,7 +306,7 @@ LST:
 	WithLandingCraftAnimation:
 		OpenTerrainTypes: Clear, Rough, Road, Ore, Gems, Beach
 	Cargo:
-		Types: Infantry, Hacker, Vehicle
+		Types: Infantry, Hacker, Brute, Vehicle
 		MaxWeight: 5
 		PassengerFacing: 0
 		LoadingCondition: notmobile
@@ -331,6 +331,18 @@ LST:
 	Encyclopedia:
 		Category: Allies/Naval; Soviets/Naval; GDI/Naval; Nod/Naval
 
+LST.Reinforce:
+	Inherits: LST
+	-Selectable:
+	-Buildable:
+	-WithCargoPipsDecoration:
+	RenderSprites:
+		Image: lst
+	Interactable:
+	RejectsOrders:
+	Cargo:
+		MaxWeight: 50
+
 PT:
 	Inherits: ^Ship
 	Inherits@AUTOTARGET: ^AutoTargetNavalAssaultMove
@@ -344,7 +356,7 @@ PT:
 	TooltipExtras:
 		Strengths: • Strong vs Naval Units
 		Weaknesses: • Weak vs Ground Units\n• Cannot attack Aircraft
-		Attributes: • Can detect submarines
+		Attributes: • Detects submarines
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -406,7 +418,7 @@ PT2:
 	TooltipExtras:
 		Strengths: • Strong vs Submarines, Aircraft
 		Weaknesses: • Weak vs Ground Units
-		Attributes: • Can detect submarines
+		Attributes: • Detects submarines
 	Valued:
 		Cost: 750
 	Tooltip:
@@ -481,7 +493,7 @@ DD2:
 	TooltipExtras:
 		Strengths: • Strong vs Naval Units, Vehicles
 		Weaknesses: • Cannot attack Aircraft
-		Attributes: • Can detect submarines
+		Attributes: • Detects submarines
 	Valued:
 		Cost: 1000
 	Tooltip:
@@ -497,7 +509,7 @@ DD2:
 		Speed: 60
 	RevealsShroud:
 		MinRange: 5c0
-		Range: 6c0
+		Range: 8c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 5c0
@@ -581,7 +593,7 @@ SS2:
 	TooltipExtras:
 		Strengths: • Strong vs Naval Units
 		Weaknesses: • Cannot attack Ground Units, Aircraft
-		Attributes: • Can detect other submarines
+		Attributes: • Detects other submarines
 	Valued:
 		Cost: 950
 	Tooltip:
@@ -651,7 +663,7 @@ ISUB:
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Ground Units
 		Weaknesses: • Weak vs Naval Units\n• Cannot attack Aircraft
-		Attributes: • Missiles can be shot down by static anti-air defenses\n• Can detect other submarines
+		Attributes: • Missiles can be shot down by static anti-air defenses\n• Detects other submarines
 	Valued:
 		Cost: 2000
 	Tooltip:
@@ -846,11 +858,11 @@ SB:
 		TurnSpeed: 40
 		Speed: 113
 	RevealsShroud:
-		MinRange: 4c0
-		Range: 5c0
+		MinRange: 5c0
+		Range: 7c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 4c0
+		Range: 5c0
 	Armament@PRIMARY:
 		Weapon: SBRockets
 		LocalOffset: -128, -170, 170, -128, 170, 170
@@ -889,7 +901,7 @@ SEAS:
 	TooltipExtras:
 		Strengths: • Strong vs Aircraft, Infantry
 		Weaknesses: • Weak vs Naval Units, Vehicles
-		Attributes: • Can detect submarines
+		Attributes: • Detects submarines
 	Valued:
 		Cost: 600
 	Tooltip:

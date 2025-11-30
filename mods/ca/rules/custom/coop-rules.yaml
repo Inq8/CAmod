@@ -1,0 +1,1466 @@
+World:
+	MapBuildRadius:
+		AllyBuildRadiusCheckboxEnabled: True
+		BuildRadiusCheckboxVisible: True
+		BuildRadiusCheckboxLocked: False
+		BuildRadiusCheckboxEnabled: False
+
+	ScriptLobbyDropdown@basesharing:
+		ID: basesharing
+		Label: Base Sharing
+		Description: Controls whether every player gets a MCV and whether tech is shared.\nWhen tech is shared you can produce units from other players production buildings if you don't have that building.\nNo effect in baseless missions.\nUpgrades are not shared.
+		Values:
+			1: Shared base & tech
+			2: MCV each, tech shared
+			3: MCV each, no tech shared
+		Default: 2
+		DisplayOrder: 999
+
+	ScriptLobbyDropdown@incomeshare:
+		ID: incomeshare
+		Label: Income Sharing
+		Description: Shares a percentage of all player refinery income with all other players.\nFor technical reasons this makes silos useless.
+		Values:
+			0: Off
+			100: Equally Split
+			125: Equal +25% Per Ally
+			150: Equal +50% Per Ally
+			175: Equal +75% Per Ally
+			999: Full Amount to All
+			10: 10%
+			15: 15%
+			20: 20%
+			25: 25%
+			30: 30%
+			35: 35%
+			40: 40%
+			45: 45%
+			50: 50%
+		Default: 100
+		DisplayOrder: 999
+
+	ScriptLobbyDropdown@enattackstr:
+		ID: enattackstr
+		Label: Enemy Attack Modifier
+		Description: Increases AI attack wave frequency and size (applied after any difficulty modifiers).
+		Values:
+			0: +0%
+			20: +20%
+			40: +40%
+			60: +60%
+			80: +80%
+			100: +100%
+			120: +120%
+			140: +140%
+			160: +160%
+			180: +180%
+			200: +200%
+			250: +250%
+			300: +300%
+		Default: 0
+		DisplayOrder: 999
+
+	ScriptLobbyDropdown@enemyranks:
+		ID: enemyranks
+		Label: Enemy Veterancy
+		Description: Give every enemy combat unit this level of base veterancy to boost their stats.
+		Values:
+			0: 0
+			1: 1
+			2: 2
+			3: 3
+		Default: 0
+		DisplayOrder: 999
+
+	ScriptLobbyDropdown@oremines:
+		ID: oremines
+		Label: Resource Spawners
+		Description: Adjustements to resource spawners on the map.\n\nNo change: Resource spawners are unchanged\nAdditional: Adds a mine or blossom tree to every field that has none. Amount varies from map to map.\nUpgrade: All ore mines become gem mines, all green blossom trees become blue blossom trees.\nAdd & Upgrade: Adds spawners and upgrades all of them\nDelete all: Remove all spawners. Warning: All resources are finite now. This can make some missions extremely difficult or impossible without near-perfect execution.
+		Values:
+			oreoff: No Change
+			oreon: Additional
+			oreupgrade: Upgrade
+			oreonupgrade: Add & Upgrade
+			orefinite: Delete All (Hardcore)
+		Default: oreoff
+		DisplayOrder: 999
+
+	ScriptLobbyDropdown@enmp:
+		ID: enmp
+		Label: Duplicate Enemy Starting Units
+		Description: Multiplies starting ground combat units of the enemy.\nSome missions may become unbeatable if this value is raised.
+		Values:
+			999: x Player Count
+			0: 1x (Off)
+			1: 2x
+			2: 3x
+			3: 4x
+			4: 5x
+			5: 6x (Shouldn't go higher)
+			6: 7x
+			7: 8x
+			8: 9x
+			9: 10x
+			10: 11x
+			11: 12x (Stop it!)
+			19: 20x (CPU may melt)
+			39: 50x (Abandon all hope!!!)
+		Default: 0
+		DisplayOrder: 1000
+
+	ScriptLobbyDropdown@prmp:
+		ID: prmp
+		Label: Duplicate Enemy Produced Units
+		Description: Copies any ground combat units the enemy AI produces.\nThis raises the difficulty significantly and should be used with care.
+		Values:
+			999: x Player Count
+			0: 1x (Off)
+			1: 2x
+			2: 3x
+			3: 4x
+			4: 5x
+			5: 6x (Shouldn't go higher)
+			6: 7x
+			7: 8x
+			8: 9x
+			9: 10x
+			10: 11x
+			11: 12x (Stop it!)
+			19: 20x (CPU may melt)
+			39: 50x (Abandon all hope!!!)
+		Default: 0
+		DisplayOrder: 1000
+
+	ScriptLobbyDropdown@pfollow:
+		ID: pfollow
+		Label: Produced Duplicates Follow
+		Description: Odds that a duplicated produced unit will follow the unit they are copied from, and go hunting when it dies.\nLeads to bigger attack waves.\nFollowers will also switch to hunt mode after a while to prevent clogging of production areas.
+		Values:
+			0: 0 (Will never happen)
+			1: 1
+			2: 2
+			3: 3
+			4: 4
+			5: 5
+		Default: 5
+		DisplayOrder: 1000
+
+	ScriptLobbyDropdown@phunt:
+		ID: phunt
+		Label: Produced Duplicates Hunt
+		Description: Odds that a duplicated produced unit will immediately attack the players.
+		Values:
+			0: 0 (Will never happen)
+			1: 1
+			2: 2
+			3: 3
+			4: 4
+			5: 5
+		Default: 0
+		DisplayOrder: 1000
+
+	ScriptLobbyDropdown@pwander:
+		ID: pwander
+		Label: Produced Duplicates Wander
+		Description: Odds that a duplicated produced unit will roam around the map randomly.\nLeading to unpredictable attack directions and random enemies at unexpected locations.
+		Values:
+			0: 0 (Will never happen)
+			1: 1
+			2: 2
+			3: 3
+			4: 4
+			5: 5
+		Default: 0
+		DisplayOrder: 1000
+
+	ScriptLobbyDropdown@pidle:
+		ID: pidle
+		Label: Produced Duplicates Idle
+		Description: Odds that a duplicated produced unit will just stand around and will only move and attack when enemies get near them or they are attacked.\nThis results in bases full of enemies.\nThis value will default to 1 if all other values are 0.
+		Values:
+			0: 0 (Will never happen)
+			1: 1
+			2: 2
+			3: 3
+			4: 4
+			5: 5
+		Default: 0
+		DisplayOrder: 1000
+
+	ScriptLobbyDropdown@sfollow:
+		ID: sfollow
+		Label: Starter Duplicates Follow
+		Description: Odds that a duplicated starting unit will follow the unit they are copied from, and go hunting when it dies.\nResults in bigger garrisons and patrols.
+		Values:
+			0: 0 (Will never happen)
+			1: 1
+			2: 2
+			3: 3
+			4: 4
+			5: 5
+		Default: 5
+		DisplayOrder: 1000
+
+	ScriptLobbyDropdown@shunt:
+		ID: shunt
+		Label: Starter Duplicates Hunt
+		Description: Odds that a duplicated starting unit will immediately go and attack the players.\nCan lead to being rushed in the early game.
+		Values:
+			0: 0 (Will never happen)
+			1: 1
+			2: 2
+			3: 3
+			4: 4
+			5: 5
+		Default: 0
+		DisplayOrder: 1000
+
+	ScriptLobbyDropdown@swander:
+		ID: swander
+		Label: Starter Duplicates Wander
+		Description: Odds that a duplicated starting unit will roam around the map randomly.\nResults in unpredictable attack directions and random enemies at unexpected locations.
+		Values:
+			0: 0 (Will never happen)
+			1: 1
+			2: 2
+			3: 3
+			4: 4
+			5: 5
+		Default: 0
+		DisplayOrder: 1000
+
+	ScriptLobbyDropdown@sidle:
+		ID: sidle
+		Label: Starter Duplicates Idle
+		Description: Odds that a duplicated starting unit will just stand around and will only move and attack when enemies get near them or they are attacked.\nThis results in bases full of enemies.\nThis value will default to 1 if all other values are 0.
+		Values:
+			0: 0 (Will never happen)
+			1: 1
+			2: 2
+			3: 3
+			4: 4
+			5: 5
+		Default: 0
+		DisplayOrder: 1000
+
+	ScriptLobbyDropdown@multiplyaircraft:
+		ID: multiplyaircraft
+		Label: Also Duplicate Aircraft
+		Description: EXPERIMENTAL\nInclude aircraft in the unit duplication.\nThe AI may have problems resupplying them all.
+		Values:
+			domulti: On (Multiply)
+			dontmulti: Off (Don't multiply)
+		Default: dontmulti
+		DisplayOrder: 1000
+
+Player:
+	LobbyPrerequisiteCheckbox@GLOBALFACTUNDEPLOY:
+		ID: factundeploy
+		Label: checkbox-redeployable-mcvs.label
+		Description: checkbox-redeployable-mcvs.description
+		Enabled: True
+		DisplayOrder: 7
+		Prerequisites: global-factundeploy
+	LobbyPrerequisiteCheckbox@FASTREGROWTH:
+		Locked: False
+		Visible: True
+
+# Make Oil Derrick use resource storage so it works with income sharing
+OILB:
+	StoresPlayerResourcesCA:
+		Capacity: 5000
+	CashTrickler:
+		UseResourceStorage: True
+
+COOPDUMMY:
+	Inherits: ^InvisibleDummy
+	DummyConditionGranter@MQ:
+		Condition: global-multiqueue
+	DummyConditionGranter@MQFull:
+		Condition: global-multiqueuefull
+	DummyConditionConsumer@MQ:
+		Condition: global-multiqueue
+	DummyConditionConsumer@MQFull:
+		Condition: global-multiqueuefull
+
+^COOPProducesBuildings:
+	Inherits@PRIMARY: ^PrimaryBuilding
+	Production@SQBLD:
+		Produces: BuildingSQ, DefenseSQ
+		RequiresCondition: !global-multiqueuefull
+
+^COOPProducesVehicles:
+	Production:
+		Produces: VehicleSQ, ParadropVehicle
+		RequiresCondition: !global-multiqueue
+	GrantExternalConditionToProduced:
+		Condition: produced
+	UpdatesUnitsProduced:
+
+^COOPProducesNaval:
+	Inherits@PRIMARY: ^PrimaryBuilding
+	Production:
+		Produces: ShipSQ, Boat, Submarine
+		RequiresCondition: !global-multiqueue
+	UpdatesUnitsProduced:
+
+^COOPProducesAircraft:
+	Inherits@PRIMARY: ^PrimaryBuilding
+	ProvidesPrerequisite@any:
+		Prerequisite: aircraft.any
+	Production:
+		Produces: AircraftSQ, Plane, Helicopter
+		RequiresCondition: !global-multiqueue
+	GrantConditionOnPrerequisite@KoreanBonus:
+		Prerequisites: korea.coalition
+		Condition: korea-coalition
+	DamageMultiplier@KoreanBonus:
+		Modifier: 50
+		RequiresCondition: korea-coalition
+	GrantExternalConditionToProduced:
+		Condition: produced
+	UpdatesUnitsProduced:
+
+^COOPProducesHelicopters:
+	Inherits@AIR: ^COOPProducesAircraft
+	Production:
+		Produces: AircraftSQ, Helicopter
+		RequiresCondition: !global-multiqueue
+
+^COOPProducesInfantry:
+	Inherits@PRIMARY: ^PrimaryBuilding
+	Production:
+		Produces: InfantrySQ, Cyborg, Soldier, ParadropInfantry
+		RequiresCondition: !global-multiqueue
+	GrantExternalConditionToProduced:
+		Condition: produced
+	UpdatesUnitsProduced:
+
+^COOPProducesDogs:
+	Inherits: ^COOPProducesInfantry
+	Production:
+		Produces: InfantrySQ, Dog
+
+^COOPProducesCyborgs:
+	Inherits: ^COOPProducesInfantry
+	Production:
+		Produces: InfantrySQ, Cyborg, ParadropInfantry, Upgrade
+
+^COOPProducesUpgrades:
+	Production:
+		Produces: Upgrade
+	ProvidesPrerequisite@UpgradesProducer:
+		Prerequisite: upgrades.producer
+
+COOPMSLO:
+	Inherits: COOPDUMMY
+	ProvidesPrerequisite:
+		Prerequisite: mslo
+
+COOPSPEN:
+	Inherits: COOPDUMMY
+	Inherits@NAV: ^COOPProducesNaval
+	ProvidesPrerequisite:
+		Prerequisite: spen
+
+COOPSYRD:
+	Inherits: COOPDUMMY
+	Inherits@NAV: ^COOPProducesNaval
+	ProvidesPrerequisite:
+		Prerequisite: syrd
+
+COOPPDOX:
+	Inherits: COOPDUMMY
+	ProvidesPrerequisite:
+		Prerequisite: pdox
+
+COOPTSLA:
+	Inherits: COOPDUMMY
+	ProvidesPrerequisite:
+		Prerequisite: tsla
+
+COOPDOME:
+	Inherits: COOPDUMMY
+	Inherits@UPG: ^COOPProducesUpgrades
+	ProvidesRadar:
+	ProvidesPrerequisite:
+		Prerequisite: dome
+	ValidFactions:
+		Factions: allies, england, france, germany, usa, soviet, russia, ukraine, iraq, yuri
+	ProvidesPrerequisite@buildingname:
+	ProvidesPrerequisite@anyradar:
+		Prerequisite: anyradar
+	ProvidesPrerequisite@radarorrepair:
+		Prerequisite: radarorrepair
+	ProvidesPrerequisite@RadarOrAircraft:
+		Prerequisite: radaroraircraft
+	ProvidesPrerequisite@FlameTowerOrRadar:
+		Prerequisite: fturorradar
+	ProvidesPrerequisiteValidatedFaction@allrad:
+		Factions: allies, england, france, germany, usa
+		Prerequisite: radar.allies
+	ProvidesPrerequisiteValidatedFaction@engrad:
+		Factions: england
+		Prerequisite: radar.england
+	ProvidesPrerequisiteValidatedFaction@frarad:
+		Factions: france
+		Prerequisite: radar.france
+	ProvidesPrerequisiteValidatedFaction@sovrad:
+		Factions: soviet, russia, ukraine, iraq, yuri
+		Prerequisite: radar.soviet
+	ProvidesPrerequisiteValidatedFaction@rusrad:
+		Factions: russia
+		Prerequisite: radar.russia
+	ProvidesPrerequisiteValidatedFaction@ukrrad:
+		Factions: ukraine
+		Prerequisite: radar.ukraine
+	ProvidesPrerequisiteValidatedFaction@irarad:
+		Factions: iraq
+		Prerequisite: radar.iraq
+	ProvidesPrerequisiteValidatedFaction@yurirad:
+		Factions: yuri
+		Prerequisite: radar.yuri
+	ProvidesPrerequisite@radar-active:
+		Prerequisite: radar-active
+
+COOPFTUR:
+	Inherits: COOPDUMMY
+	ProvidesPrerequisite:
+		Prerequisite: ftur
+
+COOPATEK:
+	Inherits: COOPDUMMY
+	Inherits@UPG: ^COOPProducesUpgrades
+	ProvidesPrerequisite:
+		Prerequisite: atek
+	ValidFactions:
+		Factions: allies, england, germany, france, usa
+	ProvidesPrerequisite@buildingname:
+	ProvidesPrerequisite:
+		Prerequisite: techcenter.any
+	ProvidesPrerequisiteValidatedFaction@germanyatek:
+		Factions: germany
+		Prerequisite: atek.germany
+	ProvidesPrerequisiteValidatedFaction@franceatek:
+		Factions: france
+		Prerequisite: atek.france
+	ProvidesPrerequisiteValidatedFaction@usaatek:
+		Factions: usa
+		Prerequisite: atek.usa
+
+COOPALHQ:
+	Inherits: COOPDUMMY
+	Inherits@UPG: ^COOPProducesUpgrades
+	ProvidesPrerequisite:
+		Prerequisite: alhq
+
+COOPWEAP:
+	Inherits: COOPDUMMY
+	Inherits@VEH: ^COOPProducesVehicles
+	ProvidesPrerequisite:
+		Prerequisite: weap
+	ValidFactions:
+		Factions: allies, england, france, germany, usa, soviet, russia, ukraine, iraq, yuri
+	ProvidesPrerequisite@any:
+		Prerequisite: vehicles.any
+	ProvidesPrerequisite@human:
+		Prerequisite: vehicles.human
+	ProvidesPrerequisiteValidatedFaction@allies:
+		Factions: allies, england, france, germany, usa
+		Prerequisite: vehicles.allies
+	ProvidesPrerequisite@ra:
+		Prerequisite: vehicles.ra
+	ProvidesPrerequisiteValidatedFaction@england:
+		Factions: england
+		Prerequisite: vehicles.england
+	ProvidesPrerequisiteValidatedFaction@france:
+		Factions: france
+		Prerequisite: vehicles.france
+	ProvidesPrerequisiteValidatedFaction@germany:
+		Factions: germany
+		Prerequisite: vehicles.germany
+	ProvidesPrerequisiteValidatedFaction@usa:
+		Factions: usa
+		Prerequisite: vehicles.usa
+	ProvidesPrerequisiteValidatedFaction@soviet:
+		Factions: soviet, russia, ukraine, iraq, yuri
+		Prerequisite: vehicles.soviet
+	ProvidesPrerequisiteValidatedFaction@russia:
+		Factions: russia
+		Prerequisite: vehicles.russia
+	ProvidesPrerequisiteValidatedFaction@ukraine:
+		Factions: ukraine
+		Prerequisite: vehicles.ukraine
+	ProvidesPrerequisiteValidatedFaction@iraq:
+		Factions: iraq
+		Prerequisite: vehicles.iraq
+	ProvidesPrerequisiteValidatedFaction@yuri:
+		Factions: yuri
+		Prerequisite: vehicles.yuri
+	ProvidesPrerequisiteValidatedFaction@1tnk:
+		Factions: allies, france, germany, usa
+		Prerequisite: vehicles.1tnk
+	ProvidesPrerequisiteValidatedFaction@qtnk:
+		Factions: soviet, russia, ukraine, iraq
+		Prerequisite: vehicles.qtnk
+
+COOPFACT:
+	Inherits: COOPDUMMY
+	Inherits@BLD: ^COOPProducesBuildings
+	ProvidesPrerequisite:
+		Prerequisite: fact
+	ValidFactions:
+		Factions: allies, england, france, germany, usa, soviet, russia, ukraine, iraq, yuri
+	ProvidesPrerequisite@ra:
+		Prerequisite: structures.ra
+	ProvidesPrerequisiteValidatedFaction@allies:
+		Factions: allies, england, france, germany, usa
+		Prerequisite: structures.allies
+	ProvidesPrerequisiteValidatedFaction@england:
+		Factions: england
+		Prerequisite: structures.england
+	ProvidesPrerequisiteValidatedFaction@france:
+		Factions: france
+		Prerequisite: structures.france
+	ProvidesPrerequisiteValidatedFaction@germany:
+		Factions: germany
+		Prerequisite: structures.germany
+	ProvidesPrerequisiteValidatedFaction@usa:
+		Factions: usa
+		Prerequisite: structures.usa
+	ProvidesPrerequisiteValidatedFaction@soviet:
+		Factions: soviet, russia, ukraine, iraq, yuri
+		Prerequisite: structures.soviet
+	ProvidesPrerequisiteValidatedFaction@russia:
+		Factions: russia
+		Prerequisite: structures.russia
+	ProvidesPrerequisiteValidatedFaction@ukraine:
+		Factions: ukraine
+		Prerequisite: structures.ukraine
+	ProvidesPrerequisiteValidatedFaction@iraq:
+		Factions: iraq
+		Prerequisite: structures.iraq
+	ProvidesPrerequisiteValidatedFaction@yuri:
+		Factions: yuri
+		Prerequisite: structures.yuri
+	ProvidesPrerequisite@wall:
+		Prerequisite: structures.wall
+	ProvidesPrerequisiteValidatedFaction@sandbag:
+		Factions: allies, england, france, germany, usa
+		Prerequisite: structures.sandbag
+	ProvidesPrerequisiteValidatedFaction@apwr:
+		Factions: allies, england, france, germany, usa, soviet, ukraine, iraq, yuri
+		Prerequisite: structures.apwr
+	ProvidesPrerequisiteValidatedFaction@pbox:
+		Factions: allies, france, germany, usa
+		Prerequisite: structures.pbox
+	ProvidesPrerequisiteValidatedFaction@pris:
+		Factions: allies, england, germany, usa
+		Prerequisite: structures.pris
+	ProvidesPrerequisiteValidatedFaction@ftur:
+		Factions: soviet, russia, ukraine, yuri
+		Prerequisite: structures.ftur
+	ProvidesPrerequisite@anyconyard:
+		Prerequisite: anyconyard
+
+COOPPROC:
+	Inherits: COOPDUMMY
+	ProvidesPrerequisite:
+		Prerequisite: proc
+	ProvidesPrerequisite@anyrefinery:
+		Prerequisite: anyrefinery
+
+COOPHPAD:
+	Inherits: COOPDUMMY
+	Inherits@AIR: ^COOPProducesHelicopters
+	ProvidesPrerequisite:
+		Prerequisite: hpad
+	ValidFactions:
+		Factions: allies, england, france, germany, usa, russia, ukraine, iraq, yuri
+	ProvidesPrerequisiteValidatedFaction@allies:
+		Factions: allies, england, france, germany, usa
+		Prerequisite: aircraft.allies
+	ProvidesPrerequisiteValidatedFaction@usa:
+		Factions: usa
+		Prerequisite: aircraft.usa
+	ProvidesPrerequisiteValidatedFaction@soviets:
+		Factions: soviet, russia, ukraine, iraq, yuri
+		Prerequisite: aircraft.soviet
+	ProvidesPrerequisiteValidatedFaction@russia:
+		Factions: russia
+		Prerequisite: aircraft.russia
+	ProvidesPrerequisiteValidatedFaction@ukraine:
+		Factions: ukraine
+		Prerequisite: aircraft.ukraine
+	ProvidesPrerequisiteValidatedFaction@iraq:
+		Factions: iraq
+		Prerequisite: aircraft.iraq
+	ProvidesPrerequisiteValidatedFaction@yuri:
+		Factions: yuri
+		Prerequisite: aircraft.yuri
+	ProvidesPrerequisiteValidatedFaction@kiro:
+		Factions: soviet, russia, ukraine, iraq
+		Prerequisite: aircraft.kiro
+	ProvidesPrerequisiteValidatedFaction@chinookvisible:
+		Factions: allies, england, france, germany, gdi, zocom, eagle, talon, arc, nod, blackh, legion, marked, shadow
+		Prerequisite: aircraft.chinookvisible
+	ProvidesPrerequisiteValidatedFaction@chinook:
+		Factions: allies, england, france, germany, gdi, zocom, eagle, talon, arc, nod, blackh, legion, marked, shadow
+		Prerequisite: aircraft.chinook
+	ProvidesPrerequisiteValidatedFaction@nhaw:
+		Factions: usa
+		Prerequisite: aircraft.nhaw
+	ProvidesPrerequisite@RadarOrAircraft:
+		Prerequisite: radaroraircraft
+
+COOPAFLD:
+	Inherits: COOPDUMMY
+	Inherits@AIR: ^COOPProducesAircraft
+	ProvidesPrerequisite:
+		Prerequisite: afld
+	ValidFactions:
+		Factions: soviet, russia, ukraine, iraq, yuri
+	ProvidesPrerequisite@soviet:
+		Prerequisite: aircraft.soviet
+	ProvidesPrerequisiteValidatedFaction@russia:
+		Factions: russia
+		Prerequisite: aircraft.russia
+	ProvidesPrerequisiteValidatedFaction@ukraine:
+		Factions: ukraine
+		Prerequisite: aircraft.ukraine
+	ProvidesPrerequisiteValidatedFaction@iraq:
+		Factions: iraq
+		Prerequisite: aircraft.iraq
+	ProvidesPrerequisiteValidatedFaction@yuri:
+		Factions: yuri
+		Prerequisite: aircraft.yuri
+	ProvidesPrerequisiteValidatedFaction@kiro:
+		Factions: soviet, russia, ukraine, iraq
+		Prerequisite: aircraft.kiro
+	ProvidesPrerequisite@RadarOrAircraft:
+		Prerequisite: radaroraircraft
+
+COOPPOWR:
+	Inherits: COOPDUMMY
+	ProvidesPrerequisite:
+		Prerequisite: anypower, powr
+
+COOPAPWR:
+	Inherits: COOPDUMMY
+	ProvidesPrerequisite:
+		Prerequisite: anypower, apwr
+
+COOPNPWR:
+	Inherits: COOPDUMMY
+	Inherits@UPG: ^COOPProducesUpgrades
+	ProvidesPrerequisite:
+		Prerequisite: anypower, npwr
+
+COOPTPWR:
+	Inherits: COOPDUMMY
+	ProvidesPrerequisite:
+		Prerequisite: anypower, tpwr
+
+COOPSTEK:
+	Inherits: COOPDUMMY
+	Inherits@UPG: ^COOPProducesUpgrades
+	ProvidesPrerequisite:
+		Prerequisite: stek
+	ProvidesPrerequisite:
+		Prerequisite: techcenter.any
+	ProvidesPrerequisite@TeslaCoilOrSovietTechCenter:
+		Prerequisite: tslaorstek
+	ProvidesPrerequisite@ChemTowerOrSovietTechCenter:
+		Prerequisite: tturorstek
+	ValidFactions:
+		Factions: soviet, russia, ukraine, iraq, yuri
+	ProvidesPrerequisiteValidatedFaction@russia:
+		Factions: russia
+		Prerequisite: stek.russia
+	ProvidesPrerequisiteValidatedFaction@ukraine:
+		Factions: ukraine
+		Prerequisite: stek.ukraine
+	ProvidesPrerequisiteValidatedFaction@iraq:
+		Factions: iraq
+		Prerequisite: stek.iraq
+
+COOPBARR:
+	Inherits: COOPDUMMY
+	Inherits@INF: ^COOPProducesInfantry
+	ProvidesPrerequisite:
+		Prerequisite: barr
+	ValidFactions:
+		Factions: soviet, russia, ukraine, iraq, yuri
+	ProvidesPrerequisite@infantryany:
+		Prerequisite: infantry.any
+	ProvidesPrerequisite@human:
+		Prerequisite: infantry.human
+	ProvidesPrerequisite@infantryra:
+		Prerequisite: infantry.ra
+	ProvidesPrerequisiteValidatedFaction@russia:
+		Factions: russia
+		Prerequisite: infantry.russia
+	ProvidesPrerequisiteValidatedFaction@ukraine:
+		Factions: ukraine
+		Prerequisite: infantry.ukraine
+	ProvidesPrerequisiteValidatedFaction@iraq:
+		Factions: iraq
+		Prerequisite: infantry.iraq
+	ProvidesPrerequisiteValidatedFaction@yuri:
+		Factions: yuri
+		Prerequisite: infantry.yuri
+	ProvidesPrerequisiteValidatedFaction@e2:
+		Factions: soviet, russia, iraq, yuri
+		Prerequisite: infantry.e2
+	ProvidesPrerequisite@dog:
+		Prerequisite: infantry.dog
+	ProvidesPrerequisiteValidatedFaction@boris:
+		Factions: soviet, russia, iraq, ukraine
+		Prerequisite: infantry.boris
+	ProvidesPrerequisiteValidatedFaction@shok:
+		Factions: soviet, russia, ukraine, yuri
+		Prerequisite: infantry.shok
+
+COOPKENN:
+	Inherits: COOPDUMMY
+	Inherits@INF: ^COOPProducesDogs
+	ProvidesPrerequisite:
+		Prerequisite: kenn
+	ProvidesPrerequisite@dog:
+		Prerequisite: infantry.dog
+
+COOPTENT:
+	Inherits: COOPDUMMY
+	Inherits@INF: ^COOPProducesInfantry
+	ProvidesPrerequisite:
+		Prerequisite: tent
+	ValidFactions:
+		Factions: allies, england, germany, france, usa
+	ProvidesPrerequisite@infantryany:
+		Prerequisite: infantry.any
+	ProvidesPrerequisite@human:
+		Prerequisite: infantry.human
+	ProvidesPrerequisite@infantryra:
+		Prerequisite: infantry.ra
+	ProvidesPrerequisiteValidatedFaction@england:
+		Factions: england
+		Prerequisite: infantry.england
+	ProvidesPrerequisiteValidatedFaction@france:
+		Factions: france
+		Prerequisite: infantry.france
+	ProvidesPrerequisiteValidatedFaction@germany:
+		Factions: germany
+		Prerequisite: infantry.germany
+	ProvidesPrerequisiteValidatedFaction@usa:
+		Factions: usa
+		Prerequisite: infantry.usa
+	ProvidesPrerequisite@mech:
+		Prerequisite: infantry.mech
+	ProvidesPrerequisite@medi:
+		Prerequisite: infantry.medi
+
+COOPFIX:
+	Inherits: COOPDUMMY
+	ProvidesPrerequisite:
+		Prerequisite: fix
+	ProvidesPrerequisite@repair:
+		Prerequisite: repair
+	ProvidesPrerequisite@radarorrepair:
+		Prerequisite: radarorrepair
+	ProvidesPrerequisite@allowsmcv:
+		Prerequisite: vehicles.mcv
+
+COOPPYLE:
+	Inherits: COOPDUMMY
+	Inherits@INF: ^COOPProducesInfantry
+	ProvidesPrerequisite:
+		Prerequisite: pyle
+	ValidFactions:
+		Factions: gdi, talon, zocom, eagle, arc
+	ProvidesPrerequisite@infantryany:
+		Prerequisite: infantry.any
+	ProvidesPrerequisite@human:
+		Prerequisite: infantry.human
+	ProvidesPrerequisite@infantrytd:
+		Prerequisite: infantry.td
+	ProvidesPrerequisiteValidatedFaction@talon:
+		Factions: talon
+		Prerequisite: infantry.talon
+	ProvidesPrerequisiteValidatedFaction@zocom:
+		Factions: zocom
+		Prerequisite: infantry.zocom
+	ProvidesPrerequisiteValidatedFaction@eagle:
+		Factions: eagle
+		Prerequisite: infantry.eagle
+	ProvidesPrerequisiteValidatedFaction@arc:
+		Factions: arc
+		Prerequisite: infantry.arc
+	ProvidesPrerequisite@medi:
+		Prerequisite: infantry.medi
+
+COOPHAND:
+	Inherits: COOPDUMMY
+	Inherits@INF: ^COOPProducesInfantry
+	ProvidesPrerequisite:
+		Prerequisite: hand
+	ValidFactions:
+		Factions: nod, blackh, marked, legion, shadow
+	ProvidesPrerequisite@infantryany:
+		Prerequisite: infantry.any
+	ProvidesPrerequisite@human:
+		Prerequisite: infantry.human
+	ProvidesPrerequisite@infantrytd:
+		Prerequisite: infantry.td
+	ProvidesPrerequisite@nod:
+		Prerequisite: infantry.nod
+	ProvidesPrerequisiteValidatedFaction@blackh:
+		Factions: blackh
+		Prerequisite: infantry.blackh
+	ProvidesPrerequisiteValidatedFaction@marked:
+		Factions: marked
+		Prerequisite: infantry.marked
+	ProvidesPrerequisiteValidatedFaction@legion:
+		Factions: legion
+		Prerequisite: infantry.legion
+	ProvidesPrerequisiteValidatedFaction@shadow:
+		Factions: shadow
+		Prerequisite: infantry.shadow
+	ProvidesPrerequisite@mech:
+		Prerequisite: infantry.mech
+
+COOPWEAP.TD:
+	Inherits: COOPDUMMY
+	Inherits@VEH: ^COOPProducesVehicles
+	ProvidesPrerequisite:
+		Prerequisite: weap.td
+	ValidFactions:
+		Factions: gdi, talon, zocom, eagle, arc, nod, legion
+	ProvidesPrerequisite@any:
+		Prerequisite: vehicles.any
+	ProvidesPrerequisite@human:
+		Prerequisite: vehicles.human
+	ProvidesPrerequisite@td:
+		Prerequisite: vehicles.td
+	ProvidesPrerequisiteValidatedFaction@gdi:
+		Factions: gdi, talon, zocom, eagle, arc
+		Prerequisite: vehicles.gdi
+	ProvidesPrerequisiteValidatedFaction@talon:
+		Factions: talon
+		Prerequisite: vehicles.talon
+	ProvidesPrerequisiteValidatedFaction@zocom:
+		Factions: zocom
+		Prerequisite: vehicles.zocom
+	ProvidesPrerequisiteValidatedFaction@eagle:
+		Factions: eagle
+		Prerequisite: vehicles.eagle
+	ProvidesPrerequisiteValidatedFaction@arc:
+		Factions: arc
+		Prerequisite: vehicles.arc
+	ProvidesPrerequisiteValidatedFaction@nod:
+		Factions: nod, legion
+		Prerequisite: vehicles.nod
+	ProvidesPrerequisiteValidatedFaction@legion:
+		Factions: legion
+		Prerequisite: vehicles.legion
+	ProvidesPrerequisiteValidatedFaction@hmmv:
+		Factions: gdi, talon, zocom, eagle
+		Prerequisite: vehicles.hmmv
+	ProvidesPrerequisiteValidatedFaction@ftnk:
+		Factions: legion
+		Prerequisite: vehicles.ftnk
+	ProvidesPrerequisite@apc2:
+		Prerequisite: vehicles.apc2
+	ProvidesPrerequisiteValidatedFaction@mtnk:
+		Factions: gdi, talon, zocom, eagle, arc, legion
+		Prerequisite: vehicles.mtnk
+	ProvidesPrerequisiteValidatedFaction@msam:
+		Factions: gdi, talon, zocom, arc
+		Prerequisite: vehicles.msam
+	ProvidesPrerequisiteValidatedFaction@htnk:
+		Factions: gdi, zocom, eagle, arc
+		Prerequisite: vehicles.htnk
+	ProvidesPrerequisiteValidatedFaction@mlrs:
+		Factions: legion
+		Prerequisite: vehicles.mlrs
+
+COOPAIRS:
+	Inherits: COOPDUMMY
+	Inherits@NOMCV: ^UnlocksMcvIfNoneOwned
+	Inherits@VEH: ^COOPProducesVehicles
+	ProvidesPrerequisite:
+		Prerequisite: airs
+	ValidFactions:
+		Factions: nod, blackh, marked, shadow
+	ProvidesPrerequisite@any:
+		Prerequisite: vehicles.any
+	ProvidesPrerequisite@human:
+		Prerequisite: vehicles.human
+	ProvidesPrerequisite@td:
+		Prerequisite: vehicles.td
+	ProvidesPrerequisite@nod:
+		Prerequisite: vehicles.nod
+	ProvidesPrerequisite@ltnk:
+		Prerequisite: vehicles.ltnk
+	ProvidesPrerequisiteValidatedFaction@blackh:
+		Factions: blackh
+		Prerequisite: vehicles.blackh
+	ProvidesPrerequisiteValidatedFaction@marked:
+		Factions: marked
+		Prerequisite: vehicles.marked
+	ProvidesPrerequisiteValidatedFaction@shadow:
+		Factions: shadow
+		Prerequisite: vehicles.shadow
+	ProvidesPrerequisiteValidatedFaction@ftnk:
+		Factions: nod, marked, shadow
+		Prerequisite: vehicles.ftnk
+	ProvidesPrerequisiteValidatedFaction@mlrs:
+		Factions: nod, blackh, marked
+		Prerequisite: vehicles.mlrs
+
+COOPNUKE:
+	Inherits: COOPDUMMY
+	ProvidesPrerequisite:
+		Prerequisite: nuke, anypower
+
+COOPNUK2:
+	Inherits: COOPDUMMY
+	ProvidesPrerequisite:
+		Prerequisite: nuk2, anypower
+
+COOPAFAC:
+	Inherits: COOPDUMMY
+	Inherits@BLD: ^COOPProducesBuildings
+	ProvidesPrerequisite:
+		Prerequisite: afac
+	ValidFactions:
+		Factions: gdi, talon, zocom, eagle, arc, nod, blackh, marked, legion, shadow
+	ProvidesPrerequisite@td:
+		Prerequisite: structures.td
+	ProvidesPrerequisiteValidatedFaction@gdi:
+		Factions: gdi, talon, zocom, eagle, arc
+		Prerequisite: structures.gdi
+	ProvidesPrerequisiteValidatedFaction@talon:
+		Factions: talon
+		Prerequisite: structures.talon
+	ProvidesPrerequisiteValidatedFaction@zocom:
+		Factions: zocom
+		Prerequisite: structures.zocom
+	ProvidesPrerequisiteValidatedFaction@eagle:
+		Factions: eagle
+		Prerequisite: structures.eagle
+	ProvidesPrerequisiteValidatedFaction@arc:
+		Factions: arc
+		Prerequisite: structures.arc
+	ProvidesPrerequisiteValidatedFaction@nod:
+		Factions: nod, blackh, marked, legion, shadow
+		Prerequisite: structures.nod
+	ProvidesPrerequisiteValidatedFaction@blackh:
+		Factions: blackh
+		Prerequisite: structures.blackh
+	ProvidesPrerequisiteValidatedFaction@marked:
+		Factions: marked
+		Prerequisite: structures.marked
+	ProvidesPrerequisiteValidatedFaction@legion:
+		Factions: legion
+		Prerequisite: structures.legion
+	ProvidesPrerequisiteValidatedFaction@shadow:
+		Factions: shadow
+		Prerequisite: structures.shadow
+	ProvidesPrerequisiteValidatedFaction@weap.tdFAC:
+		Factions: gdi, talon, zocom, eagle, arc, legion
+		Prerequisite: structures.weap.td
+	ProvidesPrerequisiteValidatedFaction@airs:
+		Factions: nod, blackh, marked, shadow
+		Prerequisite: structures.airs
+	ProvidesPrerequisite@wall:
+		Prerequisite: structures.wall
+	ProvidesPrerequisiteValidatedFaction@sandbag:
+		Factions: gdi, talon, zocom, eagle, arc
+		Prerequisite: structures.sandbag
+	ProvidesPrerequisiteValidatedFaction@atwr:
+		Factions: gdi, talon, eagle, arc
+		Prerequisite: structures.atwr
+	ProvidesPrerequisite@anyconyard:
+		Prerequisite: anyconyard
+
+COOPOBLI:
+	Inherits: COOPDUMMY
+	ProvidesPrerequisite:
+		Prerequisite: obli
+	ProvidesPrerequisite@ObeliskOrTemple:
+		Prerequisite: obliortmpl
+
+COOPHQ:
+	Inherits: COOPDUMMY
+	Inherits@UPG: ^COOPProducesUpgrades
+	ProvidesRadar:
+	ProvidesPrerequisite:
+		Prerequisite: hq
+	ValidFactions:
+		Factions: gdi, talon, zocom, eagle, arc, nod, blackh, marked, legion, shadow
+	ProvidesPrerequisite@buildingname:
+	ProvidesPrerequisite@anyradar:
+		Prerequisite: anyradar
+	ProvidesPrerequisite@radarorrepair:
+		Prerequisite: radarorrepair
+	ProvidesPrerequisite@RadarOrAircraft:
+		Prerequisite: radaroraircraft
+	ProvidesPrerequisite@FlameTowerOrRadar:
+		Prerequisite: fturorradar
+	ProvidesPrerequisiteValidatedFaction@gdirad:
+		Factions: gdi, talon, zocom, eagle, arc
+		Prerequisite: radar.gdi
+	ProvidesPrerequisiteValidatedFaction@talrad:
+		Factions: talon
+		Prerequisite: radar.talon
+	ProvidesPrerequisiteValidatedFaction@zocrad:
+		Factions: zocom
+		Prerequisite: radar.zocom
+	ProvidesPrerequisiteValidatedFaction@eagrad:
+		Factions: eagle
+		Prerequisite: radar.eagle
+	ProvidesPrerequisiteValidatedFaction@arcrad:
+		Factions: arc
+		Prerequisite: radar.arc
+	ProvidesPrerequisiteValidatedFaction@nodrad:
+		Factions: nod, blackh, marked, legion, shadow
+		Prerequisite: radar.nod
+	ProvidesPrerequisiteValidatedFaction@bhrad:
+		Factions: blackh
+		Prerequisite: radar.blackh
+	ProvidesPrerequisiteValidatedFaction@legrad:
+		Factions: legion
+		Prerequisite: radar.legion
+	ProvidesPrerequisiteValidatedFaction@shadrad:
+		Factions: shadow
+		Prerequisite: radar.shadow
+
+COOPEYE:
+	Inherits: COOPDUMMY
+	ProvidesRadar:
+	ProvidesPrerequisite:
+		Prerequisite: eye
+	ValidFactions:
+		Factions: gdi, talon, zocom, eagle, arc
+	ProvidesPrerequisiteValidatedFaction@zoceye:
+		Factions: zocom
+		Prerequisite: eye.zocom
+
+COOPREP:
+	Inherits: COOPDUMMY
+	ProvidesPrerequisite:
+		Prerequisite: rep
+	ProvidesPrerequisite@repair:
+		Prerequisite: repair
+	ProvidesPrerequisite@radarorrepair:
+		Prerequisite: radarorrepair
+	ProvidesPrerequisite@allowsmcv:
+		Prerequisite: vehicles.mcv
+
+COOPHPAD.TD:
+	Inherits: COOPDUMMY
+	ProvidesPrerequisite:
+		Prerequisite: hpad.td
+	ValidFactions:
+		Factions: gdi, talon, zocom, eagle, arc, nod, blackh, marked, legion, shadow
+	ProvidesPrerequisiteValidatedFaction@gdi:
+		Factions: gdi, talon, zocom, eagle, arc
+		Prerequisite: aircraft.gdi
+	ProvidesPrerequisiteValidatedFaction@talon:
+		Factions: talon
+		Prerequisite: aircraft.talon
+	ProvidesPrerequisiteValidatedFaction@eagle:
+		Factions: eagle
+		Prerequisite: aircraft.eagle
+	ProvidesPrerequisiteValidatedFaction@arc:
+		Factions: arc
+		Prerequisite: aircraft.arc
+	ProvidesPrerequisiteValidatedFaction@nod:
+		Factions: nod, blackh, marked, legion, shadow
+		Prerequisite: aircraft.nod
+	ProvidesPrerequisiteValidatedFaction@marked:
+		Factions: marked
+		Prerequisite: aircraft.marked
+	ProvidesPrerequisiteValidatedFaction@shadow:
+		Factions: shadow
+		Prerequisite: aircraft.shadow
+	ProvidesPrerequisiteValidatedFaction@apch:
+		Factions: nod, blackh, legion, shadow
+		Prerequisite: aircraft.apch
+	ProvidesPrerequisite@chinookvisible:
+		Prerequisite: aircraft.chinookvisible
+	ProvidesPrerequisite@chinook:
+		Prerequisite: aircraft.chinook
+	ProvidesPrerequisite@RadarOrAircraft:
+		Prerequisite: radaroraircraft
+
+COOPPROC.TD:
+	Inherits: COOPDUMMY
+	ProvidesPrerequisite:
+		Prerequisite: proc.td
+	ProvidesPrerequisite@anyrefinery:
+		Prerequisite: anyrefinery
+
+COOPAFLD.GDI:
+	Inherits: COOPDUMMY
+	Inherits@AIR: ^COOPProducesAircraft
+	ProvidesPrerequisite:
+		Prerequisite: afld.gdi
+	ValidFactions:
+		Factions: gdi, talon, zocom, eagle, arc
+	ProvidesPrerequisite@gdi:
+		Prerequisite: aircraft.gdi
+	ProvidesPrerequisiteValidatedFaction@eagle:
+		Factions: eagle
+		Prerequisite: aircraft.eagle
+	ProvidesPrerequisiteValidatedFaction@arc:
+		Factions: arc
+		Prerequisite: aircraft.arc
+	ProvidesPrerequisite@chinook:
+		Prerequisite: aircraft.chinook
+	ProvidesPrerequisite@chinookvisible:
+		Prerequisite: aircraft.chinookvisible
+	ProvidesPrerequisite@RadarOrAircraft:
+		Prerequisite: radaroraircraft
+
+COOPGTEK:
+	Inherits: COOPDUMMY
+	Inherits@UPG: ^COOPProducesUpgrades
+	ProvidesPrerequisite:
+		Prerequisite: gtek
+	ValidFactions:
+		Factions: gdi, talon, zocom, eagle, arc
+	ProvidesPrerequisite:
+		Prerequisite: techcenter.any
+	ProvidesPrerequisite@tdtek:
+		Prerequisite: techcenter.td
+	ProvidesPrerequisiteValidatedFaction@talongtek:
+		Factions: talon
+		Prerequisite: gtek.talon
+	ProvidesPrerequisiteValidatedFaction@arcgtek:
+		Factions: arc
+		Prerequisite: gtek.arc
+	ProvidesPrerequisiteValidatedFaction@zocomgtek:
+		Factions: zocom
+		Prerequisite: gtek.zocom
+	ProvidesPrerequisiteValidatedFaction@eaglegtek:
+		Factions: eagle
+		Prerequisite: gtek.eagle
+
+COOPTMPL:
+	Inherits: COOPDUMMY
+	Inherits@UPG: ^COOPProducesUpgrades
+	ProvidesPrerequisite:
+		Prerequisite: tmpl
+	ValidFactions:
+		Factions: nod, blackh, marked, legion, shadow
+	ProvidesPrerequisite:
+		Prerequisite: techcenter.any
+	ProvidesPrerequisite@tdtek:
+		Prerequisite: techcenter.td
+	ProvidesPrerequisite@ObeliskOrTemple:
+		Prerequisite: obliortmpl
+	ProvidesPrerequisiteValidatedFaction@blackhtmpl:
+		Factions: blackh
+		Prerequisite: tmpl.blackh
+	ProvidesPrerequisiteValidatedFaction@markedtmpl:
+		Factions: marked
+		Prerequisite: tmpl.marked
+	ProvidesPrerequisiteValidatedFaction@legiontmpl:
+		Factions: legion
+		Prerequisite: tmpl.legion
+	ProvidesPrerequisiteValidatedFaction@shadowtmpl:
+		Factions: shadow
+		Prerequisite: tmpl.shadow
+
+COOPPRIS:
+	Inherits: COOPDUMMY
+	ProvidesPrerequisite:
+		Prerequisite: pris
+
+COOPSPEN.nod:
+	Inherits: COOPDUMMY
+	Inherits@NAV: ^COOPProducesNaval
+	ProvidesPrerequisite:
+		Prerequisite: spen.nod
+
+COOPSYRD.gdi:
+	Inherits: COOPDUMMY
+	Inherits@NAV: ^COOPProducesNaval
+	ProvidesPrerequisite:
+		Prerequisite: syrd.gdi
+
+COOPTTUR:
+	Inherits: COOPDUMMY
+	ProvidesPrerequisite:
+		Prerequisite: ttur
+	ProvidesPrerequisite@ftur:
+		Prerequisite: ftur
+	ProvidesPrerequisite@FlameTowerOrRadar:
+		Prerequisite: fturorradar
+	ProvidesPrerequisite@ChemTowerOrSovietTechCenter:
+		Prerequisite: tturorstek
+
+COOPCVAT:
+	Inherits: COOPDUMMY
+	Inherits@UPG: ^COOPProducesUpgrades
+	ProvidesPrerequisite:
+		Prerequisite: cvat
+
+COOPINDP:
+	Inherits: COOPDUMMY
+	Inherits@UPG: ^COOPProducesUpgrades
+	ProvidesPrerequisite:
+		Prerequisite: indp
+
+COOPMUNP:
+	Inherits: COOPDUMMY
+	Inherits@UPG: ^COOPProducesUpgrades
+	ProvidesPrerequisite:
+		Prerequisite: munp
+	ProvidesPrerequisite@IndpOrMunp:
+		Prerequisite: indpormunp
+
+COOPOREP:
+	Inherits: COOPDUMMY
+	Inherits@UPG: ^COOPProducesUpgrades
+	ProvidesPrerequisite:
+		Prerequisite: orep
+
+COOPUPGC:
+	Inherits: COOPDUMMY
+	Inherits@UPG: ^COOPProducesUpgrades
+	ProvidesPrerequisite:
+		Prerequisite: upgc
+	ValidFactions:
+		Factions: gdi, talon, zocom, eagle, arc
+	ProvidesPrerequisiteValidatedFaction@talonupgc:
+		Factions: talon
+		Prerequisite: upgc.talon
+	ProvidesPrerequisiteValidatedFaction@zocomupgc:
+		Factions: zocom
+		Prerequisite: upgc.zocom
+	ProvidesPrerequisiteValidatedFaction@eagleupgc:
+		Factions: eagle
+		Prerequisite: upgc.eagle
+	ProvidesPrerequisiteValidatedFaction@arcupgc:
+		Factions: arc
+		Prerequisite: upgc.arc
+	ProvidesPrerequisite@GDIORUPGC:
+		Prerequisite: gdiorupgc
+
+COOPTMPP:
+	Inherits: COOPDUMMY
+	Inherits@UPG: ^COOPProducesUpgrades
+	Inherits@INF: ^COOPProducesCyborgs
+	ProvidesPrerequisite:
+		Prerequisite: tmpp
+	ProvidesPrerequisite@nod:
+		Prerequisite: infantry.nod
+	ProvidesPrerequisite@marked:
+		Factions: marked
+		Prerequisite: infantry.marked
+	ProvidesPrerequisite@mech:
+		Prerequisite: infantry.mech
+
+COOPMSLO.Nod:
+	Inherits: COOPDUMMY
+	ProvidesPrerequisite:
+		Prerequisite: mslo.Nod
+
+COOPWEAT:
+	Inherits: COOPDUMMY
+	ProvidesPrerequisite:
+		Prerequisite: weat
+
+COOPSFAC:
+	Inherits: COOPDUMMY
+	Inherits@BLD: ^COOPProducesBuildings
+	ValidFactions:
+		Factions: scrin, reaper, traveler, harbinger, collector
+	ProvidesPrerequisite:
+		Prerequisite: sfac
+	ProvidesPrerequisite@scrin:
+		Prerequisite: structures.scrin
+	ProvidesPrerequisiteValidatedFaction@reaper:
+		Factions: reaper
+		Prerequisite: structures.reaper
+	ProvidesPrerequisiteValidatedFaction@traveler:
+		Factions: traveler
+		Prerequisite: structures.traveler
+	ProvidesPrerequisiteValidatedFaction@harbinger:
+		Factions: harbinger
+		Prerequisite: structures.harbinger
+	ProvidesPrerequisiteValidatedFaction@collector:
+		Factions: collector
+		Prerequisite: structures.collector
+	ProvidesPrerequisite@anyconyard:
+		Prerequisite: anyconyard
+
+COOPREAC:
+	Inherits: COOPDUMMY
+	ProvidesPrerequisite:
+		Prerequisite: anypower, reac
+
+COOPREA2:
+	Inherits: COOPDUMMY
+	ProvidesPrerequisite:
+		Prerequisite: anypower, rea2
+
+COOPPROC.SCRIN:
+	Inherits: COOPDUMMY
+	ProvidesPrerequisite:
+		Prerequisite: proc.scrin
+	ProvidesPrerequisite@anyrefinery:
+		Prerequisite: anyrefinery
+
+COOPPORT:
+	Inherits: COOPDUMMY
+	Inherits@INF: ^COOPProducesInfantry
+	ProvidesPrerequisite:
+		Prerequisite: port
+	ValidFactions:
+		Factions: scrin, reaper, traveler, harbinger, collector
+	ProvidesPrerequisite@infantryany:
+		Prerequisite: infantry.any
+	ProvidesPrerequisite@scrin:
+		Prerequisite: infantry.scrin
+	ProvidesPrerequisiteValidatedFaction@reaper:
+		Factions: reaper
+		Prerequisite: infantry.reaper
+	ProvidesPrerequisiteValidatedFaction@traveler:
+		Factions: traveler
+		Prerequisite: infantry.traveler
+	ProvidesPrerequisiteValidatedFaction@harbinger:
+		Factions: harbinger
+		Prerequisite: infantry.harbinger
+	ProvidesPrerequisiteValidatedFaction@collector:
+		Factions: collector
+		Prerequisite: infantry.collector
+
+COOPWSPH:
+	Inherits: COOPDUMMY
+	Inherits@VEH: ^COOPProducesVehicles
+	ProvidesPrerequisite:
+		Prerequisite: wsph
+	ValidFactions:
+		Factions: scrin ,reaper, traveler, harbinger, collector
+	ProvidesPrerequisite@any:
+		Prerequisite: vehicles.any
+	ProvidesPrerequisite@scrin:
+		Prerequisite: vehicles.scrin
+	ProvidesPrerequisiteValidatedFaction@reaper:
+		Factions: reaper
+		Prerequisite: vehicles.reaper
+	ProvidesPrerequisiteValidatedFaction@traveler:
+		Factions: traveler
+		Prerequisite: vehicles.traveler
+	ProvidesPrerequisiteValidatedFaction@harbinger:
+		Factions: harbinger
+		Prerequisite: vehicles.harbinger
+	ProvidesPrerequisiteValidatedFaction@collector:
+		Factions: collector
+		Prerequisite: vehicles.collector
+	ProvidesPrerequisiteValidatedFaction@seek:
+		Factions: scrin, reaper, harbinger, collector
+		Prerequisite: vehicles.seek
+	ProvidesPrerequisiteValidatedFaction@corr:
+		Factions: scrin, reaper, traveler, harbinger
+		Prerequisite: vehicles.corr
+	ProvidesPrerequisiteValidatedFaction@devo:
+		Factions: scrin, reaper, traveler, collector
+		Prerequisite: vehicles.devo
+	ProvidesPrerequisiteValidatedFaction@tpod:
+		Factions: scrin, traveler, harbinger, collector
+		Prerequisite: vehicles.tpod
+
+COOPNERV:
+	Inherits: COOPDUMMY
+	Inherits@UPG: ^COOPProducesUpgrades
+	ProvidesRadar:
+	ProvidesPrerequisite:
+		Prerequisite: nerv
+	ValidFactions:
+		Factions: scrin, reaper, traveler, harbinger, collector
+	ProvidesPrerequisite@buildingname:
+	ProvidesPrerequisite@anyradar:
+		Prerequisite: anyradar
+	ProvidesPrerequisite@radarorrepair:
+		Prerequisite: radarorrepair
+	ProvidesPrerequisite@RadarOrAircraft:
+		Prerequisite: radaroraircraft
+	ProvidesPrerequisite@FlameTowerOrRadar:
+		Prerequisite: fturorradar
+	ProvidesPrerequisite@scrinrad:
+		Prerequisite: radar.scrin
+	ProvidesPrerequisiteValidatedFaction@reaprad:
+		Factions: reaper
+		Prerequisite: radar.reaper
+	ProvidesPrerequisiteValidatedFaction@travrad:
+		Factions: traveler
+		Prerequisite: radar.traveler
+	ProvidesPrerequisiteValidatedFaction@harbrad:
+		Factions: harbinger
+		Prerequisite: radar.harbinger
+	ProvidesPrerequisiteValidatedFaction@desprad:
+		Factions: collector
+		Prerequisite: radar.collector
+	ProvidesPrerequisite@radar-active:
+		Prerequisite: radar-active
+
+COOPSCRT:
+	Inherits: COOPDUMMY
+	Inherits@UPG: ^COOPProducesUpgrades
+	ValidFactions:
+		Factions: scrin, reaper, traveler, harbinger, collector
+	ProvidesPrerequisite:
+		Prerequisite: scrt
+	ProvidesPrerequisite@buildingname:
+	ProvidesPrerequisite:
+		Prerequisite: techcenter.any
+	ProvidesPrerequisiteValidatedFaction@harbscrt:
+		Factions: harbinger
+		Prerequisite: scrt.harbinger
+	ProvidesPrerequisiteValidatedFaction@collscrt:
+		Factions: collector
+		Prerequisite: scrt.collector
+	ProvidesPrerequisite@BotAllegiance:
+		Prerequisite: scrin.allegiances.available
+		RequiresPrerequisites: botplayer
+
+COOPGRAV:
+	Inherits: COOPDUMMY
+	Inherits@AIR: ^COOPProducesHelicopters
+	ProvidesPrerequisite:
+		Prerequisite: grav
+	ValidFactions:
+		Factions: scrin, reaper, traveler, harbinger, collector
+	ProvidesPrerequisiteValidatedFaction@traveler:
+		Factions: traveler
+		Prerequisite: aircraft.traveler
+	ProvidesPrerequisite@scrin:
+		Prerequisite: aircraft.scrin
+	ProvidesPrerequisite@RadarOrAircraft:
+		Prerequisite: radaroraircraft
+
+COOPSIGN:
+	Inherits: COOPDUMMY
+	Inherits@UPG: ^COOPProducesUpgrades
+	ProvidesPrerequisite:
+		Prerequisite: sign
+
+COOPSREP:
+	Inherits: COOPDUMMY
+	ProvidesPrerequisite:
+		Prerequisite: srep
+	ProvidesPrerequisite@repair:
+		Prerequisite: repair
+	ProvidesPrerequisite@radarorrepair:
+		Prerequisite: radarorrepair
+	ProvidesPrerequisite@allowsmcv:
+		Prerequisite: vehicles.mcv
+
+COOPRFGN:
+	Inherits: COOPDUMMY
+	ProvidesPrerequisite:
+		Prerequisite: rfgn

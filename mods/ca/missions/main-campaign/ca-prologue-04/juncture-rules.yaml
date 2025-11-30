@@ -1,0 +1,90 @@
+^Palettes:
+	FlashPostProcessEffect@CHRONO:
+		Type: Chronoshift
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, juncture.lua
+	MissionData:
+		Briefing: Critical components and supplies are being transported to a secret staging area. Few in the Brotherhood know the full details of this operation, but all will be revealed in time.\n\nGDI continue to threaten vital transportation routes, and you have been chosen to secure one such route in Egypt.\n\nGDI is blockading the Nile river with their fleet, and this is unacceptably delaying our progress.\n\nEstablish a foothold, then your objective is to destroy the GDI anti-aircraft systems that line the river bank. Once those are out of the way, Kane has a surprise in store for GDI's navy.
+	-ScriptLobbyDropdown@DIFFICULTY:
+	ScriptLobbyDropdown@PROLOGUEDIFFICULTY:
+		ID: prologuedifficulty
+		Label: dropdown-difficulty.label
+		Description: dropdown-difficulty.description
+		Values:
+			easy: options-difficulty.easy
+		Default: easy
+		Locked: True
+	MusicPlaylist:
+		StartingMusic: fist226m
+	MapOptions:
+		TechLevel: medium
+
+Player:
+	PlayerResources:
+		DefaultCash: 10000
+
+AIRS:
+	-ParatroopersPowerCA@blackhairdrop:
+
+HQ:
+	-DropPodsPowerCA@Zocom:
+	-AirstrikePowerCA@BlackhandFirebomb:
+
+LTNK:
+	Mobile:
+		Locomotor: tracked
+
+JJET:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+MECH:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+STNK.Nod:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+MNLY:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+AMCV:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+SPEN.nod:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+SYRD.gdi:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+	Capturable:
+		Types: none
+
+TRAN:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+APCH:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+RAH:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+LTUR:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+OBLI:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+LASP:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+HPAD.TD:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+	Power:
+		Amount: 0
+
+AFLD.GDI:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+DD2:
+	Armament@PRIMARY:
+		Weapon: Stinger

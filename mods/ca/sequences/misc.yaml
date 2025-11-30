@@ -93,8 +93,14 @@ explosion:
 		IgnoreWorldTint: true
 	piff:
 		Filename: piff.shp
+	piff2:
+		Filename: piff.shp
+		FlipX: true
 	piffs:
 		Filename: piffpiff.shp
+	piffs2:
+		Filename: piffpiff.shp
+		FlipX: true
 	water_piff:
 		Filename: wpiff.shp
 	water_piffs:
@@ -426,6 +432,11 @@ explosion:
 		Filename: sonicimpact.shp
 		BlendMode: Additive
 		Alpha: 0.75
+	sonicimpactsm:
+		Filename: sonicimpactsm.shp
+		BlendMode: Additive
+		Alpha: 0.6
+		Tick: 30
 	sonicblast1:
 		Filename: sonicblast.shp
 		Start: 0
@@ -1989,8 +2000,14 @@ icon:
 		Filename: anathemaicon.shp
 	timeskip:
 		Filename: timeskipicon.shp
+	ichorspike:
+		Filename: ispkicon.shp
+	colonyspike:
+		Filename: cspkicon.shp
 	voidspike:
 		Filename: vspkicon.shp
+	sendcash:
+		Filename: sendcashicon.shp
 	placeholder:
 		Filename: placeholdericon.shp
 
@@ -3338,6 +3355,20 @@ ussrstar:
 	idle-overlay2:
 		Frames: 1,1,1,1,1,1,1,1,1,1
 
+custbuff:
+	Defaults:
+		Filename: custbuff.shp
+		Length: *
+		ZOffset: -32
+		Alpha: 0.65 ,0.6, 0.55, 0.5, 0.45, 0.4, 0.45, 0.5, 0.55, 0.6
+		IgnoreWorldTint: true
+		Tick: 120
+		BlendMode: Additive
+	idle-overlay1:
+		Frames: 0,0,0,0,0,0,0,0,0,0
+	idle-overlay2:
+		Frames: 1,1,1,1,1,1,1,1,1,1
+
 heliosbomb:
 	Defaults:
 		Filename: heliosbomb.shp
@@ -3431,3 +3462,27 @@ influence.level2:
 influence.level3:
 	icon:
 		Filename: influencelevel3icon.shp
+
+covenant.level1:
+	icon:
+		Filename: covenantlevel1icon.shp
+
+covenant.level2:
+	icon:
+		Filename: covenantlevel2icon.shp
+
+covenant.level3:
+	icon:
+		Filename: covenantlevel3icon.shp
+
+custhealhit:
+	Defaults:
+		Filename: custhealhit.shp
+		Length: *
+		BlendMode: Additive
+		Offset: 0, -4
+		ZOffset: 512
+		IgnoreWorldTint: true
+	idle:
+	idle2:
+		FlipX: true

@@ -1,0 +1,252 @@
+^Palettes:
+	TintPostProcessEffect:
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, subversion.lua
+	MissionData:
+		Briefing: The Allies are now gripped by fear and suspicion. We must seize this opportunity to further destabilize their uneasy alliance with GDI.\n\nVery recently GDI launched one of their orbital weapons platforms. Both groups are being cautious about what information they give each other. The Allies were only partially informed and are predictably concerned, given recent events.\n\nLet us turn their fear into anger. Take control of GDI's Ion Cannon control systems and use the weapon against the Allies.
+	MapOptions:
+		ShortGameCheckboxEnabled: False
+	ScriptLobbyDropdown@RESPAWN:
+		ID: respawn
+		Label: Respawns
+		Description: Enable/disable respawning on death
+		Values:
+			enabled: Enabled
+			disabled: Disabled
+		Default: disabled
+		DisplayOrder: 999
+	MusicPlaylist:
+		StartingMusic: subvn
+
+Player:
+	PlayerResources:
+		DefaultCash: 0
+
+# Disable tech
+
+cyborgarmor.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+cyborgspeed.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+# Disable powers
+
+HQ:
+	-DropPodsPowerCA@Zocom:
+	-AirstrikePowerCA@uav:
+
+AFLD.GDI:
+	-InterceptorPower@AirDef:
+
+HPAD.TD:
+	-InterceptorPower@AirDef:
+
+# Remove radar/power requirements from drones
+
+MEMP:
+	-ExternalCondition@DRONECONTROL:
+	-GrantConditionOnPrerequisite@DRONECONTROL:
+	-WithColoredOverlay@DRONEDISABLE:
+	-WithDecoration@DRONEDISABLE:
+	ExternalCondition@IMMOBILISE:
+		Condition: notmobile
+	Mobile:
+		PauseOnCondition: triggered || being-captured || empdisable || being-warped || driver-dead || notmobile
+	GrantTimedConditionOnDeploy:
+		RequiresCondition: !(empdisable || being-warped)
+	Tooltip:
+		Name: E.M.P Drone
+		GenericVisibility: None
+	Voiced:
+		-RequiresCondition:
+	-Voiced@OFFLINE:
+
+HTNK.Drone:
+	-ExternalCondition@DRONECONTROL:
+	-GrantConditionOnPrerequisite@DRONECONTROL:
+	-WithColoredOverlay@DRONEDISABLE:
+	-WithDecoration@DRONEDISABLE:
+	ExternalCondition@IMMOBILISE:
+		Condition: notmobile
+	Mobile:
+		PauseOnCondition: empdisable || being-captured || empdisable || being-warped || driver-dead || notmobile
+	AttackTurreted:
+		PauseOnCondition: empdisable || being-warped
+	Tooltip:
+		GenericVisibility: None
+	Voiced:
+		-RequiresCondition:
+	-Voiced@OFFLINE:
+
+MTNK.Drone:
+	-ExternalCondition@DRONECONTROL:
+	-GrantConditionOnPrerequisite@DRONECONTROL:
+	-WithColoredOverlay@DRONEDISABLE:
+	-WithDecoration@DRONEDISABLE:
+	ExternalCondition@IMMOBILISE:
+		Condition: notmobile
+	Mobile:
+		PauseOnCondition: empdisable || being-captured || empdisable || being-warped || driver-dead || notmobile
+	AttackTurreted:
+		PauseOnCondition: empdisable || being-warped
+	Tooltip:
+		GenericVisibility: None
+	Voiced:
+		-RequiresCondition:
+	-Voiced@OFFLINE:
+
+GDRN:
+	ExternalCondition@IMMOBILISE:
+		Condition: notmobile
+	Tooltip:
+		GenericVisibility: None
+
+# Difficulty adjustments for Stealth Tank / Commando / Hackers
+
+^DifficultyModifiers:
+	Inherits@ActorDifficultyConditions: ^ActorDifficultyConditions
+	DamageMultiplier@NORMAL:
+		Modifier: 80
+		RequiresCondition: difficulty-normal
+	DamageMultiplier@EASY:
+		Modifier: 60
+		RequiresCondition: difficulty-easy
+	RevealsShroudMultiplier@NORMAL:
+		Modifier: 115
+		RequiresCondition: difficulty-normal
+	RevealsShroudMultiplier@EASY:
+		Modifier: 130
+		RequiresCondition: difficulty-easy
+	RangeMultiplier@EASY:
+		Modifier: 115
+		RequiresCondition: difficulty-easy
+
+STNK.Nod:
+	Inherits@DIFFICULTY: ^DifficultyModifiers
+	GainsExperienceMultiplier@TenPercentXp:
+		Modifier: 10
+	GrantCondition:
+		Condition: tibcore-upgrade
+	RevealsShroud:
+		Range: 8c0
+
+RMBO:
+	Inherits@DIFFICULTY: ^DifficultyModifiers
+	AutoTarget:
+		InitialStance: HoldFire
+	RevealsShroud:
+		Range: 8c0
+	ChangesHealth@HOSPITAL:
+		Step: 1000
+
+HACK:
+	Inherits@DIFFICULTY: ^DifficultyModifiers
+	-WithMindControlArc@HACK:
+	TooltipExtras:
+		Attributes: • Can take control of enemy structures & drones from range\n• Control lost if the Hacker dies
+	Selectable:
+		Priority: 10
+
+# Disable stolen tech from hacking
+
+PYLE:
+	-SpawnActorOnMindControlled@STOLENTECH:
+
+WEAP.TD:
+	-SpawnActorOnMindControlled@STOLENTECH:
+
+HPAD.TD:
+	-SpawnActorOnMindControlled@STOLENTECH:
+
+AFLD.GDI:
+	-SpawnActorOnMindControlled@STOLENTECH:
+
+# Satellite Hack
+
+sathack.dummy:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	SpawnActorPowerCA@sathack:
+		Actor: camera.sathack
+		LifeTime: 75
+		OrderName: sathack
+		Icon: hacksat
+		ChargeInterval: 3000
+		Name: Hack Satellite Uplink
+		Description: \nReveals the targeted area for a short time.
+		LaunchSound: hacksat.aud
+		SelectTargetSpeechNotification: SelectTarget
+		EffectImage: empty
+		EffectSequence: idle
+		EffectPalette: tseffect-ignore-lighting-alpha75
+		TargetCircleRange: 9c512
+		TargetCircleColor: 999999AA
+		SupportPowerPaletteOrder: 50
+
+# Misc
+
+BRIDGEHUT:
+	-Targetable:
+	-Demolishable:
+
+BRIDGEHUT.small:
+	-Targetable:
+	-Demolishable:
+
+GTWR:
+	-Power:
+
+REP:
+	-Power:
+
+HOSP:
+	Inherits@HACKABLE: ^Hackable
+	-GrantConditionOnPrerequisite@OwnedByAi:
+	-PeriodicProducerCA@MEDIC:
+	-PeriodicProducerCA@REJUVENATOR:
+	-GrantConditionIfOwnerIsNeutral:
+	-GrantConditionOnPrerequisite@SCRIN:
+	-RallyPoint:
+	TooltipExtras:
+		Description: When controlled, heals nearby infantry.
+	-TooltipDescription@ally:
+	-TooltipDescription@other:
+
+HOSP.Rebuilt:
+	-PeriodicProducerCA@MEDIC:
+	-PeriodicProducerCA@REJUVENATOR:
+
+HOSP.Husk:
+	-ChangesHealth:
+
+NUKE:
+	WithDecoration@HACKED:
+		Sequence: hacked
+	-ChangesHealth@HACKED:
+
+NUK2:
+	WithDecoration@HACKED:
+		Sequence: hacked
+	-ChangesHealth@HACKED:
+
+EYE:
+	DetonateWeaponPower@IonStorm:
+		DisplayTimerRelationships: Ally
+		ChargeInterval: 375
+		-PauseOnCondition:
+		-BeginChargeSpeechNotification:
+	IonCannonPower@SurgicalStrike:
+		ChargeInterval: 125
+		-PauseOnCondition:
+		-Prerequisites:
+	Power:
+		Amount: 0
+	-Buildable:
+
+# Hunt() requires only 1 AttackBase
+BATF.AI:
+	-AttackFrontal:

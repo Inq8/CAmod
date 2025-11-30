@@ -31,6 +31,8 @@ Player:
 	Inherits@GREATERCOALESCENCEPOWER: ^GreaterCoalescencePower
 	Inherits@OVERLORDSWRATHPOWER: ^OverlordsWrathPower
 	Inherits@ANATHEMAPOWER: ^AnathemaPower
+	Inherits@ICHORSPIKEPOWER: ^IchorSpikePower
+	Inherits@COLONYSPIKEPOWER: ^ColonySpikePower
 	Inherits@VOIDSPIKEPOWER: ^VoidSpikePower
 	Inherits@SUPPRESSIONPOWER: ^SuppressionPower
 	GrantExternalConditionPowerCA@FSHIELD:
@@ -177,6 +179,16 @@ Player:
 		-Prerequisites:
 		-EndChargeSpeechNotification:
 		ChargeInterval: 1
+	DetonateWeaponPower@IchorSpike:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		DisplayTimerRelationships: None
+		ChargeInterval: 1
+	DetonateWeaponPower@ColonySpike:
+		-Prerequisites:
+		-EndChargeSpeechNotification:
+		DisplayTimerRelationships: None
+		ChargeInterval: 1
 	DetonateWeaponPower@VoidSpike:
 		-Prerequisites:
 		-EndChargeSpeechNotification:
@@ -201,7 +213,7 @@ Player:
 	ExternalCondition@3:
 		Condition: being-warped
 	ExternalCondition@5:
-		Condition: tower.shield
+		Condition: tower-shield
 
 # Powers that depend on a structure in the world (can't be attached to the player)
 

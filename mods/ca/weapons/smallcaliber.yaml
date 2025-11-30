@@ -183,7 +183,7 @@ MGatt:
 			Concrete: 10
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 	Warhead@2Eff: CreateEffect
-		Explosions: piff
+		Explosions: piff, piff2
 		Inaccuracy: 171
 	Warhead@3EffWater: CreateEffect
 		Explosions: water_piff
@@ -224,19 +224,14 @@ ChainGun:
 	Projectile: Bullet
 		Blockable: false
 	Warhead@1Dam: SpreadDamage
-		Damage: 7800
+		Damage: 4400
 		Versus:
 			None: 100
-			Wood: 15
-			Light: 25
-			Heavy: 18
-			Concrete: 15
+			Wood: 26
+			Light: 38
+			Heavy: 48
+			Concrete: 26
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath, AirToGround
-
-KamovChainGun:
-	Inherits: ChainGun
-	Warhead@1Dam: SpreadDamage
-		Damage: 8600
 
 GAU8:
 	Inherits: ^HeavyMG
@@ -253,7 +248,7 @@ GAU8:
 		Blockable: false
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
-		Damage: 1750
+		Damage: 1900
 		Versus:
 			None: 200
 			Wood: 0
@@ -543,25 +538,24 @@ M60mgIFV:
 	Range: 5c768
 	-Report:
 	StartBurstReport: ifvmg1.aud, ifvmg2.aud
-	BurstDelays: 2
-	Burst: 3
-	ReloadDelay: 50
+	Burst: 1
+	ReloadDelay: 44
 	Warhead@1Dam: SpreadDamage
-		Damage: 2500
+		Damage: 7600
 		Versus:
-			Wood: 40
-			Light: 90
+			Wood: 30
+			Light: 75
 			None: 100
 		DamageTypes: Prone50Percent, BulletDeath
 	Warhead@PercDam: HealthPercentageDamage
 		Spread: 42
-		Damage: 20
+		Damage: 60
 		Versus:
 			Light: 1
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 		ValidTargets: Infantry
 	Warhead@2Eff: CreateEffect
-		Explosions: piff
+		Explosions: piff, piff2
 	Warhead@3EffWater: CreateEffect
 		Explosions: water_piff
 
@@ -587,7 +581,6 @@ MGattG:
 			Concrete: 35
 			Light: 155
 			Heavy: 35
-		DamageTypes: Prone50Percent, BulletDeath
 	Warhead@PercDam: HealthPercentageDamage
 		Spread: 42
 		Damage: 6
@@ -639,9 +632,9 @@ SilencedPPKBATF:
 
 Colt45:
 	Inherits: ^SnipeWeapon
-	ReloadDelay: 5
-	Burst: 2
-	BurstDelays: 2
+	ReloadDelay: 7
+	Burst: 4
+	BurstDelays: 2,6,2
 	Range: 7c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 4700
@@ -662,7 +655,7 @@ Colt45BATF:
 SMG:
 	Inherits: ^SnipeWeapon
 	Report: silppk.aud
-	ReloadDelay: 10
+	ReloadDelay: 12
 	Range: 7c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 25000
@@ -715,7 +708,7 @@ MP5BATF:
 
 AKM:
 	StartBurstReport: mg11.aud
-	ReloadDelay: 8
+	ReloadDelay: 10
 	Burst: 3
 	BurstDelays: 2
 	Range: 7c0
@@ -868,7 +861,7 @@ SniperIFVGun:
 
 CommandoIFVGun:
 	Inherits: SMG
-	ReloadDelay: 10
+	ReloadDelay: 12
 	Burst: 3
 	BurstDelays: 2
 	Projectile: InstantHit
@@ -949,7 +942,7 @@ WolverineGun:
 		Spread: 256
 		Damage: 750
 		Versus:
-			Wood: 45
+			Wood: 50
 			Light: 70
 			Heavy: 12
 	-Warhead@2Eff:
@@ -982,6 +975,7 @@ WolverineGunTracer:
 	-Warhead@1Dam:
 	-Warhead@3EffWater:
 	Projectile: BulletCA
+		Blockable: true
 		Speed: 1350
 		ContrailStartWidth: 40
 		ContrailLength: 9
@@ -999,11 +993,86 @@ EnforcerShotgun:
 	Range: 4c0
 	Report: enfo-fire1.aud, enfo-fire2.aud
 	ReloadDelay: 55
-	Projectile: InstantHit
+	Projectile: LinearPulse
 		Blockable: true
+		Speed: 2c0
+		ImpactInterval: 512
+		ImpactType: Trapezoid
+		TrapezoidStartWidth: 0c768
+		TrapezoidEndWidth: 2c0
+		TrapezoidSegmentLength: 1c0
+		SingleHitPerActor: true
+		ForceGround: DamageOnly
+		MinimumFriendlyFireRange: 2c0
+		ProjectileAnimation@1:
+			Image: empty
+			Speed: 1350
+			ContrailStartWidth: 40
+			ContrailLength: 9
+			ContrailStartColor: d6b4a044
+			ContrailStartColorAlpha: 60
+			TargetOffset: -128, -512, 0
+			Inaccuracy: 128
+			Delay: 0,3
+			HitAnim: explosion
+			HitAnimSequence: piff
+			HitAnimPalette: effect-ignore-lighting-alpha50
+		ProjectileAnimation@2:
+			Image: empty
+			Speed: 1350
+			ContrailStartWidth: 40
+			ContrailLength: 9
+			ContrailStartColor: d6b4a044
+			ContrailStartColorAlpha: 60
+			TargetOffset: -64, -256, 0
+			Inaccuracy: 128
+			Delay: 0,3
+			HitAnim: explosion
+			HitAnimSequence: piff
+			HitAnimPalette: effect-ignore-lighting-alpha50
+		ProjectileAnimation@3:
+			Image: empty
+			Speed: 1350
+			ContrailStartWidth: 40
+			ContrailLength: 9
+			ContrailStartColor: d6b4a044
+			ContrailStartColorAlpha: 60
+			Inaccuracy: 128
+			Delay: 0,3
+			HitAnim: explosion
+			HitAnimSequence: piff
+			HitAnimPalette: effect-ignore-lighting-alpha50
+		ProjectileAnimation@4:
+			Image: empty
+			Speed: 1350
+			ContrailStartWidth: 40
+			ContrailLength: 9
+			ContrailStartColor: d6b4a044
+			ContrailStartColorAlpha: 60
+			TargetOffset: -64, 256, 0
+			Inaccuracy: 128
+			Delay: 0,3
+			HitAnim: explosion
+			HitAnimSequence: piff
+			HitAnimPalette: effect-ignore-lighting-alpha50
+		ProjectileAnimation@5:
+			Image: empty
+			Speed: 1350
+			ContrailStartWidth: 40
+			ContrailLength: 9
+			ContrailStartColor: d6b4a044
+			ContrailStartColorAlpha: 60
+			TargetOffset: -128, 512, 0
+			Inaccuracy: 128
+			Delay: 0,3
+			HitAnim: explosion
+			HitAnimSequence: piff
+			HitAnimPalette: effect-ignore-lighting-alpha50
+		DamageFalloff@1:
+			Spread: 4c0
+			Falloff: 100, 33
+			FalloffBasis: DistanceFromSource
 	Warhead@1Dam: SpreadDamage
-		Spread: 320
-		Falloff: 100, 26, 10, 4, 0
 		Damage: 7000
 		Versus:
 			None: 100
@@ -1013,37 +1082,9 @@ EnforcerShotgun:
 			Concrete: 15
 			Brick: 30
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
-	Warhead@2Eff: CreateEffect
-		Explosions: piffs
-		ValidTargets: Ground, Ship, Air, AirSmall, Trees
-
-EnforcerShotgunLine:
-	Inherits: EnforcerShotgun
-	-Report:
-	Projectile: RailgunCA
-		Blockable: true
-		Invisible: true
-		PassthroughToMaxRange: true
-		PassthroughParallelToMuzzleOffset: true
-		DamageActorsInLine: true
-		BeamWidth: 256
-	Warhead@1Dam: SpreadDamage
-		Spread: 42
-		Damage: 2000
-		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
-		ValidRelationships: Enemy, Neutral
-	Warhead@2Eff: CreateEffect
-		Explosions: piff, empty
-		ValidTargets: Infantry, Structure, Vehicle, Ship, Trees
-		ValidRelationships: Enemy, Neutral
 
 EnforcerIFVShotgun:
 	Inherits: EnforcerShotgun
-	Burst: 2
-	BurstDelays: 5
-
-EnforcerIFVShotgunLine:
-	Inherits: EnforcerShotgunLine
 	Burst: 2
 	BurstDelays: 5
 

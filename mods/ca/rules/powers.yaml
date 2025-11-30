@@ -30,20 +30,33 @@
 		TargetCircleColor: 0066ff
 		Range: 3c0
 
+^SendCashPower:
+	SendCashPower@SendCash:
+		OrderName: sendcash
+		Icon: sendcash
+		ChargeInterval: 1
+		Name: Send Cash
+		Description: Sends up to $1000 to the owner of the target allied unit or structure.
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		Cursor: ability
+		SupportPowerPaletteOrder: 0
+		Prerequisites: sendcash.enabled
+
 ^TimeSkipPower:
 	ProduceActorPowerCA@TimeSkip:
 		OrderName: timeskip
 		Prerequisites: ~player.allies, ~!influence.level3
 		Icon: timeskip
 		Type: TimeSkip
-		ChargeInterval: 50
+		ChargeInterval: 125
 		StartFullyCharged: true
 		Name: Time Skip
 		Description: Allocate funding for precise temporal manipulation to progress Allied technological and organizational advancement.\n\nAdvances influence progress by 1:00.
 		Actors: timeskip
 		SupportPowerPaletteOrder: 0
 		SelectProducer: false
-		Cost: 1000
+		Cost: 800
 		LaunchSound: timeskip.aud
 
 ^VeilOfWarPower:
@@ -1138,7 +1151,8 @@
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 		GuardDuration: 500
-		Cordon: 5c0
+		GuardRadius: 12c0
+		TargetCircleColor: 99999988
 		SupportPowerPaletteOrder: 45
 		LaunchSound: interceptors.aud
 		IncomingSound: interceptors.aud
@@ -1191,11 +1205,12 @@
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
-		RequiresCondition: tower.rocket
+		RequiresCondition: tower-rocket
 		Prerequisites: ~techlevel.high
 		SupportPowerPaletteOrder: 30
 		TargetCircleRadius: 4c512
 		TargetCircleColor: ff660088
+		DisplayTimerRelationships: Ally, Neutral, Enemy
 		DisplayBeacon: True
 		BeaconAssumedLaunchDelay: 45
 		BeaconRemoveAdvance: 25
@@ -1219,7 +1234,7 @@
 		IconPalette: chrometd
 		Name: Advanced Radar Scan
 		Description: Reveals the location of enemy structures & units through the fog of war.
-		RequiresCondition: tower.radar
+		RequiresCondition: tower-radar
 		PauseOnCondition: !radar-active || disabled || being-warped
 		LaunchSound: gradarup.aud
 		BeginChargeSound: gradardn.aud
@@ -1255,7 +1270,7 @@
 		EffectImage: empty
 		EffectSequence: idle
 		EffectPalette: tseffect-ignore-lighting-alpha75
-		RequiresCondition: tower.shield
+		RequiresCondition: tower-shield
 		TargetCircleRange: 6c0
 		TargetCircleColor: 64a5dcbb
 		SupportPowerPaletteOrder: 30
@@ -1419,7 +1434,7 @@
 		Icon: substrike
 		Prerequisites: vehicles.marked
 		Cursor: ability
-		ChargeInterval: 13500
+		ChargeInterval: 12000
 		Name: Subterranean Strike
 		ActivationDelay: 250
 		Description: Deploys a squad of Acolytes/Templar via Subterranean APC.
@@ -1786,6 +1801,7 @@
 		ValidRelationships: Ally, Neutral, Enemy
 		Range: 3c512
 		Duration: 600
+		MaxAltitude: 1
 		AllowMultiple: false
 		Description: Makes selected vehicles and structures temporarily invisible.\n\nWarning: Harmful to non-cyborg infantry.\n\nHazmat Suits upgrade makes allies immune to damage and enemies take 50% damage.
 		OnFireSound: cloak6.aud
@@ -1847,6 +1863,56 @@
 		CircleBorderColor: 007700AA
 		SupportPowerPaletteOrder: 10
 
+^IchorSpikePower:
+	DetonateWeaponPower@IchorSpike:
+		OrderName: ichorspike
+		Icon: ichorspike
+		IconPalette: chromes
+		Prerequisites: loyalist.allegiance
+		Cursor: ability
+		ChargeInterval: 6000
+		Name: Ichor Spike
+		ActivationDelay: 1
+		Description: Creates an Ichor Spike at the target location. Resources within its area of influence grow and spread faster.\n\nAlso empowers units with Resource Conversion upgrade.
+		LaunchSound: scrinbuild.aud
+		Weapon: IchorSpikeSpawner
+		AirburstAltitude: 0c0
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		EndChargeSpeechNotification: IchorSpikeReady
+		EndChargeTextNotification: Ichor Spike ready.
+		CameraActor: camera.dummy
+		CameraRemoveDelay: 1
+		DisplayRadarPing: True
+		SupportPowerPaletteOrder: 50
+		TargetCircleRange: 8c0
+		TargetCircleColor: 00ff00aa
+
+^ColonySpikePower:
+	DetonateWeaponPower@ColonySpike:
+		OrderName: colonyspike
+		Icon: colonyspike
+		IconPalette: chromes
+		Prerequisites: rebel.allegiance
+		Cursor: ability
+		ChargeInterval: 7500
+		Name: Colony Spike
+		ActivationDelay: 1
+		Description: Creates a Colony Spike at the target location. Provides production of non-defensive structures.\n\nMust be built within range of a Colony Platform.
+		LaunchSound: cspk.aud
+		IncomingSound: cspk.aud
+		Weapon: ColonySpikeSpawner
+		AirburstAltitude: 0c0
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		EndChargeSpeechNotification: ColonySpikeReady
+		EndChargeTextNotification: Colony Spike ready.
+		CameraActor: camera.dummy
+		CameraRemoveDelay: 1
+		DisplayRadarPing: True
+		SupportPowerPaletteOrder: 50
+		TargetMustBeInBuildRadius: true
+
 ^VoidSpikePower:
 	DetonateWeaponPower@VoidSpike:
 		OrderName: voidspike
@@ -1857,20 +1923,21 @@
 		ChargeInterval: 6000
 		Name: Voidspike
 		ActivationDelay: 1
-		Description: Creates an void spike at the target location. Gradually transforms nearby resources into Black Tiberium which is devoid of most of its useful properties.\n\nDamages nearby enemy units.
+		Description: Creates a Voidspike at the target location. Gradually transforms nearby resources into Black Tiberium which is devoid of most of its useful properties.\n\nDamages nearby enemy units.
 		LaunchSound: scrinbuild.aud
 		Weapon: VoidSpikeSpawner
 		AirburstAltitude: 0c0
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		EndChargeSpeechNotification: VoidSpikeReady
-		EndChargeTextNotification: Void Spike ready.
+		EndChargeTextNotification: Voidspike ready.
 		CameraActor: camera.dummy
 		CameraRemoveDelay: 1
 		DisplayRadarPing: True
 		SupportPowerPaletteOrder: 50
 		TargetCircleRange: 7c511
 		TargetCircleColor: 471f8c90
+		IncomingSound: malefic.aud
 
 ^ResourceScanPower:
 	RevealActorsPower@RESOURCESCAN:
@@ -2107,7 +2174,7 @@
 		IconPalette: chromes
 		Prerequisites: ~rebel.allegiance, ~techlevel.high
 		Cursor: ability
-		ChargeInterval: 4500
+		ChargeInterval: 6000
 		Name: Gateway
 		ActivationDelay: 1
 		Description: Creates a Gateway at the target location. Acts as the exit for any\n   targeted infantry or vehicle production structure.\n\nRequires target location to be within vision.
@@ -2131,7 +2198,7 @@
 		OrderName: anathema
 		Icon: anathema
 		IconPalette: chromes
-		ChargeInterval: 2250
+		ChargeInterval: 3000
 		Name: Anathema
 		Condition: anathema
 		Range: 2c0
@@ -2291,21 +2358,13 @@
 
 # Providers
 
-voidspike.provider:
-	Inherits@DUMMY: ^InvisibleDummy
-	Inherits@VoidSpike: ^VoidSpikePower
-	UpdatesSupportPowerTimer:
-		OrderName: voidspike
-		InitialOnly: true
-		Ticks: 75
-
 assassinsquad.provider:
 	Inherits@DUMMY: ^InvisibleDummy
 	Inherits@AssassinSquad: ^AssassinSquadPower
 	UpdatesSupportPowerTimer:
 		OrderName: assassinsquad
 		InitialOnly: true
-		Ticks: 1500
+		Ticks: 3750
 
 hackercell.provider:
 	Inherits@DUMMY: ^InvisibleDummy
@@ -2313,7 +2372,7 @@ hackercell.provider:
 	UpdatesSupportPowerTimer:
 		OrderName: hackercell
 		InitialOnly: true
-		Ticks: 1500
+		Ticks: 3750
 
 confessorcabal.provider:
 	Inherits@DUMMY: ^InvisibleDummy
@@ -2321,4 +2380,28 @@ confessorcabal.provider:
 	UpdatesSupportPowerTimer:
 		OrderName: confessorcabal
 		InitialOnly: true
-		Ticks: 1500
+		Ticks: 3750
+
+ichorspike.provider:
+	Inherits@DUMMY: ^InvisibleDummy
+	Inherits@IchorSpike: ^IchorSpikePower
+	UpdatesSupportPowerTimer:
+		OrderName: ichorspike
+		InitialOnly: true
+		Ticks: 75
+
+colonyspike.provider:
+	Inherits@DUMMY: ^InvisibleDummy
+	Inherits@ColonySpike: ^ColonySpikePower
+	UpdatesSupportPowerTimer:
+		OrderName: colonyspike
+		InitialOnly: true
+		Ticks: 750
+
+voidspike.provider:
+	Inherits@DUMMY: ^InvisibleDummy
+	Inherits@VoidSpike: ^VoidSpikePower
+	UpdatesSupportPowerTimer:
+		OrderName: voidspike
+		InitialOnly: true
+		Ticks: 750

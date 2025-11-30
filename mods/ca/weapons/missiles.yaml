@@ -50,6 +50,7 @@
 	Projectile: MissileCA
 		Inaccuracy: 0
 		AllowSnapping: true
+		HorizontalRateOfTurn: 100
 	Warhead@1Dam: SpreadDamage
 		Range: 0, 0c64, 0c256, 3c0
 		Falloff: 100, 100, 30, 15
@@ -83,7 +84,6 @@
 	Projectile: MissileCA
 		-Arm:
 		Speed: 384
-		HorizontalRateOfTurn: 40
 		RangeLimit: 13c0
 	Warhead@smallDamage: SpreadDamage
 		Spread: 341
@@ -399,13 +399,13 @@ HindRockets:
 	BurstDelays: 12
 	Burst: 6
 	Warhead@1Dam: SpreadDamage
-		Damage: 3200
+		Damage: 3750
 		Versus:
-			None: 25
-			Light: 40
-			Wood: 30
-			Concrete: 30
-			Heavy: 75
+			None: 100
+			Light: 38
+			Wood: 26
+			Concrete: 26
+			Heavy: 48
 
 HindRockets.UPG:
 	Inherits: HindRockets
@@ -504,7 +504,6 @@ HellfireAA.Harrier:
 		ContrailLength: 10
 		ContrailStartColor: dddddd
 		ContrailStartWidth: 52
-		HorizontalRateOfTurn: 40
 		VerticalRateOfTurn: 30
 	Warhead@1Dam: SpreadDamage
 		Damage: 8000
@@ -515,12 +514,13 @@ WidowAA:
 	Inherits: ^AirToAirMissile
 	ReloadDelay: 60
 	Report: vbleatta.aud, vbleattb.aud
-	Range: 8c0
+	Range: 10c0
 	Burst: 2
 	BurstDelays: 10
 	Projectile: MissileCA
 		Speed: 404
 		ContrailLength: 6
+		ContrailStartColor: dddddd
 	Warhead@1Dam: SpreadDamage
 		Damage: 6000
 	Warhead@smallDamage: SpreadDamage
@@ -559,6 +559,11 @@ MammothTusk:
 		Explosions: med_explosion_air
 		ImpactSounds: kaboom25.aud
 		ValidTargets: Air, AirSmall
+
+MammothTusk.Drone:
+	Inherits: MammothTusk
+	Warhead@1Dam: SpreadDamage
+		Damage: 3750
 
 ApocalypseTusk:
 	Inherits: MammothTusk
@@ -606,7 +611,6 @@ Nike:
 	Projectile: MissileCA
 		Arm: 2
 		Image: MISSILE
-		HorizontalRateOfTurn: 100
 		RangeLimit: 10c512
 		Speed: 341
 		MaximumLaunchAngle: 256
@@ -632,13 +636,12 @@ RedEye:
 	Projectile: MissileCA
 		Arm: 3
 		Image: Dragon
-		HorizontalRateOfTurn: 80
 		RangeLimit: 9c0
 		Speed: 298
 	Warhead@1Dam: SpreadDamage
 		Damage: 4000
 	Warhead@smallDamage: SpreadDamage
-		Damage: 6000
+		Damage: 7000
 	Warhead@3Eff: CreateEffect
 		ValidTargets: Air, AirSmall, ICBM, Ground, Water, Trees
 
@@ -787,10 +790,10 @@ StingerGTWR:
 		Arm: 0
 		HorizontalRateOfTurn: 40
 		RangeLimit: 11c819
-		Speed: 350
+		Speed: 400
 		LockOnProbability: 66
 	Warhead@1Dam: SpreadDamage
-		Damage: 7800
+		Damage: 8900
 		Spread: 341
 		Versus:
 			None: 40
@@ -892,6 +895,7 @@ PitbullRockets:
 		Duration: 45
 		Condition: blinded
 		ValidTargets: Vehicle
+		InvalidTargets: BlindImmune
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: caneon
@@ -920,7 +924,7 @@ PitbullRocketsAA:
 		Duration: 50
 		Condition: blinded
 		ValidTargets: Air, AirSmall
-		InvalidTargets: Shielded
+		InvalidTargets: BlindImmune
 		ValidRelationships: Enemy, Neutral
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
@@ -1330,6 +1334,7 @@ BikeRocketsAA:
 	Warhead@1Dam: SpreadDamage
 		Damage: 3600
 	Warhead@smallDamage: SpreadDamage
+		Spread: 192
 		Damage: 3600
 
 BikeRockets.TibCore:
@@ -1489,6 +1494,7 @@ IFVRocketsAAE.TibCore:
 		LockOnProbability: 66
 		Jammable: false
 		RangeLimit: 13c0
+		MinimumLaunchAngle: 64
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
 		Damage: 800
@@ -1525,13 +1531,17 @@ IFVRocketsAAE.TibCore:
 	Report: vaegattb.aud, vaegatta.aud
 	BurstDelays: 6
 	Projectile: MissileCA
-		Speed: 550
-		Inaccuracy: 256
-		LockOnProbability: 100
+	-Projectile:
+	Projectile: Bullet
+		Image: DRAGON
+		TrailImage: smokey
+		Shadow: True
+		ContrailLength: 15
 		ContrailStartColor: 00FFFFE6
-		MinimumLaunchAngle: 100
-		MaximumLaunchAngle: 200
-		AllowSnapping: true
+		Speed: 1200
+		Inaccuracy: 0c128
+		LaunchAngle: 40
+		Blockable: false
 	Warhead@1Dam: SpreadDamage
 		Damage: 880
 
@@ -1541,7 +1551,8 @@ IFVRocketsAAE.TibCore:
 	Report: hammerheadmissile1.aud, hammerheadmissile2.aud
 	Projectile: MissileCA
 		ContrailStartColor: FFCC00E6
-		LockOnProbability: 80
+		LockOnProbability: 100
+		Speed: 250
 	Warhead@1Dam: SpreadDamage
 		Damage: 860
 		Spread: 426
@@ -1550,29 +1561,24 @@ IFVRocketsAAE.TibCore:
 		Explosions: artillery_explosion
 	Warhead@Concussion: GrantExternalConditionCA
 		Range: 0c768
-		Duration: 70
+		Duration: 75
 		Condition: concussion
 
 227mm.Hailstorm:
 	Inherits: 227mm.upg
-	Range: 10c0
 	Report: hailstormmissile1.aud, hailstormmissile2.aud
 	Burst: 6
 	BurstDelays: 6
-	-Projectile:
-	Projectile: Bullet
-		Image: DRAGON
-		TrailImage: smokey
-		Shadow: True
-		ContrailLength: 15
+	Projectile:
 		ContrailStartColor: FF4400E6
-		Speed: 266
-		Inaccuracy: 1c0
-		LaunchAngle: 62
-		Blockable: false
+		Inaccuracy: 1c256
+		MinimumLaunchAngle: 200
+		MaximumLaunchAngle: 250
+		LockOnProbability: 100
+		CruiseAltitude: 0
 	Warhead@1Dam: SpreadDamage
 		Spread: 426
-		Damage: 370
+		Damage: 360
 
 227mmH.Hypersonic:
 	Inherits: 227mm.Hypersonic
@@ -1584,7 +1590,7 @@ IFVRocketsAAE.TibCore:
 
 227mmH.Hailstorm:
 	Inherits: 227mm.Hailstorm
-	Range: 9c512
+	Range: 8c512
 
 227mmAA:
 	Inherits: ^AntiAirMissile
@@ -1690,12 +1696,12 @@ StnkMissileAA:
 	Projectile: MissileCA
 		Arm: 0
 		Inaccuracy: 128
-		HorizontalRateOfTurn: 40
 		Speed: 298
 		RangeLimit: 9c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 4800
 	Warhead@smallDamage: SpreadDamage
+		Spread: 192
 		Damage: 4800
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: xplos.aud
@@ -2002,7 +2008,7 @@ ScrinTorpAA:
 	Report: scrin5b.aud
 	Burst: 3
 	BurstDelays: 4
-	Projectile: Missile
+	Projectile: MissileCA
 		Image: scrintorp
 		Palette: tseffect-ignore-lighting-alpha90
 		-TrailImage:
@@ -2210,11 +2216,11 @@ Hydra.R:
 		ContrailStartWidth: 0c42
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
-		Damage: 250
+		Damage: 315
 		Falloff: 1000, 448, 192, 50, 18, 7, 0
 		Versus:
 			None: 100
-			Wood: 10
+			Wood: 8
 			Concrete: 60
 			Light: 100
 			Heavy: 100
@@ -2306,6 +2312,7 @@ PhantomMissiles:
 		Range: 0c256
 		Duration: 150
 		Condition: blinded
+		InvalidTargets: BlindImmune
 
 PhantomMissilesAA:
 	Inherits: MaverickAA
@@ -2327,6 +2334,7 @@ PhantomMissilesAA:
 		Duration: 150
 		Condition: blinded
 		ValidTargets: Air, AirSmall
+		InvalidTargets: BlindImmune
 		ValidRelationships: Enemy, Neutral
 
 RocketShells:
@@ -2497,6 +2505,11 @@ TigerGuardMissile:
 			Heavy: 100
 			Concrete: 50
 			Brick: 75
+	Warhead@VeiledCondition: GrantExternalConditionCA
+		Range: 0c341
+		Duration: 100
+		Condition: gapveiled
+		ValidTargets: Infantry, Vehicle, Ship
 
 TigerGuardMissileAA:
 	Inherits: ^AntiAirMissile
@@ -2513,6 +2526,11 @@ TigerGuardMissileAA:
 		Damage: 12000
 	Warhead@3Eff: CreateEffect
 		ValidTargets: Air, AirSmall, ICBM, Ground, Water, Trees
+	Warhead@VeiledCondition: GrantExternalConditionCA
+		Range: 0c341
+		Duration: 100
+		Condition: gapveiled
+		ValidTargets: Air, AirSmall
 
 TigerGuardMissileBATF:
 	Inherits: TigerGuardMissile

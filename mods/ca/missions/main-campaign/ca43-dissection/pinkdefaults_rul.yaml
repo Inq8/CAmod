@@ -1,0 +1,96 @@
+^Palettes:
+	PaletteFromFile@terrain-jungle:
+		Name: jungle
+		Tileset: DESERT
+		Filename: ca|missions/main-campaign/ca43-dissection/jungle.pal
+		ShadowIndex: 3, 4
+	PaletteFromFile@terrain-trees:
+		Name: medtree
+		Tileset: DESERT
+		Filename: ca|missions/main-campaign/ca43-dissection/medtree.pal
+		ShadowIndex: 3, 4
+
+^JungleTree:
+	RenderSprites:
+		Palette: jungle
+
+^Bush:
+	RenderSprites:
+		Palette: terrain
+
+^1x1:
+	Building:
+		Footprint: x
+		Dimensions: 1, 1
+	RequiresBuildableArea:
+		AreaTypes: building
+	RadarColorFromTerrain:
+		Terrain: Rock
+
+^1x2:
+	Building:
+		Footprint: x x
+		Dimensions: 1, 2
+	RequiresBuildableArea:
+		AreaTypes: building
+	RadarColorFromTerrain:
+		Terrain: Rock
+
+^2x1:
+	Building:
+		Footprint: xx
+		Dimensions: 2, 1
+	RequiresBuildableArea:
+		AreaTypes: building
+	RadarColorFromTerrain:
+		Terrain: Rock
+
+^2x2:
+	Building:
+		Footprint: xx xx
+		Dimensions: 2, 2
+	RequiresBuildableArea:
+		AreaTypes: building
+	RadarColorFromTerrain:
+		Terrain: Rock
+
+^2x3:
+	Building:
+		Footprint: xx xx xx
+		Dimensions: 2, 3
+	RequiresBuildableArea:
+		AreaTypes: building
+	RadarColorFromTerrain:
+		Terrain: Rock
+
+^3x2:
+	Building:
+		Footprint: xxx xxx
+		Dimensions: 3, 2
+	RequiresBuildableArea:
+		AreaTypes: building
+	RadarColorFromTerrain:
+		Terrain: Rock
+
+^3x3:
+	Building:
+		Footprint: xxx xxx xxx
+		Dimensions: 3, 3
+	RequiresBuildableArea:
+		AreaTypes: building
+	RadarColorFromTerrain:
+		Terrain: Rock
+
+^CustomMapDebris:
+	Inherits@1: ^SpriteActor
+	RenderSprites:
+		Palette: terrain
+	WithSpriteBody:
+	AppearsOnRadar:
+	RadarColorFromTerrain:
+		Terrain: Tree
+	AlwaysVisible:
+	ScriptTriggers:
+	MapEditorData:
+		Categories: Decoration
+	Interactable:

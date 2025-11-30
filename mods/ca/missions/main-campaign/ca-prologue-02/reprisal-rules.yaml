@@ -1,0 +1,37 @@
+^Palettes:
+	FlashPostProcessEffect@CHRONO:
+		Type: Chronoshift
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, reprisal.lua
+	MissionData:
+		Briefing: While we extracted all the information we needed from Einstein, Comrade Stalin was most displeased to learn of his escape.\n\nThe traitor who informed the Allies of the scientist's whereabouts has been identified, and Stalin demands retribution.\n\nGo to the village the traitor calls home. Wipe it out. Leave no survivors.\n\nThe Allies have set up a base nearby, to protect the village while they prepare to evacuate it. Once the village is destroyed, destroy the Allied base.
+	-ScriptLobbyDropdown@DIFFICULTY:
+	ScriptLobbyDropdown@PROLOGUEDIFFICULTY:
+		ID: prologuedifficulty
+		Label: dropdown-difficulty.label
+		Description: dropdown-difficulty.description
+		Values:
+			easy: options-difficulty.easy
+		Default: easy
+		Locked: True
+	MusicPlaylist:
+		StartingMusic: chaos2
+	MapOptions:
+		TechLevel: low
+
+Player:
+	PlayerResources:
+		DefaultCash: 10000
+
+^CivInfantry:
+	Wanders:
+		MinMoveDelay: 7500
+		MaxMoveDelay: 10000
+
+SPEN:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+MCV:
+	Inherits@CAMPAIGNDISABLED: ^Disabled

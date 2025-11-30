@@ -1,0 +1,24 @@
+^Palettes:
+	FlashPostProcessEffect@CHRONO:
+		Type: Chronoshift
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, detachment.lua
+	MissionData:
+		Briefing: GDI forces have found themselves scattered and confused in unfamiliar surroundings, confronted by hostile soldiers.\n\nOther GDI units have been in radio contact after finding themselves in the same situation.\n\nGunfire can be heard echoing through the trees, and reports of casualties have already been heard over the radio. There is no time to lose.\n\nTake command, locate these other GDI troops, and find a route to safety.
+	-ScriptLobbyDropdown@DIFFICULTY:
+	ScriptLobbyDropdown@PROLOGUEDIFFICULTY:
+		ID: prologuedifficulty
+		Label: dropdown-difficulty.label
+		Description: dropdown-difficulty.description
+		Values:
+			easy: options-difficulty.easy
+		Default: easy
+		Locked: True
+	MusicPlaylist:
+		StartingMusic: linefire
+
+DOME:
+	Power:
+		Amount: 0

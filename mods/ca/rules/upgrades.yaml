@@ -114,6 +114,27 @@ bombard2.strat:
 	WithProductionIconOverlay:
 		Prerequisites: bombard2.strat
 
+bombard3.strat:
+	Inherits: ^GDIUpgrade
+	Valued:
+		Cost: 1000
+	Tooltip:
+		Name: Upgrade: Firestorm Missile System
+	Buildable:
+		BuildPaletteOrder: 8
+		Prerequisites: ~player.gdi, upgc, !upgc.drop, bombard2.strat, ~bombard.strat, ~!seek.strat, ~!hold.strat, ~techlevel.high
+		Description: Provides an napalm rocket barrage.
+		IconPalette: chrometd
+	TooltipExtras:
+		Strengths: + Increases firepower and rate of fire of vehicles and aircraft by a further 3%\n+ Unlocks Firestorm Missile Barrage power
+		Attributes: (!) Mutually exclusive with Supply Drop Zone
+	RenderSprites:
+		PlayerPalette: playertd
+	WithProductionIconOverlay:
+		Prerequisites: bombard3.strat
+	UpdatesCount:
+		Type: StrategyLevel
+
 seek.strat:
 	Inherits: ^GDIUpgrade
 	Tooltip:
@@ -156,6 +177,27 @@ seek2.strat:
 		Type: StrategyLevel
 	WithProductionIconOverlay:
 		Prerequisites: seek2.strat
+
+seek3.strat:
+	Inherits: ^GDIUpgrade
+	Valued:
+		Cost: 1000
+	Tooltip:
+		Name: Upgrade: Advanced Radar System
+	Buildable:
+		BuildPaletteOrder: 10
+		Prerequisites: ~player.gdi, upgc, !upgc.drop, seek2.strat, ~seek.strat, ~!bombard.strat, ~!hold.strat, ~techlevel.high
+		Description: Provides detailed information on enemy locations.
+		IconPalette: chrometd
+	TooltipExtras:
+		Strengths: + Increases speed and weapon range of vehicles and aircraft by a further 5%\n+ Unlocks Advanced Radar Scan power
+		Attributes: (!) Mutually exclusive with Supply Drop Zone
+	RenderSprites:
+		PlayerPalette: playertd
+	WithProductionIconOverlay:
+		Prerequisites: seek3.strat
+	UpdatesCount:
+		Type: StrategyLevel
 
 hold.strat:
 	Inherits: ^GDIUpgrade
@@ -200,6 +242,27 @@ hold2.strat:
 	WithProductionIconOverlay:
 		Prerequisites: hold2.strat
 
+hold3.strat:
+	Inherits: ^GDIUpgrade
+	Valued:
+		Cost: 1000
+	Tooltip:
+		Name: Upgrade: Nanoshield Generator
+	Buildable:
+		BuildPaletteOrder: 12
+		Prerequisites: ~player.gdi, upgc, !upgc.drop, hold2.strat, ~hold.strat, ~!bombard.strat, ~!seek.strat, ~techlevel.high
+		Description: Provides the ability to shield units in an area
+		IconPalette: chrometd
+	TooltipExtras:
+		Strengths: + Increases armor of vehicles and aircraft by a further 5%\n+ Unlocks Nanite Shield power
+		Attributes: (!) Mutually exclusive with Supply Drop Zone
+	RenderSprites:
+		PlayerPalette: playertd
+	WithProductionIconOverlay:
+		Prerequisites: hold3.strat
+	UpdatesCount:
+		Type: StrategyLevel
+
 vulcan.upgrade:
 	Inherits: ^GDIUpgrade
 	Tooltip:
@@ -230,7 +293,7 @@ bjet.upgrade:
 		Strengths: + Strong vs Buildings, Defenses, Light Armor
 		Weaknesses: – Weak vs Heavy Armor\n– Has difficulty hitting moving targets\n– Cannot attack Aircraft
 	Valued:
-		Cost: 750
+		Cost: 1000
 	RenderSprites:
 		Image: bjet.upgrade
 	WithProductionIconOverlay:
@@ -437,8 +500,8 @@ hailstorm.upgrade:
 		IconPalette: chrometd
 		Description: Equip the MLRS/HMLRS with Hailstorm Missiles.\n\nUpgrades: MLRS/HMLRS
 	TooltipExtras:
-		Strengths: + Increased damage, area of effect and range\n+ Fires six missiles per salvo
-		Weaknesses: – Unguided
+		Strengths: + Increased damage and area of effect\n+ Fires six missiles per salvo
+		Weaknesses: – Reduced accuracy
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -458,7 +521,8 @@ hypersonic.upgrade:
 		IconPalette: chrometd
 		Description: Equip the MLRS/HMLRS with Hypersonic Missiles.\n\nUpgrades: MLRS/HMLRS
 	TooltipExtras:
-		Strengths: + Increased speed, precision and damage
+		Strengths: + Increased projectile speed, precision and damage
+		Weaknesses: – Unguided
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -479,6 +543,7 @@ hammerhead.upgrade:
 		Description: Equip the MLRS/HMLRS with Hammerhead Missiles.\n\nUpgrades: MLRS/HMLRS
 	TooltipExtras:
 		Strengths: + Increased damage and area of effect\n+ Briefly slows movement and rate of fire of impacted targets
+		Weaknesses: – Reduced projectile speed
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -511,12 +576,12 @@ sonic.upgrade:
 abur.upgrade:
 	Inherits: ^GDIUpgrade
 	Tooltip:
-		Name: Upgrade: Afterburner
+		Name: Upgrade: Afterburners
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.eagle, gtek, ~techlevel.high
 		IconPalette: chrometd
-		Description: Equips Orcas and Orca Bombers with afterburners.\n\nUpgrades: Orca\nUpgrades: Orca Bomber
+		Description: Equips Orcas, Orca Bombers and Hover Mammoths with afterburners.\n\nUpgrades: Orca\nUpgrades: Orca Bomber\nUpgrades: Hover Mammoth
 	TooltipExtras:
 		Strengths: + Added Afterburner for temporary speed boost
 	Valued:
@@ -535,13 +600,12 @@ bdrone.upgrade:
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.arc, gtek, ~techlevel.high
-		IconPalette: chrometd
 		Description: Allows construction of remotely piloted Battle Tanks.\n\nReplaces: Battle Tank
 	TooltipExtras:
-		Strengths: + Immunity to crew kill, chaos gas and mind control\n+ Reduced cost\n+ Increased rate of fire\n+ Self-repair
-		Weaknesses: – Disabled if radar is down\n– Can be hacked
+		Strengths: + Reduced cost\n+ Increased rate of fire\n+ Self-repair\n• XP of losses reclaimed by replacements\n+ Immunity to crew kill, chaos gas and mind control
+		Weaknesses: – Reduced HP\n– Reduced damage\n– Disabled if radar is down\n– Can be hacked
 	Valued:
-		Cost: 1250
+		Cost: 750
 	RenderSprites:
 		Image: bdrone.upgrade
 	AnnounceOnCreation:
@@ -564,7 +628,7 @@ railgun.upgrade:
 	TooltipExtras:
 		Strengths: + Increased range\n+ Damages targets in a line
 	Valued:
-		Cost: 1000
+		Cost: 750
 	AnnounceOnCreation:
 		SoundNotification: UPG-railgun
 		Delay: 60
@@ -587,7 +651,7 @@ ionmam.upgrade:
 	TooltipExtras:
 		Strengths: + Increased range\n+ Increased area of effect
 	Valued:
-		Cost: 1000
+		Cost: 750
 	RenderSprites:
 		Image: ionmam.upgrade
 	AnnounceOnCreation:
@@ -610,7 +674,7 @@ hovermam.upgrade:
 	TooltipExtras:
 		Strengths: + Faster movement speed\n+ Can traverse water
 	Valued:
-		Cost: 1000
+		Cost: 750
 	RenderSprites:
 		Image: hovermam.upgrade
 	AnnounceOnCreation:
@@ -628,13 +692,12 @@ mdrone.upgrade:
 	Buildable:
 		BuildPaletteOrder: 40
 		Prerequisites: ~player.arc, upgc, ~techlevel.high
-		IconPalette: chrometd
 		Description: Allows construction of remotely piloted Mammoth Tanks.\n\nReplaces: Mammoth Tank
 	TooltipExtras:
-		Strengths: + Immunity to crew kill, chaos gas and mind control\n+ Reduced cost\n+ Increased rate of fire\n+ Improved self-repair
-		Weaknesses: – Disabled if radar is down\n– Can be hacked
+		Strengths: + Reduced cost\n+ Increased rate of fire\n+ Improved self-repair\n• XP of losses reclaimed by replacements\n+ Immunity to crew kill, chaos gas and mind control
+		Weaknesses: – Reduced HP\n– Reduced damage\n– Disabled if radar is down\n– Can be hacked
 	Valued:
-		Cost: 1000
+		Cost: 750
 	RenderSprites:
 		Image: mdrone.upgrade
 	AnnounceOnCreation:
@@ -665,6 +728,27 @@ gyro.upgrade:
 	EncyclopediaExtras:
 		Subfaction: talon
 
+upgc.drop:
+	Inherits: ^GDIUpgrade
+	Valued:
+		Cost: 1000
+	Tooltip:
+		Name: Upgrade: Supply Drop Zone
+	Buildable:
+		BuildPaletteOrder: 90
+		Prerequisites: ~gdiorupgc, upgc, !bombard3.strat, !seek3.strat, !hold3.strat, ~techlevel.high
+		Description: Provides a dropzone for emergency supplies.
+		IconPalette: chrometd
+	TooltipExtras:
+		Strengths: + $1250 delivered every 60 seconds (normal speed)
+		Attributes: (!) Mutually exclusive with Firestorm Missile System, Advanced Radar System and Nanoshield Generator
+	RenderSprites:
+		PlayerPalette: playertd
+	UpdatesCount:
+		Type: StrategyLevel
+	WithProductionIconOverlay:
+		Prerequisites: dropzone
+
 #########################NOD#########
 ########################################
 
@@ -688,13 +772,13 @@ wrath.covenant:
 		Name: Covenant of Wrath
 	Buildable:
 		BuildPaletteOrder: 13
-		Prerequisites: ~player.nod, nod.covenants.available, !unity.covenant, !zeal.covenant, ~techlevel.medium
-		Description: Required for:\n• Avatar\n• Assassin Squad\n• Compressed Plasma (+3 Banshee ammo)\n• Cyborg Firepower Upgrade\n\n
+		Prerequisites: ~player.nod, covenant.level1, !unity.covenant, !zeal.covenant, ~techlevel.medium
+		Description: Adopt the Covenant of Wrath.\n\n• Level 1: Assassin Squad & Compressed Plasma (+3 Banshee ammo)\n• Level 2: Cyborg Armor & Laser Tanks Upgrades\n• Level 3: Avatar, Cyborg Elite & Cyborg Firepower Upgrade
 		IconPalette: chrometd
 	TooltipExtras:
 		Attributes: (!) Only ONE Covenant may be chosen.
 	Valued:
-		Cost: 500
+		Cost: 300
 	RenderSprites:
 		Image: wrath.covenant
 	WithProductionIconOverlay:
@@ -708,13 +792,13 @@ unity.covenant:
 		Name: Covenant of Unity
 	Buildable:
 		BuildPaletteOrder: 14
-		Prerequisites: ~player.nod, nod.covenants.available, !wrath.covenant, !zeal.covenant, ~techlevel.medium
-		Description: Required for:\n• Cyborg Reaper\n• Hacker Cell\n• Siphoned Funds ($ from Hackers in Comms Center)\n• Augmented Fabrication Upgrade\n\n
+		Prerequisites: ~player.nod, covenant.level1, !wrath.covenant, !zeal.covenant, ~techlevel.medium
+		Description: Adopt the Covenant of Unity.\n\n• Level 1: Hacker Squad, Internet Center & Siphoned Funds ($ from Hackers in Internet Center)\n• Level 2: Cyborg Armor & Custodian Upgrades\n• Level 3: Cyborg Reaper, Cyborg Elite & Reclaimed Fabrication Upgrade
 		IconPalette: chrometd
 	TooltipExtras:
 		Attributes: (!) Only ONE Covenant may be chosen.
 	Valued:
-		Cost: 500
+		Cost: 300
 	RenderSprites:
 		Image: unity.covenant
 	WithProductionIconOverlay:
@@ -728,13 +812,13 @@ zeal.covenant:
 		Name: Covenant of Zeal
 	Buildable:
 		BuildPaletteOrder: 15
-		Prerequisites: ~player.nod, nod.covenants.available, !unity.covenant, !wrath.covenant, ~techlevel.medium
-		Description: Required for:\n• Enlightened\n• Confessor Cabal\n• Fast Harrassers (+15% Bike/Buggy/Howitzer speed)\n• Cyborg Speed Upgrade\n\n
+		Prerequisites: ~player.nod, covenant.level1, !unity.covenant, !wrath.covenant, ~techlevel.medium
+		Description: Adopt the Covenant of Zeal.\n\n• Level 1: Confessor Cabal & Fast Harrassers (+15% Bike/Buggy/Howitzer speed)\n• Level 2: Cyborg Armor & Raider Buggy Upgrades\n• Level 3: Enlightened, Cyborg Elite & Cyborg Speed Upgrade
 		IconPalette: chrometd
 	TooltipExtras:
 		Attributes: (!) Only ONE Covenant may be chosen.
 	Valued:
-		Cost: 500
+		Cost: 300
 	RenderSprites:
 		Image: zeal.covenant
 	WithProductionIconOverlay:
@@ -751,18 +835,18 @@ howi.upgrade:
 		Prerequisites: ~player.nod, anyradar, ~techlevel.medium
 		Description: Allows construction of Howitzers.\n\nReplaces: Artillery
 	TooltipExtras:
-		Strengths: + Increased projectile speed\n+ Increased movement speed\n+ Increased accuracy\n+ Has turret
-		Weaknesses: – Reduced damage\n– Reduced range
+		Strengths: + Increased projectile speed\n+ Increased movement speed\n+ Increased accuracy\n+ Increased burst damage\n+ Increased vision\n+ Has turret
+		Weaknesses: – Reduced splash radius\n– Reduced range\n– Reduced rate of fire
 	Valued:
-		Cost: 1000
+		Cost: 500
 	RenderSprites:
 		Image: howi.upgrade
 	ProductionCostMultiplier@blackh:
 		Multiplier: 0
-		Prerequisites: radar.blackh
+		Prerequisites: player.blackh
 	ProductionTimeMultiplier@blackh:
 		Multiplier: 0
-		Prerequisites: radar.blackh
+		Prerequisites: player.blackh
 	WithProductionIconOverlay:
 		Prerequisites: howi.upgrade
 
@@ -773,7 +857,7 @@ decoy.upgrade:
 	Buildable:
 		BuildPaletteOrder: 20
 		Prerequisites: ~player.nod, anyradar, ~techlevel.medium
-		Description: Grant Buggies the ability to project a pair of decoy Flame Tanks. Decoys provide small area of vision for a short time after being killed.\n\nUpgrades: Buggy
+		Description: Grant Buggies the ability to project a pair of decoy Flame Tanks. Decoys provide small area of vision for a short time after being killed.\n\nUpgrades: Buggy\nUpgrades: Raider Buggy
 	TooltipExtras:
 		Strengths: + Decoy projection ability
 	Valued:
@@ -821,24 +905,6 @@ tibcore.upgrade:
 		Delay: 60
 	WithProductionIconOverlay:
 		Prerequisites: tibcore.upgrade
-
-lastnk.upgrade:
-	Inherits: ^NodUpgrade
-	Tooltip:
-		Name: Upgrade: Laser Tanks
-	Buildable:
-		BuildPaletteOrder: 30
-		Prerequisites: ~player.nod, tmpl, ~techlevel.high
-		Description: Upgrades: Light Tank\nUpgrades: Battle Tank
-	TooltipExtras:
-		Strengths: + Increased damage vs infantry & light armor
-		Weaknesses: – Reduced damage vs heavy armor
-	Valued:
-		Cost: 750
-	RenderSprites:
-		Image: lastnk.upgrade
-	WithProductionIconOverlay:
-		Prerequisites: lastnk.upgrade
 
 blacknapalm.upgrade:
 	Inherits: ^NodUpgrade
@@ -922,21 +988,76 @@ hstk.upgrade:
 	EncyclopediaExtras:
 		Subfaction: shadow
 
-advcyber.upgrade:
+covenant.upgrade:
 	Inherits: ^NodUpgrade
 	Tooltip:
-		Name: Research: Advanced Cybernetics
+		Name: Covenant Dependent Upgrade
 	Buildable:
-		BuildPaletteOrder: 40
-		Prerequisites: ~player.nod, tmpp, ~techlevel.high
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.nod, anycovenant, covenant.level2, ~!wrath.covenant, ~!unity.covenant, ~!zeal.covenant, ~techlevel.high
 		IconPalette: chrometd
-		Description: Allows production of advanced cybernetic units.\n\nUnlocks: Cyborg Elite\nUnlocks: Avatar (Wrath Covenant Only)\nUnlocks: Cyborg Reaper (Unity Convenant only)\nUnlocks: Enlightened (Zeal Covenant only)
+		Description: Upgrade depends on chosen covenant.\n\n• Wrath: Laser Tanks\n• Unity: Custodian\n• Zeal: Raider Buggy
 	Valued:
-		Cost: 1000
+		Cost: 750
 	RenderSprites:
-		Image: advcyber.upgrade
+		Image: covenant.upgrade
 	WithProductionIconOverlay:
-		Prerequisites: advcyber.upgrade
+		Prerequisites: covenant.upgrade
+	-Encyclopedia:
+
+lastnk.upgrade:
+	Inherits: ^NodUpgrade
+	Tooltip:
+		Name: Upgrade: Laser Tanks
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.nod, covenant.level2, ~wrath.covenant, ~techlevel.high
+		Description: Upgrades: Light Tank\nUpgrades: Battle Tank
+	TooltipExtras:
+		Strengths: + Increased damage vs infantry & light armor\n+ Increased range
+		Weaknesses: – Reduced damage vs heavy armor
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: lastnk.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: lastnk.upgrade
+
+cust.upgrade:
+	Inherits: ^NodUpgrade
+	Tooltip:
+		Name: Research: Custodian
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.nod, covenant.level2, ~unity.covenant, ~techlevel.high
+		Description: Replaces: Stealth APC
+	TooltipExtras:
+		Strengths: + Heavy armor\n+ Heals cyborgs & repairs vehicles
+		Weaknesses: – No stealth capability\n– No offensive capability\n– Reduced speed\n– Increased cost
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: cust.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: cust.upgrade
+
+rbug.upgrade:
+	Inherits: ^NodUpgrade
+	Tooltip:
+		Name: Research: Raider Buggy
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.nod, covenant.level2, ~zeal.covenant, ~techlevel.high
+		Description: Replaces: Buggy
+	TooltipExtras:
+		Strengths: + Heavy armor\n+ Increased damage\n+ Increased range
+		Weaknesses: – Increased cost\n– Reduced speed
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: rbug.upgrade
+	WithProductionIconOverlay:
+		Prerequisites: rbug.upgrade
 
 cyborgarmor.upgrade:
 	Inherits: ^NodUpgrade
@@ -944,7 +1065,7 @@ cyborgarmor.upgrade:
 		Name: Upgrade: Improved Cyborg Armor
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~player.nod, tmpp, ~techlevel.high
+		Prerequisites: ~player.nod, covenant.level2, ~techlevel.high
 		IconPalette: chrometd
 		Description: Improves cyborg armor.\n\nUpgrades: Cyborg\nUpgrades: Cyborg Rocket Soldier\nUpgrades: Chemical Warrior\nUpgrades: Acolyte/Templar\nUpgrades: Cyborg Mechanic\nUpgrades: Enlightened\nUpgrades: Cyborg Reaper\nUpgrades: Cyborg Elite
 	TooltipExtras:
@@ -956,13 +1077,13 @@ cyborgarmor.upgrade:
 	WithProductionIconOverlay:
 		Prerequisites: cyborgarmor.upgrade
 
-covenant.upgrade:
+covenant.upgrade2:
 	Inherits: ^NodUpgrade
 	Tooltip:
 		Name: Covenant Dependent Upgrade
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~player.nod, anycovenant, ~!wrath.covenant, ~!unity.covenant, ~!zeal.covenant, ~techlevel.high
+		Prerequisites: ~player.nod, anycovenant, tmpp, covenant.level3, ~!wrath.covenant, ~!unity.covenant, ~!zeal.covenant, ~techlevel.high
 		IconPalette: chrometd
 		Description: Upgrade depends on chosen covenant.\n\n• Wrath: Cyborg Firepower\n• Unity: Augmented Fabrication\n• Zeal: Cyborg Speed
 	Valued:
@@ -970,7 +1091,7 @@ covenant.upgrade:
 	RenderSprites:
 		Image: covenant.upgrade
 	WithProductionIconOverlay:
-		Prerequisites: covenant.upgrade
+		Prerequisites: covenant.upgrade2
 	-Encyclopedia:
 
 cyborgdmg.upgrade:
@@ -979,7 +1100,7 @@ cyborgdmg.upgrade:
 		Name: Upgrade: Improved Cyborg Firepower
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~player.nod, tmpp, ~wrath.covenant, ~techlevel.high
+		Prerequisites: ~player.nod, covenant.level3, ~wrath.covenant, ~techlevel.high
 		IconPalette: chrometd
 		Description: Increases cyborg firepower.\n\nUpgrades: Cyborg\nUpgrades: Cyborg Rocket Soldier\nUpgrades: Chemical Warrior\nUpgrades: Acolyte/Templar\nUpgrades: Cyborg Mechanic\nUpgrades: Cyborg Elite
 	TooltipExtras:
@@ -996,14 +1117,14 @@ cyborgdmg.upgrade:
 cyborgprod.upgrade:
 	Inherits: ^NodUpgrade
 	Tooltip:
-		Name: Upgrade: Augmented Fabrication
+		Name: Upgrade: Reclaimed Fabrication
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~player.nod, tmpp, ~unity.covenant, ~techlevel.high
+		Prerequisites: ~player.nod, covenant.level3, ~unity.covenant, ~techlevel.high
 		IconPalette: chrometd
-		Description: Leverage CABAL AI to increase cyborg production speed.\n\nUpgrades: Cyborg\nUpgrades: Cyborg Rocket Soldier\nUpgrades: Chemical Warrior\nUpgrades: Acolyte/Templar\nUpgrades: Cyborg Mechanic\nUpgrades: Cyborg Reaper\nUpgrades: Cyborg Elite
+		Description: Leverage CABAL AI to reclaim components from lost cyborgs to replacements.
 	TooltipExtras:
-		Strengths: + 10% faster production
+		Strengths: + 15% of lost cyborgs value is reclaimed to create new Cyborgs from Temple Prime
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -1019,7 +1140,7 @@ cyborgspeed.upgrade:
 		Name: Upgrade: Improved Cyborg Speed
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~player.nod, tmpp, ~zeal.covenant, ~techlevel.high
+		Prerequisites: ~player.nod, covenant.level3, ~zeal.covenant, ~techlevel.high
 		IconPalette: chrometd
 		Description: Increases cyborg movement speed.\n\nUpgrades: Cyborg\nUpgrades: Cyborg Rocket Soldier\nUpgrades: Chemical Warrior\nUpgrades: Acolyte/Templar\nUpgrades: Cyborg Mechanic\nUpgrades: Enlightened\nUpgrades: Cyborg Elite
 	TooltipExtras:
@@ -1061,7 +1182,7 @@ infantry.doctrine:
 	TooltipExtras:
 		Attributes: (!) Only ONE Doctrine may be chosen.
 	Valued:
-		Cost: 500
+		Cost: 300
 	RenderSprites:
 		Image: infantry.doctrine
 	WithProductionIconOverlay:
@@ -1078,7 +1199,7 @@ armor.doctrine:
 	TooltipExtras:
 		Attributes: (!) Only ONE Doctrine may be chosen.
 	Valued:
-		Cost: 500
+		Cost: 300
 	RenderSprites:
 		Image: armor.doctrine
 	WithProductionIconOverlay:
@@ -1095,7 +1216,7 @@ arty.doctrine:
 	TooltipExtras:
 		Attributes: (!) Only ONE Doctrine may be chosen.
 	Valued:
-		Cost: 500
+		Cost: 300
 	RenderSprites:
 		Image: arty.doctrine
 	WithProductionIconOverlay:
@@ -1149,7 +1270,7 @@ lasher.upgrade:
 		Strengths: + 25% faster movement\n+ Improved crushing performance
 		Weaknesses: – Reduced hit points\n– Reduced firepower
 	Valued:
-		Cost: 1000
+		Cost: 750
 	RenderSprites:
 		Image: lasher.upgrade
 	WithProductionIconOverlay:
@@ -1212,6 +1333,12 @@ ttrp.upgrade:
 		Image: ttrp.upgrade
 	WithProductionIconOverlay:
 		Prerequisites: ttrp.upgrade
+	ProductionCostMultiplier@russia:
+		Multiplier: 0
+		Prerequisites: player.russia
+	ProductionTimeMultiplier@russia:
+		Multiplier: 0
+		Prerequisites: player.russia
 
 deso.upgrade:
 	Inherits: ^SovietUpgrade
@@ -1429,7 +1556,7 @@ doctrine.upgrade2:
 		Name: Doctrine Dependent Upgrade
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~player.soviet, stek, anydoctrine, ~!infantry.doctrine, ~!armor.doctrine, ~!arty.doctrine, ~techlevel.high
+		Prerequisites: ~player.soviet, anydoctrine, ~!infantry.doctrine, ~!armor.doctrine, ~!arty.doctrine, ~techlevel.high
 		Description: Upgrade depends on chosen doctrine.\n\n• Infantry: Overlord Tank\n• Tanks: Apocalypse Tank\n• Artillery: Nuke Cannon
 	Valued:
 		Cost: 1000
@@ -1516,7 +1643,7 @@ economy.policy:
 	Buildable:
 		BuildPaletteOrder: 1
 		Prerequisites: ~player.allies, influence.level1, !economy.policy, !defense.policy, !development.policy, ~techlevel.medium
-		Description: Pursue economic policy.\n\n• Level 1: -10% cost of Refineries, Harvesters & MCVs\n• Level 2: -20% cost of Refineries, Harvesters & MCVs, +25% Construction Yard build radius\n• Level 3: -30% cost of Refineries, Harvesters & MCVs, +50% Ore Purifier income
+		Description: Pursue economic policy.\n\n• Level 1: -15% cost of Refineries, Harvesters & MCVs\n• Level 2: -25% cost of Refineries, Harvesters & MCVs, +20% MCV movement speed\n• Level 3: Free Chrono Miner upgrade, +15% Harvester durability, +50% Ore Purifier income
 	TooltipExtras:
 		Attributes: (!) Only ONE Policy may be chosen.
 	Valued:
@@ -1525,6 +1652,12 @@ economy.policy:
 		Image: economy.policy
 	WithProductionIconOverlay:
 		Prerequisites: economy.policy
+	ProvidesPrerequisite@FreeChronoMiner:
+		Prerequisite: charv.upgrade
+		RequiresCondition: charv-upgrade
+	GrantConditionOnPrerequisite@FreeChronoMiner:
+		Condition: charv-upgrade
+		Prerequisites: influence.level3
 
 defense.policy:
 	Inherits: ^AlliedUpgrade
@@ -1533,7 +1666,7 @@ defense.policy:
 	Buildable:
 		BuildPaletteOrder: 1
 		Prerequisites: ~player.allies, influence.level1, !economy.policy, !defense.policy, !development.policy, ~techlevel.medium
-		Description: Pursue defense policy.\n\n• Level 1: +10% building HP\n• Level 2: +20% building HP, +40% building repair rate & +20% defense repair rate\n• Level 3: +30% building HP, +15% defense weapon damage
+		Description: Pursue defense policy.\n\n• Level 1: +15% building HP, +25% Construction Yard build radius\n• Level 2: +30% building HP, +40% building repair rate & +20% defense repair rate\n• Level 3: +25% building/defense vision radius, +15% defense weapon damage
 	TooltipExtras:
 		Attributes: (!) Only ONE Policy may be chosen.
 	Valued:
@@ -1571,7 +1704,7 @@ greece.coalition:
 	TooltipExtras:
 		Attributes: (!) Only ONE Coalition may be chosen.
 	Valued:
-		Cost: 500
+		Cost: 300
 	RenderSprites:
 		Image: greece.coalition
 	AnnounceOnCreation:
@@ -1591,7 +1724,7 @@ korea.coalition:
 	TooltipExtras:
 		Attributes: (!) Only ONE Coalition may be chosen.
 	Valued:
-		Cost: 500
+		Cost: 300
 	RenderSprites:
 		Image: korea.coalition
 	AnnounceOnCreation:
@@ -1611,7 +1744,7 @@ sweden.coalition:
 	TooltipExtras:
 		Attributes: (!) Only ONE Coalition may be chosen.
 	Valued:
-		Cost: 500
+		Cost: 300
 	RenderSprites:
 		Image: sweden.coalition
 	AnnounceOnCreation:
@@ -1620,24 +1753,24 @@ sweden.coalition:
 	WithProductionIconOverlay:
 		Prerequisites: sweden.coalition
 
-rapc.upgrade:
+aapc.upgrade:
 	Inherits: ^AlliedUpgrade
 	Inherits@DevelopmentPolicyDiscount: ^DevelopmentPolicyDiscount
 	Tooltip:
-		Name: Research: Raider APC
+		Name: Research: Archer APC
 	Buildable:
 		BuildPaletteOrder: 20
 		Prerequisites: ~player.allies, anyradar, ~techlevel.medium
-		Description: Allows construction of the Raider APC.\n\nUpgrades: APC
+		Description: Allows construction of the Archer APC.\n\nReplaces: APC
 	TooltipExtras:
-		Strengths: + Adds strong anti-structure damage\n+ Increased splash damage\n+ Adds turret
-		Weaknesses: – Increased cost\n– Slower projectile speed\n– Reduced speed
+		Strengths: + Adds a target painting radar that reveals enemies and makes them take increased damage
+		Weaknesses: – Increased cost\n– Cannot deal damage
 	Valued:
 		Cost: 750
 	RenderSprites:
-		Image: rapc.upgrade
+		Image: aapc.upgrade
 	WithProductionIconOverlay:
-		Prerequisites: rapc.upgrade
+		Prerequisites: aapc.upgrade
 
 optics.upgrade:
 	Inherits: ^AlliedUpgrade
@@ -1774,7 +1907,7 @@ charv.upgrade:
 		Name: Upgrade: Chrono Miner
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~player.allies, alhq, ~techlevel.high
+		Prerequisites: ~player.allies, alhq, ~techlevel.high, !charv.upgrade
 		Description: Allows construction of Chrono Miners which\nteleport back to refineries.\n\nUpgrades: Ore Truck
 	TooltipExtras:
 		Strengths: + Teleport back to refinery
@@ -1809,16 +1942,18 @@ loyalist.allegiance:
 	Buildable:
 		BuildPaletteOrder: 16
 		Prerequisites: ~player.scrin, scrin.allegiances.available, !rebel.allegiance, !malefic.allegiance, ~techlevel.medium
-		Description: Declare your allegiance and side with the Scrin Overlord.\n\nRequired for:\n• Eviscerator\n• Ruiner\n• Overlord's Wrath\n• 25% faster regrowth of resources near Colony Platforms\n\n
+		Description: Declare your allegiance and side with the Scrin Overlord.\n\nRequired for:\n• Eviscerator\n• Ruiner\n• Overlord's Wrath\n• Ichor Spike\n\n
 		IconPalette: chromes
 	TooltipExtras:
 		Attributes: (!) Only ONE allegiance may be chosen.
 	Valued:
-		Cost: 500
+		Cost: 300
 	RenderSprites:
 		Image: loyalist.allegiance
 	WithProductionIconOverlay:
 		Prerequisites: loyalist.allegiance
+	FreeActorCA@IchorSpike:
+		Actor: ichorspike.provider
 
 rebel.allegiance:
 	Inherits: ^ScrinUpgrade
@@ -1827,16 +1962,18 @@ rebel.allegiance:
 	Buildable:
 		BuildPaletteOrder: 17
 		Prerequisites: ~player.scrin, scrin.allegiances.available, !loyalist.allegiance, !malefic.allegiance, ~techlevel.medium
-		Description: Declare your allegiance and side with the Scrin Rebels.\n\nRequired for:\n• Impaler\n• Nullifier\n• Gateway\n• Colony Ships can produce non-defense structures on the move\n\n
+		Description: Declare your allegiance and side with the Scrin Rebels.\n\nRequired for:\n• Impaler\n• Nullifier\n• Gateway\n• Colony Spike\n\n
 		IconPalette: chromes
 	TooltipExtras:
 		Attributes: (!) Only ONE allegiance may be chosen.
 	Valued:
-		Cost: 500
+		Cost: 300
 	RenderSprites:
 		Image: rebel.allegiance
 	WithProductionIconOverlay:
 		Prerequisites: rebel.allegiance
+	FreeActorCA@ColonySpike:
+		Actor: colonyspike.provider
 
 malefic.allegiance:
 	Inherits: ^ScrinUpgrade
@@ -1850,7 +1987,7 @@ malefic.allegiance:
 	TooltipExtras:
 		Attributes: (!) Only ONE allegiance may be chosen.
 	Valued:
-		Cost: 500
+		Cost: 300
 	RenderSprites:
 		Image: malefic.allegiance
 	WithProductionIconOverlay:
@@ -1865,7 +2002,7 @@ hyper.upgrade:
 	Buildable:
 		BuildPaletteOrder: 20
 		Prerequisites: ~player.scrin, anyradar, ~techlevel.medium
-		Description: Seekers and Lacerators gain Hypercharge ability, allow them to fire an uninterrupted barrage for a limited time. After use, weapon damage and speed is reduced for a short time.\n\nUpgrades: Seeker\nUpgrades: Lacerator
+		Description: Seekers and Lacerators gain Hypercharge ability, allow them to fire an uninterrupted barrage for a limited time. Increased damage taken while active. After use, weapon damage and speed is reduced for a short time.\n\nUpgrades: Seeker\nUpgrades: Lacerator
 		IconPalette: chromes
 	TooltipExtras:
 		Strengths: + Hypercharge ability
@@ -1903,8 +2040,8 @@ evis.upgrade:
 		Description: Replaces: Ravager
 		IconPalette: chromes
 	TooltipExtras:
-		Strengths: + Increased damage\n+ Increased health\n+ Increased range\n+ Increased rate of fire\n+ Affected by Resource Conversion upgrade
-		Weaknesses: – Increased cost
+		Strengths: + Increased damage\n+ Increased health\n+ Increased rate of fire\n+ Benefits from Resource Conversion upgrade
+		Weaknesses: – Increased cost\n– Reduced range
 	Valued:
 		Cost: 750
 	RenderSprites:
@@ -1942,7 +2079,7 @@ stlk.upgrade:
 		IconPalette: chromes
 	TooltipExtras:
 		Strengths: + Increased damage\n+ Increased health\n+ Cloaking ability with speed boost
-		Weaknesses: – Increased cost\n– Reduced range
+		Weaknesses: – Increased cost\n– Reduced splash damage
 	Valued:
 		Cost: 750
 	RenderSprites:

@@ -143,11 +143,19 @@ namespace OpenRA.Mods.CA.Activities
 			var expectedRemainingCost = upgradeTicksRemaining == 1 ? 0 : upgradeable.UpgradeInfo.Cost * upgradeTicksRemaining / Math.Max(1, upgradeable.UpgradeInfo.BuildDuration);
 			var costThisFrame = upgradeCostRemaining - expectedRemainingCost;
 
-			/* Insufficient funds. */
-			if (costThisFrame != 0 && !playerResources.TakeCash(costThisFrame, true))
-				return;
+			if (costThisFrame > 0)
+			{
+				/* Insufficient funds. */
+				if (!playerResources.TakeCash(costThisFrame, true))
+					return;
 
-			upgradeCostRemaining -= costThisFrame;
+				upgradeCostRemaining -= costThisFrame;
+			}
+			else if (costThisFrame < 0)
+			{
+				playerResources.GiveCash(-costThisFrame);
+				upgradeCostRemaining -= costThisFrame;
+			}
 
 			foreach (var notifyResupply in notifyResupplies)
 				notifyResupply.ResupplyTick(host.Actor, self, ResupplyType.Rearm);

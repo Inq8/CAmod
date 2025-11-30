@@ -27,6 +27,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Player relationships that see the overlay.")]
 		public readonly PlayerRelationship ValidRelationships = PlayerRelationship.Ally | PlayerRelationship.Neutral | PlayerRelationship.Enemy;
 
+		[Desc("Whether the effect is visible through fog.")]
+		public readonly bool VisibleThroughFog = true;
+
 		public override object Create(ActorInitializer init) { return new WithPalettedOverlay(init.Self, this); }
 	}
 
@@ -45,10 +48,10 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled)
 				return r;
 
-			return ModifiedRender(wr, r);
+			return ModifiedRender(self, wr, r);
 		}
 
-		IEnumerable<IRenderable> ModifiedRender(WorldRenderer wr, IEnumerable<IRenderable> r)
+		IEnumerable<IRenderable> ModifiedRender(Actor self, WorldRenderer wr, IEnumerable<IRenderable> r)
 		{
 			if (IsTraitDisabled)
 				yield break;
@@ -59,7 +62,7 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				yield return a;
 
-				if (validRelationship && palette != null && !a.IsDecoration && a is IPalettedRenderable)
+				if (validRelationship && palette != null && !a.IsDecoration && a is IPalettedRenderable && (Info.VisibleThroughFog || !self.World.FogObscures(self.CenterPosition)))
 					yield return ((IPalettedRenderable)a).WithPalette(palette)
 						.WithZOffset(a.ZOffset + 1)
 						.AsDecoration();
