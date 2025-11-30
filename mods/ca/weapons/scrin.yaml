@@ -192,7 +192,7 @@ PlasmaDiscs:
 	Burst: 5
 	BurstDelays: 4
 	ValidTargets: Ground, Water, Underwater
-	Projectile: Missile
+	Projectile: MissileCA
 		Image: plasdiscsm
 		TrailImage: smokey
 		TrailPalette: scrinplasma
@@ -230,7 +230,7 @@ PlasmaDiscs.Hypercharged:
 	Burst: 1
 	ReloadDelay: 4
 	Range: 7c0
-	Projectile: Missile
+	Projectile: MissileCA
 		RangeLimit: 7c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 1600
@@ -244,7 +244,7 @@ IntruderDiscs:
 	Range: 6c0
 	ReloadDelay: 70
 	Burst: 3
-	Projectile: Missile
+	Projectile: MissileCA
 		Inaccuracy: 0c128
 		LockOnProbability: 33
 	Warhead@1Dam: SpreadDamage
@@ -262,7 +262,7 @@ MarauderDiscs:
 	Burst: 2
 	BurstDelays: 5
 	Report: mrdr-fire1.aud, mrdr-fire2.aud
-	Projectile: Missile
+	Projectile: MissileCA
 		Image: mrdrdisc
 		Speed: 550
 		LockOnProbability: 100
@@ -1187,7 +1187,7 @@ ShardLauncher:
 	BurstDelays: 4
 	Range: 8c0
 	ValidTargets: Air, AirSmall, ICBM
-	Projectile: Missile
+	Projectile: MissileCA
 		Speed: 448
 		CloseEnough: 448
 		Palette: scrin
@@ -1232,7 +1232,7 @@ RavagerShards:
 	ReloadDelay: 45
 	BurstDelays: 5
 	Range: 5c0
-	Projectile: Missile
+	Projectile: MissileCA
 		Speed: 265
 		CloseEnough: 265
 		ContrailLength: 9
@@ -1264,7 +1264,7 @@ EvisceratorShards:
 	Range: 4c0
 	ReloadDelay: 30
 	BurstDelays: 4
-	Projectile: Missile
+	Projectile: MissileCA
 		Speed: 350
 	Warhead@1Dam: SpreadDamage
 		Damage: 2200
@@ -1273,7 +1273,7 @@ EvisceratorShardsCharged:
 	Inherits: EvisceratorShards
 	ReloadDelay: 26
 	StartBurstReport: shard-fire1.aud
-	Projectile: Missile
+	Projectile: MissileCA
 		ContrailStartColorAlpha: 128
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: firebl3.aud
@@ -1291,7 +1291,7 @@ EvisceratorArcShard:
 	Inherits: EvisceratorShards
 	-Burst:
 	Range: 2c0
-	Projectile: Missile
+	Projectile: MissileCA
 		MinimumLaunchAngle: 80
 		MaximumLaunchAngle: 80
 		Inaccuracy: 32
@@ -1308,7 +1308,7 @@ StalkerShards:
 	Burst: 2
 	BurstDelays: 4
 	ReloadDelay: 40
-	Projectile: Missile
+	Projectile: MissileCA
 		Speed: 350
 		Image: scrinzap
 		ContrailStartColor: 954fff
@@ -1337,7 +1337,7 @@ ShardWalkerShards:
 	Inherits: RavagerShards
 	ReloadDelay: 35
 	StartBurstReport: shard-fire1.aud
-	Projectile: Missile
+	Projectile: MissileCA
 		Speed: 448
 		ContrailStartColor: 00FF0066
 		ContrailStartColorAlpha: 102
@@ -1360,7 +1360,7 @@ ShardWalkerShardsAA:
 	ReloadDelay: 35
 	BurstDelays: 5
 	Range: 8c512
-	Projectile: Missile
+	Projectile: MissileCA
 		ContrailStartColor: 00FF0066
 		ContrailStartColorAlpha: 102
 	Warhead@1Dam: SpreadDamage
@@ -1379,7 +1379,7 @@ LaceratorShards:
 	StartBurstReport: lacerator-fire1.aud, lacerator-fire2.aud
 	ReloadDelay: 100
 	ValidTargets: Ground, Water, Underwater
-	Projectile: Missile
+	Projectile: MissileCA
 		Image: bshard
 		ContrailLength: 9
 		ContrailStartWidth: 0c32
@@ -1407,7 +1407,7 @@ LaceratorShards.Hypercharged:
 	-StartBurstReport:
 	Range: 7c0
 	Report: lacerator-hyperfire1.aud, lacerator-hyperfire2.aud
-	Projectile: Missile
+	Projectile: MissileCA
 		ContrailStartWidth: 0c48
 		ContrailStartColor: 7e00ff
 	Warhead@1Dam: SpreadDamage
@@ -1465,7 +1465,7 @@ ImpalerTracer:
 ImpalerSpikePassenger:
 	Inherits: ImpalerSpike
 	-Projectile:
-	Projectile: Missile
+	Projectile: MissileCA
 		Speed: 800
 		Blockable: false
 		Image: DRAGON
@@ -1483,7 +1483,7 @@ WatcherDart:
 	ReloadDelay: 100
 	Report: wchr-fire1.aud
 	ValidTargets: WatcherParasiteAttachable
-	Projectile: Missile
+	Projectile: MissileCA
 		Speed: 750
 		Blockable: false
 		Image: wchrdart
