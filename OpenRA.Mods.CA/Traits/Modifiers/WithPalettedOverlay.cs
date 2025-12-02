@@ -18,7 +18,7 @@ namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("Overlays a copy of each renderable of the actor using the specified palette.",
 		"Will obscure the underlying renderables if the chosen palette has no transparency.")]
-	public class WithPalettedOverlayInfo : ConditionalTraitInfo
+	public class WithPalettedOverlayInfo : ConditionalTraitInfo, IActorPreviewRenderModifierInfo
 	{
 		[PaletteReference]
 		[Desc("Palette to use when rendering the overlay")]
@@ -30,7 +30,19 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Whether the effect is visible through fog.")]
 		public readonly bool VisibleThroughFog = true;
 
+		[Desc("Whether to show this overlay in actor previews (encyclopedia, tooltips, etc).")]
+		public readonly bool ShowInPreview = false;
+
 		public override object Create(ActorInitializer init) { return new WithPalettedOverlay(init.Self, this); }
+
+		public IActorPreviewRenderModifier GetPreviewRenderModifier(WorldRenderer wr, ActorInfo actorInfo, TypeDictionary inits, Color previewColor)
+		{
+			// ShowInPreview overrides the condition check - if true, always show in preview
+			if (!ShowInPreview)
+				return null;
+
+			return new WithPalettedOverlayPreviewModifier(wr, this);
+		}
 	}
 
 	public class WithPalettedOverlay : ConditionalTrait<WithPalettedOverlayInfo>, IRenderModifier, INotifyOwnerChanged
@@ -84,5 +96,35 @@ namespace OpenRA.Mods.CA.Traits
 			var relationship = self.World.RenderPlayer != null ? self.Owner.RelationshipWith(self.World.RenderPlayer) : PlayerRelationship.None;
 			validRelationship = Info.ValidRelationships.HasRelationship(relationship);
 		}
+	}
+
+	/// <summary>
+	/// Preview modifier for WithPalettedOverlay
+	/// </summary>
+	sealed class WithPalettedOverlayPreviewModifier : IActorPreviewRenderModifier
+	{
+		readonly PaletteReference palette;
+
+		public WithPalettedOverlayPreviewModifier(WorldRenderer wr, WithPalettedOverlayInfo info)
+		{
+			palette = string.IsNullOrEmpty(info.Palette) ? null : wr.Palette(info.Palette);
+		}
+
+		public IEnumerable<IRenderable> ModifyPreviewRender(WorldRenderer wr, IEnumerable<IRenderable> renderables, Rectangle bounds)
+		{
+			foreach (var r in renderables)
+			{
+				yield return r;
+
+				// For preview rendering, apply palette swap to all paletted renderables
+				// (unlike in-game where we skip decorations)
+				if (palette != null && r is IPalettedRenderable pr)
+					yield return pr.WithPalette(palette)
+						.WithZOffset(r.ZOffset + 1)
+						.AsDecoration();
+			}
+		}
+
+		public void Tick() { }
 	}
 }

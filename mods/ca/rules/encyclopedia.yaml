@@ -11,9 +11,20 @@ encyclopedia.tips.general:
 		HideNotProducible: true
 		Description: encyclopedia-tips-general-description
 
+^DebuffPreview:
+	Inherits: ^PreviewDummy
+	Encyclopedia:
+		Scale: 2
+	RenderSprites:
+		Image: 4tnk
+	WithFacingSpriteBody:
+	WithSpriteTurret:
+		Sequence: turret
+	Turreted:
+
 encyclopedia.debuffs.atomized:
-	Interactable:
-	AlwaysVisible:
+	Inherits: ^DebuffPreview
+	Inherits@Atomizable: ^Atomizable
 	Tooltip:
 		Name: Atomized
 	Encyclopedia:
@@ -23,10 +34,12 @@ encyclopedia.debuffs.atomized:
 		Description: Deals damage over time and reduces movement speed and firepower.
 	TooltipExtras:
 		Weaknesses: • Deals periodic damage\n-33% movement speed\n-33% damage dealt
+	WithIdleOverlay@ATOMIZED:
+		-RequiresCondition:
 
 encyclopedia.debuffs.berserk:
-	Interactable:
-	AlwaysVisible:
+	Inherits: ^DebuffPreview
+	Inherits@Berserk: ^Berserk
 	Tooltip:
 		Name: Berserk
 	Encyclopedia:
@@ -37,10 +50,11 @@ encyclopedia.debuffs.berserk:
 	TooltipExtras:
 		Weaknesses: • Attacks units indiscriminately
 		Attributes: +25% movement speed\n+100% rate of fire
+	WithPalettedOverlay@BERSERK:
+		ShowInPreview: true
 
 encyclopedia.debuffs.blinded:
-	Interactable:
-	AlwaysVisible:
+	Inherits: ^DebuffPreview
 	Tooltip:
 		Name: Blinded
 	Encyclopedia:
@@ -50,10 +64,15 @@ encyclopedia.debuffs.blinded:
 		Description: Disables unit vision and weapons.
 	TooltipExtras:
 		Weaknesses: • Vision disabled\n• Weapons disabled
+	WithPreviewDecoration@Blinded:
+		Image: blinded
+		Sequence: idle
+		Palette: effect
+		Position: Top
+		Margin: 0, 8
 
 encyclopedia.debuffs.chill:
-	Interactable:
-	AlwaysVisible:
+	Inherits: ^DebuffPreview
 	Tooltip:
 		Name: Chilled
 	Encyclopedia:
@@ -64,10 +83,12 @@ encyclopedia.debuffs.chill:
 	TooltipExtras:
 		Attributes: • Stacks up to 10 times
 		Weaknesses: -25/35/43/50/56/59/62/65/68/70% movement speed\n+10% damage received per stack
+	WithColoredOverlayCA@chilled5:
+		Color: 51aeda68
+		ShowInPreview: true
 
 encyclopedia.debuffs.concussion:
-	Interactable:
-	AlwaysVisible:
+	Inherits: ^DebuffPreview
 	Tooltip:
 		Name: Concussed
 	Encyclopedia:
@@ -77,10 +98,16 @@ encyclopedia.debuffs.concussion:
 		Description: Reduces rate of fire and movement speed.
 	TooltipExtras:
 		Weaknesses: -25% movement speed\n-50% rate of fire
+	WithPreviewDecoration:
+		Image: pips
+		Sequence: pip-conc
+		Palette: chrome
+		Position: Top
+		BlinkInterval: 16
+		BlinkPattern: On, On, Off
 
 encyclopedia.debuffs.emp:
-	Interactable:
-	AlwaysVisible:
+	Inherits: ^DebuffPreview
 	Tooltip:
 		Name: EMP
 	Encyclopedia:
@@ -90,10 +117,17 @@ encyclopedia.debuffs.emp:
 		Description: Completely incapacitates vehicles, heavy cyborgs and defenses.
 	TooltipExtras:
 		Weaknesses: • Movement disabled\n• Weapons disabled\n• Abilities disabled
+	WithColoredOverlayCA@EMPDISABLE:
+		Color: 000000b4
+		ShowInPreview: true
+	WithIdleOverlay@EMPDISABLE:
+		Sequence: emp-overlay
+		Palette: tseffect
+		IsDecoration: True
 
 encyclopedia.debuffs.irradiated:
-	Interactable:
-	AlwaysVisible:
+	Inherits: ^DebuffPreview
+	Inherits@Irradiatable: ^Irradiatable
 	Tooltip:
 		Name: Irradiated
 	Encyclopedia:
@@ -103,10 +137,12 @@ encyclopedia.debuffs.irradiated:
 		Description: Causes periodic AoE damage, reduces outgoing damage and increases incoming damage.
 	TooltipExtras:
 		Weaknesses: • Deals periodic damage to nearby units\n• Irradiates the ground\n-10% damage dealt\n+10% damage received
+	WithPalettedOverlay@IRRADIATABLE:
+		ShowInPreview: true
 
 encyclopedia.debuffs.jammed:
-	Interactable:
-	AlwaysVisible:
+	Inherits: ^DebuffPreview
+	Inherits@WeaponJammable: ^WeaponJammable
 	Tooltip:
 		Name: Jammed
 	Encyclopedia:
@@ -116,10 +152,12 @@ encyclopedia.debuffs.jammed:
 		Description: Reduces vehicle weapon damage and rate of fire.
 	TooltipExtras:
 		Weaknesses: -10% damage dealt\n-20% rate of fire
+	WithIdleOverlay@WEAPJAMMED:
+		-RequiresCondition:
 
 encyclopedia.debuffs.suppression:
-	Interactable:
-	AlwaysVisible:
+	Inherits: ^DebuffPreview
+	Inherits@Suppressable: ^Suppressable
 	Tooltip:
 		Name: Suppressed
 	Encyclopedia:
@@ -129,10 +167,12 @@ encyclopedia.debuffs.suppression:
 		Description: Reduces movement speed and rate of fire.
 	TooltipExtras:
 		Weaknesses: -60% movement speed\n-20% rate of fire
+	WithPalettedOverlay@SUPPRESSION:
+		ShowInPreview: true
 
 encyclopedia.debuffs.veiled:
-	Interactable:
-	AlwaysVisible:
+	Inherits: ^DebuffPreview
+	Inherits@Veilable: ^Veilable
 	Tooltip:
 		Name: Veiled
 	Encyclopedia:
@@ -142,10 +182,14 @@ encyclopedia.debuffs.veiled:
 		Description: Reduces weapon and vision range.
 	TooltipExtras:
 		Weaknesses: -20% weapon range\n-20% vision range
+	WithIdleOverlay@VEILED:
+		-RequiresCondition:
 
 encyclopedia.debuffs.warped:
-	Interactable:
-	AlwaysVisible:
+	Inherits: ^DebuffPreview
+	Inherits@Warpable: ^Warpable
+	-Warpable:
+	-FireWarheadsOnDeath@TEMPORAL:
 	Tooltip:
 		Name: Warped
 	Encyclopedia:
@@ -156,3 +200,7 @@ encyclopedia.debuffs.warped:
 	TooltipExtras:
 		Strengths: • Immune to non-warping damage
 		Weaknesses: • Movement disabled\n• Weapons disabled\n• Abilities disabled
+	WithPalettedOverlay@TEMPORALl:
+		ShowInPreview: true
+	WithIdleOverlay@TEMPORAL:
+		-RequiresCondition:
