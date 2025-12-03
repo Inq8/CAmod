@@ -11,10 +11,15 @@ encyclopedia.tips.general:
 		HideNotProducible: true
 		Description: encyclopedia-tips-general-description
 
-^DebuffPreview:
+^EffectPreview:
 	Inherits: ^PreviewDummy
 	Encyclopedia:
 		Scale: 2
+	EncyclopediaExtras:
+		HideNotProducible: true
+
+^VehicleEffectPreview:
+	Inherits: ^EffectPreview
 	RenderSprites:
 		Image: 4tnk
 	WithFacingSpriteBody:
@@ -22,15 +27,259 @@ encyclopedia.tips.general:
 		Sequence: turret
 	Turreted:
 
+^InfantryEffectPreview:
+	Inherits: ^EffectPreview
+	RenderSprites:
+		Image: e1
+		PlayerPalette: playertd
+	WithInfantryBody:
+		IdleSequences: idle1,idle2
+		StandSequences: stand,stand2
+	QuantizeFacingsFromSequence:
+		Sequence: stand
+
+encyclopedia.buffs.anathema:
+	Inherits: ^VehicleEffectPreview
+	Tooltip:
+		Name: Anathema
+	Encyclopedia:
+		Category: Other/Buffs
+	EncyclopediaExtras:
+		Description: Gradually increases damage output and speed over 30 seconds, but unit is destroyed once the effect ends.
+	TooltipExtras:
+		Strengths: • Gains firepower, rate of fire and speed gradually over 30 seconds
+		Weaknesses: • Destroyed once effect ends
+	WithIdleOverlay@Anathema:
+		Sequence: idle
+		Image: anathema
+		Palette: caneon
+		IsDecoration: True
+	WithPalettedOverlay@Anathema:
+		Palette: anathema
+		ShowInPreview: true
+
+encyclopedia.buffs.defensematrix:
+	Inherits: ^InfantryEffectPreview
+	Tooltip:
+		Name: Defense Matrix
+	Encyclopedia:
+		Category: Other/Buffs
+	EncyclopediaExtras:
+		Description: Increases effective health of infantry.
+	TooltipExtras:
+		Strengths: • Increased effective health by 1250 per stack (up to 6 stacks)
+	WithIdleOverlay@ZoneDefenderShield:
+		Sequence: idle
+		Image: zdefshield-overlay
+		Palette: tdeffect
+		IsDecoration: True
+
+encyclopedia.buffs.frenzy:
+	Inherits: ^VehicleEffectPreview
+	Tooltip:
+		Name: Frenzy
+	Encyclopedia:
+		Category: Other/Buffs
+	EncyclopediaExtras:
+		Description: Increases rate of fire and movement speed, but reduces them once the effect ends.
+	TooltipExtras:
+		Strengths: +33% rate of fire\n+25% movement speed
+		Weaknesses: -15% rate of fire after effect ends\n-15% movement speed after effect ends
+	WithPalettedOverlay@FRENZY:
+		Palette: frenzy
+		ShowInPreview: true
+	WithIdleOverlay@FRENZY:
+		Sequence: vehicle
+		Image: frenzy-overlay
+		Palette: frenzyoverlay
+		IsDecoration: True
+
+encyclopedia.buffs.gyro:
+	Inherits: ^VehicleEffectPreview
+	RenderSprites:
+		Image: titn
+		PlayerPalette: playertd
+	QuantizeFacingsFromSequence:
+		Sequence: stand
+	WithFacingSpriteBody:
+		Sequence: stand
+	Tooltip:
+		Name: Gyro Stabilizers
+	Encyclopedia:
+		Category: Other/Buffs
+	EncyclopediaExtras:
+		Description: Increases range but reduces rate of fire.
+	TooltipExtras:
+		Strengths: +33% weapon range
+		Weaknesses: -25% rate of fire
+	WithPalettedOverlay@GYRO:
+		Palette: gyro
+		ShowInPreview: true
+
+encyclopedia.buffs.hotu:
+	Inherits: ^InfantryEffectPreview
+	Tooltip:
+		Name: Hero of the Union
+	Encyclopedia:
+		Category: Other/Buffs
+	EncyclopediaExtras:
+		Description: Increases effective health, speed, rate of fire and range.
+	TooltipExtras:
+		Strengths: 28k effective health\n+20% movement speed\n+50% range\n+50% rate of fire
+	WithIdleOverlay@HeroOfTheUnionCrest:
+		Sequence: star
+		Image: hero-overlay
+		Palette: effect
+		IsDecoration: True
+	WithIdleOverlay@HeroOfTheUnionLight:
+		Sequence: light
+		Image: hero-overlay
+		Palette: effect
+		IsDecoration: True
+
+encyclopedia.buffs.hypercharge:
+	Inherits: ^VehicleEffectPreview
+	RenderSprites:
+		Image: seek
+	Tooltip:
+		Name: Hypercharge
+	Encyclopedia:
+		Category: Other/Buffs
+	EncyclopediaExtras:
+		Description: Allows unit to fire continuously for a short duration while taking increased damage. After the effect ends the unit has reduced speed, damage and rate of fire for a short time.
+	TooltipExtras:
+		Strengths: • Continuous fire
+		Weaknesses: +20% increased damage taken
+	WithPalettedOverlay@HYPERCHARGE:
+		Palette: hypercharge
+		ShowInPreview: true
+	WithIdleOverlay@HYPERCHARGE:
+		Sequence: emp-overlay
+		Palette: ionsurgeoverlay
+		IsDecoration: True
+
+encyclopedia.buffs.inspiration:
+	Inherits: ^InfantryEffectPreview
+	Tooltip:
+		Name: Inspiration I
+	Encyclopedia:
+		Category: Other/Buffs
+	EncyclopediaExtras:
+		Description: Increases movement speed and rate of fire.
+	TooltipExtras:
+		Strengths: +30% movement speed\n+10% rate of fire
+	WithIdleOverlay@Inspiration1:
+		Image: ussrstar
+		Sequence: idle-overlay1
+		Palette: effect
+		IsDecoration: True
+
+encyclopedia.buffs.inspiration2:
+	Inherits: ^InfantryEffectPreview
+	Tooltip:
+		Name: Inspiration II
+	Encyclopedia:
+		Category: Other/Buffs
+	EncyclopediaExtras:
+		Description: Increases movement speed and rate of fire.
+	TooltipExtras:
+		Strengths: +40% movement speed\n+20% rate of fire
+	WithIdleOverlay@Inspiration2:
+		Image: ussrstar
+		Sequence: idle-overlay2
+		Palette: effect
+		IsDecoration: True
+
+encyclopedia.buffs.ionsurge:
+	Inherits: ^VehicleEffectPreview
+	Tooltip:
+		Name: Ion Surge
+	Encyclopedia:
+		Category: Other/Buffs
+	EncyclopediaExtras:
+		Description: Increases movement speed.
+	TooltipExtras:
+		Strengths: +50% movement speed
+	WithColoredOverlayCA@IONSURGE:
+		Color: bd70ff23
+		ShowInPreview: true
+	WithIdleOverlay@IONSURGE:
+		Sequence: vehicle
+		Image: ionsurge-overlay
+		Palette: ionsurgeoverlay
+		IsDecoration: True
+
+encyclopedia.buffs.ironcurtain:
+	Inherits: ^VehicleEffectPreview
+	Tooltip:
+		Name: Iron Curtain
+	Encyclopedia:
+		Category: Other/Buffs
+	EncyclopediaExtras:
+		Description: Grants temporary invulnerability.
+	TooltipExtras:
+		Strengths: • Immune to all damage
+		Weaknesses: • Speed capped to Heavy Tank speed
+	WithPalettedOverlay@IRONCURTAIN:
+		Palette: invuln
+		ShowInPreview: true
+
+encyclopedia.buffs.naniterepair:
+	Inherits: ^VehicleEffectPreview
+	Tooltip:
+		Name: Nanite Repair
+	Encyclopedia:
+		Category: Other/Buffs
+	EncyclopediaExtras:
+		Description: Repairs vehicles over time.
+	TooltipExtras:
+		Strengths: • Repairs 5% health per second
+	WithPalettedOverlay@NREPAIR:
+		Palette: nrepair
+		ShowInPreview: true
+	WithIdleOverlay@NREPAIR:
+		Image: nrepair-overlay
+		Sequence: idle
+		Palette: effect
+		IsDecoration: True
+
+encyclopedia.buffs.naniteshield:
+	Inherits: ^VehicleEffectPreview
+	Tooltip:
+		Name: Nanite Shield
+	Encyclopedia:
+		Category: Other/Buffs
+	EncyclopediaExtras:
+		Description: Absorbs a portion of incoming damage.
+	TooltipExtras:
+		Strengths: • Absorbs 50% of incoming damage
+	WithIdleOverlay@NSHIELD:
+		Sequence: idle
+		Image: nshield-overlay
+		Palette: effect
+		IsDecoration: True
+
+encyclopedia.buffs.tibstealth:
+	Inherits: ^VehicleEffectPreview
+	RenderSprites:
+		Palette: cloakgreen
+	Tooltip:
+		Name: Tiberium Stealth
+	Encyclopedia:
+		Category: Other/Buffs
+	EncyclopediaExtras:
+		Description: Makes the unit invisible to enemies until it attacks or is attacked, and reduces damage taken.
+	TooltipExtras:
+		Strengths: • Invisible to enemies\n-10% damage taken
+
 encyclopedia.debuffs.atomized:
-	Inherits: ^DebuffPreview
+	Inherits: ^VehicleEffectPreview
 	Inherits@Atomizable: ^Atomizable
 	Tooltip:
 		Name: Atomized
 	Encyclopedia:
 		Category: Other/Debuffs
 	EncyclopediaExtras:
-		HideNotProducible: true
 		Description: Deals damage over time and reduces movement speed and firepower.
 	TooltipExtras:
 		Weaknesses: • Deals periodic damage\n-33% movement speed\n-33% damage dealt
@@ -38,14 +287,13 @@ encyclopedia.debuffs.atomized:
 		-RequiresCondition:
 
 encyclopedia.debuffs.berserk:
-	Inherits: ^DebuffPreview
+	Inherits: ^VehicleEffectPreview
 	Inherits@Berserk: ^Berserk
 	Tooltip:
 		Name: Berserk
 	Encyclopedia:
 		Category: Other/Debuffs
 	EncyclopediaExtras:
-		HideNotProducible: true
 		Description: Causes affected units to uncontrollably attack nearby units.
 	TooltipExtras:
 		Weaknesses: • Attacks units indiscriminately
@@ -54,13 +302,12 @@ encyclopedia.debuffs.berserk:
 		ShowInPreview: true
 
 encyclopedia.debuffs.blinded:
-	Inherits: ^DebuffPreview
+	Inherits: ^VehicleEffectPreview
 	Tooltip:
 		Name: Blinded
 	Encyclopedia:
 		Category: Other/Debuffs
 	EncyclopediaExtras:
-		HideNotProducible: true
 		Description: Disables unit vision and weapons.
 	TooltipExtras:
 		Weaknesses: • Vision disabled\n• Weapons disabled
@@ -72,13 +319,12 @@ encyclopedia.debuffs.blinded:
 		Margin: 0, 8
 
 encyclopedia.debuffs.chill:
-	Inherits: ^DebuffPreview
+	Inherits: ^VehicleEffectPreview
 	Tooltip:
 		Name: Chilled
 	Encyclopedia:
 		Category: Other/Debuffs
 	EncyclopediaExtras:
-		HideNotProducible: true
 		Description: Reduces movement speed and makes affected units take more damage.
 	TooltipExtras:
 		Attributes: • Stacks up to 10 times
@@ -88,13 +334,12 @@ encyclopedia.debuffs.chill:
 		ShowInPreview: true
 
 encyclopedia.debuffs.concussion:
-	Inherits: ^DebuffPreview
+	Inherits: ^VehicleEffectPreview
 	Tooltip:
 		Name: Concussed
 	Encyclopedia:
 		Category: Other/Debuffs
 	EncyclopediaExtras:
-		HideNotProducible: true
 		Description: Reduces rate of fire and movement speed.
 	TooltipExtras:
 		Weaknesses: -25% movement speed\n-50% rate of fire
@@ -107,13 +352,12 @@ encyclopedia.debuffs.concussion:
 		BlinkPattern: On, On, Off
 
 encyclopedia.debuffs.emp:
-	Inherits: ^DebuffPreview
+	Inherits: ^VehicleEffectPreview
 	Tooltip:
 		Name: EMP
 	Encyclopedia:
 		Category: Other/Debuffs
 	EncyclopediaExtras:
-		HideNotProducible: true
 		Description: Completely incapacitates vehicles, heavy cyborgs and defenses.
 	TooltipExtras:
 		Weaknesses: • Movement disabled\n• Weapons disabled\n• Abilities disabled
@@ -126,14 +370,13 @@ encyclopedia.debuffs.emp:
 		IsDecoration: True
 
 encyclopedia.debuffs.irradiated:
-	Inherits: ^DebuffPreview
+	Inherits: ^VehicleEffectPreview
 	Inherits@Irradiatable: ^Irradiatable
 	Tooltip:
 		Name: Irradiated
 	Encyclopedia:
 		Category: Other/Debuffs
 	EncyclopediaExtras:
-		HideNotProducible: true
 		Description: Causes periodic AoE damage, reduces outgoing damage and increases incoming damage.
 	TooltipExtras:
 		Weaknesses: • Deals periodic damage to nearby units\n• Irradiates the ground\n-10% damage dealt\n+10% damage received
@@ -141,29 +384,61 @@ encyclopedia.debuffs.irradiated:
 		ShowInPreview: true
 
 encyclopedia.debuffs.jammed:
-	Inherits: ^DebuffPreview
+	Inherits: ^VehicleEffectPreview
 	Inherits@WeaponJammable: ^WeaponJammable
 	Tooltip:
 		Name: Jammed
 	Encyclopedia:
 		Category: Other/Debuffs
 	EncyclopediaExtras:
-		HideNotProducible: true
 		Description: Reduces vehicle weapon damage and rate of fire.
 	TooltipExtras:
 		Weaknesses: -10% damage dealt\n-20% rate of fire
 	WithIdleOverlay@WEAPJAMMED:
 		-RequiresCondition:
 
+encyclopedia.debuffs.targetpainted:
+	Inherits: ^VehicleEffectPreview
+	Tooltip:
+		Name: Target Painted
+	Encyclopedia:
+		Category: Other/Debuffs
+	EncyclopediaExtras:
+		Description: Increases damage received and reveals the unit to enemies.
+	TooltipExtras:
+		Weaknesses: Revealed to enemies\n+10% damage received
+	WithPreviewDecoration:
+		Image: targetpainter
+		Sequence: idle
+		Palette: effect
+		Position: Top
+		Margin: 0, 8
+
+encyclopedia.debuffs.reapersnared:
+	Inherits: ^InfantryEffectPreview
+	Inherits@ReaperSnareable: ^ReaperSnareable
+	Tooltip:
+		Name: Reaper Snared
+	Encyclopedia:
+		Category: Other/Debuffs
+	EncyclopediaExtras:
+		Description: Completely incapacitates infantry.
+	TooltipExtras:
+		Weaknesses: • Movement disabled\n• Weapons disabled\n• Abilities disabled
+	WithIdleOverlay@ReaperSnare:
+		-RequiresCondition:
+	WithInfantryBody:
+		IdleSequences: idle1,idle2
+		StandSequences: parachute
+
 encyclopedia.debuffs.suppression:
-	Inherits: ^DebuffPreview
+	Inherits: ^VehicleEffectPreview
 	Inherits@Suppressable: ^Suppressable
 	Tooltip:
 		Name: Suppressed
 	Encyclopedia:
 		Category: Other/Debuffs
 	EncyclopediaExtras:
-		HideNotProducible: true
 		Description: Reduces movement speed and rate of fire.
 	TooltipExtras:
 		Weaknesses: -60% movement speed\n-20% rate of fire
@@ -171,14 +446,13 @@ encyclopedia.debuffs.suppression:
 		ShowInPreview: true
 
 encyclopedia.debuffs.veiled:
-	Inherits: ^DebuffPreview
+	Inherits: ^VehicleEffectPreview
 	Inherits@Veilable: ^Veilable
 	Tooltip:
 		Name: Veiled
 	Encyclopedia:
 		Category: Other/Debuffs
 	EncyclopediaExtras:
-		HideNotProducible: true
 		Description: Reduces weapon and vision range.
 	TooltipExtras:
 		Weaknesses: -20% weapon range\n-20% vision range
@@ -186,7 +460,7 @@ encyclopedia.debuffs.veiled:
 		-RequiresCondition:
 
 encyclopedia.debuffs.warped:
-	Inherits: ^DebuffPreview
+	Inherits: ^VehicleEffectPreview
 	Inherits@Warpable: ^Warpable
 	-Warpable:
 	-FireWarheadsOnDeath@TEMPORAL:
@@ -195,7 +469,6 @@ encyclopedia.debuffs.warped:
 	Encyclopedia:
 		Category: Other/Debuffs
 	EncyclopediaExtras:
-		HideNotProducible: true
 		Description: Completely incapacitates the target, but makes it immune to non-warping damage.
 	TooltipExtras:
 		Strengths: • Immune to non-warping damage
@@ -204,3 +477,20 @@ encyclopedia.debuffs.warped:
 		ShowInPreview: true
 	WithIdleOverlay@TEMPORAL:
 		-RequiresCondition:
+
+encyclopedia.debuffs.watched:
+	Inherits: ^VehicleEffectPreview
+	Tooltip:
+		Name: Watched
+	Encyclopedia:
+		Category: Other/Debuffs
+	EncyclopediaExtras:
+		Description: Revealed to enemies.
+	TooltipExtras:
+		Weaknesses: • Revealed to enemies
+	WithPreviewDecoration:
+		Image: watched
+		Sequence: idle
+		Palette: scrineffect
+		Position: Top
+		Margin: 0, 8

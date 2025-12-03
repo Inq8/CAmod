@@ -1181,9 +1181,10 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				"Support Powers" => 7,
 				"Subfactions" => 8,
 				"Tips" => 9,
-				"Debuffs" => 10,
-				"Tech Buildings" => 11,
-				"Tech Units" => 12,
+				"Buffs" => 10,
+				"Debuffs" => 11,
+				"Tech Buildings" => 12,
+				"Tech Units" => 13,
 				_ => 1000
 			};
 		}
