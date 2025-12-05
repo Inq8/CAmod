@@ -2197,10 +2197,6 @@ CalculatePlayerCharacteristics = function()
 		AirValue = 0,
 	}
 
-	MissionPlayers = Utils.Where(MissionPlayers, function(p)
-		return p.PlayerIsActive
-	end)
-
 	Utils.Do(MissionPlayers, function(p)
 		PlayerCharacteristics[p.InternalName] = {
 			MassInfantry = false,

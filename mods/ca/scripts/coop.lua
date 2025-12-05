@@ -334,107 +334,12 @@ local function SyncObjectives()
 			end)
 		end)
 
-		Trigger.OnPlayerLost(player, function()
-			for i, v in ipairs(CoopPlayers) do
-				if v == player then
-					table.remove(CoopPlayers, i)
-					break
-				end
-			end
+		Trigger.OnPlayerLost(player, function(p)
+			PlayerDefeatedOrDisconnected(p)
+		end)
 
-			Trigger.AfterDelay(DateTime.Seconds(1), function()
-				Media.PlaySpeechNotification(player, "Lose")
-			end)
-
-			local surrenderMessages = {
-				"PID's not surrenderin'! PID's passed on! This Commander is no more! They have ceased to be! PID's expired and gone to meet their maker! PID's a stiff! Bereft of life, PID rests in peace! If you hadn't nailed them to the playerlist, PID'd be pushing up the daisies! Their metabolic processes are now history! PID's off the twig! PID's kicked the bucket, PID's shuffled off their mortal coil, run down the curtain and joined the bleedin' choir invisible!! THIS IS AN EX-COMMANDER!!",
-				"We noticed that PID went AWOL. All troops under their command will be reassigned.",
-				"We are sad to announce that PID is lost in the Combat Zone. We can't afford a search party. All units, regroup.",
-				"PID has abandoned the operation. Their assets are now under joint command.",
-				"Commander PID has failed to report in. All units will be redistributed.",
-				"PID is MIA. Remaining forces are now reassigned to active commanders.",
-				"Reports confirm that PID is no longer in the fight. Reallocating resources.",
-				"High Command suspects PID was compromised. Their troops are now yours.",
-				"PID pulled out. Their units remain. Use them wisely.",
-				"We've lost contact with PID. Taking control of their remaining forces.",
-				"PID has been deemed unfit for command. Reassigning assets.",
-				"No further transmissions from PID. Their troops now fall under unified command.",
-				"High Command regrets to inform that PID has been silenced. Units are being reassigned.",
-				"Another Commander down: PID. Their legacy continues through their troops.",
-				"PID's command channel went dark. Redirecting all forces to surviving operatives.",
-				"Surrender confirmed from PID. Their units will continue the fight without them.",
-				"PID's resignation has been accepted... by force. Reassigning units.",
-				"Satellite link to PID severed. Their war assets are now at your disposal.",
-				"Combat stress got the better of PID. Picking up the slack.",
-				"Casualty of war: PID. All operable units reassigned to remaining players.",
-				"Command vacancy filled. PID's units will continue under new leadership.",
-				"PID has paid the ultimate price. Their forces are yours to command.",
-				"War spares no one. PID has fallen. Their troops remain.",
-				"PID has been promoted to civilian. By force. Units reassigned.",
-				"PID tripped on a landmine and career-ending shame. Units reassigned.",
-				"PID forgot to pay their command subscription. Reallocating troops.",
-				"PID's command authority revoked. Initiating redistribution of forces.",
-				"Command integrity of PID compromised. Units transferring to secure channels.",
-				"PID's signal is gone. Let their sacrifice not be in vain.",
-				"Command silence from PID. Reallocation of units underway.",
-				"PID fell to the chaos of war. Their forces continue the mission.",
-				"Confirmed KIA: PID. Taking operational control of remaining assets.",
-				"PID's command integrity shattered. Their war effort continues through us.",
-				"Another ghost in the fog: PID. Let their units be our resolve.",
-				"Transmission lost. PID is no more. We fight on.",
-				"PID has ragequit real life. You get their toys.",
-				"PID left the oven on. They've gone home. You're in charge now.",
-				"PID suffered from sudden strategic incompetence. Assets reallocated.",
-				"PID experienced spontaneous desk flipping. Their troops are free real estate.",
-				"Last known words of PID: 'Watch this!' Reassigning units.",
-				"PID achieved a higher state of 'not our problem'. You take it from here.",
-				"Command code: FAIL-STATE. PID's forces now under community management.",
-				"We've promoted PID to field observer. Very, very far from the field.",
-				"PID has been debriefed from active duty. Units reassigned.",
-				"Command slot vacated: PID. Assets redistributed.",
-				"PID no longer reports to HQ. Taking direct control of their forces.",
-				"Operational handover complete for PID. Troops reassigned.",
-				"Command continuity protocol activated. PID's assets now reassigned.",
-				"PID has disengaged. Their units now fall under surviving command.",
-				"Control signal lost from PID. Integrating their forces.",
-				"PID has relinquished control. Remaining assets transferred."
-			}
-
-			--Media.DisplayMessage("Number of Bullshit Messages: " .. #surrenderMessages)
-			Trigger.AfterDelay(DateTime.Seconds(5), function()
-				if Messagecooldown ~= true then
-					Messagecooldown = true
-					local MessageIndex = Utils.RandomInteger(1, #surrenderMessages)
-					local selectedMessage = surrenderMessages[MessageIndex]
-					local playerName = player.Name
-					if selectedMessage ~= nil then
-						local formattedMessage = string.gsub(selectedMessage, "PID", playerName)
-						Media.DisplayMessage(formattedMessage, "High Command", player.Color)
-					end
-				end
-			end)
-
-
-			Trigger.AfterDelay(DateTime.Seconds(8), function()
-				AssignToCoopPlayers(player.GetActors(), CoopPlayers)
-				local EstateCash = (player.Cash + player.Resources)
-				EstateCash = (EstateCash / #CoopPlayers)
-				Utils.Do(CoopPlayers, function(PID)
-					PID.Cash = PID.Cash + EstateCash
-				end)
-				Messagecooldown = false
-			end)
-
-			Trigger.AfterDelay(DateTime.Seconds(10), function()
-				--Failsafe if reassignment isnt possible
-				local Deathlist = player.GetActors()
-				Utils.Do(Deathlist,function(UID)
-					if UID.Type ~= "player" and not UID.IsDead and UID.HasProperty("Health") then
-						UID.Kill()
-					end
-				end)
-			end)
-
+		TriggerCA.OnPlayerDisconnected(player, function(p)
+			PlayerDefeatedOrDisconnected(p)
 		end)
 	end)
 
@@ -454,6 +359,112 @@ local function SyncObjectives()
 			if player.IsLocalPlayer then
 				Media.PlaySoundNotification(player, "AlertBleep")
 				Media.DisplayMessage(MainPlayer.GetObjectiveDescription(obid), "Objective failed", HSLColor.Red)
+			end
+		end)
+	end)
+end
+
+PlayerDefeatedOrDisconnected = function(player)
+
+	if not IsPlayerInList(player, CoopPlayers) then
+		return
+	end
+
+	for i, v in ipairs(CoopPlayers) do
+		if v == player then
+			table.remove(CoopPlayers, i)
+			break
+		end
+	end
+
+	Trigger.AfterDelay(DateTime.Seconds(1), function()
+		Media.PlaySpeechNotification(player, "Lose")
+	end)
+
+	local surrenderMessages = {
+		"PID's not surrenderin'! PID's passed on! This Commander is no more! They have ceased to be! PID's expired and gone to meet their maker! PID's a stiff! Bereft of life, PID rests in peace! If you hadn't nailed them to the playerlist, PID'd be pushing up the daisies! Their metabolic processes are now history! PID's off the twig! PID's kicked the bucket, PID's shuffled off their mortal coil, run down the curtain and joined the bleedin' choir invisible!! THIS IS AN EX-COMMANDER!!",
+		"We noticed that PID went AWOL. All troops under their command will be reassigned.",
+		"We are sad to announce that PID is lost in the Combat Zone. We can't afford a search party. All units, regroup.",
+		"PID has abandoned the operation. Their assets are now under joint command.",
+		"Commander PID has failed to report in. All units will be redistributed.",
+		"PID is MIA. Remaining forces are now reassigned to active commanders.",
+		"Reports confirm that PID is no longer in the fight. Reallocating resources.",
+		"High Command suspects PID was compromised. Their troops are now yours.",
+		"PID pulled out. Their units remain. Use them wisely.",
+		"We've lost contact with PID. Taking control of their remaining forces.",
+		"PID has been deemed unfit for command. Reassigning assets.",
+		"No further transmissions from PID. Their troops now fall under unified command.",
+		"High Command regrets to inform that PID has been silenced. Units are being reassigned.",
+		"Another Commander down: PID. Their legacy continues through their troops.",
+		"PID's command channel went dark. Redirecting all forces to surviving operatives.",
+		"Surrender confirmed from PID. Their units will continue the fight without them.",
+		"PID's resignation has been accepted... by force. Reassigning units.",
+		"Satellite link to PID severed. Their war assets are now at your disposal.",
+		"Combat stress got the better of PID. Picking up the slack.",
+		"Casualty of war: PID. All operable units reassigned to remaining players.",
+		"Command vacancy filled. PID's units will continue under new leadership.",
+		"PID has paid the ultimate price. Their forces are yours to command.",
+		"War spares no one. PID has fallen. Their troops remain.",
+		"PID has been promoted to civilian. By force. Units reassigned.",
+		"PID tripped on a landmine and career-ending shame. Units reassigned.",
+		"PID forgot to pay their command subscription. Reallocating troops.",
+		"PID's command authority revoked. Initiating redistribution of forces.",
+		"Command integrity of PID compromised. Units transferring to secure channels.",
+		"PID's signal is gone. Let their sacrifice not be in vain.",
+		"Command silence from PID. Reallocation of units underway.",
+		"PID fell to the chaos of war. Their forces continue the mission.",
+		"Confirmed KIA: PID. Taking operational control of remaining assets.",
+		"PID's command integrity shattered. Their war effort continues through us.",
+		"Another ghost in the fog: PID. Let their units be our resolve.",
+		"Transmission lost. PID is no more. We fight on.",
+		"PID has ragequit real life. You get their toys.",
+		"PID left the oven on. They've gone home. You're in charge now.",
+		"PID suffered from sudden strategic incompetence. Assets reallocated.",
+		"PID experienced spontaneous desk flipping. Their troops are free real estate.",
+		"Last known words of PID: 'Watch this!' Reassigning units.",
+		"PID achieved a higher state of 'not our problem'. You take it from here.",
+		"Command code: FAIL-STATE. PID's forces now under community management.",
+		"We've promoted PID to field observer. Very, very far from the field.",
+		"PID has been debriefed from active duty. Units reassigned.",
+		"Command slot vacated: PID. Assets redistributed.",
+		"PID no longer reports to HQ. Taking direct control of their forces.",
+		"Operational handover complete for PID. Troops reassigned.",
+		"Command continuity protocol activated. PID's assets now reassigned.",
+		"PID has disengaged. Their units now fall under surviving command.",
+		"Control signal lost from PID. Integrating their forces.",
+		"PID has relinquished control. Remaining assets transferred."
+	}
+
+	--Media.DisplayMessage("Number of Bullshit Messages: " .. #surrenderMessages)
+	Trigger.AfterDelay(DateTime.Seconds(5), function()
+		if not MessageCooldown then
+			MessageCooldown = true
+			local messageIndex = Utils.RandomInteger(1, #surrenderMessages)
+			local selectedMessage = surrenderMessages[messageIndex]
+			local playerName = player.Name
+			if selectedMessage ~= nil then
+				local formattedMessage = string.gsub(selectedMessage, "PID", playerName)
+				Media.DisplayMessage(formattedMessage, "High Command", player.Color)
+			end
+		end
+	end)
+
+	Trigger.AfterDelay(DateTime.Seconds(8), function()
+		AssignToCoopPlayers(player.GetActors(), CoopPlayers)
+		local estateCash = player.Cash + player.Resources
+		local estateCashShare = estateCash / #CoopPlayers
+		Utils.Do(CoopPlayers, function(player)
+			player.Cash = player.Cash + estateCashShare
+		end)
+		MessageCooldown = false
+	end)
+
+	Trigger.AfterDelay(DateTime.Seconds(10), function()
+		-- failsafe if reassignment wasn't possible
+		local deathList = player.GetActors()
+		Utils.Do(deathList, function(a)
+			if a.Type ~= "player" and not a.IsDead and a.HasProperty("Health") then
+				a.Kill()
 			end
 		end)
 	end)
