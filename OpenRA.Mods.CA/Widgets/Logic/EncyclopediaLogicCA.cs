@@ -198,9 +198,6 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			// Create the UI from the hierarchy
 			CreateFolderStructure();
 
-			// Select the first item in the first category on initial load
-			SelectFirstItem();
-
 			widget.Get<ButtonWidget>("BACK_BUTTON").OnClick = () =>
 			{
 				if (world.Type == WorldType.Shellmap)
@@ -384,13 +381,8 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				{
 					var item = CreateActorListItem(actor, selectedRootNode.FullPath, 0);
 
-					// Only set firstItem and select actor if no actor is currently selected
 					if (firstItem == null)
-					{
 						firstItem = item;
-						if (selectedActor == null)
-							SelectActor(actor, selectedRootNode.FullPath);
-					}
 
 					actorList.AddChild(item);
 				}
@@ -434,13 +426,8 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				{
 					var item = CreateActorListItem(actor, node.FullPath, displayDepth);
 
-					// Only set firstItem and select actor if no actor is currently selected
 					if (firstItem == null)
-					{
 						firstItem = item;
-						if (selectedActor == null)
-							SelectActor(actor, node.FullPath);
-					}
 
 					actorList.AddChild(item);
 				}
@@ -506,6 +493,14 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			actorList.RemoveChildren();
 			firstItem = null;
 			CreateFolderStructure();
+
+			// When expanding, auto-select the first actor in the expanded folder
+			if (!isCurrentlyExpanded && folderNodes.TryGetValue(folderPath, out var node))
+			{
+				var firstActorResult = GetFirstActorFromAnyNode(node);
+				if (firstActorResult.actor != null)
+					SelectActor(firstActorResult.actor, firstActorResult.categoryPath);
+			}
 		}
 
 		void SelectActor(ActorInfo actor, string categoryPath = null)
