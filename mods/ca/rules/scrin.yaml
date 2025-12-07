@@ -1120,7 +1120,7 @@ SMEDI:
 		TargetRelationships: Ally
 		ForceTargetRelationships: None
 	AttackFrontal:
-		PauseOnCondition: being-warped || blinded || reapersnare
+		PauseOnCondition: being-warped || blinded || reapersnare || berserkactive
 		FacingTolerance: 0
 	AttackSoundsCA@HEALSOUND:
 		Sounds: heal2.aud
@@ -1137,8 +1137,6 @@ SMEDI:
 		ValidRelationships: Ally
 	Voiced:
 		VoiceSet: AssimilatorVoice
-	Targetable@ChaosImmune:
-		TargetTypes: ChaosImmune
 	GuardsSelection:
 		ValidTargets: Infantry
 	KeepsDistance:
@@ -1184,7 +1182,7 @@ ARTI:
 		InvalidTargets: NoAutoTarget
 		ValidRelationships: Ally
 	AttackFrontal:
-		PauseOnCondition: being-warped || blinded || reapersnare
+		PauseOnCondition: being-warped || blinded || reapersnare || berserkactive
 		FacingTolerance: 0
 	AttackSoundsCA@REPAIRSOUND:
 		Sounds: floatk1.aud
@@ -1224,8 +1222,6 @@ ARTI:
 		Prerequisites: barracks.upgraded
 	Voiced:
 		VoiceSet: AssimilatorVoice
-	Targetable@ChaosImmune:
-		TargetTypes: ChaosImmune
 	GuardsSelection:
 		ValidTargets: Vehicle
 	KeepsDistance:
@@ -3075,8 +3071,6 @@ SMCV:
 	-Crushable:
 	Targetable@MindControlImmune:
 		TargetTypes: MindControlImmune
-	Targetable@ChaosImmune:
-		TargetTypes: ChaosImmune
 	Hovers:
 		BobDistance: -25
 		RequiresCondition: !empdisable && !being-warped && !driver-dead

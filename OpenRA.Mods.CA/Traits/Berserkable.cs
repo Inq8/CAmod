@@ -31,13 +31,16 @@ namespace OpenRA.Mods.CA.Traits
 
 	class Berserkable : ConditionalTrait<BerserkableInfo>, INotifyIdle
 	{
-		readonly Mobile mobile;
+		Mobile mobile;
 
 		public Berserkable(Actor self, BerserkableInfo info)
-			: base(info)
-        {
-            mobile = self.TraitOrDefault<Mobile>();
-        }
+			: base(info) {}
+
+		protected override void Created(Actor self)
+		{
+			base.Created(self);
+			mobile = self.TraitOrDefault<Mobile>();
+		}
 
 		void Blink(Actor self)
 		{
@@ -99,6 +102,9 @@ namespace OpenRA.Mods.CA.Traits
 			var atbs = self.TraitsImplementing<AttackBase>().Where(a => !a.IsTraitDisabled && !a.IsTraitPaused).ToArray();
 			if (atbs.Length == 0)
 			{
+				if (mobile != null)
+					self.QueueActivity(false, new Nudge(self));
+
 				self.QueueActivity(new Wait(15));
 				return;
 			}
@@ -107,7 +113,9 @@ namespace OpenRA.Mods.CA.Traits
 
 			var targets = self.World.FindActorsInCircle(self.CenterPosition, range)
 				.Where(a => !a.Owner.NonCombatant
-					&& a != self && a.IsTargetableBy(self)
+					&& a != self
+					&& a.IsTargetableBy(self)
+					&& atbs.Any(ab => ab.HasAnyValidWeapons(Target.FromActor(a)))
 					&& !Info.InvalidTargets.Overlaps(a.GetEnabledTargetTypes()));
 
 			if (!targets.Any())

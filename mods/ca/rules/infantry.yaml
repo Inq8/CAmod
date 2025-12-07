@@ -138,7 +138,6 @@ TDOG:
 E1:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@BERSERK: ^Berserk
 	Inherits@BOTHELPER: ^BotCaptureHelper
 	Inherits@Inspirable: ^Inspirable
 	Inherits@HeroOfTheUnionTargetable: ^HeroOfTheUnionTargetable
@@ -194,7 +193,6 @@ E1R1:
 E2:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@BERSERK: ^Berserk
 	Inherits@Inspirable: ^Inspirable
 	Inherits@HeroOfTheUnionTargetableGrenFlamer: ^HeroOfTheUnionTargetableGrenFlamer
 	Buildable:
@@ -249,7 +247,6 @@ E2:
 E3:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
-	Inherits@BERSERK: ^Berserk
 	Inherits@Inspirable: ^Inspirable
 	Inherits@HeroOfTheUnionTargetable: ^HeroOfTheUnionTargetable
 	Buildable:
@@ -360,7 +357,6 @@ E3:
 U3:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
-	Inherits@BERSERK: ^Berserk
 	Inherits@BOTHELPER: ^BotCaptureHelper
 	Buildable:
 		Queue: GuardianGI
@@ -600,7 +596,6 @@ E3R1:
 E4:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@BERSERK: ^Berserk
 	Inherits@Inspirable: ^Inspirable
 	Inherits@HeroOfTheUnionTargetableGrenFlamer: ^HeroOfTheUnionTargetableGrenFlamer
 	Buildable:
@@ -827,8 +822,6 @@ SPY:
 		VoiceSet: SpyVoice
 	Targetable:
 		TargetTypes: Ground, Infantry
-	Targetable@ChaosImmune:
-		TargetTypes: ChaosImmune
 	Targetable@Disguised:
 		TargetTypes: Disguised
 		RequiresCondition: disguise
@@ -972,7 +965,7 @@ MEDI:
 		TargetRelationships: Ally
 		ForceTargetRelationships: None
 	AttackFrontal:
-		PauseOnCondition: being-warped || blinded || reapersnare
+		PauseOnCondition: being-warped || blinded || reapersnare || berserkactive
 		FacingTolerance: 0
 	AttackSoundsCA@HEALSOUND:
 		Sounds: heal2.aud
@@ -993,8 +986,6 @@ MEDI:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
-	Targetable@ChaosImmune:
-		TargetTypes: ChaosImmune
 	GuardsSelection:
 		ValidTargets: Infantry
 	KeepsDistance:
@@ -1049,7 +1040,7 @@ MECH:
 		ValidRelationships: Ally
 	AttackFrontal:
 		Voice: Action
-		PauseOnCondition: being-warped || blinded || reapersnare
+		PauseOnCondition: being-warped || blinded || reapersnare || berserkactive
 		FacingTolerance: 0
 	AttackSoundsCA@REPAIRSOUND:
 		Sounds: fixit1.aud
@@ -1084,8 +1075,6 @@ MECH:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
-	Targetable@ChaosImmune:
-		TargetTypes: ChaosImmune
 	GuardsSelection:
 		ValidTargets: Vehicle
 	Convertible:
@@ -1144,7 +1133,7 @@ CMEC:
 		ValidRelationships: Ally
 	AttackFrontal:
 		Voice: Action
-		PauseOnCondition: being-warped || blinded || reapersnare
+		PauseOnCondition: being-warped || blinded || reapersnare || berserkactive
 		FacingTolerance: 0
 	AttackSoundsCA@REPAIRSOUND:
 		Sounds: cmecrepair.aud
@@ -1226,7 +1215,7 @@ HACK:
 		Voice: Action
 		FacingTolerance: 512
 		TargetFrozenActors: true
-		PauseOnCondition: being-warped || blinded || reapersnare
+		PauseOnCondition: being-warped || blinded || reapersnare || berserkactive
 	WithInfantryBody:
 		IdleSequences: idle
 		StandSequences: stand
@@ -1252,8 +1241,6 @@ HACK:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
-	Targetable@ChaosImmune:
-		TargetTypes: ChaosImmune
 	MindController:
 		ControlType: Hack
 		ArmamentNames: primary
@@ -1449,8 +1436,6 @@ THF:
 		Condition: moving
 	Crushable:
 		RequiresCondition: !invulnerability && !being-warped && !moving
-	Targetable@ChaosImmune:
-		TargetTypes: ChaosImmune
 	-SpeedMultiplier@HAZMATSOVIET:
 	-GrantConditionOnTerrain@HAZMATSOVIET:
 	WithColoredSelectionBox@INVIS:
@@ -1467,7 +1452,6 @@ THF:
 SHOK:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@BERSERK: ^Berserk
 	AutoTargetPriority@DEFAULT:
 		InvalidTargets: NoAutoTarget, WaterStructure, AntiAirDefense, TeslaBoost, Disguised
 	AutoTargetPriority@ATTACKANYTHING:
@@ -1582,7 +1566,6 @@ TTRP:
 N1:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@BERSERK: ^Berserk
 	Inherits@BOTHELPER: ^BotCaptureHelper
 	Inherits@Inspirable: ^Inspirable
 	Inherits@HeroOfTheUnionTargetable: ^HeroOfTheUnionTargetable
@@ -1645,7 +1628,6 @@ N1R1:
 N2:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@BERSERK: ^Berserk
 	Inherits@Inspirable: ^Inspirable
 	Inherits@HeroOfTheUnionTargetableGrenFlamer: ^HeroOfTheUnionTargetableGrenFlamer
 	Buildable:
@@ -1724,7 +1706,6 @@ N2R1:
 N3:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
-	Inherits@BERSERK: ^Berserk
 	Inherits@Inspirable: ^Inspirable
 	Inherits@HeroOfTheUnionTargetable: ^HeroOfTheUnionTargetable
 	Buildable:
@@ -1825,7 +1806,6 @@ N3R1:
 N4:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@BERSERK: ^Berserk
 	Inherits@Inspirable: ^Inspirable
 	Inherits@HeroOfTheUnionTargetableGrenFlamer: ^HeroOfTheUnionTargetableGrenFlamer
 	Buildable:
@@ -1892,7 +1872,6 @@ N4:
 N5:
 	Inherits: ^Cyborg
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@BERSERK: ^Berserk
 	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
@@ -2145,7 +2124,6 @@ VICE:
 SNIP:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@BERSERK: ^Berserk
 	RenderSprites:
 		Image: sniper
 	Buildable:
@@ -2376,7 +2354,6 @@ SAB:
 	Inherits: ^Soldier
 	Inherits@SELECTION: ^SelectableSupportUnit
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -2478,7 +2455,6 @@ SAB:
 ASSA:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: AssassinSquad
 		Description: Specialist armed with a sniper rifle and C4 explosives.
@@ -2666,7 +2642,6 @@ CONF:
 ACOL:
 	Inherits: ^Cyborg
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
@@ -2779,11 +2754,11 @@ JJET:
 	Inherits@selection: ^SelectableCombatUnit
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@BERSERK: ^Berserk
 	Inherits@mind: ^MindControllable
 	Inherits@ionsurge: ^IonSurgable
 	Inherits@atomize: ^Atomizable
 	Inherits@Blindable: ^Blindable
+	Inherits@BERSERK: ^Berserk
 	Huntable:
 	ClassicFacingBodyOrientation:
 		QuantizedFacings: 8
@@ -3042,7 +3017,6 @@ JJET.UPG.Husk:
 E8:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -3209,7 +3183,6 @@ N1C:
 	Inherits: ^Cyborg
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BOTHELPER: ^BotCaptureHelper
-	Inherits@BERSERK: ^Berserk
 	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	RenderSprites:
 	Buildable:
@@ -3264,7 +3237,6 @@ N1C:
 N3C:
 	Inherits: ^Cyborg
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
-	Inherits@BERSERK: ^Berserk
 	RenderSprites:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
@@ -3413,8 +3385,6 @@ RMBC:
 	-KillsSelf@Immolate:
 	Targetable:
 		TargetTypes: Ground, Vehicle
-	Targetable@ChaosImmune:
-		TargetTypes: ChaosImmune
 	-Targetable@HEAL:
 	Targetable@REPAIR:
 		RequiresCondition: !parachute && damaged && !being-warped && !repair-cooldown
@@ -3448,7 +3418,6 @@ RMBC:
 IVAN:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@BERSERK: ^Berserk
 	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
@@ -3552,6 +3521,8 @@ BRUT:
 		DecorationBounds: 640, 896, 0, -341
 	Targetable@MindControlImmune:
 		TargetTypes: MindControlImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	Targetable@DogImmune:
 		TargetTypes: DogImmune
 	Voiced:
@@ -3659,7 +3630,6 @@ BRUT.Mutating:
 SHAD:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: ShadowTeam
 		Description: Stealth infantry armed with a machine pistol and grenades.
@@ -3946,7 +3916,6 @@ SGLI.discarded:
 BH:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -4378,8 +4347,6 @@ ENLI:
 	-KillsSelf@Immolate:
 	Targetable:
 		TargetTypes: Ground, Vehicle
-	Targetable@ChaosImmune:
-		TargetTypes: ChaosImmune
 	-Targetable@HEAL:
 	Targetable@REPAIR:
 		RequiresCondition: damaged && !parachute && !being-warped && !repair-cooldown
@@ -4463,7 +4430,6 @@ ENLI:
 ^MortarInfantryBase:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -4601,7 +4567,6 @@ CSCR:
 	Inherits: ^Cyborg
 	Inherits@ScrinUnitPalette: ^ScrinUnitPalette
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@BERSERK: ^Berserk
 	Inherits@InfiltratorStolenTech: ^InfiltratorStolenTech
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
@@ -4658,7 +4623,6 @@ CSCR:
 CMSR:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@BERSERK: ^Berserk
 	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
@@ -4736,7 +4700,6 @@ CMSR:
 ZTRP:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@BERSERK: ^Berserk
 	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
@@ -4933,7 +4896,6 @@ ZDEF:
 ENFO:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@BERSERK: ^Berserk
 	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
@@ -5002,7 +4964,6 @@ ENFO:
 HOPL:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@BERSERK: ^Berserk
 	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
@@ -5093,7 +5054,6 @@ HOPL:
 TIGR:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
-	Inherits@BERSERK: ^Berserk
 	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
@@ -5166,7 +5126,6 @@ TIGR:
 CRYT:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@BERSERK: ^Berserk
 	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
@@ -5269,8 +5228,6 @@ REAP:
 	-KillsSelf@Immolate:
 	Targetable:
 		TargetTypes: Ground, Vehicle
-	Targetable@ChaosImmune:
-		TargetTypes: ChaosImmune
 	-Targetable@HEAL:
 	Targetable@REPAIR:
 		RequiresCondition: damaged && !parachute && !being-warped && !repair-cooldown

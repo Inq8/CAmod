@@ -1744,8 +1744,6 @@
 		RequiresCondition: pointdef-upgrade
 	WithIdleOverlay@NSHIELD:
 		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
-	Targetable@ChaosImmune:
-		TargetTypes: ChaosImmune
 	Targetable@MindControlResistant:
 		TargetTypes: MindControlResistant
 
@@ -2397,6 +2395,7 @@
 	Inherits@Blindable: ^Blindable
 	Inherits@KillZoneTargetable: ^KillZoneTargetable
 	Inherits@Anathema: ^Anathema
+	Inherits@Berserk: ^Berserk
 	Inherits@DevelopmentPolicyVeterancyBonus: ^DevelopmentPolicyVeterancyBonus
 	Huntable:
 	EdibleByLeap:
@@ -2611,6 +2610,7 @@
 	Inherits@KillZoneTargetable: ^KillZoneTargetable
 	Inherits@ReaperSnareable: ^ReaperSnareable
 	Inherits@IdolOfKane: ^IdolOfKane
+	Inherits@Berserk: ^Berserk
 	Inherits@DevelopmentPolicyVeterancyBonus: ^DevelopmentPolicyVeterancyBonus
 	RenderSprites:
 		PlayerPalette: playertd
@@ -3041,6 +3041,7 @@
 	Inherits@Blindable: ^Blindable
 	Inherits@KillZoneTargetable: ^KillZoneTargetable
 	Inherits@Anathema: ^Anathema
+	Inherits@Berserk: ^Berserk
 	Inherits@DevelopmentPolicyVeterancyBonus: ^DevelopmentPolicyVeterancyBonus
 	Huntable:
 	RenderSprites:
@@ -4572,8 +4573,6 @@
 		Cost: 400
 	Passenger:
 		CustomPipType: yellow
-	Targetable@ChaosImmune:
-		TargetTypes: ChaosImmune
 	InstantlyRepairs:
 	RepairsBridges:
 		EnterBehaviour: Exit
