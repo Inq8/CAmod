@@ -80,6 +80,7 @@ namespace OpenRA.Mods.Common.Traits
 		PowerManager playerPower;
 		Actor actorToClone;
 		BuildableInfo bi;
+		Cargo cargo;
 		bool exitOnCompletion = false;
 
 		public CargoCloner(Actor self, CargoClonerInfo info)
@@ -95,6 +96,7 @@ namespace OpenRA.Mods.Common.Traits
 		{
 			base.Created(self);
 			playerPower = self.Owner.PlayerActor.Trait<PowerManager>();
+			cargo = self.Trait<Cargo>();
 			previousPowerState = playerPower.PowerState;
 		}
 
@@ -188,7 +190,6 @@ namespace OpenRA.Mods.Common.Traits
 
 		void Unload()
 		{
-			var cargo = self.TraitOrDefault<Cargo>();
 			if (cargo != null && !cargo.IsEmpty())
 				self.QueueActivity(new UnloadCargo(self, cargo.Info.LoadRange));
 		}

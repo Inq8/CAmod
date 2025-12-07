@@ -21,12 +21,19 @@ namespace OpenRA.Mods.CA.Traits
 
 	class CancelActivityOnPickup : ConditionalTrait<CancelActivityOnPickupInfo>, INotifyRemovedFromWorld
 	{
+		Carryable carryable;
+
 		public CancelActivityOnPickup(ActorInitializer init, CancelActivityOnPickupInfo info)
 			: base(info) { }
 
+		protected override void Created(Actor self)
+		{
+			base.Created(self);
+			carryable = self.TraitOrDefault<Carryable>();
+		}
+
 		void INotifyRemovedFromWorld.RemovedFromWorld(Actor self)
 		{
-			var carryable = self.TraitOrDefault<Carryable>();
 			if (carryable != null && carryable.Carrier != null)
 			{
 				self.CancelActivity();

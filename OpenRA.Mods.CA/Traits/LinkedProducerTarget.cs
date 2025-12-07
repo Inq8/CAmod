@@ -75,6 +75,7 @@ namespace OpenRA.Mods.Common.Traits
 		public string[] Types => info.Types;
 		public IEnumerable<LinkedProducerSource> Sources => linkedSources;
 		public Actor Actor => self;
+		RallyPoint rallyPoint;
 
 		public LinkedProducerTarget(Actor self, LinkedProducerTargetInfo info)
 			: base(info)
@@ -84,10 +85,12 @@ namespace OpenRA.Mods.Common.Traits
 			LinkNodes = new List<WPos>();
 		}
 
-		void INotifyCreated.Created(Actor self)
+		protected override void Created(Actor self)
 		{
+			base.Created(self);
 			singleQueue = self.World.LobbyInfo.GlobalSettings.OptionOrDefault("queuetype", "") == "global.singlequeue";
 			effect = new LinkedProducerIndicator(self, this);
+			rallyPoint = self.TraitOrDefault<RallyPoint>();
 		}
 
 		void INotifyAddedToWorld.AddedToWorld(Actor self)
@@ -130,12 +133,11 @@ namespace OpenRA.Mods.Common.Traits
 				unit.Trait<Mobile>().SetPosition(self, self.Location);
 				unit.Generation++;
 
-				var rp = self.TraitOrDefault<RallyPoint>();
 				var move = unit.TraitOrDefault<IMove>();
 
-				if (move != null && rp != null && rp.Path.Count > 0)
+				if (move != null && rallyPoint != null && rallyPoint.Path.Count > 0)
 				{
-					foreach (var cell in rp.Path)
+					foreach (var cell in rallyPoint.Path)
 						unit.QueueActivity(new AttackMoveActivity(unit, () => move.MoveTo(cell, 1, evaluateNearestMovableCell: true, targetLineColor: Color.OrangeRed)));
 				}
 				else

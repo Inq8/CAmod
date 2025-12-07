@@ -52,6 +52,7 @@ namespace OpenRA.Mods.CA.Traits
 		Player creatorOwner;
 		bool controlChanging;
 		Actor oldSelf = null;
+		Cargo cargo;
 
 		int controlledToken = Actor.InvalidConditionToken;
 		int revokingToken = Actor.InvalidConditionToken;
@@ -72,6 +73,7 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			base.Created(self);
 			notifyMindControlled = self.TraitsImplementing<INotifyMindControlled>().ToArray();
+			cargo = self.TraitOrDefault<Cargo>();
 		}
 
 		public void LinkMaster(Actor self, Actor masterActor)
@@ -174,7 +176,6 @@ namespace OpenRA.Mods.CA.Traits
 
 		void HandleCargo(Actor self, Actor master)
 		{
-			var cargo = self.TraitOrDefault<Cargo>();
 			if (cargo != null && master != null)
 			{
 				if (info.CargoBehaviour == CargoBehaviour.Kill)

@@ -47,6 +47,7 @@ namespace OpenRA.Mods.CA.Traits
 	{
 		int conditionToken = Actor.InvalidConditionToken;
 		Actor self;
+		IHealth health;
 
 		[Sync]
 		int strength;
@@ -62,6 +63,7 @@ namespace OpenRA.Mods.CA.Traits
 		protected override void Created(Actor self)
 		{
 			base.Created(self);
+			health = self.TraitOrDefault<IHealth>();
 			strength = Info.MaxStrength;
 			ResetRegen();
 		}
@@ -113,8 +115,6 @@ namespace OpenRA.Mods.CA.Traits
 			var damageTypes = e.Damage.DamageTypes;
 			var excessDamage = damageAmt - strength;
 			strength = Math.Max(strength - damageAmt, 0);
-
-			var health = self.TraitOrDefault<IHealth>();
 
 			if (health != null)
 			{

@@ -63,7 +63,7 @@ namespace OpenRA.Mods.CA.Traits
 	{
 		readonly PeriodicExplosionInfo info;
 		readonly WeaponInfo weapon;
-		readonly BodyOrientation body;
+		BodyOrientation body;
 
 		int fireDelay;
 		int burst;
@@ -83,11 +83,11 @@ namespace OpenRA.Mods.CA.Traits
 			weapon = info.WeaponInfo;
 			burst = weapon.Burst;
 			initialDelay = info.InitialDelay;
-			body = self.TraitOrDefault<BodyOrientation>();
 		}
 
 		protected override void Created(Actor self)
 		{
+			body = self.TraitOrDefault<BodyOrientation>();
 			ammoPool = self.TraitsImplementing<AmmoPool>().FirstOrDefault(la => la.Info.Name == Info.AmmoPoolName);
 
 			if (info.ApplyModifiers)

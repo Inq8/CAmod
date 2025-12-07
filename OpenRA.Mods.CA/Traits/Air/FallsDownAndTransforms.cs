@@ -39,7 +39,7 @@ namespace OpenRA.Mods.Common.Traits
 	{
 		readonly FallsDownAndTransformsInfo info;
 		readonly IPositionable positionable;
-		readonly IFacing facing;
+		IFacing facing;
 
 		public FallsDownAndTransforms(ActorInitializer init, FallsDownAndTransformsInfo info)
 		{
@@ -50,12 +50,12 @@ namespace OpenRA.Mods.Common.Traits
 
 		void INotifyCreated.Created(Actor self)
 		{
+			facing = self.TraitOrDefault<IFacing>();
 			self.QueueActivity(false, new FallDown(self, positionable.CenterPosition, info.FallVelocity.Length, info.ForwardVelocity.Length));
 		}
 
 		void INotifyFallDown.OnLanded(Actor self)
 		{
-			var facing = self.TraitOrDefault<IFacing>();
 			Transform(self);
 
 			if (info.SpawnActor != null)

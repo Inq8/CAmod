@@ -21,8 +21,16 @@ namespace OpenRA.Mods.CA.Traits
 
 	public class BuildingRepairBotModuleCA : ConditionalTrait<BuildingRepairBotModuleCAInfo>, IBotRespondToAttack
 	{
+		RepairableBuilding rb;
+
 		public BuildingRepairBotModuleCA(Actor self, BuildingRepairBotModuleCAInfo info)
 			: base(info) { }
+
+		protected override void Created(Actor self)
+		{
+			base.Created(self);
+			rb = self.TraitOrDefault<RepairableBuilding>();
+		}
 
 		void IBotRespondToAttack.RespondToAttack(IBot bot, Actor self, AttackInfo e)
 		{
@@ -32,7 +40,6 @@ namespace OpenRA.Mods.CA.Traits
 			if (self.IsDead || self.Owner.RelationshipWith(e.Attacker.Owner) == PlayerRelationship.Neutral)
 				return;
 
-			var rb = self.TraitOrDefault<RepairableBuilding>();
 			if (rb != null)
 			{
 				if (e.DamageState > DamageState.Undamaged && e.PreviousDamageState < e.DamageState && !rb.RepairActive)
