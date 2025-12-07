@@ -562,6 +562,23 @@ StartWandering = function(unit)
 	end)
 end
 
+local function GetTeamPrimaryProducerOfType(buildingType)
+	for _, player in ipairs(CoopPlayers) do
+		local realProducers = player.GetActorsByType(buildingType)
+		if #realProducers > 0 then
+			local primaryProducers = Utils.Where(realProducers, function(rp)
+				return rp.HasProperty("IsPrimaryBuilding") and rp.IsPrimaryBuilding
+			end)
+			if #primaryProducers > 0 then
+				return primaryProducers[#primaryProducers]
+			end
+			return realProducers[#realProducers]
+		end
+	end
+
+	return nil
+end
+
 --- Create a remote building to mimic players sharing base buildings and tech.
 --- If this can produce units, those units will be produced at the map edge,
 --- and possibly moved to the last created building of the desired type.
@@ -569,43 +586,22 @@ end
 ---@param originalType string The "real" building type, where units can appear.
 ---@param remoteType string The remote building type.
 local function CreateRemoteBuilding(owner, originalType, remoteType)
-	--Media.DisplayMessage("Remotebuilding created, Type " .. originalType)
 	local remote = Actor.Create(remoteType, true, { Owner = owner, Location = originalLocation })
 	local offset = RemoteExits[originalType]
-	CACoopQueueSyncer()
 
-	--[[if not offset then
-		-- One of three things is true: this is not a factory, map edge
-		-- production is desired, or somebody forgot to add a remote exit CVec.
-		return
-	end]]
-	local IsProducer = false
-	Utils.Do(UnitProducers, function(UPID)
-		if UPID == originalType then
-			IsProducer = true
-		end
+	local isProducer = Utils.Any(UnitProducers, function(producerType)
+		return originalType == producerType
 	end)
 
-	if IsProducer == true then
+	if isProducer then
 		Trigger.OnProduction(remote, function(producer, produced)
-			--Media.DisplayMessage(tostring(originalType) .. " is the Remote Building Type.")
-			local primary
-
-			-- Use the newest player-created producer as the "primary building".
-			ForEachPlayer(function(player)
-				local realProducers = player.GetActorsByType(originalType)
-				if #realProducers > 0 then
-					primary = realProducers[#realProducers]
-				end
-			end)
+			local primary = GetTeamPrimaryProducerOfType(originalType)
 
 			if not primary then
 				-- It seems all factories of this type have been wiped
 				-- out before the shared prerequisites were updated.
-				--print(produced.Type .. " produced by " .. tostring(produced.Owner) .. " lacks a spawn building. Refunded.")
 				producer.Owner.Cash = producer.Owner.Cash + Actor.Cost(produced.Type)
 				produced.Destroy()
-				--Media.DisplayMessage(produced.Type .. " produced by " .. tostring(produced.Owner) .. " lacks a spawn building. Refunded.")
 				return
 			end
 
@@ -615,7 +611,6 @@ local function CreateRemoteBuilding(owner, originalType, remoteType)
 			produced.Owner = Neutral
 			produced.IsInWorld = false
 			produced.Destroy()
-			--Media.DisplayMessage(produced.Type .. " produced by " .. tostring(produced.Owner) .. " has a spawn building. Produced.")
 		end)
 	end
 end
@@ -638,9 +633,11 @@ local function UpdateCoopPrequisites()
 			local teamBuildings = {}
 			local teamRemoteBuildings = {}
 			local playerBuildingTypes = {}
+			local playerRemoteBuildingTypes = {}
 
 			for _, player in ipairs(factionPlayers) do
 				playerBuildingTypes[player.InternalName] = {}
+				playerRemoteBuildingTypes[player.InternalName] = {}
 
 				local playerBuildings = player.GetActorsByTypes(sharedBuildingTypesForFaction)
 				Utils.Do(playerBuildings, function(b)
@@ -651,26 +648,37 @@ local function UpdateCoopPrequisites()
 				local playerRemoteBuildings = player.GetActorsByTypes(RemoteBuildingLists[faction])
 				Utils.Do(playerRemoteBuildings, function(rb)
 					teamRemoteBuildings[rb.Type] = true
+					playerRemoteBuildingTypes[player.InternalName][rb.Type] = true
 				end)
 			end
 
 			-- if the team has a building, ensure all players have it or its remote equivalent
 			for _, buildingType in ipairs(sharedBuildingTypesForFaction) do
+				local playersNeedingRemote = {}
 				local teamHasBuilding = teamBuildings[buildingType] == true
+				local remoteType = "coop" .. buildingType
 
 				Utils.Do(factionPlayers, function(player)
-					local remoteType = "coop" .. buildingType
-					local teamHasRemoteBuilding = teamRemoteBuildings[remoteType] == true
+					local playerHasRemoteBuilding = playerRemoteBuildingTypes[player.InternalName][remoteType] == true
 
-					if playerBuildingTypes[player.InternalName][buildingType] or (not teamHasBuilding and teamHasRemoteBuilding) then
+					-- if this player has the building, or the team does not have the building, destroy any remote equivalents
+					if playerBuildingTypes[player.InternalName][buildingType] or (not teamHasBuilding and playerHasRemoteBuilding) then
 						local remoteBuildings = player.GetActorsByType(remoteType)
 						Utils.Do(remoteBuildings, function(remote)
 							remote.Destroy()
 						end)
-					elseif not playerBuildingTypes[player.InternalName][buildingType] and teamHasBuilding and not teamHasRemoteBuilding then
-						CreateRemoteBuilding(player, buildingType, remoteType)
+					-- if this player does not have the building or the remote equivalent, but the team does, create the remote equivalent
+					elseif not playerBuildingTypes[player.InternalName][buildingType] and teamHasBuilding and not playerHasRemoteBuilding then
+						playersNeedingRemote[#playersNeedingRemote + 1] = player
 					end
 				end)
+
+				if #playersNeedingRemote > 0 then
+					Utils.Do(playersNeedingRemote, function(player)
+						CreateRemoteBuilding(player, buildingType, remoteType)
+					end)
+					CACoopQueueSyncer()
+				end
 			end
 		end
 	end

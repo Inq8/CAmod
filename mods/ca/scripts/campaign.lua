@@ -1697,9 +1697,12 @@ SellOnCaptureAttempt = function(buildings, sellAsGroup)
 	end
 	Utils.Do(buildings, function(b)
 		BuildingsToSellOnCaptureAttempt[tostring(b)] = true
-		Trigger.OnEnteredProximityTrigger(b.CenterPosition, WDist.New(5 * 1024), function(a, id)
+		local footprint = b.FootprintCells
+		local captureCells = Utils.ExpandFootprint(footprint, true)
+
+		Trigger.OnEnteredFootprint(captureCells, function(a, id)
 			if IsMissionPlayer(a.Owner) and (a.Type == "e6" or a.Type == "n6" or a.Type == "s6" or a.Type == "mast" or (a.Type == "ifv" and a.HasPassengers and Utils.Any(a.Passengers, function(p) return p.Type == "e6" or p.Type == "n6" or p.Type == "s6" end))) then
-				Trigger.RemoveProximityTrigger(id)
+				Trigger.RemoveFootprintTrigger(id)
 				if sellAsGroup then
 					Utils.Do(buildings, function(b2)
 						if not b2.IsDead and not IsMissionPlayer(b2.Owner) then
