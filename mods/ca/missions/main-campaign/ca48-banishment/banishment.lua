@@ -229,7 +229,7 @@ InitMaleficScrin = function()
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
 	end)
 
-	Utils.Do({ VoidEngine, VoidEngine2 }, function(v)
+	Utils.Do({ VoidEngine1, VoidEngine2 }, function(v)
 		if not v.IsDead then
 			Trigger.OnDamaged(v, function(self, attacker, damage)
 				InitVoidEngines()
@@ -242,7 +242,7 @@ InitVoidEngines = function()
 	if not VoidEnginesHunting then
 		VoidEnginesHunting = true
 		MediaCA.PlaySound("veng-spawn.aud", 2)
-		Utils.Do({ VoidEngine, VoidEngine2 }, function(ve)
+		Utils.Do({ VoidEngine1, VoidEngine2 }, function(ve)
 			if not ve.IsDead then
 				AssaultPlayerBaseOrHunt(v)
 			end
