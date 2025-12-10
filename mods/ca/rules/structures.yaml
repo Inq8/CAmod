@@ -1080,7 +1080,7 @@ ATEK:
 		Factions: allies, england, germany, france, usa
 	ProvidesPrerequisite@buildingname:
 		RequiresCondition: !tech-locked
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@anytechcenter:
 		Prerequisite: techcenter.any
 		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@germanyatek:
@@ -1816,7 +1816,7 @@ POWR:
 		Cost: 300
 	Tooltip:
 		Name: Power Plant
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@anypower:
 		Prerequisite: anypower
 	Building:
 		Footprint: xx xx ==
@@ -1859,7 +1859,7 @@ APWR:
 		Cost: 500
 	Tooltip:
 		Name: Advanced Power Plant
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@anypower:
 		Prerequisite: anypower
 	Building:
 		Footprint: xxx Xxx ===
@@ -1912,7 +1912,7 @@ NPWR:
 		Cost: 1000
 	Tooltip:
 		Name: Atomic Reactor
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@anypower:
 		Prerequisite: anypower
 	Building:
 		Footprint: xxxx Xxxx ====
@@ -2046,7 +2046,7 @@ STEK:
 		Amount: -150
 	ProvidesPrerequisite@buildingname:
 		RequiresCondition: !tech-locked
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@anytechcenter:
 		Prerequisite: techcenter.any
 		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@TeslaCoilOrSovietTechCenter:
@@ -3230,7 +3230,7 @@ NUKE:
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-captured && !being-warped && !hacked && !discpowerdrain
 	ProvidesPrerequisite@buildingname:
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@anypower:
 		Prerequisite: anypower
 	UpdatesBuildOrder:
 		Limit: 2
@@ -3264,7 +3264,7 @@ NUK2:
 		Cost: 500
 	Tooltip:
 		Name: Advanced Nuclear Power Plant
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@anypower:
 		Prerequisite: anypower
 	Building:
 		Footprint: xX xx ==
@@ -4592,7 +4592,7 @@ GTEK:
 		Factions: gdi, talon, zocom, eagle, arc
 	ProvidesPrerequisite@buildingname:
 		RequiresCondition: !tech-locked
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@anytechcenter:
 		Prerequisite: techcenter.any
 		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@tdtek:
@@ -4680,7 +4680,7 @@ TMPL:
 		Factions: nod, blackh, marked, legion, shadow
 	ProvidesPrerequisite@buildingname:
 		RequiresCondition: !tech-locked
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@anytechcenter:
 		Prerequisite: techcenter.any
 		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@tdtek:
