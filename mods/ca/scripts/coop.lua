@@ -871,8 +871,11 @@ IncomeSharing = function()
 			end
 		-- Handle 100/125/150%/175% Shared: Send everything to SharedBank (with 0/25/50%/75% extra per ally)
 		elseif IncomePercentage >= 100 then
-			local extraAmount = PID.Resources * #CoopPlayers * (1 - (IncomePercentage / 100))
-			SharedBank = SharedBank + PID.Resources + extraAmount
+			local additionalPlayers = #CoopPlayers - 1
+			local bonusPerPlayer = (IncomePercentage - 100) / 100
+			local totalMultiplier = 1 + (bonusPerPlayer * additionalPlayers)
+			local totalAmount = PID.Resources * totalMultiplier
+			SharedBank = SharedBank + totalAmount
 			PID.Resources = 0
 		else
 			-- Store resources in the buffer for non-100% sharing
