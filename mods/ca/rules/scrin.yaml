@@ -336,16 +336,16 @@ VEHICLES.SCRIN:
 		RequiresCondition: anathema
 		IsDecoration: True
 	ReloadDelayMultiplier@Anathema1:
-		Modifier: 73
+		Modifier: 80
 		RequiresCondition: anathema == 1
 	ReloadDelayMultiplier@Anathema2:
-		Modifier: 57
+		Modifier: 67
 		RequiresCondition: anathema == 2
 	ReloadDelayMultiplier@Anathema3:
-		Modifier: 47
+		Modifier: 57
 		RequiresCondition: anathema == 3
 	ReloadDelayMultiplier@Anathema4:
-		Modifier: 40
+		Modifier: 50
 		RequiresCondition: anathema >= 4
 	ValueScalingFirepowerMultiplier@Anathema1:
 		MinValue: 600
@@ -372,10 +372,10 @@ VEHICLES.SCRIN:
 		MaxValueModifier: 200
 		RequiresCondition: anathema >= 4
 	SpeedMultiplier@Anathema2:
-		Modifier: 120
+		Modifier: 110
 		RequiresCondition: anathema >= 2 && anathema < 4
 	SpeedMultiplier@Anathema4:
-		Modifier: 140
+		Modifier: 120
 		RequiresCondition: anathema >= 4
 	GrantTimedCondition@Anathema:
 		Condition: anathema-alive
@@ -1646,7 +1646,7 @@ SEEK:
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Inherits@Hypercharge: ^Hypercharge
 	Valued:
-		Cost: 750
+		Cost: 700
 	Tooltip:
 		Name: Seeker
 	Selectable:
@@ -1666,6 +1666,7 @@ SEEK:
 	Mobile:
 		Speed: 126
 		Locomotor: lighthover
+		TurnSpeed: 24
 	Health:
 		HP: 23000
 	Armor:
@@ -1728,7 +1729,7 @@ LACE:
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Inherits@Hypercharge: ^Hypercharge
 	Valued:
-		Cost: 650
+		Cost: 600
 	Tooltip:
 		Name: Lacerator
 	Selectable:
