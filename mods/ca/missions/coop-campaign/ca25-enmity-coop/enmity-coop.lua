@@ -31,7 +31,7 @@ end
 DoReinforcements = function()
 	Reinforcements.Reinforce(GDI, { "hmmv", "mtnk", "mtnk" }, { McvSpawn.Location, McvRally.Location }, 75)
 	GDI.Cash = 6000 + CashAdjustments[Difficulty]
-	StartCashSpread(3000)
+	StartCashSpread(3500)
 
 	local delay = 0
 	Utils.Do(GetMcvPlayers(), function(p)

@@ -16,7 +16,7 @@ SetupPlayers = function()
 end
 
 AfterWorldLoaded = function()
-	StartCashSpread(3000)
+	StartCashSpread(3500)
 
 	local StartAPCs = {Actor1010, Actor1015}
 	Utils.Do(StartAPCs, function(UID)

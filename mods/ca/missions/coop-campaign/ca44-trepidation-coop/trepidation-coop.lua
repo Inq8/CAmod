@@ -18,7 +18,7 @@ SetupPlayers = function()
 end
 
 AfterWorldLoaded = function()
-	StartCashSpread(3000)
+	StartCashSpread(3500)
 
 	if #MissionPlayers > 4 then
 		Actor.Create("ctnk", true, { Owner = Greece, Location = CPos.New(84, 95) })

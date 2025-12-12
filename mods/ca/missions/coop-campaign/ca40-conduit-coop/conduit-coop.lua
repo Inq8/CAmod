@@ -20,7 +20,7 @@ end
 AfterWorldLoaded = function()
 	local firstActivePlayer = GetFirstActivePlayer()
 	TransferBaseToPlayer(SinglePlayerPlayer, firstActivePlayer)
-	StartCashSpread(3000)
+	StartCashSpread(3500)
 
 	local delay = 25
 	local path = { CPos.New(18,1), CPos.New(18,8) }
