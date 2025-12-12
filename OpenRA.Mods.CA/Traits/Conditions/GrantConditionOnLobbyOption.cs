@@ -8,26 +8,37 @@
  */
 #endregion
 
+using System.Linq;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("Grants a condition to the actor when created if fog is enabled.")]
-	public class GrantConditionOnFogEnabledInfo : TraitInfo
+	public class GrantConditionOnLobbyOptionInfo : TraitInfo
 	{
 		[FieldLoader.Require]
 		[GrantedConditionReference]
 		[Desc("Condition to grant.")]
 		public readonly string Condition = null;
 
-		public override object Create(ActorInitializer init) { return new GrantConditionOnFogEnabled(init.Self, this); }
+		[FieldLoader.Require]
+		[Desc("Name of the lobby option.")]
+		public readonly string Name = null;
+
+		[Desc("Whether value is boolean (condition is enabled if option value is true).")]
+		public readonly bool IsBoolean = false;
+
+		[Desc("If not boolean, list of string values that enable the condition.")]
+		public readonly string[] Values = new string[] {};
+
+		public override object Create(ActorInitializer init) { return new GrantConditionOnLobbyOption(init.Self, this); }
 	}
 
-	public class GrantConditionOnFogEnabled : INotifyCreated
+	public class GrantConditionOnLobbyOption : INotifyCreated
 	{
-		readonly GrantConditionOnFogEnabledInfo info;
+		readonly GrantConditionOnLobbyOptionInfo info;
 
-		public GrantConditionOnFogEnabled(Actor self, GrantConditionOnFogEnabledInfo info)
+		public GrantConditionOnLobbyOption(Actor self, GrantConditionOnLobbyOptionInfo info)
 		{
 			this.info = info;
 		}
@@ -38,9 +49,19 @@ namespace OpenRA.Mods.CA.Traits
 				return;
 
 			var gs = self.World.LobbyInfo.GlobalSettings;
-			var fogEnabled = gs.OptionOrDefault("fog", true);
+			bool enabled;
 
-			if (!fogEnabled)
+			if (info.IsBoolean)
+			{
+				enabled = gs.OptionOrDefault(info.Name, false);
+			}
+			else
+			{
+				var value = gs.OptionOrDefault(info.Name, "");
+				enabled = info.Values.Contains(value);
+			}
+
+			if (!enabled)
 				return;
 
 			if (!string.IsNullOrEmpty(info.Condition))
