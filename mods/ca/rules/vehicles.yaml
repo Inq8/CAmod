@@ -1932,7 +1932,7 @@ SAPC:
 	Armor:
 		Type: Light
 	Mobile:
-		Speed: 100
+		Speed: 82
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -1990,6 +1990,7 @@ SAPC:
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
 		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead
 		PauseOnCondition: invisibility
+		AudibleThroughFog: true
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
 	GrantConditionOnDamageState@UNCLOAK:
