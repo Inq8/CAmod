@@ -980,12 +980,15 @@
 	GrantConditionOnPrerequisite@HAZMAT:
 		Condition: hazmat-upgrade
 		Prerequisites: hazmat.upgrade
-	GrantConditionOnPrerequisite@HAZMATSOVIET:
-		Condition: hazmatsoviet-upgrade
-		Prerequisites: hazmatsoviet.upgrade
 	GrantConditionOnPrerequisite@HAZMATZOCOM:
 		Condition: hazmat-upgrade
 		Prerequisites: player.zocom
+	GrantConditionOnPrerequisite@HAZMATSOVIET:
+		Condition: hazmatsoviet-upgrade
+		Prerequisites: hazmatsoviet.upgrade
+	GrantConditionOnPrerequisite@HAZMATIRAQ:
+		Condition: hazmatsoviet-upgrade
+		Prerequisites: player.iraq
 	GrantCondition@HAZMAT:
 		Condition: hazmatsuits
 		RequiresCondition: hazmat-upgrade && !hazmatsoviet-upgrade
