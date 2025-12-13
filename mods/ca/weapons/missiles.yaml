@@ -629,7 +629,7 @@ Nike:
 
 RedEye:
 	Inherits: ^AntiAirMissile
-	Range: 7c512
+	Range: 6c512
 	ReloadDelay: 50
 	Report: missile1.aud
 	ValidTargets: Air, AirSmall
@@ -664,6 +664,7 @@ RedEye.TibCore:
 
 RedEye.CYB:
 	Inherits: RedEye
+	Range: 7c0
 	Report: itanweaa.aud, itanweab.aud, itanweac.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 4600
@@ -672,6 +673,7 @@ RedEye.CYB:
 
 RedEye.CYB.TibCore:
 	Inherits: RedEye.TibCore
+	Range: 7c0
 	Report: itanweaa.aud, itanweab.aud, itanweac.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 4600
@@ -693,33 +695,17 @@ RedEye.CRYO:
 		ValidTargets: Air, AirSmall
 		ValidRelationships: Enemy, Neutral
 
-RedEyeE:
-	Inherits: RedEye
-	Range: 9c0
-
 RedEyeGI:
 	Inherits: RedEye
 	Report: iggiat2a.aud, iggiat2b.aud
 	ReloadDelay: 40
-	Range: 9c0
+	Range: 8c0
 
 RedEyeGI.CRYO:
 	Inherits: RedEye.CRYO
 	Report: iggiat2a.aud, iggiat2b.aud
 	ReloadDelay: 40
-	Range: 9c0
-
-RedEyeE.TibCore:
-	Inherits: RedEye.TibCore
-	Range: 9c0
-
-RedEyeE.CYB:
-	Inherits: RedEyeE
-	Report: itanweaa.aud, itanweab.aud, itanweac.aud
-
-RedEyeE.CYB.TibCore:
-	Inherits: RedEyeE.TibCore
-	Report: itanweaa.aud, itanweab.aud, itanweac.aud
+	Range: 8c0
 
 Stinger:
 	Inherits: ^AntiGroundMissile
@@ -904,6 +890,7 @@ PitbullRockets:
 
 PitbullRocketsAA:
 	Inherits: RedEye
+	Range: 7c512
 	Report: pitbull-fire1.aud, pitbull-fire2.aud
 	ReloadDelay: 80
 	Burst: 2
@@ -1328,6 +1315,7 @@ BikeRockets:
 
 BikeRocketsAA:
 	Inherits: RedEye
+	Range: 7c512
 	Report: bazook1.aud
 	Burst: 2
 	BurstDelays: 5
@@ -1413,6 +1401,7 @@ IFVRockets:
 
 IFVRocketsAA:
 	Inherits: RedEye
+	Range: 7c512
 	Burst: 2
 	BurstDelays: 5
 	Warhead@1Dam: SpreadDamage
