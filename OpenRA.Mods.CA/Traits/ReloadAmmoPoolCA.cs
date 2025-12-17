@@ -51,6 +51,8 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly bool ShowSelectionBar = true;
 		public readonly Color SelectionBarColor = Color.FromArgb(128, 200, 255);
 
+		public readonly PlayerRelationship SelectionBarValidRelationships = PlayerRelationship.Ally;
+
 		public override object Create(ActorInitializer init) { return new ReloadAmmoPoolCA(init.Self, this); }
 
 		public override void RulesetLoaded(Ruleset rules, ActorInfo ai)
@@ -165,7 +167,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		float ISelectionBar.GetValue()
 		{
-			if (!Info.ShowSelectionBar || remainingDelay > 0 || !self.Owner.IsAlliedWith(self.World.RenderPlayer))
+			if (!Info.ShowSelectionBar || remainingDelay > 0 || !Info.SelectionBarValidRelationships.HasRelationship(self.Owner.RelationshipWith(self.World.RenderPlayer)))
 				return 0;
 
 			if (reloadTicks == 0)
