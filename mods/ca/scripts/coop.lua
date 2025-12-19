@@ -35,8 +35,8 @@ PrepareBuildingLists = function()
 
 	SharedBuildingLists = {
 		allies = { "fact", "powr", "apwr", "tent", "weap", "hpad", "proc", "dome", "atek", "pdox", "weat", "fix", "syrd" },
-		soviet = { "fact", "powr", "apwr", "barr", "weap", "afld", "proc", "dome", "stek", "mslo", "fix", "kenn", "spen", "npwr", "tpwr", "ftur", "ttur", "tsla" },
-		gdi = { "afac", "nuke", "nuk2", "pyle", "weap.td", "afld.gdi", "proc.td", "hq", "gtek", "eye", "rep", "syrd.gdi" },
+		soviet = { "fact", "powr", "apwr", "barr", "weap", "afld", "hpad", "proc", "dome", "stek", "mslo", "fix", "kenn", "spen", "npwr", "tpwr", "ftur", "ttur", "tsla" },
+		gdi = { "afac", "nuke", "nuk2", "pyle", "weap.td", "afld.gdi", "hpad.td", "proc.td", "hq", "gtek", "eye", "rep", "syrd.gdi" },
 		nod = { "afac", "nuke", "nuk2", "hand", "weap.td", "airs", "hpad.td", "proc.td", "hq", "tmpl", "mslo.nod", "rep", "spen.nod", "obli" },
 		scrin = { "sfac", "reac", "rea2", "port", "wsph", "grav", "proc.scrin", "nerv", "scrt", "rfgn", "srep" }
 	}
