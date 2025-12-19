@@ -6070,11 +6070,11 @@ CSPK:
 	Tooltip:
 		Name: Colony Spike
 	TooltipExtras:
-		Attributes: • Produces non-defense buildings.
+		Attributes: • Produces non-defense buildings.\n• Allows non-defense buildings to be built nearby once fully charged
 		Description: Enables production of non-defense buildings.
 	RevealsShroud:
 		MinRange: 6c0
-		Range: 10c0
+		Range: 8c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 6c0
@@ -6083,6 +6083,24 @@ CSPK:
 	Building:
 		TerrainTypes: Clear,Road
 		AllowPlacementOnResources: false
+	GivesBuildableArea:
+		AreaTypes: building
+	BaseProvider:
+		Range: 6c0
+		RequiresCondition: charged
+	WithRangeCircle:
+		Type: ColonySpike
+		Range: 6c0
+		Color: ffffff50
+		RequiresCondition: charged
+	ReloadAmmoPoolCA@Charged:
+		Delay: 4500
+		SelectionBarColor: FFFFFF
+		SelectionBarValidRelationships: Ally, Enemy, Neutral
+	AmmoPool@Charged:
+		Ammo: 1
+		InitialAmmo: 0
+		AmmoCondition: charged
 	-PrimaryBuilding:
 	-WithDecoration@primary:
 	-ProductionQueue@MQDEF:
