@@ -11,6 +11,7 @@
 using System;
 using System.Linq;
 using OpenRA.Activities;
+using OpenRA.Mods.CA.Activities;
 using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Traits;
@@ -184,7 +185,7 @@ namespace OpenRA.Mods.CA.Traits
 				}
 
 				var exitCell = self.Location + exit.ExitCell;
-				actor.QueueActivity(new Land(actor, Target.FromActor(self), WDist.Zero, info.LandOffset, info.Facing, clearCells: new CPos[1] { exitCell }));
+				actor.QueueActivity(new ProductionAirdropDeliver(actor, Target.FromActor(self), info.LandOffset, info.Facing));
 				if (info.WaitTickBeforeProduce > 0)
 					actor.QueueActivity(new Wait(info.WaitTickBeforeProduce));
 				actor.QueueActivity(new CallFunc(() =>
