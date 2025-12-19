@@ -88,5 +88,12 @@ namespace OpenRA.Mods.CA.Traits.Render
 			exitingActor = other;
 			desiredFrame = door.CurrentSequence.Length - 1;
 		}
+
+		public void OpenDoor(Actor a, CPos exit)
+		{
+			openExit = exit;
+			exitingActor = a;
+			desiredFrame = door.CurrentSequence.Length - 1;
+		}
 	}
 }

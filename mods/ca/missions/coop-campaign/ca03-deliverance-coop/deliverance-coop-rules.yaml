@@ -5,16 +5,18 @@ World:
 		Prefix: Initial Objectives
 		Text: • Find and take control of the GDI base, then defend it until reinforcements arrive.\n• Locate and capture the prison in which the GDI commander is being held.
 
-COOPWEAP.TD:
-	ProvidesPrerequisite@gdi:
-		Prerequisite: vehicles.gdi
-	ProvidesPrerequisite@mtnk:
-		Prerequisite: vehicles.mtnk
-	ProvidesPrerequisite@msam:
-		Prerequisite: vehicles.msam
-	ProvidesPrerequisite@hmmv:
-		Prerequisite: vehicles.hmmv
+PYLE:
+	CreateProxyActorForAllies:
+		RequireValidFaction: False
 
-COOPHPAD.TD:
-	ProvidesPrerequisite@gdi:
-		Prerequisite: aircraft.gdi
+WEAP.TD:
+	CreateProxyActorForAllies:
+		RequireValidFaction: False
+
+HPAD.TD:
+	CreateProxyActorForAllies:
+		RequireValidFaction: False
+
+HQ:
+	CreateProxyActorForAllies:
+		RequireValidFaction: False

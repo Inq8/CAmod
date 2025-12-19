@@ -1,4 +1,3 @@
-ExtraPrerequisiteFactions = { "gdi" }
 
 SetupPlayers = function()
 	Multi0 = Player.GetPlayer("Multi0")
@@ -42,7 +41,6 @@ TransferGDIUnits = function()
 
 	Trigger.AfterDelay(1, function()
 		TransferBaseToPlayer(SinglePlayerPlayer, GetFirstActivePlayer())
-		CACoopQueueSyncer()
 	end)
 end
 

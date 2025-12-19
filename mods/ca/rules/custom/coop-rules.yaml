@@ -1,6 +1,7 @@
 World:
 	ProductionQueueFromSelectionCA:
 		AllySelection: true
+	AllyProxyFromSelection:
 	MapBuildRadius:
 		AllyBuildRadiusCheckboxEnabled: True
 		BuildRadiusCheckboxVisible: True
@@ -257,12 +258,7 @@ World:
 
 Player:
 	LobbyPrerequisiteCheckbox@GLOBALFACTUNDEPLOY:
-		ID: factundeploy
-		Label: checkbox-redeployable-mcvs.label
-		Description: checkbox-redeployable-mcvs.description
 		Enabled: True
-		DisplayOrder: 7
-		Prerequisites: global-factundeploy
 	LobbyPrerequisiteCheckbox@FASTREGROWTH:
 		Locked: False
 		Visible: True
@@ -316,8 +312,42 @@ OILB:
 	CashTrickler:
 		UseResourceStorage: True
 
-COOPDUMMY:
-	Inherits: ^InvisibleDummy
+^BasicBuilding:
+	CreateProxyActorForAllies:
+		ProxyNamePrefix: coop
+		UseLocation: True
+		LinkedToParent: True
+		RequireValidFaction: True
+		RequiresPlayableOwner: True
+		RequiresCondition: tech-sharing-enabled
+	AllyProxyRallyPoint:
+	GrantConditionOnLobbyOption@BaseSharing:
+		Name: basesharing
+		Values: 1, 2
+		Condition: tech-sharing-enabled
+
+^ProducesInfantry:
+	ProvidesPrerequisite@HasRealProductionBuilding:
+		Prerequisite: has.infantry.production.building
+
+^ProducesVehicles:
+	ProvidesPrerequisite@HasRealProductionBuilding:
+		Prerequisite: has.vehicle.production.building
+
+^ProducesNaval:
+	ProvidesPrerequisite@HasRealProductionBuilding:
+		Prerequisite: has.naval.production.building
+
+^ProducesAircraft:
+	ProvidesPrerequisite@HasRealProductionBuilding:
+		Prerequisite: has.aircraft.production.building
+
+^ProducesHelicopters:
+	ProvidesPrerequisite@HasRealProductionBuilding:
+		Prerequisite: has.helicopter.production.building
+
+^COOPQueueUpdater:
+	Inherits@QueueUpdater: ^QueueUpdater
 	DummyConditionGranter@MQ:
 		Condition: global-multiqueue
 	DummyConditionGranter@MQFull:
@@ -327,34 +357,54 @@ COOPDUMMY:
 	DummyConditionConsumer@MQFull:
 		Condition: global-multiqueuefull
 
+^COOPProducesUnits:
+	Inherits@COOPQueueUpdater: ^COOPQueueUpdater
+	AlwaysVisible:
+	Selectable:
+		Priority: 1
+	ScriptTriggers:
+	ImmobileMultiCell:
+		OccupiesSpace: false
+		LocalCenterOffset: 0,-512,0
+	UpdatesUnitsProduced:
+	RallyPoint:
+
 ^COOPProducesBuildings:
+	Inherits@COOPQueueUpdater: ^COOPQueueUpdater
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Production@SQBLD:
 		Produces: BuildingSQ, DefenseSQ
 		RequiresCondition: !global-multiqueuefull
 
 ^COOPProducesVehicles:
+	Inherits: ^COOPProducesUnits
+	Inherits@NOMCV: ^UnlocksMcvIfNoneOwned
 	Production:
 		Produces: VehicleSQ, ParadropVehicle
-		RequiresCondition: !global-multiqueue
+		RequiresCondition: !global-multiqueue && !has-real-building
 	GrantExternalConditionToProduced:
 		Condition: produced
-	UpdatesUnitsProduced:
+	GrantConditionOnPrerequisite@HasRealProductionBuilding:
+		Condition: has-real-building
+		Prerequisites: has.vehicle.production.building
 
 ^COOPProducesNaval:
+	Inherits: ^COOPProducesUnits
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Production:
 		Produces: ShipSQ, Boat, Submarine
 		RequiresCondition: !global-multiqueue
-	UpdatesUnitsProduced:
+	ImmobileMultiCell:
+		-LocalCenterOffset:
 
 ^COOPProducesAircraft:
+	Inherits: ^COOPProducesUnits
 	Inherits@PRIMARY: ^PrimaryBuilding
 	ProvidesPrerequisite@any:
 		Prerequisite: aircraft.any
 	Production:
 		Produces: AircraftSQ, Plane, Helicopter
-		RequiresCondition: !global-multiqueue
+		RequiresCondition: !global-multiqueue && !has-real-building
 	GrantConditionOnPrerequisite@KoreanBonus:
 		Prerequisites: korea.coalition
 		Condition: korea-coalition
@@ -363,22 +413,30 @@ COOPDUMMY:
 		RequiresCondition: korea-coalition
 	GrantExternalConditionToProduced:
 		Condition: produced
-	UpdatesUnitsProduced:
+	GrantConditionOnPrerequisite@HasRealProductionBuilding:
+		Condition: has-real-building
+		Prerequisites: has.aircraft.production.building
 
 ^COOPProducesHelicopters:
 	Inherits@AIR: ^COOPProducesAircraft
 	Production:
 		Produces: AircraftSQ, Helicopter
-		RequiresCondition: !global-multiqueue
+		RequiresCondition: !global-multiqueue && !has-real-building
+	GrantConditionOnPrerequisite@HasRealProductionBuilding:
+		Condition: has-real-building
+		Prerequisites: has.helicopter.production.building
 
 ^COOPProducesInfantry:
+	Inherits: ^COOPProducesUnits
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Production:
 		Produces: InfantrySQ, Cyborg, Soldier, ParadropInfantry
-		RequiresCondition: !global-multiqueue
+		RequiresCondition: !global-multiqueue && !has-real-building
 	GrantExternalConditionToProduced:
 		Condition: produced
-	UpdatesUnitsProduced:
+	GrantConditionOnPrerequisite@HasRealProductionBuilding:
+		Condition: has-real-building
+		Prerequisites: has.infantry.production.building
 
 ^COOPProducesDogs:
 	Inherits: ^COOPProducesInfantry
@@ -391,40 +449,91 @@ COOPDUMMY:
 		Produces: InfantrySQ, Cyborg, ParadropInfantry, Upgrade
 
 ^COOPProducesUpgrades:
+	Inherits@COOPQueueUpdater: ^COOPQueueUpdater
 	Production:
 		Produces: Upgrade
 	ProvidesPrerequisite@UpgradesProducer:
 		Prerequisite: upgrades.producer
 
 COOPMSLO:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: mslo
 
 COOPSPEN:
-	Inherits: COOPDUMMY
 	Inherits@NAV: ^COOPProducesNaval
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: spen
+	ImmobileMultiCell:
+		Dimensions: 3,3
+	Exit@1:
+		SpawnOffset: 0,-213,0
+		Facing: 384
+		ExitCell: -1,2
+	Exit@2:
+		SpawnOffset: 0,-213,0
+		Facing: 640
+		ExitCell: 3,2
+	Exit@3:
+		SpawnOffset: 0,0,0
+		Facing: 128
+		ExitCell: 0,0
+	Exit@4:
+		SpawnOffset: 0,0,0
+		Facing: 896
+		ExitCell: 2,0
+	Exit@b1:
+		SpawnOffset: -1024,1024,0
+		Facing: 640
+		ExitCell: 0,2
+	Exit@b2:
+		SpawnOffset: 1024,1024,0
+		Facing: 896
+		ExitCell: 2,2
+	Exit@b3:
+		SpawnOffset: -1024,-1024,0
+		Facing: 384
+		ExitCell: 0,0
+	Exit@b4:
+		SpawnOffset: 1024,-1024,0
+		Facing: 128
+		ExitCell: 2,0
 
 COOPSYRD:
-	Inherits: COOPDUMMY
 	Inherits@NAV: ^COOPProducesNaval
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: syrd
+	ImmobileMultiCell:
+		Dimensions: 3,3
+	Exit@1:
+		SpawnOffset: -1024,1024,0
+		Facing: 640
+		ExitCell: 0,2
+	Exit@2:
+		SpawnOffset: 1024,1024,0
+		Facing: 896
+		ExitCell: 2,2
+	Exit@3:
+		SpawnOffset: -1024,-1024,0
+		Facing: 384
+		ExitCell: 0,0
+	Exit@4:
+		SpawnOffset: 1024,-1024,0
+		Facing: 128
+		ExitCell: 2,0
 
 COOPPDOX:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: pdox
 
 COOPTSLA:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: tsla
 
 COOPDOME:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	Inherits@UPG: ^COOPProducesUpgrades
 	ProvidesRadar:
 	ValidFactions:
@@ -467,12 +576,12 @@ COOPDOME:
 		Prerequisite: radar-active
 
 COOPFTUR:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: ftur
 
 COOPATEK:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	Inherits@UPG: ^COOPProducesUpgrades
 	ValidFactions:
 		Factions: allies, england, germany, france, usa
@@ -491,13 +600,12 @@ COOPATEK:
 		Prerequisite: atek.usa
 
 COOPALHQ:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	Inherits@UPG: ^COOPProducesUpgrades
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: alhq
 
 COOPWEAP:
-	Inherits: COOPDUMMY
 	Inherits@VEH: ^COOPProducesVehicles
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: weap
@@ -545,9 +653,15 @@ COOPWEAP:
 	ProvidesPrerequisiteValidatedFaction@qtnk:
 		Factions: soviet, russia, ukraine, iraq
 		Prerequisite: vehicles.qtnk
+	ImmobileMultiCell:
+		Dimensions: 3,3
+	Exit@1:
+		SpawnOffset: 213,-128,0
+		ExitCell: 1,2
+	TriggersProductionDoorOverlay:
 
 COOPFACT:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	Inherits@BLD: ^COOPProducesBuildings
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: fact
@@ -606,14 +720,13 @@ COOPFACT:
 		Prerequisite: anyconyard
 
 COOPPROC:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: proc
 	ProvidesPrerequisite@anyrefinery:
 		Prerequisite: anyrefinery
 
 COOPHPAD:
-	Inherits: COOPDUMMY
 	Inherits@AIR: ^COOPProducesHelicopters
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: hpad
@@ -654,9 +767,14 @@ COOPHPAD:
 		Prerequisite: aircraft.nhaw
 	ProvidesPrerequisite@RadarOrAircraft:
 		Prerequisite: radaroraircraft
+	ImmobileMultiCell:
+		Dimensions: 2,3
+	Exit@1:
+		SpawnOffset: 0,-256,0
+		ExitCell: 0,0
+		Facing: 896
 
 COOPAFLD:
-	Inherits: COOPDUMMY
 	Inherits@AIR: ^COOPProducesAircraft
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: afld
@@ -681,23 +799,28 @@ COOPAFLD:
 		Prerequisite: aircraft.kiro
 	ProvidesPrerequisite@RadarOrAircraft:
 		Prerequisite: radaroraircraft
+	ImmobileMultiCell:
+		Dimensions: 3,2
+	Exit@1:
+		ExitCell: 1,1
+		Facing: 768
 
 COOPPOWR:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	ProvidesPrerequisite@anypower:
 		Prerequisite: anypower
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: powr
 
 COOPAPWR:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	ProvidesPrerequisite@anypower:
 		Prerequisite: anypower
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: apwr
 
 COOPNPWR:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	Inherits@UPG: ^COOPProducesUpgrades
 	ProvidesPrerequisite@anypower:
 		Prerequisite: anypower
@@ -705,14 +828,14 @@ COOPNPWR:
 		Prerequisite: npwr
 
 COOPTPWR:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	ProvidesPrerequisite@anypower:
 		Prerequisite: anypower
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: tpwr
 
 COOPSTEK:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	Inherits@UPG: ^COOPProducesUpgrades
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: stek
@@ -735,7 +858,6 @@ COOPSTEK:
 		Prerequisite: stek.iraq
 
 COOPBARR:
-	Inherits: COOPDUMMY
 	Inherits@INF: ^COOPProducesInfantry
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: barr
@@ -770,17 +892,37 @@ COOPBARR:
 	ProvidesPrerequisiteValidatedFaction@shok:
 		Factions: soviet, russia, ukraine, yuri
 		Prerequisite: infantry.shok
+	ImmobileMultiCell:
+		Dimensions: 2,3
+	Exit@1:
+		SpawnOffset: -170,810,0
+		ExitCell: 1,2
+	Exit@2:
+		SpawnOffset: -725,640,0
+		ExitCell: 0,2
+	Exit@3:
+		SpawnOffset: -170,810,0
+		ExitCell: -1,2
+		Priority: 0
+	Exit@4:
+		SpawnOffset: -725,640,0
+		ExitCell: 2,2
+		Priority: 0
 
 COOPKENN:
-	Inherits: COOPDUMMY
 	Inherits@INF: ^COOPProducesDogs
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: kenn
 	ProvidesPrerequisite@dog:
 		Prerequisite: infantry.dog
+	Exit@1:
+		SpawnOffset: -280,400,0
+		ExitCell: 0,1
+	Exit@2:
+		SpawnOffset: -280,400,0
+		ExitCell: -1,0
 
 COOPTENT:
-	Inherits: COOPDUMMY
 	Inherits@INF: ^COOPProducesInfantry
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: tent
@@ -808,9 +950,25 @@ COOPTENT:
 		Prerequisite: infantry.mech
 	ProvidesPrerequisite@medi:
 		Prerequisite: infantry.medi
+	ImmobileMultiCell:
+		Dimensions: 2,3
+	Exit@1:
+		SpawnOffset: -42,810,0
+		ExitCell: 1,2
+	Exit@2:
+		SpawnOffset: -725,640,0
+		ExitCell: 0,2
+	Exit@3:
+		SpawnOffset: -42,810,0
+		ExitCell: -1,2
+		Priority: 0
+	Exit@4:
+		SpawnOffset: -725,640,0
+		ExitCell: 2,2
+		Priority: 0
 
 COOPFIX:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: fix
 	ProvidesPrerequisite@repair:
@@ -821,7 +979,6 @@ COOPFIX:
 		Prerequisite: vehicles.mcv
 
 COOPPYLE:
-	Inherits: COOPDUMMY
 	Inherits@INF: ^COOPProducesInfantry
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: pyle
@@ -847,9 +1004,24 @@ COOPPYLE:
 		Prerequisite: infantry.arc
 	ProvidesPrerequisite@medi:
 		Prerequisite: infantry.medi
+	ImmobileMultiCell:
+		Dimensions: 2,3
+	Exit@1:
+		SpawnOffset: -170,810,0
+		ExitCell: 1,2
+	Exit@2:
+		SpawnOffset: -725,640,0
+		ExitCell: 0,2
+	Exit@3:
+		SpawnOffset: -170,810,0
+		ExitCell: -1,2
+		Priority: 0
+	Exit@4:
+		SpawnOffset: -725,640,0
+		ExitCell: 2,2
+		Priority: 0
 
 COOPHAND:
-	Inherits: COOPDUMMY
 	Inherits@INF: ^COOPProducesInfantry
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: hand
@@ -877,9 +1049,25 @@ COOPHAND:
 		Prerequisite: infantry.shadow
 	ProvidesPrerequisite@mech:
 		Prerequisite: infantry.mech
+	ImmobileMultiCell:
+		Dimensions: 2,3
+	Exit@1:
+		SpawnOffset: 512,1024,0
+		ExitCell: 1,2
+	Exit@2:
+		SpawnOffset: -1024,768,0
+		ExitCell: -2,2
+		Facing: 384
+	Exit@3:
+		SpawnOffset: 512,1024,0
+		ExitCell: 0,2
+		Priority: 0
+	Exit@4:
+		SpawnOffset: 512,1024,0
+		ExitCell: 2,2
+		Priority: 0
 
 COOPWEAP.TD:
-	Inherits: COOPDUMMY
 	Inherits@VEH: ^COOPProducesVehicles
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: weap.td
@@ -932,10 +1120,25 @@ COOPWEAP.TD:
 	ProvidesPrerequisiteValidatedFaction@mlrs:
 		Factions: legion
 		Prerequisite: vehicles.mlrs
+	ImmobileMultiCell:
+		Dimensions: 3,3
+	Exit@1:
+		SpawnOffset: -341,-341,0
+		ExitCell: 0,2
+	TriggersProductionDoorOverlay:
+
+AIRS:
+
+
+SYRD:
+	Building:
+		Footprint: +++ +x+ +++
+
+SYRD.gdi:
+	Building:
+		Footprint: +++ +x+ +++
 
 COOPAIRS:
-	Inherits: COOPDUMMY
-	Inherits@NOMCV: ^UnlocksMcvIfNoneOwned
 	Inherits@VEH: ^COOPProducesVehicles
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: airs
@@ -966,23 +1169,43 @@ COOPAIRS:
 	ProvidesPrerequisiteValidatedFaction@mlrs:
 		Factions: nod, blackh, marked
 		Prerequisite: vehicles.mlrs
+	ImmobileMultiCell:
+		Dimensions: 4,3
+	Exit@1:
+		SpawnOffset: -1024,0,0
+		ExitCell: 3,1
+	-Production:
+	ProductionAirdropCA@SQVEH:
+		Produces: VehicleSQ, ParadropVehicle
+		ActorType: c17.cargo
+		ReadyAudio: ReinforcementsArrived
+		SpawnType: ClosestEdgeToDestination
+		ProportionalSpeed: true
+		RequiresCondition: !global-multiqueue && !has-real-building
+	ProductionAirdropCA@MQVEH:
+		Produces: VehicleMQ, ParadropVehicle
+		ActorType: c17.cargo
+		ReadyAudio: ReinforcementsArrived
+		SpawnType: ClosestEdgeToDestination
+		ProportionalSpeed: true
+		RequiresCondition: !global-multiqueue && !has-real-building
 
 COOPNUKE:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	ProvidesPrerequisite@anypower:
 		Prerequisite: anypower
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: nuke
 
 COOPNUK2:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	ProvidesPrerequisite@anypower:
 		Prerequisite: anypower
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: nuk2
 
 COOPAFAC:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	Inherits@BLD: ^COOPProducesBuildings
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: afac
@@ -1038,14 +1261,14 @@ COOPAFAC:
 		Prerequisite: anyconyard
 
 COOPOBLI:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: obli
 	ProvidesPrerequisite@ObeliskOrTemple:
 		Prerequisite: obliortmpl
 
 COOPHQ:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	Inherits@UPG: ^COOPProducesUpgrades
 	ProvidesRadar:
 	ProvidesPrerequisite@buildingname:
@@ -1089,7 +1312,7 @@ COOPHQ:
 		Prerequisite: radar.shadow
 
 COOPEYE:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	ProvidesRadar:
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: eye
@@ -1100,7 +1323,7 @@ COOPEYE:
 		Prerequisite: eye.zocom
 
 COOPREP:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: rep
 	ProvidesPrerequisite@repair:
@@ -1111,7 +1334,6 @@ COOPREP:
 		Prerequisite: vehicles.mcv
 
 COOPHPAD.TD:
-	Inherits: COOPDUMMY
 	Inherits@AIR: ^COOPProducesHelicopters
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: hpad.td
@@ -1147,16 +1369,20 @@ COOPHPAD.TD:
 		Prerequisite: aircraft.chinook
 	ProvidesPrerequisite@RadarOrAircraft:
 		Prerequisite: radaroraircraft
+	ImmobileMultiCell:
+		Dimensions: 2,3
+	Exit@1:
+		SpawnOffset: 0,-256,0
+		Facing: 896
 
 COOPPROC.TD:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: proc.td
 	ProvidesPrerequisite@anyrefinery:
 		Prerequisite: anyrefinery
 
 COOPAFLD.GDI:
-	Inherits: COOPDUMMY
 	Inherits@AIR: ^COOPProducesAircraft
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: afld.gdi
@@ -1176,9 +1402,14 @@ COOPAFLD.GDI:
 		Prerequisite: aircraft.chinookvisible
 	ProvidesPrerequisite@RadarOrAircraft:
 		Prerequisite: radaroraircraft
+	ImmobileMultiCell:
+		Dimensions: 3,2
+	Exit@1:
+		ExitCell: 1,1
+		Facing: 768
 
 COOPGTEK:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	Inherits@UPG: ^COOPProducesUpgrades
 	ValidFactions:
 		Factions: gdi, talon, zocom, eagle, arc
@@ -1202,7 +1433,7 @@ COOPGTEK:
 		Prerequisite: gtek.eagle
 
 COOPTMPL:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	Inherits@UPG: ^COOPProducesUpgrades
 	ValidFactions:
 		Factions: nod, blackh, marked, legion, shadow
@@ -1228,24 +1459,54 @@ COOPTMPL:
 		Prerequisite: tmpl.shadow
 
 COOPPRIS:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: pris
 
 COOPSPEN.nod:
-	Inherits: COOPDUMMY
 	Inherits@NAV: ^COOPProducesNaval
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: spen.nod
+	ImmobileMultiCell:
+		Dimensions: 3,3
+	Exit@1:
+		SpawnOffset: 0,-213,0
+		Facing: 384
+		ExitCell: -1,2
+	Exit@2:
+		SpawnOffset: 0,-213,0
+		Facing: 640
+		ExitCell: 3,2
+	Exit@3:
+		SpawnOffset: 0,0,0
+		Facing: 0
+		ExitCell: 1,0
 
 COOPSYRD.gdi:
-	Inherits: COOPDUMMY
 	Inherits@NAV: ^COOPProducesNaval
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: syrd.gdi
+	ImmobileMultiCell:
+		Dimensions: 3,3
+	Exit@1:
+		SpawnOffset: -1024,1024,0
+		Facing: 640
+		ExitCell: 0,2
+	Exit@2:
+		SpawnOffset: 1024,1024,0
+		Facing: 896
+		ExitCell: 2,2
+	Exit@3:
+		SpawnOffset: -1024,-1024,0
+		Facing: 384
+		ExitCell: 0,0
+	Exit@4:
+		SpawnOffset: 1024,-1024,0
+		Facing: 128
+		ExitCell: 2,0
 
 COOPTTUR:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: ttur
 	ProvidesPrerequisite@ftur:
@@ -1256,19 +1517,19 @@ COOPTTUR:
 		Prerequisite: tturorstek
 
 COOPCVAT:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	Inherits@UPG: ^COOPProducesUpgrades
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: cvat
 
 COOPINDP:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	Inherits@UPG: ^COOPProducesUpgrades
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: indp
 
 COOPMUNP:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	Inherits@UPG: ^COOPProducesUpgrades
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: munp
@@ -1276,13 +1537,13 @@ COOPMUNP:
 		Prerequisite: indpormunp
 
 COOPOREP:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	Inherits@UPG: ^COOPProducesUpgrades
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: orep
 
 COOPUPGC:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	Inherits@UPG: ^COOPProducesUpgrades
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: upgc
@@ -1304,7 +1565,6 @@ COOPUPGC:
 		Prerequisite: gdiorupgc
 
 COOPTMPP:
-	Inherits: COOPDUMMY
 	Inherits@UPG: ^COOPProducesUpgrades
 	Inherits@INF: ^COOPProducesCyborgs
 	ProvidesPrerequisite@buildingname:
@@ -1316,19 +1576,28 @@ COOPTMPP:
 		Prerequisite: infantry.marked
 	ProvidesPrerequisite@mech:
 		Prerequisite: infantry.mech
+	ImmobileMultiCell:
+		Dimensions: 3,4
+	Exit@1:
+		SpawnOffset: -170,1310,0
+		ExitCell: 1,3
+	Exit@2:
+		SpawnOffset: 190,-400,0
+		ExitCell: 1,-1
+		Priority: 0
 
 COOPMSLO.Nod:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: mslo.Nod
 
 COOPWEAT:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: weat
 
 COOPSFAC:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	Inherits@BLD: ^COOPProducesBuildings
 	ValidFactions:
 		Factions: scrin, reaper, traveler, harbinger, collector
@@ -1352,28 +1621,27 @@ COOPSFAC:
 		Prerequisite: anyconyard
 
 COOPREAC:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	ProvidesPrerequisite@anypower:
 		Prerequisite: anypower
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: reac
 
 COOPREA2:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	ProvidesPrerequisite@anypower:
 		Prerequisite: anypower
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: rea2
 
 COOPPROC.SCRIN:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: proc.scrin
 	ProvidesPrerequisite@anyrefinery:
 		Prerequisite: anyrefinery
 
 COOPPORT:
-	Inherits: COOPDUMMY
 	Inherits@INF: ^COOPProducesInfantry
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: port
@@ -1395,9 +1663,24 @@ COOPPORT:
 	ProvidesPrerequisiteValidatedFaction@collector:
 		Factions: collector
 		Prerequisite: infantry.collector
+	ImmobileMultiCell:
+		Dimensions: 2,3
+	Exit@1:
+		SpawnOffset: 0,512,0
+		ExitCell: 0,2
+	Exit@2:
+		SpawnOffset: 256,512,0
+		ExitCell: 1,2
+	Exit@3:
+		SpawnOffset: 0,512,0
+		ExitCell: -1,2
+		Priority: 0
+	Exit@4:
+		SpawnOffset: 256,512,0
+		ExitCell: 2,2
+		Priority: 0
 
 COOPWSPH:
-	Inherits: COOPDUMMY
 	Inherits@VEH: ^COOPProducesVehicles
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: wsph
@@ -1431,9 +1714,14 @@ COOPWSPH:
 	ProvidesPrerequisiteValidatedFaction@tpod:
 		Factions: scrin, traveler, harbinger, collector
 		Prerequisite: vehicles.tpod
+	ImmobileMultiCell:
+		Dimensions: 3,3
+	Exit@1:
+		SpawnOffset: 0,0,0
+		ExitCell: 0,2
 
 COOPNERV:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	Inherits@UPG: ^COOPProducesUpgrades
 	ProvidesRadar:
 	ProvidesPrerequisite@buildingname:
@@ -1466,7 +1754,7 @@ COOPNERV:
 		Prerequisite: radar-active
 
 COOPSCRT:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	Inherits@UPG: ^COOPProducesUpgrades
 	ValidFactions:
 		Factions: scrin, reaper, traveler, harbinger, collector
@@ -1485,7 +1773,6 @@ COOPSCRT:
 		RequiresPrerequisites: botplayer
 
 COOPGRAV:
-	Inherits: COOPDUMMY
 	Inherits@AIR: ^COOPProducesHelicopters
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: grav
@@ -1498,15 +1785,21 @@ COOPGRAV:
 		Prerequisite: aircraft.scrin
 	ProvidesPrerequisite@RadarOrAircraft:
 		Prerequisite: radaroraircraft
+	ImmobileMultiCell:
+		Dimensions: 3,3
+	Exit@1:
+		ExitCell: 1,1
+		Facing: 720
+		SpawnOffset: -128,0,0
 
 COOPSIGN:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	Inherits@UPG: ^COOPProducesUpgrades
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: sign
 
 COOPSREP:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: srep
 	ProvidesPrerequisite@repair:
@@ -1517,6 +1810,6 @@ COOPSREP:
 		Prerequisite: vehicles.mcv
 
 COOPRFGN:
-	Inherits: COOPDUMMY
+	Inherits: ^InvisibleDummy
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: rfgn

@@ -30,54 +30,6 @@ CompositionValueMultipliers[Difficulty] = CompositionValueMultipliers[Difficulty
 UnitBuildTimeMultipliers[Difficulty] = math.max(UnitBuildTimeMultipliers[Difficulty] / CoopAttackStrengthMultiplier, 0.1)
 --------
 
-PrepareBuildingLists = function()
-	UnitProducers = Utils.Concat(BarracksTypes, Utils.Concat(FactoryTypes, Utils.Concat(AirProductionTypes, NavalProductionTypes)))
-
-	SharedBuildingLists = {
-		allies = { "fact", "powr", "apwr", "tent", "weap", "hpad", "proc", "dome", "atek", "pdox", "weat", "fix", "syrd" },
-		soviet = { "fact", "powr", "apwr", "barr", "weap", "afld", "hpad", "proc", "dome", "stek", "mslo", "fix", "kenn", "spen", "npwr", "tpwr", "ftur", "ttur", "tsla" },
-		gdi = { "afac", "nuke", "nuk2", "pyle", "weap.td", "afld.gdi", "hpad.td", "proc.td", "hq", "gtek", "eye", "rep", "syrd.gdi" },
-		nod = { "afac", "nuke", "nuk2", "hand", "weap.td", "airs", "hpad.td", "proc.td", "hq", "tmpl", "mslo.nod", "rep", "spen.nod", "obli" },
-		scrin = { "sfac", "reac", "rea2", "port", "wsph", "grav", "proc.scrin", "nerv", "scrt", "rfgn", "srep" }
-	}
-
-	RemoteBuildingLists = {}
-
-	-- copy SharedBuildingLists to RemoteBuildingLists with "coop" prefix
-	for faction, buildingTypes in pairs(SharedBuildingLists) do
-		RemoteBuildingLists[faction] = {}
-		Utils.Do(buildingTypes, function(buildingType)
-			RemoteBuildingLists[faction][#RemoteBuildingLists[faction] + 1] = "coop" .. buildingType
-		end)
-	end
-
-	-- non-shared buildings (build limit 1)
-	-- "alhq", "cvat", "indp", "munp", "orep", "upgc", "tmpp", "sign"
-
-	RemoteExits =
-	{
-		barr = CVec.New(0, 1),
-		tent = CVec.New(0, 1),
-		weap = CVec.New(1, 1),
-		spen = CVec.New(2, 2),
-		syrd = CVec.New(2, 2),
-		kenn = CVec.New(0, 0),
-		afld = CVec.New(1, 1),
-		hpad = CVec.New(1, 0),
-		hand = CVec.New(1, 1),
-		pyle = CVec.New(0, 1),
-		["weap.td"] = CVec.New(1, 1),
-		airs = CVec.New(1, 1),
-		["hpad.td"] = CVec.New(1, 0),
-		["afld.gdi"] = CVec.New(1, 1),
-		["spen.nod"] = CVec.New(2, 2),
-		["syrd.gdi"] = CVec.New(2, 2),
-		port = CVec.New(0, 1),
-		grav = CVec.New(1, 1),
-		wsph = CVec.New(1, 1)
-	}
-end
-
 CACoopQueueSyncer = function()
 	Trigger.AfterDelay(1, function()
 		Utils.Do(CoopPlayers,function(p)
@@ -579,111 +531,6 @@ local function GetTeamPrimaryProducerOfType(buildingType)
 	return nil
 end
 
---- Create a remote building to mimic players sharing base buildings and tech.
---- If this can produce units, those units will be produced at the map edge,
---- and possibly moved to the last created building of the desired type.
----@param owner player Owner of the new remote building.
----@param originalType string The "real" building type, where units can appear.
----@param remoteType string The remote building type.
-local function CreateRemoteBuilding(owner, originalType, remoteType)
-	local remote = Actor.Create(remoteType, true, { Owner = owner, Location = originalLocation })
-	local offset = RemoteExits[originalType]
-
-	local isProducer = Utils.Any(UnitProducers, function(producerType)
-		return originalType == producerType
-	end)
-
-	if isProducer then
-		Trigger.OnProduction(remote, function(producer, produced)
-			local primary = GetTeamPrimaryProducerOfType(originalType)
-
-			if not primary then
-				-- It seems all factories of this type have been wiped
-				-- out before the shared prerequisites were updated.
-				producer.Owner.Cash = producer.Owner.Cash + Actor.Cost(produced.Type)
-				produced.Destroy()
-				return
-			end
-
-			local exit = primary.Location + offset
-			local remoteUnit = Actor.Create(produced.Type, true, { Owner = producer.Owner, Location = exit })
-			MoveDownIfAble(remoteUnit)
-			produced.Owner = Neutral
-			produced.IsInWorld = false
-			produced.Destroy()
-		end)
-	end
-end
-
---- Periodically update the co-op team's prerequisites, which can
---- be shared through the creation/destruction of remote buildings.
-local function UpdateCoopPrequisites()
-	Trigger.AfterDelay(5, UpdateCoopPrequisites)
-
-	if not TechShared then
-		return
-	end
-
-	for faction, sharedBuildingTypesForFaction in pairs(SharedBuildingLists) do
-		local factionPlayers = Utils.Where(CoopPlayers, function(player)
-			return player.Faction == faction or (ExtraPrerequisiteFactions and Utils.Any(ExtraPrerequisiteFactions, function(ef) return ef == faction end))
-		end)
-
-		if #factionPlayers > 0 then
-			local teamBuildings = {}
-			local teamRemoteBuildings = {}
-			local playerBuildingTypes = {}
-			local playerRemoteBuildingTypes = {}
-
-			for _, player in ipairs(factionPlayers) do
-				playerBuildingTypes[player.InternalName] = {}
-				playerRemoteBuildingTypes[player.InternalName] = {}
-
-				local playerBuildings = player.GetActorsByTypes(sharedBuildingTypesForFaction)
-				Utils.Do(playerBuildings, function(b)
-					teamBuildings[b.Type] = true
-					playerBuildingTypes[player.InternalName][b.Type] = true
-				end)
-
-				local playerRemoteBuildings = player.GetActorsByTypes(RemoteBuildingLists[faction])
-				Utils.Do(playerRemoteBuildings, function(rb)
-					teamRemoteBuildings[rb.Type] = true
-					playerRemoteBuildingTypes[player.InternalName][rb.Type] = true
-				end)
-			end
-
-			-- if the team has a building, ensure all players have it or its remote equivalent
-			for _, buildingType in ipairs(sharedBuildingTypesForFaction) do
-				local playersNeedingRemote = {}
-				local teamHasBuilding = teamBuildings[buildingType] == true
-				local remoteType = "coop" .. buildingType
-
-				Utils.Do(factionPlayers, function(player)
-					local playerHasRemoteBuilding = playerRemoteBuildingTypes[player.InternalName][remoteType] == true
-
-					-- if this player has the building, or the team does not have the building, destroy any remote equivalents
-					if playerBuildingTypes[player.InternalName][buildingType] or (not teamHasBuilding and playerHasRemoteBuilding) then
-						local remoteBuildings = player.GetActorsByType(remoteType)
-						Utils.Do(remoteBuildings, function(remote)
-							remote.Destroy()
-						end)
-					-- if this player does not have the building or the remote equivalent, but the team does, create the remote equivalent
-					elseif not playerBuildingTypes[player.InternalName][buildingType] and teamHasBuilding and not playerHasRemoteBuilding then
-						playersNeedingRemote[#playersNeedingRemote + 1] = player
-					end
-				end)
-
-				if #playersNeedingRemote > 0 then
-					Utils.Do(playersNeedingRemote, function(player)
-						CreateRemoteBuilding(player, buildingType, remoteType)
-					end)
-					CACoopQueueSyncer()
-				end
-			end
-		end
-	end
-end
-
 ---@param enemyPlayer player
 local function MultiplyEnemyStartingUnits(enemyPlayer)
 	local multiplier
@@ -1037,20 +884,14 @@ CoopInit = function()
 	CoopPlayers = MissionPlayers
 
 	local mainEnemies = MissionEnemies
-
-	PrepareBuildingLists()
-
 	local baseSharingValue = Map.LobbyOption("basesharing")
 
 	if baseSharingValue == "1" then
 		McvPerPlayer = false
-		TechShared = true
 	elseif baseSharingValue == "2" then
 		McvPerPlayer = true
-		TechShared = true
 	else
 		McvPerPlayer = true
-		TechShared = false
 	end
 
 	-- delay by 1 tick to allow difficulty based removals to take effect
@@ -1091,7 +932,6 @@ CoopInit = function()
 
 		SetExtraMines()
 		originalLocation = CPos.New(3, 3)
-		UpdateCoopPrequisites()
 		StartCoopBots()
 		EnemyVeterancy(mainEnemies)
 	end)
@@ -1111,6 +951,7 @@ TransferBaseToPlayer = function(fromPlayer, toPlayer)
 		Utils.Do(baseActors, function(a)
 			a.Owner = toPlayer
 		end)
+		CACoopQueueSyncer()
 	end)
 end
 
