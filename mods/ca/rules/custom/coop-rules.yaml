@@ -267,6 +267,48 @@ Player:
 		Locked: False
 		Visible: True
 
+# Don't allow players without a real refinery to build harvesters
+
+REALREFINERY:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		Name: Refinery
+	Buildable:
+		Description: Refinery
+
+PROC:
+	ProvidesPrerequisite@HasRealRefinery:
+		Prerequisite: realrefinery
+
+PROC.TD:
+	ProvidesPrerequisite@HasRealRefinery:
+		Prerequisite: realrefinery
+
+PROC.SCRIN:
+	ProvidesPrerequisite@HasRealRefinery:
+		Prerequisite: realrefinery
+
+HARV:
+	Buildable:
+		Prerequisites: realrefinery, ~vehicles.ra, ~!charv.upgrade
+
+HARV.Chrono:
+	Buildable:
+		Prerequisites: realrefinery, ~charv.upgrade, ~vehicles.allies
+
+HARV.TD:
+	Buildable:
+		Prerequisites: ~!sharv.upgrade, realrefinery, ~vehicles.td
+
+HARV.TD.UPG:
+	Buildable:
+		Prerequisites: ~sharv.upgrade, realrefinery, ~vehicles.td
+
+HARV.Scrin:
+	Buildable:
+		Prerequisites: realrefinery, ~vehicles.scrin
+
 # Make Oil Derrick use resource storage so it works with income sharing
 OILB:
 	StoresPlayerResourcesCA:
