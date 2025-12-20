@@ -29,7 +29,7 @@ namespace OpenRA.Mods.CA.Traits
 	}
 
 	[Desc("Used for actors spawned by InterceptorsPower.")]
-	public class Interceptor : ITick, INotifyAddedToWorld, INotifyRemovedFromWorld
+	public class Interceptor : INotifyCreated, ITick, INotifyAddedToWorld, INotifyRemovedFromWorld
 	{
 		WPos targetPos;
 		WVec targetOffset;
@@ -38,13 +38,15 @@ namespace OpenRA.Mods.CA.Traits
 		int guardDuration;
 		InterceptorState state;
 		int guardTicksRemaining;
-		readonly AutoTarget autoTarget;
+		AutoTarget autoTarget;
 
 		public event Action<Actor> OnRemovedFromWorld = self => { };
 		public event Action<Actor> OnEnteredAttackRange = self => { };
 		public event Action<Actor> OnExitedAttackRange = self => { };
 
-		public Interceptor(Actor self, InterceptorInfo info)
+		public Interceptor(Actor self, InterceptorInfo info) {}
+
+		void INotifyCreated.Created(Actor self)
 		{
 			autoTarget = self.TraitOrDefault<AutoTarget>();
 		}

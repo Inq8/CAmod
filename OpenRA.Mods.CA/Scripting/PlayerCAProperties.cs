@@ -47,6 +47,24 @@ namespace OpenRA.Mods.Common.Scripting
 		}
 
 		[Desc("True if the player has not surrendered or disconnected.")]
-		public bool PlayerIsActive => !Player.Spectating && Player.WinState != WinState.Lost && Player.PlayerActor.TraitOrDefault<PlayerConnectionStatus>()?.IsConnected == true;
+		public bool PlayerIsActive
+		{
+			get
+			{
+				if (Player == null)
+					return false;
+
+				if (Player.Spectating)
+					return false;
+
+				if (Player.WinState == WinState.Lost)
+					return false;
+
+				if (Player.PlayerActor.TraitOrDefault<PlayerConnectionStatus>()?.IsConnected != true)
+					return false;
+
+				return true;
+			}
+		}
 	}
 }

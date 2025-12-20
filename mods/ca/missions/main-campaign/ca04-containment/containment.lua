@@ -461,7 +461,7 @@ DropChronoPrison = function()
 				a.GrantCondition("difficulty-" .. Difficulty)
 				TransferChronoPrisonOwnership(a)
 
-				Trigger.OnKilled(chronoPrison, function(self, killer)
+				Trigger.OnKilled(a, function(self, killer)
 					if RespawnEnabled then
 						DropChronoPrison()
 					else

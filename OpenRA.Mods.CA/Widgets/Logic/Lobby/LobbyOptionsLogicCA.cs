@@ -30,6 +30,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 		readonly Widget optionsContainer;
 		readonly Widget checkboxRowTemplate;
 		readonly Widget dropdownRowTemplate;
+		readonly Widget advancedHeaderTemplate;
 		readonly int yMargin;
 
 		readonly Func<MapPreview> getMap;
@@ -52,6 +53,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			yMargin = optionsContainer.Bounds.Y;
 			checkboxRowTemplate = optionsContainer.Get("CHECKBOX_ROW_TEMPLATE");
 			dropdownRowTemplate = optionsContainer.Get("DROPDOWN_ROW_TEMPLATE");
+			advancedHeaderTemplate = optionsContainer.Get("ADVANCED_HEADER_TEMPLATE");
 
 			var logDir = Platform.SupportDir + "Logs";
 			savedOptionsFilePath = Path.Combine(logDir, "ca-lobbyoptions.log");
@@ -94,11 +96,43 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			optionsContainer.Bounds.Height = 0;
 			var allOptions = GetOptions();
 
+			var regularOptions = allOptions.Where(o => o.DisplayOrder <= 999).ToArray();
+			var advancedOptions = allOptions.Where(o => o.DisplayOrder > 999).ToArray();
+
+			AddOptionsSection(regularOptions);
+
+			if (advancedOptions.Length > 0)
+			{
+				var divider = new ColoredRectangleWidget();
+				divider.Color = Color.FromArgb(255, 32, 32, 32);
+				divider.Bounds.X = 10;
+				divider.Bounds.Y = optionsContainer.Bounds.Height + 5;
+				divider.Bounds.Width = optionsContainer.Bounds.Width - 20;
+				divider.Bounds.Height = 1;
+				optionsContainer.Bounds.Height += 10;
+				optionsContainer.AddChild(divider);
+
+				var advancedHeader = advancedHeaderTemplate.Clone();
+				advancedHeader.Bounds.Y = optionsContainer.Bounds.Height;
+				optionsContainer.Bounds.Height += advancedHeader.Bounds.Height;
+				optionsContainer.AddChild(advancedHeader);
+
+				AddOptionsSection(advancedOptions);
+			}
+
+			panel.ContentHeight = yMargin + optionsContainer.Bounds.Height;
+			optionsContainer.Bounds.Y = yMargin;
+
+			panel.ScrollToTop();
+		}
+
+		void AddOptionsSection(IEnumerable<LobbyOption> options)
+		{
 			Widget row = null;
 			var checkboxColumns = new Queue<CheckboxWidget>();
 			var dropdownColumns = new Queue<DropDownButtonWidget>();
 
-			foreach (var option in allOptions.Where(o => o is LobbyBooleanOption))
+			foreach (var option in options.Where(o => o is LobbyBooleanOption))
 			{
 				if (checkboxColumns.Count == 0)
 				{
@@ -135,7 +169,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				};
 			}
 
-			foreach (var option in allOptions.Where(o => o is not LobbyBooleanOption))
+			foreach (var option in options.Where(o => o is not LobbyBooleanOption))
 			{
 				if (dropdownColumns.Count == 0)
 				{
@@ -191,11 +225,6 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 					label.IsVisible = () => true;
 				}
 			}
-
-			panel.ContentHeight = yMargin + optionsContainer.Bounds.Height;
-			optionsContainer.Bounds.Y = yMargin;
-
-			panel.ScrollToTop();
 		}
 
 		IEnumerable<LobbyOption> GetOptions()

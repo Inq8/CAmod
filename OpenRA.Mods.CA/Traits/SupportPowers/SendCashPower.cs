@@ -25,6 +25,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Amount of money to send. Will send less if the player cannot afford the full amount.")]
 		public readonly int Amount = 1000;
 
+		[Desc("Percentage of amount sent to be taxed away.")]
+		public readonly int TaxPercentage = 0;
+
 		[Desc("The `TargetTypes` from `Targetable` that can be targeted.")]
 		public readonly BitSet<TargetableType> ValidTargets = default;
 
@@ -74,6 +77,14 @@ namespace OpenRA.Mods.CA.Traits
 				playerResources.TakeCash(amountToSend, true);
 
 				var targetResources = target.Owner.PlayerActor.Trait<PlayerResources>();
+
+				if (info.TaxPercentage > 0)
+				{
+					var taxAmount = amountToSend * info.TaxPercentage / 100;
+					amountToSend -= taxAmount;
+					amountToSend = System.Math.Max(1, amountToSend);
+				}
+
 				targetResources.GiveCash(amountToSend);
 
 				self.World.AddFrameEndTask(w =>
@@ -82,8 +93,12 @@ namespace OpenRA.Mods.CA.Traits
 					w.Add(new FlashTarget(target, Color.Yellow));
 				});
 
-				TextNotificationsManager.AddTransientLine(self.Owner, $"Sent ${amountToSend} to {target.Owner.ResolvedPlayerName}");
-				TextNotificationsManager.AddTransientLine(target.Owner, $"Received ${amountToSend} from {self.Owner.ResolvedPlayerName}");
+				var localPlayer = self.World.LocalPlayer;
+				if (localPlayer != null && localPlayer.IsAlliedWith(self.Owner))
+				{
+					var message = $"Sent ${amountToSend} to {target.Owner.ResolvedPlayerName}";
+					TextNotificationsManager.AddChatLine(self.Owner.ClientIndex, "[Team] " + self.Owner.ResolvedPlayerName, message, self.Owner.Color);
+				}
 			}
 		}
 

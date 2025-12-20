@@ -8,6 +8,7 @@
  */
 #endregion
 
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using OpenRA.Mods.Common.Activities;
@@ -31,37 +32,48 @@ namespace OpenRA.Mods.CA.Traits
 
 	class Berserkable : ConditionalTrait<BerserkableInfo>, INotifyIdle
 	{
-		readonly Mobile mobile;
+		Mobile mobile;
+		IEnumerable<AutoTarget> autoTargets;
+		IEnumerable<AttackBase> attackBases;
+		Harvester harvester;
 
 		public Berserkable(Actor self, BerserkableInfo info)
-			: base(info)
-        {
-            mobile = self.TraitOrDefault<Mobile>();
-        }
+			: base(info) {}
+
+		protected override void Created(Actor self)
+		{
+			base.Created(self);
+			mobile = self.TraitOrDefault<Mobile>();
+			autoTargets = self.TraitsImplementing<AutoTarget>();
+			attackBases = self.TraitsImplementing<AttackBase>();
+			harvester = self.TraitOrDefault<Harvester>();
+		}
 
 		void Blink(Actor self)
 		{
-			self.World.AddFrameEndTask(w =>
+			if (self.IsInWorld)
 			{
-				if (self.IsInWorld)
-				{
-					var stop = new Order("Stop", self, false);
-					foreach (var t in self.TraitsImplementing<IResolveOrder>())
-						t.ResolveOrder(self, stop);
-				}
-			});
+				var stop = new Order("Stop", self, false);
+				foreach (var t in self.TraitsImplementing<IResolveOrder>())
+					t.ResolveOrder(self, stop);
+			}
 		}
 
 		protected override void TraitEnabled(Actor self)
 		{
-			// Getting enraged cancels current activity.
-			Blink(self);
+			self.World.AddFrameEndTask(w => Blink(self));
 		}
 
 		protected override void TraitDisabled(Actor self)
 		{
-			// Getting unraged should drop the target, too.
-			Blink(self);
+			self.World.AddFrameEndTask(w =>
+			{
+				Blink(self);
+
+				if (harvester != null)
+					self.QueueActivity(false, new FindAndDeliverResources(self));
+			});
+
 		}
 
 		WDist GetScanRange(Actor self, AttackBase[] atbs)
@@ -69,8 +81,7 @@ namespace OpenRA.Mods.CA.Traits
 			WDist range = WDist.Zero;
 
 			// Get max value of autotarget scan range.
-			var autoTargets = self.TraitsImplementing<AutoTarget>().Where(a => !a.IsTraitDisabled).ToArray();
-			foreach (var at in autoTargets)
+			foreach (var at in autoTargets.Where(a => !a.IsTraitDisabled))
 			{
 				var r = at.Info.ScanRadius;
 				if (r > range.Length)
@@ -96,18 +107,23 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled)
 				return;
 
-			var atbs = self.TraitsImplementing<AttackBase>().Where(a => !a.IsTraitDisabled && !a.IsTraitPaused).ToArray();
-			if (atbs.Length == 0)
+			var activeAttackBases = attackBases.Where(a => !a.IsTraitDisabled && !a.IsTraitPaused).ToArray();
+			if (activeAttackBases.Length == 0)
 			{
+				if (mobile != null)
+					self.QueueActivity(false, new Nudge(self));
+
 				self.QueueActivity(new Wait(15));
 				return;
 			}
 
-			WDist range = GetScanRange(self, atbs);
+			WDist range = GetScanRange(self, activeAttackBases);
 
 			var targets = self.World.FindActorsInCircle(self.CenterPosition, range)
 				.Where(a => !a.Owner.NonCombatant
-					&& a != self && a.IsTargetableBy(self)
+					&& a != self
+					&& a.IsTargetableBy(self)
+					&& activeAttackBases.Any(ab => ab.HasAnyValidWeapons(Target.FromActor(a)))
 					&& !Info.InvalidTargets.Overlaps(a.GetEnabledTargetTypes()));
 
 			if (!targets.Any())
@@ -121,7 +137,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			// Attack a random target.
 			var target = Target.FromActor(targets.Random(self.World.SharedRandom));
-			self.QueueActivity(atbs.First().GetAttackActivity(self, AttackSource.AutoTarget, target, true, true));
+			self.QueueActivity(activeAttackBases.First().GetAttackActivity(self, AttackSource.AutoTarget, target, true, true));
 		}
 	}
 }

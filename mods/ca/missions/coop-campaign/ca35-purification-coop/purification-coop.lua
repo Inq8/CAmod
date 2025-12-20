@@ -19,7 +19,7 @@ end
 AfterWorldLoaded = function()
 	local firstActivePlayer = GetFirstActivePlayer()
 	TransferBaseToPlayer(SinglePlayerPlayer, firstActivePlayer)
-	StartCashSpread(3000)
+	StartCashSpread(3500)
 
 	local mcvPath = { CPos.New(74,1), CPos.New(72, 6) }
 

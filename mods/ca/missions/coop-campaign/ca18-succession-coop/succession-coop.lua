@@ -18,14 +18,13 @@ end
 
 AfterWorldLoaded = function()
 	TransferMcvsToPlayers()
-	StartCashSpread(3000)
+	StartCashSpread(3500)
 end
 
 AfterTick = function()
 
 end
 
--- overridden in co-op version
 SendKirovs = function()
 	local firstActivePlayer = GetFirstActivePlayer()
 	Reinforcements.Reinforce(firstActivePlayer, { "kiro" }, { KirovSpawn1.Location, KirovRally1.Location })

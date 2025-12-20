@@ -143,6 +143,7 @@ namespace OpenRA.Mods.CA.Traits
 		int ticks;
 		MapEdge nearestMapEdge;
 		WDist spawnDistance;
+		WithSpriteBody wsb;
 
 		[Sync]
 		public int Ticks { get; private set; }
@@ -160,6 +161,7 @@ namespace OpenRA.Mods.CA.Traits
 		protected override void Created(Actor self)
 		{
 			base.Created(self);
+			wsb = self.TraitOrDefault<WithSpriteBody>();
 		}
 
 		public override void SelectTarget(Actor self, string order, SupportPowerManager manager)
@@ -172,7 +174,6 @@ namespace OpenRA.Mods.CA.Traits
 			base.Activate(self, order, manager);
 			PlayLaunchSounds();
 
-			var wsb = self.TraitOrDefault<WithSpriteBody>();
 			if (wsb != null && wsb.DefaultAnimation.HasSequence(info.ActiveSequence))
 				wsb.PlayCustomAnimation(self, info.ActiveSequence);
 

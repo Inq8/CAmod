@@ -144,6 +144,7 @@ namespace OpenRA.Mods.CA.Traits
 		TechTree techTree;
 
 		IEnumerable<Actor> targets;
+		WithSpriteBody wsb;
 
 		[Sync]
 		public int Ticks { get; private set; }
@@ -160,6 +161,7 @@ namespace OpenRA.Mods.CA.Traits
 			base.Created(self);
 			watchers = self.TraitsImplementing<IConditionTimerWatcher>().Where(Notifies).ToArray();
 			techTree = self.Owner.PlayerActor.Trait<TechTree>();
+			wsb = self.TraitOrDefault<WithSpriteBody>();
 		}
 
 		public override void SelectTarget(Actor self, string order, SupportPowerManager manager)
@@ -188,7 +190,6 @@ namespace OpenRA.Mods.CA.Traits
 				activeToken = self.GrantCondition(info.ActiveCondition);
 			}
 
-			var wsb = self.TraitOrDefault<WithSpriteBody>();
 			if (wsb != null && wsb.DefaultAnimation.HasSequence(info.ActiveSequence))
 				wsb.PlayCustomAnimation(self, info.ActiveSequence);
 

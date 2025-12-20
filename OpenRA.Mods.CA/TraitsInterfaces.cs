@@ -8,6 +8,7 @@
  */
 #endregion
 
+using System.Collections.Generic;
 using OpenRA.GameRules;
 using OpenRA.Graphics;
 using OpenRA.Primitives;
@@ -15,6 +16,18 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
+	// Allows modifying previews e.g. with WithColoredOverlayCA
+	public interface IActorPreviewRenderModifierInfo : ITraitInfoInterface
+	{
+		IActorPreviewRenderModifier GetPreviewRenderModifier(WorldRenderer wr, ActorInfo actorInfo, TypeDictionary inits, Color previewColor);
+	}
+
+	public interface IActorPreviewRenderModifier
+	{
+		IEnumerable<IRenderable> ModifyPreviewRender(WorldRenderer wr, IEnumerable<IRenderable> renderables, Rectangle bounds);
+		void Tick();
+	}
+
 	[RequireExplicitImplementation]
 	public interface ISmokeParticleInfo
 	{

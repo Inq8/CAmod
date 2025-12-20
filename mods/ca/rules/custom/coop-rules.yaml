@@ -1,4 +1,6 @@
 World:
+	ProductionQueueFromSelectionCA:
+		AllySelection: true
 	MapBuildRadius:
 		AllyBuildRadiusCheckboxEnabled: True
 		BuildRadiusCheckboxVisible: True
@@ -19,7 +21,7 @@ World:
 	ScriptLobbyDropdown@incomeshare:
 		ID: incomeshare
 		Label: Income Sharing
-		Description: Shares a percentage of all player refinery income with all other players.\nFor technical reasons this makes silos useless.
+		Description: Shares a percentage of all player refinery income with all other players.\nFor technical reasons this makes silos useless.\nChoosing options with bonus income may make the mission significantly easier.
 		Values:
 			0: Off
 			100: Equally Split
@@ -354,40 +356,39 @@ COOPDUMMY:
 
 COOPMSLO:
 	Inherits: COOPDUMMY
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: mslo
 
 COOPSPEN:
 	Inherits: COOPDUMMY
 	Inherits@NAV: ^COOPProducesNaval
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: spen
 
 COOPSYRD:
 	Inherits: COOPDUMMY
 	Inherits@NAV: ^COOPProducesNaval
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: syrd
 
 COOPPDOX:
 	Inherits: COOPDUMMY
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: pdox
 
 COOPTSLA:
 	Inherits: COOPDUMMY
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: tsla
 
 COOPDOME:
 	Inherits: COOPDUMMY
 	Inherits@UPG: ^COOPProducesUpgrades
 	ProvidesRadar:
-	ProvidesPrerequisite:
-		Prerequisite: dome
 	ValidFactions:
 		Factions: allies, england, france, germany, usa, soviet, russia, ukraine, iraq, yuri
 	ProvidesPrerequisite@buildingname:
+		Prerequisite: dome
 	ProvidesPrerequisite@anyradar:
 		Prerequisite: anyradar
 	ProvidesPrerequisite@radarorrepair:
@@ -425,18 +426,17 @@ COOPDOME:
 
 COOPFTUR:
 	Inherits: COOPDUMMY
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: ftur
 
 COOPATEK:
 	Inherits: COOPDUMMY
 	Inherits@UPG: ^COOPProducesUpgrades
-	ProvidesPrerequisite:
-		Prerequisite: atek
 	ValidFactions:
 		Factions: allies, england, germany, france, usa
 	ProvidesPrerequisite@buildingname:
-	ProvidesPrerequisite:
+		Prerequisite: atek
+	ProvidesPrerequisite@anytechcenter:
 		Prerequisite: techcenter.any
 	ProvidesPrerequisiteValidatedFaction@germanyatek:
 		Factions: germany
@@ -451,13 +451,13 @@ COOPATEK:
 COOPALHQ:
 	Inherits: COOPDUMMY
 	Inherits@UPG: ^COOPProducesUpgrades
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: alhq
 
 COOPWEAP:
 	Inherits: COOPDUMMY
 	Inherits@VEH: ^COOPProducesVehicles
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: weap
 	ValidFactions:
 		Factions: allies, england, france, germany, usa, soviet, russia, ukraine, iraq, yuri
@@ -507,7 +507,7 @@ COOPWEAP:
 COOPFACT:
 	Inherits: COOPDUMMY
 	Inherits@BLD: ^COOPProducesBuildings
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: fact
 	ValidFactions:
 		Factions: allies, england, france, germany, usa, soviet, russia, ukraine, iraq, yuri
@@ -565,7 +565,7 @@ COOPFACT:
 
 COOPPROC:
 	Inherits: COOPDUMMY
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: proc
 	ProvidesPrerequisite@anyrefinery:
 		Prerequisite: anyrefinery
@@ -573,7 +573,7 @@ COOPPROC:
 COOPHPAD:
 	Inherits: COOPDUMMY
 	Inherits@AIR: ^COOPProducesHelicopters
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: hpad
 	ValidFactions:
 		Factions: allies, england, france, germany, usa, russia, ukraine, iraq, yuri
@@ -616,7 +616,7 @@ COOPHPAD:
 COOPAFLD:
 	Inherits: COOPDUMMY
 	Inherits@AIR: ^COOPProducesAircraft
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: afld
 	ValidFactions:
 		Factions: soviet, russia, ukraine, iraq, yuri
@@ -642,31 +642,39 @@ COOPAFLD:
 
 COOPPOWR:
 	Inherits: COOPDUMMY
-	ProvidesPrerequisite:
-		Prerequisite: anypower, powr
+	ProvidesPrerequisite@anypower:
+		Prerequisite: anypower
+	ProvidesPrerequisite@buildingname:
+		Prerequisite: powr
 
 COOPAPWR:
 	Inherits: COOPDUMMY
-	ProvidesPrerequisite:
-		Prerequisite: anypower, apwr
+	ProvidesPrerequisite@anypower:
+		Prerequisite: anypower
+	ProvidesPrerequisite@buildingname:
+		Prerequisite: apwr
 
 COOPNPWR:
 	Inherits: COOPDUMMY
 	Inherits@UPG: ^COOPProducesUpgrades
-	ProvidesPrerequisite:
-		Prerequisite: anypower, npwr
+	ProvidesPrerequisite@anypower:
+		Prerequisite: anypower
+	ProvidesPrerequisite@buildingname:
+		Prerequisite: npwr
 
 COOPTPWR:
 	Inherits: COOPDUMMY
-	ProvidesPrerequisite:
-		Prerequisite: anypower, tpwr
+	ProvidesPrerequisite@anypower:
+		Prerequisite: anypower
+	ProvidesPrerequisite@buildingname:
+		Prerequisite: tpwr
 
 COOPSTEK:
 	Inherits: COOPDUMMY
 	Inherits@UPG: ^COOPProducesUpgrades
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: stek
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@anytechcenter:
 		Prerequisite: techcenter.any
 	ProvidesPrerequisite@TeslaCoilOrSovietTechCenter:
 		Prerequisite: tslaorstek
@@ -687,7 +695,7 @@ COOPSTEK:
 COOPBARR:
 	Inherits: COOPDUMMY
 	Inherits@INF: ^COOPProducesInfantry
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: barr
 	ValidFactions:
 		Factions: soviet, russia, ukraine, iraq, yuri
@@ -724,7 +732,7 @@ COOPBARR:
 COOPKENN:
 	Inherits: COOPDUMMY
 	Inherits@INF: ^COOPProducesDogs
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: kenn
 	ProvidesPrerequisite@dog:
 		Prerequisite: infantry.dog
@@ -732,7 +740,7 @@ COOPKENN:
 COOPTENT:
 	Inherits: COOPDUMMY
 	Inherits@INF: ^COOPProducesInfantry
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: tent
 	ValidFactions:
 		Factions: allies, england, germany, france, usa
@@ -761,7 +769,7 @@ COOPTENT:
 
 COOPFIX:
 	Inherits: COOPDUMMY
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: fix
 	ProvidesPrerequisite@repair:
 		Prerequisite: repair
@@ -773,7 +781,7 @@ COOPFIX:
 COOPPYLE:
 	Inherits: COOPDUMMY
 	Inherits@INF: ^COOPProducesInfantry
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: pyle
 	ValidFactions:
 		Factions: gdi, talon, zocom, eagle, arc
@@ -801,7 +809,7 @@ COOPPYLE:
 COOPHAND:
 	Inherits: COOPDUMMY
 	Inherits@INF: ^COOPProducesInfantry
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: hand
 	ValidFactions:
 		Factions: nod, blackh, marked, legion, shadow
@@ -831,7 +839,7 @@ COOPHAND:
 COOPWEAP.TD:
 	Inherits: COOPDUMMY
 	Inherits@VEH: ^COOPProducesVehicles
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: weap.td
 	ValidFactions:
 		Factions: gdi, talon, zocom, eagle, arc, nod, legion
@@ -887,7 +895,7 @@ COOPAIRS:
 	Inherits: COOPDUMMY
 	Inherits@NOMCV: ^UnlocksMcvIfNoneOwned
 	Inherits@VEH: ^COOPProducesVehicles
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: airs
 	ValidFactions:
 		Factions: nod, blackh, marked, shadow
@@ -919,18 +927,22 @@ COOPAIRS:
 
 COOPNUKE:
 	Inherits: COOPDUMMY
-	ProvidesPrerequisite:
-		Prerequisite: nuke, anypower
+	ProvidesPrerequisite@anypower:
+		Prerequisite: anypower
+	ProvidesPrerequisite@buildingname:
+		Prerequisite: nuke
 
 COOPNUK2:
 	Inherits: COOPDUMMY
-	ProvidesPrerequisite:
-		Prerequisite: nuk2, anypower
+	ProvidesPrerequisite@anypower:
+		Prerequisite: anypower
+	ProvidesPrerequisite@buildingname:
+		Prerequisite: nuk2
 
 COOPAFAC:
 	Inherits: COOPDUMMY
 	Inherits@BLD: ^COOPProducesBuildings
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: afac
 	ValidFactions:
 		Factions: gdi, talon, zocom, eagle, arc, nod, blackh, marked, legion, shadow
@@ -985,7 +997,7 @@ COOPAFAC:
 
 COOPOBLI:
 	Inherits: COOPDUMMY
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: obli
 	ProvidesPrerequisite@ObeliskOrTemple:
 		Prerequisite: obliortmpl
@@ -994,11 +1006,10 @@ COOPHQ:
 	Inherits: COOPDUMMY
 	Inherits@UPG: ^COOPProducesUpgrades
 	ProvidesRadar:
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: hq
 	ValidFactions:
 		Factions: gdi, talon, zocom, eagle, arc, nod, blackh, marked, legion, shadow
-	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite@anyradar:
 		Prerequisite: anyradar
 	ProvidesPrerequisite@radarorrepair:
@@ -1038,7 +1049,7 @@ COOPHQ:
 COOPEYE:
 	Inherits: COOPDUMMY
 	ProvidesRadar:
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: eye
 	ValidFactions:
 		Factions: gdi, talon, zocom, eagle, arc
@@ -1048,7 +1059,7 @@ COOPEYE:
 
 COOPREP:
 	Inherits: COOPDUMMY
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: rep
 	ProvidesPrerequisite@repair:
 		Prerequisite: repair
@@ -1059,7 +1070,8 @@ COOPREP:
 
 COOPHPAD.TD:
 	Inherits: COOPDUMMY
-	ProvidesPrerequisite:
+	Inherits@AIR: ^COOPProducesHelicopters
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: hpad.td
 	ValidFactions:
 		Factions: gdi, talon, zocom, eagle, arc, nod, blackh, marked, legion, shadow
@@ -1096,7 +1108,7 @@ COOPHPAD.TD:
 
 COOPPROC.TD:
 	Inherits: COOPDUMMY
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: proc.td
 	ProvidesPrerequisite@anyrefinery:
 		Prerequisite: anyrefinery
@@ -1104,7 +1116,7 @@ COOPPROC.TD:
 COOPAFLD.GDI:
 	Inherits: COOPDUMMY
 	Inherits@AIR: ^COOPProducesAircraft
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: afld.gdi
 	ValidFactions:
 		Factions: gdi, talon, zocom, eagle, arc
@@ -1126,11 +1138,11 @@ COOPAFLD.GDI:
 COOPGTEK:
 	Inherits: COOPDUMMY
 	Inherits@UPG: ^COOPProducesUpgrades
-	ProvidesPrerequisite:
-		Prerequisite: gtek
 	ValidFactions:
 		Factions: gdi, talon, zocom, eagle, arc
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
+		Prerequisite: gtek
+	ProvidesPrerequisite@anytechcenter:
 		Prerequisite: techcenter.any
 	ProvidesPrerequisite@tdtek:
 		Prerequisite: techcenter.td
@@ -1150,11 +1162,11 @@ COOPGTEK:
 COOPTMPL:
 	Inherits: COOPDUMMY
 	Inherits@UPG: ^COOPProducesUpgrades
-	ProvidesPrerequisite:
-		Prerequisite: tmpl
 	ValidFactions:
 		Factions: nod, blackh, marked, legion, shadow
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
+		Prerequisite: tmpl
+	ProvidesPrerequisite@anytechcenter:
 		Prerequisite: techcenter.any
 	ProvidesPrerequisite@tdtek:
 		Prerequisite: techcenter.td
@@ -1175,24 +1187,24 @@ COOPTMPL:
 
 COOPPRIS:
 	Inherits: COOPDUMMY
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: pris
 
 COOPSPEN.nod:
 	Inherits: COOPDUMMY
 	Inherits@NAV: ^COOPProducesNaval
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: spen.nod
 
 COOPSYRD.gdi:
 	Inherits: COOPDUMMY
 	Inherits@NAV: ^COOPProducesNaval
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: syrd.gdi
 
 COOPTTUR:
 	Inherits: COOPDUMMY
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: ttur
 	ProvidesPrerequisite@ftur:
 		Prerequisite: ftur
@@ -1204,19 +1216,19 @@ COOPTTUR:
 COOPCVAT:
 	Inherits: COOPDUMMY
 	Inherits@UPG: ^COOPProducesUpgrades
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: cvat
 
 COOPINDP:
 	Inherits: COOPDUMMY
 	Inherits@UPG: ^COOPProducesUpgrades
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: indp
 
 COOPMUNP:
 	Inherits: COOPDUMMY
 	Inherits@UPG: ^COOPProducesUpgrades
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: munp
 	ProvidesPrerequisite@IndpOrMunp:
 		Prerequisite: indpormunp
@@ -1224,13 +1236,13 @@ COOPMUNP:
 COOPOREP:
 	Inherits: COOPDUMMY
 	Inherits@UPG: ^COOPProducesUpgrades
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: orep
 
 COOPUPGC:
 	Inherits: COOPDUMMY
 	Inherits@UPG: ^COOPProducesUpgrades
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: upgc
 	ValidFactions:
 		Factions: gdi, talon, zocom, eagle, arc
@@ -1253,7 +1265,7 @@ COOPTMPP:
 	Inherits: COOPDUMMY
 	Inherits@UPG: ^COOPProducesUpgrades
 	Inherits@INF: ^COOPProducesCyborgs
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: tmpp
 	ProvidesPrerequisite@nod:
 		Prerequisite: infantry.nod
@@ -1265,12 +1277,12 @@ COOPTMPP:
 
 COOPMSLO.Nod:
 	Inherits: COOPDUMMY
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: mslo.Nod
 
 COOPWEAT:
 	Inherits: COOPDUMMY
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: weat
 
 COOPSFAC:
@@ -1278,7 +1290,7 @@ COOPSFAC:
 	Inherits@BLD: ^COOPProducesBuildings
 	ValidFactions:
 		Factions: scrin, reaper, traveler, harbinger, collector
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: sfac
 	ProvidesPrerequisite@scrin:
 		Prerequisite: structures.scrin
@@ -1299,17 +1311,21 @@ COOPSFAC:
 
 COOPREAC:
 	Inherits: COOPDUMMY
-	ProvidesPrerequisite:
-		Prerequisite: anypower, reac
+	ProvidesPrerequisite@anypower:
+		Prerequisite: anypower
+	ProvidesPrerequisite@buildingname:
+		Prerequisite: reac
 
 COOPREA2:
 	Inherits: COOPDUMMY
-	ProvidesPrerequisite:
-		Prerequisite: anypower, rea2
+	ProvidesPrerequisite@anypower:
+		Prerequisite: anypower
+	ProvidesPrerequisite@buildingname:
+		Prerequisite: rea2
 
 COOPPROC.SCRIN:
 	Inherits: COOPDUMMY
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: proc.scrin
 	ProvidesPrerequisite@anyrefinery:
 		Prerequisite: anyrefinery
@@ -1317,7 +1333,7 @@ COOPPROC.SCRIN:
 COOPPORT:
 	Inherits: COOPDUMMY
 	Inherits@INF: ^COOPProducesInfantry
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: port
 	ValidFactions:
 		Factions: scrin, reaper, traveler, harbinger, collector
@@ -1341,7 +1357,7 @@ COOPPORT:
 COOPWSPH:
 	Inherits: COOPDUMMY
 	Inherits@VEH: ^COOPProducesVehicles
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: wsph
 	ValidFactions:
 		Factions: scrin ,reaper, traveler, harbinger, collector
@@ -1378,11 +1394,10 @@ COOPNERV:
 	Inherits: COOPDUMMY
 	Inherits@UPG: ^COOPProducesUpgrades
 	ProvidesRadar:
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: nerv
 	ValidFactions:
 		Factions: scrin, reaper, traveler, harbinger, collector
-	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite@anyradar:
 		Prerequisite: anyradar
 	ProvidesPrerequisite@radarorrepair:
@@ -1413,10 +1428,9 @@ COOPSCRT:
 	Inherits@UPG: ^COOPProducesUpgrades
 	ValidFactions:
 		Factions: scrin, reaper, traveler, harbinger, collector
-	ProvidesPrerequisite:
-		Prerequisite: scrt
 	ProvidesPrerequisite@buildingname:
-	ProvidesPrerequisite:
+		Prerequisite: scrt
+	ProvidesPrerequisite@anytechcenter:
 		Prerequisite: techcenter.any
 	ProvidesPrerequisiteValidatedFaction@harbscrt:
 		Factions: harbinger
@@ -1431,7 +1445,7 @@ COOPSCRT:
 COOPGRAV:
 	Inherits: COOPDUMMY
 	Inherits@AIR: ^COOPProducesHelicopters
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: grav
 	ValidFactions:
 		Factions: scrin, reaper, traveler, harbinger, collector
@@ -1446,12 +1460,12 @@ COOPGRAV:
 COOPSIGN:
 	Inherits: COOPDUMMY
 	Inherits@UPG: ^COOPProducesUpgrades
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: sign
 
 COOPSREP:
 	Inherits: COOPDUMMY
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: srep
 	ProvidesPrerequisite@repair:
 		Prerequisite: repair
@@ -1462,5 +1476,5 @@ COOPSREP:
 
 COOPRFGN:
 	Inherits: COOPDUMMY
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@buildingname:
 		Prerequisite: rfgn

@@ -35,8 +35,8 @@ PrepareBuildingLists = function()
 
 	SharedBuildingLists = {
 		allies = { "fact", "powr", "apwr", "tent", "weap", "hpad", "proc", "dome", "atek", "pdox", "weat", "fix", "syrd" },
-		soviet = { "fact", "powr", "apwr", "barr", "weap", "afld", "proc", "dome", "stek", "mslo", "fix", "kenn", "spen", "npwr", "tpwr", "ftur", "ttur", "tsla" },
-		gdi = { "afac", "nuke", "nuk2", "pyle", "weap.td", "afld.gdi", "proc.td", "hq", "gtek", "eye", "rep", "syrd.gdi" },
+		soviet = { "fact", "powr", "apwr", "barr", "weap", "afld", "hpad", "proc", "dome", "stek", "mslo", "fix", "kenn", "spen", "npwr", "tpwr", "ftur", "ttur", "tsla" },
+		gdi = { "afac", "nuke", "nuk2", "pyle", "weap.td", "afld.gdi", "hpad.td", "proc.td", "hq", "gtek", "eye", "rep", "syrd.gdi" },
 		nod = { "afac", "nuke", "nuk2", "hand", "weap.td", "airs", "hpad.td", "proc.td", "hq", "tmpl", "mslo.nod", "rep", "spen.nod", "obli" },
 		scrin = { "sfac", "reac", "rea2", "port", "wsph", "grav", "proc.scrin", "nerv", "scrt", "rfgn", "srep" }
 	}
@@ -334,107 +334,12 @@ local function SyncObjectives()
 			end)
 		end)
 
-		Trigger.OnPlayerLost(player, function()
-			for i, v in ipairs(CoopPlayers) do
-				if v == player then
-					table.remove(CoopPlayers, i)
-					break
-				end
-			end
+		Trigger.OnPlayerLost(player, function(p)
+			PlayerDefeatedOrDisconnected(p)
+		end)
 
-			Trigger.AfterDelay(DateTime.Seconds(1), function()
-				Media.PlaySpeechNotification(player, "Lose")
-			end)
-
-			local surrenderMessages = {
-				"PID's not surrenderin'! PID's passed on! This Commander is no more! They have ceased to be! PID's expired and gone to meet their maker! PID's a stiff! Bereft of life, PID rests in peace! If you hadn't nailed them to the playerlist, PID'd be pushing up the daisies! Their metabolic processes are now history! PID's off the twig! PID's kicked the bucket, PID's shuffled off their mortal coil, run down the curtain and joined the bleedin' choir invisible!! THIS IS AN EX-COMMANDER!!",
-				"We noticed that PID went AWOL. All troops under their command will be reassigned.",
-				"We are sad to announce that PID is lost in the Combat Zone. We can't afford a search party. All units, regroup.",
-				"PID has abandoned the operation. Their assets are now under joint command.",
-				"Commander PID has failed to report in. All units will be redistributed.",
-				"PID is MIA. Remaining forces are now reassigned to active commanders.",
-				"Reports confirm that PID is no longer in the fight. Reallocating resources.",
-				"High Command suspects PID was compromised. Their troops are now yours.",
-				"PID pulled out. Their units remain. Use them wisely.",
-				"We've lost contact with PID. Taking control of their remaining forces.",
-				"PID has been deemed unfit for command. Reassigning assets.",
-				"No further transmissions from PID. Their troops now fall under unified command.",
-				"High Command regrets to inform that PID has been silenced. Units are being reassigned.",
-				"Another Commander down: PID. Their legacy continues through their troops.",
-				"PID's command channel went dark. Redirecting all forces to surviving operatives.",
-				"Surrender confirmed from PID. Their units will continue the fight without them.",
-				"PID's resignation has been accepted... by force. Reassigning units.",
-				"Satellite link to PID severed. Their war assets are now at your disposal.",
-				"Combat stress got the better of PID. Picking up the slack.",
-				"Casualty of war: PID. All operable units reassigned to remaining players.",
-				"Command vacancy filled. PID's units will continue under new leadership.",
-				"PID has paid the ultimate price. Their forces are yours to command.",
-				"War spares no one. PID has fallen. Their troops remain.",
-				"PID has been promoted to civilian. By force. Units reassigned.",
-				"PID tripped on a landmine and career-ending shame. Units reassigned.",
-				"PID forgot to pay their command subscription. Reallocating troops.",
-				"PID's command authority revoked. Initiating redistribution of forces.",
-				"Command integrity of PID compromised. Units transferring to secure channels.",
-				"PID's signal is gone. Let their sacrifice not be in vain.",
-				"Command silence from PID. Reallocation of units underway.",
-				"PID fell to the chaos of war. Their forces continue the mission.",
-				"Confirmed KIA: PID. Taking operational control of remaining assets.",
-				"PID's command integrity shattered. Their war effort continues through us.",
-				"Another ghost in the fog: PID. Let their units be our resolve.",
-				"Transmission lost. PID is no more. We fight on.",
-				"PID has ragequit real life. You get their toys.",
-				"PID left the oven on. They've gone home. You're in charge now.",
-				"PID suffered from sudden strategic incompetence. Assets reallocated.",
-				"PID experienced spontaneous desk flipping. Their troops are free real estate.",
-				"Last known words of PID: 'Watch this!' Reassigning units.",
-				"PID achieved a higher state of 'not our problem'. You take it from here.",
-				"Command code: FAIL-STATE. PID's forces now under community management.",
-				"We've promoted PID to field observer. Very, very far from the field.",
-				"PID has been debriefed from active duty. Units reassigned.",
-				"Command slot vacated: PID. Assets redistributed.",
-				"PID no longer reports to HQ. Taking direct control of their forces.",
-				"Operational handover complete for PID. Troops reassigned.",
-				"Command continuity protocol activated. PID's assets now reassigned.",
-				"PID has disengaged. Their units now fall under surviving command.",
-				"Control signal lost from PID. Integrating their forces.",
-				"PID has relinquished control. Remaining assets transferred."
-			}
-
-			--Media.DisplayMessage("Number of Bullshit Messages: " .. #surrenderMessages)
-			Trigger.AfterDelay(DateTime.Seconds(5), function()
-				if Messagecooldown ~= true then
-					Messagecooldown = true
-					local MessageIndex = Utils.RandomInteger(1, #surrenderMessages)
-					local selectedMessage = surrenderMessages[MessageIndex]
-					local playerName = player.Name
-					if selectedMessage ~= nil then
-						local formattedMessage = string.gsub(selectedMessage, "PID", playerName)
-						Media.DisplayMessage(formattedMessage, "High Command", player.Color)
-					end
-				end
-			end)
-
-
-			Trigger.AfterDelay(DateTime.Seconds(8), function()
-				AssignToCoopPlayers(player.GetActors(), CoopPlayers)
-				local EstateCash = (player.Cash + player.Resources)
-				EstateCash = (EstateCash / #CoopPlayers)
-				Utils.Do(CoopPlayers, function(PID)
-					PID.Cash = PID.Cash + EstateCash
-				end)
-				Messagecooldown = false
-			end)
-
-			Trigger.AfterDelay(DateTime.Seconds(10), function()
-				--Failsafe if reassignment isnt possible
-				local Deathlist = player.GetActors()
-				Utils.Do(Deathlist,function(UID)
-					if UID.Type ~= "player" and not UID.IsDead and UID.HasProperty("Health") then
-						UID.Kill()
-					end
-				end)
-			end)
-
+		TriggerCA.OnPlayerDisconnected(player, function(p)
+			PlayerDefeatedOrDisconnected(p)
 		end)
 	end)
 
@@ -454,6 +359,112 @@ local function SyncObjectives()
 			if player.IsLocalPlayer then
 				Media.PlaySoundNotification(player, "AlertBleep")
 				Media.DisplayMessage(MainPlayer.GetObjectiveDescription(obid), "Objective failed", HSLColor.Red)
+			end
+		end)
+	end)
+end
+
+PlayerDefeatedOrDisconnected = function(player)
+
+	if not IsPlayerInList(player, CoopPlayers) then
+		return
+	end
+
+	for i, v in ipairs(CoopPlayers) do
+		if v == player then
+			table.remove(CoopPlayers, i)
+			break
+		end
+	end
+
+	Trigger.AfterDelay(DateTime.Seconds(1), function()
+		Media.PlaySpeechNotification(player, "Lose")
+	end)
+
+	local surrenderMessages = {
+		"PID's not surrenderin'! PID's passed on! This Commander is no more! They have ceased to be! PID's expired and gone to meet their maker! PID's a stiff! Bereft of life, PID rests in peace! If you hadn't nailed them to the playerlist, PID'd be pushing up the daisies! Their metabolic processes are now history! PID's off the twig! PID's kicked the bucket, PID's shuffled off their mortal coil, run down the curtain and joined the bleedin' choir invisible!! THIS IS AN EX-COMMANDER!!",
+		"We noticed that PID went AWOL. All troops under their command will be reassigned.",
+		"We are sad to announce that PID is lost in the Combat Zone. We can't afford a search party. All units, regroup.",
+		"PID has abandoned the operation. Their assets are now under joint command.",
+		"Commander PID has failed to report in. All units will be redistributed.",
+		"PID is MIA. Remaining forces are now reassigned to active commanders.",
+		"Reports confirm that PID is no longer in the fight. Reallocating resources.",
+		"High Command suspects PID was compromised. Their troops are now yours.",
+		"PID pulled out. Their units remain. Use them wisely.",
+		"We've lost contact with PID. Taking control of their remaining forces.",
+		"PID has been deemed unfit for command. Reassigning assets.",
+		"No further transmissions from PID. Their troops now fall under unified command.",
+		"High Command regrets to inform that PID has been silenced. Units are being reassigned.",
+		"Another Commander down: PID. Their legacy continues through their troops.",
+		"PID's command channel went dark. Redirecting all forces to surviving operatives.",
+		"Surrender confirmed from PID. Their units will continue the fight without them.",
+		"PID's resignation has been accepted... by force. Reassigning units.",
+		"Satellite link to PID severed. Their war assets are now at your disposal.",
+		"Combat stress got the better of PID. Picking up the slack.",
+		"Casualty of war: PID. All operable units reassigned to remaining players.",
+		"Command vacancy filled. PID's units will continue under new leadership.",
+		"PID has paid the ultimate price. Their forces are yours to command.",
+		"War spares no one. PID has fallen. Their troops remain.",
+		"PID has been promoted to civilian. By force. Units reassigned.",
+		"PID tripped on a landmine and career-ending shame. Units reassigned.",
+		"PID forgot to pay their command subscription. Reallocating troops.",
+		"PID's command authority revoked. Initiating redistribution of forces.",
+		"Command integrity of PID compromised. Units transferring to secure channels.",
+		"PID's signal is gone. Let their sacrifice not be in vain.",
+		"Command silence from PID. Reallocation of units underway.",
+		"PID fell to the chaos of war. Their forces continue the mission.",
+		"Confirmed KIA: PID. Taking operational control of remaining assets.",
+		"PID's command integrity shattered. Their war effort continues through us.",
+		"Another ghost in the fog: PID. Let their units be our resolve.",
+		"Transmission lost. PID is no more. We fight on.",
+		"PID has ragequit real life. You get their toys.",
+		"PID left the oven on. They've gone home. You're in charge now.",
+		"PID suffered from sudden strategic incompetence. Assets reallocated.",
+		"PID experienced spontaneous desk flipping. Their troops are free real estate.",
+		"Last known words of PID: 'Watch this!' Reassigning units.",
+		"PID achieved a higher state of 'not our problem'. You take it from here.",
+		"Command code: FAIL-STATE. PID's forces now under community management.",
+		"We've promoted PID to field observer. Very, very far from the field.",
+		"PID has been debriefed from active duty. Units reassigned.",
+		"Command slot vacated: PID. Assets redistributed.",
+		"PID no longer reports to HQ. Taking direct control of their forces.",
+		"Operational handover complete for PID. Troops reassigned.",
+		"Command continuity protocol activated. PID's assets now reassigned.",
+		"PID has disengaged. Their units now fall under surviving command.",
+		"Control signal lost from PID. Integrating their forces.",
+		"PID has relinquished control. Remaining assets transferred."
+	}
+
+	--Media.DisplayMessage("Number of Bullshit Messages: " .. #surrenderMessages)
+	Trigger.AfterDelay(DateTime.Seconds(5), function()
+		if not MessageCooldown then
+			MessageCooldown = true
+			local messageIndex = Utils.RandomInteger(1, #surrenderMessages)
+			local selectedMessage = surrenderMessages[messageIndex]
+			local playerName = player.Name
+			if selectedMessage ~= nil then
+				local formattedMessage = string.gsub(selectedMessage, "PID", playerName)
+				Media.DisplayMessage(formattedMessage, "High Command", player.Color)
+			end
+		end
+	end)
+
+	Trigger.AfterDelay(DateTime.Seconds(8), function()
+		AssignToCoopPlayers(player.GetActors(), CoopPlayers)
+		local estateCash = player.Cash + player.Resources
+		local estateCashShare = estateCash / #CoopPlayers
+		Utils.Do(CoopPlayers, function(player)
+			player.Cash = player.Cash + estateCashShare
+		end)
+		MessageCooldown = false
+	end)
+
+	Trigger.AfterDelay(DateTime.Seconds(10), function()
+		-- failsafe if reassignment wasn't possible
+		local deathList = player.GetActors()
+		Utils.Do(deathList, function(a)
+			if a.Type ~= "player" and not a.IsDead and a.HasProperty("Health") then
+				a.Kill()
 			end
 		end)
 	end)
@@ -551,6 +562,23 @@ StartWandering = function(unit)
 	end)
 end
 
+local function GetTeamPrimaryProducerOfType(buildingType)
+	for _, player in ipairs(CoopPlayers) do
+		local realProducers = player.GetActorsByType(buildingType)
+		if #realProducers > 0 then
+			local primaryProducers = Utils.Where(realProducers, function(rp)
+				return rp.HasProperty("IsPrimaryBuilding") and rp.IsPrimaryBuilding
+			end)
+			if #primaryProducers > 0 then
+				return primaryProducers[#primaryProducers]
+			end
+			return realProducers[#realProducers]
+		end
+	end
+
+	return nil
+end
+
 --- Create a remote building to mimic players sharing base buildings and tech.
 --- If this can produce units, those units will be produced at the map edge,
 --- and possibly moved to the last created building of the desired type.
@@ -558,43 +586,22 @@ end
 ---@param originalType string The "real" building type, where units can appear.
 ---@param remoteType string The remote building type.
 local function CreateRemoteBuilding(owner, originalType, remoteType)
-	--Media.DisplayMessage("Remotebuilding created, Type " .. originalType)
 	local remote = Actor.Create(remoteType, true, { Owner = owner, Location = originalLocation })
 	local offset = RemoteExits[originalType]
-	CACoopQueueSyncer()
 
-	--[[if not offset then
-		-- One of three things is true: this is not a factory, map edge
-		-- production is desired, or somebody forgot to add a remote exit CVec.
-		return
-	end]]
-	local IsProducer = false
-	Utils.Do(UnitProducers, function(UPID)
-		if UPID == originalType then
-			IsProducer = true
-		end
+	local isProducer = Utils.Any(UnitProducers, function(producerType)
+		return originalType == producerType
 	end)
 
-	if IsProducer == true then
+	if isProducer then
 		Trigger.OnProduction(remote, function(producer, produced)
-			--Media.DisplayMessage(tostring(originalType) .. " is the Remote Building Type.")
-			local primary
-
-			-- Use the newest player-created producer as the "primary building".
-			ForEachPlayer(function(player)
-				local realProducers = player.GetActorsByType(originalType)
-				if #realProducers > 0 then
-					primary = realProducers[#realProducers]
-				end
-			end)
+			local primary = GetTeamPrimaryProducerOfType(originalType)
 
 			if not primary then
 				-- It seems all factories of this type have been wiped
 				-- out before the shared prerequisites were updated.
-				--print(produced.Type .. " produced by " .. tostring(produced.Owner) .. " lacks a spawn building. Refunded.")
 				producer.Owner.Cash = producer.Owner.Cash + Actor.Cost(produced.Type)
 				produced.Destroy()
-				--Media.DisplayMessage(produced.Type .. " produced by " .. tostring(produced.Owner) .. " lacks a spawn building. Refunded.")
 				return
 			end
 
@@ -604,7 +611,6 @@ local function CreateRemoteBuilding(owner, originalType, remoteType)
 			produced.Owner = Neutral
 			produced.IsInWorld = false
 			produced.Destroy()
-			--Media.DisplayMessage(produced.Type .. " produced by " .. tostring(produced.Owner) .. " has a spawn building. Produced.")
 		end)
 	end
 end
@@ -627,9 +633,11 @@ local function UpdateCoopPrequisites()
 			local teamBuildings = {}
 			local teamRemoteBuildings = {}
 			local playerBuildingTypes = {}
+			local playerRemoteBuildingTypes = {}
 
 			for _, player in ipairs(factionPlayers) do
 				playerBuildingTypes[player.InternalName] = {}
+				playerRemoteBuildingTypes[player.InternalName] = {}
 
 				local playerBuildings = player.GetActorsByTypes(sharedBuildingTypesForFaction)
 				Utils.Do(playerBuildings, function(b)
@@ -640,26 +648,37 @@ local function UpdateCoopPrequisites()
 				local playerRemoteBuildings = player.GetActorsByTypes(RemoteBuildingLists[faction])
 				Utils.Do(playerRemoteBuildings, function(rb)
 					teamRemoteBuildings[rb.Type] = true
+					playerRemoteBuildingTypes[player.InternalName][rb.Type] = true
 				end)
 			end
 
 			-- if the team has a building, ensure all players have it or its remote equivalent
 			for _, buildingType in ipairs(sharedBuildingTypesForFaction) do
+				local playersNeedingRemote = {}
 				local teamHasBuilding = teamBuildings[buildingType] == true
+				local remoteType = "coop" .. buildingType
 
 				Utils.Do(factionPlayers, function(player)
-					local remoteType = "coop" .. buildingType
-					local teamHasRemoteBuilding = teamRemoteBuildings[remoteType] == true
+					local playerHasRemoteBuilding = playerRemoteBuildingTypes[player.InternalName][remoteType] == true
 
-					if playerBuildingTypes[player.InternalName][buildingType] or (not teamHasBuilding and teamHasRemoteBuilding) then
+					-- if this player has the building, or the team does not have the building, destroy any remote equivalents
+					if playerBuildingTypes[player.InternalName][buildingType] or (not teamHasBuilding and playerHasRemoteBuilding) then
 						local remoteBuildings = player.GetActorsByType(remoteType)
 						Utils.Do(remoteBuildings, function(remote)
 							remote.Destroy()
 						end)
-					elseif not playerBuildingTypes[player.InternalName][buildingType] and teamHasBuilding and not teamHasRemoteBuilding then
-						CreateRemoteBuilding(player, buildingType, remoteType)
+					-- if this player does not have the building or the remote equivalent, but the team does, create the remote equivalent
+					elseif not playerBuildingTypes[player.InternalName][buildingType] and teamHasBuilding and not playerHasRemoteBuilding then
+						playersNeedingRemote[#playersNeedingRemote + 1] = player
 					end
 				end)
+
+				if #playersNeedingRemote > 0 then
+					Utils.Do(playersNeedingRemote, function(player)
+						CreateRemoteBuilding(player, buildingType, remoteType)
+					end)
+					CACoopQueueSyncer()
+				end
 			end
 		end
 	end
@@ -852,8 +871,11 @@ IncomeSharing = function()
 			end
 		-- Handle 100/125/150%/175% Shared: Send everything to SharedBank (with 0/25/50%/75% extra per ally)
 		elseif IncomePercentage >= 100 then
-			local extraAmount = PID.Resources * #CoopPlayers * (1 - (IncomePercentage / 100))
-			SharedBank = SharedBank + PID.Resources + extraAmount
+			local additionalPlayers = #CoopPlayers - 1
+			local bonusPerPlayer = (IncomePercentage - 100) / 100
+			local totalMultiplier = 1 + (bonusPerPlayer * additionalPlayers)
+			local totalAmount = PID.Resources * totalMultiplier
+			SharedBank = SharedBank + totalAmount
 			PID.Resources = 0
 		else
 			-- Store resources in the buffer for non-100% sharing

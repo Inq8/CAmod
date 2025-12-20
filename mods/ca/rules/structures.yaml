@@ -1056,8 +1056,10 @@ ATEK:
 	SupportPowerChargeBar:
 	Power:
 		Amount: -150
-	GrantConditionOnFogEnabled@FOGENABLED:
+	GrantConditionOnLobbyOption@FOGENABLED:
+		Name: fog
 		Condition: fogenabled
+		IsBoolean: true
 	ExternalCondition@DUMMY:
 		Condition: gps-launched
 	GrantConditionOnPrerequisite@PREVGPS:
@@ -1080,7 +1082,7 @@ ATEK:
 		Factions: allies, england, germany, france, usa
 	ProvidesPrerequisite@buildingname:
 		RequiresCondition: !tech-locked
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@anytechcenter:
 		Prerequisite: techcenter.any
 		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@germanyatek:
@@ -1816,7 +1818,7 @@ POWR:
 		Cost: 300
 	Tooltip:
 		Name: Power Plant
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@anypower:
 		Prerequisite: anypower
 	Building:
 		Footprint: xx xx ==
@@ -1859,7 +1861,7 @@ APWR:
 		Cost: 500
 	Tooltip:
 		Name: Advanced Power Plant
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@anypower:
 		Prerequisite: anypower
 	Building:
 		Footprint: xxx Xxx ===
@@ -1912,7 +1914,7 @@ NPWR:
 		Cost: 1000
 	Tooltip:
 		Name: Atomic Reactor
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@anypower:
 		Prerequisite: anypower
 	Building:
 		Footprint: xxxx Xxxx ====
@@ -2046,7 +2048,7 @@ STEK:
 		Amount: -150
 	ProvidesPrerequisite@buildingname:
 		RequiresCondition: !tech-locked
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@anytechcenter:
 		Prerequisite: techcenter.any
 		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@TeslaCoilOrSovietTechCenter:
@@ -3230,7 +3232,7 @@ NUKE:
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-captured && !being-warped && !hacked && !discpowerdrain
 	ProvidesPrerequisite@buildingname:
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@anypower:
 		Prerequisite: anypower
 	UpdatesBuildOrder:
 		Limit: 2
@@ -3264,7 +3266,7 @@ NUK2:
 		Cost: 500
 	Tooltip:
 		Name: Advanced Nuclear Power Plant
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@anypower:
 		Prerequisite: anypower
 	Building:
 		Footprint: xX xx ==
@@ -4592,7 +4594,7 @@ GTEK:
 		Factions: gdi, talon, zocom, eagle, arc
 	ProvidesPrerequisite@buildingname:
 		RequiresCondition: !tech-locked
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@anytechcenter:
 		Prerequisite: techcenter.any
 		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@tdtek:
@@ -4680,7 +4682,7 @@ TMPL:
 		Factions: nod, blackh, marked, legion, shadow
 	ProvidesPrerequisite@buildingname:
 		RequiresCondition: !tech-locked
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@anytechcenter:
 		Prerequisite: techcenter.any
 		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@tdtek:
@@ -5223,10 +5225,10 @@ SGEN:
 		TargetTypes: ResetSupportPowerInfiltrate
 	WithRangeCircle@SGEN:
 		Type: StealthGenerator
-		Range: 5c512
+		Range: 7c512
 		Color: 00aa00
 	ProximityExternalCondition@SGEN:
-		Range: 5c512
+		Range: 7c512
 		Condition: sgencloak
 		MaximumVerticalOffset: 512
 		AffectsParent: true
@@ -5244,9 +5246,9 @@ SGEN.Shadow:
 	TooltipExtras:
 		Attributes: • Maximum 1 can be built\n• Cloaks nearby units and structures\n• Requires power to operate\n• Special Ability: Tiberium Stealth
 	WithRangeCircle@SGEN:
-		Range: 9c512
+		Range: 11c512
 	ProximityExternalCondition@SGEN:
-		Range: 9c512
+		Range: 11c512
 		RequiresCondition: !disabled && !empdisable && !being-warped
 	RenderSprites:
 		Image: sgen

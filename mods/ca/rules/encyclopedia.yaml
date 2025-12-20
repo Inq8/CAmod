@@ -11,148 +11,486 @@ encyclopedia.tips.general:
 		HideNotProducible: true
 		Description: encyclopedia-tips-general-description
 
+^EffectPreview:
+	Inherits: ^PreviewDummy
+	Encyclopedia:
+		Scale: 2
+	EncyclopediaExtras:
+		HideNotProducible: true
+
+^VehicleEffectPreview:
+	Inherits: ^EffectPreview
+	RenderSprites:
+		Image: 4tnk
+	WithFacingSpriteBody:
+	WithSpriteTurret:
+		Sequence: turret
+	Turreted:
+
+^InfantryEffectPreview:
+	Inherits: ^EffectPreview
+	RenderSprites:
+		Image: e1
+		PlayerPalette: playertd
+	WithInfantryBody:
+		IdleSequences: idle1,idle2
+		StandSequences: stand,stand2
+	QuantizeFacingsFromSequence:
+		Sequence: stand
+
+encyclopedia.buffs.anathema:
+	Inherits: ^VehicleEffectPreview
+	Tooltip:
+		Name: Anathema
+	Encyclopedia:
+		Category: Other/Buffs
+	EncyclopediaExtras:
+		Description: A Malefic Scrin support power effect which gradually increases damage output and speed over 30 seconds, but unit is destroyed once the effect ends. Bonus firepower scales inversely with the value of the affected unit.
+	TooltipExtras:
+		Strengths: • Gains firepower, rate of fire and speed gradually over 30 seconds
+		Weaknesses: • Destroyed once effect ends
+	WithIdleOverlay@Anathema:
+		Sequence: idle
+		Image: anathema
+		Palette: caneon
+		IsDecoration: True
+	WithPalettedOverlay@Anathema:
+		Palette: anathema
+		ShowInPreview: true
+
+encyclopedia.buffs.defensematrix:
+	Inherits: ^InfantryEffectPreview
+	Tooltip:
+		Name: Defense Matrix
+	Encyclopedia:
+		Category: Other/Buffs
+	EncyclopediaExtras:
+		Description: Granted by GDI Zone Defenders to nearby allied infantry, increasing their effective health.
+	TooltipExtras:
+		Strengths: • Increased effective health by 1250 per stack (up to 6 stacks)
+	WithIdleOverlay@ZoneDefenderShield:
+		Sequence: idle
+		Image: zdefshield-overlay
+		Palette: tdeffect
+		IsDecoration: True
+
+encyclopedia.buffs.frenzy:
+	Inherits: ^VehicleEffectPreview
+	Tooltip:
+		Name: Frenzy
+	Encyclopedia:
+		Category: Other/Buffs
+	EncyclopediaExtras:
+		Description: Granted by the eponymous Marked of Kane support power. Increases rate of fire and movement speed, but reduces them once the effect ends.
+	TooltipExtras:
+		Strengths: +33% rate of fire\n+25% movement speed
+		Weaknesses: -15% rate of fire after effect ends\n-15% movement speed after effect ends
+	WithPalettedOverlay@FRENZY:
+		Palette: frenzy
+		ShowInPreview: true
+	WithIdleOverlay@FRENZY:
+		Sequence: vehicle
+		Image: frenzy-overlay
+		Palette: frenzyoverlay
+		IsDecoration: True
+
+encyclopedia.buffs.gyro:
+	Inherits: ^VehicleEffectPreview
+	RenderSprites:
+		Image: titn
+		PlayerPalette: playertd
+	QuantizeFacingsFromSequence:
+		Sequence: stand
+	WithFacingSpriteBody:
+		Sequence: stand
+	Tooltip:
+		Name: Gyro Stabilizers
+	Encyclopedia:
+		Category: Other/Buffs
+	EncyclopediaExtras:
+		Description: An effect granted by activating the Gyro Stabilizers ability available via upgrade to Talon mechs which increases weapon range but reduces rate of fire.
+	TooltipExtras:
+		Strengths: +33% weapon range
+		Weaknesses: -25% rate of fire
+	WithPalettedOverlay@GYRO:
+		Palette: gyro
+		ShowInPreview: true
+
+encyclopedia.buffs.hotu:
+	Inherits: ^InfantryEffectPreview
+	Tooltip:
+		Name: Hero of the Union
+	Encyclopedia:
+		Category: Other/Buffs
+	EncyclopediaExtras:
+		Description: Granted by the Heroes of the Union support power available to the Soviets after adopting the Infantry Doctrine. Increases effective health, speed, rate of fire and range.
+	TooltipExtras:
+		Strengths: Effective health boosted to 28k\n+20% movement speed\n+50% range\n+50% rate of fire
+	WithIdleOverlay@HeroOfTheUnionCrest:
+		Sequence: star
+		Image: hero-overlay
+		Palette: effect
+		IsDecoration: True
+	WithIdleOverlay@HeroOfTheUnionLight:
+		Sequence: light
+		Image: hero-overlay
+		Palette: effect
+		IsDecoration: True
+
+encyclopedia.buffs.hypercharge:
+	Inherits: ^VehicleEffectPreview
+	RenderSprites:
+		Image: seek
+	Tooltip:
+		Name: Hypercharge
+	Encyclopedia:
+		Category: Other/Buffs
+	EncyclopediaExtras:
+		Description: An effect granted by activating the Hypercharge ability available via upgrade to Scrin Seekers and Lacerators. Allows the unit to fire continuously for a short duration while taking increased damage. After the effect ends the unit has reduced speed, damage and rate of fire for a short time.
+	TooltipExtras:
+		Strengths: • Continuous fire
+		Weaknesses: +20% increased damage taken
+	WithPalettedOverlay@HYPERCHARGE:
+		Palette: hypercharge
+		ShowInPreview: true
+	WithIdleOverlay@HYPERCHARGE:
+		Sequence: emp-overlay
+		Palette: ionsurgeoverlay
+		IsDecoration: True
+
+encyclopedia.buffs.inspiration:
+	Inherits: ^InfantryEffectPreview
+	Tooltip:
+		Name: Inspiration I
+	Encyclopedia:
+		Category: Other/Buffs
+	EncyclopediaExtras:
+		Description: Applied to basic infantry within range of a Soviet Commissar, Troop Crawler or Overlord Tank. Increases movement speed and rate of fire.
+	TooltipExtras:
+		Strengths: +30% movement speed\n+10% rate of fire
+	WithIdleOverlay@Inspiration1:
+		Image: ussrstar
+		Sequence: idle-overlay1
+		Palette: effect
+		IsDecoration: True
+
+encyclopedia.buffs.inspiration2:
+	Inherits: ^InfantryEffectPreview
+	Tooltip:
+		Name: Inspiration II
+	Encyclopedia:
+		Category: Other/Buffs
+	EncyclopediaExtras:
+		Description: Applied to basic infantry within range of two or more different units that apply the Inspiration effect. Further increases movement speed and rate of fire.
+	TooltipExtras:
+		Strengths: +40% movement speed\n+20% rate of fire
+	WithIdleOverlay@Inspiration2:
+		Image: ussrstar
+		Sequence: idle-overlay2
+		Palette: effect
+		IsDecoration: True
+
+encyclopedia.buffs.ionsurge:
+	Inherits: ^VehicleEffectPreview
+	Tooltip:
+		Name: Ion Surge
+	Encyclopedia:
+		Category: Other/Buffs
+	EncyclopediaExtras:
+		Description: Effect granted by a Traveler-59 support power which increases movement speed.
+	TooltipExtras:
+		Strengths: +50% movement speed
+	WithColoredOverlayCA@IONSURGE:
+		Color: bd70ff23
+		ShowInPreview: true
+	WithIdleOverlay@IONSURGE:
+		Sequence: vehicle
+		Image: ionsurge-overlay
+		Palette: ionsurgeoverlay
+		IsDecoration: True
+
+encyclopedia.buffs.ironcurtain:
+	Inherits: ^VehicleEffectPreview
+	Tooltip:
+		Name: Iron Curtain
+	Encyclopedia:
+		Category: Other/Buffs
+	EncyclopediaExtras:
+		Description: Soviet minor superweapon effect which grants temporary invulnerability.
+	TooltipExtras:
+		Strengths: • Immune to all damage
+		Weaknesses: • Speed capped to Heavy Tank speed
+	WithPalettedOverlay@IRONCURTAIN:
+		Palette: invuln
+		ShowInPreview: true
+
+encyclopedia.buffs.naniterepair:
+	Inherits: ^VehicleEffectPreview
+	Tooltip:
+		Name: Nanite Repair
+	Encyclopedia:
+		Category: Other/Buffs
+	EncyclopediaExtras:
+		Description: Applied by an ARC support power. Repairs vehicles over time.
+	TooltipExtras:
+		Strengths: • Repairs 5% health per second
+	WithPalettedOverlay@NREPAIR:
+		Palette: nrepair
+		ShowInPreview: true
+	WithIdleOverlay@NREPAIR:
+		Image: nrepair-overlay
+		Sequence: idle
+		Palette: effect
+		IsDecoration: True
+
+encyclopedia.buffs.naniteshield:
+	Inherits: ^VehicleEffectPreview
+	Tooltip:
+		Name: Nanite Shield
+	Encyclopedia:
+		Category: Other/Buffs
+	EncyclopediaExtras:
+		Description: Granted by the support power available with the third level of GDI's Hold the Line Strategy. Absorbs a portion of incoming damage.
+	TooltipExtras:
+		Strengths: • Absorbs 50% of incoming damage
+	WithIdleOverlay@NSHIELD:
+		Sequence: idle
+		Image: nshield-overlay
+		Palette: effect
+		IsDecoration: True
+
+encyclopedia.buffs.tibstealth:
+	Inherits: ^VehicleEffectPreview
+	RenderSprites:
+		Palette: cloakgreen
+	Tooltip:
+		Name: Tiberium Stealth
+	Encyclopedia:
+		Category: Other/Buffs
+	EncyclopediaExtras:
+		Description: Applied by the minor superweapon power granted by Nod's Stealth Generator. Makes units invisible to enemies until it attacks or is attacked, and reduces damage taken.
+	TooltipExtras:
+		Strengths: • Invisible to enemies\n-10% damage taken
+
 encyclopedia.debuffs.atomized:
-	Interactable:
-	AlwaysVisible:
+	Inherits: ^VehicleEffectPreview
+	Inherits@Atomizable: ^Atomizable
 	Tooltip:
 		Name: Atomized
 	Encyclopedia:
 		Category: Other/Debuffs
 	EncyclopediaExtras:
-		HideNotProducible: true
-		Description: Deals damage over time and reduces movement speed and firepower.
+		Description: An effect that can only be applied Collector-73's Atomizer unit. Deals damage over time and reduces movement speed and firepower.
 	TooltipExtras:
 		Weaknesses: • Deals periodic damage\n-33% movement speed\n-33% damage dealt
+	WithIdleOverlay@ATOMIZED:
+		-RequiresCondition:
 
 encyclopedia.debuffs.berserk:
-	Interactable:
-	AlwaysVisible:
+	Inherits: ^VehicleEffectPreview
+	Inherits@Berserk: ^Berserk
 	Tooltip:
 		Name: Berserk
 	Encyclopedia:
 		Category: Other/Debuffs
 	EncyclopediaExtras:
-		HideNotProducible: true
-		Description: Causes affected units to uncontrollably attack nearby units.
+		Description: Applied via Yuri's Chaos Gas, or the Rage Generator ability of Nod Idols of Kane. Causes affected units to uncontrollably attack nearby units.
 	TooltipExtras:
 		Weaknesses: • Attacks units indiscriminately
 		Attributes: +25% movement speed\n+100% rate of fire
+	WithPalettedOverlay@BERSERK:
+		ShowInPreview: true
 
 encyclopedia.debuffs.blinded:
-	Interactable:
-	AlwaysVisible:
+	Inherits: ^VehicleEffectPreview
 	Tooltip:
 		Name: Blinded
 	Encyclopedia:
 		Category: Other/Debuffs
 	EncyclopediaExtras:
-		HideNotProducible: true
 		Description: Disables unit vision and weapons.
 	TooltipExtras:
 		Weaknesses: • Vision disabled\n• Weapons disabled
+	WithPreviewDecoration@Blinded:
+		Image: blinded
+		Sequence: idle
+		Palette: effect
+		Position: Top
+		Margin: 0, 8
 
 encyclopedia.debuffs.chill:
-	Interactable:
-	AlwaysVisible:
+	Inherits: ^VehicleEffectPreview
 	Tooltip:
 		Name: Chilled
 	Encyclopedia:
 		Category: Other/Debuffs
 	EncyclopediaExtras:
-		HideNotProducible: true
-		Description: Reduces movement speed and makes affected units take more damage.
+		Description: Applied by Allied cryo weaponry. Reduces movement speed and makes affected units take more damage.
 	TooltipExtras:
 		Attributes: • Stacks up to 10 times
 		Weaknesses: -25/35/43/50/56/59/62/65/68/70% movement speed\n+10% damage received per stack
+	WithColoredOverlayCA@chilled5:
+		Color: 51aeda68
+		ShowInPreview: true
 
 encyclopedia.debuffs.concussion:
-	Interactable:
-	AlwaysVisible:
+	Inherits: ^VehicleEffectPreview
 	Tooltip:
 		Name: Concussed
 	Encyclopedia:
 		Category: Other/Debuffs
 	EncyclopediaExtras:
-		HideNotProducible: true
 		Description: Reduces rate of fire and movement speed.
 	TooltipExtras:
 		Weaknesses: -25% movement speed\n-50% rate of fire
+	WithPreviewDecoration:
+		Image: pips
+		Sequence: pip-conc
+		Palette: chrome
+		Position: Top
+		BlinkInterval: 16
+		BlinkPattern: On, On, Off
 
 encyclopedia.debuffs.emp:
-	Interactable:
-	AlwaysVisible:
+	Inherits: ^VehicleEffectPreview
 	Tooltip:
 		Name: EMP
 	Encyclopedia:
 		Category: Other/Debuffs
 	EncyclopediaExtras:
-		HideNotProducible: true
-		Description: Completely incapacitates vehicles, heavy cyborgs and defenses.
+		Description: Completely incapacitates vehicles, heavy cyborgs and defenses. Causes unshielded aircraft to crash.
 	TooltipExtras:
-		Weaknesses: • Movement disabled\n• Weapons disabled\n• Abilities disabled
+		Weaknesses: • Movement disabled\n• Weapons disabled\n• Abilities disabled\n• Unshielded aircraft crash to ground
+	WithColoredOverlayCA@EMPDISABLE:
+		Color: 000000b4
+		ShowInPreview: true
+	WithIdleOverlay@EMPDISABLE:
+		Sequence: emp-overlay
+		Palette: tseffect
+		IsDecoration: True
 
 encyclopedia.debuffs.irradiated:
-	Interactable:
-	AlwaysVisible:
+	Inherits: ^VehicleEffectPreview
+	Inherits@Irradiatable: ^Irradiatable
 	Tooltip:
 		Name: Irradiated
 	Encyclopedia:
 		Category: Other/Debuffs
 	EncyclopediaExtras:
-		HideNotProducible: true
-		Description: Causes periodic AoE damage, reduces outgoing damage and increases incoming damage.
+		Description: Applied by Iraqi Desolators and Eradicators. Causes periodic AoE damage, reduces outgoing damage and increases incoming damage.
 	TooltipExtras:
 		Weaknesses: • Deals periodic damage to nearby units\n• Irradiates the ground\n-10% damage dealt\n+10% damage received
+	WithPalettedOverlay@IRRADIATABLE:
+		ShowInPreview: true
 
 encyclopedia.debuffs.jammed:
-	Interactable:
-	AlwaysVisible:
+	Inherits: ^VehicleEffectPreview
+	Inherits@WeaponJammable: ^WeaponJammable
 	Tooltip:
 		Name: Jammed
 	Encyclopedia:
 		Category: Other/Debuffs
 	EncyclopediaExtras:
-		HideNotProducible: true
-		Description: Reduces vehicle weapon damage and rate of fire.
+		Description: Applied by Allied Radar Jammers. Reduces vehicle weapon damage and rate of fire.
 	TooltipExtras:
 		Weaknesses: -10% damage dealt\n-20% rate of fire
+	WithIdleOverlay@WEAPJAMMED:
+		-RequiresCondition:
+
+encyclopedia.debuffs.targetpainted:
+	Inherits: ^VehicleEffectPreview
+	Tooltip:
+		Name: Target Painted
+	Encyclopedia:
+		Category: Other/Debuffs
+	EncyclopediaExtras:
+		Description: Increases damage received and reveals the unit to enemies.
+	TooltipExtras:
+		Weaknesses: Revealed to enemies\n+10% damage received
+	WithPreviewDecoration:
+		Image: targetpainter
+		Sequence: idle
+		Palette: effect
+		Position: Top
+		Margin: 0, 8
+
+encyclopedia.debuffs.reapersnared:
+	Inherits: ^InfantryEffectPreview
+	Inherits@ReaperSnareable: ^ReaperSnareable
+	Tooltip:
+		Name: Reaper Snared
+	Encyclopedia:
+		Category: Other/Debuffs
+	EncyclopediaExtras:
+		Description: Applied by Nod Cyborg Reapers' snare ability. Completely incapacitates infantry.
+	TooltipExtras:
+		Weaknesses: • Movement disabled\n• Weapons disabled\n• Abilities disabled
+	WithIdleOverlay@ReaperSnare:
+		-RequiresCondition:
+	WithInfantryBody:
+		IdleSequences: idle1,idle2
+		StandSequences: parachute
 
 encyclopedia.debuffs.suppression:
-	Interactable:
-	AlwaysVisible:
+	Inherits: ^VehicleEffectPreview
+	Inherits@Suppressable: ^Suppressable
 	Tooltip:
 		Name: Suppressed
 	Encyclopedia:
 		Category: Other/Debuffs
 	EncyclopediaExtras:
-		HideNotProducible: true
-		Description: Reduces movement speed and rate of fire.
+		Description: An effect applied by the Scrin Suppression power, Masterminds and Enervators. Reduces movement speed and rate of fire.
 	TooltipExtras:
 		Weaknesses: -60% movement speed\n-20% rate of fire
+	WithPalettedOverlay@SUPPRESSION:
+		ShowInPreview: true
 
 encyclopedia.debuffs.veiled:
-	Interactable:
-	AlwaysVisible:
+	Inherits: ^VehicleEffectPreview
+	Inherits@Veilable: ^Veilable
 	Tooltip:
 		Name: Veiled
 	Encyclopedia:
 		Category: Other/Debuffs
 	EncyclopediaExtras:
-		HideNotProducible: true
-		Description: Reduces weapon and vision range.
+		Description: Applied by Allied Gap Generators, Black Eagles, Tiger Guards, and England's Veil of War support power. Reduces weapon and vision range.
 	TooltipExtras:
 		Weaknesses: -20% weapon range\n-20% vision range
+	WithIdleOverlay@VEILED:
+		-RequiresCondition:
 
 encyclopedia.debuffs.warped:
-	Interactable:
-	AlwaysVisible:
+	Inherits: ^VehicleEffectPreview
+	Inherits@Warpable: ^Warpable
+	-Warpable:
+	-FireWarheadsOnDeath@TEMPORAL:
 	Tooltip:
 		Name: Warped
 	Encyclopedia:
 		Category: Other/Debuffs
 	EncyclopediaExtras:
-		HideNotProducible: true
-		Description: Completely incapacitates the target, but makes it immune to non-warping damage.
+		Description: Applied by Allied Chrono Prisons and Germany's Time Warp ability. Completely incapacitates the target, but makes it immune to non-warping damage.
 	TooltipExtras:
 		Strengths: • Immune to non-warping damage
 		Weaknesses: • Movement disabled\n• Weapons disabled\n• Abilities disabled
+	WithPalettedOverlay@TEMPORALl:
+		ShowInPreview: true
+	WithIdleOverlay@TEMPORAL:
+		-RequiresCondition:
+
+encyclopedia.debuffs.watched:
+	Inherits: ^VehicleEffectPreview
+	Tooltip:
+		Name: Watched
+	Encyclopedia:
+		Category: Other/Debuffs
+	EncyclopediaExtras:
+		Description: Revealed to enemies.
+	TooltipExtras:
+		Weaknesses: • Revealed to enemies
+	WithPreviewDecoration:
+		Image: watched
+		Sequence: idle
+		Palette: scrineffect
+		Position: Top
+		Margin: 0, 8

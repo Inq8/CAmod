@@ -30,7 +30,7 @@ faction-france =
       • Entrenchment
 
     Bonuses:
-      • Walls & Defenses (10% Discount)
+      • Walls & Defenses (10% discount)
 
 faction-germany =
     .name = Germany
@@ -47,8 +47,8 @@ faction-germany =
       • Temporal Flux
 
     Bonuses:
-      • Chrono Tanks (10% Discount)
-      • Chronosphere (20% Discount)
+      • Chrono Tanks (10% discount)
+      • Chronosphere (20% discount)
 
 faction-usa =
     .name = USA
@@ -83,7 +83,7 @@ faction-russia =
       • Tesla Arcing
 
     Bonuses:
-      • Tesla Coil (10% Discount)
+      • Tesla Coil (10% discount)
       • Free Tesla Trooper Upgrade
       • Kirov Tesla Bombs
 
@@ -102,8 +102,8 @@ faction-ukraine =
       • Seismic Missiles
 
     Bonuses:
-      • V3 Launcher (10% Discount)
-      • Terror Dog (20% Discount)
+      • V3 Launcher (10% discount)
+      • Terror Dog (20% discount)
       • Kirov Cluster Bombs
 
 faction-iraq =
@@ -122,8 +122,8 @@ faction-iraq =
       • Eradicator (replaces Mammoth Tank)
 
     Bonuses:
-      • Demolition Truck (10% Discount)
-      • Missile Silo (40% Discount)
+      • Heavy Hazmat Suits equipped as standard
+      • Missile Silo (40% discount)
       • Kirov Atom Bombs
 
 faction-yuri =
@@ -159,8 +159,8 @@ faction-talon =
       • Gyro Stabilizers
 
     Bonuses:
-      • Tech Center (10% Discount)
-      • Upgrade Center (20% Discount)
+      • Tech Center (10% discount)
+      • Upgrade Center (20% discount)
 
 faction-zocom =
     .name = ZOCOM
@@ -179,8 +179,8 @@ faction-zocom =
       • Sonic Amplifiers
 
     Bonuses:
-      • Adv. Communication Center (40% Discount)
-      • Hazmat Suits Equipped as Standard
+      • Adv. Communication Center (40% discount)
+      • Hazmat Suits equipped as standard
 
 faction-eagle =
     .name = Eagle
@@ -198,7 +198,7 @@ faction-eagle =
       • Afterburners
 
     Bonuses:
-      • Aircraft (10% Discount)
+      • Aircraft (10% discount)
 
 faction-arc =
     .name = ARC
@@ -216,10 +216,10 @@ faction-arc =
       • Battle Drone (replaces Battle Tank)
 
     Bonuses:
-      • Recon Drone (-20% Cooldown)
-      • Mobile Sensor Array (20% Discount)
-      • Drone Carrier (10% Discount)
-      • Additional Comms. Centers (50% Discount)
+      • Recon Drone (-20% cooldown)
+      • Mobile Sensor Array (20% discount)
+      • Drone Carrier (10% discount)
+      • Additional Comms. Centers (50% discount)
       • Comms. Center emergency backup power
 
 faction-blackh =
@@ -237,7 +237,7 @@ faction-blackh =
       • Black Napalm
 
     Bonuses:
-      • SSM (10% Discount)
+      • SSM (10% discount)
       • Free Howitzer Upgrade
 
 faction-marked =
@@ -255,8 +255,8 @@ faction-marked =
       • Quantum Capacitors
 
     Bonuses:
-      • Banshee (10% Discount)
-      • Temple Prime (10% Discount)
+      • Banshee (10% discount)
+      • Temple Prime (10% discount)
 
 faction-legion =
     .name = Legion
@@ -274,8 +274,8 @@ faction-legion =
       • Intensified Microwaves
 
     Bonuses:
-      • Stolen Technology Units (10% Discount)
-      • Hack Satellite (-33% Cooldown)
+      • Stolen Technology Units (10% discount)
+      • Hack Satellite (-33% cooldown)
 
 faction-shadow =
     .name = Shadow
@@ -292,8 +292,8 @@ faction-shadow =
       • Heavy Stealth Tank
 
     Bonuses:
-      • Comanche (10% Discount)
-      • Stealth Generator (+4 Passive Range, remains cloaked during Tiberium Stealth)
+      • Comanche (10% discount)
+      • Stealth Generator (+4 passive range, remains cloaked during Tiberium Stealth)
 
 faction-reaper =
     .name = Reaper-17
@@ -309,8 +309,8 @@ faction-reaper =
       • Shard Walker
 
     Bonuses:
-      • Devourer (10% Discount)
-      • Ichor Seed (-20% Cooldown)
+      • Devourer (10% discount)
+      • Ichor Seed (-20% cooldown)
 
 faction-traveler =
     .name = Traveler-59
@@ -342,8 +342,8 @@ faction-harbinger =
       • Stellar Fusion Cannon
 
     Bonuses:
-      • Devastator Warship (10% Discount)
-      • Mothership (10% Discount)
+      • Devastator Warship (10% discount)
+      • Mothership (10% discount)
 
 faction-collector =
     .name = Collector-73
@@ -359,8 +359,8 @@ faction-collector =
       • Coalescence
 
     Bonuses:
-      • Field Manipulator (20% Discount)
-      • Suppression Field (-15% Cooldown, +10% Duration)
+      • Field Manipulator (20% discount)
+      • Suppression Field (-15% cooldown, +10% duration)
 
 faction-randomallies =
     .name = Allies

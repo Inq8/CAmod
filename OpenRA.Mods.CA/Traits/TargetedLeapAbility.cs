@@ -111,6 +111,7 @@ namespace OpenRA.Mods.CA.Traits
 	{
 		public readonly new TargetedLeapAbilityInfo Info;
 		readonly Mobile mobile;
+		IFacing facing;
 
 		[Sync]
 		int chargeTick = 0;
@@ -132,6 +133,12 @@ namespace OpenRA.Mods.CA.Traits
 			MaxDistance = Info.MaxDistance;
 			MaxCharges = Info.Charges;
 			Charges = Info.Charges;
+		}
+
+		protected override void Created(Actor self)
+		{
+			base.Created(self);
+			facing = self.TraitOrDefault<IFacing>();
 		}
 
 		void ITick.Tick(Actor self)
@@ -217,8 +224,6 @@ namespace OpenRA.Mods.CA.Traits
 				var cell = self.World.Map.CellContaining(order.Target.CenterPosition);
 
 				self.QueueActivity(mobile.MoveWithinRange(order.Target, WDist.FromCells(Info.MaxDistance), targetLineColor: Info.TargetLineColor));
-
-				var facing = self.TraitOrDefault<IFacing>();
 
 				if (facing != null)
 				{

@@ -86,6 +86,7 @@ namespace OpenRA.Mods.CA.Traits
 	public class DetonateWeaponPower : SupportPower, ITick
 	{
 		public new readonly DetonateWeaponPowerInfo Info;
+		WithSpriteBody wsb;
 
 		[Sync]
 		int ticks;
@@ -101,6 +102,12 @@ namespace OpenRA.Mods.CA.Traits
 			AllyBuildEnabled = mapBuildRadius != null && mapBuildRadius.AllyBuildRadiusEnabled;
 		}
 
+		protected override void Created(Actor self)
+		{
+			base.Created(self);
+			wsb = self.TraitOrDefault<WithSpriteBody>();
+		}
+
 		public override SupportPowerInstance CreateInstance(string key, SupportPowerManager manager)
 		{
 			return new SupportPowerInstanceCA(key, Info, manager);
@@ -114,7 +121,6 @@ namespace OpenRA.Mods.CA.Traits
 			if (!string.IsNullOrEmpty(Info.ActiveCondition) && activeToken == Actor.InvalidConditionToken)
 				activeToken = self.GrantCondition(Info.ActiveCondition);
 
-			var wsb = self.TraitOrDefault<WithSpriteBody>();
 			if (wsb != null && wsb.DefaultAnimation.HasSequence(Info.Sequence))
 				wsb.PlayCustomAnimation(self, Info.Sequence);
 

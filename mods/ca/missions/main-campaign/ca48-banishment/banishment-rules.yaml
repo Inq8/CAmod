@@ -49,11 +49,11 @@ Player:
 
 SNIP:
 	Buildable:
-		Prerequisites: tent, anyradar
+		Prerequisites: ~tent, anyradar
 
 SEAL:
 	Buildable:
-		Prerequisites: tent, atek
+		Prerequisites: ~tent, atek
 
 RTNK:
 	Buildable:
@@ -169,3 +169,12 @@ MACS:
 
 MACS.Rebuilt:
 	-PeriodicProducerCA@Initial:
+
+# Hunt() requires only 1 AttackBase
+DEVA:
+	-AttackFrontalCharged:
+	-Armament@PRIMARYUPG:
+	-AmbientSound@CHARGE:
+	-WithIdleOverlay@CHARGE1:
+	-WithIdleOverlay@CHARGE2:
+	-WithIdleOverlay@CHARGE3:

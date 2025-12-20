@@ -3,8 +3,8 @@ MissionDir = "ca|missions/main-campaign/ca10-zenith"
 NukeSilos = { NukeSilo1, NukeSilo2, NukeSilo3, NukeSilo4 }
 
 NukeTimer = {
-	easy = DateTime.Minutes(60),
-	normal = DateTime.Minutes(45),
+	easy = DateTime.Minutes(120),
+	normal = DateTime.Minutes(60),
 	hard = DateTime.Minutes(35),
 	vhard = DateTime.Minutes(30),
 	brutal = DateTime.Minutes(25),

@@ -49,6 +49,11 @@ namespace OpenRA.Mods.CA.Traits.Render
 			: base(info)
 		{
 			this.self = self;
+		}
+
+		protected override void Created(Actor self)
+		{
+			base.Created(self);
 			selectable = self.TraitOrDefault<Selectable>();
 		}
 

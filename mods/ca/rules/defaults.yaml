@@ -980,12 +980,15 @@
 	GrantConditionOnPrerequisite@HAZMAT:
 		Condition: hazmat-upgrade
 		Prerequisites: hazmat.upgrade
-	GrantConditionOnPrerequisite@HAZMATSOVIET:
-		Condition: hazmatsoviet-upgrade
-		Prerequisites: hazmatsoviet.upgrade
 	GrantConditionOnPrerequisite@HAZMATZOCOM:
 		Condition: hazmat-upgrade
 		Prerequisites: player.zocom
+	GrantConditionOnPrerequisite@HAZMATSOVIET:
+		Condition: hazmatsoviet-upgrade
+		Prerequisites: hazmatsoviet.upgrade
+	GrantConditionOnPrerequisite@HAZMATIRAQ:
+		Condition: hazmatsoviet-upgrade
+		Prerequisites: player.iraq
 	GrantCondition@HAZMAT:
 		Condition: hazmatsuits
 		RequiresCondition: hazmat-upgrade && !hazmatsoviet-upgrade
@@ -1627,7 +1630,7 @@
 		Image: pips
 		Sequence: pip-conc
 		Palette: chrome
-		Position: TopCenter
+		Position: Top
 		RequiresCondition: concussion
 		BlinkInterval: 16
 		BlinkPatterns:
@@ -1744,8 +1747,6 @@
 		RequiresCondition: pointdef-upgrade
 	WithIdleOverlay@NSHIELD:
 		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
-	Targetable@ChaosImmune:
-		TargetTypes: ChaosImmune
 	Targetable@MindControlResistant:
 		TargetTypes: MindControlResistant
 
@@ -2397,6 +2398,7 @@
 	Inherits@Blindable: ^Blindable
 	Inherits@KillZoneTargetable: ^KillZoneTargetable
 	Inherits@Anathema: ^Anathema
+	Inherits@Berserk: ^Berserk
 	Inherits@DevelopmentPolicyVeterancyBonus: ^DevelopmentPolicyVeterancyBonus
 	Huntable:
 	EdibleByLeap:
@@ -2611,6 +2613,7 @@
 	Inherits@KillZoneTargetable: ^KillZoneTargetable
 	Inherits@ReaperSnareable: ^ReaperSnareable
 	Inherits@IdolOfKane: ^IdolOfKane
+	Inherits@Berserk: ^Berserk
 	Inherits@DevelopmentPolicyVeterancyBonus: ^DevelopmentPolicyVeterancyBonus
 	RenderSprites:
 		PlayerPalette: playertd
@@ -2915,6 +2918,7 @@
 	-GrantConditionOnPrerequisite@BIO:
 	-GrantConditionOnPrerequisite@HAZMAT:
 	-GrantConditionOnPrerequisite@HAZMATSOVIET:
+	-GrantConditionOnPrerequisite@HAZMATIRAQ:
 	-GrantConditionOnPrerequisite@HAZMATZOCOM:
 	-GrantCondition@HAZMAT:
 	-GrantCondition@HAZMATSOVIET:
@@ -3041,6 +3045,7 @@
 	Inherits@Blindable: ^Blindable
 	Inherits@KillZoneTargetable: ^KillZoneTargetable
 	Inherits@Anathema: ^Anathema
+	Inherits@Berserk: ^Berserk
 	Inherits@DevelopmentPolicyVeterancyBonus: ^DevelopmentPolicyVeterancyBonus
 	Huntable:
 	RenderSprites:
@@ -4572,8 +4577,6 @@
 		Cost: 400
 	Passenger:
 		CustomPipType: yellow
-	Targetable@ChaosImmune:
-		TargetTypes: ChaosImmune
 	InstantlyRepairs:
 	RepairsBridges:
 		EnterBehaviour: Exit

@@ -19,7 +19,7 @@ end
 AfterWorldLoaded = function()
 	local firstActivePlayer = GetFirstActivePlayer()
 	TransferBaseToPlayer(SinglePlayerPlayer, firstActivePlayer)
-	StartCashSpread(3000)
+	StartCashSpread(3500)
 
 	local mcvSpawnCell = CPos.New(45, 3)
 	Utils.Do(GetMcvPlayers(), function(p)

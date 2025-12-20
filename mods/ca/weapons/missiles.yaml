@@ -629,7 +629,7 @@ Nike:
 
 RedEye:
 	Inherits: ^AntiAirMissile
-	Range: 7c512
+	Range: 6c512
 	ReloadDelay: 50
 	Report: missile1.aud
 	ValidTargets: Air, AirSmall
@@ -664,6 +664,7 @@ RedEye.TibCore:
 
 RedEye.CYB:
 	Inherits: RedEye
+	Range: 7c0
 	Report: itanweaa.aud, itanweab.aud, itanweac.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 4600
@@ -672,6 +673,7 @@ RedEye.CYB:
 
 RedEye.CYB.TibCore:
 	Inherits: RedEye.TibCore
+	Range: 7c0
 	Report: itanweaa.aud, itanweab.aud, itanweac.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 4600
@@ -693,33 +695,17 @@ RedEye.CRYO:
 		ValidTargets: Air, AirSmall
 		ValidRelationships: Enemy, Neutral
 
-RedEyeE:
-	Inherits: RedEye
-	Range: 9c0
-
 RedEyeGI:
 	Inherits: RedEye
 	Report: iggiat2a.aud, iggiat2b.aud
 	ReloadDelay: 40
-	Range: 9c0
+	Range: 8c0
 
 RedEyeGI.CRYO:
 	Inherits: RedEye.CRYO
 	Report: iggiat2a.aud, iggiat2b.aud
 	ReloadDelay: 40
-	Range: 9c0
-
-RedEyeE.TibCore:
-	Inherits: RedEye.TibCore
-	Range: 9c0
-
-RedEyeE.CYB:
-	Inherits: RedEyeE
-	Report: itanweaa.aud, itanweab.aud, itanweac.aud
-
-RedEyeE.CYB.TibCore:
-	Inherits: RedEyeE.TibCore
-	Report: itanweaa.aud, itanweab.aud, itanweac.aud
+	Range: 8c0
 
 Stinger:
 	Inherits: ^AntiGroundMissile
@@ -904,6 +890,7 @@ PitbullRockets:
 
 PitbullRocketsAA:
 	Inherits: RedEye
+	Range: 7c512
 	Report: pitbull-fire1.aud, pitbull-fire2.aud
 	ReloadDelay: 80
 	Burst: 2
@@ -1315,7 +1302,7 @@ HonestJohnTargeting:
 
 BikeRockets:
 	Inherits: Dragon
-	Range: 4c512
+	Range: 5c0
 	Report: bazook1.aud
 	Burst: 2
 	BurstDelays: 5
@@ -1328,6 +1315,7 @@ BikeRockets:
 
 BikeRocketsAA:
 	Inherits: RedEye
+	Range: 7c512
 	Report: bazook1.aud
 	Burst: 2
 	BurstDelays: 5
@@ -1413,6 +1401,7 @@ IFVRockets:
 
 IFVRocketsAA:
 	Inherits: RedEye
+	Range: 7c512
 	Burst: 2
 	BurstDelays: 5
 	Warhead@1Dam: SpreadDamage
@@ -2371,9 +2360,8 @@ CyborgReaperMissiles:
 	ReloadDelay: 65
 	Burst: 2
 	BurstDelays: 10
-	Range: 5c768
+	Range: 6c0
 	Report: reap-fire1.aud, reap-fire2.aud
-	ValidTargets: Ground, Water, Air, AirSmall
 	Projectile: MissileCA
 		Speed: 220
 		ContrailLength: 15
@@ -2390,11 +2378,29 @@ CyborgReaperMissiles:
 			Heavy: 25
 			Concrete: 50
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
-		ValidTargets: Ground, Water, Air, AirSmall
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
 		ImpactSounds: reap-explosion1.aud
-		ValidTargets: Ground, Air, AirSmall, Ship, Trees
+
+CyborgReaperMissilesAA:
+	Inherits: ^AntiAirMissile
+	ReloadDelay: 65
+	Burst: 2
+	BurstDelays: 10
+	Range: 6c0
+	Report: reap-fire1.aud, reap-fire2.aud
+	Projectile: MissileCA
+		Speed: 250
+		ContrailLength: 15
+		ContrailStartColor: aa0000aa
+		ContrailStartColorAlpha: 200
+	Warhead@1Dam: SpreadDamage
+		-Falloff:
+		-Range:
+		Damage: 5500
+		Spread: 448
+	Warhead@smallDamage: SpreadDamage
+		Damage: 5500
 
 CyborgReaperSnare:
 	ReloadDelay: 375
@@ -2405,7 +2411,7 @@ CyborgReaperSnare:
 		ContrailLength: 30
 		ContrailStartColorAlpha: 100
 		ContrailStartColor: 00FF00
-		Speed: 250
+		Speed: 330
 		Inaccuracy: 128
 		Image: flakball
 		Shadow: true

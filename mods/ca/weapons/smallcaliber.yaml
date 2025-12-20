@@ -126,7 +126,7 @@ Gatt:
 		Range: 0, 0c64, 0c256, 1c768
 		Falloff: 100, 70, 30, 10
 	Warhead@2Eff: CreateEffect
-		Explosions: piff
+		Explosions: piff, piff2
 		ValidTargets: Air, AirSmall, ICBM
 		ImpactSounds: sirodefa.aud, sirodefb.aud, sirodefc.aud, sirodefd
 		ImpactSoundChance: 60
@@ -141,7 +141,7 @@ MGatt:
 	Warhead@smallDamage: SpreadDamage
 		Damage: 665
 	Warhead@2Eff: CreateEffect
-		Explosions: piff
+		Explosions: piff, piff2
 		ValidTargets: Air, AirSmall
 		ImpactSounds: sirodefa.aud, sirodefb.aud, sirodefc.aud, sirodefd
 		ImpactSoundChance: 60
@@ -210,6 +210,13 @@ Vulcan:
 			Concrete: 35
 			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+	Warhead@2Eff: CreateEffect
+		Explosions: piff, piff2
+		Inaccuracy: 171
+	Warhead@2Eff2: CreateEffect
+		Delay: 2
+		Explosions: piff, piff2
+		Inaccuracy: 171
 
 GTChainGun:
 	Inherits: Vulcan
@@ -427,7 +434,7 @@ M1Carbine:
 			Heavy: 13
 	Warhead@2Eff2: CreateEffect
 		Delay: 2
-		Explosions: piff
+		Explosions: piff, piff2
 		ValidTargets: Ground, Air, AirSmall, Trees
 		Inaccuracy: 171
 	Warhead@3EffWater2: CreateEffect
@@ -438,7 +445,7 @@ M1Carbine:
 		Inaccuracy: 171
 	Warhead@2Eff3: CreateEffect
 		Delay: 4
-		Explosions: piff
+		Explosions: piff, piff2
 		ValidTargets: Ground, Air, AirSmall, Trees
 		Inaccuracy: 171
 	Warhead@3EffWater3: CreateEffect
@@ -475,27 +482,32 @@ BATFGun:
 
 M60mg:
 	Inherits: ^LightMG
+	-Report:
 	Range: 4c0
-	Report: pillbox1.aud
+	StartBurstReport: pillbox1.aud
 	Burst: 5
+	BurstDelays: 3
+	ReloadDelay: 38
 	Warhead@1Dam: SpreadDamage
 		Versus:
 			Light: 75
 	Warhead@2Eff: CreateEffect
-		Explosions: piffs
-		Inaccuracy: 0
+		Explosions: piff, piff2
+		Inaccuracy: 64
 
 M60mgTD:
 	Inherits: M60mg
-	Report: m60.aud
+	StartBurstReport: m60x5.aud
 
 M60mgJJ:
 	Inherits: M60mg
 	Range: 4c768
 	Projectile: Bullet
 		Blockable: false
+	-StartBurstReport:
 	Report: vblhatta.aud, vblhattb.aud
 	Burst: 3
+	BurstDelays: 5
 	Warhead@1Dam: SpreadDamage
 		Damage: 3250
 		Versus:
@@ -525,8 +537,10 @@ M60mgNHAW:
 	Range: 4c768
 	Projectile: Bullet
 		Blockable: false
+	-StartBurstReport:
 	Report: vblhatta.aud, vblhattb.aud
 	Burst: 3
+	BurstDelays: 5
 	Warhead@1Dam: SpreadDamage
 		Versus:
 			None: 165
@@ -536,7 +550,6 @@ M60mgNHAW:
 M60mgIFV:
 	Inherits: M60mg
 	Range: 5c768
-	-Report:
 	StartBurstReport: ifvmg1.aud, ifvmg2.aud
 	Burst: 1
 	ReloadDelay: 44
@@ -589,8 +602,12 @@ MGattG:
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 		ValidTargets: Infantry
 	Warhead@2Eff: CreateEffect
-		Explosions: piffs
-		Inaccuracy: 64
+		Explosions: piff, piff2
+		Inaccuracy: 171
+	Warhead@2Eff2: CreateEffect
+		Delay: 2
+		Explosions: piff, piff2
+		Inaccuracy: 171
 
 ^SnipeWeapon:
 	ReloadDelay: 80
@@ -608,7 +625,7 @@ MGattG:
 		ValidTargets: Barrel, Infantry, Mine, Wall, Husk
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 	Warhead@2Eff: CreateEffect
-		Explosions: piff
+		Explosions: piff, piff2
 		ImpactActors: false
 		ValidTargets: Ground, Water, Air, AirSmall
 
@@ -619,7 +636,7 @@ SilencedPPK:
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
 	Warhead@2Eff: CreateEffect
-		Explosions: piff
+		Explosions: piff, piff2
 		ValidTargets: Ground, Ship, Air, AirSmall, Trees
 	Warhead@3EffWater: CreateEffect
 		Explosions: water_piff
@@ -641,7 +658,7 @@ Colt45:
 		Versus:
 			Light: 25
 	Warhead@2Eff: CreateEffect
-		Explosions: piff
+		Explosions: piff, piff2
 		ValidTargets: Ground, Ship, Air, AirSmall, Trees
 	Warhead@3EffWater: CreateEffect
 		Explosions: water_piff
@@ -661,7 +678,7 @@ SMG:
 		Damage: 25000
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
-		Explosions: piff
+		Explosions: piff, piff2
 		ValidTargets: Ground, Ship, Air, AirSmall, Trees
 	Warhead@3EffWater: CreateEffect
 		Explosions: water_piff
@@ -693,7 +710,7 @@ MP5:
 			Brick: 10
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
-		Explosions: piff
+		Explosions: piff, piff2
 		Inaccuracy: 171
 		ValidTargets: Ground, Ship, Air, AirSmall, Trees
 	Warhead@3EffWater: CreateEffect
@@ -727,7 +744,7 @@ AKM:
 			Brick: 10
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
-		Explosions: piff
+		Explosions: piff, piff2
 		Inaccuracy: 171
 		ValidTargets: Ground, Ship, Air, AirSmall, Trees
 	Warhead@3EffWater: CreateEffect
@@ -742,7 +759,7 @@ AKMBATF:
 
 SNIPER:
 	ReloadDelay: 120
-	Range: 8c512
+	Range: 8c0
 	Report: snipe.aud
 	Projectile: InstantHit
 		Blockable: true
@@ -765,7 +782,7 @@ SNIPER:
 		Versus:
 			Light: 25
 	Warhead@2Eff: CreateEffect
-		Explosions: piff
+		Explosions: piff, piff2
 		ValidTargets: Ground, Ship, Air, AirSmall, Trees
 	Warhead@3EffWater: CreateEffect
 		Explosions: water_piff
@@ -785,7 +802,7 @@ SNIPER.vehicle:
 		SmudgeType: Crater
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
 	Warhead@2Eff: CreateEffect
-		Explosions: piff
+		Explosions: piff, piff2
 		-ValidTargets:
 	Warhead@3Eff: CreateEffect
 		Explosions: small_explosion
@@ -832,7 +849,7 @@ SNIPER.ASSA:
 	Inherits: SNIPER
 	InvalidTargets: Structure
 	ReloadDelay: 100
-	Range: 8c512
+	Range: 8c0
 	Report: iviratta.aud
 	Warhead@1Dam: SpreadDamage
 		DamageTypes: Prone50Percent, TriggerProne, PoisonDeath
@@ -895,7 +912,7 @@ ShadowOperativeGun:
 			Light: 60
 			Heavy: 20
 	Warhead@2Eff: CreateEffect
-		Explosions: piff
+		Explosions: piff, piff2
 
 HeliGunAG:
 	Inherits: ^HeavyMG
@@ -936,7 +953,6 @@ WolverineGun:
 	MinRange: 0c128
 	ReloadDelay: 25
 	BurstDelays: 3
-	-Report:
 	StartBurstReport: wolv-fire1.aud, wolv-fire2.aud
 	Warhead@1Dam: SpreadDamage
 		Spread: 256
@@ -1028,7 +1044,7 @@ EnforcerShotgun:
 			Inaccuracy: 128
 			Delay: 0,3
 			HitAnim: explosion
-			HitAnimSequence: piff
+			HitAnimSequence: piff2
 			HitAnimPalette: effect-ignore-lighting-alpha50
 		ProjectileAnimation@3:
 			Image: empty
@@ -1053,7 +1069,7 @@ EnforcerShotgun:
 			Inaccuracy: 128
 			Delay: 0,3
 			HitAnim: explosion
-			HitAnimSequence: piff
+			HitAnimSequence: piff2
 			HitAnimPalette: effect-ignore-lighting-alpha50
 		ProjectileAnimation@5:
 			Image: empty

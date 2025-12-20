@@ -92,14 +92,14 @@ WorldLoaded = function()
 
 	Trigger.OnEnteredFootprint(eastAttackTriggerCells, function(a, id)
 		if IsMissionPlayer(a.Owner) then
-			Trigger.RemoveProximityTrigger(id)
+			Trigger.RemoveFootprintTrigger(id)
 			InitGDIEast()
 		end
 	end)
 
 	Trigger.OnEnteredFootprint(westAttackTriggerCells, function(a, id)
 		if IsMissionPlayer(a.Owner) then
-			Trigger.RemoveProximityTrigger(id)
+			Trigger.RemoveFootprintTrigger(id)
 			InitGDIWest()
 		end
 	end)

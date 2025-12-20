@@ -31,6 +31,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		void INotifyPlayerDisconnected.PlayerDisconnected(Actor self, Player p)
 		{
+			if (p != self.Owner)
+				return;
+
 			isConnected = false;
 		}
 	}

@@ -324,7 +324,7 @@ InitGDI = function()
 	Trigger.OnEnteredFootprint(titanTriggerFootprint, function(a, id)
 		if IsMissionPlayer(a.Owner) and not TitanPatroller.IsDead and not IsTitanSpotted then
 			IsTitanSpotted = true
-			Trigger.RemoveProximityTrigger(id)
+			Trigger.RemoveFootprintTrigger(id)
 			local camera = Actor.Create("smallcamera", true, { Owner = Scrin, Location = TitanPatroller.Location })
 			Beacon.New(Scrin, TitanPatroller.CenterPosition)
 			Media.PlaySound("beacon.aud")

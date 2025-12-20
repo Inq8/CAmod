@@ -212,8 +212,7 @@ namespace OpenRA.Mods.CA.Traits
 
 				if (!self.IsDead && !self.Disposed && hasDeployedActors && hasUndeployedActors)
 				{
-					var self_gcod = self.TraitOrDefault<GrantConditionOnDeployTurreted>();
-					if (self_gcod.DeployState == DeployState.Undeploying || self_gcod.DeployState == DeployState.Undeployed)
+					if (DeployState == DeployState.Undeploying || DeployState == DeployState.Undeployed)
 						return true;
 
 					return false;

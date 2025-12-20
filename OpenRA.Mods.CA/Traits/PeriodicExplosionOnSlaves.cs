@@ -81,8 +81,8 @@ namespace OpenRA.Mods.CA.Traits
 	{
 		readonly PeriodicExplosionOnSlavesInfo info;
 		readonly WeaponInfo weapon;
-		readonly BodyOrientation body;
-		readonly MindController mc;
+		BodyOrientation body;
+		MindController mc;
 
 		int fireDelay;
 		int burst;
@@ -97,14 +97,13 @@ namespace OpenRA.Mods.CA.Traits
 
 			weapon = info.WeaponInfo;
 			burst = weapon.Burst;
-			body = self.TraitOrDefault<BodyOrientation>();
-			mc = self.TraitsImplementing<MindController>().First(mc => mc.Info.ControlType == info.ControlType);
 		}
 
 		protected override void Created(Actor self)
 		{
+			body = self.TraitOrDefault<BodyOrientation>();
+			mc = self.TraitsImplementing<MindController>().First(mc => mc.Info.ControlType == info.ControlType);
 			ammoPool = self.TraitsImplementing<AmmoPool>().FirstOrDefault(la => la.Info.Name == Info.AmmoPoolName);
-
 			base.Created(self);
 		}
 

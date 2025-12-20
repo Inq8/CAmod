@@ -28,23 +28,29 @@ namespace OpenRA.Mods.CA.Traits
 
 	public class ConvertsDamageToHealth : ConditionalTrait<ConvertsDamageToHealthInfo>, INotifyAppliedDamage
 	{
+		IHealth health;
+
 		public ConvertsDamageToHealth(ActorInitializer init, ConvertsDamageToHealthInfo info)
 			: base(info) { }
+
+		protected override void Created(Actor self)
+		{
+			base.Created(self);
+			health = self.TraitOrDefault<IHealth>();
+		}
 
 		void INotifyAppliedDamage.AppliedDamage(Actor self, Actor damaged, AttackInfo e)
 		{
 			if (IsTraitDisabled)
 				return;
 
+			if (health == null)
+				return;
+
 			if (e.Damage.Value <= 0 || damaged == self)
 				return;
 
 			if (Info.InvalidTargetTypes.Overlaps(damaged.GetEnabledTargetTypes()))
-				return;
-
-			var health = self.TraitOrDefault<IHealth>();
-
-			if (health == null)
 				return;
 
 			var healthAmt = (e.Damage.Value / 100) * Info.DamagePercentConverted;

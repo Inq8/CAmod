@@ -159,13 +159,13 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			this.info = info;
 			slaveHistory = new HashSet<Actor>();
-			gainsExperience = self.TraitOrDefault<GainsExperience>();
-			capacityModifiers = self.TraitsImplementing<MindControllerCapacityModifier>();
 		}
 
 		protected override void Created(Actor self)
 		{
 			base.Created(self);
+			gainsExperience = self.TraitOrDefault<GainsExperience>();
+			capacityModifiers = self.TraitsImplementing<MindControllerCapacityModifier>();
 			deployTrait = self.TraitOrDefault<GrantConditionOnDeploy>();
 			ResetProgress(self);
 			UpdateCapacity(self);

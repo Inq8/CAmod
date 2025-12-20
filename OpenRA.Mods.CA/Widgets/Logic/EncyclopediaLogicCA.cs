@@ -45,7 +45,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 		readonly ScrollItemWidget headerTemplate;
 		readonly ScrollItemWidget template;
 		readonly BackgroundWidget previewBackground;
-		readonly ActorPreviewWidget previewWidget;
+		readonly ActorPreviewCAWidget previewWidget;
 
 		readonly Widget tabContainer;
 		readonly ButtonWidget tabTemplate;
@@ -127,7 +127,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			widget.Get("ACTOR_INFO").IsVisible = () => selectedActor != null;
 
 			previewBackground = widget.GetOrNull<BackgroundWidget>("ACTOR_BG");
-			previewWidget = widget.Get<ActorPreviewWidget>("ACTOR_PREVIEW");
+			previewWidget = widget.Get<ActorPreviewCAWidget>("ACTOR_PREVIEW");
 			previewBackground.IsVisible = () => selectedActor != null &&
 				selectedActor.TraitInfos<IRenderActorPreviewSpritesInfo>().Count > 0;
 
@@ -197,9 +197,6 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			// Create the UI from the hierarchy
 			CreateFolderStructure();
-
-			// Select the first item in the first category on initial load
-			SelectFirstItem();
 
 			widget.Get<ButtonWidget>("BACK_BUTTON").OnClick = () =>
 			{
@@ -384,13 +381,8 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				{
 					var item = CreateActorListItem(actor, selectedRootNode.FullPath, 0);
 
-					// Only set firstItem and select actor if no actor is currently selected
 					if (firstItem == null)
-					{
 						firstItem = item;
-						if (selectedActor == null)
-							SelectActor(actor, selectedRootNode.FullPath);
-					}
 
 					actorList.AddChild(item);
 				}
@@ -434,13 +426,8 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				{
 					var item = CreateActorListItem(actor, node.FullPath, displayDepth);
 
-					// Only set firstItem and select actor if no actor is currently selected
 					if (firstItem == null)
-					{
 						firstItem = item;
-						if (selectedActor == null)
-							SelectActor(actor, node.FullPath);
-					}
 
 					actorList.AddChild(item);
 				}
@@ -506,6 +493,14 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			actorList.RemoveChildren();
 			firstItem = null;
 			CreateFolderStructure();
+
+			// When expanding, auto-select the first actor in the expanded folder
+			if (!isCurrentlyExpanded && folderNodes.TryGetValue(folderPath, out var node))
+			{
+				var firstActorResult = GetFirstActorFromAnyNode(node);
+				if (firstActorResult.actor != null)
+					SelectActor(firstActorResult.actor, firstActorResult.categoryPath);
+			}
 		}
 
 		void SelectActor(ActorInfo actor, string categoryPath = null)
@@ -521,12 +516,16 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				lastSelectedActorByCategory[selectedTopLevelCategory] = actor;
 			}
 
+			// Update the encyclopedia color palette with the faction color
+			var previewColor = GetPreviewColorFromCategory(categoryPath);
+			EncyclopediaColorPalette.SetPreviewColor(previewColor);
+
 			var previewOwner = GetPreviewOwner(selectedInfo);
 			var typeDictionary = CreatePreviewTypeDictionary(previewOwner);
 
 			if (previewBackground.IsVisible())
 			{
-				previewWidget.SetPreview(renderActor, typeDictionary);
+				previewWidget.SetPreview(renderActor, typeDictionary, previewColor);
 				previewWidget.GetScale = () => selectedInfo.Scale;
 				buildIconWidget.Bounds.Y = previewWidget.Bounds.Bottom + 10;
 			}
@@ -928,12 +927,6 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				return;
 
 			currentFacing -= new WAngle(16);
-			var selectedInfo = info[selectedActor];
-			var previewOwner = GetPreviewOwner(selectedInfo);
-			var typeDictionary = CreatePreviewTypeDictionary(previewOwner);
-
-			if (previewBackground.IsVisible())
-				previewWidget.SetPreview(renderActor, typeDictionary);
 		}
 
 		Player GetPreviewOwner(EncyclopediaInfo selectedInfo)
@@ -1050,6 +1043,42 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			};
 		}
 
+		/// <summary>
+		/// Gets an arbitrary color for the preview based on faction/category.
+		/// This allows coloring actors without needing a map player.
+		/// </summary>
+		Color GetPreviewColorFromCategory(string categoryPath)
+		{
+			if (string.IsNullOrEmpty(categoryPath))
+				return Color.White;
+
+			var topLevelCategory = categoryPath.Split('/')[0];
+
+			if (topLevelCategory == "Nod")
+			{
+				var redUnits = new[] { "amcv", "harv.td", "harv.td.upg", "enli", "rmbc", "reap", "tplr", "shad", "scrn" };
+				var parts = categoryPath.Split('/');
+				if (parts.Length > 1)
+				{
+					// Most Nod units appear white/gray
+					var secondLevel = parts[1];
+					if (!redUnits.Contains(selectedActor.Name) && (secondLevel == "Vehicles" || secondLevel == "Aircraft" || secondLevel == "Infantry"))
+						return Color.FromArgb(230, 230, 255); // E6E6FF
+				}
+
+				return Color.FromArgb(254, 17, 0);
+			}
+
+			return topLevelCategory switch
+			{
+				"Allies" => Color.FromArgb(153, 172, 242), // 99ACF2
+				"Soviets" => Color.FromArgb(254, 17, 0), // FE1100
+				"GDI" => Color.FromArgb(242, 207, 116), // F2CF74
+				"Scrin" => Color.FromArgb(128, 0, 200), // 7700FF
+				_ => Color.FromArgb(158, 166, 179) // 9ea6b3
+			};
+		}
+
 		void CreateCategoryTabs()
 		{
 			// Get all top-level categories
@@ -1147,9 +1176,10 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				"Support Powers" => 7,
 				"Subfactions" => 8,
 				"Tips" => 9,
-				"Debuffs" => 10,
-				"Tech Buildings" => 11,
-				"Tech Units" => 12,
+				"Buffs" => 10,
+				"Debuffs" => 11,
+				"Tech Buildings" => 12,
+				"Tech Units" => 13,
 				_ => 1000
 			};
 		}
@@ -1204,20 +1234,29 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			{
 				new OwnerInit(previewOwner ?? world.WorldActor.Owner),
 				new FactionInit(world.WorldActor.Owner.PlayerReference.Faction),
+				new DynamicFacingInit(() => currentFacing),
 			};
+
+			// Add DynamicTurretFacingInit for each turret so they rotate with the body
+			foreach (var turretInfo in renderActor.TraitInfos<TurretedInfo>())
+			{
+				// The turret facing is relative to the body, so we add body facing + initial turret facing
+				typeDictionary.Add(new DynamicTurretFacingInit(turretInfo, () => currentFacing + turretInfo.InitialFacing));
+			}
 
 			foreach (var actorPreviewInit in renderActor.TraitInfos<IActorPreviewInitInfo>())
 			{
 				foreach (var init in actorPreviewInit.ActorPreviewInits(renderActor, ActorPreviewType.ColorPicker))
 				{
+					// Skip FacingInit since we're using DynamicFacingInit
 					if (init is FacingInit)
-					{
-						typeDictionary.Add(new FacingInit(currentFacing));
-					}
-					else
-					{
-						typeDictionary.Add(init);
-					}
+						continue;
+
+					// Skip TurretFacingInit since we're using DynamicTurretFacingInit
+					if (init is TurretFacingInit)
+						continue;
+
+					typeDictionary.Add(init);
 				}
 			}
 

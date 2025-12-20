@@ -57,7 +57,7 @@ namespace OpenRA.Mods.CA.Traits
 	public class AttackFrontalCharged : AttackFrontal, INotifyAttack, INotifySold, ISelectionBar
 	{
 		public new readonly AttackFrontalChargedInfo Info;
-		readonly IMove movement;
+		IMove movement;
 		readonly Stack<int> chargingTokens = new Stack<int>();
 
 		bool charging;
@@ -106,8 +106,13 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			Info = info;
 			shotsFired = 0;
-			movement = self.TraitOrDefault<IMove>();
 			requiredChargeLevel = Common.Util.RandomInRange(self.World.SharedRandom, info.ChargeLevel);
+		}
+
+		protected override void Created(Actor self)
+		{
+			base.Created(self);
+			movement = self.TraitOrDefault<IMove>();
 		}
 
 		protected override void TraitEnabled(Actor self)

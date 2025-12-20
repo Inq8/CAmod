@@ -336,16 +336,16 @@ VEHICLES.SCRIN:
 		RequiresCondition: anathema
 		IsDecoration: True
 	ReloadDelayMultiplier@Anathema1:
-		Modifier: 73
+		Modifier: 80
 		RequiresCondition: anathema == 1
 	ReloadDelayMultiplier@Anathema2:
-		Modifier: 57
+		Modifier: 67
 		RequiresCondition: anathema == 2
 	ReloadDelayMultiplier@Anathema3:
-		Modifier: 47
+		Modifier: 57
 		RequiresCondition: anathema == 3
 	ReloadDelayMultiplier@Anathema4:
-		Modifier: 40
+		Modifier: 50
 		RequiresCondition: anathema >= 4
 	ValueScalingFirepowerMultiplier@Anathema1:
 		MinValue: 600
@@ -372,10 +372,10 @@ VEHICLES.SCRIN:
 		MaxValueModifier: 200
 		RequiresCondition: anathema >= 4
 	SpeedMultiplier@Anathema2:
-		Modifier: 120
+		Modifier: 110
 		RequiresCondition: anathema >= 2 && anathema < 4
 	SpeedMultiplier@Anathema4:
-		Modifier: 140
+		Modifier: 120
 		RequiresCondition: anathema >= 4
 	GrantTimedCondition@Anathema:
 		Condition: anathema-alive
@@ -424,6 +424,7 @@ VEHICLES.SCRIN:
 	-GrantConditionOnPrerequisite@BIO:
 	-GrantConditionOnPrerequisite@HAZMAT:
 	-GrantConditionOnPrerequisite@HAZMATSOVIET:
+	-GrantConditionOnPrerequisite@HAZMATIRAQ:
 	-GrantConditionOnPrerequisite@HAZMATZOCOM:
 	-GrantCondition@HAZMAT:
 	-GrantCondition@HAZMATSOVIET:
@@ -605,7 +606,6 @@ S3:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	AutoTarget:
-		ScanRadius: 6
 		MaximumScanTimeInterval: 5
 	AmmoPool:
 		Ammo: 1
@@ -1033,8 +1033,6 @@ STLK:
 	Armament@BATF:
 		Name: batf
 		Weapon: StalkerShards
-	AutoTarget:
-		ScanRadius: 5
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 	TimedConditionBarCA@Cloaked:
@@ -1120,7 +1118,7 @@ SMEDI:
 		TargetRelationships: Ally
 		ForceTargetRelationships: None
 	AttackFrontal:
-		PauseOnCondition: being-warped || blinded || reapersnare
+		PauseOnCondition: being-warped || blinded || reapersnare || berserkactive
 		FacingTolerance: 0
 	AttackSoundsCA@HEALSOUND:
 		Sounds: heal2.aud
@@ -1137,8 +1135,6 @@ SMEDI:
 		ValidRelationships: Ally
 	Voiced:
 		VoiceSet: AssimilatorVoice
-	Targetable@ChaosImmune:
-		TargetTypes: ChaosImmune
 	GuardsSelection:
 		ValidTargets: Infantry
 	KeepsDistance:
@@ -1184,7 +1180,7 @@ ARTI:
 		InvalidTargets: NoAutoTarget
 		ValidRelationships: Ally
 	AttackFrontal:
-		PauseOnCondition: being-warped || blinded || reapersnare
+		PauseOnCondition: being-warped || blinded || reapersnare || berserkactive
 		FacingTolerance: 0
 	AttackSoundsCA@REPAIRSOUND:
 		Sounds: floatk1.aud
@@ -1224,8 +1220,6 @@ ARTI:
 		Prerequisites: barracks.upgraded
 	Voiced:
 		VoiceSet: AssimilatorVoice
-	Targetable@ChaosImmune:
-		TargetTypes: ChaosImmune
 	GuardsSelection:
 		ValidTargets: Vehicle
 	KeepsDistance:
@@ -1650,7 +1644,7 @@ SEEK:
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Inherits@Hypercharge: ^Hypercharge
 	Valued:
-		Cost: 750
+		Cost: 700
 	Tooltip:
 		Name: Seeker
 	Selectable:
@@ -1668,8 +1662,9 @@ SEEK:
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
 		Attributes: • Detects cloaked units, spies and submarines.\n• Can traverse water
 	Mobile:
-		Speed: 113
+		Speed: 126
 		Locomotor: lighthover
+		TurnSpeed: 24
 	Health:
 		HP: 23000
 	Armor:
@@ -1732,7 +1727,7 @@ LACE:
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Inherits@Hypercharge: ^Hypercharge
 	Valued:
-		Cost: 650
+		Cost: 600
 	Tooltip:
 		Name: Lacerator
 	Selectable:
@@ -3075,8 +3070,6 @@ SMCV:
 	-Crushable:
 	Targetable@MindControlImmune:
 		TargetTypes: MindControlImmune
-	Targetable@ChaosImmune:
-		TargetTypes: ChaosImmune
 	Hovers:
 		BobDistance: -25
 		RequiresCondition: !empdisable && !being-warped && !driver-dead
@@ -4678,7 +4671,7 @@ REAC:
 		Cost: 300
 	Tooltip:
 		Name: Reactor
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@anypower:
 		Prerequisite: anypower
 	Building:
 		Footprint: xX xx ==
@@ -4720,7 +4713,7 @@ REA2:
 		Cost: 500
 	Tooltip:
 		Name: Advanced Reactor
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@anypower:
 		Prerequisite: anypower
 	Building:
 		Footprint: xxx Xxx ===
@@ -5170,7 +5163,7 @@ SCRT:
 		Factions: scrin, reaper, traveler, harbinger, collector
 	ProvidesPrerequisite@buildingname:
 		RequiresCondition: !tech-locked
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@anytechcenter:
 		Prerequisite: techcenter.any
 		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@harbscrt:
@@ -6579,7 +6572,7 @@ WORMHOLE:
 	Targetable:
 		TargetTypes: Ground, Structure, Defense, Wormhole
 	Health:
-		HP: 50000
+		HP: 25000
 	Armor:
 		Type: Concrete
 	RevealsShroud:
