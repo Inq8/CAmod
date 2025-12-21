@@ -244,7 +244,7 @@ InitVoidEngines = function()
 		MediaCA.PlaySound("veng-spawn.aud", 2)
 		Utils.Do({ VoidEngine1, VoidEngine2 }, function(ve)
 			if not ve.IsDead then
-				AssaultPlayerBaseOrHunt(v)
+				AssaultPlayerBaseOrHunt(ve)
 			end
 		end)
 	end
