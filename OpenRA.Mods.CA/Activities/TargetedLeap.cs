@@ -59,7 +59,7 @@ namespace OpenRA.Mods.CA.Activities
 
 		protected override void OnFirstRun(Actor self)
 		{
-			if (!ability.CanLeap)
+			if (!ability.CanPerformMovement)
 			{
 				canceling = true;
 				return;
@@ -144,16 +144,6 @@ namespace OpenRA.Mods.CA.Activities
 			}
 
 			return false;
-		}
-
-		protected override void OnLastRun(Actor self)
-		{
-			base.OnLastRun(self);
-		}
-
-		protected override void OnActorDispose(Actor self)
-		{
-			base.OnActorDispose(self);
 		}
 
 		public override IEnumerable<Target> GetTargets(Actor self)

@@ -23,6 +23,7 @@ namespace OpenRA.Mods.CA.Activities
 		readonly Aircraft aircraft;
 		readonly int speed;
 		readonly Target target;
+		readonly Action onDiveComplete;
 
 		WPos origin, targetPosition;
 		int length;
@@ -30,11 +31,12 @@ namespace OpenRA.Mods.CA.Activities
 		bool jumpComplete = false;
 		int ticks = 0;
 
-		public Dive(in Target target, Aircraft aircraft, int speed)
+		public Dive(in Target target, Aircraft aircraft, int speed, Action onDiveComplete = null)
 		{
 			this.aircraft = aircraft;
 			this.target = target;
 			this.speed = speed;
+			this.onDiveComplete = onDiveComplete;
 		}
 
 		protected override void OnFirstRun(Actor self)
@@ -53,7 +55,6 @@ namespace OpenRA.Mods.CA.Activities
 
 		public override bool Tick(Actor self)
 		{
-			// Correct the visual position after we jumped
 			if (canceled || jumpComplete)
 				return true;
 
@@ -66,12 +67,10 @@ namespace OpenRA.Mods.CA.Activities
 			var desiredFacing = (targetPosition - position).Yaw;
 			aircraft.Facing = Util.TickFacing(aircraft.Facing, desiredFacing, aircraft.TurnSpeed);
 
-			// We are at the destination
 			if (++ticks >= length)
 			{
-				// Revoke the run condition
-				self.Kill(self);
 				jumpComplete = true;
+				onDiveComplete?.Invoke();
 			}
 
 			return false;
