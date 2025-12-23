@@ -95,7 +95,7 @@ WorldLoaded = function()
 			Trigger.AfterDelay(DateTime.Seconds(5), function()
 				PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 				Notification("Reinforcements have arrived.")
-				Reinforcements.Reinforce(USSR, { "mcv" }, { McvSpawn.Location, McvRally.Location })
+				DoMcvArrival()
 				Beacon.New(USSR, McvRally.CenterPosition)
 				McvArrived = true
 				USSR.MarkCompletedObjective(ObjectiveDestroyOutpost)
@@ -385,4 +385,9 @@ DoDisruptorDrop = function()
 	if Difficulty == "brutal" then
 		Trigger.AfterDelay(DateTime.Minutes(5), DoDisruptorDrop)
 	end
+end
+
+-- overridden in co-op version
+DoMcvArrival = function()
+	Reinforcements.Reinforce(USSR, { "mcv" }, { McvSpawn.Location, McvRally.Location })
 end

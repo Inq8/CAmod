@@ -24,3 +24,14 @@ end
 AfterTick = function()
 
 end
+
+-- overridden in co-op version
+DoMcvArrival = function()
+	local delay = 0
+	Utils.Do(GetMcvPlayers(), function(p)
+		Trigger.AfterDelay(delay, function()
+			Reinforcements.Reinforce(p, { "mcv" }, { McvSpawn.Location, McvRally.Location })
+		end)
+		delay = delay + DateTime.Seconds(1)
+	end)
+end
