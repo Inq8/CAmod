@@ -10,6 +10,7 @@
  */
 #endregion
 
+using OpenRA.Primitives;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
@@ -19,11 +20,17 @@ namespace OpenRA.Mods.CA.Traits
 	public class LobbyMissionInfoInfo : TraitInfo
 	{
 		[FieldLoader.Require]
-		[Desc("Info to display in the lobby chat.")]
-		public readonly string Info = "";
+		[Desc("Text to display in the lobby chat.")]
+		public readonly string Text = "";
 
 		[Desc("Prefix to display before the info in the lobby chat.")]
-		public readonly string Prefix = "Mission Info";
+		public readonly string Prefix = null;
+
+		[Desc("Color of the prefix text in the lobby chat.")]
+		public readonly Color PrefixColor = Color.Cyan;
+
+		[Desc("Color of the info text in the lobby chat.")]
+		public readonly Color TextColor = Color.Cyan;
 
 		public override object Create(ActorInitializer init) { return new LobbyMissionInfo(); }
 	}
