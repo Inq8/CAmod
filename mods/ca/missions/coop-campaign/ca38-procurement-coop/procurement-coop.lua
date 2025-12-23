@@ -18,14 +18,13 @@ SetupPlayers = function()
 end
 
 AfterWorldLoaded = function()
-
+	StartCashSpread(3500)
 end
 
 AfterTick = function()
 
 end
 
--- overridden in co-op version
 DoMcvArrival = function()
 	local delay = 0
 	Utils.Do(GetMcvPlayers(), function(p)
