@@ -288,7 +288,7 @@ SendReinforcements = function()
 	end
 
 	if IsVeryHardOrBelow() and ReinforcementWave == 3 then
-		DoMcvArrival()
+		DoMcvArrival(path)
 	end
 
 	local reinforcements = Reinforcements.Reinforce(GDI, units, path, 50)
