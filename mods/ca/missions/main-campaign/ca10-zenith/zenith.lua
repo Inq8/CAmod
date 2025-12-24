@@ -141,12 +141,16 @@ WorldLoaded = function()
 		if not NukeDummy.IsDead then
 			if not NukeSilo1.IsDead then
 				NukeSilo1.ActivateNukePower(PlayerStart.Location)
+				NukeLaunched = true
 			elseif not NukeSilo2.IsDead then
 				NukeSilo2.ActivateNukePower(PlayerStart.Location)
+				NukeLaunched = true
 			elseif not NukeSilo3.IsDead then
 				NukeSilo3.ActivateNukePower(PlayerStart.Location)
+				NukeLaunched = true
 			elseif not NukeSilo4.IsDead then
 				NukeSilo4.ActivateNukePower(PlayerStart.Location)
+				NukeLaunched = true
 			end
 			NukeDummy.Destroy()
 			Media.PlaySound("nukelaunch.aud")
@@ -233,7 +237,9 @@ InitUSSR = function()
 	Actor.Create("ai.unlimited.power", true, { Owner = USSR })
 
 	Trigger.OnAllKilledOrCaptured(NukeSilos, function()
-		Nod.MarkCompletedObjective(ObjectiveKillSilos)
+		if not NukeLaunched then
+			Nod.MarkCompletedObjective(ObjectiveKillSilos)
+		end
 	end)
 
 	Trigger.OnAllKilledOrCaptured(TeslaReactors, function()

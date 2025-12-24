@@ -48,8 +48,9 @@ WorldLoaded = function()
 	TanyaDeathTrigger(Tanya)
 
 	local silos = Scrin.GetActorsByTypes({ "silo.scrin", "silo.scrinblue"})
+	NumSilosRemaining = #silos
+
 	Utils.Do(silos, function(a)
-		NumSilosRemaining = #silos
 		Trigger.OnKilled(a, function(self, killer)
 			SiloKilled(killer)
 		end)

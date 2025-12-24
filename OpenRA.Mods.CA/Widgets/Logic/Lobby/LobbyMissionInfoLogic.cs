@@ -11,7 +11,6 @@
 using System;
 using OpenRA.Mods.CA.Traits;
 using OpenRA.Network;
-using OpenRA.Primitives;
 using OpenRA.Widgets;
 
 namespace OpenRA.Mods.CA.Widgets.Logic
@@ -43,14 +42,24 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			lastMapUid = mapUid;
 
-			var lobbyMissionInfo = map.WorldActorInfo.TraitInfoOrDefault<LobbyMissionInfoInfo>();
-			if (lobbyMissionInfo == null || string.IsNullOrEmpty(lobbyMissionInfo.Info))
+			var lobbyMissionInfos = map.WorldActorInfo.TraitInfos<LobbyMissionInfoInfo>();
+
+			if (lobbyMissionInfos.Count == 0)
 				return;
 
-			var info = lobbyMissionInfo.Info;
-			var prefix = lobbyMissionInfo.Prefix;
+			Game.RunAfterTick(() => {
+				foreach (var lobbyMissionInfo in lobbyMissionInfos)
+				{
+					var text = lobbyMissionInfo.Text;
+					var prefix = lobbyMissionInfo.Prefix;
+					var prefixColor = lobbyMissionInfo.PrefixColor;
+					var textColor = lobbyMissionInfo.TextColor;
 
-			Game.RunAfterTick(() => TextNotificationsManager.AddChatLine(TextNotificationsManager.SystemClientId, prefix, info, Color.DeepSkyBlue, Color.DeepSkyBlue));
+					text = text.Replace("\\n", "\n");
+
+					TextNotificationsManager.AddChatLine(TextNotificationsManager.SystemClientId, prefix, text, prefixColor, textColor);
+				}
+			});
 		}
 
 		protected override void Dispose(bool disposing)

@@ -1503,7 +1503,7 @@ HARV.Scrin:
 		LocalOffset: 400, 0, 0
 	Buildable:
 		BuildPaletteOrder: 13
-		Prerequisites: ~proc.scrin, ~vehicles.scrin, ~techlevel.low
+		Prerequisites: anyrefinery, ~vehicles.scrin, ~techlevel.low
 		IconPalette: chrome
 	SpawnActorOnDeath:
 		Actor: HARV.Scrin.Husk
@@ -4792,6 +4792,7 @@ PROC.SCRIN:
 		DragOffset: -554,512,0
 		DragLength: 12
 		MaxQueueLength: 12
+		RequiresCondition: !being-warped
 	StoresPlayerResourcesCA:
 		Capacity: 2000
 	WithResourceStoragePipsDecoration:
