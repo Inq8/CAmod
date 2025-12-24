@@ -177,14 +177,6 @@ VEHICLES.SCRIN:
 	Targetable@FleetRecallable:
 		TargetTypes: FleetRecallable
 
-^SignalTransmitterSpeedBoost:
-	GrantConditionOnPrerequisite@SignalTransmitterSpeedBoost:
-		Condition: sign-speed
-		Prerequisites: sign
-	SpeedMultiplier@SignalTransmitterSpeedBoost:
-		Modifier: 110
-		RequiresCondition: sign-speed
-
 ^IonConduits:
 	GrantConditionOnPrerequisite@IONCON:
 		Condition: ioncon-upgrade
@@ -3508,7 +3500,6 @@ DEVA:
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
 	Inherits@FleetRecallable: ^FleetRecallable
-	Inherits@SignalTransmitterSpeedBoost: ^SignalTransmitterSpeedBoost
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 111
@@ -3650,7 +3641,6 @@ PAC:
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
 	Inherits@FleetRecallable: ^FleetRecallable
-	Inherits@SignalTransmitterSpeedBoost: ^SignalTransmitterSpeedBoost
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 112
@@ -3886,7 +3876,6 @@ MSHP:
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
 	Inherits@FleetRecallable: ^FleetRecallable
-	Inherits@SignalTransmitterSpeedBoost: ^SignalTransmitterSpeedBoost
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 113
@@ -5320,7 +5309,7 @@ SIGN:
 		BuildLimit: 1
 		IconPalette: chromes
 	TooltipExtras:
-		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked\n• Boosts speed of fleet ships by 10%
+		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked
 	-Capturable:
 	-CaptureNotification:
 	-CapturableProgressBar:
