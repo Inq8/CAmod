@@ -349,15 +349,9 @@ GDIBaseFound = function()
 		IsGDIBaseFound = true
 		MediaCA.PlaySound(MissionDir .. "/r_gdibasediscovered.aud", 2)
 
-		Greece.PlayLowPowerNotification = false
-
 		TransferGDIUnits()
-
-		Trigger.AfterDelay(DateTime.Seconds(5), function()
-			Greece.PlayLowPowerNotification = true
-		end)
-
 		InitUSSRAttacks()
+
 		TimerTicks = HoldOutTime[Difficulty]
 
 		Trigger.AfterDelay(DateTime.Seconds(1), function()
@@ -396,6 +390,11 @@ end
 
 -- overridden in co-op version
 TransferGDIUnits = function()
+	Greece.PlayLowPowerNotification = false
+	Trigger.AfterDelay(DateTime.Seconds(10), function()
+		Greece.PlayLowPowerNotification = true
+	end)
+
 	local gdiForces = GDI.GetActors()
 	Utils.Do(gdiForces, function(a)
 		if a.Type ~= "player" then
