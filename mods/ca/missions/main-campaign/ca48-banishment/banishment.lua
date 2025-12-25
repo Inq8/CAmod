@@ -129,7 +129,7 @@ WorldLoaded = function()
 	end)
 
 	local nerveCenters = MaleficScrin.GetActorsByType("nerv")
-	Trigger.OnAllKilled(nerveCenters, function()
+	Trigger.OnAllKilledOrCaptured(nerveCenters, function()
 		Greece.MarkCompletedObjective(ObjectiveDestroyScrinBases)
 	end)
 
