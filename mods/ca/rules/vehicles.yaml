@@ -216,7 +216,7 @@ NUKC:
 		Voice: Move
 		ImmovableCondition: deployed
 		RequireForceMoveCondition: !undeployed
-		PauseOnCondition: being-captured || empdisable || being-warped || driver-dead || notmobile || deploying || undeploying
+		PauseOnCondition: being-captured || empdisable || being-warped || driver-dead || notmobile || deploying || undeploying || deployed
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 5c0
@@ -280,11 +280,11 @@ NUKC:
 		Sequence: undeploy
 		Body: body
 	WithFacingSpriteBody:
-		RequiresCondition: undeployed
+		RequiresCondition: undeployed || deploying
 	WithFacingSpriteBody@DeployedChassis:
 		Name: deployed
 		Sequence: deployed
-		RequiresCondition: !undeployed
+		RequiresCondition: !undeployed && !deploying
 	WithFacingSpriteBody@Overlay:
 		Name: overlay
 		Sequence: overlay
