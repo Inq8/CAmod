@@ -176,21 +176,21 @@ namespace OpenRA.Mods.CA.Traits
 
 		void HandleCargo(Actor self, Actor master)
 		{
-			if (cargo != null && master != null)
+			if (cargo == null || cargo.IsEmpty() || master == null)
+				return;
+
+			if (info.CargoBehaviour == CargoBehaviour.Kill)
 			{
-				if (info.CargoBehaviour == CargoBehaviour.Kill)
+				while (!cargo.IsEmpty())
 				{
-					while (!cargo.IsEmpty())
-					{
-						var a = cargo.Unload(self);
-						a.Kill(master);
-					}
+					var a = cargo.Unload(self);
+					a.Kill(master);
 				}
-				else if (info.CargoBehaviour == CargoBehaviour.Eject && !cargo.IsEmpty())
-				{
-					self.CancelActivity();
-					self.QueueActivity(new UnloadCargo(self, WDist.FromCells(5)));
-				}
+			}
+			else if (info.CargoBehaviour == CargoBehaviour.Eject)
+			{
+				self.CancelActivity();
+				self.QueueActivity(new UnloadCargo(self, WDist.FromCells(5)));
 			}
 		}
 
@@ -268,10 +268,11 @@ namespace OpenRA.Mods.CA.Traits
 
 		void INotifyPassengerExited.OnPassengerExited(Actor self, Actor passenger)
 		{
-			if (Master == null && passenger.Owner != creatorOwner)
+			if (Master == null || creatorOwner == null)
 				return;
 
-			passenger.ChangeOwner(creatorOwner);
+			if (passenger.Owner != creatorOwner)
+				passenger.ChangeOwner(creatorOwner);
 		}
 	}
 }
