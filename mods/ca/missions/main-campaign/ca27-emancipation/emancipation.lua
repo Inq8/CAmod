@@ -202,10 +202,6 @@ WorldLoaded = function()
 				UpdateObjectiveText()
 				FreeSlaves(slaves)
 
-				Trigger.AfterDelay(1, function()
-					Actor.Create("QueueUpdaterDummy", true, { Owner = GDI })
-				end)
-
 				if m == Mastermind4 then
 					Utils.Do(MissionPlayers, function(p)
 						Actor.Create("amcv.enabled", true, { Owner = p })
@@ -373,5 +369,9 @@ FreeSlaves = function(slaves)
 				end
 			end)
 		end
+	end)
+
+	Trigger.AfterDelay(1, function()
+		Actor.Create("QueueUpdaterDummy", true, { Owner = GDI })
 	end)
 end

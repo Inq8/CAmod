@@ -355,10 +355,6 @@ AwakenSleeperCell = function()
 				GDIHarvester.Owner = Nod
 			end
 
-			Trigger.AfterDelay(1, function()
-				Actor.Create("QueueUpdaterDummy", true, { Owner = Nod })
-			end)
-
 			if ObjectiveRescueResearchers == nil then
 				ObjectiveRescueResearchers = Nod.AddObjective("Locate and rescue Nod researchers.")
 			end
@@ -388,6 +384,10 @@ TransferLegionForces = function()
 		if self.Type ~= "player" then
 			self.Owner = Nod
 		end
+	end)
+
+	Trigger.AfterDelay(1, function()
+		Actor.Create("QueueUpdaterDummy", true, { Owner = Nod })
 	end)
 end
 

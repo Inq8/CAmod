@@ -63,4 +63,6 @@ FreeSlaves = function(slaves)
 			end)
 		end
 	end)
+
+	CACoopQueueSyncer()
 end
