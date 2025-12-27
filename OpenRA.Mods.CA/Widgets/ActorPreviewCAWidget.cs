@@ -26,6 +26,7 @@ namespace OpenRA.Mods.CA.Widgets
 	/// - Arbitrary player colors (not tied to map players)
 	/// - Preview rendering of overlay traits like WithColoredOverlay, WithPalettedOverlay
 	/// - Automatic palette swapping for player-colored sprites to use encyclopedia palette
+	/// Uses Render() instead of RenderUI() to get SpriteRenderables which already support IModifyableRenderable
 	/// </summary>
 	public class ActorPreviewCAWidget : Widget
 	{
@@ -110,14 +111,40 @@ namespace OpenRA.Mods.CA.Widgets
 
 		public override void PrepareRenderables()
 		{
-			var scale = GetScale() * viewportSizes.DefaultScale;
 			var origin = RenderOrigin + PreviewOffset + new int2(RenderBounds.Size.Width / 2, RenderBounds.Size.Height / 2);
 
-			IEnumerable<IRenderable> baseRenderables = preview
-				.SelectMany(p => p.RenderUI(worldRenderer, origin, scale));
+			// Calculate a world position that will project to our desired screen location
+			// We need to reverse the viewport projection
+			var centerPos = worldRenderer.Viewport.ViewToWorldPx(origin);
+			var worldPos = worldRenderer.ProjectedPosition(centerPos);
+
+			// Use Render() instead of RenderUI() to get SpriteRenderables which already implement IModifyableRenderable
+			// This allows WithColoredOverlayCA and alpha modifications to work automatically
+			var baseRenderables = preview
+				.SelectMany(p => p.Render(worldRenderer, worldPos))
+				.Select(r =>
+				{
+					// Apply encyclopedia scale to SpriteRenderables
+					if (r is SpriteRenderable sr && GetScale() != 1f)
+					{
+						var scaleFactor = GetScale();
+						return new SpriteRenderable(
+							sr.GetType().GetField("sprite", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(sr) as Sprite,
+							sr.Pos,
+							sr.Offset,
+							sr.ZOffset,
+							sr.Palette,
+							(float)sr.GetType().GetField("scale", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(sr) * scaleFactor,
+							sr.Alpha,
+							sr.Tint,
+							sr.TintModifiers,
+							sr.IsDecoration);
+					}
+					return r;
+				})
+				.ToList();
 
 			// Calculate scaled bounds for modifiers
-			// The bounds are centered around origin, scaled appropriately
 			var scaledBounds = new Rectangle(
 				origin.X - (int)(IdealPreviewSize.X * GetScale() / 2),
 				origin.Y - (int)(IdealPreviewSize.Y * GetScale() / 2),
@@ -126,12 +153,11 @@ namespace OpenRA.Mods.CA.Widgets
 
 			// Apply preview modifiers
 			foreach (var modifier in previewModifiers)
-				baseRenderables = modifier.ModifyPreviewRender(worldRenderer, baseRenderables, scaledBounds);
+				baseRenderables = modifier.ModifyPreviewRender(worldRenderer, baseRenderables, scaledBounds).ToList();
 
 			// Swap player palettes to encyclopedia palettes for proper coloring
-			baseRenderables = baseRenderables.Select(r => SwapPlayerPalette(r));
-
 			renderables = baseRenderables
+				.Select(r => SwapPlayerPalette(r))
 				.OrderBy(WorldRenderer.RenderableZPositionComparisonKey)
 				.Select(r => r.PrepareRender(worldRenderer))
 				.ToArray();
@@ -165,7 +191,12 @@ namespace OpenRA.Mods.CA.Widgets
 						paletteCache[newPaletteName] = newPalette;
 					}
 
-					return pr.WithPalette(newPalette);
+					var ret = (IRenderable)pr.WithPalette(newPalette);
+
+					if (r is IModifyableRenderable mr && ret is IModifyableRenderable retMr)
+						ret = retMr.WithAlpha(mr.Alpha).WithTint(mr.Tint, mr.TintModifiers);
+
+					return ret;
 				}
 			}
 
