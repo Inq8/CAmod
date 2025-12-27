@@ -42,3 +42,16 @@ end
 AfterTick = function()
 
 end
+
+TransferAbandonedBase = function()
+	local baseBuildings = Map.ActorsInBox(AbandonedBaseTopLeft.CenterPosition, AbandonedBaseBottomRight.CenterPosition, function(a)
+		return a.Owner == USSRAbandoned
+	end)
+
+	Utils.Do(baseBuildings, function(a)
+		a.Owner = GetFirstActivePlayer()
+	end)
+
+	CACoopQueueSyncer()
+	StopSpread = false
+end
