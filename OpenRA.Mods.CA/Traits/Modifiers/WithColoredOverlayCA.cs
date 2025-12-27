@@ -9,6 +9,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Linq;
 using OpenRA.Graphics;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
@@ -94,19 +95,18 @@ namespace OpenRA.Mods.CA.Traits
 
 		public IEnumerable<IRenderable> ModifyPreviewRender(WorldRenderer wr, IEnumerable<IRenderable> renderables, Rectangle bounds)
 		{
-			var result = new List<IRenderable>();
-
-			foreach (var r in renderables)
+			foreach (var r in renderables.ToList())
 			{
-				result.Add(r);
+				yield return r;
 
-				// For preview rendering, we apply tint to all modifyable renderables
-				// (unlike in-game where we skip decorations)
 				if (r is IModifyableRenderable mr)
-					result.Add(mr.WithTint(tint, mr.TintModifiers | TintModifiers.ReplaceColor).WithAlpha(alpha));
+				{
+					var currentTintModifiers = mr.TintModifiers;
+					yield return mr.WithTint(tint, currentTintModifiers | TintModifiers.ReplaceColor)
+						.WithAlpha(alpha)
+						.AsDecoration();
+				}
 			}
-
-			return result;
 		}
 
 		public void Tick() { }
