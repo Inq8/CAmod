@@ -153,6 +153,7 @@ namespace OpenRA.Mods.CA.Traits
 		GrantConditionOnDeploy deployTrait;
 		HashSet<Actor> slaveHistory;
 		GainsExperience gainsExperience;
+		INotifyMindControlling[] notifyMindControlling;
 
 		public MindController(Actor self, MindControllerInfo info)
 			: base(info)
@@ -167,6 +168,7 @@ namespace OpenRA.Mods.CA.Traits
 			gainsExperience = self.TraitOrDefault<GainsExperience>();
 			capacityModifiers = self.TraitsImplementing<MindControllerCapacityModifier>();
 			deployTrait = self.TraitOrDefault<GrantConditionOnDeploy>();
+			notifyMindControlling = self.TraitsImplementing<INotifyMindControlling>().ToArray();
 			ResetProgress(self);
 			UpdateCapacity(self);
 		}
@@ -254,10 +256,10 @@ namespace OpenRA.Mods.CA.Traits
 
 		void MaxControlledCheck(Actor self)
 		{
-			if (capacity == 0)
+			if (capacity <= 0)
 				return;
 
-			if (slaves.Count() >= capacity)
+			if (slaves.Count >= capacity)
 				GrantMaxControlledCondition(self);
 			else
 				RevokeMaxControlledCondition(self);
@@ -420,7 +422,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (mindControllable.IsTraitDisabled || mindControllable.IsTraitPaused)
 				return;
 
-			if (capacity > 0 && Info.ControlAtCapacityBehaviour == ControlAtCapacityBehaviour.BlockNew && slaves.Count() >= capacity)
+			if (capacity > 0 && Info.ControlAtCapacityBehaviour == ControlAtCapacityBehaviour.BlockNew && slaves.Count >= capacity)
 				return;
 
 			if (!transfer && mindControllable.Master != null)
@@ -434,7 +436,7 @@ namespace OpenRA.Mods.CA.Traits
 			AddControllingCondition(self);
 			mindControllable.LinkMaster(slaveToAdd, self);
 
-			if (capacity > 0 && Info.ControlAtCapacityBehaviour != ControlAtCapacityBehaviour.BlockNew && slaves.Count() > capacity)
+			if (capacity > 0 && Info.ControlAtCapacityBehaviour != ControlAtCapacityBehaviour.BlockNew && slaves.Count > capacity)
 			{
 				var oldestSlave = slaves[0];
 				oldestSlave.Trait.RevokeMindControl(oldestSlave.Actor, 0);
@@ -458,7 +460,7 @@ namespace OpenRA.Mods.CA.Traits
 			ControlComplete(self);
 			MaxControlledCheck(self);
 
-			foreach (var notify in self.TraitsImplementing<INotifyMindControlling>())
+			foreach (var notify in notifyMindControlling)
 				notify.MindControlling(self, slaveToAdd);
 		}
 
@@ -576,7 +578,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			capacity = Math.Max(newCapacity, 1);
 
-			var currentSlaveCount = slaves.Count();
+			var currentSlaveCount = slaves.Count;
 			var numSlavesToRemove = currentSlaveCount - capacity;
 			for (var i = numSlavesToRemove; i > 0; i--)
 				slaves[i].Trait.RevokeMindControl(slaves[i].Actor, 0);
@@ -693,20 +695,16 @@ namespace OpenRA.Mods.CA.Traits
 
 		void INotifyExitedCargo.OnExitedCargo(Actor self, Actor cargo)
 		{
-			if (Info.TransferToTransport)
-			{
-				var transportMc = cargo.TraitsImplementing<MindController>().FirstOrDefault(mc => mc.Info.ControlType == info.ControlType);
-				if (transportMc != null)
-				{
-					foreach (var s in transportMc.Slaves)
-					{
-						if (s.Actor.IsDead || s.Actor.Disposed)
-							continue;
+			if (!Info.TransferToTransport)
+				return;
 
-						AddSlave(self, s.Actor, true);
-					}
-				}
-			}
+			var transportMc = cargo.TraitsImplementing<MindController>().FirstOrDefault(mc => mc.Info.ControlType == info.ControlType);
+			if (transportMc == null)
+				return;
+
+			var slavesToTransfer = transportMc.Slaves.Where(s => !s.Actor.IsDead && !s.Actor.Disposed).ToList();
+			foreach (var s in slavesToTransfer)
+				AddSlave(self, s.Actor, true);
 		}
 	}
 }
