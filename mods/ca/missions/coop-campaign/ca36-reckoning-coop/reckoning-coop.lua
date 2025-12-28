@@ -31,6 +31,18 @@ AfterWorldLoaded = function()
 	Utils.Do(Utils.Where({ Multi2, Multi5 }, function(p) return p ~= nil end), function(p)
 		Actor.Create("rebel.allegiance", true, { Owner = p })
 	end)
+
+	if (Multi1 ~= nil and Multi1.IsLocalPlayer) or (Multi4 ~= nil and Multi4.IsLocalPlayer) then
+		Camera.Position = GDIBase.CenterPosition
+	end
+
+	if Multi2 ~= nil and Multi2.IsLocalPlayer then
+		Camera.Position = Exterminator3Patrol1.CenterPosition
+	end
+
+	if Multi5 ~= nil and Multi5.IsLocalPlayer then
+		Camera.Position = R4.CenterPosition
+	end
 end
 
 AfterTick = function()
@@ -60,6 +72,9 @@ DistributeUnitsAndBases = function()
 	if Multi1 ~= nil or Multi4 ~= nil then
 		GDIActive = true
 
+		local excess = GDIHostile.GetActorsByTypes({ "gtek", "hq", "afld.gdi", "titn", "htnk.ion", "htnk.drone", "atwr" })
+		Utils.Do(excess, function(a) a.Destroy() end)
+
 		local firstGdiPlayer = Multi1 ~= nil and Multi1 or Multi4
 		TransferBaseToPlayer(GDIHostile, firstGdiPlayer)
 
@@ -79,10 +94,13 @@ DistributeUnitsAndBases = function()
 		InitAttackSquad(Squads.ScrinGDIKiller, Scrin, activeGdiPlayers)
 	end
 
-	Trigger.AfterDelay(1, function()
-		-- transfer top Scrin base to first Scrin player (y = 0 -> 50)
-		if Multi2 ~= nil or Multi5 ~= nil then
-			ScrinRebelsActive = true
+	-- transfer top Scrin base to first Scrin player (y = 0 -> 50)
+	if Multi2 ~= nil or Multi5 ~= nil then
+		ScrinRebelsActive = true
+
+		Trigger.AfterDelay(1, function()
+			local excess = ScrinRebels.GetActorsByTypes({ "scrt", "nerv", "grav", "sign", "tpod" })
+			Utils.Do(excess, function(a) a.Destroy() end)
 
 			local firstScrinPlayer = Multi2 ~= nil and Multi2 or Multi5
 
@@ -113,8 +131,9 @@ DistributeUnitsAndBases = function()
 			local activeRebelPlayers = Utils.Where({ Multi1, Multi4 }, function(p) return p ~= nil end)
 			Squads.ScrinRebelKiller.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 40, Max = 80 })
 			InitAttackSquad(Squads.ScrinRebelKiller, Scrin, activeRebelPlayers)
-		end
-	end)
+			CACoopQueueSyncer()
+		end)
+	end
 
 	CACoopQueueSyncer()
 end
