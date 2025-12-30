@@ -488,6 +488,10 @@ TransferBaseActors = function(base)
 	Utils.Do(baseActors, function(a)
 		a.Owner = Greece
 	end)
+
+	Trigger.AfterDelay(1, function()
+		Actor.Create("QueueUpdaterDummy", true, { Owner = Greece })
+	end)
 end
 
 -- overridden in co-op version

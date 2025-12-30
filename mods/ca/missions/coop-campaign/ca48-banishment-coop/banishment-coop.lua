@@ -55,6 +55,8 @@ TransferBaseActors = function(base)
 	Utils.Do(baseActors, function(a)
 		a.Owner = recipientPlayer
 	end)
+
+	CACoopQueueSyncer()
 end
 
 DoMcvArrival = function()
