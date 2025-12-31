@@ -1612,6 +1612,24 @@ FollowSquadLeader = function(actor, squad)
 	end
 end
 
+FollowActor = function(actor, actorToFollow)
+	if not actor.IsDead and actor.IsInWorld then
+		if not actorToFollow.IsDead and actorToFollow.IsInWorld then
+			local possibleCells = Utils.ExpandFootprint(Utils.ExpandFootprint({ actorToFollow.Location }, true))
+			local cell = Utils.Random(possibleCells)
+			actor.Stop()
+			actor.AttackMove(cell, 1)
+
+			Trigger.AfterDelay(Utils.RandomInteger(35,65), function()
+				FollowActor(actor, actorToFollow)
+			end)
+		else
+			actor.Stop()
+			Trigger.ClearAll(actor)
+		end
+	end
+end
+
 SetupRefAndSilosCaptureCredits = function(player)
 	local silosAndRefineries = player.GetActorsByTypes(CashRewardOnCaptureTypes)
 	Utils.Do(silosAndRefineries, function(a)

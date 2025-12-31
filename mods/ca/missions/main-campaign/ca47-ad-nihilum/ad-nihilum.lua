@@ -354,17 +354,28 @@ SendNextVoidEngine = function()
 			end)
 		end)[1]
 
-		if Difficulty == "brutal" and DateTime.GameTime > DateTime.Minutes(30) then
+		if IsVeryHardOrAbove() then
+			local startGuardCount
+			local maxGuardCount
+
+			if Difficulty == "brutal" then
+				startGuardCount = 4
+				maxGuardCount = 10
+			else
+				startGuardCount = 2
+				maxGuardCount = 8
+			end
+
 			local guardsList = {}
 
-			-- starting with 4, add a guard for every 10 minutes past 30 minutes, up to a max of 10 guards
-			local numGuards = math.min(10, 4 + math.floor((DateTime.GameTime - DateTime.Minutes(30)) / DateTime.Minutes(10)))
+			-- starting with startGuardCount, add a guard every 10 minutes
+			local numGuards = math.max(startGuardCount, math.min(maxGuardCount, startGuardCount + math.floor((DateTime.GameTime - DateTime.Minutes(10)) / DateTime.Minutes(10))))
 			for i = 1, numGuards do
 				table.insert(guardsList, "gunw")
 			end
 
 			local guards = Reinforcements.Reinforce(MaleficScrin, guardsList, { spawnLoc }, 250, function(g)
-				g.Guard(voidEngine)
+				FollowActor(g, voidEngine)
 				IdleHunt(g)
 			end)
 		end
