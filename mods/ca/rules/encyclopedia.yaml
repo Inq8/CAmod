@@ -38,6 +38,1646 @@ encyclopedia.tips.general:
 	QuantizeFacingsFromSequence:
 		Sequence: stand
 
+# Support Power Template - Uses build icon like upgrades (no 3D preview background)
+^SupportPowerPreview:
+	Inherits: ^InvisibleDummy
+	Buildable:
+		Icon: icon
+	Encyclopedia:
+	EncyclopediaExtras:
+		HideNotProducible: true
+
+encyclopedia.power.chronoshift:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: chrono.power
+	Tooltip:
+		Name: Chronoshift
+	Encyclopedia:
+		Category: Allies/Support Powers
+	EncyclopediaExtras:
+		Description: Teleports up to 9 selected vehicles to a targeted location, returning them to their original location after a short time.\n\n• If killed, units are returned with 20% health\n• Units with larger health pools take additional damage\n• Passengers cannot be unloaded\n• Enemy units are teleported for reduced duration
+	TooltipExtras:
+		Attributes: Cooldown: 3:00\nRequires: Chronosphere
+
+encyclopedia.power.forceshield:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: forceshield.power
+	Tooltip:
+		Name: Force Shield
+	Encyclopedia:
+		Category: Allies/Support Powers
+	EncyclopediaExtras:
+		Description: Makes selected friendly structures temporarily invulnerable.\n\nWarning: Causes power failure.
+	TooltipExtras:
+		Attributes: Cooldown: 5:00\nRequires: Allied Tech Center
+
+encyclopedia.power.spysatellite:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: gps.power
+	Tooltip:
+		Name: Spy Satellite
+	Encyclopedia:
+		Category: Allies/Support Powers
+	EncyclopediaExtras:
+		Description: Periodically reveals the entire map for a short time (activated automatically).
+	TooltipExtras:
+		Attributes: Cooldown: 3:30\nRequires: Allied Tech Center
+
+encyclopedia.power.timewarp:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: timewarp.power
+	Tooltip:
+		Name: Time Warp
+	Encyclopedia:
+		Category: Allies/Support Powers
+	EncyclopediaExtras:
+		Description: Disrupts time and space at the target location. Affected units & structures are frozen in time, unable to act, but immune to damage.
+	TooltipExtras:
+		Attributes: Cooldown: 3:00\nRequires: Chronosphere
+
+encyclopedia.power.tempinc:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: tempinc.power
+	Tooltip:
+		Name: Temporal Incursion
+	Encyclopedia:
+		Category: Allies/Support Powers
+	EncyclopediaExtras:
+		Description: Summons reinforcements from the future. Units return to their origin time after a short time.
+	TooltipExtras:
+		Attributes: Cooldown: 5:00\nRequires: Chronosphere
+
+encyclopedia.power.veilofwar:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: veilofwar.power
+	Tooltip:
+		Name: Veil of War
+	Encyclopedia:
+		Category: Allies/Support Powers
+	EncyclopediaExtras:
+		Description: Creates an expanding area of shroud, reducing the vision and weapon range of enemy units and defenses.
+	TooltipExtras:
+		Attributes: Cooldown: 5:00\nRequires: Gap Generator
+
+encyclopedia.power.clustermines:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: cmines.power
+	Tooltip:
+		Name: Cluster Mines
+	Encyclopedia:
+		Category: Allies/Support Powers
+	EncyclopediaExtras:
+		Description: Sends a cargo plane to drop a minefield at the target location.
+	TooltipExtras:
+		Attributes: Cooldown: 4:30\nRequires: Airfield (France)
+
+encyclopedia.power.strafe:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: strafe.power
+	Tooltip:
+		Name: Strafing Run
+	Encyclopedia:
+		Category: Allies/Support Powers
+	EncyclopediaExtras:
+		Description: Calls in P51 ground attack planes to perform strafing runs on the target.
+	TooltipExtras:
+		Attributes: Cooldown: 5:00\nRequires: Airfield
+
+encyclopedia.power.cryostorm:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: cryostorm.power
+	Tooltip:
+		Name: Cryostorm
+	Encyclopedia:
+		Category: Allies/Support Powers
+	EncyclopediaExtras:
+		Description: Creates a turbulent area of extreme cold, reducing movement speed and increasing damage taken.
+	TooltipExtras:
+		Attributes: Cooldown: 5:30\nRequires: Weather Controller
+
+encyclopedia.power.heliosbomb:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: heliosbomb.power
+	Tooltip:
+		Name: Helios Bomb
+	Encyclopedia:
+		Category: Allies/Support Powers
+	EncyclopediaExtras:
+		Description: Calls in a bomber which drops a Helios bomb, blinding units in a large area.
+	TooltipExtras:
+		Attributes: Cooldown: 7:00\nRequires: Airfield
+
+encyclopedia.power.bsky:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: bsky.power
+	Tooltip:
+		Name: Black Sky Strike
+	Encyclopedia:
+		Category: Allies/Support Powers
+	EncyclopediaExtras:
+		Description: Fires long range guided missiles at multiple ground targets prioritized by value. Tracking can be lost if targets move far enough from their initial location.
+	TooltipExtras:
+		Attributes: Cooldown: 6:00\nRequires: Black Sky Command
+
+# Soviets Support Powers
+encyclopedia.power.ironcurtain:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: invuln.power
+	Tooltip:
+		Name: Iron Curtain
+	Encyclopedia:
+		Category: Soviets/Support Powers
+	EncyclopediaExtras:
+		Description: Makes selected friendly vehicles temporarily invulnerable.
+	TooltipExtras:
+		Attributes: Cooldown: 5:00\nRequires: Iron Curtain
+
+encyclopedia.power.lightningstorm:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: storm.power
+	Tooltip:
+		Name: Lightning Storm
+	Encyclopedia:
+		Category: Soviets/Support Powers
+	EncyclopediaExtras:
+		Description: Initiate a Lightning Storm which deals heavy damage over a large area.
+	TooltipExtras:
+		Attributes: Cooldown: 9:00\nRequires: Weather Controller
+
+encyclopedia.power.atombomb:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: abomb.power
+	Tooltip:
+		Name: Atom Bomb
+	Encyclopedia:
+		Category: Soviets/Support Powers
+	EncyclopediaExtras:
+		Description: Launches a devastating atomic bomb at the target location, dealing heavy damage over a large area.
+	TooltipExtras:
+		Attributes: Cooldown: 9:00\nRequires: Missile Silo
+
+encyclopedia.power.spyplane:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: spyplane.power
+	Tooltip:
+		Name: Spy Plane
+	Encyclopedia:
+		Category: Soviets/Support Powers
+	EncyclopediaExtras:
+		Description: Dispatches a spy plane that reveals the target location for a limited time.
+	TooltipExtras:
+		Attributes: Cooldown: 2:00\nRequires: Radar
+
+encyclopedia.power.paratroopers:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: paratroopers.power
+	Tooltip:
+		Name: Paratroopers
+	Encyclopedia:
+		Category: Soviets/Support Powers
+	EncyclopediaExtras:
+		Description: Dispatches a Halo transport to drop a squad of infantry anywhere on the map.
+	TooltipExtras:
+		Attributes: Cooldown: 5:00\nRequires: Airfield
+
+encyclopedia.power.stormtroopers:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: stormtroopers.power
+	Tooltip:
+		Name: Storm-troopers
+	Encyclopedia:
+		Category: Soviets/Support Powers
+	EncyclopediaExtras:
+		Description: Dispatches a Halo transport to drop a squad of Shock Troopers anywhere on the map.
+	TooltipExtras:
+		Attributes: Cooldown: 6:00\nRequires: Tesla Reactor
+
+encyclopedia.power.parabombs:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: parabombs.power
+	Tooltip:
+		Name: Parabombs
+	Encyclopedia:
+		Category: Soviets/Support Powers
+	EncyclopediaExtras:
+		Description: Calls in a Badger bomber which drops parachuted bombs on your target.
+	TooltipExtras:
+		Attributes: Cooldown: 5:00\nRequires: Airfield
+
+encyclopedia.power.carpetbomb:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: carpetbomb.power
+	Tooltip:
+		Name: Carpet Bomb
+	Encyclopedia:
+		Category: Soviets/Support Powers
+	EncyclopediaExtras:
+		Description: Calls in a squad of Badgers which drop bombs on your target.
+	TooltipExtras:
+		Attributes: Cooldown: 7:00\nRequires: Soviet Tech Center
+
+encyclopedia.power.atomicbombair:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: abombair.power
+	Tooltip:
+		Name: Atomic Bomb (Air)
+	Encyclopedia:
+		Category: Soviets/Support Powers
+	EncyclopediaExtras:
+		Description: Calls in a Badger bomber which drops an atom bomb on your target.
+	TooltipExtras:
+		Attributes: Cooldown: 7:00\nRequires: Soviet Tech Center
+
+encyclopedia.power.mutabomb:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: mutabomb.power
+	Tooltip:
+		Name: Muta Bomb
+	Encyclopedia:
+		Category: Soviets/Support Powers
+	EncyclopediaExtras:
+		Description: Calls in a Badger bomber which drops a genetic mutation bomb on your target, transforming infantry into Brutes under your control.
+	TooltipExtras:
+		Attributes: Cooldown: 4:30\nRequires: Bio-Research Facility
+
+encyclopedia.power.chaosbombs:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: chaosbombs.power
+	Tooltip:
+		Name: Chaos Bombs
+	Encyclopedia:
+		Category: Soviets/Support Powers
+	EncyclopediaExtras:
+		Description: Calls in a Badger bomber which drops parachuted chaos bombs on your target.
+	TooltipExtras:
+		Attributes: Cooldown: 5:30\nRequires: Airfield
+
+encyclopedia.power.atomicammo:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: atomicammo.power
+	Tooltip:
+		Name: Atomic Shells
+	Encyclopedia:
+		Category: Soviets/Support Powers
+	EncyclopediaExtras:
+		Description: Grants tanks a limited supply of atomic shells (also for a limited duration).\n\nAffects Soviet tanks only (Heavy/Rhino Tank, Lasher/Thrasher Tank, Siege Tank, Mammoth Tank, Overlord Tank, Apocalypse Tank, Nuke Cannon)
+	TooltipExtras:
+		Attributes: Cooldown: 6:00\nRequires: Missile Silo
+
+encyclopedia.power.heroes:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: heroes.power
+	Tooltip:
+		Name: Heroes of the Union
+	Encyclopedia:
+		Category: Soviets/Support Powers
+	EncyclopediaExtras:
+		Description: Targeted basic infantry units become Heroes of the Union, significantly increasing their damage, speed, range and resilience.\n\nCan affect Rifle Infantry, Rocket Soldiers, Grenadiers and Flamethrowers.
+	TooltipExtras:
+		Attributes: Cooldown: 5:00\nRequires: Soviet Tech Center
+
+encyclopedia.power.tankdrop:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: tankdrop.power
+	Tooltip:
+		Name: Tank Drop
+	Encyclopedia:
+		Category: Soviets/Support Powers
+	EncyclopediaExtras:
+		Description: Dispatches cargo planes to air drop tanks at the target location.
+	TooltipExtras:
+		Attributes: Cooldown: 9:00\nRequires: Soviet Tech Center
+
+encyclopedia.power.killzone:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: killzone.power
+	Tooltip:
+		Name: Kill Zone
+	Encyclopedia:
+		Category: Soviets/Support Powers
+	EncyclopediaExtras:
+		Description: Calls in a Spy Plane which marks a target area. Any enemy units within it take increased damage.
+	TooltipExtras:
+		Attributes: Cooldown: 3:00\nRequires: Radar
+
+# GDI Support Powers
+encyclopedia.power.ioncannon:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: ioncannon.power
+	Tooltip:
+		Name: Ion Cannon
+	Encyclopedia:
+		Category: GDI/Support Powers
+	EncyclopediaExtras:
+		Description: Fires a devastating ion cannon beam at the target location.
+	TooltipExtras:
+		Attributes: Cooldown: 7:00\nRequires: Ion Cannon Uplink
+
+encyclopedia.power.recondrone:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: uavicon.power
+	Tooltip:
+		Name: Recon Drone
+	Encyclopedia:
+		Category: GDI/Support Powers
+	EncyclopediaExtras:
+		Description: A drone flies across the map, revealing the area as it passes.\n\nDetects cloaked units.
+	TooltipExtras:
+		Attributes: Cooldown: 2:30\nRequires: Radar
+
+encyclopedia.power.xodrop:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: xodrop.power
+	Tooltip:
+		Name: X-O Drop
+	Encyclopedia:
+		Category: GDI/Support Powers
+	EncyclopediaExtras:
+		Description: An Orca transport drops a squad of X-O Powersuits at the target location.
+	TooltipExtras:
+		Attributes: Cooldown: 6:30\nRequires: GDI Tech Center
+
+encyclopedia.power.droppods:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: droppods.power
+	Tooltip:
+		Name: Drop Pods
+	Encyclopedia:
+		Category: GDI/Support Powers
+	EncyclopediaExtras:
+		Description: Instantly deploys a small team of elite soldiers at the target location via orbital drop pods.
+	TooltipExtras:
+		Attributes: Cooldown: 5:00\nRequires: GDI Tech Center
+
+encyclopedia.power.reinforcements:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: orcaca.power
+	Tooltip:
+		Name: Reinforcements
+	Encyclopedia:
+		Category: GDI/Support Powers
+	EncyclopediaExtras:
+		Description: An Orca Carryall drops an APC containing an infantry squad at the target location.
+	TooltipExtras:
+		Attributes: Cooldown: 4:00\nRequires: Airfield
+
+encyclopedia.power.interceptors:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: airsupport.power
+	Tooltip:
+		Name: Interceptors
+	Encyclopedia:
+		Category: GDI/Support Powers
+	EncyclopediaExtras:
+		Description: A squadron of Interceptors provides air cover over the target area, engaging any enemy aircraft within range.
+	TooltipExtras:
+		Attributes: Cooldown: 7:00\nRequires: Airfield
+
+encyclopedia.power.naniterepair:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: nrepair.power
+	Tooltip:
+		Name: Nanite Repair
+	Encyclopedia:
+		Category: GDI/Support Powers
+	EncyclopediaExtras:
+		Description: Repairs selected damaged vehicles over time.
+	TooltipExtras:
+		Attributes: Cooldown: 5:00\nRequires: GDI Tech Center
+
+encyclopedia.power.firestorm:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: fstorm.power
+	Tooltip:
+		Name: Firestorm
+	Encyclopedia:
+		Category: GDI/Support Powers
+	EncyclopediaExtras:
+		Description: Fires a barrage of rockets at the target area.
+	TooltipExtras:
+		Attributes: Cooldown: 5:00\nRequires: GDI Tech Center
+
+encyclopedia.power.advancedradar:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: arscan.power
+	Tooltip:
+		Name: Advanced Radar
+	Encyclopedia:
+		Category: GDI/Support Powers
+	EncyclopediaExtras:
+		Description: Reveals all enemy units on the radar for a limited time.
+	TooltipExtras:
+		Attributes: Cooldown: 4:00\nRequires: GDI Tech Center
+
+encyclopedia.power.naniteshield:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: nshield.power
+	Tooltip:
+		Name: Nanite Shield
+	Encyclopedia:
+		Category: GDI/Support Powers
+	EncyclopediaExtras:
+		Description: Creates a protective nanite shield around selected units.
+	TooltipExtras:
+		Attributes: Cooldown: 5:00\nRequires: GDI Tech Center
+
+encyclopedia.power.empmissile:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: empmissile.power
+	Tooltip:
+		Name: EMP Missile
+	Encyclopedia:
+		Category: GDI/Support Powers
+	EncyclopediaExtras:
+		Description: Launches an EMP missile that disables vehicles and structures in the target area.
+	TooltipExtras:
+		Attributes: Cooldown: 5:00\nRequires: EMP Cannon
+
+encyclopedia.power.surgicalstrike:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: surgicalstrike.power
+	Tooltip:
+		Name: Surgical Strike
+	Encyclopedia:
+		Category: GDI/Support Powers
+	EncyclopediaExtras:
+		Description: Calls in precision airstrikes on the target.
+	TooltipExtras:
+		Attributes: Cooldown: 5:00\nRequires: Airfield
+
+# Nod Support Powers
+encyclopedia.power.clustermissile:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: clustermissile.power
+	Tooltip:
+		Name: Cluster Missile
+	Encyclopedia:
+		Category: Nod/Support Powers
+	EncyclopediaExtras:
+		Description: Launches cluster missiles at the target area.
+	TooltipExtras:
+		Attributes: Cooldown: 6:00\nRequires: Missile Silo
+
+encyclopedia.power.chemmissile:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: chemmissile.power
+	Tooltip:
+		Name: Chemical Missile
+	Encyclopedia:
+		Category: Nod/Support Powers
+	EncyclopediaExtras:
+		Description: Launches a chemical missile that creates a toxic cloud at the target location.
+	TooltipExtras:
+		Attributes: Cooldown: 7:00\nRequires: Chemical Plant
+
+encyclopedia.power.tibstealth:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: invis.power
+	Tooltip:
+		Name: Tib Stealth
+	Encyclopedia:
+		Category: Nod/Support Powers
+	EncyclopediaExtras:
+		Description: Makes selected units invisible for a limited time.
+	TooltipExtras:
+		Attributes: Cooldown: 4:00\nRequires: Stealth Generator
+
+encyclopedia.power.airdrop:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: airdrop.power
+	Tooltip:
+		Name: Air Drop
+	Encyclopedia:
+		Category: Nod/Support Powers
+	EncyclopediaExtras:
+		Description: Air drops units at the target location.
+	TooltipExtras:
+		Attributes: Cooldown: 5:00\nRequires: Airfield
+
+encyclopedia.power.hacksat:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: hacksat.power
+	Tooltip:
+		Name: Hack Satellite
+	Encyclopedia:
+		Category: Nod/Support Powers
+	EncyclopediaExtras:
+		Description: Hacks enemy satellites to reveal their base.
+	TooltipExtras:
+		Attributes: Cooldown: 4:00\nRequires: Nod Tech Center
+
+encyclopedia.power.infbomb:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: infbomb.power
+	Tooltip:
+		Name: Inferno Bomb
+	Encyclopedia:
+		Category: Nod/Support Powers
+	EncyclopediaExtras:
+		Description: Calls in a bomber to drop incendiary bombs on the target.
+	TooltipExtras:
+		Attributes: Cooldown: 6:00\nRequires: Airfield
+
+encyclopedia.power.cashhack:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: chack.power
+	Tooltip:
+		Name: Cash Hack
+	Encyclopedia:
+		Category: Nod/Support Powers
+	EncyclopediaExtras:
+		Description: Steals credits from enemy players.
+	TooltipExtras:
+		Attributes: Cooldown: 3:00\nRequires: Operations Center
+
+encyclopedia.power.shadowteam:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: shadteam.power
+	Tooltip:
+		Name: Shadow Team
+	Encyclopedia:
+		Category: Nod/Support Powers
+	EncyclopediaExtras:
+		Description: Deploys a team of Shadow operatives at the target location.
+	TooltipExtras:
+		Attributes: Cooldown: 5:00\nRequires: Nod Tech Center
+
+encyclopedia.power.frenzy:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: frenzy.power
+	Tooltip:
+		Name: Frenzy
+	Encyclopedia:
+		Category: Nod/Support Powers
+	EncyclopediaExtras:
+		Description: Sends infantry into a frenzy, increasing their attack speed.
+	TooltipExtras:
+		Attributes: Cooldown: 4:00\nRequires: Temple of Nod
+
+encyclopedia.power.techhack:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: techhack.power
+	Tooltip:
+		Name: Tech Hack
+	Encyclopedia:
+		Category: Nod/Support Powers
+	EncyclopediaExtras:
+		Description: Temporarily disables enemy defenses.
+	TooltipExtras:
+		Attributes: Cooldown: 4:00\nRequires: Operations Center
+
+encyclopedia.power.assassinsquad:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: assassinsquad.power
+	Tooltip:
+		Name: Assassin Squad
+	Encyclopedia:
+		Category: Nod/Support Powers
+	EncyclopediaExtras:
+		Description: Deploys a squad of assassins at the target location.
+	TooltipExtras:
+		Attributes: Cooldown: 6:00\nRequires: Temple of Nod
+
+encyclopedia.power.hackercell:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: hackercell.power
+	Tooltip:
+		Name: Hacker Cell
+	Encyclopedia:
+		Category: Nod/Support Powers
+	EncyclopediaExtras:
+		Description: Deploys a cell of hackers at the target location.
+	TooltipExtras:
+		Attributes: Cooldown: 5:00\nRequires: Operations Center
+
+encyclopedia.power.confessorcabal:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: confessorcabal.power
+	Tooltip:
+		Name: Confessor Cabal
+	Encyclopedia:
+		Category: Nod/Support Powers
+	EncyclopediaExtras:
+		Description: Deploys a group of Confessors at the target location.
+	TooltipExtras:
+		Attributes: Cooldown: 6:00\nRequires: Temple of Nod
+
+encyclopedia.power.substrike:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: substrike.power
+	Tooltip:
+		Name: Subterranean Strike
+	Encyclopedia:
+		Category: Nod/Support Powers
+	EncyclopediaExtras:
+		Description: Launches a subterranean attack at the target location.
+	TooltipExtras:
+		Attributes: Cooldown: 6:00\nRequires: Nod Tech Center
+
+# Scrin Support Powers
+encyclopedia.power.rift:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: riftpower.power
+	Tooltip:
+		Name: Rift
+	Encyclopedia:
+		Category: Scrin/Support Powers
+	EncyclopediaExtras:
+		Description: Opens a devastating rift at the target location, pulling in and damaging nearby units.
+	TooltipExtras:
+		Attributes: Cooldown: 7:00\nRequires: Rift Generator
+
+encyclopedia.power.suppression:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: spresspower.power
+	Tooltip:
+		Name: Suppression
+	Encyclopedia:
+		Category: Scrin/Support Powers
+	EncyclopediaExtras:
+		Description: Suppresses enemy units in the target area, reducing their effectiveness.
+	TooltipExtras:
+		Attributes: Cooldown: 4:00\nRequires: Nerve Center
+
+encyclopedia.power.gateway:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: gateway.power
+	Tooltip:
+		Name: Gateway
+	Encyclopedia:
+		Category: Scrin/Support Powers
+	EncyclopediaExtras:
+		Description: Opens a gateway that allows units to teleport to the target location.
+	TooltipExtras:
+		Attributes: Cooldown: 5:00\nRequires: Signal Transmitter
+
+encyclopedia.power.anathemapower:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: anathema.power
+	Tooltip:
+		Name: Anathema
+	Encyclopedia:
+		Category: Scrin/Support Powers
+	EncyclopediaExtras:
+		Description: Marks enemy units for destruction, gradually increasing their damage output and speed but destroying them when the effect ends.
+	TooltipExtras:
+		Attributes: Cooldown: 5:00\nRequires: Technology Assembler
+
+encyclopedia.power.owrath:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: owrath.power
+	Tooltip:
+		Name: Overlord's Wrath
+	Encyclopedia:
+		Category: Scrin/Support Powers
+	EncyclopediaExtras:
+		Description: Calls down a devastating beam attack from orbit.
+	TooltipExtras:
+		Attributes: Cooldown: 8:00\nRequires: Mothership
+
+encyclopedia.power.ionsurge:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: ionsurgepower.power
+	Tooltip:
+		Name: Ion Surge
+	Encyclopedia:
+		Category: Scrin/Support Powers
+	EncyclopediaExtras:
+		Description: Creates an ion storm that damages enemies in the area.
+	TooltipExtras:
+		Attributes: Cooldown: 6:00\nRequires: Storm Column
+
+encyclopedia.power.stormspikepower:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: stormspikepower.power
+	Tooltip:
+		Name: Storm Spike
+	Encyclopedia:
+		Category: Scrin/Support Powers
+	EncyclopediaExtras:
+		Description: Deploys a Storm Spike at the target location.
+	TooltipExtras:
+		Attributes: Cooldown: 5:00\nRequires: Nerve Center
+
+encyclopedia.power.buzzerswarm:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: buzzpower.power
+	Tooltip:
+		Name: Buzzer Swarm
+	Encyclopedia:
+		Category: Scrin/Support Powers
+	EncyclopediaExtras:
+		Description: Deploys a swarm of Buzzers at the target location.
+	TooltipExtras:
+		Attributes: Cooldown: 3:00\nRequires: Warp Sphere
+
+encyclopedia.power.ichorseed:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: ichorpower.power
+	Tooltip:
+		Name: Ichor Seed
+	Encyclopedia:
+		Category: Scrin/Support Powers
+	EncyclopediaExtras:
+		Description: Plants an Ichor seed that grows Tiberium at the target location.
+	TooltipExtras:
+		Attributes: Cooldown: 4:00\nRequires: Growth Accelerator
+
+encyclopedia.power.greatercoalescence:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: grclpower.power
+	Tooltip:
+		Name: Greater Coalescence
+	Encyclopedia:
+		Category: Scrin/Support Powers
+	EncyclopediaExtras:
+		Description: Summons a powerful Coalescence entity at the target location.
+	TooltipExtras:
+		Attributes: Cooldown: 7:00\nRequires: Technology Assembler
+
+encyclopedia.power.fleetrecall:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: fleetrecall.power
+	Tooltip:
+		Name: Fleet Recall
+	Encyclopedia:
+		Category: Scrin/Support Powers
+	EncyclopediaExtras:
+		Description: Teleports selected units back to the Mothership.
+	TooltipExtras:
+		Attributes: Cooldown: 4:00\nRequires: Mothership
+
+encyclopedia.power.resourcescan:
+	Inherits: ^SupportPowerPreview
+	RenderSprites:
+		Image: rescanpower.power
+	Tooltip:
+		Name: Resource Scan
+	Encyclopedia:
+		Category: Scrin/Support Powers
+	EncyclopediaExtras:
+		Description: Reveals Tiberium deposits on the map.
+	TooltipExtras:
+		Attributes: Cooldown: 2:00\nRequires: Extractor
+
+# IFV Variant Template
+^IFVVariantPreview:
+	Inherits: ^EffectPreview
+	RenderSprites:
+		Image: ifv
+	WithFacingSpriteBody:
+	WithSpriteTurret:
+		Sequence: turret
+	Turreted:
+	Encyclopedia:
+		Scale: 1.5
+
+encyclopedia.ifv.missile:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-rocket
+	Tooltip:
+		Name: Missile IFV
+	Encyclopedia:
+		Category: Allies/Vehicles/IFV Variants
+	EncyclopediaExtras:
+		Description: IFV loaded with a Rocket Soldier. Fires anti-air/anti-armor missiles.
+	TooltipExtras:
+		Strengths: Strong vs Aircraft, Heavy Armor
+		Weaknesses: Weak vs Infantry
+		Attributes: Passenger: Rocket Soldier
+
+encyclopedia.ifv.ggi:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-ggi
+	Tooltip:
+		Name: GGI IFV
+	Encyclopedia:
+		Category: Allies/Vehicles/IFV Variants
+	EncyclopediaExtras:
+		Description: IFV loaded with a Guardian GI. Fires powerful anti-armor rounds.
+	TooltipExtras:
+		Strengths: Strong vs Vehicles, Heavy Armor
+		Weaknesses: Weak vs Infantry
+		Attributes: Passenger: Guardian GI
+
+encyclopedia.ifv.mg:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-mg
+	Tooltip:
+		Name: Machine Gun IFV
+	Encyclopedia:
+		Category: Allies/Vehicles/IFV Variants
+	EncyclopediaExtras:
+		Description: IFV loaded with a Rifle Infantry. Fires a rapid machine gun.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, Light Vehicles
+		Weaknesses: Weak vs Heavy Armor
+		Attributes: Passenger: Rifle Infantry
+
+encyclopedia.ifv.grenade:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-frag
+	Tooltip:
+		Name: Grenade IFV
+	Encyclopedia:
+		Category: Allies/Vehicles/IFV Variants
+	EncyclopediaExtras:
+		Description: IFV loaded with a Grenadier. Launches fragmentation grenades.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, Buildings
+		Weaknesses: Weak vs Vehicles
+		Attributes: Passenger: Grenadier
+
+encyclopedia.ifv.flame:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-flame
+	Tooltip:
+		Name: Flamethrower IFV
+	Encyclopedia:
+		Category: Allies/Vehicles/IFV Variants
+	EncyclopediaExtras:
+		Description: IFV loaded with a Flamethrower. Projects devastating flames.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, Buildings
+		Weaknesses: Weak vs Vehicles
+		Attributes: Passenger: Flamethrower
+
+encyclopedia.ifv.chem:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-chem
+	Tooltip:
+		Name: Chemical IFV
+	Encyclopedia:
+		Category: Allies/Vehicles/IFV Variants
+	EncyclopediaExtras:
+		Description: IFV loaded with a Toxin Soldier. Sprays toxic chemicals.
+	TooltipExtras:
+		Strengths: Strong vs Infantry
+		Weaknesses: Weak vs Vehicles, Buildings
+		Attributes: Passenger: Toxin Soldier
+
+encyclopedia.ifv.laser:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-laser
+	Tooltip:
+		Name: Laser IFV
+	Encyclopedia:
+		Category: Allies/Vehicles/IFV Variants
+	EncyclopediaExtras:
+		Description: IFV loaded with an Acolyte. Fires a powerful laser beam.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, Light Vehicles
+		Weaknesses: Moderate vs Heavy Armor
+		Attributes: Passenger: Acolyte
+
+encyclopedia.ifv.rad:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-rad
+	Tooltip:
+		Name: Desolator IFV
+	Encyclopedia:
+		Category: Allies/Vehicles/IFV Variants
+	EncyclopediaExtras:
+		Description: IFV loaded with a Desolator. Sprays deadly radiation.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, Vehicles
+		Weaknesses: Damages friendly units in range
+		Attributes: Passenger: Desolator
+
+encyclopedia.ifv.cmdo:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-cmdo
+	Tooltip:
+		Name: Commando IFV
+	Encyclopedia:
+		Category: Allies/Vehicles/IFV Variants
+	EncyclopediaExtras:
+		Description: IFV loaded with a Commando or SEAL. Fires a powerful sniper rifle.
+	TooltipExtras:
+		Strengths: Strong vs Infantry
+		Weaknesses: Weak vs Vehicles
+		Attributes: Passenger: Commando/SEAL
+
+encyclopedia.ifv.mech:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-mech
+	Tooltip:
+		Name: Repair IFV
+	Encyclopedia:
+		Category: Allies/Vehicles/IFV Variants
+	EncyclopediaExtras:
+		Description: IFV loaded with a Mechanic. Repairs nearby friendly vehicles.
+	TooltipExtras:
+		Strengths: Repairs vehicles
+		Attributes: Passenger: Mechanic
+
+encyclopedia.ifv.snip:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-snip
+	Tooltip:
+		Name: Sniper IFV
+	Encyclopedia:
+		Category: Allies/Vehicles/IFV Variants
+	EncyclopediaExtras:
+		Description: IFV loaded with a Sniper. Fires long-range sniper rounds.
+	TooltipExtras:
+		Strengths: Strong vs Infantry
+		Weaknesses: Weak vs Vehicles
+		Attributes: Passenger: Sniper
+
+encyclopedia.ifv.enli:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-enli
+	Tooltip:
+		Name: Enlightened IFV
+	Encyclopedia:
+		Category: Allies/Vehicles/IFV Variants
+	EncyclopediaExtras:
+		Description: IFV loaded with an Enlightened. Fires a powerful laser.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, Vehicles
+		Attributes: Passenger: Enlightened
+
+encyclopedia.ifv.rmbc:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-rmbc
+	Tooltip:
+		Name: Cyborg Elite IFV
+	Encyclopedia:
+		Category: Allies/Vehicles/IFV Variants
+	EncyclopediaExtras:
+		Description: IFV loaded with a Cyborg Elite. Fires plasma bolts.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, Vehicles
+		Attributes: Passenger: Cyborg Elite
+
+encyclopedia.ifv.bh:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-bh
+	Tooltip:
+		Name: Black Hand IFV
+	Encyclopedia:
+		Category: Allies/Vehicles/IFV Variants
+	EncyclopediaExtras:
+		Description: IFV loaded with a Black Hand. Projects devastating flames.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, Buildings
+		Weaknesses: Weak vs Vehicles
+		Attributes: Passenger: Black Hand
+
+encyclopedia.ifv.pdisc:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-pdisc
+	Tooltip:
+		Name: Plasma Disc IFV
+	Encyclopedia:
+		Category: Allies/Vehicles/IFV Variants
+	EncyclopediaExtras:
+		Description: IFV loaded with a Disc Thrower. Fires plasma discs.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, Light Vehicles
+		Attributes: Passenger: Disc Thrower
+
+encyclopedia.ifv.shard:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-shard
+	Tooltip:
+		Name: Shard IFV
+	Encyclopedia:
+		Category: Allies/Vehicles/IFV Variants
+	EncyclopediaExtras:
+		Description: IFV loaded with a Shard Trooper. Fires Tiberium shards.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, Light Vehicles
+		Attributes: Passenger: Shard Trooper
+
+encyclopedia.ifv.mort:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-mort
+	Tooltip:
+		Name: Mortar IFV
+	Encyclopedia:
+		Category: Allies/Vehicles/IFV Variants
+	EncyclopediaExtras:
+		Description: IFV loaded with a Mortar Infantry. Fires mortar rounds.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, Buildings
+		Weaknesses: Slow rate of fire
+		Attributes: Passenger: Mortar Infantry
+
+encyclopedia.ifv.cryo:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-cryo
+	Tooltip:
+		Name: Cryo IFV
+	Encyclopedia:
+		Category: Allies/Vehicles/IFV Variants
+	EncyclopediaExtras:
+		Description: IFV loaded with a Cryo Legionnaire. Fires freezing blasts.
+	TooltipExtras:
+		Strengths: Slows and freezes enemies
+		Attributes: Passenger: Cryo Legionnaire
+
+encyclopedia.ifv.enfo:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-enfo
+	Tooltip:
+		Name: Enforcer IFV
+	Encyclopedia:
+		Category: Allies/Vehicles/IFV Variants
+	EncyclopediaExtras:
+		Description: IFV loaded with an Enforcer. Fires shotgun blasts.
+	TooltipExtras:
+		Strengths: Strong vs Infantry at close range
+		Attributes: Passenger: Enforcer
+
+encyclopedia.ifv.engi:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-engi
+	Tooltip:
+		Name: Engineer IFV
+	Encyclopedia:
+		Category: Allies/Vehicles/IFV Variants
+	EncyclopediaExtras:
+		Description: IFV loaded with an Engineer. Can capture enemy structures.
+	TooltipExtras:
+		Strengths: Captures structures
+		Attributes: Passenger: Engineer
+
+encyclopedia.ifv.ztrp:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-ztrp
+	Tooltip:
+		Name: Zone Trooper IFV
+	Encyclopedia:
+		Category: Allies/Vehicles/IFV Variants
+	EncyclopediaExtras:
+		Description: IFV loaded with a Zone Trooper. Fires powerful railgun shots.
+	TooltipExtras:
+		Strengths: Strong vs Vehicles, Heavy Armor
+		Attributes: Passenger: Zone Trooper
+
+encyclopedia.ifv.zdef:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-zdef
+	Tooltip:
+		Name: Zone Defender IFV
+	Encyclopedia:
+		Category: Allies/Vehicles/IFV Variants
+	EncyclopediaExtras:
+		Description: IFV loaded with a Zone Defender. Fires anti-air missiles.
+	TooltipExtras:
+		Strengths: Strong vs Aircraft
+		Attributes: Passenger: Zone Defender
+
+encyclopedia.ifv.zrai:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-zrai
+	Tooltip:
+		Name: Zone Raider IFV
+	Encyclopedia:
+		Category: Allies/Vehicles/IFV Variants
+	EncyclopediaExtras:
+		Description: IFV loaded with a Zone Raider. Fires sonic blasts.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, Structures
+		Attributes: Passenger: Zone Raider
+
+encyclopedia.ifv.tigr:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-tigr
+	Tooltip:
+		Name: Tiger Guard IFV
+	Encyclopedia:
+		Category: Allies/Vehicles/IFV Variants
+	EncyclopediaExtras:
+		Description: IFV loaded with a Tiger Guard. Fires dual machine guns.
+	TooltipExtras:
+		Strengths: Strong vs Infantry
+		Attributes: Passenger: Tiger Guard
+
+encyclopedia.ifv.hopl:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-hopl
+	Tooltip:
+		Name: Hoplite IFV
+	Encyclopedia:
+		Category: Allies/Vehicles/IFV Variants
+	EncyclopediaExtras:
+		Description: IFV loaded with a Hoplite. Fires EMP rounds.
+	TooltipExtras:
+		Strengths: Disables vehicles
+		Attributes: Passenger: Hoplite
+
+encyclopedia.ifv.impl:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-impl
+	Tooltip:
+		Name: Impaler IFV
+	Encyclopedia:
+		Category: Allies/Vehicles/IFV Variants
+	EncyclopediaExtras:
+		Description: IFV loaded with an Impaler. Fires spikes.
+	TooltipExtras:
+		Strengths: Strong vs Infantry
+		Attributes: Passenger: Impaler
+
+encyclopedia.ifv.stlk:
+	Inherits: ^IFVVariantPreview
+	RenderSprites:
+		Image: ifv
+		Palette: playerscrin
+	WithSpriteTurret:
+		Sequence: turret-stlk
+	Tooltip:
+		Name: Stalker IFV
+	Encyclopedia:
+		Category: Allies/Vehicles/IFV Variants
+	EncyclopediaExtras:
+		Description: IFV loaded with a Stalker. Fires plasma bolts.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, Light Vehicles
+		Attributes: Passenger: Stalker (Scrin)
+
+encyclopedia.ifv.disin:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-disin
+	Tooltip:
+		Name: Disintegrator IFV
+	Encyclopedia:
+		Category: Allies/Vehicles/IFV Variants
+	EncyclopediaExtras:
+		Description: IFV loaded with a Disintegrator. Fires disintegration beams.
+	TooltipExtras:
+		Strengths: Strong vs Vehicles, Buildings
+		Attributes: Passenger: Disintegrator (Scrin)
+
+encyclopedia.ifv.conf:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-conf
+	Tooltip:
+		Name: Confessor IFV
+	Encyclopedia:
+		Category: Allies/Vehicles/IFV Variants
+	EncyclopediaExtras:
+		Description: IFV loaded with a Confessor. Fires hallucinogenic rounds.
+	TooltipExtras:
+		Strengths: Strong vs Infantry
+		Attributes: Passenger: Confessor (Nod)
+
+encyclopedia.ifv.reap:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-reap
+	Tooltip:
+		Name: Reaper IFV
+	Encyclopedia:
+		Category: Allies/Vehicles/IFV Variants
+	EncyclopediaExtras:
+		Description: IFV loaded with a Reaper. Fires Tiberium-infused rounds.
+	TooltipExtras:
+		Strengths: Strong vs Infantry
+		Attributes: Passenger: Reaper (Nod)
+
+# Reckoner Variant Template
+^ReckonerVariantPreview:
+	Inherits: ^EffectPreview
+	RenderSprites:
+		Image: reck
+	WithFacingSpriteBody:
+	WithSpriteTurret:
+		Sequence: turret
+	Turreted:
+	Encyclopedia:
+		Scale: 1.5
+
+encyclopedia.reck.missile:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-rocket
+	Tooltip:
+		Name: Missile Reckoner
+	Encyclopedia:
+		Category: Nod/Vehicles/Reckoner Variants
+	EncyclopediaExtras:
+		Description: Reckoner loaded with a Rocket Soldier. Fires anti-air/anti-armor missiles.
+	TooltipExtras:
+		Strengths: Strong vs Aircraft, Heavy Armor
+		Weaknesses: Weak vs Infantry
+		Attributes: Passenger: Rocket Soldier
+
+encyclopedia.reck.mg:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-mg
+	Tooltip:
+		Name: Machine Gun Reckoner
+	Encyclopedia:
+		Category: Nod/Vehicles/Reckoner Variants
+	EncyclopediaExtras:
+		Description: Reckoner loaded with a Rifle Infantry. Fires a rapid machine gun.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, Light Vehicles
+		Weaknesses: Weak vs Heavy Armor
+		Attributes: Passenger: Rifle Infantry
+
+encyclopedia.reck.grenade:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-frag
+	Tooltip:
+		Name: Grenade Reckoner
+	Encyclopedia:
+		Category: Nod/Vehicles/Reckoner Variants
+	EncyclopediaExtras:
+		Description: Reckoner loaded with a Grenadier. Launches fragmentation grenades.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, Buildings
+		Weaknesses: Weak vs Vehicles
+		Attributes: Passenger: Grenadier
+
+encyclopedia.reck.flame:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-flame
+	Tooltip:
+		Name: Flamethrower Reckoner
+	Encyclopedia:
+		Category: Nod/Vehicles/Reckoner Variants
+	EncyclopediaExtras:
+		Description: Reckoner loaded with a Flamethrower. Projects devastating flames.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, Buildings
+		Weaknesses: Weak vs Vehicles
+		Attributes: Passenger: Flamethrower
+
+encyclopedia.reck.chem:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-chem
+	Tooltip:
+		Name: Chemical Reckoner
+	Encyclopedia:
+		Category: Nod/Vehicles/Reckoner Variants
+	EncyclopediaExtras:
+		Description: Reckoner loaded with a Toxin Soldier. Sprays toxic chemicals.
+	TooltipExtras:
+		Strengths: Strong vs Infantry
+		Weaknesses: Weak vs Vehicles, Buildings
+		Attributes: Passenger: Toxin Soldier
+
+encyclopedia.reck.laser:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-laser
+	Tooltip:
+		Name: Laser Reckoner
+	Encyclopedia:
+		Category: Nod/Vehicles/Reckoner Variants
+	EncyclopediaExtras:
+		Description: Reckoner loaded with an Acolyte. Fires a powerful laser beam.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, Light Vehicles
+		Weaknesses: Moderate vs Heavy Armor
+		Attributes: Passenger: Acolyte
+
+encyclopedia.reck.rad:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-rad
+	Tooltip:
+		Name: Desolator Reckoner
+	Encyclopedia:
+		Category: Nod/Vehicles/Reckoner Variants
+	EncyclopediaExtras:
+		Description: Reckoner loaded with a Desolator. Sprays deadly radiation.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, Vehicles
+		Weaknesses: Damages friendly units in range
+		Attributes: Passenger: Desolator
+
+encyclopedia.reck.cmdo:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-cmdo
+	Tooltip:
+		Name: Commando Reckoner
+	Encyclopedia:
+		Category: Nod/Vehicles/Reckoner Variants
+	EncyclopediaExtras:
+		Description: Reckoner loaded with a Commando. Fires a powerful sniper rifle.
+	TooltipExtras:
+		Strengths: Strong vs Infantry
+		Weaknesses: Weak vs Vehicles
+		Attributes: Passenger: Commando
+
+encyclopedia.reck.mech:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-mech
+	Tooltip:
+		Name: Repair Reckoner
+	Encyclopedia:
+		Category: Nod/Vehicles/Reckoner Variants
+	EncyclopediaExtras:
+		Description: Reckoner loaded with a Mechanic. Repairs nearby friendly vehicles.
+	TooltipExtras:
+		Strengths: Repairs vehicles
+		Attributes: Passenger: Mechanic
+
+encyclopedia.reck.snip:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-snip
+	Tooltip:
+		Name: Sniper Reckoner
+	Encyclopedia:
+		Category: Nod/Vehicles/Reckoner Variants
+	EncyclopediaExtras:
+		Description: Reckoner loaded with a Sniper. Fires long-range sniper rounds.
+	TooltipExtras:
+		Strengths: Strong vs Infantry
+		Weaknesses: Weak vs Vehicles
+		Attributes: Passenger: Sniper
+
+encyclopedia.reck.enli:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-enli
+	Tooltip:
+		Name: Enlightened Reckoner
+	Encyclopedia:
+		Category: Nod/Vehicles/Reckoner Variants
+	EncyclopediaExtras:
+		Description: Reckoner loaded with an Enlightened. Fires a powerful laser.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, Vehicles
+		Attributes: Passenger: Enlightened
+
+encyclopedia.reck.rmbc:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-rmbc
+	Tooltip:
+		Name: Cyborg Elite Reckoner
+	Encyclopedia:
+		Category: Nod/Vehicles/Reckoner Variants
+	EncyclopediaExtras:
+		Description: Reckoner loaded with a Cyborg Elite. Fires plasma bolts.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, Vehicles
+		Attributes: Passenger: Cyborg Elite
+
+encyclopedia.reck.bh:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-bh
+	Tooltip:
+		Name: Black Hand Reckoner
+	Encyclopedia:
+		Category: Nod/Vehicles/Reckoner Variants
+	EncyclopediaExtras:
+		Description: Reckoner loaded with a Black Hand. Projects devastating flames.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, Buildings
+		Weaknesses: Weak vs Vehicles
+		Attributes: Passenger: Black Hand
+
+encyclopedia.reck.pdisc:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-pdisc
+	Tooltip:
+		Name: Plasma Disc Reckoner
+	Encyclopedia:
+		Category: Nod/Vehicles/Reckoner Variants
+	EncyclopediaExtras:
+		Description: Reckoner loaded with a Disc Thrower. Fires plasma discs.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, Light Vehicles
+		Attributes: Passenger: Disc Thrower
+
+encyclopedia.reck.shard:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-shard
+	Tooltip:
+		Name: Shard Reckoner
+	Encyclopedia:
+		Category: Nod/Vehicles/Reckoner Variants
+	EncyclopediaExtras:
+		Description: Reckoner loaded with a Shard Trooper. Fires Tiberium shards.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, Light Vehicles
+		Attributes: Passenger: Shard Trooper
+
+encyclopedia.reck.mort:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-mort
+	Tooltip:
+		Name: Mortar Reckoner
+	Encyclopedia:
+		Category: Nod/Vehicles/Reckoner Variants
+	EncyclopediaExtras:
+		Description: Reckoner loaded with a Mortar Infantry. Fires mortar rounds.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, Buildings
+		Weaknesses: Slow rate of fire
+		Attributes: Passenger: Mortar Infantry
+
+encyclopedia.reck.cryo:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-cryo
+	Tooltip:
+		Name: Cryo Reckoner
+	Encyclopedia:
+		Category: Nod/Vehicles/Reckoner Variants
+	EncyclopediaExtras:
+		Description: Reckoner loaded with a Cryo Legionnaire. Fires freezing blasts.
+	TooltipExtras:
+		Strengths: Slows and freezes enemies
+		Attributes: Passenger: Cryo Legionnaire
+
+encyclopedia.reck.enfo:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-enfo
+	Tooltip:
+		Name: Enforcer Reckoner
+	Encyclopedia:
+		Category: Nod/Vehicles/Reckoner Variants
+	EncyclopediaExtras:
+		Description: Reckoner loaded with an Enforcer. Fires shotgun blasts.
+	TooltipExtras:
+		Strengths: Strong vs Infantry at close range
+		Attributes: Passenger: Enforcer
+
+encyclopedia.reck.engi:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-engi
+	Tooltip:
+		Name: Engineer Reckoner
+	Encyclopedia:
+		Category: Nod/Vehicles/Reckoner Variants
+	EncyclopediaExtras:
+		Description: Reckoner loaded with an Engineer. Can capture enemy structures.
+	TooltipExtras:
+		Strengths: Captures structures
+		Attributes: Passenger: Engineer
+
+encyclopedia.reck.conf:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-conf
+	Tooltip:
+		Name: Confessor Reckoner
+	Encyclopedia:
+		Category: Nod/Vehicles/Reckoner Variants
+	EncyclopediaExtras:
+		Description: Reckoner loaded with a Confessor. Fires hallucinogenic rounds.
+	TooltipExtras:
+		Strengths: Strong vs Infantry
+		Attributes: Passenger: Confessor
+
+encyclopedia.reck.reap:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-reap
+	Tooltip:
+		Name: Reaper Reckoner
+	Encyclopedia:
+		Category: Nod/Vehicles/Reckoner Variants
+	EncyclopediaExtras:
+		Description: Reckoner loaded with a Reaper. Fires Tiberium-infused rounds.
+	TooltipExtras:
+		Strengths: Strong vs Infantry
+		Attributes: Passenger: Reaper
+
+encyclopedia.reck.stlk:
+	Inherits: ^ReckonerVariantPreview
+	RenderSprites:
+		Image: reck
+		Palette: playerscrin
+	WithSpriteTurret:
+		Sequence: turret-stlk
+	Tooltip:
+		Name: Stalker Reckoner
+	Encyclopedia:
+		Category: Nod/Vehicles/Reckoner Variants
+	EncyclopediaExtras:
+		Description: Reckoner loaded with a Stalker. Fires plasma bolts.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, Light Vehicles
+		Attributes: Passenger: Stalker (Scrin)
+
+encyclopedia.reck.disin:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-disin
+	Tooltip:
+		Name: Disintegrator Reckoner
+	Encyclopedia:
+		Category: Nod/Vehicles/Reckoner Variants
+	EncyclopediaExtras:
+		Description: Reckoner loaded with a Disintegrator. Fires disintegration beams.
+	TooltipExtras:
+		Strengths: Strong vs Vehicles, Buildings
+		Attributes: Passenger: Disintegrator (Scrin)
+
 encyclopedia.buffs.anathema:
 	Inherits: ^VehicleEffectPreview
 	Tooltip:
