@@ -384,15 +384,15 @@ end
 
 SendNextExterminator = function()
 	if NextExterminatorIndex <= ExterminatorAttackCount[Difficulty] and not Victory then
-		local exterminator
+		local exterminatorLocations
 
 		if Exterminators[NextExterminatorIndex] ~= nil then
-			exterminator = Exterminators[NextExterminatorIndex]
+			exterminatorLocations = Exterminators[NextExterminatorIndex]
 		else
-			exterminator = { SpawnLocation = Utils.Random({ ExterminatorSpawnWest.Location, ExterminatorSpawnEast.Location }) }
+			exterminatorLocations = { SpawnLocation = Utils.Random({ ExterminatorSpawnWest.Location, ExterminatorSpawnEast.Location }) }
 		end
 
-		local wormhole = Actor.Create("wormholelg", true, { Owner = Scrin, Location = exterminator.SpawnLocation })
+		local wormhole = Actor.Create("wormholelg", true, { Owner = Scrin, Location = exterminatorLocations.SpawnLocation })
 
 		Trigger.AfterDelay(DateTime.Seconds(2), function()
 			MediaCA.PlaySound("etpd-aggro.aud", 2)
@@ -406,9 +406,9 @@ SendNextExterminator = function()
 				Notification("Exterminator Tripod detected.")
 			end
 
-			local reinforcements = Reinforcements.Reinforce(Scrin, { "etpd" }, { exterminator.SpawnLocation }, 10, function(a)
-				if exterminator.Path ~= nil then
-					local path = exterminator.Path
+			local exterminator = Reinforcements.Reinforce(Scrin, { "etpd" }, { exterminatorLocations.SpawnLocation }, 10, function(a)
+				if exterminatorLocations.Path ~= nil then
+					local path = exterminatorLocations.Path
 					a.Patrol(path)
 
 					Trigger.OnIdle(a, function(self)
@@ -433,7 +433,33 @@ SendNextExterminator = function()
 				Trigger.AfterDelay(DateTime.Seconds(10), function()
 					wormhole.Kill()
 				end)
-			end)
+			end)[1]
+
+			if IsVeryHardOrAbove() then
+				local startGuardCount
+				local maxGuardCount
+
+				if Difficulty == "brutal" then
+					startGuardCount = 4
+					maxGuardCount = 10
+				else
+					startGuardCount = 2
+					maxGuardCount = 8
+				end
+
+				local guardsList = {}
+
+				-- starting with startGuardCount, add a guard every 10 minutes
+				local numGuards = math.max(startGuardCount, math.min(maxGuardCount, startGuardCount + math.floor((DateTime.GameTime - DateTime.Minutes(10)) / DateTime.Minutes(10))))
+				for i = 1, numGuards do
+					table.insert(guardsList, "gunw")
+				end
+
+				local guards = Reinforcements.Reinforce(Scrin, guardsList, { exterminatorLocations.SpawnLocation }, 15, function(g)
+					FollowActor(g, exterminator)
+					IdleHunt(g)
+				end)
+			end
 
 			NextExterminatorIndex = NextExterminatorIndex + 1
 
