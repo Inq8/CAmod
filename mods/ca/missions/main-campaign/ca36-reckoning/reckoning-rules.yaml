@@ -119,6 +119,126 @@ hstk.upgrade:
 	Buildable:
 		Prerequisites: ~player.nod, tmpl
 
+# Enable GDI subfaction specific tech
+
+STWR:
+	Buildable:
+		Prerequisites: vehicles.any, ~structures.gdi
+
+TITN:
+	Buildable:
+		Prerequisites: gtek, ~!railgun.upgrade, ~vehicles.gdi
+
+TITN.RAIL:
+	Buildable:
+		Prerequisites: gtek, ~railgun.upgrade, ~vehicles.gdi
+
+JUGG:
+	Buildable:
+		Prerequisites: upgc, ~vehicles.gdi
+
+HSAM:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.gdi
+
+MDRN:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.gdi
+
+GDRN:
+	Buildable:
+		Prerequisites: ~vehicles.gdi, ~!tow.upgrade
+
+GDRN.TOW:
+	Buildable:
+		Prerequisites: ~vehicles.gdi, ~tow.upgrade
+
+WOLV:
+	Buildable:
+		Prerequisites: gtek, ~vehicles.gdi
+
+XO:
+	Buildable:
+		Prerequisites: gtek, ~vehicles.gdi
+
+PBUL:
+	Buildable:
+		Prerequisites: gtek, ~vehicles.gdi
+
+AURO:
+	Buildable:
+		Prerequisites: afld.gdi, gtek, ~aircraft.gdi
+
+gyro.upgrade:
+	Buildable:
+		Prerequisites: gtek, ~player.gdi
+
+abur.upgrade:
+	Buildable:
+		Prerequisites: gtek, ~player.gdi
+
+bdrone.upgrade:
+	Buildable:
+		Prerequisites: gtek, ~player.gdi
+
+railgun.upgrade:
+	Buildable:
+		Prerequisites: upgc, ~player.gdi
+
+ionmam.upgrade:
+	Buildable:
+		Prerequisites: upgc, !mdrone.upgrade, !hovermam.upgrade, ~player.gdi
+	TooltipExtras:
+		Attributes: \n(!) Only ONE Mammoth Tank upgrade can be chosen
+
+hovermam.upgrade:
+	Buildable:
+		Prerequisites: upgc, !ionmam.upgrade, !mdrone.upgrade, ~player.gdi
+	TooltipExtras:
+		Attributes: \n(!) Only ONE Mammoth Tank upgrade can be chosen
+
+mdrone.upgrade:
+	Buildable:
+		Prerequisites: upgc, !ionmam.upgrade, !hovermam.upgrade, ~player.gdi
+	TooltipExtras:
+		Attributes: \n(!) Only ONE Mammoth Tank upgrade can be chosen
+
+# Enable Scrin subfaction specific tech
+
+STCR:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.scrin
+
+LCHR:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.scrin
+
+RUIN:
+	Buildable:
+		Prerequisites: scrt, ~vehicles.scrin
+
+ATMZ:
+	Buildable:
+		Prerequisites: scrt, ~vehicles.scrin
+
+stellar.upgrade:
+	Buildable:
+		Prerequisites: scrt, ~player.scrin
+
+coalescence.upgrade:
+	Buildable:
+		Prerequisites: scrt, ~player.scrin
+
+RTPD:
+	Buildable:
+		Prerequisites: scrt, ~vehicles.scrin
+
+ENRV:
+	Buildable:
+		Prerequisites: scrt, ~aircraft.scrin
+
+# Misc
+
 NERV:
 	DetonateWeaponPower@BUZZERSWARMAI:
 		Prerequisites: nerv
