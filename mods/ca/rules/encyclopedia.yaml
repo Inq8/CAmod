@@ -883,7 +883,7 @@ encyclopedia.power.resourcescan:
 	TooltipExtras:
 		Attributes: Cooldown: 2:00\nRequires: Extractor
 
-# IFV Variant Template
+# IFV Variants
 ^IFVVariantPreview:
 	Inherits: ^EffectPreview
 	RenderSprites:
@@ -901,9 +901,9 @@ encyclopedia.ifv.missile:
 		Sequence: turret-rocket
 	Tooltip:
 		Name: Missile IFV
-	Encyclopedia:
-		Category: Allies/Vehicles/IFV Variants
 	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Allies
 		Description: IFV loaded with a Rocket Soldier. Fires anti-air/anti-armor missiles.
 	TooltipExtras:
 		Strengths: Strong vs Aircraft, Heavy Armor
@@ -916,9 +916,9 @@ encyclopedia.ifv.ggi:
 		Sequence: turret-ggi
 	Tooltip:
 		Name: GGI IFV
-	Encyclopedia:
-		Category: Allies/Vehicles/IFV Variants
 	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Allies
 		Description: IFV loaded with a Guardian GI. Fires powerful anti-armor rounds.
 	TooltipExtras:
 		Strengths: Strong vs Vehicles, Heavy Armor
@@ -931,9 +931,9 @@ encyclopedia.ifv.mg:
 		Sequence: turret-mg
 	Tooltip:
 		Name: Machine Gun IFV
-	Encyclopedia:
-		Category: Allies/Vehicles/IFV Variants
 	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Allies
 		Description: IFV loaded with a Rifle Infantry. Fires a rapid machine gun.
 	TooltipExtras:
 		Strengths: Strong vs Infantry, Light Vehicles
@@ -946,9 +946,9 @@ encyclopedia.ifv.grenade:
 		Sequence: turret-frag
 	Tooltip:
 		Name: Grenade IFV
-	Encyclopedia:
-		Category: Allies/Vehicles/IFV Variants
 	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Soviet
 		Description: IFV loaded with a Grenadier. Launches fragmentation grenades.
 	TooltipExtras:
 		Strengths: Strong vs Infantry, Buildings
@@ -961,9 +961,9 @@ encyclopedia.ifv.flame:
 		Sequence: turret-flame
 	Tooltip:
 		Name: Flamethrower IFV
-	Encyclopedia:
-		Category: Allies/Vehicles/IFV Variants
 	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Soviet
 		Description: IFV loaded with a Flamethrower. Projects devastating flames.
 	TooltipExtras:
 		Strengths: Strong vs Infantry, Buildings
@@ -976,9 +976,9 @@ encyclopedia.ifv.chem:
 		Sequence: turret-chem
 	Tooltip:
 		Name: Chemical IFV
-	Encyclopedia:
-		Category: Allies/Vehicles/IFV Variants
 	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Nod
 		Description: IFV loaded with a Toxin Soldier. Sprays toxic chemicals.
 	TooltipExtras:
 		Strengths: Strong vs Infantry
@@ -991,9 +991,9 @@ encyclopedia.ifv.laser:
 		Sequence: turret-laser
 	Tooltip:
 		Name: Laser IFV
-	Encyclopedia:
-		Category: Allies/Vehicles/IFV Variants
 	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Nod
 		Description: IFV loaded with an Acolyte. Fires a powerful laser beam.
 	TooltipExtras:
 		Strengths: Strong vs Infantry, Light Vehicles
@@ -1006,9 +1006,9 @@ encyclopedia.ifv.rad:
 		Sequence: turret-rad
 	Tooltip:
 		Name: Desolator IFV
-	Encyclopedia:
-		Category: Allies/Vehicles/IFV Variants
 	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Soviet
 		Description: IFV loaded with a Desolator. Sprays deadly radiation.
 	TooltipExtras:
 		Strengths: Strong vs Infantry, Vehicles
@@ -1021,14 +1021,29 @@ encyclopedia.ifv.cmdo:
 		Sequence: turret-cmdo
 	Tooltip:
 		Name: Commando IFV
-	Encyclopedia:
-		Category: Allies/Vehicles/IFV Variants
 	EncyclopediaExtras:
-		Description: IFV loaded with a Commando or SEAL. Fires a powerful sniper rifle.
+		VariantOf: IFV
+		VariantGroup: Allies
+		Description: IFV loaded with a Commando (Tanya/Boris). Fires powerful sniper bursts with high damage per shot.
 	TooltipExtras:
 		Strengths: Strong vs Infantry
 		Weaknesses: Weak vs Vehicles
-		Attributes: Passenger: Commando/SEAL
+		Attributes: Passenger: Tanya, Boris
+
+encyclopedia.ifv.seal:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-cmdo
+	Tooltip:
+		Name: SEAL IFV
+	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Allies
+		Description: IFV loaded with a Navy SEAL. Fires a rapid-fire MP5 submachine gun.
+	TooltipExtras:
+		Strengths: Strong vs Infantry
+		Weaknesses: Weak vs Vehicles
+		Attributes: Passenger: Navy SEAL
 
 encyclopedia.ifv.mech:
 	Inherits: ^IFVVariantPreview
@@ -1036,9 +1051,9 @@ encyclopedia.ifv.mech:
 		Sequence: turret-mech
 	Tooltip:
 		Name: Repair IFV
-	Encyclopedia:
-		Category: Allies/Vehicles/IFV Variants
 	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Utility
 		Description: IFV loaded with a Mechanic. Repairs nearby friendly vehicles.
 	TooltipExtras:
 		Strengths: Repairs vehicles
@@ -1050,9 +1065,9 @@ encyclopedia.ifv.snip:
 		Sequence: turret-snip
 	Tooltip:
 		Name: Sniper IFV
-	Encyclopedia:
-		Category: Allies/Vehicles/IFV Variants
 	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Allies
 		Description: IFV loaded with a Sniper. Fires long-range sniper rounds.
 	TooltipExtras:
 		Strengths: Strong vs Infantry
@@ -1065,9 +1080,9 @@ encyclopedia.ifv.enli:
 		Sequence: turret-enli
 	Tooltip:
 		Name: Enlightened IFV
-	Encyclopedia:
-		Category: Allies/Vehicles/IFV Variants
 	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Nod
 		Description: IFV loaded with an Enlightened. Fires a powerful laser.
 	TooltipExtras:
 		Strengths: Strong vs Infantry, Vehicles
@@ -1079,9 +1094,9 @@ encyclopedia.ifv.rmbc:
 		Sequence: turret-rmbc
 	Tooltip:
 		Name: Cyborg Elite IFV
-	Encyclopedia:
-		Category: Allies/Vehicles/IFV Variants
 	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Nod
 		Description: IFV loaded with a Cyborg Elite. Fires plasma bolts.
 	TooltipExtras:
 		Strengths: Strong vs Infantry, Vehicles
@@ -1093,9 +1108,9 @@ encyclopedia.ifv.bh:
 		Sequence: turret-bh
 	Tooltip:
 		Name: Black Hand IFV
-	Encyclopedia:
-		Category: Allies/Vehicles/IFV Variants
 	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Nod
 		Description: IFV loaded with a Black Hand. Projects devastating flames.
 	TooltipExtras:
 		Strengths: Strong vs Infantry, Buildings
@@ -1108,9 +1123,9 @@ encyclopedia.ifv.pdisc:
 		Sequence: turret-pdisc
 	Tooltip:
 		Name: Plasma Disc IFV
-	Encyclopedia:
-		Category: Allies/Vehicles/IFV Variants
 	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Scrin
 		Description: IFV loaded with a Disc Thrower. Fires plasma discs.
 	TooltipExtras:
 		Strengths: Strong vs Infantry, Light Vehicles
@@ -1122,28 +1137,13 @@ encyclopedia.ifv.shard:
 		Sequence: turret-shard
 	Tooltip:
 		Name: Shard IFV
-	Encyclopedia:
-		Category: Allies/Vehicles/IFV Variants
 	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Scrin
 		Description: IFV loaded with a Shard Trooper. Fires Tiberium shards.
 	TooltipExtras:
 		Strengths: Strong vs Infantry, Light Vehicles
 		Attributes: Passenger: Shard Trooper
-
-encyclopedia.ifv.mort:
-	Inherits: ^IFVVariantPreview
-	WithSpriteTurret:
-		Sequence: turret-mort
-	Tooltip:
-		Name: Mortar IFV
-	Encyclopedia:
-		Category: Allies/Vehicles/IFV Variants
-	EncyclopediaExtras:
-		Description: IFV loaded with a Mortar Infantry. Fires mortar rounds.
-	TooltipExtras:
-		Strengths: Strong vs Infantry, Buildings
-		Weaknesses: Slow rate of fire
-		Attributes: Passenger: Mortar Infantry
 
 encyclopedia.ifv.cryo:
 	Inherits: ^IFVVariantPreview
@@ -1151,9 +1151,9 @@ encyclopedia.ifv.cryo:
 		Sequence: turret-cryo
 	Tooltip:
 		Name: Cryo IFV
-	Encyclopedia:
-		Category: Allies/Vehicles/IFV Variants
 	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Allies
 		Description: IFV loaded with a Cryo Legionnaire. Fires freezing blasts.
 	TooltipExtras:
 		Strengths: Slows and freezes enemies
@@ -1165,9 +1165,9 @@ encyclopedia.ifv.enfo:
 		Sequence: turret-enfo
 	Tooltip:
 		Name: Enforcer IFV
-	Encyclopedia:
-		Category: Allies/Vehicles/IFV Variants
 	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Soviet
 		Description: IFV loaded with an Enforcer. Fires shotgun blasts.
 	TooltipExtras:
 		Strengths: Strong vs Infantry at close range
@@ -1179,9 +1179,9 @@ encyclopedia.ifv.engi:
 		Sequence: turret-engi
 	Tooltip:
 		Name: Engineer IFV
-	Encyclopedia:
-		Category: Allies/Vehicles/IFV Variants
 	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Utility
 		Description: IFV loaded with an Engineer. Can capture enemy structures.
 	TooltipExtras:
 		Strengths: Captures structures
@@ -1193,9 +1193,9 @@ encyclopedia.ifv.ztrp:
 		Sequence: turret-ztrp
 	Tooltip:
 		Name: Zone Trooper IFV
-	Encyclopedia:
-		Category: Allies/Vehicles/IFV Variants
 	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: GDI
 		Description: IFV loaded with a Zone Trooper. Fires powerful railgun shots.
 	TooltipExtras:
 		Strengths: Strong vs Vehicles, Heavy Armor
@@ -1207,9 +1207,9 @@ encyclopedia.ifv.zdef:
 		Sequence: turret-zdef
 	Tooltip:
 		Name: Zone Defender IFV
-	Encyclopedia:
-		Category: Allies/Vehicles/IFV Variants
 	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: GDI
 		Description: IFV loaded with a Zone Defender. Fires anti-air missiles.
 	TooltipExtras:
 		Strengths: Strong vs Aircraft
@@ -1221,9 +1221,9 @@ encyclopedia.ifv.zrai:
 		Sequence: turret-zrai
 	Tooltip:
 		Name: Zone Raider IFV
-	Encyclopedia:
-		Category: Allies/Vehicles/IFV Variants
 	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: GDI
 		Description: IFV loaded with a Zone Raider. Fires sonic blasts.
 	TooltipExtras:
 		Strengths: Strong vs Infantry, Structures
@@ -1235,9 +1235,9 @@ encyclopedia.ifv.tigr:
 		Sequence: turret-tigr
 	Tooltip:
 		Name: Tiger Guard IFV
-	Encyclopedia:
-		Category: Allies/Vehicles/IFV Variants
 	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Soviet
 		Description: IFV loaded with a Tiger Guard. Fires dual machine guns.
 	TooltipExtras:
 		Strengths: Strong vs Infantry
@@ -1249,9 +1249,9 @@ encyclopedia.ifv.hopl:
 		Sequence: turret-hopl
 	Tooltip:
 		Name: Hoplite IFV
-	Encyclopedia:
-		Category: Allies/Vehicles/IFV Variants
 	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: GDI
 		Description: IFV loaded with a Hoplite. Fires EMP rounds.
 	TooltipExtras:
 		Strengths: Disables vehicles
@@ -1263,9 +1263,9 @@ encyclopedia.ifv.impl:
 		Sequence: turret-impl
 	Tooltip:
 		Name: Impaler IFV
-	Encyclopedia:
-		Category: Allies/Vehicles/IFV Variants
 	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Scrin
 		Description: IFV loaded with an Impaler. Fires spikes.
 	TooltipExtras:
 		Strengths: Strong vs Infantry
@@ -1280,9 +1280,9 @@ encyclopedia.ifv.stlk:
 		Sequence: turret-stlk
 	Tooltip:
 		Name: Stalker IFV
-	Encyclopedia:
-		Category: Allies/Vehicles/IFV Variants
 	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Scrin
 		Description: IFV loaded with a Stalker. Fires plasma bolts.
 	TooltipExtras:
 		Strengths: Strong vs Infantry, Light Vehicles
@@ -1294,9 +1294,9 @@ encyclopedia.ifv.disin:
 		Sequence: turret-disin
 	Tooltip:
 		Name: Disintegrator IFV
-	Encyclopedia:
-		Category: Allies/Vehicles/IFV Variants
 	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Scrin
 		Description: IFV loaded with a Disintegrator. Fires disintegration beams.
 	TooltipExtras:
 		Strengths: Strong vs Vehicles, Buildings
@@ -1308,9 +1308,9 @@ encyclopedia.ifv.conf:
 		Sequence: turret-conf
 	Tooltip:
 		Name: Confessor IFV
-	Encyclopedia:
-		Category: Allies/Vehicles/IFV Variants
 	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Nod
 		Description: IFV loaded with a Confessor. Fires hallucinogenic rounds.
 	TooltipExtras:
 		Strengths: Strong vs Infantry
@@ -1322,15 +1322,166 @@ encyclopedia.ifv.reap:
 		Sequence: turret-reap
 	Tooltip:
 		Name: Reaper IFV
-	Encyclopedia:
-		Category: Allies/Vehicles/IFV Variants
 	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Nod
 		Description: IFV loaded with a Reaper. Fires Tiberium-infused rounds.
 	TooltipExtras:
 		Strengths: Strong vs Infantry
 		Attributes: Passenger: Reaper (Nod)
 
-# Reckoner Variant Template
+encyclopedia.ifv.med:
+	Inherits: ^IFVVariantPreview
+	Tooltip:
+		Name: Medical IFV
+	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Utility
+		Description: IFV loaded with a Medic. Heals nearby friendly infantry.
+	TooltipExtras:
+		Strengths: Heals infantry
+		Weaknesses: Unarmed
+		Attributes: Passenger: Medic
+
+encyclopedia.ifv.ivan:
+	Inherits: ^IFVVariantPreview
+	Tooltip:
+		Name: Explosive IFV
+	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Soviet
+		Description: IFV loaded with a Crazy Ivan. Self-destructs on contact with the target, dealing massive damage.
+	TooltipExtras:
+		Strengths: Strong vs Everything
+		Weaknesses: Self-destructs on attack
+		Attributes: Passenger: Crazy Ivan
+
+encyclopedia.ifv.spy:
+	Inherits: ^IFVVariantPreview
+	Tooltip:
+		Name: Spy IFV
+	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Allies
+		Description: IFV loaded with a Spy. Can infiltrate enemy structures and detects cloaked units.
+	TooltipExtras:
+		Strengths: Infiltrates structures, detects cloaked
+		Weaknesses: Cannot deal damage
+		Attributes: Passenger: Spy
+
+encyclopedia.ifv.tes:
+	Inherits: ^IFVVariantPreview
+	Tooltip:
+		Name: Tesla IFV
+	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Soviet
+		Description: IFV loaded with a Shock Trooper or Tesla Trooper. Fires a powerful tesla bolt.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, Vehicles
+		Weaknesses: Cannot attack Aircraft
+		Attributes: Passenger: Shock Trooper, Tesla Trooper
+
+encyclopedia.ifv.psy:
+	Inherits: ^IFVVariantPreview
+	Tooltip:
+		Name: Psychic IFV
+	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Special
+		Description: IFV loaded with a Yuri Prime (Yuri) or Mastermind (Scrin). Can mind control enemy units. Control is lost if passenger exits.
+	TooltipExtras:
+		Strengths: Mind controls enemies
+		Weaknesses: Cannot deal damage, control lost on exit
+		Attributes: Passenger: Yuri Prime (Yuri), Mastermind (Scrin)
+
+encyclopedia.ifv.cmsr:
+	Inherits: ^IFVVariantPreview
+	Tooltip:
+		Name: Commissar IFV
+	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Soviet
+		Description: IFV loaded with a Commissar. Inspires nearby friendly units, boosting their combat effectiveness.
+	TooltipExtras:
+		Strengths: Inspires nearby allies
+		Weaknesses: Unarmed
+		Attributes: Passenger: Commissar
+
+encyclopedia.ifv.shad:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-cmdo
+	Tooltip:
+		Name: Shadow IFV
+	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Nod
+		Description: IFV loaded with a Shadow. Fires a sniper rifle effective against infantry.
+	TooltipExtras:
+		Strengths: Strong vs Infantry
+		Weaknesses: Weak vs Vehicles
+		Attributes: Passenger: Shadow
+
+encyclopedia.ifv.hack:
+	Inherits: ^IFVVariantPreview
+	Tooltip:
+		Name: Hacker IFV
+	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Nod
+		Description: IFV loaded with a Hacker. Can mind control enemy defenses and buildings. Control is lost if passenger exits.
+	TooltipExtras:
+		Strengths: Strong vs Defenses, Buildings
+		Weaknesses: Cannot deal direct damage, control lost on exit
+		Attributes: Passenger: Hacker
+
+encyclopedia.ifv.mortchem:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-mort
+	Tooltip:
+		Name: Chemical Mortar IFV
+	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Nod
+		Description: IFV loaded with a Chemical Mortar Infantry. Fires chemical mortar rounds that leave toxic residue.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, area denial
+		Weaknesses: Minimum range
+		Attributes: Passenger: Chemical Mortar
+
+encyclopedia.ifv.mortcryo:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-mort
+	Tooltip:
+		Name: Cryo Mortar IFV
+	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: Allies
+		Description: IFV loaded with a Cryo Mortar Infantry. Fires cryo mortar rounds that slow and freeze enemies.
+	TooltipExtras:
+		Strengths: Slows and freezes enemies
+		Weaknesses: Minimum range
+		Attributes: Passenger: Cryo Mortar
+
+encyclopedia.ifv.mortsonic:
+	Inherits: ^IFVVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-mort
+	Tooltip:
+		Name: Sonic Mortar IFV
+	EncyclopediaExtras:
+		VariantOf: IFV
+		VariantGroup: GDI
+		Description: IFV loaded with a Sonic Mortar Infantry. Fires sonic mortar rounds that deal splash damage.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, Buildings
+		Weaknesses: Minimum range
+		Attributes: Passenger: Sonic Mortar
+
+# Reckoner Variants
 ^ReckonerVariantPreview:
 	Inherits: ^EffectPreview
 	RenderSprites:
@@ -1348,9 +1499,9 @@ encyclopedia.reck.missile:
 		Sequence: turret-rocket
 	Tooltip:
 		Name: Missile Reckoner
-	Encyclopedia:
-		Category: Nod/Vehicles/Reckoner Variants
 	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Allies
 		Description: Reckoner loaded with a Rocket Soldier. Fires anti-air/anti-armor missiles.
 	TooltipExtras:
 		Strengths: Strong vs Aircraft, Heavy Armor
@@ -1363,9 +1514,9 @@ encyclopedia.reck.mg:
 		Sequence: turret-mg
 	Tooltip:
 		Name: Machine Gun Reckoner
-	Encyclopedia:
-		Category: Nod/Vehicles/Reckoner Variants
 	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Allies
 		Description: Reckoner loaded with a Rifle Infantry. Fires a rapid machine gun.
 	TooltipExtras:
 		Strengths: Strong vs Infantry, Light Vehicles
@@ -1378,9 +1529,9 @@ encyclopedia.reck.grenade:
 		Sequence: turret-frag
 	Tooltip:
 		Name: Grenade Reckoner
-	Encyclopedia:
-		Category: Nod/Vehicles/Reckoner Variants
 	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Soviet
 		Description: Reckoner loaded with a Grenadier. Launches fragmentation grenades.
 	TooltipExtras:
 		Strengths: Strong vs Infantry, Buildings
@@ -1393,9 +1544,9 @@ encyclopedia.reck.flame:
 		Sequence: turret-flame
 	Tooltip:
 		Name: Flamethrower Reckoner
-	Encyclopedia:
-		Category: Nod/Vehicles/Reckoner Variants
 	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Soviet
 		Description: Reckoner loaded with a Flamethrower. Projects devastating flames.
 	TooltipExtras:
 		Strengths: Strong vs Infantry, Buildings
@@ -1408,9 +1559,9 @@ encyclopedia.reck.chem:
 		Sequence: turret-chem
 	Tooltip:
 		Name: Chemical Reckoner
-	Encyclopedia:
-		Category: Nod/Vehicles/Reckoner Variants
 	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Nod
 		Description: Reckoner loaded with a Toxin Soldier. Sprays toxic chemicals.
 	TooltipExtras:
 		Strengths: Strong vs Infantry
@@ -1423,9 +1574,9 @@ encyclopedia.reck.laser:
 		Sequence: turret-laser
 	Tooltip:
 		Name: Laser Reckoner
-	Encyclopedia:
-		Category: Nod/Vehicles/Reckoner Variants
 	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Nod
 		Description: Reckoner loaded with an Acolyte. Fires a powerful laser beam.
 	TooltipExtras:
 		Strengths: Strong vs Infantry, Light Vehicles
@@ -1438,9 +1589,9 @@ encyclopedia.reck.rad:
 		Sequence: turret-rad
 	Tooltip:
 		Name: Desolator Reckoner
-	Encyclopedia:
-		Category: Nod/Vehicles/Reckoner Variants
 	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Soviet
 		Description: Reckoner loaded with a Desolator. Sprays deadly radiation.
 	TooltipExtras:
 		Strengths: Strong vs Infantry, Vehicles
@@ -1453,14 +1604,29 @@ encyclopedia.reck.cmdo:
 		Sequence: turret-cmdo
 	Tooltip:
 		Name: Commando Reckoner
-	Encyclopedia:
-		Category: Nod/Vehicles/Reckoner Variants
 	EncyclopediaExtras:
-		Description: Reckoner loaded with a Commando. Fires a powerful sniper rifle.
+		VariantOf: RECK
+		VariantGroup: Allies
+		Description: Reckoner loaded with a Commando (Tanya/Boris). Fires powerful sniper bursts with high damage per shot.
 	TooltipExtras:
 		Strengths: Strong vs Infantry
 		Weaknesses: Weak vs Vehicles
-		Attributes: Passenger: Commando
+		Attributes: Passenger: Tanya, Boris
+
+encyclopedia.reck.seal:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-cmdo
+	Tooltip:
+		Name: SEAL Reckoner
+	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Allies
+		Description: Reckoner loaded with a Navy SEAL. Fires a rapid-fire MP5 submachine gun.
+	TooltipExtras:
+		Strengths: Strong vs Infantry
+		Weaknesses: Weak vs Vehicles
+		Attributes: Passenger: Navy SEAL
 
 encyclopedia.reck.mech:
 	Inherits: ^ReckonerVariantPreview
@@ -1468,9 +1634,9 @@ encyclopedia.reck.mech:
 		Sequence: turret-mech
 	Tooltip:
 		Name: Repair Reckoner
-	Encyclopedia:
-		Category: Nod/Vehicles/Reckoner Variants
 	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Utility
 		Description: Reckoner loaded with a Mechanic. Repairs nearby friendly vehicles.
 	TooltipExtras:
 		Strengths: Repairs vehicles
@@ -1482,9 +1648,9 @@ encyclopedia.reck.snip:
 		Sequence: turret-snip
 	Tooltip:
 		Name: Sniper Reckoner
-	Encyclopedia:
-		Category: Nod/Vehicles/Reckoner Variants
 	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Allies
 		Description: Reckoner loaded with a Sniper. Fires long-range sniper rounds.
 	TooltipExtras:
 		Strengths: Strong vs Infantry
@@ -1497,9 +1663,9 @@ encyclopedia.reck.enli:
 		Sequence: turret-enli
 	Tooltip:
 		Name: Enlightened Reckoner
-	Encyclopedia:
-		Category: Nod/Vehicles/Reckoner Variants
 	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Nod
 		Description: Reckoner loaded with an Enlightened. Fires a powerful laser.
 	TooltipExtras:
 		Strengths: Strong vs Infantry, Vehicles
@@ -1511,9 +1677,9 @@ encyclopedia.reck.rmbc:
 		Sequence: turret-rmbc
 	Tooltip:
 		Name: Cyborg Elite Reckoner
-	Encyclopedia:
-		Category: Nod/Vehicles/Reckoner Variants
 	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Nod
 		Description: Reckoner loaded with a Cyborg Elite. Fires plasma bolts.
 	TooltipExtras:
 		Strengths: Strong vs Infantry, Vehicles
@@ -1525,9 +1691,9 @@ encyclopedia.reck.bh:
 		Sequence: turret-bh
 	Tooltip:
 		Name: Black Hand Reckoner
-	Encyclopedia:
-		Category: Nod/Vehicles/Reckoner Variants
 	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Nod
 		Description: Reckoner loaded with a Black Hand. Projects devastating flames.
 	TooltipExtras:
 		Strengths: Strong vs Infantry, Buildings
@@ -1540,9 +1706,9 @@ encyclopedia.reck.pdisc:
 		Sequence: turret-pdisc
 	Tooltip:
 		Name: Plasma Disc Reckoner
-	Encyclopedia:
-		Category: Nod/Vehicles/Reckoner Variants
 	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Scrin
 		Description: Reckoner loaded with a Disc Thrower. Fires plasma discs.
 	TooltipExtras:
 		Strengths: Strong vs Infantry, Light Vehicles
@@ -1554,42 +1720,13 @@ encyclopedia.reck.shard:
 		Sequence: turret-shard
 	Tooltip:
 		Name: Shard Reckoner
-	Encyclopedia:
-		Category: Nod/Vehicles/Reckoner Variants
 	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Scrin
 		Description: Reckoner loaded with a Shard Trooper. Fires Tiberium shards.
 	TooltipExtras:
 		Strengths: Strong vs Infantry, Light Vehicles
 		Attributes: Passenger: Shard Trooper
-
-encyclopedia.reck.mort:
-	Inherits: ^ReckonerVariantPreview
-	WithSpriteTurret:
-		Sequence: turret-mort
-	Tooltip:
-		Name: Mortar Reckoner
-	Encyclopedia:
-		Category: Nod/Vehicles/Reckoner Variants
-	EncyclopediaExtras:
-		Description: Reckoner loaded with a Mortar Infantry. Fires mortar rounds.
-	TooltipExtras:
-		Strengths: Strong vs Infantry, Buildings
-		Weaknesses: Slow rate of fire
-		Attributes: Passenger: Mortar Infantry
-
-encyclopedia.reck.cryo:
-	Inherits: ^ReckonerVariantPreview
-	WithSpriteTurret:
-		Sequence: turret-cryo
-	Tooltip:
-		Name: Cryo Reckoner
-	Encyclopedia:
-		Category: Nod/Vehicles/Reckoner Variants
-	EncyclopediaExtras:
-		Description: Reckoner loaded with a Cryo Legionnaire. Fires freezing blasts.
-	TooltipExtras:
-		Strengths: Slows and freezes enemies
-		Attributes: Passenger: Cryo Legionnaire
 
 encyclopedia.reck.enfo:
 	Inherits: ^ReckonerVariantPreview
@@ -1597,9 +1734,9 @@ encyclopedia.reck.enfo:
 		Sequence: turret-enfo
 	Tooltip:
 		Name: Enforcer Reckoner
-	Encyclopedia:
-		Category: Nod/Vehicles/Reckoner Variants
 	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Soviet
 		Description: Reckoner loaded with an Enforcer. Fires shotgun blasts.
 	TooltipExtras:
 		Strengths: Strong vs Infantry at close range
@@ -1611,9 +1748,9 @@ encyclopedia.reck.engi:
 		Sequence: turret-engi
 	Tooltip:
 		Name: Engineer Reckoner
-	Encyclopedia:
-		Category: Nod/Vehicles/Reckoner Variants
 	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Utility
 		Description: Reckoner loaded with an Engineer. Can capture enemy structures.
 	TooltipExtras:
 		Strengths: Captures structures
@@ -1625,9 +1762,9 @@ encyclopedia.reck.conf:
 		Sequence: turret-conf
 	Tooltip:
 		Name: Confessor Reckoner
-	Encyclopedia:
-		Category: Nod/Vehicles/Reckoner Variants
 	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Nod
 		Description: Reckoner loaded with a Confessor. Fires hallucinogenic rounds.
 	TooltipExtras:
 		Strengths: Strong vs Infantry
@@ -1639,9 +1776,9 @@ encyclopedia.reck.reap:
 		Sequence: turret-reap
 	Tooltip:
 		Name: Reaper Reckoner
-	Encyclopedia:
-		Category: Nod/Vehicles/Reckoner Variants
 	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Nod
 		Description: Reckoner loaded with a Reaper. Fires Tiberium-infused rounds.
 	TooltipExtras:
 		Strengths: Strong vs Infantry
@@ -1656,9 +1793,9 @@ encyclopedia.reck.stlk:
 		Sequence: turret-stlk
 	Tooltip:
 		Name: Stalker Reckoner
-	Encyclopedia:
-		Category: Nod/Vehicles/Reckoner Variants
 	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Scrin
 		Description: Reckoner loaded with a Stalker. Fires plasma bolts.
 	TooltipExtras:
 		Strengths: Strong vs Infantry, Light Vehicles
@@ -1670,13 +1807,369 @@ encyclopedia.reck.disin:
 		Sequence: turret-disin
 	Tooltip:
 		Name: Disintegrator Reckoner
-	Encyclopedia:
-		Category: Nod/Vehicles/Reckoner Variants
 	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Scrin
 		Description: Reckoner loaded with a Disintegrator. Fires disintegration beams.
 	TooltipExtras:
 		Strengths: Strong vs Vehicles, Buildings
 		Attributes: Passenger: Disintegrator (Scrin)
+
+encyclopedia.reck.med:
+	Inherits: ^ReckonerVariantPreview
+	Tooltip:
+		Name: Medical Reckoner
+	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Utility
+		Description: Reckoner loaded with a Medic. Heals nearby friendly infantry.
+	TooltipExtras:
+		Strengths: Heals infantry
+		Weaknesses: Unarmed
+		Attributes: Passenger: Medic
+
+encyclopedia.reck.ivan:
+	Inherits: ^ReckonerVariantPreview
+	Tooltip:
+		Name: Explosive Reckoner
+	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Soviet
+		Description: Reckoner loaded with a Crazy Ivan. Self-destructs on contact with the target, dealing massive damage.
+	TooltipExtras:
+		Strengths: Strong vs Everything
+		Weaknesses: Self-destructs on attack
+		Attributes: Passenger: Crazy Ivan
+
+encyclopedia.reck.spy:
+	Inherits: ^ReckonerVariantPreview
+	Tooltip:
+		Name: Spy Reckoner
+	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Allies
+		Description: Reckoner loaded with a Spy. Can infiltrate enemy structures and detects cloaked units.
+	TooltipExtras:
+		Strengths: Infiltrates structures, detects cloaked
+		Weaknesses: Cannot deal damage
+		Attributes: Passenger: Spy
+
+encyclopedia.reck.tes:
+	Inherits: ^ReckonerVariantPreview
+	Tooltip:
+		Name: Tesla Reckoner
+	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Soviet
+		Description: Reckoner loaded with a Shock Trooper or Tesla Trooper. Fires a powerful tesla bolt.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, Vehicles
+		Weaknesses: Cannot attack Aircraft
+		Attributes: Passenger: Shock Trooper, Tesla Trooper
+
+encyclopedia.reck.psy:
+	Inherits: ^ReckonerVariantPreview
+	Tooltip:
+		Name: Psychic Reckoner
+	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Special
+		Description: Reckoner loaded with a Yuri Prime (Yuri) or Mastermind (Scrin). Can mind control enemy units. Control is lost if passenger exits.
+	TooltipExtras:
+		Strengths: Mind controls enemies
+		Weaknesses: Cannot deal damage, control lost on exit
+		Attributes: Passenger: Yuri Prime (Yuri), Mastermind (Scrin)
+
+encyclopedia.reck.cmsr:
+	Inherits: ^ReckonerVariantPreview
+	Tooltip:
+		Name: Commissar Reckoner
+	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Soviet
+		Description: Reckoner loaded with a Commissar. Inspires nearby friendly units, boosting their combat effectiveness.
+	TooltipExtras:
+		Strengths: Inspires nearby allies
+		Weaknesses: Unarmed
+		Attributes: Passenger: Commissar
+
+encyclopedia.reck.shad:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-cmdo
+	Tooltip:
+		Name: Shadow Reckoner
+	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Nod
+		Description: Reckoner loaded with a Shadow. Fires a sniper rifle effective against infantry.
+	TooltipExtras:
+		Strengths: Strong vs Infantry
+		Weaknesses: Weak vs Vehicles
+		Attributes: Passenger: Shadow
+
+encyclopedia.reck.hack:
+	Inherits: ^ReckonerVariantPreview
+	Tooltip:
+		Name: Hacker Reckoner
+	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Nod
+		Description: Reckoner loaded with a Hacker. Can mind control enemy defenses and buildings. Control is lost if passenger exits.
+	TooltipExtras:
+		Strengths: Strong vs Defenses, Buildings
+		Weaknesses: Cannot deal direct damage, control lost on exit
+		Attributes: Passenger: Hacker
+
+encyclopedia.reck.mortchem:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-mort
+	Tooltip:
+		Name: Chemical Mortar Reckoner
+	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Nod
+		Description: Reckoner loaded with a Chemical Mortar Infantry. Fires chemical mortar rounds that leave toxic residue.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, area denial
+		Weaknesses: Minimum range
+		Attributes: Passenger: Chemical Mortar
+
+encyclopedia.reck.mortcryo:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-mort
+	Tooltip:
+		Name: Cryo Mortar Reckoner
+	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Allies
+		Description: Reckoner loaded with a Cryo Mortar Infantry. Fires cryo mortar rounds that slow and freeze enemies.
+	TooltipExtras:
+		Strengths: Slows and freezes enemies
+		Weaknesses: Minimum range
+		Attributes: Passenger: Cryo Mortar
+
+encyclopedia.reck.mortsonic:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-mort
+	Tooltip:
+		Name: Sonic Mortar Reckoner
+	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: GDI
+		Description: Reckoner loaded with a Sonic Mortar Infantry. Fires sonic mortar rounds that deal splash damage.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, Buildings
+		Weaknesses: Minimum range
+		Attributes: Passenger: Sonic Mortar
+
+encyclopedia.reck.ggi:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-ggi
+	Tooltip:
+		Name: GGI Reckoner
+	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Allies
+		Description: Reckoner loaded with a Guardian GI. Fires powerful anti-armor rounds.
+	TooltipExtras:
+		Strengths: Strong vs Vehicles, Heavy Armor
+		Weaknesses: Weak vs Infantry
+		Attributes: Passenger: Guardian GI
+
+encyclopedia.reck.ztrp:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-ztrp
+	Tooltip:
+		Name: Zone Trooper Reckoner
+	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: GDI
+		Description: Reckoner loaded with a Zone Trooper. Fires powerful railgun shots.
+	TooltipExtras:
+		Strengths: Strong vs Vehicles, Heavy Armor
+		Attributes: Passenger: Zone Trooper
+
+encyclopedia.reck.zdef:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-zdef
+	Tooltip:
+		Name: Zone Defender Reckoner
+	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: GDI
+		Description: Reckoner loaded with a Zone Defender. Fires anti-air missiles.
+	TooltipExtras:
+		Strengths: Strong vs Aircraft
+		Attributes: Passenger: Zone Defender
+
+encyclopedia.reck.zrai:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-zrai
+	Tooltip:
+		Name: Zone Raider Reckoner
+	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: GDI
+		Description: Reckoner loaded with a Zone Raider. Fires sonic blasts.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, Structures
+		Attributes: Passenger: Zone Raider
+
+encyclopedia.reck.tigr:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-tigr
+	Tooltip:
+		Name: Tiger Guard Reckoner
+	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Soviet
+		Description: Reckoner loaded with a Tiger Guard. Fires dual machine guns.
+	TooltipExtras:
+		Strengths: Strong vs Infantry
+		Attributes: Passenger: Tiger Guard
+
+encyclopedia.reck.hopl:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-hopl
+	Tooltip:
+		Name: Hoplite Reckoner
+	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: GDI
+		Description: Reckoner loaded with a Hoplite. Fires EMP rounds.
+	TooltipExtras:
+		Strengths: Disables vehicles
+		Attributes: Passenger: Hoplite
+
+encyclopedia.reck.impl:
+	Inherits: ^ReckonerVariantPreview
+	WithSpriteTurret:
+		Sequence: turret-impl
+	Tooltip:
+		Name: Impaler Reckoner
+	EncyclopediaExtras:
+		VariantOf: RECK
+		VariantGroup: Scrin
+		Description: Reckoner loaded with an Impaler. Fires spikes.
+	TooltipExtras:
+		Strengths: Strong vs Infantry
+		Attributes: Passenger: Impaler
+
+# Battle Fortress Variants
+^BattleFortressVariantPreview:
+	Inherits: ^EffectPreview
+	RenderSprites:
+		Image: batf
+	WithFacingSpriteBody:
+	Encyclopedia:
+		Scale: 1.5
+
+encyclopedia.batf.spy:
+	Inherits: ^BattleFortressVariantPreview
+	Tooltip:
+		Name: Spy Battle Fortress
+	EncyclopediaExtras:
+		VariantOf: BATF
+		VariantGroup: Utility
+		Description: Battle Fortress loaded with Spies, Thieves, or Saboteurs. Gains the ability to detect cloaked and disguised units within a 6 cell radius.
+	TooltipExtras:
+		Strengths: Detects cloaked/disguised units
+		Attributes: Passengers: Spy, Thief, Saboteur
+
+encyclopedia.batf.medic:
+	Inherits: ^BattleFortressVariantPreview
+	Tooltip:
+		Name: Medic Battle Fortress
+	EncyclopediaExtras:
+		VariantOf: BATF
+		VariantGroup: Utility
+		Description: Battle Fortress loaded with Medics. Provides a healing aura that restores health to nearby allied infantry.
+	TooltipExtras:
+		Strengths: Heals nearby infantry
+		Attributes: Passengers: Medic, Soviet Medic
+
+encyclopedia.batf.repair:
+	Inherits: ^BattleFortressVariantPreview
+	Tooltip:
+		Name: Repair Battle Fortress
+	EncyclopediaExtras:
+		VariantOf: BATF
+		VariantGroup: Utility
+		Description: Battle Fortress loaded with Engineers or Mechanics. Slowly repairs itself when damaged.
+	TooltipExtras:
+		Strengths: Self-repairs when damaged
+		Attributes: Passengers: Engineer, Mechanic, Artificer
+
+encyclopedia.batf.aa:
+	Inherits: ^BattleFortressVariantPreview
+	Tooltip:
+		Name: Anti-Air Battle Fortress
+	EncyclopediaExtras:
+		VariantOf: BATF
+		VariantGroup: Combat
+		Description: Battle Fortress loaded with GGI or Rocket Soldiers. Gains the ability to attack aircraft using their anti-air missiles.
+	TooltipExtras:
+		Strengths: Can attack Aircraft
+		Attributes: Passengers: GGI, Rocket Soldier, Flak Trooper
+
+encyclopedia.batf.flame:
+	Inherits: ^BattleFortressVariantPreview
+	Tooltip:
+		Name: Flame Battle Fortress
+	EncyclopediaExtras:
+		VariantOf: BATF
+		VariantGroup: Combat
+		Description: Battle Fortress loaded with Black Hand troopers. Infantry fire their flamethrowers from the ports, devastating infantry and light vehicles.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, Light Vehicles, Buildings
+		Attributes: Passengers: Black Hand
+
+encyclopedia.batf.cryo:
+	Inherits: ^BattleFortressVariantPreview
+	Tooltip:
+		Name: Cryo Battle Fortress
+	EncyclopediaExtras:
+		VariantOf: BATF
+		VariantGroup: Combat
+		Description: Battle Fortress loaded with Cryo Troopers. Infantry fire their freeze rays from the ports, slowing and freezing enemies.
+	TooltipExtras:
+		Strengths: Slows and freezes enemies
+		Attributes: Passengers: Cryo Trooper
+
+encyclopedia.batf.cmdo:
+	Inherits: ^BattleFortressVariantPreview
+	Tooltip:
+		Name: Commando Battle Fortress
+	EncyclopediaExtras:
+		VariantOf: BATF
+		VariantGroup: Special
+		Description: Battle Fortress loaded with Commandos (Tanya, Boris, Commando, Yuri Prime, or Mastermind). Becomes immune to mind control.
+	TooltipExtras:
+		Strengths: Immune to mind control
+		Attributes: Passengers: Tanya, Boris, Commando, Yuri Prime, Mastermind
+
+encyclopedia.batf.seal:
+	Inherits: ^BattleFortressVariantPreview
+	Tooltip:
+		Name: SEAL Battle Fortress
+	EncyclopediaExtras:
+		VariantOf: BATF
+		VariantGroup: Combat
+		Description: Battle Fortress loaded with Navy SEALs. SEALs fire their weapons from the ports, but unlike Commandos, do not provide mind control immunity.
+	TooltipExtras:
+		Strengths: Strong vs Infantry
+		Weaknesses: No mind control immunity
+		Attributes: Passengers: Navy SEAL
 
 encyclopedia.buffs.anathema:
 	Inherits: ^VehicleEffectPreview

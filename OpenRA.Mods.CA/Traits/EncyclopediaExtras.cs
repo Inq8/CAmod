@@ -31,6 +31,12 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("If no Buildable Description exists, this will be shown instead.")]
 		public readonly string Description = "";
 
+		[Desc("Actor name this entry is a variant of (e.g., 'IFV'). Hides entry from main list.")]
+		public readonly string VariantOf = null;
+
+		[Desc("Group name for variant dropdown (e.g., 'Allies Infantry').")]
+		public readonly string VariantGroup = null;
+
 		public override object Create(ActorInitializer init) { return new EncyclopediaExtras(init, this); }
 	}
 
