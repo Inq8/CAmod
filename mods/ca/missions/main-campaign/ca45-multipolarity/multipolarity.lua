@@ -407,7 +407,7 @@ FlipAlliedBase = function()
 end
 
 FlipNodBase = function()
-	if NodBaseFlipped or SovietBaseFlipped then
+	if NodBaseFlipped or SovietBaseFlipped or HawthorneClaimedNodBase then
 		return
 	end
 
@@ -433,7 +433,7 @@ FlipNodBase = function()
 end
 
 FlipSovietBase = function()
-	if SovietBaseFlipped or NodBaseFlipped then
+	if SovietBaseFlipped or NodBaseFlipped or HawthorneClaimedSovietBase then
 		return
 	end
 
@@ -459,12 +459,16 @@ FlipSovietBase = function()
 end
 
 HawthorneClaimRandomBase = function()
-	if HawthorneClaimedSovietBase and HawthorneClaimedNodBase then
+	-- no bases left to claim
+	if (HawthorneClaimedSovietBase or SovietBaseFlipped) and (HawthorneClaimedNodBase or NodBaseFlipped) then
 		return
-	elseif HawthorneClaimedSovietBase then
+	-- soviet base claimed, claim nod base
+	elseif HawthorneClaimedSovietBase or SovietBaseFlipped then
 		HawthorneClaimNodBase()
-	elseif HawthorneClaimedNodBase then
+	-- nod base claimed, claim soviet base
+	elseif HawthorneClaimedNodBase or NodBaseFlipped then
 		HawthorneClaimSovietBase()
+	-- both available, randomly choose one
 	else
 		local choice = Utils.Random({ "Soviet", "Nod" })
 		if choice == "Soviet" then
@@ -476,7 +480,7 @@ HawthorneClaimRandomBase = function()
 end
 
 HawthorneClaimSovietBase = function()
-	if HawthorneClaimedSovietBase then
+	if HawthorneClaimedSovietBase or SovietBaseFlipped then
 		return
 	end
 
@@ -534,7 +538,7 @@ HawthorneClaimSovietBase = function()
 end
 
 HawthorneClaimNodBase = function()
-	if HawthorneClaimedNodBase then
+	if HawthorneClaimedNodBase or NodBaseFlipped then
 		return
 	end
 
@@ -547,8 +551,6 @@ HawthorneClaimNodBase = function()
 		Media.DisplayMessage("That Nod base has been sitting idle for too long. It's time I got some use out of it!", "Gen. Hawthorne", HSLColor.FromHex("F2CF74"))
 		MediaCA.PlaySound(MissionDir .. "/hth_nodequipauto.aud", 2)
 	end
-
-	InitAttackSquad(Squads.Nod, GDI)
 
 	local nodBaseActors = Utils.Where(Nod.GetActors(), function(a)
 		return not a.IsDead and a.Type ~= "player"
