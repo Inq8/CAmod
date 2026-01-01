@@ -48,7 +48,7 @@ WorldLoaded = function()
 		ObjectiveDestroyFrigates = Nod.AddObjective("Destroy GDI naval blockade.")
 
 		Trigger.AfterDelay(DateTime.Seconds(6), function()
-			WarpInBanshees()
+			InitReinforcements()
 		end)
 
 		Trigger.OnAllKilled(frigates, function()
@@ -105,7 +105,7 @@ InitGDI = function()
 	end)
 end
 
-WarpInBanshees = function()
+InitReinforcements = function()
 	if BansheesWarped then
 		return
 	end
@@ -119,13 +119,7 @@ WarpInBanshees = function()
 		RocksToRemove1.Destroy()
 		RocksToRemove2.Destroy()
 
-		local hpad1 = Actor.Create("hpad.td", true, { Owner = Nod, Location = HpadSpawn1.Location })
-		local hpad2 = Actor.Create("hpad.td", true, { Owner = Nod, Location = HpadSpawn2.Location  })
-
-		Trigger.AfterDelay(10, function()
-			Actor.Create("scrn", true, { Owner = Nod, Location = hpad1.Location, CenterPosition = hpad1.CenterPosition, Facing = Angle.NorthEast })
-			Actor.Create("scrn", true, { Owner = Nod, Location = hpad1.Location, CenterPosition = hpad2.CenterPosition, Facing = Angle.NorthEast })
-		end)
+		WarpInBanshees()
 
 		Trigger.AfterDelay(DateTime.Seconds(2), function()
 			PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
@@ -150,4 +144,16 @@ PanToBanshees = function()
 	if Camera.Position.X == targetPos.X and Camera.Position.Y == targetPos.Y then
 		PanToBansheesComplete = true
 	end
+end
+
+-- overridden in co-op version
+WarpInBanshees = function()
+	local hpad1 = Actor.Create("hpad.td", true, { Owner = Nod, Location = HpadSpawn1.Location })
+	local hpad2 = Actor.Create("hpad.td", true, { Owner = Nod, Location = HpadSpawn2.Location  })
+	Trigger.AfterDelay(10, function()
+		local banshee1 = Actor.Create("scrn", true, { Owner = Nod, Location = hpad1.Location, CenterPosition = hpad1.CenterPosition, Facing = Angle.NorthEast })
+		local banshee2 = Actor.Create("scrn", true, { Owner = Nod, Location = hpad1.Location, CenterPosition = hpad2.CenterPosition, Facing = Angle.NorthEast })
+		banshee1.Move(hpad1.Location)
+		banshee2.Move(hpad2.Location)
+	end)
 end
