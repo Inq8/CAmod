@@ -639,128 +639,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				}
 			}
 
-			var currentY = 0;
-
-			if (productionContainer != null)
-			{
-				var currentX = 0;
-				var productionContainerHeight = 0;
-				const int IconWidth = 16;
-				const int LabelSpacing = 4;
-				const int GroupSpacing = 20;
-
-				var costIcon = productionContainer.GetOrNull("COST_ICON");
-				var timeIcon = productionContainer.GetOrNull("TIME_ICON");
-				var notProducibleIcon = productionContainer.GetOrNull<ImageWidget>("NOT_PRODUCIBLE_ICON");
-				var notProducibleLabel = productionContainer.GetOrNull<LabelWidget>("NOT_PRODUCIBLE");
-
-				if (costIcon != null) costIcon.Visible = false;
-				if (timeIcon != null) timeIcon.Visible = false;
-				if (productionCost != null) productionCost.Visible = false;
-				if (productionTime != null) productionTime.Visible = false;
-				if (armorTypeIcon != null) armorTypeIcon.Visible = false;
-				if (armorTypeLabel != null) armorTypeLabel.Visible = false;
-				if (productionPowerIcon != null) productionPowerIcon.Visible = false;
-				if (productionPower != null) productionPower.Visible = false;
-				if (notProducibleIcon != null) notProducibleIcon.Visible = false;
-				if (notProducibleLabel != null) notProducibleLabel.Visible = false;
-
-				if (bi != null && !selectedInfo.HideBuildable)
-				{
-					var cost = actor.TraitInfoOrDefault<ValuedInfo>()?.Cost ?? 0;
-					if (cost > 0 && productionCost != null && costIcon != null)
-					{
-						var costText = cost.ToString(NumberFormatInfo.CurrentInfo);
-						productionCost.Text = costText;
-						costIcon.Bounds.X = currentX;
-						productionCost.Bounds.X = currentX + IconWidth + LabelSpacing;
-						var costWidth = Game.Renderer.Fonts[productionCost.Font].Measure(costText).X;
-						currentX += IconWidth + LabelSpacing + costWidth + GroupSpacing;
-
-						costIcon.Visible = true;
-						productionCost.Visible = true;
-						productionContainerHeight = descriptionFont.Measure(costText).Y;
-					}
-
-					var time = BuildTime(selectedActor, selectedInfo.BuildableQueue);
-					if (time > 0 && productionTime != null && timeIcon != null)
-					{
-						var timeText = WidgetUtils.FormatTime(time, world.Timestep);
-						productionTime.Text = timeText;
-						timeIcon.Bounds.X = currentX;
-						productionTime.Bounds.X = currentX + IconWidth + LabelSpacing;
-						var timeWidth = Game.Renderer.Fonts[productionTime.Font].Measure(timeText).X;
-						currentX += IconWidth + LabelSpacing + timeWidth + GroupSpacing;
-
-						timeIcon.Visible = true;
-						productionTime.Visible = true;
-						productionContainerHeight = Math.Max(productionContainerHeight, descriptionFont.Measure(timeText).Y);
-					}
-				}
-				else
-				{
-					if (encyclopediaExtrasInfo != null && encyclopediaExtrasInfo.HideNotProducible)
-					{
-						productionContainer.Visible = false;
-					}
-					else
-					{
-						notProducibleIcon.Visible = true;
-						notProducibleIcon.Bounds.X = currentX;
-						notProducibleLabel.Visible = true;
-						notProducibleLabel.Bounds.X = currentX + IconWidth + LabelSpacing;
-						var notProducibleLabelWidth = Game.Renderer.Fonts[notProducibleLabel.Font].Measure(notProducibleLabel.Text).X;
-						currentX += IconWidth + LabelSpacing + notProducibleLabelWidth + GroupSpacing;
-						productionContainerHeight = descriptionFont.Measure(notProducibleLabel.Text).Y;
-					}
-				}
-
-				if (armorTypeLabel != null && armorTypeIcon != null)
-				{
-					var armor = actor.TraitInfos<ArmorInfo>().FirstOrDefault();
-					if (armor != null && !string.IsNullOrEmpty(armor.Type))
-					{
-						SelectionTooltipLogic.GetArmorTypeLabel(armorTypeLabel, actor);
-						var hasArmorType = !string.IsNullOrEmpty(armorTypeLabel.Text);
-						if (hasArmorType)
-						{
-							armorTypeIcon.Bounds.X = currentX;
-							armorTypeLabel.Bounds.X = currentX + IconWidth + LabelSpacing;
-							var armorWidth = Game.Renderer.Fonts[armorTypeLabel.Font].Measure(armorTypeLabel.Text).X;
-							currentX += IconWidth + LabelSpacing + armorWidth + GroupSpacing;
-
-							armorTypeIcon.Visible = true;
-							armorTypeLabel.Visible = true;
-							productionContainerHeight = Math.Max(productionContainerHeight, descriptionFont.Measure(armorTypeLabel.Text).Y);
-						}
-					}
-				}
-
-				var power = actor.TraitInfos<PowerInfo>().Where(i => i.EnabledByDefault).Sum(i => i.Amount);
-				if (power != 0 && productionPower != null && productionPowerIcon != null)
-				{
-					var powerText = power.ToString(NumberFormatInfo.CurrentInfo);
-					productionPower.Text = powerText;
-					productionPowerIcon.Bounds.X = currentX;
-					productionPower.Bounds.X = currentX + IconWidth + LabelSpacing;
-					var powerWidth = Game.Renderer.Fonts[productionPower.Font].Measure(powerText).X;
-					currentX += IconWidth + LabelSpacing + powerWidth + GroupSpacing;
-
-					productionPowerIcon.Visible = true;
-					productionPower.Visible = true;
-					productionContainerHeight = Math.Max(productionContainerHeight, descriptionFont.Measure(powerText).Y);
-				}
-
-				// Only show the production container if it has any visible content
-				var hasVisibleContent = (costIcon?.Visible == true) ||
-					(timeIcon?.Visible == true) ||
-					(armorTypeIcon?.Visible == true) ||
-					(productionPowerIcon?.Visible == true) ||
-					(notProducibleIcon?.Visible == true);
-
-				productionContainer.Visible = hasVisibleContent;
-				currentY = productionContainerHeight + 10;
-			}
+			var currentY = SetupProductionContainer(actor);
 
 			FactionInfo subfaction = null;
 			var subfactionText = "";
@@ -841,6 +720,302 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				currentY += additionalInfoHeight + 8;
 			}
 
+			currentY = SetupDescriptionSection(actor, currentY, showEncyclopediaDescription: true);
+
+			actorDetailsContainer.Bounds.Height = currentY;
+
+			descriptionPanel.Layout.AdjustChildren();
+
+			descriptionPanel.ScrollToTop();
+		}
+
+		void SetupVariantDropdown(ActorInfo actor)
+		{
+			if (variantDropdown == null)
+				return;
+
+			// Check if this actor has variants
+			if (!variantsByParent.TryGetValue(actor.Name, out var variants) || variants.Count == 0)
+			{
+				variantDropdown.IsDisabled = () => true;
+				variantDropdown.GetText = () => "";
+				return;
+			}
+
+			variantDropdown.IsDisabled = () => false;
+			variantDropdown.GetText = () => selectedVariant != null
+				? GetActorDisplayName(selectedVariant)
+				: "Select variant...";
+
+			variantDropdown.OnMouseDown = _ =>
+			{
+				// Include the base actor along with variants
+				var allVariants = new List<ActorInfo> { actor };
+				allVariants.AddRange(variants);
+
+				// Separate variants into grouped and ungrouped
+				var variantsWithGroups = allVariants
+					.Select(v => new
+					{
+						Actor = v,
+						Group = v.TraitInfoOrDefault<EncyclopediaExtrasInfo>()?.VariantGroup
+					})
+					.ToList();
+
+				var hasAnyGroups = variantsWithGroups.Any(v => v.Group != null);
+
+				ScrollItemWidget SetupItem(ActorInfo variantActor, ScrollItemWidget template)
+				{
+					bool IsSelected() => selectedVariant == variantActor;
+					void OnClick() => SelectVariant(variantActor);
+
+					var scrollItem = ScrollItemWidget.Setup(template, IsSelected, OnClick);
+					var label = scrollItem.Get<LabelWidget>("LABEL");
+					label.GetText = () => GetActorDisplayName(variantActor);
+					return scrollItem;
+				}
+
+				if (!hasAnyGroups)
+				{
+					// No groups - use simple flat dropdown without headers (preserve YAML order)
+					var itemHeight = 25;
+					var totalHeight = Math.Min(allVariants.Count * itemHeight, 300);
+
+					variantDropdown.ShowDropDown("LABEL_DROPDOWN_TEMPLATE", totalHeight, allVariants, SetupItem);
+				}
+				else
+				{
+					// Has groups - use grouped dropdown with headers
+					var groupedVariants = variantsWithGroups
+						.Where(v => v.Group != null)
+						.GroupBy(v => v.Group)
+						.OrderBy(g => GetVariantGroupSortOrder(g.Key))
+						.ToDictionary(
+							g => g.Key,
+							g => g.Select(v => v.Actor).AsEnumerable()
+						);
+
+					// Add ungrouped variants first (with empty key, handled specially)
+					var ungrouped = variantsWithGroups.Where(v => v.Group == null).Select(v => v.Actor).ToList();
+					if (ungrouped.Any())
+					{
+						var orderedGrouped = new Dictionary<string, IEnumerable<ActorInfo>>
+						{
+							{ "", ungrouped }
+						};
+						foreach (var kvp in groupedVariants)
+							orderedGrouped[kvp.Key] = kvp.Value;
+						groupedVariants = orderedGrouped;
+					}
+
+					// Calculate dropdown height
+					var itemHeight = 25;
+					var headerHeight = 13;
+					var totalHeight = groupedVariants.Sum(g => (string.IsNullOrEmpty(g.Key) ? 0 : headerHeight) + g.Value.Count() * itemHeight);
+					totalHeight = Math.Min(totalHeight, 300); // Cap at 300px
+
+					variantDropdown.ShowDropDown("LABEL_DROPDOWN_TEMPLATE", totalHeight, groupedVariants, SetupItem);
+				}
+			};
+		}
+
+		void SelectVariant(ActorInfo variant)
+		{
+			if (variant == null || selectedActor == null)
+				return;
+
+			selectedVariant = variant;
+
+			// Update the preview to show the variant
+			LoadExtras(variant);
+			var selectedInfo = info.ContainsKey(variant) ? info[variant] : info[selectedActor];
+
+			var previewColor = GetPreviewColorFromCategory(currentCategoryPath);
+			EncyclopediaColorPalette.SetPreviewColor(previewColor);
+
+			var previewOwner = GetPreviewOwner(selectedInfo);
+			var typeDictionary = CreatePreviewTypeDictionary(previewOwner);
+
+			if (previewBackground.IsVisible())
+			{
+				previewWidget.SetPreview(renderActor, typeDictionary, previewColor);
+				previewWidget.GetScale = () => selectedInfo.Scale;
+			}
+
+			// Update title to show variant name
+			if (titleLabel != null)
+				titleLabel.Text = GetActorDisplayName(variant);
+
+			// Update description from variant's traits
+			UpdateVariantDescription(variant);
+		}
+
+		void UpdateVariantDescription(ActorInfo variant)
+		{
+			var currentY = SetupProductionContainer(variant);
+
+			// Hide subfaction info for variants
+			if (subfactionLabel != null)
+				subfactionLabel.Visible = false;
+			if (subfactionFlagImage != null)
+				subfactionFlagImage.Visible = false;
+			if (additionalInfoLabel != null)
+				additionalInfoLabel.Visible = false;
+
+			currentY = SetupDescriptionSection(variant, currentY, showEncyclopediaDescription: false);
+
+			actorDetailsContainer.Bounds.Height = currentY;
+			descriptionPanel.Layout.AdjustChildren();
+			descriptionPanel.ScrollToTop();
+		}
+
+		int SetupProductionContainer(ActorInfo actor)
+		{
+			if (productionContainer == null)
+				return 0;
+
+			var currentX = 0;
+			var productionContainerHeight = 0;
+			const int IconWidth = 16;
+			const int LabelSpacing = 4;
+			const int GroupSpacing = 20;
+
+			var costIcon = productionContainer.GetOrNull("COST_ICON");
+			var timeIcon = productionContainer.GetOrNull("TIME_ICON");
+			var notProducibleIcon = productionContainer.GetOrNull<ImageWidget>("NOT_PRODUCIBLE_ICON");
+			var notProducibleLabel = productionContainer.GetOrNull<LabelWidget>("NOT_PRODUCIBLE");
+
+			if (costIcon != null) costIcon.Visible = false;
+			if (timeIcon != null) timeIcon.Visible = false;
+			if (productionCost != null) productionCost.Visible = false;
+			if (productionTime != null) productionTime.Visible = false;
+			if (armorTypeIcon != null) armorTypeIcon.Visible = false;
+			if (armorTypeLabel != null) armorTypeLabel.Visible = false;
+			if (productionPowerIcon != null) productionPowerIcon.Visible = false;
+			if (productionPower != null) productionPower.Visible = false;
+			if (notProducibleIcon != null) notProducibleIcon.Visible = false;
+			if (notProducibleLabel != null) notProducibleLabel.Visible = false;
+
+			// For variants without BuildableInfo/ValuedInfo, fall back to base actor
+			var bi = actor.TraitInfoOrDefault<BuildableInfo>();
+			var valued = actor.TraitInfoOrDefault<ValuedInfo>();
+			var actorForProduction = actor;
+
+			if ((bi == null || valued == null) && actor != selectedActor && selectedActor != null)
+			{
+				// Variant doesn't have production info, use base actor
+				if (bi == null)
+					bi = selectedActor.TraitInfoOrDefault<BuildableInfo>();
+				if (valued == null)
+				{
+					valued = selectedActor.TraitInfoOrDefault<ValuedInfo>();
+					actorForProduction = selectedActor;
+				}
+			}
+
+			var selectedInfo = info.ContainsKey(actor) ? info[actor] : info[selectedActor];
+
+			if (bi != null && !selectedInfo.HideBuildable)
+			{
+				var cost = valued?.Cost ?? 0;
+				if (cost > 0 && productionCost != null && costIcon != null)
+				{
+					var costText = cost.ToString(NumberFormatInfo.CurrentInfo);
+					productionCost.Text = costText;
+					costIcon.Bounds.X = currentX;
+					productionCost.Bounds.X = currentX + IconWidth + LabelSpacing;
+					var costWidth = Game.Renderer.Fonts[productionCost.Font].Measure(costText).X;
+					currentX += IconWidth + LabelSpacing + costWidth + GroupSpacing;
+
+					costIcon.Visible = true;
+					productionCost.Visible = true;
+					productionContainerHeight = descriptionFont.Measure(costText).Y;
+				}
+
+				var time = BuildTime(actorForProduction, selectedInfo.BuildableQueue);
+				if (time > 0 && productionTime != null && timeIcon != null)
+				{
+					var timeText = WidgetUtils.FormatTime(time, world.Timestep);
+					productionTime.Text = timeText;
+					timeIcon.Bounds.X = currentX;
+					productionTime.Bounds.X = currentX + IconWidth + LabelSpacing;
+					var timeWidth = Game.Renderer.Fonts[productionTime.Font].Measure(timeText).X;
+					currentX += IconWidth + LabelSpacing + timeWidth + GroupSpacing;
+
+					timeIcon.Visible = true;
+					productionTime.Visible = true;
+					productionContainerHeight = Math.Max(productionContainerHeight, descriptionFont.Measure(timeText).Y);
+				}
+			}
+			else
+			{
+				if (encyclopediaExtrasInfo != null && encyclopediaExtrasInfo.HideNotProducible)
+				{
+					productionContainer.Visible = false;
+				}
+				else
+				{
+					notProducibleIcon.Visible = true;
+					notProducibleIcon.Bounds.X = currentX;
+					notProducibleLabel.Visible = true;
+					notProducibleLabel.Bounds.X = currentX + IconWidth + LabelSpacing;
+					var notProducibleLabelWidth = Game.Renderer.Fonts[notProducibleLabel.Font].Measure(notProducibleLabel.Text).X;
+					currentX += IconWidth + LabelSpacing + notProducibleLabelWidth + GroupSpacing;
+					productionContainerHeight = descriptionFont.Measure(notProducibleLabel.Text).Y;
+				}
+			}
+
+			if (armorTypeLabel != null && armorTypeIcon != null)
+			{
+				var armor = actor.TraitInfos<ArmorInfo>().FirstOrDefault();
+				if (armor != null && !string.IsNullOrEmpty(armor.Type))
+				{
+					SelectionTooltipLogic.GetArmorTypeLabel(armorTypeLabel, actor);
+					var hasArmorType = !string.IsNullOrEmpty(armorTypeLabel.Text);
+					if (hasArmorType)
+					{
+						armorTypeIcon.Bounds.X = currentX;
+						armorTypeLabel.Bounds.X = currentX + IconWidth + LabelSpacing;
+						var armorWidth = Game.Renderer.Fonts[armorTypeLabel.Font].Measure(armorTypeLabel.Text).X;
+						currentX += IconWidth + LabelSpacing + armorWidth + GroupSpacing;
+
+						armorTypeIcon.Visible = true;
+						armorTypeLabel.Visible = true;
+						productionContainerHeight = Math.Max(productionContainerHeight, descriptionFont.Measure(armorTypeLabel.Text).Y);
+					}
+				}
+			}
+
+			var power = actor.TraitInfos<PowerInfo>().Where(i => i.EnabledByDefault).Sum(i => i.Amount);
+			if (power != 0 && productionPower != null && productionPowerIcon != null)
+			{
+				var powerText = power.ToString(NumberFormatInfo.CurrentInfo);
+				productionPower.Text = powerText;
+				productionPowerIcon.Bounds.X = currentX;
+				productionPower.Bounds.X = currentX + IconWidth + LabelSpacing;
+				var powerWidth = Game.Renderer.Fonts[productionPower.Font].Measure(powerText).X;
+				currentX += IconWidth + LabelSpacing + powerWidth + GroupSpacing;
+
+				productionPowerIcon.Visible = true;
+				productionPower.Visible = true;
+				productionContainerHeight = Math.Max(productionContainerHeight, descriptionFont.Measure(powerText).Y);
+			}
+
+			// Only show the production container if it has any visible content
+			var hasVisibleContent = (costIcon?.Visible == true) ||
+				(timeIcon?.Visible == true) ||
+				(armorTypeIcon?.Visible == true) ||
+				(productionPowerIcon?.Visible == true) ||
+				(notProducibleIcon?.Visible == true);
+
+			productionContainer.Visible = hasVisibleContent;
+			return productionContainerHeight + 10;
+		}
+
+		int SetupDescriptionSection(ActorInfo actor, int currentY, bool showEncyclopediaDescription)
+		{
+			// Get prerequisites and description
+			var bi = actor.TraitInfoOrDefault<BuildableInfo>();
 			var prerequisitesText = "";
 			var descriptionText = "";
 
@@ -910,6 +1085,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				currentY += descriptionHeight + 8;
 			}
 
+			// Get strengths/weaknesses/attributes
 			var strengthsText = "";
 			var weaknessesText = "";
 			var attributesText = "";
@@ -948,242 +1124,29 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				attributesLabel.Visible = false;
 			}
 
-			var encyclopediaText = "";
-			if (selectedInfo != null && !string.IsNullOrEmpty(selectedInfo.Description))
-				encyclopediaText = WidgetUtils.WrapText(FluentProvider.GetMessage(selectedInfo.Description), descriptionLabel.Bounds.Width, descriptionFont);
-
-			if (!string.IsNullOrEmpty(encyclopediaText) && encyclopediaDescriptionLabel != null)
+			// Show encyclopedia description only for base actors
+			if (showEncyclopediaDescription)
 			{
-				SetupTextLabel(encyclopediaDescriptionLabel, encyclopediaText, ref currentY, 0);
+				var selectedInfo = info.ContainsKey(actor) ? info[actor] : null;
+				var encyclopediaText = "";
+				if (selectedInfo != null && !string.IsNullOrEmpty(selectedInfo.Description))
+					encyclopediaText = WidgetUtils.WrapText(FluentProvider.GetMessage(selectedInfo.Description), descriptionLabel.Bounds.Width, descriptionFont);
+
+				if (!string.IsNullOrEmpty(encyclopediaText) && encyclopediaDescriptionLabel != null)
+				{
+					SetupTextLabel(encyclopediaDescriptionLabel, encyclopediaText, ref currentY, 0);
+				}
+				else if (encyclopediaDescriptionLabel != null)
+				{
+					encyclopediaDescriptionLabel.Visible = false;
+				}
 			}
 			else if (encyclopediaDescriptionLabel != null)
 			{
 				encyclopediaDescriptionLabel.Visible = false;
 			}
 
-			actorDetailsContainer.Bounds.Height = currentY;
-
-			descriptionPanel.Layout.AdjustChildren();
-
-			descriptionPanel.ScrollToTop();
-		}
-
-		void SetupVariantDropdown(ActorInfo actor)
-		{
-			if (variantDropdown == null)
-				return;
-
-			// Check if this actor has variants
-			if (!variantsByParent.TryGetValue(actor.Name, out var variants) || variants.Count == 0)
-			{
-				variantDropdown.IsDisabled = () => true;
-				variantDropdown.GetText = () => "";
-				return;
-			}
-
-			variantDropdown.IsDisabled = () => false;
-			variantDropdown.GetText = () => selectedVariant != null
-				? GetActorDisplayName(selectedVariant)
-				: "Select variant...";
-
-			variantDropdown.OnMouseDown = _ =>
-			{
-				// Separate variants into grouped and ungrouped
-				var variantsWithGroups = variants
-					.Select(v => new
-					{
-						Actor = v,
-						Group = v.TraitInfoOrDefault<EncyclopediaExtrasInfo>()?.VariantGroup
-					})
-					.ToList();
-
-				var hasAnyGroups = variantsWithGroups.Any(v => v.Group != null);
-
-				ScrollItemWidget SetupItem(ActorInfo variantActor, ScrollItemWidget template)
-				{
-					bool IsSelected() => selectedVariant == variantActor;
-					void OnClick() => SelectVariant(variantActor);
-
-					var scrollItem = ScrollItemWidget.Setup(template, IsSelected, OnClick);
-					var label = scrollItem.Get<LabelWidget>("LABEL");
-					label.GetText = () => GetActorDisplayName(variantActor);
-					return scrollItem;
-				}
-
-				if (!hasAnyGroups)
-				{
-					// No groups - use simple flat dropdown without headers
-					var flatList = variants.OrderBy(v => GetActorDisplayName(v)).ToList();
-					var itemHeight = 25;
-					var totalHeight = Math.Min(flatList.Count * itemHeight, 300);
-
-					variantDropdown.ShowDropDown("LABEL_DROPDOWN_TEMPLATE", totalHeight, flatList, SetupItem);
-				}
-				else
-				{
-					// Has groups - use grouped dropdown with headers
-					var groupedVariants = variantsWithGroups
-						.Where(v => v.Group != null)
-						.GroupBy(v => v.Group)
-						.OrderBy(g => GetVariantGroupSortOrder(g.Key))
-						.ToDictionary(
-							g => g.Key,
-							g => g.OrderBy(v => GetActorDisplayName(v.Actor)).Select(v => v.Actor).AsEnumerable()
-						);
-
-					// Add ungrouped variants first (with empty key, handled specially)
-					var ungrouped = variantsWithGroups.Where(v => v.Group == null).Select(v => v.Actor).ToList();
-					if (ungrouped.Any())
-					{
-						var orderedGrouped = new Dictionary<string, IEnumerable<ActorInfo>>
-						{
-							{ "", ungrouped.OrderBy(v => GetActorDisplayName(v)) }
-						};
-						foreach (var kvp in groupedVariants)
-							orderedGrouped[kvp.Key] = kvp.Value;
-						groupedVariants = orderedGrouped;
-					}
-
-					// Calculate dropdown height
-					var itemHeight = 25;
-					var headerHeight = 13;
-					var totalHeight = groupedVariants.Sum(g => (string.IsNullOrEmpty(g.Key) ? 0 : headerHeight) + g.Value.Count() * itemHeight);
-					totalHeight = Math.Min(totalHeight, 300); // Cap at 300px
-
-					variantDropdown.ShowDropDown("LABEL_DROPDOWN_TEMPLATE", totalHeight, groupedVariants, SetupItem);
-				}
-			};
-		}
-
-		void SelectVariant(ActorInfo variant)
-		{
-			if (variant == null || selectedActor == null)
-				return;
-
-			selectedVariant = variant;
-
-			// Update the preview to show the variant
-			LoadExtras(variant);
-			var selectedInfo = info.ContainsKey(variant) ? info[variant] : info[selectedActor];
-
-			var previewColor = GetPreviewColorFromCategory(currentCategoryPath);
-			EncyclopediaColorPalette.SetPreviewColor(previewColor);
-
-			var previewOwner = GetPreviewOwner(selectedInfo);
-			var typeDictionary = CreatePreviewTypeDictionary(previewOwner);
-
-			if (previewBackground.IsVisible())
-			{
-				previewWidget.SetPreview(renderActor, typeDictionary, previewColor);
-				previewWidget.GetScale = () => selectedInfo.Scale;
-			}
-
-			// Update title to show variant name
-			if (titleLabel != null)
-				titleLabel.Text = GetActorDisplayName(variant);
-
-			// Update description from variant's traits
-			UpdateVariantDescription(variant);
-		}
-
-		void UpdateVariantDescription(ActorInfo variant)
-		{
-			var currentY = 0;
-
-			// Hide production container for variants
-			if (productionContainer != null)
-				productionContainer.Visible = false;
-
-			currentY = 10;
-
-			// Get description from variant's EncyclopediaExtras or TooltipExtras
-			var variantExtras = variant.TraitInfoOrDefault<EncyclopediaExtrasInfo>();
-			var variantTooltipExtras = variant.TraitInfos<TooltipExtrasInfo>().FirstOrDefault(t => t.IsStandard);
-
-			var descriptionText = "";
-			if (variantExtras != null && !string.IsNullOrEmpty(variantExtras.Description))
-			{
-				descriptionText = WidgetUtilsCA.WrapTextWithIndent(
-					FluentProvider.GetMessage(variantExtras.Description.Replace("\\n", "\n")),
-					descriptionLabel.Bounds.Width,
-					descriptionFont);
-			}
-			else if (variantTooltipExtras != null && !string.IsNullOrEmpty(variantTooltipExtras.Description))
-			{
-				descriptionText = WidgetUtilsCA.WrapTextWithIndent(
-					FluentProvider.GetMessage(variantTooltipExtras.Description.Replace("\\n", "\n")),
-					descriptionLabel.Bounds.Width,
-					descriptionFont);
-			}
-
-			var descriptionHeight = string.IsNullOrEmpty(descriptionText) ? 0 : descriptionFont.Measure(descriptionText).Y;
-			descriptionLabel.GetText = () => descriptionText;
-			descriptionLabel.Bounds.Height = descriptionHeight;
-			descriptionLabel.Visible = !string.IsNullOrEmpty(descriptionText);
-
-			if (!string.IsNullOrEmpty(descriptionText))
-			{
-				descriptionLabel.Bounds.Y = currentY;
-				currentY += descriptionHeight + 8;
-			}
-
-			// Hide prerequisites for variants
-			prerequisitesLabel.Visible = false;
-
-			// Hide subfaction info
-			if (subfactionLabel != null)
-				subfactionLabel.Visible = false;
-			if (subfactionFlagImage != null)
-				subfactionFlagImage.Visible = false;
-			if (additionalInfoLabel != null)
-				additionalInfoLabel.Visible = false;
-
-			// Get strengths/weaknesses/attributes from variant
-			var strengthsText = "";
-			var weaknessesText = "";
-			var attributesText = "";
-
-			if (variantTooltipExtras != null)
-			{
-				strengthsText = WidgetUtilsCA.WrapTextWithIndent(variantTooltipExtras.Strengths.Replace("\\n", "\n"), strengthsLabel.Bounds.Width, descriptionFont, 6);
-				weaknessesText = WidgetUtilsCA.WrapTextWithIndent(variantTooltipExtras.Weaknesses.Replace("\\n", "\n"), weaknessesLabel.Bounds.Width, descriptionFont, 6);
-				attributesText = WidgetUtilsCA.WrapTextWithIndent(variantTooltipExtras.Attributes.Replace("\\n", "\n"), attributesLabel.Bounds.Width, descriptionFont, 6);
-			}
-
-			if (!string.IsNullOrEmpty(strengthsText) && strengthsLabel != null)
-			{
-				SetupTextLabel(strengthsLabel, strengthsText, ref currentY, 0);
-			}
-			else if (strengthsLabel != null)
-			{
-				strengthsLabel.Visible = false;
-			}
-
-			if (!string.IsNullOrEmpty(weaknessesText) && weaknessesLabel != null)
-			{
-				SetupTextLabel(weaknessesLabel, weaknessesText, ref currentY, 0);
-			}
-			else if (weaknessesLabel != null)
-			{
-				weaknessesLabel.Visible = false;
-			}
-
-			if (!string.IsNullOrEmpty(attributesText) && attributesLabel != null)
-			{
-				SetupTextLabel(attributesLabel, attributesText, ref currentY, 8);
-			}
-			else if (attributesLabel != null)
-			{
-				attributesLabel.Visible = false;
-			}
-
-			// Hide encyclopedia description for variants
-			if (encyclopediaDescriptionLabel != null)
-				encyclopediaDescriptionLabel.Visible = false;
-
-			actorDetailsContainer.Bounds.Height = currentY;
-			descriptionPanel.Layout.AdjustChildren();
-			descriptionPanel.ScrollToTop();
+			return currentY;
 		}
 
 		int GetVariantGroupSortOrder(string groupName)
@@ -1464,6 +1427,14 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 		static string GetActorDisplayName(ActorInfo actor)
 		{
+			// Check for EncyclopediaExtrasInfo.Name first
+			var extras = actor.TraitInfoOrDefault<EncyclopediaExtrasInfo>();
+			if (extras != null && !string.IsNullOrEmpty(extras.Name))
+			{
+				return FluentProvider.GetMessage(extras.Name);
+			}
+
+			// Fall back to TooltipInfo
 			var name = actor.TraitInfos<TooltipInfo>().FirstOrDefault(info => info.EnabledByDefault)?.Name;
 			if (!string.IsNullOrEmpty(name))
 			{

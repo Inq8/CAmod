@@ -15,6 +15,10 @@ namespace OpenRA.Mods.CA.Traits
 	[Desc("To override encyclopedia preview.")]
 	public class EncyclopediaExtrasInfo : TraitInfo
 	{
+		[FluentReference]
+		[Desc("If set, will be used instead of the tooltip name in encyclopedia.")]
+		public readonly string Name = null;
+
 		[Desc("If set will override the preview with this actor.")]
 		public readonly string RenderPreviewActor;
 
