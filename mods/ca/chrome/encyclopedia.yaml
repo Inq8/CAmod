@@ -79,9 +79,17 @@ Background@ENCYCLOPEDIA_PANEL:
 					Width: PARENT_WIDTH - 250 - 10
 					Height: PARENT_HEIGHT - 65
 					Children:
-						ScrollPanel@ACTOR_DESCRIPTION_PANEL:
+						DropDownButton@VARIANT_DROPDOWN:
+							X: 0
+							Y: 0
 							Width: PARENT_WIDTH - 148 - 10
-							Height: PARENT_HEIGHT
+							Height: 25
+							Font: Regular
+							Text: Select Variant...
+						ScrollPanel@ACTOR_DESCRIPTION_PANEL:
+							Y: 30
+							Width: PARENT_WIDTH - 148 - 10
+							Height: PARENT_HEIGHT - 30
 							TopBottomSpacing: 8
 							Background: observer-scrollpanel-button-pressed
 							Children:

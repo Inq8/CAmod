@@ -80,6 +80,18 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 		// Build icon widget
 		readonly SpriteWidget buildIconWidget;
 
+		// Variant dropdown widget
+		readonly DropDownButtonWidget variantDropdown;
+
+		// Variant lookup - maps parent actor name to list of variant actors (case-insensitive)
+		readonly Dictionary<string, List<ActorInfo>> variantsByParent = new(StringComparer.OrdinalIgnoreCase);
+
+		// Variant group order - tracks order groups were first encountered during file scan
+		readonly Dictionary<string, int> variantGroupOrder = new();
+
+		// Currently selected variant (if any)
+		ActorInfo selectedVariant;
+
 		// Folder structure tracking
 		readonly Dictionary<string, FolderNode> folderNodes = new();
 		readonly Dictionary<string, bool> folderExpanded = new();
@@ -173,6 +185,8 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			buildIconWidget = widget.GetOrNull<SpriteWidget>("BUILD_ICON");
 
+			variantDropdown = widget.GetOrNull<DropDownButtonWidget>("VARIANT_DROPDOWN");
+
 			foreach (var actor in modData.DefaultRules.Actors.Values)
 			{
 				var statistics = actor.TraitInfoOrDefault<UpdatesPlayerStatisticsInfo>();
@@ -188,6 +202,9 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			foreach (var faction in world.Map.Rules.Actors[SystemActors.World].TraitInfos<FactionInfo>().Where(f => f.Selectable))
 				factions.Add(faction.InternalName, faction);
+
+			// Build variant lookup - find all actors that are variants of other actors
+			BuildVariantLookup();
 
 			// Build folder hierarchy
 			BuildFolderHierarchy();
@@ -260,6 +277,27 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			return (null, null);
 		}
 
+		void BuildVariantLookup()
+		{
+			foreach (var actorInfo in info)
+			{
+				var actor = actorInfo.Key;
+				var extras = actor.TraitInfoOrDefault<EncyclopediaExtrasInfo>();
+
+				if (extras?.VariantOf != null)
+				{
+					if (!variantsByParent.ContainsKey(extras.VariantOf))
+						variantsByParent[extras.VariantOf] = new List<ActorInfo>();
+
+					variantsByParent[extras.VariantOf].Add(actor);
+
+					// Track group order based on first encounter during file scan (only for non-null groups)
+					if (extras.VariantGroup != null && !variantGroupOrder.ContainsKey(extras.VariantGroup))
+						variantGroupOrder[extras.VariantGroup] = variantGroupOrder.Count;
+				}
+			}
+		}
+
 		void BuildFolderHierarchy()
 		{
 			// Group actors by their category paths (actors can have multiple categories)
@@ -270,6 +308,11 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				var actor = actorInfo.Key;
 				var encyclopedia = actorInfo.Value;
 				var categories = encyclopedia.Category ?? "";
+
+				// Skip variants - they are accessed via dropdown only
+				var extras = actor.TraitInfoOrDefault<EncyclopediaExtrasInfo>();
+				if (extras?.VariantOf != null)
+					continue;
 
 				// Split by semicolon to allow multiple categories per actor
 				var categoryPaths = ParseCategoryPaths(categories);
@@ -508,6 +551,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			LoadExtras(actor);
 			var selectedInfo = info[actor];
 			selectedActor = actor;
+			selectedVariant = null;
 			currentCategoryPath = categoryPath;
 
 			// Remember this actor for the current top-level category
@@ -516,9 +560,11 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				lastSelectedActorByCategory[selectedTopLevelCategory] = actor;
 			}
 
+			// Setup variant dropdown
+			SetupVariantDropdown(actor);
+
 			// Update the encyclopedia color palette with the faction color
 			var previewColor = GetPreviewColorFromCategory(categoryPath);
-			EncyclopediaColorPalette.SetPreviewColor(previewColor);
 
 			var previewOwner = GetPreviewOwner(selectedInfo);
 			var typeDictionary = CreatePreviewTypeDictionary(previewOwner);
@@ -919,6 +965,228 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			descriptionPanel.Layout.AdjustChildren();
 
 			descriptionPanel.ScrollToTop();
+		}
+
+		void SetupVariantDropdown(ActorInfo actor)
+		{
+			if (variantDropdown == null)
+				return;
+
+			// Check if this actor has variants
+			if (!variantsByParent.TryGetValue(actor.Name, out var variants) || variants.Count == 0)
+			{
+				variantDropdown.IsVisible = () => false;
+				return;
+			}
+
+			variantDropdown.IsVisible = () => true;
+			variantDropdown.GetText = () => selectedVariant != null
+				? GetActorDisplayName(selectedVariant)
+				: "Select Variant...";
+
+			variantDropdown.OnMouseDown = _ =>
+			{
+				// Separate variants into grouped and ungrouped
+				var variantsWithGroups = variants
+					.Select(v => new
+					{
+						Actor = v,
+						Group = v.TraitInfoOrDefault<EncyclopediaExtrasInfo>()?.VariantGroup
+					})
+					.ToList();
+
+				var hasAnyGroups = variantsWithGroups.Any(v => v.Group != null);
+
+				ScrollItemWidget SetupItem(ActorInfo variantActor, ScrollItemWidget template)
+				{
+					bool IsSelected() => selectedVariant == variantActor;
+					void OnClick() => SelectVariant(variantActor);
+
+					var scrollItem = ScrollItemWidget.Setup(template, IsSelected, OnClick);
+					var label = scrollItem.Get<LabelWidget>("LABEL");
+					label.GetText = () => GetActorDisplayName(variantActor);
+					return scrollItem;
+				}
+
+				if (!hasAnyGroups)
+				{
+					// No groups - use simple flat dropdown without headers
+					var flatList = variants.OrderBy(v => GetActorDisplayName(v)).ToList();
+					var itemHeight = 25;
+					var totalHeight = Math.Min(flatList.Count * itemHeight, 300);
+
+					variantDropdown.ShowDropDown("LABEL_DROPDOWN_TEMPLATE", totalHeight, flatList, SetupItem);
+				}
+				else
+				{
+					// Has groups - use grouped dropdown with headers
+					var groupedVariants = variantsWithGroups
+						.Where(v => v.Group != null)
+						.GroupBy(v => v.Group)
+						.OrderBy(g => GetVariantGroupSortOrder(g.Key))
+						.ToDictionary(
+							g => g.Key,
+							g => g.OrderBy(v => GetActorDisplayName(v.Actor)).Select(v => v.Actor).AsEnumerable()
+						);
+
+					// Add ungrouped variants first (with empty key, handled specially)
+					var ungrouped = variantsWithGroups.Where(v => v.Group == null).Select(v => v.Actor).ToList();
+					if (ungrouped.Any())
+					{
+						var orderedGrouped = new Dictionary<string, IEnumerable<ActorInfo>>
+						{
+							{ "", ungrouped.OrderBy(v => GetActorDisplayName(v)) }
+						};
+						foreach (var kvp in groupedVariants)
+							orderedGrouped[kvp.Key] = kvp.Value;
+						groupedVariants = orderedGrouped;
+					}
+
+					// Calculate dropdown height
+					var itemHeight = 25;
+					var headerHeight = 13;
+					var totalHeight = groupedVariants.Sum(g => (string.IsNullOrEmpty(g.Key) ? 0 : headerHeight) + g.Value.Count() * itemHeight);
+					totalHeight = Math.Min(totalHeight, 300); // Cap at 300px
+
+					variantDropdown.ShowDropDown("LABEL_DROPDOWN_TEMPLATE", totalHeight, groupedVariants, SetupItem);
+				}
+			};
+		}
+
+		void SelectVariant(ActorInfo variant)
+		{
+			if (variant == null || selectedActor == null)
+				return;
+
+			selectedVariant = variant;
+
+			// Update the preview to show the variant
+			LoadExtras(variant);
+			var selectedInfo = info.ContainsKey(variant) ? info[variant] : info[selectedActor];
+
+			var previewColor = GetPreviewColorFromCategory(currentCategoryPath);
+			EncyclopediaColorPalette.SetPreviewColor(previewColor);
+
+			var previewOwner = GetPreviewOwner(selectedInfo);
+			var typeDictionary = CreatePreviewTypeDictionary(previewOwner);
+
+			if (previewBackground.IsVisible())
+			{
+				previewWidget.SetPreview(renderActor, typeDictionary, previewColor);
+				previewWidget.GetScale = () => selectedInfo.Scale;
+			}
+
+			// Update title to show variant name
+			if (titleLabel != null)
+				titleLabel.Text = GetActorDisplayName(variant);
+
+			// Update description from variant's traits
+			UpdateVariantDescription(variant);
+		}
+
+		void UpdateVariantDescription(ActorInfo variant)
+		{
+			var currentY = 0;
+
+			// Hide production container for variants
+			if (productionContainer != null)
+				productionContainer.Visible = false;
+
+			currentY = 10;
+
+			// Get description from variant's EncyclopediaExtras or TooltipExtras
+			var variantExtras = variant.TraitInfoOrDefault<EncyclopediaExtrasInfo>();
+			var variantTooltipExtras = variant.TraitInfos<TooltipExtrasInfo>().FirstOrDefault(t => t.IsStandard);
+
+			var descriptionText = "";
+			if (variantExtras != null && !string.IsNullOrEmpty(variantExtras.Description))
+			{
+				descriptionText = WidgetUtilsCA.WrapTextWithIndent(
+					FluentProvider.GetMessage(variantExtras.Description.Replace("\\n", "\n")),
+					descriptionLabel.Bounds.Width,
+					descriptionFont);
+			}
+			else if (variantTooltipExtras != null && !string.IsNullOrEmpty(variantTooltipExtras.Description))
+			{
+				descriptionText = WidgetUtilsCA.WrapTextWithIndent(
+					FluentProvider.GetMessage(variantTooltipExtras.Description.Replace("\\n", "\n")),
+					descriptionLabel.Bounds.Width,
+					descriptionFont);
+			}
+
+			var descriptionHeight = string.IsNullOrEmpty(descriptionText) ? 0 : descriptionFont.Measure(descriptionText).Y;
+			descriptionLabel.GetText = () => descriptionText;
+			descriptionLabel.Bounds.Height = descriptionHeight;
+			descriptionLabel.Visible = !string.IsNullOrEmpty(descriptionText);
+
+			if (!string.IsNullOrEmpty(descriptionText))
+			{
+				descriptionLabel.Bounds.Y = currentY;
+				currentY += descriptionHeight + 8;
+			}
+
+			// Hide prerequisites for variants
+			prerequisitesLabel.Visible = false;
+
+			// Hide subfaction info
+			if (subfactionLabel != null)
+				subfactionLabel.Visible = false;
+			if (subfactionFlagImage != null)
+				subfactionFlagImage.Visible = false;
+			if (additionalInfoLabel != null)
+				additionalInfoLabel.Visible = false;
+
+			// Get strengths/weaknesses/attributes from variant
+			var strengthsText = "";
+			var weaknessesText = "";
+			var attributesText = "";
+
+			if (variantTooltipExtras != null)
+			{
+				strengthsText = WidgetUtilsCA.WrapTextWithIndent(variantTooltipExtras.Strengths.Replace("\\n", "\n"), strengthsLabel.Bounds.Width, descriptionFont, 6);
+				weaknessesText = WidgetUtilsCA.WrapTextWithIndent(variantTooltipExtras.Weaknesses.Replace("\\n", "\n"), weaknessesLabel.Bounds.Width, descriptionFont, 6);
+				attributesText = WidgetUtilsCA.WrapTextWithIndent(variantTooltipExtras.Attributes.Replace("\\n", "\n"), attributesLabel.Bounds.Width, descriptionFont, 6);
+			}
+
+			if (!string.IsNullOrEmpty(strengthsText) && strengthsLabel != null)
+			{
+				SetupTextLabel(strengthsLabel, strengthsText, ref currentY, 0);
+			}
+			else if (strengthsLabel != null)
+			{
+				strengthsLabel.Visible = false;
+			}
+
+			if (!string.IsNullOrEmpty(weaknessesText) && weaknessesLabel != null)
+			{
+				SetupTextLabel(weaknessesLabel, weaknessesText, ref currentY, 0);
+			}
+			else if (weaknessesLabel != null)
+			{
+				weaknessesLabel.Visible = false;
+			}
+
+			if (!string.IsNullOrEmpty(attributesText) && attributesLabel != null)
+			{
+				SetupTextLabel(attributesLabel, attributesText, ref currentY, 8);
+			}
+			else if (attributesLabel != null)
+			{
+				attributesLabel.Visible = false;
+			}
+
+			// Hide encyclopedia description for variants
+			if (encyclopediaDescriptionLabel != null)
+				encyclopediaDescriptionLabel.Visible = false;
+
+			actorDetailsContainer.Bounds.Height = currentY;
+			descriptionPanel.Layout.AdjustChildren();
+			descriptionPanel.ScrollToTop();
+		}
+
+		int GetVariantGroupSortOrder(string groupName)
+		{
+			return variantGroupOrder.TryGetValue(groupName, out var order) ? order : int.MaxValue;
 		}
 
 		void RotatePreview()
