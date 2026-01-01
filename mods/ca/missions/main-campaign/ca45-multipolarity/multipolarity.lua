@@ -274,6 +274,22 @@ WorldLoaded = function()
 		DoCommandoDrop()
 	end
 
+	Trigger.OnAllKilledOrCaptured({ SovietFactory, SovietBarracks }, function()
+		SovietProductionDestroyed = true
+		if HawthorneClaimedSovietBase then
+			Squads.Main.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 })
+			Squads.Secondary.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 })
+		end
+	end)
+
+	Trigger.OnAllKilledOrCaptured({ NodAirstrip, NodHand }, function()
+		NodProductionDestroyed = true
+		if HawthorneClaimedNodBase then
+			Squads.Main.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 })
+			Squads.Secondary.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 })
+		end
+	end)
+
 	AfterWorldLoaded()
 end
 
@@ -528,13 +544,10 @@ HawthorneClaimSovietBase = function()
 	AutoRepairBuilding(sam, GDI)
 	AutoRebuildBuilding(sam, GDI, 10)
 
-	Squads.Main.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 30 })
-	Squads.Secondary.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 30 })
-
-	Trigger.OnAllKilledOrCaptured({ SovietFactory, SovietBarracks }, function()
-		Squads.Main.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 })
-		Squads.Secondary.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 })
-	end)
+	if not SovietProductionDestroyed then
+		Squads.Main.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 30 })
+		Squads.Secondary.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 30 })
+	end
 end
 
 HawthorneClaimNodBase = function()
@@ -586,13 +599,10 @@ HawthorneClaimNodBase = function()
 	AutoRepairBuilding(nsam, GDI)
 	AutoRebuildBuilding(nsam, GDI, 10)
 
-	Squads.Main.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 30 })
-	Squads.Secondary.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 30 })
-
-	Trigger.OnAllKilledOrCaptured({ NodAirstrip, NodHand }, function()
-		Squads.Main.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 })
-		Squads.Secondary.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 })
-	end)
+	if not NodProductionDestroyed then
+		Squads.Main.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 30 })
+		Squads.Secondary.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 30 })
+	end
 end
 
 DoDisruptorDrop = function()
