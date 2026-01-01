@@ -565,6 +565,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			// Update the encyclopedia color palette with the faction color
 			var previewColor = GetPreviewColorFromCategory(categoryPath);
+			EncyclopediaColorPalette.SetPreviewColor(previewColor);
 
 			var previewOwner = GetPreviewOwner(selectedInfo);
 			var typeDictionary = CreatePreviewTypeDictionary(previewOwner);
@@ -975,14 +976,15 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			// Check if this actor has variants
 			if (!variantsByParent.TryGetValue(actor.Name, out var variants) || variants.Count == 0)
 			{
-				variantDropdown.IsVisible = () => false;
+				variantDropdown.IsDisabled = () => true;
+				variantDropdown.GetText = () => "";
 				return;
 			}
 
-			variantDropdown.IsVisible = () => true;
+			variantDropdown.IsDisabled = () => false;
 			variantDropdown.GetText = () => selectedVariant != null
 				? GetActorDisplayName(selectedVariant)
-				: "Select Variant...";
+				: "Select variant...";
 
 			variantDropdown.OnMouseDown = _ =>
 			{
