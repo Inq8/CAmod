@@ -8,6 +8,7 @@
  */
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Mods.Common;
@@ -229,23 +230,6 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 				return;
 			}
 
-			var firstUnit = owner.Units.FirstOrDefault();
-			var buildableInfo = firstUnit.Info.TraitInfoOrDefault<BuildableInfo>();
-			var limitOne = buildableInfo != null && buildableInfo.BuildLimit == 1;
-			var canBuildMoreOfAircraft = firstUnit != null && !limitOne && owner.SquadManager.CanBuildMoreOfAircraft(firstUnit.Info);
-			var waitingCount = owner.WaitingUnits.Count;
-
-			var waitingPatience = 99;
-			if (waitingCount > 7)
-				waitingPatience = 65;
-			else if (waitingCount > 3)
-				waitingPatience = 85;
-			else if (waitingCount > 1)
-				waitingPatience = 95;
-
-			var impatience = owner.World.LocalRandom.Next(100);
-			var noPatience = impatience > waitingPatience;
-
 			foreach (var a in owner.Units)
 			{
 				var currentActivity = a.CurrentActivity;
@@ -300,7 +284,25 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 					owner.WaitingUnits.Add(a);
 			}
 
-			if ((!canBuildMoreOfAircraft || noPatience) && owner.WaitingUnits.Count > 0 && owner.WaitingUnits.Count >= owner.RearmingUnits.Count)
+			var firstUnit = owner.Units.FirstOrDefault();
+			var buildableInfo = firstUnit.Info.TraitInfoOrDefault<BuildableInfo>();
+			var limitOne = buildableInfo != null && buildableInfo.BuildLimit == 1;
+
+			var waitingCount = owner.WaitingUnits.Count;
+
+			var waitingPatience = 99;
+			if (waitingCount > 7)
+				waitingPatience = 65;
+			else if (waitingCount > 3)
+				waitingPatience = 85;
+			else if (waitingCount > 1)
+				waitingPatience = 95;
+
+			var impatience = owner.World.LocalRandom.Next(100);
+			var noPatience = impatience > waitingPatience;
+			Func<bool> canBuildMoreOfAircraft = () => firstUnit != null && !limitOne && owner.SquadManager.CanBuildMoreOfAircraft(firstUnit.Info);
+
+			if (owner.WaitingUnits.Count > 0 && owner.WaitingUnits.Count >= owner.RearmingUnits.Count && (noPatience || !canBuildMoreOfAircraft()))
 			{
 				foreach (var a in owner.WaitingUnits)
 					if (CanAttackTarget(a, owner.TargetActor))

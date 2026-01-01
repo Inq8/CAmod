@@ -302,28 +302,68 @@ namespace OpenRA.Mods.CA.Traits
 			if (attackAircraftInfo == null)
 				return true;
 
+			int currentCount;
 			var limit = Info.MaxAircraft;
-			var currentCount = 0;
+			var isAirToAir = Info.AirToAirUnits.Contains(actorInfo.Name);
 
-			if (Info.MaintainAirSuperiority)
+			if (Info.MaintainAirSuperiority && isAirToAir)
 			{
-				var numAirToAirUnits = AIUtils.GetActorsWithTrait<Aircraft>(player.World).Count(a => a.Owner == player && Info.AirToAirUnits.Contains(a.Info.Name));
+				// Get all production queues to count queued aircraft (for allies as well)
+				var queues = AIUtils.FindQueuesByCategory(player.World.Players.Where(p => p.IsAlliedWith(player)));
 
-				if (Info.AirToAirUnits.Contains(actorInfo.Name))
-				{
-					currentCount = numAirToAirUnits;
-					var numFriendlyAirToAirUnits = player.World.Actors.Count(a => a.Owner.RelationshipWith(player) == PlayerRelationship.Ally && Info.AirToAirUnits.Contains(a.Info.Name));
-					var numEnemyAirThreatUnits = player.World.Actors.Count(a => a.Owner.RelationshipWith(player) == PlayerRelationship.Enemy && Info.AirThreatUnits.Contains(a.Info.Name));
-					limit = Math.Max(numEnemyAirThreatUnits - numFriendlyAirToAirUnits + 1, limit);
+				// Count queued air-to-air units across all queues
+				var queuedAirToAirCount = queues.SelectMany(g => g).SelectMany(q => q.AllQueued())
+					.Count(item => Info.AirToAirUnits.Contains(item.Item));
 
-					if (Info.MaxAirSuperiority > 0)
-						limit = Math.Min(Info.MaxAirSuperiority, limit);
-				}
-				else
-					currentCount = AIUtils.GetActorsWithTrait<Aircraft>(player.World).Count(a => a.Owner == player && a.Info.HasTraitInfo<BuildableInfo>()) - numAirToAirUnits;
+				var friendlyAirToAirCount = player.World.Actors.Count(a => a.Owner.RelationshipWith(player) == PlayerRelationship.Ally
+					&& Info.AirToAirUnits.Contains(a.Info.Name));
+
+				var enemyAirThreatCount = player.World.Actors.Count(a => a.Owner.RelationshipWith(player) == PlayerRelationship.Enemy
+					&& Info.AirThreatUnits.Contains(a.Info.Name));
+
+				currentCount = friendlyAirToAirCount + queuedAirToAirCount;
+				limit = Math.Max(enemyAirThreatCount + 1, limit);
+
+				if (Info.MaxAirSuperiority > 0)
+					limit = Math.Min(Info.MaxAirSuperiority, limit);
 			}
 			else
-				currentCount = AIUtils.GetActorsWithTrait<Aircraft>(player.World).Count(a => a.Owner == player && a.Info.HasTraitInfo<BuildableInfo>());
+			{
+				// Get all production queues to count queued aircraft
+				var queues = AIUtils.FindQueuesByCategory(player);
+
+				// Non air-to-air aircraft uses the standard aircraft limit
+				if (Info.MaintainAirSuperiority)
+				{
+					var existingNonAirToAirCount = player.World.Actors.Count(a =>
+						a.Owner == player &&
+						a.Info.HasTraitInfo<AircraftInfo>() &&
+						a.Info.HasTraitInfo<BuildableInfo>() &&
+						!Info.AirToAirUnits.Contains(a.Info.Name));
+
+					var queuedNonAirToAirCount = queues.SelectMany(g => g).SelectMany(q => q.AllQueued())
+						.Count(item => !Info.AirToAirUnits.Contains(item.Item) &&
+							world.Map.Rules.Actors[item.Item].HasTraitInfo<AircraftInfo>());
+
+					currentCount = existingNonAirToAirCount + queuedNonAirToAirCount;
+				}
+				else
+				{
+					var existingAircraftCount = player.World.Actors.Count(a =>
+						a.Owner == player &&
+						a.Info.HasTraitInfo<AircraftInfo>() &&
+						a.Info.HasTraitInfo<BuildableInfo>());
+
+					// Count all queued aircraft
+					var queuedAircraft = queues.SelectMany(g => g).SelectMany(q => q.AllQueued())
+						.Count(item => world.Map.Rules.Actors[item.Item].HasTraitInfo<AircraftInfo>());
+
+					currentCount = existingAircraftCount + queuedAircraft;
+				}
+			}
+
+			// bot debug
+			TextNotificationsManager.Debug("AI: {0} aircraft count for {1}: {2}/{3}", player, actorInfo.Name, currentCount, limit);
 
 			return currentCount < limit;
 		}
