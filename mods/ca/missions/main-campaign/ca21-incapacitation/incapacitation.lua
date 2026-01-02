@@ -159,7 +159,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(5), function()
-		SpawnLeechers()
+		SpawnInitialLeechers()
 
 		Trigger.AfterDelay(DateTime.Seconds(5), function()
 			Tip("Leechers can be deployed using [" .. UtilsCA.Hotkey("Deploy") .. "] to temporarily transform into balls of bio-matter which heal nearby allies.")
@@ -274,6 +274,7 @@ end
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
 		UpdatePlayerBaseLocations()
+		LeecherRespawnCheck()
 	end
 end
 
@@ -395,7 +396,7 @@ UpdateObjective = function()
 	UserInterface.SetMissionText(#activeAA .. " active anti-aircraft defenses remaining. " .. #aircraftStructuresRemaining .. " aircraft structures remaining.", HSLColor.Yellow)
 end
 
-SpawnLeechers = function()
+SpawnInitialLeechers = function()
 	local wormhole = Actor.Create("wormhole", true, { Owner = Scrin, Location = LeecherSpawn.Location })
 	Beacon.New(Scrin, LeecherSpawn.CenterPosition, DateTime.Seconds(20))
 
@@ -411,8 +412,9 @@ SpawnLeechers = function()
 		Utils.Do(leechers, function(leecher)
 			leecher.GrantCondition("difficulty-" .. Difficulty)
 			leecher.Scatter()
-			LeecherDeathTrigger(leecher)
 		end)
+
+		SetupLeecherRespawning()
 
 		Trigger.AfterDelay(DateTime.Seconds(5), function()
 			wormhole.Kill()
@@ -420,42 +422,61 @@ SpawnLeechers = function()
 	end)
 end
 
-LeecherDeathTrigger = function(a)
-	if RespawnEnabled then
-		Trigger.OnKilled(a, function(self, killer)
-			Trigger.AfterDelay(1, function()
-				local orbs = Utils.Where(self.Owner.GetActorsByType("lchr.orb"), function(a)
-					return not OrbsRespawning[tostring(a)]
-				end)
-
-				Utils.Do(orbs, function(orb)
-					OrbsRespawning[tostring(orb)] = true
-
-					Trigger.OnKilled(orb, function(self, killer)
-						local spawnCell = CPos.New(LeecherSpawn.Location.X + Utils.RandomInteger(-1, 1), LeecherSpawn.Location.Y + Utils.RandomInteger(-1, 1))
-						Notification("Leecher arriving in 20 seconds.")
-
-						Trigger.AfterDelay(DateTime.Seconds(20), function()
-							local wormhole = Actor.Create("wormhole", true, { Owner = Scrin, Location = spawnCell })
-
-							Trigger.AfterDelay(DateTime.Seconds(1), function()
-								local leecher = Reinforcements.Reinforce(self.Owner, { "lchr" }, { spawnCell }, 1)[1]
-								leecher.Scatter()
-								Beacon.New(self.Owner, leecher.CenterPosition)
-								Media.PlaySpeechNotification(self.Owner, "ReinforcementsArrived")
-								leecher.GrantCondition("difficulty-" .. Difficulty)
-								LeecherDeathTrigger(leecher)
-							end)
-
-							Trigger.AfterDelay(DateTime.Seconds(5), function()
-								wormhole.Kill()
-							end)
-						end)
-					end)
-				end)
-			end)
-		end)
+SetupLeecherRespawning = function()
+	if not RespawnEnabled then
+		return
 	end
+
+	LeecherStatuses = {}
+
+	Trigger.AfterDelay(10, function()
+		local leechers = GetMissionPlayersActorsByType("lchr")
+		Utils.Do(leechers, function(leecher)
+			if not LeecherStatuses[leecher.Owner.InternalName] then
+				LeecherStatuses[leecher.Owner.InternalName] = { Owner = leecher.Owner, IsRespawning = false, Count = 0 }
+			end
+			LeecherStatuses[leecher.Owner.InternalName].Count = LeecherStatuses[leecher.Owner.InternalName].Count + 1
+		end)
+	end)
+end
+
+LeecherRespawnCheck = function()
+	if not RespawnEnabled or not LeecherStatuses then
+		return
+	end
+	Utils.Do(LeecherStatuses, function(status)
+		if not status.IsRespawning then
+			local leecherCount = #status.Owner.GetActorsByTypes({ "lchr", "lchr.orb" })
+			if leecherCount < status.Count then
+				status.IsRespawning = true
+				RespawnLeecher(status)
+			end
+		end
+	end)
+end
+
+RespawnLeecher = function(status)
+	Notification("Leecher arriving in 20 seconds.")
+
+	local player = status.Owner
+	local spawnCell = CPos.New(LeecherSpawn.Location.X + Utils.RandomInteger(-1, 1), LeecherSpawn.Location.Y + Utils.RandomInteger(-1, 1))
+
+	Trigger.AfterDelay(DateTime.Seconds(20), function()
+		local wormhole = Actor.Create("wormhole", true, { Owner = player, Location = spawnCell })
+
+		Trigger.AfterDelay(DateTime.Seconds(1), function()
+			local leecher = Reinforcements.Reinforce(player, { "lchr" }, { spawnCell }, 1)[1]
+			leecher.Scatter()
+			Beacon.New(player, leecher.CenterPosition)
+			Media.PlaySpeechNotification(player, "ReinforcementsArrived")
+			leecher.GrantCondition("difficulty-" .. Difficulty)
+			status.IsRespawning = false
+		end)
+
+		Trigger.AfterDelay(DateTime.Seconds(5), function()
+			wormhole.Kill()
+		end)
+	end)
 end
 
 IntruderDeathTrigger = function(a)
