@@ -16,7 +16,6 @@ using OpenRA.Mods.CA.Traits;
 using OpenRA.Mods.Common.Graphics;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
-using OpenRA.Traits;
 using OpenRA.Widgets;
 
 namespace OpenRA.Mods.CA.Widgets
@@ -113,17 +112,29 @@ namespace OpenRA.Mods.CA.Widgets
 		{
 			var origin = RenderOrigin + PreviewOffset + new int2(RenderBounds.Size.Width / 2, RenderBounds.Size.Height / 2);
 
-			// Calculate a world position that will project to our desired screen location
-			// We need to reverse the viewport projection
-			var centerPos = worldRenderer.Viewport.ViewToWorldPx(origin);
-			var worldPos = worldRenderer.ProjectedPosition(centerPos);
+			// Calculate where WPos.Zero would render on screen in viewport coordinates
+			var zeroScreenPos = worldRenderer.ScreenPxPosition(WPos.Zero);
+			var viewportZeroPos = worldRenderer.Viewport.WorldToViewPx(zeroScreenPos);
 
-			// Use Render() instead of RenderUI() to get SpriteRenderables which already implement IModifyableRenderable
+			// Calculate offset from that position to our desired screen position
+			// This offset in screen pixels needs to be converted to world units for OffsetBy
+			var screenOffset = origin - viewportZeroPos;
+
+			// Convert screen pixel offset to world vector
+			// The tile size and scale determine the conversion factor
+			var worldOffsetX = screenOffset.X * worldRenderer.TileScale / worldRenderer.TileSize.Width;
+			var worldOffsetY = screenOffset.Y * worldRenderer.TileScale / worldRenderer.TileSize.Height;
+			var worldOffset = new WVec(worldOffsetX, worldOffsetY, 0);
+
+			// Use Render() at WPos.Zero to get SpriteRenderables which support IModifyableRenderable
 			// This allows WithColoredOverlayCA and alpha modifications to work automatically
 			var baseRenderables = preview
-				.SelectMany(p => p.Render(worldRenderer, worldPos))
+				.SelectMany(p => p.Render(worldRenderer, WPos.Zero))
 				.Select(r =>
 				{
+					// Offset each renderable to the correct screen position
+					r = r.OffsetBy(worldOffset);
+
 					// Apply encyclopedia scale to SpriteRenderables
 					if (r is SpriteRenderable sr && GetScale() != 1f)
 					{
