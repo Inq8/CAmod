@@ -130,6 +130,7 @@ namespace OpenRA.Mods.CA.Widgets
 			// This allows WithColoredOverlayCA and alpha modifications to work automatically
 			var baseRenderables = preview
 				.SelectMany(p => p.Render(worldRenderer, WPos.Zero))
+				.OrderBy(WorldRenderer.RenderableZPositionComparisonKey)
 				.Select(r =>
 				{
 					// Offset each renderable to the correct screen position
@@ -169,7 +170,6 @@ namespace OpenRA.Mods.CA.Widgets
 			// Swap player palettes to encyclopedia palettes for proper coloring
 			renderables = baseRenderables
 				.Select(r => SwapPlayerPalette(r))
-				.OrderBy(WorldRenderer.RenderableZPositionComparisonKey)
 				.Select(r => r.PrepareRender(worldRenderer))
 				.ToArray();
 		}
