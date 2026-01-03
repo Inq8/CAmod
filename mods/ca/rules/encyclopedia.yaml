@@ -38,7 +38,6 @@ encyclopedia.tips.general:
 	QuantizeFacingsFromSequence:
 		Sequence: stand
 
-# Support Power Template - Uses build icon like upgrades (no 3D preview background)
 ^SupportPowerPreview:
 	Inherits: ^InvisibleDummy
 	Buildable:
@@ -49,85 +48,7 @@ encyclopedia.tips.general:
 	EncyclopediaExtras:
 		HideNotProducible: true
 
-encyclopedia.power.lightningstorm:
-	Inherits: ^SupportPowerPreview
-	Buildable:
-		Icon: storm
-		Prerequisites: weat
-		BuildDuration: 13500
-	Tooltip:
-		Name: Lightning Storm
-	Encyclopedia:
-		Category: Allies/Support Powers
-	EncyclopediaExtras:
-		Description: Initiate a Lightning Storm which deals heavy damage over a large area.
-
-encyclopedia.power.chronoshift:
-	Inherits: ^SupportPowerPreview
-	Buildable:
-		Icon: chrono
-		Prerequisites: pdox
-		BuildDuration: 4500
-	Tooltip:
-		Name: Chronoshift
-	Encyclopedia:
-		Category: Allies/Support Powers
-	EncyclopediaExtras:
-		Description: Teleports up to 9 selected vehicles to a targeted location, returning them to their original location after a short time.\n\n• If killed, units are returned with 20% health\n• Units with larger health pools take additional damage\n• Passengers cannot be unloaded\n• Enemy units are teleported for reduced duration
-
-encyclopedia.power.forceshield:
-	Inherits: ^SupportPowerPreview
-	Buildable:
-		Icon: forceshield
-		Prerequisites: techcenter.any
-		BuildDuration: 7500
-	Tooltip:
-		Name: Force Shield
-	Encyclopedia:
-		Category: Allies/Support Powers; Soviets/Support Powers; GDI/Support Powers; Nod/Support Powers; Scrin/Support Powers
-	EncyclopediaExtras:
-		Description: Makes selected friendly structures temporarily invulnerable.\n\nWarning: Causes power failure.
-
-encyclopedia.power.spysatellite:
-	Inherits: ^SupportPowerPreview
-	Buildable:
-		Icon: gps
-		Prerequisites: atek
-		BuildDuration: 5250
-	Tooltip:
-		Name: Spy Satellite
-	Encyclopedia:
-		Category: Allies/Support Powers
-	EncyclopediaExtras:
-		Description: Periodically reveals the entire map for a short time (activated automatically).
-
-encyclopedia.power.timewarp:
-	Inherits: ^SupportPowerPreview
-	Buildable:
-		Icon: timewarp
-		Prerequisites: pdox
-		BuildDuration: 4500
-	Tooltip:
-		Name: Time Warp
-	Encyclopedia:
-		Category: Allies/Support Powers
-	EncyclopediaExtras:
-		Description: Disrupts time and space at the target location. Affected units & structures are frozen in time, unable to act, but immune to damage.
-		Subfaction: germany
-
-encyclopedia.power.tempinc:
-	Inherits: ^SupportPowerPreview
-	Buildable:
-		Icon: tempinc
-		Prerequisites: pdox
-		BuildDuration: 7500
-	Tooltip:
-		Name: Temporal Incursion
-	Encyclopedia:
-		Category: Allies/Support Powers
-	EncyclopediaExtras:
-		Description: Summons reinforcements from the future. Units return to their origin time after a short time.
-		Subfaction: germany
+# Allied Support Powers
 
 encyclopedia.power.veilofwar:
 	Inherits: ^SupportPowerPreview
@@ -215,32 +136,74 @@ encyclopedia.power.bsky:
 		Description: Fires long range guided missiles at multiple ground targets prioritized by value. Tracking can be lost if targets move far enough from their initial location.
 		AdditionalInfo: Requires Korea Coalition.
 
-# Soviets Support Powers
-encyclopedia.power.ironcurtain:
+encyclopedia.power.spysatellite:
 	Inherits: ^SupportPowerPreview
 	Buildable:
-		Icon: invuln
-		Prerequisites: iron
+		Icon: gps
+		Prerequisites: atek
+		BuildDuration: 5250
+	Tooltip:
+		Name: Spy Satellite
+	Encyclopedia:
+		Category: Allies/Support Powers
+	EncyclopediaExtras:
+		Description: Periodically reveals the entire map for a short time (activated automatically).
+
+encyclopedia.power.tempinc:
+	Inherits: ^SupportPowerPreview
+	Buildable:
+		Icon: tempinc
+		Prerequisites: pdox
+		BuildDuration: 7500
+	Tooltip:
+		Name: Temporal Incursion
+	Encyclopedia:
+		Category: Allies/Support Powers
+	EncyclopediaExtras:
+		Description: Summons reinforcements from the future. Units return to their origin time after a short time.
+		Subfaction: germany
+
+encyclopedia.power.timewarp:
+	Inherits: ^SupportPowerPreview
+	Buildable:
+		Icon: timewarp
+		Prerequisites: pdox
 		BuildDuration: 4500
 	Tooltip:
-		Name: Iron Curtain
+		Name: Time Warp
 	Encyclopedia:
-		Category: Soviets/Support Powers
+		Category: Allies/Support Powers
 	EncyclopediaExtras:
-		Description: Makes selected friendly vehicles temporarily invulnerable.
+		Description: Disrupts time and space at the target location. Affected units & structures are frozen in time, unable to act, but immune to damage.
+		Subfaction: germany
 
-encyclopedia.power.atombomb:
+encyclopedia.power.chronoshift:
 	Inherits: ^SupportPowerPreview
 	Buildable:
-		Icon: abomb
-		Prerequisites: mslo
+		Icon: chrono
+		Prerequisites: pdox
+		BuildDuration: 4500
+	Tooltip:
+		Name: Chronoshift
+	Encyclopedia:
+		Category: Allies/Support Powers
+	EncyclopediaExtras:
+		Description: Teleports up to 9 selected vehicles to a targeted location, returning them to their original location after a short time.\n\n• If killed, units are returned with 20% health\n• Units with larger health pools take additional damage\n• Passengers cannot be unloaded\n• Enemy units are teleported for reduced duration
+
+encyclopedia.power.lightningstorm:
+	Inherits: ^SupportPowerPreview
+	Buildable:
+		Icon: storm
+		Prerequisites: weat
 		BuildDuration: 13500
 	Tooltip:
-		Name: Atom Bomb
+		Name: Lightning Storm
 	Encyclopedia:
-		Category: Soviets/Support Powers
+		Category: Allies/Support Powers
 	EncyclopediaExtras:
-		Description: Launches a devastating atomic bomb at the target location, dealing heavy damage over a large area.
+		Description: Initiate a Lightning Storm which deals heavy damage over a large area.
+
+# Soviet Support Powers
 
 encyclopedia.power.spyplane:
 	Inherits: ^SupportPowerPreview
@@ -404,19 +367,33 @@ encyclopedia.power.killzone:
 		Description: Calls in a Spy Plane which marks a target area. Any enemy units within it take increased damage.
 		AdditionalInfo: Requires Artillery Doctrine.
 
-# GDI Support Powers
-encyclopedia.power.ioncannon:
+encyclopedia.power.ironcurtain:
 	Inherits: ^SupportPowerPreview
 	Buildable:
-		Icon: ioncannon
-		Prerequisites: eye
+		Icon: invuln
+		Prerequisites: iron
+		BuildDuration: 4500
+	Tooltip:
+		Name: Iron Curtain
+	Encyclopedia:
+		Category: Soviets/Support Powers
+	EncyclopediaExtras:
+		Description: Makes selected friendly vehicles temporarily invulnerable.
+
+encyclopedia.power.atombomb:
+	Inherits: ^SupportPowerPreview
+	Buildable:
+		Icon: abomb
+		Prerequisites: mslo
 		BuildDuration: 13500
 	Tooltip:
-		Name: Ion Cannon
+		Name: Atom Bomb
 	Encyclopedia:
-		Category: GDI/Support Powers
+		Category: Soviets/Support Powers
 	EncyclopediaExtras:
-		Description: Fires a devastating ion cannon beam at the target location.
+		Description: Launches a devastating atomic bomb at the target location, dealing heavy damage over a large area.
+
+# GDI Support Powers
 
 encyclopedia.power.recondrone:
 	Inherits: ^SupportPowerPreview
@@ -502,6 +479,21 @@ encyclopedia.power.naniterepair:
 		Description: Repairs selected damaged vehicles over time.
 		Subfaction: arc
 
+encyclopedia.power.surgicalstrike:
+	Inherits: ^SupportPowerPreview
+	Buildable:
+		Icon: surgicalstrike
+		IconPalette: chrometd
+		Prerequisites: eye
+		BuildDuration: 6000
+	Tooltip:
+		Name: Surgical Strike
+	Encyclopedia:
+		Category: GDI/Support Powers
+	EncyclopediaExtras:
+		Description: Initiate an precision Ion Cannon strike which deals instant damage to a small area.
+		Subfaction: zocom
+
 encyclopedia.power.firestorm:
 	Inherits: ^SupportPowerPreview
 	Buildable:
@@ -559,63 +551,33 @@ encyclopedia.power.empmissile:
 	EncyclopediaExtras:
 		Description: Launches an EMP missile that disables vehicles and structures in the target area.
 
-encyclopedia.power.surgicalstrike:
+encyclopedia.power.ioncannon:
 	Inherits: ^SupportPowerPreview
 	Buildable:
-		Icon: surgicalstrike
-		IconPalette: chrometd
+		Icon: ioncannon
 		Prerequisites: eye
-		BuildDuration: 6000
+		BuildDuration: 13500
 	Tooltip:
-		Name: Surgical Strike
+		Name: Ion Cannon
 	Encyclopedia:
 		Category: GDI/Support Powers
 	EncyclopediaExtras:
-		Description: Initiate an precision Ion Cannon strike which deals instant damage to a small area.
-		Subfaction: zocom
+		Description: Fires a devastating ion cannon beam at the target location.
 
 # Nod Support Powers
-encyclopedia.power.clustermissile:
-	Inherits: ^SupportPowerPreview
-	Buildable:
-		Icon: clustermissile
-		IconPalette: chrometd
-		Prerequisites: tmpl
-		BuildDuration: 10500
-	Tooltip:
-		Name: Cluster Missile
-	Encyclopedia:
-		Category: Nod/Support Powers
-	EncyclopediaExtras:
-		Description: Launches a Cluster Missile which deals heavy damage at the target location.
 
-encyclopedia.power.chemmissile:
+encyclopedia.power.hacksat:
 	Inherits: ^SupportPowerPreview
 	Buildable:
-		Icon: chemmissile
-		IconPalette: chrometd
-		Prerequisites: mslo.nod
-		BuildDuration: 13500
-	Tooltip:
-		Name: Chemical Missile
-	Encyclopedia:
-		Category: Nod/Support Powers
-	EncyclopediaExtras:
-		Description: Launches an deadly Chemical Missile. Deals heavy damage and creates toxic clouds which are extremely harmful to infantry.\n
-
-encyclopedia.power.tibstealth:
-	Inherits: ^SupportPowerPreview
-	Buildable:
-		Icon: invis
-		IconPalette: chrometd
-		Prerequisites: sgen
+		Icon: hacksat
+		Prerequisites: anyradar
 		BuildDuration: 4500
 	Tooltip:
-		Name: Tiberium Stealth
+		Name: Hack Satellite
 	Encyclopedia:
 		Category: Nod/Support Powers
 	EncyclopediaExtras:
-		Description: Makes selected vehicles and structures temporarily invisible.\n\nWarning: Harmful to non-cyborg infantry.\n\nHazmat Suits upgrade makes allies immune to damage and enemies take 50% damage.
+		Description: Reveals the targeted area for a short time.
 
 encyclopedia.power.airdrop:
 	Inherits: ^SupportPowerPreview
@@ -630,18 +592,19 @@ encyclopedia.power.airdrop:
 	EncyclopediaExtras:
 		Description: Dispatches cargo planes to air drop tanks at the target location. Units dependent on subfaction.
 
-encyclopedia.power.hacksat:
+encyclopedia.power.substrike:
 	Inherits: ^SupportPowerPreview
 	Buildable:
-		Icon: hacksat
-		Prerequisites: anyradar
-		BuildDuration: 4500
+		Icon: substrike
+		Prerequisites: weap.td
+		BuildDuration: 12000
 	Tooltip:
-		Name: Hack Satellite
+		Name: Subterranean Strike
 	Encyclopedia:
 		Category: Nod/Support Powers
 	EncyclopediaExtras:
-		Description: Reveals the targeted area for a short time.
+		Description: Deploys a squad of infantry via Subterranean APC.
+		Subfaction: marked
 
 encyclopedia.power.infbomb:
 	Inherits: ^SupportPowerPreview
@@ -755,91 +718,105 @@ encyclopedia.power.confessorcabal:
 		Description: Deploy a Confessor Cabal which is able to construct Idols of Kane that buffs allies and debuffs enemies.\n\nTarget infantry production structure to deploy.
 		AdditionalInfo: Requires Zeal Covenant.
 
-encyclopedia.power.substrike:
+encyclopedia.power.clustermissile:
 	Inherits: ^SupportPowerPreview
 	Buildable:
-		Icon: substrike
-		Prerequisites: weap.td
-		BuildDuration: 12000
+		Icon: clustermissile
+		IconPalette: chrometd
+		Prerequisites: tmpl
+		BuildDuration: 10500
 	Tooltip:
-		Name: Subterranean Strike
+		Name: Cluster Missile
 	Encyclopedia:
 		Category: Nod/Support Powers
 	EncyclopediaExtras:
-		Description: Deploys a squad of infantry via Subterranean APC.
-		Subfaction: marked
+		Description: Launches a Cluster Missile which deals heavy damage at the target location.
 
-# Scrin Support Powers
-encyclopedia.power.rift:
+encyclopedia.power.tibstealth:
 	Inherits: ^SupportPowerPreview
 	Buildable:
-		Icon: riftpower
-		Prerequisites: rfgn
-		BuildDuration: 13500
-	Tooltip:
-		Name: Rift
-	Encyclopedia:
-		Category: Scrin/Support Powers
-	EncyclopediaExtras:
-		Description: Initiate a Rift which deals heavy damage over time to a large area.
-
-encyclopedia.power.suppression:
-	Inherits: ^SupportPowerPreview
-	Buildable:
-		Icon: spresspower
-		Prerequisites: mani
+		Icon: invis
+		IconPalette: chrometd
+		Prerequisites: sgen
 		BuildDuration: 4500
 	Tooltip:
-		Name: Suppression
+		Name: Tiberium Stealth
+	Encyclopedia:
+		Category: Nod/Support Powers
+	EncyclopediaExtras:
+		Description: Makes selected vehicles and structures temporarily invisible.\n\nWarning: Harmful to non-cyborg infantry.\n\nHazmat Suits upgrade makes allies immune to damage and enemies take 50% damage.
+
+encyclopedia.power.chemmissile:
+	Inherits: ^SupportPowerPreview
+	Buildable:
+		Icon: chemmissile
+		IconPalette: chrometd
+		Prerequisites: mslo.nod
+		BuildDuration: 13500
+	Tooltip:
+		Name: Chemical Missile
+	Encyclopedia:
+		Category: Nod/Support Powers
+	EncyclopediaExtras:
+		Description: Launches an deadly Chemical Missile. Deals heavy damage and creates toxic clouds which are extremely harmful to infantry.\n
+
+# Scrin Support Powers
+
+
+encyclopedia.power.resourcescan:
+	Inherits: ^SupportPowerPreview
+	Buildable:
+		Icon: rescanpower
+		Prerequisites: anyradar
+		BuildDuration: 7500
+	Tooltip:
+		Name: Resource Scan
 	Encyclopedia:
 		Category: Scrin/Support Powers
 	EncyclopediaExtras:
-		Description: Applies a suppression field to the target area, slowing unit movement and rate of fire.
+		Description: Reveals the area surrounding all resources on the map.
 
-encyclopedia.power.gateway:
+encyclopedia.power.ichorspike:
 	Inherits: ^SupportPowerPreview
 	Buildable:
-		Icon: gateway
+		Icon: ichorspike
 		IconPalette: chromes
-		Prerequisites: scrt
 		BuildDuration: 6000
 	Tooltip:
-		Name: Gateway
+		Name: Ichor Spike
 	Encyclopedia:
 		Category: Scrin/Support Powers
 	EncyclopediaExtras:
-		Description: Creates a Gateway at the target location. Acts as the exit for any\n   targeted infantry or vehicle production structure.\n\nRequires target location to be within vision.
+		Description:  Creates an Ichor Spike at the target location. Resources within its area of influence grow and spread faster.\n\nAlso empowers units with Resource Conversion upgrade.
+		AdditionalInfo: Requires Loyalist Allegiance.
+
+encyclopedia.power.colonyspike:
+	Inherits: ^SupportPowerPreview
+	Buildable:
+		Icon: colonyspike
+		IconPalette: chromes
+		BuildDuration: 7500
+	Tooltip:
+		Name: Colony Spike
+	Encyclopedia:
+		Category: Scrin/Support Powers
+	EncyclopediaExtras:
+		Description: Creates a Colony Spike at the target location. Enables production of non-defensive structures.\n\nWhen fully charged allows non-defensive structures to be built nearby.\n\nMust be built within range of a Colony Platform.
 		AdditionalInfo: Requires Rebel Allegiance.
 
-encyclopedia.power.anathemapower:
+encyclopedia.power.voidspike:
 	Inherits: ^SupportPowerPreview
 	Buildable:
-		Icon: anathema
+		Icon: voidspike
 		IconPalette: chromes
-		Prerequisites: scrt
-		BuildDuration: 3000
+		BuildDuration: 6000
 	Tooltip:
-		Name: Anathema
+		Name: Voidspike
 	Encyclopedia:
 		Category: Scrin/Support Powers
 	EncyclopediaExtras:
-		Description: Targeted vehicle greatly increases in power over time. After 30 seconds the unit explodes.
+		Description: Creates a Voidspike at the target location. Gradually transforms nearby resources into Black Tiberium which is devoid of most of its useful properties.\n\nDamages nearby enemy units.
 		AdditionalInfo: Requires Malefic Allegiance.
-
-encyclopedia.power.owrath:
-	Inherits: ^SupportPowerPreview
-	Buildable:
-		Icon: owrath
-		IconPalette: chromes
-		Prerequisites: scrt
-		BuildDuration: 10500
-	Tooltip:
-		Name: Overlord's Wrath
-	Encyclopedia:
-		Category: Scrin/Support Powers
-	EncyclopediaExtras:
-		Description: A Tiberium meteor strikes the target location dealing heavy damage and creating a patch of Tiberium.
-		AdditionalInfo: Requires Loyalist Allegiance.
 
 encyclopedia.power.ionsurge:
 	Inherits: ^SupportPowerPreview
@@ -913,47 +890,50 @@ encyclopedia.power.greatercoalescence:
 		Description: Spawns a controllable biomass which heals nearby allies and sustains itself by feeding off enemies.\n\nFeeding from power plants will shut them down temporarily.
 		Subfaction: collector
 
-encyclopedia.power.ichorspike:
+encyclopedia.power.gateway:
 	Inherits: ^SupportPowerPreview
 	Buildable:
-		Icon: ichorspike
+		Icon: gateway
 		IconPalette: chromes
+		Prerequisites: scrt
 		BuildDuration: 6000
 	Tooltip:
-		Name: Ichor Spike
+		Name: Gateway
 	Encyclopedia:
 		Category: Scrin/Support Powers
 	EncyclopediaExtras:
-		Description:  Creates an Ichor Spike at the target location. Resources within its area of influence grow and spread faster.\n\nAlso empowers units with Resource Conversion upgrade.
-		AdditionalInfo: Requires Loyalist Allegiance.
-
-encyclopedia.power.colonyspike:
-	Inherits: ^SupportPowerPreview
-	Buildable:
-		Icon: colonyspike
-		IconPalette: chromes
-		BuildDuration: 7500
-	Tooltip:
-		Name: Colony Spike
-	Encyclopedia:
-		Category: Scrin/Support Powers
-	EncyclopediaExtras:
-		Description: Creates a Colony Spike at the target location. Enables production of non-defensive structures.\n\nWhen fully charged allows non-defensive structures to be built nearby.\n\nMust be built within range of a Colony Platform.
+		Description: Creates a Gateway at the target location. Acts as the exit for any\n   targeted infantry or vehicle production structure.\n\nRequires target location to be within vision.
 		AdditionalInfo: Requires Rebel Allegiance.
 
-encyclopedia.power.voidspike:
+encyclopedia.power.anathemapower:
 	Inherits: ^SupportPowerPreview
 	Buildable:
-		Icon: voidspike
+		Icon: anathema
 		IconPalette: chromes
-		BuildDuration: 6000
+		Prerequisites: scrt
+		BuildDuration: 3000
 	Tooltip:
-		Name: Voidspike
+		Name: Anathema
 	Encyclopedia:
 		Category: Scrin/Support Powers
 	EncyclopediaExtras:
-		Description: Creates a Voidspike at the target location. Gradually transforms nearby resources into Black Tiberium which is devoid of most of its useful properties.\n\nDamages nearby enemy units.
+		Description: Targeted vehicle greatly increases in power over time. After 30 seconds the unit explodes.
 		AdditionalInfo: Requires Malefic Allegiance.
+
+encyclopedia.power.owrath:
+	Inherits: ^SupportPowerPreview
+	Buildable:
+		Icon: owrath
+		IconPalette: chromes
+		Prerequisites: scrt
+		BuildDuration: 10500
+	Tooltip:
+		Name: Overlord's Wrath
+	Encyclopedia:
+		Category: Scrin/Support Powers
+	EncyclopediaExtras:
+		Description: A Tiberium meteor strikes the target location dealing heavy damage and creating a patch of Tiberium.
+		AdditionalInfo: Requires Loyalist Allegiance.
 
 encyclopedia.power.fleetrecall:
 	Inherits: ^SupportPowerPreview
@@ -969,18 +949,57 @@ encyclopedia.power.fleetrecall:
 	EncyclopediaExtras:
 		Description: Recalls all selected Scrin fleet vessels back to the Signal Transmitter.\n\nApplies to: Mothership, Planetary Assault Carrier, Devastator
 
-encyclopedia.power.resourcescan:
+encyclopedia.power.suppression:
 	Inherits: ^SupportPowerPreview
 	Buildable:
-		Icon: rescanpower
-		Prerequisites: anyradar
-		BuildDuration: 7500
+		Icon: spresspower
+		Prerequisites: mani
+		BuildDuration: 4500
 	Tooltip:
-		Name: Resource Scan
+		Name: Suppression
 	Encyclopedia:
 		Category: Scrin/Support Powers
 	EncyclopediaExtras:
-		Description: Reveals the area surrounding all resources on the map.
+		Description: Applies a suppression field to the target area, slowing unit movement and rate of fire.
+
+encyclopedia.power.rift:
+	Inherits: ^SupportPowerPreview
+	Buildable:
+		Icon: riftpower
+		Prerequisites: rfgn
+		BuildDuration: 13500
+	Tooltip:
+		Name: Rift
+	Encyclopedia:
+		Category: Scrin/Support Powers
+	EncyclopediaExtras:
+		Description: Initiate a Rift which deals heavy damage over time to a large area.
+
+encyclopedia.power.forceshield:
+	Inherits: ^SupportPowerPreview
+	Buildable:
+		Icon: forceshield
+		Prerequisites: techcenter.any
+		BuildDuration: 7500
+	Tooltip:
+		Name: Force Shield
+	Encyclopedia:
+		Category: Other/Shared Support Powers
+	EncyclopediaExtras:
+		Description: Makes selected friendly structures temporarily invulnerable.\n\nWarning: Causes power failure.
+
+encyclopedia.power.sendcash:
+	Inherits: ^SupportPowerPreview
+	Buildable:
+		Icon: sendcash
+		Prerequisites: anyrefinery
+		BuildDuration: 0
+	Tooltip:
+		Name: Send Cash
+	Encyclopedia:
+		Category: Other/Shared Support Powers
+	EncyclopediaExtras:
+		Description: Available in team games and co-op. Sends $1000 credits to targeted ally.
 
 # IFV Variants
 ^IFVVariantPreview:

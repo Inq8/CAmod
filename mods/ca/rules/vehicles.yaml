@@ -3803,9 +3803,20 @@ APC2:
 		UpgradeAtActors: fix, rep, srep
 		RequiresCondition: !mindcontrolled
 	Encyclopedia:
-		Category: GDI/Vehicles; Nod/Vehicles
+		Category: GDI/Vehicles
 	EncyclopediaExtras:
 		Name: APC
+
+APC2.Nod.Preview:
+	Inherits: APC2
+	RenderSprites:
+		Image: apc2.nod
+	Buildable:
+		Queue: Encyclopedia
+	Encyclopedia:
+		Category: Nod/Vehicles
+	EncyclopediaExtras:
+		Subfaction: legion
 
 APC2.NODAI:
 	Inherits: APC2
@@ -4170,6 +4181,8 @@ LTNK.Laser:
 	Selectable:
 		Class: ltnk
 	-ReplacedInQueue:
+	EncyclopediaExtras:
+		VariantOf: LTNK
 
 MTNK:
 	Inherits: ^TankTD
@@ -4316,7 +4329,7 @@ MTNK:
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
 	Encyclopedia:
-		Category: GDI/Vehicles; Nod/Vehicles
+		Category: GDI/Vehicles
 
 MTNK.Drone:
 	Inherits: MTNK
@@ -4405,6 +4418,18 @@ MTNK.Drone:
 	EncyclopediaExtras:
 		Subfaction: arc
 
+MTNK.Nod.Preview:
+	Inherits: MTNK
+	RenderSprites:
+		Image: mtnk.nod
+	Buildable:
+		Queue: Encyclopedia
+		BuildPaletteOrder: 101
+	Encyclopedia:
+		Category: Nod/Vehicles
+	EncyclopediaExtras:
+		Subfaction: legion
+
 MTNK.Laser:
 	Inherits: MTNK
 	RenderSprites:
@@ -4442,6 +4467,7 @@ MTNK.Laser:
 		Category: Nod/Vehicles
 	EncyclopediaExtras:
 		Subfaction: legion
+		VariantOf: MTNK.Nod.Preview
 
 MDRN:
 	Inherits: ^Vehicle
@@ -7386,9 +7412,10 @@ RECK:
 	SpeedMultiplier@TigerGuard:
 		Modifier: 90
 	Encyclopedia:
-		Category: Nod/Vehicles
+		Category: Nod/Stolen Technology
 	EncyclopediaExtras:
 		AdditionalInfo: Stolen from Allied War Factory.
+		-Name:
 
 TITN:
 	Inherits: ^TankTD
@@ -9302,7 +9329,7 @@ CYCP:
 		Actor: CYCP.Husk
 		RequiresCondition: !being-warped
 	Encyclopedia:
-		Category: Nod/Vehicles
+		Category: Nod/Stolen Technology
 	EncyclopediaExtras:
 		AdditionalInfo: Stolen from Soviet War Factory.
 
@@ -9384,7 +9411,7 @@ BASI:
 		Condition: inherited-cloak
 		RequiresCondition: hidden || invisibility
 	Encyclopedia:
-		Category: Nod/Vehicles
+		Category: Nod/Stolen Technology
 	EncyclopediaExtras:
 		AdditionalInfo: Stolen from GDI Weapons Factory.
 
@@ -9448,7 +9475,7 @@ MANT:
 	GuardsSelection:
 		ValidTargets: Infantry, Vehicle
 	Encyclopedia:
-		Category: Nod/Vehicles
+		Category: Nod/Stolen Technology
 	EncyclopediaExtras:
 		AdditionalInfo: Stolen from Nod Airstrip.
 
@@ -9519,7 +9546,7 @@ VIPR:
 		TargetTypes: Water, Ship
 		RequiresCondition: onwater
 	Encyclopedia:
-		Category: Nod/Vehicles
+		Category: Nod/Stolen Technology
 	EncyclopediaExtras:
 		AdditionalInfo: Stolen from Scrin Warp Sphere.
 

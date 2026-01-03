@@ -779,7 +779,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				{
 					// No groups - use simple flat dropdown without headers (preserve YAML order)
 					var itemHeight = 25;
-					var totalHeight = Math.Min(allVariants.Count * itemHeight, 300);
+					var totalHeight = Math.Min(allVariants.Count * itemHeight, 300) + 5;
 
 					variantDropdown.ShowDropDown("LABEL_DROPDOWN_TEMPLATE", totalHeight, allVariants, SetupItem);
 				}
@@ -811,7 +811,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 					// Calculate dropdown height
 					var itemHeight = 25;
 					var headerHeight = 13;
-					var totalHeight = groupedVariants.Sum(g => (string.IsNullOrEmpty(g.Key) ? 0 : headerHeight) + g.Value.Count() * itemHeight);
+					var totalHeight = groupedVariants.Sum(g => (string.IsNullOrEmpty(g.Key) ? 0 : headerHeight) + g.Value.Count() * itemHeight) + 5;
 					totalHeight = Math.Min(totalHeight, 300); // Cap at 300px
 
 					variantDropdown.ShowDropDown("LABEL_DROPDOWN_TEMPLATE", totalHeight, groupedVariants, SetupItem);
@@ -1266,6 +1266,10 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				return "Nod";
 			}
 
+			if (selectedActor.Name == "sbag" || selectedActor.Name == "fenc") {
+				return "GDI";
+			}
+
 			return topLevelCategory switch
 			{
 				"Allies" => "Greece",
@@ -1299,7 +1303,11 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 						return Color.FromArgb(230, 230, 255); // E6E6FF
 				}
 
-				return Color.FromArgb(254, 17, 0);
+				return Color.FromArgb(254, 17, 0); // FE1100
+			}
+
+			if (selectedActor.Name == "sbag" || selectedActor.Name == "fenc") {
+				return Color.FromArgb(242, 207, 116); // F2CF74
 			}
 
 			return topLevelCategory switch
@@ -1308,7 +1316,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				"Soviets" => Color.FromArgb(254, 17, 0), // FE1100
 				"GDI" => Color.FromArgb(242, 207, 116), // F2CF74
 				"Scrin" => Color.FromArgb(128, 0, 200), // 7700FF
-				_ => Color.FromArgb(158, 166, 179) // 9ea6b3
+				_ => Color.FromArgb(158, 166, 179) // 9EA6B3
 			};
 		}
 
