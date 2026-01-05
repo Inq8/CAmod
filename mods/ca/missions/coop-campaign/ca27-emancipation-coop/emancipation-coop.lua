@@ -31,7 +31,7 @@ AfterTick = function()
 end
 
 FreeSlaves = function(slaves)
-	local baseSlaves = Utils.Where(slaves, function(s) return IsBaseTransferActor(a) end)
+	local baseSlaves = Utils.Where(slaves, function(s) return IsBaseTransferActor(s) end)
 	local otherSlaves = Utils.Where(slaves, function(s) return s.HasProperty("Move") and not IsHarvester(s) end)
 	local firstActivePlayer = GetFirstActivePlayer()
 
