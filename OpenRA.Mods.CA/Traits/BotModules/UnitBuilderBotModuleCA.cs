@@ -362,9 +362,6 @@ namespace OpenRA.Mods.CA.Traits
 				}
 			}
 
-			// bot debug
-			TextNotificationsManager.Debug("AI: {0} aircraft count for {1}: {2}/{3}", player, actorInfo.Name, currentCount, limit);
-
 			return currentCount < limit;
 		}
 
