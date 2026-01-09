@@ -647,7 +647,7 @@ InitMADTankAttack = function()
 
 		Trigger.AfterDelay(DateTime.Seconds(10), function()
 			Trigger.OnEnteredProximityTrigger(MADTankPath1.CenterPosition, WDist.New(7 * 1024), function(a, id)
-				if a.Owner == GDI and a.HasProperty("Attack") then
+				if IsMissionPlayer(a.Owner) and a.HasProperty("Attack") then
 					Trigger.RemoveProximityTrigger(id)
 					SendMADTank()
 				end

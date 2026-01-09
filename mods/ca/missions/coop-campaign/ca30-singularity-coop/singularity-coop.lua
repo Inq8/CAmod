@@ -50,6 +50,8 @@ FlipSlaveFaction = function(player, killer)
 	if player == NodSlaves then
 		NodFreed = true
 		Squads.NodSlaves.IdleUnits = { }
+		attackPath = { EastAttackNode1.Location, WormholeWP.Location }
+		InitAttackSquad(Squads.ScrinEast, Scrin)
 		if ScrinDefenseBuff1.IsDead and ScrinDefenseBuff2.IsDead then
 			InitHackers(HackersDelay[Difficulty])
 		end
@@ -58,12 +60,16 @@ FlipSlaveFaction = function(player, killer)
 	elseif player == SovietSlaves then
 		SovietsFreed = true
 		Squads.SovietSlaves.IdleUnits = { }
+		attackPath = { WestAttackNode1.Location, WormholeWP.Location }
+		InitAttackSquad(Squads.ScrinWest, Scrin)
 		InitMADTankAttack()
 		Notification("Soviet forces have been released from Scrin control.")
 		MediaCA.PlaySound(MissionDir .. "/c_sovietsreleased.aud", 2)
 	elseif player == AlliedSlaves then
 		AlliesFreed = true
 		Squads.AlliedSlaves.IdleUnits = { }
+		attackPath = { CenterAttackNode1.Location, WormholeWP.Location }
+		InitAttackSquad(Squads.ScrinCenter, Scrin)
 		InitChronoTanks()
 		Notification("Allied forces have been released from Scrin control.")
 		MediaCA.PlaySound(MissionDir .. "/c_alliesreleased.aud", 2)
