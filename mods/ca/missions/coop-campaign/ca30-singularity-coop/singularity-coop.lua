@@ -27,8 +27,6 @@ SetupPlayers = function()
 end
 
 AfterWorldLoaded = function()
-	SplitOwnerBlacklist[#SplitOwnerBlacklist] = "yf23.interceptor"
-
 	local firstActivePlayer = GetFirstActivePlayer()
 	TransferBaseToPlayer(SinglePlayerPlayer, firstActivePlayer)
 	StartCashSpread(3500)

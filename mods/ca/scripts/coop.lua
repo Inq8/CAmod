@@ -7,7 +7,41 @@ CoopPlayers = {}
 local MainPlayer
 
 ---@type string[]
-SplitOwnerBlacklist = {}
+SplitOwnerBlacklist = {
+	"badr",
+	"badr.bomber",
+	"badr.cbomber",
+	"badr.nbomber",
+	"badr.mbomber",
+	"badr.chaosbomber",
+	"b2b",
+	"p51",
+	"tran.paradrop",
+	"halo.paradrop",
+	"halo.paradrop.invuln",
+	"nhaw.paradrop",
+	"u2",
+	"u2.killzone",
+	"smig",
+	"a10.bomber",
+	"c17",
+	"c17.cargo",
+	"c17.clustermines",
+	"c17.xo",
+	"uav",
+	"ocar.reinforce",
+	"ocar.xo",
+	"horn",
+	"yf23.bomber",
+	"pod",
+	"pod2",
+	"pod3",
+	"anto",
+	"galx",
+	"galx.helios",
+	"yf23.interceptor",
+	"lst.reinforce"
+}
 
 ---@type integer
 local SharedBank = 0
@@ -888,8 +922,6 @@ CoopInit = function()
 
 	if baseSharingValue == "1" then
 		McvPerPlayer = false
-	elseif baseSharingValue == "2" then
-		McvPerPlayer = true
 	else
 		McvPerPlayer = true
 	end

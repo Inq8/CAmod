@@ -3,8 +3,7 @@ World:
 		Scripts: campaign.lua, coop.lua, ca|missions/main-campaign/ca19-proliferation/proliferation.lua, proliferation-coop.lua
 	ScriptLobbyDropdown@basesharing:
 		Values:
-			-2:
-			-3:
+			-0:
 		Default: 1
 		Locked: True
 	ScriptLobbyDropdown@incomeshare:
@@ -28,3 +27,7 @@ World:
 	LobbyMissionInfo@InitialObjectives:
 		Prefix: Initial Objectives
 		Text: • Establish and secure harvesting operations at all Tiberium fields.\n• Remove all Nod harvesting operations.
+
+^SendCashPower:
+	SendCashPower@SendCash:
+		Prerequisites: ~disabled
