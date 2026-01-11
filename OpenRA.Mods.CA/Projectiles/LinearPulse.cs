@@ -1035,8 +1035,11 @@ namespace OpenRA.Mods.CA.Projectiles
 		{
 			var world = args.SourceActor.World;
 
-			// Calculate distance from source to impact position (respecting damage grounding)
-			var distanceFromSource = (impactPos - source).Length;
+			// When ForceGround is enabled, use grounded source for all calculations to match visualization
+			var effectiveSource = info.ForceGround != LinearPulseForceGroundType.None ? new WPos(source.X, source.Y, 0) : source;
+
+			// Calculate distance from source to impact position using XY only to avoid Z-component errors
+			var distanceFromSource = (impactPos - effectiveSource).Length;
 
 			// Use the trapezoid segment length to determine how many segments we need
 			var segmentLength = info.TrapezoidSegmentLength.Length;
@@ -1056,11 +1059,8 @@ namespace OpenRA.Mods.CA.Projectiles
 				var caDebug = world.WorldActor.TraitOrDefault<WarheadDebugOverlayCA>();
 				if (caDebug != null)
 				{
-					// When ForceGround is true, visualize the trapezoid at ground level
-					var vizSource = info.ForceGround != LinearPulseForceGroundType.None ? new WPos(source.X, source.Y, 0) : source;
-
 					// Use exact overall trapezoid from start (0) to full range with configured widths
-					GetTrapezoidCorners(vizSource, forwardDir, 0, range, info.TrapezoidStartWidth.Length, info.TrapezoidEndWidth.Length,
+					GetTrapezoidCorners(effectiveSource, forwardDir, 0, range, info.TrapezoidStartWidth.Length, info.TrapezoidEndWidth.Length,
 						out var o1, out var o2, out var o3, out var o4);
 					caDebug.AddPolygonOutline(new[] { o1, o2, o3, o4 }, Color.Yellow, 1);
 				}
@@ -1070,12 +1070,10 @@ namespace OpenRA.Mods.CA.Projectiles
 			var segStart = Math.Max(0, distanceFromSource - segmentLength / 2);
 			var segEnd = Math.Min(range, distanceFromSource + segmentLength / 2);
 
-			// Calculate trapezoid width at start and end of this segment
-			var progressStart = (double)segStart / range;
-			var progressEnd = (double)segEnd / range;
-
-			var startWidthAtSeg = (int)(info.TrapezoidStartWidth.Length + progressStart * (info.TrapezoidEndWidth.Length - info.TrapezoidStartWidth.Length));
-			var endWidthAtSeg = (int)(info.TrapezoidStartWidth.Length + progressEnd * (info.TrapezoidEndWidth.Length - info.TrapezoidStartWidth.Length));
+			// Calculate trapezoid width at start and end of this segment using integer math
+			// to ensure consistent results at segment boundaries
+			var startWidthAtSeg = GetTrapezoidWidthAtDistance(segStart);
+			var endWidthAtSeg = GetTrapezoidWidthAtDistance(segEnd);
 
 			// Debug visualization for this segment (exact trapezoid outline)
 			if (debugVis != null && debugVis.CombatGeometry)
@@ -1083,8 +1081,7 @@ namespace OpenRA.Mods.CA.Projectiles
 				var caDebug = world.WorldActor.TraitOrDefault<WarheadDebugOverlayCA>();
 				if (caDebug != null)
 				{
-					var vizSource = info.ForceGround != LinearPulseForceGroundType.None ? new WPos(source.X, source.Y, 0) : source;
-					GetTrapezoidCorners(vizSource, forwardDir, segStart, segEnd, startWidthAtSeg, endWidthAtSeg,
+					GetTrapezoidCorners(effectiveSource, forwardDir, segStart, segEnd, startWidthAtSeg, endWidthAtSeg,
 						out var corner1, out var corner2, out var corner3, out var corner4);
 					caDebug.AddPolygonOutline(new[] { corner1, corner2, corner3, corner4 }, Color.Red, 1);
 				}
@@ -1096,7 +1093,7 @@ namespace OpenRA.Mods.CA.Projectiles
 				var halfMaxWidth = maxWidth / 2;
 				var segMid = (segStart + segEnd) / 2;
 				var normalizedForwardDir = Normalize1024OrDefault(forwardDir);
-				var segCenter = source + normalizedForwardDir * segMid / 1024;
+				var segCenter = effectiveSource + normalizedForwardDir * segMid / 1024;
 				var searchRadius = new WDist((segEnd - segStart) / 2 + halfMaxWidth + 512);
 
 				foreach (var actor in world.FindActorsInCircle(segCenter, searchRadius))
@@ -1113,7 +1110,7 @@ namespace OpenRA.Mods.CA.Projectiles
 							continue;
 					}
 
-					if (IsActorInTrapezoidSegment(actor, source, forwardDir, segStart, segEnd, startWidthAtSeg, endWidthAtSeg))
+					if (IsActorInTrapezoidSegment(actor, effectiveSource, forwardDir, segStart, segEnd, startWidthAtSeg, endWidthAtSeg))
 					{
 						// Calculate falloff data for all configured DamageFalloff settings
 						var falloffData = new List<(DamageFalloff Falloff, int FalloffDistance)>();
@@ -1154,7 +1151,7 @@ namespace OpenRA.Mods.CA.Projectiles
 								{
 									DamageCalculationType.HitShape => closestDistance,
 									DamageCalculationType.ClosestTargetablePosition => actor.GetTargetablePositions()
-										.Where(x => IsPositionInTrapezoidSegment(x, source, forwardDir, segStart, segEnd, startWidthAtSeg, endWidthAtSeg))
+										.Where(x => IsPositionInTrapezoidSegment(x, effectiveSource, forwardDir, segStart, segEnd, startWidthAtSeg, endWidthAtSeg))
 										.DefaultIfEmpty(actor.CenterPosition)
 										.Min(x => CalculateFalloffDistance(x, impactPos, damageFalloff)),
 									DamageCalculationType.CenterPosition => CalculateFalloffDistance(actor.CenterPosition, impactPos, damageFalloff),
@@ -1324,6 +1321,21 @@ namespace OpenRA.Mods.CA.Projectiles
 		static long CrossProduct2D(WVec a, WVec b)
 		{
 			return (long)a.X * b.Y - (long)a.Y * b.X;
+		}
+
+		/// <summary>
+		/// Calculates the trapezoid width at a given distance from the source using integer arithmetic
+		/// to ensure consistent results at segment boundaries.
+		/// </summary>
+		int GetTrapezoidWidthAtDistance(int distance)
+		{
+			var startWidth = info.TrapezoidStartWidth.Length;
+			var endWidth = info.TrapezoidEndWidth.Length;
+			var widthDelta = endWidth - startWidth;
+
+			// Use integer arithmetic with proper rounding: startWidth + (distance * widthDelta + range/2) / range
+			// The + range/2 ensures we round to nearest rather than truncate
+			return startWidth + (int)(((long)distance * widthDelta + range / 2) / range);
 		}
 
 		static WVec Normalize1024OrDefault(WVec v)
