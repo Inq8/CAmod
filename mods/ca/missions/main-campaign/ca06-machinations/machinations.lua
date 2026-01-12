@@ -194,7 +194,7 @@ WorldLoaded = function()
 
 	-- On proximity to lab, reveal it and update objectives.
 	Trigger.OnEnteredProximityTrigger(ResearchLab.CenterPosition, WDist.New(10 * 1024), function(a, id)
-		if a.EffectiveOwner == Greece then
+		if IsMissionPlayer(a.Owner) then
 			Trigger.RemoveProximityTrigger(id)
 			RevealLab()
 		end
