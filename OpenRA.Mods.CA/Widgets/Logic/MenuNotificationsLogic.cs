@@ -145,6 +145,12 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 					break;
 				}
 
+				var currentRelease = releases.FirstOrDefault(r => r.tag_name == currentVersion);
+
+				// If the current release is newer than the release we are checking, we can stop here since all subsequent releases will be older
+				if (currentRelease != null && release.created_at < currentRelease.created_at)
+					break;
+
 				DisplayAvailableUpdate(release);
 				versionCheck.Release = release;
 				break;
@@ -174,10 +180,10 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 		async Task FetchNotifications()
 		{
-			var apiUrl = $"https://ca.oraladder.net/notifications/{currentVersion}.json";
+			var apiUrl = $"https://raw.githubusercontent.com/darkademic/ca-notifications/refs/heads/main/{currentVersion}.json";
 			var client = HttpClientFactory.Create();
 			client.DefaultRequestHeaders.Add("User-Agent", "OpenRA-CombinedArms");
-			client.DefaultRequestHeaders.Add("Accept", "application/json");
+			client.DefaultRequestHeaders.Add("Accept", "application/vnd.github+json");
 
 			var httpResponseMessage = await client.GetAsync(apiUrl);
 
@@ -254,6 +260,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			return ReleaseType.Full;
 		}
+
 		VersionCheck GetLastVersionCheck()
 		{
 			var versionCheck = new VersionCheck()
