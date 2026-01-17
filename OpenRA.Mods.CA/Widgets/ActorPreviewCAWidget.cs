@@ -1,5 +1,5 @@
 #region Copyright & License Information
-/**
+/*
  * Copyright (c) The OpenRA Combined Arms Developers (see CREDITS).
  * This file is part of OpenRA Combined Arms, which is free software.
  * It is made available to you under the terms of the GNU General Public License
@@ -11,7 +11,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using OpenRA.Graphics;
+using OpenRA.Mods.CA.Graphics;
 using OpenRA.Mods.CA.Traits;
 using OpenRA.Mods.Common.Graphics;
 using OpenRA.Mods.Common.Traits;
@@ -25,7 +27,7 @@ namespace OpenRA.Mods.CA.Widgets
 	/// - Arbitrary player colors (not tied to map players)
 	/// - Preview rendering of overlay traits like WithColoredOverlay, WithPalettedOverlay
 	/// - Automatic palette swapping for player-colored sprites to use encyclopedia palette
-	/// Uses Render() instead of RenderUI() to get SpriteRenderables which already support IModifyableRenderable
+	/// Uses Render() instead of RenderUI() to get SpriteRenderables which already support IModifyableRenderable.
 	/// </summary>
 	public class ActorPreviewCAWidget : Widget
 	{
@@ -37,7 +39,7 @@ namespace OpenRA.Mods.CA.Widgets
 		readonly WorldViewportSizes viewportSizes;
 
 		IActorPreview[] preview = Array.Empty<IActorPreview>();
-		List<IActorPreviewRenderModifier> previewModifiers = new();
+		readonly List<IActorPreviewRenderModifier> previewModifiers = new();
 
 		public int2 PreviewOffset { get; private set; }
 		public int2 IdealPreviewSize { get; private set; }
@@ -108,51 +110,56 @@ namespace OpenRA.Mods.CA.Widgets
 		IFinalizedRenderable[] renderables;
 		readonly Dictionary<string, PaletteReference> paletteCache = new();
 
+		static readonly FieldInfo SpriteRenderableSpriteField = typeof(SpriteRenderable).GetField("sprite", BindingFlags.NonPublic | BindingFlags.Instance);
+		static readonly FieldInfo SpriteRenderablePosField = typeof(SpriteRenderable).GetField("pos", BindingFlags.NonPublic | BindingFlags.Instance);
+		static readonly FieldInfo SpriteRenderableScaleField = typeof(SpriteRenderable).GetField("scale", BindingFlags.NonPublic | BindingFlags.Instance);
+		static readonly FieldInfo SpriteRenderableRotationField = typeof(SpriteRenderable).GetField("rotation", BindingFlags.NonPublic | BindingFlags.Instance);
+
 		public override void PrepareRenderables()
 		{
+			var scale = GetScale() * viewportSizes.DefaultScale;
 			var origin = RenderOrigin + PreviewOffset + new int2(RenderBounds.Size.Width / 2, RenderBounds.Size.Height / 2);
 
-			// Calculate where WPos.Zero would render on screen in viewport coordinates
-			var zeroScreenPos = worldRenderer.ScreenPxPosition(WPos.Zero);
-			var viewportZeroPos = worldRenderer.Viewport.WorldToViewPx(zeroScreenPos);
-
-			// Calculate offset from that position to our desired screen position
-			// This offset in screen pixels needs to be converted to world units for OffsetBy
-			var screenOffset = origin - viewportZeroPos;
-
-			// Convert screen pixel offset to world vector
-			// The tile size and scale determine the conversion factor
-			var worldOffsetX = screenOffset.X * worldRenderer.TileScale / worldRenderer.TileSize.Width;
-			var worldOffsetY = screenOffset.Y * worldRenderer.TileScale / worldRenderer.TileSize.Height;
-			var worldOffset = new WVec(worldOffsetX, worldOffsetY, 0);
-
-			// Use Render() at WPos.Zero to get SpriteRenderables which support IModifyableRenderable
-			// This allows WithColoredOverlayCA and alpha modifications to work automatically
+			// Use Render() to get SpriteRenderables (supports IModifyableRenderable),
+			// then convert to UI-space renderables so they are not affected by world viewport/camera.
 			var baseRenderables = preview
 				.SelectMany(p => p.Render(worldRenderer, WPos.Zero))
 				.OrderBy(WorldRenderer.RenderableZPositionComparisonKey)
 				.Select(r =>
 				{
-					// Offset each renderable to the correct screen position
-					r = r.OffsetBy(worldOffset);
+					if (r is not SpriteRenderable sr)
+						return r;
 
-					// Apply encyclopedia scale to SpriteRenderables
-					if (r is SpriteRenderable sr && GetScale() != 1f)
-					{
-						var scaleFactor = GetScale();
-						return new SpriteRenderable(
-							sr.GetType().GetField("sprite", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(sr) as Sprite,
-							sr.Pos,
-							sr.Offset,
-							sr.ZOffset,
-							sr.Palette,
-							(float)sr.GetType().GetField("scale", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(sr) * scaleFactor,
-							sr.Alpha,
-							sr.Tint,
-							sr.TintModifiers,
-							sr.IsDecoration);
-					}
-					return r;
+					// SpriteRenderable's sprite/pos/scale/rotation are private; extract them once here.
+					// These field names are stable within this engine version.
+					var sprite = (Sprite)SpriteRenderableSpriteField.GetValue(sr);
+					var basePos = (WPos)SpriteRenderablePosField.GetValue(sr);
+					var baseScale = (float)SpriteRenderableScaleField.GetValue(sr);
+					var rotation = (WAngle)SpriteRenderableRotationField.GetValue(sr);
+
+					var totalScale = baseScale * scale;
+
+					// Map the world-space renderable position into the encyclopedia widget UI coordinate space.
+					// This mirrors the semantics of Animation.RenderUI (pos + scaled offsets - half sprite size).
+					var baseOffsetPx = (totalScale * worldRenderer.ScreenPosition(basePos)).ToInt2();
+					var offsetPx = (totalScale * worldRenderer.ScreenVectorComponents(sr.Offset)).XY.ToInt2();
+					var halfSizePx = new int2((int)(totalScale * sprite.Size.X / 2), (int)(totalScale * sprite.Size.Y / 2));
+					var screenPos = origin + baseOffsetPx + offsetPx - halfSizePx;
+
+					return new UIModifyableSpriteRenderable(
+						sprite,
+						sr.Pos,
+						screenPos,
+						sr.ZOffset,
+						sr.Palette,
+						totalScale,
+						sr.Alpha,
+						sr.Tint,
+						sr.TintModifiers,
+						sr.IsDecoration,
+						rotation.RendererRadians(),
+						worldRenderer.TileSize,
+						worldRenderer.TileScale);
 				})
 				.ToList();
 
@@ -176,7 +183,7 @@ namespace OpenRA.Mods.CA.Widgets
 
 		/// <summary>
 		/// Swaps player-colored palettes to encyclopedia palettes.
-		/// e.g., "playerGreece" -> "encyclopedia", "playertdNod" -> "encyclopediatd", "playerscrinScrin" -> "encyclopediascrin"
+		/// e.g., "playerGreece" -> "encyclopedia", "playertdNod" -> "encyclopediatd", "playerscrinScrin" -> "encyclopediascrin".
 		/// </summary>
 		IRenderable SwapPlayerPalette(IRenderable r)
 		{
