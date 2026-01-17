@@ -334,7 +334,6 @@ OILB:
 		RequireValidFaction: True
 		RequiresPlayableOwner: True
 		RequiresCondition: base-sharing-enabled
-	AllyProxyRallyPoint:
 	GrantConditionOnLobbyOption@BaseSharing:
 		Name: basesharing
 		Values: 1
@@ -360,7 +359,7 @@ OILB:
 	ProvidesPrerequisite@HasRealProductionBuilding:
 		Prerequisite: has.helicopter.production.building
 
-^COOPQueueUpdater:
+^COOPProducer:
 	Inherits@QueueUpdater: ^QueueUpdater
 	DummyConditionGranter@MQ:
 		Condition: global-multiqueue
@@ -372,7 +371,7 @@ OILB:
 		Condition: global-multiqueuefull
 
 ^COOPProducesUnits:
-	Inherits@COOPQueueUpdater: ^COOPQueueUpdater
+	Inherits@COOPProducer: ^COOPProducer
 	AlwaysVisible:
 	Selectable:
 		Priority: 1
@@ -384,8 +383,7 @@ OILB:
 	RallyPoint:
 
 ^COOPProducesBuildings:
-	Inherits@COOPQueueUpdater: ^COOPQueueUpdater
-	Inherits@PRIMARY: ^PrimaryBuilding
+	Inherits@COOPProducer: ^COOPProducer
 	Production@SQBLD:
 		Produces: BuildingSQ, DefenseSQ
 		RequiresCondition: !global-multiqueuefull
@@ -404,7 +402,6 @@ OILB:
 
 ^COOPProducesNaval:
 	Inherits: ^COOPProducesUnits
-	Inherits@PRIMARY: ^PrimaryBuilding
 	Production:
 		Produces: ShipSQ, Boat, Submarine
 		RequiresCondition: !global-multiqueue
@@ -413,18 +410,11 @@ OILB:
 
 ^COOPProducesAircraft:
 	Inherits: ^COOPProducesUnits
-	Inherits@PRIMARY: ^PrimaryBuilding
 	ProvidesPrerequisite@any:
 		Prerequisite: aircraft.any
 	Production:
 		Produces: AircraftSQ, Plane, Helicopter
 		RequiresCondition: !global-multiqueue && !has-real-building
-	GrantConditionOnPrerequisite@KoreanBonus:
-		Prerequisites: korea.coalition
-		Condition: korea-coalition
-	DamageMultiplier@KoreanBonus:
-		Modifier: 50
-		RequiresCondition: korea-coalition
 	GrantExternalConditionToProduced:
 		Condition: produced
 	GrantConditionOnPrerequisite@HasRealProductionBuilding:
@@ -442,7 +432,6 @@ OILB:
 
 ^COOPProducesInfantry:
 	Inherits: ^COOPProducesUnits
-	Inherits@PRIMARY: ^PrimaryBuilding
 	Production:
 		Produces: InfantrySQ, Cyborg, Soldier, ParadropInfantry
 		RequiresCondition: !global-multiqueue && !has-real-building
@@ -463,7 +452,7 @@ OILB:
 		Produces: InfantrySQ, Cyborg, ParadropInfantry, Upgrade
 
 ^COOPProducesUpgrades:
-	Inherits@COOPQueueUpdater: ^COOPQueueUpdater
+	Inherits@COOPProducer: ^COOPProducer
 	Production:
 		Produces: Upgrade
 	ProvidesPrerequisite@UpgradesProducer:

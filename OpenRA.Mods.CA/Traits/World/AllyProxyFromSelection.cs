@@ -42,7 +42,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			var selectedBuildings = new HashSet<Actor>();
 
-			// Find all selected ally buildings with AllyProxyRallyPoint and get their proxies
+			// Find all selected ally buildings with AllyProxyProduction and get their proxies
 			foreach (var actor in world.Selection.Actors.ToList())
 			{
 				if (actor.IsDead || !actor.IsInWorld)
@@ -52,11 +52,11 @@ namespace OpenRA.Mods.CA.Traits
 				if (actor.Owner == localPlayer || !actor.Owner.IsAlliedWith(localPlayer))
 					continue;
 
-				var allyProxyRallyPoint = actor.TraitOrDefault<AllyProxyRallyPoint>();
-				if (allyProxyRallyPoint == null || allyProxyRallyPoint.IsTraitDisabled)
+				var proxyCreator = actor.TraitOrDefault<CreateProxyActorForAllies>();
+				if (proxyCreator == null || proxyCreator.IsTraitDisabled)
 					continue;
 
-				var proxy = allyProxyRallyPoint.GetProxyActor(localPlayer);
+				var proxy = proxyCreator.GetProxyForPlayer(localPlayer);
 				if (proxy != null && !proxy.IsDead && proxy.IsInWorld)
 				{
 					selectedBuildings.Add(actor);
