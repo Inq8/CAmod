@@ -294,14 +294,7 @@ namespace OpenRA.Mods.CA.Traits
 
 				foreach (var b in bases)
 					foreach (var r in b.Trait.RangeCircleRenderables())
-						yield return new RangeCircleAnnotationRenderable(
-							b.Actor.CenterPosition,
-							b.Trait.Info.Range,
-							0,
-							b.Trait.Ready() ? b.Trait.Info.CircleReadyColor : b.Trait.Info.CircleBlockedColor,
-							b.Trait.Info.CircleWidth,
-							b.Trait.Info.CircleBorderColor,
-							b.Trait.Info.CircleBorderWidth);
+						yield return r;
 			}
 		}
 
