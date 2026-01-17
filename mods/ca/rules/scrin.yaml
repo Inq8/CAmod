@@ -1045,7 +1045,7 @@ STLK:
 		Instant: true
 	Cloak@NORMAL:
 		InitialDelay: 0
-		CloakDelay: 375
+		CloakDelay: 750
 		CloakSound: stlk-cloak.aud
 		UncloakSound: stlk-uncloak.aud
 		CloakedCondition: hidden
@@ -1059,7 +1059,7 @@ STLK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden)
 	GrantTimedCondition@CloakActive:
 		Condition: cloak-active
-		Duration: 375
+		Duration: 750
 		ForceFullDuration: true
 		RequiresCondition: cloak-triggered
 	GrantTimedCondition@Uncloaked:
