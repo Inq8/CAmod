@@ -11,7 +11,7 @@ World:
 	ScriptLobbyDropdown@basesharing:
 		ID: basesharing
 		Label: Base Sharing
-		Description: When base sharing is enabled you can produce from the production buildings of teammates if you don't have your own. The most recently built will be used.\nNo effect in baseless missions.\nUpgrades are never shared.
+		Description: When base sharing is enabled you can produce from the production buildings of teammates\n   if you don't have your own (the most recently built will be used).\n\n- No effect in baseless missions.\n- Upgrades are never shared.\n- When enabled, the first player will own any initial MCV or Construction Yard.
 		Values:
 			0: Off
 			1: On
@@ -21,7 +21,7 @@ World:
 	ScriptLobbyDropdown@incomeshare:
 		ID: incomeshare
 		Label: Income Sharing
-		Description: Shares a percentage of all player refinery income with all other players.\nFor technical reasons this makes silos useless.\nChoosing options with bonus income may make the mission significantly easier.
+		Description: Shares a percentage of all player refinery income with all other players.\n\nFor technical reasons this makes silos useless.\n\nChoosing options with bonus income may make the mission significantly easier.
 		Values:
 			0: Off
 			100: Equally Split
@@ -29,15 +29,15 @@ World:
 			150: Equal +50% Per Ally
 			175: Equal +75% Per Ally
 			999: Full Amount to All
-			10: 10%
-			15: 15%
-			20: 20%
-			25: 25%
-			30: 30%
-			35: 35%
-			40: 40%
-			45: 45%
-			50: 50%
+			10: 10% Shared
+			15: 15% Shared
+			20: 20% Shared
+			25: 25% Shared
+			30: 30% Shared
+			35: 35% Shared
+			40: 40% Shared
+			45: 45% Shared
+			50: 50% Shared
 		Default: 100
 		DisplayOrder: 999
 
@@ -77,7 +77,7 @@ World:
 	ScriptLobbyDropdown@oremines:
 		ID: oremines
 		Label: Resource Spawners
-		Description: Adjustements to resource spawners on the map.\n\nNo change: Resource spawners are unchanged\nAdditional: Adds a mine or blossom tree to every field that has none. Amount varies from map to map.\nUpgrade: All ore mines become gem mines, all green blossom trees become blue blossom trees.\nAdd & Upgrade: Adds spawners and upgrades all of them\nDelete all: Remove all spawners. Warning: All resources are finite now. This can make some missions extremely difficult or impossible without near-perfect execution.
+		Description: Adjustements to resource spawners on the map.\n\n- No change: Resource spawners are unchanged\n- Additional: Adds a mine or blossom tree to every field that has none. Amount varies from map to map.\n- Upgrade: All ore mines become gem mines, all green blossom trees become blue blossom trees.\n- Add & Upgrade: Adds spawners and upgrades all of them\n- Delete All: Remove all spawners. Warning: All resources are finite now. This can make some missions\n     extremely difficult or impossible without near-perfect execution.
 		Values:
 			oreoff: No Change
 			oreon: Additional
@@ -90,7 +90,7 @@ World:
 	ScriptLobbyDropdown@enmp:
 		ID: enmp
 		Label: Duplicate Enemy Starting Units
-		Description: Multiplies starting ground combat units of the enemy.\nSome missions may become unbeatable if this value is raised.
+		Description: Multiplies starting ground combat units of the enemy.\n\nSome missions may become unbeatable if this value is raised.
 		Values:
 			999: x Player Count
 			0: 1x (Off)
@@ -106,14 +106,14 @@ World:
 			10: 11x
 			11: 12x (Stop it!)
 			19: 20x (CPU may melt)
-			39: 50x (Abandon all hope!!!)
+			49: 50x (Abandon all hope!!!)
 		Default: 0
 		DisplayOrder: 1000
 
 	ScriptLobbyDropdown@prmp:
 		ID: prmp
 		Label: Duplicate Enemy Produced Units
-		Description: Copies any ground combat units the enemy AI produces.\nThis raises the difficulty significantly and should be used with care.
+		Description: Copies any ground combat units the enemy AI produces.\n\nThis raises the difficulty significantly and should be used with care.
 		Values:
 			999: x Player Count
 			0: 1x (Off)
@@ -136,7 +136,7 @@ World:
 	ScriptLobbyDropdown@pfollow:
 		ID: pfollow
 		Label: Produced Duplicates Follow
-		Description: Odds that a duplicated produced unit will follow the unit they are copied from, and go hunting when it dies.\nLeads to bigger attack waves.\nFollowers will also switch to hunt mode after a while to prevent clogging of production areas.
+		Description: Odds that a duplicated produced unit will follow the unit they are copied from and go hunting when it dies.\n\nLeads to bigger attack waves.\n\nFollowers will also switch to hunt mode after a while to prevent clogging up production areas.
 		Values:
 			0: 0 (Will never happen)
 			1: 1
@@ -164,7 +164,7 @@ World:
 	ScriptLobbyDropdown@pwander:
 		ID: pwander
 		Label: Produced Duplicates Wander
-		Description: Odds that a duplicated produced unit will roam around the map randomly.\nLeading to unpredictable attack directions and random enemies at unexpected locations.
+		Description: Odds that a duplicated produced unit will roam around the map randomly.\n\nResults in unpredictable attack directions and random enemies at unexpected locations.
 		Values:
 			0: 0 (Will never happen)
 			1: 1
@@ -178,7 +178,7 @@ World:
 	ScriptLobbyDropdown@pidle:
 		ID: pidle
 		Label: Produced Duplicates Idle
-		Description: Odds that a duplicated produced unit will just stand around and will only move and attack when enemies get near them or they are attacked.\nThis results in bases full of enemies.\nThis value will default to 1 if all other values are 0.
+		Description: Odds that a duplicated produced unit will just stand around and will only move\n   and attack when enemies get near them or they are attacked.\n\nThis results in bases full of enemies.\n\nThis value will default to 1 if all other values are 0.
 		Values:
 			0: 0 (Will never happen)
 			1: 1
@@ -192,7 +192,7 @@ World:
 	ScriptLobbyDropdown@sfollow:
 		ID: sfollow
 		Label: Starter Duplicates Follow
-		Description: Odds that a duplicated starting unit will follow the unit they are copied from, and go hunting when it dies.\nResults in bigger garrisons and patrols.
+		Description: Odds that a duplicated starting unit will follow the unit they are copied from, and go hunting when it dies.\n\nResults in bigger garrisons and patrols.
 		Values:
 			0: 0 (Will never happen)
 			1: 1
@@ -206,7 +206,7 @@ World:
 	ScriptLobbyDropdown@shunt:
 		ID: shunt
 		Label: Starter Duplicates Hunt
-		Description: Odds that a duplicated starting unit will immediately go and attack the players.\nCan lead to being rushed in the early game.
+		Description: Odds that a duplicated starting unit will immediately go and attack the players.\n\nCan lead to being rushed in the early game.
 		Values:
 			0: 0 (Will never happen)
 			1: 1
@@ -220,7 +220,7 @@ World:
 	ScriptLobbyDropdown@swander:
 		ID: swander
 		Label: Starter Duplicates Wander
-		Description: Odds that a duplicated starting unit will roam around the map randomly.\nResults in unpredictable attack directions and random enemies at unexpected locations.
+		Description: Odds that a duplicated starting unit will roam around the map randomly.\n\nResults in unpredictable attack directions and random enemies at unexpected locations.
 		Values:
 			0: 0 (Will never happen)
 			1: 1
@@ -234,7 +234,7 @@ World:
 	ScriptLobbyDropdown@sidle:
 		ID: sidle
 		Label: Starter Duplicates Idle
-		Description: Odds that a duplicated starting unit will just stand around and will only move and attack when enemies get near them or they are attacked.\nThis results in bases full of enemies.\nThis value will default to 1 if all other values are 0.
+		Description: Odds that a duplicated starting unit will just stand around and will only move\n   and attack when enemies get near them or they are attacked.\n\nThis results in bases full of enemies.\n\nThis value will default to 1 if all other values are 0.
 		Values:
 			0: 0 (Will never happen)
 			1: 1
@@ -248,7 +248,7 @@ World:
 	ScriptLobbyDropdown@multiplyaircraft:
 		ID: multiplyaircraft
 		Label: Also Duplicate Aircraft
-		Description: EXPERIMENTAL\nInclude aircraft in the unit duplication.\nThe AI may have problems resupplying them all.
+		Description: EXPERIMENTAL\n\nInclude aircraft in the unit duplication.\n\nThe AI may have problems resupplying them all.
 		Values:
 			domulti: On (Multiply)
 			dontmulti: Off (Don't multiply)
