@@ -89,6 +89,8 @@ namespace OpenRA.Mods.CA.Traits
 
 		public readonly SpawnerSlaveBaseEntry[] SlaveEntries;
 
+		int nextExitIndex = 0;
+
 		public SpawnerMasterBase(ActorInitializer init, SpawnerMasterBaseInfo info)
 			: base(info)
 		{
@@ -218,7 +220,19 @@ namespace OpenRA.Mods.CA.Traits
 
 		public virtual void SpawnIntoWorld(Actor self, Actor slave, WPos centerPosition)
 		{
-			var exit = self.RandomExitOrDefault(self.World, null);
+			var exits = self.Exits().ToList();
+			Exit exit;
+
+			if (exits.Count == 0)
+			{
+				exit = null;
+			}
+			else
+			{
+				exit = exits[nextExitIndex % exits.Count];
+				nextExitIndex = (nextExitIndex + 1) % exits.Count;
+			}
+
 			SetSpawnedFacing(slave, exit);
 
 			self.World.AddFrameEndTask(w =>
