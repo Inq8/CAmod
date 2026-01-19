@@ -40,7 +40,7 @@ namespace OpenRA.Mods.CA.Traits
 
 	public class DelayedWeaponAttachable : ConditionalTrait<DelayedWeaponAttachableInfo>, ITick, INotifyKilled, ISelectionBar, INotifyTransform, INotifyRemovedFromWorld
 	{
-		public HashSet<DelayedWeaponTrigger> Container { get; private set; }
+		public List<DelayedWeaponTrigger> Container { get; private set; }
 
 		readonly Actor self;
 		readonly HashSet<Actor> detectors = new HashSet<Actor>();
@@ -52,7 +52,7 @@ namespace OpenRA.Mods.CA.Traits
 			: base(info)
 		{
 			this.self = self;
-			Container = new HashSet<DelayedWeaponTrigger>();
+			Container = new List<DelayedWeaponTrigger>();
 		}
 
 		void ITick.Tick(Actor self)
@@ -62,7 +62,7 @@ namespace OpenRA.Mods.CA.Traits
 				foreach (var trigger in Container)
 					trigger.Tick(self);
 
-				Container.RemoveWhere(p => !p.IsValid);
+				Container.RemoveAll(p => !p.IsValid);
 
 				while (tokens.Count > Container.Count)
 					self.RevokeCondition(tokens.Pop());
@@ -81,7 +81,7 @@ namespace OpenRA.Mods.CA.Traits
 					trigger.Activate(self);
 				}
 
-				Container.RemoveWhere(p => !p.IsValid);
+				Container.RemoveAll(p => !p.IsValid);
 			}
 		}
 
@@ -150,7 +150,7 @@ namespace OpenRA.Mods.CA.Traits
 				foreach (var trigger in Container)
 					trigger.Activate(self);
 
-				Container.RemoveWhere(p => !p.IsValid);
+				Container.RemoveAll(p => !p.IsValid);
 
 				while (tokens.Count > 0 && Container.Count == 0)
 					self.RevokeCondition(tokens.Pop());

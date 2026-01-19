@@ -45,7 +45,10 @@ namespace OpenRA.Mods.CA.Traits
 
 		void INotifyAttack.Attacking(Actor self, in Target target, Armament a, Barrel barrel)
 		{
-			self.QueueActivity(false, new Dive(target, aircraft, Info.Speed.Length));
+			self.QueueActivity(false, new Dive(target, aircraft, Info.Speed.Length, () =>
+			{
+				self.Kill(self);
+			}));
 
 			if (Info.DiveCondition != null)
 				self.GrantCondition(Info.DiveCondition);

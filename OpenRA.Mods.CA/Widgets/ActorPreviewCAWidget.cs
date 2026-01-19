@@ -1,5 +1,5 @@
 #region Copyright & License Information
-/**
+/*
  * Copyright (c) The OpenRA Combined Arms Developers (see CREDITS).
  * This file is part of OpenRA Combined Arms, which is free software.
  * It is made available to you under the terms of the GNU General Public License
@@ -11,12 +11,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using OpenRA.Graphics;
+using OpenRA.Mods.CA.Graphics;
 using OpenRA.Mods.CA.Traits;
 using OpenRA.Mods.Common.Graphics;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
-using OpenRA.Traits;
 using OpenRA.Widgets;
 
 namespace OpenRA.Mods.CA.Widgets
@@ -26,6 +27,7 @@ namespace OpenRA.Mods.CA.Widgets
 	/// - Arbitrary player colors (not tied to map players)
 	/// - Preview rendering of overlay traits like WithColoredOverlay, WithPalettedOverlay
 	/// - Automatic palette swapping for player-colored sprites to use encyclopedia palette
+	/// Uses Render() instead of RenderUI() to get SpriteRenderables which already support IModifyableRenderable.
 	/// </summary>
 	public class ActorPreviewCAWidget : Widget
 	{
@@ -37,7 +39,7 @@ namespace OpenRA.Mods.CA.Widgets
 		readonly WorldViewportSizes viewportSizes;
 
 		IActorPreview[] preview = Array.Empty<IActorPreview>();
-		List<IActorPreviewRenderModifier> previewModifiers = new();
+		readonly List<IActorPreviewRenderModifier> previewModifiers = new();
 
 		public int2 PreviewOffset { get; private set; }
 		public int2 IdealPreviewSize { get; private set; }
@@ -108,16 +110,60 @@ namespace OpenRA.Mods.CA.Widgets
 		IFinalizedRenderable[] renderables;
 		readonly Dictionary<string, PaletteReference> paletteCache = new();
 
+		static readonly FieldInfo SpriteRenderableSpriteField = typeof(SpriteRenderable).GetField("sprite", BindingFlags.NonPublic | BindingFlags.Instance);
+		static readonly FieldInfo SpriteRenderablePosField = typeof(SpriteRenderable).GetField("pos", BindingFlags.NonPublic | BindingFlags.Instance);
+		static readonly FieldInfo SpriteRenderableScaleField = typeof(SpriteRenderable).GetField("scale", BindingFlags.NonPublic | BindingFlags.Instance);
+		static readonly FieldInfo SpriteRenderableRotationField = typeof(SpriteRenderable).GetField("rotation", BindingFlags.NonPublic | BindingFlags.Instance);
+
 		public override void PrepareRenderables()
 		{
 			var scale = GetScale() * viewportSizes.DefaultScale;
 			var origin = RenderOrigin + PreviewOffset + new int2(RenderBounds.Size.Width / 2, RenderBounds.Size.Height / 2);
 
-			IEnumerable<IRenderable> baseRenderables = preview
-				.SelectMany(p => p.RenderUI(worldRenderer, origin, scale));
+			// Use Render() to get SpriteRenderables (supports IModifyableRenderable),
+			// then convert to UI-space renderables so they are not affected by world viewport/camera.
+			var baseRenderables = preview
+				.SelectMany(p => p.Render(worldRenderer, WPos.Zero))
+				.OrderBy(WorldRenderer.RenderableZPositionComparisonKey)
+				.Select(r =>
+				{
+					if (r is not SpriteRenderable sr)
+						return r;
+
+					// SpriteRenderable's sprite/pos/scale/rotation are private; extract them once here.
+					// These field names are stable within this engine version.
+					var sprite = (Sprite)SpriteRenderableSpriteField.GetValue(sr);
+					var basePos = (WPos)SpriteRenderablePosField.GetValue(sr);
+					var baseScale = (float)SpriteRenderableScaleField.GetValue(sr);
+					var rotation = (WAngle)SpriteRenderableRotationField.GetValue(sr);
+
+					var totalScale = baseScale * scale;
+
+					// Map the world-space renderable position into the encyclopedia widget UI coordinate space.
+					// This mirrors the semantics of Animation.RenderUI (pos + scaled offsets - half sprite size).
+					var baseOffsetPx = (totalScale * worldRenderer.ScreenPosition(basePos)).ToInt2();
+					var offsetPx = (totalScale * worldRenderer.ScreenVectorComponents(sr.Offset)).XY.ToInt2();
+					var halfSizePx = new int2((int)(totalScale * sprite.Size.X / 2), (int)(totalScale * sprite.Size.Y / 2));
+					var screenPos = origin + baseOffsetPx + offsetPx - halfSizePx;
+
+					return new UIModifyableSpriteRenderable(
+						sprite,
+						sr.Pos,
+						screenPos,
+						sr.ZOffset,
+						sr.Palette,
+						totalScale,
+						sr.Alpha,
+						sr.Tint,
+						sr.TintModifiers,
+						sr.IsDecoration,
+						rotation.RendererRadians(),
+						worldRenderer.TileSize,
+						worldRenderer.TileScale);
+				})
+				.ToList();
 
 			// Calculate scaled bounds for modifiers
-			// The bounds are centered around origin, scaled appropriately
 			var scaledBounds = new Rectangle(
 				origin.X - (int)(IdealPreviewSize.X * GetScale() / 2),
 				origin.Y - (int)(IdealPreviewSize.Y * GetScale() / 2),
@@ -126,20 +172,18 @@ namespace OpenRA.Mods.CA.Widgets
 
 			// Apply preview modifiers
 			foreach (var modifier in previewModifiers)
-				baseRenderables = modifier.ModifyPreviewRender(worldRenderer, baseRenderables, scaledBounds);
+				baseRenderables = modifier.ModifyPreviewRender(worldRenderer, baseRenderables, scaledBounds).ToList();
 
 			// Swap player palettes to encyclopedia palettes for proper coloring
-			baseRenderables = baseRenderables.Select(r => SwapPlayerPalette(r));
-
 			renderables = baseRenderables
-				.OrderBy(WorldRenderer.RenderableZPositionComparisonKey)
+				.Select(r => SwapPlayerPalette(r))
 				.Select(r => r.PrepareRender(worldRenderer))
 				.ToArray();
 		}
 
 		/// <summary>
 		/// Swaps player-colored palettes to encyclopedia palettes.
-		/// e.g., "playerGreece" -> "encyclopedia", "playertdNod" -> "encyclopediatd", "playerscrinScrin" -> "encyclopediascrin"
+		/// e.g., "playerGreece" -> "encyclopedia", "playertdNod" -> "encyclopediatd", "playerscrinScrin" -> "encyclopediascrin".
 		/// </summary>
 		IRenderable SwapPlayerPalette(IRenderable r)
 		{
@@ -165,7 +209,12 @@ namespace OpenRA.Mods.CA.Widgets
 						paletteCache[newPaletteName] = newPalette;
 					}
 
-					return pr.WithPalette(newPalette);
+					var ret = (IRenderable)pr.WithPalette(newPalette);
+
+					if (r is IModifyableRenderable mr && ret is IModifyableRenderable retMr)
+						ret = retMr.WithAlpha(mr.Alpha).WithTint(mr.Tint, mr.TintModifiers);
+
+					return ret;
 				}
 			}
 

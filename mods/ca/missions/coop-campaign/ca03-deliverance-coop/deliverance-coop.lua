@@ -1,4 +1,3 @@
-ExtraPrerequisiteFactions = { "gdi" }
 
 SetupPlayers = function()
 	Multi0 = Player.GetPlayer("Multi0")
@@ -26,6 +25,13 @@ AfterTick = function()
 end
 
 TransferGDIUnits = function()
+	Utils.Do(MissionPlayers, function(p)
+		p.PlayLowPowerNotification = false
+		Trigger.AfterDelay(DateTime.Seconds(10), function()
+			p.PlayLowPowerNotification = true
+		end)
+	end)
+
 	local gdiForces = GDI.GetActors()
 	Utils.Do(gdiForces, function(a)
 		if a.Type ~= "player" then
@@ -35,7 +41,6 @@ TransferGDIUnits = function()
 
 	Trigger.AfterDelay(1, function()
 		TransferBaseToPlayer(SinglePlayerPlayer, GetFirstActivePlayer())
-		CACoopQueueSyncer()
 	end)
 end
 

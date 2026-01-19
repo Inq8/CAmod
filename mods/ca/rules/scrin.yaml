@@ -177,14 +177,6 @@ VEHICLES.SCRIN:
 	Targetable@FleetRecallable:
 		TargetTypes: FleetRecallable
 
-^SignalTransmitterSpeedBoost:
-	GrantConditionOnPrerequisite@SignalTransmitterSpeedBoost:
-		Condition: sign-speed
-		Prerequisites: sign
-	SpeedMultiplier@SignalTransmitterSpeedBoost:
-		Modifier: 110
-		RequiresCondition: sign-speed
-
 ^IonConduits:
 	GrantConditionOnPrerequisite@IONCON:
 		Condition: ioncon-upgrade
@@ -594,6 +586,9 @@ S3:
 		Weapon: DisintegratorBeam
 		LocalOffset: 150,0,400
 		PauseOnCondition: !ammo
+	Armament@Targeter:
+		Weapon: DisintegratorBeamTargeter
+		LocalOffset: 150,0,400
 	Armament@BATF:
 		Name: batf
 		Weapon: DisintegratorBeamBATF
@@ -1053,7 +1048,7 @@ STLK:
 		Instant: true
 	Cloak@NORMAL:
 		InitialDelay: 0
-		CloakDelay: 375
+		CloakDelay: 750
 		CloakSound: stlk-cloak.aud
 		UncloakSound: stlk-uncloak.aud
 		CloakedCondition: hidden
@@ -1067,7 +1062,7 @@ STLK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden)
 	GrantTimedCondition@CloakActive:
 		Condition: cloak-active
-		Duration: 375
+		Duration: 750
 		ForceFullDuration: true
 		RequiresCondition: cloak-triggered
 	GrantTimedCondition@Uncloaked:
@@ -1660,7 +1655,7 @@ SEEK:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Buildings
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
-		Attributes: • Detects cloaked units, spies and submarines.\n• Can traverse water
+		Attributes: • Detects cloaked units, spies and submarines\n• Can traverse water
 	Mobile:
 		Speed: 126
 		Locomotor: lighthover
@@ -1743,7 +1738,7 @@ LACE:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Buildings
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
-		Attributes: • Detects cloaked units, spies and submarines.\n• Can traverse water
+		Attributes: • Detects cloaked units, spies and submarines\n• Can traverse water
 	Mobile:
 		TurnSpeed: 40
 		Speed: 144
@@ -2644,7 +2639,7 @@ TPOD:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
 		Weaknesses: • Cannot attack Aircraft
-		Attributes: • Can crush concrete walls.\n• Self repairs on Tiberium or other resources when not in combat.
+		Attributes: • Can crush concrete walls\n• Self repairs on Tiberium or other resources when not in combat
 	Voiced:
 		VoiceSet: TripodVoice
 	Valued:
@@ -2736,7 +2731,7 @@ RTPD:
 		BuildPaletteOrder: 282
 		Prerequisites: scrt, ~vehicles.reaper, ~techlevel.high
 	TooltipExtras:
-		Attributes: • Can crush concrete walls.\n• Weapons empowered by Tiberium or other resources\n• Self repairs on Tiberium or other resources when not in combat.
+		Attributes: • Can crush concrete walls\n• Weapons empowered by Tiberium or other resources\n• Self repairs on Tiberium or other resources when not in combat
 	Valued:
 		Cost: 2200
 	Tooltip:
@@ -3508,7 +3503,6 @@ DEVA:
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
 	Inherits@FleetRecallable: ^FleetRecallable
-	Inherits@SignalTransmitterSpeedBoost: ^SignalTransmitterSpeedBoost
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 111
@@ -3588,7 +3582,7 @@ DEVA:
 		FacingTolerance: 40
 		ForceFireIgnoresActors: True
 		TargetFrozenActors: True
-		ChargeLevel: 100
+		ChargeLevel: 75
 		DischargeRate: 2
 		ChargingCondition: charging
 		ConditionChargeLevels: 1, 34, 67
@@ -3650,7 +3644,6 @@ PAC:
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
 	Inherits@FleetRecallable: ^FleetRecallable
-	Inherits@SignalTransmitterSpeedBoost: ^SignalTransmitterSpeedBoost
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 112
@@ -3671,7 +3664,7 @@ PAC:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 52000
+		HP: 56000
 	Armor:
 		Type: Aircraft
 	HitShape:
@@ -3734,7 +3727,7 @@ PAC:
 		SpawnAllAtOnce: false
 		LoadedCondition: inva-loaded
 		RequiresCondition: !empdisable && !being-warped
-		MaxSlaveDistance: 16c0
+		MaxSlaveDistance: 12c0
 	WithSpawnerMasterPipsDecoration:
 		Position: BottomLeft
 		Margin: 4, 3
@@ -3773,7 +3766,7 @@ PAC:
 		Types: Veterancy
 		Prerequisites: aircraft.upgraded
 	Shielded:
-		MaxStrength: 13000
+		MaxStrength: 14000
 	Turreted@SHIELDS:
 		Offset: -128,0,0
 	GpsRadarDot:
@@ -3886,7 +3879,6 @@ MSHP:
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
 	Inherits@FleetRecallable: ^FleetRecallable
-	Inherits@SignalTransmitterSpeedBoost: ^SignalTransmitterSpeedBoost
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 113
@@ -5320,14 +5312,14 @@ SIGN:
 		BuildLimit: 1
 		IconPalette: chromes
 	TooltipExtras:
-		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked\n• Boosts speed of fleet ships by 10%
+		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked
 	-Capturable:
 	-CaptureNotification:
 	-CapturableProgressBar:
 	-CapturableProgressBlink:
 	-CaptureManager:
 	Valued:
-		Cost: 1800
+		Cost: 1500
 	Tooltip:
 		Name: Signal Transmitter
 	Power:
@@ -5505,6 +5497,7 @@ MANI:
 		Amount: -200
 	MustBeDestroyed:
 		RequiredForShortGame: false
+	ProvidesPrerequisite@buildingname:
 	InfiltrateForSupportPowerReset:
 		Types: ResetSupportPowerInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
@@ -5889,6 +5882,8 @@ SSPK:
 	Inherits: SCOL
 	Tooltip:
 		Name: Storm Spike
+	Encyclopedia:
+		Category: Scrin/Support Powers
 	-Sellable:
 	-Buildable:
 	Health:
@@ -6081,11 +6076,11 @@ CSPK:
 	Tooltip:
 		Name: Colony Spike
 	TooltipExtras:
-		Attributes: • Produces non-defense buildings.
+		Attributes: • Produces non-defense buildings\n• Allows non-defense buildings to be built nearby once fully charged
 		Description: Enables production of non-defense buildings.
 	RevealsShroud:
 		MinRange: 6c0
-		Range: 10c0
+		Range: 8c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 6c0
@@ -6094,6 +6089,24 @@ CSPK:
 	Building:
 		TerrainTypes: Clear,Road
 		AllowPlacementOnResources: false
+	GivesBuildableArea:
+		AreaTypes: building
+	BaseProvider:
+		Range: 6c0
+		RequiresCondition: charged
+	WithRangeCircle:
+		Type: ColonySpike
+		Range: 6c0
+		Color: ffffff50
+		RequiresCondition: charged
+	ReloadAmmoPoolCA@Charged:
+		Delay: 4500
+		SelectionBarColor: FFFFFF
+		SelectionBarValidRelationships: Ally, Enemy, Neutral
+	AmmoPool@Charged:
+		Ammo: 1
+		InitialAmmo: 0
+		AmmoCondition: charged
 	-PrimaryBuilding:
 	-WithDecoration@primary:
 	-ProductionQueue@MQDEF:

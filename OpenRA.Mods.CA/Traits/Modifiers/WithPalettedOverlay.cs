@@ -117,7 +117,7 @@ namespace OpenRA.Mods.CA.Traits
 				yield return r;
 
 				// For preview rendering, apply palette swap to all paletted renderables
-				// (unlike in-game where we skip decorations)
+				// (unlike in-game where we skip decorations, because the colored overlay used for customising the actor color is a decoration)
 				if (palette != null && r is IPalettedRenderable pr)
 					yield return pr.WithPalette(palette)
 						.WithZOffset(r.ZOffset + 1)

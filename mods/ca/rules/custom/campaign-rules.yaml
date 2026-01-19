@@ -673,6 +673,8 @@ ETPD:
 		FireDelay: 22
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
+	AttackTurreted:
+		PauseOnCondition: empdisable || being-warped
 	Health:
 		HP: 900000
 	Shielded:
@@ -707,8 +709,14 @@ ETPD:
 		RequiresCondition: shields-up
 	Targetable@DriverKillImmune:
 		TargetTypes: DriverKillImmune
-	Targetable@BlindImmune:
-		TargetTypes: BlindImmune
+	RevealsShroudMultiplier@Blinded:
+		Modifier: 80
+	RangeMultiplier@Blinded:
+		Modifier: 80
+		RequiresCondition: blinded
+	FirepowerMultiplier@Blinded:
+		Modifier: 90
+		RequiresCondition: blinded
 	SpeedMultiplier@TEMPORAL:
 		Modifier: 75
 	ReloadDelayMultiplier@TEMPORAL:
@@ -769,6 +777,7 @@ VENG:
 		Speed: 10
 		Locomotor: sheavytracked
 		PauseOnCondition: empdisable || notmobile
+	-Crushable:
 	WithShadow:
 		Offset: 43, 128, 0
 		ZOffset: -129

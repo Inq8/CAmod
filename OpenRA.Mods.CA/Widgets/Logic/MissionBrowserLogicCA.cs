@@ -256,7 +256,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 					() => StartMissionClicked(onExit));
 
 				var label = item.Get<LabelWithTooltipWidget>("TITLE");
-				var missionTitle = CampaignProgressTracker.GetMapTileWithoutNumber(preview.Title);
+				var missionTitle = CampaignProgressTracker.GetMapTitleWithoutNumber(preview.Title);
 
 				if (campaignProgress.ContainsKey(missionTitle))
 				{

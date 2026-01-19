@@ -274,6 +274,22 @@ WorldLoaded = function()
 		DoCommandoDrop()
 	end
 
+	Trigger.OnAllKilledOrCaptured({ SovietFactory, SovietBarracks }, function()
+		SovietProductionDestroyed = true
+		if HawthorneClaimedSovietBase then
+			Squads.Main.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 })
+			Squads.Secondary.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 })
+		end
+	end)
+
+	Trigger.OnAllKilledOrCaptured({ NodAirstrip, NodHand }, function()
+		NodProductionDestroyed = true
+		if HawthorneClaimedNodBase then
+			Squads.Main.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 })
+			Squads.Secondary.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 })
+		end
+	end)
+
 	AfterWorldLoaded()
 end
 
@@ -407,7 +423,7 @@ FlipAlliedBase = function()
 end
 
 FlipNodBase = function()
-	if NodBaseFlipped or SovietBaseFlipped then
+	if NodBaseFlipped or SovietBaseFlipped or HawthorneClaimedNodBase then
 		return
 	end
 
@@ -433,7 +449,7 @@ FlipNodBase = function()
 end
 
 FlipSovietBase = function()
-	if SovietBaseFlipped or NodBaseFlipped then
+	if SovietBaseFlipped or NodBaseFlipped or HawthorneClaimedSovietBase then
 		return
 	end
 
@@ -459,12 +475,16 @@ FlipSovietBase = function()
 end
 
 HawthorneClaimRandomBase = function()
-	if HawthorneClaimedSovietBase and HawthorneClaimedNodBase then
+	-- no bases left to claim
+	if (HawthorneClaimedSovietBase or SovietBaseFlipped) and (HawthorneClaimedNodBase or NodBaseFlipped) then
 		return
-	elseif HawthorneClaimedSovietBase then
+	-- soviet base claimed, claim nod base
+	elseif HawthorneClaimedSovietBase or SovietBaseFlipped then
 		HawthorneClaimNodBase()
-	elseif HawthorneClaimedNodBase then
+	-- nod base claimed, claim soviet base
+	elseif HawthorneClaimedNodBase or NodBaseFlipped then
 		HawthorneClaimSovietBase()
+	-- both available, randomly choose one
 	else
 		local choice = Utils.Random({ "Soviet", "Nod" })
 		if choice == "Soviet" then
@@ -476,7 +496,7 @@ HawthorneClaimRandomBase = function()
 end
 
 HawthorneClaimSovietBase = function()
-	if HawthorneClaimedSovietBase then
+	if HawthorneClaimedSovietBase or SovietBaseFlipped then
 		return
 	end
 
@@ -524,17 +544,14 @@ HawthorneClaimSovietBase = function()
 	AutoRepairBuilding(sam, GDI)
 	AutoRebuildBuilding(sam, GDI, 10)
 
-	Squads.Main.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 30 })
-	Squads.Secondary.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 30 })
-
-	Trigger.OnAllKilledOrCaptured({ SovietFactory, SovietBarracks }, function()
-		Squads.Main.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 })
-		Squads.Secondary.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 })
-	end)
+	if not SovietProductionDestroyed then
+		Squads.Main.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 30 })
+		Squads.Secondary.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 30 })
+	end
 end
 
 HawthorneClaimNodBase = function()
-	if HawthorneClaimedNodBase then
+	if HawthorneClaimedNodBase or NodBaseFlipped then
 		return
 	end
 
@@ -547,8 +564,6 @@ HawthorneClaimNodBase = function()
 		Media.DisplayMessage("That Nod base has been sitting idle for too long. It's time I got some use out of it!", "Gen. Hawthorne", HSLColor.FromHex("F2CF74"))
 		MediaCA.PlaySound(MissionDir .. "/hth_nodequipauto.aud", 2)
 	end
-
-	InitAttackSquad(Squads.Nod, GDI)
 
 	local nodBaseActors = Utils.Where(Nod.GetActors(), function(a)
 		return not a.IsDead and a.Type ~= "player"
@@ -584,13 +599,10 @@ HawthorneClaimNodBase = function()
 	AutoRepairBuilding(nsam, GDI)
 	AutoRebuildBuilding(nsam, GDI, 10)
 
-	Squads.Main.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 30 })
-	Squads.Secondary.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 30 })
-
-	Trigger.OnAllKilledOrCaptured({ NodAirstrip, NodHand }, function()
-		Squads.Main.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 })
-		Squads.Secondary.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 })
-	end)
+	if not NodProductionDestroyed then
+		Squads.Main.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 30 })
+		Squads.Secondary.AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 30 })
+	end
 end
 
 DoDisruptorDrop = function()

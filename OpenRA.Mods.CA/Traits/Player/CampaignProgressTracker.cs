@@ -48,7 +48,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (!player.World.Map.Categories.Contains("Campaign"))
 				return;
 
-			var missionTitle = GetMapTileWithoutNumber(player.World.Map.Title);
+			var missionTitle = GetMapTitleWithoutNumber(player.World.Map.Title);
 			var worldActor = player.World.WorldActor;
 			var difficulty = worldActor.TraitsImplementing<ScriptLobbyDropdown>()
 				.FirstOrDefault(sld => sld.Info.ID == "difficulty");
@@ -124,16 +124,23 @@ namespace OpenRA.Mods.CA.Traits
 				developerCommandUsed = true;
 		}
 
-		public static string GetMapTileWithoutNumber(string mapTitle)
+		public static string GetMapTitleWithoutNumber(string mapTitle)
 		{
 			var firstColonIndex = mapTitle.IndexOf(": ");
 			var firstPeriodIndex = mapTitle.IndexOf(". ");
 			var splitIndex = firstColonIndex >= 0 ? firstColonIndex : firstPeriodIndex;
 
+			string result;
 			if (splitIndex >= 0)
-				return mapTitle.Substring(splitIndex + 2);
+				result = mapTitle.Substring(splitIndex + 2);
+			else
+				result = mapTitle;
 
-			return mapTitle;
+			var bracketIndex = result.IndexOf('(');
+			if (bracketIndex >= 0)
+				result = result.Substring(0, bracketIndex);
+
+			return result.TrimEnd();
 		}
 
 		public static Dictionary<string, MissionVictoryResult> GetCampaignProgress()

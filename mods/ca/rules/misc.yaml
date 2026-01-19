@@ -1163,7 +1163,7 @@ SPLITBLUE:
 veilofwar1:
 	Inherits: ^Veil
 	CreatesShroud:
-		Range: 3c512
+		Range: 3c0
 	KillsSelf:
 		Delay: 60
 	WithMakeAnimation:
@@ -1171,7 +1171,7 @@ veilofwar1:
 		Actor: veilofwar2
 	WithRangeCircle@VeilMaxRange:
 		Type: VeilOfWar
-		Range: 7c512
+		Range: 6c0
 		Visible: Always
 		Color: 999999AA
 	ProximityExternalCondition@Veiled:
@@ -1180,7 +1180,7 @@ veilofwar1:
 veilofwar2:
 	Inherits: ^Veil
 	CreatesShroud:
-		Range: 5c512
+		Range: 4c512
 	PeriodicExplosion:
 		Weapon: VeilMedium
 	KillsSelf:
@@ -1189,7 +1189,7 @@ veilofwar2:
 		Actor: veilofwar3
 	WithRangeCircle@VeilMaxRange:
 		Type: VeilOfWar
-		Range: 7c512
+		Range: 6c0
 		Visible: Always
 		Color: 999999AA
 	ProximityExternalCondition@Veiled:
@@ -1198,13 +1198,13 @@ veilofwar2:
 veilofwar3:
 	Inherits: ^Veil
 	CreatesShroud:
-		Range: 7c512
+		Range: 6c0
 	PeriodicExplosion:
 		Weapon: VeilLarge
 	KillsSelf:
 		Delay: 300
 	ProximityExternalCondition@Veiled:
-		Range: 7c512
+		Range: 6c0
 
 jamming.field:
 	Interactable:

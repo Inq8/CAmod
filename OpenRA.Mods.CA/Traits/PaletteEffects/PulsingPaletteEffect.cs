@@ -43,7 +43,7 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new PulsingPaletteEffect(this); }
 	}
 
-	public class PulsingPaletteEffect : IPaletteModifier, ITick
+	public class PulsingPaletteEffect : IPaletteModifier, ITick, ITickRender
 	{
 		readonly PulsingPaletteEffectInfo info;
 
@@ -67,6 +67,17 @@ namespace OpenRA.Mods.CA.Traits
 			alphaDiff = (info.EndColor.A - info.StartColor.A) / info.PulseDuration;
 		}
 
+		void Advance()
+		{
+			if (incrementing)
+				ticks++;
+			else
+				ticks--;
+
+			if (ticks == info.PulseDuration + (info.PulseDelay * 2) || ticks == 0)
+				incrementing = !incrementing;
+		}
+
 		public void AdjustPalette(IReadOnlyDictionary<string, MutablePalette> b)
 		{
 			var pulseTick = (ticks - info.PulseDelay).Clamp(0, info.PulseDuration);
@@ -88,15 +99,13 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
-		void ITick.Tick(Actor self)
-		{
-			if (incrementing)
-				ticks++;
-			else
-				ticks--;
+		void ITick.Tick(Actor self) { Advance(); }
 
-			if (ticks == info.PulseDuration + (info.PulseDelay * 2) || ticks == 0)
-				incrementing = !incrementing;
+		void ITickRender.TickRender(WorldRenderer wr, Actor self)
+		{
+			// Continue visual-only palette animation while the game is paused.
+			if (self.World.Paused)
+				Advance();
 		}
 	}
 }

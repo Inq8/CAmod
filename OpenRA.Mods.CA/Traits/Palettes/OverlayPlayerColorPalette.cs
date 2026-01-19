@@ -9,6 +9,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Linq;
 using OpenRA.Graphics;
 using OpenRA.Primitives;
 using OpenRA.Traits;
@@ -39,24 +40,41 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("If player name is set here, remap to these colours instead.")]
 		public readonly Dictionary<string, Color> PlayerColors;
 
-		public override object Create(ActorInitializer init) { return new OverlayPlayerColorPalette(this); }
+		[Desc("If faction is set here, remap to these colors instead.")]
+		public readonly Dictionary<string, Color> FactionColors;
+
+		[Desc("Players listed here will have their colors determined by their faction color if set.")]
+		public readonly HashSet<string> FactionColorPlayers = new();
+
+		public override object Create(ActorInitializer init) { return new OverlayPlayerColorPalette(init, this); }
 	}
 
 	public class OverlayPlayerColorPalette : ILoadsPlayerPalettes
 	{
 		readonly OverlayPlayerColorPaletteInfo info;
+		readonly World world;
 
-		public OverlayPlayerColorPalette(OverlayPlayerColorPaletteInfo info)
+		public OverlayPlayerColorPalette(ActorInitializer init, OverlayPlayerColorPaletteInfo info)
 		{
 			this.info = info;
+			world = init.Self.World;
 		}
 
 		public void LoadPlayerPalettes(WorldRenderer wr, string playerName, Color c, bool replaceExisting)
 		{
 			var basePalette = wr.Palette(info.BasePalette).Palette;
+			var player = world.Players.FirstOrDefault(p => p.InternalName == playerName);
 
-			if (info.PlayerColors != null && info.PlayerColors.TryGetValue(playerName, out var overrideColor))
-				c = overrideColor;
+			if (player != null
+				&& info.FactionColors != null
+				&& info.FactionColors.TryGetValue(player.Faction.InternalName, out var factionColor)
+				&& (!info.FactionColorPlayers.Any() || info.FactionColorPlayers.Contains(playerName)))
+			{
+				c = factionColor;
+			}
+
+			if (info.PlayerColors != null && info.PlayerColors.TryGetValue(playerName, out var playerColor))
+				c = playerColor;
 
 			var pal = new MutablePalette(basePalette);
 			var r = info.Ramp;

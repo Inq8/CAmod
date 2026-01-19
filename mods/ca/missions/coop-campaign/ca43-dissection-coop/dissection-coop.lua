@@ -40,6 +40,10 @@ DoMcvArrival = function()
 	local i = 1
 	local mcvPlayers = GetMcvPlayers()
 
+	if #mcvPlayers == 1 and #MissionPlayers > 1 then
+		table.insert(mcvPlayers, MissionPlayers[2])
+	end
+
 	Utils.Do(MissionPlayers, function(p)
 		local isMcvPlayer = Utils.Any(mcvPlayers, function(mcvPlayer) return p == mcvPlayer end)
 		local entryPoint = entryPoints[i]

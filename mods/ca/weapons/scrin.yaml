@@ -27,6 +27,11 @@ DisintegratorBeam:
 			Light: 34
 			Concrete: 75
 
+DisintegratorBeamTargeter:
+	ReloadDelay: 30
+	Range: 5c0
+	Projectile: InstantHit
+
 DisintegratorBeamBATF:
 	Inherits: DisintegratorBeam
 	Range: 5c768
@@ -335,7 +340,7 @@ DevastatorTorpedo:
 	Burst: 3
 	Report: plasmatorp.aud
 	BurstDelays: 8
-	ReloadDelay: 70
+	ReloadDelay: 100
 	Projectile: Bullet
 		Image: plasmatorp3
 		Palette: scrin
@@ -343,6 +348,7 @@ DevastatorTorpedo:
 		Inaccuracy: 1c0
 		Shadow: true
 		ShadowColor: 00000033
+		Speed: 400
 	Warhead@1Dam: SpreadDamage
 		Damage: 14000
 		Spread: 512
@@ -919,7 +925,7 @@ EnervatorBoltsAA:
 
 InvaderLauncher:
 	ReloadDelay: 5
-	Range: 10c0
+	Range: 8c0
 	ValidTargets: Air, AirSmall, Ground, Water
 	Projectile: InstantHit
 	Warhead@1Dam: TargetDamage
@@ -949,7 +955,7 @@ InvaderZap:
 		Damage: 1000
 		InvalidTargets: Infantry
 		Versus:
-			None: 65
+			None: 60
 			Wood: 30
 			Concrete: 15
 			Light: 80
@@ -959,7 +965,7 @@ InvaderZap:
 	Warhead@2Dam: SpreadDamage
 		Spread: 128
 		ValidTargets: Infantry
-		Damage: 1000
+		Damage: 600
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, AirToGround
 	Warhead@2Eff: CreateEffect
 		Explosions: idle

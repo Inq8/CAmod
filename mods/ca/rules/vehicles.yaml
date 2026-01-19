@@ -216,7 +216,7 @@ NUKC:
 		Voice: Move
 		ImmovableCondition: deployed
 		RequireForceMoveCondition: !undeployed
-		PauseOnCondition: being-captured || empdisable || being-warped || driver-dead || notmobile || deploying || undeploying
+		PauseOnCondition: being-captured || empdisable || being-warped || driver-dead || notmobile || deploying || undeploying || deployed
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 5c0
@@ -280,11 +280,11 @@ NUKC:
 		Sequence: undeploy
 		Body: body
 	WithFacingSpriteBody:
-		RequiresCondition: undeployed
+		RequiresCondition: undeployed || deploying
 	WithFacingSpriteBody@DeployedChassis:
 		Name: deployed
 		Sequence: deployed
-		RequiresCondition: !undeployed
+		RequiresCondition: !undeployed && !deploying
 	WithFacingSpriteBody@Overlay:
 		Name: overlay
 		Sequence: overlay
@@ -936,6 +936,8 @@ GTNK.squad:
 	Upgradeable@RHINO:
 		Actor: 3tnk.rhino.atomic
 	-Upgradeable@ATOMIC:
+	EncyclopediaExtras:
+		VariantOf: 3TNK
 
 3TNK.YURI:
 	Inherits: 3TNK
@@ -1068,6 +1070,7 @@ GTNK.squad:
 	-Upgradeable@LASHER:
 	EncyclopediaExtras:
 		Subfaction: yuri
+		VariantOf: 3TNK.YURI
 
 3TNK.RHINO:
 	Inherits: ^Tank
@@ -1177,6 +1180,7 @@ GTNK.squad:
 	Encyclopedia:
 		Category: Soviets/Vehicles
 	EncyclopediaExtras:
+		Name: Rhino Tank
 		AdditionalInfo: Requires Armor Doctrine.
 
 3TNK.RHINO.ATOMIC:
@@ -1207,6 +1211,9 @@ GTNK.squad:
 	Upgradeable@LASHER:
 		Actor: 3tnk.rhino.atomicyuri
 	-Upgradeable@ATOMIC:
+	EncyclopediaExtras:
+		Name: Atomic Rhino Tank
+		VariantOf: 3TNK.RHINO
 
 3TNK.RHINO.YURI:
 	Inherits: 3TNK.RHINO
@@ -1245,6 +1252,7 @@ GTNK.squad:
 	-SpeedMultiplier@CRUSHSLOW:
 	-Upgradeable@LASHER:
 	EncyclopediaExtras:
+		Name: Thrasher Tank
 		Subfaction: yuri
 
 3TNK.RHINO.ATOMICYURI:
@@ -1282,7 +1290,9 @@ GTNK.squad:
 	-Upgradeable@LASHER:
 	-WithDecoration@UpgradeOverlay:
 	EncyclopediaExtras:
+		Name: Atomic Thrasher Tank
 		Subfaction: yuri
+		VariantOf: 3TNK.RHINO.YURI
 
 4TNK:
 	Inherits: ^Tank
@@ -1450,6 +1460,8 @@ GTNK.squad:
 	Upgradeable@APOC:
 		Actor: apoc.atomic
 	-Upgradeable@ATOMIC:
+	EncyclopediaExtras:
+		VariantOf: 4TNK
 
 4TNK.ERAD:
 	Inherits: 4TNK
@@ -1538,6 +1550,8 @@ GTNK.squad:
 	Upgradeable@OVLD:
 		Actor: ovld.erad.atomic
 	-Upgradeable@ERAD:
+	EncyclopediaExtras:
+		VariantOf: 4TNK.ERAD
 
 ARTY:
 	Inherits: ^Vehicle
@@ -2374,6 +2388,8 @@ APC:
 		RequiresCondition: !mindcontrolled
 	Encyclopedia:
 		Category: Allies/Vehicles
+	EncyclopediaExtras:
+		Name: APC
 
 AAPC:
 	Inherits: APC
@@ -2408,6 +2424,8 @@ AAPC:
 	-ReplacedInQueue:
 	-Upgradeable@Archer:
 	-WithDecoration@UpgradeOverlay:
+	EncyclopediaExtras:
+		Name: Archer APC
 
 APC.AI:
 	Inherits: APC
@@ -3785,7 +3803,20 @@ APC2:
 		UpgradeAtActors: fix, rep, srep
 		RequiresCondition: !mindcontrolled
 	Encyclopedia:
-		Category: GDI/Vehicles; Nod/Vehicles
+		Category: GDI/Vehicles
+	EncyclopediaExtras:
+		Name: APC
+
+APC2.Nod.Preview:
+	Inherits: APC2
+	RenderSprites:
+		Image: apc2.nod
+	Buildable:
+		Queue: Encyclopedia
+	Encyclopedia:
+		Category: Nod/Vehicles
+	EncyclopediaExtras:
+		Subfaction: legion
 
 APC2.NODAI:
 	Inherits: APC2
@@ -3997,6 +4028,8 @@ VULC:
 		RequiresCondition: loaded-cmdo
 	Encyclopedia:
 		Category: GDI/Vehicles
+	EncyclopediaExtras:
+		Name: Vulcan
 
 VULC.AI:
 	Inherits: VULC
@@ -4148,6 +4181,8 @@ LTNK.Laser:
 	Selectable:
 		Class: ltnk
 	-ReplacedInQueue:
+	EncyclopediaExtras:
+		VariantOf: LTNK
 
 MTNK:
 	Inherits: ^TankTD
@@ -4294,7 +4329,7 @@ MTNK:
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
 	Encyclopedia:
-		Category: GDI/Vehicles; Nod/Vehicles
+		Category: GDI/Vehicles
 
 MTNK.Drone:
 	Inherits: MTNK
@@ -4383,6 +4418,18 @@ MTNK.Drone:
 	EncyclopediaExtras:
 		Subfaction: arc
 
+MTNK.Nod.Preview:
+	Inherits: MTNK
+	RenderSprites:
+		Image: mtnk.nod
+	Buildable:
+		Queue: Encyclopedia
+		BuildPaletteOrder: 101
+	Encyclopedia:
+		Category: Nod/Vehicles
+	EncyclopediaExtras:
+		Subfaction: legion
+
 MTNK.Laser:
 	Inherits: MTNK
 	RenderSprites:
@@ -4420,6 +4467,7 @@ MTNK.Laser:
 		Category: Nod/Vehicles
 	EncyclopediaExtras:
 		Subfaction: legion
+		VariantOf: MTNK.Nod.Preview
 
 MDRN:
 	Inherits: ^Vehicle
@@ -5804,6 +5852,8 @@ BTR:
 		VoiceSet: BtrVoice
 	Encyclopedia:
 		Category: Soviets/Vehicles
+	EncyclopediaExtras:
+		Name: BTR
 
 BTR.AI:
 	Inherits: BTR
@@ -5946,6 +5996,7 @@ BTR.YURI:
 	-Upgradeable@GATTLING:
 	-WithDecoration@UpgradeOverlay:
 	EncyclopediaExtras:
+		Name: Gattling BTR
 		Subfaction: yuri
 
 BTR.YURI.AI:
@@ -7113,6 +7164,8 @@ IFV:
 		CasingTargetOffset: 0, -600, 0
 	Encyclopedia:
 		Category: Allies/Vehicles
+	EncyclopediaExtras:
+		Name: IFV
 
 IFV.AI:
 	Inherits: ^Tank
@@ -7359,9 +7412,10 @@ RECK:
 	SpeedMultiplier@TigerGuard:
 		Modifier: 90
 	Encyclopedia:
-		Category: Nod/Vehicles
+		Category: Nod/Stolen Technology
 	EncyclopediaExtras:
 		AdditionalInfo: Stolen from Allied War Factory.
+		-Name:
 
 TITN:
 	Inherits: ^TankTD
@@ -8024,7 +8078,7 @@ V3RL:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
 		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets\n• Rockets can be shot down by static anti-air defenses
 	Valued:
-		Cost: 1400
+		Cost: 1250
 	Tooltip:
 		Name: V3 Launcher
 	UpdatesPlayerStatistics:
@@ -8615,6 +8669,7 @@ BATF:
 			s3: loaded
 			s4: loaded
 			s6: loaded-repair
+			mrdr: loaded
 			evis: loaded
 			impl: loaded
 			stlk: loaded
@@ -9274,7 +9329,7 @@ CYCP:
 		Actor: CYCP.Husk
 		RequiresCondition: !being-warped
 	Encyclopedia:
-		Category: Nod/Vehicles
+		Category: Nod/Stolen Technology
 	EncyclopediaExtras:
 		AdditionalInfo: Stolen from Soviet War Factory.
 
@@ -9356,7 +9411,7 @@ BASI:
 		Condition: inherited-cloak
 		RequiresCondition: hidden || invisibility
 	Encyclopedia:
-		Category: Nod/Vehicles
+		Category: Nod/Stolen Technology
 	EncyclopediaExtras:
 		AdditionalInfo: Stolen from GDI Weapons Factory.
 
@@ -9420,7 +9475,7 @@ MANT:
 	GuardsSelection:
 		ValidTargets: Infantry, Vehicle
 	Encyclopedia:
-		Category: Nod/Vehicles
+		Category: Nod/Stolen Technology
 	EncyclopediaExtras:
 		AdditionalInfo: Stolen from Nod Airstrip.
 
@@ -9491,7 +9546,7 @@ VIPR:
 		TargetTypes: Water, Ship
 		RequiresCondition: onwater
 	Encyclopedia:
-		Category: Nod/Vehicles
+		Category: Nod/Stolen Technology
 	EncyclopediaExtras:
 		AdditionalInfo: Stolen from Scrin Warp Sphere.
 
@@ -9850,6 +9905,8 @@ APOC.ATOMIC:
 	Upgradeable@ERAD:
 		Actor: apoc.erad.atomic
 	-Upgradeable@ATOMIC:
+	EncyclopediaExtras:
+		VariantOf: APOC
 
 APOC.ERAD:
 	Inherits: APOC
@@ -9933,6 +9990,7 @@ APOC.ERAD.ATOMIC:
 		VoiceSet: EradVoice
 	EncyclopediaExtras:
 		Subfaction: iraq
+		VariantOf: APOC.ERAD
 
 OVLD:
 	Inherits: ^Tank
@@ -10089,6 +10147,8 @@ OVLD.ATOMIC:
 	SpeedMultiplier:
 		Modifier: 125
 	-SpawnActorOnDeath:
+	EncyclopediaExtras:
+		VariantOf: OVLD
 
 OVLD.ERAD:
 	Inherits: OVLD
@@ -10165,6 +10225,7 @@ OVLD.ERAD.ATOMIC:
 		VoiceSet: EradVoice
 	EncyclopediaExtras:
 		Subfaction: iraq
+		VariantOf: OVLD.ERAD
 
 THWK:
 	Inherits: ^TankTD

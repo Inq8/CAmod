@@ -129,7 +129,7 @@ WorldLoaded = function()
 	end)
 
 	local nerveCenters = MaleficScrin.GetActorsByType("nerv")
-	Trigger.OnAllKilled(nerveCenters, function()
+	Trigger.OnAllKilledOrCaptured(nerveCenters, function()
 		Greece.MarkCompletedObjective(ObjectiveDestroyScrinBases)
 	end)
 
@@ -487,6 +487,10 @@ TransferBaseActors = function(base)
 
 	Utils.Do(baseActors, function(a)
 		a.Owner = Greece
+	end)
+
+	Trigger.AfterDelay(1, function()
+		Actor.Create("QueueUpdaterDummy", true, { Owner = Greece })
 	end)
 end
 

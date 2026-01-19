@@ -80,7 +80,7 @@ namespace OpenRA.Mods.CA.Traits
 					new OwnerInit(self.Owner),
 				};
 
-				var ai = w.Map.Rules.Actors[Info.Actor];
+				var ai = w.Map.Rules.Actors[Info.Actor.ToLowerInvariant()];
 
 				if (self.Info.HasTraitInfo<IOccupySpaceInfo>() && ai.HasTraitInfo<IOccupySpaceInfo>())
 					td.Add(new LocationInit(self.Location + Info.SpawnOffset));

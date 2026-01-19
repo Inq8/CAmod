@@ -327,10 +327,6 @@ AbandonedBaseDiscovered = function()
 
 	InitAlliedAttacks()
 
-	Trigger.AfterDelay(1, function()
-		Actor.Create("QueueUpdaterDummy", true, { Owner = USSR })
-	end)
-
 	Trigger.AfterDelay(ReinforcementsDelay[Difficulty], function()
 		PlaySpeechNotificationToMissionPlayers("ReinforcementsArrived")
 		Beacon.New(USSR, ReinforcementsDestination.CenterPosition)
@@ -354,6 +350,10 @@ TransferAbandonedBase = function()
 
 	Utils.Do(baseBuildings, function(a)
 		a.Owner = USSR
+	end)
+
+	Trigger.AfterDelay(1, function()
+		Actor.Create("QueueUpdaterDummy", true, { Owner = USSR })
 	end)
 end
 

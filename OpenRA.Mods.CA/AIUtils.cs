@@ -49,6 +49,16 @@ namespace OpenRA.Mods.CA
 				.ToLookup(pq => pq.Info.Type);
 		}
 
+		public static ILookup<string, ProductionQueue> FindQueuesByCategory(IEnumerable<Player> players)
+		{
+			var player = players.First();
+
+			return player.World.ActorsWithTrait<ProductionQueue>()
+				.Where(a => players.Contains(a.Actor.Owner) && a.Trait.Enabled)
+				.Select(a => a.Trait)
+				.ToLookup(pq => pq.Info.Type);
+		}
+
 		public static IEnumerable<Actor> GetActorsWithTrait<T>(World world)
 		{
 			return world.ActorsHavingTrait<T>();

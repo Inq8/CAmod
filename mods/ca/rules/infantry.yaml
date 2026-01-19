@@ -290,6 +290,10 @@ E3:
 		LocalOffset: 0,0,500
 		PauseOnCondition: !ammo
 		RequiresCondition: cryw-upgrade
+	# Prevents attack moving forwards when main weapon is paused for reload
+	Armament@Targeter:
+		Weapon: DragonTargeter
+		LocalOffset: 0,0,500
 	Armament@BATF:
 		Name: batf
 		Weapon: DragonBATF
@@ -1381,7 +1385,7 @@ THF:
 		Description: Steals enemy credits and hijacks enemy vehicles.
 	TooltipExtras:
 		Weaknesses: • Unarmed
-		Attributes: • Cloaked when not moving\n• Gains vision range while cloaked.
+		Attributes: • Cloaked when not moving\n• Gains vision range while cloaked
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -1748,6 +1752,10 @@ N3:
 		LocalOffset: 0,0,500
 		PauseOnCondition: !ammo
 		RequiresCondition: tibcore-upgrade
+	# Prevents attack moving forwards when main weapon is paused for reload
+	Armament@Targeter:
+		Weapon: DragonTargeter
+		LocalOffset: 0,0,500
 	Armament@BATF:
 		Name: batf
 		Weapon: DragonBATF.TD
@@ -2649,7 +2657,7 @@ ACOL:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Cannot attack Aircraft
-		Attributes: • Heals on Tiberium
+		Attributes: • Heals rapidly on Tiberium
 	Valued:
 		Cost: 475
 	Tooltip:
@@ -2701,6 +2709,8 @@ ACOL:
 		Category: Nod/Infantry
 	EncyclopediaExtras:
 		Subfaction: marked
+	ChangesHealth@THEAL:
+		PercentageStep: 3
 
 TPLR:
 	Inherits: ACOL
@@ -3295,6 +3305,10 @@ N3C:
 		LocalOffset: 0,0,500
 		PauseOnCondition: !ammo
 		RequiresCondition: tibcore-upgrade
+	# Prevents attack moving forwards when main weapon is paused for reload
+	Armament@Targeter:
+		Weapon: DragonTargeter
+		LocalOffset: 0,0,500
 	Armament@BATF:
 		Name: batf
 		Weapon: DragonBATF.CYB
@@ -3769,9 +3783,9 @@ SGLI:
 		InitialFacing: 192
 		TurnSpeed: 16
 		Speed: 115
-		RepulsionSpeed: 40
 		MaximumPitch: 56
 		Voice: Move
+		Repulsable: false
 	Armament:
 		Weapon: ShadowGliderGrenade
 		LocalOffset: 0,0,-85
@@ -3798,9 +3812,7 @@ SGLI:
 		DecorationBounds: 1280, 1194, 0, 85
 	TransformOnCondition:
 		IntoActor: sgli.deployed
-		RequiresCondition: deployed
-	GrantConditionOnDeploy:
-		DeployedCondition: deployed
+		RequiresCondition: exhausted
 	Targetable@AIRBORNE:
 		RequiresCondition: airborne && !being-warped
 		TargetTypes: AirSmall
@@ -3810,8 +3822,8 @@ SGLI:
 	TimedConditionBar@GLIDING:
 		Condition: gliding
 		Color: 8A8A8A
-	GrantCondition@AUTODEPLOY:
-		Condition: deployed
+	GrantCondition@Exhausted:
+		Condition: exhausted
 		RequiresCondition: !gliding
 	RejectsOrders:
 		RequiresCondition: !gliding
@@ -3821,6 +3833,12 @@ SGLI:
 	-Contrail@2:
 	-ActorLostNotification:
 	-SoundOnDamageTransitionCA:
+	TargetedDiveAbility:
+		MinDistance: 3
+		MaxDistance: 8
+		Speed: 175
+		TransformIntoActor: shad
+		ShowSelectionBar: false
 
 SGLI.crashing:
 	Inherits: SGLI
@@ -3843,11 +3861,10 @@ SGLI.crashing:
 	-DeathSounds:
 	-UpdatesPlayerStatistics:
 	-SpawnActorOnDeath:
-	-GrantConditionOnDeploy:
 	-TransformOnCondition:
 	-GrantTimedCondition@GLIDING:
 	-TimedConditionBar@GLIDING:
-	-GrantCondition@AUTODEPLOY:
+	-GrantCondition@Exhausted:
 	AmbientSoundCA:
 		SoundFiles: chute1.aud
 		Interval: 6000
@@ -3877,11 +3894,10 @@ SGLI.deployed:
 	AmbientSoundCA:
 		SoundFiles: chute1.aud
 		Interval: 6000
-	-GrantConditionOnDeploy:
 	-TransformOnCondition:
 	-GrantTimedCondition@GLIDING:
 	-TimedConditionBar@GLIDING:
-	-GrantCondition@AUTODEPLOY:
+	-GrantCondition@Exhausted:
 	RejectsOrders:
 		-RequiresCondition:
 	-MapEditorData:
@@ -4459,7 +4475,7 @@ ENLI:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	Encyclopedia:
-		Category: Nod/Infantry
+		Category: Nod/Stolen Technology
 
 MORT.Cryo:
 	Inherits: ^MortarInfantryBase
@@ -4920,7 +4936,7 @@ ENFO:
 		Range: 6c0
 	Armament@PRIMARY:
 		Weapon: EnforcerShotgun
-		LocalOffset: 350,0,341
+		LocalOffset: 0,0,341
 	Armament@BATF:
 		Name: batf
 		Weapon: EnforcerShotgun
@@ -5091,6 +5107,7 @@ TIGR:
 		FacingTolerance: 32
 		ChargeLevel: 0,2
 		PauseOnCondition: being-warped || blinded || reapersnare
+		TargetFrozenActors: true
 	AttackMove:
 		Voice: Move
 	AutoTargetPriority@HeavyPrio:

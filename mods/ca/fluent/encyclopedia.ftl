@@ -37,3 +37,5 @@ encyclopedia-tips-general-description = • Most infantry prone when they are fi
     • Service Depot repairs are completely free. Vehicles can be sold while being repaired.
 
     • All production times are proportional to cost. The cost to time ratio is lower for Refineries, MCVs and higher for upgrades.
+
+    • In Single Queue the maximum production speed is 2x, which requires 5 infantry/aircraft production structures, or 4 vehicle/building production structures.

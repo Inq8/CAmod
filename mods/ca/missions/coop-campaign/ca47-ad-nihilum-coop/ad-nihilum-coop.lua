@@ -62,8 +62,8 @@ end
 DoMcvArrival = function()
 	local mcvPlayers = GetMcvPlayers()
 
-	if #mcvPlayers == 1 then
-		table.insert(mcvPlayers, mcvPlayers[1])
+	if #mcvPlayers == 1 and #MissionPlayers > 1 then
+		table.insert(mcvPlayers, MissionPlayers[2])
 	end
 
 	local mcvPaths = {

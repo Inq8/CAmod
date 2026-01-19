@@ -255,34 +255,79 @@ Container@MAINMENU:
 							Y: 5
 							Width: 200
 							Height: 200
-		Background@NEW_VERSION:
-			Logic: VersionCheckLogic
-			Background: dialog4
-			X: WINDOW_WIDTH - WIDTH - 25
-			Y: WINDOW_HEIGHT - 32 - HEIGHT - 25 - 2
-			Width: 270
-			Height: 65
+		Container@MENU_NOTIFICATIONS:
+			Logic: MenuNotificationsLogic
 			Children:
-				Label@NEW_VERSION_LABEL:
-					X: 0
-					Y: 2
-					Width: PARENT_WIDTH
-					Height: 25
-					Align: Center
-					Font: Regular
-					Shadow: true
-					TextColor: ffff00
-					Text: Testing testing
-				ExternalLinkButton@NEW_VERSION_BUTTON:
-					X: PARENT_WIDTH / 2 - WIDTH / 2
-					Y: PARENT_HEIGHT - HEIGHT - 8
-					Width: 100
-					Height: 28
-					Background: button
-					Align: Center
-					Text: Download
-					Font: Regular
-					Url: null
+				Background@NEW_VERSION:
+					Background: dialog4
+					X: WINDOW_WIDTH - WIDTH - 25
+					Y: WINDOW_HEIGHT - 32 - HEIGHT - 25 - 4
+					Width: 270
+					Height: 65
+					Children:
+						Label@NEW_VERSION_LABEL:
+							X: 0
+							Y: 2
+							Width: PARENT_WIDTH
+							Height: 25
+							Align: Center
+							Font: Regular
+							Shadow: true
+							TextColor: ffff00
+							Text: Testing testing
+						ExternalLinkButton@NEW_VERSION_BUTTON:
+							X: PARENT_WIDTH / 2 - WIDTH / 2
+							Y: PARENT_HEIGHT - HEIGHT - 8
+							Width: 100
+							Height: 28
+							Background: button
+							Align: Center
+							Text: Download
+							Font: Regular
+							Url: null
+				Background@NOTIFICATIONS:
+					Background: dialog4
+					X: WINDOW_WIDTH - WIDTH - 25
+					Y: WINDOW_HEIGHT - 32 - HEIGHT - 25 - 4
+					Width: 300
+					Height: 200
+					Children:
+						Label@NOTIFICATIONS_TITLE:
+							X: 0
+							Y: 5
+							Width: PARENT_WIDTH
+							Height: 20
+							Align: Center
+							Font: Bold
+							Shadow: true
+							TextColor: ffff00
+							Text: Notifications
+						ScrollPanel@NOTIFICATIONS_PANEL:
+							X: 10
+							Y: 30
+							Width: PARENT_WIDTH - 20
+							Height: PARENT_HEIGHT - 40
+							Background: observer-scrollpanel-button-pressed
+							Children:
+								Container@NOTIFICATION_TEMPLATE:
+									X: 0
+									Y: 0
+									Width: PARENT_WIDTH
+									Height: 35
+									Children:
+										Label@NOTIFICATION_TITLE:
+											X: 8
+											Y: 0
+											Width: PARENT_WIDTH - 40
+											Height: 15
+											Font: Regular
+											TextColor: ff0000
+										Label@NOTIFICATION_BODY:
+											X: 8
+											Y: 18
+											Width: PARENT_WIDTH - 40
+											Height: 15
+											Font: Small
 		Container@EXTERNAL_LINKS:
 			Logic: ExternalLinksLogic
 			X: WINDOW_WIDTH - WIDTH - 25
