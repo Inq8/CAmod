@@ -1615,7 +1615,7 @@ end
 FollowActor = function(actor, actorToFollow)
 	if not actor.IsDead and actor.IsInWorld then
 		if not actorToFollow.IsDead and actorToFollow.IsInWorld then
-			local possibleCells = Utils.ExpandFootprint(Utils.ExpandFootprint({ actorToFollow.Location }, true))
+			local possibleCells = Utils.ExpandFootprint(Utils.ExpandFootprint({ actorToFollow.Location }, true), false)
 			local cell = Utils.Random(possibleCells)
 			actor.Stop()
 			actor.AttackMove(cell, 1)
