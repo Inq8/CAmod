@@ -30,7 +30,7 @@ namespace OpenRA.Mods.CA.Scripting
 		public void TargetedLeap(CPos targetCell)
 		{
 			var target = Target.FromCell(Self.World, targetCell);
-			LeapAbility.ResolveOrder(Self, new Order("TargetableLeapOrderLeap", Self, target, true));
+			LeapAbility.ResolveOrder(Self, new Order("TargetedLeapOrderLeap", Self, target, true));
 		}
 	}
 }
