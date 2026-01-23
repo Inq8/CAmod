@@ -1519,6 +1519,9 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			var tabCount = topLevelCategories.Count;
 			var tabWidth = tabCount > 0 ? availableWidth / tabCount : 0;
 
+			// Get the font for measuring text width
+			var font = Game.Renderer.Fonts[tabTemplate.Font];
+
 			// Create tab buttons
 			var tabX = 0;
 			foreach (var category in topLevelCategories)
@@ -1526,16 +1529,63 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				var tabButton = (ButtonWidget)tabTemplate.Clone();
 				tabButton.Bounds.X = tabX;
 				tabButton.Bounds.Width = tabWidth;
-				tabButton.GetText = () => category.Name;
 				tabButton.IsHighlighted = () => selectedTopLevelCategory == category.FullPath;
 				tabButton.OnClick = () => SelectTopLevelCategory(category.FullPath);
 				tabButton.IsVisible = () => true;
+				tabButton.GetText = () => category.Name;
+
+				// Get the flag image widget
+				var flagImage = tabButton.GetOrNull<ImageWidget>("TAB_FLAG");
+				var flagName = GetFactionFlag(category.Name);
+
+				if (flagImage != null && !string.IsNullOrEmpty(flagName))
+				{
+					tabButton.GetText = () => "";
+
+					var tabLabel = tabButton.GetOrNull<LabelWidget>("TAB_LABEL");
+					tabLabel.GetText = () => category.Name;
+
+					var textWidth = font.Measure(category.Name).X;
+					var flagWidth = 30; // Width of flag as defined in YAML
+					var gap = 7; // Small gap between flag and text
+
+					var contentWidth = flagWidth + gap + textWidth;
+
+					var flagX = (tabWidth - contentWidth) / 2;
+
+					// Position the flag
+					flagImage.Bounds.X = flagX;
+					flagImage.IsVisible = () => true;
+					flagImage.GetImageName = () => flagName;
+
+					// Position the label after the flag + gap
+					tabLabel.Bounds.X = flagX + flagWidth + gap;
+				}
+				else
+				{
+					// No flag, center text normally
+					if (flagImage != null)
+						flagImage.IsVisible = () => false;
+				}
 
 				tabContainer.AddChild(tabButton);
 				categoryTabs.Add(tabButton);
 
 				tabX += tabWidth;
 			}
+		}
+
+		static string GetFactionFlag(string categoryName)
+		{
+			return categoryName switch
+			{
+				"Allies" => "allies",
+				"Soviets" => "soviet",
+				"GDI" => "gdi",
+				"Nod" => "nod",
+				"Scrin" => "scrin",
+				_ => null
+			};
 		}
 
 		void SelectTopLevelCategory(string categoryPath)
