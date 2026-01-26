@@ -274,7 +274,9 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			try
 			{
 				var lastVersionCheckFileContents = File.ReadAllText(versionCheckFilePath);
-				versionCheck = JsonConvert.DeserializeObject<VersionCheck>(lastVersionCheckFileContents);
+				var lastVersionCheck = JsonConvert.DeserializeObject<VersionCheck>(lastVersionCheckFileContents);
+				if (lastVersionCheck != null)
+					versionCheck = lastVersionCheck;
 			}
 			catch
 			{
