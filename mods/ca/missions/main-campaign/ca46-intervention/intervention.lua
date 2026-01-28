@@ -191,7 +191,7 @@ InitNod = function()
 
 	local productionBuildings = Nod.GetActorsByTypes({ "hand", "hpad.td", "airs", "afac" })
 	for _, b in pairs(productionBuildings) do
-		SellOnCaptureAttempt(b)
+		BuildDefenseOnCaptureAttempt(b, "ltur", true)
 	end
 end
 

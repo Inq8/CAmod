@@ -212,6 +212,9 @@ McvProductionTriggers = { }
 -- stores buildings that should be sold on capture attempts
 BuildingsToSellOnCaptureAttempt = { }
 
+-- stores buildings that should trigger defense to be built on capture attempts
+BuildingsToDefendOnCaptureAttempt = { }
+
 --
 -- end automatically populated vars
 --
@@ -700,8 +703,11 @@ RebuildBuilding = function(queueItem)
 			RestoreSquadProduction(queueItem.Actor, b)
 
 			if BuildingsToSellOnCaptureAttempt[queueItem.ActorId] then
-				BuildingsToSellOnCaptureAttempt[tostring(b)] = true
 				SellOnCaptureAttempt(b)
+			end
+
+			if BuildingsToDefendOnCaptureAttempt[queueItem.ActorId] then
+				BuildDefenseOnCaptureAttempt(b, BuildingsToDefendOnCaptureAttempt[queueItem.ActorId])
 			end
 
 			if RebuildFunctions ~= nil and RebuildFunctions[queueItem.Player.InternalName] ~= nil then
@@ -1709,17 +1715,19 @@ AutoReplaceHarvester = function(player, harvester)
 	end)
 end
 
-SellOnCaptureAttempt = function(buildings, sellAsGroup)
+SellOnCaptureAttempt = function(buildings, sellAsGroup, initialOnly)
 	if type(buildings) ~= "table" then
 		buildings = { buildings }
 	end
 	Utils.Do(buildings, function(b)
-		BuildingsToSellOnCaptureAttempt[tostring(b)] = true
+		if not initialOnly then
+			BuildingsToSellOnCaptureAttempt[tostring(b)] = true
+		end
 		local footprint = b.FootprintCells
 		local captureCells = Utils.ExpandFootprint(footprint, true)
 
 		Trigger.OnEnteredFootprint(captureCells, function(a, id)
-			if IsMissionPlayer(a.Owner) and (a.Type == "e6" or a.Type == "n6" or a.Type == "s6" or a.Type == "mast" or (a.Type == "ifv" and a.HasPassengers and Utils.Any(a.Passengers, function(p) return p.Type == "e6" or p.Type == "n6" or p.Type == "s6" end))) then
+			if IsMissionPlayer(a.Owner) and IsCapturer(a) then
 				Trigger.RemoveFootprintTrigger(id)
 				if sellAsGroup then
 					Utils.Do(buildings, function(b2)
@@ -1731,6 +1739,42 @@ SellOnCaptureAttempt = function(buildings, sellAsGroup)
 					if not b.IsDead and not IsMissionPlayer(b.Owner) then
 						b.Sell()
 					end
+				end
+			end
+		end)
+	end)
+end
+
+BuildDefenseOnCaptureAttempt = function(buildings, defenseType, fallbackSell)
+	if type(buildings) ~= "table" then
+		buildings = { buildings }
+	end
+
+	Utils.Do(buildings, function(b)
+		BuildingsToDefendOnCaptureAttempt[tostring(b)] = defenseType
+		local footprint = b.FootprintCells
+		local triggerCells = Utils.ExpandFootprint(footprint, true)
+		local originalOwner = b.Owner
+
+		Trigger.OnEnteredFootprint(triggerCells, function(a, id)
+			if IsMissionPlayer(a.Owner) and IsCapturer(a) then
+				Trigger.RemoveFootprintTrigger(id)
+				if not b.IsDead and b.Owner == originalOwner then
+					triggerCells = Utils.Shuffle(triggerCells)
+					for _, cell in pairs(triggerCells) do
+
+						Media.Debug("Trying to place defense at " .. tostring(cell) .. " success: " .. tostring(UtilsCA.CanPlaceBuilding(defenseType, cell)))
+
+						if UtilsCA.CanPlaceBuilding(defenseType, cell) then
+							Actor.Create(defenseType, true, { Owner = b.Owner, Location = cell })
+							break
+						end
+					end
+					Trigger.AfterDelay(DateTime.Seconds(5), function()
+						if not b.IsDead and b.Owner == originalOwner then
+							SellOnCaptureAttempt(b, false, true)
+						end
+					end)
 				end
 			end
 		end)
@@ -1895,6 +1939,10 @@ IsConyard = function(actor)
 			return true
 		end
 	end
+end
+
+IsCapturer = function(actor)
+	return (actor.Type == "e6" or actor.Type == "n6" or actor.Type == "s6" or actor.Type == "mast" or (actor.Type == "ifv" and actor.HasPassengers and Utils.Any(actor.Passengers, function(p) return p.Type == "e6" or p.Type == "n6" or p.Type == "s6" end)))
 end
 
 IsGroundHunterUnit = function(actor)
