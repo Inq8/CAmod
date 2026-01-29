@@ -283,7 +283,7 @@ InitScrin = function()
 
 	Utils.Do(scrinGroundAttackers, function(a)
 		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnitExcludingExterminators, function(p) return p == Nod or p == ScrinRebels or p == GDI end)
+		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnitExcludingExterminators, function(p) return IsMissionPlayer(p) or p == Nod or p == ScrinRebels or p == GDI end)
 	end)
 
 	Trigger.AfterDelay(ExterminatorsStartTime[Difficulty], function()

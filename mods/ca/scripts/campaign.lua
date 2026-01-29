@@ -1762,15 +1762,12 @@ BuildDefenseOnCaptureAttempt = function(buildings, defenseType, fallbackSell)
 				if not b.IsDead and b.Owner == originalOwner then
 					triggerCells = Utils.Shuffle(triggerCells)
 					for _, cell in pairs(triggerCells) do
-
-						Media.Debug("Trying to place defense at " .. tostring(cell) .. " success: " .. tostring(UtilsCA.CanPlaceBuilding(defenseType, cell)))
-
 						if UtilsCA.CanPlaceBuilding(defenseType, cell) then
 							Actor.Create(defenseType, true, { Owner = b.Owner, Location = cell })
 							break
 						end
 					end
-					Trigger.AfterDelay(DateTime.Seconds(5), function()
+					Trigger.AfterDelay(DateTime.Seconds(10), function()
 						if not b.IsDead and b.Owner == originalOwner then
 							SellOnCaptureAttempt(b, false, true)
 						end
