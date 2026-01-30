@@ -105,9 +105,13 @@ namespace OpenRA.Mods.Common.Traits
 			if (actorToClone == null)
 			{
 				bi = passenger.Info.TraitInfoOrDefault<BuildableInfo>();
+
+				if (bi == null)
+					return;
+
 				var existingCount = GetExistingCount(passenger);
 
-				if (bi != null && bi.BuildLimit > 0)
+				if (bi.BuildLimit > 0)
 				{
 					if (existingCount >= bi.BuildLimit + 1 || passenger.Owner != self.Owner)
 					{
