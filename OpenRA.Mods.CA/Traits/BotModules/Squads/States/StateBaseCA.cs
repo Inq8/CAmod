@@ -17,7 +17,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 {
-	abstract class StateBaseCA
+	public abstract class StateBaseCA
 	{
 		protected static void GoToRandomOwnBuilding(SquadCA squad)
 		{

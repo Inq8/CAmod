@@ -45,6 +45,57 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 		public HashSet<Actor> WaitingUnits = new HashSet<Actor>();
 		public HashSet<Actor> RearmingUnits = new HashSet<Actor>();
 
+		// squad leader
+		Actor leader;
+		public Locomotor LeaderLocomotor { get; private set; }
+
+		/// <summary>
+		/// Elects a unit to lead the squad, other units in the squad will regroup to the leader if they start to spread out.
+		/// The leader remains the same unless a new one is forced or the leader is no longer part of the squad.
+		/// </summary>
+		public Actor GetLeader()
+		{
+			if (leader == null || !Units.Contains(leader))
+			{
+				leader = NewLeader(this);
+				LeaderLocomotor = leader?.TraitOrDefault<Mobile>()?.Locomotor;
+			}
+
+			return leader;
+		}
+
+		static Actor NewLeader(SquadCA owner)
+		{
+			IEnumerable<Actor> units = owner.Units;
+
+			// Identify the Locomotor with the most restrictive passable terrain list. For squads with mixed
+			// locomotors, we hope to choose the most restrictive option. This means we won't nominate a leader who has
+			// more options. This avoids situations where we would nominate a hovercraft as the leader and tanks would
+			// fail to follow it because they can't go over water. By forcing us to choose a unit with limited movement
+			// options, we maximise the chance other units will be able to follow it. We could still be screwed if the
+			// squad has a mix of units with disparate movement, e.g. land units and naval units. We must trust the
+			// squad has been formed from a set of units that don't suffer this problem.
+			var leastCommonDenominator = units
+				.Select(a => a.TraitOrDefault<Mobile>()?.Locomotor)
+				.Where(l => l != null)
+				.MinByOrDefault(l => l.Info.TerrainSpeeds.Count)
+				?.Info.TerrainSpeeds.Count;
+
+			if (leastCommonDenominator != null)
+				units = units.Where(a => a.TraitOrDefault<Mobile>()?.Locomotor.Info.TerrainSpeeds.Count == leastCommonDenominator).ToList();
+
+			var minSpeed = units
+				.Select(a => a.TraitOrDefault<Mobile>()?.Info.Speed)
+				.MinByOrDefault(s => s ?? int.MaxValue);
+
+			if (minSpeed != null)
+				units = units.Where(a => a.TraitOrDefault<Mobile>()?.Info.Speed == minSpeed).ToList();
+
+			// Choosing a unit in the center reduces the need for an immediate regroup.
+			var centerPosition = units.Select(a => a.CenterPosition).Average();
+			return units.MinBy(a => (a.CenterPosition - centerPosition).LengthSquared);
+		}
+
 		public SquadCA(IBot bot, SquadManagerBotModuleCA squadManager, SquadCAType type)
 			: this(bot, squadManager, type, default) { }
 

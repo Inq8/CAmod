@@ -31,7 +31,8 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			if (!owner.IsValid)
 				return;
 
-			var leader = Leader(owner);
+			var leader = owner.GetLeader();
+
 			if (!owner.IsTargetValid(leader))
 			{
 				var target = owner.SquadManager.FindClosestEnemy(leader, WDist.FromCells(owner.SquadManager.Info.ProtectionScanRadius));

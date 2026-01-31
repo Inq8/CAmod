@@ -123,6 +123,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Air threats to prioritise above all others.")]
 		public readonly HashSet<string> BigAirThreats = new HashSet<string>();
 
+		[Desc("Percent chance to take a less direct route to targets.")]
+		public readonly int IndirectRouteChance = 50;
+
 		public override void RulesetLoaded(Ruleset rules, ActorInfo ai)
 		{
 			base.RulesetLoaded(rules, ai);
