@@ -27,6 +27,6 @@ namespace OpenRA.Mods.CA.Scripting
 		}
 
 		[Desc("Returns the building's footprint cells.")]
-		public CPos[] FootprintCells => building.Info.Tiles(Self.Location).ToArray();
+		public CPos[] FootprintCells => building.Info.Tiles(Self.Location).OrderBy(t => t.Y).ThenBy(t => t.X).ToArray();
 	}
 }

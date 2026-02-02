@@ -707,7 +707,7 @@ RebuildBuilding = function(queueItem)
 			end
 
 			if BuildingsToDefendOnCaptureAttempt[queueItem.ActorId] then
-				BuildDefenseOnCaptureAttempt(b, BuildingsToDefendOnCaptureAttempt[queueItem.ActorId])
+				BuildDefenseOnCaptureAttempt(b, BuildingsToDefendOnCaptureAttempt[queueItem.ActorId], true)
 			end
 
 			if RebuildFunctions ~= nil and RebuildFunctions[queueItem.Player.InternalName] ~= nil then
@@ -1715,18 +1715,16 @@ AutoReplaceHarvester = function(player, harvester)
 	end)
 end
 
-SellOnCaptureAttempt = function(buildings, sellAsGroup, initialOnly)
+SellOnCaptureAttempt = function(buildings, sellAsGroup)
 	if type(buildings) ~= "table" then
 		buildings = { buildings }
 	end
 	Utils.Do(buildings, function(b)
-		if not initialOnly then
-			BuildingsToSellOnCaptureAttempt[tostring(b)] = true
-		end
+		BuildingsToSellOnCaptureAttempt[tostring(b)] = true
 		local footprint = b.FootprintCells
 		local captureCells = Utils.ExpandFootprint(footprint, true)
 
-		Trigger.OnEnteredFootprint(captureCells, function(a, id)
+		local id = Trigger.OnEnteredFootprint(captureCells, function(a, id)
 			if IsMissionPlayer(a.Owner) and IsCapturer(a) then
 				Trigger.RemoveFootprintTrigger(id)
 				if sellAsGroup then
@@ -1742,6 +1740,10 @@ SellOnCaptureAttempt = function(buildings, sellAsGroup, initialOnly)
 				end
 			end
 		end)
+
+		Trigger.OnKilledOrCaptured(b, function()
+			Trigger.RemoveFootprintTrigger(id)
+		end)
 	end)
 end
 
@@ -1756,24 +1758,37 @@ BuildDefenseOnCaptureAttempt = function(buildings, defenseType, fallbackSell)
 		local triggerCells = Utils.ExpandFootprint(footprint, true)
 		local originalOwner = b.Owner
 
-		Trigger.OnEnteredFootprint(triggerCells, function(a, id)
+		local id = Trigger.OnEnteredFootprint(triggerCells, function(a, id)
 			if IsMissionPlayer(a.Owner) and IsCapturer(a) then
 				Trigger.RemoveFootprintTrigger(id)
+
 				if not b.IsDead and b.Owner == originalOwner then
 					triggerCells = Utils.Shuffle(triggerCells)
+					local defense
 					for _, cell in pairs(triggerCells) do
 						if UtilsCA.CanPlaceBuilding(defenseType, cell) then
-							Actor.Create(defenseType, true, { Owner = b.Owner, Location = cell })
+							defense = Actor.Create(defenseType, true, { Owner = b.Owner, Location = cell })
 							break
 						end
 					end
-					Trigger.AfterDelay(DateTime.Seconds(10), function()
-						if not b.IsDead and b.Owner == originalOwner then
-							SellOnCaptureAttempt(b, false, true)
-						end
-					end)
+
+					if defense then
+						Trigger.OnKilled(defense, function(self, killer)
+							Trigger.AfterDelay(DateTime.Seconds(10), function()
+								if not b.IsDead and b.Owner == originalOwner then
+									BuildDefenseOnCaptureAttempt(b, defenseType, fallbackSell)
+								end
+							end)
+						end)
+					elseif fallbackSell then
+						b.Sell()
+					end
 				end
 			end
+		end)
+
+		Trigger.OnKilledOrCaptured(b, function()
+			Trigger.RemoveFootprintTrigger(id)
 		end)
 	end)
 end
@@ -1936,6 +1951,10 @@ IsConyard = function(actor)
 			return true
 		end
 	end
+end
+
+IsDefense = function(actor)
+	return actor.HasProperty("StartBuildingRepairs") and not actor.HasProperty("Attack")
 end
 
 IsCapturer = function(actor)
