@@ -16,7 +16,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 {
-	public enum SquadCAType { Assault, Air, Rush, Protection, Naval }
+	public enum SquadCAType { Assault, Air, Rush, Protection, Naval, Harass }
 
 	public class SquadCA
 	{
@@ -123,6 +123,9 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 					break;
 				case SquadCAType.Naval:
 					FuzzyStateMachine.ChangeState(this, new NavyUnitsIdleState(), true);
+					break;
+				case SquadCAType.Harass:
+					FuzzyStateMachine.ChangeState(this, new HarasserUnitsIdleStateCA(), true);
 					break;
 			}
 		}

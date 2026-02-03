@@ -8,6 +8,7 @@
  */
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Mods.Common.Traits;
@@ -127,7 +128,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 			if (!owner.IsTargetValid(leader))
 			{
-				var closestEnemy = NewLeaderAndFindClosestEnemy(owner);
+				var closestEnemy = NewLeaderAndFindClosestEnemy(owner, owner.Type == SquadCAType.Harass);
 				owner.SetActorToTarget(closestEnemy);
 				if (closestEnemy.Actor == null)
 				{
@@ -190,16 +191,20 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 				{
 					// Calculate less direct routes
 					if ((currentRoute == null || targetChanged)
-						&& owner.SquadManager.Info.IndirectRouteChance > 0
-						&& owner.World.LocalRandom.Next(100) < owner.SquadManager.Info.IndirectRouteChance
+						&& (owner.Type == SquadCAType.Harass || (owner.SquadManager.Info.IndirectRouteChance > 0 && owner.World.LocalRandom.Next(100) < owner.SquadManager.Info.IndirectRouteChance))
 						&& owner.LeaderLocomotor != null)
 					{
+						// Get the closest friendly building to the target to use as the starting point
+						var friendlyBuildings = owner.World.Actors.Where(a => a.Owner == owner.Bot.Player && a.Info.HasTraitInfo<BuildingInfo>());
+						var closestFriendlyBuilding = WorldUtils.ClosestToIgnoringPath(friendlyBuildings, owner.TargetActor);
+						var startLocation = closestFriendlyBuilding != null ? closestFriendlyBuilding.Location : leader.Location;
+
 						var routes = AIUtils.FindDistinctRoutes(
 							owner.World,
 							owner.LeaderLocomotor,
-							leader.Location,
+							startLocation,
 							owner.TargetActor.Location,
-							maxRoutes: 7,
+							maxRoutes: owner.Type == SquadCAType.Harass ? 10 : 7,
 							BlockedByActor.None);
 
 						// Store all routes for the overlay
@@ -212,9 +217,19 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 						if (routes.Count > 0)
 						{
-							currentRoute = routes.Random(owner.World.LocalRandom).Skip(1).ToList();
-							currentWaypointIndex = 0;
-							lastWaypointUpdateTick = owner.World.WorldTick;
+							currentRoute = owner.Type == SquadCAType.Harass ? routes[routes.Count - 1] : routes.Random(owner.World.LocalRandom);
+							currentRoute = currentRoute.Skip(1).ToList();
+
+							if (currentRoute.Count == 0)
+							{
+								currentRoute = null;
+								allRoutes = null;
+							}
+							else
+							{
+								currentWaypointIndex = 0;
+								lastWaypointUpdateTick = owner.World.WorldTick;
+							}
 						}
 						else
 						{
@@ -331,5 +346,53 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 		}
 
 		public void Deactivate(SquadCA owner) { owner.SquadManager.UnregisterSquad(owner); }
+	}
+
+	sealed class HarasserUnitsIdleStateCA : GroundStateBaseCA, IState
+	{
+		public void Activate(SquadCA owner) { }
+
+		public void Tick(SquadCA owner)
+		{
+			if (!owner.IsValid)
+				return;
+
+			var leader = owner.GetLeader();
+
+			if (!ShouldHarass(owner))
+			{
+				return;
+			}
+
+			if (!owner.IsTargetValid(leader))
+			{
+				var closestEnemy = NewLeaderAndFindClosestEnemy(owner, true);
+				owner.SetActorToTarget(closestEnemy);
+				if (closestEnemy.Actor == null)
+					return;
+			}
+
+			owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsAttackMoveStateCA(), true);
+		}
+
+		bool ShouldHarass(SquadCA owner)
+		{
+			switch (owner.Units.Count)
+			{
+				case 0:
+				case 1:
+				case 2:
+					return false;
+				case 3:
+					return owner.World.LocalRandom.Next(100) < 5;
+				case 4:
+					return owner.World.LocalRandom.Next(100) < 10;
+				case 5:
+				default:
+					return true;
+			}
+		}
+
+		public void Deactivate(SquadCA owner) { }
 	}
 }

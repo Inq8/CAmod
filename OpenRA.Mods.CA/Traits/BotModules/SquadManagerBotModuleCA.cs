@@ -31,6 +31,10 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly HashSet<string> AirUnitsTypes = new HashSet<string>();
 
 		[ActorReference]
+		[Desc("Actor types that are valid for harasser squads.")]
+		public readonly HashSet<string> HarasserTypes = new HashSet<string>();
+
+		[ActorReference]
 		[Desc("Actor types that should generally be excluded from attack squads.")]
 		public readonly HashSet<string> ExcludeFromSquadsTypes = new HashSet<string>();
 
@@ -483,6 +487,27 @@ namespace OpenRA.Mods.CA.Traits
 					{
 						var newNavalSquad = RegisterNewSquad(bot, SquadCAType.Naval);
 						newNavalSquad.Units.Add(a);
+					}
+				}
+				else if (Info.HarasserTypes.Contains(a.Info.Name))
+				{
+					var harasserSquads = Squads.Where(s => s.Type == SquadCAType.Harass);
+					var matchingHarasserSquadFound = false;
+
+					foreach (var harasserSquad in harasserSquads)
+					{
+						if (harasserSquad.Units.Any(u => u.Info.Name == a.Info.Name))
+						{
+							harasserSquad.Units.Add(a);
+							matchingHarasserSquadFound = true;
+							break;
+						}
+					}
+
+					if (!matchingHarasserSquadFound)
+					{
+						var newHarasserSquad = RegisterNewSquad(bot, SquadCAType.Harass);
+						newHarasserSquad.Units.Add(a);
 					}
 				}
 				else
