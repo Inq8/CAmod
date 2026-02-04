@@ -39,6 +39,10 @@ namespace OpenRA.Mods.Common.Traits
 		[Desc("If true, BuildDurationModifier will override the equivalent value in Buildable.")]
 		public readonly bool OverrideUnitBuildDurationModifier = false;
 
+		[ActorReference]
+		[Desc("If set, when actor has no cargo, clone this actor instead.")]
+		public readonly string EmptyFallbackActor = null;
+
 		[NotificationReference("Speech")]
 		[Desc("Notification played when production is complete.",
 			"The filename of the audio is defined per faction in notifications.yaml.")]
@@ -78,10 +82,14 @@ namespace OpenRA.Mods.Common.Traits
 
 		PowerState previousPowerState;
 		PowerManager playerPower;
-		Actor actorToClone;
+		Actor passengerToClone;
 		BuildableInfo bi;
 		Cargo cargo;
+		RallyPoint rallyPoint;
 		bool exitOnCompletion = false;
+
+		string ActorTypeToClone => passengerToClone != null ? passengerToClone.Info.Name : info.EmptyFallbackActor;
+		ActorInfo ActorInfoToClone => ActorTypeToClone != null ? self.World.Map.Rules.Actors[ActorTypeToClone] : null;
 
 		public CargoCloner(Actor self, CargoClonerInfo info)
 			: base(info)
@@ -89,7 +97,7 @@ namespace OpenRA.Mods.Common.Traits
 			this.info = info;
 			this.self = self;
 			ticksUntilCloned = 0;
-			actorToClone = null;
+			passengerToClone = null;
 		}
 
 		protected override void Created(Actor self)
@@ -98,18 +106,24 @@ namespace OpenRA.Mods.Common.Traits
 			playerPower = self.Owner.PlayerActor.Trait<PowerManager>();
 			cargo = self.Trait<Cargo>();
 			previousPowerState = playerPower.PowerState;
+			rallyPoint = self.TraitOrDefault<RallyPoint>();
+
+			if (info.EmptyFallbackActor != null)
+			{
+				totalTicksToClone = ticksUntilCloned = CalculateBuildTime();
+			}
 		}
 
 		void INotifyPassengerEntered.OnPassengerEntered(Actor self, Actor passenger)
 		{
-			if (actorToClone == null)
+			if (passengerToClone == null)
 			{
 				bi = passenger.Info.TraitInfoOrDefault<BuildableInfo>();
 
 				if (bi == null)
 					return;
 
-				var existingCount = GetExistingCount(passenger);
+				var existingCount = GetExistingCount(passenger.Info.Name);
 
 				if (bi.BuildLimit > 0)
 				{
@@ -125,16 +139,16 @@ namespace OpenRA.Mods.Common.Traits
 					}
 				}
 
-				actorToClone = passenger;
+				passengerToClone = passenger;
 				totalTicksToClone = ticksUntilCloned = CalculateBuildTime();
 			}
 		}
 
 		void INotifyPassengerExited.OnPassengerExited(Actor self, Actor passenger)
 		{
-			if (actorToClone == passenger)
+			if (passengerToClone == passenger)
 			{
-				actorToClone = null;
+				passengerToClone = null;
 				bi = null;
 				totalTicksToClone = ticksUntilCloned = 0;
 			}
@@ -163,7 +177,7 @@ namespace OpenRA.Mods.Common.Traits
 
 		void ITick.Tick(Actor self)
 		{
-			if (IsTraitDisabled || self.IsDead || actorToClone == null)
+			if (IsTraitDisabled || self.IsDead || ActorTypeToClone == null)
 			{
 				ticksUntilCloned = 0;
 				return;
@@ -186,10 +200,10 @@ namespace OpenRA.Mods.Common.Traits
 				totalTicksToClone = ticksUntilCloned = CalculateBuildTime();
 		}
 
-		int GetExistingCount(Actor actorToClone)
+		int GetExistingCount(string actorType)
 		{
 			return self.Owner.World.ActorsHavingTrait<Buildable>()
-				.Count(a => a.Info.Name == actorToClone.Info.Name && a.Owner == self.Owner);
+				.Count(a => a.Info.Name == actorType && a.Owner == self.Owner);
 		}
 
 		void Unload()
@@ -200,13 +214,13 @@ namespace OpenRA.Mods.Common.Traits
 
 		int CalculateBuildTime()
 		{
-			if (actorToClone == null)
+			if (ActorTypeToClone == null)
 				return 0;
 
 			if (info.BuildTime > 0)
 				return info.BuildTime;
 
-			var cost = GetUnitCost(actorToClone.Info);
+			var cost = GetUnitCost(ActorInfoToClone);
 			if (cost == 0)
 				return 0;
 
@@ -232,10 +246,10 @@ namespace OpenRA.Mods.Common.Traits
 
 		void ProduceClone()
 		{
-			if (IsTraitDisabled || self.IsDead || actorToClone == null)
+			if (IsTraitDisabled || self.IsDead || ActorTypeToClone == null)
 				return;
 
-			var actorName = actorToClone.Info.Name.ToLowerInvariant();
+			var actorName = ActorTypeToClone.ToLowerInvariant();
 
 			if (info.InvalidActors.Contains(actorName))
 				return;
@@ -247,14 +261,15 @@ namespace OpenRA.Mods.Common.Traits
 
 			var cloned = false;
 
-			if (bi != null && bi.BuildLimit > 0 && GetExistingCount(actorToClone) >= bi.BuildLimit + 1)
+			if (bi != null && bi.BuildLimit > 0 && GetExistingCount(ActorTypeToClone) >= bi.BuildLimit + 1)
 			{
-				actorToClone = null;
+				passengerToClone = null;
 				bi = null;
 				totalTicksToClone = ticksUntilCloned = 0;
+				return;
 			}
 
-			if (actorToClone != null && sp != null)
+			if (ActorTypeToClone != null && sp != null)
 			{
 				var inits = new TypeDictionary
 				{

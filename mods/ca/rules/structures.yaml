@@ -5538,7 +5538,7 @@ PATR:
 
 CVAT:
 	Inherits: ^Building
-	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
+	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Inherits@SHAPE: ^2x2Shape
 	Inherits@TECHLOCKABLE: ^TechLockable
 	HitShape:
@@ -5620,8 +5620,9 @@ CVAT:
 		BlockedAudio: NoBuild
 		BlockedTextNotification: Unable to build more.
 		ShowSelectionBar: true
-		PauseOnCondition: tech-locked || being-warped
+		PauseOnCondition: tech-locked || being-warped || disabled
 		RequiresCondition: !global-multiqueue
+		EmptyFallbackActor: e1
 	CargoCloner@MQ:
 		Types: Clone
 		OverrideUnitBuildDurationModifier: true
@@ -5630,12 +5631,12 @@ CVAT:
 		BlockedAudio: NoBuild
 		BlockedTextNotification: Unable to build more.
 		ShowSelectionBar: true
-		PauseOnCondition: tech-locked || being-warped
+		PauseOnCondition: tech-locked || being-warped || disabled
 		RequiresCondition: global-multiqueue
+		EmptyFallbackActor: e1
 	Cargo:
 		MaxWeight: 1
 		Types: Infantry, Brute, Hacker
-		InitialUnits: e1
 	WithCargoPipsDecoration:
 		Position: BottomLeft
 		Margin: 4, 3
