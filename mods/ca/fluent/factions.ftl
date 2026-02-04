@@ -91,7 +91,8 @@ faction-ukraine =
     .name = Ukraine
     .description = Ukraine: Demolition
     Units:
-      • Siege Tank
+      • V3 Launcher
+      • Siege Tank (replaces V2)
       • Crazy Ivan (replaces Grenadier)
 
     Powers:
@@ -102,7 +103,6 @@ faction-ukraine =
       • Seismic Missiles
 
     Bonuses:
-      • V3 Launcher (10% discount)
       • Terror Dog (20% discount)
       • Kirov Cluster Bombs
 

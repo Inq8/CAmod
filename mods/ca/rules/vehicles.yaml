@@ -2,11 +2,10 @@ V2RL:
 	Inherits: ^Vehicle
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 180
-		Prerequisites: anyradar, ~vehicles.soviet, ~!v3.upgrade, ~techlevel.medium
+		Prerequisites: anyradar, ~vehicles.v2, ~techlevel.medium
 		Description: Long-range rocket artillery with low rate of fire.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
@@ -53,15 +52,6 @@ V2RL:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1194, 1194
-	ReplacedInQueue:
-		Actors: v3rl
-	Upgradeable@V3:
-		Type: v3.upgrade
-		UpgradingCondition: upgrading
-		Actor: v3rl
-		UpgradeAtActors: fix, rep, srep
-		BuildDuration: 100
-		RequiresCondition: !mindcontrolled
 	Encyclopedia:
 		Category: Soviets/Vehicles
 
@@ -8071,8 +8061,8 @@ V3RL:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 181
-		Prerequisites: anyradar, ~vehicles.soviet, ~v3.upgrade, ~techlevel.high
+		BuildPaletteOrder: 243
+		Prerequisites: stek, ~vehicles.ukraine, ~techlevel.high
 		Description: Extreme long-range rocket artillery.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
@@ -8138,13 +8128,11 @@ V3RL:
 		DecorationBounds: 1194, 1194
 	Voiced:
 		VoiceSet: V3Voice
-	ProductionCostMultiplier@UkraineBonus:
-		Multiplier: 90
-		Prerequisites: player.ukraine
 	Encyclopedia:
 		Category: Soviets/Vehicles
 	EncyclopediaExtras:
 		RenderPreviewActor: v3rl.preview
+		Subfaction: ukraine
 
 V3RL.Preview:
 	Inherits: ^PreviewDummy

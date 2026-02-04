@@ -165,7 +165,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			// Regrouping isn't needed when following waypoints as squad will naturally group at each waypoint.
 			if (currentRoute == null)
 			{
-				var ownUnits = owner.World.FindActorsInCircle(leader.CenterPosition, WDist.FromCells(owner.Units.Count) / 3)
+				var ownUnits = owner.World.FindActorsInCircle(leader.CenterPosition, WDist.FromCells(Math.Max(9, owner.Units.Count)) / 3)
 					.Where(owner.Units.Contains).ToHashSet();
 
 				if (ownUnits.Count < owner.Units.Count)
@@ -360,9 +360,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			var leader = owner.GetLeader();
 
 			if (!ShouldHarass(owner))
-			{
 				return;
-			}
 
 			if (!owner.IsTargetValid(leader))
 			{
