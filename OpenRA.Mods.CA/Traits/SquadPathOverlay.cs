@@ -85,7 +85,7 @@ namespace OpenRA.Mods.CA.Traits
 				//var routeColor = routeColors[currentColorIndex];
 
 				var routeColor = playerColor;
-				var altRouteColor = Color.FromArgb(64,
+				var altRouteColor = Color.FromArgb(32,
 					routeColor.R,
 					routeColor.G,
 					routeColor.B);

@@ -23,7 +23,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 		{
 			var loc = RandomBuildingLocation(squad);
 			foreach (var a in squad.Units)
-				squad.Bot.QueueOrder(new Order("Move", a, Target.FromCell(squad.World, loc), false));
+				squad.Bot.QueueOrder(new Order("AttackMove", a, Target.FromCell(squad.World, loc), false));
 		}
 
 		protected static CPos RandomBuildingLocation(SquadCA squad)

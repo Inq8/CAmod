@@ -75,6 +75,9 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			// options, we maximise the chance other units will be able to follow it. We could still be screwed if the
 			// squad has a mix of units with disparate movement, e.g. land units and naval units. We must trust the
 			// squad has been formed from a set of units that don't suffer this problem.
+
+			// not really necessary for CA
+			/*
 			var leastCommonDenominator = units
 				.Select(a => a.TraitOrDefault<Mobile>()?.Locomotor)
 				.Where(l => l != null)
@@ -83,6 +86,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 			if (leastCommonDenominator != null)
 				units = units.Where(a => a.TraitOrDefault<Mobile>()?.Locomotor.Info.TerrainSpeeds.Count == leastCommonDenominator).ToList();
+			*/
 
 			var minSpeed = units
 				.Select(a => a.TraitOrDefault<Mobile>()?.Info.Speed)
