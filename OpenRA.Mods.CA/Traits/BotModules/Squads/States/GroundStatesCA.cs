@@ -178,10 +178,12 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 				var startActor = WorldUtils.ClosestToIgnoringPath(possibleStartActors, owner.TargetActor);
 				var startLocation = startActor != null ? startActor.Location : leader.Location;
 				var maxRoutes = 2;
+				var useIndirectRoutes = false;
 
 				if (owner.Type == SquadCAType.Harass) {
-					maxRoutes = 10;
+					maxRoutes = 12;
 				} else if (owner.SquadManager.Info.IndirectRouteChance > 0 && owner.World.LocalRandom.Next(100) < owner.SquadManager.Info.IndirectRouteChance) {
+					useIndirectRoutes = true;
 					maxRoutes = 7;
 				}
 
@@ -198,15 +200,16 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 				foreach (var r in routes)
 					allRoutes.Add(r.Skip(1).ToList());
 
+				// For harass squads, randomly select from the 2 last routes in the list
+				if (owner.Type == SquadCAType.Harass)
+					routes = routes.Skip(Math.Max(0, routes.Count - 2)).Take(2).ToList();
 				// If we're using indirect routes, exclude the first (most direct) route
-				if (maxRoutes > 2) {
+				else if (useIndirectRoutes)
 					routes = routes.Skip(1).ToList();
-				}
 
 				if (routes.Count > 0)
 				{
-					// For harass squads, always use the least direct route to maximize chance of flanking
-					currentRoute = owner.Type == SquadCAType.Harass ? routes[routes.Count - 1] : routes.Random(owner.World.LocalRandom);
+					currentRoute = routes.Random(owner.World.LocalRandom);
 					currentRoute = currentRoute.Skip(1).ToList();
 
 					if (currentRoute.Count == 0)

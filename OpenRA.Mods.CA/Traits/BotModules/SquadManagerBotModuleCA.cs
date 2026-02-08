@@ -532,17 +532,13 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				foreach (var a in unitsHangingAroundTheBase)
 				{
-					if (cachedUnitValues.TryGetValue(a.Info.Name, out var value))
-						idleUnitsValue += value;
-					else
+					if (!cachedUnitValues.TryGetValue(a.Info.Name, out var unitCost))
 					{
-						var valued = a.Info.TraitInfoOrDefault<ValuedInfo>();
-						if (valued != null)
-						{
-							cachedUnitValues[a.Info.Name] = valued.Cost;
-							idleUnitsValue += valued.Cost;
-						}
+						unitCost = a.Info.TraitInfoOrDefault<ValuedInfo>()?.Cost ?? 0;
+						cachedUnitValues[a.Info.Name] = unitCost;
 					}
+
+					idleUnitsValue += unitCost;
 				}
 			}
 
