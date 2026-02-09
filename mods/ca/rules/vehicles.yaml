@@ -6402,7 +6402,7 @@ IFV:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 30000
+		HP: 32000
 	Armor:
 		Type: Light
 	Mobile:
@@ -6952,6 +6952,11 @@ IFV:
 		RequiresCondition: (stance-attackanything || assault-move) && !is-aa
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Structure, Defense, Mine
 		InvalidTargets: NoAutoTarget
+	AutoTargetPriority@HeavyPrio:
+		ValidTargets: Heavy
+		InvalidTargets: NoAutoTarget
+		Priority: 15
+		RequiresCondition: tigrturr
 	AttackMove:
 		AssaultMoveCondition: assault-move
 	AutoTargetPriority@REPAIR:

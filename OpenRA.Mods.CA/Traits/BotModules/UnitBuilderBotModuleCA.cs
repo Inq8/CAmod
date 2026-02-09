@@ -98,7 +98,7 @@ namespace OpenRA.Mods.CA.Traits
 		readonly Dictionary<string, int> activeUnitIntervals = new();
 		ActorIndex.OwnerAndNames unitsToBuild;
 
-		UnitCompositionsBotModule compositions;
+		UnitCompositionsBotModule compositionsModule;
 		TechTree techTree;
 
 		IBotRequestPauseUnitProduction[] requestPause;
@@ -120,17 +120,17 @@ namespace OpenRA.Mods.CA.Traits
 			requestPause = self.Owner.PlayerActor.TraitsImplementing<IBotRequestPauseUnitProduction>().ToArray();
 			playerResources = self.Owner.PlayerActor.Trait<PlayerResources>();
 			techTree = self.Owner.PlayerActor.TraitOrDefault<TechTree>();
-			compositions = Info.UseCompositions ? self.World.WorldActor.TraitOrDefault<UnitCompositionsBotModule>() : null;
+			compositionsModule = Info.UseCompositions ? self.World.WorldActor.TraitOrDefault<UnitCompositionsBotModule>() : null;
 
 			var referencedUnitTypes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 			if (Info.UnitsToBuild != null)
 				referencedUnitTypes.UnionWith(Info.UnitsToBuild.Keys);
 
-			if (compositions != null)
+			if (compositionsModule != null)
 			{
-				baselineComposition = compositions != null ? compositions.UnitCompositions.FirstOrDefault(c => c != null && c.IsBaseline) : null;
+				baselineComposition = compositionsModule != null ? compositionsModule.UnitCompositions.FirstOrDefault(c => c != null && c.IsBaseline) : null;
 
-				foreach (var c in compositions.UnitCompositions)
+				foreach (var c in compositionsModule.UnitCompositions)
 					if (c?.UnitsToBuild != null)
 						referencedUnitTypes.UnionWith(c.UnitsToBuild.Keys);
 			}
@@ -336,14 +336,14 @@ namespace OpenRA.Mods.CA.Traits
 
 		bool HasAnyUnitCompositionOrFallback()
 		{
-			var hasCompositions = compositions != null && compositions.UnitCompositions.Count != 0;
+			var hasCompositions = compositionsModule != null && compositionsModule.UnitCompositions.Count != 0;
 			var hasFallback = Info.UnitsToBuild != null && Info.UnitsToBuild.Count != 0;
 			return hasCompositions || hasFallback;
 		}
 
 		Dictionary<string, int> GetUnitsToBuildForCategory(string queueCategory)
 		{
-			if (compositions == null || compositions.UnitCompositions.Count == 0)
+			if (compositionsModule == null || compositionsModule.UnitCompositions.Count == 0)
 				return Info.UnitsToBuild;
 
 			if (activeComposition != null && CompositionAppliesToCategory(activeComposition, queueCategory))
@@ -357,7 +357,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		void UpdateComposition()
 		{
-			if (compositions == null || compositions.UnitCompositions.Count == 0)
+			if (compositionsModule == null || compositionsModule.UnitCompositions.Count == 0)
 				return;
 
 			// If a non-baseline composition is active, then keep it until it expires.
@@ -392,14 +392,14 @@ namespace OpenRA.Mods.CA.Traits
 
 		UnitComposition ChooseActiveComposition()
 		{
-			if (compositions == null || compositions.UnitCompositions.Count == 0)
+			if (compositionsModule == null || compositionsModule.UnitCompositions.Count == 0)
 				return null;
 
 			nextCompositionSelectTick = GetNextCompositionSelectTick();
 
 			var playerQueues = AIUtils.FindQueuesByCategory(player);
 
-			var candidates = compositions.UnitCompositions
+			var candidates = compositionsModule.UnitCompositions
 				.Where(c => c != null && !c.IsBaseline
 					&& IsCompositionTimeValid(c)
 					&& IsCompositionIntervalValid(c)
@@ -514,7 +514,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		void AddToActiveCompositionProducedValue(ActorInfo builtUnit)
 		{
-			compositions.UnitCosts.TryGetValue(builtUnit.Name, out var unitCost);
+			compositionsModule.UnitCosts.TryGetValue(builtUnit.Name, out var unitCost);
 			if (unitCost <= 0)
 				return;
 

@@ -101,10 +101,13 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly int SquadValue = 0;
 
 		[Desc("Random number of up to this value units is added to squad value when creating an attack squad.")]
-		public readonly int SquadValueRandomEarlyBonus = 0;
+		public readonly int SquadValueMaxEarlyBonus = 0;
 
 		[Desc("The random number added to squad value increases to this value over the first 20 minutes.")]
-		public readonly int SquadValueRandomLateBonus = 0;
+		public readonly int SquadValueMinLateBonus = 0;
+
+		[Desc("The random number added to squad value increases to this value over the first 20 minutes.")]
+		public readonly int SquadValueMaxLateBonus = 0;
 
 		[Desc("Percent change for ground squads to attack a random priority target rather than the closest enemy.")]
 		public readonly int HighValueTargetPriority = 0;
@@ -134,8 +137,11 @@ namespace OpenRA.Mods.CA.Traits
 			if (DangerScanRadius <= 0)
 				throw new YamlException("DangerScanRadius must be greater than zero.");
 
-			if (SquadValueRandomEarlyBonus > SquadValueRandomLateBonus)
-				throw new YamlException("SquadValueRandomEarlyBonus cannot be greater than SquadValueRandomLateBonus.");
+			if (SquadValueMaxEarlyBonus > SquadValueMaxLateBonus)
+				throw new YamlException("SquadValueMaxEarlyBonus cannot be greater than SquadValueMaxLateBonus.");
+
+			if (SquadValueMinLateBonus > SquadValueMaxLateBonus)
+				throw new YamlException("SquadValueMinLateBonus cannot be greater than SquadValueMaxLateBonus.");
 		}
 
 		public override object Create(ActorInitializer init) { return new SquadManagerBotModuleCA(init.Self, this); }
@@ -561,9 +567,16 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			desiredAttackForceValue = Info.SquadValue;
 
-			// Add a random bonus between 0 and a value that scales from SquadValueRandomEarlyBonus at 0 WorldTick to SquadValueRandomLateBonus at 20 minutes WorldTick
-			var randomBonus = World.LocalRandom.Next(0, (int)(Info.SquadValueRandomEarlyBonus + (Info.SquadValueRandomLateBonus - Info.SquadValueRandomEarlyBonus) * Math.Min(1, (float)World.WorldTick / (20 * 60 * 25))));
-			desiredAttackForceValue += randomBonus;
+			// Add a random bonus between a min and max that scale over the first 20 minutes.
+			// Min scales from 0 to SquadValueMinLateBonus; max scales from SquadValueMaxEarlyBonus to SquadValueMaxLateBonus.
+			var t = Math.Min(1f, World.WorldTick / (20f * 60f * 25f));
+			var minBonus = (int)(Info.SquadValueMinLateBonus * t);
+			var maxBonus = (int)(Info.SquadValueMaxEarlyBonus + (Info.SquadValueMaxLateBonus - Info.SquadValueMaxEarlyBonus) * t);
+
+			if (maxBonus <= minBonus)
+				desiredAttackForceValue += minBonus;
+			else
+				desiredAttackForceValue += World.LocalRandom.Next(minBonus, maxBonus);
 		}
 
 		void ProtectOwn(IBot bot, Actor attacker)
