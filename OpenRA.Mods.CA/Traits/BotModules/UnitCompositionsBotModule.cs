@@ -24,7 +24,7 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("What units to the AI should build.", "What relative share of the total army must be this type of unit.")]
 		public readonly Dictionary<string, int> UnitsToBuild = new();
 
-		[Desc("If true, the AI can use this as a baseline/fallback composition (MaxDuration and MaxProducedValue will be ignored).")]
+		[Desc("If true, the AI can use this as a baseline/fallback composition (MaxDuration, MaxProducedValue and EnabledChance will be ignored).")]
 		public readonly bool IsBaseline = false;
 
 		[Desc("If non-zero, the maximum number of ticks the composition should remain active before reverting to baseline.")]
@@ -41,6 +41,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		[Desc("Maximum ticks into the game the compositon can be selected.")]
 		public readonly int MinInterval = 7500;
+
+		[Desc("Percentage chance this composition will be available to a given bot (determinated at the start of the game).")]
+		public readonly int EnabledChance = 100;
 
 		[Desc("List of prerequisites that must be met for the composition to be chosen.")]
 		public readonly string[] Prerequisites = Array.Empty<string>();

@@ -75,7 +75,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly int MinCompositionSelectInterval = 750;
 
 		[Desc("Maximum ticks before selecting a new non-baseline composition.")]
-		public readonly int MaxCompositionSelectInterval = 1500;
+		public readonly int MaxCompositionSelectInterval = 7500;
 
 		public override object Create(ActorInitializer init) { return new UnitBuilderBotModuleCA(init.Self, this); }
 	}
@@ -99,6 +99,7 @@ namespace OpenRA.Mods.CA.Traits
 		ActorIndex.OwnerAndNames unitsToBuild;
 
 		UnitCompositionsBotModule compositionsModule;
+		List<UnitComposition> possibleActiveCompositions = null;
 		TechTree techTree;
 
 		IBotRequestPauseUnitProduction[] requestPause;
@@ -133,6 +134,12 @@ namespace OpenRA.Mods.CA.Traits
 				foreach (var c in compositionsModule.UnitCompositions)
 					if (c?.UnitsToBuild != null)
 						referencedUnitTypes.UnionWith(c.UnitsToBuild.Keys);
+
+				possibleActiveCompositions = compositionsModule.UnitCompositions.Where(c => c != null
+					&& !c.IsBaseline
+					&& (c.EnabledChance == 100 || self.World.LocalRandom.Next(100) < c.EnabledChance)).ToList();
+
+				nextCompositionSelectTick = GetNextCompositionSelectTick();
 			}
 
 			unitsToBuild = new ActorIndex.OwnerAndNames(world, referencedUnitTypes, player);
@@ -392,14 +399,14 @@ namespace OpenRA.Mods.CA.Traits
 
 		UnitComposition ChooseActiveComposition()
 		{
-			if (compositionsModule == null || compositionsModule.UnitCompositions.Count == 0)
+			if (compositionsModule == null || possibleActiveCompositions.Count == 0)
 				return null;
 
 			nextCompositionSelectTick = GetNextCompositionSelectTick();
 
 			var playerQueues = AIUtils.FindQueuesByCategory(player);
 
-			var candidates = compositionsModule.UnitCompositions
+			var candidates = possibleActiveCompositions
 				.Where(c => c != null && !c.IsBaseline
 					&& IsCompositionTimeValid(c)
 					&& IsCompositionIntervalValid(c)
