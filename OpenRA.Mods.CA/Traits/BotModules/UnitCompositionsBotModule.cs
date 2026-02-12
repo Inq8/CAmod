@@ -66,6 +66,9 @@ namespace OpenRA.Mods.CA.Traits
 		[FieldLoader.LoadUsing(nameof(LoadUnitCompositions))]
 		public readonly List<UnitComposition> UnitCompositions = new();
 
+		/// To suppress errors
+		public readonly UnitComposition Composition = null;
+
 		public override object Create(ActorInitializer init) { return new UnitCompositionsBotModule(init.Self, this); }
 
 		static object LoadUnitCompositions(MiniYaml yaml)
