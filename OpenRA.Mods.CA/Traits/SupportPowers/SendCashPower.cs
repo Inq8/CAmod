@@ -8,6 +8,7 @@
  */
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Graphics;
@@ -28,6 +29,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Percentage of amount sent to be taxed away.")]
 		public readonly int TaxPercentage = 0;
 
+		[Desc("If true, target player must have available capacity to receive the money.")]
+		public readonly bool RequireTargetCapacity = false;
+
 		[Desc("The `TargetTypes` from `Targetable` that can be targeted.")]
 		public readonly BitSet<TargetableType> ValidTargets = default;
 
@@ -39,6 +43,17 @@ namespace OpenRA.Mods.CA.Traits
 
 		[Desc("Sound to play when sending money.")]
 		public readonly string OnFireSound = null;
+
+		[Desc("If true, target player cannot have more money than the sender.")]
+		public readonly bool TargetMustBePoorer = false;
+
+		[NotificationReference("Speech")]
+		[Desc("Speech notification to play when the player does not have any funds.")]
+		public readonly string InsufficientFundsNotification = null;
+
+		[FluentReference(optional: true)]
+		[Desc("Text notification to display when the player does not have any funds.")]
+		public readonly string InsufficientFundsTextNotification = null;
 
 		public override object Create(ActorInitializer init) { return new SendCashPower(init.Self, this); }
 	}
@@ -66,26 +81,62 @@ namespace OpenRA.Mods.CA.Traits
 			if (target == null)
 				return;
 
-			PlayLaunchSounds();
-			Game.Sound.Play(SoundType.World, info.OnFireSound, order.Target.CenterPosition);
-
 			var playerResources = self.Owner.PlayerActor.Trait<PlayerResources>();
-			var amountToSend = System.Math.Min(info.Amount, playerResources.Cash + playerResources.Resources);
+
+			// first constrain the amount to how much the player can afford to send
+			var amountToSend = Math.Min(info.Amount, playerResources.GetCashAndResources());
 
 			if (amountToSend > 0)
 			{
-				playerResources.TakeCash(amountToSend, true);
-
 				var targetResources = target.Owner.PlayerActor.Trait<PlayerResources>();
+				var localPlayer = self.World.LocalPlayer;
+
+				// if the target must be poorer, further constrain the amount to send based on the difference between sender and target funds
+				if (info.TargetMustBePoorer)
+				{
+					amountToSend = Math.Max(0, Math.Min(amountToSend, playerResources.GetCashAndResources() - targetResources.GetCashAndResources()));
+
+					if (amountToSend <= 0)
+					{
+						var message = $"Cannot send to players with more resources.";
+						if (localPlayer != null && localPlayer == self.Owner)
+							TextNotificationsManager.AddChatLine(self.Owner.ClientIndex, "[Team] " + self.Owner.ResolvedPlayerName, message, self.Owner.Color);
+						return;
+					}
+				}
+
+				if (info.RequireTargetCapacity)
+				{
+					var capacityAvailable = targetResources.ResourceCapacity - targetResources.Resources;
+
+					if (capacityAvailable <= 0)
+					{
+						var message = $"{target.Owner.ResolvedPlayerName} has no storage capacity remaining.";
+						if (localPlayer != null && localPlayer == self.Owner)
+							TextNotificationsManager.AddChatLine(self.Owner.ClientIndex, "[Team] " + self.Owner.ResolvedPlayerName, message, self.Owner.Color);
+						return;
+					}
+
+					amountToSend = Math.Min(amountToSend, capacityAvailable);
+				}
+
+				PlayLaunchSounds();
+				Game.Sound.Play(SoundType.World, info.OnFireSound, order.Target.CenterPosition);
+
+				playerResources.TakeCash(amountToSend, true);
+				var taxAmount = 0;
 
 				if (info.TaxPercentage > 0)
 				{
-					var taxAmount = amountToSend * info.TaxPercentage / 100;
+					taxAmount = amountToSend * info.TaxPercentage / 100;
 					amountToSend -= taxAmount;
-					amountToSend = System.Math.Max(1, amountToSend);
+					amountToSend = Math.Max(1, amountToSend);
 				}
 
-				targetResources.GiveCash(amountToSend);
+				if (info.RequireTargetCapacity)
+					targetResources.GiveResources(amountToSend);
+				else
+					targetResources.GiveCash(amountToSend);
 
 				self.World.AddFrameEndTask(w =>
 				{
@@ -93,12 +144,19 @@ namespace OpenRA.Mods.CA.Traits
 					w.Add(new FlashTarget(target, Color.Yellow));
 				});
 
-				var localPlayer = self.World.LocalPlayer;
 				if (localPlayer != null && localPlayer.IsAlliedWith(self.Owner))
 				{
 					var message = $"Sent ${amountToSend} to {target.Owner.ResolvedPlayerName}";
+
+					if (info.TaxPercentage > 0)
+						message += $" (${amountToSend + taxAmount} - ${taxAmount} tax)";
+
 					TextNotificationsManager.AddChatLine(self.Owner.ClientIndex, "[Team] " + self.Owner.ResolvedPlayerName, message, self.Owner.Color);
 				}
+
+			} else {
+				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", info.InsufficientFundsNotification, self.Owner.Faction.InternalName);
+				TextNotificationsManager.AddTransientLine(self.Owner, info.InsufficientFundsTextNotification);
 			}
 		}
 
