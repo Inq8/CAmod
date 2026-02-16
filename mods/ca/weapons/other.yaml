@@ -1419,7 +1419,7 @@ EnlightenedEmp:
 		Range: 0c896
 		Duration: 150
 		Condition: empdisable
-		ValidTargets: Vehicle, Ship
+		ValidTargets: Vehicle, Ship, Building
 		InvalidTargets: Cyborg, EmpImmune
 	Warhead@2Emp: GrantExternalConditionCA
 		Range: 0c896
@@ -2228,8 +2228,8 @@ OrcaBomb:
 		Range: 1c512
 		Duration: 375
 		Condition: empdisable
-		ValidTargets: Ground, Structure, Vehicle
-		InvalidTargets: Defense, EmpImmune
+		ValidTargets: Vehicle, Ship, Building
+		InvalidTargets: EmpImmune
 	Warhead@empdef: GrantExternalConditionCA
 		Range: 1c512
 		Duration: 625
@@ -2300,7 +2300,7 @@ MicrowaveZap:
 		Range: 0c511
 		Duration: 100
 		Condition: empdisable
-		ValidTargets: Vehicle, Ship, Defense
+		ValidTargets: Vehicle, Ship, Structure
 		InvalidTargets: EmpImmune
 	Warhead@3Eff: CreateEffect
 		Image: microwavehit
@@ -2322,7 +2322,7 @@ MicrowaveZap.UPG:
 		Range: 0c511
 		Duration: 125
 		Condition: empdisable
-		ValidTargets: Vehicle, Ship, Defense
+		ValidTargets: Vehicle, Ship, Structure
 		InvalidTargets: EmpImmune
 	Warhead@Flash: FlashTarget
 		Spread: 0c511
@@ -3447,7 +3447,7 @@ ShadeEmp:
 		Range: 1c0
 		Duration: 225
 		Condition: empdisable
-		ValidTargets: Vehicle, Ship, Defense
+		ValidTargets: Vehicle, Ship, Structure
 		InvalidTargets: Cyborg, EmpImmune
 	Warhead@2Emp: GrantExternalConditionCA
 		Range: 1c0
@@ -3530,7 +3530,7 @@ PeacemakerBombs:
 			Wood: 0
 			Light: 70
 			Heavy: 100
-			Concrete: 55
+			Concrete: 60
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster, AirToGround, FlakVestMitigated
 	Warhead@2Dam: SpreadDamage
 		Spread: 512
@@ -3572,7 +3572,7 @@ PeacemakerBombsBuilding:
 		Delay: 35
 		Versus:
 			None: 0
-			Wood: 40
+			Wood: 45
 			Light: 0
 			Heavy: 0
 			Concrete: 0
@@ -3863,7 +3863,7 @@ BasiliskPulse:
 		Range: 0c511
 		Duration: 100
 		Condition: empdisable
-		ValidTargets: Vehicle, Ship, Defense
+		ValidTargets: Vehicle, Ship, Structure
 		InvalidTargets: EmpImmune
 
 CyclopsZap:

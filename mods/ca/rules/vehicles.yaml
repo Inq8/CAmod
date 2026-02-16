@@ -2,11 +2,10 @@ V2RL:
 	Inherits: ^Vehicle
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 180
-		Prerequisites: anyradar, ~vehicles.soviet, ~!v3.upgrade, ~techlevel.medium
+		Prerequisites: anyradar, ~vehicles.v2, ~techlevel.medium
 		Description: Long-range rocket artillery with low rate of fire.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
@@ -53,15 +52,6 @@ V2RL:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1194, 1194
-	ReplacedInQueue:
-		Actors: v3rl
-	Upgradeable@V3:
-		Type: v3.upgrade
-		UpgradingCondition: upgrading
-		Actor: v3rl
-		UpgradeAtActors: fix, rep, srep
-		BuildDuration: 100
-		RequiresCondition: !mindcontrolled
 	Encyclopedia:
 		Category: Soviets/Vehicles
 
@@ -2013,7 +2003,7 @@ SAPC:
 		ValidDamageStates: Critical
 	AutoTarget:
 		InitialStance: HoldFire
-		InitialStanceAI: Defend
+		InitialStanceAI: AttackAnything
 	GrantTimedConditionOnCargoAction:
 		Condition: cloak-force-disabled
 		Actions: Load
@@ -5262,7 +5252,7 @@ STNK.Nod:
 		Sequence: turret-upg
 	AutoTarget:
 		InitialStance: HoldFire
-		InitialStanceAI: Defend
+		InitialStanceAI: AttackAnything
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
@@ -5380,7 +5370,7 @@ HSTK:
 		Sequence: turret-upg
 	AutoTarget:
 		InitialStance: HoldFire
-		InitialStanceAI: Defend
+		InitialStanceAI: AttackAnything
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
@@ -6412,7 +6402,7 @@ IFV:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 30000
+		HP: 32000
 	Armor:
 		Type: Light
 	Mobile:
@@ -6962,6 +6952,11 @@ IFV:
 		RequiresCondition: (stance-attackanything || assault-move) && !is-aa
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Structure, Defense, Mine
 		InvalidTargets: NoAutoTarget
+	AutoTargetPriority@HeavyPrio:
+		ValidTargets: Heavy
+		InvalidTargets: NoAutoTarget
+		Priority: 15
+		RequiresCondition: tigrturr
 	AttackMove:
 		AssaultMoveCondition: assault-move
 	AutoTargetPriority@REPAIR:
@@ -8071,8 +8066,8 @@ V3RL:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
-		BuildPaletteOrder: 181
-		Prerequisites: anyradar, ~vehicles.soviet, ~v3.upgrade, ~techlevel.high
+		BuildPaletteOrder: 243
+		Prerequisites: stek, ~vehicles.ukraine, ~techlevel.high
 		Description: Extreme long-range rocket artillery.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
@@ -8138,13 +8133,11 @@ V3RL:
 		DecorationBounds: 1194, 1194
 	Voiced:
 		VoiceSet: V3Voice
-	ProductionCostMultiplier@UkraineBonus:
-		Multiplier: 90
-		Prerequisites: player.ukraine
 	Encyclopedia:
 		Category: Soviets/Vehicles
 	EncyclopediaExtras:
 		RenderPreviewActor: v3rl.preview
+		Subfaction: ukraine
 
 V3RL.Preview:
 	Inherits: ^PreviewDummy

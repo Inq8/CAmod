@@ -57,7 +57,7 @@ namespace OpenRA.Mods.CA.Traits
 					continue;
 
 				var proxy = proxyCreator.GetProxyForPlayer(localPlayer);
-				if (proxy != null && !proxy.IsDead && proxy.IsInWorld)
+				if (proxy != null && !proxy.IsDead && proxy.IsInWorld && proxy.Info.HasTraitInfo<ISelectableInfo>())
 				{
 					selectedBuildings.Add(actor);
 

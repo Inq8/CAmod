@@ -182,7 +182,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnEnteredProximityTrigger(AlliedBaseCenter.CenterPosition, WDist.New(15 * 1024), function(a, id)
-		if a.Owner == Greece and a.Type ~= "flare" then
+		if IsMissionPlayer(a.Owner) and a.Type ~= "flare" then
 			Trigger.RemoveProximityTrigger(id)
 			if not AlliedBaseFlare.IsDead then
 				AlliedBaseFlare.Destroy()
@@ -362,7 +362,7 @@ InitGDI = function()
 
 	local productionBuildings = GDI.GetActorsByTypes({ "pyle", "afac", "weap.td", "afld.gdi" })
 	for _, b in pairs(productionBuildings) do
-		SellOnCaptureAttempt(b)
+		BuildDefenseOnCaptureAttempt(b, "gtwr", true)
 	end
 
 	UpgradeCenter.GrantCondition("tower-rocket")

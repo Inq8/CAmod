@@ -55,6 +55,9 @@ namespace OpenRA.Mods.Common.Traits
 		[Desc("Text notification to display when setting a new source.")]
 		public readonly string SourceSetTextNotification = null;
 
+		[Desc("If true, skips anything currently being produced when link is established.")]
+		public readonly bool SkipCurrentlyProducing = false;
+
 		public override object Create(ActorInitializer init) { return new LinkedProducerTarget(init.Self, this); }
 	}
 
@@ -233,7 +236,9 @@ namespace OpenRA.Mods.Common.Traits
 				LinkNodes.Add(producer.CenterPosition);
 			}
 
-			if (!singleQueue && producer.TraitsImplementing<ProductionQueue>().Any(q => q.CurrentItem() != null))
+			if (info.SkipCurrentlyProducing
+				&& !singleQueue
+				&& producer.TraitsImplementing<ProductionQueue>().Any(q => q.CurrentItem() != null))
 			{
 				delayedSources.Add(source);
 			}

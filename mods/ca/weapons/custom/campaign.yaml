@@ -177,6 +177,14 @@ C4:
 		ValidTargets: CampaignBoss
 		InvalidTargets: Shielded
 
+MEMP:
+	Warhead@emp: GrantExternalConditionCA
+		InvalidTargets: EmpImmune, CampaignBoss
+	Inherits@VsCampaignBossEmp: ^VsCampaignBossEmp
+	Warhead@bossEmp: GrantExternalConditionCA
+		Range: 5c0
+		Duration: 40
+
 MicrowaveZap:
 	Warhead@emp: GrantExternalConditionCA
 		InvalidTargets: EmpImmune, CampaignBoss
@@ -213,7 +221,7 @@ EMPGrenade:
 
 OrcaBomb:
 	Warhead@emp: GrantExternalConditionCA
-		InvalidTargets: Defense, EmpImmune, CampaignBoss
+		InvalidTargets: EmpImmune, CampaignBoss
 	Inherits@VsCampaignBossEmp: ^VsCampaignBossEmp
 	Warhead@bossEmp: GrantExternalConditionCA
 		Duration: 20

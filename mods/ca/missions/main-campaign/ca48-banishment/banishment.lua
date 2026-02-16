@@ -148,7 +148,7 @@ WorldLoaded = function()
 
 	local productionBuildings = MaleficScrin.GetActorsByTypes({ "port", "wsph", "sfac", "grav" })
 	for _, b in pairs(productionBuildings) do
-		SellOnCaptureAttempt(b)
+		BuildDefenseOnCaptureAttempt(b, "ptur", true)
 	end
 
 	if IsHardOrAbove() then

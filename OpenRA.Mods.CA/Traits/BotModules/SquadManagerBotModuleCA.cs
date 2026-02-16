@@ -31,6 +31,10 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly HashSet<string> AirUnitsTypes = new HashSet<string>();
 
 		[ActorReference]
+		[Desc("Actor types that are valid for harasser squads.")]
+		public readonly HashSet<string> HarasserTypes = new HashSet<string>();
+
+		[ActorReference]
 		[Desc("Actor types that should generally be excluded from attack squads.")]
 		public readonly HashSet<string> ExcludeFromSquadsTypes = new HashSet<string>();
 
@@ -48,12 +52,6 @@ namespace OpenRA.Mods.CA.Traits
 
 		[Desc("Target types are used for identifying aircraft.")]
 		public readonly BitSet<TargetableType> AircraftTargetType = new("Air");
-
-		[Desc("Minimum number of units AI must have before attacking.")]
-		public readonly int SquadSize = 8;
-
-		[Desc("Random number of up to this many units is added to squad size when creating an attack squad.")]
-		public readonly int SquadSizeRandomBonus = 30;
 
 		[Desc("Delay (in ticks) between giving out orders to units.")]
 		public readonly int AssignRolesInterval = 50;
@@ -102,8 +100,14 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Minimum value of units AI must have before attacking.")]
 		public readonly int SquadValue = 0;
 
-		[Desc("Random number of up to this value units is added to squad valuee when creating an attack squad.")]
-		public readonly int SquadValueRandomBonus = 0;
+		[Desc("Random number of up to this value units is added to squad value when creating an attack squad.")]
+		public readonly int SquadValueMaxEarlyBonus = 0;
+
+		[Desc("The random number added to squad value increases to this value over the first 20 minutes.")]
+		public readonly int SquadValueMinLateBonus = 0;
+
+		[Desc("The random number added to squad value increases to this value over the first 20 minutes.")]
+		public readonly int SquadValueMaxLateBonus = 0;
 
 		[Desc("Percent change for ground squads to attack a random priority target rather than the closest enemy.")]
 		public readonly int HighValueTargetPriority = 0;
@@ -123,12 +127,21 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Air threats to prioritise above all others.")]
 		public readonly HashSet<string> BigAirThreats = new HashSet<string>();
 
+		[Desc("Percent chance to take a less direct route to targets.")]
+		public readonly int IndirectRouteChance = 50;
+
 		public override void RulesetLoaded(Ruleset rules, ActorInfo ai)
 		{
 			base.RulesetLoaded(rules, ai);
 
 			if (DangerScanRadius <= 0)
 				throw new YamlException("DangerScanRadius must be greater than zero.");
+
+			if (SquadValueMaxEarlyBonus > SquadValueMaxLateBonus)
+				throw new YamlException("SquadValueMaxEarlyBonus cannot be greater than SquadValueMaxLateBonus.");
+
+			if (SquadValueMinLateBonus > SquadValueMaxLateBonus)
+				throw new YamlException("SquadValueMinLateBonus cannot be greater than SquadValueMaxLateBonus.");
 		}
 
 		public override object Create(ActorInitializer init) { return new SquadManagerBotModuleCA(init.Self, this); }
@@ -175,7 +188,8 @@ namespace OpenRA.Mods.CA.Traits
 		Actor protectOwnFrom; // CA: Track what we're protecting from
 
 		int desiredAttackForceValue; // CA: Value-based squad thresholds
-		int desiredAttackForceSize;
+
+		Dictionary<string, int> cachedUnitValues = new();
 
 		public SquadManagerBotModuleCA(Actor self, SquadManagerBotModuleCAInfo info)
 			: base(info)
@@ -482,6 +496,27 @@ namespace OpenRA.Mods.CA.Traits
 						newNavalSquad.Units.Add(a);
 					}
 				}
+				else if (Info.HarasserTypes.Contains(a.Info.Name))
+				{
+					var harasserSquads = Squads.Where(s => s.Type == SquadCAType.Harass);
+					var matchingHarasserSquadFound = false;
+
+					foreach (var harasserSquad in harasserSquads)
+					{
+						if (harasserSquad.Units.Any(u => u.Info.Name == a.Info.Name))
+						{
+							harasserSquad.Units.Add(a);
+							matchingHarasserSquadFound = true;
+							break;
+						}
+					}
+
+					if (!matchingHarasserSquadFound)
+					{
+						var newHarasserSquad = RegisterNewSquad(bot, SquadCAType.Harass);
+						newHarasserSquad.Units.Add(a);
+					}
+				}
 				else
 					unitsHangingAroundTheBase.Add(a);
 
@@ -503,13 +538,17 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				foreach (var a in unitsHangingAroundTheBase)
 				{
-					var valued = a.Info.TraitInfoOrDefault<ValuedInfo>();
-					if (valued != null)
-						idleUnitsValue += valued.Cost;
+					if (!cachedUnitValues.TryGetValue(a.Info.Name, out var unitCost))
+					{
+						unitCost = a.Info.TraitInfoOrDefault<ValuedInfo>()?.Cost ?? 0;
+						cachedUnitValues[a.Info.Name] = unitCost;
+					}
+
+					idleUnitsValue += unitCost;
 				}
 			}
 
-			if (idleUnitsValue >= desiredAttackForceValue && unitsHangingAroundTheBase.Count >= desiredAttackForceSize)
+			if (idleUnitsValue >= desiredAttackForceValue)
 			{
 				var attackForce = RegisterNewSquad(bot, SquadCAType.Assault);
 
@@ -526,11 +565,18 @@ namespace OpenRA.Mods.CA.Traits
 
 		void SetNextDesiredAttackForce()
 		{
-			desiredAttackForceSize = Info.SquadSize + World.LocalRandom.Next(Info.SquadSizeRandomBonus);
-			desiredAttackForceValue = 0;
+			desiredAttackForceValue = Info.SquadValue;
 
-			if (Info.SquadValue > 0) // CA: Value-based squad thresholds
-				desiredAttackForceValue = Info.SquadValue + World.LocalRandom.Next(Info.SquadValueRandomBonus);
+			// Add a random bonus between a min and max that scale over the first 20 minutes.
+			// Min scales from 0 to SquadValueMinLateBonus; max scales from SquadValueMaxEarlyBonus to SquadValueMaxLateBonus.
+			var t = Math.Min(1f, World.WorldTick / (20f * 60f * 25f));
+			var minBonus = (int)(Info.SquadValueMinLateBonus * t);
+			var maxBonus = (int)(Info.SquadValueMaxEarlyBonus + (Info.SquadValueMaxLateBonus - Info.SquadValueMaxEarlyBonus) * t);
+
+			if (maxBonus <= minBonus)
+				desiredAttackForceValue += minBonus;
+			else
+				desiredAttackForceValue += World.LocalRandom.Next(minBonus, maxBonus);
 		}
 
 		void ProtectOwn(IBot bot, Actor attacker)
@@ -671,7 +717,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		public bool IsPreferredEnemyBuilding(Actor a)
 		{
-			return IsValidEnemyUnit(a) && a.Info.HasTraitInfo<BuildingInfo>();
+			return IsValidEnemyUnit(a) && a.Info.HasTraitInfo<RepairableBuildingInfo>();
 		}
 
 		public bool IsPreferredEnemyAircraft(Actor a)

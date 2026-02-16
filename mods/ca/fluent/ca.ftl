@@ -2,6 +2,9 @@
 mod-title = Combined Arms
 mod-windowtitle = OpenRA Combined Arms
 
+## Debug Commands
+description-squadpaths-debug-overlay = Toggles visualization of AI squad pathfinding routes
+
 ## Bots
 bot-easy-ai =
     .name = Easy AI

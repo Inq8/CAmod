@@ -15,6 +15,8 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 		IState currentState;
 		IState previousState;
 
+		public IState CurrentState => currentState;
+
 		public void Update(SquadCA squad)
 		{
 			if (currentState != null)

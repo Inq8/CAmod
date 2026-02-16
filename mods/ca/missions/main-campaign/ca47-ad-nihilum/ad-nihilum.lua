@@ -173,11 +173,6 @@ WorldLoaded = function()
 		SendNextVoidEngine()
 	end)
 
-	local productionBuildings = MaleficScrin.GetActorsByTypes({ "port", "wsph", "airs", "sfac" })
-	for _, b in pairs(productionBuildings) do
-		SellOnCaptureAttempt(b)
-	end
-
 	local voidEngineExit = {}
 	for x = 84, 132 do
 		table.insert(voidEngineExit, CPos.New(x, 1))
@@ -265,7 +260,7 @@ InitMaleficScrin = function()
 
 	local productionBuildings = MaleficScrin.GetActorsByTypes({ "port", "wsph", "sfac", "grav" })
 	for _, b in pairs(productionBuildings) do
-		SellOnCaptureAttempt(b)
+		BuildDefenseOnCaptureAttempt(b, "ptur", true)
 	end
 end
 

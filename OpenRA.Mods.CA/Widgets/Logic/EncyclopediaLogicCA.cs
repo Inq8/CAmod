@@ -37,7 +37,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 		readonly ScrollPanelWidget descriptionPanel;
 		readonly LabelWidget titleLabel;
 		readonly LabelWidget descriptionLabel;
-		readonly LabelWidget prerequisitesLabel;
+		readonly LinkableLabelWidget prerequisitesLabel;
 		readonly SpriteFont descriptionFont;
 		readonly Widget actorDetailsContainer;
 
@@ -67,15 +67,21 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 		// Tooltip extras widgets
 		readonly LabelWidget strengthsLabel;
 		readonly LabelWidget weaknessesLabel;
-		readonly LabelWidget attributesLabel;
-		readonly LabelWidget encyclopediaDescriptionLabel;
+		readonly LinkableLabelWidget attributesLabel;
+		readonly LinkableLabelWidget encyclopediaDescriptionLabel;
+
+		// Entry lookup for cross-reference navigation (by actor name, case-insensitive)
+		readonly Dictionary<string, ActorInfo> entryLookupByActorName = new(StringComparer.OrdinalIgnoreCase);
+
+		// Prerequisite provider lookup - maps faction -> prerequisite name -> actor name
+		readonly Dictionary<string, Dictionary<string, string>> prerequisiteProvidersByFaction = new(StringComparer.OrdinalIgnoreCase);
 
 		// Subfaction widgets
 		readonly LabelWidget subfactionLabel;
 		readonly ImageWidget subfactionFlagImage;
 
 		// Additional info widget
-		readonly LabelWidget additionalInfoLabel;
+		readonly LinkableLabelWidget additionalInfoLabel;
 
 		// Build icon widget
 		readonly SpriteWidget buildIconWidget;
@@ -147,8 +153,13 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			titleLabel = descriptionPanel.GetOrNull<LabelWidget>("ACTOR_TITLE");
 			actorDetailsContainer = descriptionPanel.Get("ACTOR_DETAILS");
 			descriptionLabel = actorDetailsContainer.Get<LabelWidget>("ACTOR_DESCRIPTION");
-			prerequisitesLabel = actorDetailsContainer.Get<LabelWidget>("ACTOR_PREREQUISITES");
+			prerequisitesLabel = actorDetailsContainer.Get<LinkableLabelWidget>("ACTOR_PREREQUISITES");
 			descriptionFont = Game.Renderer.Fonts[descriptionLabel.Font];
+
+			// Wire up link click handler for prerequisites cross-references
+			prerequisitesLabel.OnLinkClicked = NavigateToEntry;
+			prerequisitesLabel.IsValidLink = IsValidEntryLink;
+			prerequisitesLabel.ResolveDisplayText = ResolveActorDisplayName;
 
 			portraitWidget = widget.GetOrNull<SpriteWidget>("ACTOR_PORTRAIT");
 			if (portraitWidget != null)
@@ -175,13 +186,32 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			strengthsLabel = actorDetailsContainer.Get<LabelWidget>("STRENGTHS");
 			weaknessesLabel = actorDetailsContainer.Get<LabelWidget>("WEAKNESSES");
-			attributesLabel = actorDetailsContainer.Get<LabelWidget>("ATTRIBUTES");
-			encyclopediaDescriptionLabel = actorDetailsContainer.Get<LabelWidget>("ENCYCLOPEDIA_DESCRIPTION");
+			attributesLabel = actorDetailsContainer.Get<LinkableLabelWidget>("ATTRIBUTES");
+
+			// Wire up link click handler for Attributes cross-references
+			attributesLabel.OnLinkClicked = NavigateToEntry;
+			attributesLabel.IsValidLink = IsValidEntryLink;
+			attributesLabel.ResolveDisplayText = ResolveActorDisplayName;
+
+			encyclopediaDescriptionLabel = actorDetailsContainer.Get<LinkableLabelWidget>("ENCYCLOPEDIA_DESCRIPTION");
+
+			// Wire up link click handler for cross-references
+			encyclopediaDescriptionLabel.OnLinkClicked = NavigateToEntry;
+			encyclopediaDescriptionLabel.IsValidLink = IsValidEntryLink;
+			encyclopediaDescriptionLabel.ResolveDisplayText = ResolveActorDisplayName;
 
 			subfactionLabel = actorDetailsContainer.GetOrNull<LabelWidget>("SUBFACTION");
 			subfactionFlagImage = actorDetailsContainer.GetOrNull<ImageWidget>("SUBFACTION_FLAG");
 
-			additionalInfoLabel = actorDetailsContainer.GetOrNull<LabelWidget>("ADDITIONAL_INFO");
+			additionalInfoLabel = actorDetailsContainer.GetOrNull<LinkableLabelWidget>("ADDITIONAL_INFO");
+
+			// Wire up link click handler for AdditionalInfo cross-references
+			if (additionalInfoLabel != null)
+			{
+				additionalInfoLabel.OnLinkClicked = NavigateToEntry;
+				additionalInfoLabel.IsValidLink = IsValidEntryLink;
+				additionalInfoLabel.ResolveDisplayText = ResolveActorDisplayName;
+			}
 
 			buildIconWidget = widget.GetOrNull<SpriteWidget>("BUILD_ICON");
 
@@ -208,6 +238,9 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			// Build folder hierarchy
 			BuildFolderHierarchy();
+
+			// Build lookup dictionary for entry navigation
+			BuildEntryLookup();
 
 			// Create tabs for top-level categories
 			CreateCategoryTabs();
@@ -296,6 +329,100 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 						variantGroupOrder[extras.VariantGroup] = variantGroupOrder.Count;
 				}
 			}
+		}
+
+		void BuildEntryLookup()
+		{
+			foreach (var actor in modData.DefaultRules.Actors.Values)
+			{
+				var encyclopedia = actor.TraitInfoOrDefault<EncyclopediaInfo>();
+				if (encyclopedia == null)
+					continue;
+
+				// Add to actor name lookup (actor names are unique)
+				entryLookupByActorName[actor.Name] = actor;
+
+				// Build prerequisite provider lookup for each faction this actor belongs to
+				if (!string.IsNullOrEmpty(encyclopedia.Category))
+				{
+					var factions = GetFactionsFromCategory(encyclopedia.Category);
+					var providesPrereqs = actor.TraitInfos<ProvidesPrerequisiteInfo>();
+
+					foreach (var faction in factions)
+					{
+						if (!prerequisiteProvidersByFaction.ContainsKey(faction))
+							prerequisiteProvidersByFaction[faction] = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+						foreach (var provides in providesPrereqs)
+						{
+							if (!string.IsNullOrEmpty(provides.Prerequisite) &&
+								!prerequisiteProvidersByFaction[faction].ContainsKey(provides.Prerequisite))
+							{
+								prerequisiteProvidersByFaction[faction][provides.Prerequisite] = actor.Name;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		static IEnumerable<string> GetFactionsFromCategory(string category)
+		{
+			if (string.IsNullOrEmpty(category))
+				yield break;
+
+			foreach (var cat in category.Split(';'))
+				yield return cat.Trim().Split('/')[0];
+		}
+
+		bool IsValidEntryLink(string actorName)
+		{
+			return entryLookupByActorName.ContainsKey(actorName);
+		}
+
+		/// <summary>
+		/// Resolves an actor name to its display name (from TooltipInfo).
+		/// Returns null if the actor doesn't exist or has no tooltip.
+		/// </summary>
+		string ResolveActorDisplayName(string actorName)
+		{
+			if (!entryLookupByActorName.TryGetValue(actorName, out var actor))
+				return null;
+
+			var tooltip = actor.TraitInfos<TooltipInfo>().FirstOrDefault();
+			if (tooltip == null || string.IsNullOrEmpty(tooltip.Name))
+				return null;
+
+			return FluentProvider.GetMessage(tooltip.Name);
+		}
+
+		void NavigateToEntry(string actorName)
+		{
+			if (!entryLookupByActorName.TryGetValue(actorName, out var actor))
+				return;
+
+			var encyclopedia = actor.TraitInfoOrDefault<EncyclopediaInfo>();
+			if (encyclopedia == null)
+				return;
+
+			// Switch to correct category tab and select actor
+			var categoryPath = encyclopedia.Category;
+			if (!string.IsNullOrEmpty(categoryPath))
+			{
+				var topCategory = categoryPath.Split('/')[0];
+
+				// Find and activate the correct tab
+				foreach (var tab in categoryTabs)
+				{
+					if (tab.Text == topCategory)
+					{
+						tab.OnClick();
+						break;
+					}
+				}
+			}
+
+			SelectActor(actor, categoryPath);
 		}
 
 		void BuildFolderHierarchy()
@@ -1019,11 +1146,23 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			var prerequisitesText = "";
 			var descriptionText = "";
 
+			// Get current faction for context-aware prerequisite linking
+			var currentFaction = "";
+			if (!string.IsNullOrEmpty(currentCategoryPath))
+				currentFaction = currentCategoryPath.Split('/')[0];
+
 			if (bi != null)
 			{
 				var prereqs = bi.Prerequisites
-					.Select(a => ActorName(modData.DefaultRules, a))
 					.Where(s => !s.StartsWith('~') && !s.StartsWith('!'))
+					.Select(prereqName =>
+					{
+						// Find the actor name that provides this prerequisite (faction-aware)
+						var actorName = FindPrerequisiteActorName(prereqName, currentFaction);
+						if (actorName != null)
+							return $"[[{actorName}]]"; // Display name resolved by ResolveDisplayText callback
+						return ActorName(modData.DefaultRules, prereqName);
+					})
 					.ToList();
 
 				if (prereqs.Count != 0)
@@ -1056,10 +1195,14 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				}
 				else if (encyclopediaExtrasInfo != null && !string.IsNullOrEmpty(encyclopediaExtrasInfo.Description))
 				{
-					descriptionText = WidgetUtilsCA.WrapTextWithIndent(
-						FluentProvider.GetMessage(encyclopediaExtrasInfo.Description.Replace("\\n", "\n")),
-						descriptionLabel.Bounds.Width,
-						descriptionFont);
+					// Skip text with links - it will go to the LinkableLabelWidget
+					if (!encyclopediaExtrasInfo.Description.Contains("[["))
+					{
+						descriptionText = WidgetUtilsCA.WrapTextWithIndent(
+							FluentProvider.GetMessage(encyclopediaExtrasInfo.Description.Replace("\\n", "\n")),
+							descriptionLabel.Bounds.Width,
+							descriptionFont);
+					}
 				}
 			}
 
@@ -1129,8 +1272,21 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			{
 				var selectedInfo = info.ContainsKey(actor) ? info[actor] : null;
 				var encyclopediaText = "";
+
+				// First check EncyclopediaInfo.Description
 				if (selectedInfo != null && !string.IsNullOrEmpty(selectedInfo.Description))
 					encyclopediaText = WidgetUtils.WrapText(FluentProvider.GetMessage(selectedInfo.Description), descriptionLabel.Bounds.Width, descriptionFont);
+
+				// Also check EncyclopediaExtrasInfo.Description for text with [[...]] links
+				if (string.IsNullOrEmpty(encyclopediaText) && encyclopediaExtrasInfo != null
+					&& !string.IsNullOrEmpty(encyclopediaExtrasInfo.Description)
+					&& encyclopediaExtrasInfo.Description.Contains("[["))
+				{
+					encyclopediaText = WidgetUtilsCA.WrapTextWithIndent(
+						FluentProvider.GetMessage(encyclopediaExtrasInfo.Description.Replace("\\n", "\n")),
+						descriptionLabel.Bounds.Width,
+						descriptionFont);
+				}
 
 				if (!string.IsNullOrEmpty(encyclopediaText) && encyclopediaDescriptionLabel != null)
 				{
@@ -1197,6 +1353,30 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			}
 
 			return name;
+		}
+
+		/// <summary>
+		/// Finds the faction-specific building that provides a given prerequisite.
+		/// Returns the actor name, or null if not found.
+		/// </summary>
+		string FindPrerequisiteActorName(string prereqName, string faction)
+		{
+			// First check if the prerequisite is a direct actor name with an encyclopedia entry
+			if (modData.DefaultRules.Actors.TryGetValue(prereqName.ToLowerInvariant(), out var directActor))
+			{
+				if (entryLookupByActorName.ContainsKey(directActor.Name))
+					return directActor.Name;
+			}
+
+			// Look up the actor that provides this prerequisite for the given faction
+			if (!string.IsNullOrEmpty(faction) &&
+				prerequisiteProvidersByFaction.TryGetValue(faction, out var providers) &&
+				providers.TryGetValue(prereqName, out var actorName))
+			{
+				return actorName;
+			}
+
+			return null;
 		}
 
 		int BuildTime(ActorInfo info, string queue)
@@ -1266,7 +1446,8 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				return "Nod";
 			}
 
-			if (selectedActor.Name == "sbag" || selectedActor.Name == "fenc") {
+			if (selectedActor.Name == "sbag" || selectedActor.Name == "fenc")
+			{
 				return "GDI";
 			}
 
@@ -1306,7 +1487,8 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				return Color.FromArgb(254, 17, 0); // FE1100
 			}
 
-			if (selectedActor.Name == "sbag" || selectedActor.Name == "fenc") {
+			if (selectedActor.Name == "sbag" || selectedActor.Name == "fenc")
+			{
 				return Color.FromArgb(242, 207, 116); // F2CF74
 			}
 
@@ -1337,6 +1519,9 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			var tabCount = topLevelCategories.Count;
 			var tabWidth = tabCount > 0 ? availableWidth / tabCount : 0;
 
+			// Get the font for measuring text width
+			var font = Game.Renderer.Fonts[tabTemplate.Font];
+
 			// Create tab buttons
 			var tabX = 0;
 			foreach (var category in topLevelCategories)
@@ -1344,16 +1529,63 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				var tabButton = (ButtonWidget)tabTemplate.Clone();
 				tabButton.Bounds.X = tabX;
 				tabButton.Bounds.Width = tabWidth;
-				tabButton.GetText = () => category.Name;
 				tabButton.IsHighlighted = () => selectedTopLevelCategory == category.FullPath;
 				tabButton.OnClick = () => SelectTopLevelCategory(category.FullPath);
 				tabButton.IsVisible = () => true;
+				tabButton.GetText = () => category.Name;
+
+				// Get the flag image widget
+				var flagImage = tabButton.GetOrNull<ImageWidget>("TAB_FLAG");
+				var flagName = GetFactionFlag(category.Name);
+
+				if (flagImage != null && !string.IsNullOrEmpty(flagName))
+				{
+					tabButton.GetText = () => "";
+
+					var tabLabel = tabButton.GetOrNull<LabelWidget>("TAB_LABEL");
+					tabLabel.GetText = () => category.Name;
+
+					var textWidth = font.Measure(category.Name).X;
+					var flagWidth = 30; // Width of flag as defined in YAML
+					var gap = 7; // Small gap between flag and text
+
+					var contentWidth = flagWidth + gap + textWidth;
+
+					var flagX = (tabWidth - contentWidth) / 2;
+
+					// Position the flag
+					flagImage.Bounds.X = flagX;
+					flagImage.IsVisible = () => true;
+					flagImage.GetImageName = () => flagName;
+
+					// Position the label after the flag + gap
+					tabLabel.Bounds.X = flagX + flagWidth + gap;
+				}
+				else
+				{
+					// No flag, center text normally
+					if (flagImage != null)
+						flagImage.IsVisible = () => false;
+				}
 
 				tabContainer.AddChild(tabButton);
 				categoryTabs.Add(tabButton);
 
 				tabX += tabWidth;
 			}
+		}
+
+		static string GetFactionFlag(string categoryName)
+		{
+			return categoryName switch
+			{
+				"Allies" => "allies",
+				"Soviets" => "soviet",
+				"GDI" => "gdi",
+				"Nod" => "nod",
+				"Scrin" => "scrin",
+				_ => null
+			};
 		}
 
 		void SelectTopLevelCategory(string categoryPath)
