@@ -2678,10 +2678,10 @@ World:
 				s1: 65
 				n1c: 65
 				s2: 15
-				e3: 40
-				n3: 40
-				s3: 40
-				n3c: 40
+				e3: 30
+				n3: 30
+				s3: 30
+				n3c: 30
 				n5: 15
 				e6: 5
 				n6: 5
@@ -2690,7 +2690,7 @@ World:
 				mrdr: 15
 				medi: 3
 				mech: 3
-				u3.squad: 40
+				u3.squad: 30
 				seal: 15
 				dog: 2
 				shok: 15
@@ -2888,12 +2888,6 @@ World:
 				lace: 100
 				1tnk: 100
 				rtnk: 100
-		Composition@BlackHandAssault:
-			MaxProducedValue: 12000
-			UnitQueues: InfantrySQ, InfantryMQ, VehicleSQ, VehicleMQ
-			UnitsToBuild:
-				bh: 100
-				hftk: 100
 		Composition@StealthTankAssault:
 			MaxProducedValue: 12000
 			UnitQueues: VehicleSQ, VehicleMQ
@@ -2901,7 +2895,15 @@ World:
 				stnk.nod: 100
 				hstk: 100
 				spec: 100
+		Composition@BlackHandAssault:
+			Prerequisites: player.blackh
+			MaxProducedValue: 12000
+			UnitQueues: InfantrySQ, InfantryMQ, VehicleSQ, VehicleMQ
+			UnitsToBuild:
+				bh: 100
+				hftk: 100
 		Composition@ZocomAssault:
+			Prerequisites: player.zocom
 			MaxProducedValue: 15000
 			UnitQueues: InfantrySQ, InfantryMQ, VehicleSQ, VehicleMQ
 			UnitsToBuild:
@@ -2911,6 +2913,7 @@ World:
 				zdef: 100
 				xo: 50
 		Composition@TeslaAssault:
+			Prerequisites: player.russia
 			MaxProducedValue: 14000
 			UnitQueues: InfantrySQ, InfantryMQ, VehicleSQ, VehicleMQ
 			UnitsToBuild:

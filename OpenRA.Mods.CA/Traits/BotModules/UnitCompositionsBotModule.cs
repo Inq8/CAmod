@@ -109,7 +109,7 @@ namespace OpenRA.Mods.CA.Traits
 
 				var buildable = unitInfo.TraitInfoOrDefault<BuildableInfo>();
 				if (buildable == null)
-					throw new Exception($"Unit {unit} in UnitCompositionsBotModule does not have Buildable trait, and thus cannot be built by the bot.");
+					continue;
 
 				UnitQueues[unit] = buildable.Queue.ToArray();
 				UnitPrerequisites[unit] = buildable.Prerequisites;
