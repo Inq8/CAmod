@@ -173,6 +173,11 @@ InitNod = function()
 		InitAirAttackSquad(Squads.AntiCruiserAir, Nod, MissionPlayers, { "ca" })
 		InitAirAttackSquad(Squads.AirToAir, Nod, MissionPlayers, { "Aircraft" }, "ArmorType")
 
+		local productionBuildings = Nod.GetActorsByTypes({ "hand", "hpad.td", "airs", "afac" })
+		for _, b in pairs(productionBuildings) do
+			BuildDefenseOnCaptureAttempt(b, "ltur", true)
+		end
+
 		if Difficulty == "brutal" then
 			InitNavalAttackSquad(Squads.ICBMSubs, Nod)
 		end
@@ -188,11 +193,6 @@ InitNod = function()
 		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsNodGroundHunterUnit)
 	end)
-
-	local productionBuildings = Nod.GetActorsByTypes({ "hand", "hpad.td", "airs", "afac" })
-	for _, b in pairs(productionBuildings) do
-		BuildDefenseOnCaptureAttempt(b, "ltur", true)
-	end
 end
 
 SetupLightning = function()

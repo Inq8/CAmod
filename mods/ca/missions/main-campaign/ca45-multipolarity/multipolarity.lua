@@ -360,9 +360,11 @@ InitGDI = function()
 		end)
 	end)
 
-	local productionBuildings = GDI.GetActorsByTypes({ "pyle", "afac", "weap.td", "afld.gdi" })
-	for _, b in pairs(productionBuildings) do
-		BuildDefenseOnCaptureAttempt(b, "gtwr", true)
+	if IsHardOrAbove() then
+		local productionBuildings = GDI.GetActorsByTypes({ "pyle", "afac", "weap.td", "afld.gdi" })
+		for _, b in pairs(productionBuildings) do
+			BuildDefenseOnCaptureAttempt(b, "gtwr", true)
+		end
 	end
 
 	UpgradeCenter.GrantCondition("tower-rocket")

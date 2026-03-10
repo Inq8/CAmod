@@ -245,6 +245,11 @@ InitMaleficScrin = function()
 
 	if IsHardOrAbove() then
 		InitAirAttackSquad(Squads.AirToAir, MaleficScrin, MissionPlayers, { "Aircraft" }, "ArmorType")
+
+		local productionBuildings = MaleficScrin.GetActorsByTypes({ "port", "wsph", "sfac", "grav" })
+		for _, b in pairs(productionBuildings) do
+			BuildDefenseOnCaptureAttempt(b, "ptur", true)
+		end
 	end
 
 	Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
@@ -257,11 +262,6 @@ InitMaleficScrin = function()
 		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
 	end)
-
-	local productionBuildings = MaleficScrin.GetActorsByTypes({ "port", "wsph", "sfac", "grav" })
-	for _, b in pairs(productionBuildings) do
-		BuildDefenseOnCaptureAttempt(b, "ptur", true)
-	end
 end
 
 SendNextVoidEngine = function()
