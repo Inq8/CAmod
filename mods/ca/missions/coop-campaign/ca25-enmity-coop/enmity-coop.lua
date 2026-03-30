@@ -16,10 +16,13 @@ SetupPlayers = function()
 end
 
 AfterWorldLoaded = function()
+	TransferBaseToPlayer(SinglePlayerPlayer, GetFirstActivePlayer())
 	if #MissionPlayers > 1 then
-		local player2Buildings = { Actor109, Actor96, Actor100, Actor294 }
-		Utils.Do(player2Buildings, function(b)
-			b.Owner = MissionPlayers[2]
+		Trigger.AfterDelay(2, function()
+			local player2Buildings = { Actor109, Actor96, Actor100, Actor294 }
+			Utils.Do(player2Buildings, function(b)
+				b.Owner = MissionPlayers[2]
+			end)
 		end)
 	end
 end

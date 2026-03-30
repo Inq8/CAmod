@@ -146,12 +146,12 @@ WorldLoaded = function()
 		end)
 	end)
 
-	local productionBuildings = MaleficScrin.GetActorsByTypes({ "port", "wsph", "sfac", "grav" })
-	for _, b in pairs(productionBuildings) do
-		BuildDefenseOnCaptureAttempt(b, "ptur", true)
-	end
-
 	if IsHardOrAbove() then
+		local productionBuildings = MaleficScrin.GetActorsByTypes({ "port", "wsph", "sfac", "grav" })
+		for _, b in pairs(productionBuildings) do
+			BuildDefenseOnCaptureAttempt(b, "ptur", true)
+		end
+
 		Trigger.OnAnyKilled(productionBuildings, function()
 			Trigger.AfterDelay(DateTime.Minutes(5), function()
 				if not RoamersInitialized then

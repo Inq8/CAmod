@@ -260,14 +260,17 @@ InitNod = function()
 	SetupRefAndSilosCaptureCredits(Nod)
 	AutoReplaceHarvesters(Nod)
 	AutoRebuildConyards(Nod)
-	BuildDefenseOnCaptureAttempt(StructuresToSellToAvoidCapture, "ltur", true)
 	InitAiUpgrades(Nod)
 	InitAttackSquad(Squads.North, Nod)
 	InitAttackSquad(Squads.South, Nod)
 	InitAirAttackSquad(Squads.Air, Nod)
 
-	if Difficulty == "brutal" then
-		InitAirAttackSquad(Squads.BrutalComanches, Nod, nil, { "gtek", "rmbo", "medi", "upgc", "eye" })
+	if IsHardOrAbove() then
+		BuildDefenseOnCaptureAttempt(StructuresToSellToAvoidCapture, "ltur", true)
+
+		if Difficulty == "brutal" then
+			InitAirAttackSquad(Squads.BrutalComanches, Nod, nil, { "gtek", "rmbo", "medi", "upgc", "eye" })
+		end
 	end
 
 	local nodGroundAttackers = Nod.GetGroundAttackers()
