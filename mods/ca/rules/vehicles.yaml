@@ -2309,7 +2309,7 @@ APC:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 121
-		Prerequisites: ~vehicles.allies, ~!aapc.upgrade, ~techlevel.low
+		Prerequisites: ~vehicles.allies, ~!delp.upgrade, ~techlevel.low
 		Description: Tough infantry transport.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
@@ -2372,11 +2372,11 @@ APC:
 		TargetTypes: MindControlImmune
 		RequiresCondition: loaded-cmdo
 	ReplacedInQueue:
-		Actors: aapc
-	Upgradeable@Archer:
-		Type: aapc.upgrade
+		Actors: delp
+	Upgradeable@DELPHIS:
+		Type: delp.upgrade
 		UpgradingCondition: upgrading
-		Actor: aapc
+		Actor: delp
 		UpgradeAtActors: fix, rep, srep
 		RequiresCondition: !mindcontrolled
 	Encyclopedia:
@@ -2384,41 +2384,41 @@ APC:
 	EncyclopediaExtras:
 		Name: APC
 
-AAPC:
+DELP:
 	Inherits: APC
 	Buildable:
-		Prerequisites: ~vehicles.allies, ~aapc.upgrade, ~techlevel.medium
-		Description: Tough infantry transport with a target painting radar.
+		Prerequisites: ~vehicles.allies, ~delp.upgrade, ~techlevel.medium
+		Description: Tough infantry transport armed with an anti structure sonic weapon.
 	Valued:
 		Cost: 800
+	Mobile:
+		Speed: 100
 	RevealsShroud:
 		Range: 6c0
 	Tooltip:
-		Name: Armored Personnel Carrier (Archer)
+		Name: Armored Personnel Carrier (Delphis)
 	TooltipExtras:
-		Description: Tough infantry transport with a target painting radar.
+		Description: Tough infantry transport with a sonic weapon.
 		-Strengths:
-		Weaknesses: • Unarmed
-		Attributes: • Targets are revealed and take increased damage
+		Weaknesses: • Weak vs Heavy Armor
+		Attributes: • Inflicted structures take increased damage
 	-AttackFrontal:
 	AttackTurreted:
-		TargetFrozenActors: True
 		PauseOnCondition: empdisable || being-warped || blinded
 	Turreted:
 		TurnSpeed: 14
 	WithSpriteTurret:
+	WithFacingSpriteBody:
+		Sequence: idle-upg
 	Armament:
-		Weapon: TargetPainter
-		LocalOffset: 0,0,250
+		Weapon: SonicPulseDelphis
+		LocalOffset: -50,0,250
 		-MuzzleSequence:
-	KeepsDistance:
-	GuardsSelection:
-		RequiresCondition: !stance-attackanything
 	-ReplacedInQueue:
-	-Upgradeable@Archer:
+	-Upgradeable@DELPHIS:
 	-WithDecoration@UpgradeOverlay:
 	EncyclopediaExtras:
-		Name: Archer APC
+		Name: Delphis APC
 
 APC.AI:
 	Inherits: APC
@@ -2426,23 +2426,23 @@ APC.AI:
 	RenderSprites:
 		Image: APC
 	Buildable:
-		Prerequisites: ~botplayer, ~vehicles.allies, ~!aapc.upgrade, ~techlevel.low
+		Prerequisites: ~botplayer, ~vehicles.allies, ~!delp.upgrade, ~techlevel.low
 	Cargo:
 		InitialUnits: E1,E1,E1,E3,E3
 	WithCargoSounds:
 		-EnterSounds:
 	-ReplacedInQueue:
-	-Upgradeable@Archer:
+	-Upgradeable@DELPHIS:
 	-WithDecoration@UpgradeOverlay:
 	-Encyclopedia:
 
-AAPC.AI:
-	Inherits: AAPC
+DELP.AI:
+	Inherits: DELP
 	Inherits@AIUNLOAD: ^AIUNLOAD
 	RenderSprites:
-		Image: aapc
+		Image: delp
 	Buildable:
-		Prerequisites: ~botplayer, ~vehicles.allies, ~aapc.upgrade, ~techlevel.medium
+		Prerequisites: ~botplayer, ~vehicles.allies, ~delp.upgrade, ~techlevel.medium
 	Cargo:
 		InitialUnits: E1,E1,E1,E3,E3
 	WithCargoSounds:
@@ -6334,7 +6334,7 @@ IFV:
 		RequiresCondition: flamturr || chemturr || hoplturr
 	TooltipExtras@spyturr:
 		Weaknesses: • Cannot deal damage
-		Attributes: • Sabotages enemy structures:\n    • Power Plants: Power outage\n    • Barracks/Factory: Infantry/vehicles produced as veteran\n    • Superweapons: Reset timer\n    • Radar: Reset shroud\n    • Helipad: Single-use paratroopers\n    • Airfield/Gravity Stabilizer: Single-use airstrike
+		Attributes: • Targets are reaveled and take increased damage
 		IsStandard: false
 		RequiresCondition: spyturr
 	TooltipExtras@rmbcturr:
@@ -6641,23 +6641,13 @@ IFV:
 		LocalOffset: 192,100,256, 192,-100,256
 		RequiresCondition: reapturr
 	Armament@Spy:
-		Weapon: SpyIFVInfiltrate
-		LocalOffset: 0,0,100
+		Weapon: TargetPainter
+		LocalOffset: 0,0,250
 		RequiresCondition: spyturr
-	Armament@SpyCharge:
-		Weapon: SpyIFVCharge
-		LocalOffset: 0,0,100
-		RequiresCondition: spyturr
-		Name: secondary
 	AttackSoundsCA@REPAIRSOUND:
 		Sounds: repair11.aud
 		RequiresCondition: mechturr
 		Armaments: primary
-	WithIdleOverlay@SPINNER:
-		Sequence: spinner
-		PauseOnCondition: empdisable || being-warped
-		RequiresCondition: spyturr
-		Offset: 0,0,200
 	WithIdleOverlay@TESLA:
 		Sequence: tesla
 		PauseOnCondition: empdisable || being-warped
@@ -6766,6 +6756,10 @@ IFV:
 	WithSpriteTurret@reap:
 		Sequence: turret-reap
 		RequiresCondition: reapturr
+	WithSpriteTurret@ARCHER:
+		Sequence: turret-arch
+		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: spyturr
 	Cargo:
 		Types: Infantry, Hacker
 		MaxWeight: 1

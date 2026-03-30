@@ -1735,24 +1735,24 @@ sweden.coalition:
 	WithProductionIconOverlay:
 		Prerequisites: sweden.coalition
 
-aapc.upgrade:
+delp.upgrade:
 	Inherits: ^AlliedUpgrade
 	Inherits@DevelopmentPolicyDiscount: ^DevelopmentPolicyDiscount
 	Tooltip:
-		Name: Research: Archer APC
+		Name: Research: Delphis APC
 	Buildable:
 		BuildPaletteOrder: 20
 		Prerequisites: ~player.allies, anyradar, ~techlevel.medium
-		Description: Allows construction of the Archer APC.\n\nReplaces: APC
+		Description: Allows construction of the Delphis APC.\n\nReplaces: APC
 	TooltipExtras:
-		Strengths: + Adds a target painting radar that reveals enemies and makes them take increased damage
-		Weaknesses: – Increased cost\n– Cannot deal damage
+		Strengths: + Turreted sonic weapon that weakens structures
+		Weaknesses: – Increased cost\n– Decreased unit speed
 	Valued:
 		Cost: 750
 	RenderSprites:
-		Image: aapc.upgrade
+		Image: delp.upgrade
 	WithProductionIconOverlay:
-		Prerequisites: aapc.upgrade
+		Prerequisites: delp.upgrade
 
 optics.upgrade:
 	Inherits: ^AlliedUpgrade

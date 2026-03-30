@@ -565,6 +565,10 @@ apc:
 		Filename: apc.shp
 		Facings: 32
 		UseClassicFacings: True
+	idle-upg:
+		Filename: delp.shp
+		Facings: 32
+		UseClassicFacings: True
 	muzzle:
 		Filename: minigun16.shp
 		Length: 6
@@ -579,14 +583,18 @@ apc:
 	icon:
 		Filename: apcicon.shp
 
-aapc:
+delp:
 	Inherits: apc
+	idle:
+		Filename: delp.shp
+		Facings: 32
+		UseClassicFacings: True
 	turret:
-		Filename: aapc.shp
+		Filename: delptur.shp
 		Facings: 32
 		UseClassicFacings: True
 	icon:
-		Filename: aapcicon.shp
+		Filename: delpicon.shp
 
 apc.destroyed:
 	Inherits: ^VehicleOverlays
@@ -1970,6 +1978,10 @@ ifv:
 		Facings: 32
 		UseClassicFacings: True
 		Offset: 0, 1
+	turret-arch:
+		Filename: arch.shp
+		Facings: 32
+		UseClassicFacings: True
 	open:
 		Filename: ifv.shp
 		Start: 32

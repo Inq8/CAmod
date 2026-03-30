@@ -1917,7 +1917,7 @@ SonicZap:
 			Heavy: 60
 			Concrete: 130
 			Wood: 180
-		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Dam: SpreadDamage
 		Range: 0, 32
 		Falloff: 100, 100
@@ -1928,7 +1928,7 @@ SonicZap:
 			Heavy: 60
 			Brick: 400
 			Wood: 180
-		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 
 SonicZap.UPG:
 	Inherits: SonicZap
@@ -2839,7 +2839,7 @@ SonicPulse:
 			Concrete: 80
 			Light: 92
 			Heavy: 100
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 
 SonicPulse.UPG:
 	Inherits: SonicPulse
@@ -2896,7 +2896,7 @@ DisruptorPulse:
 			Light: 30
 			Heavy: 15
 		ValidRelationships: Enemy, Neutral
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, FlakVestMitigatedMinor
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigatedMinor
 	Warhead@friendlyFire: SpreadDamage
 		Damage: 600
 		Versus:
@@ -2906,7 +2906,7 @@ DisruptorPulse:
 			Light: 30
 			Heavy: 15
 		ValidRelationships: Ally
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, FlakVestMitigatedMinor
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigatedMinor
 		InvalidTargets: Disruptor
 
 DisruptorPulse.Amp:
@@ -2931,6 +2931,55 @@ DisruptorPulse.Seek3:
 DisruptorPulse.Amp.Seek3:
 	Inherits: DisruptorPulse.Amp
 	Range: 6c384
+
+SonicPulseDelphis:
+	ReloadDelay: 80
+	Range: 5c256
+	StartBurstReport: delpatk1.aud, delpatk2.aud
+	Burst: 3
+	BurstDelays: 2
+	TargetActorCenter: true
+	Projectile: LinearPulse
+		Speed: 384
+		MinimumImpactDistance: 768
+		MinimumFriendlyFireRange: 1c768
+		ImpactType: Rectangle
+		RectangleLength: 768
+		RectangleWidth: 2c256
+		SingleHitPerActor: true
+		ForceGround: DamageOnly
+		DamageFalloff@1:
+			Spread: 0c384
+			Falloff: 100, 75, 25, 0
+		ImpactAnimation@1:
+			Image: explosion
+			Sequences: sonicwavedelp1, sonicwavedelp2
+			Palette: effect
+	Warhead@1Dam: SpreadDamage
+		Damage: 4000
+		Versus:
+			None: 55
+			Wood: 100
+			Concrete: 55
+			Light: 30
+			Heavy: 15
+		ValidRelationships: Enemy, Neutral
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigatedMinor
+	Warhead@friendlyFire: SpreadDamage
+		Damage: 1200
+		Versus:
+			None: 55
+			Wood: 100
+			Concrete: 55
+			Light: 30
+			Heavy: 15
+		ValidRelationships: Ally
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigatedMinor
+	Warhead@4Conc: GrantExternalConditionCA
+		Range: 0c768
+		Duration: 75
+		Condition: undermine-foundation
+		ValidTargets: Structure
 
 JDAM:
 	ValidTargets: Ground, Water, Trees
@@ -3909,40 +3958,3 @@ TargetPainter:
 		Duration: 28
 		Condition: painted-target
 		ValidTargets: Vehicle, Ship, Structure
-
-SpyIFVInfiltrate:
-	Range: 2c512
-	Report: gpowof.aud
-	ReloadDelay: 25
-	ValidTargets: SpyIFVInfiltratable
-	TargetActorCenter: true
-	Projectile: InstantHit
-	Warhead@Infiltrate: Infiltrate
-		ValidTargets: SpyIFVInfiltratable
-		Types: ResetSupportPowerInfiltrate, PowerOutageInfiltrate, VetInfiltrate, ResetShroudInfiltrate, GrantSupportPowerInfiltrate
-		ValidRelationships: Enemy, Neutral
-
-SpyIFVCharge:
-	Inherits: SpyIFVInfiltrate
-	-Projectile:
-	-Warhead@Infiltrate:
-	ReloadDelay: 25
-	Report: targetpainterbeep.aud
-	ValidTargets: ResetSupportPowerInfiltrate, PowerOutageInfiltrate, VetInfiltrate, ResetShroudInfiltrate, GrantSupportPowerInfiltrate
-	Projectile: ArcLaserZap
-		Color: 00006660
-		Angle: 70
-		Width: 70
-		Duration: 20
-		HitAnim: empty
-	Warhead@Flash: FlashTarget
-		Color: 0000ff
-		Spread: 0c256
-		ValidTargets: ResetSupportPowerInfiltrate, PowerOutageInfiltrate, VetInfiltrate, ResetShroudInfiltrate, GrantSupportPowerInfiltrate
-		ValidRelationships: Enemy, Neutral
-	Warhead@ProgressBar: GrantExternalConditionCA
-		Range: 0c256
-		Condition: spy-ifv-charging
-		Duration: 26
-		ValidTargets: ResetSupportPowerInfiltrate, PowerOutageInfiltrate, VetInfiltrate, ResetShroudInfiltrate, GrantSupportPowerInfiltrate
-		ValidRelationships: Enemy, Neutral
