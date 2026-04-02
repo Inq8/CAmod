@@ -2399,9 +2399,9 @@ DELP:
 		Name: Armored Personnel Carrier (Delphis)
 	TooltipExtras:
 		Description: Tough infantry transport with a sonic weapon.
-		-Strengths:
+		Strengths: • Strong vs Buildings, Defenses, Infantry
 		Weaknesses: • Weak vs Heavy Armor
-		Attributes: • Inflicted structures take increased damage
+		Attributes: • Causes structures to take increased damage
 	-AttackFrontal:
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped || blinded
@@ -6758,7 +6758,6 @@ IFV:
 		RequiresCondition: reapturr
 	WithSpriteTurret@ARCHER:
 		Sequence: turret-arch
-		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: spyturr
 	Cargo:
 		Types: Infantry, Hacker
