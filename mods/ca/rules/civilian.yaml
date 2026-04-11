@@ -728,6 +728,8 @@ BUNK:
 	Inherits@shape: ^2x2Shape
 	Inherits@AUTOTARGET: ^AutoTargetGround
 	Inherits@COMMANDOSKULL: ^CommandoSkull
+	Inherits@BLIND: ^Blindable
+	Inherits@WARPABLE: ^Warpable
 	Selectable:
 		Priority: 0
 		Bounds: 2048, 2048
@@ -841,7 +843,7 @@ BUNK:
 		Voice: Attack
 		Armaments: batf, batf-bh, batf-cryt
 		PortOffsets: 825,0,256, 348,-482,256, -348,-482,256, -448,482,256, 448,482,256
-		PauseOnCondition: being-warped || empdisable || blinded
+		PauseOnCondition: being-warped || blinded
 		RequiresCondition: loaded || loaded-cmdo || loaded-seal || loaded-air
 	Targetable@MindControlResistant:
 		TargetTypes: MindControlResistant
@@ -870,7 +872,7 @@ BUNK:
 		ValidRelationships: Ally, Enemy, Neutral
 	WithIdleOverlay@MEDIC:
 		Sequence: medic
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: being-warped
 		RequiresCondition: loaded-medic
 		Offset: 0,0,250
 	ProximityExternalCondition@MEDIC:
