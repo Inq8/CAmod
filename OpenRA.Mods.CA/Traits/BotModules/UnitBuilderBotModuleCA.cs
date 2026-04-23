@@ -521,6 +521,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		void AddToActiveCompositionProducedValue(ActorInfo builtUnit)
 		{
+			if (activeComposition == null || compositionsModule == null || builtUnit == null)
+				return;
+
 			compositionsModule.UnitCosts.TryGetValue(builtUnit.Name, out var unitCost);
 			if (unitCost <= 0)
 				return;
