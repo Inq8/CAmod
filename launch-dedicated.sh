@@ -50,7 +50,7 @@ fi
 
 NAME="${Name:-"Dedicated Server"}"
 LAUNCH_MOD="${Mod:-"${MOD_ID}"}"
-MAP="${Mod:-""}"
+MAP="${Map:-""}"
 LISTEN_PORT="${ListenPort:-"1234"}"
 ADVERTISE_ONLINE="${AdvertiseOnline:-"True"}"
 PASSWORD="${Password:-""}"
