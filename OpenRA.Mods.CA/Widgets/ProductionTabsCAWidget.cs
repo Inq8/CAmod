@@ -25,6 +25,8 @@ namespace OpenRA.Mods.CA.Widgets
 		public string Name;
 		public ProductionQueue Queue;
 		public Actor Actor;
+		public int IdleTicks;
+		public bool IsIdle;
 	}
 
 	public class ProductionTabGroupCA
@@ -32,6 +34,7 @@ namespace OpenRA.Mods.CA.Widgets
 		public List<ProductionTabCA> Tabs = new List<ProductionTabCA>();
 		public string Group;
 		public bool Alert { get { return Tabs.Any(t => t.Queue.AllQueued().Any(i => i.Done)); } }
+		public bool HasIdleFactories { get { return Tabs.Any(t => t.IsIdle); } }
 
 		public void Update(IEnumerable<ProductionQueue> allQueues)
 		{
@@ -95,6 +98,12 @@ namespace OpenRA.Mods.CA.Widgets
 
 		public readonly Color TabColor = Color.White;
 		public readonly Color TabColorDone = Color.Gold;
+
+		public readonly int IdleAlertDelay = 125;
+
+		public readonly HashSet<string> IdleAlertGroups = new() { "Infantry", "Vehicle", "Aircraft", "Ship" };
+
+		public readonly float IdleAlertBlinkRate = 0.08f;
 
 		int contentWidth = 0;
 		bool leftPressed = false;
@@ -257,7 +266,21 @@ namespace OpenRA.Mods.CA.Widgets
 				// Draw number label
 				var textSize = font.Measure(tab.Name);
 				var position = new int2(rect.X + (rect.Width - textSize.X) / 2, (rect.Y + (rect.Height - textSize.Y) / 2) - 1);
-				font.DrawText(tab.Name, position, tab.Queue.AllQueued().Any(i => i.Done) ? TabColorDone : TabColor);
+
+				Color tabTextColor;
+				var showText = true;
+				if (tab.Queue.AllQueued().Any(i => i.Done))
+					tabTextColor = TabColorDone;
+				else if (tab.IsIdle && !highlighted)
+				{
+					tabTextColor = TabColor;
+					showText = Math.Sin(Game.LocalTick * IdleAlertBlinkRate * 2 * Math.PI) > -0.3;
+				}
+				else
+					tabTextColor = TabColor;
+
+				if (showText)
+					font.DrawText(tab.Name, position, tabTextColor);
 
 				tabsShown++;
 			}
@@ -348,6 +371,39 @@ namespace OpenRA.Mods.CA.Widgets
 			if (shouldUpdateQueues)
 				foreach (var g in Groups.Values)
 					g.Update(cachedProductionQueueEnabledStates.Select(t => t.Queue));
+
+			// Track idle ticks for each tab in groups that support idle alerts
+			if (Game.Settings.Game.IdleFactoryAlert)
+			{
+				foreach (var g in Groups.Values)
+				{
+					if (!IdleAlertGroups.Contains(g.Group))
+						continue;
+
+					foreach (var tab in g.Tabs)
+					{
+						if (tab.Queue.Enabled && tab.Queue.CurrentItem() == null)
+						{
+							tab.IdleTicks++;
+							tab.IsIdle = tab.IdleTicks >= IdleAlertDelay;
+						}
+						else
+						{
+							tab.IdleTicks = 0;
+							tab.IsIdle = false;
+						}
+					}
+				}
+			}
+			else
+			{
+				foreach (var g in Groups.Values)
+					foreach (var tab in g.Tabs)
+					{
+						tab.IdleTicks = 0;
+						tab.IsIdle = false;
+					}
+			}
 		}
 
 		public override bool YieldMouseFocus(MouseInput mi)

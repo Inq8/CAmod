@@ -45,6 +45,24 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			var icon = button.Get<ImageWidget>("ICON");
 			icon.GetImageName = () => button.IsDisabled() ? chromeName + "-disabled" :
 				tabs.Groups[button.ProductionGroup].Alert ? chromeName + "-alert" : chromeName;
+
+			var defaultIsVisible = icon.IsVisible;
+			icon.IsVisible = () =>
+			{
+				if (!defaultIsVisible())
+					return false;
+
+				var group = tabs.Groups[button.ProductionGroup];
+				if (!group.Alert && group.HasIdleFactories
+					&& tabs.QueueGroup != button.ProductionGroup
+					&& Game.Settings.Game.IdleFactoryAlert)
+				{
+					// Blink by toggling visibility using sine wave
+					return Math.Sin(Game.LocalTick * tabs.IdleAlertBlinkRate * 2 * Math.PI) > -0.3;
+				}
+
+				return true;
+			};
 		}
 
 		[ObjectCreator.UseCtor]
