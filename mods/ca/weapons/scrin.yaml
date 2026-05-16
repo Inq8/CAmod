@@ -2072,11 +2072,11 @@ BursterExplode:
 		InvalidTargets: Structure, Burster
 		Versus:
 			None: 35
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 	Warhead@FF: HealthPercentageDamage
 		Spread: 2c0
 		Damage: 25
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 		ValidTargets: Burster
 	Warhead@SDam: SpreadDamage
 		Damage: 4500
@@ -2089,12 +2089,21 @@ BursterExplode:
 		Size: 3
 		Delay: 5
 	Warhead@3Eff: CreateEffect
-		Explosions: lchr_explode
-		ExplosionPalette: effect
+		Explosions: brst_explode
+		ExplosionPalette: scrineffect
 		ImpactSounds: vdemdiea.aud
 		Delay: 1
-	Warhead@4Eff: CreateEffect
-		Explosions: artillery_explosion
+	Warhead@3Eff_impact: CreateEffect
+		Explosions: med_chem
+		ExplosionPalette: tdeffect
+		ImpactSounds: vtoxcona.aud, vtoxconb.aud, vtoxconc.aud
+	Warhead@Shrap: FireShrapnel
+		Weapon: ChemDebris
+		Amount: 5
+		AimChance: 0
+		ValidTargets: Ground, Water, Infantry, Vehicle
+		ThrowWithoutTarget: true
+		Delay: 1
 
 MindSparkEruption:
 	ReloadDelay: 1000
