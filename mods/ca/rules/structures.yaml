@@ -1179,11 +1179,6 @@ ALHQ:
 	-WithDecoration@HACKED:
 	-WithDecoration@RESTORING:
 	-PowerMultiplier@HACKED:
-	FreeActor@ProductionOptimizer2:
-		RequiresCondition: optimized-production1
-	GrantConditionOnPrerequisite@ProductionOptimizer1:
-		Condition: optimized-production1
-		Prerequisites: optimized.production1
 	Encyclopedia:
 		Category: Allies/Buildings
 		Scale: 1.8
@@ -3184,9 +3179,12 @@ AIRS:
 		Multiplier: 125
 		Prerequisites: global.multiqueuescaled, vehicles.any, optimized.production1, !optimized.production2
 	ProductionCostMultiplier@MQS3:
+		Multiplier: 125
+		Prerequisites: global.multiqueuescaled, vehicles.any, !optimized.production1, optimized.production2
+	ProductionCostMultiplier@MQS4:
 		Multiplier: 90
 		Prerequisites: global.multiqueuescaled, vehicles.any, optimized.production1, optimized.production2
-	ProductionCostMultiplier@MQS4:
+	ProductionCostMultiplier@MQS5:
 		Multiplier: 90
 		Prerequisites: global.multiqueuescaled, !vehicles.any
 	Encyclopedia:

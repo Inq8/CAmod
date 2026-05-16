@@ -4790,8 +4790,6 @@
 		Prerequisites: global.multiqueuescaled
 
 ^ProductionOptimizer1:
-	ProvidesPrerequisite@ProductionOptimizer1:
-		Prerequisite: optimized.production1
 	FreeActor@ProductionOptimizer1:
 		Actor: optimized.production1
 	SpawnActorOnCapture@ProductionOptimizer1:
@@ -4799,8 +4797,6 @@
 		Delay: 1
 
 ^ProductionOptimizer2:
-	ProvidesPrerequisite@ProductionOptimizer2:
-		Prerequisite: optimized.production2
 	FreeActor@ProductionOptimizer2:
 		Actor: optimized.production2
 	SpawnActorOnCapture@ProductionOptimizer2:
@@ -4902,6 +4898,9 @@
 	ProductionCostMultiplier@MQS2:
 		Multiplier: 200
 		Prerequisites: infantry.any, global.multiqueuescaled, optimized.production1, !optimized.production2
+	ProductionCostMultiplier@MQS3:
+		Multiplier: 200
+		Prerequisites: infantry.any, global.multiqueuescaled, !optimized.production1, optimized.production2
 	LinkedProducerSource:
 	UpdatesUnitsProduced:
 
@@ -4919,6 +4918,7 @@
 		ProductionType: CyborgMQ
 	-ProductionCostMultiplier@MQS1:
 	-ProductionCostMultiplier@MQS2:
+	-ProductionCostMultiplier@MQS3:
 
 ^ProducesDogs:
 	Inherits: ^ProducesInfantry
@@ -4934,6 +4934,7 @@
 		ProductionType: DogMQ
 	-ProductionCostMultiplier@MQS1:
 	-ProductionCostMultiplier@MQS2:
+	-ProductionCostMultiplier@MQS3:
 
 ^ProducesVehicles:
 	Inherits@QUEUEUPDATER: ^QueueUpdater
@@ -4971,6 +4972,9 @@
 	ProductionCostMultiplier@MQS2:
 		Multiplier: 135
 		Prerequisites: vehicles.any, global.multiqueuescaled, optimized.production1, !optimized.production2
+	ProductionCostMultiplier@MQS3:
+		Multiplier: 135
+		Prerequisites: vehicles.any, global.multiqueuescaled, !optimized.production1, optimized.production2
 	GrantExternalConditionToProduced:
 		Condition: produced
 	LinkedProducerSource:
@@ -5061,6 +5065,9 @@
 	ProductionCostMultiplier@MQS2:
 		Multiplier: 130
 		Prerequisites: aircraft.any, global.multiqueuescaled, optimized.production1, !optimized.production2
+	ProductionCostMultiplier@MQS3:
+		Multiplier: 130
+		Prerequisites: aircraft.any, global.multiqueuescaled, !optimized.production1, optimized.production2
 	GrantExternalConditionToProduced:
 		Condition: produced
 	UpdatesUnitsProduced:
