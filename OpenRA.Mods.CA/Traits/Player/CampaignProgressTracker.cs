@@ -143,6 +143,50 @@ namespace OpenRA.Mods.CA.Traits
 			return result.TrimEnd();
 		}
 
+		public static string GetNextCampaignMissionUid(ModData modData, string currentMapUid)
+		{
+			if (modData == null || string.IsNullOrEmpty(currentMapUid))
+				return null;
+
+			var updatedMapUid = modData.MapCache.GetUpdatedMap(currentMapUid) ?? currentMapUid;
+			var currentPreview = modData.MapCache.FirstOrDefault(p => p.Uid == updatedMapUid);
+			if (currentPreview == null)
+				return null;
+
+			var currentMissionId = Path.GetFileName(currentPreview.Package.Name);
+			if (string.IsNullOrEmpty(currentMissionId))
+				return null;
+
+			var orderedMissionIds = GetOrderedCampaignMissionIds(modData);
+			var currentMissionIndex = orderedMissionIds.FindIndex(missionId => missionId == currentMissionId);
+			if (currentMissionIndex < 0 || currentMissionIndex >= orderedMissionIds.Count - 1)
+				return null;
+
+			var nextMissionId = orderedMissionIds[currentMissionIndex + 1];
+			var nextMission = modData.MapCache
+				.FirstOrDefault(p => p.Status == MapStatus.Available
+					&& Path.GetFileName(p.Package.Name) == nextMissionId
+					&& p.Categories.Contains("Campaign"));
+
+			return nextMission?.Uid;
+		}
+
+		static List<string> GetOrderedCampaignMissionIds(ModData modData)
+		{
+			var orderedMissionIds = new List<string>();
+			if (modData.Manifest.Missions == null || modData.Manifest.Missions.Length == 0)
+				return orderedMissionIds;
+
+			var stringPool = new HashSet<string>();
+			var yaml = MiniYaml.Merge(modData.Manifest.Missions.Select(
+				m => MiniYaml.FromStream(modData.DefaultFileSystem.Open(m), m, stringPool: stringPool)));
+
+			foreach (var section in yaml)
+				orderedMissionIds.AddRange(section.Value.Nodes.Select(node => node.Key));
+
+			return orderedMissionIds;
+		}
+
 		public static Dictionary<string, MissionVictoryResult> GetCampaignProgress()
 		{
 			var campaignProgress = new Dictionary<string, MissionVictoryResult>();

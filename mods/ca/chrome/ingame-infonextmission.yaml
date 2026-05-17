@@ -1,0 +1,110 @@
+Container@NEXT_MISSION_PANEL:
+	Height: PARENT_HEIGHT
+	Width: PARENT_WIDTH
+	Logic: NextMissionInfoLogicCA
+	Children:
+		Background@PREVIEW_BG:
+			X: (PARENT_WIDTH - WIDTH) / 2
+			Y: 20
+			Width: 362
+			Height: 202
+			Background: dialog3
+			Children:
+				MapPreview@MISSION_PREVIEW:
+					X: 1
+					Y: 1
+					Width: PARENT_WIDTH - 2
+					Height: PARENT_HEIGHT - 2
+					IgnoreMouseOver: True
+					IgnoreMouseInput: True
+					ShowSpawnPoints: False
+		Container@MISSION_TABS:
+			X: (PARENT_WIDTH - WIDTH) / 2
+			Y: 230
+			Width: 280
+			Height: 25
+			Children:
+				Button@BRIEFING_TAB:
+					Y: 0
+					Width: 140
+					Height: 25
+					Font: Bold
+					Text: menu-game-info.briefing
+				Button@OPTIONS_TAB:
+					X: 140
+					Y: 0
+					Width: 140
+					Height: 25
+					Font: Bold
+					Text: menu-game-info.options
+		ScrollPanel@MISSION_DESCRIPTION_PANEL:
+			X: 20
+			Y: 263
+			Width: PARENT_WIDTH - 40
+			Height: 122
+			Children:
+				Label@MISSION_DESCRIPTION:
+					X: 4
+					Y: 2
+					Width: PARENT_WIDTH - 32
+		ScrollPanel@MISSION_OPTIONS:
+			X: 20
+			Y: 263
+			Width: PARENT_WIDTH - 40
+			Height: 122
+			TopBottomSpacing: 10
+			Children:
+				Container@CHECKBOX_ROW_TEMPLATE:
+					Width: PARENT_WIDTH
+					Height: 30
+					Children:
+						Checkbox@A:
+							X: 10
+							Width: PARENT_WIDTH / 2 - 25
+							Height: 20
+							Visible: False
+							TooltipContainer: TOOLTIP_CONTAINER
+						Checkbox@B:
+							X: PARENT_WIDTH / 2 + 5
+							Width: PARENT_WIDTH / 2 - 25
+							Height: 20
+							Visible: False
+							TooltipContainer: TOOLTIP_CONTAINER
+				Container@DROPDOWN_ROW_TEMPLATE:
+					Height: 60
+					Width: PARENT_WIDTH
+					Children:
+						LabelForInput@A_DESC:
+							X: 10
+							Width: PARENT_WIDTH / 2 - 35
+							Height: 20
+							Visible: False
+							For: A
+						DropDownButton@A:
+							X: 10
+							Y: 25
+							Width: PARENT_WIDTH / 2 - 35
+							Height: 25
+							Visible: False
+							TooltipContainer: TOOLTIP_CONTAINER
+						LabelForInput@B_DESC:
+							X: PARENT_WIDTH / 2 + 5
+							Width: PARENT_WIDTH / 2 - 35
+							Height: 20
+							Visible: False
+							For: B
+						DropDownButton@B:
+							X: PARENT_WIDTH / 2 + 5
+							Y: 25
+							Width: PARENT_WIDTH / 2 - 35
+							Height: 25
+							Visible: False
+							TooltipContainer: TOOLTIP_CONTAINER
+		Button@CONTINUE_BUTTON:
+			X: (PARENT_WIDTH - WIDTH) / 2
+			Y: 393
+			Width: 160
+			Height: 25
+			Font: Bold
+			Text: menu-game-info-ca.start-next-mission
+		TooltipContainer@TOOLTIP_CONTAINER:

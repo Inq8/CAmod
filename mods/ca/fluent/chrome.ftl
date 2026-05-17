@@ -169,3 +169,8 @@ menu-ingame =
     .save-map = Save Map
     .exit-map = Exit Map Editor
     .encyclopedia = Encyclopedia
+
+## GameInfoLogic
+menu-game-info-ca =
+    .next-mission = Next Mission
+    .start-next-mission = Start Next Mission
