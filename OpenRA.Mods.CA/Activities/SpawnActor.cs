@@ -21,7 +21,7 @@ namespace OpenRA.Mods.CA.Activities
 {
 	public class SpawnActor : Activity
 	{
-		readonly CPos targetCell;
+		readonly Func<Actor, CPos> targetCellProvider;
 		readonly WAngle? initFacing;
 		readonly bool skipMakeAnims;
 		readonly string[]types;
@@ -37,8 +37,16 @@ namespace OpenRA.Mods.CA.Activities
 		public SpawnActor(string[] types, CPos targetCell, WAngle? initFacing, bool skipMakeAnims, string[] spawnSounds,
 			AmmoPool ammoPool, int range, bool avoidActors, WDist maxRange, bool spawnInShroud, HashSet<string> allowedTerrainTypes,
 			Action<Actor, Actor> onActorSpawned = null)
+			: this(types, _ => targetCell, initFacing, skipMakeAnims, spawnSounds, ammoPool, range, avoidActors, maxRange,
+				spawnInShroud, allowedTerrainTypes, onActorSpawned)
 		{
-			this.targetCell = targetCell;
+		}
+
+		public SpawnActor(string[] types, Func<Actor, CPos> targetCellProvider, WAngle? initFacing, bool skipMakeAnims, string[] spawnSounds,
+			AmmoPool ammoPool, int range, bool avoidActors, WDist maxRange, bool spawnInShroud, HashSet<string> allowedTerrainTypes,
+			Action<Actor, Actor> onActorSpawned = null)
+		{
+			this.targetCellProvider = targetCellProvider;
 			this.initFacing = initFacing;
 			this.skipMakeAnims = skipMakeAnims;
 			this.types = types;
@@ -66,6 +74,7 @@ namespace OpenRA.Mods.CA.Activities
 		void Spawn(Actor self)
 		{
 			var map = self.World.Map;
+			var targetCell = targetCellProvider(self);
 			var targetCells = map.FindTilesInCircle(targetCell, range);
 			var cell = targetCells.GetEnumerator();
 			var soundPlayed = false;
