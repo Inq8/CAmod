@@ -1,11 +1,10 @@
 #region Copyright & License Information
-/*
- * Copyright (c) The OpenRA Developers and Contributors
- * This file is part of OpenRA, which is free software. It is made
- * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation, either version 3 of
- * the License, or (at your option) any later version. For more
- * information, see COPYING.
+/**
+ * Copyright (c) The OpenRA Combined Arms Developers (see CREDITS).
+ * This file is part of OpenRA Combined Arms, which is free software.
+ * It is made available to you under the terms of the GNU General Public License
+ * as published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. For more information, see COPYING.
  */
 #endregion
 
@@ -125,6 +124,74 @@ namespace OpenRA.Mods.CA.Traits
 
 			var startEdge = target - (distanceFromStartEdgeToTarget + WDist.FromCells(1) + extraDistanceToMeetMinimum).Length * delta / 1024;
 			var finishEdge = target + (self.World.Map.DistanceToEdge(target, delta) + WDist.FromCells(5)).Length * delta / 1024;
+			var squadSize = GetSquadSize();
+			var formationOffsets = new List<(WVec SpawnOffset, WVec TargetOffset)>();
+			for (var i = -squadSize / 2; i <= squadSize / 2; i++)
+			{
+				// Even-sized squads skip the lead plane
+				if (i == 0 && (squadSize & 1) == 0)
+					continue;
+
+				// Includes the 90 degree rotation between body and world coordinates
+				var so = info.SquadOffset;
+				formationOffsets.Add((
+					new WVec(i * so.Y, -Math.Abs(i) * so.X, 0).Rotate(dropRotation),
+					new WVec(i * so.Y, 0, 0).Rotate(dropRotation)));
+			}
+
+			if (delta.X == 0 || delta.Y == 0)
+			{
+				var map = self.World.Map;
+				var bounds = map.Bounds;
+				var shiftX = 0;
+				var shiftY = 0;
+
+				if (delta.X == 0)
+				{
+					var bufferX = bounds.Width > 2 ? 1 : 0;
+					var minAllowedX = bounds.Left + bufferX;
+					var maxAllowedX = bounds.Right - bufferX - 1;
+					var minFormationX = int.MaxValue;
+					var maxFormationX = int.MinValue;
+
+					foreach (var offsets in formationOffsets)
+					{
+						var cell = map.CellContaining(target + offsets.TargetOffset);
+						minFormationX = Math.Min(minFormationX, cell.X);
+						maxFormationX = Math.Max(maxFormationX, cell.X);
+					}
+
+					shiftX = minFormationX < minAllowedX ? minAllowedX - minFormationX
+						: maxFormationX > maxAllowedX ? maxAllowedX - maxFormationX : 0;
+				}
+				else
+				{
+					var bufferY = bounds.Height > 2 ? 1 : 0;
+					var minAllowedY = bounds.Top + bufferY;
+					var maxAllowedY = bounds.Bottom - bufferY - 1;
+					var minFormationY = int.MaxValue;
+					var maxFormationY = int.MinValue;
+
+					foreach (var offsets in formationOffsets)
+					{
+						var cell = map.CellContaining(target + offsets.TargetOffset);
+						minFormationY = Math.Min(minFormationY, cell.Y);
+						maxFormationY = Math.Max(maxFormationY, cell.Y);
+					}
+
+					shiftY = minFormationY < minAllowedY ? minAllowedY - minFormationY
+						: maxFormationY > maxAllowedY ? maxAllowedY - maxFormationY : 0;
+				}
+
+				if (shiftX != 0 || shiftY != 0)
+				{
+					var targetCell = map.CellContaining(target);
+					var formationShift = map.CenterOfCell(targetCell + new CVec(shiftX, shiftY)) - map.CenterOfCell(targetCell);
+					startEdge += formationShift;
+					target += formationShift;
+					finishEdge += formationShift;
+				}
+			}
 
 			Actor camera = null;
 			Beacon beacon = null;
@@ -181,22 +248,12 @@ namespace OpenRA.Mods.CA.Traits
 				}
 			}
 
-			var squadSize = GetSquadSize();
-
 			// Create the actors immediately so they can be returned
-			for (var i = -squadSize / 2; i <= squadSize / 2; i++)
+			foreach (var offsets in formationOffsets)
 			{
-				// Even-sized squads skip the lead plane
-				if (i == 0 && (squadSize & 1) == 0)
-					continue;
-
-				// Includes the 90 degree rotation between body and world coordinates
-				var so = info.SquadOffset;
-				var spawnOffset = new WVec(i * so.Y, -Math.Abs(i) * so.X, 0).Rotate(dropRotation);
-
 				aircraft.Add(self.World.CreateActor(false, unitType, new TypeDictionary
 				{
-					new CenterPositionInit(startEdge + spawnOffset),
+					new CenterPositionInit(startEdge + offsets.SpawnOffset),
 					new OwnerInit(self.Owner),
 					new FacingInit(facing.Value),
 				}));
@@ -221,21 +278,13 @@ namespace OpenRA.Mods.CA.Traits
 				var passengersPerPlane = (dropItems.Length + squadSize - 1) / squadSize;
 				var added = 0;
 				var j = 0;
-				for (var i = -squadSize / 2; i <= squadSize / 2; i++)
+				foreach (var offsets in formationOffsets)
 				{
-					// Even-sized squads skip the lead plane
-					if (i == 0 && (squadSize & 1) == 0)
-						continue;
-
-					// Includes the 90 degree rotation between body and world coordinates
-					var so = info.SquadOffset;
-					var spawnOffset = new WVec(i * so.Y, -Math.Abs(i) * so.X, 0).Rotate(dropRotation);
-					var targetOffset = new WVec(i * so.Y, 0, 0).Rotate(dropRotation);
 					var a = aircraft[j++];
 					w.Add(a);
 
 					var drop = a.Trait<ParaDrop>();
-					drop.SetLZ(w.Map.CellContaining(target + targetOffset), !info.AllowImpassableCells);
+					drop.SetLZ(w.Map.CellContaining(target + offsets.TargetOffset), !info.AllowImpassableCells);
 					drop.OnEnteredDropRange += OnEnterRange;
 					drop.OnExitedDropRange += OnExitRange;
 					drop.OnRemovedFromWorld += OnRemovedFromWorld;
@@ -247,8 +296,8 @@ namespace OpenRA.Mods.CA.Traits
 						added++;
 					}
 
-					a.QueueActivity(new Fly(a, Target.FromPos(target + spawnOffset)));
-					a.QueueActivity(new Fly(a, Target.FromPos(finishEdge + spawnOffset)));
+					a.QueueActivity(new Fly(a, Target.FromPos(target + offsets.SpawnOffset)));
+					a.QueueActivity(new Fly(a, Target.FromPos(finishEdge + offsets.SpawnOffset)));
 					a.QueueActivity(new RemoveSelf());
 					aircraftInRange.Add(a, false);
 					distanceTestActor = a;

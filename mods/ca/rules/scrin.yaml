@@ -1035,7 +1035,7 @@ STLK:
 		Weapon: StalkerShards
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
-	TimedConditionBar@Cloaked:
+	TimedConditionBarCA@Cloaked:
 		Condition: cloak-active
 		Color: ffffff
 		RequiresCondition: hidden
@@ -1275,6 +1275,8 @@ MAST:
 	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Inherits@CommandoRegen: ^CommandoRegen
 	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
+	AutoTarget:
+		AllowMovement: false
 	AutoTargetPriority@DEFAULT:
 		RequiresCondition: !maxcontrolled || stance-attackanything || assault-move
 	Buildable:
