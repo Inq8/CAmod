@@ -83,7 +83,7 @@ faction-russia =
       • Tesla Arcing
 
     Bonuses:
-      • Tesla Coil (10% discount)
+      • Tesla Reactors boost nearby Tesla Coils
       • Free Tesla Trooper Upgrade
       • Kirov Tesla Bombs
 

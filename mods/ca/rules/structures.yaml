@@ -519,9 +519,6 @@ TSLA:
 		Prerequisite: tslaorstek
 	DetectCloaked:
 		RequiresCondition: !(disabled || empdisable || being-warped)
-	ProductionCostMultiplier@RussiaBonus:
-		Multiplier: 90
-		Prerequisites: player.russia
 	GrantConditionOnPowerState@LOWPOWER:
 		RequiresCondition: !charged
 	ExternalCondition@CHARGED:
@@ -1980,6 +1977,7 @@ TPWR:
 	TooltipExtras:
 		Strengths: • Power output unaffected by damage
 		Weaknesses: • Unstable when damaged
+		Attributes: • Boosts nearby Tesla Coils
 	Valued:
 		Cost: 600
 	Tooltip:
@@ -2001,6 +1999,13 @@ TPWR:
 	Power:
 		Amount: 300
 	-ScalePowerWithHealth:
+	ProximityExternalCondition@TeslaBoost:
+		Condition: charged
+		Range: 6c0
+	WithRangeCircle@TeslaBoost:
+		Type: TeslaBoost
+		Color: FFFF00AA
+		Range: 6c0
 	UpdatesBuildOrder:
 		Limit: 1
 	Encyclopedia:
