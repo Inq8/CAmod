@@ -836,7 +836,7 @@ SPY:
 	WithColoredSelectionBox@Disguised:
 		RequiresCondition: disguise
 		ColorSource: Player
-	GrantsConditionOnPrerequisite@England:
+	GrantConditionOnPrerequisite@England:
 		Condition: player-england
 		Prerequisites: player.england
 	Encyclopedia:
@@ -3425,6 +3425,11 @@ RMBC:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
+	ProducibleWithLevel@MarkedBonus:
+		Prerequisites: player.marked
+	WithProductionIconOverlay@MarkedBonus:
+		Types: MarkedVeterancy
+		Prerequisites: player.marked
 	GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
 		Condition: repair-cooldown
 		RequiredHealing: 85000
@@ -4412,6 +4417,11 @@ ENLI:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
+	ProducibleWithLevel@MarkedBonus:
+		Prerequisites: player.marked
+	WithProductionIconOverlay@MarkedBonus:
+		Types: MarkedVeterancy
+		Prerequisites: player.marked
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		IdleSequences: idle, idle2
@@ -5304,6 +5314,11 @@ REAP:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
+	ProducibleWithLevel@MarkedBonus:
+		Prerequisites: player.marked
+	WithProductionIconOverlay@MarkedBonus:
+		Types: MarkedVeterancy
+		Prerequisites: player.marked
 	WithInfantryBody:
 		-IdleSequences:
 		DefaultAttackSequence: shoot

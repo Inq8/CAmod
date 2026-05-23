@@ -256,7 +256,7 @@ faction-marked =
       • Quantum Capacitors
 
     Bonuses:
-      • Banshee (10% discount)
+      • Avatar, Cyborg Elite, Enlightened & Cyborg Reaper (+1 veterancy)
       • Temple Prime (10% discount)
 
 faction-legion =
