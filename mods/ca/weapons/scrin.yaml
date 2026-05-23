@@ -609,6 +609,31 @@ CorrupterSpew:
 		ExplosionPalette: caneon
 		Image: tibexplodesm
 
+CorrupterSpewCharged:
+	Inherits: CorrupterSpew
+	StartBurstReport: corrupter-cfire1.aud
+	Projectile: Bullet
+		Speed: 200
+		TrailImage: tibspew1lg
+		Image: tibspew2lg
+		LaunchAngle: 40
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			None: 225
+		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath, FlakVestMitigatedMinor
+	Warhead@2Dam: HealthPercentageSpreadDamage
+		Damage: 100
+		Spread: 288
+		Falloff: 100, 45, 20, 7, 0
+		Versus:
+			None: 15
+			Wood: 0
+			Concrete: 0
+			Light: 0
+			Heavy: 0
+	Warhead@1Dam: SpreadDamage
+		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
+
 CorrupterExplode:
 	Inherits: UnitExplodeIraqTank
 	Warhead@3Eff_impact: CreateEffect

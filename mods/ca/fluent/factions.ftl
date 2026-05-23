@@ -309,7 +309,7 @@ faction-reaper =
       • Shard Walker
 
     Bonuses:
-      • Devourer (10% discount)
+      • Resource Conversion also applies to Corrupters
       • Ichor Seed (-20% cooldown)
 
 faction-traveler =

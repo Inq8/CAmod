@@ -1968,6 +1968,7 @@ CORR:
 	Inherits@BERSERK: ^Berserk
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
+	Inherits@RESCONV: ^ResourceConversion
 	Valued:
 		Cost: 1100
 	Tooltip:
@@ -1998,12 +1999,19 @@ CORR:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
-	Armament:
+	Armament@PRIMARY:
 		Weapon: CorrupterSpew
+		PauseOnCondition: (ammo || charged-fire) && !uncharged-fire
+		LocalOffset: 750,0,100
+	Armament@PRIMARYCHARGED:
+		Name: primary-charged
+		Weapon: CorrupterSpewCharged
+		PauseOnCondition: !ammo || uncharged-fire
 		LocalOffset: 750,0,100
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped || blinded
 		FacingTolerance: 0
+		Armaments: primary, primary-charged
 	FireWarheadsOnDeath:
 		Weapon: CorrupterExplode
 		EmptyWeapon: CorrupterExplode
@@ -2020,6 +2028,21 @@ CORR:
 	SpeedMultiplier@TRAVELERSPEED:
 		RequiresCondition: travelerspeed
 		Modifier: 115
+	AmmoPool@RESCONV:
+		Ammo: 90
+	ReloadAmmoPool@RESCONV:
+		Count: 30
+		Delay: 50
+	WithAmmoPipsDecoration@RESCONV:
+		PipCount: 3
+	GrantCondition@RESCONVCHARGE:
+		RequiresCondition: resconv-upgrade && on-resource && (ammo < 90 || charged-fire)
+	GrantConditionOnAttack@PRIMARY:
+		RevokeDelay: 100
+	GrantConditionOnAttack@PRIMARYCHARGED:
+		RevokeDelay: 100
+	GrantConditionOnPrerequisite@RESCONV:
+		Prerequisites: resconv.upgrade, player.reaper
 	Encyclopedia:
 		Category: Scrin/Vehicles
 
