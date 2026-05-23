@@ -48,17 +48,31 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly Color TargetCircleColor = Color.White;
 		public readonly bool TargetCircleUsePlayerColor = false;
 
+		[Desc("Prerequisites grouped together to be referenced by the Prerequisite based overrides.")]
+		public readonly Dictionary<string, string[]> PrerequisiteGroupings = new();
+
+		[Desc("Overrides UnitType based on prerequsites being met. If multiple are met, the first is used.",
+			"Keys can either be a single prerequisite or be a key of PrerequisiteGroupings.")]
+		public readonly Dictionary<string, string> PrerequisiteUnitTypes = new();
+
 		public override object Create(ActorInitializer init) { return new AirstrikePowerCA(init.Self, this); }
 	}
 
 	public class AirstrikePowerCA : DirectionalSupportPower
 	{
 		readonly AirstrikePowerCAInfo info;
+		TechTree techTree;
 
 		public AirstrikePowerCA(Actor self, AirstrikePowerCAInfo info)
 			: base(self, info)
 		{
 			this.info = info;
+		}
+
+		protected override void Created(Actor self)
+		{
+			base.Created(self);
+			techTree = self.Owner.PlayerActor.Trait<TechTree>();
 		}
 
 		public override void SelectTarget(Actor self, string order, SupportPowerManager manager)
@@ -84,7 +98,8 @@ namespace OpenRA.Mods.CA.Traits
 			if (!facing.HasValue)
 				facing = new WAngle(1024 * self.World.SharedRandom.Next(info.QuantizedFacings) / info.QuantizedFacings);
 
-			var altitude = self.World.Map.Rules.Actors[info.UnitType].TraitInfo<AircraftInfo>().CruiseAltitude.Length;
+			var unitType = GetUnitType();
+			var altitude = self.World.Map.Rules.Actors[unitType].TraitInfo<AircraftInfo>().CruiseAltitude.Length;
 			var attackRotation = WRot.FromYaw(facing.Value);
 			var delta = new WVec(0, -1024, 0).Rotate(attackRotation);
 			target += new WVec(0, 0, altitude);
@@ -153,7 +168,7 @@ namespace OpenRA.Mods.CA.Traits
 				var so = info.SquadOffset;
 				var spawnOffset = new WVec(i * so.Y, -Math.Abs(i) * so.X, 0).Rotate(attackRotation);
 				var targetOffset = new WVec(i * so.Y, 0, 0).Rotate(attackRotation);
-				var a = self.World.CreateActor(false, info.UnitType, new TypeDictionary
+				var a = self.World.CreateActor(false, unitType, new TypeDictionary
 				{
 					new CenterPositionInit(startEdge + spawnOffset),
 					new OwnerInit(self.Owner),
@@ -236,6 +251,28 @@ namespace OpenRA.Mods.CA.Traits
 				return;
 
 			Self.World.AddFrameEndTask(w => w.Remove(beacon));
+		}
+
+		string GetUnitType()
+		{
+			if (info.PrerequisiteUnitTypes.Any())
+			{
+				foreach (var item in info.PrerequisiteUnitTypes)
+				{
+					if (techTree.HasPrerequisites(GetPrerequisitesList(item.Key)))
+						return item.Value;
+				}
+			}
+
+			return info.UnitType;
+		}
+
+		string[] GetPrerequisitesList(string key)
+		{
+			if (info.PrerequisiteGroupings.TryGetValue(key, out var prerequisites))
+				return prerequisites;
+
+			return new string[] { key };
 		}
 	}
 }

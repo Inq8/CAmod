@@ -144,6 +144,9 @@ faction-yuri =
       • Lasher Tank
       • Gattling BTR
 
+    Bonuses:
+      • Spy Plane grants psychic detection for 40s after vision fades
+
 faction-talon =
     .name = Talon
     .description = Steel Talon: Mech Warfare
