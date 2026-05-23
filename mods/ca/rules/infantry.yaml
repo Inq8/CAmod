@@ -2440,6 +2440,10 @@ SAB:
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Heavy, Critical
+		RequiresCondition: !player-shadow
+	GrantConditionOnPrerequisite@Shadow:
+		Condition: player-shadow
+		Prerequisites: player.shadow
 	IgnoresDisguise:
 	DetectCloaked:
 		DetectionTypes: Cloak
@@ -3732,6 +3736,10 @@ SHAD:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden)
 	GrantConditionOnDamageState@UNCLOAK:
 		ValidDamageStates: Critical
+		RequiresCondition: !player-shadow
+	GrantConditionOnPrerequisite@Shadow:
+		Condition: player-shadow
+		Prerequisites: player.shadow
 	IgnoresDisguise:
 	DetectCloaked:
 		DetectionTypes: Cloak

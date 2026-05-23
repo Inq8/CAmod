@@ -2615,6 +2615,10 @@ RAH:
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
+		RequiresCondition: !player-shadow
+	GrantConditionOnPrerequisite@Shadow:
+		Condition: player-shadow
+		Prerequisites: player.shadow
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
@@ -2687,9 +2691,6 @@ RAH:
 	WithShadow@CLOAKED:
 		ShadowColor: 00000033
 		RequiresCondition: invisibility || hidden
-	ProductionCostMultiplier@ShadowBonus:
-		Multiplier: 90
-		Prerequisites: player.shadow
 	Encyclopedia:
 		Category: Nod/Aircraft
 
@@ -4720,6 +4721,10 @@ VERT:
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
+		RequiresCondition: !player-shadow
+	GrantConditionOnPrerequisite@Shadow:
+		Condition: player-shadow
+		Prerequisites: player.shadow
 	-RangeMultiplier@SEEK:
 	-RangeMultiplier@SEEK2:
 	-RangeMultiplier@SEEK3:

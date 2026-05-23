@@ -293,7 +293,7 @@ faction-shadow =
       • Heavy Stealth Tank
 
     Bonuses:
-      • Comanche (10% discount)
+      • Stealth units can still cloak when critically damaged
       • Stealth Generator (+4 passive range, remains cloaked during Tiberium Stealth)
 
 faction-reaper =
