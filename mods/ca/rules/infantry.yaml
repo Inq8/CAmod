@@ -756,6 +756,12 @@ SPY:
 		Range: 7c0
 		MinRange: 6c0
 		RevealGeneratedShroud: false
+		RequiresCondition: !player-england
+	RevealsShroud@England:
+		Range: 9c0
+		MinRange: 6c0
+		RevealGeneratedShroud: false
+		RequiresCondition: player-england
 	RevealsShroud@GAPGEN:
 		Range: 6c0
 	Passenger:
@@ -830,6 +836,9 @@ SPY:
 	WithColoredSelectionBox@Disguised:
 		RequiresCondition: disguise
 		ColorSource: Player
+	GrantsConditionOnPrerequisite@England:
+		Condition: player-england
+		Prerequisites: player.england
 	Encyclopedia:
 		Category: Allies/Infantry
 

@@ -15,6 +15,7 @@ faction-england =
 
     Bonuses:
       • Fake Buildings
+      • Spy (+2 Vision)
 
 faction-france =
     .name = France
