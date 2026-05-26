@@ -10,6 +10,7 @@
 
 using System.Linq;
 using OpenRA.Graphics;
+using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
 
 namespace OpenRA.Mods.CA.Graphics
@@ -43,6 +44,10 @@ namespace OpenRA.Mods.CA.Graphics
 		public void Render(WorldRenderer wr)
 		{
 			var screenWidth = wr.ScreenVector(new WVec(width, WDist.Zero, WDist.Zero))[0];
+
+			if (Game.Settings.Graphics.LaserGlow)
+				wr.World.WorldActor.TraitOrDefault<GlowRenderer>()
+					?.RegisterGlow(Pos, Pos, color, width.Length / 86f);
 
 			Game.Renderer.WorldRgbaColorRenderer.DrawLine(offsets.Select(offset => wr.Screen3DPosition(offset)), screenWidth, color, false);
 		}

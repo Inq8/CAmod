@@ -374,3 +374,16 @@ Container@DISPLAY_PANEL:
 									Font: Tiny
 									Text: Display and OpenGL changes require restart
 									Align: Center
+				Container@ROW:
+					Width: PARENT_WIDTH - 24
+					Height: 30
+					Children:
+						Container@LASER_GLOW_CHECKBOX_CONTAINER:
+							X: 10
+							Width: PARENT_WIDTH - 20
+							Children:
+								Checkbox@LASER_GLOW_CHECKBOX:
+									Width: PARENT_WIDTH
+									Height: 20
+									Font: Regular
+									Text: Enable Weapon Glow FX

@@ -9,6 +9,7 @@
 #endregion
 
 using OpenRA.Graphics;
+using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
 
 namespace OpenRA.Mods.CA.Graphics
@@ -93,6 +94,10 @@ namespace OpenRA.Mods.CA.Graphics
 
 				var end = wr.Screen3DPosition(pos + y);
 				Game.Renderer.WorldRgbaColorRenderer.DrawLine(last, end, screenWidth, color);
+
+				if (Game.Settings.Graphics.LaserGlow)
+					wr.World.WorldActor.TraitOrDefault<GlowRenderer>()
+						?.RegisterGlow(Pos, Pos, color, width.Length / 86f);
 
 				pos += forwardStep; // keep moving along x axis
 				last = end;

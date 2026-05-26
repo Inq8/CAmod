@@ -9,6 +9,7 @@
 #endregion
 
 using OpenRA.Graphics;
+using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
 
 namespace OpenRA.Mods.CA.Graphics
@@ -51,6 +52,10 @@ namespace OpenRA.Mods.CA.Graphics
 			float3[] points = new float3[segments + 1];
 			for (int i = 0; i <= segments; i++)
 				points[i] = wr.Screen3DPosition(WPos.LerpQuadratic(a, b, angle, i, segments));
+
+			if (Game.Settings.Graphics.LaserGlow)
+				wr.World.WorldActor.TraitOrDefault<GlowRenderer>()
+					?.RegisterGlow(Pos, Pos, color, width.Length / 86f);
 
 			Game.Renderer.WorldRgbaColorRenderer.DrawLine(points, screenWidth, color, false);
 		}
