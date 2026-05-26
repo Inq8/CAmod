@@ -1392,6 +1392,13 @@ U2:
 	EjectOnDeath:
 		ChuteSound: gejecta.aud
 
+U2.Yuri:
+	Inherits: U2
+	RenderSprites:
+		Image: u2
+	Armament:
+		Weapon: U2Camera.Yuri
+
 U2.KillZone:
 	Inherits: U2
 	RenderSprites:
@@ -2615,6 +2622,10 @@ RAH:
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
+		RequiresCondition: !player-shadow
+	GrantConditionOnPrerequisite@Shadow:
+		Condition: player-shadow
+		Prerequisites: player.shadow
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
@@ -2687,9 +2698,6 @@ RAH:
 	WithShadow@CLOAKED:
 		ShadowColor: 00000033
 		RequiresCondition: invisibility || hidden
-	ProductionCostMultiplier@ShadowBonus:
-		Multiplier: 90
-		Prerequisites: player.shadow
 	Encyclopedia:
 		Category: Nod/Aircraft
 
@@ -3383,9 +3391,6 @@ SCRN:
 		Prerequisites: aircraft.upgraded
 	Rearmable:
 		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
-	ProductionCostMultiplier@markedBonus:
-		Multiplier: 90
-		Prerequisites: player.marked
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
 	GpsRadarDot:
@@ -4723,6 +4728,10 @@ VERT:
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
+		RequiresCondition: !player-shadow
+	GrantConditionOnPrerequisite@Shadow:
+		Condition: player-shadow
+		Prerequisites: player.shadow
 	-RangeMultiplier@SEEK:
 	-RangeMultiplier@SEEK2:
 	-RangeMultiplier@SEEK3:
@@ -5032,7 +5041,7 @@ JACK:
 		PersistentTargeting: false
 		PauseOnCondition: empdisable || being-warped
 	DiveOnAttack:
-		Speed: 250
+		Speed: 320
 		DiveCondition: diving
 	AutoTarget:
 		InitialStance: HoldFire

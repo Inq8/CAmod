@@ -53,7 +53,7 @@ namespace OpenRA.Mods.Common.Traits.Render
 			if (IsTraitDisabled)
 				return 0;
 
-			if (Info.ValidRelationships.HasRelationship(self.Owner.RelationshipWith(self.World.RenderPlayer)))
+			if (!Info.ValidRelationships.HasRelationship(self.Owner.RelationshipWith(self.World.RenderPlayer)))
 				return 0;
 
 			return value;

@@ -195,22 +195,22 @@
 		Condition: noinsurance
 		Duration: 3000
 	CashTrickler@brutalinsurance:
-		Interval: 450
-		Amount: 1250
+		Interval: 375
+		Amount: 1700
 		ShowTicks: False
 		RequiresCondition: owned-by-brutal-ai && !noinsurance
 	CashTrickler@vhardinsurance:
-		Interval: 450
-		Amount: 1000
+		Interval: 375
+		Amount: 1300
 		ShowTicks: False
 		RequiresCondition: owned-by-vhard-ai && !noinsurance
 	CashTrickler@hardinsurance:
-		Interval: 450
-		Amount: 750
+		Interval: 375
+		Amount: 900
 		ShowTicks: False
 		RequiresCondition: owned-by-hard-ai && !noinsurance
 	CashTrickler@normalinsurance:
-		Interval: 450
+		Interval: 375
 		Amount: 500
 		ShowTicks: False
 		RequiresCondition: owned-by-normal-ai && !noinsurance
@@ -668,9 +668,10 @@
 ^Atomizable:
 	ExternalCondition@ATOMIZED:
 		Condition: atomized
-	TimedConditionBar@ATOMIZED:
+	TimedConditionBarCA@ATOMIZED:
 		Condition: atomized
 		Color: ff0000
+		ValidRelationships: Ally, Enemy, Neutral
 	WithIdleOverlay@ATOMIZED:
 		Sequence: vehicle
 		Image: atomize-overlay
@@ -1185,8 +1186,9 @@
 	DamageMultiplier@IRONCURTAIN:
 		RequiresCondition: invulnerability
 		Modifier: 0
-	TimedConditionBar@IRONCURTAIN:
+	TimedConditionBarCA@IRONCURTAIN:
 		Condition: invulnerability
+		ValidRelationships: Ally, Enemy, Neutral
 	ExternalCondition@INVULNERABILITY:
 		Condition: invulnerability
 	SpeedCapSpeedMultiplier@IRONCURTAIN:
@@ -2345,7 +2347,7 @@
 
 ^DevelopmentPolicyDiscount:
 	ProductionCostMultiplier@DevelopmentPolicy2:
-		Multiplier: 90
+		Multiplier: 85
 		Prerequisites: development.policy, influence.level2
 
 ^SovietT4Boost:
@@ -2646,6 +2648,7 @@
 		Speed: 46
 		Locomotor: foot
 		PauseOnCondition: being-warped || reapersnare
+		ResponsiveBetweenCells: true
 	GrantConditionOnTerrain@ONTIB:
 		Condition: on-tib
 		TerrainTypes: Tiberium, BlueTiberium, BlackTiberium
@@ -4788,8 +4791,6 @@
 		Prerequisites: global.multiqueuescaled
 
 ^ProductionOptimizer1:
-	ProvidesPrerequisite@ProductionOptimizer1:
-		Prerequisite: optimized.production1
 	FreeActor@ProductionOptimizer1:
 		Actor: optimized.production1
 	SpawnActorOnCapture@ProductionOptimizer1:
@@ -4797,8 +4798,6 @@
 		Delay: 1
 
 ^ProductionOptimizer2:
-	ProvidesPrerequisite@ProductionOptimizer2:
-		Prerequisite: optimized.production2
 	FreeActor@ProductionOptimizer2:
 		Actor: optimized.production2
 	SpawnActorOnCapture@ProductionOptimizer2:
@@ -4900,6 +4899,9 @@
 	ProductionCostMultiplier@MQS2:
 		Multiplier: 200
 		Prerequisites: infantry.any, global.multiqueuescaled, optimized.production1, !optimized.production2
+	ProductionCostMultiplier@MQS3:
+		Multiplier: 200
+		Prerequisites: infantry.any, global.multiqueuescaled, !optimized.production1, optimized.production2
 	LinkedProducerSource:
 	UpdatesUnitsProduced:
 
@@ -4917,6 +4919,7 @@
 		ProductionType: CyborgMQ
 	-ProductionCostMultiplier@MQS1:
 	-ProductionCostMultiplier@MQS2:
+	-ProductionCostMultiplier@MQS3:
 
 ^ProducesDogs:
 	Inherits: ^ProducesInfantry
@@ -4932,6 +4935,7 @@
 		ProductionType: DogMQ
 	-ProductionCostMultiplier@MQS1:
 	-ProductionCostMultiplier@MQS2:
+	-ProductionCostMultiplier@MQS3:
 
 ^ProducesVehicles:
 	Inherits@QUEUEUPDATER: ^QueueUpdater
@@ -4969,6 +4973,9 @@
 	ProductionCostMultiplier@MQS2:
 		Multiplier: 135
 		Prerequisites: vehicles.any, global.multiqueuescaled, optimized.production1, !optimized.production2
+	ProductionCostMultiplier@MQS3:
+		Multiplier: 135
+		Prerequisites: vehicles.any, global.multiqueuescaled, !optimized.production1, optimized.production2
 	GrantExternalConditionToProduced:
 		Condition: produced
 	LinkedProducerSource:
@@ -5059,6 +5066,9 @@
 	ProductionCostMultiplier@MQS2:
 		Multiplier: 130
 		Prerequisites: aircraft.any, global.multiqueuescaled, optimized.production1, !optimized.production2
+	ProductionCostMultiplier@MQS3:
+		Multiplier: 130
+		Prerequisites: aircraft.any, global.multiqueuescaled, !optimized.production1, optimized.production2
 	GrantExternalConditionToProduced:
 		Condition: produced
 	UpdatesUnitsProduced:

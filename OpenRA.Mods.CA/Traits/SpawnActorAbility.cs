@@ -205,10 +205,7 @@ namespace OpenRA.Mods.CA.Traits
 
 				if (Info.Behavior == SpawnActorAbilityBehavior.SpawnAtSelfAndMoveToTarget || Info.Behavior == SpawnActorAbilityBehavior.SpawnAtSelfAndSlavesAndMoveToTarget)
 				{
-					var spawnCell = self.Location;
-					var spawnPos = self.CenterPosition;
-
-					self.QueueActivity(new SpawnActor(Info.Actors, spawnCell, initFacing, Info.SkipMakeAnimations, Info.SpawnSounds, ammoPool, 3, Info.AvoidActors, WDist.Zero, Info.CanTargetShroud, Info.AllowedTerrainTypes, (actor, spawned) =>
+					self.QueueActivity(new SpawnActor(Info.Actors, actor => actor.Location, initFacing, Info.SkipMakeAnimations, Info.SpawnSounds, ammoPool, 3, Info.AvoidActors, WDist.Zero, Info.CanTargetShroud, Info.AllowedTerrainTypes, (actor, spawned) =>
 					{
 						ActorSpawned(actor, spawned);
 
@@ -226,9 +223,9 @@ namespace OpenRA.Mods.CA.Traits
 								if (slave.Actor.IsInWorld && !slave.Actor.IsDead)
 								{
 									var slaveCell = slave.Actor.Location;
-									var slavePos = slave.Actor.CenterPosition;
+									var slaveActor = slave.Actor;
 
-									self.QueueActivity(new SpawnActor(Info.Actors, slaveCell, initFacing, Info.SkipMakeAnimations, Info.SpawnSounds, ammoPool, 3, Info.AvoidActors, WDist.Zero, Info.CanTargetShroud, Info.AllowedTerrainTypes, (actor, spawned) =>
+									self.QueueActivity(new SpawnActor(Info.Actors, actor => slaveActor.IsInWorld && !slaveActor.IsDead ? slaveActor.Location : slaveCell, initFacing, Info.SkipMakeAnimations, Info.SpawnSounds, ammoPool, 3, Info.AvoidActors, WDist.Zero, Info.CanTargetShroud, Info.AllowedTerrainTypes, (actor, spawned) =>
 									{
 										ActorSpawned(actor, spawned);
 

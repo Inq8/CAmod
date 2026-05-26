@@ -30,6 +30,11 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Map player to transfer this actor to if the owner lost the game.")]
 		public readonly string FallbackOwner = "Creeps";
 
+		[Desc("What happens when mind control is revoked after the original owner has already lost.",
+			"Allowed values are 'ChangeOwner', 'Dispose', 'Kill'.",
+			"'ChangeOwner' transfers the actor to FallbackOwner.")]
+		public readonly OwnerLostActionType OriginalOwnerLostAction = OwnerLostActionType.ChangeOwner;
+
 		[Desc("What happens to cargo on being mind controlled, and when control is lost.")]
 		public readonly CargoBehaviour CargoBehaviour = CargoBehaviour.DoNothing;
 
@@ -157,11 +162,6 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			self.CancelActivity();
 
-			if (creatorOwner.WinState == WinState.Lost)
-				self.ChangeOwner(self.World.Players.First(p => p.InternalName == info.FallbackOwner));
-			else
-				self.ChangeOwner(creatorOwner);
-
 			if (controlledToken != Actor.InvalidConditionToken)
 				controlledToken = self.RevokeCondition(controlledToken);
 
@@ -170,6 +170,24 @@ namespace OpenRA.Mods.CA.Traits
 
 			if (info.RevokeControlSounds.Length > 0)
 				Game.Sound.Play(SoundType.World, info.RevokeControlSounds.Random(self.World.SharedRandom), self.CenterPosition);
+
+			if (creatorOwner.WinState == WinState.Lost)
+			{
+				switch (info.OriginalOwnerLostAction)
+				{
+					case OwnerLostActionType.Kill:
+						self.Kill(self);
+						break;
+					case OwnerLostActionType.Dispose:
+						self.Dispose();
+						break;
+					default:
+						self.ChangeOwner(self.World.Players.First(p => p.InternalName == info.FallbackOwner));
+						break;
+				}
+			}
+			else
+				self.ChangeOwner(creatorOwner);
 
 			self.World.AddFrameEndTask(_ => controlChanging = false);
 		}

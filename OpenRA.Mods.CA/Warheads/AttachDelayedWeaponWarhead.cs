@@ -13,13 +13,14 @@ using OpenRA.GameRules;
 using OpenRA.Mods.CA.Traits;
 using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Traits;
+using OpenRA.Mods.Common.Warheads;
 using OpenRA.Primitives;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Warheads
 {
 	[Desc("This warhead can attach a DelayedWeapon to the target. Requires an appropriate type of DelayedWeaponAttachable trait to function properly.")]
-	public class AttachDelayedWeaponWarhead : WarheadAS, IRulesetLoaded<WeaponInfo>
+	public class AttachDelayedWeaponWarhead : Warhead, IRulesetLoaded<WeaponInfo>
 	{
 		[WeaponReference]
 		[FieldLoader.Require]
@@ -29,8 +30,8 @@ namespace OpenRA.Mods.CA.Warheads
 		[Desc("Type of the DelayedWeapon.")]
 		public readonly string Type = "";
 
-		[Desc("Range of targets to be attached.")]
-		public readonly WDist Range = WDist.FromCells(1);
+		[Desc("Range of targets to be attached. If zero, only the targeted actor will be affected.")]
+		public readonly WDist Range = WDist.Zero;
 
 		[Desc("Trigger the DelayedWeapon after these amount of ticks.")]
 		public readonly int TriggerTime = 30;
@@ -75,61 +76,75 @@ namespace OpenRA.Mods.CA.Warheads
 
 			var pos = target.CenterPosition;
 
-			if (!IsValidImpact(pos, firedBy))
-				return;
-
 			var world = firedBy.World;
-			var availableActors = firedBy.World.FindActorsOnCircle(pos, Range);
-
-			foreach (var actor in availableActors)
+			if (Range == WDist.Zero)
 			{
-				if (!IsValidAgainst(actor, firedBy))
-					continue;
-
-				if (actor.IsDead)
-					continue;
-
-				var activeShapes = actor.TraitsImplementing<HitShape>().Where(Exts.IsTraitEnabled);
-				if (!activeShapes.Any())
-					continue;
-
-				var distance = activeShapes.Min(t => t.DistanceFromEdge(actor, pos));
-
-				if (distance > Range)
-					continue;
-
-				var attachable = actor.TraitsImplementing<DelayedWeaponAttachable>().FirstOrDefault(a => a.CanAttach(Type));
-				if (attachable != null)
-				{
-					CalculatedTriggerTime = TriggerTime;
-
-					if (ScaleTriggerTimeWithValue)
-					{
-						var valued = actor.Info.TraitInfoOrDefault<ValuedInfo>();
-						if (valued != null)
-							CalculatedTriggerTime = (valued.Cost / 100) * TriggerTime;
-					}
-
-					attachable.Attach(new DelayedWeaponTrigger(this, args));
-
-					var attachSound = AttachSounds.RandomOrDefault(world.LocalRandom);
-					if (attachSound != null)
-						Game.Sound.Play(SoundType.World, attachSound, pos);
-
+				var directTarget = args.WeaponTarget.Type == TargetType.Actor ? args.WeaponTarget.Actor : target.Actor;
+				if (TryAttachToActor(directTarget, pos, firedBy, args, world))
 					return;
-				}
-			}
-
-			if (MissWeapon != null)
-			{
-				MissWeaponInfo.Impact(Target.FromPos(pos), args.SourceActor);
 			}
 			else
 			{
-				var failSound = MissSounds.RandomOrDefault(world.LocalRandom);
+				var availableActors = firedBy.World.FindActorsOnCircle(pos, Range);
+
+				foreach (var actor in availableActors)
+				{
+					if (TryAttachToActor(actor, pos, firedBy, args, world))
+						return;
+				}
+			}
+
+			HandleMiss(firedBy, pos);
+		}
+
+		void HandleMiss(Actor firedBy, WPos pos)
+		{
+			if (MissWeapon != null)
+				MissWeaponInfo.Impact(Target.FromPos(pos), firedBy);
+			else
+			{
+				var failSound = MissSounds.RandomOrDefault(firedBy.World.LocalRandom);
 				if (failSound != null)
 					Game.Sound.Play(SoundType.World, failSound, pos);
 			}
+		}
+
+		bool TryAttachToActor(Actor actor, WPos pos, Actor firedBy, WarheadArgs args, World world)
+		{
+			if (actor == null || !IsValidAgainst(actor, firedBy) || actor.IsDead)
+				return false;
+
+			var attachable = actor.TraitsImplementing<DelayedWeaponAttachable>().FirstOrDefault(a => a.CanAttach(Type));
+			if (attachable == null)
+				return false;
+
+			if (Range != WDist.Zero)
+			{
+				var activeShapes = actor.TraitsImplementing<HitShape>().Where(Exts.IsTraitEnabled);
+				if (!activeShapes.Any())
+					return false;
+
+				var distance = activeShapes.Min(t => t.DistanceFromEdge(actor, pos));
+				if (distance > Range)
+					return false;
+			}
+
+			CalculatedTriggerTime = TriggerTime;
+
+			if (ScaleTriggerTimeWithValue)
+			{
+				var valued = actor.Info.TraitInfoOrDefault<ValuedInfo>();
+				if (valued != null)
+					CalculatedTriggerTime = (valued.Cost / 100) * TriggerTime;
+			}
+
+			attachable.Attach(new DelayedWeaponTrigger(this, args));
+
+			var attachSound = AttachSounds.RandomOrDefault(world.LocalRandom);
+			if (attachSound != null)
+				Game.Sound.Play(SoundType.World, attachSound, pos);
+
+			return true;
 		}
 	}
 }

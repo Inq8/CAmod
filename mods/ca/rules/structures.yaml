@@ -519,9 +519,6 @@ TSLA:
 		Prerequisite: tslaorstek
 	DetectCloaked:
 		RequiresCondition: !(disabled || empdisable || being-warped)
-	ProductionCostMultiplier@RussiaBonus:
-		Multiplier: 90
-		Prerequisites: player.russia
 	GrantConditionOnPowerState@LOWPOWER:
 		RequiresCondition: !charged
 	ExternalCondition@CHARGED:
@@ -1118,6 +1115,7 @@ ALHQ:
 	Inherits@HeliosBombPower: ^HeliosBombPower
 	Inherits@BlackSkyStrikePower: ^BlackSkyStrikePower
 	Inherits@ProductionOptimizer2: ^ProductionOptimizer2
+	Inherits@DevelopmentPolicyDiscount: ^DevelopmentPolicyDiscount
 	Selectable:
 		Bounds: 2048, 3072, 0, -512
 		DecorationBounds: 2133, 3157, 0, -512
@@ -1179,11 +1177,6 @@ ALHQ:
 	-WithDecoration@HACKED:
 	-WithDecoration@RESTORING:
 	-PowerMultiplier@HACKED:
-	FreeActor@ProductionOptimizer2:
-		RequiresCondition: optimized-production1
-	GrantConditionOnPrerequisite@ProductionOptimizer1:
-		Condition: optimized-production1
-		Prerequisites: optimized.production1
 	Encyclopedia:
 		Category: Allies/Buildings
 		Scale: 1.8
@@ -1985,6 +1978,7 @@ TPWR:
 	TooltipExtras:
 		Strengths: • Power output unaffected by damage
 		Weaknesses: • Unstable when damaged
+		Attributes: • Boosts nearby Tesla Coils
 	Valued:
 		Cost: 600
 	Tooltip:
@@ -2006,6 +2000,13 @@ TPWR:
 	Power:
 		Amount: 300
 	-ScalePowerWithHealth:
+	ProximityExternalCondition@TeslaBoost:
+		Condition: charged
+		Range: 6c0
+	WithRangeCircle@TeslaBoost:
+		Type: TeslaBoost
+		Color: FFFF00AA
+		Range: 6c0
 	UpdatesBuildOrder:
 		Limit: 1
 	Encyclopedia:
@@ -3184,9 +3185,12 @@ AIRS:
 		Multiplier: 125
 		Prerequisites: global.multiqueuescaled, vehicles.any, optimized.production1, !optimized.production2
 	ProductionCostMultiplier@MQS3:
+		Multiplier: 125
+		Prerequisites: global.multiqueuescaled, vehicles.any, !optimized.production1, optimized.production2
+	ProductionCostMultiplier@MQS4:
 		Multiplier: 90
 		Prerequisites: global.multiqueuescaled, vehicles.any, optimized.production1, optimized.production2
-	ProductionCostMultiplier@MQS4:
+	ProductionCostMultiplier@MQS5:
 		Multiplier: 90
 		Prerequisites: global.multiqueuescaled, !vehicles.any
 	Encyclopedia:
@@ -6403,7 +6407,7 @@ IOK:
 		Condition: iokbuff
 		Range: 5c0
 		ValidRelationships: Ally
-		RequiresCondition: !rage-active && initialized
+		RequiresCondition: initialized
 	ProximityExternalCondition@IdolOfKaneDebuff:
 		Condition: iokdebuff
 		Range: 5c0

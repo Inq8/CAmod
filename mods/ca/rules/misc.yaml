@@ -347,6 +347,22 @@ camera.paradrop:
 camera.spyplane:
 	Inherits: ^CameraBase
 
+camera.psychic:
+	Inherits@1: ^CameraBase
+	-RevealsShroud:
+	RangedGpsRadarProvider:
+		Range: 10c0
+		TargetTypes: Infantry, Vehicle, Air, Structure
+	WithRangeCircle:
+		Type: PsychicDetection
+		Range: 10c0
+		Color: cc00ff77
+		BorderColor: 00000044
+		Visible: Always
+	KillsSelf:
+		RemoveInstead: true
+		Delay: 1150
+
 camera.sathack:
 	Inherits: ^CameraBase
 	Interactable:

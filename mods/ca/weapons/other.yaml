@@ -824,7 +824,6 @@ PlaceC4:
 		Type: c4
 		TriggerTime: 60
 		DeathTypes: ExplosionDeath
-		Range: 1
 	Warhead@Flash: FlashTarget
 		Spread: 0c256
 		Color: ffffff
@@ -3063,6 +3062,13 @@ U2Camera:
 	TargetActorCenter: true
 	Projectile: InstantHit
 
+U2Camera.Yuri:
+	Inherits: U2Camera
+	Warhead@Spawn: SpawnActor
+		Actors: camera.psychic
+		Range: 1
+		ImpactActors: false
+
 KillZoneSpawner:
 	Range: 1c0
 	ReloadDelay: 100
@@ -3895,8 +3901,8 @@ BasiliskPulse:
 		Falloff: 100, 75, 25, 0
 		Damage: 500
 		Versus:
-			None: 0
-			Wood: 0
+			None: 20
+			Wood: 20
 			Light: 100
 			Heavy: 100
 			Concrete: 100

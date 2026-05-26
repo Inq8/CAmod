@@ -15,6 +15,7 @@ faction-england =
 
     Bonuses:
       • Fake Buildings
+      • Spy (+2 Vision)
 
 faction-france =
     .name = France
@@ -83,7 +84,7 @@ faction-russia =
       • Tesla Arcing
 
     Bonuses:
-      • Tesla Coil (10% discount)
+      • Tesla Reactors boost nearby Tesla Coils
       • Free Tesla Trooper Upgrade
       • Kirov Tesla Bombs
 
@@ -142,6 +143,9 @@ faction-yuri =
     Upgrades:
       • Lasher Tank
       • Gattling BTR
+
+    Bonuses:
+      • Spy Plane grants psychic detection for 40s after vision fades
 
 faction-talon =
     .name = Talon
@@ -255,7 +259,7 @@ faction-marked =
       • Quantum Capacitors
 
     Bonuses:
-      • Banshee (10% discount)
+      • Avatar, Cyborg Elite, Enlightened & Cyborg Reaper (+1 veterancy)
       • Temple Prime (10% discount)
 
 faction-legion =
@@ -292,7 +296,7 @@ faction-shadow =
       • Heavy Stealth Tank
 
     Bonuses:
-      • Comanche (10% discount)
+      • Stealth units can still cloak when critically damaged
       • Stealth Generator (+4 passive range, remains cloaked during Tiberium Stealth)
 
 faction-reaper =
@@ -309,7 +313,7 @@ faction-reaper =
       • Shard Walker
 
     Bonuses:
-      • Devourer (10% discount)
+      • Resource Conversion also applies to Corrupters
       • Ichor Seed (-20% cooldown)
 
 faction-traveler =

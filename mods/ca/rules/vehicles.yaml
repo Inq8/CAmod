@@ -1898,6 +1898,10 @@ SPEC:
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
+		RequiresCondition: !player-shadow
+	GrantConditionOnPrerequisite@Shadow:
+		Condition: player-shadow
+		Prerequisites: player.shadow
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
@@ -2004,6 +2008,10 @@ SAPC:
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
+		RequiresCondition: !player-shadow
+	GrantConditionOnPrerequisite@Shadow:
+		Condition: player-shadow
+		Prerequisites: player.shadow
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
@@ -2606,6 +2614,8 @@ MGG:
 		Sequence: spinner
 		PauseOnCondition: empdisable || being-warped || mgg-disabled
 		RequiresCondition: !passenger
+	MindControllable@MINDCONTROL:
+		OriginalOwnerLostAction: Kill
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -2770,6 +2780,10 @@ MSG:
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
+		RequiresCondition: !player-shadow
+	GrantConditionOnPrerequisite@Shadow:
+		Condition: player-shadow
+		Prerequisites: player.shadow
 	Encyclopedia:
 		Category: Nod/Vehicles
 	EncyclopediaExtras:
@@ -3258,9 +3272,9 @@ HMMV:
 		ActiveCondition: gshield
 		ChargingColor: 008888
 		DrainingColor: 00ffff
-		Modifier: 33
-		Duration: 100
-		ChargeTime: 625
+		Modifier: 50
+		Duration: 50
+		ChargeTime: 750
 		ActivateSound: gshieldup.aud
 		DeactivateSound: gshielddown.aud
 		RequiresCondition: pointdef-upgrade
@@ -3384,8 +3398,8 @@ GDRN:
 		ActiveCondition: gshield
 		ChargingColor: 008888
 		DrainingColor: 00FFFF61
-		Modifier: 33
-		Duration: 50
+		Modifier: 50
+		Duration: 25
 		ChargeTime: 750
 		ActivateSound: gshieldup.aud
 		DeactivateSound: gshielddown.aud
@@ -4505,10 +4519,11 @@ MDRN:
 		Range: 4c0
 	Mobile:
 		Speed: 126
-		TurnSpeed: 255
+		TurnSpeed: 512
 		Locomotor: seal
 		Voice: Move
 		PauseOnCondition: being-captured || empdisable || being-warped || driver-dead
+		ResponsiveBetweenCells: true
 	Voiced:
 		VoiceSet: MiniDroneVoice
 	Armament@PRIMARY:
@@ -5224,6 +5239,10 @@ STNK.Nod:
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
+		RequiresCondition: !player-shadow
+	GrantConditionOnPrerequisite@Shadow:
+		Condition: player-shadow
+		Prerequisites: player.shadow
 	Armament@PRIMARY:
 		Weapon: StnkMissile
 		LocalOffset: 213,43,128, 213,-43,128
@@ -5342,6 +5361,10 @@ HSTK:
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
+		RequiresCondition: !player-shadow
+	GrantConditionOnPrerequisite@Shadow:
+		Condition: player-shadow
+		Prerequisites: player.shadow
 	Armament@PRIMARY:
 		Weapon: HstkMissile
 		LocalOffset: 213,160,128, 213,-160,128
@@ -6960,7 +6983,7 @@ IFV:
 		RequiresCondition: mechturr
 		ValidRelationships: Ally
 	AutoTargetPriority@HEAL:
-		ValidTargets: Heal
+		ValidTargets: Healable
 		RequiresCondition: medturr
 		ValidRelationships: Ally
 	AutoTargetPriority@defuse:
@@ -9335,7 +9358,7 @@ BASI:
 		Description: Stealth tank with an EMP wave weapon.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses
-		Weaknesses: • Cannot attack Aircraft\n• No effect on infantry\n• Can be spotted by nearby infantry and defense structures
+		Weaknesses: • Weak vs Buildings, Infantry\n• Cannot attack Aircraft\n• Can be spotted by nearby infantry and defense structures
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -9393,6 +9416,10 @@ BASI:
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
+		RequiresCondition: !player-shadow
+	GrantConditionOnPrerequisite@Shadow:
+		Condition: player-shadow
+		Prerequisites: player.shadow
 	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || hidden
 		ColorSource: Player
@@ -10649,6 +10676,11 @@ AVTR:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: vehicles.upgraded
+	ProducibleWithLevel@MarkedBonus:
+		Prerequisites: player.marked
+	WithProductionIconOverlay@MarkedBonus:
+		Types: MarkedVeterancy
+		Prerequisites: player.marked
 	Voiced:
 		VoiceSet: AvatarVoice
 	SpawnActorOnDeath:

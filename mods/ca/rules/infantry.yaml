@@ -756,6 +756,12 @@ SPY:
 		Range: 7c0
 		MinRange: 6c0
 		RevealGeneratedShroud: false
+		RequiresCondition: !player-england
+	RevealsShroud@England:
+		Range: 9c0
+		MinRange: 6c0
+		RevealGeneratedShroud: false
+		RequiresCondition: player-england
 	RevealsShroud@GAPGEN:
 		Range: 6c0
 	Passenger:
@@ -830,6 +836,9 @@ SPY:
 	WithColoredSelectionBox@Disguised:
 		RequiresCondition: disguise
 		ColorSource: Player
+	GrantConditionOnPrerequisite@England:
+		Condition: player-england
+		Prerequisites: player.england
 	Encyclopedia:
 		Category: Allies/Infantry
 
@@ -2431,6 +2440,10 @@ SAB:
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Heavy, Critical
+		RequiresCondition: !player-shadow
+	GrantConditionOnPrerequisite@Shadow:
+		Condition: player-shadow
+		Prerequisites: player.shadow
 	IgnoresDisguise:
 	DetectCloaked:
 		DetectionTypes: Cloak
@@ -2834,7 +2847,7 @@ JJET:
 		TargetTypes: Ground, Infantry
 	Targetable@HEAL:
 		RequiresCondition: (!airborne && !being-warped) && damaged
-		TargetTypes: Heal
+		TargetTypes: Healable
 	Targetable@AIRBORNE:
 		RequiresCondition: airborne && !being-warped
 		TargetTypes: AirSmall
@@ -3416,6 +3429,11 @@ RMBC:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
+	ProducibleWithLevel@MarkedBonus:
+		Prerequisites: player.marked
+	WithProductionIconOverlay@MarkedBonus:
+		Types: MarkedVeterancy
+		Prerequisites: player.marked
 	GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
 		Condition: repair-cooldown
 		RequiredHealing: 85000
@@ -3718,6 +3736,10 @@ SHAD:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden)
 	GrantConditionOnDamageState@UNCLOAK:
 		ValidDamageStates: Critical
+		RequiresCondition: !player-shadow
+	GrantConditionOnPrerequisite@Shadow:
+		Condition: player-shadow
+		Prerequisites: player.shadow
 	IgnoresDisguise:
 	DetectCloaked:
 		DetectionTypes: Cloak
@@ -4001,6 +4023,8 @@ YURI:
 	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Inherits@CommandoRegen: ^CommandoRegen
 	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
+	AutoTarget:
+		AllowMovement: false
 	AutoTargetPriority@DEFAULT:
 		RequiresCondition: !maxcontrolled || stance-attackanything || assault-move
 	Buildable:
@@ -4401,6 +4425,11 @@ ENLI:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
+	ProducibleWithLevel@MarkedBonus:
+		Prerequisites: player.marked
+	WithProductionIconOverlay@MarkedBonus:
+		Types: MarkedVeterancy
+		Prerequisites: player.marked
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		IdleSequences: idle, idle2
@@ -4501,6 +4530,9 @@ CDOG:
 	Inherits: DOG
 	Inherits@InfiltratorStolenTech: ^InfiltratorStolenTech
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@CYBORGUPG: ^NodCyborgUpgrade
+	Inherits@CustodianBuff: ^CustodianBuff
+	Inherits@SLOWABLE: ^Slowable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -5290,6 +5322,11 @@ REAP:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
+	ProducibleWithLevel@MarkedBonus:
+		Prerequisites: player.marked
+	WithProductionIconOverlay@MarkedBonus:
+		Types: MarkedVeterancy
+		Prerequisites: player.marked
 	WithInfantryBody:
 		-IdleSequences:
 		DefaultAttackSequence: shoot
