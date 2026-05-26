@@ -1165,6 +1165,9 @@ App1:
 		LocalCenterOffset: 0,0,0
 	GrantRandomCondition:
 		Conditions: husk1, husk2, husk3
+	WithDeathAnimation:
+		DeathSequence: death
+		UseDeathTypeSuffix: false
 	SpawnActorOnDeath@1:
 		Actor: App1.Husk
 		RequiresCondition: husk1
@@ -1236,6 +1239,9 @@ Shop1:
 		Footprint: ___ === xxx xxx
 		Dimensions: 3,4
 		LocalCenterOffset: 0,0,0
+	WithDeathAnimation:
+		DeathSequence: death
+		UseDeathTypeSuffix: false
 	SpawnActorOnDeath:
 		Actor: Shop1.Husk
 	Targetable:
@@ -1260,11 +1266,12 @@ Shop1.Husk:
 		Name: Destroyed Building
 	RenderSprites:
 		Image: shop1.destroyed
-	WithIdleOverlay@Burns:
-		Image: fire
-		Sequence: 1
-		IsDecoration: true
-		Palette: effect
+	WithIdleOverlay@Crater:
+		Image: Crater
+		Sequence: idle
+		IsDecoration: false
+		Palette: terrain
+		Offset: -1024,0,0
 	-Selectable:
 	-Targetable:
 	-Targetable@C4Plantable:
@@ -1312,11 +1319,12 @@ Hotel1.Husk:
 		Name: Destroyed Building
 	RenderSprites:
 		Image: hotel1.destroyed
-	WithIdleOverlay@Burns:
-		Image: fire
-		Sequence: 1
-		IsDecoration: true
-		Palette: effect
+	WithIdleOverlay@Crater:
+		Image: Crater
+		Sequence: idle
+		IsDecoration: false
+		Palette: terrain
+		Offset: 0,0,0
 	-Selectable:
 	-Targetable:
 	-Targetable@C4Plantable:
@@ -1340,6 +1348,9 @@ High1:
 		Footprint: ____ ____ ==== xxxx xxxx xxxx
 		Dimensions: 4,6
 		LocalCenterOffset: 0,0,0
+	WithDeathAnimation:
+		DeathSequence: death
+		UseDeathTypeSuffix: false
 	SpawnActorOnDeath:
 		Actor: High1.Husk
 	Targetable:
@@ -1364,11 +1375,12 @@ High1.Husk:
 		Name: Destroyed Building
 	RenderSprites:
 		Image: high1.destroyed
-	WithIdleOverlay@Burns:
-		Image: fire
-		Sequence: 1
-		IsDecoration: true
-		Palette: effect
+	WithIdleOverlay@Crater:
+		Image: Crater
+		Sequence: idle
+		IsDecoration: false
+		Palette: terrain
+		Offset: -3200,0,0
 	-Selectable:
 	-Targetable:
 	-Targetable@C4Plantable:
@@ -1392,6 +1404,9 @@ High2:
 		Footprint: ____ ____ ____ ==== xxxx xxxx xxxx
 		Dimensions: 4,7
 		LocalCenterOffset: 0,0,0
+	WithDeathAnimation:
+		DeathSequence: death
+		UseDeathTypeSuffix: false
 	SpawnActorOnDeath:
 		Actor: High2.Husk
 	Targetable:
@@ -1416,11 +1431,12 @@ High2.Husk:
 		Name: Destroyed Building
 	RenderSprites:
 		Image: high2.destroyed
-	WithIdleOverlay@Burns:
-		Image: fire
-		Sequence: 1
-		IsDecoration: true
-		Palette: effect
+	WithIdleOverlay@Crater:
+		Image: Crater
+		Sequence: idle
+		IsDecoration: false
+		Palette: terrain
+		Offset: -3200,0,0
 	-Selectable:
 	-Targetable:
 	-Targetable@C4Plantable:
