@@ -14,6 +14,7 @@ using OpenRA.GameRules;
 using OpenRA.Mods.CA.Traits;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Mods.Common.Warheads;
+using OpenRA.Primitives;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Warheads
@@ -40,6 +41,19 @@ namespace OpenRA.Mods.CA.Warheads
 
 		[Desc("It saturates at this level, by this weapon.")]
 		public int MaxLevel = 500;
+
+		[Desc("Color of the glow at the impact position. Requires GlowScale > 0.")]
+		public readonly Color GlowColor = Color.FromArgb(255, 0, 255, 0);
+
+		[Desc("Scale of the glow effect at the impact position. Set above 0 to enable.")]
+		public readonly float GlowScale = 0f;
+
+		[Desc("Number of render frames for the glow to fade out over.")]
+		public readonly int GlowFadeFrames = 60;
+
+		[Desc("Number of render frames for the glow to fade in over. 0 = instant.")]
+		public readonly int GlowFadeInFrames = 0;
+
 
 		public void RulesetLoaded(Ruleset rules, WeaponInfo info)
 		{
@@ -69,6 +83,10 @@ namespace OpenRA.Mods.CA.Warheads
 					world.WorldActor.Trait<WarheadDebugOverlay>().AddImpact(pos, rng, DebugOverlayColor);
 				}
 			}
+
+			if (GlowScale > 0 && Game.Settings.Graphics.LaserGlow)
+				world.WorldActor.TraitOrDefault<GlowRenderer>()
+					?.RegisterGlow(pos, pos, GlowColor, GlowScale, GlowFadeFrames, GlowFadeInFrames);
 
 			var targetTile = world.Map.CellContaining(pos);
 			for (var i = 0; i < Range.Length; i++)
