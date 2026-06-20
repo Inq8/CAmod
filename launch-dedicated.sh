@@ -97,5 +97,5 @@ while true; do
      Server.ShareAnonymizedIPs="${SHARE_ANONYMISED_IPS}" \
      Server.FloodLimitJoinCooldown="${FLOOD_LIMIT_JOIN_COOLDOWN}" \
      Server.QueryMapRepository="${QUERY_MAP_REPOSITORY}" \
-     Engine.SupportDir="${SUPPORT_DIR}"
+     Engine.SupportDir="${SUPPORT_DIR}" || :
 done
