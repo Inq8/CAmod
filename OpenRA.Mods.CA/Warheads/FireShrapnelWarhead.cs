@@ -51,10 +51,16 @@ namespace OpenRA.Mods.CA.Warheads
 		[Desc("Should the shrapnel target actors in order of distance?")]
 		public readonly bool TargetClosest = false;
 
+		[Desc("Maximum deviation from the impact orientation. Range [0, 512], 512 covers 360 degrees.")]
+		public readonly WAngle MaxAngle = new WAngle(512);
+
 		WeaponInfo weapon;
 
 		public void RulesetLoaded(Ruleset rules, WeaponInfo info)
 		{
+			if (MaxAngle.Angle > 512)
+				throw new YamlException("Max angle must be in range of [0, 512], 512 covers 360 degrees.");
+
 			if (!rules.Weapons.TryGetValue(Weapon.ToLowerInvariant(), out weapon))
 				throw new YamlException($"Weapons Ruleset does not contain an entry '{Weapon.ToLowerInvariant()}'");
 		}
@@ -88,25 +94,41 @@ namespace OpenRA.Mods.CA.Warheads
 						return false;
 
 					return true;
-				});
+				}).ToHashSet();
 
-			var availableTargetActors = world.FindActorsOnCircle(epicenter, weapon.Range)
+			var candidateActors = world.FindActorsOnCircle(epicenter, weapon.Range);
+			var coneDirection = WVec.Zero;
+			var coneCosine = 0;
+			var coneCosineSquared = 0L;
+			if (MaxAngle.Angle < 512)
+			{
+				var impactYaw = args.ImpactOrientation.Yaw;
+				coneDirection = new WVec(impactYaw.Sin(), -impactYaw.Cos(), 0);
+				coneCosine = MaxAngle.Cos();
+				coneCosineSquared = (long)coneCosine * coneCosine;
+
+				if (coneCosine > 512)
+				{
+					var searchRange = weapon.Range + world.ActorMap.LargestActorRadius;
+					var coneRadius = new WDist((int)((long)searchRange.Length * 1024 / (2 * coneCosine)) + 1);
+					var coneCenter = epicenter + coneDirection * coneRadius.Length / 1024;
+					candidateActors = world.FindActorsInCircle(coneCenter, coneRadius);
+				}
+			}
+
+			var availableTargetActors = candidateActors
 				.Where(x => (AllowDirectHit || !directActors.Contains(x))
 					&& weapon.IsValidAgainst(Target.FromActor(x), firedBy.World, firedBy)
-					&& AimTargetStances.HasRelationship(firedBy.Owner.RelationshipWith(x.Owner)))
-				.Where(x =>
-				{
-					var activeShapes = x.TraitsImplementing<HitShape>().Where(Exts.IsTraitEnabled);
-					if (!activeShapes.Any())
-						return false;
+					&& AimTargetStances.HasRelationship(firedBy.Owner.RelationshipWith(x.Owner)));
 
-					var distance = activeShapes.Min(t => t.DistanceFromEdge(x, epicenter));
+			if (MaxAngle.Angle < 512)
+				availableTargetActors = availableTargetActors.Where(x => IsWithinCone(x.CenterPosition - epicenter, coneDirection, coneCosine, coneCosineSquared));
 
-					if (distance < weapon.Range)
-						return true;
-
-					return false;
-				});
+			availableTargetActors = availableTargetActors.Where(x =>
+			{
+				var activeShapes = x.TraitsImplementing<HitShape>().Where(Exts.IsTraitEnabled);
+				return activeShapes.Any() && activeShapes.Min(t => t.DistanceFromEdge(x, epicenter)) < weapon.Range;
+			});
 
 			if (TargetClosest)
 				availableTargetActors = availableTargetActors.OrderBy(x => (x.CenterPosition - epicenter).Length);
@@ -130,9 +152,12 @@ namespace OpenRA.Mods.CA.Warheads
 
 				if (ThrowWithoutTarget && shrapnelTarget.Type == TargetType.Invalid)
 				{
-					var rotation = WRot.FromFacing(world.SharedRandom.Next(256));
+					var yaw = MaxAngle.Angle == 0
+						? args.ImpactOrientation.Yaw
+						: new WAngle(args.ImpactOrientation.Yaw.Angle - MaxAngle.Angle + world.SharedRandom.Next(MaxAngle.Angle * 2));
+					var rotation = WRot.FromYaw(yaw);
 					var range = world.SharedRandom.Next(weapon.MinRange.Length, weapon.Range.Length);
-					var targetpos = epicenter + new WVec(range, 0, 0).Rotate(rotation);
+					var targetpos = epicenter + new WVec(0, -range, 0).Rotate(rotation);
 					var tpos = Target.FromPos(new WPos(targetpos.X, targetpos.Y, map.CenterOfCell(map.CellContaining(targetpos)).Z));
 					if (weapon.IsValidAgainst(tpos, firedBy.World, firedBy))
 						shrapnelTarget = tpos;
@@ -187,6 +212,21 @@ namespace OpenRA.Mods.CA.Warheads
 				if (impactSound != null)
 					Game.Sound.Play(SoundType.World, impactSound, target.CenterPosition);
 			}
+		}
+
+		static bool IsWithinCone(WVec delta, WVec coneDirection, int coneCosine, long coneCosineSquared)
+		{
+			var distanceSquared = delta.HorizontalLengthSquared;
+			if (distanceSquared == 0)
+				return true;
+
+			var dot = (long)coneDirection.X * delta.X + (long)coneDirection.Y * delta.Y;
+			var dotSquared = dot * dot;
+			var threshold = distanceSquared * coneCosineSquared;
+
+			return coneCosine >= 0
+				? dot >= 0 && dotSquared >= threshold
+				: dot >= 0 || dotSquared <= threshold;
 		}
 	}
 }
