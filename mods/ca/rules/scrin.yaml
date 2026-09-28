@@ -899,7 +899,7 @@ EVIS:
 		BuildPaletteOrder: 121
 		Prerequisites: anyradar, ~infantry.scrin, ~evis.upgrade, ~techlevel.medium
 		IconPalette: chromes
-		Description: Durable, fast moving, short-range, anti-personnel infantry.
+		Description: Durable, fast moving, anti-personnel infantry with scattering projectiles.
 	Selectable:
 		DecorationBounds: 640, 896, -32, -256
 	Valued:
@@ -1119,6 +1119,10 @@ SMEDI:
 		VoiceSet: AssimilatorVoice
 	AutoGuard:
 		ValidTargets: Infantry
+		RequiresCondition: !auto-guard-delay
+	GrantTimedCondition@AutoGuardDelay:
+		Condition: auto-guard-delay
+		Duration: 25
 	KeepsDistance:
 	Encyclopedia:
 		HideBuildable: True
@@ -1204,6 +1208,10 @@ ARTI:
 		VoiceSet: AssimilatorVoice
 	AutoGuard:
 		ValidTargets: Vehicle
+		RequiresCondition: !auto-guard-delay
+	GrantTimedCondition@AutoGuardDelay:
+		Condition: auto-guard-delay
+		Duration: 25
 	KeepsDistance:
 	Encyclopedia:
 		HideBuildable: True
