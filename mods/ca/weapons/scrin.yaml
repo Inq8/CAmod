@@ -1776,13 +1776,10 @@ IonSurge:
 GatewaySpawner:
 	ReloadDelay: 999
 	Projectile: InstantExplode
-	Warhead@Spawn: SpawnActor
-		Actors: rebelgateway
+	Warhead@spawn: SpawnBuilding
+		Buildings: rebelgateway
 		Range: 3
-		ForceGround: false
-		ValidTargets: Ground, Water
-		ImpactActors: false
-		AvoidActors: true
+		ValidTargets: Ground, Water, Trees
 
 MothershipChargeBeam:
 	ReloadDelay: 3
