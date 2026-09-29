@@ -68,7 +68,7 @@ SovietAttackPaths = {
 
 Squads = {
 	ScrinMain = {
-		InitTimeAdjustment = -DateTime.Minutes(3),
+		InitTimeAdjustment = -DateTime.Minutes(5),
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Scrin),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40, RampDuration = DateTime.Minutes(15) }),
 		FollowLeader = true,
@@ -76,7 +76,7 @@ Squads = {
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(2)),
 	},
 	SovietMain = {
-		InitTimeAdjustment = -DateTime.Minutes(3),
+		InitTimeAdjustment = -DateTime.Minutes(5),
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Soviet),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40, RampDuration = DateTime.Minutes(15) }),
 		FollowLeader = true,
@@ -85,12 +85,12 @@ Squads = {
 	},
 	ScrinAir = {
 		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(12)),
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 6, Max = 6 }),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 6, Max = 8 }),
 		Compositions = AirCompositions.Scrin,
 	},
 	SovietAir = {
 		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(13)),
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 6, Max = 6 }),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 6, Max = 8 }),
 		Compositions = AirCompositions.Soviet,
 	},
 	ScrinFleetKillers = {
