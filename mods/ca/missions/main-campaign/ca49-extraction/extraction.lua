@@ -11,7 +11,8 @@ RebelStructures = {
     RebelStructures8,
     RebelStructures9,
     RebelStructures10,
-    RebelStructures11
+    RebelStructures11,
+	RebelStructures12
 }
 
 NodStrandedUnits = {
