@@ -101,6 +101,17 @@ DOMI:
 	DamageTypeDamageMultiplier@A2GPROTECTION:
 		Modifier: 75
 		RequiresCondition: !difficulty-easy
+	ExternalCondition@DomiReveal:
+		Condition: domi-reveal
+	RevealsShroud@DomiReveal:
+		Range: 5c0
+		ValidRelationships: Enemy
+		RequiresCondition: domi-reveal
+	-Targetable@REPAIR:
+	-GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
+	-ExternalCondition@INVULNERABILITY:
+	DummyConditionGranter@INVULNERABILITY:
+		Condition: invulnerability
 
 # Hunt() requires only 1 AttackBase
 DEVA:

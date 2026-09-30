@@ -282,13 +282,7 @@ InitUSSR = function(paths, cameras)
 
 	InitAttackSquad(Squads.Soviets, USSR)
 	InitAirAttackSquad(Squads.SovietAir, USSR)
-
-	local ussrGroundAttackers = USSR.GetGroundAttackers()
-
-	Utils.Do(ussrGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsUSSRGroundHunterUnit)
-	end)
+	SetupUnitDefenders(USSR)
 
 	Trigger.AfterDelay(DateTime.Seconds(1), function()
 		Utils.Do(USSRSavedAdvancedBuildings, function(b)
@@ -319,13 +313,7 @@ InitGreece = function(paths, cameras)
 
 	InitAttackSquad(Squads.Allies, Greece)
 	InitAirAttackSquad(Squads.AlliedAir, Greece)
-
-	local greeceGroundAttackers = Greece.GetGroundAttackers()
-
-	Utils.Do(greeceGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGreeceGroundHunterUnit)
-	end)
+	SetupUnitDefenders(Greece)
 
 	Trigger.AfterDelay(DateTime.Seconds(1), function()
 		Utils.Do(AlliedSavedAdvancedBuildings, function(b)
@@ -356,13 +344,7 @@ InitNod = function(paths, cameras)
 
 	InitAttackSquad(Squads.Nod, Nod)
 	InitAirAttackSquad(Squads.NodAir, Nod)
-
-	local nodGroundAttackers = Nod.GetGroundAttackers()
-
-	Utils.Do(nodGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsNodGroundHunterUnit)
-	end)
+	SetupUnitDefenders(Nod)
 
 	Trigger.AfterDelay(DateTime.Seconds(1), function()
 		Utils.Do(NodSavedAdvancedBuildings, function(b)

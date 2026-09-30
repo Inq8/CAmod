@@ -96,13 +96,7 @@ InitGDI = function()
 	SetupRefAndSilosCaptureCredits(GDI)
 	AutoReplaceHarvesters(GDI)
 	InitAttackSquad(Squads.Main, GDI)
-
-	local gdiGroundAttackers = GDI.GetGroundAttackers()
-
-	Utils.Do(gdiGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGDIGroundHunterUnit)
-	end)
+	SetupUnitDefenders(GDI)
 end
 
 InitReinforcements = function()

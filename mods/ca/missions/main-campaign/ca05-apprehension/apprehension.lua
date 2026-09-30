@@ -238,17 +238,11 @@ InitNod = function()
 	AutoRepairBuildings(Nod)
 	SetupRefAndSilosCaptureCredits(Nod)
 	AutoReplaceHarvesters(Nod)
+	SetupUnitDefenders(Nod)
 
 	if IsVeryHardOrAbove() then
 		InitAttackSquad(Squads.Main, Nod)
 	end
-
-	local nodGroundAttackers = Nod.GetGroundAttackers()
-
-	Utils.Do(nodGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsNodGroundHunterUnit)
-	end)
 end
 
 InitLongbows = function()

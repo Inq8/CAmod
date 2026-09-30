@@ -305,15 +305,9 @@ InitUSSR = function()
 	InitAirAttackSquad(Squads.AirAntiHeavy, USSR, MissionPlayers, { "Heavy" }, "ArmorType")
 	InitAirAttackSquad(Squads.AirAntiAir, USSR, MissionPlayers, { "Aircraft" }, "ArmorType")
 	InitAttackSquad(Squads.Kirovs, USSR)
+	SetupUnitDefenders(USSR)
 
 	Actor.Create("ai.unlimited.power", true, { Owner = USSR })
-
-	local ussrGroundAttackers = USSR.GetGroundAttackers()
-
-	Utils.Do(ussrGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsUSSRGroundHunterUnit)
-	end)
 
 	Utils.Do(InnerTeslas, function(a)
 		if not a.IsDead then

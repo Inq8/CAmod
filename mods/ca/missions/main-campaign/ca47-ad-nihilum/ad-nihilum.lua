@@ -242,6 +242,7 @@ InitMaleficScrin = function()
 	InitAttackSquad(Squads.Left, MaleficScrin)
 	InitAttackSquad(Squads.Right, MaleficScrin)
 	InitAirAttackSquad(Squads.Air, MaleficScrin)
+	SetupUnitDefenders(MaleficScrin)
 
 	if IsHardOrAbove() then
 		InitAirAttackSquad(Squads.AirToAir, MaleficScrin, MissionPlayers, { "Aircraft" }, "ArmorType")
@@ -255,12 +256,6 @@ InitMaleficScrin = function()
 	Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
 		Actor.Create("ai.superweapons.enabled", true, { Owner = MaleficScrin })
 		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = MaleficScrin })
-	end)
-
-	local maleficScrinGroundAttackers = MaleficScrin.GetGroundAttackers()
-	Utils.Do(maleficScrinGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
 	end)
 end
 

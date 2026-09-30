@@ -192,13 +192,7 @@ InitNod = function()
 		AutoReplaceHarvesters(p)
 		AutoRebuildConyards(p)
 		InitAiUpgrades(p)
-
-		local nodGroundAttackers = p.GetGroundAttackers()
-
-		Utils.Do(nodGroundAttackers, function(a)
-			TargetSwapChance(a, 10)
-			CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsNodGroundHunterUnit)
-		end)
+		SetupUnitDefenders(p)
 	end)
 
 	InitAttackSquad(Squads.Main2, Nod2)

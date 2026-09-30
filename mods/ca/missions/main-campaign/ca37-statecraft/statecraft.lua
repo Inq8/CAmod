@@ -314,13 +314,7 @@ InitGenerals = function()
 		AutoReplaceHarvesters(g)
 		AutoRebuildConyards(g)
 		InitAiUpgrades(g)
-
-		local groundAttackers = g.GetGroundAttackers()
-
-		Utils.Do(groundAttackers, function(a)
-			TargetSwapChance(a, 10)
-			CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsUSSRGroundHunterUnit)
-		end)
+		SetupUnitDefenders(g)
 	end)
 
 	InitAttackSquad(Squads.MarineskoMain, Marinesko)

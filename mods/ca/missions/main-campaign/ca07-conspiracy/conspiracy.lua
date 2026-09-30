@@ -401,12 +401,7 @@ end
 
 InitGDI = function()
 	AutoRepairAndRebuildBuildings(GDI, 15)
-	local gdiGroundAttackers = GDI.GetGroundAttackers()
-
-	Utils.Do(gdiGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGDIGroundHunterUnit)
-	end)
+	SetupUnitDefenders(GDI)
 end
 
 InitGreece = function()
@@ -419,13 +414,7 @@ InitGreece = function()
 	AutoReplaceHarvesters(Greece)
 	AutoRebuildConyards(Greece)
 	InitAiUpgrades(Greece)
-
-	local greeceGroundAttackers = Greece.GetGroundAttackers()
-
-	Utils.Do(greeceGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGreeceGroundHunterUnit)
-	end)
+	SetupUnitDefenders(Greece)
 end
 
 InitAlliedAttacks = function()

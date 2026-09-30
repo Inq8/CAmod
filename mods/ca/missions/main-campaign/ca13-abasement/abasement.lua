@@ -190,17 +190,11 @@ InitScrin = function()
 	InitAttackSquad(Squads.ScrinMain, Scrin)
 	InitAttackSquad(Squads.ScrinWater, Scrin)
 	InitAirAttackSquad(Squads.ScrinAir, Scrin)
+	SetupUnitDefenders(Scrin)
 
 	if IsHardOrAbove() then
 		InitAirAttackSquad(Squads.ScrinAirToAir, Scrin, MissionPlayers, { "Aircraft" }, "ArmorType")
 	end
-
-	local scrinGroundAttackers = Scrin.GetGroundAttackers()
-
-	Utils.Do(scrinGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
-	end)
 end
 
 InitNod = function()

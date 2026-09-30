@@ -249,19 +249,10 @@ InitGreece = function()
 	end
 
 	Utils.Do({ Greece, GreeceNorth }, function(p)
-		local greeceGroundAttackers = p.GetGroundAttackers()
-
-		Utils.Do(greeceGroundAttackers, function(a)
-			TargetSwapChance(a, 10)
-			CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGreeceGroundHunterUnit)
-		end)
+		SetupUnitDefenders(p)
 	end)
 
-	local gdiGroundAttackers = GDI.GetGroundAttackers()
-	Utils.Do(gdiGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGDIGroundHunterUnit)
-	end)
+	SetupUnitDefenders(GDI)
 
 	Trigger.OnProduction(AlliedNavalYard, function(producer, produced)
 		if produced.Type == "ca" and not produced.IsDead then

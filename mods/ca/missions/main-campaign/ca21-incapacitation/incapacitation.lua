@@ -285,19 +285,13 @@ InitGreece = function()
 	SetupRefAndSilosCaptureCredits(Greece)
 	AutoReplaceHarvesters(Greece)
 	InitAiUpgrades(Greece)
+	SetupUnitDefenders(Greece)
 
 	if IsVeryHardOrAbove() then
 		InitAttackSquad(Squads.Allied, Greece)
 	end
 
 	Actor.Create("ai.unlimited.power", true, { Owner = Greece })
-
-	local alliedGroundAttackers = Greece.GetGroundAttackers()
-
-	Utils.Do(alliedGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGreeceGroundHunterUnit)
-	end)
 end
 
 InitGDI = function()
@@ -307,19 +301,13 @@ InitGDI = function()
 	SetupRefAndSilosCaptureCredits(GDI)
 	AutoReplaceHarvesters(GDI)
 	InitAiUpgrades(GDI)
+	SetupUnitDefenders(GDI)
 
 	if IsVeryHardOrAbove() then
 		InitAttackSquad(Squads.GDI, GDI)
 	end
 
 	Actor.Create("ai.unlimited.power", true, { Owner = GDI })
-
-	local gdiGroundAttackers = GDI.GetGroundAttackers()
-
-	Utils.Do(gdiGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGDIGroundHunterUnit)
-	end)
 
 	local titanTriggerFootprint = { TitanTrigger1.Location, TitanTrigger2.Location, TitanTrigger3.Location, TitanTrigger4.Location, TitanTrigger5.Location }
 	Trigger.OnEnteredFootprint(titanTriggerFootprint, function(a, id)

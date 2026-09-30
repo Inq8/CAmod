@@ -112,15 +112,6 @@ WorldLoaded = function()
 	ObjectiveDestroyWormholes = GDI.AddObjective("Destroy all Scrin wormholes.")
 	ObjectiveDefendHQ = GDI.AddObjective("Protect the Command Center.")
 
-	Utils.Do({ Nod, USSR, Greece }, function(p)
-		local groundAttackers = p.GetGroundAttackers()
-
-		Utils.Do(groundAttackers, function(a)
-			TargetSwapChance(a, 10)
-			CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGroundHunterUnit)
-		end)
-	end)
-
 	Trigger.OnKilled(HQ, function()
 		GDI.MarkFailedObjective(ObjectiveDefendHQ)
 	end)
@@ -194,38 +185,15 @@ InitScrin = function()
 	InitAiUpgrades(Scrin)
 	InitAttackSquad(Squads.ScrinMain, Scrin)
 	InitAttackSquad(Squads.ScrinAir, Scrin)
+	SetupUnitDefenders(Scrin, WDist.New(8192))
 
 	Actor.Create("ai.unlimited.power", true, { Owner = Scrin })
-
-	local scrinGroundAttackers = Scrin.GetGroundAttackers()
-
-	Utils.Do(scrinGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(8192), IsScrinGroundHunterUnit)
-	end)
 end
 
 InitFriendlies = function()
-	local nodGroundAttackers = Nod.GetGroundAttackers()
-
-	Utils.Do(nodGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsNodGroundHunterUnit)
-	end)
-
-	local ussrGroundAttackers = USSR.GetGroundAttackers()
-
-	Utils.Do(ussrGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsUSSRGroundHunterUnit)
-	end)
-
-	local greeceGroundAttackers = Greece.GetGroundAttackers()
-
-	Utils.Do(greeceGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGreeceGroundHunterUnit)
-	end)
+	SetupUnitDefenders(Nod, nil, nil, function(p) return p == Scrin end)
+	SetupUnitDefenders(USSR, nil, nil, function(p) return p == Scrin end)
+	SetupUnitDefenders(Greece, nil, nil, function(p) return p == Scrin end)
 end
 
 SetupLightning = function()

@@ -213,16 +213,11 @@ InitUSSR = function()
 	InitAiUpgrades(USSR)
 	InitAttackSquad(Squads.Main, USSR)
 	InitAirAttackSquad(Squads.Air, USSR)
+	SetupUnitDefenders(USSR)
 
 	Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
 		Actor.Create("ai.superweapons.enabled", true, { Owner = USSR })
 		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = USSR })
-	end)
-
-	local ussrGroundAttackers = USSR.GetGroundAttackers()
-	Utils.Do(ussrGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsUSSRGroundHunterUnit)
 	end)
 
 	local grads = USSR.GetActorsByType("grad.defender")

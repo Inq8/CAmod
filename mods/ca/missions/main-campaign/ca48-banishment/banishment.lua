@@ -222,12 +222,7 @@ InitMaleficScrin = function()
 	SetupRefAndSilosCaptureCredits(MaleficScrin)
 	AutoReplaceHarvesters(MaleficScrin)
 	AutoRebuildConyards(MaleficScrin)
-
-	local maleficScrinGroundAttackers = Utils.Where(MaleficScrin.GetGroundAttackers(), function (a) return a.Type ~= "veng" end)
-	Utils.Do(maleficScrinGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
-	end)
+	SetupUnitDefenders(MaleficScrin, nil, IsScrinGroundHunterUnitExcludingVoidEngines)
 
 	Utils.Do({ VoidEngine1, VoidEngine2 }, function(v)
 		if not v.IsDead then
@@ -477,6 +472,10 @@ SecureMcv = function()
 			McvFlare.Destroy()
 		end
 	end
+end
+
+IsScrinGroundHunterUnitExcludingVoidEngines = function(actor)
+	return IsScrinGroundHunterUnit(actor) and actor.Type ~= "veng"
 end
 
 -- overridden in co-op version

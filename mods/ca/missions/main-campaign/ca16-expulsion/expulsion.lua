@@ -163,13 +163,7 @@ InitGDI = function()
 	InitAttackSquad(Squads.GDISouth, GDI)
 	InitAttackSquad(Squads.GDINorthEast, GDI)
 	InitAirAttackSquad(Squads.GDIAir, GDI)
-
-	local gdiGroundAttackers = GDI.GetGroundAttackers()
-
-	Utils.Do(gdiGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGDIGroundHunterUnit)
-	end)
+	SetupUnitDefenders(GDI)
 
 	if Difficulty ~= "easy" then
 		Trigger.AfterDelay(EmpMissileEnabledTime[Difficulty], function()

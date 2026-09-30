@@ -262,10 +262,38 @@ tflx.upgrade:
 
 # AI Powers
 
+^IchorSpikePower:
+	DetonateWeaponPower@IchorSpike:
+		Prerequisites: ~disabled
+
 ^StormSpikePower:
 	DetonateWeaponPower@STORMSPIKE:
 		Prerequisites: botplayer, player.scrin
 		ChargeInterval: 8250
+
+SCRT:
+	-MeteorPower@OverlordsWrath:
+
+^OverlordsWrathPower:
+	MeteorPower@OverlordsWrath:
+		ChargeInterval: 1
+		OneShot: true
+		AllowMultiple: true
+		PauseOnCondition: disabled
+	DummyConditionGranter@OverlordsWrath:
+		Condition: disabled
+
+owrath.provider:
+	Inherits@DUMMY: ^InvisibleDummy
+	Inherits@OverlordsWrathPower: ^OverlordsWrathPower
+
+Player:
+	SupportPowerBotModule:
+		Decisions:
+			owrath:
+				MinimumAttractiveness: 2000
+				Consideration@1:
+					Types: Structure, Vehicle, Infantry
 
 # Difficulty modifiers
 

@@ -62,7 +62,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			var numEnemiesNearby = actorsInRange.Count();
 
-			if (numEnemiesNearby >= info.EnemyCount)
+			if (numEnemiesNearby >= info.EnemyCount && token == Actor.InvalidConditionToken)
 				token = self.GrantCondition(info.Condition);
 			else if (token != Actor.InvalidConditionToken)
 				token = self.RevokeCondition(token);

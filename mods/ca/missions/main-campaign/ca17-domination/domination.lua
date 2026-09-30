@@ -279,15 +279,9 @@ InitNod = function()
 	AutoReplaceHarvesters(Nod)
 	InitAiUpgrades(Nod)
 	InitAttackSquad(Squads.Main, Nod)
+	SetupUnitDefenders(Nod)
 
 	Actor.Create("ai.unlimited.power", true, { Owner = Nod })
-
-	local nodGroundAttackers = Nod.GetGroundAttackers()
-
-	Utils.Do(nodGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsNodGroundHunterUnit)
-	end)
 
 	Trigger.AfterDelay(1, function()
 		Utils.Do(Patrols, function(p)

@@ -351,13 +351,9 @@ InitGDI = function()
 	SetupRefAndSilosCaptureCredits(GDI)
 	AutoReplaceHarvesters(GDI)
 	AutoRebuildConyards(GDI)
-
-	local GDIGroundAttackers = GDI.GetGroundAttackers()
-	Utils.Do(GDIGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), function(a)
-			return IsGDIGroundHunterUnit(a) and a.Type ~= "zrai" -- exclude zone raiders so they aren't interrupted before the jump
-		end)
+	SetupUnitDefenders(GDI, nil, function(a)
+		 -- exclude zone raiders so they aren't interrupted before the jump
+		return IsGDIGroundHunterUnit(a) and a.Type ~= "zrai"
 	end)
 
 	if IsHardOrAbove() then

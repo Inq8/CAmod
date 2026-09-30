@@ -99,6 +99,8 @@ DOG:
 	AutoGuard:
 		ValidOrders: KeepDistance
 		ValidTargets: Infantry, Vehicle
+	ReplacedInQueue:
+		Actors: tdog
 	Encyclopedia:
 		Category: Soviets/Infantry
 
@@ -1010,6 +1012,10 @@ MEDI:
 		Prerequisites: barracks.upgraded
 	AutoGuard:
 		ValidTargets: Infantry
+		RequiresCondition: !auto-guard-delay
+	GrantTimedCondition@AutoGuardDelay:
+		Condition: auto-guard-delay
+		Duration: 25
 	KeepsDistance:
 	Encyclopedia:
 		Category: Allies/Infantry; GDI/Infantry
@@ -1099,6 +1105,10 @@ MECH:
 		Prerequisites: barracks.upgraded
 	AutoGuard:
 		ValidTargets: Vehicle
+		RequiresCondition: !auto-guard-delay
+	GrantTimedCondition@AutoGuardDelay:
+		Condition: auto-guard-delay
+		Duration: 25
 	Convertible:
 		SpawnActors: CMEC
 	ReplacedInQueue:
@@ -1192,6 +1202,10 @@ CMEC:
 		Prerequisites: barracks.upgraded
 	AutoGuard:
 		ValidTargets: Vehicle
+		RequiresCondition: !auto-guard-delay
+	GrantTimedCondition@AutoGuardDelay:
+		Condition: auto-guard-delay
+		Duration: 25
 	-TakeCover:
 	KeepsDistance:
 	Encyclopedia:

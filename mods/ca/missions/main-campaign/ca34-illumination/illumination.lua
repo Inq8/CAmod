@@ -331,7 +331,7 @@ SpawnScrinSquad = function(cave, continuous)
 		a.Wait(Utils.RandomInteger(1, 75))
 		a.Scatter()
 		TargetSwapChance(a, 10)
-		ca34_CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
+		IlluminationCallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
 		Trigger.OnIdle(a, function(self)
 			a.Patrol(cave.PatrolPath)
 			local selfId = tostring(self);
@@ -355,7 +355,7 @@ SpawnScrinSquad = function(cave, continuous)
 	end)
 end
 
-ca34_CallForHelpOnDamagedOrKilled = function(actor, range, filter, validAttackingPlayerFunc)
+IlluminationCallForHelpOnDamagedOrKilled = function(actor, range, filter, validAttackingPlayerFunc)
 	if validAttackingPlayerFunc == nil then
 		validAttackingPlayerFunc = function(p) return IsMissionPlayer(p) end
 	end
@@ -485,10 +485,5 @@ GetSquadComposition = function()
 end
 
 InitScrin = function()
-	local scrinGroundAttackers = Scrin.GetGroundAttackers()
-
-	Utils.Do(scrinGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
-	end)
+	SetupUnitDefenders(Scrin)
 end

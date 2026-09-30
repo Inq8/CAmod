@@ -266,23 +266,12 @@ InitGreece = function()
 	AutoReplaceHarvesters(Greece)
 	AutoRebuildConyards(Greece)
 	InitAiUpgrades(Greece)
+	SetupUnitDefenders(Greece)
+
 	InitAiUpgrades(Traitor)
+	SetupUnitDefenders(Traitor, nil, IsGroundHunterUnit)
 
 	Actor.Create("ai.unlimited.power", true, { Owner = Traitor })
-
-	local alliedGroundAttackers = Greece.GetGroundAttackers()
-
-	Utils.Do(alliedGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGreeceGroundHunterUnit)
-	end)
-
-	local traitorGroundAttackers = Traitor.GetGroundAttackers()
-
-	Utils.Do(traitorGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGroundHunterUnit)
-	end)
 end
 
 TraitorTechCenterDiscovered = function()

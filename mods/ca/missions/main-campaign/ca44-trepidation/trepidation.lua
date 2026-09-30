@@ -173,14 +173,9 @@ InitUSSR = function()
 	SetupRefAndSilosCaptureCredits(USSR)
 	AutoReplaceHarvesters(USSR)
 	AutoRebuildConyards(USSR)
+	SetupUnitDefenders(USSR)
 
 	Actor.Create("hazmatsoviet.upgrade", true, { Owner = USSR })
-
-	local ussrGroundAttackers = USSR.GetGroundAttackers()
-	Utils.Do(ussrGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsUSSRGroundHunterUnit)
-	end)
 
 	if IsHardOrAbove() then
 		local ussrStructures = USSR.GetActorsByTypes({ "tpwr", "mslo", "stek", "weap", "barr", "iron", "afld", "proc", "dome" })
@@ -206,12 +201,7 @@ InitScrin = function()
 	SetupRefAndSilosCaptureCredits(Scrin)
 	AutoReplaceHarvesters(Scrin)
 	AutoRebuildConyards(Scrin)
-
-	local scrinGroundAttackers = Scrin.GetGroundAttackers()
-	Utils.Do(scrinGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
-	end)
+	SetupUnitDefenders(Scrin)
 end
 
 InitScrinAttacks = function()

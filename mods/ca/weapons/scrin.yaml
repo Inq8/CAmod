@@ -1317,17 +1317,12 @@ EvisceratorShards:
 	Range: 4c0
 	ReloadDelay: 30
 	BurstDelays: 4
-	Projectile: MissileCA
-		Speed: 350
-	Warhead@1Dam: SpreadDamage
-		Damage: 2200
-
-EvisceratorShardsCharged:
-	Inherits: EvisceratorShards
-	ReloadDelay: 26
 	StartBurstReport: shard-fire1.aud
 	Projectile: MissileCA
+		Speed: 350
 		ContrailStartColorAlpha: 128
+	Warhead@1Dam: SpreadDamage
+		Damage: 2200
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: firebl3.aud
 		Explosions: idle
@@ -1339,6 +1334,7 @@ EvisceratorShardsCharged:
 		AimChance: 100
 		ThrowWithoutTarget: true
 		AimTargetStances: Enemy, Neutral
+		MaxAngle: 60
 
 EvisceratorArcShard:
 	Inherits: EvisceratorShards
@@ -1352,8 +1348,17 @@ EvisceratorArcShard:
 		VerticalRateOfTurn: 40
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
-		Damage: 1400
+		Damage: 2000
 		ValidRelationships: Enemy, Neutral
+	Warhead@3Eff: CreateEffect
+		ImpactSoundChance: 50
+	Warhead@Arc: FireShrapnel
+		Weapon: EvisceratorArcShard2
+		MaxAngle: 30
+
+EvisceratorArcShard2:
+	Inherits: EvisceratorArcShard
+	-Warhead@Arc:
 
 StalkerShards:
 	Inherits: RavagerShards
@@ -1771,13 +1776,10 @@ IonSurge:
 GatewaySpawner:
 	ReloadDelay: 999
 	Projectile: InstantExplode
-	Warhead@Spawn: SpawnActor
-		Actors: rebelgateway
+	Warhead@spawn: SpawnBuilding
+		Buildings: rebelgateway
 		Range: 3
-		ForceGround: false
-		ValidTargets: Ground, Water
-		ImpactActors: false
-		AvoidActors: true
+		ValidTargets: Ground, Water, Trees
 
 MothershipChargeBeam:
 	ReloadDelay: 3

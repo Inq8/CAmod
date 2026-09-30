@@ -221,7 +221,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				&& (!client.IsAdmin || orderManager.LobbyInfo.GlobalSettings.Dedicated)
 				&& (!isVoteKick() || UnitOrders.KickVoteTarget == null || UnitOrders.KickVoteTarget == client.Index);
 
-			var revealedPlayersManager = player?.PlayerActor.TraitOrDefault<RevealedPlayersManager>();
+			var revealedPlayersManager = player?.PlayerActor.TraitOrDefault<RevealedFactionsManager>();
 
 			foreach (var t in teams)
 			{

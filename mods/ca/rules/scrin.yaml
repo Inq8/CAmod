@@ -893,14 +893,13 @@ EVIS:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
-	Inherits@RESCONV: ^ResourceConversion
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 121
 		Prerequisites: anyradar, ~infantry.scrin, ~evis.upgrade, ~techlevel.medium
 		IconPalette: chromes
-		Description: Durable, fast moving, short-range, anti-personnel infantry.
+		Description: Durable, fast moving, anti-personnel infantry with scattering projectiles.
 	Selectable:
 		DecorationBounds: 640, 896, -32, -256
 	Valued:
@@ -910,7 +909,6 @@ EVIS:
 	TooltipExtras:
 		Strengths: • Strong vs Light Armor, Infantry
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
-		Attributes: • Charges a more powerful attack while on resources (with upgrade)
 	Health:
 		HP: 16000
 	UpdatesPlayerStatistics:
@@ -922,43 +920,12 @@ EVIS:
 	AttackFrontal:
 		FacingTolerance: 64
 		PauseOnCondition: being-warped || blinded || reapersnare
-		Armaments: primary, primary-charged
 	Armament@PRIMARY:
 		Weapon: EvisceratorShards
-		LocalOffset: 0,-100,250, 0,100,250
-		PauseOnCondition: (ammo || charged-fire) && !uncharged-fire
-	Armament@PRIMARYCHARGED:
-		Name: primary-charged
-		Weapon: EvisceratorShardsCharged
-		PauseOnCondition: !ammo || uncharged-fire
 		LocalOffset: 0,-100,250, 0,100,250
 	Armament@BATF:
 		Name: batf
 		Weapon: EvisceratorShards
-	AmmoPool@RESCONV:
-		Ammo: 20
-	ReloadAmmoPool@RESCONV:
-		Count: 5
-	WithAmmoPipsDecoration@RESCONV:
-		PipCount: 4
-	GrantCondition@RESCONVCHARGE:
-		RequiresCondition: resconv-upgrade && on-resource && (ammo < 20 || charged-fire)
-	GrantConditionOnAttack@PRIMARY:
-		RevokeDelay: 28
-	GrantConditionOnAttack@PRIMARYCHARGED:
-		RevokeDelay: 28
-	WithIdleOverlay@RESCONVTIB:
-		Offset: 0,0,150
-		Sequence: greensm
-	WithIdleOverlay@RESCONVORE:
-		Offset: 0,0,150
-		Sequence: yellowsm
-	WithIdleOverlay@RESCONVBLUETIB:
-		Offset: 0,0,150
-		Sequence: bluesm
-	WithIdleOverlay@RESCONVGEMS:
-		Offset: 0,0,150
-		Sequence: redsm
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 	EncyclopediaExtras:
@@ -1152,6 +1119,10 @@ SMEDI:
 		VoiceSet: AssimilatorVoice
 	AutoGuard:
 		ValidTargets: Infantry
+		RequiresCondition: !auto-guard-delay
+	GrantTimedCondition@AutoGuardDelay:
+		Condition: auto-guard-delay
+		Duration: 25
 	KeepsDistance:
 	Encyclopedia:
 		HideBuildable: True
@@ -1237,6 +1208,10 @@ ARTI:
 		VoiceSet: AssimilatorVoice
 	AutoGuard:
 		ValidTargets: Vehicle
+		RequiresCondition: !auto-guard-delay
+	GrantTimedCondition@AutoGuardDelay:
+		Condition: auto-guard-delay
+		Duration: 25
 	KeepsDistance:
 	Encyclopedia:
 		HideBuildable: True
@@ -4792,6 +4767,8 @@ REA2:
 	WithBuildingBib:
 	Power:
 		Amount: 200
+	Power@DiscPowerDrain:
+		Amount: -400
 	ProvidesPrerequisite@buildingname:
 	ScalePowerWithHealth:
 	Sellable:
@@ -6685,6 +6662,7 @@ WORMHOLE:
 	TeleportNetwork:
 		Type: Wormhole
 		Delay: 0
+	WithTeleportNetworkLinkVisualization:
 	RallyPoint:
 		Path: 1,1
 	Exit:
@@ -6730,6 +6708,13 @@ REBELGATEWAY:
 	ToggleConditionOnOrder:
 		Condition: powerdown
 		OrderName: PowerDown
+	-HiddenUnderFog:
+	-Immobile:
+	Building:
+		Dimensions: 1,1
+		Footprint: x
+		TerrainTypes: Clear,Road
+	FrozenUnderFog:
 
 # infiltrator stolen tech
 

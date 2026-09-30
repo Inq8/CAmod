@@ -174,13 +174,7 @@ InitGDI = function()
 	AutoReplaceHarvesters(GDI)
 	AutoRebuildConyards(GDI)
 	InitAiUpgrades(GDI)
-
-	local gdiGroundAttackers = GDI.GetGroundAttackers()
-
-	Utils.Do(gdiGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGDIGroundHunterUnit)
-	end)
+	SetupUnitDefenders(GDI)
 
 	Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
 		Actor.Create("ai.superweapons.enabled", true, { Owner = GDI })

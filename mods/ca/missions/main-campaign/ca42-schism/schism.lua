@@ -324,18 +324,12 @@ InitScrinRebels = function()
 	InitAiUpgrades(ScrinRebels)
 	InitAttackSquad(Squads.ScrinRebels, ScrinRebels)
 	InitAirAttackSquad(Squads.ScrinRebelsAir, ScrinRebels)
+	SetupUnitDefenders(ScrinRebels)
 
 	if IsHardOrAbove() then
 		InitAirAttackSquad(Squads.Enervators, ScrinRebels, MissionPlayers, { "etpd" })
 		InitAirAttackSquad(Squads.ScrinRebelsAirToAir, Scrin, MissionPlayers, { "Aircraft" }, "ArmorType")
 	end
-
-	local scrinRebelsGroundAttackers = ScrinRebels.GetGroundAttackers()
-
-	Utils.Do(scrinRebelsGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
-	end)
 end
 
 InitNod = function()
@@ -346,17 +340,11 @@ InitNod = function()
 	InitAiUpgrades(Nod)
 	InitAttackSquad(Squads.Nod, Nod)
 	InitAirAttackSquad(Squads.NodAir, Nod)
+	SetupUnitDefenders(Nod)
 
 	if IsNormalOrAbove() then
 		InitAirAttackSquad(Squads.Banshees, Nod, MissionPlayers, { "etpd" })
 	end
-
-	local nodGroundAttackers = Nod.GetGroundAttackers()
-
-	Utils.Do(nodGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsNodGroundHunterUnit)
-	end)
 end
 
 PurificationWave = function()

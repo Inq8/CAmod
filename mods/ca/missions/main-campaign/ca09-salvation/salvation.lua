@@ -201,13 +201,7 @@ end
 InitScrin = function()
 	AutoRepairAndRebuildBuildings(Scrin, 15)
 	SetupRefAndSilosCaptureCredits(Scrin)
-
-	local scrinGroundAttackers = Scrin.GetGroundAttackers()
-
-	Utils.Do(scrinGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
-	end)
+	SetupUnitDefenders(Scrin)
 end
 
 SpawnWormhole = function()

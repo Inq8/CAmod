@@ -168,6 +168,7 @@ InitNod = function()
 	InitAiUpgrades(Nod)
 	InitNavalAttackSquad(Squads.Naval, Nod)
 	InitAirAttackSquad(Squads.Air, Nod)
+	SetupUnitDefenders(Nod)
 
 	if IsHardOrAbove() then
 		InitAirAttackSquad(Squads.AntiCruiserAir, Nod, MissionPlayers, { "ca" })
@@ -186,12 +187,6 @@ InitNod = function()
 	Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
 		Actor.Create("ai.superweapons.enabled", true, { Owner = Nod })
 		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = Nod })
-	end)
-
-	local NodGroundAttackers = Nod.GetGroundAttackers()
-	Utils.Do(NodGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsNodGroundHunterUnit)
 	end)
 end
 

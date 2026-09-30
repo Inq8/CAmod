@@ -132,13 +132,7 @@ InitGreece = function()
 	SetupRefAndSilosCaptureCredits(Greece)
 	AutoReplaceHarvesters(Greece)
 	InitAttackSquad(Squads.Main, Greece)
-
-	local greeceGroundAttackers = Greece.GetGroundAttackers()
-
-	Utils.Do(greeceGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGreeceGroundHunterUnit)
-	end)
+	SetupUnitDefenders(Greece)
 end
 
 -- overridden in co-op version

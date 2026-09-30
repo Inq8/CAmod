@@ -210,15 +210,9 @@ InitScrin = function()
 	AutoRepairBuildings(Scrin)
 	InitAttackSquad(Squads.ScrinMain, Scrin)
 	InitAttackSquad(Squads.ScrinWater, Scrin)
+	SetupUnitDefenders(Scrin)
 
 	Actor.Create("ioncon.upgrade", true, { Owner = Scrin })
-
-	local scrinGroundAttackers = Scrin.GetGroundAttackers()
-
-	Utils.Do(scrinGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
-	end)
 end
 
 SetupLightning = function()

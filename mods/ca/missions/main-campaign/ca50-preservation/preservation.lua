@@ -64,7 +64,13 @@ MaleficFleetSpawnDelay = {
 	brutal = DateTime.Minutes(10)
 }
 
-MaleficFleetSpawnInterval = DateTime.Minutes(4)
+MaleficFleetSpawnInterval = {
+	easy = DateTime.Minutes(5),
+	normal = DateTime.Minutes(5),
+	hard = DateTime.Minutes(4),
+	vhard = DateTime.Minutes(4),
+	brutal = DateTime.Minutes(3),
+}
 
 MaleficFleetCompositions = {
 	easy = { "pac", "deva" },
@@ -74,39 +80,61 @@ MaleficFleetCompositions = {
 	brutal = { "pac", "deva", "pac", "deva", "pac" },
 }
 
+if IsHardOrAbove() then
+	table.insert(UnitCompositions.Scrin, {
+		Infantry = { "s3", "s4", "evis", "evis", "evis", "evis", "s1", "s1", "s4", "s1", "s4", "s1", "s4", "s1", "mast" },
+		Vehicles = { "shrw", TripodVariant, TripodVariant, "shrw", CorrupterOrDevourer, "oblt", "shrw" },
+		Aircraft = { PacOrDevastator, "pac" },
+		MinTime = DateTime.Minutes(22)
+	})
+
+	if IsVeryHardOrAbove() then
+		table.insert(UnitCompositions.Scrin, {
+			Infantry = { "evis", "evis", "evis", "evis", "evis", "evis", "evis", "evis", "evis", "evis", "evis", "evis", "evis", "evis", "evis", "evis", "evis" },
+			Vehicles = { "shrw", "shrw", "ruin", "ruin", "ruin", "ruin", "rtpd", "rtpd" },
+			Aircraft = { "deva" },
+			MinTime = DateTime.Minutes(18),
+			RequiredTargetCharacteristics = { "MassInfantry" }
+		})
+	end
+end
+
 NextMaleficFleetSpawnIndex = 1
 
 Squads = {
 	ScrinMain = {
+		InitTimeAdjustment = -DateTime.Minutes(4),
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Scrin),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40, RampDuration = DateTime.Minutes(15) }),
 		FollowLeader = true,
 		AttackPaths = ScrinAttackPaths,
-		Delay = AdjustDelayForDifficulty(DateTime.Minutes(2)),
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(1)),
 	},
 	SovietMain = {
+		InitTimeAdjustment = -DateTime.Minutes(4),
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Soviet),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40, RampDuration = DateTime.Minutes(15) }),
 		FollowLeader = true,
 		AttackPaths = SovietAttackPaths,
-		Delay = AdjustDelayForDifficulty(DateTime.Minutes(3)),
+		Delay = AdjustDelayForDifficulty(DateTime.Minutes(2)),
 	},
 	ScrinAir = {
 		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(13)),
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 6, Max = 12 }),
 		Compositions = AirCompositions.Scrin,
 	},
 	SovietAir = {
 		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(13)),
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 6, Max = 12 }),
 		Compositions = AirCompositions.Soviet,
 	},
+	ScrinAirToAir = AirToAirSquad({ "stmr", "enrv", "torm" }, AdjustAirDelayForDifficulty(DateTime.Minutes(10))),
 	AirFleetKillers = {
 		ActiveCondition = function(squad)
 			local scrinFleet = GetMissionPlayersActorsByTypes({ "pac", "deva" })
 			return #scrinFleet > AirFleetKillersThreshold[Difficulty]
 		end,
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 50, Max = 50 }),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 30, Max = 30 }),
 		Compositions = function(squad)
 			local enervators = { "enrv" }
 			local numFleetShips = #GetMissionPlayersActorsByTypes({ "pac", "deva" })
@@ -130,6 +158,14 @@ Squads = {
 			end
 			return { { Aircraft = sukhois } }
 		end
+	},
+	SovietCommandoKillers = {
+		ActiveCondition = function(squad)
+			local commandos = GetMissionPlayersActorsByTypes({ "mast", "rmbo" })
+			return #commandos > 0
+		end,
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 10, Max = 20 }),
+		Compositions = { { Aircraft = { "yak", "yak" } } }
 	}
 }
 
@@ -167,6 +203,10 @@ WorldLoaded = function()
         end
     end)
 
+	WestTemple.GrantCondition("is-objective")
+	MiddleTemple.GrantCondition("is-objective")
+	EastTemple.GrantCondition("is-objective")
+
     local initialAttackWaves = Utils.Shuffle({ SovietInitialAttack1, SovietInitialAttack2, SovietInitialAttack3, ScrinInitialAttack1, ScrinInitialAttack2, ScrinInitialAttack3 })
     local initialAttackDelay = 0
 
@@ -182,9 +222,7 @@ WorldLoaded = function()
         initialAttackDelay = initialAttackDelay + DateTime.Seconds(20)
     end)
 
-    Trigger.AfterDelay(DateTime.Seconds(5), function()
-        Tip("Use the Charge Gateway power to use resources to charge the three gateways.")
-    end)
+	ShowGatewayChargeTip()
 
 	Trigger.AfterDelay(MaleficFleetSpawnDelay[Difficulty], function()
 		Notification("Warning, Malefic fleet detected, approaching from the south.")
@@ -193,6 +231,11 @@ WorldLoaded = function()
 			SpawnNextMaleficFleetWave()
 		end)
 	end)
+
+	WestToMiddleWormhole.RallyPoint = CPos.New(WestToMiddleWormhole.Location.X - 3, WestToMiddleWormhole.Location.Y - 1)
+	MiddleToWestWormhole.RallyPoint = CPos.New(MiddleToWestWormhole.Location.X + 2, MiddleToWestWormhole.Location.Y - 2)
+	MiddleToEastWormhole.RallyPoint = CPos.New(MiddleToEastWormhole.Location.X - 3, MiddleToEastWormhole.Location.Y + 2)
+	EastToMiddleWormhole.RallyPoint = CPos.New(EastToMiddleWormhole.Location.X, EastToMiddleWormhole.Location.Y + 3)
 
     AfterWorldLoaded()
 end
@@ -240,12 +283,7 @@ InitScrin = function()
 	SetupRefAndSilosCaptureCredits(Scrin)
 	AutoReplaceHarvesters(Scrin)
 	AutoRebuildConyards(Scrin)
-
-	local scrinGroundAttackers = Scrin.GetGroundAttackers()
-	Utils.Do(scrinGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
-	end)
+	SetupUnitDefenders(Scrin)
 
     InitScrinAttacks()
 end
@@ -262,6 +300,7 @@ InitScrinAttacks = function()
 
 	if IsHardOrAbove() then
 		InitAirAttackSquad(Squads.AirFleetKillers, Scrin, MissionPlayers, { "pac", "deva" })
+		InitAirAttackSquad(Squads.ScrinAirToAir, Scrin, MissionPlayers, { "Aircraft" }, "ArmorType")
 	end
 end
 
@@ -270,12 +309,7 @@ InitUSSR = function()
 	SetupRefAndSilosCaptureCredits(USSR)
 	AutoReplaceHarvesters(USSR)
 	AutoRebuildConyards(USSR)
-
-	local ussrGroundAttackers = USSR.GetGroundAttackers()
-	Utils.Do(ussrGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsUSSRGroundHunterUnit)
-	end)
+	SetupUnitDefenders(USSR)
 
     InitUSSRAttacks()
 end
@@ -292,6 +326,10 @@ InitUSSRAttacks = function()
 
 	if IsHardOrAbove() then
 		InitAirAttackSquad(Squads.TripodKillers, USSR, MissionPlayers, { "tpod", "rtpd" })
+
+		if IsVeryHardOrAbove() then
+			InitAirAttackSquad(Squads.SovietCommandoKillers, USSR, MissionPlayers, { "mast", "rmbo" })
+		end
 	end
 end
 
@@ -301,11 +339,7 @@ UpdateGatewayStatus = function()
         chargePerc = MiddleGateway.ChargePercentage
     end
 
-	local text = "Gateway charge progress: " .. chargePerc .. "%"
-	local textColor = HSLColor.Yellow
-
-	text = AppendChargeStatus(text, chargePerc)
-    UserInterface.SetMissionText(text, textColor)
+	SetChargeStatusText(chargePerc)
 
     if chargePerc == 100 then
         ScrinRebels.MarkCompletedObjective(ObjectiveProtectTemples)
@@ -332,16 +366,28 @@ SpawnNextMaleficFleetWave = function()
 		NextMaleficFleetSpawnIndex = 1
 	end
 
-	Trigger.AfterDelay(MaleficFleetSpawnInterval, SpawnNextMaleficFleetWave)
+	Trigger.AfterDelay(MaleficFleetSpawnInterval[Difficulty], SpawnNextMaleficFleetWave)
 end
 
 -- overridden in co-op version
-AppendChargeStatus = function(text, chargePerc)
+SetChargeStatusText = function(chargePerc)
+	local text = "Gateway charge progress: " .. chargePerc .. "%"
+	local textColor = HSLColor.Yellow
 	local isCharging = ScrinRebels.HasPrerequisites({ "gatewayscharging" })
+
 	if isCharging then
 		text = text .. " (Charging)"
 		textColor = HSLColor.Lime
 	else
 		text = text .. " (Not Charging)"
 	end
+
+	UserInterface.SetMissionText(text, textColor)
+end
+
+-- overridden in co-op version
+ShowGatewayChargeTip = function()
+    Trigger.AfterDelay(DateTime.Seconds(5), function()
+        Tip("Use the Charge Gateway power to use resources to charge the three gateways.")
+    end)
 end

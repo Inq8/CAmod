@@ -274,17 +274,11 @@ InitScrin = function()
 	InitAttackSquad(Squads.ScrinMain, Scrin)
 	InitAirAttackSquad(Squads.ScrinAir, Scrin)
 	InitAttackSquad(Squads.ScrinRebelKiller, Scrin, ScrinRebels)
+	SetupUnitDefenders(Scrin, nil, IsScrinGroundHunterUnitExcludingExterminators, function(p) return IsMissionPlayer(p) or p == Nod or p == ScrinRebels or p == GDI end)
 
 	if IsHardOrAbove() then
 		InitAirAttackSquad(Squads.ScrinAirToAir, Scrin, MissionPlayers, { "Aircraft" }, "ArmorType")
 	end
-
-	local scrinGroundAttackers = Scrin.GetGroundAttackers()
-
-	Utils.Do(scrinGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnitExcludingExterminators, function(p) return IsMissionPlayer(p) or p == Nod or p == ScrinRebels or p == GDI end)
-	end)
 
 	Trigger.AfterDelay(ExterminatorsStartTime[Difficulty], function()
 		SendNextExterminator()
@@ -343,13 +337,7 @@ InitScrinRebels = function()
 		InitAiUpgrades(ScrinRebels)
 		InitAirAttackSquad(Squads.ScrinRebelsAir, ScrinRebels, Scrin)
 		InitAttackSquad(Squads.ScrinRebelsMain, ScrinRebels, Scrin)
-
-		local scrinRebelGroundAttackers = ScrinRebels.GetGroundAttackers()
-
-		Utils.Do(scrinRebelGroundAttackers, function(a)
-			TargetSwapChance(a, 10)
-			CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinRebelGroundHunterUnit, function(p) return p == Scrin end)
-		end)
+		SetupUnitDefenders(ScrinRebels, nil, IsScrinRebelGroundHunterUnit, function(p) return p == Scrin end)
 	end
 end
 

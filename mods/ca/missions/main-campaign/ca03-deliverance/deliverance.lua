@@ -486,13 +486,7 @@ InitUSSR = function()
 	AutoRebuildConyards(USSR)
 	InitAiUpgrades(USSR)
 	InitUSSRPatrols()
-
-	local ussrGroundAttackers = USSR.GetGroundAttackers()
-
-	Utils.Do(ussrGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsUSSRGroundHunterUnit)
-	end)
+	SetupUnitDefenders(USSR)
 
 	-- If main sub pens are destroyed, update naval attack path
 	Utils.Do({ SovietSouthSubPen1, SovietSouthSubPen2 }, function(a)

@@ -388,15 +388,9 @@ end
 
 InitUSSR = function()
 	AutoRepairBuildings(USSR)
+	SetupUnitDefenders(USSR, WDist.New(4096))
 
 	Actor.Create("ai.unlimited.power", true, { Owner = USSR })
-
-	local ussrGroundAttackers = USSR.GetGroundAttackers()
-
-	Utils.Do(ussrGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(4096), IsUSSRGroundHunterUnit)
-	end)
 
 	if IsHardOrAbove() then
 		NukeDummy = Actor.Create("NukeDummyHard", true, { Owner = USSR, Location = Chronosphere.Location })

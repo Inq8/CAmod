@@ -66,10 +66,10 @@ IronCurtainEnabledDelay = {
 }
 
 DominatorStartTime = {
-	easy = DateTime.Minutes(10),
-	normal = DateTime.Minutes(8),
-	hard = DateTime.Minutes(6),
-	vhard = DateTime.Minutes(6),
+	easy = DateTime.Minutes(13),
+	normal = DateTime.Minutes(11),
+	hard = DateTime.Minutes(9),
+	vhard = DateTime.Minutes(7),
 	brutal = DateTime.Minutes(5)
 }
 
@@ -79,6 +79,14 @@ DominatorInterval = {
 	hard = DateTime.Minutes(5),
 	vhard = DateTime.Minutes(4),
 	brutal = DateTime.Minutes(3) + DateTime.Seconds(20)
+}
+
+DominatorRevealDelay = {
+	easy = DateTime.Seconds(5),
+	normal = DateTime.Seconds(5),
+	hard = DateTime.Seconds(30),
+	vhard = DateTime.Seconds(999),
+	brutal = DateTime.Seconds(999)
 }
 
 UnitCompositions.Soviet = Utils.Concat(UnitCompositions.Soviet, {
@@ -176,7 +184,7 @@ Squads = {
 			local scrinFleet = GetMissionPlayersActorsByTypes({ "pac", "deva" })
 			return #scrinFleet > AirFleetKillersThreshold[Difficulty]
 		end,
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 50, Max = 50 }),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 30, Max = 30 }),
 		Compositions = function(squad)
 			local migs = { "mig" }
 			local numFleetShips = #GetMissionPlayersActorsByTypes({ "pac", "deva" })
@@ -280,6 +288,15 @@ WorldLoaded = function()
 			Trigger.AfterDelay(DateTime.Seconds(1), function()
 				Notification("Warning, powerful psionic signature detected.")
 				MediaCA.PlaySound(MissionDir .. "/s_psionic.aud", 2)
+				if IsHardOrBelow() then
+					Trigger.AfterDelay(DominatorRevealDelay[Difficulty], function()
+						if not produced.IsDead then
+							Beacon.New(ScrinRebels, produced.CenterPosition)
+							Media.PlaySound("beacon.aud")
+							produced.GrantCondition("domi-reveal")
+						end
+					end)
+				end
 			end)
 			if not YuriDispleased then
 				YuriDispleased = true
@@ -297,6 +314,18 @@ WorldLoaded = function()
 		Media.DisplayMessage("Ah, new test subjects. The Scrin will make excellent slaves.", "Yuri", HSLColor.FromHex("FF00BB"))
 		MediaCA.PlaySound(MissionDir .. "/yuri_testsubjects.aud", 2)
 	end)
+
+	if IsVeryHardOrAbove() then
+		local yuriProductionBuildings = USSR.GetActorsByTypes({ "fact", "weap", "barr", "afld" })
+		for _, b in pairs(yuriProductionBuildings) do
+			BuildDefenseOnCaptureAttempt(b, "ftur", true)
+		end
+
+		local nodConyards = Nod.GetActorsByType("afac")
+		for _, c in pairs(nodConyards) do
+			BuildDefenseOnCaptureAttempt(c, "ltur", false)
+		end
+	end
 
     AfterWorldLoaded()
 end
@@ -347,6 +376,7 @@ InitUSSR = function()
 	InitAirAttackSquad(Squads.AirMain, USSR)
 	InitAttackSquad(Squads.Discs, USSR)
 	InitAttackSquad(Squads.Dominators, USSR)
+	SetupUnitDefenders(USSR)
 
 	if IsVeryHardOrAbove() then
 		SellOnCaptureAttempt({ NorthConyard, WestConyard, EastConyard })
@@ -359,19 +389,12 @@ InitUSSR = function()
 	end
 
 	if Difficulty ~= "easy" then
-		InitAirAttackSquad(Squads.AirFleetKillers, USSR, MissionPlayers, { "pac", "deva", "stmr", "enrv", "torm" })
+		InitAirAttackSquad(Squads.AirFleetKillers, USSR, MissionPlayers, { "pac", "deva" })
 	end
 
 	if Difficulty ~= "easy" then
 		InitAirAttackSquad(Squads.TripodKillers, USSR, MissionPlayers, { "tpod", "rtpd" })
 	end
-
-	local ussrGroundAttackers = USSR.GetGroundAttackers()
-
-	Utils.Do(ussrGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsUSSRGroundHunterUnit)
-	end)
 
 	Trigger.AfterDelay(IronCurtainEnabledDelay[Difficulty], function()
 		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = USSR })
@@ -388,13 +411,7 @@ InitNod = function()
 	AutoReplaceHarvesters(Nod)
 	AutoRebuildConyards(Nod)
 	InitAiUpgrades(Nod)
-
-	local nodGroundAttackers = Nod.GetGroundAttackers()
-
-	Utils.Do(nodGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsNodGroundHunterUnit)
-	end)
+	SetupUnitDefenders(Nod)
 
 	InitAttackSquad(Squads.Nod, Nod)
 end

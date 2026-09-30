@@ -986,7 +986,7 @@ end
 -------------------
 
 IsBaseTransferActor = function(actor)
-	return actor.HasProperty("StartBuildingRepairs") or IsHarvester(actor) or Utils.Any(WallTypes, function(t) return actor.Type == t end)
+	return actor.HasProperty("StartBuildingRepairs") or IsHarvester(actor) or Utils.Any(WallTypes, function(t) return actor.Type == t end) or actor.Type == "cspk"
 end
 
 IsSpreadableUnit = function(a)

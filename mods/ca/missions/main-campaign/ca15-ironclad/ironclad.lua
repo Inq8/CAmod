@@ -181,13 +181,7 @@ InitGreece = function()
 	AutoReplaceHarvesters(Greece)
 	AutoRebuildConyards(Greece)
 	InitAiUpgrades(Greece)
-
-	local alliedGroundAttackers = Greece.GetGroundAttackers()
-
-	Utils.Do(alliedGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(6656), IsGreeceGroundHunterUnit)
-	end)
+	SetupUnitDefenders(Greece, WDist.New(6656))
 end
 
 InitGDI = function()
@@ -200,13 +194,7 @@ InitGDI = function()
 	AutoReplaceHarvesters(GDI)
 	AutoRebuildConyards(GDI)
 	InitAiUpgrades(GDI)
-
-	local gdiGroundAttackers = GDI.GetGroundAttackers()
-
-	Utils.Do(gdiGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(6656), IsGDIGroundHunterUnit)
-	end)
+	SetupUnitDefenders(GDI, WDist.New(6656))
 
 	if Difficulty == "brutal" then
 		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = GDI })

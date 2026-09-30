@@ -14,6 +14,20 @@ WolverineDropInterval = {
 	brutal = DateTime.Minutes(7)
 }
 
+AirFleetKillersThreshold = {
+	normal = 6,
+	hard = 4,
+	vhard = 3,
+	brutal = 2
+}
+
+MaxFleetKillers = {
+	normal = 3,
+	hard = 5,
+	vhard = 8,
+	brutal = 12
+}
+
 AdjustedGDICompositions = AdjustCompositionsForDifficulty(UnitCompositions.GDI)
 AdjustedNodCompositions = AdjustCompositionsForDifficulty(UnitCompositions.Nod)
 
@@ -67,6 +81,21 @@ Squads = {
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
 		Compositions = AirCompositions.GDI,
 	},
+	GDIFleetKillers = {
+		ActiveCondition = function(squad)
+			local scrinFleet = GetMissionPlayersActorsByTypes({ "pac", "deva" })
+			return #scrinFleet > AirFleetKillersThreshold[Difficulty]
+		end,
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 30, Max = 30 }),
+		Compositions = function(squad)
+			local orcas = { "orca" }
+			local numFleetShips = #GetMissionPlayersActorsByTypes({ "pac", "deva" })
+			for i = 1, math.min(numFleetShips, MaxFleetKillers[Difficulty]) do
+				table.insert(orcas, "orca")
+			end
+			return { { Aircraft = orcas } }
+		end
+	},
 	AntiHeavyAir = AntiHeavyAirSquad({ "orcb" }, AdjustAirDelayForDifficulty(DateTime.Minutes(10))),
 	AirToAir = AirToAirSquad({ "orca" }, AdjustAirDelayForDifficulty(DateTime.Minutes(10))),
 	Nod = {
@@ -111,6 +140,7 @@ WorldLoaded = function()
 
     ObjectiveEliminateHawthorne = ScrinRebels.AddObjective("Eliminate Hawthorne's forces.")
 	ObjectiveProtectTemple = ScrinRebels.AddObjective("Nod Temple Prime must survive.")
+	TemplePrime.GrantCondition("is-objective")
 
     Trigger.OnKilled(TemplePrime, function(self, killer)
         if not ScrinRebels.IsObjectiveCompleted(ObjectiveProtectTemple) then
@@ -130,6 +160,13 @@ WorldLoaded = function()
 			end)
 		end)
 	end)
+
+	if IsVeryHardOrAbove() then
+		local gdiProductionBuildings = HawthorneGDI.GetActorsByTypes({ "afac", "weap.td", "pyle", "afld.gdi" })
+		for _, b in pairs(gdiProductionBuildings) do
+			BuildDefenseOnCaptureAttempt(b, "gtwr", true)
+		end
+	end
 
     AfterWorldLoaded()
 end
@@ -173,13 +210,6 @@ InitNod = function()
 	SetupRefAndSilosCaptureCredits(Nod)
 	AutoReplaceHarvesters(Nod)
 
-	local nodGroundAttackers = Nod.GetGroundAttackers()
-
-	Utils.Do(nodGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsNodGroundHunterUnit)
-	end)
-
 	InitAttackSquad(Squads.Nod, Nod, HawthorneGDI)
 	InitAirAttackSquad(Squads.NodAir, Nod, HawthorneGDI)
 end
@@ -190,13 +220,7 @@ InitHawthorneGDI = function()
 	AutoReplaceHarvesters(HawthorneGDI)
 	AutoRebuildConyards(HawthorneGDI)
 	InitAiUpgrades(HawthorneGDI)
-
-	local gdiGroundAttackers = HawthorneGDI.GetGroundAttackers()
-
-	Utils.Do(gdiGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGDIGroundHunterUnit)
-	end)
+	SetupUnitDefenders(HawthorneGDI)
 
 	Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
 		Actor.Create("ai.superweapons.enabled", true, { Owner = HawthorneGDI })
@@ -206,6 +230,7 @@ InitHawthorneGDI = function()
 	if IsHardOrAbove() then
 		Trigger.AfterDelay(DateTime.Minutes(20), DoCommandoDrop)
 		Trigger.AfterDelay(WolverineDropInterval[Difficulty], DoWolverineDrop)
+		InitAirAttackSquad(Squads.GDIFleetKillers, HawthorneGDI, MissionPlayers, { "pac", "deva" })
 	end
 
 	InitHawthorneGDIAttacks()

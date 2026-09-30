@@ -228,18 +228,12 @@ InitNod = function()
 	InitAttackSquad(Squads.Main1, Nod)
 	InitAttackSquad(Squads.Main2, Nod)
 	InitAirAttackSquad(Squads.Air, Nod)
+	SetupUnitDefenders(Nod)
 
 	if IsHardOrAbove() then
 		InitAirAttackSquad(Squads.AntiHeavyAir, Nod, MissionPlayers, { "4tnk", "4tnk.atomic", "apoc", "apoc.atomic" })
 		InitAirAttackSquad(Squads.AirToAir, Nod, MissionPlayers, { "Aircraft" }, "ArmorType")
 	end
-
-	local nodGroundAttackers = Nod.GetGroundAttackers()
-
-	Utils.Do(nodGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsNodGroundHunterUnit)
-	end)
 
 	Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
 		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = Nod })

@@ -51,8 +51,8 @@ namespace OpenRA.Mods.CA.Graphics
 			var br = wr.Viewport.WorldToViewPx(new float2(decorationBounds.Right, decorationBounds.Bottom)).ToFloat2();
 			var tr = new float2(br.X, tl.Y);
 			var bl = new float2(tl.X, br.Y);
-			var u = new float2(2 + thickness * 2, 0);
-			var v = new float2(0, 2 + thickness * 2);
+			var u = new float2(1 + thickness * 3, 0);
+			var v = new float2(0, 1 + thickness * 3);
 
 			var cr = Game.Renderer.RgbaColorRenderer;
 			cr.DrawLine(new float3[] { tl + u, tl, tl + v }, thickness, color, true);

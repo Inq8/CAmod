@@ -140,6 +140,24 @@ World:
 		Position: Top
 		Margin: 0,-15
 
+^ObjectiveDecorations:
+	ExternalCondition@Objective:
+		Condition: is-objective
+	WithColoredSelectionBox@Objective:
+		RequiresCondition: is-objective
+		Color: 00FF00
+		Thickness: 3
+		BoundsPadding: 256
+		ValidRelationships: Ally, Neutral, Enemy
+	WithDecoration@Objective:
+		RequiresCondition: is-objective
+		Image: objective-text
+		Palette: chrome
+		Sequence: green
+		Position: Top
+		Margin: 0, -12
+		ValidRelationships: Ally, Neutral, Enemy
+
 # Assigned to actors in missions, assigned in lua dynamically
 # (so we use DummyConditionConsumer to prevent yaml warnings)
 
@@ -994,6 +1012,16 @@ VCAN:
 	-WithMakeAnimation:
 	-Sellable:
 	-Targetable@HACKABLE:
+	GrantConditionOnDamageStateCA:
+		Condition: angry
+		GrantPermanently: true
+		ValidDamageStates: Medium, Heavy, Critical
+	RangeMultiplier@Angry:
+		Modifier: 200
+		RequiresCondition: angry
+	ReloadDelayMultiplier@Angry:
+		Modifier: 50
+		RequiresCondition: angry
 
 VoidCannonRift:
 	Inherits: Rift
@@ -1059,7 +1087,7 @@ WORMHOLEUNSTABLE:
 
 OSPI:
 	Inherits: ^Defense
-	Inherits@AUTOTARGET: ^AutoTargetGround
+	Inherits@AUTOTARGET: ^AutoTargetAll
 	Inherits@ActorDifficultyConditions: ^ActorDifficultyConditions
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Targetable@CampaignBoss:
@@ -1508,6 +1536,22 @@ DISR:
 sonic.upgrade:
 	Buildable:
 		Prerequisites: gtek, ~player.gdi, ~techlevel.high
+
+# Increase vision of longer range vehicles for non-playable players
+
+^NonPlayableVisionBoost:
+	GrantConditionOnNonPlayableOwner@NonPlayableVisionBoost:
+		Condition: has-non-playable-owner
+		RequireNoPlayableAllies: true
+	GrantConditionOnActorTypes@NonPlayableVisionBoost:
+		Condition: is-long-range-unit
+		Types: arty, arty.nod, katy, grad, ptnk, pcan, cryo, msam, hsam, mlrs, spec, zeus, mgg, mrj, tigr, v2rl, v3rl, ttra, nukc, thwk, jugg, deva, ruin, obli, null
+	RevealsShroudMultiplier@NonPlayableVisionBoost:
+		Modifier: 200
+		RequiresCondition: is-long-range-unit && has-non-playable-owner
+
+^Vehicle-NOUPG:
+	Inherits@NonPlayableVisionBoost: ^NonPlayableVisionBoost
 
 # For attack interval calculations, factoring in extra value from cargo
 

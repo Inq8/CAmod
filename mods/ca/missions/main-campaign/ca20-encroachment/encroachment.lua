@@ -231,18 +231,12 @@ InitGreece = function()
 	InitAiUpgrades(Greece)
 	InitAttackSquad(Squads.AlliedMain, Greece)
 	InitAirAttackSquad(Squads.AlliedAir, Greece)
+	SetupUnitDefenders(Greece)
 
 	Actor.Create("ai.unlimited.power", true, { Owner = Greece })
 
 	Trigger.AfterDelay(WeatherStormEnabledTime[Difficulty], function()
 		Actor.Create("ai.superweapons.enabled", true, { Owner = Greece })
-	end)
-
-	local alliedGroundAttackers = Greece.GetGroundAttackers()
-
-	Utils.Do(alliedGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGreeceGroundHunterUnit)
 	end)
 end
 
@@ -266,13 +260,7 @@ InitGDI = function()
 	InitAiUpgrades(GDI)
 	InitAttackSquad(Squads.GDIMain, GDI)
 	InitAirAttackSquad(Squads.GDIAir, GDI)
-
-	local gdiGroundAttackers = GDI.GetGroundAttackers()
-
-	Utils.Do(gdiGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGDIGroundHunterUnit)
-	end)
+	SetupUnitDefenders(GDI)
 
 	Trigger.AfterDelay(IonCannonEnabledTime[Difficulty], function()
 		Actor.Create("ai.superweapons.enabled", true, { Owner = GDI })

@@ -21,14 +21,20 @@ SetupPlayers = function()
 end
 
 AfterWorldLoaded = function()
-	NodTemplePrime.Destroy()
-	NodTemple.Destroy()
-	NodComms.Destroy()
-	Nod2Comms.Destroy()
-
 	StartCashSpread(3500)
 	TransferMcvsToPlayers(ScrinRebelPlayers)
 	AssignToCoopPlayers(GetSpreadableUnits(SinglePlayerPlayer), ScrinRebelPlayers)
+
+	if #NodPlayers > 0 then
+		NodTemplePrime.Destroy()
+		NodTemple.Destroy()
+		NodComms.Destroy()
+		Nod2Comms.Destroy()
+		local nodUnitsToDestroy = Nod1.GetActorsByTypes({ "rmbc", "reap" })
+		Utils.Do(nodUnitsToDestroy, function(u)
+			u.Destroy()
+		end)
+	end
 
 	-- west nod
 	if Multi1 ~= nil then

@@ -1,5 +1,5 @@
-GDIVsNod1.AttackValuesPerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 })
-GDIVsNod2.AttackValuesPerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 })
+Squads.GDIVsNod1.AttackValuesPerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 })
+Squads.GDIVsNod2.AttackValuesPerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40 })
 
 SetupPlayers = function()
 	Multi0 = Player.GetPlayer("Multi0")
@@ -40,6 +40,10 @@ AfterWorldLoaded = function()
 	Utils.Do(ScrinRebelPlayers, function(p)
 		Actor.Create("rebel.allegiance", true, { Owner = p })
 	end)
+
+	if Multi1 ~= nil and Multi1.IsLocalPlayer then
+		Camera.Position = TemplePrime.CenterPosition
+	end
 
 	Trigger.AfterDelay(1, function()
 		StopSpread = false

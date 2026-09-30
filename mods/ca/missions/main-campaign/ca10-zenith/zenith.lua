@@ -221,6 +221,7 @@ InitUSSR = function()
 	InitAiUpgrades(USSR)
 	InitAirAttackSquad(Squads.Planes, USSR)
 	InitAirAttackSquad(Squads.Helicopters, USSR)
+	SetupUnitDefenders(USSR)
 
 	if IsNormalOrAbove() then
 		InitNavalAttackSquad(Squads.Naval, USSR)
@@ -260,13 +261,6 @@ InitUSSR = function()
 		Trigger.AfterDelay(DateTime.Seconds(2), function()
 			Notification("Good work commander! Their airbase has been neutralised, so you no longer have to worry about being attacked from the air.")
 		end)
-	end)
-
-	local ussrGroundAttackers = USSRUnits.GetGroundAttackers()
-
-	Utils.Do(ussrGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsUSSRGroundHunterUnit)
 	end)
 
 	Trigger.OnEnteredProximityTrigger(MADTank.CenterPosition, WDist.New(7 * 1024), function(a, id)

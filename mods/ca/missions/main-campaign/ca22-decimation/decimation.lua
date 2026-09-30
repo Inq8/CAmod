@@ -323,6 +323,7 @@ InitUSSR = function()
 	InitAttackSquad(Squads.West, USSR)
 	InitAttackSquad(Squads.East, USSR)
 	InitAirAttackSquad(Squads.AirMain, USSR)
+	SetupUnitDefenders(USSR)
 
 	if IsVeryHardOrAbove() then
 		SellOnCaptureAttempt({ SWBarracks, SEBarracks1, SEBarracks2 })
@@ -343,13 +344,6 @@ InitUSSR = function()
 	end
 
 	Actor.Create("ai.unlimited.power", true, { Owner = USSR })
-
-	local ussrGroundAttackers = USSR.GetGroundAttackers()
-
-	Utils.Do(ussrGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsUSSRGroundHunterUnit)
-	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(5), function()
 		Utils.Do({ ShoreInf1, ShoreInf2, ShoreInf3, ShoreInf4, ShoreHeavyTank1, ShoreHeavyTank2 }, function(self)

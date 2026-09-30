@@ -22,11 +22,11 @@ MaleficAttackPaths = {
 }
 
 NumEvacConvoys = {
-	easy = 8,
-	normal = 10,
-	hard = 12,
-	vhard = 14,
-	brutal = 16
+	easy = 8, -- total time to evacuate = 20 mins
+	normal = 10, -- total time to evacuate = 24 mins
+	hard = 12, -- total time to evacuate = 28 mins
+	vhard = 14, -- total time to evacuate = 32 mins
+	brutal = 16 -- total time to evacuate = 36 mins
 }
 
 GatewayReorientationTime = {
@@ -38,11 +38,11 @@ GatewayReorientationTime = {
 }
 
 VoidspikeInterval = {
-	easy = DateTime.Minutes(4),
-	normal = DateTime.Minutes(3) + DateTime.Seconds(30),
-	hard = DateTime.Minutes(3),
-	vhard = DateTime.Minutes(2) + DateTime.Seconds(30),
-	brutal = DateTime.Minutes(2) + DateTime.Seconds(30),
+	easy = DateTime.Minutes(4), -- 52 mins to finish
+	normal = DateTime.Minutes(3) + DateTime.Seconds(30), -- 48.5 mins to finish
+	hard = DateTime.Minutes(3) + DateTime.Seconds(30), -- 45.5 min to finish
+	vhard = DateTime.Minutes(3), -- 39 min to finish
+	brutal = DateTime.Minutes(2) + DateTime.Seconds(30), -- 32.5 min to finish
 }
 
 VoidspikeTargets = {
@@ -81,6 +81,14 @@ Squads = {
 		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(13)),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
 		Compositions = AirCompositions.Scrin,
+	},
+	MaleficCommandoKillers = {
+		ActiveCondition = function(squad)
+			local commandos = GetMissionPlayersActorsByTypes({ "mast", "rmbo" })
+			return #commandos > 0
+		end,
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 5, Max = 10 }),
+		Compositions = { { Aircraft = { "stmr" } } }
 	},
 }
 
@@ -133,6 +141,7 @@ WorldLoaded = function()
 	end)
 
 	ObjectiveCaptureNerveCenter = ScrinRebels.AddObjective("Capture the gateway Nerve Center.")
+	GatewayNerveCenter.GrantCondition("is-objective")
 
 	Trigger.OnCapture(GatewayNerveCenter, function(self, captor, oldOwner, newOwner)
 		if IsMissionPlayer(newOwner) then
@@ -179,6 +188,18 @@ WorldLoaded = function()
 		Media.DisplayMessage("Attention rebel forces. We will not allow you to disrupt our evacuation. You will be fired upon if you approach. Once our forces have departed, the gateway is all yours.", "GDI Commander", HSLColor.FromHex("F2CF74"))
 		MediaCA.PlaySound(MissionDir .. "/g_attention.aud", 2)
 	end)
+
+	if IsVeryHardOrAbove() then
+		local gdiProductionBuildings = GDI.GetActorsByTypes({ "afac", "weap.td", "pyle", "afld.gdi" })
+		for _, b in pairs(gdiProductionBuildings) do
+			BuildDefenseOnCaptureAttempt(b, "gtwr", true)
+		end
+
+		local maleficProductionBuildings = MaleficScrin.GetActorsByTypes({ "port", "wsph", "sfac", "grav" })
+		for _, b in pairs(maleficProductionBuildings) do
+			BuildDefenseOnCaptureAttempt(b, "ptur", true)
+		end
+	end
 
     AfterWorldLoaded()
 end
@@ -301,16 +322,13 @@ CreateNextVoidCannonRift = function()
 end
 
 InitMaleficScrin = function()
+	RebuildExcludes.MaleficScrin = { Types = { "vcan" } }
+
 	AutoRepairAndRebuildBuildings(MaleficScrin)
 	SetupRefAndSilosCaptureCredits(MaleficScrin)
 	AutoReplaceHarvesters(MaleficScrin)
 	AutoRebuildConyards(MaleficScrin)
-
-	local scrinGroundAttackers = MaleficScrin.GetGroundAttackers()
-	Utils.Do(scrinGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
-	end)
+	SetupUnitDefenders(MaleficScrin)
 
     InitMaleficScrinAttacks()
 end
@@ -319,17 +337,16 @@ InitMaleficScrinAttacks = function()
 	InitAiUpgrades(MaleficScrin)
 	InitAttackSquad(Squads.MaleficMain, MaleficScrin)
 	InitAirAttackSquad(Squads.MaleficAir, MaleficScrin)
+
+	if IsVeryHardOrAbove() then
+		InitAirAttackSquad(Squads.MaleficCommandoKillers, Scrin, MissionPlayers, { "mast", "rmbo" })
+	end
 end
 
 InitGDI = function()
 	AutoRepairBuildings(GDI)
 	SetupRefAndSilosCaptureCredits(GDI)
-
-	local gdiGroundAttackers = GDI.GetGroundAttackers()
-	Utils.Do(gdiGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGDIGroundHunterUnit)
-	end)
+	SetupUnitDefenders(GDI)
 
 	InitConvoys()
 end
@@ -384,9 +401,9 @@ InitConvoys = function()
 				NextConvoySpawnIndex = 1
 			end
 		end)
-
-		Trigger.AfterDelay(DateTime.Minutes(2 * NumEvacConvoys[Difficulty]), EvacuateRemainingUnits)
 	end
+
+	Trigger.AfterDelay(DateTime.Minutes(2 * NumEvacConvoys[Difficulty]), EvacuateRemainingUnits)
 end
 
 EvacuateRemainingUnits = function()

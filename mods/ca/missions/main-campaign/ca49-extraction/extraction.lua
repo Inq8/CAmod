@@ -11,7 +11,8 @@ RebelStructures = {
     RebelStructures8,
     RebelStructures9,
     RebelStructures10,
-    RebelStructures11
+    RebelStructures11,
+	RebelStructures12
 }
 
 NodStrandedUnits = {
@@ -38,6 +39,20 @@ SuperweaponsEnabledTime = {
 	brutal = DateTime.Seconds((60 * 15) + 17)
 }
 
+AirFleetKillersThreshold = {
+	normal = 6,
+	hard = 4,
+	vhard = 3,
+	brutal = 2
+}
+
+MaxFleetKillers = {
+	normal = 3,
+	hard = 5,
+	vhard = 8,
+	brutal = 12
+}
+
 ScrinAttackPaths = {
 	{ ScrinWaypoint1.Location, ScrinWaypoint3.Location, NodBaseCenter.Location },
     { ScrinWaypoint2.Location, ScrinWaypoint4.Location, NodBaseCenter.Location },
@@ -53,7 +68,7 @@ SovietAttackPaths = {
 
 Squads = {
 	ScrinMain = {
-		InitTimeAdjustment = -DateTime.Minutes(7),
+		InitTimeAdjustment = -DateTime.Minutes(5),
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Scrin),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40, RampDuration = DateTime.Minutes(15) }),
 		FollowLeader = true,
@@ -61,7 +76,7 @@ Squads = {
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(2)),
 	},
 	SovietMain = {
-		InitTimeAdjustment = -DateTime.Minutes(7),
+		InitTimeAdjustment = -DateTime.Minutes(5),
 		Compositions = AdjustCompositionsForDifficulty(UnitCompositions.Soviet),
 		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 20, Max = 40, RampDuration = DateTime.Minutes(15) }),
 		FollowLeader = true,
@@ -69,37 +84,54 @@ Squads = {
 		Delay = AdjustDelayForDifficulty(DateTime.Minutes(2)),
 	},
 	ScrinAir = {
-		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(13)),
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(12)),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 6, Max = 8 }),
 		Compositions = AirCompositions.Scrin,
 	},
 	SovietAir = {
 		Delay = AdjustAirDelayForDifficulty(DateTime.Minutes(13)),
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 12, Max = 12 }),
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 6, Max = 8 }),
 		Compositions = AirCompositions.Soviet,
+	},
+	ScrinFleetKillers = {
+		ActiveCondition = function(squad)
+			local scrinFleet = GetMissionPlayersActorsByTypes({ "pac", "deva" })
+			return #scrinFleet > AirFleetKillersThreshold[Difficulty]
+		end,
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 30, Max = 30 }),
+		Compositions = function(squad)
+			local enervators = { "enrv" }
+			local numFleetShips = #GetMissionPlayersActorsByTypes({ "pac", "deva" })
+			for i = 1, math.min(numFleetShips, MaxFleetKillers[Difficulty]) do
+				table.insert(enervators, "enrv")
+			end
+			return { { Aircraft = enervators } }
+		end
 	},
 	ScrinCommandoKillers = {
 		ActiveCondition = function(squad)
 			local commandos = GetMissionPlayersActorsByTypes({ "mast", "rmbo" })
 			return #commandos > 0
 		end,
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 20 }),
-		Compositions = { { Aircraft = { "stmr", "stmr" } } }
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 5, Max = 10 }),
+		Compositions = { { Aircraft = { "stmr" } } }
 	},
 	SovietCommandoKillers = {
 		ActiveCondition = function(squad)
 			local commandos = GetMissionPlayersActorsByTypes({ "mast", "rmbo" })
 			return #commandos > 0
 		end,
-		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 15, Max = 20 }),
-		Compositions = { { Aircraft = { "yak", "yak" } } }
+		AttackValuePerSecond = AdjustAttackValuesForDifficulty({ Min = 5, Max = 10 }),
+		Compositions = { { Aircraft = { "yak" } } }
 	}
 }
 
 SetupPlayers = function()
 	ScrinRebels = Player.GetPlayer("ScrinRebels")
 	USSR = Player.GetPlayer("USSR")
+	USSR2 = Player.GetPlayer("USSR2")
 	Scrin = Player.GetPlayer("Scrin")
+	Scrin2 = Player.GetPlayer("Scrin2")
     ScrinRebelsInactive = Player.GetPlayer("ScrinRebelsInactive")
     Nod = Player.GetPlayer("Nod")
 	NodInactive = Player.GetPlayer("NodInactive")
@@ -125,6 +157,10 @@ WorldLoaded = function()
 		Utils.Do(MissionPlayers, function(p)
 			Actor.Create("mcv.allowed", true, { Owner = p })
 		end)
+	end
+
+	if IsVeryHardOrAbove() then
+		NorthTree.Destroy()
 	end
 
     ObjectivePrepare = ScrinRebels.AddObjective("Gather forces and rendezvous with Kane before deadline.")
@@ -175,6 +211,8 @@ WorldLoaded = function()
 		end
 	end)
 
+	KanesTemple.GrantCondition("is-objective")
+
 	local harvs = Utils.Where(ScrinRebelsInactive.GetActors(), function(a) return a.Type == "harv.scrin" end)
 	Utils.Do(harvs, function(h)
 		h.Stop()
@@ -194,6 +232,8 @@ OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
 		Scrin.Resources = Scrin.ResourceCapacity - 500
         USSR.Resources = USSR.ResourceCapacity - 500
+		Scrin2.Resources = Scrin2.ResourceCapacity - 500
+		USSR2.Resources = USSR2.ResourceCapacity - 500
 
 		if TimerTicks > 0 then
 			if TimerTicks > 25 then
@@ -308,15 +348,14 @@ InitScrin = function()
 	SetupRefAndSilosCaptureCredits(Scrin)
 	AutoReplaceHarvesters(Scrin)
 	AutoRebuildConyards(Scrin)
+	SetupUnitDefenders(Scrin)
 
-	local scrinGroundAttackers = Scrin.GetGroundAttackers()
-	Utils.Do(scrinGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
-	end)
+	if IsHardOrAbove() then
+		InitAirAttackSquad(Squads.ScrinFleetKillers, Scrin, MissionPlayers, { "pac", "deva" })
 
-	if IsVeryHardOrAbove() then
-		InitAirAttackSquad(Squads.ScrinCommandoKillers, Scrin, MissionPlayers, { "mast", "rmbo" })
+		if IsVeryHardOrAbove() then
+			InitAirAttackSquad(Squads.ScrinCommandoKillers, Scrin, MissionPlayers, { "mast", "rmbo" })
+		end
 	end
 end
 
@@ -336,12 +375,7 @@ InitUSSR = function()
 	SetupRefAndSilosCaptureCredits(USSR)
 	AutoReplaceHarvesters(USSR)
 	AutoRebuildConyards(USSR)
-
-	local ussrGroundAttackers = USSR.GetGroundAttackers()
-	Utils.Do(ussrGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsUSSRGroundHunterUnit)
-	end)
+	SetupUnitDefenders(USSR)
 
 	if IsVeryHardOrAbove() then
 		InitAirAttackSquad(Squads.SovietCommandoKillers, USSR, MissionPlayers, { "mast", "rmbo" })

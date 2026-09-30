@@ -6160,6 +6160,10 @@ TRPC:
 	KeepsDistance:
 	AutoGuard:
 		ValidTargets: Infantry, Vehicle
+		RequiresCondition: !auto-guard-delay
+	GrantTimedCondition@AutoGuardDelay:
+		Condition: auto-guard-delay
+		Duration: 25
 	AttackFrontal:
 	AttackMove:
 	ProximityExternalCondition@InspirationTrpc:
@@ -9604,6 +9608,10 @@ MANT:
 	KeepsDistance:
 	AutoGuard:
 		ValidTargets: Infantry, Vehicle
+		RequiresCondition: !auto-guard-delay
+	GrantTimedCondition@AutoGuardDelay:
+		Condition: auto-guard-delay
+		Duration: 25
 	Encyclopedia:
 		Category: Nod/Stolen Technology
 	EncyclopediaExtras:
@@ -10918,6 +10926,10 @@ CUST:
 	KeepsDistance:
 	AutoGuard:
 		ValidTargets: Cyborg, Vehicle
+		RequiresCondition: !auto-guard-delay
+	GrantTimedCondition@AutoGuardDelay:
+		Condition: auto-guard-delay
+		Duration: 25
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped || blinded
 	AttackMove:

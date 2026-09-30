@@ -172,14 +172,8 @@ end
 -- Functions
 
 InitNod = function()
-	local nod2Forces = Nod2.GetGroundAttackers()
-	Utils.Do(nod2Forces, function(a)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(10240), IsGroundHunterUnit, function(p) return true end)
-	end)
-	local nod3Forces = Nod3.GetGroundAttackers()
-	Utils.Do(nod3Forces, function(a)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(10240), IsGroundHunterUnit, function(p) return true end)
-	end)
+	SetupUnitDefenders(Nod2, WDist.New(10240), IsGroundHunterUnit, function(p) return true end)
+	SetupUnitDefenders(Nod3, WDist.New(10240), IsGroundHunterUnit, function(p) return true end)
 end
 
 InitGDI = function()
@@ -187,18 +181,12 @@ InitGDI = function()
 	SetupRefAndSilosCaptureCredits(GDI)
 	AutoReplaceHarvesters(GDI)
 	AutoRebuildConyards(GDI)
+	SetupUnitDefenders(GDI)
 
 	if IsHardOrAbove() then
 		InitAirAttackSquad(Squads.AntiHeavyAir, GDI, MissionPlayers, { "rmbc", "enli", "reap", "avtr" })
 		InitAirAttackSquad(Squads.AirToAir, GDI, MissionPlayers, { "Aircraft" }, "ArmorType")
 	end
-
-	local gdiGroundAttackers = GDI.GetGroundAttackers()
-
-	Utils.Do(gdiGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGDIGroundHunterUnit)
-	end)
 
 	Trigger.AfterDelay(DateTime.Minutes(8), function()
 		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = GDI })

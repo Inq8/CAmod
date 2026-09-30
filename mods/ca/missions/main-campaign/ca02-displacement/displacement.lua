@@ -380,6 +380,7 @@ InitScrin = function()
 	AutoRebuildConyards(Scrin)
 	InitAttackSquad(Squads.Main, Scrin)
 	InitAirAttackSquad(Squads.Stormriders, Scrin)
+	SetupUnitDefenders(Scrin)
 
 	if IsNormalOrAbove() then
 		InitAirAttackSquad(Squads.Devastators, Scrin, MissionPlayers, { "dome", "atek", "apwr", "pris", "fix" })
@@ -397,13 +398,6 @@ InitScrin = function()
 	SeekerPatroller1.Patrol({ SeekerPatrol1a.Location, SeekerPatrol1b.Location })
 	SeekerPatroller2.Patrol({ SeekerPatrol1a.Location, SeekerPatrol1b.Location })
 	SeekerPatroller3.Patrol({ SeekerPatrol1a.Location, SeekerPatrol1b.Location })
-
-	local scrinGroundAttackers = Scrin.GetGroundAttackers()
-
-	Utils.Do(scrinGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
-	end)
 
 	local stormriders = Scrin.GetActorsByType("stmr")
 	Utils.Do(stormriders, function(a)

@@ -282,16 +282,10 @@ InitNod = function()
 	AutoReplaceHarvesters(Nod)
 	AutoRebuildConyards(Nod)
 	InitAiUpgrades(Nod)
+	SetupUnitDefenders(Nod)
 
 	Trigger.AfterDelay(SuperweaponsEnabledTime[Difficulty], function()
 		Actor.Create("ai.minor.superweapons.enabled", true, { Owner = Nod })
-	end)
-
-	local nodGroundAttackers = Nod.GetGroundAttackers()
-
-	Utils.Do(nodGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsNodGroundHunterUnit)
 	end)
 
 	InitNavalAttackSquad(Squads.Naval, Nod)

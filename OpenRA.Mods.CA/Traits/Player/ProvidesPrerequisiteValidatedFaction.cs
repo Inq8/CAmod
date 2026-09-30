@@ -89,7 +89,7 @@ namespace OpenRA.Mods.CA.Traits
 				var capturedFactionManager = playerActor.TraitOrDefault<CapturedFactionsManager>();
 				var capturedFactions = capturedFactionManager != null ? capturedFactionManager.Factions : new HashSet<string>();
 				var players = self.World.Players
-					.Where(p => !p.NonCombatant && p.Playable)
+					.Where(p => !p.NonCombatant)
 					.OrderByDescending(p => p.Faction.InternalName == playerActor.Owner.Faction.InternalName)
 					.ThenByDescending(p => capturedFactions.Contains(p.Faction.InternalName));
 

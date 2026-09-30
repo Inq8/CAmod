@@ -234,13 +234,7 @@ InitScrinRebels = function()
 		AutoReplaceHarvesters(p)
 		AutoRebuildConyards(p)
 		InitAiUpgrades(p)
-
-		local scrinRebelsGroundAttackers = p.GetGroundAttackers()
-
-		Utils.Do(scrinRebelsGroundAttackers, function(a)
-			TargetSwapChance(a, 10)
-			CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
-		end)
+		SetupUnitDefenders(p)
 	end)
 
 	InitAttackSquad(Squads.ScrinRebels1, ScrinRebels1)
@@ -257,13 +251,7 @@ InitNod = function()
 	AutoRepairBuildings(Nod)
 	SetupRefAndSilosCaptureCredits(Nod)
 	SellOnCaptureAttempt(NodBuildingsToSell)
-
-	local nodGroundAttackers = Nod.GetGroundAttackers()
-
-	Utils.Do(nodGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsNodGroundHunterUnit)
-	end)
+	SetupUnitDefenders(Nod)
 
 	Trigger.AfterDelay(DateTime.Minutes(2), function()
 		Utils.Do(nodGroundAttackers, function(a)

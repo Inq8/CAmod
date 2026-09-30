@@ -166,13 +166,7 @@ end
 
 InitUSSR = function()
 	AutoRepairBuildings(USSR)
-
-	local ussrGroundAttackers = USSR.GetGroundAttackers()
-
-	Utils.Do(ussrGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsUSSRGroundHunterUnit)
-	end)
+	SetupUnitDefenders(USSR)
 end
 
 SetupAmbience = function()

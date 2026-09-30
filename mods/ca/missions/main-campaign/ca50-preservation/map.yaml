@@ -28,7 +28,7 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: Random
-		Enemies: ScrinRebels, Nod, Scrin, USSR, MaleficScrin
+		Enemies: ScrinRebels, Nod, Scrin, USSR, MaleficScrin, ScrinRebelWestWormholes, ScrinRebelEastWormholes
 	PlayerReference@ScrinRebels:
 		Name: ScrinRebels
 		AllowBots: False
@@ -40,21 +40,21 @@ Players:
 		Color: 2FB4A6
 		LockSpawn: True
 		LockTeam: True
-		Allies: Nod
+		Allies: Nod, ScrinRebelWestWormholes, ScrinRebelEastWormholes
 		Enemies: USSR, Scrin, MaleficScrin, Creeps
 	PlayerReference@ScrinRebelWestWormholes:
 		Name: ScrinRebelWestWormholes
 		NonCombatant: True
 		Faction: scrin
 		Color: 2FB4A6
-		Allies: ScrinRebels
+		Allies: ScrinRebels, Nod, ScrinRebelEastWormholes
 		Enemies: Scrin, USSR, MaleficScrin, Creeps
 	PlayerReference@ScrinRebelEastWormholes:
 		Name: ScrinRebelEastWormholes
 		NonCombatant: True
 		Faction: scrin
 		Color: 2FB4A6
-		Allies: ScrinRebels
+		Allies: ScrinRebels, Nod, ScrinRebelWestWormholes
 		Enemies: Scrin, USSR, MaleficScrin, Creeps
 	PlayerReference@Scrin:
 		Name: Scrin
@@ -75,14 +75,14 @@ Players:
 		Bot: dormant
 		Faction: nod
 		Color: 6D738C
-		Allies: ScrinRebels
+		Allies: ScrinRebels, ScrinRebelWestWormholes, ScrinRebelEastWormholes
 		Enemies: USSR, Scrin, MaleficScrin, Creeps
 	PlayerReference@MaleficScrin:
 		Name: MaleficScrin
 		Bot: campaign
 		Faction: scrin
 		Color: 3E4549
-		Enemies: ScrinRebels, Nod, Scrin, USSR, Creeps
+		Enemies: ScrinRebels, ScrinRebelWestWormholes, ScrinRebelEastWormholes, Nod, Scrin, USSR, Creeps
 
 Actors:
 	Actor160: sbag
@@ -1764,30 +1764,6 @@ Actors:
 	Actor682: swal
 		Owner: Scrin
 		Location: 2,7
-	Actor683: swal
-		Owner: Scrin
-		Location: 4,7
-	Actor684: swal
-		Owner: Scrin
-		Location: 3,7
-	Actor685: swal
-		Owner: Scrin
-		Location: 6,7
-	Actor686: swal
-		Owner: Scrin
-		Location: 5,7
-	Actor687: swal
-		Owner: Scrin
-		Location: 7,7
-	Actor688: swal
-		Owner: Scrin
-		Location: 8,7
-	Actor689: swal
-		Owner: Scrin
-		Location: 8,6
-	Actor690: swal
-		Owner: Scrin
-		Location: 7,6
 	Actor691: swal
 		Owner: Scrin
 		Location: 45,22
@@ -2790,9 +2766,6 @@ Actors:
 	Actor1025: brik
 		Owner: USSR
 		Location: 88,1
-	Actor1026: cspk
-		Owner: ScrinRebels
-		Location: 215,77
 	Actor1027: fact
 		Owner: USSR
 		Location: 200,2
@@ -2832,9 +2805,6 @@ Actors:
 	Actor1039: afld
 		Owner: USSR
 		Location: 87,3
-	Actor1040: fix
-		Owner: USSR
-		Location: 92,2
 	Actor1041: npwr
 		Owner: USSR
 		Location: 198,11
@@ -2964,6 +2934,7 @@ Actors:
 	Actor1090: shar
 		Owner: Scrin
 		Location: 144,27
+		TurretFacing: 192
 	Actor1091: shar
 		Owner: Scrin
 		Location: 147,28
@@ -3030,18 +3001,12 @@ Actors:
 	Actor1104: port
 		Owner: Scrin
 		Location: 128,16
-	Actor1110: reac
-		Owner: Scrin
-		Location: 2,8
 	Actor1083: grav
 		Owner: Scrin
 		Location: 6,11
 	Actor1081: grav
 		Owner: Scrin
 		Location: 12,14
-	Actor1084: grav
-		Owner: Scrin
-		Location: 14,5
 	Actor1111: reac
 		Owner: Scrin
 		Location: 2,11
@@ -4098,18 +4063,6 @@ Actors:
 	Actor1428: nerv
 		Owner: ScrinRebels
 		Location: 126,92
-	Actor506: wormhole
-		Owner: ScrinRebelEastWormholes
-		Location: 198,69
-	Actor504: wormhole
-		Owner: ScrinRebelWestWormholes
-		Location: 119,85
-	Actor505: wormhole
-		Owner: ScrinRebelEastWormholes
-		Location: 145,90
-	Actor503: wormhole
-		Owner: ScrinRebelWestWormholes
-		Location: 61,85
 	ScrinWaypoint1: waypoint
 		Owner: Neutral
 		Location: 123,36
@@ -4752,8 +4705,8 @@ Actors:
 		Location: 127,22
 	Actor1552: ruin
 		Owner: Scrin
-		Facing: 512
 		Location: 119,22
+		Facing: 512
 	Actor1551: ruin
 		Owner: Scrin
 		Facing: 512
@@ -4859,12 +4812,12 @@ Actors:
 		Location: 118,20
 	Actor1579: rtpd
 		Owner: Scrin
-		Facing: 512
 		Location: 128,20
+		Facing: 512
 	Actor1580: rtpd
 		Owner: Scrin
-		Facing: 512
 		Location: 134,15
+		Facing: 512
 	Actor1581: rtpd
 		Owner: Scrin
 		Facing: 512
@@ -4916,11 +4869,6 @@ Actors:
 		SubCell: 3
 		Facing: 640
 		Location: 16,8
-	Actor1590: evis
-		Owner: Scrin
-		SubCell: 3
-		Facing: 640
-		Location: 15,4
 	Actor1591: evis
 		Owner: Scrin
 		SubCell: 3
@@ -5471,6 +5419,400 @@ Actors:
 	MaleficSpawnEast: waypoint
 		Owner: Neutral
 		Location: 208,128
+	Actor1684: e1
+		Owner: USSR
+		Facing: 384
+		Location: 197,22
+		SubCell: 3
+	Actor1685: e1
+		Owner: USSR
+		Facing: 384
+		Location: 188,17
+		SubCell: 3
+	Actor1687: s1
+		Owner: Scrin
+		Location: 121,15
+		SubCell: 1
+		Facing: 512
+	Actor1688: s1
+		Owner: Scrin
+		Location: 121,15
+		SubCell: 2
+		Facing: 512
+	Actor1686: s1
+		Owner: Scrin
+		Location: 123,15
+		SubCell: 3
+		Facing: 512
+	Actor1693: s1
+		Owner: Scrin
+		Location: 123,13
+		SubCell: 5
+		Facing: 512
+	Actor1689: s1
+		Owner: Scrin
+		SubCell: 1
+		Facing: 512
+		Location: 111,21
+	Actor1690: s1
+		Owner: Scrin
+		SubCell: 2
+		Facing: 512
+		Location: 111,21
+	Actor1691: s1
+		Owner: Scrin
+		SubCell: 1
+		Facing: 512
+		Location: 131,15
+	Actor1692: s1
+		Owner: Scrin
+		SubCell: 2
+		Facing: 512
+		Location: 131,15
+	Actor1694: s1
+		Owner: Scrin
+		SubCell: 1
+		Facing: 512
+		Location: 131,5
+	Actor1695: s1
+		Owner: Scrin
+		SubCell: 2
+		Facing: 512
+		Location: 131,5
+	Actor1696: s1
+		Owner: Scrin
+		SubCell: 1
+		Facing: 512
+		Location: 128,5
+	Actor1697: s1
+		Owner: Scrin
+		SubCell: 2
+		Facing: 512
+		Location: 128,5
+	Actor1698: s1
+		Owner: Scrin
+		SubCell: 1
+		Facing: 512
+		Location: 117,23
+	Actor1699: s1
+		Owner: Scrin
+		SubCell: 2
+		Facing: 512
+		Location: 117,23
+	Actor1700: s1
+		Owner: Scrin
+		SubCell: 1
+		Facing: 512
+		Location: 118,23
+	Actor1701: s1
+		Owner: Scrin
+		SubCell: 2
+		Facing: 512
+		Location: 118,23
+	Actor1702: s1
+		Owner: Scrin
+		SubCell: 1
+		Facing: 512
+		Location: 119,23
+	Actor1703: s1
+		Owner: Scrin
+		SubCell: 2
+		Facing: 512
+		Location: 119,23
+	Actor1704: s1
+		Owner: Scrin
+		SubCell: 1
+		Facing: 512
+		Location: 127,23
+	Actor1705: s1
+		Owner: Scrin
+		SubCell: 2
+		Facing: 512
+		Location: 127,23
+	Actor1706: s1
+		Owner: Scrin
+		SubCell: 1
+		Facing: 512
+		Location: 128,23
+	Actor1707: s1
+		Owner: Scrin
+		SubCell: 2
+		Facing: 512
+		Location: 128,23
+	Actor1708: s1
+		Owner: Scrin
+		SubCell: 1
+		Facing: 512
+		Location: 129,23
+	Actor1709: s1
+		Owner: Scrin
+		SubCell: 2
+		Facing: 512
+		Location: 129,23
+	Actor1710: s1
+		Owner: Scrin
+		SubCell: 1
+		Facing: 512
+		Location: 143,25
+	Actor1711: s1
+		Owner: Scrin
+		SubCell: 2
+		Facing: 512
+		Location: 143,25
+	Actor1712: s1
+		Owner: Scrin
+		SubCell: 1
+		Facing: 512
+		Location: 144,24
+	Actor1713: s1
+		Owner: Scrin
+		SubCell: 2
+		Facing: 512
+		Location: 144,24
+	Actor1714: s1
+		Owner: Scrin
+		SubCell: 1
+		Facing: 512
+		Location: 145,23
+	Actor1715: s1
+		Owner: Scrin
+		SubCell: 2
+		Facing: 512
+		Location: 145,23
+	Actor1716: s1
+		Owner: Scrin
+		SubCell: 3
+		Facing: 512
+		Location: 111,19
+	Actor1717: s1
+		Owner: Scrin
+		SubCell: 3
+		Facing: 512
+		Location: 114,23
+	Actor1718: s1
+		Owner: Scrin
+		SubCell: 3
+		Facing: 512
+		Location: 135,20
+	Actor1719: s1
+		Owner: Scrin
+		SubCell: 3
+		Facing: 512
+		Location: 124,10
+	Actor1720: s1
+		Owner: Scrin
+		SubCell: 3
+		Facing: 512
+		Location: 128,6
+	Actor1721: s1
+		Owner: Scrin
+		SubCell: 3
+		Facing: 512
+		Location: 133,7
+	Actor1722: s1
+		Owner: Scrin
+		SubCell: 3
+		Facing: 512
+		Location: 116,5
+	Actor1723: s1
+		Owner: Scrin
+		SubCell: 3
+		Facing: 512
+		Location: 111,6
+	Actor1724: shar
+		Owner: Scrin
+		Location: 110,7
+	Actor1725: shar
+		Owner: Scrin
+		Location: 140,3
+	Actor1726: sfac
+		Owner: Scrin
+		Location: 14,5
+	Actor1590: evis
+		Owner: Scrin
+		Facing: 640
+		Location: 13,4
+		SubCell: 3
+	Actor1727: fact
+		Owner: USSR
+		Location: 91,2
+	Actor1040: fix
+		Owner: USSR
+		Location: 91,6
+	Actor1728: s1
+		Owner: Scrin
+		SubCell: 3
+		Facing: 512
+		Location: 51,25
+	Actor1729: s1
+		Owner: Scrin
+		SubCell: 1
+		Facing: 512
+		Location: 49,25
+	Actor1730: s1
+		Owner: Scrin
+		SubCell: 2
+		Facing: 512
+		Location: 49,25
+	Actor1731: s1
+		Owner: Scrin
+		SubCell: 3
+		Facing: 512
+		Location: 46,23
+	Actor1732: s1
+		Owner: Scrin
+		SubCell: 1
+		Facing: 512
+		Location: 44,23
+	Actor1733: s1
+		Owner: Scrin
+		SubCell: 2
+		Facing: 512
+		Location: 44,23
+	Actor1734: s1
+		Owner: Scrin
+		SubCell: 3
+		Facing: 512
+		Location: 58,25
+	Actor1737: s1
+		Owner: Scrin
+		SubCell: 1
+		Facing: 512
+		Location: 57,26
+	Actor1738: s1
+		Owner: Scrin
+		SubCell: 2
+		Facing: 512
+		Location: 57,26
+	Actor1735: s1
+		Owner: Scrin
+		SubCell: 3
+		Facing: 512
+		Location: 45,25
+	Actor1736: s1
+		Owner: Scrin
+		SubCell: 3
+		Facing: 512
+		Location: 80,29
+	Actor1739: s1
+		Owner: Scrin
+		SubCell: 1
+		Facing: 512
+		Location: 78,29
+	Actor1740: s1
+		Owner: Scrin
+		SubCell: 2
+		Facing: 512
+		Location: 78,29
+	Actor1741: s1
+		Owner: Scrin
+		SubCell: 3
+		Facing: 512
+		Location: 87,29
+	Actor1743: s1
+		Owner: Scrin
+		SubCell: 2
+		Facing: 512
+		Location: 86,30
+	Actor1744: s1
+		Owner: Scrin
+		SubCell: 1
+		Facing: 512
+		Location: 90,29
+	Actor1745: s1
+		Owner: Scrin
+		SubCell: 2
+		Facing: 512
+		Location: 90,29
+	Actor1742: shar
+		Owner: Scrin
+		Location: 12,24
+	Actor1746: shar
+		Owner: Scrin
+		Location: 16,18
+	Actor1747: shar
+		Owner: Scrin
+		Location: 23,16
+	Actor1748: shar
+		Owner: Scrin
+		Location: 25,13
+	Actor1749: shar
+		Owner: Scrin
+		Location: 18,4
+	Actor1750: s1
+		Owner: Scrin
+		Location: 4,18
+		SubCell: 3
+		Facing: 640
+	Actor1751: s1
+		Owner: Scrin
+		Location: 4,18
+		SubCell: 1
+		Facing: 640
+	Actor1752: s3
+		Owner: Scrin
+		Location: 6,16
+		SubCell: 3
+		Facing: 640
+	Actor1753: s3
+		Owner: Scrin
+		SubCell: 3
+		Facing: 640
+		Location: 10,13
+	Actor1754: s3
+		Owner: Scrin
+		SubCell: 3
+		Facing: 640
+		Location: 19,8
+	Actor1755: s1
+		Owner: Scrin
+		SubCell: 3
+		Facing: 640
+		Location: 16,16
+	Actor1757: s1
+		Owner: Scrin
+		SubCell: 3
+		Facing: 640
+		Location: 10,19
+	Actor1758: s1
+		Owner: Scrin
+		SubCell: 1
+		Facing: 640
+		Location: 10,19
+	Actor1760: s1
+		Owner: Scrin
+		SubCell: 1
+		Facing: 640
+		Location: 10,17
+	Actor1762: s1
+		Owner: Scrin
+		SubCell: 1
+		Facing: 640
+		Location: 21,10
+	Actor1756: rea2
+		Owner: Scrin
+		Location: 2,8
+	Actor1759: rea2
+		Owner: Scrin
+		Location: 6,7
+	Actor1761: reac
+		Owner: Scrin
+		Location: 8,4
+	WestToMiddleWormhole: wormhole
+		Owner: ScrinRebelWestWormholes
+		Location: 61,85
+	MiddleToWestWormhole: wormhole
+		Owner: ScrinRebelWestWormholes
+		Location: 119,85
+	MiddleToEastWormhole: wormhole
+		Owner: ScrinRebelEastWormholes
+		Location: 145,90
+	EastToMiddleWormhole: wormhole
+		Owner: ScrinRebelEastWormholes
+		Location: 198,69
+	EastColonySpike: cspk
+		Owner: ScrinRebels
+		Location: 215,77
 
 Rules: ca|rules/custom/campaign-rules.yaml, ca|rules/custom/campaign-tooltips.yaml, ca|rules/custom/two-tone-nod.yaml, ca|rules/custom/disable-allegiances.yaml, preservation-rules.yaml
 

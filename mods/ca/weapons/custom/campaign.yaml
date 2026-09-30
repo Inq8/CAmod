@@ -220,7 +220,7 @@ DominationWave:
 		ImpactSounds: dominator.aud
 	Warhead@MC: ChangeOwner
 		Range: 6c0
-		ValidTargets: MindControllable
+		ValidTargets: MindControllable, Structure
 		InvalidTargets: MindControlImmune
 
 DominatorAA:
@@ -291,6 +291,10 @@ VanquisherAA:
 		ContrailStartColorAlpha: 170
 		RangeLimit: 14c0
 		ContrailZOffset: 3584
+	Warhead@1Dam: SpreadDamage
+		Damage: 3500
+	Warhead@smallDamage: SpreadDamage
+		Range: 0, 0c64, 0c256, 2c768
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: scrin
@@ -304,6 +308,7 @@ OverlordSpireZap:
 	Inherits: StormColumnZap
 	Burst: 11
 	Range: 12c0
+	ValidTargets: Ground, Air
 	Projectile: ElectricBolt
 		Colors: 00FF00E6, 5eff5eE6, 3bc350E6, 7ead85E6, 67be74E6, 009e18E6
 		Duration: 6
@@ -312,6 +317,17 @@ OverlordSpireZap:
 		Distortion: 96
 		DistortionAnimation: 96
 		ZOffset: 512
+	Warhead@2Dam: SpreadDamage
+		Damage: 1000
+		ValidTargets: Air
+		ValidRelationships: Enemy, Neutral
+		Range: 0, 0c64, 0c256, 3c0
+		Falloff: 100, 100, 30, 15
+	Warhead@Flash: FlashTarget
+		Spread: 0c511
+		Color: 00ff00
+		Duration: 3
+		ValidTargets: Vehicle, Air
 
 # Super unit modifiers
 

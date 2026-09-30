@@ -435,13 +435,7 @@ InitScrin = function()
 	AutoRebuildConyards(Scrin)
 	InitAiUpgrades(Scrin)
 	InitAirAttackSquad(Squads.ScrinAir, Scrin)
-
-	local scrinGroundAttackers = Scrin.GetGroundAttackers()
-
-	Utils.Do(scrinGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
-	end)
+	SetupUnitDefenders(Scrin)
 
 	Mothership.Attack(Wormhole, true, true)
 	IonConduits = Actor.Create("ioncon.upgrade", true, { Owner = Scrin })

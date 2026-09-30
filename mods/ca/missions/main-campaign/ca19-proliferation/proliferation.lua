@@ -261,13 +261,7 @@ InitNod = function()
 	SetupRefAndSilosCaptureCredits(Nod)
 	InitAiUpgrades(Nod)
 	InitAirAttackSquad(Squads.Air, Nod, MissionPlayers, { "harv", "harv.td", "proc", "proc.scrin" })
-
-	local nodGroundAttackers = Nod.GetGroundAttackers()
-
-	Utils.Do(nodGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(6 * 1024), IsNodGroundHunterUnit)
-	end)
+	SetupUnitDefenders(Nod, WDist.New(6144))
 
 	Trigger.AfterDelay(RaidStart[Difficulty], function()
 		DoRaid()

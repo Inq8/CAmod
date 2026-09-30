@@ -137,13 +137,7 @@ InitNod = function()
 	AutoReplaceHarvesters(Nod)
 	InitAiUpgrades(Nod)
 	InitAirAttackSquad(Squads.NodAir, Nod)
-
-	local nodGroundAttackers = Nod.GetGroundAttackers()
-
-	Utils.Do(nodGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsNodGroundHunterUnit)
-	end)
+	SetupUnitDefenders(Nod)
 end
 
 InitMcv = function()

@@ -264,6 +264,7 @@ InitNod = function()
 	InitAttackSquad(Squads.North, Nod)
 	InitAttackSquad(Squads.South, Nod)
 	InitAirAttackSquad(Squads.Air, Nod)
+	SetupUnitDefenders(Nod)
 
 	if IsHardOrAbove() then
 		BuildDefenseOnCaptureAttempt(StructuresToSellToAvoidCapture, "ltur", true)
@@ -272,13 +273,6 @@ InitNod = function()
 			InitAirAttackSquad(Squads.BrutalComanches, Nod, nil, { "gtek", "rmbo", "medi", "upgc", "eye" })
 		end
 	end
-
-	local nodGroundAttackers = Nod.GetGroundAttackers()
-
-	Utils.Do(nodGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsNodGroundHunterUnit)
-	end)
 
 	Actor.Create("ai.unlimited.power", true, { Owner = Nod })
 

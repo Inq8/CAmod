@@ -136,6 +136,8 @@ CashRewardOnCaptureTypes = { "proc", "proc.td", "proc.scrin", "silo", "silo.td",
 
 WallTypes = { "sbag", "fenc", "brik", "cycl", "barb" }
 
+ProductionTypes = Utils.Concat(ConyardTypes, Utils.Concat(BarracksTypes, Utils.Concat(FactoryTypes, AirProductionTypes)))
+
 KeyStructures = { "fact", "afac", "sfac", "proc", "proc.td", "proc.scrin", "weap", "weap.td", "airs", "wsph", "dome", "hq", "nerv", "atek", "stek", "gtek", "tmpl", "scrt", "mcv", "amcv", "smcv" }
 
 DefaultQueueProducers = {
@@ -983,11 +985,9 @@ TargetSwapChance = function(unit, chance, isMissionPlayerFunc)
 		end
 		local rand = Utils.RandomInteger(1,100)
 		if rand > 100 - chance then
-			if not unit.IsDead and not attacker.IsDead and unit.HasProperty("Attack") then
+			if not unit.IsDead and not attacker.IsDead and unit.HasProperty("Attack") and unit.CanTarget(attacker) then
 				unit.Stop()
-				if unit.CanTarget(attacker) then
-					unit.Attack(attacker)
-				end
+				unit.Attack(attacker)
 			end
 		end
 	end)
@@ -1776,10 +1776,13 @@ BuildDefenseOnCaptureAttempt = function(buildings, defenseType, fallbackSell)
 				if not b.IsDead and b.Owner == originalOwner then
 					triggerCells = Utils.Shuffle(triggerCells)
 					local defense
-					for _, cell in pairs(triggerCells) do
-						if UtilsCA.CanPlaceBuilding(defenseType, cell) then
-							defense = Actor.Create(defenseType, true, { Owner = b.Owner, Location = cell })
-							break
+
+					if HasConyard(b.Owner) then
+						for _, cell in pairs(triggerCells) do
+							if UtilsCA.CanPlaceBuilding(defenseType, cell) then
+								defense = Actor.Create(defenseType, true, { Owner = b.Owner, Location = cell })
+								break
+							end
 						end
 					end
 
@@ -1861,6 +1864,67 @@ SetupReveals = function(revealPoints, cameraType)
 				end)
 			end
 		end)
+	end)
+end
+
+SetupUnitDefenders = function(player, customRange, customFilter, validAttackingPlayerFunc)
+	local range = customRange or WDist.New(5120)
+	local groundAttackers = player.GetGroundAttackers()
+
+	local filtersByFaction = {
+		allies = IsGreeceGroundHunterUnit,
+		soviet = IsUSSRGroundHunterUnit,
+		gdi = IsGDIGroundHunterUnit,
+		nod = IsNodGroundHunterUnit,
+		scrin = IsScrinGroundHunterUnit,
+		yuri = IsUSSRGroundHunterUnit,
+		arc = IsGDIGroundHunterUnit
+	}
+
+	local filter
+
+	if customFilter ~= nil then
+		filter = customFilter
+	elseif filtersByFaction[player.Faction] ~= nil then
+		filter = filtersByFaction[player.Faction]
+	else
+		filter = IsGroundHunterUnit
+	end
+
+	Utils.Do(groundAttackers, function(a)
+		if not filter or filter(a) then
+			TargetSwapChance(a, 10)
+			CallForHelpOnDamagedOrKilled(a, range, filter, validAttackingPlayerFunc)
+		end
+	end)
+end
+
+SetupBuildingDefenders = function(player, customFilter, customRange, validAttackingPlayerFunc)
+	local range = customRange or WDist.New(8192)
+	local productionStructures = player.GetActorsByTypes(ProductionTypes)
+
+	local filtersByFaction = {
+		allies = IsGreeceGroundHunterUnit,
+		soviet = IsUSSRGroundHunterUnit,
+		gdi = IsGDIGroundHunterUnit,
+		nod = IsNodGroundHunterUnit,
+		scrin = IsScrinGroundHunterUnit,
+		yuri = IsUSSRGroundHunterUnit,
+		arc = IsGDIGroundHunterUnit
+	}
+
+	local filter
+
+	if customFilter ~= nil then
+		filter = customFilter
+	elseif filtersByFaction[player.Faction] ~= nil then
+		filter = filtersByFaction[player.Faction]
+	else
+		filter = IsGroundHunterUnit
+	end
+
+	Utils.Do(productionStructures, function(a)
+		CallForHelpOnDamagedOrKilled(a, range, filter, validAttackingPlayerFunc)
 	end)
 end
 
@@ -2786,14 +2850,14 @@ SpecialistAirSquad = function(unitTypes, characteristic, characteristicValue, de
 	return squad
 end
 
-AirToAirSquad = function(unitTypes, delay)
+AirToAirSquad = function(unitTypes, delay, onProducedAction)
 	return SpecialistAirSquad(unitTypes, "MassAir", "AirValue", delay, onProducedAction)
 end
 
-AntiHeavyAirSquad = function(unitTypes, delay)
+AntiHeavyAirSquad = function(unitTypes, delay, onProducedAction)
 	return SpecialistAirSquad(unitTypes, "MassHeavy", "HeavyValue", delay, onProducedAction)
 end
 
-AntiInfAirSquad = function(unitTypes, delay)
+AntiInfAirSquad = function(unitTypes, delay, onProducedAction)
 	return SpecialistAirSquad(unitTypes, "MassInfantry", "InfantryValue", delay, onProducedAction)
 end

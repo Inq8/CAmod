@@ -247,17 +247,14 @@ InitGDI = function()
 	AutoReplaceHarvesters(GDI)
 	InitAiUpgrades(GDI)
 	InitGDIPatrols()
+	SetupUnitDefenders(GDI, nil, function(a)
+		-- exclude drones as player should hack them
+		return IsGDIGroundHunterUnit and a.Type ~= "memp" and a.Type ~= "gdrn" and a.Type ~= "htnk.drone" and a.Type ~= "mtnk.drone"
+	end)
+
 	if IsVeryHardOrAbove() then
 		InitAttackSquad(Squads.Main, GDI)
 	end
-	local gdiGroundAttackers = GDI.GetGroundAttackers()
-
-	Utils.Do(gdiGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		if a.Type ~= "memp" and a.Type ~= "gdrn" and a.Type ~= "htnk.drone" and a.Type ~= "mtnk.drone" then
-			CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGDIGroundHunterUnit)
-		end
-	end)
 end
 
 InitGreece = function()

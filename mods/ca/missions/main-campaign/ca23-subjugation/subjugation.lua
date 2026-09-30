@@ -314,6 +314,7 @@ InitUSSR = function()
 	AutoRepairBuildings(USSR)
 	SetupRefAndSilosCaptureCredits(USSR)
 	InitAiUpgrades(USSR, 0)
+	SetupUnitDefenders(USSR)
 
 	if IsVeryHardOrAbove() then
 		InitAttackSquad(Squads.Main, USSR)
@@ -330,13 +331,6 @@ InitUSSR = function()
 	Actor.Create("ai.unlimited.power", true, { Owner = USSR })
 	Actor.Create("cyborgspeed.upgrade", true, { Owner = USSR })
 	Actor.Create("cyborgarmor.upgrade", true, { Owner = USSR })
-
-	local ussrGroundAttackers = USSR.GetGroundAttackers()
-
-	Utils.Do(ussrGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsUSSRGroundHunterUnit)
-	end)
 
 	local hinds = USSR.GetActorsByType("hind")
 	Utils.Do(hinds, function(a)
