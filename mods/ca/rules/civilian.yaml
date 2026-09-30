@@ -522,6 +522,9 @@ MISS:
 		Types: building
 	CapturableProgressBar:
 	CapturableProgressBlink:
+	TransformOnCapture:
+		IntoActor: Miss.Capture
+		SkipMakeAnims: False
 	InstantlyRepairable:
 	WithDeathAnimation:
 		DeathSequence: dead
@@ -531,6 +534,15 @@ MISS:
 		Actor: MISS.Husk
 		OwnerType: InternalName
 	-FireWarheadsOnDeath:
+	WithMakeAnimation:
+
+MISS.Capture:
+	Inherits: MISS
+	-TransformOnCapture:
+	-WithMakeAnimation:
+	SpawnActorOnDeath:
+		Actor: MISS.Capture.Husk
+		OwnerType: InternalName
 
 BIO:
 	Inherits: ^TechBuilding

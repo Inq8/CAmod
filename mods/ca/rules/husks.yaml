@@ -1431,6 +1431,22 @@ MISS.Husk:
 	RenderSprites:
 		Image: MISS.destroyed
 
+MISS.Capture.Husk:
+	Inherits: ^TechHusk
+	Building:
+		Footprint: xxx xxx ===
+		Dimensions: 3,3
+		LocalCenterOffset: 0,-512,0
+	WithBuildingBib:
+	Tooltip:
+		Name: Ruin (Communications Center)
+	TransformOnCapture:
+		IntoActor: miss.capture
+	InfiltrateForTransform:
+		IntoActor: miss.capture
+	RenderSprites:
+		Image: MISS.Capture.destroyed
+
 BIO.Husk:
 	Inherits: ^TechHusk
 	Building:
